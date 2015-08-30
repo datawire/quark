@@ -4,16 +4,20 @@ class AST:
 
     indent = []
 
-    def __init__(self, *children):
-        self.children = children
-
     def origin(self, node):
         if not hasattr(self, "node"):
             self.node = node
 
+    def lookup(self, prefix, visitor):
+        for cls in self.__mro__:
+            method = "%s_%s" % (prefix, cls.__name__)
+            if hasattr(visitor, method):
+                return getattr(visitor, method)
+        return lambda s: None
+
     def traverse(self, visitor):
-        visit = getattr(visitor, "visit_%s" % self.__class__.__name__, lambda s: None)
-        leave = getattr(visitor, "leave_%s" % self.__class__.__name__, lambda s: None)
+        visit = self.lookup(visitor, "visit")
+        leave = self.lookup(visitor, "leave")
         visit(self)
         if self.children:
             for c in self.children:
