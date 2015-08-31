@@ -1,15 +1,27 @@
 import inspect
 
-class AST:
+class AST(object):
 
     indent = []
 
     def origin(self, node):
         if not hasattr(self, "node"):
             self.node = node
+            self.line, self.column = self._lineinfo(node)
 
-    def lookup(self, prefix, visitor):
-        for cls in self.__mro__:
+    def _lineinfo(self, node):
+        line = 1
+        column = 1
+        for c in self.node.full_text[:self.node.start]:
+            if c == "\n":
+                line += 1
+                column = 1
+            else:
+                column += 1
+        return line, column
+
+    def lookup(self, visitor, prefix):
+        for cls in self.__class__.__mro__:
             method = "%s_%s" % (prefix, cls.__name__)
             if hasattr(visitor, method):
                 return getattr(visitor, method)
@@ -41,13 +53,21 @@ class Var(AST):
     def __init__(self, name):
         self.name = name
 
+    @property
+    def children(self):
+        yield self.name
+
 class Name(AST):
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, text):
+        self.text = text
 
     def __repr__(self):
-        return self.name
+        return self.text
+
+    @property
+    def children(self):
+        return ()
 
 class Type(AST):
 
@@ -78,6 +98,11 @@ class Binop(AST):
         self.op = op
         self.right = right
 
+    @property
+    def children(self):
+        yield self.left
+        yield self.right
+
 class Function(AST):
 
     indent = ["body"]
@@ -88,11 +113,34 @@ class Function(AST):
         self.params = params
         self.body = body
 
-class Param(AST):
+    @property
+    def children(self):
+        yield self.type
+        yield self.name
+        for p in self.params:
+            yield p
+        for b in self.body:
+            yield b
+
+class Method(Function):
+    pass
+
+class Declaration(AST):
 
     def __init__(self, type, name):
         self.type = type
         self.name = name
+
+    @property
+    def children(self):
+        yield self.type
+        yield self.name
+
+class Param(Declaration):
+    pass
+
+class Field(Declaration):
+    pass
 
 class File(AST):
 
@@ -100,6 +148,10 @@ class File(AST):
 
     def __init__(self, definitions):
         self.definitions = definitions
+
+    @property
+    def children(self):
+        return self.definitions
 
 class Package(AST):
 
@@ -109,6 +161,12 @@ class Package(AST):
         self.name = name
         self.definitions = definitions
 
+    @property
+    def children(self):
+        yield self.name
+        for d in self.definitions:
+            yield d
+
 class Class(AST):
 
     indent = ["definitions"]
@@ -117,6 +175,13 @@ class Class(AST):
         self.name = name
         self.base = base
         self.definitions = definitions
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.base
+        for d in self.definitions:
+            yield d
 
 class Attr(AST):
 
@@ -130,11 +195,22 @@ class Call(AST):
         self.expr = expr
         self.args = args
 
+    @property
+    def children(self):
+        yield self.expr
+        for a in self.args:
+            yield a
+
 class Assign(AST):
 
     def __init__(self, lhs, rhs):
         self.lhs = lhs
         self.rhs = rhs
+
+    @property
+    def children(self):
+        yield self.lhs
+        yield self.rhs
 
 class If(AST):
 

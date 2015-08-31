@@ -30,30 +30,42 @@ class Parser:
                "AND": "&&",
                "OR": "||"}
 
-    @g.rule('file = definitions ~"$"')
+    @g.rule('file = file_definition* ~"$"')
     def visit_file(self, node, (definitions, eof)):
         return File(definitions)
 
-    @g.rule('definitions = definition*')
-    def visit_definitions(self, node, children):
-        return children
-
-    @g.rule('definition = package / class / function')
-    def visit_definition(self, node, (dfn,)):
+    @g.rule('file_definition = package / class / function')
+    def visit_file_definition(self, node, (dfn,)):
         return dfn
 
-    @g.rule('package = PACKAGE name LBR definitions RBR')
+    @g.rule('package = PACKAGE name LBR pkg_definition* RBR')
     def visit_package(self, node, children):
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('class = CLASS name ( EXTENDS name )? LBR function* RBR')
-    def visit_class(self, node, (c, name, extends, l, functions, r)):
+    @g.rule('pkg_definition = class / function')
+    def visit_pkg_definition(self, node, (dfn,)):
+        return dfn
+
+    @g.rule('class = CLASS name ( EXTENDS name )? LBR class_definition* RBR')
+    def visit_class(self, node, (c, name, extends, l, definitions, r)):
         if extends:
             base = extends[0][-1]
         else:
             base = None
-        return Class(name, base, functions)
+        return Class(name, base, definitions)
+
+    @g.rule('class_definition = field / method')
+    def visit_class_definition(self, node, (dfn,)):
+        return dfn
+
+    @g.rule('field = type name SEMI')
+    def visit_field(self, node, (type, name, _)):
+        return Field(type, name)
+
+    @g.rule('method = type name LPR parameters RPR LBR statements RBR')
+    def visit_method(self, node, (type, name, lp, parameters, rp, lb, statements, rb)):
+        return Method(type, name, tuple(parameters), statements)
 
     @g.rule('function = type name LPR parameters RPR LBR statements RBR')
     def visit_function(self, node, (type, name, lp, parameters, rp, lb, statements, rb)):
@@ -105,7 +117,7 @@ class Parser:
     def visit_exprstmt(self, node, (expr, s)):
         return expr
 
-    @g.rule('assign = ( attr / name )  EQ expr SEMI')
+    @g.rule('assign = ( attr / var )  EQ expr SEMI')
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
         return Assign(lhs, rhs)
 
@@ -211,8 +223,8 @@ class Parser:
     def visit_paren(self, node, (l, expr, r)):
         return expr
 
-    @g.rule('var = name')
-    def visit_var(self, node, (name,)):
+    @g.rule('var = name ""')
+    def visit_var(self, node, (name, _)):
         return Var(name)
 
     def visit_(self, node, children):

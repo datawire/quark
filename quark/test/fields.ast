@@ -1,0 +1,11 @@
+File(
+ (Class(A, None, 
+  (Field(int, x))),
+ Class(B, None, 
+  (Field(int, x),
+  Field(float, y))),
+ Class(C, None, 
+  (Field(int, x),
+  Method(void, method, (), 
+   ()),
+  Field(float, y)))))
