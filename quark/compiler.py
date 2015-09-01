@@ -59,7 +59,7 @@ class Def:
     def visit_Function(self, f):
         self.define(f.parent.env, f)
 
-    def visit_Param(self, p):
+    def visit_Declaration(self, p):
         self.define(p.env, p)
 
 class Use:
@@ -75,6 +75,12 @@ class Use:
             else:
                 ast = ast.parent
         return None
+
+    def visit_Declaration(self, d):
+        resolved = self.lookup(d.type)
+        self.dfn = resolved
+        if resolved is None:
+            self.unresolved.append(d.type)
 
     def visit_Var(self, v):
         resolved = self.lookup(v)
