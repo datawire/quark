@@ -8,7 +8,11 @@ class B {
 }
 
 class C {
-   int x;
-   void method() {}
-   float y;
+    int x;
+    void method() {}
+    float y;
+}
+
+class D {
+    int x = foo();
 }

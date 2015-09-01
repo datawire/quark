@@ -59,9 +59,13 @@ class Parser:
     def visit_class_definition(self, node, (dfn,)):
         return dfn
 
-    @g.rule('field = type name SEMI')
-    def visit_field(self, node, (type, name, _)):
-        return Field(type, name)
+    @g.rule('field = type name (EQ expr)? SEMI')
+    def visit_field(self, node, (type, name, opt, _)):
+        if opt:
+            expr = opt[0][-1]
+        else:
+            expr = None
+        return Field(type, name, expr)
 
     @g.rule('method = type name LPR parameters RPR LBR statements RBR')
     def visit_method(self, node, (type, name, lp, parameters, rp, lb, statements, rb)):
@@ -81,9 +85,13 @@ class Parser:
                 del children[1]
         return children
 
-    @g.rule('param = type name')
-    def visit_param(self, node, (type, name)):
-        return Param(type, name)
+    @g.rule('param = type name (EQ expr)?')
+    def visit_param(self, node, (type, name, opt)):
+        if opt:
+            expr = opt[0][-1]
+        else:
+            expr = None
+        return Param(type, name, expr)
 
     @g.rule('type = name (LA types RA)?')
     def visit_type(self, node, (name, params)):
@@ -109,7 +117,7 @@ class Parser:
     def visit_statements(self, node, children):
         return children
 
-    @g.rule('statement = exprstmt / assign / if')
+    @g.rule('statement = exprstmt / assign / declaration / if')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
@@ -120,6 +128,14 @@ class Parser:
     @g.rule('assign = ( attr / var )  EQ expr SEMI')
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
         return Assign(lhs, rhs)
+
+    @g.rule('declaration = type name (EQ expr)? SEMI')
+    def visit_declaration(self, node, (type, name, opt, _)):
+        if opt:
+            expr = opt[0][-1]
+        else:
+            expr = None
+        return Declaration(type, name, expr)
 
     @g.rule('if = IF LPR expr RPR LBR statements RBR')
     def visit_if(self, node, (kw, lp, expr, rp, lb, statements, rb)):

@@ -1,10 +1,10 @@
 File(
  (Package(foo, 
-  (Function(void, f, (Param(int, a), Param(int, b), Param(int, c), Param(int, d)), 
+  (Function(void, f, (Param(int, a, None), Param(int, b, None), Param(int, c, None), Param(int, d, None)), 
    (Binop(Binop(Binop(Binop(Binop(Binop(Var(x), '*', Var(a)), '*', Var(b)), '*', Var(c)), '+', Var(b)), '+', Binop(Var(c), '*', Var(d))), '<=', Var(t)))),
-  Function(void, asdf, (Param(float, x), Param(float, y)), 
+  Function(void, asdf, (Param(float, x, None), Param(float, y, None)), 
    (Binop(Binop(Binop(Binop(Binop(Var(x), '*', Var(a)), '*', Var(b)), '*', Binop(Binop(Var(c), '+', Var(b)), '+', Var(c))), '*', Var(d)), '<=', Var(t)))),
-  Function(void, fdsa, (Param(float, x),), 
+  Function(void, fdsa, (Param(float, x, None),), 
    ()),
   Function(int, pie, (), 
    (Var(blueberry),

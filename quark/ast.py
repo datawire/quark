@@ -127,14 +127,16 @@ class Method(Function):
 
 class Declaration(AST):
 
-    def __init__(self, type, name):
+    def __init__(self, type, name, value):
         self.type = type
         self.name = name
+        self.value = value
 
     @property
     def children(self):
         yield self.type
         yield self.name
+        yield self.value
 
 class Param(Declaration):
     pass

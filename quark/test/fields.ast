@@ -1,11 +1,13 @@
 File(
  (Class(A, None, 
-  (Field(int, x))),
+  (Field(int, x, None))),
  Class(B, None, 
-  (Field(int, x),
-  Field(float, y))),
+  (Field(int, x, None),
+  Field(float, y, None))),
  Class(C, None, 
-  (Field(int, x),
+  (Field(int, x, None),
   Method(void, method, (), 
    ()),
-  Field(float, y)))))
+  Field(float, y, None))),
+ Class(D, None, 
+  (Field(int, x, Call(Var(foo), []))))))
