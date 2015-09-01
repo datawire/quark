@@ -6,7 +6,7 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "extends", "if"]
+    keywords = ["package", "class", "extends"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LPR": "(",
@@ -28,7 +28,9 @@ class Parser:
                "LT": "<",
                "GT": ">",
                "AND": "&&",
-               "OR": "||"}
+               "OR": "||",
+               "IF": "if",
+               "ELSE": "else"}
 
     @g.rule('file = file_definition* ~"$"')
     def visit_file(self, node, (definitions, eof)):
@@ -137,9 +139,17 @@ class Parser:
             expr = None
         return Declaration(type, name, expr)
 
-    @g.rule('if = IF LPR expr RPR LBR statements RBR')
-    def visit_if(self, node, (kw, lp, expr, rp, lb, statements, rb)):
-        return If(expr, statements)
+    @g.rule('if = IF LPR expr RPR block (ELSE block)?')
+    def visit_if(self, node, (kw, lp, expr, rp, consequence, opt)):
+        if opt:
+            alternative = opt[0][1]
+        else:
+            alternative = None
+        return If(expr, consequence, alternative)
+
+    @g.rule('block = LBR statements RBR')
+    def visit_block(self, node, (l, statements, r)):
+        return statements
 
     @g.rule('expr = oroperand (OR oroperand)*')
     def visit_expr(self, node, (result, remaining)):

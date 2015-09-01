@@ -218,6 +218,13 @@ class If(AST):
 
     indent = ["consequence"]
 
-    def __init__(self, predicate, consequence):
+    def __init__(self, predicate, consequence, alternative):
         self.predicate = predicate
         self.consequence = consequence
+        self.alternative = alternative
+
+    @property
+    def children(self):
+        yield self.predicate
+        yield self.consequence
+        yield self.alternative

@@ -1,0 +1,10 @@
+File(
+ (Function(void, test, (), 
+  (If(Var(x), 
+   (Call(Var(y), [])), None),
+  If(Var(x), 
+   (Call(Var(y), [])), None),
+  If(Var(x), 
+   (Call(Var(y), [])), [Call(Var(z), [])]),
+  If(Var(x), 
+   (Call(Var(y), [])), [Call(Var(z), [])])))))
