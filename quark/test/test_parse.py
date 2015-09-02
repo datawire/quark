@@ -15,7 +15,7 @@
 import os, pytest
 from quark.parser import Parser
 
-directory = os.path.dirname(__file__)
+directory = os.path.join(os.path.dirname(__file__), "parse")
 
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
@@ -24,7 +24,7 @@ paths = [os.path.join(directory, name) for name in files]
 def path(request):
     return request.param
 
-def test_parser(path):
+def test_parse(path):
     text = open(path).read()
     p = Parser()
     ast = p.parse(text)

@@ -13,7 +13,6 @@
 # limitations under the License.
 
 import os, pytest
-from quark.backend import Java
 from quark.compiler import Compiler, CompileError
 from quark.ast import *
 
@@ -94,38 +93,3 @@ package p {
         msg = str(e)
         for fragment in ("5:13:x", "6:13:nonexistent", "6:34:d"):
             assert fragment in msg
-
-def test_emit():
-    c = Compiler()
-    c.parse("""
-class Test {
-    Test add(Test t) {}
-
-    void test() {
-        int x = 2;
-        int y = 2;
-        int z = x + y;
-        String hello = "hello";
-        Test t1;
-        Test t2;
-        t1 + t2;
-        int four = 2 + 2;
-    }
-}
-""")
-    c.compile()
-    b = Java()
-    c.emit(b)
-    assert b.files["Test.java"] == """public class Test {
-    public Test add(Test t) {}
-    public void test() {
-        int x = 2;
-        int y = 2;
-        int z = (x) + (y);
-        String hello = "hello";
-        Test t1;
-        Test t2;
-        (t1) + (t2);
-        int four = (2) + (2);
-    }
-}"""
