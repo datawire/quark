@@ -17,8 +17,9 @@ from .parser import Parser
 
 class Root(AST):
 
-    def __init__(self):
+    def __init__(self, *primatives):
         self.parent = None
+        self.primatives = primatives
         self.files = []
 
     def add(self, file):
@@ -26,7 +27,33 @@ class Root(AST):
 
     @property
     def children(self):
-        return self.files
+        for p in self.primatives:
+            yield p
+        for f in self.files:
+            yield f
+
+BUILTIN = "(builtin)"
+
+class Primative(AST):
+
+    def __init__(self, name):
+        self.name = name
+        self.line = BUILTIN
+        self.column = BUILTIN
+
+    @property
+    def children(self):
+        return ()
+
+class IntPrimative(Primative):
+
+    def __init__(self):
+        Primative.__init__(self, "int")
+
+class StringPrimative(Primative):
+
+    def __init__(self):
+        Primative.__init__(self, "String")
 
 class InitParent:
 
@@ -60,12 +87,22 @@ class InitEnv:
 
 class Def:
 
-    def define(self, env, value):
-        assert value.name.text not in env
-        env[value.name.text] = value
+    def __init__(self):
+        self.duplicates = []
+
+    def define(self, env, node, name=None):
+        if name is None:
+            name = node.name.text
+        if name in env:
+            self.duplicates.append((node, name, env[name]))
+        else:
+            env[name] = node
 
     def visit_Package(self, p):
         self.define(p.parent.env, p)
+
+    def visit_Primative(self, p):
+        self.define(p.parent.env, p, p.name)
 
     def visit_Class(self, c):
         self.define(c.parent.env, c)
@@ -108,10 +145,17 @@ class Use:
 
 class CompileError(Exception): pass
 
+def lineinfo(node):
+    if node.line == BUILTIN:
+        return "(builtin)"
+    else:
+        return "%s:%s" % (node.line, node.column)
+
 class Compiler:
 
     def __init__(self):
-        self.root = Root()
+        self.root = Root(IntPrimative(),
+                         StringPrimative())
         self.parser = Parser()
 
     def parse(self, text):
@@ -120,7 +164,14 @@ class Compiler:
     def prep(self):
         self.root.traverse(InitParent())
         self.root.traverse(InitEnv())
-        self.root.traverse(Def())
+        def_ = Def()
+        self.root.traverse(def_)
+        if def_.duplicates:
+            dups = ["%s:%s: duplicate definition of %s (first definition %s)" %
+                    (node.line, node.column, name, lineinfo(first))
+                    for node, name, first in def_.duplicates]
+            raise CompileError("\n".join(dups))
+
         use = Use()
         self.root.traverse(use)
         if use.unresolved:

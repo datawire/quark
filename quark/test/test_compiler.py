@@ -25,8 +25,6 @@ def check_f(f):
 def test_prep_function():
     c = Compiler()
     c.parse("""
-class int {}
-
 void f(int a, int b, int c) {}
     """)
     c.prep()
@@ -35,8 +33,6 @@ void f(int a, int b, int c) {}
 def test_prep_package():
     c = Compiler()
     c.parse("""
-class int {}
-
 package p {
     void f(int a, int b, int c) {}
 }
@@ -50,8 +46,6 @@ package p {
 def test_prep_package_class():
     c = Compiler()
     c.parse("""
-class int {}
-
 package p {
     class C {
         void f(int a, int b, int c) {
@@ -70,8 +64,6 @@ package p {
 def test_prep_class():
     c = Compiler()
     c.parse("""
-class int {}
-
 class C {
     void f(int a, int b, int c) {
     }
@@ -100,16 +92,12 @@ package p {
         assert False
     except CompileError, e:
         msg = str(e)
-        for fragment in ("4:16:int", "4:23:int", "4:30:int",
-                         "5:13:x",
-                         "6:13:nonexistent", "6:34:d"):
+        for fragment in ("5:13:x", "6:13:nonexistent", "6:34:d"):
             assert fragment in msg
 
 def test_emit():
     c = Compiler()
     c.parse("""
-class int {}
-
 class Test {
     void test() {
         int x = 2;
@@ -121,7 +109,6 @@ class Test {
     c.prep()
     b = Java()
     c.emit(b)
-    assert b.files["int.java"] == "public class int {}"
     assert b.files["Test.java"] == """public class Test {
     public void test() {
         int x = 2;
