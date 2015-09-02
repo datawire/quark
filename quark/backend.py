@@ -73,6 +73,9 @@ class ClassRenderer(object):
     def Number(self, n):
         return n.text
 
+    def String(self, s):
+        return s.text
+
     def Binop(self, b):
         return "(%s) %s (%s)" % (b.left.apply(self), b.op, b.right.apply(self))
 

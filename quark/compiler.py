@@ -143,6 +143,11 @@ class Use:
         if n.dfn is None:
             self.unresolved.append((n, "int"))
 
+    def visit_String(self, s):
+        s.dfn = self.lookup(s, "String")
+        if s.dfn is None:
+            self.unresolved.append((s, "String"))
+
 class CompileError(Exception): pass
 
 def lineinfo(node):

@@ -34,7 +34,7 @@ def test_prep_package():
     c = Compiler()
     c.parse("""
 package p {
-    void f(int a, int b, int c) {}
+    void f(int a, int b, String c) {}
 }
     """)
     c.prep()
@@ -48,7 +48,7 @@ def test_prep_package_class():
     c.parse("""
 package p {
     class C {
-        void f(int a, int b, int c) {
+        void f(int a, int b, String c) {
         }
     }
 }
@@ -65,7 +65,7 @@ def test_prep_class():
     c = Compiler()
     c.parse("""
 class C {
-    void f(int a, int b, int c) {
+    void f(int a, int b, String c) {
     }
 }
     """)
@@ -103,6 +103,7 @@ class Test {
         int x = 2;
         int y = 2;
         int z = x + y;
+        String hello = "hello";
     }
 }
 """)
@@ -114,5 +115,6 @@ class Test {
         int x = 2;
         int y = 2;
         int z = (x) + (y);
+        String hello = "hello";
     }
 }"""
