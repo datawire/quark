@@ -16,3 +16,11 @@ class C {
 class D {
     int x = foo();
 }
+
+class E {
+    int x = 3;
+}
+
+class F {
+    String x = "pie";
+}

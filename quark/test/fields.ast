@@ -10,4 +10,8 @@ File(
    ()),
   Field(float, y, None))),
  Class(D, None, 
-  (Field(int, x, Call(Var(foo), []))))))
+  (Field(int, x, Call(Var(foo), [])))),
+ Class(E, None, 
+  (Field(int, x, Number('3')))),
+ Class(F, None, 
+  (Field(String, x, String('"pie"'))))))
