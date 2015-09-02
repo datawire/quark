@@ -17,9 +17,9 @@ from .parser import Parser
 
 class Root(AST):
 
-    def __init__(self, *primatives):
+    def __init__(self, *primitives):
         self.parent = None
-        self.primatives = primatives
+        self.primitives = primitives
         self.files = []
 
     def add(self, file):
@@ -27,14 +27,14 @@ class Root(AST):
 
     @property
     def children(self):
-        for p in self.primatives:
+        for p in self.primitives:
             yield p
         for f in self.files:
             yield f
 
 BUILTIN = "(builtin)"
 
-class Primative(AST):
+class Primitive(AST):
 
     def __init__(self, name):
         self.name = name
@@ -45,15 +45,15 @@ class Primative(AST):
     def children(self):
         return ()
 
-class IntPrimative(Primative):
+class IntPrimitive(Primitive):
 
     def __init__(self):
-        Primative.__init__(self, "int")
+        Primitive.__init__(self, "int")
 
-class StringPrimative(Primative):
+class StringPrimitive(Primitive):
 
     def __init__(self):
-        Primative.__init__(self, "String")
+        Primitive.__init__(self, "String")
 
 class InitParent:
 
@@ -101,7 +101,7 @@ class Def:
     def visit_Package(self, p):
         self.define(p.parent.env, p)
 
-    def visit_Primative(self, p):
+    def visit_Primitive(self, p):
         self.define(p.parent.env, p, p.name)
 
     def visit_Class(self, c):
@@ -154,8 +154,8 @@ def lineinfo(node):
 class Compiler:
 
     def __init__(self):
-        self.root = Root(IntPrimative(),
-                         StringPrimative())
+        self.root = Root(IntPrimitive(),
+                         StringPrimitive())
         self.parser = Parser()
 
     def parse(self, text):
