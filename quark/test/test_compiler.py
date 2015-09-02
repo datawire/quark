@@ -22,28 +22,28 @@ def check_f(f):
     assert f.name.text == "f"
     assert [p.name.text for p in f.params] == ["a", "b", "c"]
 
-def test_prep_function():
+def test_compile_function():
     c = Compiler()
     c.parse("""
 void f(int a, int b, int c) {}
     """)
-    c.prep()
+    c.compile()
     check_f(c.root.env["f"])
 
-def test_prep_package():
+def test_compile_package():
     c = Compiler()
     c.parse("""
 package p {
     void f(int a, int b, String c) {}
 }
     """)
-    c.prep()
+    c.compile()
     p = c.root.env["p"]
     assert p.name.text == "p"
     f = p.env["f"]
     check_f(f)
 
-def test_prep_package_class():
+def test_compile_package_class():
     c = Compiler()
     c.parse("""
 package p {
@@ -53,7 +53,7 @@ package p {
     }
 }
     """)
-    c.prep()
+    c.compile()
     p = c.root.env["p"]
     assert p.name.text == "p"
     C = p.env["C"]
@@ -61,7 +61,7 @@ package p {
     f = C.env["f"]
     check_f(f)
 
-def test_prep_class():
+def test_compile_class():
     c = Compiler()
     c.parse("""
 class C {
@@ -69,7 +69,7 @@ class C {
     }
 }
     """)
-    c.prep()
+    c.compile()
     C = c.root.env["C"]
     assert C.name.text == "C"
     f = C.env["f"]
@@ -88,7 +88,7 @@ package p {
 }
     """)
     try:
-        c.prep()
+        c.compile()
         assert False
     except CompileError, e:
         msg = str(e)
@@ -113,7 +113,7 @@ class Test {
     }
 }
 """)
-    c.prep()
+    c.compile()
     b = Java()
     c.emit(b)
     assert b.files["Test.java"] == """public class Test {

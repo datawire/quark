@@ -188,7 +188,7 @@ class Compiler:
     def parse(self, text):
         self.root.add(self.parser.parse(text))
 
-    def prep(self):
+    def compile(self):
         self.root.traverse(InitParent())
         self.root.traverse(InitEnv())
 
