@@ -1,4 +1,5 @@
 import os, pytest
+from quark.backend import Java
 from quark.compiler import Compiler, CompileError
 from quark.ast import *
 
@@ -89,3 +90,28 @@ package p {
                          "5:13:x",
                          "6:13:nonexistent", "6:34:d"):
             assert fragment in msg
+
+def test_emit():
+    c = Compiler()
+    c.parse("""
+class int {}
+
+class Test {
+    void test() {
+        int x = 2;
+        int y = 2;
+        int z = x + y;
+    }
+}
+""")
+    c.prep()
+    b = Java()
+    c.emit(b)
+    assert b.files["int.java"] == "public class int {}"
+    assert b.files["Test.java"] == """public class Test {
+    public void test() {
+        int x = 2;
+        int y = 2;
+        int z = (x) + (y);
+    }
+}"""

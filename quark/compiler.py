@@ -67,26 +67,30 @@ class Use:
     def __init__(self):
         self.unresolved = []
 
-    def lookup(self, v):
-        ast = v
-        while ast:
-            if v.name.text in ast.env:
-                return ast.env[v.name.text]
+    def lookup(self, node, name=None):
+        if name is None:
+            name = node.name.text
+        while node:
+            if name in node.env:
+                return node.env[name]
             else:
-                ast = ast.parent
+                node = node.parent
         return None
 
     def visit_Declaration(self, d):
-        resolved = self.lookup(d.type)
-        self.dfn = resolved
-        if resolved is None:
-            self.unresolved.append(d.type)
+        self.dfn = self.lookup(d.type)
+        if self.dfn is None:
+            self.unresolved.append((d.type.name, d.type.name.text))
 
     def visit_Var(self, v):
-        resolved = self.lookup(v)
-        self.dfn = resolved
-        if resolved is None:
-            self.unresolved.append(v)
+        self.dfn = self.lookup(v)
+        if self.dfn is None:
+            self.unresolved.append((v.name, v.name.text))
+
+    def visit_Number(self, n):
+        self.dfn = self.lookup(n, "int")
+        if self.dfn is None:
+            self.unresolved.append((n, "int"))
 
 class CompileError(Exception): pass
 
@@ -106,5 +110,9 @@ class Compiler:
         use = Use()
         self.root.traverse(use)
         if use.unresolved:
-            vars = ["%s:%s:%s" % (v.name.line, v.name.column, v.name.text) for v in use.unresolved]
+            vars = ["%s:%s:%s" % (node.line, node.column, name)
+                    for node, name in use.unresolved]
             raise CompileError("unresolved variables: %s" % ", ".join(vars))
+
+    def emit(self, backend):
+        self.root.traverse(backend)
