@@ -133,25 +133,25 @@ class Parser:
     def visit_statements(self, node, children):
         return children
 
-    @g.rule('statement = exprstmt / assign / declaration / if')
+    @g.rule('statement = exprstmt / assign / local / if')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
     @g.rule('exprstmt = expr SEMI')
     def visit_exprstmt(self, node, (expr, s)):
-        return expr
+        return ExprStmt(expr)
 
     @g.rule('assign = ( attr / var )  EQ expr SEMI')
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
         return Assign(lhs, rhs)
 
-    @g.rule('declaration = type name (EQ expr)? SEMI')
-    def visit_declaration(self, node, (type, name, opt, _)):
+    @g.rule('local = type name (EQ expr)? SEMI')
+    def visit_local(self, node, (type, name, opt, _)):
         if opt:
             expr = opt[0][-1]
         else:
             expr = None
-        return Declaration(type, name, expr)
+        return Local(Declaration(type, name, expr))
 
     @g.rule('if = IF LPR expr RPR block (ELSE block)?')
     def visit_if(self, node, (kw, lp, expr, rp, consequence, opt)):

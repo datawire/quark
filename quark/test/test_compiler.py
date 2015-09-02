@@ -99,11 +99,17 @@ def test_emit():
     c = Compiler()
     c.parse("""
 class Test {
+    Test add(Test t) {}
+
     void test() {
         int x = 2;
         int y = 2;
         int z = x + y;
         String hello = "hello";
+        Test t1;
+        Test t2;
+        t1 + t2;
+        int four = 2 + 2;
     }
 }
 """)
@@ -111,10 +117,15 @@ class Test {
     b = Java()
     c.emit(b)
     assert b.files["Test.java"] == """public class Test {
+    public Test add(Test t) {}
     public void test() {
         int x = 2;
         int y = 2;
         int z = (x) + (y);
         String hello = "hello";
+        Test t1;
+        Test t2;
+        (t1) + (t2);
+        int four = (2) + (2);
     }
 }"""

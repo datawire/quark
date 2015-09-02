@@ -66,9 +66,15 @@ class ClassRenderer(object):
         name = d.name.apply(self.namer)
         if d.value:
             value = d.value.apply(self)
-            return "%s %s = %s;" % (type, name, value)
+            return "%s %s = %s" % (type, name, value)
         else:
-            return "%s %s;" % (type, name)
+            return "%s %s" % (type, name)
+
+    def Local(self, stmt):
+        return "%s;" % stmt.declaration.apply(self)
+
+    def ExprStmt(self, stmt):
+        return "%s;" % stmt.expr.apply(self)
 
     def Number(self, n):
         return n.text

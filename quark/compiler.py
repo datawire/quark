@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ast import AST
+from .ast import AST, Definition
 from .parser import Parser
 
 class Root(AST):
@@ -34,7 +34,7 @@ class Root(AST):
 
 BUILTIN = "(builtin)"
 
-class Primitive(AST):
+class Primitive(Definition):
 
     def __init__(self, name):
         self.name = name
@@ -54,6 +54,11 @@ class StringPrimitive(Primitive):
 
     def __init__(self):
         Primitive.__init__(self, "String")
+
+class VoidPrimitive(Primitive):
+
+    def __init__(self):
+        Primitive.__init__(self, "void")
 
 class InitParent:
 
@@ -128,25 +133,41 @@ class Use:
                 node = node.parent
         return None
 
-    def visit_Declaration(self, d):
-        d.dfn = self.lookup(d.type)
-        if d.dfn is None:
-            self.unresolved.append((d.type.name, d.type.name.text))
+    def visit_Class(self, c):
+        c.resolved = c
+
+    def visit_Type(self, t):
+        t.resolved = self.lookup(t)
+        assert isinstance(t.resolved, Definition)
+        if t.resolved is None:
+            self.unresolved.append((t.name, t.name.text))
+
+    def leave_Declaration(self, d):
+        d.resolved = d.type.resolved
 
     def visit_Var(self, v):
-        v.dfn = self.lookup(v)
-        if v.dfn is None:
+        node = self.lookup(v)
+        if node:
+            v.resolved = node.resolved
+        else:
+            v.resolved = None
             self.unresolved.append((v.name, v.name.text))
 
     def visit_Number(self, n):
-        n.dfn = self.lookup(n, "int")
-        if n.dfn is None:
+        n.resolved = self.lookup(n, "int")
+        if n.resolved is None:
             self.unresolved.append((n, "int"))
 
     def visit_String(self, s):
-        s.dfn = self.lookup(s, "String")
-        if s.dfn is None:
+        s.resolved = self.lookup(s, "String")
+        if s.resolved is None:
             self.unresolved.append((s, "String"))
+
+    def leave_Binop(self, b):
+        left = b.left.resolved
+        right = b.right.resolved
+        # XXX
+        b.resolved = left
 
 class CompileError(Exception): pass
 
@@ -159,7 +180,8 @@ def lineinfo(node):
 class Compiler:
 
     def __init__(self):
-        self.root = Root(IntPrimitive(),
+        self.root = Root(VoidPrimitive(),
+                         IntPrimitive(),
                          StringPrimitive())
         self.parser = Parser()
 

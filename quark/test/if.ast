@@ -1,10 +1,10 @@
 File(
  (Function(void, test, (), 
   (If(Var(x), 
-   (Call(Var(y), [])), None),
+   (ExprStmt(Call(Var(y), []))), None),
   If(Var(x), 
-   (Call(Var(y), [])), None),
+   (ExprStmt(Call(Var(y), []))), None),
   If(Var(x), 
-   (Call(Var(y), [])), [Call(Var(z), [])]),
+   (ExprStmt(Call(Var(y), []))), [ExprStmt(Call(Var(z), []))]),
   If(Var(x), 
-   (Call(Var(y), [])), [Call(Var(z), [])])))))
+   (ExprStmt(Call(Var(y), []))), [ExprStmt(Call(Var(z), []))])))))

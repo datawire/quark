@@ -43,7 +43,7 @@ class AST(object):
             if hasattr(target, method):
                 return getattr(target, method)
         if default is None:
-            raise AttributeError("%s has no suitable method for object: %s" % (target, self))
+            raise AttributeError("%s has no suitable method for class: %s" % (target, self.__class__))
         else:
             return default
 
@@ -71,7 +71,152 @@ class AST(object):
         else:
             return repr(getattr(self, field))
 
-class Var(AST):
+## Top level
+
+class File(AST):
+
+    indent = ["definitions"]
+
+    def __init__(self, definitions):
+        self.definitions = definitions
+
+    @property
+    def children(self):
+        return self.definitions
+
+## Definitions
+
+class Definition(AST):
+    pass
+
+class Package(Definition):
+
+    indent = ["definitions"]
+
+    def __init__(self, name, definitions):
+        self.name = name
+        self.definitions = definitions
+
+    @property
+    def children(self):
+        yield self.name
+        for d in self.definitions:
+            yield d
+
+class Function(Definition):
+
+    indent = ["body"]
+
+    def __init__(self, type, name, params, body):
+        self.type = type
+        self.name = name
+        self.params = params
+        self.body = body
+
+    @property
+    def children(self):
+        yield self.type
+        yield self.name
+        for p in self.params:
+            yield p
+        for b in self.body:
+            yield b
+
+class Class(Definition):
+
+    indent = ["definitions"]
+
+    def __init__(self, name, base, definitions):
+        self.name = name
+        self.base = base
+        self.definitions = definitions
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.base
+        for d in self.definitions:
+            yield d
+
+class Method(Function):
+    pass
+
+## Declarations
+
+class Declaration(AST):
+
+    def __init__(self, type, name, value):
+        self.type = type
+        self.name = name
+        self.value = value
+
+    @property
+    def children(self):
+        yield self.type
+        yield self.name
+        yield self.value
+
+class Param(Declaration):
+    pass
+
+class Field(Declaration):
+    pass
+
+## Statements
+
+class Statement(AST):
+    pass
+
+class Assign(Statement):
+
+    def __init__(self, lhs, rhs):
+        self.lhs = lhs
+        self.rhs = rhs
+
+    @property
+    def children(self):
+        yield self.lhs
+        yield self.rhs
+
+class If(Statement):
+
+    indent = ["consequence"]
+
+    def __init__(self, predicate, consequence, alternative):
+        self.predicate = predicate
+        self.consequence = consequence
+        self.alternative = alternative
+
+    @property
+    def children(self):
+        yield self.predicate
+        yield self.consequence
+        yield self.alternative
+
+class ExprStmt(Statement):
+
+    def __init__(self, expr):
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.expr
+
+class Local(Statement):
+
+    def __init__(self, declaration):
+        self.declaration = declaration
+
+    @property
+    def children(self):
+        yield self.declaration
+
+## Expressions
+
+class Expression(AST):
+    pass
+
+class Var(Expression):
 
     def __init__(self, name):
         self.name = name
@@ -79,6 +224,59 @@ class Var(AST):
     @property
     def children(self):
         yield self.name
+
+class Attr(Expression):
+
+    def __init__(self, expr, attr):
+        self.expr = expr
+        self.attr = attr
+
+class Call(Expression):
+
+    def __init__(self, expr, args):
+        self.expr = expr
+        self.args = args
+
+    @property
+    def children(self):
+        yield self.expr
+        for a in self.args:
+            yield a
+
+class Unary(Expression):
+
+    def __init__(self, op, expr):
+        self.op = op
+        self.expr = expr
+
+class Binop(Expression):
+
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op
+        self.right = right
+
+    @property
+    def children(self):
+        yield self.left
+        yield self.right
+
+class Literal(Expression):
+
+    def __init__(self, text):
+        self.text = text
+
+    @property
+    def children(self):
+        if False: yield
+
+class Number(Literal):
+    pass
+
+class String(Literal):
+    pass
+
+## Miscelaneous
 
 class Name(AST):
 
@@ -107,162 +305,3 @@ class Type(AST):
             return "%s<%s>" % (self.name, ", ".join([str(s) for s in self.parameters]))
         else:
             return repr(self.name)
-
-class Unary(AST):
-
-    def __init__(self, op, expr):
-        self.op = op
-        self.expr = expr
-
-class Binop(AST):
-
-    def __init__(self, left, op, right):
-        self.left = left
-        self.op = op
-        self.right = right
-
-    @property
-    def children(self):
-        yield self.left
-        yield self.right
-
-class Function(AST):
-
-    indent = ["body"]
-
-    def __init__(self, type, name, params, body):
-        self.type = type
-        self.name = name
-        self.params = params
-        self.body = body
-
-    @property
-    def children(self):
-        yield self.type
-        yield self.name
-        for p in self.params:
-            yield p
-        for b in self.body:
-            yield b
-
-class Method(Function):
-    pass
-
-class Declaration(AST):
-
-    def __init__(self, type, name, value):
-        self.type = type
-        self.name = name
-        self.value = value
-
-    @property
-    def children(self):
-        yield self.type
-        yield self.name
-        yield self.value
-
-class Param(Declaration):
-    pass
-
-class Field(Declaration):
-    pass
-
-class File(AST):
-
-    indent = ["definitions"]
-
-    def __init__(self, definitions):
-        self.definitions = definitions
-
-    @property
-    def children(self):
-        return self.definitions
-
-class Package(AST):
-
-    indent = ["definitions"]
-
-    def __init__(self, name, definitions):
-        self.name = name
-        self.definitions = definitions
-
-    @property
-    def children(self):
-        yield self.name
-        for d in self.definitions:
-            yield d
-
-class Class(AST):
-
-    indent = ["definitions"]
-
-    def __init__(self, name, base, definitions):
-        self.name = name
-        self.base = base
-        self.definitions = definitions
-
-    @property
-    def children(self):
-        yield self.name
-        yield self.base
-        for d in self.definitions:
-            yield d
-
-class Attr(AST):
-
-    def __init__(self, expr, attr):
-        self.expr = expr
-        self.attr = attr
-
-class Call(AST):
-
-    def __init__(self, expr, args):
-        self.expr = expr
-        self.args = args
-
-    @property
-    def children(self):
-        yield self.expr
-        for a in self.args:
-            yield a
-
-class Assign(AST):
-
-    def __init__(self, lhs, rhs):
-        self.lhs = lhs
-        self.rhs = rhs
-
-    @property
-    def children(self):
-        yield self.lhs
-        yield self.rhs
-
-class If(AST):
-
-    indent = ["consequence"]
-
-    def __init__(self, predicate, consequence, alternative):
-        self.predicate = predicate
-        self.consequence = consequence
-        self.alternative = alternative
-
-    @property
-    def children(self):
-        yield self.predicate
-        yield self.consequence
-        yield self.alternative
-
-class Literal(AST):
-
-    def __init__(self, text):
-        self.text = text
-
-    @property
-    def children(self):
-        if False: yield
-
-class Number(Literal):
-    pass
-
-class String(Literal):
-    pass
