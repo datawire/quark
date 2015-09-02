@@ -241,7 +241,7 @@ class Parser:
     def visit_attr(self, node, (atom, dot, name)):
         return Attr(atom, name)
 
-    @g.rule('atom = paren / var')
+    @g.rule('atom = paren / var / literal')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -252,6 +252,27 @@ class Parser:
     @g.rule('var = name ""')
     def visit_var(self, node, (name, _)):
         return Var(name)
+
+    @g.rule('literal = number / string')
+    def visit_literal(self, node, (literal,)):
+        return literal
+
+    @g.rule('number = _ NUMBER _')
+    def visit_number(self, node, (pre, number, post)):
+        return Number(number)
+
+    @g.rule(r'NUMBER = ~"[0-9]+"')
+    def visit_NUMBER(self, node, children):
+        return node.text
+
+    @g.rule('string = _ STRING _')
+    def visit_string(self, node, (pre, string, post)):
+        return String(string)
+
+    # lame string literals here
+    @g.rule(r'STRING = ~"\"[^\"]*\""')
+    def visit_STRING(self, node, children):
+        return node.text
 
     def visit_(self, node, children):
         return children

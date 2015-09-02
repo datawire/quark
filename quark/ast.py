@@ -20,22 +20,31 @@ class AST(object):
                 column += 1
         return line, column
 
-    def lookup(self, visitor, prefix):
+    def lookup(self, target, prefix=None, default=None):
         for cls in self.__class__.__mro__:
-            method = "%s_%s" % (prefix, cls.__name__)
-            if hasattr(visitor, method):
-                return getattr(visitor, method)
-        return lambda s: None
+            if prefix is None:
+                method = cls.__name__
+            else:
+                method = "%s_%s" % (prefix, cls.__name__)
+            if hasattr(target, method):
+                return getattr(target, method)
+        if default is None:
+            raise AttributeError("%s has no suitable method for object: %s" % (target, self))
+        else:
+            return default
 
-    def traverse(self, visitor):
-        visit = self.lookup(visitor, "visit")
-        leave = self.lookup(visitor, "leave")
+    def traverse(self, visitor, default=lambda s: None):
+        visit = self.lookup(visitor, "visit", default)
+        leave = self.lookup(visitor, "leave", default)
         visit(self)
         if self.children:
             for c in self.children:
                 if c is not None:
                     c.traverse(visitor)
         leave(self)
+
+    def apply(self, transform, default=None):
+        return self.lookup(transform, default=default)(self)
 
     def __repr__(self):
         fields = inspect.getargspec(self.__class__.__init__)[0][1:]
@@ -228,3 +237,18 @@ class If(AST):
         yield self.predicate
         yield self.consequence
         yield self.alternative
+
+class Literal(AST):
+
+    def __init__(self, text):
+        self.text = text
+
+    @property
+    def children(self):
+        if False: yield
+
+class Number(Literal):
+    pass
+
+class String(Literal):
+    pass
