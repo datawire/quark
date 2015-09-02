@@ -129,18 +129,18 @@ class Use:
         return None
 
     def visit_Declaration(self, d):
-        self.dfn = self.lookup(d.type)
-        if self.dfn is None:
+        d.dfn = self.lookup(d.type)
+        if d.dfn is None:
             self.unresolved.append((d.type.name, d.type.name.text))
 
     def visit_Var(self, v):
-        self.dfn = self.lookup(v)
-        if self.dfn is None:
+        v.dfn = self.lookup(v)
+        if v.dfn is None:
             self.unresolved.append((v.name, v.name.text))
 
     def visit_Number(self, n):
-        self.dfn = self.lookup(n, "int")
-        if self.dfn is None:
+        n.dfn = self.lookup(n, "int")
+        if n.dfn is None:
             self.unresolved.append((n, "int"))
 
 class CompileError(Exception): pass
@@ -164,6 +164,7 @@ class Compiler:
     def prep(self):
         self.root.traverse(InitParent())
         self.root.traverse(InitEnv())
+
         def_ = Def()
         self.root.traverse(def_)
         if def_.duplicates:

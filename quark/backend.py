@@ -23,18 +23,6 @@ class Java(Backend):
         Backend.__init__(self)
         self.classr = ClassRenderer()
 
-    def visit_Root(self, r):
-        for f in r.files:
-            f.traverse(self)
-
-    def visit_File(self, f):
-        for d in f.definitions:
-            d.traverse(self)
-
-    def visit_Package(self, p):
-        for d in p.definitions:
-            d.traverse(self)
-
     def visit_Class(self, c):
         self.files[c.name.text + ".java"] = c.apply(self.classr)
 
