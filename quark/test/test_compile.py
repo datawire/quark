@@ -14,82 +14,32 @@
 
 import os, pytest
 from quark.compiler import Compiler, CompileError
-from quark.ast import *
 
-def check_f(f):
-    assert isinstance(f, Function)
-    assert f.name.text == "f"
-    assert [p.name.text for p in f.params] == ["a", "b", "c"]
+directory = os.path.join(os.path.dirname(__file__), "compile")
 
-def test_compile_function():
+files = [name for name in os.listdir(directory) if name.endswith(".q")]
+paths = [os.path.join(directory, name) for name in files]
+
+@pytest.fixture(params=paths)
+def path(request):
+    return request.param
+
+def test_compile(path):
+    text = open(path).read()
+    base = os.path.splitext(path)[0]
     c = Compiler()
-    c.parse("""
-void f(int a, int b, int c) {}
-    """)
-    c.compile()
-    check_f(c.root.env["f"])
-
-def test_compile_package():
-    c = Compiler()
-    c.parse("""
-package p {
-    void f(int a, int b, String c) {}
-}
-    """)
-    c.compile()
-    p = c.root.env["p"]
-    assert p.name.text == "p"
-    f = p.env["f"]
-    check_f(f)
-
-def test_compile_package_class():
-    c = Compiler()
-    c.parse("""
-package p {
-    class C {
-        void f(int a, int b, String c) {
-        }
-    }
-}
-    """)
-    c.compile()
-    p = c.root.env["p"]
-    assert p.name.text == "p"
-    C = p.env["C"]
-    assert C.name.text == "C"
-    f = C.env["f"]
-    check_f(f)
-
-def test_compile_class():
-    c = Compiler()
-    c.parse("""
-class C {
-    void f(int a, int b, String c) {
-    }
-}
-    """)
-    c.compile()
-    C = c.root.env["C"]
-    assert C.name.text == "C"
-    f = C.env["f"]
-    check_f(f)
-
-def test_nonexistent():
-    c = Compiler()
-    c.parse("""
-package p {
-    class C {
-        void f(int a, int b, int c) {
-            x = a;
-            nonexistent(a, b, c, d);
-        }
-    }
-}
-    """)
+    c.parse(text)
     try:
         c.compile()
-        assert False
+        expected = base + ".ast"
+        computed = str(c.root)
     except CompileError, e:
-        msg = str(e)
-        for fragment in ("5:13:x", "6:13:nonexistent", "6:34:d"):
-            assert fragment in msg
+        expected = base + ".err"
+        computed = str(e)
+    try:
+        saved = open(expected).read()
+    except IOError, e:
+        saved = None
+    if saved != computed:
+        open(expected + ".cmp", "write").write(computed)
+    assert computed == saved

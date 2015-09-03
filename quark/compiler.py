@@ -62,13 +62,18 @@ class VoidPrimitive(Primitive):
 
 class InitParent:
 
-    def __init__(self):
+    def __init__(self, annotator):
+        self.annotator = annotator
         self.stack = []
+        self.count = 0
 
     def visit_AST(self, ast):
         if self.stack:
             ast.parent = self.stack[-1]
         self.stack.append(ast)
+        ast.annotator = self.annotator
+        ast.id = self.count
+        self.count += 1
 
     def leave_AST(self, ast):
         self.stack.pop()
@@ -169,6 +174,29 @@ class Use:
         # XXX
         b.resolved = left
 
+def refstr(ast):
+    if ast is None:
+        return None
+    else:
+        return "%s:%s" % (ast.__class__.__name__, ast.id)
+
+class Annotator:
+
+    def __call__(self, ast):
+        result = ast.apply(self, lambda x: [])
+        if ast.parent and ast.parent.env != ast.env:
+            keys = ast.env.keys()
+            keys.sort()
+            for k in keys:
+                result.append((k, refstr(ast.env[k])))
+        return result
+
+    def Declaration(self, decl):
+        return [("$type", refstr(decl.resolved))]
+
+    def Expression(self, expr):
+        return [("$type", refstr(expr.resolved))]
+
 class CompileError(Exception): pass
 
 def lineinfo(node):
@@ -189,7 +217,7 @@ class Compiler:
         self.root.add(self.parser.parse(text))
 
     def compile(self):
-        self.root.traverse(InitParent())
+        self.root.traverse(InitParent(Annotator()))
         self.root.traverse(InitEnv())
 
         def_ = Def()

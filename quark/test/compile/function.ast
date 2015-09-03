@@ -1,0 +1,3 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Function:5(void, f, (Param:8(int, a, None, $type=IntPrimitive:2), Param:11(int, b, None, $type=IntPrimitive:2), Param:14(int, c, None, $type=IntPrimitive:2)), 
+  (), a=Param:8, b=Param:11, c=Param:14))))

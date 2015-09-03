@@ -61,12 +61,20 @@ class AST(object):
         return self.lookup(transform, default=default)(self)
 
     def __repr__(self):
-        fields = inspect.getargspec(self.__class__.__init__)[0][1:]
         name = self.__class__.__name__
+        if hasattr(self, "id"):
+            name = "%s:%s" % (name, self.id)
+
+        fields = inspect.getargspec(self.__class__.__init__)[0][1:]
         if fields:
-            return "%s(%s)" % (name, ", ".join([self.format(f) for f in fields]))
+            args = [self.format(f) for f in fields]
         else:
-            return "%s(%s)" % (name, ", ".join([repr(c) for c in self.children]))
+            args = [repr(c) for c in self.children]
+
+        if hasattr(self, "annotator"):
+            args.extend(["%s=%s" % (k, v) for k, v in self.annotator(self)])
+
+        return "%s(%s)" % (name, ", ".join(args))
 
     def format(self, field):
         if field in self.indent:
