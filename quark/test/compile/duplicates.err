@@ -1,0 +1,6 @@
+2:1: duplicate definition of Test (first definition 1:1)
+3:17: duplicate definition of a (first definition 3:10)
+6:5: duplicate definition of x (first definition 5:5)
+8:5: duplicate definition of bar (first definition 7:5)
+12:5: duplicate definition of foo (first definition 11:5)
+14:1: duplicate definition of Bar (first definition 10:1)
