@@ -141,21 +141,18 @@ class Use:
     def visit_Class(self, c):
         c.resolved = c
 
+    def visit_Function(self, f):
+        f.resolved = f
+
     def visit_Type(self, t):
         t.resolved = self.lookup(t)
         assert isinstance(t.resolved, Definition)
         if t.resolved is None:
             self.unresolved.append((t.name, t.name.text))
 
-    def leave_Declaration(self, d):
-        d.resolved = d.type.resolved
-
     def visit_Var(self, v):
-        node = self.lookup(v)
-        if node:
-            v.resolved = node.resolved
-        else:
-            v.resolved = None
+        v.definition = self.lookup(v)
+        if v.definition is None:
             self.unresolved.append((v.name, v.name.text))
 
     def visit_Number(self, n):
@@ -168,11 +165,20 @@ class Use:
         if s.resolved is None:
             self.unresolved.append((s, "String"))
 
+class Resolver:
+
+    def leave_Declaration(self, d):
+        d.resolved = d.type.resolved
+
+    def leave_Var(self, v):
+        v.resolved = v.definition.resolved
+
     def leave_Binop(self, b):
-        left = b.left.resolved
-        right = b.right.resolved
         # XXX
-        b.resolved = left
+        b.resolved = b.left.resolved
+
+    def leave_Call(self, c):
+        c.resolved = c.expr.resolved.type.resolved
 
 def refstr(ast):
     if ast is None:
@@ -234,6 +240,8 @@ class Compiler:
             vars = ["%s:%s:%s" % (node.line, node.column, name)
                     for node, name in use.unresolved]
             raise CompileError("unresolved variables: %s" % ", ".join(vars))
+
+        self.root.traverse(Resolver())
 
     def emit(self, backend):
         self.root.traverse(backend)

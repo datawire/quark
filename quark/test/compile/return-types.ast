@@ -1,0 +1,5 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Function:5(int, f, (), 
+  ()),
+ Function:8(void, g, (), 
+  (Local:11(Declaration:12(int, x, Call:15(Var:16(f, $type=Function:5), [], $type=IntPrimitive:2), $type=IntPrimitive:2))), x=Declaration:12))))
