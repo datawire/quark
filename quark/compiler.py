@@ -165,6 +165,14 @@ class Use:
         if s.resolved is None:
             self.unresolved.append((s, "String"))
 
+class InvokedType:
+
+    def Function(self, f):
+        return f.type.resolved
+
+    def Class(self, c):
+        return c
+
 class Resolver:
 
     def leave_Declaration(self, d):
@@ -181,7 +189,7 @@ class Resolver:
         b.resolved = b.left.resolved
 
     def leave_Call(self, c):
-        c.resolved = c.expr.resolved.type.resolved
+        c.resolved = c.expr.resolved.apply(InvokedType())
 
 def refstr(ast):
     if ast is None:

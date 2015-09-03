@@ -12,40 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os, pytest
 from quark.backend import Java
 from quark.compiler import Compiler, CompileError
 
-def test_emit():
-    c = Compiler()
-    c.parse("""
-class Test {
-    Test add(Test t) {}
+directory = os.path.join(os.path.dirname(__file__), "emit")
+build = os.path.join(directory, "build")
 
-    void test() {
-        int x = 2;
-        int y = 2;
-        int z = x + y;
-        String hello = "hello";
-        Test t1;
-        Test t2;
-        t1 + t2;
-        int four = 2 + 2;
-    }
-}
-""")
+files = [name for name in os.listdir(directory) if name.endswith(".q")]
+paths = [os.path.join(directory, name) for name in files]
+
+@pytest.fixture(params=paths)
+def path(request):
+    return request.param
+
+def test_emit(path):
+    text = open(path).read()
+    base = os.path.splitext(path)[0]
+    c = Compiler()
+    c.parse(text)
     c.compile()
-    b = Java()
-    c.emit(b)
-    assert b.files["Test.java"] == """public class Test {
-    public Test add(Test t) {}
-    public void test() {
-        int x = 2;
-        int y = 2;
-        int z = (x) + (y);
-        String hello = "hello";
-        Test t1;
-        Test t2;
-        (t1) + (t2);
-        int four = (2) + (2);
-    }
-}"""
+    j = Java()
+    c.emit(j)
+    expected = base + ".java"
+    assert len(j.files) == 1
+    computed = j.files.values()[0]
+    try:
+        saved = open(expected).read()
+    except IOError, e:
+        saved = None
+    if saved != computed:
+        open(expected + ".cmp", "write").write(computed)
+    assert computed == saved
+    if not os.path.exists(build):
+        os.makedirs(build)
+    jexit = os.system("javac -d %s %s" % (build, expected))
+    assert jexit == 0

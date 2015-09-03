@@ -44,6 +44,18 @@ class NameRenderer(object):
     def Var(self, v):
         return v.name.apply(self)
 
+class Invoker(object):
+
+    def __init__(self, expr, args):
+        self.expr = expr
+        self.args = args
+
+    def Class(self, c):
+        return "new %s(%s)" % (self.expr, ", ".join(self.args))
+
+    def Function(self, f):
+        return "%s(%s)" % (self.expr, ", ".join(self.args))
+
 class ClassRenderer(object):
 
     def __init__(self):
@@ -70,6 +82,9 @@ class ClassRenderer(object):
         else:
             return "%s %s" % (type, name)
 
+    def Return(self, r):
+        return "return %s;" % r.expr.apply(self)
+
     def Local(self, stmt):
         return "%s;" % stmt.declaration.apply(self)
 
@@ -84,6 +99,13 @@ class ClassRenderer(object):
 
     def Binop(self, b):
         return "(%s) %s (%s)" % (b.left.apply(self), b.op, b.right.apply(self))
+
+    def Call(self, c):
+        type = c.expr.resolved
+        return type.apply(Invoker(c.expr.apply(self), [a.apply(self) for a in c.args]))
+
+    def Attr(self, a):
+        return "(%s).%s" % (a.expr.apply(self), a.attr)
 
     def Var(self, v):
         return v.apply(self.namer)
