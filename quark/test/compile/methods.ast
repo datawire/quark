@@ -1,0 +1,7 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Class:5(Test, None, 
+  (Method:7(int, foo, (), 
+   ())), foo=Method:7),
+ Function:10(void, bar, (), 
+  (Local:13(Declaration:14(Test, t, None, $type=Class:5)),
+  ExprStmt:17(Call:18(Attr:19(Var:20(t, $type=Class:5), foo, $type=Method:7), [], $type=IntPrimitive:2))), t=Declaration:14))))

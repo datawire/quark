@@ -242,6 +242,10 @@ class Attr(Expression):
         self.expr = expr
         self.attr = attr
 
+    @property
+    def children(self):
+        yield self.expr
+
 class Call(Expression):
 
     def __init__(self, expr, args):

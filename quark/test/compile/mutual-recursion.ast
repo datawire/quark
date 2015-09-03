@@ -1,0 +1,5 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Function:5(int, foo, (), 
+  (ExprStmt:8(Call:9(Var:10(bar, $type=Function:12), [], $type=StringPrimitive:3)))),
+ Function:12(String, bar, (), 
+  (ExprStmt:15(Call:16(Var:17(foo, $type=Function:5), [], $type=IntPrimitive:2)))))))

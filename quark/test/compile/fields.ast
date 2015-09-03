@@ -1,0 +1,8 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Class:5(Test, None, 
+  (Field:7(int, x, None, $type=IntPrimitive:2),
+  Field:10(String, y, None, $type=StringPrimitive:3)), x=Field:7, y=Field:10),
+ Function:13(void, f, (), 
+  (Local:16(Declaration:17(Test, t, None, $type=Class:5)),
+  ExprStmt:20(Attr:21(Var:22(t, $type=Class:5), x, $type=IntPrimitive:2)),
+  ExprStmt:24(Attr:25(Var:26(t, $type=Class:5), y, $type=StringPrimitive:3))), t=Declaration:17))))

@@ -173,6 +173,9 @@ class Resolver:
     def leave_Var(self, v):
         v.resolved = v.definition.resolved
 
+    def leave_Attr(self, a):
+        a.resolved = a.expr.resolved.env[a.attr.text].resolved
+
     def leave_Binop(self, b):
         # XXX
         b.resolved = b.left.resolved
