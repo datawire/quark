@@ -178,6 +178,15 @@ class Field(Declaration):
 class Statement(AST):
     pass
 
+class Return(Statement):
+
+    def __init__(self, expr):
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.expr
+
 class Assign(Statement):
 
     def __init__(self, lhs, rhs):

@@ -20,7 +20,7 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "extends"]
+    keywords = ["package", "class", "extends", "return"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LPR": "(",
@@ -133,9 +133,13 @@ class Parser:
     def visit_statements(self, node, children):
         return children
 
-    @g.rule('statement = exprstmt / assign / local / if')
+    @g.rule('statement = return / exprstmt / assign / local / if')
     def visit_statement(self, node, (stmt,)):
         return stmt
+
+    @g.rule('return = RETURN expr SEMI')
+    def visit_return(self, node, (r, expr, s)):
+        return Return(expr)
 
     @g.rule('exprstmt = expr SEMI')
     def visit_exprstmt(self, node, (expr, s)):
