@@ -62,8 +62,11 @@ class AST(object):
 
     def __repr__(self):
         fields = inspect.getargspec(self.__class__.__init__)[0][1:]
-        if not fields: fields = ["children"]
-        return "%s(%s)" % (self.__class__.__name__, ", ".join([self.format(f) for f in fields]))
+        name = self.__class__.__name__
+        if fields:
+            return "%s(%s)" % (name, ", ".join([self.format(f) for f in fields]))
+        else:
+            return "%s(%s)" % (name, ", ".join([repr(c) for c in self.children]))
 
     def format(self, field):
         if field in self.indent:
