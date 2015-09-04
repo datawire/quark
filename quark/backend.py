@@ -110,6 +110,9 @@ class ClassRenderer(object):
     def ExprStmt(self, stmt):
         return "%s;" % stmt.expr.apply(self)
 
+    def Assign(self, a):
+        return "%s = %s;" % (a.lhs.apply(self), a.rhs.apply(self))
+
     def Number(self, n):
         return n.text
 
