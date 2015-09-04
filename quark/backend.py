@@ -56,6 +56,25 @@ class Invoker(object):
     def Function(self, f):
         return "%s(%s)" % (self.expr, ", ".join(self.args))
 
+class Binoper(object):
+
+    def __init__(self, left, op, right):
+        self.left = left
+        self.op = op
+        self.right = right
+        self.aliases = {
+            "+": "add",
+            "-": "subtract",
+            "*": "multiply"
+        }
+
+    def Class(self, c):
+        return "(%s).%s(%s)" % (self.left, self.aliases[self.op], self.right)
+
+    def Primitive(self, p):
+        return "(%s) %s (%s)" % (self.left, self.op, self.right)
+
+
 class ClassRenderer(object):
 
     def __init__(self):
@@ -98,7 +117,8 @@ class ClassRenderer(object):
         return s.text
 
     def Binop(self, b):
-        return "(%s) %s (%s)" % (b.left.apply(self), b.op, b.right.apply(self))
+        type = b.left.resolved
+        return type.apply(Binoper(b.left.apply(self), b.op, b.right.apply(self)))
 
     def Call(self, c):
         type = c.expr.resolved
