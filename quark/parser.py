@@ -153,6 +153,13 @@ class Parser:
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
         return Assign(lhs, rhs)
 
+    @g.rule('attr = atom (DOT name)+')
+    def visit_attr(self, node, (atom, rest)):
+        result = atom
+        for n in rest:
+            result = Attr(atom, n[-1])
+        return result
+
     @g.rule('local = type name (EQ expr)? SEMI')
     def visit_local(self, node, (type, name, opt, _)):
         if opt:
@@ -247,12 +254,26 @@ class Parser:
     def visit_uop(self, node, (op,)):
         return op
 
-    @g.rule('prim = call / attr / atom')
-    def visit_prim(self, node, (expr,)):
-        return expr
+    @g.rule('prim = atom modifier*')
+    def visit_prim(self, node, (atom, mods)):
+        result = atom
+        for m in mods:
+            if isinstance(m, Name):
+                result = Attr(result, m)
+            else:
+                result = Call(result, m)
+        return result
 
-    @g.rule('call = ( attr / atom ) LPR (expr (COMMA expr)*)? RPR')
-    def visit_call(self, node, ((expr,), l, args, r)):
+    @g.rule('modifier = attrmod / callmod')
+    def visit_modifier(self, node, (mod,)):
+        return mod
+
+    @g.rule('attrmod = DOT name')
+    def visit_attrmod(self, node, (_, name)):
+        return name
+
+    @g.rule('callmod = LPR (expr (COMMA expr)*)? RPR')
+    def visit_callmod(self, node, (l, args, r)):
         if args:
             args = args[0]
             if args[1]:
@@ -261,11 +282,7 @@ class Parser:
                 del args[1]
         else:
             args = []
-        return Call(expr, args)
-
-    @g.rule('attr = atom DOT name')
-    def visit_attr(self, node, (atom, dot, name)):
-        return Attr(atom, name)
+        return args
 
     @g.rule('atom = paren / var / literal')
     def visit_atom(self, node, (atom,)):

@@ -1,0 +1,14 @@
+File(
+ (Function(void, expressions, (), Block(
+  (ExprStmt(Var(a)),
+  ExprStmt(Attr(Var(a), b)),
+  ExprStmt(Call(Attr(Var(a), b), [])),
+  ExprStmt(Call(Attr(Attr(Var(a), b), c), [])),
+  ExprStmt(Attr(Attr(Call(Var(a), []), b), c)),
+  ExprStmt(Attr(Call(Attr(Var(a), b), []), c)),
+  ExprStmt(Binop(Var(a), '+', Var(x))),
+  ExprStmt(Binop(Attr(Var(a), b), '+', Var(x))),
+  ExprStmt(Binop(Call(Attr(Var(a), b), []), '+', Var(x))),
+  ExprStmt(Binop(Call(Attr(Attr(Var(a), b), c), []), '+', Var(x))),
+  ExprStmt(Binop(Attr(Attr(Call(Var(a), []), b), c), '+', Var(x))),
+  ExprStmt(Binop(Attr(Call(Attr(Var(a), b), []), c), '+', Var(x))))))))
