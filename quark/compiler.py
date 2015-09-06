@@ -89,6 +89,9 @@ class InitEnv:
     def visit_Function(self, f):
         f.env = {}
 
+    def visit_Macro(self, m):
+        m.env = {}
+
     def visit_AST(self, ast):
         if ast.parent:
             ast.env = ast.parent.env
@@ -120,8 +123,16 @@ class Def:
     def visit_Function(self, f):
         self.define(f.parent.env, f)
 
+    def visit_Method(self, m):
+        self.define(m.parent.env, m)
+        self.define(m.env, m.parent, "self")
+
     def visit_Macro(self, m):
         self.define(m.parent.env, m)
+
+    def visit_MethodMacro(self, mm):
+        self.define(mm.parent.env, mm)
+        self.define(mm.env, mm.parent, "self")
 
     def visit_Declaration(self, p):
         self.define(p.env, p)

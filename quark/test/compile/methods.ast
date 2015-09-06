@@ -1,7 +1,7 @@
 Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
  (Class:5(Test, None, 
   (Method:7(int, foo, (), Block:10(
-   ()))), foo=Method:7),
+   ()), self=Class:5)), foo=Method:7),
  Function:11(void, bar, (), Block:14(
   (Local:15(Declaration:16(Test, t, None, $type=Class:5)),
   ExprStmt:19(Call:20(Attr:21(Var:22(t, $type=Class:5), foo, $type=Method:7), [], $type=IntPrimitive:2)))), t=Declaration:16))))

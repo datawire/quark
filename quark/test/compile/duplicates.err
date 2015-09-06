@@ -4,3 +4,4 @@
 8:5: duplicate definition of bar (first definition 7:5)
 12:5: duplicate definition of foo (first definition 11:5)
 14:1: duplicate definition of Bar (first definition 10:1)
+17:5: duplicate definition of x (first definition 16:5)

@@ -12,3 +12,7 @@ class Bar {
     void foo() {}
 }
 void Bar() {}
+void test() {
+    int x;
+    int x;
+}

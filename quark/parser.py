@@ -168,7 +168,9 @@ class Parser:
             expr = opt[0][-1]
         else:
             expr = None
-        return Local(Declaration(type, name, expr))
+        d = Declaration(type, name, expr)
+        d.origin(node)
+        return Local(d)
 
     @g.rule('if = IF LPR expr RPR block (ELSE block)?')
     def visit_if(self, node, (kw, lp, expr, rp, consequence, opt)):

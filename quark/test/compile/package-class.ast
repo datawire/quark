@@ -2,4 +2,4 @@ Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
  (Package:5(p, 
   (Class:7(C, None, 
    (Method:9(void, f, (Param:12(int, a, None, $type=IntPrimitive:2), Param:15(int, b, None, $type=IntPrimitive:2), Param:18(String, c, None, $type=StringPrimitive:3)), Block:21(
-    ()), a=Param:12, b=Param:15, c=Param:18)), f=Method:9)), C=Class:7))))
+    ()), a=Param:12, b=Param:15, c=Param:18, self=Class:7)), f=Method:9)), C=Class:7))))

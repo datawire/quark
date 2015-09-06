@@ -51,7 +51,7 @@ class SubstitutionNamer(NameRenderer):
 
     def Name(self, n):
         if n.text in self.env:
-            return self.env[n]
+            return self.env[n.text]
         else:
             return n.text
 
@@ -72,7 +72,7 @@ class ExprRenderer(object):
 
     def Call(self, c):
         type = c.expr.resolved
-        return type.apply(Invoker(c.expr.apply(self), [a.apply(self) for a in c.args]))
+        return type.apply(Invoker(c, self.namer))
 
     def Attr(self, a):
         return "(%s).%s" % (a.expr.apply(self), a.attr)
@@ -82,9 +82,17 @@ class ExprRenderer(object):
 
 class Invoker(object):
 
-    def __init__(self, expr, args):
-        self.expr = expr
-        self.args = args
+    def __init__(self, call, namer):
+        self.call = call
+        self.namer = namer
+
+    @property
+    def expr(self):
+        return self.call.expr.apply(ExprRenderer(self.namer))
+
+    @property
+    def args(self):
+        return [a.apply(ExprRenderer(self.namer)) for a in self.call.args]
 
     def Class(self, c):
         return "new %s(%s)" % (self.expr, ", ".join(self.args))
@@ -92,14 +100,32 @@ class Invoker(object):
     def Function(self, f):
         return "%s(%s)" % (self.expr, ", ".join(self.args))
 
+    @property
+    def self_(self):
+        return self.call.expr.expr.apply(ExprRenderer(self.namer))
+
+    def Method(self, m):
+        return "(%s).%s(%s)" % (self.self_, m.name, ", ".join(self.args))
+
     def Macro(self, m):
-        # XXX: expr isn't used here!!!
+        # macros are evaluated at compile time, so we don't use expr
         env = {}
         idx = 0
+        args = self.args
         for p in m.params:
-            env[p.name] = self.args[idx]
+            env[p.name.text] = args[idx]
             idx += 1
         return m.body.apply(ExprRenderer(SubstitutionNamer(env)))
+
+    def MethodMacro(self, mm):
+        # for method macros we use expr to access self
+        env = {"self": self.self_}
+        idx = 0
+        args = self.args
+        for p in mm.params:
+            env[p.name.text] = args[idx]
+            idx += 1
+        return mm.body.apply(ExprRenderer(SubstitutionNamer(env)))
 
 class Binoper(object):
 
