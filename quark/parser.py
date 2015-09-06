@@ -288,7 +288,7 @@ class Parser:
             args = []
         return args
 
-    @g.rule('atom = paren / var / literal')
+    @g.rule('atom = paren / var / literal / native')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -320,6 +320,35 @@ class Parser:
     @g.rule(r'STRING = ~"\"[^\"]*\""')
     def visit_STRING(self, node, children):
         return node.text
+
+    def flatten(self, stuff, result):
+        for s in stuff:
+            if isinstance(s, (Fixed, Name)):
+                result.append(s)
+            else:
+                self.flatten(s, result)
+
+    @g.rule('native = _ "${" stuff* "}" _')
+    def visit_native(self, node, (ls, l, stuff, r, rs)):
+        flattened = []
+        self.flatten(stuff, flattened)
+        return Native(flattened)
+
+    @g.rule('stuff = fixed / dvar / braces')
+    def visit_stuff(self, node, (stuff,)):
+        return stuff
+
+    @g.rule('fixed = ~"[^{$}]"+')
+    def visit_fixed(self, node, children):
+        return Fixed(node.text)
+
+    @g.rule('dvar = "$" name_re')
+    def visit_dvar(self, node, (_, name)):
+        return Name(name)
+
+    @g.rule('braces = "{" stuff* "}"')
+    def visit_braces(self, node, (l, stuff, r)):
+        return Fixed("{"), stuff, Fixed("}")
 
     def visit_(self, node, children):
         return children

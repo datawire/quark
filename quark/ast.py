@@ -304,6 +304,16 @@ class Number(Literal):
 class String(Literal):
     pass
 
+class Native(Expression):
+
+    def __init__(self, children):
+        self.children = children
+
+class Fixed(Expression):
+
+    def __init__(self, text):
+        self.text = text
+
 ## Miscelaneous
 
 class Name(AST):
@@ -345,4 +355,3 @@ class Block(AST):
     def children(self):
         for s in self.statements:
             yield s
-
