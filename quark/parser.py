@@ -20,7 +20,7 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "extends", "return"]
+    keywords = ["package", "class", "extends", "return", "macro"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LPR": "(",
@@ -50,7 +50,7 @@ class Parser:
     def visit_file(self, node, (definitions, eof)):
         return File(definitions)
 
-    @g.rule('file_definition = package / class / function')
+    @g.rule('file_definition = package / class / function / macro')
     def visit_file_definition(self, node, (dfn,)):
         return dfn
 
@@ -71,7 +71,7 @@ class Parser:
             base = None
         return Class(name, base, definitions)
 
-    @g.rule('class_definition = field / method')
+    @g.rule('class_definition = field / method / method_macro')
     def visit_class_definition(self, node, (dfn,)):
         return dfn
 
@@ -83,13 +83,21 @@ class Parser:
             expr = None
         return Field(type, name, expr)
 
-    @g.rule('method = type name LPR parameters RPR LBR statements RBR')
-    def visit_method(self, node, (type, name, lp, parameters, rp, lb, statements, rb)):
-        return Method(type, name, tuple(parameters), statements)
+    @g.rule('method = type name LPR parameters RPR block')
+    def visit_method(self, node, (type, name, lp, parameters, rp, body)):
+        return Method(type, name, tuple(parameters), body)
 
-    @g.rule('function = type name LPR parameters RPR LBR statements RBR')
-    def visit_function(self, node, (type, name, lp, parameters, rp, lb, statements, rb)):
-        return Function(type, name, tuple(parameters), statements)
+    @g.rule('method_macro = MACRO type name LPR parameters RPR expr SEMI')
+    def visit_method_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):
+        return MethodMacro(type, name, tuple(parameters), expr)
+
+    @g.rule('function = type name LPR parameters RPR block')
+    def visit_function(self, node, (type, name, lp, parameters, rp, body)):
+        return Function(type, name, tuple(parameters), body)
+
+    @g.rule('macro = MACRO type name LPR parameters RPR expr SEMI')
+    def visit_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):
+        return Macro(type, name, tuple(parameters), expr)
 
     @g.rule('parameters = (param (COMMA param)*)?')
     def visit_parameters(self, node, children):
@@ -129,10 +137,6 @@ class Parser:
     def visit_name(self, node, (pre, name, post)):
         return Name(name)
 
-    @g.rule('statements = statement*')
-    def visit_statements(self, node, children):
-        return children
-
     @g.rule('statement = return / exprstmt / assign / local / if')
     def visit_statement(self, node, (stmt,)):
         return stmt
@@ -167,7 +171,11 @@ class Parser:
 
     @g.rule('block = LBR statements RBR')
     def visit_block(self, node, (l, statements, r)):
-        return statements
+        return Block(statements)
+
+    @g.rule('statements = statement*')
+    def visit_statements(self, node, children):
+        return children
 
     @g.rule('expr = oroperand (OR oroperand)*')
     def visit_expr(self, node, (result, remaining)):

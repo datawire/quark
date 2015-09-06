@@ -1,0 +1,9 @@
+Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
+ (Macro:5(int, pi, (), Number:8('3', $type=IntPrimitive:2)),
+ Function:9(void, test, (), Block:12(
+  (Local:13(Declaration:14(int, x, Call:17(Var:18(pi, $type=Macro:5), [], $type=IntPrimitive:2), $type=IntPrimitive:2)))), x=Declaration:14),
+ Class:20(Pie, None, 
+  (MethodMacro:22(int, slice, (), Number:25('3', $type=IntPrimitive:2)),
+  Method:26(void, test, (), Block:29(
+   (Local:30(Declaration:31(Pie, p, Call:34(Var:35(Pie, $type=Class:20), [], $type=Class:20), $type=Class:20)),
+   Local:37(Declaration:38(int, x, Call:41(Attr:42(Var:43(p, $type=Class:20), slice, $type=MethodMacro:22), [], $type=IntPrimitive:2), $type=IntPrimitive:2)))), p=Declaration:31, x=Declaration:38)), slice=MethodMacro:22, test=Method:26))))

@@ -114,9 +114,7 @@ class Package(Definition):
         for d in self.definitions:
             yield d
 
-class Function(Definition):
-
-    indent = ["body"]
+class Callable(Definition):
 
     def __init__(self, type, name, params, body):
         self.type = type
@@ -130,8 +128,13 @@ class Function(Definition):
         yield self.name
         for p in self.params:
             yield p
-        for b in self.body:
-            yield b
+        yield self.body
+
+class Function(Callable):
+    pass
+
+class Macro(Callable):
+    pass
 
 class Class(Definition):
 
@@ -150,6 +153,9 @@ class Class(Definition):
             yield d
 
 class Method(Function):
+    pass
+
+class MethodMacro(Macro):
     pass
 
 ## Declarations
@@ -199,8 +205,6 @@ class Assign(Statement):
         yield self.rhs
 
 class If(Statement):
-
-    indent = ["consequence"]
 
     def __init__(self, predicate, consequence, alternative):
         self.predicate = predicate
@@ -329,3 +333,16 @@ class Type(AST):
             return "%s<%s>" % (self.name, ", ".join([str(s) for s in self.parameters]))
         else:
             return repr(self.name)
+
+class Block(AST):
+
+    indent = ["statements"]
+
+    def __init__(self, statements):
+        self.statements = statements
+
+    @property
+    def children(self):
+        for s in self.statements:
+            yield s
+

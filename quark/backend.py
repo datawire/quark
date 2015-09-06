@@ -44,6 +44,42 @@ class NameRenderer(object):
     def Var(self, v):
         return v.name.apply(self)
 
+class SubstitutionNamer(NameRenderer):
+
+    def __init__(self, env):
+        self.env = env
+
+    def Name(self, n):
+        if n.text in self.env:
+            return self.env[n]
+        else:
+            return n.text
+
+class ExprRenderer(object):
+
+    def __init__(self, namer):
+        self.namer = namer
+
+    def Number(self, n):
+        return n.text
+
+    def String(self, s):
+        return s.text
+
+    def Binop(self, b):
+        type = b.left.resolved
+        return type.apply(Binoper(b.left.apply(self), b.op, b.right.apply(self)))
+
+    def Call(self, c):
+        type = c.expr.resolved
+        return type.apply(Invoker(c.expr.apply(self), [a.apply(self) for a in c.args]))
+
+    def Attr(self, a):
+        return "(%s).%s" % (a.expr.apply(self), a.attr)
+
+    def Var(self, v):
+        return v.apply(self.namer)
+
 class Invoker(object):
 
     def __init__(self, expr, args):
@@ -55,6 +91,15 @@ class Invoker(object):
 
     def Function(self, f):
         return "%s(%s)" % (self.expr, ", ".join(self.args))
+
+    def Macro(self, m):
+        # XXX: expr isn't used here!!!
+        env = {}
+        idx = 0
+        for p in m.params:
+            env[p.name] = self.args[idx]
+            idx += 1
+        return m.body.apply(ExprRenderer(SubstitutionNamer(env)))
 
 class Binoper(object):
 
@@ -79,56 +124,46 @@ class ClassRenderer(object):
 
     def __init__(self):
         self.namer = NameRenderer()
+        self.exprr = ExprRenderer(self.namer)
 
     def Class(self, c):
         name = c.name.apply(self.namer)
         body = "\n".join([d.apply(self) for d in c.definitions])
         return "public class %s {%s}" % (name, indent(body))
 
+    def Block(self, b):
+        return "\n".join([s.apply(self) for s in b.statements])
+
     def Method(self, m):
         type = m.type.apply(self.namer)
         name = m.name.apply(self.namer)
         params = ", ".join([p.apply(self) for p in m.params])
-        body = "\n".join([d.apply(self) for d in m.body])
+        body = m.body.apply(self)
         return "public %s %s(%s) {%s}" % (type, name, params, indent(body))
+
+    def MethodMacro(self, mm):
+        return ""
 
     def Declaration(self, d):
         type = d.type.apply(self.namer)
         name = d.name.apply(self.namer)
         if d.value:
-            value = d.value.apply(self)
+            value = d.value.apply(self.exprr)
             return "%s %s = %s" % (type, name, value)
         else:
             return "%s %s" % (type, name)
 
     def Return(self, r):
-        return "return %s;" % r.expr.apply(self)
+        return "return %s;" % r.expr.apply(self.exprr)
 
     def Local(self, stmt):
         return "%s;" % stmt.declaration.apply(self)
 
     def ExprStmt(self, stmt):
-        return "%s;" % stmt.expr.apply(self)
+        return "%s;" % stmt.expr.apply(self.exprr)
 
     def Assign(self, a):
-        return "%s = %s;" % (a.lhs.apply(self), a.rhs.apply(self))
-
-    def Number(self, n):
-        return n.text
-
-    def String(self, s):
-        return s.text
-
-    def Binop(self, b):
-        type = b.left.resolved
-        return type.apply(Binoper(b.left.apply(self), b.op, b.right.apply(self)))
-
-    def Call(self, c):
-        type = c.expr.resolved
-        return type.apply(Invoker(c.expr.apply(self), [a.apply(self) for a in c.args]))
-
-    def Attr(self, a):
-        return "(%s).%s" % (a.expr.apply(self), a.attr)
+        return "%s = %s;" % (a.lhs.apply(self), a.rhs.apply(self.exprr))
 
     def Var(self, v):
         return v.apply(self.namer)

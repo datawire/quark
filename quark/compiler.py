@@ -120,6 +120,9 @@ class Def:
     def visit_Function(self, f):
         self.define(f.parent.env, f)
 
+    def visit_Macro(self, m):
+        self.define(m.parent.env, m)
+
     def visit_Declaration(self, p):
         self.define(p.env, p)
 
@@ -144,9 +147,11 @@ class Use:
     def visit_Function(self, f):
         f.resolved = f
 
+    def visit_Macro(self, m):
+        m.resolved = m
+
     def visit_Type(self, t):
         t.resolved = self.lookup(t)
-        assert isinstance(t.resolved, Definition)
         if t.resolved is None:
             self.unresolved.append((t.name, t.name.text))
 
@@ -172,6 +177,9 @@ class InvokedType:
 
     def Class(self, c):
         return c
+
+    def Macro(self, m):
+        return m.type.resolved
 
 class Resolver:
 

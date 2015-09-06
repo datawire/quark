@@ -6,8 +6,8 @@ File(
   Field(float, y, None))),
  Class(C, None, 
   (Field(int, x, None),
-  Method(void, method, (), 
-   ()),
+  Method(void, method, (), Block(
+   ())),
   Field(float, y, None))),
  Class(D, None, 
   (Field(int, x, Call(Var(foo), [])))),

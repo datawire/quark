@@ -1,4 +1,4 @@
 Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
  (Class:5(C, None, 
-  (Method:7(void, f, (Param:10(int, a, None, $type=IntPrimitive:2), Param:13(int, b, None, $type=IntPrimitive:2), Param:16(String, c, None, $type=StringPrimitive:3)), 
-   (), a=Param:10, b=Param:13, c=Param:16)), f=Method:7))))
+  (Method:7(void, f, (Param:10(int, a, None, $type=IntPrimitive:2), Param:13(int, b, None, $type=IntPrimitive:2), Param:16(String, c, None, $type=StringPrimitive:3)), Block:19(
+   ()), a=Param:10, b=Param:13, c=Param:16)), f=Method:7))))

@@ -1,0 +1,4 @@
+File(
+ (Macro(int, pi, (), Number('3')),
+ Class(Pie, None, 
+  (MethodMacro(int, slice, (), Number('3'))))))
