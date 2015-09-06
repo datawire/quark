@@ -153,11 +153,13 @@ class Parser:
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
         return Assign(lhs, rhs)
 
-    @g.rule('attr = atom (DOT name)+')
-    def visit_attr(self, node, (atom, rest)):
+    @g.rule('attr = atom (callmod? attrmod)+')
+    def visit_attr(self, node, (atom, mods)):
         result = atom
-        for n in rest:
-            result = Attr(atom, n[-1])
+        for (args, name) in mods:
+            if args:
+                result = Call(result, args[0])
+            result = Attr(result, name)
         return result
 
     @g.rule('local = type name (EQ expr)? SEMI')
