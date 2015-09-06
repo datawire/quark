@@ -80,6 +80,12 @@ class ExprRenderer(object):
     def Var(self, v):
         return v.apply(self.namer)
 
+    def Native(self, n):
+        return "".join([c.apply(self) for c in n.children])
+
+    def Fixed(self, f):
+        return f.text
+
 class Invoker(object):
 
     def __init__(self, call, namer):

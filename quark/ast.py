@@ -314,6 +314,10 @@ class Fixed(Expression):
     def __init__(self, text):
         self.text = text
 
+    @property
+    def children(self):
+        if False: yield
+
 ## Miscelaneous
 
 class Name(AST):

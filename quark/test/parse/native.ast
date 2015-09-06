@@ -1,6 +1,6 @@
 File(
  (Function(void, test, (), Block(
   (Assign(Var(x), Native([Fixed('this is directly emitted')])),
-  Assign(Var(y), Native([Fixed('this is directly emitted with '), substitution])),
-  Assign(Var(z), Native([Fixed('this is directly emitted'), Fixed('{'), Fixed('}'), Fixed(' with '), Fixed('{'), substitution, Fixed('}')])),
-  Assign(Var(a), Native([Fixed(' this is a test'), Fixed('{'), Fixed(' of '), asdf, Fixed(' '), fdsa, Fixed('  '), Fixed('{'), Fixed('}'), Fixed(' '), Fixed('}'), Fixed(' ')])))))))
+  Assign(Var(y), Native([Fixed('this is directly emitted with '), Var(substitution)])),
+  Assign(Var(z), Native([Fixed('this is directly emitted'), Fixed('{'), Fixed('}'), Fixed(' with '), Fixed('{'), Var(substitution), Fixed('}')])),
+  Assign(Var(a), Native([Fixed(' this is a test'), Fixed('{'), Fixed(' of '), Var(asdf), Fixed(' '), Var(fdsa), Fixed('  '), Fixed('{'), Fixed('}'), Fixed(' '), Fixed('}'), Fixed(' ')])))))))
