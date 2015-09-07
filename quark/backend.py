@@ -26,6 +26,12 @@ class Java(Backend):
     def visit_Class(self, c):
         self.files[c.name.text + ".java"] = c.apply(self.classr)
 
+    def visit_Primitive(self, p):
+        pass
+
+    def visit_Interface(self, i):
+        pass
+
 def indent(st, level=4):
     if st:
         spaces = " "*level

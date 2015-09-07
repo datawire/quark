@@ -32,34 +32,6 @@ class Root(AST):
         for f in self.files:
             yield f
 
-BUILTIN = "(builtin)"
-
-class Primitive(Definition):
-
-    def __init__(self, name):
-        self.name = name
-        self.line = BUILTIN
-        self.column = BUILTIN
-
-    @property
-    def children(self):
-        return ()
-
-class IntPrimitive(Primitive):
-
-    def __init__(self):
-        Primitive.__init__(self, "int")
-
-class StringPrimitive(Primitive):
-
-    def __init__(self):
-        Primitive.__init__(self, "String")
-
-class VoidPrimitive(Primitive):
-
-    def __init__(self):
-        Primitive.__init__(self, "void")
-
 class InitParent:
 
     def __init__(self, annotator):
@@ -113,9 +85,6 @@ class Def:
 
     def visit_Package(self, p):
         self.define(p.parent.env, p)
-
-    def visit_Primitive(self, p):
-        self.define(p.parent.env, p, p.name)
 
     def visit_Class(self, c):
         self.define(c.parent.env, c)
@@ -210,6 +179,12 @@ class Resolver:
     def leave_Call(self, c):
         c.resolved = c.expr.resolved.apply(InvokedType())
 
+    def leave_Fixed(self, f):
+        f.resolved = None
+
+    def leave_Native(self, n):
+        n.resolved = None
+
 def refstr(ast):
     if ast is None:
         return None
@@ -236,18 +211,24 @@ class Annotator:
 class CompileError(Exception): pass
 
 def lineinfo(node):
-    if node.line == BUILTIN:
-        return "(builtin)"
-    else:
-        return "%s:%s" % (node.line, node.column)
+    return "%s:%s" % (node.line, node.column)
+
+BUILTIN = """
+primitive void {}
+primitive int {
+    macro int add(int other) ${($self)+($other)};
+    macro int subtract(int other) ${($self)-($other)};
+    macro int multiply(int other) ${($self)*($other)};
+}
+primitive String {}
+"""
 
 class Compiler:
 
     def __init__(self):
-        self.root = Root(VoidPrimitive(),
-                         IntPrimitive(),
-                         StringPrimitive())
+        self.root = Root()
         self.parser = Parser()
+        self.parse(BUILTIN)
 
     def parse(self, text):
         self.root.add(self.parser.parse(text))

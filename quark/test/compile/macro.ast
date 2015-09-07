@@ -1,9 +1,17 @@
-Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
- (Macro:5(int, pi, (), Number:8('3', $type=IntPrimitive:2)),
- Function:9(void, test, (), Block:12(
-  (Local:13(Declaration:14(int, x, Call:17(Var:18(pi, $type=Macro:5), [], $type=IntPrimitive:2), $type=IntPrimitive:2)))), x=Declaration:14),
- Class:20(Pie, None, 
-  (MethodMacro:22(int, slice, (), Number:25('3', $type=IntPrimitive:2), self=Class:20),
-  Method:26(void, test, (), Block:29(
-   (Local:30(Declaration:31(Pie, p, Call:34(Var:35(Pie, $type=Class:20), [], $type=Class:20), $type=Class:20)),
-   Local:37(Declaration:38(int, x, Call:41(Attr:42(Var:43(p, $type=Class:20), slice, $type=MethodMacro:22), [], $type=IntPrimitive:2), $type=IntPrimitive:2)))), p=Declaration:31, self=Class:20, x=Declaration:38)), slice=MethodMacro:22, test=Method:26))))
+Root:0(File:1(
+ (Primitive:2(void, None, 
+  ()),
+ Primitive:4(int, None, 
+  (MethodMacro:6(int, add, (Param:9(int, other, None, $type=Primitive:4),), Native:12([Fixed:13('(', $type=None), Var:14(self, $type=Primitive:4), Fixed:16(')+(', $type=None), Var:17(other, $type=Primitive:4), Fixed:19(')', $type=None)], $type=None), other=Param:9, self=Primitive:4),
+  MethodMacro:20(int, subtract, (Param:23(int, other, None, $type=Primitive:4),), Native:26([Fixed:27('(', $type=None), Var:28(self, $type=Primitive:4), Fixed:30(')-(', $type=None), Var:31(other, $type=Primitive:4), Fixed:33(')', $type=None)], $type=None), other=Param:23, self=Primitive:4),
+  MethodMacro:34(int, multiply, (Param:37(int, other, None, $type=Primitive:4),), Native:40([Fixed:41('(', $type=None), Var:42(self, $type=Primitive:4), Fixed:44(')*(', $type=None), Var:45(other, $type=Primitive:4), Fixed:47(')', $type=None)], $type=None), other=Param:37, self=Primitive:4)), add=MethodMacro:6, multiply=MethodMacro:34, subtract=MethodMacro:20),
+ Primitive:48(String, None, 
+  ()))), File:50(
+ (Macro:51(int, pi, (), Number:54('3', $type=Primitive:4)),
+ Function:55(void, test, (), Block:58(
+  (Local:59(Declaration:60(int, x, Call:63(Var:64(pi, $type=Macro:51), [], $type=Primitive:4), $type=Primitive:4)))), x=Declaration:60),
+ Class:66(Pie, None, 
+  (MethodMacro:68(int, slice, (), Number:71('3', $type=Primitive:4), self=Class:66),
+  Method:72(void, test, (), Block:75(
+   (Local:76(Declaration:77(Pie, p, Call:80(Var:81(Pie, $type=Class:66), [], $type=Class:66), $type=Class:66)),
+   Local:83(Declaration:84(int, x, Call:87(Attr:88(Var:89(p, $type=Class:66), slice, $type=MethodMacro:68), [], $type=Primitive:4), $type=Primitive:4)))), p=Declaration:77, self=Class:66, x=Declaration:84)), slice=MethodMacro:68, test=Method:72))))

@@ -20,7 +20,7 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "extends", "return", "macro"]
+    keywords = ["package", "class", "interface", "primitive", "extends", "return", "macro"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LPR": "(",
@@ -63,13 +63,18 @@ class Parser:
     def visit_pkg_definition(self, node, (dfn,)):
         return dfn
 
-    @g.rule('class = CLASS name ( EXTENDS name )? LBR class_definition* RBR')
-    def visit_class(self, node, (c, name, extends, l, definitions, r)):
+    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name ( EXTENDS name )? LBR class_definition* RBR')
+    def visit_class(self, node, ((kw,), name, extends, l, definitions, r)):
         if extends:
             base = extends[0][-1]
         else:
             base = None
-        return Class(name, base, definitions)
+        if kw == "class":
+            return Class(name, base, definitions)
+        elif kw == "interface":
+            return Interface(name, base, definitions)
+        else:
+            return Primitive(name, base, definitions)
 
     @g.rule('class_definition = field / method / method_macro')
     def visit_class_definition(self, node, (dfn,)):

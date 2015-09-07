@@ -158,6 +158,12 @@ class Method(Function):
 class MethodMacro(Macro):
     pass
 
+class Interface(Class):
+    pass
+
+class Primitive(Class):
+    pass
+
 ## Declarations
 
 class Declaration(AST):

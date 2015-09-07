@@ -17,7 +17,6 @@ from quark.backend import Java
 from quark.compiler import Compiler, CompileError
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
-build = os.path.join(directory, "build")
 
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
@@ -34,17 +33,24 @@ def test_emit(path):
     c.compile()
     j = Java()
     c.emit(j)
-    expected = base + ".java"
-    assert len(j.files) == 1
-    computed = j.files.values()[0]
-    try:
-        saved = open(expected).read()
-    except IOError, e:
-        saved = None
-    if saved != computed:
-        open(expected + ".cmp", "write").write(computed)
-    assert computed == saved
+    if not os.path.exists(base):
+        os.makedirs(base)
+    expected = [name for name in os.listdir(base) if name.endswith(".java")]
+    srcs = []
+    for name in j.files:
+        path = os.path.join(base, name)
+        srcs.append(path)
+        computed = j.files[name]
+        try:
+            saved = open(path).read()
+        except IOError, e:
+            saved = None
+        if saved != computed:
+            open(path + ".cmp", "write").write(computed)
+        assert computed == saved
+    assert len(j.files) == len(expected)
+    build = os.path.join(base, "build")
     if not os.path.exists(build):
         os.makedirs(build)
-    jexit = os.system("javac -d %s %s" % (build, expected))
+    jexit = os.system("javac -d %s %s" % (build, " ".join(srcs)))
     assert jexit == 0

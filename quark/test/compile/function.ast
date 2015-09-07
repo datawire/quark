@@ -1,3 +1,11 @@
-Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
- (Function:5(void, f, (Param:8(int, a, None, $type=IntPrimitive:2), Param:11(int, b, None, $type=IntPrimitive:2), Param:14(int, c, None, $type=IntPrimitive:2)), Block:17(
-  ()), a=Param:8, b=Param:11, c=Param:14))))
+Root:0(File:1(
+ (Primitive:2(void, None, 
+  ()),
+ Primitive:4(int, None, 
+  (MethodMacro:6(int, add, (Param:9(int, other, None, $type=Primitive:4),), Native:12([Fixed:13('(', $type=None), Var:14(self, $type=Primitive:4), Fixed:16(')+(', $type=None), Var:17(other, $type=Primitive:4), Fixed:19(')', $type=None)], $type=None), other=Param:9, self=Primitive:4),
+  MethodMacro:20(int, subtract, (Param:23(int, other, None, $type=Primitive:4),), Native:26([Fixed:27('(', $type=None), Var:28(self, $type=Primitive:4), Fixed:30(')-(', $type=None), Var:31(other, $type=Primitive:4), Fixed:33(')', $type=None)], $type=None), other=Param:23, self=Primitive:4),
+  MethodMacro:34(int, multiply, (Param:37(int, other, None, $type=Primitive:4),), Native:40([Fixed:41('(', $type=None), Var:42(self, $type=Primitive:4), Fixed:44(')*(', $type=None), Var:45(other, $type=Primitive:4), Fixed:47(')', $type=None)], $type=None), other=Param:37, self=Primitive:4)), add=MethodMacro:6, multiply=MethodMacro:34, subtract=MethodMacro:20),
+ Primitive:48(String, None, 
+  ()))), File:50(
+ (Function:51(void, f, (Param:54(int, a, None, $type=Primitive:4), Param:57(int, b, None, $type=Primitive:4), Param:60(int, c, None, $type=Primitive:4)), Block:63(
+  ()), a=Param:54, b=Param:57, c=Param:60))))

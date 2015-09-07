@@ -1,3 +1,11 @@
-Root:0(VoidPrimitive:1(), IntPrimitive:2(), StringPrimitive:3(), File:4(
- (Function:5(int, foo, (), Block:8(
-  (ExprStmt:9(Call:10(Var:11(foo, $type=Function:5), [], $type=IntPrimitive:2))))))))
+Root:0(File:1(
+ (Primitive:2(void, None, 
+  ()),
+ Primitive:4(int, None, 
+  (MethodMacro:6(int, add, (Param:9(int, other, None, $type=Primitive:4),), Native:12([Fixed:13('(', $type=None), Var:14(self, $type=Primitive:4), Fixed:16(')+(', $type=None), Var:17(other, $type=Primitive:4), Fixed:19(')', $type=None)], $type=None), other=Param:9, self=Primitive:4),
+  MethodMacro:20(int, subtract, (Param:23(int, other, None, $type=Primitive:4),), Native:26([Fixed:27('(', $type=None), Var:28(self, $type=Primitive:4), Fixed:30(')-(', $type=None), Var:31(other, $type=Primitive:4), Fixed:33(')', $type=None)], $type=None), other=Param:23, self=Primitive:4),
+  MethodMacro:34(int, multiply, (Param:37(int, other, None, $type=Primitive:4),), Native:40([Fixed:41('(', $type=None), Var:42(self, $type=Primitive:4), Fixed:44(')*(', $type=None), Var:45(other, $type=Primitive:4), Fixed:47(')', $type=None)], $type=None), other=Param:37, self=Primitive:4)), add=MethodMacro:6, multiply=MethodMacro:34, subtract=MethodMacro:20),
+ Primitive:48(String, None, 
+  ()))), File:50(
+ (Function:51(int, foo, (), Block:54(
+  (ExprStmt:55(Call:56(Var:57(foo, $type=Function:51), [], $type=Primitive:4))))))))
