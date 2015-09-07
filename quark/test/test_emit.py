@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest
+import os, pytest, subprocess
 from quark.backend import Java
 from quark.compiler import Compiler, CompileError
 
@@ -48,9 +48,17 @@ def test_emit(path):
         if saved != computed:
             open(path + ".cmp", "write").write(computed)
         assert computed == saved
+
     assert len(j.files) == len(expected)
+
     build = os.path.join(base, "build")
     if not os.path.exists(build):
         os.makedirs(build)
     jexit = os.system("javac -d %s %s" % (build, " ".join(srcs)))
     assert jexit == 0
+
+    out = base + ".out"
+    if os.path.exists(out):
+        expected = open(out).read()
+        actual = subprocess.check_output(["java", "-cp", build, "Functions"])
+        assert actual == expected
