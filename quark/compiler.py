@@ -40,6 +40,7 @@ class InitParent:
         self.count = 0
 
     def visit_AST(self, ast):
+        ast.count = 0
         if self.stack:
             ast.parent = self.stack[-1]
         self.stack.append(ast)
@@ -47,8 +48,9 @@ class InitParent:
         if isinstance(ast, Definition):
             ast.id = str(ast.name)
         else:
-            ast.id = self.count
-            self.count += 1
+            if ast.parent:
+                ast.id = ast.parent.count
+                ast.parent.count += 1
 
     def leave_AST(self, ast):
         self.stack.pop()
@@ -188,11 +190,21 @@ class Resolver:
     def leave_Native(self, n):
         n.resolved = None
 
+def qid(ast):
+    if ast.parent:
+        pid = qid(ast.parent)
+        if pid:
+            return "%s.%s" % (pid, ast.id)
+        else:
+            return ast.id
+    else:
+        return ""
+
 def refstr(ast):
     if ast is None:
         return None
     else:
-        return "%s:%s" % (ast.__class__.__name__, ast.id)
+        return "%s:%s" % (ast.__class__.__name__, qid(ast))
 
 class Annotator:
 

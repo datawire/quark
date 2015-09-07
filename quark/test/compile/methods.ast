@@ -1,15 +1,15 @@
-Root:0(File:1(
+Root(File:0(
  (Primitive:void(void, None, 
   ()),
  Primitive:int(int, None, 
-  (MethodMacro:__add__(int, __add__, (Param:6(int, other, None, $type=Primitive:int),), Native:9([Fixed:10('(', $type=None), Var:11(self, $type=Primitive:int), Fixed:13(') + (', $type=None), Var:14(other, $type=Primitive:int), Fixed:16(')', $type=None)], $type=None), other=Param:6, self=Primitive:int),
-  MethodMacro:__sub__(int, __sub__, (Param:19(int, other, None, $type=Primitive:int),), Native:22([Fixed:23('(', $type=None), Var:24(self, $type=Primitive:int), Fixed:26(') - (', $type=None), Var:27(other, $type=Primitive:int), Fixed:29(')', $type=None)], $type=None), other=Param:19, self=Primitive:int),
-  MethodMacro:__mul__(int, __mul__, (Param:32(int, other, None, $type=Primitive:int),), Native:35([Fixed:36('(', $type=None), Var:37(self, $type=Primitive:int), Fixed:39(') * (', $type=None), Var:40(other, $type=Primitive:int), Fixed:42(')', $type=None)], $type=None), other=Param:32, self=Primitive:int)), __add__=MethodMacro:__add__, __mul__=MethodMacro:__mul__, __sub__=MethodMacro:__sub__),
+  (MethodMacro:__add__(int, __add__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') + (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__add__.2, self=Primitive:int),
+  MethodMacro:__sub__(int, __sub__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') - (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__sub__.2, self=Primitive:int),
+  MethodMacro:__mul__(int, __mul__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') * (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__mul__.2, self=Primitive:int)), __add__=MethodMacro:int.__add__, __mul__=MethodMacro:int.__mul__, __sub__=MethodMacro:int.__sub__),
  Primitive:String(String, None, 
-  ()))), File:44(
+  ()))), File:1(
  (Class:Test(Test, None, 
-  (Method:foo(int, foo, (), Block:48(
-   ()), self=Class:Test)), foo=Method:foo),
- Function:bar(void, bar, (), Block:51(
-  (Local:52(Declaration:53(Test, t, None, $type=Class:Test)),
-  ExprStmt:56(Call:57(Attr:58(Var:59(t, $type=Class:Test), foo, $type=Method:foo), [], $type=Primitive:int)))), t=Declaration:53))))
+  (Method:foo(int, foo, (), Block:2(
+   ()), self=Class:1.Test)), foo=Method:1.Test.foo),
+ Function:bar(void, bar, (), Block:2(
+  (Local:0(Declaration:0(Test, t, None, $type=Class:1.Test)),
+  ExprStmt:1(Call:0(Attr:0(Var:0(t, $type=Class:1.Test), foo, $type=Method:1.Test.foo), [], $type=Primitive:int)))), t=Declaration:1.bar.2.0.0))))
