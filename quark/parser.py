@@ -41,6 +41,7 @@ class Parser:
                "LE": "<=",
                "LT": "<",
                "GT": ">",
+               "EQL": "==",
                "AND": "&&",
                "OR": "||",
                "IF": "if",
@@ -53,7 +54,11 @@ class Parser:
         "/": "__div__",
         "&&": "__and__",
         "||": "__or__",
-        "<=": "__le__"
+        "<=": "__le__",
+        ">=": "__ge__",
+        "<": "__lt__",
+        ">": "__gt__",
+        "==": "__eq__"
     }
 
     unary_aliases = {
@@ -237,7 +242,7 @@ class Parser:
             result = Call(Attr(result, op), [rhs])
         return result
 
-    @g.rule('cmpop = GE / LE / LT / GT')
+    @g.rule('cmpop = GE / LE / LT / GT / EQL')
     def visit_cmpop(self, node, (op,)):
         return Name(self.aliases[op])
 

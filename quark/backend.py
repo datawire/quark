@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from .ast import Method
+
 class Backend(object):
 
     def __init__(self):
@@ -22,9 +24,25 @@ class Java(Backend):
     def __init__(self):
         Backend.__init__(self)
         self.classr = ClassRenderer()
+        self.functions = []
 
     def visit_Class(self, c):
         self.files[c.name.text + ".java"] = c.apply(self.classr)
+
+    def visit_Function(self, f):
+        if not isinstance(f, Method):
+            self.functions.append(f)
+
+    def leave_Root(self, r):
+        if self.functions:
+            cr = ClassRenderer()
+            functions = []
+            for f in self.functions:
+                functions.append(f.apply(cr))
+                if f.name.text == "main":
+                    functions.append("public static void main(String[] args) {\n    main();\n}")
+            self.files["Functions.java"] = "public class Functions {%s}" % \
+                                           indent("\n".join(functions))
 
     def visit_Primitive(self, p):
         pass
@@ -71,10 +89,6 @@ class ExprRenderer(object):
 
     def String(self, s):
         return s.text
-
-    def Binop(self, b):
-        type = b.left.resolved
-        return type.apply(Binoper(b.left.apply(self), b.op, b.right.apply(self)))
 
     def Call(self, c):
         type = c.expr.resolved
@@ -139,25 +153,6 @@ class Invoker(object):
             idx += 1
         return mm.body.apply(ExprRenderer(SubstitutionNamer(env)))
 
-class Binoper(object):
-
-    def __init__(self, left, op, right):
-        self.left = left
-        self.op = op
-        self.right = right
-        self.aliases = {
-            "+": "add",
-            "-": "subtract",
-            "*": "multiply"
-        }
-
-    def Class(self, c):
-        return "(%s).%s(%s)" % (self.left, self.aliases[self.op], self.right)
-
-    def Primitive(self, p):
-        return "(%s) %s (%s)" % (self.left, self.op, self.right)
-
-
 class ClassRenderer(object):
 
     def __init__(self):
@@ -172,12 +167,16 @@ class ClassRenderer(object):
     def Block(self, b):
         return "\n".join([s.apply(self) for s in b.statements])
 
-    def Method(self, m):
+    def Function(self, m):
         type = m.type.apply(self.namer)
         name = m.name.apply(self.namer)
         params = ", ".join([p.apply(self) for p in m.params])
         body = m.body.apply(self)
-        return "public %s %s(%s) {%s}" % (type, name, params, indent(body))
+        if isinstance(m, Method):
+            mods = "public"
+        else:
+            mods = "public static"
+        return "%s %s %s(%s) {%s}" % (mods, type, name, params, indent(body))
 
     def MethodMacro(self, mm):
         return ""
@@ -205,3 +204,10 @@ class ClassRenderer(object):
 
     def Var(self, v):
         return v.apply(self.namer)
+
+    def If(self, i):
+        result = "if (%s) {%s}" % (i.predicate.apply(self.exprr),
+                                   indent(i.consequence.apply(self)))
+        if i.alternative:
+            result += " else {%s}" % indent(i.alternative.apply(self))
+        return result

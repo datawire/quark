@@ -1,0 +1,7 @@
+File(
+ (Function(void, test, (), Block(
+  (ExprStmt(Call(Attr(Var(a), __lt__), [Var(b)])),
+  ExprStmt(Call(Attr(Var(a), __gt__), [Var(b)])),
+  ExprStmt(Call(Attr(Var(a), __le__), [Var(b)])),
+  ExprStmt(Call(Attr(Var(a), __ge__), [Var(b)])),
+  ExprStmt(Call(Attr(Var(a), __eq__), [Var(b)])))))))

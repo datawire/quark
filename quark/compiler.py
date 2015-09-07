@@ -234,6 +234,7 @@ primitive int {
     macro int __add__(int other) ${($self) + ($other)};
     macro int __sub__(int other) ${($self) - ($other)};
     macro int __mul__(int other) ${($self) * ($other)};
+    macro int __eq__(int other) ${($self) == ($other)};
 }
 primitive String {}
 macro void print(String msg) ${System.out.println($msg)};
