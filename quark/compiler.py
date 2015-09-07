@@ -44,8 +44,11 @@ class InitParent:
             ast.parent = self.stack[-1]
         self.stack.append(ast)
         ast.annotator = self.annotator
-        ast.id = self.count
-        self.count += 1
+        if isinstance(ast, Definition):
+            ast.id = str(ast.name)
+        else:
+            ast.id = self.count
+            self.count += 1
 
     def leave_AST(self, ast):
         self.stack.pop()
@@ -216,9 +219,9 @@ def lineinfo(node):
 BUILTIN = """
 primitive void {}
 primitive int {
-    macro int add(int other) ${($self)+($other)};
-    macro int subtract(int other) ${($self)-($other)};
-    macro int multiply(int other) ${($self)*($other)};
+    macro int __add__(int other) ${($self) + ($other)};
+    macro int __sub__(int other) ${($self) - ($other)};
+    macro int __mul__(int other) ${($self) * ($other)};
 }
 primitive String {}
 """

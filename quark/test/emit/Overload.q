@@ -1,10 +1,10 @@
 class Overload {
 
-    Overload add(Overload o) {
+    Overload __add__(Overload o) {
         return o;
     }
 
-    Overload multiply(Overload o) {
+    Overload __mul__(Overload o) {
         return o;
     }
 

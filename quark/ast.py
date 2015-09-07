@@ -277,24 +277,6 @@ class Call(Expression):
         for a in self.args:
             yield a
 
-class Unary(Expression):
-
-    def __init__(self, op, expr):
-        self.op = op
-        self.expr = expr
-
-class Binop(Expression):
-
-    def __init__(self, left, op, right):
-        self.left = left
-        self.op = op
-        self.right = right
-
-    @property
-    def children(self):
-        yield self.left
-        yield self.right
-
 class Literal(Expression):
 
     def __init__(self, text):

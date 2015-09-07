@@ -1,13 +1,13 @@
 Root:0(File:1(
- (Primitive:2(void, None, 
+ (Primitive:void(void, None, 
   ()),
- Primitive:4(int, None, 
-  (MethodMacro:6(int, add, (Param:9(int, other, None, $type=Primitive:4),), Native:12([Fixed:13('(', $type=None), Var:14(self, $type=Primitive:4), Fixed:16(')+(', $type=None), Var:17(other, $type=Primitive:4), Fixed:19(')', $type=None)], $type=None), other=Param:9, self=Primitive:4),
-  MethodMacro:20(int, subtract, (Param:23(int, other, None, $type=Primitive:4),), Native:26([Fixed:27('(', $type=None), Var:28(self, $type=Primitive:4), Fixed:30(')-(', $type=None), Var:31(other, $type=Primitive:4), Fixed:33(')', $type=None)], $type=None), other=Param:23, self=Primitive:4),
-  MethodMacro:34(int, multiply, (Param:37(int, other, None, $type=Primitive:4),), Native:40([Fixed:41('(', $type=None), Var:42(self, $type=Primitive:4), Fixed:44(')*(', $type=None), Var:45(other, $type=Primitive:4), Fixed:47(')', $type=None)], $type=None), other=Param:37, self=Primitive:4)), add=MethodMacro:6, multiply=MethodMacro:34, subtract=MethodMacro:20),
- Primitive:48(String, None, 
-  ()))), File:50(
- (Function:51(int, foo, (), Block:54(
-  (ExprStmt:55(Call:56(Var:57(bar, $type=Function:59), [], $type=Primitive:48))))),
- Function:59(String, bar, (), Block:62(
-  (ExprStmt:63(Call:64(Var:65(foo, $type=Function:51), [], $type=Primitive:4))))))))
+ Primitive:int(int, None, 
+  (MethodMacro:__add__(int, __add__, (Param:6(int, other, None, $type=Primitive:int),), Native:9([Fixed:10('(', $type=None), Var:11(self, $type=Primitive:int), Fixed:13(') + (', $type=None), Var:14(other, $type=Primitive:int), Fixed:16(')', $type=None)], $type=None), other=Param:6, self=Primitive:int),
+  MethodMacro:__sub__(int, __sub__, (Param:19(int, other, None, $type=Primitive:int),), Native:22([Fixed:23('(', $type=None), Var:24(self, $type=Primitive:int), Fixed:26(') - (', $type=None), Var:27(other, $type=Primitive:int), Fixed:29(')', $type=None)], $type=None), other=Param:19, self=Primitive:int),
+  MethodMacro:__mul__(int, __mul__, (Param:32(int, other, None, $type=Primitive:int),), Native:35([Fixed:36('(', $type=None), Var:37(self, $type=Primitive:int), Fixed:39(') * (', $type=None), Var:40(other, $type=Primitive:int), Fixed:42(')', $type=None)], $type=None), other=Param:32, self=Primitive:int)), __add__=MethodMacro:__add__, __mul__=MethodMacro:__mul__, __sub__=MethodMacro:__sub__),
+ Primitive:String(String, None, 
+  ()))), File:44(
+ (Function:foo(int, foo, (), Block:47(
+  (ExprStmt:48(Call:49(Var:50(bar, $type=Function:bar), [], $type=Primitive:String))))),
+ Function:bar(String, bar, (), Block:54(
+  (ExprStmt:55(Call:56(Var:57(foo, $type=Function:foo), [], $type=Primitive:int))))))))

@@ -46,6 +46,21 @@ class Parser:
                "IF": "if",
                "ELSE": "else"}
 
+    aliases = {
+        "+": "__add__",
+        "-": "__sub__",
+        "*": "__mul__",
+        "/": "__div__",
+        "&&": "__and__",
+        "||": "__or__",
+        "<=": "__le__"
+    }
+
+    unary_aliases = {
+        "!": "__not__",
+        "-": "__neg__"
+    }
+
     @g.rule('file = file_definition* ~"$"')
     def visit_file(self, node, (definitions, eof)):
         return File(definitions)
@@ -134,7 +149,7 @@ class Parser:
     def visit_types(self, node, (first, rest)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('name_re = ~"[a-zA-Z][a-zA-Z0-9]*"')
+    @g.rule('name_re = ~"[_a-zA-Z][_a-zA-Z0-9]*"')
     def visit_name_re(self, node, children):
         return node.text
 
@@ -197,20 +212,20 @@ class Parser:
     def visit_expr(self, node, (result, remaining)):
         while remaining:
             op, rhs = remaining.pop(0)
-            result = Binop(result, op, rhs)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
         return result
 
     @g.rule("oroperand = andoperand (AND andoperand)*")
     def visit_oroperand(self, node, (result, remaining)):
         while remaining:
             op, rhs = remaining.pop(0)
-            result = Binop(result, op, rhs)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
         return result
 
     @g.rule("andoperand = NOT? notoperand")
     def visit_andoperand(self, node, (not_, operand)):
         if not_:
-            return Unary(not_[0], operand)
+            return Call(Attr(operand, Name(self.unary_aliases[not_[0]])), [])
         else:
             return operand
 
@@ -219,49 +234,49 @@ class Parser:
     def visit_notoperand(self, node, (result, remaining)):
         while remaining:
             op, rhs = remaining.pop(0)
-            result = Binop(result, op, rhs)
+            result = Call(Attr(result, op), [rhs])
         return result
 
     @g.rule('cmpop = GE / LE / LT / GT')
     def visit_cmpop(self, node, (op,)):
-        return op
+        return Name(self.aliases[op])
 
     @g.rule("cmpoperand = addoperand (addop addoperand)*")
     def visit_cmpoperand(self, node, children):
         result = children[0]
         remaining = children[1]
         while remaining:
-            result = Binop(result, remaining[0][0], remaining[0][1])
+            result = Call(Attr(result, remaining[0][0]), [remaining[0][1]])
             remaining.pop(0)
         return result
 
     @g.rule('addop = PLUS / MINUS')
     def visit_addop(self, node, (op,)):
-        return op
+        return Name(self.aliases[op])
 
     @g.rule("addoperand = muloperand (mulop muloperand)*")
     def visit_addoperand(self, node, children):
         result = children[0]
         remaining = children[1]
         while remaining:
-            result = Binop(result, remaining[0][0], remaining[0][1])
+            result = Call(Attr(result, remaining[0][0]), [remaining[0][1]])
             remaining.pop(0)
         return result
 
     @g.rule('mulop = MUL / DIV')
     def visit_mulop(self, node, (op,)):
-        return op
+        return Name(self.aliases[op])
 
     @g.rule("muloperand = uop? prim")
     def visit_muloperand(self, node, (uop, expr)):
         if uop:
-            return Unary(uop[0], expr)
+            return Call(Attr(expr, uop[0]), [])
         else:
             return expr
 
     @g.rule('uop = MINUS / TWIDDLE')
     def visit_uop(self, node, (op,)):
-        return op
+        return Name(self.unary_aliases[op])
 
     @g.rule('prim = atom modifier*')
     def visit_prim(self, node, (atom, mods)):

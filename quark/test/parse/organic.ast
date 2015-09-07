@@ -1,9 +1,9 @@
 File(
  (Package(foo, 
   (Function(void, f, (Param(int, a, None), Param(int, b, None), Param(int, c, None), Param(int, d, None)), Block(
-   (ExprStmt(Binop(Binop(Binop(Binop(Binop(Binop(Var(x), '*', Var(a)), '*', Var(b)), '*', Var(c)), '+', Var(b)), '+', Binop(Var(c), '*', Var(d))), '<=', Var(t)))))),
+   (ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(x), __mul__), [Var(a)]), __mul__), [Var(b)]), __mul__), [Var(c)]), __add__), [Var(b)]), __add__), [Call(Attr(Var(c), __mul__), [Var(d)])]), __le__), [Var(t)]))))),
   Function(void, asdf, (Param(float, x, None), Param(float, y, None)), Block(
-   (ExprStmt(Binop(Binop(Binop(Binop(Binop(Var(x), '*', Var(a)), '*', Var(b)), '*', Binop(Binop(Var(c), '+', Var(b)), '+', Var(c))), '*', Var(d)), '<=', Var(t)))))),
+   (ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(x), __mul__), [Var(a)]), __mul__), [Var(b)]), __mul__), [Call(Attr(Call(Attr(Var(c), __add__), [Var(b)]), __add__), [Var(c)])]), __mul__), [Var(d)]), __le__), [Var(t)]))))),
   Function(void, fdsa, (Param(float, x, None),), Block(
    ())),
   Function(int, pie, (), Block(
@@ -17,12 +17,12 @@ File(
     ExprStmt(Attr(Var(self), doc)),
     If(Var(x), Block(
      (ExprStmt(Call(Var(y), [])))), None),
-    ExprStmt(Unary('-', Var(z))),
-    If(Binop(Binop(Var(x), '&&', Var(y)), '||', Var(z)), Block(
+    ExprStmt(Call(Attr(Var(z), __neg__), [])),
+    If(Call(Attr(Call(Attr(Var(x), __and__), [Var(y)]), __or__), [Var(z)]), Block(
      (ExprStmt(Var(z)))), None),
-    If(Binop(Var(x), '||', Binop(Var(y), '&&', Var(z))), Block(
+    If(Call(Attr(Var(x), __or__), [Call(Attr(Var(y), __and__), [Var(z)])]), Block(
      (ExprStmt(Var(z)))), None),
-    If(Binop(Var(x), '||', Binop(Unary('!', Var(y)), '&&', Var(z))), Block(
+    If(Call(Attr(Var(x), __or__), [Call(Attr(Call(Attr(Var(y), __not__), []), __and__), [Var(z)])]), Block(
      (ExprStmt(Var(z)))), None)))))))),
  Class(Blah, None, 
   ())))
