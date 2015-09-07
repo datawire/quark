@@ -236,6 +236,7 @@ primitive int {
     macro int __mul__(int other) ${($self) * ($other)};
 }
 primitive String {}
+macro void print(String msg) ${System.out.println($msg)};
 """
 
 class Compiler:

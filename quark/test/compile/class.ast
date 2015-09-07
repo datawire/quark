@@ -6,7 +6,8 @@ Root(File:0(
   MethodMacro:__sub__(int, __sub__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') - (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__sub__.2, self=Primitive:int),
   MethodMacro:__mul__(int, __mul__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') * (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__mul__.2, self=Primitive:int)), __add__=MethodMacro:int.__add__, __mul__=MethodMacro:int.__mul__, __sub__=MethodMacro:int.__sub__),
  Primitive:String(String, None, 
-  ()))), File:1(
+  ()),
+ Macro:print(void, print, (Param:2(String, msg, None, $type=Primitive:String),), Native:3([Fixed:0('System.out.println(', $type=None), Var:1(msg, $type=Primitive:String), Fixed:2(')', $type=None)], $type=None), msg=Param:print.2))), File:1(
  (Class:C(C, None, 
   (Method:f(void, f, (Param:2(int, a, None, $type=Primitive:int), Param:3(int, b, None, $type=Primitive:int), Param:4(String, c, None, $type=Primitive:String)), Block:5(
    ()), a=Param:1.C.f.2, b=Param:1.C.f.3, c=Param:1.C.f.4, self=Class:1.C)), f=Method:1.C.f))))

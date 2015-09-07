@@ -6,7 +6,8 @@ Root(File:0(
   MethodMacro:__sub__(int, __sub__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') - (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__sub__.2, self=Primitive:int),
   MethodMacro:__mul__(int, __mul__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') * (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__mul__.2, self=Primitive:int)), __add__=MethodMacro:int.__add__, __mul__=MethodMacro:int.__mul__, __sub__=MethodMacro:int.__sub__),
  Primitive:String(String, None, 
-  ()))), File:1(
+  ()),
+ Macro:print(void, print, (Param:2(String, msg, None, $type=Primitive:String),), Native:3([Fixed:0('System.out.println(', $type=None), Var:1(msg, $type=Primitive:String), Fixed:2(')', $type=None)], $type=None), msg=Param:print.2))), File:1(
  (Macro:pi(int, pi, (), Number:2('3', $type=Primitive:int)),
  Function:test(void, test, (), Block:2(
   (Local:0(Declaration:0(int, x, Call:2(Var:0(pi, $type=Macro:1.pi), [], $type=Primitive:int), $type=Primitive:int)))), x=Declaration:1.test.2.0.0),
