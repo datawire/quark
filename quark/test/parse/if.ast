@@ -1,12 +1,12 @@
 File(
- (Function(void, test, (), Block(
-  (If(Var(x), Block(
-   (ExprStmt(Call(Var(y), [])))), None),
-  If(Var(x), Block(
-   (ExprStmt(Call(Var(y), [])))), None),
-  If(Var(x), Block(
-   (ExprStmt(Call(Var(y), [])))), Block(
-   (ExprStmt(Call(Var(z), []))))),
-  If(Var(x), Block(
-   (ExprStmt(Call(Var(y), [])))), Block(
-   (ExprStmt(Call(Var(z), []))))))))))
+ Function(Type(Name(void)), Name(test), Block(
+   If(Var(Name(x)), Block(
+     ExprStmt(Call(Var(Name(y)))))),
+   If(Var(Name(x)), Block(
+     ExprStmt(Call(Var(Name(y)))))),
+   If(Var(Name(x)), Block(
+     ExprStmt(Call(Var(Name(y))))), Block(
+     ExprStmt(Call(Var(Name(z)))))),
+   If(Var(Name(x)), Block(
+     ExprStmt(Call(Var(Name(y))))), Block(
+     ExprStmt(Call(Var(Name(z)))))))))

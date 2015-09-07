@@ -83,18 +83,30 @@ class Parser:
     def visit_pkg_definition(self, node, (dfn,)):
         return dfn
 
-    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name ( EXTENDS name )? LBR class_definition* RBR')
-    def visit_class(self, node, ((kw,), name, extends, l, definitions, r)):
+    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS name )? LBR class_definition* RBR')
+    def visit_class(self, node, ((kw,), name, params, extends, l, definitions, r)):
+        if params:
+            params = params[0]
+        else:
+            params = []
         if extends:
             base = extends[0][-1]
         else:
             base = None
         if kw == "class":
-            return Class(name, base, definitions)
+            return Class(name, params, base, definitions)
         elif kw == "interface":
-            return Interface(name, base, definitions)
+            return Interface(name, params, base, definitions)
         else:
-            return Primitive(name, base, definitions)
+            return Primitive(name, params, base, definitions)
+
+    @g.rule('type_params = LA type_param (COMMA type_param)* RA')
+    def visit_type_params(self, node, (l, first, rest, r)):
+        return [first] + [n[-1] for n in rest]
+
+    @g.rule('type_param = name ""')
+    def visit_type_param(self, node, (name, _)):
+        return TypeParam(name)
 
     @g.rule('class_definition = field / method / method_macro')
     def visit_class_definition(self, node, (dfn,)):
@@ -162,7 +174,11 @@ class Parser:
     def visit_name(self, node, (pre, name, post)):
         return Name(name)
 
-    @g.rule('statement = return / exprstmt / assign / local / if')
+    # XXX: local declarations and exprstmt are ambiguous, e.g.:
+    #   Box<int> x; looks like a declaration
+    #      vs
+    #    a < b > c; looks like a comparison
+    @g.rule('statement = return / assign / local / if / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
 

@@ -34,17 +34,16 @@ class Root(AST):
 
 class InitParent:
 
-    def __init__(self, annotator):
-        self.annotator = annotator
+    def __init__(self):
         self.stack = []
         self.count = 0
 
     def visit_AST(self, ast):
+        ast.resolved = None
         ast.count = 0
         if self.stack:
             ast.parent = self.stack[-1]
         self.stack.append(ast)
-        ast.annotator = self.annotator
         if isinstance(ast, Definition):
             ast.id = str(ast.name)
         else:
@@ -93,6 +92,8 @@ class Def:
 
     def visit_Class(self, c):
         self.define(c.parent.env, c)
+        for p in c.parameters:
+            self.define(c.env, p)
 
     def visit_Function(self, f):
         self.define(f.parent.env, f)
@@ -108,8 +109,8 @@ class Def:
         self.define(mm.parent.env, mm)
         self.define(mm.env, mm.parent, "self")
 
-    def visit_Declaration(self, p):
-        self.define(p.env, p)
+    def visit_Declaration(self, d):
+        self.define(d.env, d)
 
 class Use:
 
@@ -184,45 +185,6 @@ class Resolver:
     def leave_Call(self, c):
         c.resolved = c.expr.resolved.apply(InvokedType())
 
-    def leave_Fixed(self, f):
-        f.resolved = None
-
-    def leave_Native(self, n):
-        n.resolved = None
-
-def qid(ast):
-    if ast.parent:
-        pid = qid(ast.parent)
-        if pid:
-            return "%s.%s" % (pid, ast.id)
-        else:
-            return ast.id
-    else:
-        return ""
-
-def refstr(ast):
-    if ast is None:
-        return None
-    else:
-        return "%s:%s" % (ast.__class__.__name__, qid(ast))
-
-class Annotator:
-
-    def __call__(self, ast):
-        result = ast.apply(self, lambda x: [])
-        if ast.parent and ast.parent.env != ast.env:
-            keys = ast.env.keys()
-            keys.sort()
-            for k in keys:
-                result.append((k, refstr(ast.env[k])))
-        return result
-
-    def Declaration(self, decl):
-        return [("$type", refstr(decl.resolved))]
-
-    def Expression(self, expr):
-        return [("$type", refstr(expr.resolved))]
-
 class CompileError(Exception): pass
 
 def lineinfo(node):
@@ -251,7 +213,7 @@ class Compiler:
         self.root.add(self.parser.parse(text))
 
     def compile(self):
-        self.root.traverse(InitParent(Annotator()))
+        self.root.traverse(InitParent())
         self.root.traverse(InitEnv())
 
         def_ = Def()

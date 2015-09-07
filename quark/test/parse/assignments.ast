@@ -1,13 +1,15 @@
 File(
- (Function(void, assignments, (), Block(
-  (Assign(Var(a), Var(x)),
-  Assign(Attr(Var(a), b), Var(x)),
-  Assign(Attr(Attr(Var(a), b), c), Var(x)),
-  Assign(Attr(Call(Var(a), []), b), Var(x)),
-  Assign(Attr(Call(Attr(Var(a), b), []), c), Var(x)),
-  Assign(Attr(Number('3'), a), Var(x)),
-  Assign(Attr(Attr(Number('3'), a), b), Var(x)),
-  Assign(Attr(Attr(Attr(Number('3'), a), b), c), Var(x)),
-  Assign(Attr(Call(Number('3'), []), a), Var(x)),
-  Assign(Attr(Call(Attr(Number('3'), a), []), b), Var(x)),
-  Assign(Attr(Call(Attr(Attr(Number('3'), a), b), []), c), Var(x)))))))
+ Function(Type(Name(void)), Name(assignments), Block(
+   Assign(Var(Name(a)), Var(Name(x))),
+   Assign(Attr(Var(Name(a)), Name(b)), Var(Name(x))),
+   Assign(Attr(Attr(Var(Name(a)), Name(b)), Name(c)), Var(Name(x))),
+   Assign(Attr(Call(Var(Name(a))), Name(b)), Var(Name(x))),
+   Assign(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c)), Var(Name(x))),
+   Assign(Attr(Number(3), Name(a)), Var(Name(x))),
+   Assign(Attr(Attr(Number(3), Name(a)), Name(b)), Var(Name(x))),
+   Assign(Attr(Attr(Attr(Number(3), Name(a)), Name(b)), Name(c)),
+    Var(Name(x))),
+   Assign(Attr(Call(Number(3)), Name(a)), Var(Name(x))),
+   Assign(Attr(Call(Attr(Number(3), Name(a))), Name(b)), Var(Name(x))),
+   Assign(Attr(Call(Attr(Attr(Number(3), Name(a)), Name(b))), Name(c)),
+    Var(Name(x))))))

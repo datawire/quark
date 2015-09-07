@@ -1,28 +1,50 @@
 File(
- (Package(foo, 
-  (Function(void, f, (Param(int, a, None), Param(int, b, None), Param(int, c, None), Param(int, d, None)), Block(
-   (ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(x), __mul__), [Var(a)]), __mul__), [Var(b)]), __mul__), [Var(c)]), __add__), [Var(b)]), __add__), [Call(Attr(Var(c), __mul__), [Var(d)])]), __le__), [Var(t)]))))),
-  Function(void, asdf, (Param(float, x, None), Param(float, y, None)), Block(
-   (ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(x), __mul__), [Var(a)]), __mul__), [Var(b)]), __mul__), [Call(Attr(Call(Attr(Var(c), __add__), [Var(b)]), __add__), [Var(c)])]), __mul__), [Var(d)]), __le__), [Var(t)]))))),
-  Function(void, fdsa, (Param(float, x, None),), Block(
-   ())),
-  Function(int, pie, (), Block(
-   (ExprStmt(Var(blueberry)),
-   ExprStmt(Var(huckleberry))))),
-  Class(Foo, Bar, 
-   (Method(void, doFoo, (), Block(
-    (Assign(Var(x), Call(Attr(Var(this), x), [Var(a), Var(b), Var(c)])),
-    Assign(Attr(Var(q), asdf), Call(Attr(Var(this), y), [Var(x)])),
-    ExprStmt(Call(Attr(Var(this), z), [])),
-    ExprStmt(Attr(Var(self), doc)),
-    If(Var(x), Block(
-     (ExprStmt(Call(Var(y), [])))), None),
-    ExprStmt(Call(Attr(Var(z), __neg__), [])),
-    If(Call(Attr(Call(Attr(Var(x), __and__), [Var(y)]), __or__), [Var(z)]), Block(
-     (ExprStmt(Var(z)))), None),
-    If(Call(Attr(Var(x), __or__), [Call(Attr(Var(y), __and__), [Var(z)])]), Block(
-     (ExprStmt(Var(z)))), None),
-    If(Call(Attr(Var(x), __or__), [Call(Attr(Call(Attr(Var(y), __not__), []), __and__), [Var(z)])]), Block(
-     (ExprStmt(Var(z)))), None)))))))),
- Class(Blah, None, 
-  ())))
+ Package(Name(foo),
+  Function(Type(Name(void)), Name(f),
+   Param(Type(Name(int)), Name(a)),
+   Param(Type(Name(int)), Name(b)),
+   Param(Type(Name(int)), Name(c)),
+   Param(Type(Name(int)), Name(d)),
+   Block(
+    ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(
+                  Name(x)), Name(__mul__)), Var(Name(a))), Name(__mul__)),
+              Var(Name(b))), Name(__mul__)), Var(Name(c))), Name(__add__)),
+          Var(Name(b))), Name(__add__)), Call(Attr(Var(Name(c)),
+          Name(__mul__)), Var(Name(d)))), Name(__le__)), Var(Name(t)))))),
+  Function(Type(Name(void)), Name(asdf),
+   Param(Type(Name(float)), Name(x)),
+   Param(Type(Name(float)), Name(y)),
+   Block(
+    ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(Name(x)),
+               Name(__mul__)), Var(Name(a))), Name(__mul__)), Var(Name(b))),
+           Name(__mul__)), Call(Attr(Call(Attr(Var(Name(c)), Name(__add__)),
+             Var(Name(b))), Name(__add__)), Var(Name(c)))), Name(__mul__)),
+        Var(Name(d))), Name(__le__)), Var(Name(t)))))),
+  Function(Type(Name(void)), Name(fdsa),
+   Param(Type(Name(float)), Name(x)),
+   Block()),
+  Function(Type(Name(int)), Name(pie), Block(
+    ExprStmt(Var(Name(blueberry))),
+    ExprStmt(Var(Name(huckleberry))))),
+  Class(Name(Foo), Name(Bar),
+   Method(Type(Name(void)), Name(doFoo), Block(
+     Assign(Var(Name(x)), Call(Attr(Var(Name(this)), Name(x)), Var(Name(a)),
+       Var(Name(b)), Var(Name(c)))),
+     Assign(Attr(Var(Name(q)), Name(asdf)), Call(Attr(Var(Name(this)),
+        Name(y)), Var(Name(x)))),
+     ExprStmt(Call(Attr(Var(Name(this)), Name(z)))),
+     ExprStmt(Attr(Var(Name(self)), Name(doc))),
+     If(Var(Name(x)), Block(
+       ExprStmt(Call(Var(Name(y)))))),
+     ExprStmt(Call(Attr(Var(Name(z)), Name(__neg__)))),
+     If(Call(Attr(Call(Attr(Var(Name(x)), Name(__and__)), Var(Name(y))),
+        Name(__or__)), Var(Name(z))), Block(
+       ExprStmt(Var(Name(z))))),
+     If(Call(Attr(Var(Name(x)), Name(__or__)), Call(Attr(Var(Name(y)),
+         Name(__and__)), Var(Name(z)))), Block(
+       ExprStmt(Var(Name(z))))),
+     If(Call(Attr(Var(Name(x)), Name(__or__)),
+       Call(Attr(Call(Attr(Var(Name(y)), Name(__not__))), Name(__and__)),
+        Var(Name(z)))), Block(
+       ExprStmt(Var(Name(z))))))))),
+ Class(Name(Blah)))

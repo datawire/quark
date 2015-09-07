@@ -1,15 +1,33 @@
-Root(File:0(
- (Primitive:void(void, None, 
-  ()),
- Primitive:int(int, None, 
-  (MethodMacro:__add__(int, __add__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') + (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__add__.2, self=Primitive:int),
-  MethodMacro:__sub__(int, __sub__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') - (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__sub__.2, self=Primitive:int),
-  MethodMacro:__mul__(int, __mul__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') * (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__mul__.2, self=Primitive:int),
-  MethodMacro:__eq__(int, __eq__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') == (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__eq__.2, self=Primitive:int)), __add__=MethodMacro:int.__add__, __eq__=MethodMacro:int.__eq__, __mul__=MethodMacro:int.__mul__, __sub__=MethodMacro:int.__sub__),
- Primitive:String(String, None, 
-  ()),
- Macro:print(void, print, (Param:2(String, msg, None, $type=Primitive:String),), Native:3([Fixed:0('System.out.println(', $type=None), Var:1(msg, $type=Primitive:String), Fixed:2(')', $type=None)], $type=None), msg=Param:print.2))), File:1(
- (Package:p(p, 
-  (Class:C(C, None, 
-   (Method:f(void, f, (Param:2(int, a, None, $type=Primitive:int), Param:3(int, b, None, $type=Primitive:int), Param:4(String, c, None, $type=Primitive:String)), Block:5(
-    ()), a=Param:1.p.C.f.2, b=Param:1.p.C.f.3, c=Param:1.p.C.f.4, self=Class:1.p.C)), f=Method:1.p.C.f)), C=Class:1.p.C))))
+Root(
+ File(
+  Primitive(Name(void)),
+  Primitive(Name(int),
+   MethodMacro(Type(Name(int)), Name(__add__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__sub__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__mul__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')')))),
+  Primitive(Name(String)),
+  Macro(Type(Name(void)), Name(print),
+   Param(Type(Name(String)), Name(msg)),
+   Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
+    Fixed(')')))),
+ File(
+  Package(Name(p),
+   Class(Name(C),
+    Method(Type(Name(void)), Name(f),
+     Param(Type(Name(int)), Name(a)),
+     Param(Type(Name(int)), Name(b)),
+     Param(Type(Name(String)), Name(c)),
+     Block())))))

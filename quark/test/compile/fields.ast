@@ -1,18 +1,34 @@
-Root(File:0(
- (Primitive:void(void, None, 
-  ()),
- Primitive:int(int, None, 
-  (MethodMacro:__add__(int, __add__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') + (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__add__.2, self=Primitive:int),
-  MethodMacro:__sub__(int, __sub__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') - (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__sub__.2, self=Primitive:int),
-  MethodMacro:__mul__(int, __mul__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') * (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__mul__.2, self=Primitive:int),
-  MethodMacro:__eq__(int, __eq__, (Param:2(int, other, None, $type=Primitive:int),), Native:3([Fixed:0('(', $type=None), Var:1(self, $type=Primitive:int), Fixed:2(') == (', $type=None), Var:3(other, $type=Primitive:int), Fixed:4(')', $type=None)], $type=None), other=Param:int.__eq__.2, self=Primitive:int)), __add__=MethodMacro:int.__add__, __eq__=MethodMacro:int.__eq__, __mul__=MethodMacro:int.__mul__, __sub__=MethodMacro:int.__sub__),
- Primitive:String(String, None, 
-  ()),
- Macro:print(void, print, (Param:2(String, msg, None, $type=Primitive:String),), Native:3([Fixed:0('System.out.println(', $type=None), Var:1(msg, $type=Primitive:String), Fixed:2(')', $type=None)], $type=None), msg=Param:print.2))), File:1(
- (Class:Test(Test, None, 
-  (Field:1(int, x, None, $type=Primitive:int),
-  Field:2(String, y, None, $type=Primitive:String)), x=Field:1.Test.1, y=Field:1.Test.2),
- Function:f(void, f, (), Block:2(
-  (Local:0(Declaration:0(Test, t, None, $type=Class:1.Test)),
-  ExprStmt:1(Attr:0(Var:0(t, $type=Class:1.Test), x, $type=Primitive:int)),
-  ExprStmt:2(Attr:0(Var:0(t, $type=Class:1.Test), y, $type=Primitive:String)))), t=Declaration:1.f.2.0.0))))
+Root(
+ File(
+  Primitive(Name(void)),
+  Primitive(Name(int),
+   MethodMacro(Type(Name(int)), Name(__add__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__sub__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__mul__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(int)), Name(other)),
+    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
+     Var(Name(other), $type=Primitive:int), Fixed(')')))),
+  Primitive(Name(String)),
+  Macro(Type(Name(void)), Name(print),
+   Param(Type(Name(String)), Name(msg)),
+   Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
+    Fixed(')')))),
+ File(
+  Class(Name(Test), Field(Type(Name(int)), Name(x)), Field(Type(Name(String)),
+    Name(y))),
+  Function(Type(Name(void)), Name(f), Block(
+    Local(Declaration(Type(Name(Test)), Name(t))),
+    ExprStmt(Attr(Var(Name(t), $type=Class:1.Test), Name(x),
+     $type=Primitive:int)),
+    ExprStmt(Attr(Var(Name(t), $type=Class:1.Test), Name(y),
+     $type=Primitive:String))))))

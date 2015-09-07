@@ -61,26 +61,86 @@ class AST(object):
         return self.lookup(transform, default=default)(self)
 
     def __repr__(self):
-        name = self.__class__.__name__
-        if hasattr(self, "id"):
-            name = "%s:%s" % (name, self.id)
+        r = _Repr()
+        self.traverse(r)
+        return r.output
 
-        fields = inspect.getargspec(self.__class__.__init__)[0][1:]
-        if fields:
-            args = [self.format(f) for f in fields]
+class _Repr(object):
+
+    def __init__(self, width=80):
+        self.width = width
+        self.out = ""
+        self.stack = []
+        self.first = True
+        self.wrap = (File, Definition, Statement, Param)
+        self.previous = None
+
+    def merge(self, previous, line):
+        if previous and previous[-1] == ",":
+            return "%s %s" % (previous, line)
         else:
-            args = [repr(c) for c in self.children]
+            return "%s%s" % (previous, line)
 
-        if hasattr(self, "annotator"):
-            args.extend(["%s=%s" % (k, v) for k, v in self.annotator(self)])
+    @property
+    def output(self):
+        lines = self.out.split("\n")
+        result = [lines[0]]
+        for line in lines[1:]:
+            stripped = line.strip()
+            if stripped:
+                merged = self.merge(result[-1], stripped)
+                if len(merged) < self.width:
+                    result[-1] = merged
+                else:
+                    result.append(line)
+            else:
+                result.append("")
+                result.append(line)
+        return "\n".join([l for l in result if l])
 
-        return "%s(%s)" % (name, ", ".join(args))
+    def append(self, st):
+        self.out += st.replace("\n", "\n%s" % (" "*len(self.stack)))
 
-    def format(self, field):
-        if field in self.indent:
-            return "\n (%s)" % ",\n ".join([repr(v).replace("\n", "\n ") for v in getattr(self, field)])
+    def visit_AST(self, ast):
+        if self.first:
+            self.first = False
+            if isinstance(ast, self.wrap):
+                self.append("\n")
         else:
-            return repr(getattr(self, field))
+            self.append(",\n")
+        if isinstance(ast, self.wrap) or isinstance(self.previous, self.wrap):
+            self.append("\n")
+        self.append("%s(" % ast.__class__.__name__)
+        self.stack.append((ast, self.first))
+        self.first = True
+        if isinstance(ast, Fixed):
+            self.append(repr(ast.text))
+        elif hasattr(ast, "text"):
+            self.append(ast.text)
+
+    def qid(self, ast):
+        if ast.parent:
+            pid = self.qid(ast.parent)
+            if pid:
+                return "%s.%s" % (pid, ast.id)
+            else:
+                return ast.id
+        else:
+            return ""
+
+    def refstr(self, ast):
+        if ast is None:
+            return None
+        else:
+            return "%s:%s" % (ast.__class__.__name__, self.qid(ast))
+
+    def leave_AST(self, ast):
+        self.first = self.stack.pop()[-1]
+        if isinstance(ast, Expression) and not isinstance(ast, (Fixed, Native)):
+            if hasattr(ast, "resolved"):
+                self.append(",\n$type=%s" % self.refstr(ast.resolved))
+        self.append(")")
+        self.previous = ast
 
 ## Top level
 
@@ -140,14 +200,17 @@ class Class(Definition):
 
     indent = ["definitions"]
 
-    def __init__(self, name, base, definitions):
+    def __init__(self, name, parameters, base, definitions):
         self.name = name
+        self.parameters = parameters
         self.base = base
         self.definitions = definitions
 
     @property
     def children(self):
         yield self.name
+        for p in self.parameters:
+            yield p
         yield self.base
         for d in self.definitions:
             yield d
@@ -264,6 +327,7 @@ class Attr(Expression):
     @property
     def children(self):
         yield self.expr
+        yield self.attr
 
 class Call(Expression):
 
@@ -328,13 +392,25 @@ class Type(AST):
 
     @property
     def children(self):
-        return self.parameters
+        yield self.name
+        if self.parameters:
+            for p in self.parameters:
+                yield p
 
     def __repr__(self):
         if self.parameters:
             return "%s<%s>" % (self.name, ", ".join([str(s) for s in self.parameters]))
         else:
             return repr(self.name)
+
+class TypeParam(AST):
+
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def children(self):
+        yield self.name
 
 class Block(AST):
 

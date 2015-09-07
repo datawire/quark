@@ -1,3 +1,3 @@
 File(
- (Function(void, f, (), Block(
-  (Local(Declaration(int, x, Call(Var(blah), []))))))))
+ Function(Type(Name(void)), Name(f), Block(
+   Local(Declaration(Type(Name(int)), Name(x), Call(Var(Name(blah))))))))

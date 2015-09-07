@@ -1,3 +1,2 @@
 File(
- (Package(Foo, 
-  ())))
+ Package(Name(Foo)))
