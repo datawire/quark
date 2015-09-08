@@ -8,4 +8,5 @@ File(
      Fixed('}'))),
    Assign(Var(Name(a)), Native(Fixed(' this is a test'), Fixed('{'),
      Fixed(' of '), Var(Name(asdf)), Fixed(' '), Var(Name(fdsa)), Fixed('  '),
-     Fixed('{'), Fixed('}'), Fixed(' '), Fixed('}'), Fixed(' '))))))
+     Fixed('{'), Fixed('}'), Fixed(' '), Fixed('}'), Fixed(' ')))))
+)

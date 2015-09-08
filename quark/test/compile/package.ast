@@ -1,32 +1,44 @@
 Root(
  File(
   Primitive(Name(void)),
+
   Primitive(Name(int),
+
    MethodMacro(Type(Name(int)), Name(__add__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__sub__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__mul__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__eq__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
      Var(Name(other), $type=Primitive:int), Fixed(')')))),
+
   Primitive(Name(String)),
+
   Macro(Type(Name(void)), Name(print),
    Param(Type(Name(String)), Name(msg)),
    Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
-    Fixed(')')))),
+    Fixed(')')))
+ ),
+
  File(
   Package(Name(p),
+
    Function(Type(Name(void)), Name(f),
     Param(Type(Name(int)), Name(a)),
     Param(Type(Name(int)), Name(b)),
     Param(Type(Name(String)), Name(c)),
-    Block()))))
+    Block()))
+ )
+)

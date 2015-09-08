@@ -1,32 +1,45 @@
 Root(
  File(
   Primitive(Name(void)),
+
   Primitive(Name(int),
+
    MethodMacro(Type(Name(int)), Name(__add__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__sub__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__mul__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__eq__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
      Var(Name(other), $type=Primitive:int), Fixed(')')))),
+
   Primitive(Name(String)),
+
   Macro(Type(Name(void)), Name(print),
    Param(Type(Name(String)), Name(msg)),
    Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
-    Fixed(')')))),
+    Fixed(')')))
+ ),
+
  File(
   Class(Name(Test),
+
    Method(Type(Name(int)), Name(foo), Block())),
+
   Function(Type(Name(void)), Name(bar), Block(
     Local(Declaration(Type(Name(Test)), Name(t))),
     ExprStmt(Call(Attr(Var(Name(t), $type=Class:1.Test), Name(foo),
-      $type=Method:1.Test.foo), $type=Primitive:int))))))
+      $type=Method:1.Test.foo), $type=Primitive:int))))
+ )
+)

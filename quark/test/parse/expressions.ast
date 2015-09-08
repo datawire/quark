@@ -16,4 +16,5 @@ File(
    ExprStmt(Call(Attr(Attr(Attr(Call(Var(Name(a))), Name(b)), Name(c)),
       Name(__add__)), Var(Name(x)))),
    ExprStmt(Call(Attr(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c)),
-      Name(__add__)), Var(Name(x)))))))
+      Name(__add__)), Var(Name(x))))))
+)

@@ -1,5 +1,6 @@
 File(
  Package(Name(foo),
+
   Function(Type(Name(void)), Name(f),
    Param(Type(Name(int)), Name(a)),
    Param(Type(Name(int)), Name(b)),
@@ -11,6 +12,7 @@ File(
               Var(Name(b))), Name(__mul__)), Var(Name(c))), Name(__add__)),
           Var(Name(b))), Name(__add__)), Call(Attr(Var(Name(c)),
           Name(__mul__)), Var(Name(d)))), Name(__le__)), Var(Name(t)))))),
+
   Function(Type(Name(void)), Name(asdf),
    Param(Type(Name(float)), Name(x)),
    Param(Type(Name(float)), Name(y)),
@@ -20,13 +22,17 @@ File(
            Name(__mul__)), Call(Attr(Call(Attr(Var(Name(c)), Name(__add__)),
              Var(Name(b))), Name(__add__)), Var(Name(c)))), Name(__mul__)),
         Var(Name(d))), Name(__le__)), Var(Name(t)))))),
+
   Function(Type(Name(void)), Name(fdsa),
    Param(Type(Name(float)), Name(x)),
    Block()),
+
   Function(Type(Name(int)), Name(pie), Block(
     ExprStmt(Var(Name(blueberry))),
     ExprStmt(Var(Name(huckleberry))))),
+
   Class(Name(Foo), Name(Bar),
+
    Method(Type(Name(void)), Name(doFoo), Block(
      Assign(Var(Name(x)), Call(Attr(Var(Name(this)), Name(x)), Var(Name(a)),
        Var(Name(b)), Var(Name(c)))),
@@ -47,4 +53,6 @@ File(
        Call(Attr(Call(Attr(Var(Name(y)), Name(__not__))), Name(__and__)),
         Var(Name(z)))), Block(
        ExprStmt(Var(Name(z))))))))),
- Class(Name(Blah)))
+
+ Class(Name(Blah))
+)

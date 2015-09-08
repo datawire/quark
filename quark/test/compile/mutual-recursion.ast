@@ -1,32 +1,43 @@
 Root(
  File(
   Primitive(Name(void)),
+
   Primitive(Name(int),
+
    MethodMacro(Type(Name(int)), Name(__add__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__sub__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__mul__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
      Var(Name(other), $type=Primitive:int), Fixed(')'))),
+
    MethodMacro(Type(Name(int)), Name(__eq__),
     Param(Type(Name(int)), Name(other)),
     Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
      Var(Name(other), $type=Primitive:int), Fixed(')')))),
+
   Primitive(Name(String)),
+
   Macro(Type(Name(void)), Name(print),
    Param(Type(Name(String)), Name(msg)),
    Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
-    Fixed(')')))),
+    Fixed(')')))
+ ),
+
  File(
   Function(Type(Name(int)), Name(foo), Block(
     ExprStmt(Call(Var(Name(bar), $type=Function:1.bar),
      $type=Primitive:String)))),
+
   Function(Type(Name(String)), Name(bar), Block(
-    ExprStmt(Call(Var(Name(foo), $type=Function:1.foo),
-     $type=Primitive:int))))))
+    ExprStmt(Call(Var(Name(foo), $type=Function:1.foo), $type=Primitive:int))))
+ )
+)

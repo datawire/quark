@@ -96,7 +96,8 @@ class _Repr(object):
             else:
                 result.append("")
                 result.append(line)
-        return "\n".join([l for l in result if l])
+        result = [l.strip() if l.strip() == "" else l for l in result if l]
+        return "\n".join(result)
 
     def append(self, st):
         self.out += st.replace("\n", "\n%s" % (" "*len(self.stack)))
@@ -108,6 +109,8 @@ class _Repr(object):
                 self.append("\n")
         else:
             self.append(",\n")
+            if isinstance(ast, (File, Definition)):
+                self.append("\n")
         if isinstance(ast, self.wrap) or isinstance(self.previous, self.wrap):
             self.append("\n")
         self.append("%s(" % ast.__class__.__name__)
@@ -139,6 +142,8 @@ class _Repr(object):
         if isinstance(ast, Expression) and not isinstance(ast, (Fixed, Native)):
             if hasattr(ast, "resolved"):
                 self.append(",\n$type=%s" % self.refstr(ast.resolved))
+        if isinstance(ast, File) or not self.stack:
+            self.append("\n\n")
         self.append(")")
         self.previous = ast
 

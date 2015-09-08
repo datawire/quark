@@ -9,4 +9,5 @@ File(
      ExprStmt(Call(Var(Name(z)))))),
    If(Var(Name(x)), Block(
      ExprStmt(Call(Var(Name(y))))), Block(
-     ExprStmt(Call(Var(Name(z)))))))))
+     ExprStmt(Call(Var(Name(z))))))))
+)

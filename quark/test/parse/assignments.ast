@@ -12,4 +12,5 @@ File(
    Assign(Attr(Call(Number(3)), Name(a)), Var(Name(x))),
    Assign(Attr(Call(Attr(Number(3), Name(a))), Name(b)), Var(Name(x))),
    Assign(Attr(Call(Attr(Attr(Number(3), Name(a)), Name(b))), Name(c)),
-    Var(Name(x))))))
+    Var(Name(x)))))
+)
