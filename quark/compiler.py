@@ -203,23 +203,23 @@ class Use:
         if v.definition is None:
             self.unresolved.append((v.name, v.name.text))
 
-    def visit_Number(self, n):
-        type = self.lookup(n, "int")
+    def leaf(self, n, name):
+        type = self.lookup(n, name)
         n.resolved = texpr(type)
         if n.resolved is None:
-            self.unresolved.append((n, "int"))
+            self.unresolved.append((n, name))
 
-    def visit_String(self, s):
-        type = self.lookup(s, "String")
-        s.resolved = texpr(type)
-        if s.resolved is None:
-            self.unresolved.append((s, "String"))
+    def visit_Number(self, n):
+        self.leaf(n, "int")
 
-    def visit_List(self, l):
-        type = self.lookup(l, "List")
-        l.resolved = texpr(type)
-        if l.resolved is None:
-            self.unresolved.append((l, "List"))
+    def visit_String(self, n):
+        self.leaf(n, "String")
+
+    def visit_List(self, n):
+        self.leaf(n, "List")
+
+    def visit_Map(self, n):
+        self.leaf(n, "Map")
 
 class AttrType:
 
@@ -271,9 +271,22 @@ class Resolver:
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:
-            element_te = l.elements[0].resolved
-            list_te = l.resolved
-            list_te.bindings[list_te.type.parameters[0]] = element_te
+            element_texp = l.elements[0].resolved
+            list_texp = l.resolved
+            list_texp.bindings[list_texp.type.parameters[0]] = element_texp
+
+    def leave_Map(self, m):
+        if not m.entries: return
+        entry = m.entries[0]
+        map_texp = m.resolved
+        if entry.key.resolved:
+            key_texp = entry.key.resolved
+            value_texp = entry.value.resolved
+            key_param, value_param = map_texp.type.parameters
+            if key_texp:
+                map_texp.bindings[key_param] = key_texp
+            if value_texp:
+                map_texp.bindings[value_param] = value_texp
 
 class CompileError(Exception): pass
 
@@ -292,6 +305,10 @@ primitive String {}
 primitive List<T> {
     macro void add(T element) ${($self).add($element)};
     macro T get(int index) ${($self).get($index)};
+}
+primitive Map<K,V> {
+    macro void put(K key, V value) ${($self).put(($key), ($value))};
+    macro V get(K key) ${($self).get($key)};
 }
 macro void print(String msg) ${System.out.println($msg)};
 """

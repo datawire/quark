@@ -59,11 +59,15 @@ Root(
  ),
 
  File(
-  Function(Type(Name(int)), Name(f), Block()),
-
-  Function(Type(Name(void)), Name(g), Block(
+  Function(Type(Name(void)), Name(test), Block(
     Local(
-     Declaration(Type(Name(int)), Name(x), Call(Var(Name(f), $type=1.f),
-      $type=0.int), $type=0.int))))
+     Declaration(Type(Name(Map), Type(Name(String)), Type(Name(int))),
+      Name(map), Call(Type(Name(Map), Type(Name(String)), Type(Name(int))),
+      $type=0.Map<0.String,0.int>), $type=0.Map<0.String,0.int>)),
+    ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>), Name(put),
+      $type=0.Map.put), String("pi", $type=0.String), Number(3, $type=0.int),
+     $type=0.void)),
+    ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>), Name(get),
+      $type=0.Map.get), String("pi", $type=0.String), $type=0.int))))
  )
 )

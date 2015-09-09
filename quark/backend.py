@@ -168,7 +168,8 @@ class ClassRenderer(object):
 
     def __init__(self):
         self.namer = SubstitutionNamer({"self": "this", "int": "Integer",
-                                        "List": "java.util.ArrayList"})
+                                        "List": "java.util.ArrayList",
+                                        "Map": "java.util.HashMap"})
         self.exprr = ExprRenderer(self.namer)
 
     def Class(self, c):
