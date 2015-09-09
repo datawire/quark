@@ -187,7 +187,7 @@ class Use:
     def leave_Type(self, t):
         type = self.lookup(t)
         bindings = {}
-        if t.parameters:
+        if type and t.parameters:
             idx = 0
             for p in type.parameters:
                 bindings[p] = t.parameters[idx].resolved
