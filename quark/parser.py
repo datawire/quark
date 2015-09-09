@@ -24,10 +24,13 @@ class Parser:
                 "return", "macro", "new"]
     symbols = {"LBR": "{",
                "RBR": "}",
+               "LBK": "[",
+               "RBK": "]",
                "LPR": "(",
                "RPR": ")",
                "LA": "<",
                "RA": ">",
+               "COLON": ":",
                "COMMA": ",",
                "SEMI": ";",
                "EQ": "=",
@@ -349,7 +352,7 @@ class Parser:
     def visit_var(self, node, (name, _)):
         return Var(name)
 
-    @g.rule('literal = number / string')
+    @g.rule('literal = number / string / list / map')
     def visit_literal(self, node, (literal,)):
         return literal
 
@@ -369,6 +372,30 @@ class Parser:
     @g.rule(r'STRING = ~"\"[^\"]*\""')
     def visit_STRING(self, node, children):
         return node.text
+
+    @g.rule('list = LBK exprs? RBK')
+    def visit_list(self, node, (l, opt, r)):
+        if opt:
+            exprs = opt[0]
+        else:
+            exprs = []
+        return List(exprs)
+
+    @g.rule('map = LBR entries? RBR')
+    def visit_map(self, node, (l, opt, r)):
+        if opt:
+            entries = opt[0]
+        else:
+            entries = []
+        return Map(entries)
+
+    @g.rule('entries = entry (COMMA entry)*')
+    def visit_entries(self, node, (first, rest)):
+        return [first] + [n[-1] for n in rest]
+
+    @g.rule('entry = expr COLON expr')
+    def visit_entry(self, node, (key, _, value)):
+        return Entry(key, value)
 
     def flatten(self, stuff, result):
         for s in stuff:

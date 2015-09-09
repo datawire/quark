@@ -344,6 +344,12 @@ class Call(Expression):
             yield a
 
 class Literal(Expression):
+    pass
+
+class CompoundLiteral(Literal):
+    pass
+
+class PrimitiveLiteral(Literal):
 
     def __init__(self, text):
         self.text = text
@@ -352,11 +358,40 @@ class Literal(Expression):
     def children(self):
         if False: yield
 
-class Number(Literal):
+class Number(PrimitiveLiteral):
     pass
 
-class String(Literal):
+class String(PrimitiveLiteral):
     pass
+
+class List(CompoundLiteral):
+
+    def __init__(self, elements):
+        self.elements = elements
+
+    @property
+    def children(self):
+        return self.elements
+
+class Map(CompoundLiteral):
+
+    def __init__(self, entries):
+        self.entries = entries
+
+    @property
+    def children(self):
+        return self.entries
+
+class Entry(AST):
+
+    def __init__(self, key, value):
+        self.key = key
+        self.value = value
+
+    @property
+    def children(self):
+        yield self.key
+        yield self.value
 
 class Native(Expression):
 
