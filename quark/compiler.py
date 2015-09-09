@@ -215,6 +215,12 @@ class Use:
         if s.resolved is None:
             self.unresolved.append((s, "String"))
 
+    def visit_List(self, l):
+        type = self.lookup(l, "List")
+        l.resolved = texpr(type)
+        if l.resolved is None:
+            self.unresolved.append((l, "List"))
+
 class AttrType:
 
     def __init__(self, errors, attr):
@@ -262,6 +268,12 @@ class Resolver:
     def leave_Call(self, c):
         if c.expr.resolved:
             c.resolved = c.expr.resolved.type.apply(InvokedType(c.expr))
+
+    def leave_List(self, l):
+        if l.elements and l.elements[0].resolved:
+            element_te = l.elements[0].resolved
+            list_te = l.resolved
+            list_te.bindings[list_te.type.parameters[0]] = element_te
 
 class CompileError(Exception): pass
 
