@@ -66,4 +66,4 @@ def test_emit(path):
         actual = subprocess.check_output(["java", "-cp", build, "Functions"])
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
-        assert actual == expected
+        assert expected == actual
