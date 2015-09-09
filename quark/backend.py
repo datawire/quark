@@ -94,6 +94,10 @@ class ExprRenderer(object):
     def String(self, s):
         return s.text
 
+    def List(self, l):
+        return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \
+            (", ".join([e.apply(self) for e in l.elements]))
+
     def Call(self, c):
         type = c.expr.resolved.type
         return type.apply(Invoker(c, self.namer))
