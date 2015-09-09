@@ -18,7 +18,11 @@ import sys, os
 
 for f in sys.argv[1:]:
     name, ext = os.path.splitext(f)
-    os.system("diff -u %s %s" % (name, f))
+    print "==%s==" % name
+    if os.path.exists(name):
+        os.system("diff -u %s %s" % (name, f))
+    else:
+        os.system("diff -u /dev/null %s" % f)
     st = raw_input()
     if st == "y":
         os.system("mv %s %s" % (f, name))
