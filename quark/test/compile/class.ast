@@ -26,6 +26,18 @@ Root(
 
   Primitive(Name(String)),
 
+  Primitive(Name(List), TypeParam(Name(T)),
+
+   MethodMacro(Type(Name(void)), Name(add),
+    Param(Type(Name(T)), Name(element), $type=0.List.T),
+    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
+     Fixed(').add('), Var(Name(element), $type=0.List.T), Fixed(')'))),
+
+   MethodMacro(Type(Name(T)), Name(get),
+    Param(Type(Name(int)), Name(index), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
+     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')')))),
+
   Macro(Type(Name(void)), Name(print),
    Param(Type(Name(String)), Name(msg), $type=0.String),
    Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),

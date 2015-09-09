@@ -163,7 +163,8 @@ class Invoker(object):
 class ClassRenderer(object):
 
     def __init__(self):
-        self.namer = SubstitutionNamer({"self": "this", "int": "Integer"})
+        self.namer = SubstitutionNamer({"self": "this", "int": "Integer",
+                                        "List": "java.util.ArrayList"})
         self.exprr = ExprRenderer(self.namer)
 
     def Class(self, c):

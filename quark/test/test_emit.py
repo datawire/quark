@@ -57,8 +57,13 @@ def test_emit(path):
     jexit = os.system("javac -d %s %s" % (build, " ".join(srcs)))
     assert jexit == 0
 
-    out = base + ".out"
-    if os.path.exists(out):
-        expected = open(out).read()
+    if "main" in c.root.env:
+        out = base + ".out"
+        try:
+            expected = open(out).read()
+        except IOError, e:
+            expected = None
         actual = subprocess.check_output(["java", "-cp", build, "Functions"])
+        if expected != actual:
+            open(out + ".cmp", "write").write(actual)
         assert actual == expected

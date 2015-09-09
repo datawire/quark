@@ -277,6 +277,10 @@ primitive int {
     macro int __eq__(int other) ${($self) == ($other)};
 }
 primitive String {}
+primitive List<T> {
+    macro void add(T element) ${($self).add($element)};
+    macro T get(int index) ${($self).get($index)};
+}
 macro void print(String msg) ${System.out.println($msg)};
 """
 
