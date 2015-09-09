@@ -438,3 +438,6 @@ class Parser:
     def visit___(self, node, children): pass
 
 del g
+
+def rules():
+    print Parser.rules
