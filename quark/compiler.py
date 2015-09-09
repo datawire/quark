@@ -217,12 +217,18 @@ class Use:
 
 class AttrType:
 
-    def __init__(self, attr):
+    def __init__(self, errors, attr):
+        self.errors = errors
         self.attr = attr
 
     def Class(self, c):
-        tgt = c.env[self.attr.attr.text].resolved
-        return texpr(tgt.type, self.attr.expr.resolved.bindings, tgt.bindings)
+        name = self.attr.attr.text
+        if name in c.env:
+            tgt = c.env[name].resolved
+            return texpr(tgt.type, self.attr.expr.resolved.bindings, tgt.bindings)
+        else:
+            self.errors.append("%s:%s has no such attribute: %s" % (lineinfo(self.attr.attr), c.name.text, name))
+            return None
 
 class InvokedType:
 
@@ -240,6 +246,9 @@ class InvokedType:
 
 class Resolver:
 
+    def __init__(self):
+        self.errors = []
+
     def leave_Declaration(self, d):
         d.resolved = d.type.resolved
 
@@ -247,10 +256,12 @@ class Resolver:
         v.resolved = v.definition.resolved
 
     def leave_Attr(self, a):
-        a.resolved = a.expr.resolved.type.apply(AttrType(a))
+        if a.expr.resolved:
+            a.resolved = a.expr.resolved.type.apply(AttrType(self.errors, a))
 
     def leave_Call(self, c):
-        c.resolved = c.expr.resolved.type.apply(InvokedType(c.expr))
+        if c.expr.resolved:
+            c.resolved = c.expr.resolved.type.apply(InvokedType(c.expr))
 
 class CompileError(Exception): pass
 
@@ -298,7 +309,10 @@ class Compiler:
                     for node, name in use.unresolved]
             raise CompileError("unresolved variables: %s" % ", ".join(vars))
 
-        self.root.traverse(Resolver())
+        res = Resolver()
+        self.root.traverse(res)
+        if res.errors:
+            raise CompileError("\n".join(res.errors))
 
     def emit(self, backend):
         self.root.traverse(backend)
