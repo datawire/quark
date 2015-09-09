@@ -1,0 +1,11 @@
+File(
+ Class(Name(Box), TypeParam(Name(T))),
+
+ Function(Type(Name(void)), Name(test), Block(
+   Local(
+    Declaration(Type(Name(Box), Type(Name(int))), Name(box),
+     Call(Type(Name(Box), Type(Name(int)))))),
+   If(Call(Attr(Call(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b))),
+      Name(__gt__)), Var(Name(c))), Block(
+     ExprStmt(Call(Var(Name(doFoo))))))))
+)

@@ -1,5 +1,5 @@
 public class Arithmetic {
     public void arithmetic() {
-        int x = (2) + (2);
+        Integer x = (2) + (2);
     }
 }

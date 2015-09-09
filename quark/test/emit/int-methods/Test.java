@@ -1,8 +1,8 @@
 public class Test {
     public void test() {
-        int x = 1;
-        int y = 2;
-        int z = (((x) + (y)) - (3)) * (4);
-        int four = (2) + (2);
+        Integer x = 1;
+        Integer y = 2;
+        Integer z = (((x) + (y)) - (3)) * (4);
+        Integer four = (2) + (2);
     }
 }

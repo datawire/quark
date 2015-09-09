@@ -1,5 +1,5 @@
 public class Functions {
-    public static int factorial(int n) {
+    public static Integer factorial(Integer n) {
         if ((n) == (0)) {
             return 1;
         } else {

@@ -20,7 +20,8 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "interface", "primitive", "extends", "return", "macro"]
+    keywords = ["package", "class", "interface", "primitive", "extends",
+                "return", "macro", "new"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LPR": "(",
@@ -317,25 +318,32 @@ class Parser:
     def visit_attrmod(self, node, (_, name)):
         return name
 
-    @g.rule('callmod = LPR (expr (COMMA expr)*)? RPR')
+    @g.rule('callmod = LPR exprs? RPR')
     def visit_callmod(self, node, (l, args, r)):
         if args:
-            args = args[0]
-            if args[1]:
-                args[1:] = map(lambda x: x[-1], args[1])
-            else:
-                del args[1]
+            return args[0]
         else:
-            args = []
-        return args
+            return []
 
-    @g.rule('atom = paren / var / literal / native')
+    @g.rule('exprs = expr (COMMA expr)*')
+    def visit_exprs(self, node, (first, rest)):
+        return [first] + [n[-1] for n in rest]
+
+    @g.rule('atom = paren / constructor / var / literal / native')
     def visit_atom(self, node, (atom,)):
         return atom
 
     @g.rule('paren = LPR expr RPR')
     def visit_paren(self, node, (l, expr, r)):
         return expr
+
+    @g.rule('constructor = NEW type LPR exprs? RPR')
+    def visit_constructor(self, node, (_, type, l, args, r)):
+        if args:
+            args = args[0]
+        else:
+            args = []
+        return Call(type, args)
 
     @g.rule('var = name ""')
     def visit_var(self, node, (name, _)):

@@ -63,7 +63,11 @@ class NameRenderer(object):
         return n.text
 
     def Type(self, t):
-        return t.name.apply(self)
+        if t.parameters:
+            params = [p.apply(self) for p in t.parameters]
+            return "%s<%s>" % (t.name.apply(self), ",".join(params))
+        else:
+            return t.name.apply(self)
 
     def Var(self, v):
         return v.name.apply(self)
@@ -96,6 +100,9 @@ class ExprRenderer(object):
 
     def Attr(self, a):
         return "(%s).%s" % (a.expr.apply(self), a.attr.text)
+
+    def Type(self, t):
+        return t.apply(self.namer)
 
     def Var(self, v):
         return v.apply(self.namer)
@@ -156,13 +163,19 @@ class Invoker(object):
 class ClassRenderer(object):
 
     def __init__(self):
-        self.namer = NameRenderer()
+        self.namer = SubstitutionNamer({"self": "this", "int": "Integer"})
         self.exprr = ExprRenderer(self.namer)
 
     def Class(self, c):
         name = c.name.apply(self.namer)
+        params = ""
+        if c.parameters:
+            params = "<%s>" % (", ".join([p.apply(self) for p in c.parameters]))
         body = "\n".join([d.apply(self) for d in c.definitions])
-        return "public class %s {%s}" % (name, indent(body))
+        return "public class %s%s {%s}" % (name, params, indent(body))
+
+    def TypeParam(self, p):
+        return p.name.apply(self.namer)
 
     def Block(self, b):
         return "\n".join([s.apply(self) for s in b.statements])
@@ -190,6 +203,9 @@ class ClassRenderer(object):
         else:
             return "%s %s" % (type, name)
 
+    def Field(self, f):
+        return "%s;" % self.Declaration(f)
+
     def Return(self, r):
         return "return %s;" % r.expr.apply(self.exprr)
 
@@ -201,6 +217,9 @@ class ClassRenderer(object):
 
     def Assign(self, a):
         return "%s = %s;" % (a.lhs.apply(self), a.rhs.apply(self.exprr))
+
+    def Attr(self, a):
+        return "(%s).%s" % (a.expr.apply(self.exprr), a.attr.text)
 
     def Var(self, v):
         return v.apply(self.namer)
