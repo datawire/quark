@@ -5,49 +5,52 @@ Root(
   Primitive(Name(int),
 
    MethodMacro(Type(Name(int)), Name(__add__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') + ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__sub__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') - ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__mul__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') * ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')')))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
+     Var(Name(other), $type=0.int), Fixed(')')))),
 
   Primitive(Name(String)),
 
   Macro(Type(Name(void)), Name(print),
-   Param(Type(Name(String)), Name(msg)),
-   Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
+   Param(Type(Name(String)), Name(msg), $type=0.String),
+   Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),
     Fixed(')')))
  ),
 
  File(
-  Macro(Type(Name(int)), Name(pi), Number(3, $type=Primitive:int)),
+  Macro(Type(Name(int)), Name(pi), Number(3, $type=0.int)),
 
   Function(Type(Name(void)), Name(test), Block(
-    Local(Declaration(Type(Name(int)), Name(x), Call(Var(Name(pi),
-       $type=Macro:1.pi), $type=Primitive:int))))),
+    Local(
+     Declaration(Type(Name(int)), Name(x), Call(Var(Name(pi), $type=1.pi),
+      $type=0.int), $type=0.int)))),
 
   Class(Name(Pie),
 
-   MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=Primitive:int)),
+   MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=0.int)),
 
    Method(Type(Name(void)), Name(test), Block(
-     Local(Declaration(Type(Name(Pie)), Name(p), Call(Var(Name(Pie),
-        $type=Class:1.Pie), $type=Class:1.Pie))),
-     Local(Declaration(Type(Name(int)), Name(x), Call(Attr(Var(Name(p),
-         $type=Class:1.Pie), Name(slice), $type=MethodMacro:1.Pie.slice),
-       $type=Primitive:int))))))
+     Local(
+      Declaration(Type(Name(Pie)), Name(p), Call(Var(Name(Pie), $type=1.Pie),
+       $type=1.Pie), $type=1.Pie)),
+     Local(
+      Declaration(Type(Name(int)), Name(x), Call(Attr(Var(Name(p),
+         $type=1.Pie), Name(slice), $type=1.Pie.slice), $type=0.int),
+      $type=0.int)))))
  )
 )

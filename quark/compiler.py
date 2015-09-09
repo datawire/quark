@@ -12,13 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ast import AST, Definition
+from .ast import AST, Definition, Param, TypeParam
 from .parser import Parser
 
 class Root(AST):
 
     def __init__(self, *primitives):
         self.parent = None
+        self.index = 0
         self.primitives = primitives
         self.files = []
 
@@ -38,18 +39,21 @@ class InitParent:
         self.stack = []
         self.count = 0
 
+    def name(self, ast):
+        if isinstance(ast, (Definition, Param, TypeParam)):
+            return ast.name.text
+        else:
+            return str(ast.index)
+
     def visit_AST(self, ast):
         ast.resolved = None
         ast.count = 0
         if self.stack:
             ast.parent = self.stack[-1]
+            ast.index = ast.parent.count
+            ast.parent.count += 1
         self.stack.append(ast)
-        if isinstance(ast, Definition):
-            ast.id = str(ast.name)
-        else:
-            if ast.parent:
-                ast.id = ast.parent.count
-                ast.parent.count += 1
+        ast.id = ".".join([self.name(a) for a in self.stack[1:]])
 
     def leave_AST(self, ast):
         self.stack.pop()
@@ -112,6 +116,47 @@ class Def:
     def visit_Declaration(self, d):
         self.define(d.env, d)
 
+class TypePP:
+
+    def __init__(self, bindings):
+        self.bindings = bindings
+
+    def Class(self, c):
+        if c.parameters:
+            params = [repr(self.bindings.get(p, p)) for p in c.parameters]
+            return "%s<%s>" % (c.id, ",".join(params))
+        else:
+            return c.id
+
+    def Callable(self, c):
+        return c.id
+
+    def TypeParam(self, p):
+        return p.id
+
+class TypeExpr:
+
+    def __init__(self, type, bindings):
+        self.type = type
+        self.bindings = bindings
+
+    @property
+    def id(self):
+        return self.type.apply(TypePP(self.bindings))
+
+    def __repr__(self):
+        return self.id
+
+def texpr(type, *bindingses):
+    bindings = {}
+    for b in bindingses:
+        bindings.update(b)
+    while type in bindings:
+        expr = bindings[type]
+        bindings.update(expr.bindings)
+        type = expr.type
+    return TypeExpr(type, bindings)
+
 class Use:
 
     def __init__(self):
@@ -128,18 +173,30 @@ class Use:
         return None
 
     def visit_Class(self, c):
-        c.resolved = c
+        c.resolved = texpr(c)
 
     def visit_Function(self, f):
-        f.resolved = f
+        f.resolved = texpr(f)
 
     def visit_Macro(self, m):
-        m.resolved = m
+        m.resolved = texpr(m)
 
-    def visit_Type(self, t):
-        t.resolved = self.lookup(t)
-        if t.resolved is None:
+    def visit_TypeParam(self, t):
+        t.resolved = texpr(t)
+
+    def leave_Type(self, t):
+        type = self.lookup(t)
+        bindings = {}
+        if t.parameters:
+            idx = 0
+            for p in type.parameters:
+                bindings[p] = t.parameters[idx].resolved
+                idx += 1
+        if type is None:
+            t.resolved = None
             self.unresolved.append((t.name, t.name.text))
+        else:
+            t.resolved = texpr(type.resolved.type, bindings, type.resolved.bindings)
 
     def visit_Var(self, v):
         v.definition = self.lookup(v)
@@ -147,25 +204,39 @@ class Use:
             self.unresolved.append((v.name, v.name.text))
 
     def visit_Number(self, n):
-        n.resolved = self.lookup(n, "int")
+        type = self.lookup(n, "int")
+        n.resolved = texpr(type)
         if n.resolved is None:
             self.unresolved.append((n, "int"))
 
     def visit_String(self, s):
-        s.resolved = self.lookup(s, "String")
+        type = self.lookup(s, "String")
+        s.resolved = texpr(type)
         if s.resolved is None:
             self.unresolved.append((s, "String"))
 
-class InvokedType:
+class AttrType:
 
-    def Function(self, f):
-        return f.type.resolved
+    def __init__(self, attr):
+        self.attr = attr
 
     def Class(self, c):
-        return c
+        tgt = c.env[self.attr.attr.text].resolved
+        return texpr(tgt.type, self.attr.expr.resolved.bindings, tgt.bindings)
+
+class InvokedType:
+
+    def __init__(self, expr):
+        self.expr = expr
+
+    def Function(self, f):
+        return texpr(f.type.resolved.type, self.expr.resolved.bindings)
+
+    def Class(self, c):
+        return texpr(c, self.expr.resolved.bindings)
 
     def Macro(self, m):
-        return m.type.resolved
+        return texpr(m.type.resolved.type, self.expr.resolved.bindings)
 
 class Resolver:
 
@@ -176,14 +247,10 @@ class Resolver:
         v.resolved = v.definition.resolved
 
     def leave_Attr(self, a):
-        a.resolved = a.expr.resolved.env[a.attr.text].resolved
-
-    def leave_Binop(self, b):
-        # XXX
-        b.resolved = b.left.resolved
+        a.resolved = a.expr.resolved.type.apply(AttrType(a))
 
     def leave_Call(self, c):
-        c.resolved = c.expr.resolved.apply(InvokedType())
+        c.resolved = c.expr.resolved.type.apply(InvokedType(c.expr))
 
 class CompileError(Exception): pass
 

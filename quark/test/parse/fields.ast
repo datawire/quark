@@ -1,17 +1,23 @@
 File(
- Class(Name(A), Field(Type(Name(int)), Name(x))),
+ Class(Name(A),
+  Field(Type(Name(int)), Name(x))),
 
- Class(Name(B), Field(Type(Name(int)), Name(x)), Field(Type(Name(float)),
-   Name(y))),
+ Class(Name(B),
+  Field(Type(Name(int)), Name(x)),
+  Field(Type(Name(float)), Name(y))),
 
- Class(Name(C), Field(Type(Name(int)), Name(x)),
+ Class(Name(C),
+  Field(Type(Name(int)), Name(x)),
 
   Method(Type(Name(void)), Name(method), Block()),
   Field(Type(Name(float)), Name(y))),
 
- Class(Name(D), Field(Type(Name(int)), Name(x), Call(Var(Name(foo))))),
+ Class(Name(D),
+  Field(Type(Name(int)), Name(x), Call(Var(Name(foo))))),
 
- Class(Name(E), Field(Type(Name(int)), Name(x), Number(3))),
+ Class(Name(E),
+  Field(Type(Name(int)), Name(x), Number(3))),
 
- Class(Name(F), Field(Type(Name(String)), Name(x), String("pie")))
+ Class(Name(F),
+  Field(Type(Name(String)), Name(x), String("pie")))
 )

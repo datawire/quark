@@ -5,38 +5,38 @@ Root(
   Primitive(Name(int),
 
    MethodMacro(Type(Name(int)), Name(__add__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') + ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') + ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__sub__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') - ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') - ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__mul__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') * ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')'))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') * ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(int)), Name(other)),
-    Native(Fixed('('), Var(Name(self), $type=Primitive:int), Fixed(') == ('),
-     Var(Name(other), $type=Primitive:int), Fixed(')')))),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
+     Var(Name(other), $type=0.int), Fixed(')')))),
 
   Primitive(Name(String)),
 
   Macro(Type(Name(void)), Name(print),
-   Param(Type(Name(String)), Name(msg)),
-   Native(Fixed('System.out.println('), Var(Name(msg), $type=Primitive:String),
+   Param(Type(Name(String)), Name(msg), $type=0.String),
+   Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),
     Fixed(')')))
  ),
 
  File(
   Function(Type(Name(void)), Name(f),
-   Param(Type(Name(int)), Name(a)),
-   Param(Type(Name(int)), Name(b)),
-   Param(Type(Name(int)), Name(c)),
+   Param(Type(Name(int)), Name(a), $type=0.int),
+   Param(Type(Name(int)), Name(b), $type=0.int),
+   Param(Type(Name(int)), Name(c), $type=0.int),
    Block())
  )
 )

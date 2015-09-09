@@ -61,18 +61,24 @@ class AST(object):
         return self.lookup(transform, default=default)(self)
 
     def __repr__(self):
-        r = _Repr()
-        self.traverse(r)
-        return r.output
+        if hasattr(self, "id"):
+            return self.id
+        else:
+            return "%s:%s" % (self.__class__.__name__, id(self))
 
-class _Repr(object):
+    def __str__(self):
+        pp = _PPrinter()
+        self.traverse(pp)
+        return pp.output
+
+class _PPrinter(object):
 
     def __init__(self, width=80):
         self.width = width
         self.out = ""
         self.stack = []
         self.first = True
-        self.wrap = (File, Definition, Statement, Param)
+        self.wrap = (File, Definition, Statement, Declaration)
         self.previous = None
 
     def merge(self, previous, line):
@@ -121,27 +127,18 @@ class _Repr(object):
         elif hasattr(ast, "text"):
             self.append(ast.text)
 
-    def qid(self, ast):
-        if ast.parent:
-            pid = self.qid(ast.parent)
-            if pid:
-                return "%s.%s" % (pid, ast.id)
-            else:
-                return ast.id
-        else:
-            return ""
-
     def refstr(self, ast):
         if ast is None:
             return None
         else:
-            return "%s:%s" % (ast.__class__.__name__, self.qid(ast))
+            return "%s:%s" % (ast.__class__.__name__, ast.id)
 
     def leave_AST(self, ast):
         self.first = self.stack.pop()[-1]
-        if isinstance(ast, Expression) and not isinstance(ast, (Fixed, Native)):
+        if (isinstance(ast, (Expression, Declaration)) and
+            not isinstance(ast, (Fixed, Native))):
             if hasattr(ast, "resolved"):
-                self.append(",\n$type=%s" % self.refstr(ast.resolved))
+                self.append(",\n$type=%s" % ast.resolved)
         if isinstance(ast, File) or not self.stack:
             self.append("\n\n")
         self.append(")")

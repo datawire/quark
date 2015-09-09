@@ -91,11 +91,11 @@ class ExprRenderer(object):
         return s.text
 
     def Call(self, c):
-        type = c.expr.resolved
+        type = c.expr.resolved.type
         return type.apply(Invoker(c, self.namer))
 
     def Attr(self, a):
-        return "(%s).%s" % (a.expr.apply(self), a.attr)
+        return "(%s).%s" % (a.expr.apply(self), a.attr.text)
 
     def Var(self, v):
         return v.apply(self.namer)
@@ -131,7 +131,7 @@ class Invoker(object):
         return self.call.expr.expr.apply(ExprRenderer(self.namer))
 
     def Method(self, m):
-        return "(%s).%s(%s)" % (self.self_, m.name, ", ".join(self.args))
+        return "(%s).%s(%s)" % (self.self_, m.name.text, ", ".join(self.args))
 
     def Macro(self, m):
         # macros are evaluated at compile time, so we don't use expr
