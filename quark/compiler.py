@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from .ast import AST, Definition, Param, TypeParam
-from .parser import Parser
+from .parser import Parser, ParseError
 
 class Root(AST):
 
@@ -83,13 +83,15 @@ class Def:
     def __init__(self):
         self.duplicates = []
 
-    def define(self, env, node, name=None):
+    def define(self, env, node, name=None, leaf=True):
         if name is None:
             name = node.name.text
         if name in env:
             self.duplicates.append((node, name, env[name]))
         else:
             env[name] = node
+        if leaf:
+            node.resolved = texpr(node)
 
     def visit_Package(self, p):
         self.define(p.parent.env, p)
@@ -114,7 +116,8 @@ class Def:
         self.define(mm.env, mm.parent, "self")
 
     def visit_Declaration(self, d):
-        self.define(d.env, d)
+        self.define(d.env, d, leaf=False)
+
 
 class TypePP:
 
@@ -174,21 +177,6 @@ class Use:
             else:
                 node = node.parent
         return None
-
-    def visit_Package(self, p):
-        p.resolved = texpr(p)
-
-    def visit_Class(self, c):
-        c.resolved = texpr(c)
-
-    def visit_Function(self, f):
-        f.resolved = texpr(f)
-
-    def visit_Macro(self, m):
-        m.resolved = texpr(m)
-
-    def visit_TypeParam(self, t):
-        t.resolved = texpr(t)
 
     def leave_Type(self, t):
         type = self.lookup(t, t.path[0].text)
@@ -364,3 +352,59 @@ class Compiler:
 
     def emit(self, backend):
         self.root.traverse(backend)
+
+from docopt import docopt
+from backend import Java
+
+def write_files(backend, target):
+    if not os.path.exists(target):
+        os.makedirs(target)
+    for name, content in j.files.items():
+        path = os.path.join(target, name)
+        dir = os.path.dirname(path)
+        if not os.path.exists(dir):
+            os.path.makedirs(dir)
+        open(path, "write").write(content)
+
+def _main(args):
+    srcs = args["<file>"]
+    c = Compiler()
+    for src in srcs:
+        try:
+            content = open(src).read()
+        except IOError, e:
+            return e
+        try:
+            c.parse(content)
+        except ParseError, e:
+            return e
+    try:
+        c.compile()
+    except CompileError, e:
+        return e
+    java = args["--java"]
+    if java:
+        j = Java()
+        c.emit(j)
+        try:
+            write_files(j, java)
+        except IOError, e:
+            return e
+
+def main():
+    """
+Quark compiler.
+
+Usage:
+  quark [--java=<dir>] [--python=<dir>] [--ruby=<dir>] <file> ...
+  quark -h | --help
+  quark --version
+
+Options:
+  -h --help       Show this screen.
+  --version       Show version.
+  --java=<dir>    Emit java code to specified directory.
+  --python=<dir>  Emit python code to specified directory.
+  --ruby=<dir>    Emit ruby code to specified directory.
+"""
+    exit(_main(docopt(main.__doc__)))

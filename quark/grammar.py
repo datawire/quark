@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import parsimonious
+from parsimonious import ParseError
 
 class Grammar:
 

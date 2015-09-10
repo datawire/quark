@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from .ast import *
+from grammar import ParseError
 import grammar
 
 g = grammar.Grammar()
