@@ -47,6 +47,8 @@ def test_emit(path):
         os.makedirs(base)
     expected = walk(base)
     srcs = []
+
+    assertions = []
     for name in j.files:
         path = os.path.join(base, name)
         srcs.append(path)
@@ -59,8 +61,10 @@ def test_emit(path):
             if not os.path.exists(os.path.dirname(path)):
                 os.makedirs(os.path.dirname(path))
             open(path + ".cmp", "write").write(computed)
-        assert saved == computed
+        assertions.append((saved, computed))
 
+    for saved, computed in assertions:
+        assert saved == computed
     assert len(j.files) == len(expected)
 
     build = os.path.join(base, "build")

@@ -20,7 +20,7 @@ package test2 {
         }
     }
 
-    void g() {
+    void go() {
         Test t = new Test("Hello World!!");
         print(t.name);
     }

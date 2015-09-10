@@ -256,7 +256,7 @@ class ClassRenderer(object):
         return "\n".join([s.apply(self) for s in b.statements])
 
     def Function(self, m):
-        type = m.type.apply(self.namer)
+        type = "%s " % m.type.apply(self.namer) if m.type else ""
         name = m.name.apply(self.namer)
         params = ", ".join([p.apply(self) for p in m.params])
         body = " {%s}" % indent(m.body.apply(self)) if m.body else ";"
@@ -264,7 +264,7 @@ class ClassRenderer(object):
             mods = "public"
         else:
             mods = "public static"
-        return "%s %s %s(%s)%s" % (mods, type, name, params, body)
+        return "%s %s%s(%s)%s" % (mods, type, name, params, body)
 
     def MethodMacro(self, mm):
         return ""

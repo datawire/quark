@@ -22,7 +22,7 @@ File(
     Block(
      Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name)))))),
 
-  Function(Type(Name(void)), Name(g), Block(
+  Function(Type(Name(void)), Name(go), Block(
     Local(
      Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
        String("Hello World!!")))),

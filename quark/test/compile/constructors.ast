@@ -1,0 +1,140 @@
+Root(
+ File(
+  Primitive(Name(void)),
+
+  Primitive(Name(int),
+
+   MethodMacro(Type(Name(int)), Name(__add__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') + ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__sub__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') - ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__mul__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') * ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
+     Var(Name(other), $type=0.int), Fixed(')')))),
+
+  Primitive(Name(String)),
+
+  Primitive(Name(List), TypeParam(Name(T)),
+
+   MethodMacro(Type(Name(void)), Name(add),
+    Param(Type(Name(T)), Name(element), $type=0.List.T),
+    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
+     Fixed(').add('), Var(Name(element), $type=0.List.T), Fixed(')'))),
+
+   MethodMacro(Type(Name(T)), Name(get),
+    Param(Type(Name(int)), Name(index), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
+     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')')))),
+
+  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
+
+   MethodMacro(Type(Name(void)), Name(put),
+    Param(Type(Name(K)), Name(key), $type=0.Map.K),
+    Param(Type(Name(V)), Name(value), $type=0.Map.V),
+    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
+     Fixed(').put(('), Var(Name(key), $type=0.Map.K), Fixed('), ('),
+     Var(Name(value), $type=0.Map.V), Fixed('))'))),
+
+   MethodMacro(Type(Name(V)), Name(get),
+    Param(Type(Name(K)), Name(key), $type=0.Map.K),
+    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
+     Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')')))),
+
+  Macro(Type(Name(void)), Name(print),
+   Param(Type(Name(String)), Name(msg), $type=0.String),
+   Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),
+    Fixed(')')))
+ ),
+
+ File(
+  Package(Name(test1),
+
+   Class(Name(Test),
+    Field(Type(Name(String)), Name(name), $type=0.String),
+
+    Constructor(Name(Test), Block(
+      Assign(Attr(Var(Name(self), $type=1.test1.Test), Name(name),
+       $type=0.String), String("Hello World!", $type=0.String))))),
+
+   Function(Type(Name(void)), Name(go), Block(
+     Local(
+      Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
+       $type=1.test1.Test), $type=1.test1.Test)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Var(Name(t),
+        $type=1.test1.Test), Name(name), $type=0.String), $type=0.void)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Call(Type(Name(Test)),
+        $type=1.test1.Test), Name(name), $type=0.String), $type=0.void))))),
+
+  Package(Name(test2),
+
+   Class(Name(Test),
+    Field(Type(Name(String)), Name(name), $type=0.String),
+
+    Constructor(Name(Test),
+     Param(Type(Name(String)), Name(name), $type=0.String),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.test2.Test), Name(name),
+       $type=0.String), Var(Name(name), $type=0.String))))),
+
+   Function(Type(Name(void)), Name(go), Block(
+     Local(
+      Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
+        String("Hello World!!", $type=0.String), $type=1.test2.Test),
+      $type=1.test2.Test)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Var(Name(t),
+        $type=1.test2.Test), Name(name), $type=0.String), $type=0.void)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Call(Type(Name(Test)),
+         String("Hello World!!", $type=0.String), $type=1.test2.Test),
+        Name(name), $type=0.String), $type=0.void))))),
+
+  Package(Name(test3),
+
+   Class(Name(Box), TypeParam(Name(T)),
+    Field(Type(Name(T)), Name(contents), $type=1.test3.Box.T),
+
+    Constructor(Name(Box),
+     Param(Type(Name(T)), Name(contents), $type=1.test3.Box.T),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.test3.Box<1.test3.Box.T>),
+        Name(contents), $type=1.test3.Box.T), Var(Name(contents),
+       $type=1.test3.Box.T)))),
+
+    Method(Type(Name(T)), Name(get), Block(
+      Return(Attr(Var(Name(self), $type=1.test3.Box<1.test3.Box.T>),
+        Name(contents), $type=1.test3.Box.T))))),
+
+   Function(Type(Name(void)), Name(go), Block(
+     Local(
+      Declaration(Type(Name(Box), Type(Name(String))), Name(box),
+       Call(Type(Name(Box), Type(Name(String))), String("Hello World!!!",
+        $type=0.String), $type=1.test3.Box<0.String>),
+      $type=1.test3.Box<0.String>)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Call(Attr(Var(Name(box),
+         $type=1.test3.Box<0.String>), Name(get), $type=1.test3.Box.get),
+       $type=0.String), $type=0.void)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Var(Name(box),
+        $type=1.test3.Box<0.String>), Name(contents), $type=0.String),
+      $type=0.void)),
+     ExprStmt(Call(Var(Name(print), $type=0.print),
+       Call(Attr(Call(Type(Name(Box), Type(Name(String))),
+          String("Hello World!!!", $type=0.String),
+         $type=1.test3.Box<0.String>), Name(get), $type=1.test3.Box.get),
+       $type=0.String), $type=0.void)),
+     ExprStmt(Call(Var(Name(print), $type=0.print), Attr(Call(Type(Name(Box),
+          Type(Name(String))), String("Hello World!!!", $type=0.String),
+        $type=1.test3.Box<0.String>), Name(contents), $type=0.String),
+      $type=0.void)))))
+ )
+)
