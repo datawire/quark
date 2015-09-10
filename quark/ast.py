@@ -423,13 +423,14 @@ class Name(AST):
 
 class Type(AST):
 
-    def __init__(self, name, parameters=None):
-        self.name = name
+    def __init__(self, path, parameters=None):
+        self.path = path
         self.parameters = parameters
 
     @property
     def children(self):
-        yield self.name
+        for p in self.path:
+            yield p
         if self.parameters:
             for p in self.parameters:
                 yield p

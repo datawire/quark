@@ -83,7 +83,7 @@ class Parser:
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('pkg_definition = class / function')
+    @g.rule('pkg_definition = package / class / function')
     def visit_pkg_definition(self, node, (dfn,)):
         return dfn
 
@@ -158,13 +158,17 @@ class Parser:
             expr = None
         return Param(type, name, expr)
 
-    @g.rule('type = name (LA types RA)?')
-    def visit_type(self, node, (name, params)):
+    @g.rule('type = dotted_name (LA types RA)?')
+    def visit_type(self, node, (path, params)):
         if params:
             _, types, _ = params[0]
-            return Type(name, types)
+            return Type(path, types)
         else:
-            return Type(name)
+            return Type(path)
+
+    @g.rule('dotted_name = name (DOT name)*')
+    def visit_dotted_name(self, node, (first, rest)):
+        return [first] + [n[-1] for n in rest]
 
     @g.rule('types = type (COMMA type)*')
     def visit_types(self, node, (first, rest)):

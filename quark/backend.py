@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ast import Method
+from .ast import Function, Method, Package
+from collections import OrderedDict
 
 class Backend(object):
 
@@ -27,7 +28,11 @@ class Java(Backend):
         self.functions = []
 
     def visit_Class(self, c):
-        self.files[c.name.text + ".java"] = c.apply(self.classr)
+        pkg = self.classr.namer.package(c)
+        if pkg:
+            self.files["%s/%s.java" % (pkg, c.name.text)] = c.apply(self.classr)
+        else:
+            self.files["%s.java" % c.name.text] = c.apply(self.classr)
 
     def visit_Function(self, f):
         if not isinstance(f, Method):
@@ -35,14 +40,23 @@ class Java(Backend):
 
     def leave_Root(self, r):
         if self.functions:
-            cr = ClassRenderer()
-            functions = []
+            packages = OrderedDict()
             for f in self.functions:
-                functions.append(f.apply(cr))
+                pkg = self.classr.namer.package(f)
+                if pkg in packages:
+                    functions = packages[pkg]
+                else:
+                    functions = []
+                    packages[pkg] = functions
+                functions.append(f.apply(self.classr))
                 if f.name.text == "main":
                     functions.append("public static void main(String[] args) {\n    main();\n}")
-            self.files["Functions.java"] = "public class Functions {%s}" % \
-                                           indent("\n".join(functions))
+            for pkg, functions in packages.items():
+                cls = "public class Functions {%s}" % indent("\n".join(functions))
+                if pkg:
+                    self.files["%s/Functions.java" % pkg.replace(".", "/")] = "package %s;\n\n%s" % (pkg, cls)
+                else:
+                    self.files["Functions.java"] = cls
 
     def visit_Primitive(self, p):
         pass
@@ -65,12 +79,25 @@ class NameRenderer(object):
     def Type(self, t):
         if t.parameters:
             params = [p.apply(self) for p in t.parameters]
-            return "%s<%s>" % (t.name.apply(self), ",".join(params))
+            return "%s<%s>" % (".".join([p.apply(self) for p in t.path]), ",".join(params))
         else:
-            return t.name.apply(self)
+            return ".".join([p.apply(self) for p in t.path])
 
     def Var(self, v):
         return v.name.apply(self)
+
+    def package(self, node):
+        if isinstance(node, Package):
+            me = node.name.apply(self)
+            parent = self.package(node.parent)
+            if parent:
+                return "%s.%s" % (parent, me)
+            else:
+                return me
+        elif node.parent:
+            return self.package(node.parent)
+        else:
+            return None
 
 class SubstitutionNamer(NameRenderer):
 
@@ -82,6 +109,25 @@ class SubstitutionNamer(NameRenderer):
             return self.env[n.text]
         else:
             return n.text
+
+class VarRenderer(object):
+
+    def __init__(self, var, namer):
+        self.var = var
+        self.namer = namer
+
+    def Definition(self, d):
+        return self.var.apply(self.namer)
+
+    def Function(self, d):
+        pkg = self.namer.package(d)
+        if pkg:
+            return "%s.Functions.%s" % (pkg, self.var.apply(self.namer))
+        else:
+            return "Functions.%s" % self.var.apply(self.namer)
+
+    def Declaration(self, d):
+        return self.var.apply(self.namer)
 
 class ExprRenderer(object):
 
@@ -103,19 +149,39 @@ class ExprRenderer(object):
         return type.apply(Invoker(c, self.namer))
 
     def Attr(self, a):
-        return "(%s).%s" % (a.expr.apply(self), a.attr.text)
+        type = a.expr.resolved.type
+        return type.apply(Getter(a, self))
 
     def Type(self, t):
         return t.apply(self.namer)
 
     def Var(self, v):
-        return v.apply(self.namer)
+        return v.definition.apply(VarRenderer(v, self.namer))
 
     def Native(self, n):
         return "".join([c.apply(self) for c in n.children])
 
     def Fixed(self, f):
         return f.text
+
+class Getter(object):
+
+    def __init__(self, attr, exprr):
+        self.attr = attr
+        self.exprr = exprr
+
+    def Class(self, c):
+        expr = self.attr.expr
+        attr = self.attr.attr.text
+        return "(%s).%s" % (expr.apply(self.exprr), attr)
+
+    def Package(self, p):
+        expr = self.attr.expr
+        attr = self.attr.attr.text
+        if isinstance(self.attr.resolved.type, Function):
+            return "%s.Functions.%s" % (expr.apply(self.exprr), attr)
+        else:
+            return "%s.%s" % (expr.apply(self.exprr), attr)
 
 class Invoker(object):
 
@@ -178,7 +244,12 @@ class ClassRenderer(object):
         if c.parameters:
             params = "<%s>" % (", ".join([p.apply(self) for p in c.parameters]))
         body = "\n".join([d.apply(self) for d in c.definitions])
-        return "public class %s%s {%s}" % (name, params, indent(body))
+        cls = "public class %s%s {%s}" % (name, params, indent(body))
+        pkg = self.namer.package(c)
+        if pkg:
+            return "package %s;\n\n%s" % (pkg, cls)
+        else:
+            return cls
 
     def TypeParam(self, p):
         return p.name.apply(self.namer)

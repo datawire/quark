@@ -46,12 +46,12 @@ public class Functions {
         System.out.println(matrix);
     }
     public static void main() {
-        test1();
-        test2();
-        test3();
-        test4();
-        test5();
-        test6();
+        Functions.test1();
+        Functions.test2();
+        Functions.test3();
+        Functions.test4();
+        Functions.test5();
+        Functions.test6();
     }
     public static void main(String[] args) {
         main();

@@ -121,6 +121,9 @@ class TypePP:
     def __init__(self, bindings):
         self.bindings = bindings
 
+    def Package(self, p):
+        return p.id
+
     def Class(self, c):
         if c.parameters:
             params = [repr(self.bindings.get(p, p)) for p in c.parameters]
@@ -172,6 +175,9 @@ class Use:
                 node = node.parent
         return None
 
+    def visit_Package(self, p):
+        p.resolved = texpr(p)
+
     def visit_Class(self, c):
         c.resolved = texpr(c)
 
@@ -185,7 +191,10 @@ class Use:
         t.resolved = texpr(t)
 
     def leave_Type(self, t):
-        type = self.lookup(t)
+        type = self.lookup(t, t.path[0].text)
+        for n in t.path[1:]:
+            type = type.env[n.text]
+
         bindings = {}
         if type and t.parameters:
             idx = 0
@@ -194,7 +203,7 @@ class Use:
                 idx += 1
         if type is None:
             t.resolved = None
-            self.unresolved.append((t.name, t.name.text))
+            self.unresolved.append((t.path[-1], t.path[-1].text))
         else:
             t.resolved = texpr(type.resolved.type, bindings, type.resolved.bindings)
 
@@ -227,14 +236,20 @@ class AttrType:
         self.errors = errors
         self.attr = attr
 
-    def Class(self, c):
+    def lookup(self, n):
         name = self.attr.attr.text
-        if name in c.env:
-            tgt = c.env[name].resolved
+        if name in n.env:
+            tgt = n.env[name].resolved
             return texpr(tgt.type, self.attr.expr.resolved.bindings, tgt.bindings)
         else:
-            self.errors.append("%s:%s has no such attribute: %s" % (lineinfo(self.attr.attr), c.name.text, name))
+            self.errors.append("%s:%s has no such attribute: %s" % (lineinfo(self.attr.attr), n.name.text, name))
             return None
+
+    def Package(self, p):
+        return self.lookup(p)
+
+    def Class(self, c):
+        return self.lookup(c)
 
 class InvokedType:
 

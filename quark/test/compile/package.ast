@@ -65,6 +65,10 @@ Root(
     Param(Type(Name(int)), Name(a), $type=0.int),
     Param(Type(Name(int)), Name(b), $type=0.int),
     Param(Type(Name(String)), Name(c), $type=0.String),
-    Block()))
+    Block())),
+
+  Function(Type(Name(void)), Name(main), Block(
+    ExprStmt(Call(Attr(Var(Name(p), $type=1.p), Name(f), $type=1.p.f),
+     $type=0.void))))
  )
 )

@@ -21,6 +21,16 @@ directory = os.path.join(os.path.dirname(__file__), "emit")
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
 
+def walker(result, dir, fnames):
+    for f in fnames:
+        if f.endswith(".java"):
+            result.append(f)
+
+def walk(dir):
+    result = []
+    os.path.walk(dir, walker, result)
+    return result
+
 @pytest.fixture(params=paths)
 def path(request):
     return request.param
@@ -35,7 +45,7 @@ def test_emit(path):
     c.emit(j)
     if not os.path.exists(base):
         os.makedirs(base)
-    expected = [name for name in os.listdir(base) if name.endswith(".java")]
+    expected = walk(base)
     srcs = []
     for name in j.files:
         path = os.path.join(base, name)
@@ -46,8 +56,10 @@ def test_emit(path):
         except IOError, e:
             saved = None
         if saved != computed:
+            if not os.path.exists(os.path.dirname(path)):
+                os.makedirs(os.path.dirname(path))
             open(path + ".cmp", "write").write(computed)
-        assert computed == saved
+        assert saved == computed
 
     assert len(j.files) == len(expected)
 

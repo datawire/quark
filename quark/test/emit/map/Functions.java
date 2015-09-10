@@ -5,7 +5,7 @@ public class Functions {
         System.out.println((map).get("pi"));
     }
     public static void main() {
-        test1();
+        Functions.test1();
     }
     public static void main(String[] args) {
         main();

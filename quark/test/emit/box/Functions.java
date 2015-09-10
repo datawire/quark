@@ -52,22 +52,22 @@ public class Functions {
     }
     public static void main() {
         System.out.println("test1:\n--");
-        test1();
+        Functions.test1();
         System.out.println("");
         System.out.println("test2:\n--");
-        test2();
+        Functions.test2();
         System.out.println("");
         System.out.println("test3:\n--");
-        test3();
+        Functions.test3();
         System.out.println("");
         System.out.println("test4:\n--");
-        test4();
+        Functions.test4();
         System.out.println("");
         System.out.println("test5:\n--");
-        test5();
+        Functions.test5();
         System.out.println("");
         System.out.println("test6:\n--");
-        test6();
+        Functions.test6();
     }
     public static void main(String[] args) {
         main();
