@@ -24,7 +24,14 @@ Root(
     Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
      Var(Name(other), $type=0.int), Fixed(')')))),
 
-  Primitive(Name(String)),
+  Primitive(Name(Object)),
+
+  Primitive(Name(String),
+
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(String)), Name(other), $type=0.String),
+    Native(Fixed('('), Var(Name(self), $type=0.String), Fixed(').equals('),
+     Var(Name(other), $type=0.String), Fixed(')')))),
 
   Primitive(Name(List), TypeParam(Name(T)),
 

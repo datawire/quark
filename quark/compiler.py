@@ -304,7 +304,10 @@ primitive int {
     macro int __mul__(int other) ${($self) * ($other)};
     macro int __eq__(int other) ${($self) == ($other)};
 }
-primitive String {}
+primitive Object {}
+primitive String {
+    macro int __eq__(String other) ${($self).equals($other)};
+}
 primitive List<T> {
     macro void add(T element) ${($self).add($element)};
     macro T get(int index) ${($self).get($index)};
@@ -353,13 +356,14 @@ class Compiler:
     def emit(self, backend):
         self.root.traverse(backend)
 
+import os
 from docopt import docopt
 from backend import Java
 
 def write_files(backend, target):
     if not os.path.exists(target):
         os.makedirs(target)
-    for name, content in j.files.items():
+    for name, content in backend.files.items():
         path = os.path.join(target, name)
         dir = os.path.dirname(path)
         if not os.path.exists(dir):
