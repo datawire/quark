@@ -112,7 +112,7 @@ class Parser:
     def visit_type_param(self, node, (name, _)):
         return TypeParam(name)
 
-    @g.rule('class_definition = field / method / method_macro')
+    @g.rule('class_definition = field / constructor / method / method_macro')
     def visit_class_definition(self, node, (dfn,)):
         return dfn
 
@@ -123,6 +123,10 @@ class Parser:
         else:
             expr = None
         return Field(type, name, expr)
+
+    @g.rule('constructor = name LPR parameters RPR block')
+    def visit_constructor(self, node, (name, lp, parameters, rp, body)):
+        return Constructor(name, tuple(parameters), body)
 
     @g.rule('method = type name LPR parameters RPR body')
     def visit_method(self, node, (type, name, lp, parameters, rp, body)):
@@ -343,7 +347,7 @@ class Parser:
     def visit_exprs(self, node, (first, rest)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('atom = paren / constructor / var / literal / native')
+    @g.rule('atom = paren / new / var / literal / native')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -351,8 +355,8 @@ class Parser:
     def visit_paren(self, node, (l, expr, r)):
         return expr
 
-    @g.rule('constructor = NEW type LPR exprs? RPR')
-    def visit_constructor(self, node, (_, type, l, args, r)):
+    @g.rule('new = NEW type LPR exprs? RPR')
+    def visit_new(self, node, (_, type, l, args, r)):
         if args:
             args = args[0]
         else:

@@ -220,6 +220,11 @@ class Class(Definition):
 class Method(Function):
     pass
 
+class Constructor(Method):
+
+    def __init__(self, name, params, body):
+        Callable.__init__(self, None, name, params, body)
+
 class MethodMacro(Macro):
     pass
 

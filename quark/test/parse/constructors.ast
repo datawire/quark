@@ -1,11 +1,42 @@
 File(
- Class(Name(Box), TypeParam(Name(T))),
+ Package(Name(test1),
 
- Function(Type(Name(void)), Name(test), Block(
-   Local(
-    Declaration(Type(Name(Box), Type(Name(int))), Name(box),
-     Call(Type(Name(Box), Type(Name(int)))))),
-   If(Call(Attr(Call(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b))),
-      Name(__gt__)), Var(Name(c))), Block(
-     ExprStmt(Call(Var(Name(doFoo))))))))
+  Class(Name(Test),
+   Field(Type(Name(String)), Name(name)),
+
+   Constructor(Name(Test), Block(
+     Assign(Attr(Var(Name(self)), Name(name)), String("Hello World!"))))),
+
+  Function(Type(Name(void)), Name(go), Block(
+    Local(
+     Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test))))),
+    ExprStmt(Call(Var(Name(print)), Attr(Var(Name(t)), Name(name))))))),
+
+ Package(Name(test2),
+
+  Class(Name(Test),
+   Field(Type(Name(String)), Name(name)),
+
+   Constructor(Name(Test),
+    Param(Type(Name(String)), Name(name)),
+    Block(
+     Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name)))))),
+
+  Function(Type(Name(void)), Name(g), Block(
+    Local(
+     Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
+       String("Hello World!!")))),
+    ExprStmt(Call(Var(Name(print)), Attr(Var(Name(t)), Name(name))))))),
+
+ Package(Name(test3),
+
+  Class(Name(Box), TypeParam(Name(T))),
+
+  Function(Type(Name(void)), Name(go), Block(
+    Local(
+     Declaration(Type(Name(Box), Type(Name(int))), Name(box),
+      Call(Type(Name(Box), Type(Name(int)))))),
+    If(Call(Attr(Call(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b))),
+       Name(__gt__)), Var(Name(c))), Block(
+      ExprStmt(Call(Var(Name(doFoo)))))))))
 )
