@@ -124,9 +124,16 @@ class Parser:
             expr = None
         return Field(type, name, expr)
 
-    @g.rule('method = type name LPR parameters RPR block')
+    @g.rule('method = type name LPR parameters RPR body')
     def visit_method(self, node, (type, name, lp, parameters, rp, body)):
         return Method(type, name, tuple(parameters), body)
+
+    @g.rule('body = block / SEMI')
+    def visit_body(self, node, (child,)):
+        if isinstance(child, Block):
+            return child
+        else:
+            return None
 
     @g.rule('method_macro = MACRO type name LPR parameters RPR expr SEMI')
     def visit_method_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):

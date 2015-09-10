@@ -1,0 +1,21 @@
+File(
+ Interface(Name(Foo),
+
+  Method(Type(Name(void)), Name(m1)),
+
+  Method(Type(Name(void)), Name(m2),
+   Param(Type(Name(int)), Name(arg))),
+
+  Method(Type(Name(void)), Name(m3),
+   Param(Type(Name(List), Type(Name(String))), Name(args)))),
+
+ Interface(Name(Bar), TypeParam(Name(T)),
+
+  Method(Type(Name(void)), Name(m1)),
+
+  Method(Type(Name(void)), Name(m2),
+   Param(Type(Name(T)), Name(arg))),
+
+  Method(Type(Name(void)), Name(m3),
+   Param(Type(Name(List), Type(Name(T))), Name(args))))
+)

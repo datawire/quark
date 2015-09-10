@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ast import Function, Method, Package
+from .ast import Function, Interface, Method, Package
 from collections import OrderedDict
 
 class Backend(object):
@@ -59,9 +59,6 @@ class Java(Backend):
                     self.files["Functions.java"] = cls
 
     def visit_Primitive(self, p):
-        pass
-
-    def visit_Interface(self, i):
         pass
 
 def indent(st, level=4):
@@ -244,7 +241,8 @@ class ClassRenderer(object):
         if c.parameters:
             params = "<%s>" % (", ".join([p.apply(self) for p in c.parameters]))
         body = "\n".join([d.apply(self) for d in c.definitions])
-        cls = "public class %s%s {%s}" % (name, params, indent(body))
+        kw = "interface" if isinstance(c, Interface) else "class"
+        cls = "public %s %s%s {%s}" % (kw, name, params, indent(body))
         pkg = self.namer.package(c)
         if pkg:
             return "package %s;\n\n%s" % (pkg, cls)
@@ -261,12 +259,12 @@ class ClassRenderer(object):
         type = m.type.apply(self.namer)
         name = m.name.apply(self.namer)
         params = ", ".join([p.apply(self) for p in m.params])
-        body = m.body.apply(self)
+        body = " {%s}" % indent(m.body.apply(self)) if m.body else ";"
         if isinstance(m, Method):
             mods = "public"
         else:
             mods = "public static"
-        return "%s %s %s(%s) {%s}" % (mods, type, name, params, indent(body))
+        return "%s %s %s(%s)%s" % (mods, type, name, params, body)
 
     def MethodMacro(self, mm):
         return ""
