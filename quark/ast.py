@@ -363,6 +363,9 @@ class PrimitiveLiteral(Literal):
     def children(self):
         if False: yield
 
+class Null(PrimitiveLiteral):
+    pass
+
 class Number(PrimitiveLiteral):
     pass
 

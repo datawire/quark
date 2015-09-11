@@ -1,0 +1,8 @@
+File(
+ Function(Type(Name(void)), Name(test), Block(
+   ExprStmt(Null(null)),
+   ExprStmt(Null(null)),
+   ExprStmt(Var(Name(nullify))),
+   ExprStmt(Var(Name(ifnull))),
+   ExprStmt(Var(Name(ifnullelse)))))
+)

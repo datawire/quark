@@ -22,7 +22,7 @@ g = grammar.Grammar()
 class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
-                "return", "macro", "new"]
+                "return", "macro", "new", "null", "if", "else"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -48,9 +48,7 @@ class Parser:
                "GT": ">",
                "EQL": "==",
                "AND": "&&",
-               "OR": "||",
-               "IF": "if",
-               "ELSE": "else"}
+               "OR": "||"}
 
     aliases = {
         "+": "__add__",
@@ -348,7 +346,7 @@ class Parser:
     def visit_exprs(self, node, (first, rest)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('atom = paren / new / var / literal / native')
+    @g.rule('atom = literal / paren / new / var / native')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -368,7 +366,7 @@ class Parser:
     def visit_var(self, node, (name, _)):
         return Var(name)
 
-    @g.rule('literal = number / string / list / map')
+    @g.rule('literal = number / string / list / map / null')
     def visit_literal(self, node, (literal,)):
         return literal
 
@@ -404,6 +402,10 @@ class Parser:
         else:
             entries = []
         return Map(entries)
+
+    @g.rule('null = NULL ""')
+    def visit_null(self, node, (null, _)):
+        return Null(null)
 
     @g.rule('entries = entry (COMMA entry)*')
     def visit_entries(self, node, (first, rest)):
