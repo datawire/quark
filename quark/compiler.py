@@ -368,9 +368,9 @@ class Compiler:
         use = Use()
         self.root.traverse(use)
         if use.unresolved:
-            vars = ["%s:%s:%s" % (node.line, node.column, name)
+            vars = ["%s: unresolved variable: %s" % (lineinfo(node), name)
                     for node, name in use.unresolved]
-            raise CompileError("unresolved variables: %s" % ", ".join(vars))
+            raise CompileError("\n".join(vars))
 
         res = Resolver()
         self.root.traverse(res)

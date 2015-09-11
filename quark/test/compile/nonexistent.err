@@ -1,1 +1,3 @@
-unresolved variables: 4:13:x, 5:13:nonexistent, 5:34:d
+nonexistent.q:4:13: unresolved variable: x
+nonexistent.q:5:13: unresolved variable: nonexistent
+nonexistent.q:5:34: unresolved variable: d
