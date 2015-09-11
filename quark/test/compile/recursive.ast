@@ -51,7 +51,14 @@ Root(
      Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')'))),
 
    MethodMacro(Type(Name(int)), Name(size), Native(Fixed('('), Var(Name(self),
-     $type=0.List<0.List.T>), Fixed(').size()')))),
+     $type=0.List<0.List.T>), Fixed(').size()'))),
+
+   MethodMacro(Type(Name(int)), Name(__ne__),
+    Param(Type(Name(List), Type(Name(T))), Name(other),
+    $type=0.List<0.List.T>),
+    Native(Fixed('!(('), Var(Name(self), $type=0.List<0.List.T>),
+     Fixed(').equals('), Var(Name(other), $type=0.List<0.List.T>),
+     Fixed('))')))),
 
   Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 

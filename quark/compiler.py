@@ -320,6 +320,7 @@ primitive List<T> {
     macro void add(T element) ${($self).add($element)};
     macro T get(int index) ${($self).get($index)};
     macro int size() ${($self).size()};
+    macro int __ne__(List<T> other) ${!(($self).equals($other))};
 }
 primitive Map<K,V> {
     macro void put(K key, V value) ${($self).put(($key), ($value))};
