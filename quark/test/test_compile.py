@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest
-from quark.compiler import Compiler, CompileError
+from quark.compiler import Compiler, CompileError, ParseError
 
 directory = os.path.join(os.path.dirname(__file__), "compile")
 
@@ -28,12 +28,12 @@ def test_compile(path):
     text = open(path).read()
     base = os.path.splitext(path)[0]
     c = Compiler()
-    c.parse(text)
     try:
+        c.parse(os.path.basename(path), text)
         c.compile()
         expected = base + ".ast"
         computed = str(c.root)
-    except CompileError, e:
+    except (CompileError, ParseError), e:
         expected = base + ".err"
         computed = str(e)
     try:

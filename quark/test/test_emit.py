@@ -39,7 +39,7 @@ def test_emit(path):
     text = open(path).read()
     base = os.path.splitext(path)[0]
     c = Compiler()
-    c.parse(text)
+    c.parse(os.path.basename(path), text)
     c.compile()
     j = Java()
     c.emit(j)

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from .ast import AST, Definition, Param, TypeParam
-from .parser import Parser, ParseError
+from .parser import Parser, ParseError as GParseError
 
 class Root(AST):
 
@@ -298,10 +298,19 @@ class Resolver:
             if value_texp:
                 map_texp.bindings[value_param] = value_texp
 
+class ParseError(Exception): pass
 class CompileError(Exception): pass
 
 def lineinfo(node):
-    return "%s:%s" % (node.line, node.column)
+    return "%s:%s:%s" % (node.filename, node.line, node.column)
+
+class Filename:
+
+    def __init__(self, name):
+        self.name = name
+
+    def visit_AST(self, ast):
+        ast.filename = self.name
 
 BUILTIN = """
 primitive void {}
@@ -334,10 +343,15 @@ class Compiler:
     def __init__(self):
         self.root = Root()
         self.parser = Parser()
-        self.parse(BUILTIN)
+        self.parse("BUILTIN", BUILTIN)
 
-    def parse(self, text):
-        self.root.add(self.parser.parse(text))
+    def parse(self, name, text):
+        try:
+            file = self.parser.parse(text)
+        except GParseError, e:
+            raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
+        file.traverse(Filename(name))
+        self.root.add(file)
 
     def compile(self):
         self.root.traverse(InitParent())
@@ -346,8 +360,8 @@ class Compiler:
         def_ = Def()
         self.root.traverse(def_)
         if def_.duplicates:
-            dups = ["%s:%s: duplicate definition of %s (first definition %s)" %
-                    (node.line, node.column, name, lineinfo(first))
+            dups = ["%s: duplicate definition of %s (first definition %s)" %
+                    (lineinfo(node), name, lineinfo(first))
                     for node, name, first in def_.duplicates]
             raise CompileError("\n".join(dups))
 
@@ -390,7 +404,7 @@ def _main(args):
         except IOError, e:
             return e
         try:
-            c.parse(content)
+            c.parse(src, content)
         except ParseError, e:
             return e
     try:

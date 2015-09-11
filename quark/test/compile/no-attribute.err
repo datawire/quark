@@ -1,2 +1,2 @@
-5:15:Test has no such attribute: nonexistent
-6:15:Test has no such attribute: nosuchmethod
+no-attribute.q:5:15:Test has no such attribute: nonexistent
+no-attribute.q:6:15:Test has no such attribute: nosuchmethod
