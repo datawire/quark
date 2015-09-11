@@ -131,6 +131,9 @@ class ExprRenderer(object):
     def __init__(self, namer):
         self.namer = namer
 
+    def Null(self, n):
+        return n.text
+
     def Number(self, n):
         return n.text
 
@@ -227,6 +230,22 @@ class Invoker(object):
             idx += 1
         return mm.body.apply(ExprRenderer(SubstitutionNamer(env)))
 
+def type_emit(texp, namer):
+    return texp.type.apply(TypeEmit(namer, texp.bindings))
+
+class TypeEmit:
+
+    def __init__(self, namer, bindings):
+        self.namer = namer
+        self.bindings = bindings
+
+    def Class(self, c):
+        if c.parameters:
+            params = [type_emit(self.bindings[p], self.namer) for p in c.parameters]
+            return "%s<%s>" % (c.name.apply(self.namer), ",".join(params))
+        else:
+            return c.name.apply(self.namer)
+
 class ClassRenderer(object):
 
     def __init__(self):
@@ -272,7 +291,7 @@ class ClassRenderer(object):
     def maybe_cast(self, type, expr):
         result = expr.apply(self.exprr)
         if type.resolved.id != expr.resolved.id:
-            result = "(%s) (%s)" % (type.apply(self.namer), result)
+            result = "(%s) (%s)" % (type_emit(type.resolved, self.namer), result)
         return result
 
     def Declaration(self, d):
@@ -297,7 +316,7 @@ class ClassRenderer(object):
         return "%s;" % stmt.expr.apply(self.exprr)
 
     def Assign(self, a):
-        return "%s = %s;" % (a.lhs.apply(self), a.rhs.apply(self.exprr))
+        return "%s = %s;" % (a.lhs.apply(self), self.maybe_cast(a.lhs, a.rhs))
 
     def Attr(self, a):
         return "(%s).%s" % (a.expr.apply(self.exprr), a.attr.text)
@@ -311,3 +330,7 @@ class ClassRenderer(object):
         if i.alternative:
             result += " else {%s}" % indent(i.alternative.apply(self))
         return result
+
+    def While(self, w):
+        return "while (%s) {%s}" % (w.condition.apply(self.exprr),
+                                    indent(w.body.apply(self)))

@@ -22,6 +22,11 @@ Root(
    MethodMacro(Type(Name(int)), Name(__eq__),
     Param(Type(Name(int)), Name(other), $type=0.int),
     Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__lt__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') < ('),
      Var(Name(other), $type=0.int), Fixed(')')))),
 
   Primitive(Name(Object)),
@@ -43,7 +48,10 @@ Root(
    MethodMacro(Type(Name(T)), Name(get),
     Param(Type(Name(int)), Name(index), $type=0.int),
     Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')')))),
+     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(size), Native(Fixed('('), Var(Name(self),
+     $type=0.List<0.List.T>), Fixed(').size()')))),
 
   Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 

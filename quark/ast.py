@@ -293,6 +293,17 @@ class If(Statement):
         yield self.consequence
         yield self.alternative
 
+class While(Statement):
+
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body
+
+    @property
+    def children(self):
+        yield self.condition
+        yield self.body
+
 class ExprStmt(Statement):
 
     def __init__(self, expr):

@@ -210,6 +210,9 @@ class Use:
         if n.resolved is None:
             self.unresolved.append((n, name))
 
+    def visit_Null(self, n):
+        self.leaf(n, "Object")
+
     def visit_Number(self, n):
         self.leaf(n, "int")
 
@@ -307,6 +310,7 @@ primitive int {
     macro int __sub__(int other) ${($self) - ($other)};
     macro int __mul__(int other) ${($self) * ($other)};
     macro int __eq__(int other) ${($self) == ($other)};
+    macro int __lt__(int other) ${($self) < ($other)};
 }
 primitive Object {}
 primitive String {
@@ -315,6 +319,7 @@ primitive String {
 primitive List<T> {
     macro void add(T element) ${($self).add($element)};
     macro T get(int index) ${($self).get($index)};
+    macro int size() ${($self).size()};
 }
 primitive Map<K,V> {
     macro void put(K key, V value) ${($self).put(($key), ($value))};
@@ -373,6 +378,7 @@ def write_files(backend, target):
         if not os.path.exists(dir):
             os.path.makedirs(dir)
         open(path, "write").write(content)
+        print "wrote", path
 
 def _main(args):
     srcs = args["<file>"]

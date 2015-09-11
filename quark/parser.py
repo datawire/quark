@@ -22,7 +22,7 @@ g = grammar.Grammar()
 class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
-                "return", "macro", "new", "null", "if", "else"]
+                "return", "macro", "new", "null", "if", "else", "while"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -196,7 +196,7 @@ class Parser:
     #   Box<int> x; looks like a declaration
     #      vs
     #    a < b > c; looks like a comparison
-    @g.rule('statement = return / assign / local / if / exprstmt')
+    @g.rule('statement = return / assign / local / if / while / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
@@ -246,6 +246,10 @@ class Parser:
     @g.rule('statements = statement*')
     def visit_statements(self, node, children):
         return children
+
+    @g.rule('while = WHILE LPR expr RPR block')
+    def visit_while(self, node, (kw, lp, expr, rp, body)):
+        return While(expr, body)
 
     @g.rule('expr = oroperand (OR oroperand)*')
     def visit_expr(self, node, (result, remaining)):
