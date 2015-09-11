@@ -269,11 +269,17 @@ class ClassRenderer(object):
     def MethodMacro(self, mm):
         return ""
 
+    def maybe_cast(self, type, expr):
+        result = expr.apply(self.exprr)
+        if type.resolved.id != expr.resolved.id:
+            result = "(%s) (%s)" % (type.apply(self.namer), result)
+        return result
+
     def Declaration(self, d):
         type = d.type.apply(self.namer)
         name = d.name.apply(self.namer)
         if d.value:
-            value = d.value.apply(self.exprr)
+            value = self.maybe_cast(d.type, d.value)
             return "%s %s = %s" % (type, name, value)
         else:
             return "%s %s" % (type, name)
@@ -282,7 +288,7 @@ class ClassRenderer(object):
         return "%s;" % self.Declaration(f)
 
     def Return(self, r):
-        return "return %s;" % r.expr.apply(self.exprr)
+        return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
 
     def Local(self, stmt):
         return "%s;" % stmt.declaration.apply(self)

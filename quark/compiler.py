@@ -68,13 +68,17 @@ class InitEnv:
 
     def visit_Function(self, f):
         f.env = {}
+        f.callable = f
 
     def visit_Macro(self, m):
         m.env = {}
+        m.callable = m
 
     def visit_AST(self, ast):
         if ast.parent:
             ast.env = ast.parent.env
+            if hasattr(ast.parent, "callable"):
+                ast.callable = ast.parent.callable
         else:
             ast.env = {}
 
