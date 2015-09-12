@@ -160,18 +160,23 @@ class File(AST):
 ## Definitions
 
 class Definition(AST):
-    pass
+
+    def __init__(self):
+        self.annotations = []
 
 class Package(Definition):
 
     indent = ["definitions"]
 
     def __init__(self, name, definitions):
+        Definition.__init__(self)
         self.name = name
         self.definitions = definitions
 
     @property
     def children(self):
+        for a in self.annotations:
+            yield a
         yield self.name
         for d in self.definitions:
             yield d
@@ -179,6 +184,7 @@ class Package(Definition):
 class Callable(Definition):
 
     def __init__(self, type, name, params, body):
+        Definition.__init__(self)
         self.type = type
         self.name = name
         self.params = params
@@ -186,6 +192,8 @@ class Callable(Definition):
 
     @property
     def children(self):
+        for a in self.annotations:
+            yield a
         yield self.type
         yield self.name
         for p in self.params:
@@ -203,6 +211,7 @@ class Class(Definition):
     indent = ["definitions"]
 
     def __init__(self, name, parameters, base, definitions):
+        Definition.__init__(self)
         self.name = name
         self.parameters = parameters
         self.base = base
@@ -210,6 +219,8 @@ class Class(Definition):
 
     @property
     def children(self):
+        for a in self.annotations:
+            yield a
         yield self.name
         for p in self.parameters:
             yield p
@@ -239,12 +250,15 @@ class Primitive(Class):
 class Declaration(AST):
 
     def __init__(self, type, name, value):
+        self.annotations = []
         self.type = type
         self.name = name
         self.value = value
 
     @property
     def children(self):
+        for a in self.annotations:
+            yield a
         yield self.type
         yield self.name
         yield self.value
@@ -480,3 +494,15 @@ class Block(AST):
     def children(self):
         for s in self.statements:
             yield s
+
+class Annotation(AST):
+
+    def __init__(self, name, arguments):
+        self.name = name
+        self.arguments = arguments
+
+    @property
+    def children(self):
+        yield self.name
+        for a in self.arguments:
+            yield a

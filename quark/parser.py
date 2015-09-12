@@ -49,7 +49,8 @@ class Parser:
                "EQL": "==",
                "NEQ": "!=",
                "AND": "&&",
-               "OR": "||"}
+               "OR": "||",
+               "AT": "@"}
 
     aliases = {
         "+": "__add__",
@@ -75,17 +76,31 @@ class Parser:
     def visit_file(self, node, (definitions, eof)):
         return File(definitions)
 
-    @g.rule('file_definition = package / class / function / macro')
-    def visit_file_definition(self, node, (dfn,)):
+    @g.rule('file_definition = annotation* (package / class / function / macro)')
+    def visit_file_definition(self, node, (annotations, (dfn,))):
+        dfn.annotations = annotations
         return dfn
+
+    @g.rule('annotation = ann_name (LPR exprs RPR)?')
+    def visit_annotation(self, node, (name, opt)):
+        if opt:
+            exprs = opt[0][1]
+        else:
+            exprs = []
+        return Annotation(name, exprs)
+
+    @g.rule('ann_name = AT name_re _')
+    def visit_ann_name(self, node, (a, name, _)):
+        return Name(name)
 
     @g.rule('package = PACKAGE name LBR pkg_definition* RBR')
     def visit_package(self, node, children):
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('pkg_definition = package / class / function')
-    def visit_pkg_definition(self, node, (dfn,)):
+    @g.rule('pkg_definition = annotation* (package / class / function)')
+    def visit_pkg_definition(self, node, (annotations, (dfn,))):
+        dfn.annotations = annotations
         return dfn
 
     @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS name )? LBR class_definition* RBR')
@@ -113,8 +128,9 @@ class Parser:
     def visit_type_param(self, node, (name, _)):
         return TypeParam(name)
 
-    @g.rule('class_definition = field / constructor / method / method_macro')
-    def visit_class_definition(self, node, (dfn,)):
+    @g.rule('class_definition = annotation* (field / constructor / method / method_macro)')
+    def visit_class_definition(self, node, (annotations, (dfn,))):
+        dfn.annotations = annotations
         return dfn
 
     @g.rule('field = type name (EQ expr)? SEMI')
