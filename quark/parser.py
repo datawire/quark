@@ -471,11 +471,8 @@ class Parser:
     def visit_(self, node, children):
         return children
 
-    @g.rule('_ = __?')
+    @g.rule(r'_ = (~"[ \t\n\r]+" / ~"/\*.*?\*/"s / ~"//[^\n]*\n")*')
     def visit__(self, node, children): pass
-
-    @g.rule('__ = ~"[ \t\\n\\r]+"')
-    def visit___(self, node, children): pass
 
 del g
 
