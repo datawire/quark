@@ -14,6 +14,19 @@
 
 import inspect
 
+def copy(node):
+    if node is None:
+        return None
+    elif isinstance(node, tuple):
+        return tuple([copy(n) for n in node])
+    elif isinstance(node, list):
+        return [copy(n) for n in node]
+    else:
+        result = node.copy()
+        if hasattr(node, "annotations"):
+            result.annotations = copy(node.annotations)
+        return result
+
 class AST(object):
 
     indent = []
@@ -57,8 +70,8 @@ class AST(object):
                     c.traverse(visitor)
         leave(self)
 
-    def apply(self, transform, default=None):
-        return self.lookup(transform, default=default)(self)
+    def apply(self, transform, *args, **kwargs):
+        return self.lookup(transform, kwargs.get("default", None))(self, *args, **kwargs)
 
     def __repr__(self):
         if hasattr(self, "id"):
@@ -200,6 +213,10 @@ class Callable(Definition):
             yield p
         yield self.body
 
+    def copy(self):
+        return self.__class__(copy(self.type), copy(self.name),
+                              copy(self.params), copy(self.body))
+
 class Function(Callable):
     pass
 
@@ -236,6 +253,10 @@ class Constructor(Method):
     def __init__(self, name, params, body):
         Callable.__init__(self, None, name, params, body)
 
+    def copy(self):
+        return self.__class__(copy(self.name), copy(self.params),
+                              copy(self.body))
+
 class MethodMacro(Macro):
     pass
 
@@ -262,6 +283,9 @@ class Declaration(AST):
         yield self.type
         yield self.name
         yield self.value
+
+    def copy(self):
+        return self.__class__(copy(self.type), copy(self.name), copy(self.value))
 
 class Param(Declaration):
     pass
@@ -388,6 +412,9 @@ class PrimitiveLiteral(Literal):
     def children(self):
         if False: yield
 
+    def copy(self):
+        return self.__class__(self.text)
+
 class Null(PrimitiveLiteral):
     pass
 
@@ -454,6 +481,9 @@ class Name(AST):
     def children(self):
         return ()
 
+    def copy(self):
+        return Name(self.text)
+
 class Type(AST):
 
     def __init__(self, path, parameters=None):
@@ -468,11 +498,14 @@ class Type(AST):
             for p in self.parameters:
                 yield p
 
+    def copy(self):
+        return Type(copy(self.path), copy(self.parameters))
+
     def __repr__(self):
         if self.parameters:
-            return "%s<%s>" % (self.name, ", ".join([str(s) for s in self.parameters]))
+            return "%r<%s>" % (self.path, ", ".join([repr(s) for s in self.parameters]))
         else:
-            return repr(self.name)
+            return repr(self.path)
 
 class TypeParam(AST):
 
