@@ -17,10 +17,9 @@ from .parser import Parser, ParseError as GParseError
 
 class Root(AST):
 
-    def __init__(self, *primitives):
+    def __init__(self):
         self.parent = None
         self.index = 0
-        self.primitives = primitives
         self.files = []
 
     def add(self, file):
@@ -28,8 +27,6 @@ class Root(AST):
 
     @property
     def children(self):
-        for p in self.primitives:
-            yield p
         for f in self.files:
             yield f
 
@@ -302,7 +299,7 @@ class ParseError(Exception): pass
 class CompileError(Exception): pass
 
 def lineinfo(node):
-    return "%s:%s:%s" % (node.filename, node.line, node.column)
+    return "%s:%s:%s" % (getattr(node, "filename", "<none>"), node.line, node.column)
 
 class Filename:
 
@@ -384,17 +381,6 @@ import os
 from docopt import docopt
 from backend import Java
 
-def write_files(backend, target):
-    if not os.path.exists(target):
-        os.makedirs(target)
-    for name, content in backend.files.items():
-        path = os.path.join(target, name)
-        dir = os.path.dirname(path)
-        if not os.path.exists(dir):
-            os.path.makedirs(dir)
-        open(path, "write").write(content)
-        print "wrote", path
-
 def _main(args):
     srcs = args["<file>"]
     c = Compiler()
@@ -416,7 +402,7 @@ def _main(args):
         j = Java()
         c.emit(j)
         try:
-            write_files(j, java)
+            j.write(java)
         except IOError, e:
             return e
 

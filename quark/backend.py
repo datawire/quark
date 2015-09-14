@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
 from .ast import Function, Interface, Method, Package
 from collections import OrderedDict
 
@@ -26,6 +27,28 @@ class Java(Backend):
         Backend.__init__(self)
         self.classr = ClassRenderer()
         self.functions = []
+
+    def write(self, target):
+        src = os.path.join(target, "src/main/java")
+        if not os.path.exists(src):
+            os.makedirs(src)
+        for name, content in self.files.items():
+            path = os.path.join(src, name)
+            dir = os.path.dirname(path)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            open(path, "wb").write(content)
+            print "wrote", path
+        open(os.path.join(target, "pom.xml"), "wb").write("""<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <groupId>org.apache.qpid</groupId>
+  <artifactId>test</artifactId>
+  <version>1.0</version>
+  <name>test</name>
+</project>
+        """)
 
     def visit_Class(self, c):
         pkg = self.classr.namer.package(c)
