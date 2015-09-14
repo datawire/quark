@@ -269,6 +269,30 @@ class TypeEmit:
         else:
             return c.name.apply(self.namer)
 
+class DocEvaluator:
+
+    def __init__(self):
+        self.lines = []
+
+    @property
+    def doc(self):
+        if self.lines:
+            lines = ["/**"]
+            lines.extend([(" * %s" % l).rstrip() for l in self.lines])
+            lines.append(" */")
+            lines.append("")
+            return "\n".join(lines)
+        else:
+            return ""
+
+    def Annotation(self, a):
+        for e in a.arguments:
+            e.apply(self)
+
+    def String(self, s):
+        # XXX: need to properly process string literal
+        self.lines.append(s.text[1:-1])
+
 class ClassRenderer(object):
 
     def __init__(self):
@@ -277,6 +301,13 @@ class ClassRenderer(object):
                                         "Map": "java.util.HashMap"})
         self.exprr = ExprRenderer(self.namer)
 
+    def doc(self, annotations):
+        doc_eval = DocEvaluator()
+        for a in annotations:
+            if a.name.text == "doc":
+                a.apply(doc_eval)
+        return doc_eval.doc
+
     def Class(self, c):
         name = c.name.apply(self.namer)
         params = ""
@@ -284,7 +315,8 @@ class ClassRenderer(object):
             params = "<%s>" % (", ".join([p.apply(self) for p in c.parameters]))
         body = "\n".join([d.apply(self) for d in c.definitions])
         kw = "interface" if isinstance(c, Interface) else "class"
-        cls = "public %s %s%s {%s}" % (kw, name, params, indent(body))
+        doc = self.doc(c.annotations)
+        cls = "%spublic %s %s%s {%s}" % (doc, kw, name, params, indent(body))
         pkg = self.namer.package(c)
         if pkg:
             return "package %s;\n\n%s" % (pkg, cls)
@@ -298,6 +330,7 @@ class ClassRenderer(object):
         return "\n".join([s.apply(self) for s in b.statements])
 
     def Function(self, m):
+        doc = self.doc(m.annotations)
         type = "%s " % m.type.apply(self.namer) if m.type else ""
         name = m.name.apply(self.namer)
         params = ", ".join([p.apply(self) for p in m.params])
@@ -306,7 +339,7 @@ class ClassRenderer(object):
             mods = "public"
         else:
             mods = "public static"
-        return "%s %s%s(%s)%s" % (mods, type, name, params, body)
+        return "%s%s %s%s(%s)%s" % (doc, mods, type, name, params, body)
 
     def MethodMacro(self, mm):
         return ""
@@ -327,7 +360,8 @@ class ClassRenderer(object):
             return "%s %s" % (type, name)
 
     def Field(self, f):
-        return "%s;" % self.Declaration(f)
+        doc = self.doc(f.annotations)
+        return "%s%s;" % (doc, self.Declaration(f))
 
     def Return(self, r):
         return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
