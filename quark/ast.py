@@ -27,6 +27,14 @@ def copy(node):
             result.annotations = copy(node.annotations)
         return result
 
+def quark(node, sep=", "):
+    if node is None:
+        return ""
+    elif isinstance(node, (tuple, list)):
+        return "%s" % sep.join([quark(n) for n in node])
+    else:
+        return node.quark()
+
 class AST(object):
 
     indent = []
@@ -213,6 +221,13 @@ class Callable(Definition):
             yield p
         yield self.body
 
+    def quark(self):
+        result = "%s(%s) %s" % (quark(self.name), quark(self.params),
+                                quark(self.body))
+        if self.type:
+            result = "%s %s" % (quark(self.type), result)
+        return result
+
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name),
                               copy(self.params), copy(self.body))
@@ -283,6 +298,12 @@ class Declaration(AST):
         yield self.type
         yield self.name
         yield self.value
+
+    def quark(self):
+        if self.value:
+            return "%s %s %s" % (quark(self.type), quark(self.name), quark(self.value))
+        else:
+            return "%s %s" % (quark(self.type), quark(self.name))
 
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name), copy(self.value))
@@ -481,6 +502,9 @@ class Name(AST):
     def children(self):
         return ()
 
+    def quark(self):
+        return self.text
+
     def copy(self):
         return Name(self.text)
 
@@ -497,6 +521,13 @@ class Type(AST):
         if self.parameters:
             for p in self.parameters:
                 yield p
+
+    def quark(self):
+        name = quark(self.path, ".")
+        if self.parameters:
+            return "%s<%s>" % (name, quark(self.parameters, ", "))
+        else:
+            return name
 
     def copy(self):
         return Type(copy(self.path), copy(self.parameters))

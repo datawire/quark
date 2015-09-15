@@ -12,7 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .ast import AST, Definition, Param, TypeParam
+from collections import OrderedDict
+from .ast import AST, Definition, Param, TypeParam, quark
 from .parser import Parser, ParseError as GParseError
 
 class Root(AST):
@@ -55,27 +56,34 @@ class InitParent:
     def leave_AST(self, ast):
         self.stack.pop()
 
+def pkg_name(pkg):
+    if pkg.package is None:
+        return quark(pkg.name)
+    else:
+        return "%s.%s" % (pkg_name(pkg.package), quark(pkg.name))
+
 class InitEnv:
 
     def visit_Package(self, p):
-        p.env = {}
+        name = pkg_name(p)
+        if name in p.root.env:
+            p.env = p.root.env[name].env
+        else:
+            p.env = {}
+            p.root.env[name] = p
 
     def visit_Class(self, c):
         c.env = {}
 
     def visit_Function(self, f):
         f.env = {}
-        f.callable = f
 
     def visit_Macro(self, m):
         m.env = {}
-        m.callable = m
 
     def visit_AST(self, ast):
         if ast.parent:
             ast.env = ast.parent.env
-            if hasattr(ast.parent, "callable"):
-                ast.callable = ast.parent.callable
         else:
             ast.env = {}
 
@@ -84,18 +92,19 @@ class Def:
     def __init__(self):
         self.duplicates = []
 
-    def define(self, env, node, name=None, leaf=True):
+    def define(self, env, node, name=None, leaf=True, dup=True):
         if name is None:
             name = node.name.text
         if name in env:
-            self.duplicates.append((node, name, env[name]))
+            if dup:
+                self.duplicates.append((node, name, env[name]))
         else:
             env[name] = node
         if leaf:
             node.resolved = texpr(node)
 
     def visit_Package(self, p):
-        self.define(p.parent.env, p)
+        self.define(p.parent.env, p, dup=False)
 
     def visit_Class(self, c):
         self.define(c.parent.env, c)
@@ -335,12 +344,81 @@ primitive Map<K,V> {
 macro void print(String msg) ${System.out.println($msg)};
 """
 
+class ApplyAnnotators:
+
+    def __init__(self, annotators):
+        self.annotators = annotators
+        self.output = []
+
+    def visit_AST(self, node):
+        if hasattr(node, "annotations"):
+            annotations = node.annotations
+            done = set()
+            for ann in annotations:
+                name = ann.name.text
+                if name not in done and name in self.annotators:
+                    for afun in self.annotators[name]:
+                        code = afun(node)
+                        if not isinstance(code, str):
+                            raise TypeError("annotators need to produce string data: %s" % afun)
+                        self.output.append((name, code))
+                    done.add(name)
+
+class Contextualize:
+
+    def __init__(self, root):
+        self.root = root
+        self.packages = []
+        self.package = None
+        self.clazzes = []
+        self.clazz = None
+        self.callables = []
+        self.callable = None
+
+    def visit_AST(self, node):
+        node.root = self.root
+        node.package = self.package
+        node.clazz = self.clazz
+        node.callable = self.callable
+
+    def visit_Package(self, p):
+        self.visit_AST(p)
+        self.packages.append(self.package)
+        self.package = p
+
+    def leave_Package(self, p):
+        self.package = self.packages.pop()
+
+    def visit_Class(self, c):
+        self.visit_AST(c)
+        self.clazzes.append(self.clazz)
+        self.clazz = c
+
+    def leave_Clazz(self, c):
+        self.clazz = self.clazzes.pop()
+
+    def visit_Callable(self, c):
+        self.visit_AST(c)
+        self.callables.append(self.callable)
+        self.callable = c
+
+    def leave_Callable(self, c):
+        self.callable = self.callables.pop()
+
 class Compiler:
 
     def __init__(self):
         self.root = Root()
         self.parser = Parser()
+        self.annotators = OrderedDict()
         self.parse("BUILTIN", BUILTIN)
+        self.generated = OrderedDict()
+
+    def annotator(self, name, annotator):
+        if name in self.annotators:
+            self.annotators[name].append(annotator)
+        else:
+            self.annotators[name] = [annotator]
 
     def parse(self, name, text):
         try:
@@ -349,6 +427,27 @@ class Compiler:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
         file.traverse(Filename(name))
         self.root.add(file)
+        file.traverse(Contextualize(self.root))
+        aa = ApplyAnnotators(self.annotators)
+        file.traverse(aa)
+        for ann_name, code in aa.output:
+            base, ext = os.path.splitext(name)
+            gen_name = "%s@%s%s" % (base, ann_name, ext)
+            assert gen_name not in self.generated
+            self.generated[gen_name] = code
+            self.parse(gen_name, code)
+
+    def write(self, target):
+        if not os.path.exists(target):
+            os.makedirs(target)
+        for name, content in self.generated.items():
+            path = os.path.join(target, name)
+            dir = os.path.dirname(path)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            with open(path, "wb") as fd:
+                fd.write(content)
+                print "wrote", path
 
     def compile(self):
         self.root.traverse(InitParent())
@@ -383,6 +482,7 @@ from backend import Java
 
 def _main(args):
     srcs = args["<file>"]
+    java = args["--java"]
     c = Compiler()
     for src in srcs:
         try:
@@ -393,11 +493,15 @@ def _main(args):
             c.parse(src, content)
         except ParseError, e:
             return e
+        finally:
+            if java:
+                c.write(java)
+
     try:
         c.compile()
     except CompileError, e:
         return e
-    java = args["--java"]
+
     if java:
         j = Java()
         c.emit(j)
