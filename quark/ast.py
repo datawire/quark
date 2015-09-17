@@ -433,6 +433,9 @@ class PrimitiveLiteral(Literal):
     def children(self):
         if False: yield
 
+    def quark(self):
+        return self.text
+
     def copy(self):
         return self.__class__(self.text)
 

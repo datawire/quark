@@ -27,6 +27,43 @@ Root(
    MethodMacro(Type(Name(int)), Name(__lt__),
     Param(Type(Name(int)), Name(other), $type=0.int),
     Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') < ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__gt__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') > ('),
+     Var(Name(other), $type=0.int), Fixed(')')))),
+
+  Primitive(Name(long),
+
+   MethodMacro(Type(Name(int)), Name(__add__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') + ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__sub__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') - ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__mul__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') * ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') == ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__lt__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') < ('),
+     Var(Name(other), $type=0.int), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__gt__),
+    Param(Type(Name(int)), Name(other), $type=0.int),
+    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') > ('),
      Var(Name(other), $type=0.int), Fixed(')')))),
 
   Primitive(Name(Object)),
@@ -72,12 +109,27 @@ Root(
    MethodMacro(Type(Name(V)), Name(get),
     Param(Type(Name(K)), Name(key), $type=0.Map.K),
     Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')')))),
+     Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(__eq__),
+    Param(Type(Name(Map), Type(Name(K)), Type(Name(V))), Name(other),
+    $type=0.Map<0.Map.K,0.Map.V>),
+    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
+     Fixed(').equals('), Var(Name(other), $type=0.Map<0.Map.K,0.Map.V>),
+     Fixed(')'))),
+
+   MethodMacro(Type(Name(int)), Name(contains),
+    Param(Type(Name(K)), Name(key), $type=0.Map.K),
+    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
+     Fixed(').containsKey('), Var(Name(key), $type=0.Map.K), Fixed(')')))),
 
   Macro(Type(Name(void)), Name(print),
    Param(Type(Name(String)), Name(msg), $type=0.String),
    Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),
-    Fixed(')')))
+    Fixed(')'))),
+
+  Macro(Type(Name(long)), Name(now),
+   Native(Fixed('System.currentTimeMillis()')))
  ),
 
  File(

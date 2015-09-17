@@ -326,6 +326,15 @@ primitive int {
     macro int __mul__(int other) ${($self) * ($other)};
     macro int __eq__(int other) ${($self) == ($other)};
     macro int __lt__(int other) ${($self) < ($other)};
+    macro int __gt__(int other) ${($self) > ($other)};
+}
+primitive long {
+    macro int __add__(int other) ${($self) + ($other)};
+    macro int __sub__(int other) ${($self) - ($other)};
+    macro int __mul__(int other) ${($self) * ($other)};
+    macro int __eq__(int other) ${($self) == ($other)};
+    macro int __lt__(int other) ${($self) < ($other)};
+    macro int __gt__(int other) ${($self) > ($other)};
 }
 primitive Object {}
 primitive String {
@@ -340,8 +349,11 @@ primitive List<T> {
 primitive Map<K,V> {
     macro void put(K key, V value) ${($self).put(($key), ($value))};
     macro V get(K key) ${($self).get($key)};
+    macro int __eq__(Map<K,V> other) ${($self).equals($other)};
+    macro int contains(K key) ${($self).containsKey($key)};
 }
 macro void print(String msg) ${System.out.println($msg)};
+macro long now() ${System.currentTimeMillis()};
 """
 
 class ApplyAnnotators:
