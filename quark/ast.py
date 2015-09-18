@@ -68,18 +68,20 @@ class AST(object):
         else:
             return default
 
-    def traverse(self, visitor, default=lambda s: None):
-        visit = self.lookup(visitor, "visit", default)
-        leave = self.lookup(visitor, "leave", default)
-        visit(self)
+    def traverse(self, visitor, *args, **kwargs):
+        visit_default = kwargs.pop("visit_default", lambda s: None)
+        leave_default = kwargs.pop("leave_default", lambda s: None)
+        visit = self.lookup(visitor, "visit", visit_default)
+        leave = self.lookup(visitor, "leave", leave_default)
+        visit(self, *args, **kwargs)
         if self.children:
             for c in self.children:
                 if c is not None:
-                    c.traverse(visitor)
-        leave(self)
+                    c.traverse(visitor, *args, **kwargs)
+        leave(self, *args, **kwargs)
 
-    def apply(self, transform, *args, **kwargs):
-        return self.lookup(transform, kwargs.get("default", None))(self, *args, **kwargs)
+    def match(self, transform, *args, **kwargs):
+        return self.lookup(transform, "match")(self, *args, **kwargs)
 
     def __repr__(self):
         if hasattr(self, "id"):

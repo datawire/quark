@@ -53,9 +53,9 @@ class Java(Backend):
     def visit_Class(self, c):
         pkg = self.classr.namer.package(c)
         if pkg:
-            self.files["%s/%s.java" % (pkg, c.name.text)] = c.apply(self.classr)
+            self.files["%s/%s.java" % (pkg, c.name.text)] = c.match(self.classr)
         else:
-            self.files["%s.java" % c.name.text] = c.apply(self.classr)
+            self.files["%s.java" % c.name.text] = c.match(self.classr)
 
     def visit_Function(self, f):
         if not isinstance(f, Method):
@@ -71,7 +71,7 @@ class Java(Backend):
                 else:
                     functions = []
                     packages[pkg] = functions
-                functions.append(f.apply(self.classr))
+                functions.append(f.match(self.classr))
                 if f.name.text == "main":
                     functions.append("public static void main(String[] args) {\n    main();\n}")
             for pkg, functions in packages.items():
@@ -93,22 +93,22 @@ def indent(st, level=4):
 
 class NameRenderer(object):
 
-    def Name(self, n):
+    def match_Name(self, n):
         return n.text
 
-    def Type(self, t):
+    def match_Type(self, t):
         if t.parameters:
-            params = [p.apply(self) for p in t.parameters]
-            return "%s<%s>" % (".".join([p.apply(self) for p in t.path]), ",".join(params))
+            params = [p.match(self) for p in t.parameters]
+            return "%s<%s>" % (".".join([p.match(self) for p in t.path]), ",".join(params))
         else:
-            return ".".join([p.apply(self) for p in t.path])
+            return ".".join([p.match(self) for p in t.path])
 
-    def Var(self, v):
-        return v.name.apply(self)
+    def match_Var(self, v):
+        return v.name.match(self)
 
     def package(self, node):
         if isinstance(node, Package):
-            me = node.name.apply(self)
+            me = node.name.match(self)
             parent = self.package(node.parent)
             if parent:
                 return "%s.%s" % (parent, me)
@@ -124,7 +124,7 @@ class SubstitutionNamer(NameRenderer):
     def __init__(self, env):
         self.env = env
 
-    def Name(self, n):
+    def match_Name(self, n):
         if n.text in self.env:
             return self.env[n.text]
         else:
@@ -136,55 +136,55 @@ class VarRenderer(object):
         self.var = var
         self.namer = namer
 
-    def Definition(self, d):
-        return self.var.apply(self.namer)
+    def match_Definition(self, d):
+        return self.var.match(self.namer)
 
-    def Function(self, d):
+    def match_Function(self, d):
         pkg = self.namer.package(d)
         if pkg:
-            return "%s.Functions.%s" % (pkg, self.var.apply(self.namer))
+            return "%s.Functions.%s" % (pkg, self.var.match(self.namer))
         else:
-            return "Functions.%s" % self.var.apply(self.namer)
+            return "Functions.%s" % self.var.match(self.namer)
 
-    def Declaration(self, d):
-        return self.var.apply(self.namer)
+    def match_Declaration(self, d):
+        return self.var.match(self.namer)
 
 class ExprRenderer(object):
 
     def __init__(self, namer):
         self.namer = namer
 
-    def Null(self, n):
+    def match_Null(self, n):
         return n.text
 
-    def Number(self, n):
+    def match_Number(self, n):
         return n.text
 
-    def String(self, s):
+    def match_String(self, s):
         return s.text
 
-    def List(self, l):
+    def match_List(self, l):
         return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \
-            (", ".join([e.apply(self) for e in l.elements]))
+            (", ".join([e.match(self) for e in l.elements]))
 
-    def Call(self, c):
+    def match_Call(self, c):
         type = c.expr.resolved.type
-        return type.apply(Invoker(c, self.namer))
+        return type.match(Invoker(c, self.namer))
 
-    def Attr(self, a):
+    def match_Attr(self, a):
         type = a.expr.resolved.type
-        return type.apply(Getter(a, self))
+        return type.match(Getter(a, self))
 
-    def Type(self, t):
-        return t.apply(self.namer)
+    def match_Type(self, t):
+        return t.match(self.namer)
 
-    def Var(self, v):
-        return v.definition.apply(VarRenderer(v, self.namer))
+    def match_Var(self, v):
+        return v.definition.match(VarRenderer(v, self.namer))
 
-    def Native(self, n):
-        return "".join([c.apply(self) for c in n.children])
+    def match_Native(self, n):
+        return "".join([c.match(self) for c in n.children])
 
-    def Fixed(self, f):
+    def match_Fixed(self, f):
         return f.text
 
 class Getter(object):
@@ -193,18 +193,18 @@ class Getter(object):
         self.attr = attr
         self.exprr = exprr
 
-    def Class(self, c):
+    def match_Class(self, c):
         expr = self.attr.expr
         attr = self.attr.attr.text
-        return "(%s).%s" % (expr.apply(self.exprr), attr)
+        return "(%s).%s" % (expr.match(self.exprr), attr)
 
-    def Package(self, p):
+    def match_Package(self, p):
         expr = self.attr.expr
         attr = self.attr.attr.text
         if isinstance(self.attr.resolved.type, Function):
-            return "%s.Functions.%s" % (expr.apply(self.exprr), attr)
+            return "%s.Functions.%s" % (expr.match(self.exprr), attr)
         else:
-            return "%s.%s" % (expr.apply(self.exprr), attr)
+            return "%s.%s" % (expr.match(self.exprr), attr)
 
 class Invoker(object):
 
@@ -214,26 +214,26 @@ class Invoker(object):
 
     @property
     def expr(self):
-        return self.call.expr.apply(ExprRenderer(self.namer))
+        return self.call.expr.match(ExprRenderer(self.namer))
 
     @property
     def args(self):
-        return [a.apply(ExprRenderer(self.namer)) for a in self.call.args]
+        return [a.match(ExprRenderer(self.namer)) for a in self.call.args]
 
-    def Class(self, c):
+    def match_Class(self, c):
         return "new %s(%s)" % (self.expr, ", ".join(self.args))
 
-    def Function(self, f):
+    def match_Function(self, f):
         return "%s(%s)" % (self.expr, ", ".join(self.args))
 
     @property
     def self_(self):
-        return self.call.expr.expr.apply(ExprRenderer(self.namer))
+        return self.call.expr.expr.match(ExprRenderer(self.namer))
 
-    def Method(self, m):
+    def match_Method(self, m):
         return "(%s).%s(%s)" % (self.self_, m.name.text, ", ".join(self.args))
 
-    def Macro(self, m):
+    def match_Macro(self, m):
         # macros are evaluated at compile time, so we don't use expr
         env = {}
         idx = 0
@@ -241,9 +241,9 @@ class Invoker(object):
         for p in m.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return m.body.apply(ExprRenderer(SubstitutionNamer(env)))
+        return m.body.match(ExprRenderer(SubstitutionNamer(env)))
 
-    def MethodMacro(self, mm):
+    def match_MethodMacro(self, mm):
         # for method macros we use expr to access self
         env = {"self": self.self_}
         idx = 0
@@ -251,10 +251,10 @@ class Invoker(object):
         for p in mm.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return mm.body.apply(ExprRenderer(SubstitutionNamer(env)))
+        return mm.body.match(ExprRenderer(SubstitutionNamer(env)))
 
 def type_emit(texp, namer):
-    return texp.type.apply(TypeEmit(namer, texp.bindings))
+    return texp.type.match(TypeEmit(namer, texp.bindings))
 
 class TypeEmit:
 
@@ -262,12 +262,12 @@ class TypeEmit:
         self.namer = namer
         self.bindings = bindings
 
-    def Class(self, c):
+    def match_Class(self, c):
         if c.parameters:
             params = [type_emit(self.bindings[p], self.namer) for p in c.parameters]
-            return "%s<%s>" % (c.name.apply(self.namer), ",".join(params))
+            return "%s<%s>" % (c.name.match(self.namer), ",".join(params))
         else:
-            return c.name.apply(self.namer)
+            return c.name.match(self.namer)
 
 class DocEvaluator:
 
@@ -285,11 +285,11 @@ class DocEvaluator:
         else:
             return ""
 
-    def Annotation(self, a):
+    def match_Annotation(self, a):
         for e in a.arguments:
-            e.apply(self)
+            e.match(self)
 
-    def String(self, s):
+    def match_String(self, s):
         # XXX: need to properly process string literal
         self.lines.append(s.text[1:-1])
 
@@ -305,15 +305,15 @@ class ClassRenderer(object):
         doc_eval = DocEvaluator()
         for a in annotations:
             if a.name.text == "doc":
-                a.apply(doc_eval)
+                a.match(doc_eval)
         return doc_eval.doc
 
-    def Class(self, c):
-        name = c.name.apply(self.namer)
+    def match_Class(self, c):
+        name = c.name.match(self.namer)
         params = ""
         if c.parameters:
-            params = "<%s>" % (", ".join([p.apply(self) for p in c.parameters]))
-        body = "\n".join([d.apply(self) for d in c.definitions])
+            params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
+        body = "\n".join([d.match(self) for d in c.definitions])
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
         cls = "%spublic %s %s%s {%s}" % (doc, kw, name, params, indent(body))
@@ -323,71 +323,71 @@ class ClassRenderer(object):
         else:
             return cls
 
-    def TypeParam(self, p):
-        return p.name.apply(self.namer)
+    def match_TypeParam(self, p):
+        return p.name.match(self.namer)
 
-    def Block(self, b):
-        return "\n".join([s.apply(self) for s in b.statements])
+    def match_Block(self, b):
+        return "\n".join([s.match(self) for s in b.statements])
 
-    def Function(self, m):
+    def match_Function(self, m):
         doc = self.doc(m.annotations)
-        type = "%s " % m.type.apply(self.namer) if m.type else ""
-        name = m.name.apply(self.namer)
-        params = ", ".join([p.apply(self) for p in m.params])
-        body = " {%s}" % indent(m.body.apply(self)) if m.body else ";"
+        type = "%s " % m.type.match(self.namer) if m.type else ""
+        name = m.name.match(self.namer)
+        params = ", ".join([p.match(self) for p in m.params])
+        body = " {%s}" % indent(m.body.match(self)) if m.body else ";"
         if isinstance(m, Method):
             mods = "public"
         else:
             mods = "public static"
         return "%s%s %s%s(%s)%s" % (doc, mods, type, name, params, body)
 
-    def MethodMacro(self, mm):
+    def match_MethodMacro(self, mm):
         return ""
 
     def maybe_cast(self, type, expr):
-        result = expr.apply(self.exprr)
+        result = expr.match(self.exprr)
         if type.resolved.id != expr.resolved.id:
             result = "(%s) (%s)" % (type_emit(type.resolved, self.namer), result)
         return result
 
-    def Declaration(self, d):
-        type = d.type.apply(self.namer)
-        name = d.name.apply(self.namer)
+    def match_Declaration(self, d):
+        type = d.type.match(self.namer)
+        name = d.name.match(self.namer)
         if d.value:
             value = self.maybe_cast(d.type, d.value)
             return "%s %s = %s" % (type, name, value)
         else:
             return "%s %s" % (type, name)
 
-    def Field(self, f):
+    def match_Field(self, f):
         doc = self.doc(f.annotations)
-        return "%s%s;" % (doc, self.Declaration(f))
+        return "%s%s;" % (doc, self.match_Declaration(f))
 
-    def Return(self, r):
+    def match_Return(self, r):
         return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
 
-    def Local(self, stmt):
-        return "%s;" % stmt.declaration.apply(self)
+    def match_Local(self, stmt):
+        return "%s;" % stmt.declaration.match(self)
 
-    def ExprStmt(self, stmt):
-        return "%s;" % stmt.expr.apply(self.exprr)
+    def match_ExprStmt(self, stmt):
+        return "%s;" % stmt.expr.match(self.exprr)
 
-    def Assign(self, a):
-        return "%s = %s;" % (a.lhs.apply(self), self.maybe_cast(a.lhs, a.rhs))
+    def match_Assign(self, a):
+        return "%s = %s;" % (a.lhs.match(self), self.maybe_cast(a.lhs, a.rhs))
 
-    def Attr(self, a):
-        return "(%s).%s" % (a.expr.apply(self.exprr), a.attr.text)
+    def match_Attr(self, a):
+        return "(%s).%s" % (a.expr.match(self.exprr), a.attr.text)
 
-    def Var(self, v):
-        return v.apply(self.namer)
+    def match_Var(self, v):
+        return v.match(self.namer)
 
-    def If(self, i):
-        result = "if (%s) {%s}" % (i.predicate.apply(self.exprr),
-                                   indent(i.consequence.apply(self)))
+    def match_If(self, i):
+        result = "if (%s) {%s}" % (i.predicate.match(self.exprr),
+                                   indent(i.consequence.match(self)))
         if i.alternative:
-            result += " else {%s}" % indent(i.alternative.apply(self))
+            result += " else {%s}" % indent(i.alternative.match(self))
         return result
 
-    def While(self, w):
-        return "while (%s) {%s}" % (w.condition.apply(self.exprr),
-                                    indent(w.body.apply(self)))
+    def match_While(self, w):
+        return "while (%s) {%s}" % (w.condition.match(self.exprr),
+                                    indent(w.body.match(self)))

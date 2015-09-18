@@ -134,20 +134,20 @@ class TypePP:
     def __init__(self, bindings):
         self.bindings = bindings
 
-    def Package(self, p):
+    def match_Package(self, p):
         return p.id
 
-    def Class(self, c):
+    def match_Class(self, c):
         if c.parameters:
             params = [repr(self.bindings.get(p, p)) for p in c.parameters]
             return "%s<%s>" % (c.id, ",".join(params))
         else:
             return c.id
 
-    def Callable(self, c):
+    def match_Callable(self, c):
         return c.id
 
-    def TypeParam(self, p):
+    def match_TypeParam(self, p):
         return p.id
 
 class TypeExpr:
@@ -158,7 +158,7 @@ class TypeExpr:
 
     @property
     def id(self):
-        return self.type.apply(TypePP(self.bindings))
+        return self.type.match(TypePP(self.bindings))
 
     def __repr__(self):
         return self.id
@@ -246,10 +246,10 @@ class AttrType:
             self.errors.append("%s:%s has no such attribute: %s" % (lineinfo(self.attr.attr), n.name.text, name))
             return None
 
-    def Package(self, p):
+    def match_Package(self, p):
         return self.lookup(p)
 
-    def Class(self, c):
+    def match_Class(self, c):
         return self.lookup(c)
 
 class InvokedType:
@@ -257,13 +257,13 @@ class InvokedType:
     def __init__(self, expr):
         self.expr = expr
 
-    def Function(self, f):
+    def match_Function(self, f):
         return texpr(f.type.resolved.type, self.expr.resolved.bindings)
 
-    def Class(self, c):
+    def match_Class(self, c):
         return texpr(c, self.expr.resolved.bindings)
 
-    def Macro(self, m):
+    def match_Macro(self, m):
         return texpr(m.type.resolved.type, self.expr.resolved.bindings)
 
 class Resolver:
@@ -279,11 +279,11 @@ class Resolver:
 
     def leave_Attr(self, a):
         if a.expr.resolved:
-            a.resolved = a.expr.resolved.type.apply(AttrType(self.errors, a))
+            a.resolved = a.expr.resolved.type.match(AttrType(self.errors, a))
 
     def leave_Call(self, c):
         if c.expr.resolved:
-            c.resolved = c.expr.resolved.type.apply(InvokedType(c.expr))
+            c.resolved = c.expr.resolved.type.match(InvokedType(c.expr))
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:
