@@ -27,13 +27,13 @@ def copy(node):
             result.annotations = copy(node.annotations)
         return result
 
-def quark(node, sep=", "):
+def code(node, sep=", "):
     if node is None:
         return ""
     elif isinstance(node, (tuple, list)):
-        return "%s" % sep.join([quark(n) for n in node])
+        return "%s" % sep.join([code(n) for n in node])
     else:
-        return node.quark()
+        return node.code()
 
 class AST(object):
 
@@ -221,11 +221,11 @@ class Callable(Definition):
             yield p
         yield self.body
 
-    def quark(self):
-        result = "%s(%s) %s" % (quark(self.name), quark(self.params),
-                                quark(self.body))
+    def code(self):
+        result = "%s(%s) %s" % (code(self.name), code(self.params),
+                                code(self.body))
         if self.type:
-            result = "%s %s" % (quark(self.type), result)
+            result = "%s %s" % (code(self.type), result)
         return result
 
     def copy(self):
@@ -299,11 +299,11 @@ class Declaration(AST):
         yield self.name
         yield self.value
 
-    def quark(self):
+    def code(self):
         if self.value:
-            return "%s %s %s" % (quark(self.type), quark(self.name), quark(self.value))
+            return "%s %s %s" % (code(self.type), code(self.name), code(self.value))
         else:
-            return "%s %s" % (quark(self.type), quark(self.name))
+            return "%s %s" % (code(self.type), code(self.name))
 
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name), copy(self.value))
@@ -433,7 +433,7 @@ class PrimitiveLiteral(Literal):
     def children(self):
         if False: yield
 
-    def quark(self):
+    def code(self):
         return self.text
 
     def copy(self):
@@ -505,7 +505,7 @@ class Name(AST):
     def children(self):
         return ()
 
-    def quark(self):
+    def code(self):
         return self.text
 
     def copy(self):
@@ -525,10 +525,10 @@ class Type(AST):
             for p in self.parameters:
                 yield p
 
-    def quark(self):
-        name = quark(self.path, ".")
+    def code(self):
+        name = code(self.path, ".")
         if self.parameters:
-            return "%s<%s>" % (name, quark(self.parameters, ", "))
+            return "%s<%s>" % (name, code(self.parameters, ", "))
         else:
             return name
 

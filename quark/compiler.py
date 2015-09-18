@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from collections import OrderedDict
-from .ast import AST, Definition, Param, TypeParam, quark
+from .ast import AST, Definition, Param, TypeParam, code
 from .parser import Parser, ParseError as GParseError
 
 class Root(AST):
@@ -58,9 +58,9 @@ class InitParent:
 
 def pkg_name(pkg):
     if pkg.package is None:
-        return quark(pkg.name)
+        return code(pkg.name)
     else:
-        return "%s.%s" % (pkg_name(pkg.package), quark(pkg.name))
+        return "%s.%s" % (pkg_name(pkg.package), code(pkg.name))
 
 class InitEnv:
 
