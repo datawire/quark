@@ -1,230 +1,95 @@
-Root(
- File(
-  Primitive(Name(void)),
+File(
+ Class(Name(Box), TypeParam(Name(T)),
+  Field(Type(Name(T)), Name(contents), $type=1.Box.T),
 
-  Primitive(Name(int),
+  Method(Type(Name(void)), Name(set),
+   Param(Type(Name(T)), Name(contents), $type=1.Box.T),
+   Block(
+    Assign(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
+     $type=1.Box.T), Var(Name(contents), $type=1.Box.T)))),
 
-   MethodMacro(Type(Name(int)), Name(__add__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') + ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+  Method(Type(Name(T)), Name(get), Block(
+    Return(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
+     $type=1.Box.T))))),
 
-   MethodMacro(Type(Name(int)), Name(__sub__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') - ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+ Class(Name(Crate), TypeParam(Name(T)),
+  Field(Type(Name(Box), Type(Name(T))), Name(box), $type=1.Box<1.Crate.T>),
+  Field(Type(Name(Box), Type(Name(int))), Name(ibox), $type=1.Box<0.int>),
 
-   MethodMacro(Type(Name(int)), Name(__mul__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') * ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+  Method(Type(Name(void)), Name(set),
+   Param(Type(Name(T)), Name(stuff), $type=1.Crate.T),
+   Block(
+    ExprStmt(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>),
+        Name(box), $type=1.Box<1.Crate.T>), Name(set), $type=1.Box.set),
+      Var(Name(stuff), $type=1.Crate.T), $type=0.void)))),
 
-   MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+  Method(Type(Name(T)), Name(get), Block(
+    Return(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(box),
+       $type=1.Box<1.Crate.T>), Name(get), $type=1.Box.get),
+     $type=1.Crate.T))))),
 
-   MethodMacro(Type(Name(int)), Name(__lt__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') < ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+ Class(Name(Sack),
+  Field(Type(Name(Box), Type(Name(int))), Name(ints), $type=1.Box<0.int>)),
 
-   MethodMacro(Type(Name(int)), Name(__gt__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.int), Fixed(') > ('),
-     Var(Name(other), $type=0.int), Fixed(')')))),
+ Function(Type(Name(void)), Name(test1), Block(
+   Local(
+    Declaration(Type(Name(Box), Type(Name(int))), Name(ibox),
+    $type=1.Box<0.int>)),
+   ExprStmt(Call(Attr(Var(Name(ibox), $type=1.Box<0.int>), Name(set),
+     $type=1.Box.set), Number(3, $type=0.int), $type=0.void)),
+   Local(
+    Declaration(Type(Name(int)), Name(three), Call(Attr(Var(Name(ibox),
+       $type=1.Box<0.int>), Name(get), $type=1.Box.get), $type=0.int),
+    $type=0.int)),
+   ExprStmt(Attr(Var(Name(ibox), $type=1.Box<0.int>), Name(contents),
+    $type=0.int)))),
 
-  Primitive(Name(long),
+ Function(Type(Name(void)), Name(test2), Block(
+   Local(
+    Declaration(Type(Name(Box), Type(Name(String))), Name(sbox),
+    $type=1.Box<0.String>)),
+   ExprStmt(Call(Attr(Var(Name(sbox), $type=1.Box<0.String>), Name(set),
+     $type=1.Box.set), String("hello", $type=0.String), $type=0.void)),
+   Local(
+    Declaration(Type(Name(String)), Name(hello), Call(Attr(Var(Name(sbox),
+       $type=1.Box<0.String>), Name(get), $type=1.Box.get), $type=0.String),
+    $type=0.String)),
+   ExprStmt(Attr(Var(Name(sbox), $type=1.Box<0.String>), Name(contents),
+    $type=0.String)))),
 
-   MethodMacro(Type(Name(int)), Name(__add__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') + ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+ Function(Type(Name(void)), Name(test3), Block(
+   Local(
+    Declaration(Type(Name(Crate), Type(Name(int))), Name(icrate),
+    $type=1.Crate<0.int>)),
+   ExprStmt(Call(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(set),
+     $type=1.Crate.set), Number(3, $type=0.int), $type=0.void)),
+   ExprStmt(Call(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(get),
+     $type=1.Crate.get), $type=0.int)),
+   ExprStmt(Attr(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(box),
+     $type=1.Box<1.Crate.T>), Name(contents), $type=0.int)))),
 
-   MethodMacro(Type(Name(int)), Name(__sub__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') - ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+ Function(Type(Name(void)), Name(test4), Block(
+   Local(
+    Declaration(Type(Name(Sack)), Name(s), $type=1.Sack)),
+   ExprStmt(Attr(Var(Name(s), $type=1.Sack), Name(ints), $type=1.Box<0.int>)),
+   ExprStmt(Attr(Attr(Var(Name(s), $type=1.Sack), Name(ints),
+     $type=1.Box<0.int>), Name(contents), $type=0.int)))),
 
-   MethodMacro(Type(Name(int)), Name(__mul__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') * ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
+ Function(Type(Name(void)), Name(test5), Block(
+   Local(
+    Declaration(Type(Name(Crate), Type(Name(String))), Name(scrate),
+    $type=1.Crate<0.String>)),
+   ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(box),
+     $type=1.Box<1.Crate.T>), Name(contents), $type=0.String)),
+   ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(ibox),
+     $type=1.Box<0.int>), Name(contents), $type=0.int)))),
 
-   MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') == ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
-
-   MethodMacro(Type(Name(int)), Name(__lt__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') < ('),
-     Var(Name(other), $type=0.int), Fixed(')'))),
-
-   MethodMacro(Type(Name(int)), Name(__gt__),
-    Param(Type(Name(int)), Name(other), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.long), Fixed(') > ('),
-     Var(Name(other), $type=0.int), Fixed(')')))),
-
-  Primitive(Name(Object)),
-
-  Primitive(Name(String),
-
-   MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(String)), Name(other), $type=0.String),
-    Native(Fixed('('), Var(Name(self), $type=0.String), Fixed(').equals('),
-     Var(Name(other), $type=0.String), Fixed(')')))),
-
-  Primitive(Name(List), TypeParam(Name(T)),
-
-   MethodMacro(Type(Name(void)), Name(add),
-    Param(Type(Name(T)), Name(element), $type=0.List.T),
-    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').add('), Var(Name(element), $type=0.List.T), Fixed(')'))),
-
-   MethodMacro(Type(Name(T)), Name(get),
-    Param(Type(Name(int)), Name(index), $type=0.int),
-    Native(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')'))),
-
-   MethodMacro(Type(Name(int)), Name(size), Native(Fixed('('), Var(Name(self),
-     $type=0.List<0.List.T>), Fixed(').size()'))),
-
-   MethodMacro(Type(Name(int)), Name(__ne__),
-    Param(Type(Name(List), Type(Name(T))), Name(other),
-    $type=0.List<0.List.T>),
-    Native(Fixed('!(('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').equals('), Var(Name(other), $type=0.List<0.List.T>),
-     Fixed('))')))),
-
-  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
-
-   MethodMacro(Type(Name(void)), Name(put),
-    Param(Type(Name(K)), Name(key), $type=0.Map.K),
-    Param(Type(Name(V)), Name(value), $type=0.Map.V),
-    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').put(('), Var(Name(key), $type=0.Map.K), Fixed('), ('),
-     Var(Name(value), $type=0.Map.V), Fixed('))'))),
-
-   MethodMacro(Type(Name(V)), Name(get),
-    Param(Type(Name(K)), Name(key), $type=0.Map.K),
-    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')'))),
-
-   MethodMacro(Type(Name(int)), Name(__eq__),
-    Param(Type(Name(Map), Type(Name(K)), Type(Name(V))), Name(other),
-    $type=0.Map<0.Map.K,0.Map.V>),
-    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').equals('), Var(Name(other), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(')'))),
-
-   MethodMacro(Type(Name(int)), Name(contains),
-    Param(Type(Name(K)), Name(key), $type=0.Map.K),
-    Native(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').containsKey('), Var(Name(key), $type=0.Map.K), Fixed(')')))),
-
-  Macro(Type(Name(void)), Name(print),
-   Param(Type(Name(String)), Name(msg), $type=0.String),
-   Native(Fixed('System.out.println('), Var(Name(msg), $type=0.String),
-    Fixed(')'))),
-
-  Macro(Type(Name(long)), Name(now),
-   Native(Fixed('System.currentTimeMillis()')))
- ),
-
- File(
-  Class(Name(Box), TypeParam(Name(T)),
-   Field(Type(Name(T)), Name(contents), $type=1.Box.T),
-
-   Method(Type(Name(void)), Name(set),
-    Param(Type(Name(T)), Name(contents), $type=1.Box.T),
-    Block(
-     Assign(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
-      $type=1.Box.T), Var(Name(contents), $type=1.Box.T)))),
-
-   Method(Type(Name(T)), Name(get), Block(
-     Return(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
-      $type=1.Box.T))))),
-
-  Class(Name(Crate), TypeParam(Name(T)),
-   Field(Type(Name(Box), Type(Name(T))), Name(box), $type=1.Box<1.Crate.T>),
-   Field(Type(Name(Box), Type(Name(int))), Name(ibox), $type=1.Box<0.int>),
-
-   Method(Type(Name(void)), Name(set),
-    Param(Type(Name(T)), Name(stuff), $type=1.Crate.T),
-    Block(
-     ExprStmt(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>),
-         Name(box), $type=1.Box<1.Crate.T>), Name(set), $type=1.Box.set),
-       Var(Name(stuff), $type=1.Crate.T), $type=0.void)))),
-
-   Method(Type(Name(T)), Name(get), Block(
-     Return(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>),
-         Name(box), $type=1.Box<1.Crate.T>), Name(get), $type=1.Box.get),
-      $type=1.Crate.T))))),
-
-  Class(Name(Sack),
-   Field(Type(Name(Box), Type(Name(int))), Name(ints), $type=1.Box<0.int>)),
-
-  Function(Type(Name(void)), Name(test1), Block(
-    Local(
-     Declaration(Type(Name(Box), Type(Name(int))), Name(ibox),
-     $type=1.Box<0.int>)),
-    ExprStmt(Call(Attr(Var(Name(ibox), $type=1.Box<0.int>), Name(set),
-      $type=1.Box.set), Number(3, $type=0.int), $type=0.void)),
-    Local(
-     Declaration(Type(Name(int)), Name(three), Call(Attr(Var(Name(ibox),
-        $type=1.Box<0.int>), Name(get), $type=1.Box.get), $type=0.int),
-     $type=0.int)),
-    ExprStmt(Attr(Var(Name(ibox), $type=1.Box<0.int>), Name(contents),
-     $type=0.int)))),
-
-  Function(Type(Name(void)), Name(test2), Block(
-    Local(
-     Declaration(Type(Name(Box), Type(Name(String))), Name(sbox),
-     $type=1.Box<0.String>)),
-    ExprStmt(Call(Attr(Var(Name(sbox), $type=1.Box<0.String>), Name(set),
-      $type=1.Box.set), String("hello", $type=0.String), $type=0.void)),
-    Local(
-     Declaration(Type(Name(String)), Name(hello), Call(Attr(Var(Name(sbox),
-        $type=1.Box<0.String>), Name(get), $type=1.Box.get), $type=0.String),
-     $type=0.String)),
-    ExprStmt(Attr(Var(Name(sbox), $type=1.Box<0.String>), Name(contents),
-     $type=0.String)))),
-
-  Function(Type(Name(void)), Name(test3), Block(
-    Local(
-     Declaration(Type(Name(Crate), Type(Name(int))), Name(icrate),
-     $type=1.Crate<0.int>)),
-    ExprStmt(Call(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(set),
-      $type=1.Crate.set), Number(3, $type=0.int), $type=0.void)),
-    ExprStmt(Call(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(get),
-      $type=1.Crate.get), $type=0.int)),
-    ExprStmt(Attr(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(box),
-      $type=1.Box<1.Crate.T>), Name(contents), $type=0.int)))),
-
-  Function(Type(Name(void)), Name(test4), Block(
-    Local(
-     Declaration(Type(Name(Sack)), Name(s), $type=1.Sack)),
-    ExprStmt(Attr(Var(Name(s), $type=1.Sack), Name(ints), $type=1.Box<0.int>)),
-    ExprStmt(Attr(Attr(Var(Name(s), $type=1.Sack), Name(ints),
-      $type=1.Box<0.int>), Name(contents), $type=0.int)))),
-
-  Function(Type(Name(void)), Name(test5), Block(
-    Local(
-     Declaration(Type(Name(Crate), Type(Name(String))), Name(scrate),
-     $type=1.Crate<0.String>)),
-    ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(box),
-      $type=1.Box<1.Crate.T>), Name(contents), $type=0.String)),
-    ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(ibox),
-      $type=1.Box<0.int>), Name(contents), $type=0.int)))),
-
-  Function(Type(Name(void)), Name(test6), Block(
-    Local(
-     Declaration(Type(Name(Box), Type(Name(Box), Type(Name(int)))), Name(box),
-     $type=1.Box<1.Box<0.int>>)),
-    ExprStmt(Attr(Var(Name(box), $type=1.Box<1.Box<0.int>>), Name(contents),
-     $type=1.Box<0.int>)),
-    ExprStmt(Attr(Attr(Var(Name(box), $type=1.Box<1.Box<0.int>>),
-       Name(contents), $type=1.Box<0.int>), Name(contents), $type=0.int))))
- )
+ Function(Type(Name(void)), Name(test6), Block(
+   Local(
+    Declaration(Type(Name(Box), Type(Name(Box), Type(Name(int)))), Name(box),
+    $type=1.Box<1.Box<0.int>>)),
+   ExprStmt(Attr(Var(Name(box), $type=1.Box<1.Box<0.int>>), Name(contents),
+    $type=1.Box<0.int>)),
+   ExprStmt(Attr(Attr(Var(Name(box), $type=1.Box<1.Box<0.int>>),
+      Name(contents), $type=1.Box<0.int>), Name(contents), $type=0.int))))
 )

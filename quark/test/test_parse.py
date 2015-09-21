@@ -14,6 +14,7 @@
 
 import os, pytest
 from quark.compiler import Compiler
+from .util import check_file
 
 directory = os.path.join(os.path.dirname(__file__), "parse")
 
@@ -32,11 +33,4 @@ def test_parse(path):
     for ast in c.root.files:
         astname = os.path.splitext(ast.filename)[0] + ".ast"
         astpath = os.path.join(dir, astname)
-        try:
-            saved = open(astpath).read()
-        except IOError, e:
-            saved = None
-        computed = str(ast)
-        if saved != computed:
-            open(astpath + ".cmp", "write").write(computed)
-        assert computed == saved
+        check_file(astpath, str(ast))

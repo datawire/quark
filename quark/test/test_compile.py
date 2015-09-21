@@ -14,6 +14,7 @@
 
 import os, pytest
 from quark.compiler import Compiler, CompileError, ParseError
+from .util import check_file
 
 directory = os.path.join(os.path.dirname(__file__), "compile")
 
@@ -25,21 +26,18 @@ def path(request):
     return request.param
 
 def test_compile(path):
+    dir = os.path.dirname(path)
     text = open(path).read()
     base = os.path.splitext(path)[0]
     c = Compiler()
     try:
         c.parse(os.path.basename(path), text)
         c.compile()
-        expected = base + ".ast"
-        computed = str(c.root)
+        for ast in c.root.files:
+            astname = os.path.splitext(ast.filename)[0] + ".ast"
+            astpath = os.path.join(dir, astname)
+            check_file(astpath, str(ast))
     except (CompileError, ParseError), e:
         expected = base + ".err"
         computed = str(e)
-    try:
-        saved = open(expected).read()
-    except IOError, e:
-        saved = None
-    if saved != computed:
-        open(expected + ".cmp", "write").write(computed)
-    assert computed == saved
+        check_file(expected, computed)
