@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest
-from quark.parser import Parser
+from quark.compiler import Compiler
 
 directory = os.path.join(os.path.dirname(__file__), "parse")
 
@@ -25,15 +25,18 @@ def path(request):
     return request.param
 
 def test_parse(path):
+    dir = os.path.dirname(path)
     text = open(path).read()
-    p = Parser()
-    ast = p.parse(text)
-    astpath = os.path.splitext(path)[0] + ".ast"
-    try:
-        saved = open(astpath).read()
-    except IOError, e:
-        saved = None
-    computed = str(ast)
-    if saved != computed:
-        open(astpath + ".cmp", "write").write(computed)
-    assert computed == saved
+    c = Compiler()
+    c.parse(os.path.basename(path), text)
+    for ast in c.root.files:
+        astname = os.path.splitext(ast.filename)[0] + ".ast"
+        astpath = os.path.join(dir, astname)
+        try:
+            saved = open(astpath).read()
+        except IOError, e:
+            saved = None
+        computed = str(ast)
+        if saved != computed:
+            open(astpath + ".cmp", "write").write(computed)
+        assert computed == saved

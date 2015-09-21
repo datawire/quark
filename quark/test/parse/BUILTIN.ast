@@ -1,0 +1,126 @@
+File(
+ Primitive(Name(void)),
+
+ Primitive(Name(int),
+
+  MethodMacro(Type(Name(int)), Name(__add__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') + ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__sub__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') - ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__mul__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') * ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') == ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__lt__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') < ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__gt__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') > ('), Var(Name(other)),
+    Fixed(')')))),
+
+ Primitive(Name(long),
+
+  MethodMacro(Type(Name(int)), Name(__add__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') + ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__sub__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') - ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__mul__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') * ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') == ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__lt__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') < ('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__gt__),
+   Param(Type(Name(int)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(') > ('), Var(Name(other)),
+    Fixed(')')))),
+
+ Primitive(Name(Object)),
+
+ Primitive(Name(String),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(String)), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+    Fixed(')')))),
+
+ Primitive(Name(List), TypeParam(Name(T)),
+
+  MethodMacro(Type(Name(void)), Name(add),
+   Param(Type(Name(T)), Name(element)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').add('), Var(Name(element)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(T)), Name(get),
+   Param(Type(Name(int)), Name(index)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(index)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(size), Native(Fixed('('), Var(Name(self)),
+    Fixed(').size()'))),
+
+  MethodMacro(Type(Name(int)), Name(__ne__),
+   Param(Type(Name(List), Type(Name(T))), Name(other)),
+   Native(Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+    Fixed('))')))),
+
+ Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
+
+  MethodMacro(Type(Name(void)), Name(put),
+   Param(Type(Name(K)), Name(key)),
+   Param(Type(Name(V)), Name(value)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').put(('), Var(Name(key)),
+    Fixed('), ('), Var(Name(value)), Fixed('))'))),
+
+  MethodMacro(Type(Name(V)), Name(get),
+   Param(Type(Name(K)), Name(key)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(key)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(Map), Type(Name(K)), Type(Name(V))), Name(other)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+    Fixed(')'))),
+
+  MethodMacro(Type(Name(int)), Name(contains),
+   Param(Type(Name(K)), Name(key)),
+   Native(Fixed('('), Var(Name(self)), Fixed(').containsKey('), Var(Name(key)),
+    Fixed(')')))),
+
+ Macro(Type(Name(void)), Name(print),
+  Param(Type(Name(String)), Name(msg)),
+  Native(Fixed('System.out.println('), Var(Name(msg)), Fixed(')'))),
+
+ Macro(Type(Name(long)), Name(now),
+  Native(Fixed('System.currentTimeMillis()')))
+)
