@@ -310,13 +310,13 @@ class CompileError(Exception): pass
 def lineinfo(node):
     return "%s:%s:%s" % (getattr(node, "filename", "<none>"), node.line, node.column)
 
-class Filename:
+class SetFile:
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self, file):
+        self.file = file
 
     def visit_AST(self, ast):
-        ast.filename = self.name
+        ast.file = self.file
 
 BUILTIN = """
 primitive void {}
@@ -437,7 +437,8 @@ class Compiler:
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
-        file.traverse(Filename(name))
+        file.traverse(SetFile(file))
+        file.name = name
         self.root.add(file)
         file.traverse(Contextualize(self.root))
         aa = ApplyAnnotators(self.annotators)

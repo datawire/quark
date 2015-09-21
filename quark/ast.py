@@ -44,6 +44,10 @@ class AST(object):
             self.node = node
             self.line, self.column = self._lineinfo(node)
 
+    @property
+    def filename(self):
+        return self.file.name
+
     def _lineinfo(self, node):
         line = 1
         column = 1
@@ -175,6 +179,7 @@ class File(AST):
 
     def __init__(self, definitions):
         self.definitions = definitions
+        self.name = None
 
     @property
     def children(self):
