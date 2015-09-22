@@ -31,6 +31,15 @@ def test_parse(path):
     c = Compiler()
     c.parse(os.path.basename(path), text)
     for ast in c.root.files:
-        astname = os.path.splitext(ast.filename)[0] + ".ast"
-        astpath = os.path.join(dir, astname)
-        check_file(astpath, str(ast))
+        base = os.path.splitext(ast.filename)[0]
+        check_file(os.path.join(dir, base + ".ast"), str(ast))
+        code = ast.code()
+        check_file(os.path.join(dir, base + ".code"), code)
+        rtc = Compiler()
+        rtc.parse(base + ".code", code)
+        for f in rtc.root.files:
+            if f.name == base + ".code":
+                assert f.code() == code
+                break
+        else:
+            assert False

@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import inspect
+from .coder import Coder
 
 def copy(node):
     if node is None:
@@ -27,13 +28,14 @@ def copy(node):
             result.annotations = copy(node.annotations)
         return result
 
-def code(node, sep=", "):
-    if node is None:
-        return ""
-    elif isinstance(node, (tuple, list)):
-        return "%s" % sep.join([code(n) for n in node])
-    else:
-        return node.code()
+def code(*args, **kwargs):
+    return Coder().code(*args, **kwargs)
+
+def coder(method):
+    def result(self, coder=None):
+        coder = coder or Coder()
+        return method(self, coder)
+    return result
 
 class AST(object):
 
@@ -185,12 +187,20 @@ class File(AST):
     def children(self):
         return self.definitions
 
+    @coder
+    def code(self, coder):
+        return coder.code(self.definitions, "\n")
+
 ## Definitions
 
 class Definition(AST):
 
     def __init__(self):
         self.annotations = []
+
+    @coder
+    def code(self, coder):
+        return coder.code(self.annotations, "\n", tail="\n", tailoff=0)
 
 class Package(Definition):
 
@@ -208,6 +218,13 @@ class Package(Definition):
         yield self.name
         for d in self.definitions:
             yield d
+
+    @coder
+    def code(self, coder):
+        with coder.indentation():
+            return Definition.code(self, coder) + "package %s {%s}" % \
+                (self.name.code(coder), coder.code(self.definitions, "\n",
+                                                   head="\n", tail="\n"))
 
 class Callable(Definition):
 
@@ -228,12 +245,16 @@ class Callable(Definition):
             yield p
         yield self.body
 
-    def code(self):
-        result = "%s(%s) %s" % (code(self.name), code(self.params),
-                                code(self.body))
+    @coder
+    def code(self, coder):
+        result = "%s(%s)" % (coder.code(self.name), coder.code(self.params))
         if self.type:
-            result = "%s %s" % (code(self.type), result)
-        return result
+            result = "%s %s" % (coder.code(self.type), result)
+        if self.body:
+            result = "%s %s" % (result, coder.code(self.body))
+        else:
+            result = "%s;" % result
+        return "%s%s" % (Definition.code(self, coder), result)
 
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name),
@@ -243,11 +264,15 @@ class Function(Callable):
     pass
 
 class Macro(Callable):
-    pass
+
+    @coder
+    def code(self, coder):
+        return "macro %s;" % Callable.code(self, coder)
 
 class Class(Definition):
 
     indent = ["definitions"]
+    keyword = "class"
 
     def __init__(self, name, parameters, base, definitions):
         Definition.__init__(self)
@@ -267,6 +292,19 @@ class Class(Definition):
         for d in self.definitions:
             yield d
 
+    @coder
+    def code(self, coder):
+        head = "%s%s %s" % (Definition.code(self, coder),
+                            self.keyword,
+                            self.name.code(coder))
+        if self.parameters:
+            head += "<%s>" % coder.code(self.parameters, ", ")
+        if self.base:
+            head += " extends %s" % self.base.code(coder)
+        with coder.indentation():
+            body = coder.code(self.definitions, "\n", head="\n", tail="\n")
+        return "%s {%s}" % (head, body)
+
 class Method(Function):
     pass
 
@@ -280,13 +318,16 @@ class Constructor(Method):
                               copy(self.body))
 
 class MethodMacro(Macro):
-    pass
+
+    @coder
+    def code(self, coder):
+        return "macro %s;" % Callable.code(self, coder)
 
 class Interface(Class):
-    pass
+    keyword = "interface"
 
 class Primitive(Class):
-    pass
+    keyword = "primitive"
 
 ## Declarations
 
@@ -306,11 +347,14 @@ class Declaration(AST):
         yield self.name
         yield self.value
 
-    def code(self):
+    @coder
+    def code(self, coder):
+        result = "%s%s %s" % (coder.code(self.annotations, "\n", tail="\n", tailoff=0),
+                              coder.code(self.type), coder.code(self.name))
         if self.value:
-            return "%s %s %s" % (code(self.type), code(self.name), code(self.value))
+            return "%s = %s" % (result, coder.code(self.value))
         else:
-            return "%s %s" % (code(self.type), code(self.name))
+            return result
 
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name), copy(self.value))
@@ -319,7 +363,10 @@ class Param(Declaration):
     pass
 
 class Field(Declaration):
-    pass
+
+    @coder
+    def code(self, coder):
+        return "%s;" % Declaration.code(self, coder)
 
 ## Statements
 
@@ -346,6 +393,10 @@ class Assign(Statement):
         yield self.lhs
         yield self.rhs
 
+    @coder
+    def code(self, coder):
+        return "%s = %s;" % (self.lhs.code(coder), self.rhs.code(coder))
+
 class If(Statement):
 
     def __init__(self, predicate, consequence, alternative):
@@ -358,6 +409,13 @@ class If(Statement):
         yield self.predicate
         yield self.consequence
         yield self.alternative
+
+    @coder
+    def code(self, coder):
+        result = "if (%s) %s" % (self.predicate.code(coder), self.consequence.code(coder))
+        if self.alternative:
+            result += " else %s" % self.alternative.code(coder)
+        return result
 
 class While(Statement):
 
@@ -379,6 +437,10 @@ class ExprStmt(Statement):
     def children(self):
         yield self.expr
 
+    @coder
+    def code(self, coder):
+        return "%s;" % self.expr.code(coder)
+
 class Local(Statement):
 
     def __init__(self, declaration):
@@ -387,6 +449,10 @@ class Local(Statement):
     @property
     def children(self):
         yield self.declaration
+
+    @coder
+    def code(self, coder):
+        return "%s;" % self.declaration.code(coder)
 
 ## Expressions
 
@@ -402,6 +468,10 @@ class Var(Expression):
     def children(self):
         yield self.name
 
+    @coder
+    def code(self, coder):
+        return self.name.code(coder)
+
 class Attr(Expression):
 
     def __init__(self, expr, attr):
@@ -412,6 +482,10 @@ class Attr(Expression):
     def children(self):
         yield self.expr
         yield self.attr
+
+    @coder
+    def code(self, coder):
+        return "(%s).%s" % (self.expr.code(coder), self.attr.code(coder))
 
 class Call(Expression):
 
@@ -424,6 +498,14 @@ class Call(Expression):
         yield self.expr
         for a in self.args:
             yield a
+
+    @coder
+    def code(self, coder):
+        if isinstance(self.expr, Type):
+            expr = "new %s" % self.expr.code(coder)
+        else:
+            expr = "(%s)" % self.expr.code(coder)
+        return "%s(%s)" % (expr, coder.code(self.args, ", "))
 
 class Literal(Expression):
     pass
@@ -440,7 +522,8 @@ class PrimitiveLiteral(Literal):
     def children(self):
         if False: yield
 
-    def code(self):
+    @coder
+    def code(self, coder):
         return self.text
 
     def copy(self):
@@ -464,6 +547,10 @@ class List(CompoundLiteral):
     def children(self):
         return self.elements
 
+    @coder
+    def code(self, coder):
+        return "[%s]" % coder.code(self.elements, ", ")
+
 class Map(CompoundLiteral):
 
     def __init__(self, entries):
@@ -472,6 +559,10 @@ class Map(CompoundLiteral):
     @property
     def children(self):
         return self.entries
+
+    @coder
+    def code(self, coder):
+        return "{%s}" % coder.code(self.entries, ", ")
 
 class Entry(AST):
 
@@ -484,10 +575,26 @@ class Entry(AST):
         yield self.key
         yield self.value
 
+    @coder
+    def code(self, coder):
+        return "%s: %s" % (self.key.code(coder), self.value.code(coder))
+
 class Native(Expression):
 
     def __init__(self, children):
         self.children = children
+
+    @coder
+    def code(self, coder):
+        result = "${"
+        for c in self.children:
+            if isinstance(c, Fixed):
+                result += c.code(coder)
+            elif isinstance(c, Var):
+                result += "$%s" % c.code(coder)
+            else:
+                assert False
+        return result + "}"
 
 class Fixed(Expression):
 
@@ -497,6 +604,10 @@ class Fixed(Expression):
     @property
     def children(self):
         if False: yield
+
+    @coder
+    def code(self, coder):
+        return self.text
 
 ## Miscelaneous
 
@@ -512,7 +623,8 @@ class Name(AST):
     def children(self):
         return ()
 
-    def code(self):
+    @coder
+    def code(self, coder):
         return self.text
 
     def copy(self):
@@ -532,10 +644,11 @@ class Type(AST):
             for p in self.parameters:
                 yield p
 
-    def code(self):
-        name = code(self.path, ".")
+    @coder
+    def code(self, coder):
+        name = coder.code(self.path, ".")
         if self.parameters:
-            return "%s<%s>" % (name, code(self.parameters, ", "))
+            return "%s<%s>" % (name, coder.code(self.parameters, ", "))
         else:
             return name
 
@@ -557,6 +670,10 @@ class TypeParam(AST):
     def children(self):
         yield self.name
 
+    @coder
+    def code(self, coder):
+        return self.name.code(coder)
+
 class Block(AST):
 
     indent = ["statements"]
@@ -569,6 +686,12 @@ class Block(AST):
         for s in self.statements:
             yield s
 
+    @coder
+    def code(self, coder):
+        with coder.indentation():
+            return "{%s}" % coder.code(self.statements, "\n", head="\n",
+                                       tail="\n")
+
 class Annotation(AST):
 
     def __init__(self, name, arguments):
@@ -580,3 +703,10 @@ class Annotation(AST):
         yield self.name
         for a in self.arguments:
             yield a
+
+    @coder
+    def code(self, coder):
+        result = "@%s" % self.name.code(coder)
+        if self.arguments:
+            result += "(%s)" % coder.code(self.arguments, ", ")
+        return result

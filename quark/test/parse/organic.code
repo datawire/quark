@@ -1,0 +1,35 @@
+package foo {
+    void f(int a, int b, int c, int d) {
+        ((((((((((((x).__mul__)(a)).__mul__)(b)).__mul__)(c)).__add__)(b)).__add__)(((c).__mul__)(d))).__le__)(t);
+    }
+    void asdf(float x, float y) {
+        ((((((((((x).__mul__)(a)).__mul__)(b)).__mul__)(((((c).__add__)(b)).__add__)(c))).__mul__)(d)).__le__)(t);
+    }
+    void fdsa(float x) {}
+    int pie() {
+        blueberry;
+        huckleberry;
+    }
+    class Foo extends Bar {
+        void doFoo() {
+            x = ((this).x)(a, b, c);
+            (q).asdf = ((this).y)(x);
+            ((this).z)();
+            (self).doc;
+            if (x) {
+                (y)();
+            }
+            ((z).__neg__)();
+            if (((((x).__and__)(y)).__or__)(z)) {
+                z;
+            }
+            if (((x).__or__)(((y).__and__)(z))) {
+                z;
+            }
+            if (((x).__or__)(((((y).__not__)()).__and__)(z))) {
+                z;
+            }
+        }
+    }
+}
+class Blah {}
