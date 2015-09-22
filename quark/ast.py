@@ -14,6 +14,7 @@
 
 import inspect
 from .coder import Coder
+from pprinter import PPrinter as _PPrinter
 
 def copy(node):
     if node is None:
@@ -95,83 +96,13 @@ class AST(object):
         else:
             return "%s:%s" % (self.__class__.__name__, id(self))
 
-    def __str__(self):
+    def pprint(self):
         pp = _PPrinter()
         self.traverse(pp)
         return pp.output
 
-class _PPrinter(object):
-
-    def __init__(self, width=80):
-        self.width = width
-        self.out = ""
-        self.stack = []
-        self.first = True
-        self.wrap = (File, Definition, Statement, Declaration)
-        self.previous = None
-
-    def merge(self, previous, line):
-        if previous and previous[-1] == ",":
-            return "%s %s" % (previous, line)
-        else:
-            return "%s%s" % (previous, line)
-
-    @property
-    def output(self):
-        lines = self.out.split("\n")
-        result = [lines[0]]
-        for line in lines[1:]:
-            stripped = line.strip()
-            if stripped:
-                merged = self.merge(result[-1], stripped)
-                if len(merged) < self.width:
-                    result[-1] = merged
-                else:
-                    result.append(line)
-            else:
-                result.append("")
-                result.append(line)
-        result = [l.strip() if l.strip() == "" else l for l in result if l]
-        return "\n".join(result)
-
-    def append(self, st):
-        self.out += st.replace("\n", "\n%s" % (" "*len(self.stack)))
-
-    def visit_AST(self, ast):
-        if self.first:
-            self.first = False
-            if isinstance(ast, self.wrap):
-                self.append("\n")
-        else:
-            self.append(",\n")
-            if isinstance(ast, (File, Definition)):
-                self.append("\n")
-        if isinstance(ast, self.wrap) or isinstance(self.previous, self.wrap):
-            self.append("\n")
-        self.append("%s(" % ast.__class__.__name__)
-        self.stack.append((ast, self.first))
-        self.first = True
-        if isinstance(ast, Fixed):
-            self.append(repr(ast.text))
-        elif hasattr(ast, "text"):
-            self.append(ast.text)
-
-    def refstr(self, ast):
-        if ast is None:
-            return None
-        else:
-            return "%s:%s" % (ast.__class__.__name__, ast.id)
-
-    def leave_AST(self, ast):
-        self.first = self.stack.pop()[-1]
-        if (isinstance(ast, (Expression, Declaration)) and
-            not isinstance(ast, (Fixed, Native))):
-            if hasattr(ast, "resolved"):
-                self.append(",\n$type=%s" % ast.resolved)
-        if isinstance(ast, File) or not self.stack:
-            self.append("\n\n")
-        self.append(")")
-        self.previous = ast
+    def __str__(self):
+        return self.code()
 
 ## Top level
 

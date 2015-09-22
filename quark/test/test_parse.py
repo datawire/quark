@@ -32,7 +32,7 @@ def test_parse(path):
     c.parse(os.path.basename(path), text)
     for ast in c.root.files:
         base = os.path.splitext(ast.filename)[0]
-        check_file(os.path.join(dir, base + ".ast"), str(ast))
+        check_file(os.path.join(dir, base + ".ast"), ast.pprint())
         code = ast.code()
         check_file(os.path.join(dir, base + ".code"), code)
         rtc = Compiler()

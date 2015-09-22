@@ -36,7 +36,7 @@ def test_compile(path):
         for ast in c.root.files:
             astname = os.path.splitext(ast.filename)[0] + ".ast"
             astpath = os.path.join(dir, astname)
-            check_file(astpath, str(ast))
+            check_file(astpath, ast.pprint())
     except (CompileError, ParseError), e:
         expected = base + ".err"
         computed = str(e)
