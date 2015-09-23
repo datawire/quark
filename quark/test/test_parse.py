@@ -14,7 +14,7 @@
 
 import os, pytest
 from quark.compiler import Compiler
-from .util import check_file
+from .util import assert_file
 
 directory = os.path.join(os.path.dirname(__file__), "parse")
 
@@ -32,9 +32,9 @@ def test_parse(path):
     c.parse(os.path.basename(path), text)
     for ast in c.root.files:
         base = os.path.splitext(ast.filename)[0]
-        check_file(os.path.join(dir, base + ".ast"), ast.pprint())
+        assert_file(os.path.join(dir, base + ".ast"), ast.pprint())
         code = ast.code()
-        check_file(os.path.join(dir, base + ".code"), code)
+        assert_file(os.path.join(dir, base + ".code"), code)
         rtc = Compiler()
         rtc.parse(base + ".code", code)
         for f in rtc.root.files:

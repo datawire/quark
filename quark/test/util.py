@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 def check_file(path, content):
     try:
         with open(path) as fd:
@@ -19,6 +21,13 @@ def check_file(path, content):
     except IOError, e:
         expected = None
     if expected != content:
+        dir = os.path.dirname(path)
+        if not os.path.exists(dir):
+            os.makedirs(dir)
         with open(path + ".cmp", "wb") as fd:
             fd.write(content)
+    return expected
+
+def assert_file(path, content):
+    expected = check_file(path, content)
     assert content == expected

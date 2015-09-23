@@ -15,6 +15,7 @@
 import os, pytest, subprocess
 from quark.backend import Java
 from quark.compiler import Compiler, CompileError
+from .util import check_file
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
 
@@ -23,12 +24,12 @@ paths = [os.path.join(directory, name) for name in files]
 
 class Walker(object):
 
-    def __init__(self, extension):
-        self.extension = extension
+    def __init__(self, ext):
+        self.ext = ext
 
     def __call__(self, result, dir, fnames):
         for f in fnames:
-            if f.endswith(self.extension):
+            if f.endswith(self.ext):
                 result.append(f)
 
 def walk(dir, ext):
@@ -43,43 +44,41 @@ def path(request):
 def test_emit(path):
     text = open(path).read()
     base = os.path.splitext(path)[0]
-    c = Compiler()
-    c.parse(os.path.basename(path), text)
-    c.compile()
-    j = Java()
-    c.emit(j)
-    if not os.path.exists(base):
-        os.makedirs(base)
-    expected = walk(base, ".java")
-    srcs = []
+    comp = Compiler()
+    comp.parse(os.path.basename(path), text)
+    comp.compile()
 
-    assertions = []
-    for name in j.files:
-        path = os.path.join(base, name)
-        srcs.append(path)
-        computed = j.files[name]
-        try:
-            saved = open(path).read()
-        except IOError, e:
-            saved = None
-        if saved != computed:
-            if not os.path.exists(os.path.dirname(path)):
-                os.makedirs(os.path.dirname(path))
-            open(path + ".cmp", "write").write(computed)
-        assertions.append((saved, computed))
+    for Backend in (Java,):
+        backend = Backend()
+        comp.emit(backend)
+        extbase = os.path.join(base, backend.ext)
+        if not os.path.exists(extbase):
+            os.makedirs(extbase)
 
-    for saved, computed in assertions:
-        assert saved == computed
-    assert len(j.files) == len(expected)
+        srcs = []
+        assertions = []
+        for name in backend.files:
+            path = os.path.join(extbase, name)
+            srcs.append(path)
+            computed = backend.files[name]
+            expected = check_file(path, computed)
+            assertions.append((expected, computed))
 
+        for expected, computed in assertions:
+            assert expected == computed
+        assert len(backend.files) == len(walk(extbase, ".%s" % backend.ext))
+
+        BUILDERS[backend.ext](comp, extbase, srcs)
+
+def build_java(comp, base, srcs):
     build = os.path.join(base, "build")
     if not os.path.exists(build):
         os.makedirs(build)
     jexit = os.system("javac -d %s %s" % (build, " ".join(srcs)))
     assert jexit == 0
 
-    if "main" in c.root.env:
-        out = base + ".out"
+    if "main" in comp.root.env:
+        out = os.path.dirname(base) + ".out"
         try:
             expected = open(out).read()
         except IOError, e:
@@ -88,3 +87,8 @@ def test_emit(path):
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
+
+BUILDERS = {
+    "java": build_java
+}
+

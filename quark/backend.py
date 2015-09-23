@@ -20,13 +20,14 @@ from collections import OrderedDict
 
 class Backend(object):
 
-    def __init__(self):
+    def __init__(self, ext):
+        self.ext = ext
         self.files = {}
 
 class Java(Backend):
 
     def __init__(self):
-        Backend.__init__(self)
+        Backend.__init__(self, "java")
         self.dfnr = DefinitionRenderer()
         self.functions = []
 
