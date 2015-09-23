@@ -21,14 +21,19 @@ directory = os.path.join(os.path.dirname(__file__), "emit")
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
 
-def walker(result, dir, fnames):
-    for f in fnames:
-        if f.endswith(".java"):
-            result.append(f)
+class Walker(object):
 
-def walk(dir):
+    def __init__(self, extension):
+        self.extension = extension
+
+    def __call__(self, result, dir, fnames):
+        for f in fnames:
+            if f.endswith(self.extension):
+                result.append(f)
+
+def walk(dir, ext):
     result = []
-    os.path.walk(dir, walker, result)
+    os.path.walk(dir, Walker(ext), result)
     return result
 
 @pytest.fixture(params=paths)
@@ -45,7 +50,7 @@ def test_emit(path):
     c.emit(j)
     if not os.path.exists(base):
         os.makedirs(base)
-    expected = walk(base)
+    expected = walk(base, ".java")
     srcs = []
 
     assertions = []
