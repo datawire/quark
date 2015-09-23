@@ -13,7 +13,8 @@
 # limitations under the License.
 
 import os
-from .ast import Function, Interface, Method, Package
+from .ast import *
+from .dispatch import dispatch
 from collections import OrderedDict
 
 class Backend(object):
@@ -169,11 +170,11 @@ class ExprRenderer(object):
 
     def match_Call(self, c):
         type = c.expr.resolved.type
-        return type.match(Invoker(c, self.namer))
+        return self.invoke(type, c.expr, [a.match(self) for a in c.args])
 
     def match_Attr(self, a):
         type = a.expr.resolved.type
-        return type.match(Getter(a, self))
+        return self.get(type, a)
 
     def match_Type(self, t):
         return t.match(self.namer)
@@ -187,71 +188,54 @@ class ExprRenderer(object):
     def match_Fixed(self, f):
         return f.text
 
-class Getter(object):
+    @dispatch(Class)
+    def get(self, cls, attr):
+        expr = attr.expr
+        attr_name = attr.attr.text
+        return "(%s).%s" % (expr.match(self), attr_name)
 
-    def __init__(self, attr, exprr):
-        self.attr = attr
-        self.exprr = exprr
-
-    def match_Class(self, c):
-        expr = self.attr.expr
-        attr = self.attr.attr.text
-        return "(%s).%s" % (expr.match(self.exprr), attr)
-
-    def match_Package(self, p):
-        expr = self.attr.expr
-        attr = self.attr.attr.text
-        if isinstance(self.attr.resolved.type, Function):
-            return "%s.Functions.%s" % (expr.match(self.exprr), attr)
+    @dispatch(Package)
+    def get(self, pkg, attr):
+        expr = attr.expr
+        attr_name = attr.attr.text
+        if isinstance(attr.resolved.type, Function):
+            return "%s.Functions.%s" % (expr.match(self), attr_name)
         else:
-            return "%s.%s" % (expr.match(self.exprr), attr)
+            return "%s.%s" % (expr.match(self), attr_name)
 
-class Invoker(object):
+    @dispatch(Class)
+    def invoke(self, cls, expr, args):
+        return "new %s(%s)" % (expr.match(self), ", ".join(args))
 
-    def __init__(self, call, namer):
-        self.call = call
-        self.namer = namer
+    @dispatch(Function)
+    def invoke(self, func, expr, args):
+        return "%s(%s)" % (expr.match(self), ", ".join(args))
 
-    @property
-    def expr(self):
-        return self.call.expr.match(ExprRenderer(self.namer))
+    @dispatch(Method)
+    def invoke(self, method, expr, args):
+        return "(%s).%s(%s)" % (expr.expr.match(self),
+                                method.name.match(self.namer),
+                                ", ".join(args))
 
-    @property
-    def args(self):
-        return [a.match(ExprRenderer(self.namer)) for a in self.call.args]
-
-    def match_Class(self, c):
-        return "new %s(%s)" % (self.expr, ", ".join(self.args))
-
-    def match_Function(self, f):
-        return "%s(%s)" % (self.expr, ", ".join(self.args))
-
-    @property
-    def self_(self):
-        return self.call.expr.expr.match(ExprRenderer(self.namer))
-
-    def match_Method(self, m):
-        return "(%s).%s(%s)" % (self.self_, m.name.text, ", ".join(self.args))
-
-    def match_Macro(self, m):
+    @dispatch(Macro)
+    def invoke(self, macro, expr, args):
         # macros are evaluated at compile time, so we don't use expr
         env = {}
         idx = 0
-        args = self.args
-        for p in m.params:
+        for p in macro.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return m.body.match(ExprRenderer(SubstitutionNamer(env)))
+        return macro.body.match(ExprRenderer(SubstitutionNamer(env)))
 
-    def match_MethodMacro(self, mm):
+    @dispatch(MethodMacro)
+    def invoke(self, method_macro, expr, args):
         # for method macros we use expr to access self
-        env = {"self": self.self_}
+        env = {"self": expr.expr.match(self)}
         idx = 0
-        args = self.args
-        for p in mm.params:
+        for p in method_macro.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return mm.body.match(ExprRenderer(SubstitutionNamer(env)))
+        return method_macro.body.match(ExprRenderer(SubstitutionNamer(env)))
 
 def type_emit(texp, namer):
     return texp.type.match(TypeEmit(namer, texp.bindings))
