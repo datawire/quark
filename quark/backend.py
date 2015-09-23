@@ -14,6 +14,7 @@
 
 import os
 from .ast import *
+from .compiler import TypeExpr
 from .dispatch import dispatch
 from collections import OrderedDict
 
@@ -230,22 +231,6 @@ class ExprRenderer(object):
             idx += 1
         return method_macro.body.match(ExprRenderer(SubstitutionNamer(env)))
 
-def type_emit(texp, namer):
-    return texp.type.match(TypeEmit(namer, texp.bindings))
-
-class TypeEmit:
-
-    def __init__(self, namer, bindings):
-        self.namer = namer
-        self.bindings = bindings
-
-    def match_Class(self, c):
-        if c.parameters:
-            params = [type_emit(self.bindings[p], self.namer) for p in c.parameters]
-            return "%s<%s>" % (c.name.match(self.namer), ",".join(params))
-        else:
-            return c.name.match(self.namer)
-
 class DocEvaluator:
 
     def __init__(self):
@@ -321,10 +306,22 @@ class ClassRenderer(object):
     def match_MethodMacro(self, mm):
         return ""
 
+    @dispatch(TypeExpr)
+    def type(self, texpr):
+        return self.type(texpr.type, texpr.bindings)
+
+    @dispatch(Class)
+    def type(self, cls, bindings):
+        if cls.parameters:
+            params = [self.type(bindings[p]) for p in cls.parameters]
+            return "%s<%s>" % (cls.name.match(self.namer), ",".join(params))
+        else:
+            return cls.name.match(self.namer)
+
     def maybe_cast(self, type, expr):
         result = expr.match(self.exprr)
         if type.resolved.id != expr.resolved.id:
-            result = "(%s) (%s)" % (type_emit(type.resolved, self.namer), result)
+            result = "(%s) (%s)" % (self.type(type.resolved), result)
         return result
 
     def match_Declaration(self, d):

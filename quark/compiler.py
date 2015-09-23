@@ -150,7 +150,7 @@ class TypePP:
     def match_TypeParam(self, p):
         return p.id
 
-class TypeExpr:
+class TypeExpr(object):
 
     def __init__(self, type, bindings):
         self.type = type
