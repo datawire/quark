@@ -131,25 +131,6 @@ class SubstitutionNamer(NameRenderer):
         else:
             return n.text
 
-class VarRenderer(object):
-
-    def __init__(self, var, namer):
-        self.var = var
-        self.namer = namer
-
-    def match_Definition(self, d):
-        return self.var.match(self.namer)
-
-    def match_Function(self, d):
-        pkg = self.namer.package(d)
-        if pkg:
-            return "%s.Functions.%s" % (pkg, self.var.match(self.namer))
-        else:
-            return "Functions.%s" % self.var.match(self.namer)
-
-    def match_Declaration(self, d):
-        return self.var.match(self.namer)
-
 class ExprRenderer(object):
 
     def __init__(self, namer):
@@ -180,7 +161,19 @@ class ExprRenderer(object):
         return t.match(self.namer)
 
     def match_Var(self, v):
-        return v.definition.match(VarRenderer(v, self.namer))
+        return self.var(v.definition, v)
+
+    @dispatch(AST)
+    def var(self, dfn, v):
+        return v.match(self.namer)
+
+    @dispatch(Function)
+    def var(self, dfn, v):
+        pkg = self.namer.package(dfn)
+        if pkg:
+            return "%s.Functions.%s" % (pkg, v.match(self.namer))
+        else:
+            return "Functions.%s" % v.match(self.namer)
 
     def match_Native(self, n):
         return "".join([c.match(self) for c in n.children])
