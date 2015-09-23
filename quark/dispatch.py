@@ -26,46 +26,53 @@ def signatures(types):
 
 class _BoundDispatcher(object):
 
-    def __init__(self, object, dispatcher):
+    def __init__(self, clazz, object, name, cache):
+        self.clazz = clazz
         self.object = object
-        self.dispatcher = dispatcher
+        self.name = name
+        self.cache = cache
+
+    def get(self, types):
+        key = (self.clazz, types)
+        if key in self.cache:
+            return self.cache[key]
+        else:
+            for c in self.clazz.__mro__:
+                method = c.__dict__[self.name].get(types)
+                if method is None: continue
+                self.cache[key] = method
+                return method
+            raise TypeError("no matching method: (%s)" % ", ".join([t.__name__ for t in types]))
 
     def __call__(self, *args, **kwargs):
-        return self.dispatcher(self.object, *args, **kwargs)
+        types = tuple([type(arg) for arg in args])
+        method = self.get(types)
+        return method(self.object, *args, **kwargs)
 
 class _Dispatcher(object):
 
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.methods = {}
-        self._cache = {}
+        self.cache = {}
 
     def add(self, types, method):
         assert types not in self.methods
         self.methods[types] = method
 
     def get(self, types):
-        try:
-            return self._cache[types]
-        except KeyError:
-            for sig in signatures(types):
-                if sig in self.methods:
-                    method = self.methods[sig]
-                    self._cache[types] = method
-                    return method
-            raise TypeError("no matching method: (%s)" % ", ".join([t.__name__ for t in types]))
+        for sig in signatures(types):
+            if sig in self.methods:
+                return self.methods[sig]
+        return None
 
-    def __get__(self, object, owner):
-        return _BoundDispatcher(object, self)
-
-    def __call__(self, object, *args, **kwargs):
-        types = tuple([type(arg) for arg in args])
-        method = self.get(types)
-        return method(object, *args, **kwargs)
+    def __get__(self, object, clazz):
+        return _BoundDispatcher(clazz, object, self.name, self.cache)
 
 def dispatch(*types):
     def decorator(method):
         name = method.__name__
-        dispatcher = inspect.currentframe().f_back.f_locals.get(name, _Dispatcher())
+        dispatcher = inspect.currentframe().f_back.f_locals.get(name, _Dispatcher(name))
         argspec = inspect.getargspec(method)
         nargs = len(argspec.args) - 1 # don't count self
         defaulted = types + (object,)*(nargs - len(types))
