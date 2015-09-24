@@ -109,7 +109,8 @@ class Python(backend.Backend):
 
     def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        self.files["%s.py" % os.path.splitext(file.name)[0]] = self.imports + content
+        if content.strip() != "":
+            self.files["%s.py" % os.path.splitext(file.name)[0]] = self.imports + content
 
     def visit_Primitive(self, p):
         pass
