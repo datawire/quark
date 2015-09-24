@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, subprocess
-from quark.backend import Java
+from quark.backend import Java, Python
 from quark.compiler import Compiler, CompileError
 from .util import check_file
 
@@ -48,12 +48,15 @@ def test_emit(path):
     comp.parse(os.path.basename(path), text)
     comp.compile()
 
-    for Backend in (Java,):
+    for Backend in (Java, Python):
         backend = Backend()
         comp.emit(backend)
         extbase = os.path.join(base, backend.ext)
         if not os.path.exists(extbase):
-            os.makedirs(extbase)
+            if Backend in (Java,):
+                os.makedirs(extbase)
+            else:
+                continue
 
         srcs = []
         assertions = []
@@ -88,7 +91,22 @@ def build_java(comp, base, srcs):
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
 
+def build_py(comp, base, srcs):
+    if "main" in comp.root.env:
+        out = os.path.dirname(base) + ".out"
+        script = os.path.basename(os.path.dirname(base))
+        try:
+            expected = open(out).read()
+        except IOError, e:
+            expected = None
+        actual = subprocess.check_output(["python", "-c", "import %s; %s.main()" % (script, script)],
+                                         env={"PYTHONPATH": base})
+        if expected != actual:
+            open(out + ".cmp", "write").write(actual)
+        assert expected == actual
+
 BUILDERS = {
-    "java": build_java
+    "java": build_java,
+    "py": build_py
 }
 

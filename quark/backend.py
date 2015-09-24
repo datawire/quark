@@ -22,3 +22,4 @@ class Backend(object):
 
 # XXX: danger!!! circular import reference hack
 from java import Java
+from python import Python

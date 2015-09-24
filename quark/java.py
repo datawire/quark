@@ -152,7 +152,7 @@ class DefinitionRenderer(object):
         type = "%s " % m.type.match(self.namer) if m.type else ""
         name = m.name.match(self.namer)
         params = ", ".join([p.match(self) for p in m.params])
-        body = " {%s}" % indent(m.body.match(self.stmtr)) if m.body else ";"
+        body = " %s" % m.body.match(self.stmtr) if m.body else ";"
         if isinstance(m, Method):
             mods = "public"
         else:
@@ -221,18 +221,18 @@ class StatementRenderer(object):
         return v.match(self.namer)
 
     def match_If(self, i):
-        result = "if (%s) {%s}" % (i.predicate.match(self.exprr),
-                                   indent(i.consequence.match(self)))
+        result = "if (%s) %s" % (i.predicate.match(self.exprr),
+                                 i.consequence.match(self))
         if i.alternative:
-            result += " else {%s}" % indent(i.alternative.match(self))
+            result += " else %s" % i.alternative.match(self)
         return result
 
     def match_While(self, w):
-        return "while (%s) {%s}" % (w.condition.match(self.exprr),
-                                    indent(w.body.match(self)))
+        return "while (%s) %s" % (w.condition.match(self.exprr),
+                                  w.body.match(self))
 
     def match_Block(self, b):
-        return "\n".join([s.match(self) for s in b.statements])
+        return "{%s}" % indent("\n".join([s.match(self) for s in b.statements]))
 
 class ExprRenderer(object):
 
@@ -331,7 +331,7 @@ class ExprRenderer(object):
         for p in macro.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return macro.body.match(ExprRenderer(SubstitutionNamer(env)))
+        return macro.body.match(self.__class__(SubstitutionNamer(env)))
 
     @dispatch(MethodMacro)
     def invoke(self, method_macro, expr, args):
@@ -341,7 +341,7 @@ class ExprRenderer(object):
         for p in method_macro.params:
             env[p.name.text] = args[idx]
             idx += 1
-        return method_macro.body.match(ExprRenderer(SubstitutionNamer(env)))
+        return method_macro.body.match(self.__class__(SubstitutionNamer(env)))
 
 class NameRenderer(object):
 

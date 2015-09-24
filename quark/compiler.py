@@ -352,8 +352,10 @@ primitive Map<K,V> {
     macro int __eq__(Map<K,V> other) ${($self).equals($other)};
     macro int contains(K key) ${($self).containsKey($key)};
 }
-macro void print(String msg) ${System.out.println($msg)};
-macro long now() ${System.currentTimeMillis()};
+macro void print(String msg) $java{System.out.println($msg)}
+                             $py{sys.stdout.write(str($msg) + "\\n")};
+macro long now() $java{System.currentTimeMillis()}
+                 $py{long(time.time()*1000)};
 """
 
 class ApplyAnnotators:

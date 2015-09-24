@@ -123,9 +123,12 @@ File(
 
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg), $type=0.String),
-  Native(NativeCase(Fixed('System.out.println('), Var(Name(msg),
-    $type=0.String), Fixed(')')))),
+  Native(NativeCase(java,
+    Fixed('System.out.println('), Var(Name(msg), $type=0.String), Fixed(')')),
+   NativeCase(py, Fixed('sys.stdout.write(str('), Var(Name(msg),
+    $type=0.String), Fixed(') + "\\n")')))),
 
- Macro(Type(Name(long)), Name(now),
-  Native(NativeCase(Fixed('System.currentTimeMillis()'))))
+ Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
+    Fixed('System.currentTimeMillis()')), NativeCase(py,
+    Fixed('long(time.time()*1000)'))))
 )

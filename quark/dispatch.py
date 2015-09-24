@@ -38,7 +38,10 @@ class _BoundDispatcher(object):
             return self.cache[key]
         else:
             for c in self.clazz.__mro__:
-                method = c.__dict__[self.name].get(types)
+                if self.name in c.__dict__:
+                    method = c.__dict__[self.name].get(types)
+                else:
+                    method = None
                 if method is None: continue
                 self.cache[key] = method
                 return method
