@@ -151,17 +151,13 @@ class TypeExpr(object):
     def invoke(self, errors):
         return self.invoke(self.type, errors)
 
-    @dispatch(Function)
-    def invoke(self, fun, errors):
-        return texpr(fun.type.resolved.type, self.bindings)
+    @dispatch(Callable)
+    def invoke(self, dfn, errors):
+        return texpr(dfn.type.resolved.type, self.bindings)
 
     @dispatch(Class)
     def invoke(self, cls, errors):
         return texpr(cls, self.bindings)
-
-    @dispatch(Macro)
-    def invoke(self, mac, errors):
-        return texpr(mac.type.resolved.type, self.bindings)
 
     @property
     def id(self):
