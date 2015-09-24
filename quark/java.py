@@ -134,10 +134,11 @@ class DefinitionRenderer(object):
         params = ""
         if c.parameters:
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
+        extends = " extends %s" % c.base.match(self.namer) if c.base else ""
         body = "\n".join([d.match(self) for d in c.definitions])
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
-        cls = "%spublic %s %s%s {%s}" % (doc, kw, name, params, indent(body))
+        cls = "%spublic %s %s%s%s {%s}" % (doc, kw, name, params, extends, indent(body))
         pkg = self.namer.package(c)
         if pkg:
             return "package %s;\n\n%s" % (pkg, cls)
