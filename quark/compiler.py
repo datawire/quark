@@ -138,6 +138,15 @@ class TypeExpr(object):
         self.type = type
         self.bindings = bindings
 
+    def get(self, attr, errors):
+        name = attr.text
+        if name in self.type.env:
+            tgt = self.type.env[name].resolved
+            return texpr(tgt.type, self.bindings, tgt.bindings)
+        else:
+            errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
+            return None
+
     @property
     def id(self):
         return self.pprint(self.type)
@@ -233,27 +242,6 @@ class Use:
     def visit_Map(self, n):
         self.leaf(n, "Map")
 
-class AttrType:
-
-    def __init__(self, errors, attr):
-        self.errors = errors
-        self.attr = attr
-
-    def lookup(self, n):
-        name = self.attr.attr.text
-        if name in n.env:
-            tgt = n.env[name].resolved
-            return texpr(tgt.type, self.attr.expr.resolved.bindings, tgt.bindings)
-        else:
-            self.errors.append("%s:%s has no such attribute: %s" % (lineinfo(self.attr.attr), n.name.text, name))
-            return None
-
-    def match_Package(self, p):
-        return self.lookup(p)
-
-    def match_Class(self, c):
-        return self.lookup(c)
-
 class InvokedType:
 
     def __init__(self, expr):
@@ -281,7 +269,7 @@ class Resolver(object):
 
     def leave_Attr(self, a):
         if a.expr.resolved:
-            a.resolved = a.expr.resolved.type.match(AttrType(self.errors, a))
+            a.resolved = a.expr.resolved.get(a.attr, self.errors)
 
     def leave_Call(self, c):
         if c.expr.resolved:
