@@ -13,8 +13,9 @@
 # limitations under the License.
 
 from collections import OrderedDict
-from .ast import AST, Definition, Param, TypeParam, code
+from .ast import *
 from .parser import Parser, ParseError as GParseError
+from .dispatch import dispatch
 
 class Root(AST):
 
@@ -131,27 +132,6 @@ class Def:
         self.define(d.env, d, leaf=False)
 
 
-class TypePP:
-
-    def __init__(self, bindings):
-        self.bindings = bindings
-
-    def match_Package(self, p):
-        return p.id
-
-    def match_Class(self, c):
-        if c.parameters:
-            params = [repr(self.bindings.get(p, p)) for p in c.parameters]
-            return "%s<%s>" % (c.id, ",".join(params))
-        else:
-            return c.id
-
-    def match_Callable(self, c):
-        return c.id
-
-    def match_TypeParam(self, p):
-        return p.id
-
 class TypeExpr(object):
 
     def __init__(self, type, bindings):
@@ -160,7 +140,27 @@ class TypeExpr(object):
 
     @property
     def id(self):
-        return self.type.match(TypePP(self.bindings))
+        return self.pprint(self.type)
+
+    @dispatch(Package)
+    def pprint(self, pkg):
+        return pkg.id
+
+    @dispatch(Class)
+    def pprint(self, cls):
+        if cls.parameters:
+            params = [repr(self.bindings.get(p, p)) for p in cls.parameters]
+            return "%s<%s>" % (cls.id, ",".join(params))
+        else:
+            return cls.id
+
+    @dispatch(Callable)
+    def pprint(self, cls):
+        return cls.id
+
+    @dispatch(TypeParam)
+    def pprint(self, pkg):
+        return pkg.id
 
     def __repr__(self):
         return self.id
@@ -268,7 +268,7 @@ class InvokedType:
     def match_Macro(self, m):
         return texpr(m.type.resolved.type, self.expr.resolved.bindings)
 
-class Resolver:
+class Resolver(object):
 
     def __init__(self):
         self.errors = []
