@@ -239,6 +239,10 @@ class ExprRenderer(object):
     def __init__(self, namer):
         self.namer = namer
 
+    @property
+    def lang(self):
+        return "java"
+
     def match_Null(self, n):
         return n.text
 
@@ -279,7 +283,13 @@ class ExprRenderer(object):
             return "Functions.%s" % v.match(self.namer)
 
     def match_Native(self, n):
-        return "".join([c.match(self) for c in n.children])
+        return "".join([c.match(self) for c in n.cases])
+
+    def match_NativeCase(self, nc):
+        if nc.name in (None, self.lang):
+            return "".join([c.match(self) for c in nc.children])
+        else:
+            return ""
 
     def match_Fixed(self, f):
         return f.text

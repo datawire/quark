@@ -67,6 +67,10 @@ class PPrinter(object):
         self.first = True
         if isinstance(node, ast.Fixed):
             self.append(repr(node.text))
+        elif isinstance(node, ast.NativeCase):
+            if node.name:
+                self.append(node.name)
+                self.first = False
         elif hasattr(node, "text"):
             self.append(node.text)
 

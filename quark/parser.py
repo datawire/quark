@@ -444,11 +444,19 @@ class Parser:
             else:
                 self.flatten(s, result)
 
-    @g.rule('native = _ "${" stuff* "}" _')
-    def visit_native(self, node, (ls, l, stuff, r, rs)):
+    @g.rule('native = native_case+')
+    def visit_native(self, node, cases):
+        return Native(cases)
+
+    @g.rule('native_case = _ "$" name_re? "{" stuff* "}" _')
+    def visit_native_case(self, node, (ls, d, opt, l, stuff, r, rs)):
+        if opt:
+            name = opt[0]
+        else:
+            name = None
         flattened = []
         self.flatten(stuff, flattened)
-        return Native(flattened)
+        return NativeCase(name, flattened)
 
     @g.rule('stuff = fixed / dvar / braces')
     def visit_stuff(self, node, (stuff,)):

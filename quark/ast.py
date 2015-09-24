@@ -512,12 +512,27 @@ class Entry(AST):
 
 class Native(Expression):
 
-    def __init__(self, children):
+    def __init__(self, cases):
+        self.cases = cases
+
+    @property
+    def children(self):
+        for c in self.cases:
+            yield c
+
+    @coder
+    def code(self, coder):
+        return "".join([c.code(coder) for c in self.cases])
+
+class NativeCase(AST):
+
+    def __init__(self, name, children):
+        self.name = name
         self.children = children
 
     @coder
     def code(self, coder):
-        result = "${"
+        result = "$%s{" % (self.name or "")
         for c in self.children:
             if isinstance(c, Fixed):
                 result += c.code(coder)
