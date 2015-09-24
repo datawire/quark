@@ -4,7 +4,7 @@ class Overload:
     
     
     def __init__(self, name):
-        (self).name = name;
+        (self).name = name
     
     
     def __add__(self, o):
@@ -20,7 +20,7 @@ class Overload:
         o2 = Overload("two");
         o3 = (o1).__add__(o2);
         sys.stdout.write(str((o3).name) + "\n");
-        o3 = (o1).__mul__(o2);
+        o3 = (o1).__mul__(o2)
         sys.stdout.write(str((o3).name) + "\n");
     
 

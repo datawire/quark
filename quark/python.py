@@ -38,9 +38,10 @@ class PythonDefinitionRenderer(DefinitionRenderer):
 
     def match_Class(self, c):
         name = c.name.match(self.namer)
-        body = "\n".join([d.match(self) for d in c.definitions])
+        body = indent("\n".join([d.match(self) for d in c.definitions]))
+        bases = "(%s)" % c.base.match(self.namer) if c.base else ""
         doc = self.doc(c.annotations)
-        return "%sclass %s:%s" % (doc, name, indent(body))
+        return "%sclass %s%s:%s" % (doc, name, bases, body or " pass")
 
     def match_Function(self, fun):
         doc = self.doc(fun.annotations)
@@ -85,6 +86,9 @@ class PythonStatementRenderer(StatementRenderer):
         if i.alternative:
             result += "else%s" % i.alternative.match(self)
         return result
+
+    def match_Assign(self, ass):
+        return "%s = %s" % (ass.lhs.match(self.exprr), ass.rhs.match(self.exprr))
 
 
 class PythonExprRenderer(ExprRenderer):
