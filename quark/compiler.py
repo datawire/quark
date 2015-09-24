@@ -115,7 +115,9 @@ class Def:
         self.define(f.parent.env, f)
 
     def visit_Method(self, m):
-        self.define(m.parent.env, m)
+        # we don't put constructors in the namespace
+        if m.type:
+            self.define(m.parent.env, m)
         self.define(m.env, m.parent, "self")
 
     def visit_Macro(self, m):

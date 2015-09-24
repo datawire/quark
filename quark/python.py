@@ -44,12 +44,18 @@ class PythonDefinitionRenderer(DefinitionRenderer):
 
     def match_Function(self, fun):
         doc = self.doc(fun.annotations)
-        name = fun.name.match(self.namer)
+        if fun.type:
+            name = fun.name.match(self.namer)
+        else:
+            name = "__init__"
         params = [p.match(self) for p in fun.params]
         if isinstance(fun, Method):
             params = ["self"] + params
         body = fun.body.match(self.stmtr) if fun.body else "assert False"
         return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
+
+    def match_Field(self, f):
+        return ""
 
 class PythonStatementRenderer(StatementRenderer):
 
