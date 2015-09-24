@@ -1,5 +1,6 @@
 public class Arithmetic {
-    public void arithmetic() {
+    public Integer arithmetic() {
         Integer x = (2) + (2);
+        return x;
     }
 }

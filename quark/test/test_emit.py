@@ -92,6 +92,9 @@ def build_java(comp, base, srcs):
         assert expected == actual
 
 def build_py(comp, base, srcs):
+    env = {"PYTHONPATH": base}
+    pyout = subprocess.check_output(["python", "-m", "py_compile"] + srcs, env=env)
+    assert pyout == ""
     if "main" in comp.root.env:
         out = os.path.dirname(base) + ".out"
         script = os.path.basename(os.path.dirname(base))
@@ -99,8 +102,7 @@ def build_py(comp, base, srcs):
             expected = open(out).read()
         except IOError, e:
             expected = None
-        actual = subprocess.check_output(["python", "-c", "import %s; %s.main()" % (script, script)],
-                                         env={"PYTHONPATH": base})
+        actual = subprocess.check_output(["python", "-c", "import %s; %s.main()" % (script, script)], env=env)
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
@@ -109,4 +111,3 @@ BUILDERS = {
     "java": build_java,
     "py": build_py
 }
-

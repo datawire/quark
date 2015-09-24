@@ -42,21 +42,29 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         doc = self.doc(c.annotations)
         return "%sclass %s:%s" % (doc, name, indent(body))
 
-    def match_Function(self, m):
-        doc = self.doc(m.annotations)
-        name = m.name.match(self.namer)
-        params = ", ".join([p.match(self) for p in m.params])
-        body = m.body.match(self.stmtr) if m.body else "assert False"
-        return "%s\ndef %s(%s)%s" % (doc, name, params, body)
-
-    def match_Param(self, p):
-        return p.name.match(self.namer)
+    def match_Function(self, fun):
+        doc = self.doc(fun.annotations)
+        name = fun.name.match(self.namer)
+        params = [p.match(self) for p in fun.params]
+        if isinstance(fun, Method):
+            params = ["self"] + params
+        body = fun.body.match(self.stmtr) if fun.body else "assert False"
+        return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
 
 class PythonStatementRenderer(StatementRenderer):
 
     def __init__(self, namer):
         self.namer = namer
         self.exprr = PythonExprRenderer(self.namer)
+
+    def match_Declaration(self, d):
+        name = d.name.match(self.namer)
+        if d.value:
+            return "%s = %s" % (name, d.value.match(self.exprr))
+        else:
+            # XXX: will probably need to adjust this to deal with
+            #      different declaration cases in python
+            return name
 
     def match_Block(self, b):
         stmts = "\n".join([s.match(self) for s in b.statements])
@@ -82,6 +90,10 @@ class PythonExprRenderer(ExprRenderer):
     @dispatch(AST)
     def var(self, dfn, v):
         return v.match(self.namer)
+
+    @dispatch(Class)
+    def invoke(self, cls, expr, args):
+        return "%s(%s)" % (expr.match(self), ", ".join(args))
 
 class Python(backend.Backend):
 
