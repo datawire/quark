@@ -1,0 +1,40 @@
+File(
+ Class(Name(A),
+
+  Method(Type(Name(void)), Name(foo), Block(
+    ExprStmt(Call(Var(Name(print), $type=0.print), String("A", $type=0.String),
+     $type=0.void))))),
+
+ Class(Name(B), Name(A),
+
+  Method(Type(Name(void)), Name(foo), Block(
+    ExprStmt(Call(Var(Name(print), $type=0.print), String("B", $type=0.String),
+     $type=0.void))))),
+
+ Class(Name(C), Name(A)),
+
+ Function(Type(Name(void)), Name(main), Block(
+   Local(
+    Declaration(Type(Name(A)), Name(a), Call(Type(Name(A)), $type=1.A),
+    $type=1.A)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
+    $type=0.void)),
+   Local(
+    Declaration(Type(Name(B)), Name(b), Call(Type(Name(B)), $type=1.B),
+    $type=1.B)),
+   ExprStmt(Call(Attr(Var(Name(b), $type=1.B), Name(foo), $type=1.B.foo),
+    $type=0.void)),
+   Local(
+    Declaration(Type(Name(C)), Name(c), Call(Type(Name(C)), $type=1.C),
+    $type=1.C)),
+   ExprStmt(Call(Attr(Var(Name(c), $type=1.C), Name(foo), $type=1.A.foo),
+    $type=0.void)),
+   ExprStmt(Call(Var(Name(print), $type=0.print), String("--", $type=0.String),
+    $type=0.void)),
+   Assign(Var(Name(a), $type=1.A), Var(Name(b), $type=1.B)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
+    $type=0.void)),
+   Assign(Var(Name(a), $type=1.A), Var(Name(c), $type=1.C)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
+    $type=0.void))))
+)

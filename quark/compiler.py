@@ -140,12 +140,24 @@ class TypeExpr(object):
 
     def get(self, attr, errors):
         name = attr.text
-        if name in self.type.env:
-            tgt = self.type.env[name].resolved
-            return texpr(tgt.type, self.bindings, tgt.bindings)
-        else:
-            errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
-            return None
+        for env in self.environments(self.type):
+            if name in env:
+                tgt = env[name].resolved
+                return texpr(tgt.type, self.bindings, tgt.bindings)
+        errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
+        return None
+
+    @dispatch(Package)
+    def environments(self, pkg):
+        yield pkg.env
+
+    @dispatch(Class)
+    def environments(self, cls):
+        yield cls.env
+        if cls.base:
+            base = cls.base.definition
+            for e in self.environments(base):
+                yield e
 
     @dispatch(list)
     def invoke(self, errors):
@@ -232,6 +244,10 @@ class Use:
         v.definition = self.lookup(v)
         if v.definition is None:
             self.unresolved.append((v.name, v.name.text))
+
+    def visit_Class(self, c):
+        if c.base:
+            c.base.definition = self.lookup(c.base, c.base.text)
 
     def leaf(self, n, name):
         type = self.lookup(n, name)
