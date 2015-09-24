@@ -147,6 +147,22 @@ class TypeExpr(object):
             errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
             return None
 
+    @dispatch(list)
+    def invoke(self, errors):
+        return self.invoke(self.type, errors)
+
+    @dispatch(Function)
+    def invoke(self, fun, errors):
+        return texpr(fun.type.resolved.type, self.bindings)
+
+    @dispatch(Class)
+    def invoke(self, cls, errors):
+        return texpr(cls, self.bindings)
+
+    @dispatch(Macro)
+    def invoke(self, mac, errors):
+        return texpr(mac.type.resolved.type, self.bindings)
+
     @property
     def id(self):
         return self.pprint(self.type)
@@ -242,20 +258,6 @@ class Use:
     def visit_Map(self, n):
         self.leaf(n, "Map")
 
-class InvokedType:
-
-    def __init__(self, expr):
-        self.expr = expr
-
-    def match_Function(self, f):
-        return texpr(f.type.resolved.type, self.expr.resolved.bindings)
-
-    def match_Class(self, c):
-        return texpr(c, self.expr.resolved.bindings)
-
-    def match_Macro(self, m):
-        return texpr(m.type.resolved.type, self.expr.resolved.bindings)
-
 class Resolver(object):
 
     def __init__(self):
@@ -273,7 +275,7 @@ class Resolver(object):
 
     def leave_Call(self, c):
         if c.expr.resolved:
-            c.resolved = c.expr.resolved.type.match(InvokedType(c.expr))
+            c.resolved = c.expr.resolved.invoke(self.errors)
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:
