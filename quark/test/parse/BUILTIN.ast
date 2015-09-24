@@ -18,11 +18,6 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') * ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(int)), Name(other)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') == ('),
-     Var(Name(other)), Fixed(')')))),
-
   MethodMacro(Type(Name(int)), Name(__lt__),
    Param(Type(Name(int)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') < ('),
@@ -50,11 +45,6 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') * ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(int)), Name(other)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') == ('),
-     Var(Name(other)), Fixed(')')))),
-
   MethodMacro(Type(Name(int)), Name(__lt__),
    Param(Type(Name(int)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') < ('),
@@ -65,14 +55,23 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') > ('),
      Var(Name(other)), Fixed(')'))))),
 
- Primitive(Name(Object)),
-
- Primitive(Name(String),
+ Primitive(Name(Object),
 
   MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(String)), Name(other)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').equals('),
+   Param(Type(Name(Object)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') == ('),
+     Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__ne__),
+   Param(Type(Name(Object)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+     Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') != ('),
      Var(Name(other)), Fixed(')'))))),
+
+ Primitive(Name(String)),
 
  Primitive(Name(List), TypeParam(Name(T)),
 
@@ -87,12 +86,7 @@ File(
      Var(Name(index)), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(Fixed('('),
-     Var(Name(self)), Fixed(').size()')))),
-
-  MethodMacro(Type(Name(int)), Name(__ne__),
-   Param(Type(Name(List), Type(Name(T))), Name(other)),
-   Native(NativeCase(Fixed('!(('), Var(Name(self)), Fixed(').equals('),
-     Var(Name(other)), Fixed('))'))))),
+     Var(Name(self)), Fixed(').size()'))))),
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
@@ -106,11 +100,6 @@ File(
    Param(Type(Name(K)), Name(key)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').get('),
      Var(Name(key)), Fixed(')')))),
-
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(Map), Type(Name(K)), Type(Name(V))), Name(other)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').equals('),
-     Var(Name(other)), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(contains),
    Param(Type(Name(K)), Name(key)),

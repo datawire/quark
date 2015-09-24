@@ -16,5 +16,8 @@ public class Overload {
         System.out.println((o3).name);
         o3 = (o1).__mul__(o2);
         System.out.println((o3).name);
+        if ((o3).equals(o1)) {
+            System.out.println("YAY!");
+        }
     }
 }

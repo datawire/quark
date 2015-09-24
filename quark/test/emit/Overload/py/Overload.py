@@ -22,6 +22,9 @@ class Overload:
         sys.stdout.write(str((o3).name) + "\n");
         o3 = (o1).__mul__(o2)
         sys.stdout.write(str((o3).name) + "\n");
+        if ((o3) == (o1)):
+            sys.stdout.write(str("YAY!") + "\n");
+        
     
 
 

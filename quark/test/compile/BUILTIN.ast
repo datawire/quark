@@ -18,11 +18,6 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.int), Fixed(') * ('),
      Var(Name(other), $type=0.int), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(int)), Name(other), $type=0.int),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.int), Fixed(') == ('),
-     Var(Name(other), $type=0.int), Fixed(')')))),
-
   MethodMacro(Type(Name(int)), Name(__lt__),
    Param(Type(Name(int)), Name(other), $type=0.int),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.int), Fixed(') < ('),
@@ -50,11 +45,6 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.long), Fixed(') * ('),
      Var(Name(other), $type=0.int), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(int)), Name(other), $type=0.int),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.long),
-     Fixed(') == ('), Var(Name(other), $type=0.int), Fixed(')')))),
-
   MethodMacro(Type(Name(int)), Name(__lt__),
    Param(Type(Name(int)), Name(other), $type=0.int),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.long), Fixed(') < ('),
@@ -65,14 +55,25 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.long), Fixed(') > ('),
      Var(Name(other), $type=0.int), Fixed(')'))))),
 
- Primitive(Name(Object)),
-
- Primitive(Name(String),
+ Primitive(Name(Object),
 
   MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(String)), Name(other), $type=0.String),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.String),
-     Fixed(').equals('), Var(Name(other), $type=0.String), Fixed(')'))))),
+   Param(Type(Name(Object)), Name(other), $type=0.Object),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.Object), Fixed(').equals('),
+     Var(Name(other), $type=0.Object), Fixed(')')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.Object), Fixed(') == ('), Var(Name(other),
+     $type=0.Object), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__ne__),
+   Param(Type(Name(Object)), Name(other), $type=0.Object),
+   Native(NativeCase(java,
+     Fixed('!(('), Var(Name(self), $type=0.Object), Fixed(').equals('),
+     Var(Name(other), $type=0.Object), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.Object), Fixed(') != ('), Var(Name(other),
+     $type=0.Object), Fixed(')'))))),
+
+ Primitive(Name(String)),
 
  Primitive(Name(List), TypeParam(Name(T)),
 
@@ -87,13 +88,7 @@ File(
      Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(Fixed('('),
-     Var(Name(self), $type=0.List<0.List.T>), Fixed(').size()')))),
-
-  MethodMacro(Type(Name(int)), Name(__ne__),
-   Param(Type(Name(List), Type(Name(T))), Name(other), $type=0.List<0.List.T>),
-   Native(NativeCase(Fixed('!(('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').equals('), Var(Name(other), $type=0.List<0.List.T>),
-     Fixed('))'))))),
+     Var(Name(self), $type=0.List<0.List.T>), Fixed(').size()'))))),
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
@@ -108,13 +103,6 @@ File(
    Param(Type(Name(K)), Name(key), $type=0.Map.K),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
      Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')')))),
-
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(Map), Type(Name(K)), Type(Name(V))), Name(other),
-   $type=0.Map<0.Map.K,0.Map.V>),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(').equals('), Var(Name(other), $type=0.Map<0.Map.K,0.Map.V>),
-     Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(contains),
    Param(Type(Name(K)), Name(key), $type=0.Map.K),

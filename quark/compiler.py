@@ -158,6 +158,8 @@ class TypeExpr(object):
             base = cls.base.definition
             for e in self.environments(base):
                 yield e
+        else:
+            yield cls.root.env["Object"].env
 
     @dispatch(list)
     def invoke(self, errors):
@@ -328,7 +330,6 @@ primitive int {
     macro int __add__(int other) ${($self) + ($other)};
     macro int __sub__(int other) ${($self) - ($other)};
     macro int __mul__(int other) ${($self) * ($other)};
-    macro int __eq__(int other) ${($self) == ($other)};
     macro int __lt__(int other) ${($self) < ($other)};
     macro int __gt__(int other) ${($self) > ($other)};
 }
@@ -336,24 +337,24 @@ primitive long {
     macro int __add__(int other) ${($self) + ($other)};
     macro int __sub__(int other) ${($self) - ($other)};
     macro int __mul__(int other) ${($self) * ($other)};
-    macro int __eq__(int other) ${($self) == ($other)};
     macro int __lt__(int other) ${($self) < ($other)};
     macro int __gt__(int other) ${($self) > ($other)};
 }
-primitive Object {}
-primitive String {
-    macro int __eq__(String other) ${($self).equals($other)};
+primitive Object {
+    macro int __eq__(Object other) $java{($self).equals($other)}
+                                   $py{($self) == ($other)};
+    macro int __ne__(Object other) $java{!(($self).equals($other))}
+                                   $py{($self) != ($other)};
 }
+primitive String {}
 primitive List<T> {
     macro void add(T element) ${($self).add($element)};
     macro T get(int index) ${($self).get($index)};
     macro int size() ${($self).size()};
-    macro int __ne__(List<T> other) ${!(($self).equals($other))};
 }
 primitive Map<K,V> {
     macro void put(K key, V value) ${($self).put(($key), ($value))};
     macro V get(K key) ${($self).get($key)};
-    macro int __eq__(Map<K,V> other) ${($self).equals($other)};
     macro int contains(K key) ${($self).containsKey($key)};
 }
 macro void print(String msg) $java{System.out.println($msg)}

@@ -21,6 +21,9 @@ class Overload {
 	print(o3.name);
         o3 = o1 * o2;
 	print(o3.name);
+	if (o3 == o1) {
+	    print("YAY!");
+	}
     }
 
 }
