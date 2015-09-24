@@ -313,6 +313,10 @@ class Return(Statement):
     def children(self):
         yield self.expr
 
+    @coder
+    def code(self, coder):
+        return "return %s;" % (self.expr.code(coder))
+
 class Assign(Statement):
 
     def __init__(self, lhs, rhs):
