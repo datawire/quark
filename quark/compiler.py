@@ -501,11 +501,18 @@ class Compiler:
 
 import os
 from docopt import docopt
-from backend import Java
+from backend import Java, Python
 
 def _main(args):
     srcs = args["<file>"]
+
     java = args["--java"]
+    python = args["--python"]
+
+    backends = []
+    if java: backends.append((Java, java))
+    if python: backends.append((Python, python))
+
     c = Compiler()
     for src in srcs:
         try:
@@ -517,19 +524,20 @@ def _main(args):
         except ParseError, e:
             return e
         finally:
-            if java:
-                c.write(java)
+            for _, target in backends:
+                c.write(target)
 
     try:
         c.compile()
     except CompileError, e:
         return e
 
-    if java:
-        j = Java()
-        c.emit(j)
+
+    for (Backend, target) in backends:
+        b = Backend()
+        c.emit(b)
         try:
-            j.write(java)
+            b.write(target)
         except IOError, e:
             return e
 
@@ -538,7 +546,7 @@ def main():
 Quark compiler.
 
 Usage:
-  quark [--java=<dir>] [--python=<dir>] [--ruby=<dir>] <file> ...
+  quark [--java=<dir>] [--python=<dir>] <file> ...
   quark -h | --help
   quark --version
 
@@ -547,6 +555,5 @@ Options:
   --version       Show version.
   --java=<dir>    Emit java code to specified directory.
   --python=<dir>  Emit python code to specified directory.
-  --ruby=<dir>    Emit ruby code to specified directory.
 """
     exit(_main(docopt(main.__doc__)))

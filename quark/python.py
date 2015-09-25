@@ -199,7 +199,7 @@ def _println(obj):
     def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
         if content.strip() != "":
-            fname = os.path.splitext(file.name)[0]
+            fname = os.path.splitext(os.path.basename(file.name))[0]
             self.files["%s.py" % self.dfnr.namer.get(fname)] = self.header + content
 
     def visit_Primitive(self, p):
