@@ -93,8 +93,11 @@ File(
   MethodMacro(Type(Name(void)), Name(put),
    Param(Type(Name(K)), Name(key)),
    Param(Type(Name(V)), Name(value)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').put(('),
-     Var(Name(key)), Fixed('), ('), Var(Name(value)), Fixed('))')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').put(('), Var(Name(key)),
+     Fixed('), ('), Var(Name(value)), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self)), Fixed(')['), Var(Name(key)), Fixed('] = ('),
+     Var(Name(value)), Fixed(')')))),
 
   MethodMacro(Type(Name(V)), Name(get),
    Param(Type(Name(K)), Name(key)),

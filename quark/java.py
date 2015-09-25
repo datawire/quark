@@ -95,12 +95,11 @@ class DocEvaluator:
     def __init__(self):
         self.lines = []
 
-    @property
-    def doc(self):
+    def doc(self, head, prefix, tail):
         if self.lines:
-            lines = ["/**"]
-            lines.extend([(" * %s" % l).rstrip() for l in self.lines])
-            lines.append(" */")
+            lines = [head]
+            lines.extend([("%s%s" % (prefix, l)).rstrip() for l in self.lines])
+            lines.append(tail)
             lines.append("")
             return "\n".join(lines)
         else:
@@ -122,12 +121,12 @@ class DefinitionRenderer(object):
                                         "Map": "java.util.HashMap"})
         self.stmtr = StatementRenderer(self.namer)
 
-    def doc(self, annotations):
+    def doc(self, annotations, head="/**", prefix=" * ", tail=" */"):
         doc_eval = DocEvaluator()
         for a in annotations:
             if a.name.text == "doc":
                 a.match(doc_eval)
-        return doc_eval.doc
+        return doc_eval.doc(head, prefix, tail)
 
     def match_Class(self, c):
         name = c.name.match(self.namer)

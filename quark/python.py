@@ -43,7 +43,7 @@ class PythonNamer(SubstitutionNamer):
         return ".".join([p.match(self) for p in t.path])
 
     def get(self, name):
-        return self.env.get(name, name)
+        return self.env.get(name, name.replace("-", "_"))
 
 class PythonDefinitionRenderer(DefinitionRenderer):
 
@@ -51,6 +51,9 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         self.namer = PythonNamer()
         self.stmtr = PythonStatementRenderer(self.namer)
         self.fieldr = FieldRenderer(self.namer, self.stmtr.exprr)
+
+    def doc(self, annotations):
+        return DefinitionRenderer.doc(self, annotations, head='"""', prefix="", tail='"""')
 
     def match_Macro(self, m):
         return ""

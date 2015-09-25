@@ -24,7 +24,7 @@ primitive List<T> {
     macro int size() ${($self).size()};
 }
 primitive Map<K, V> {
-    macro void put(K key, V value) ${($self).put(($key), ($value))};
+    macro void put(K key, V value) $java{($self).put(($key), ($value))}$py{($self)[$key] = ($value)};
     macro V get(K key) ${($self).get($key)};
     macro int contains(K key) ${($self).containsKey($key)};
 }
