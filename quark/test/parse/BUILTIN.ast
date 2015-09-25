@@ -77,13 +77,17 @@ File(
 
   MethodMacro(Type(Name(void)), Name(add),
    Param(Type(Name(T)), Name(element)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').add('),
-     Var(Name(element)), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').add('), Var(Name(element)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)),
+     Fixed(').append('), Var(Name(element)), Fixed(')')))),
 
   MethodMacro(Type(Name(T)), Name(get),
    Param(Type(Name(int)), Name(index)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').get('),
-     Var(Name(index)), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(index)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(')['),
+     Var(Name(index)), Fixed(']')))),
 
   MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(Fixed('('),
      Var(Name(self)), Fixed(').size()'))))),

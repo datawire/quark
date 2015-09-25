@@ -1,5 +1,8 @@
 import os, sys
 
+_Map = dict
+_List = list
+
 def _println(obj):
     if obj is None:
         sys.stdout.write("null\n")

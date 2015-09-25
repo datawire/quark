@@ -9,17 +9,19 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-
-def go():
-    _println("GOGO!!");
-
 class Test:
     def _init(self):
-        self.size = None
-    
-    def __init__(self): self._init()
+        self.name = None
     
     
-    def go(self):
-        _println("TTGO!!");
     
+    def __init__(self):
+        self._init()
+        (self).name = "Hello World!"
+    
+
+
+def go():
+    t = Test();
+    _println((t).name);
+    _println((Test()).name);

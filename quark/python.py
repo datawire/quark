@@ -37,7 +37,7 @@ class FieldRenderer(object):
 class PythonNamer(SubstitutionNamer):
 
     def __init__(self):
-        SubstitutionNamer.__init__(self, {"List": "list", "Map": "dict", "print": "print_"})
+        SubstitutionNamer.__init__(self, {"List": "_List", "Map": "_Map", "print": "print_"})
 
     def match_Type(self, t):
         return ".".join([p.match(self) for p in t.path])
@@ -93,7 +93,7 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         params = [p.match(self) for p in fun.params]
         if isinstance(fun, Method):
             params = ["self"] + params
-        body = fun.body.match(self.stmtr, header=init) if fun.body else "assert False"
+        body = fun.body.match(self.stmtr, header=init) if fun.body else ": assert False"
         return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
 
     def match_Field(self, f):
@@ -141,7 +141,10 @@ class PythonExprRenderer(ExprRenderer):
 
     @dispatch(AST)
     def var(self, dfn, v):
-        return v.match(self.namer)
+        if isinstance(v.definition, Field):
+            return "self.%s" % v.match(self.namer)
+        else:
+            return v.match(self.namer)
 
     @dispatch(AST)
     def get(self, cls, attr):
@@ -153,12 +156,18 @@ class PythonExprRenderer(ExprRenderer):
     def invoke(self, cls, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 
+    def match_List(self, l):
+        return "[%s]" % ", ".join([e.match(self) for e in l.elements])
+
 class Python(backend.Backend):
 
     def __init__(self):
         backend.Backend.__init__(self, "py")
         self.dfnr = PythonDefinitionRenderer()
         self.header = """import os, sys
+
+_Map = dict
+_List = list
 
 def _println(obj):
     if obj is None:

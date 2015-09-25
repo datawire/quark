@@ -79,13 +79,19 @@ File(
 
   MethodMacro(Type(Name(void)), Name(add),
    Param(Type(Name(T)), Name(element), $type=0.List.T),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').add('), Var(Name(element), $type=0.List.T), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.List<0.List.T>), Fixed(').add('),
+     Var(Name(element), $type=0.List.T), Fixed(')')), NativeCase(py,
+     Fixed('('), Var(Name(self), $type=0.List<0.List.T>), Fixed(').append('),
+     Var(Name(element), $type=0.List.T), Fixed(')')))),
 
   MethodMacro(Type(Name(T)), Name(get),
    Param(Type(Name(int)), Name(index), $type=0.int),
-   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.List<0.List.T>),
-     Fixed(').get('), Var(Name(index), $type=0.int), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.List<0.List.T>), Fixed(').get('),
+     Var(Name(index), $type=0.int), Fixed(')')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.List<0.List.T>), Fixed(')['), Var(Name(index),
+     $type=0.int), Fixed(']')))),
 
   MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(Fixed('('),
      Var(Name(self), $type=0.List<0.List.T>), Fixed(').size()'))))),

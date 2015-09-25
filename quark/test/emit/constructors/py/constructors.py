@@ -9,6 +9,11 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
+import test1
+import test2
+import test3
 
 def main():
-    _println("Hello World");
+    (test1).go();
+    (test2).go();
+    (test3).go();

@@ -19,8 +19,8 @@ primitive Object {
 }
 primitive String {}
 primitive List<T> {
-    macro void add(T element) ${($self).add($element)};
-    macro T get(int index) ${($self).get($index)};
+    macro void add(T element) $java{($self).add($element)}$py{($self).append($element)};
+    macro T get(int index) $java{($self).get($index)}$py{($self)[$index]};
     macro int size() ${($self).size()};
 }
 primitive Map<K, V> {
