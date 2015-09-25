@@ -433,6 +433,7 @@ class Compiler:
         self.root = Root()
         self.parser = Parser()
         self.annotators = OrderedDict()
+        self.emitters = []
         self.parse("BUILTIN", BUILTIN)
         self.generated = OrderedDict()
 
@@ -442,7 +443,17 @@ class Compiler:
         else:
             self.annotators[name] = [annotator]
 
+    def emitter(self, backend, target):
+        self.emitters.append((backend, target))
+
     def parse(self, name, text):
+        try:
+            self.parse_r(name, text)
+        finally:
+            for _, target in self.emitters:
+                self.write(target)
+
+    def parse_r(self, name, text):
         try:
             file = self.parser.parse(text)
         except GParseError, e:
@@ -458,7 +469,7 @@ class Compiler:
             gen_name = "%s@%s%s" % (base, ann_name, ext)
             assert gen_name not in self.generated
             self.generated[gen_name] = code
-            self.parse(gen_name, code)
+            self.parse_r(gen_name, code)
 
     def write(self, target):
         if not os.path.exists(target):
@@ -496,6 +507,11 @@ class Compiler:
         if res.errors:
             raise CompileError("\n".join(res.errors))
 
+        for Backend, target in self.emitters:
+            backend = Backend()
+            self.emit(backend)
+            backend.write(target)
+
     def emit(self, backend):
         self.root.traverse(backend)
 
@@ -509,37 +525,22 @@ def _main(args):
     java = args["--java"]
     python = args["--python"]
 
-    backends = []
-    if java: backends.append((Java, java))
-    if python: backends.append((Python, python))
-
     c = Compiler()
-    for src in srcs:
-        try:
-            content = open(src).read()
-        except IOError, e:
-            return e
-        try:
-            c.parse(src, content)
-        except ParseError, e:
-            return e
-        finally:
-            for _, target in backends:
-                c.write(target)
+
+    if java: c.emitter(Java, java)
+    if python: c.emitter(Python, python)
 
     try:
+        for src in srcs:
+            with open(src, "rb") as fd:
+                c.parse(src, fd.read())
         c.compile()
+    except IOError, e:
+        return e
+    except ParseError, e:
+        return e
     except CompileError, e:
         return e
-
-
-    for (Backend, target) in backends:
-        b = Backend()
-        c.emit(b)
-        try:
-            b.write(target)
-        except IOError, e:
-            return e
 
 def main():
     """
