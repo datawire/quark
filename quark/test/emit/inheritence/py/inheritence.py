@@ -1,18 +1,35 @@
 import os, sys
 
+def _println(obj):
+    if obj is None:
+        sys.stdout.write("null\n")
+    else:
+        sys.stdout.write("%s\n" % obj)
+
 class A:
+    def _init(self): pass
+    def __init__(self): self._init()
     
     def foo(self):
-        sys.stdout.write(str("A") + "\n");
+        _println("A");
     
 
 class B(A):
+    def _init(self):
+        A._init(self)
+        
+    
     
     def foo(self):
-        sys.stdout.write(str("B") + "\n");
+        _println("B");
     
 
-class C(A): pass
+class C(A):
+    def _init(self):
+        A._init(self)
+        
+    
+
 
 def main():
     a = A();
@@ -21,7 +38,7 @@ def main():
     (b).foo();
     c = C();
     (c).foo();
-    sys.stdout.write(str("--") + "\n");
+    _println("--");
     a = b
     (a).foo();
     a = c

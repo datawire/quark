@@ -113,8 +113,8 @@ File(
   Param(Type(Name(String)), Name(msg), $type=0.String),
   Native(NativeCase(java,
     Fixed('System.out.println('), Var(Name(msg), $type=0.String), Fixed(')')),
-   NativeCase(py, Fixed('sys.stdout.write(str('), Var(Name(msg),
-    $type=0.String), Fixed(') + "\\n")')))),
+   NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.String),
+    Fixed(')')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,

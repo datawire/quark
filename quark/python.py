@@ -21,11 +21,30 @@ from collections import OrderedDict
 import backend
 from java import *
 
+class FieldRenderer(object):
+
+    def __init__(self, namer, exprr):
+        self.namer = namer
+        self.exprr = exprr
+
+    def match_Field(self, field):
+        name = field.name.match(self.namer)
+        if field.value:
+            return "self.%s = %s" % (name, field.value.match(self.exprr))
+        else:
+            return "self.%s = None" % name
+
+class PythonNamer(SubstitutionNamer):
+
+    def match_Type(self, t):
+        return ".".join([p.match(self) for p in t.path])
+
 class PythonDefinitionRenderer(DefinitionRenderer):
 
     def __init__(self):
-        self.namer = SubstitutionNamer({"List": "list", "Map": "dict"})
+        self.namer = PythonNamer({"List": "list", "Map": "dict"})
         self.stmtr = PythonStatementRenderer(self.namer)
+        self.fieldr = FieldRenderer(self.namer, self.stmtr.exprr)
 
     def match_Macro(self, m):
         return ""
@@ -36,10 +55,21 @@ class PythonDefinitionRenderer(DefinitionRenderer):
     def match_Package(self, p):
         return ""
 
+    def constructors(self, cls):
+        return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
-        body = indent("\n".join([d.match(self) for d in c.definitions]))
-        bases = "(%s)" % c.base.match(self.namer) if c.base else ""
+        base = c.base.match(self.namer) if c.base else ""
+        fields = "\n".join([f.match(self.fieldr) for f in c.definitions if isinstance(f, Field)])
+        if base:
+            fields = "%s._init(self)\n%s" % (base, fields)
+        extras = []
+        extras.append("def _init(self):%s" % (indent(fields) or " pass"))
+        if not c.base and not self.constructors(c):
+            extras.append("def __init__(self): self._init()")
+        body = indent("\n".join(extras + [d.match(self) for d in c.definitions]))
+        bases = "(%s)" % base if base else ""
         doc = self.doc(c.annotations)
         return "%sclass %s%s:%s" % (doc, name, bases, body or " pass")
 
@@ -47,12 +77,14 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         doc = self.doc(fun.annotations)
         if fun.type:
             name = fun.name.match(self.namer)
+            init = None
         else:
             name = "__init__"
+            init = None if fun.parent.base else ["self._init()"]
         params = [p.match(self) for p in fun.params]
         if isinstance(fun, Method):
             params = ["self"] + params
-        body = fun.body.match(self.stmtr) if fun.body else "assert False"
+        body = fun.body.match(self.stmtr, header=init) if fun.body else "assert False"
         return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
 
     def match_Field(self, f):
@@ -73,8 +105,9 @@ class PythonStatementRenderer(StatementRenderer):
             #      different declaration cases in python
             return name
 
-    def match_Block(self, b):
-        stmts = "\n".join([s.match(self) for s in b.statements])
+    def match_Block(self, b, header=None):
+        header = header or []
+        stmts = "\n".join(header + [s.match(self) for s in b.statements])
         if stmts:
             return ":%s" % indent(stmts)
         else:
@@ -110,7 +143,15 @@ class Python(backend.Backend):
     def __init__(self):
         backend.Backend.__init__(self, "py")
         self.dfnr = PythonDefinitionRenderer()
-        self.imports = "import os, sys\n\n"
+        self.header = """import os, sys
+
+def _println(obj):
+    if obj is None:
+        sys.stdout.write("null\\n")
+    else:
+        sys.stdout.write("%s\\n" % obj)
+
+"""
 
     def write(self, target):
         src = target
@@ -127,12 +168,12 @@ class Python(backend.Backend):
     def visit_Package(self, pkg):
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
         pname = self.dfnr.namer.package(pkg)
-        self.files["%s/__init__.py" % pname.replace(".", "/")] = self.imports + content
+        self.files["%s/__init__.py" % pname.replace(".", "/")] = self.header + content
 
     def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
         if content.strip() != "":
-            self.files["%s.py" % os.path.splitext(file.name)[0]] = self.imports + content
+            self.files["%s.py" % os.path.splitext(file.name)[0]] = self.header + content
 
     def visit_Primitive(self, p):
         pass

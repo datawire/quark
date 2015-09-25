@@ -1,6 +1,14 @@
 import os, sys
 
+def _println(obj):
+    if obj is None:
+        sys.stdout.write("null\n")
+    else:
+        sys.stdout.write("%s\n" % obj)
+
 class Arithmetic:
+    def _init(self): pass
+    def __init__(self): self._init()
     
     def arithmetic(self):
         x = (2) + (2);
@@ -10,4 +18,4 @@ class Arithmetic:
 
 def main():
     a = Arithmetic();
-    sys.stdout.write(str((a).arithmetic()) + "\n");
+    _println((a).arithmetic());

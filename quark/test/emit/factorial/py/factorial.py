@@ -1,5 +1,11 @@
 import os, sys
 
+def _println(obj):
+    if obj is None:
+        sys.stdout.write("null\n")
+    else:
+        sys.stdout.write("%s\n" % obj)
+
 
 def factorial(n):
     if ((n) == (0)):
@@ -10,13 +16,13 @@ def factorial(n):
 
 
 def main():
-    sys.stdout.write(str(factorial(1)) + "\n");
-    sys.stdout.write(str(factorial(2)) + "\n");
-    sys.stdout.write(str(factorial(3)) + "\n");
-    sys.stdout.write(str(factorial(4)) + "\n");
-    sys.stdout.write(str(factorial(5)) + "\n");
-    sys.stdout.write(str(factorial(6)) + "\n");
-    sys.stdout.write(str(factorial(7)) + "\n");
-    sys.stdout.write(str(factorial(8)) + "\n");
-    sys.stdout.write(str(factorial(9)) + "\n");
-    sys.stdout.write(str(factorial(10)) + "\n");
+    _println(factorial(1));
+    _println(factorial(2));
+    _println(factorial(3));
+    _println(factorial(4));
+    _println(factorial(5));
+    _println(factorial(6));
+    _println(factorial(7));
+    _println(factorial(8));
+    _println(factorial(9));
+    _println(factorial(10));

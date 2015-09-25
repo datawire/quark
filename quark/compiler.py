@@ -358,7 +358,7 @@ primitive Map<K,V> {
     macro int contains(K key) ${($self).containsKey($key)};
 }
 macro void print(String msg) $java{System.out.println($msg)}
-                             $py{sys.stdout.write(str($msg) + "\\n")};
+                             $py{_println($msg)};
 macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)};
 """
