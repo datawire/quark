@@ -97,7 +97,9 @@ def build_py(comp, base, srcs):
     assert pyout == ""
     if "main" in comp.root.env:
         out = os.path.dirname(base) + ".out"
-        script = os.path.basename(os.path.dirname(base))
+        import quark.python
+        namer = quark.python.PythonNamer()
+        script = namer.get(os.path.basename(os.path.dirname(base)))
         try:
             expected = open(out).read()
         except IOError, e:

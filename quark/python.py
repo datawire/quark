@@ -36,13 +36,19 @@ class FieldRenderer(object):
 
 class PythonNamer(SubstitutionNamer):
 
+    def __init__(self):
+        SubstitutionNamer.__init__(self, {"List": "list", "Map": "dict", "print": "print_"})
+
     def match_Type(self, t):
         return ".".join([p.match(self) for p in t.path])
+
+    def get(self, name):
+        return self.env.get(name, name)
 
 class PythonDefinitionRenderer(DefinitionRenderer):
 
     def __init__(self):
-        self.namer = PythonNamer({"List": "list", "Map": "dict"})
+        self.namer = PythonNamer()
         self.stmtr = PythonStatementRenderer(self.namer)
         self.fieldr = FieldRenderer(self.namer, self.stmtr.exprr)
 
@@ -173,7 +179,8 @@ def _println(obj):
     def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
         if content.strip() != "":
-            self.files["%s.py" % os.path.splitext(file.name)[0]] = self.header + content
+            fname = os.path.splitext(file.name)[0]
+            self.files["%s.py" % self.dfnr.namer.get(fname)] = self.header + content
 
     def visit_Primitive(self, p):
         pass

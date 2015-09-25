@@ -3,3 +3,7 @@ class Test {
         print("Hello World!");
     }
 }
+
+void main() {
+    new Test().test();
+}
