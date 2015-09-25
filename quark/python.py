@@ -157,7 +157,7 @@ class PythonExprRenderer(ExprRenderer):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 
     def match_List(self, l):
-        return "[%s]" % ", ".join([e.match(self) for e in l.elements])
+        return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
 
 class Python(backend.Backend):
 
@@ -167,7 +167,9 @@ class Python(backend.Backend):
         self.header = """import os, sys
 
 _Map = dict
-_List = list
+class _List(list):
+    def __repr__(self):
+        return "[%s]" % ", ".join([str(e) for e in self])
 
 def _println(obj):
     if obj is None:

@@ -53,10 +53,7 @@ def test_emit(path):
         comp.emit(backend)
         extbase = os.path.join(base, backend.ext)
         if not os.path.exists(extbase):
-            if Backend in (Java,):
-                os.makedirs(extbase)
-            else:
-                continue
+            os.makedirs(extbase)
 
         srcs = []
         assertions = []
