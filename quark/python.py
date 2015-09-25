@@ -62,7 +62,7 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         return ""
 
     def match_Package(self, p):
-        return ""
+        return "import %s" % p.name.match(self.namer)
 
     def constructors(self, cls):
         return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
@@ -142,6 +142,12 @@ class PythonExprRenderer(ExprRenderer):
     @dispatch(AST)
     def var(self, dfn, v):
         return v.match(self.namer)
+
+    @dispatch(AST)
+    def get(self, cls, attr):
+        expr = attr.expr
+        attr_name = attr.attr.text
+        return "(%s).%s" % (expr.match(self), attr_name)
 
     @dispatch(Class)
     def invoke(self, cls, expr, args):
