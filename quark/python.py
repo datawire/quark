@@ -194,7 +194,11 @@ def _println(obj):
     def visit_Package(self, pkg):
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
         pname = self.dfnr.namer.package(pkg)
-        self.files["%s/__init__.py" % pname.replace(".", "/")] = self.header + content
+        fname = "%s/__init__.py" % pname.replace(".", "/")
+        if fname in self.files:
+            self.files[fname] += "\n\n" + content
+        else:
+            self.files[fname] = self.header + content
 
     def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
