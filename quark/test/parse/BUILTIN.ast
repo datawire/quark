@@ -30,28 +30,28 @@ File(
 
  Primitive(Name(long),
 
-  MethodMacro(Type(Name(int)), Name(__add__),
-   Param(Type(Name(int)), Name(other)),
+  MethodMacro(Type(Name(long)), Name(__add__),
+   Param(Type(Name(long)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') + ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__sub__),
-   Param(Type(Name(int)), Name(other)),
+  MethodMacro(Type(Name(long)), Name(__sub__),
+   Param(Type(Name(long)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') - ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__mul__),
-   Param(Type(Name(int)), Name(other)),
+  MethodMacro(Type(Name(long)), Name(__mul__),
+   Param(Type(Name(long)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') * ('),
      Var(Name(other)), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(__lt__),
-   Param(Type(Name(int)), Name(other)),
+   Param(Type(Name(long)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') < ('),
      Var(Name(other)), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(__gt__),
-   Param(Type(Name(int)), Name(other)),
+   Param(Type(Name(long)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') > ('),
      Var(Name(other)), Fixed(')'))))),
 

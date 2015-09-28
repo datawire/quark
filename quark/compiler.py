@@ -334,11 +334,11 @@ primitive int {
     macro int __gt__(int other) ${($self) > ($other)};
 }
 primitive long {
-    macro int __add__(int other) ${($self) + ($other)};
-    macro int __sub__(int other) ${($self) - ($other)};
-    macro int __mul__(int other) ${($self) * ($other)};
-    macro int __lt__(int other) ${($self) < ($other)};
-    macro int __gt__(int other) ${($self) > ($other)};
+    macro long __add__(long other) ${($self) + ($other)};
+    macro long __sub__(long other) ${($self) - ($other)};
+    macro long __mul__(long other) ${($self) * ($other)};
+    macro int __lt__(long other) ${($self) < ($other)};
+    macro int __gt__(long other) ${($self) > ($other)};
 }
 primitive Object {
     macro int __eq__(Object other) $java{($self).equals($other)}
