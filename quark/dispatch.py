@@ -72,7 +72,7 @@ class _Dispatcher(object):
     def __get__(self, object, clazz):
         return _BoundDispatcher(clazz, object, self.name, self.cache)
 
-def dispatch(*types):
+def overload(*types):
     def decorator(method):
         name = method.__name__
         dispatcher = inspect.currentframe().f_back.f_locals.get(name, _Dispatcher(name))

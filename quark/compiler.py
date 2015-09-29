@@ -15,7 +15,7 @@
 from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
-from .dispatch import dispatch
+from .dispatch import overload
 
 class Root(AST):
 
@@ -147,11 +147,11 @@ class TypeExpr(object):
         errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
         return None
 
-    @dispatch(Package)
+    @overload(Package)
     def environments(self, pkg):
         yield pkg.env
 
-    @dispatch(Class)
+    @overload(Class)
     def environments(self, cls):
         yield cls.env
         if cls.base:
@@ -161,15 +161,15 @@ class TypeExpr(object):
         else:
             yield cls.root.env["Object"].env
 
-    @dispatch(list)
+    @overload(list)
     def invoke(self, errors):
         return self.invoke(self.type, errors)
 
-    @dispatch(Callable)
+    @overload(Callable)
     def invoke(self, dfn, errors):
         return texpr(dfn.type.resolved.type, self.bindings)
 
-    @dispatch(Class)
+    @overload(Class)
     def invoke(self, cls, errors):
         return texpr(cls, self.bindings)
 
@@ -177,11 +177,11 @@ class TypeExpr(object):
     def id(self):
         return self.pprint(self.type)
 
-    @dispatch(Package)
+    @overload(Package)
     def pprint(self, pkg):
         return pkg.id
 
-    @dispatch(Class)
+    @overload(Class)
     def pprint(self, cls):
         if cls.parameters:
             params = [repr(self.bindings.get(p, p)) for p in cls.parameters]
@@ -189,11 +189,11 @@ class TypeExpr(object):
         else:
             return cls.id
 
-    @dispatch(Callable)
+    @overload(Callable)
     def pprint(self, cls):
         return cls.id
 
-    @dispatch(TypeParam)
+    @overload(TypeParam)
     def pprint(self, pkg):
         return pkg.id
 

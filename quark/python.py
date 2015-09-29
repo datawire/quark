@@ -14,7 +14,7 @@
 
 import os
 from .ast import *
-from .dispatch import dispatch
+from .dispatch import overload
 from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
@@ -141,7 +141,7 @@ class PythonExprRenderer(ExprRenderer):
     def lang(self):
         return "py"
 
-    @dispatch(AST)
+    @overload(AST)
     def var(self, dfn, v):
         if isinstance(v.definition, Field):
             return "self.%s" % v.match(self.namer)
@@ -151,13 +151,13 @@ class PythonExprRenderer(ExprRenderer):
                 v.file.imports[name] = True
             return name
 
-    @dispatch(AST)
+    @overload(AST)
     def get(self, cls, attr):
         expr = attr.expr
         attr_name = attr.attr.text
         return "(%s).%s" % (expr.match(self), attr_name)
 
-    @dispatch(Class)
+    @overload(Class)
     def invoke(self, cls, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 

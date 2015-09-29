@@ -15,7 +15,7 @@
 import os
 from .ast import *
 from .compiler import TypeExpr
-from .dispatch import dispatch
+from .dispatch import overload
 from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
@@ -175,11 +175,11 @@ class StatementRenderer(object):
         self.namer = namer
         self.exprr = ExprRenderer(self.namer)
 
-    @dispatch(TypeExpr)
+    @overload(TypeExpr)
     def type(self, texpr):
         return self.type(texpr.type, texpr.bindings)
 
-    @dispatch(Class)
+    @overload(Class)
     def type(self, cls, bindings):
         if cls.parameters:
             params = [self.type(bindings[p]) for p in cls.parameters]
@@ -270,11 +270,11 @@ class ExprRenderer(object):
     def match_Var(self, v):
         return self.var(v.definition, v)
 
-    @dispatch(AST)
+    @overload(AST)
     def var(self, dfn, v):
         return v.match(self.namer)
 
-    @dispatch(Function)
+    @overload(Function)
     def var(self, dfn, v):
         pkg = self.namer.package(dfn)
         if pkg:
@@ -294,13 +294,13 @@ class ExprRenderer(object):
     def match_Fixed(self, f):
         return f.text
 
-    @dispatch(Class)
+    @overload(Class)
     def get(self, cls, attr):
         expr = attr.expr
         attr_name = attr.attr.text
         return "(%s).%s" % (expr.match(self), attr_name)
 
-    @dispatch(Package)
+    @overload(Package)
     def get(self, pkg, attr):
         expr = attr.expr
         attr_name = attr.attr.text
@@ -309,21 +309,21 @@ class ExprRenderer(object):
         else:
             return "%s.%s" % (expr.match(self), attr_name)
 
-    @dispatch(Class)
+    @overload(Class)
     def invoke(self, cls, expr, args):
         return "new %s(%s)" % (expr.match(self), ", ".join(args))
 
-    @dispatch(Function)
+    @overload(Function)
     def invoke(self, func, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 
-    @dispatch(Method)
+    @overload(Method)
     def invoke(self, method, expr, args):
         return "(%s).%s(%s)" % (expr.expr.match(self),
                                 method.name.match(self.namer),
                                 ", ".join(args))
 
-    @dispatch(Macro)
+    @overload(Macro)
     def invoke(self, macro, expr, args):
         # macros are evaluated at compile time, so we don't use expr
         env = {}
@@ -333,7 +333,7 @@ class ExprRenderer(object):
             idx += 1
         return macro.body.match(self.__class__(SubstitutionNamer(env)))
 
-    @dispatch(MethodMacro)
+    @overload(MethodMacro)
     def invoke(self, method_macro, expr, args):
         # for method macros we use expr to access self
         env = {"self": expr.expr.match(self)}
