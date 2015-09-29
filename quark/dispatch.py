@@ -26,26 +26,25 @@ def signatures(types):
 
 class _BoundDispatcher(object):
 
-    def __init__(self, clazz, object, name, cache):
+    def __init__(self, clazz, object, dispatcher):
         self.clazz = clazz
         self.object = object
-        self.name = name
-        self.cache = cache
+        self.dispatcher = dispatcher
 
     def get(self, types):
         key = (self.clazz, types)
-        if key in self.cache:
-            return self.cache[key]
+        if key in self.dispatcher.cache:
+            return self.dispatcher.cache[key]
         else:
             for c in self.clazz.__mro__:
-                if self.name in c.__dict__:
-                    method = c.__dict__[self.name].get(types)
+                if self.dispatcher.name in c.__dict__:
+                    method = c.__dict__[self.dispatcher.name].get(types)
                 else:
                     method = None
                 if method is None: continue
-                self.cache[key] = method
+                self.dispatcher.cache[key] = method
                 return method
-            raise TypeError("no matching method: (%s)" % ", ".join([t.__name__ for t in types]))
+            self.dispatcher.error(types)
 
     def __call__(self, *args, **kwargs):
         types = tuple([type(arg) for arg in args])
@@ -70,16 +69,39 @@ class _Dispatcher(object):
         return None
 
     def __get__(self, object, clazz):
-        return _BoundDispatcher(clazz, object, self.name, self.cache)
+        return _BoundDispatcher(clazz, object, self)
+
+    def error(self, types):
+        raise TypeError("no matching method: (%s)" % ", ".join([t.__name__ for t in types]))
+
+    def __call__(self, *args, **kwargs):
+        types = tuple([type(arg) for arg in args])
+        if types in self.cache:
+            function = self.cache[types]
+        else:
+            function = self.get(types)
+            if function is None: self.error(types)
+            self.cache[types] = function
+        return function(*args, **kwargs)
+
+def _decorate(namespace, function, types, offset=0):
+    name = function.__name__
+    dispatcher = namespace.get(name, _Dispatcher(name))
+    argspec = inspect.getargspec(function)
+    nargs = len(argspec.args) - offset
+    defaulted = types + (object,)*(nargs - len(types))
+    assert len(defaulted) == nargs
+    dispatcher.add(defaulted, function)
+    return dispatcher
+
+def dispatch(*types):
+    def decorator(function):
+        namespace = inspect.currentframe().f_back.f_locals
+        return _decorate(namespace, function, types)
+    return decorator
 
 def overload(*types):
     def decorator(method):
-        name = method.__name__
-        dispatcher = inspect.currentframe().f_back.f_locals.get(name, _Dispatcher(name))
-        argspec = inspect.getargspec(method)
-        nargs = len(argspec.args) - 1 # don't count self
-        defaulted = types + (object,)*(nargs - len(types))
-        assert len(defaulted) == nargs
-        dispatcher.add(defaulted, method)
-        return dispatcher
+        namespace = inspect.currentframe().f_back.f_locals
+        return _decorate(namespace, method, types, 1)
     return decorator
