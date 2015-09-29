@@ -62,7 +62,9 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         return ""
 
     def match_Package(self, p):
-        return "import %s" % p.name.match(self.namer)
+        if isinstance(p.parent, Package):
+            p.parent.imports[p.name.match(self.namer)] = True
+        return ""
 
     def constructors(self, cls):
         return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
@@ -144,7 +146,10 @@ class PythonExprRenderer(ExprRenderer):
         if isinstance(v.definition, Field):
             return "self.%s" % v.match(self.namer)
         else:
-            return v.match(self.namer)
+            name = v.match(self.namer)
+            if isinstance(v.definition, Package):
+                v.file.imports[name] = True
+            return name
 
     @dispatch(AST)
     def get(self, cls, attr):
@@ -191,20 +196,28 @@ def _println(obj):
             open(path, "wb").write(content)
             print "wrote", path
 
+    def imports(self, packages):
+        result = "\n".join(["import %s" % pkg for pkg in packages.keys()])
+        if result: result += "\n\n"
+        return result
+
     def visit_Package(self, pkg):
+        pkg.imports = OrderedDict()
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
         pname = self.dfnr.namer.package(pkg)
         fname = "%s/__init__.py" % pname.replace(".", "/")
         if fname in self.files:
-            self.files[fname] += "\n\n" + content
+            self.files[fname] += "\n\n" + self.imports(pkg.imports) + content
         else:
-            self.files[fname] = self.header + content
+            self.files[fname] = self.header + self.imports(pkg.imports) + content
 
     def visit_File(self, file):
+        file.imports = OrderedDict()
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
         if content.strip() != "":
             fname = os.path.splitext(os.path.basename(file.name))[0]
-            self.files["%s.py" % self.dfnr.namer.get(fname)] = self.header + content
+            self.files["%s.py" % self.dfnr.namer.get(fname)] = \
+                self.header + self.imports(file.imports) + content
 
     def visit_Primitive(self, p):
         pass

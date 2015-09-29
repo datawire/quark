@@ -12,7 +12,9 @@ def _println(obj):
         sys.stdout.write("%s\n" % obj)
 
 import p2
-import p2
+
+
+
 
 def c():
     _println("c");

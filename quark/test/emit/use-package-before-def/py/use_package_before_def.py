@@ -11,8 +11,9 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
+import test
+
 
 def main():
     (test).go();
 
-import test

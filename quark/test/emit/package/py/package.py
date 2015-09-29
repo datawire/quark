@@ -13,6 +13,8 @@ def _println(obj):
 
 import test
 
+
+
 def main():
     (test).go();
     ((test).test).go();
