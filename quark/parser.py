@@ -226,18 +226,34 @@ class Parser:
     def visit_exprstmt(self, node, (expr, s)):
         return ExprStmt(expr)
 
-    @g.rule('assign = ( attr / var )  EQ expr SEMI')
+    @g.rule('assign = ( lval / lvar )  EQ expr SEMI')
     def visit_assign(self, node, ((lhs,), eq, rhs, s)):
-        return Assign(lhs, rhs)
+        return lhs(rhs)
 
-    @g.rule('attr = atom (callmod? attrmod)+')
-    def visit_attr(self, node, (atom, mods)):
+    @g.rule('lval = atom (callmod? (attrmod / getmod))+')
+    def visit_lval(self, node, (atom, mods)):
         result = atom
-        for (args, name) in mods:
-            if args:
-                result = Call(result, args[0])
-            result = Attr(result, name)
-        return result
+        for (opt, mod) in mods[:-1]:
+            if opt: result = opt[0](result)
+            result = mod[0](result)
+        opt, lastmod = mods[-1]
+        if opt: result = opt[0](result)
+        mod = lastmod[0]
+        return lambda rhs: mod.assign(result, rhs)
+
+    @g.rule('lvar = var ""')
+    def visit_lvar(self, node, (var, _)):
+        return lambda rhs: Assign(var, rhs)
+
+    @g.rule('set = atom ((callmod / attrmod)? getmod)+')
+    def visit_set(self, node, (atom, mods)):
+        result = atom
+        for (opt, get) in mods[:1]:
+            if opt:
+                result = opt[0][0](result)
+            result = get(result)
+        get = mods[-1][-1]
+        return lambda rhs: get(result, '__set__', [rhs])
 
     @g.rule('local = type name (EQ expr)? SEMI')
     def visit_local(self, node, (type, name, opt, _)):
@@ -343,26 +359,37 @@ class Parser:
     def visit_prim(self, node, (atom, mods)):
         result = atom
         for m in mods:
-            if isinstance(m, Name):
-                result = Attr(result, m)
-            else:
-                result = Call(result, m)
+            result = m(result)
         return result
 
-    @g.rule('modifier = attrmod / callmod')
+    @g.rule('modifier = attrmod / callmod / getmod')
     def visit_modifier(self, node, (mod,)):
         return mod
 
     @g.rule('attrmod = DOT name')
     def visit_attrmod(self, node, (_, name)):
-        return name
+        class Mod:
+            def __call__(self, expr):
+                return Attr(expr, name)
+            def assign(self, lhs, rhs):
+                return Assign(Attr(lhs, name), rhs)
+        return Mod()
 
     @g.rule('callmod = LPR exprs? RPR')
     def visit_callmod(self, node, (l, args, r)):
         if args:
-            return args[0]
+            return lambda expr: Call(expr, args[0])
         else:
-            return []
+            return lambda expr: Call(expr, [])
+
+    @g.rule('getmod = LBK exprs RBK')
+    def visit_getmod(self, node, (l, args, r)):
+        class Mod:
+            def __call__(self, expr):
+                return Call(Attr(expr, Name("__get__")), args)
+            def assign(self, lhs, rhs):
+                return ExprStmt(Call(Attr(lhs, Name("__set__")), args + [rhs]))
+        return Mod()
 
     @g.rule('exprs = expr (COMMA expr)*')
     def visit_exprs(self, node, (first, rest)):
