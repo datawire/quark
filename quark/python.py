@@ -40,6 +40,9 @@ class PythonNamer(SubstitutionNamer):
         SubstitutionNamer.__init__(self, {"List": "_List", "Map": "_Map", "print": "print_"})
 
     def match_Type(self, t):
+        if len(t.path) > 1:
+            root = t.path[0].match(self)
+            t.file.imports[root] = True
         return ".".join([p.match(self) for p in t.path])
 
     def get(self, name):

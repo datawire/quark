@@ -128,6 +128,12 @@ class DefinitionRenderer(object):
                 a.match(doc_eval)
         return doc_eval.doc(head, prefix, tail)
 
+    def abstract(self, cls):
+        for d in cls.definitions:
+            if isinstance(d, Method) and d.body is None:
+                return True
+        return False
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
         params = ""
@@ -137,6 +143,8 @@ class DefinitionRenderer(object):
         body = "\n".join([d.match(self) for d in c.definitions])
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
+        if isinstance(c, Class) and self.abstract(c):
+            kw = "abstract " + kw
         cls = "%spublic %s %s%s%s {%s}" % (doc, kw, name, params, extends, indent(body))
         pkg = self.namer.package(c)
         if pkg:
@@ -157,6 +165,8 @@ class DefinitionRenderer(object):
             mods = "public"
         else:
             mods = "public static"
+        if m.body is None:
+            mods = mods + " abstract"
         return "%s%s %s%s(%s)%s" % (doc, mods, type, name, params, body)
 
     def match_MethodMacro(self, mm):
@@ -183,9 +193,13 @@ class StatementRenderer(object):
     def type(self, cls, bindings):
         if cls.parameters:
             params = [self.type(bindings[p]) for p in cls.parameters]
-            return "%s<%s>" % (cls.name.match(self.namer), ",".join(params))
+            result = "%s<%s>" % (cls.name.match(self.namer), ",".join(params))
         else:
-            return cls.name.match(self.namer)
+            result = cls.name.match(self.namer)
+        if cls.package:
+            return "%s.%s" % (self.namer.package(cls), result)
+        else:
+            return result
 
     @overload(TypeParam)
     def type(self, tparam, bindings):
