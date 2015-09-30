@@ -6,3 +6,7 @@ package p {
         }
     }
 }
+
+void test() {
+     p.D d = new p.D();
+}

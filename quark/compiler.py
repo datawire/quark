@@ -228,7 +228,10 @@ class Use:
     def leave_Type(self, t):
         type = self.lookup(t, t.path[0].text)
         for n in t.path[1:]:
-            type = type.env[n.text]
+            if n.text in type.env:
+                type = type.env[n.text]
+            else:
+                type = None
 
         bindings = {}
         if type and t.parameters:
