@@ -352,7 +352,10 @@ primitive List<T> {
                               $py{($self).append($element)};
     macro T __get__(int index) $java{($self).get($index)}
                                $py{($self)[$index]};
-    macro int size() ${($self).size()};
+    macro void __set__(int index, T value) $java{($self).set(($index), ($value))}
+                                           $py{($self)[$index] = ($value)};
+    macro int size() $java{($self).size()}
+                     $py{len($self)};
 }
 primitive Map<K,V> {
     macro void __set__(K key, V value) $java{($self).put(($key), ($value))}

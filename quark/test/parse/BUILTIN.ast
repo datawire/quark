@@ -89,8 +89,18 @@ File(
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(')['),
      Var(Name(index)), Fixed(']')))),
 
-  MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(Fixed('('),
-     Var(Name(self)), Fixed(').size()'))))),
+  MethodMacro(Type(Name(void)), Name(__set__),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(T)), Name(value)),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').set(('), Var(Name(index)),
+     Fixed('), ('), Var(Name(value)), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self)), Fixed(')['), Var(Name(index)), Fixed('] = ('),
+     Var(Name(value)), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(java, Fixed('('),
+     Var(Name(self)), Fixed(').size()')), NativeCase(py, Fixed('len('),
+     Var(Name(self)), Fixed(')'))))),
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 

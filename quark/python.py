@@ -164,6 +164,9 @@ class PythonExprRenderer(ExprRenderer):
     def match_List(self, l):
         return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
 
+    def match_Null(self, n):
+        return "None"
+
 class Python(backend.Backend):
 
     def __init__(self):

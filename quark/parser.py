@@ -261,9 +261,7 @@ class Parser:
             expr = opt[0][-1]
         else:
             expr = None
-        d = Declaration(type, name, expr)
-        d.origin(node)
-        return Local(d)
+        return Local(Declaration(type, name, expr))
 
     @g.rule('if = IF LPR expr RPR block (ELSE block)?')
     def visit_if(self, node, (kw, lp, expr, rp, consequence, opt)):
@@ -495,9 +493,7 @@ class Parser:
 
     @g.rule('dvar = "$" name_re')
     def visit_dvar(self, node, (_, name)):
-        n = Name(name)
-        n.origin(node)
-        return Var(n)
+        return Var(Name(name))
 
     @g.rule('braces = "{" stuff* "}"')
     def visit_braces(self, node, (l, stuff, r)):

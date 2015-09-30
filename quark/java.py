@@ -187,6 +187,13 @@ class StatementRenderer(object):
         else:
             return cls.name.match(self.namer)
 
+    @overload(TypeParam)
+    def type(self, tparam, bindings):
+        if tparam in bindings:
+            return self.type(bindings[tparam])
+        else:
+            return tparam.name.match(self.namer)
+
     def maybe_cast(self, type, expr):
         result = expr.match(self.exprr)
         if type.resolved.id != expr.resolved.id:

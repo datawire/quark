@@ -38,6 +38,11 @@ def coder(method):
         return method(self, coder)
     return result
 
+class SetOrigin:
+
+    def visit_AST(self, ast, node):
+        ast.origin(node)
+
 class AST(object):
 
     indent = []
@@ -46,6 +51,7 @@ class AST(object):
         if not hasattr(self, "node"):
             self.node = node
             self.line, self.column = self._lineinfo(node)
+            self.traverse(SetOrigin(), node)
 
     @property
     def filename(self):
@@ -76,8 +82,8 @@ class AST(object):
             return default
 
     def traverse(self, visitor, *args, **kwargs):
-        visit_default = kwargs.pop("visit_default", lambda s: None)
-        leave_default = kwargs.pop("leave_default", lambda s: None)
+        visit_default = kwargs.pop("visit_default", lambda *a, **kw: None)
+        leave_default = kwargs.pop("leave_default", lambda *a, **kw: None)
         visit = self.lookup(visitor, "visit", visit_default)
         leave = self.lookup(visitor, "leave", leave_default)
         visit(self, *args, **kwargs)
