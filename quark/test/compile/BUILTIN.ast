@@ -85,7 +85,7 @@ File(
      Fixed('('), Var(Name(self), $type=0.List<0.List.T>), Fixed(').append('),
      Var(Name(element), $type=0.List.T), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(get),
+  MethodMacro(Type(Name(T)), Name(__get__),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Native(NativeCase(java,
      Fixed('('), Var(Name(self), $type=0.List<0.List.T>), Fixed(').get('),
@@ -98,7 +98,7 @@ File(
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
-  MethodMacro(Type(Name(void)), Name(put),
+  MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(K)), Name(key), $type=0.Map.K),
    Param(Type(Name(V)), Name(value), $type=0.Map.V),
    Native(NativeCase(java,
@@ -109,7 +109,7 @@ File(
      $type=0.Map.K), Fixed('] = ('), Var(Name(value), $type=0.Map.V),
      Fixed(')')))),
 
-  MethodMacro(Type(Name(V)), Name(get),
+  MethodMacro(Type(Name(V)), Name(__get__),
    Param(Type(Name(K)), Name(key), $type=0.Map.K),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
      Fixed(').get('), Var(Name(key), $type=0.Map.K), Fixed(')')))),

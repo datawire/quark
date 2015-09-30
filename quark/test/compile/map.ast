@@ -4,9 +4,10 @@ File(
     Declaration(Type(Name(Map), Type(Name(String)), Type(Name(int))),
      Name(map), Call(Type(Name(Map), Type(Name(String)), Type(Name(int))),
      $type=0.Map<0.String,0.int>), $type=0.Map<0.String,0.int>)),
-   ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>), Name(put),
-     $type=0.Map.put), String("pi", $type=0.String), Number(3, $type=0.int),
-    $type=0.void)),
-   ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>), Name(get),
-     $type=0.Map.get), String("pi", $type=0.String), $type=0.int))))
+   ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>),
+      Name(__set__), $type=0.Map.__set__), String("pi", $type=0.String),
+     Number(3, $type=0.int), $type=0.void)),
+   ExprStmt(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.int>),
+      Name(__get__), $type=0.Map.__get__), String("pi", $type=0.String),
+    $type=0.int))))
 )

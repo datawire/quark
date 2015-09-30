@@ -82,7 +82,7 @@ File(
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)),
      Fixed(').append('), Var(Name(element)), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(get),
+  MethodMacro(Type(Name(T)), Name(__get__),
    Param(Type(Name(int)), Name(index)),
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(index)),
@@ -94,7 +94,7 @@ File(
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
-  MethodMacro(Type(Name(void)), Name(put),
+  MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(K)), Name(key)),
    Param(Type(Name(V)), Name(value)),
    Native(NativeCase(java,
@@ -103,7 +103,7 @@ File(
      Var(Name(self)), Fixed(')['), Var(Name(key)), Fixed('] = ('),
      Var(Name(value)), Fixed(')')))),
 
-  MethodMacro(Type(Name(V)), Name(get),
+  MethodMacro(Type(Name(V)), Name(__get__),
    Param(Type(Name(K)), Name(key)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').get('),
      Var(Name(key)), Fixed(')')))),

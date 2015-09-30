@@ -3,9 +3,9 @@ void test1() {
     list.add(1);
     list.add(2);
     list.add(3);
-    print(list.get(0));
-    print(list.get(1));
-    print(list.get(2));
+    print(list[0]);
+    print(list[1]);
+    print(list[2]);
 }
 
 void test2() {
@@ -13,9 +13,9 @@ void test2() {
     list.add("one");
     list.add("two");
     list.add("three");
-    print(list.get(0));
-    print(list.get(1));
-    print(list.get(2));
+    print(list[0]);
+    print(list[1]);
+    print(list[2]);
 }
 
 void test3() {
@@ -45,10 +45,10 @@ class Box<T> {
 void test5() {
     List<Box<int>> boxes = [];
     boxes.add(new Box<int>());
-    boxes.get(0).set(3);
-    print(boxes.get(0).get());
+    boxes[0].set(3);
+    print(boxes[0].get());
     boxes = [new Box<int>()];
-    print(boxes.get(0).get());
+    print(boxes[0].get());
 }
 
 void test6() {

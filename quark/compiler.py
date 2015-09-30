@@ -350,14 +350,14 @@ primitive String {}
 primitive List<T> {
     macro void add(T element) $java{($self).add($element)}
                               $py{($self).append($element)};
-    macro T get(int index) $java{($self).get($index)}
-                           $py{($self)[$index]};
+    macro T __get__(int index) $java{($self).get($index)}
+                               $py{($self)[$index]};
     macro int size() ${($self).size()};
 }
 primitive Map<K,V> {
-    macro void put(K key, V value) $java{($self).put(($key), ($value))}
-                                   $py{($self)[$key] = ($value)};
-    macro V get(K key) ${($self).get($key)};
+    macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
+                                       $py{($self)[$key] = ($value)};
+    macro V __get__(K key) ${($self).get($key)};
     macro int contains(K key) ${($self).containsKey($key)};
 }
 macro void print(String msg) $java{System.out.println($msg)}
