@@ -143,7 +143,7 @@ class DefinitionRenderer(object):
         body = "\n".join([d.match(self) for d in c.definitions])
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
-        if isinstance(c, Class) and self.abstract(c):
+        if not isinstance(c, Interface) and self.abstract(c):
             kw = "abstract " + kw
         cls = "%spublic %s %s%s%s {%s}" % (doc, kw, name, params, extends, indent(body))
         pkg = self.namer.package(c)
@@ -165,7 +165,7 @@ class DefinitionRenderer(object):
             mods = "public"
         else:
             mods = "public static"
-        if m.body is None:
+        if m.body is None and not isinstance(m.clazz, Interface):
             mods = mods + " abstract"
         return "%s%s %s%s(%s)%s" % (doc, mods, type, name, params, body)
 
