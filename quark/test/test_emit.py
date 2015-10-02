@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, subprocess
-from quark.backend import Java, Python
+from quark.backend import Java, Python, JavaScript
 from quark.compiler import Compiler, CompileError
 from .util import check_file
 
@@ -48,7 +48,7 @@ def test_emit(path):
     comp.parse(os.path.basename(path), text)
     comp.compile()
 
-    for Backend in (Java, Python):
+    for Backend in (Java, Python, JavaScript):
         backend = Backend()
         comp.emit(backend)
         extbase = os.path.join(base, backend.ext)
@@ -106,7 +106,26 @@ def build_py(comp, base, srcs):
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
 
+
+def build_js(comp, base, srcs):
+    #lint_output = subprocess.check_output(["jshint"] + srcs)
+    #assert lint_output == ""
+    if "main" in comp.root.env:
+        out = os.path.dirname(base) + ".out"
+        try:
+            expected = open(out).read()
+        except IOError:
+            expected = None
+        convoluted_way_to_get_test_name = os.path.basename(os.path.dirname(base))
+        script = convoluted_way_to_get_test_name + ".js.cmp"
+        actual = subprocess.check_output(["node", "-e", "m = require('./%s'); m.main();" % script], cwd=base)
+        if expected != actual:
+            open(out + ".cmp", "write").write(actual)
+        assert expected == actual
+
+
 BUILDERS = {
     "java": build_java,
-    "py": build_py
+    "py": build_py,
+    "js": build_js
 }
