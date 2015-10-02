@@ -69,9 +69,6 @@ class PythonDefinitionRenderer(DefinitionRenderer):
             p.parent.imports[p.name.match(self.namer)] = True
         return ""
 
-    def constructors(self, cls):
-        return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
-
     def match_Class(self, c):
         name = c.name.match(self.namer)
         base = c.base.match(self.namer) if c.base else ""
@@ -137,6 +134,8 @@ class PythonStatementRenderer(StatementRenderer):
     def match_Assign(self, ass):
         return "%s = %s" % (ass.lhs.match(self.exprr), ass.rhs.match(self.exprr))
 
+    def match_Return(self, r):
+        return "return %s;" % r.expr.match(self.exprr)
 
 class PythonExprRenderer(ExprRenderer):
 

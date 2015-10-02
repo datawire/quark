@@ -329,19 +329,24 @@ class SetFile:
 
 BUILTIN = """
 primitive void {}
-primitive int {
-    macro int __add__(int other) ${($self) + ($other)};
-    macro int __sub__(int other) ${($self) - ($other)};
-    macro int __mul__(int other) ${($self) * ($other)};
-    macro int __lt__(int other) ${($self) < ($other)};
-    macro int __gt__(int other) ${($self) > ($other)};
+primitive number {
+    macro number __add__(number other) ${($self) + ($other)};
+    macro number __sub__(number other) ${($self) - ($other)};
+    macro number __mul__(number other) ${($self) * ($other)};
+    macro number __div__(number other) ${($self) / ($other)};
+    macro number __lt__(number other) ${($self) < ($other)};
+    macro number __gt__(number other) ${($self) > ($other)};
 }
-primitive long {
-    macro long __add__(long other) ${($self) + ($other)};
-    macro long __sub__(long other) ${($self) - ($other)};
-    macro long __mul__(long other) ${($self) * ($other)};
-    macro int __lt__(long other) ${($self) < ($other)};
-    macro int __gt__(long other) ${($self) > ($other)};
+primitive int extends number {
+    macro String toString() $java{Integer.toString($self)}
+                            $py{str($self)};
+}
+primitive long extends number {}
+primitive float extends number {
+    macro float __div__(float other) $java{($self) / ($other)}
+                                     $py{float($self) / float($other)};
+    macro String toString() $java{Float.toString($self)}
+                            $py{str($self)};
 }
 primitive Object {
     macro int __eq__(Object other) $java{($self).equals($other)}
@@ -349,7 +354,9 @@ primitive Object {
     macro int __ne__(Object other) $java{!(($self).equals($other))}
                                    $py{($self) != ($other)};
 }
-primitive String {}
+primitive String {
+    macro String __add__(String other) ${($self) + ($other)};
+}
 primitive List<T> {
     macro void add(T element) $java{($self).add($element)}
                               $py{($self).append($element)};

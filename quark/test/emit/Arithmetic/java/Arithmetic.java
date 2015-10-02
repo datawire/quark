@@ -1,6 +1,6 @@
 public class Arithmetic {
     public Integer arithmetic() {
-        Integer x = (2) + (2);
+        Integer x = (Integer) ((2) + (2));
         return x;
     }
 }

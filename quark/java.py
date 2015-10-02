@@ -134,6 +134,9 @@ class DefinitionRenderer(object):
                 return True
         return False
 
+    def constructors(self, cls):
+        return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
         params = ""

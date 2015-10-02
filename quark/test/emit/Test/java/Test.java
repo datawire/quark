@@ -5,7 +5,7 @@ public class Test {
     public void test() {
         Integer x = 2;
         Integer y = 2;
-        Integer z = (x) + (y);
+        Integer z = (Integer) ((x) + (y));
         System.out.println(z);
         String hello = "hello";
         System.out.println(hello);
@@ -14,7 +14,7 @@ public class Test {
         if (!((t2).equals(t1))) {
             System.out.println("YAY!");
         }
-        Integer four = (2) + (2);
+        Integer four = (Integer) ((2) + (2));
         System.out.println(four);
     }
 }
