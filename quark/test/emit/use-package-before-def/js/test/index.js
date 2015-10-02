@@ -10,14 +10,8 @@ function _Q_toString(value) {
 }
 
 //
-var pets = require('./pets');
-exports.pets = pets;
 
-
-function main() {
-    var evil = new pets.Cat();
-    var good = new pets.Dog();
-    (evil).greet();
-    (good).greet();
+function go() {
+    console.log(_Q_toString("GO!"));
 }
-exports.main = main;
+exports.go = go;

@@ -54,7 +54,8 @@ function _Q_toString(value) {
             print "wrote", path
 
     def imports(self, packages):
-        result = "\n".join(["var %s = require('./%s');" % (pkg, pkg) for pkg in packages.keys()])
+        result = "\n".join(["var %s = require('./%s');\nexports.%s = %s;" % (pkg, pkg, pkg, pkg)
+                            for pkg in packages.keys()])
         if result:
             result += "\n"
         return result

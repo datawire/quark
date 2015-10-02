@@ -10,19 +10,16 @@ function _Q_toString(value) {
 }
 
 //
-var test1 = require('./test1');
-exports.test1 = test1;
-var test2 = require('./test2');
-exports.test2 = test2;
-var test3 = require('./test3');
-exports.test3 = test3;
-
-
+var test = require('./test');
+exports.test = test;
 
 
 function main() {
-    test1.go();
-    test2.go();
-    test3.go();
+    test.go();
+    test.test.go();
+    var t1 = new test.Test();
+    var t2 = new test.test.Test();
+    (t1).go();
+    (t2).go();
 }
 exports.main = main;
