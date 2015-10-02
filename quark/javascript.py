@@ -59,13 +59,6 @@ function _Q_toString(value) {
             result += "\n"
         return result
 
-    def visit_File(self, file):
-        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        if content.strip() != "":
-            fname = os.path.splitext(os.path.basename(file.name))[0]
-            #self.files["%s.js" % self.dfnr.namer.get(fname)] = header + content.rstrip() + "\n"
-            self.files["%s.js" % fname] = self.header + content.rstrip() + "\n"
-
     def visit_Package(self, pkg):
         pkg.imports = OrderedDict()
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
@@ -75,6 +68,13 @@ function _Q_toString(value) {
             self.files[fname] += "\n\n" + self.imports(pkg.imports) + content
         else:
             self.files[fname] = self.header + self.imports(pkg.imports) + content
+
+    def visit_File(self, file):
+        file.imports = OrderedDict()
+        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
+        if content.strip() != "":
+            fname = os.path.splitext(os.path.basename(file.name))[0]
+            self.files["%s.js" % fname] = self.header + self.imports(file.imports) + content.rstrip() + "\n"
 
     def visit_Primitive(self, p):
         pass
@@ -95,11 +95,16 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
             p.parent.imports[p.name.match(self.namer)] = True
         return ""
 
+    def match_Field(self, f):
+        doc = self.doc(f.annotations)
+        return "%s%s;" % (doc, f.match(self.stmtr))
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
         fields = []
         methods = []
         constructor = None
+        doc = self.doc(c.annotations)
 
         if c.base:
             base_class = c.base.match(self.namer)
@@ -109,14 +114,15 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
 
         for definition in c.definitions:
             if isinstance(definition, ast.Field):
-                fields.append(definition.match(self.fieldr))
+                field_doc = self.doc(definition.annotations)
+                fields.append(field_doc + definition.match(self.fieldr))
             elif not definition.type:
                 assert constructor is None
                 constructor = definition
             else:
                 methods.append(definition.match(self, class_name=name) % dict(class_name=name))
 
-        res = "\n// CLASS %s\n" % name
+        res = "\n// CLASS %s\n" % name + doc
         if constructor:
             res += constructor.match(self, class_name=name) % dict(class_name=name)
         else:
@@ -136,7 +142,6 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         doc = self.doc(m.annotations)
         name = m.name.match(self.namer)
         params = ", ".join([p.match(self) for p in m.params])
-        mods = ""
         header = []
         if isinstance(m, ast.Method):
             if m.type:
@@ -151,10 +156,14 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         else:
             # Function
             trailer = "exports.%s = %s;" % (name, name)
-        if m.body is None and not isinstance(m.clazz, ast.Interface):
-            mods = mods + " abstract"
-        body = " %s" % m.body.match(self.stmtr, header=header) if m.body else ";"
-        return "%s%s\nfunction %s(%s)%s\n" % (doc, mods, name, params, body) + trailer
+        if m.body is None:
+            if isinstance(m.clazz, ast.Interface):
+                body = " { /* interface */ }"
+            else:
+                body = " { /* abstract */ }"
+        else:
+            body = " %s" % m.body.match(self.stmtr, header=header)
+        return "\n%sfunction %s(%s)%s\n" % (doc, name, params, body) + trailer
 
     def match_Macro(self, m, class_name=None):
         return ""
@@ -238,6 +247,18 @@ class JSExprRenderer(java.ExprRenderer):
         else:
             return "%s" % v.match(self.namer)
 
+    @overload(ast.Class)
+    def get(self, cls, attr):
+        expr = attr.expr
+        attr_name = attr.attr.text
+        return "(%s).%s" % (expr.match(self), attr_name)
+
+    @overload(ast.Package)
+    def get(self, pkg, attr):
+        expr = attr.expr
+        attr_name = attr.attr.text
+        return "%s.%s" % (expr.match(self), attr_name)
+
     def match_List(self, l):
         return "[%s]" % ", ".join([e.match(self) for e in l.elements])
 
@@ -248,6 +269,9 @@ class JSNamer(java.SubstitutionNamer):
         java.SubstitutionNamer.__init__(self, ({"self": "this", "int": "Number", "List": "Array"}))
 
     def match_Type(self, t):
+        if len(t.path) > 1:
+            root = t.path[0].match(self)
+            t.file.imports[root] = True
         return ".".join([p.match(self) for p in t.path])
 
     def get(self, name):
