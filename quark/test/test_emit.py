@@ -53,6 +53,8 @@ def test_emit(path):
         comp.emit(backend)
         extbase = os.path.join(base, backend.ext)
         if not os.path.exists(extbase):
+            if Backend == JavaScript:
+                continue
             os.makedirs(extbase)
 
         srcs = []
@@ -117,7 +119,7 @@ def build_js(comp, base, srcs):
         except IOError:
             expected = None
         convoluted_way_to_get_test_name = os.path.basename(os.path.dirname(base))
-        script = convoluted_way_to_get_test_name + ".js.cmp"
+        script = convoluted_way_to_get_test_name + ".js"
         actual = subprocess.check_output(["node", "-e", "m = require('./%s'); m.main();" % script], cwd=base)
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
