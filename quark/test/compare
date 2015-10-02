@@ -32,11 +32,11 @@ def main():
         names = find_cmp_files()
     for f in names:
         name, ext = os.path.splitext(f)
-        print "== %s ==" % name
+        print name, (78 - len(name)) * "="
         if os.path.exists(name):
             os.system("diff -u %s %s" % (name, f))
         else:
-            os.system("diff -u /dev/null %s" % f)
+            os.system("less %s" % f)
         st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
         if st.startswith("Y"):
             os.system("mv %s %s" % (f, name))
