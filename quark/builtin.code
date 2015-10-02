@@ -1,3 +1,7 @@
+primitive Object {
+    macro int __eq__(Object other) $java{($self).equals($other)}$py{($self) == ($other)};
+    macro int __ne__(Object other) $java{!(($self).equals($other))}$py{($self) != ($other)};
+}
 primitive void {}
 primitive number {
     macro number __add__(number other) ${($self) + ($other)};
@@ -14,10 +18,6 @@ primitive long extends number {}
 primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}$py{float($self) / float($other)};
     macro String toString() $java{Float.toString($self)}$py{str($self)};
-}
-primitive Object {
-    macro int __eq__(Object other) $java{($self).equals($other)}$py{($self) == ($other)};
-    macro int __ne__(Object other) $java{!(($self).equals($other))}$py{($self) != ($other)};
 }
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};

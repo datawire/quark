@@ -1,4 +1,20 @@
 File(
+ Primitive(Name(Object),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(Object)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') == ('),
+     Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__ne__),
+   Param(Type(Name(Object)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
+     Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') != ('),
+     Var(Name(other)), Fixed(')'))))),
+
  Primitive(Name(void)),
 
  Primitive(Name(number),
@@ -53,22 +69,6 @@ File(
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Float.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')'))))),
-
- Primitive(Name(Object),
-
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(Object)), Name(other)),
-   Native(NativeCase(java,
-     Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
-     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') == ('),
-     Var(Name(other)), Fixed(')')))),
-
-  MethodMacro(Type(Name(int)), Name(__ne__),
-   Param(Type(Name(Object)), Name(other)),
-   Native(NativeCase(java,
-     Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
-     Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') != ('),
-     Var(Name(other)), Fixed(')'))))),
 
  Primitive(Name(String),
 

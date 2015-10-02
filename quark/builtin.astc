@@ -1,4 +1,22 @@
 File(
+ Primitive(Name(Object),
+
+  MethodMacro(Type(Name(int)), Name(__eq__),
+   Param(Type(Name(Object)), Name(other), $type=0.Object),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.Object), Fixed(').equals('),
+     Var(Name(other), $type=0.Object), Fixed(')')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.Object), Fixed(') == ('), Var(Name(other),
+     $type=0.Object), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__ne__),
+   Param(Type(Name(Object)), Name(other), $type=0.Object),
+   Native(NativeCase(java,
+     Fixed('!(('), Var(Name(self), $type=0.Object), Fixed(').equals('),
+     Var(Name(other), $type=0.Object), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.Object), Fixed(') != ('), Var(Name(other),
+     $type=0.Object), Fixed(')'))))),
+
  Primitive(Name(void)),
 
  Primitive(Name(number),
@@ -55,24 +73,6 @@ File(
      Fixed('Float.toString('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.float),
      Fixed(')'))))),
-
- Primitive(Name(Object),
-
-  MethodMacro(Type(Name(int)), Name(__eq__),
-   Param(Type(Name(Object)), Name(other), $type=0.Object),
-   Native(NativeCase(java,
-     Fixed('('), Var(Name(self), $type=0.Object), Fixed(').equals('),
-     Var(Name(other), $type=0.Object), Fixed(')')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.Object), Fixed(') == ('), Var(Name(other),
-     $type=0.Object), Fixed(')')))),
-
-  MethodMacro(Type(Name(int)), Name(__ne__),
-   Param(Type(Name(Object)), Name(other), $type=0.Object),
-   Native(NativeCase(java,
-     Fixed('!(('), Var(Name(self), $type=0.Object), Fixed(').equals('),
-     Var(Name(other), $type=0.Object), Fixed('))')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.Object), Fixed(') != ('), Var(Name(other),
-     $type=0.Object), Fixed(')'))))),
 
  Primitive(Name(String),
 

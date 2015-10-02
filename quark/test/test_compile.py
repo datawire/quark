@@ -34,7 +34,7 @@ def test_compile(path):
         c.parse(os.path.basename(path), text)
         c.compile()
         for ast in c.root.files:
-            astname = os.path.splitext(ast.filename)[0] + ".ast"
+            astname = os.path.splitext(ast.filename)[0] + ".astc"
             astpath = os.path.join(dir, astname)
             assert_file(astpath, ast.pprint())
     except (CompileError, ParseError), e:
