@@ -11,16 +11,13 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Arithmetic:
-    def _init(self): pass
-    def __init__(self): self._init()
-    
-    def arithmetic(self):
-        x = (2) + (2);
-        return x;
-    
-
 
 def main():
-    a = Arithmetic();
-    _println((a).arithmetic());
+    four = (2) + (2);
+    _println(str(four));
+    half = (1) / (2);
+    _println(str(half));
+    num = 314;
+    den = 100;
+    pi = float(num) / float(den);
+    _println(str(pi));

@@ -1,7 +1,13 @@
 public class Functions {
     public static void main() {
-        Arithmetic a = new Arithmetic();
-        System.out.println((a).arithmetic());
+        Integer four = (Integer) ((2) + (2));
+        System.out.println(Integer.toString(four));
+        Integer half = (Integer) ((1) / (2));
+        System.out.println(Integer.toString(half));
+        float num = (float) (314);
+        float den = (float) (100);
+        float pi = (num) / (den);
+        System.out.println(Float.toString(pi));
     }
     public static void main(String[] args) {
         main();
