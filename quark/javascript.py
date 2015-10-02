@@ -13,6 +13,7 @@
 # limitations under the License.
 
 import os
+from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
 import ast
@@ -26,20 +27,7 @@ class JavaScript(backend.Backend):
     def __init__(self):
         backend.Backend.__init__(self, "js")
         self.dfnr = JSDefinitionRenderer()
-
-    def write(self, target):
-        if not os.path.exists(target):
-            os.makedirs(target)
-        for name, content in self.files.items():
-            path = os.path.join(target, name)
-            dir = os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            open(path, "wb").write(content)
-            print "wrote", path
-
-    def visit_File(self, file):
-        header = """\
+        self.header = """\
 var _Q_util = require("util");
 function _Q_toString(value) {
     if (value === null) {
@@ -53,11 +41,40 @@ function _Q_toString(value) {
 
 //
 """
+
+    def write(self, target):
+        if not os.path.exists(target):
+            os.makedirs(target)
+        for name, content in self.files.items():
+            path = os.path.join(target, name)
+            dir = os.path.dirname(path)
+            if not os.path.exists(dir):
+                os.makedirs(dir)
+            open(path, "wb").write(content)
+            print "wrote", path
+
+    def imports(self, packages):
+        result = "\n".join(["var %s = require('./%s');" % (pkg, pkg) for pkg in packages.keys()])
+        if result:
+            result += "\n"
+        return result
+
+    def visit_File(self, file):
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
         if content.strip() != "":
             fname = os.path.splitext(os.path.basename(file.name))[0]
             #self.files["%s.js" % self.dfnr.namer.get(fname)] = header + content.rstrip() + "\n"
-            self.files["%s.js" % fname] = header + content.rstrip() + "\n"
+            self.files["%s.js" % fname] = self.header + content.rstrip() + "\n"
+
+    def visit_Package(self, pkg):
+        pkg.imports = OrderedDict()
+        content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
+        pname = self.dfnr.namer.package(pkg)
+        fname = "%s/index.js" % pname.replace(".", "/")
+        if fname in self.files:
+            self.files[fname] += "\n\n" + self.imports(pkg.imports) + content
+        else:
+            self.files[fname] = self.header + self.imports(pkg.imports) + content
 
     def visit_Primitive(self, p):
         pass
@@ -72,6 +89,11 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
 
     def constructors(self, cls):
         return [d for d in cls.definitions if isinstance(d, ast.Method) and d.type is None]
+
+    def match_Package(self, p):
+        if isinstance(p.parent, ast.Package):
+            p.parent.imports[p.name.match(self.namer)] = True
+        return ""
 
     def match_Class(self, c):
         name = c.name.match(self.namer)
@@ -203,13 +225,16 @@ class JSExprRenderer(java.ExprRenderer):
         if isinstance(v.definition, ast.Field):
             return "this.%s" % v.match(self.namer)
         else:
-            return v.match(self.namer)
+            name = v.match(self.namer)
+            if isinstance(v.definition, ast.Package):
+                v.file.imports[name] = True
+            return name
 
     @overload(ast.Function)
     def var(self, dfn, v):
         pkg = self.namer.package(dfn)
         if pkg:
-            return "%s.WTF.%s" % (pkg, v.match(self.namer))
+            return "%s.%s" % (pkg, v.match(self.namer))
         else:
             return "%s" % v.match(self.namer)
 
