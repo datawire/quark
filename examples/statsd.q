@@ -39,8 +39,8 @@ package statsd {
 	}
     }
 
-    class Guage extends Stat {
-	Guage(String name, int value) {
+    class Gauge extends Stat {
+	Gauge(String name, int value) {
 	    self.name = name;
 	    self.value = value;
 	}
