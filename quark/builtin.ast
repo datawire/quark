@@ -6,14 +6,16 @@ File(
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') == ('),
-     Var(Name(other)), Fixed(')')))),
+     Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(') === ('), Var(Name(other)), Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(__ne__),
    Param(Type(Name(Object)), Name(other)),
    Native(NativeCase(java,
      Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
      Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') != ('),
-     Var(Name(other)), Fixed(')'))))),
+     Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(') !== ('), Var(Name(other)), Fixed(')'))))),
 
  Primitive(Name(void)),
 
@@ -53,7 +55,8 @@ File(
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
-     Fixed('str('), Var(Name(self)), Fixed(')'))))),
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self)), Fixed(').toString()'))))),
 
  Primitive(Name(long), Name(number)),
 
@@ -64,11 +67,14 @@ File(
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(') / ('), Var(Name(other)),
      Fixed(')')), NativeCase(py, Fixed('float('), Var(Name(self)),
-     Fixed(') / float('), Var(Name(other)), Fixed(')')))),
+     Fixed(') / float('), Var(Name(other)), Fixed(')')), NativeCase(js,
+     Fixed('('), Var(Name(self)), Fixed(') / ('), Var(Name(other)),
+     Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Float.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
-     Fixed('str('), Var(Name(self)), Fixed(')'))))),
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self)), Fixed(').toString()'))))),
 
  Primitive(Name(String),
 
@@ -84,14 +90,17 @@ File(
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').add('), Var(Name(element)),
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)),
-     Fixed(').append('), Var(Name(element)), Fixed(')')))),
+     Fixed(').append('), Var(Name(element)), Fixed(')')), NativeCase(js,
+     Fixed('('), Var(Name(self)), Fixed(').push('), Var(Name(element)),
+     Fixed(')')))),
 
   MethodMacro(Type(Name(T)), Name(__get__),
    Param(Type(Name(int)), Name(index)),
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(index)),
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(')['),
-     Var(Name(index)), Fixed(']')))),
+     Var(Name(index)), Fixed(']')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(')['), Var(Name(index)), Fixed(']')))),
 
   MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(int)), Name(index)),
@@ -100,11 +109,14 @@ File(
      Fixed('('), Var(Name(self)), Fixed(').set(('), Var(Name(index)),
      Fixed('), ('), Var(Name(value)), Fixed('))')), NativeCase(py, Fixed('('),
      Var(Name(self)), Fixed(')['), Var(Name(index)), Fixed('] = ('),
-     Var(Name(value)), Fixed(')')))),
+     Var(Name(value)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(')['), Var(Name(index)), Fixed('] = ('), Var(Name(value)),
+     Fixed(')')))),
 
   MethodMacro(Type(Name(int)), Name(size), Native(NativeCase(java, Fixed('('),
      Var(Name(self)), Fixed(').size()')), NativeCase(py, Fixed('len('),
-     Var(Name(self)), Fixed(')'))))),
+     Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(').length'))))),
 
  Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
@@ -115,7 +127,9 @@ File(
      Fixed('('), Var(Name(self)), Fixed(').put(('), Var(Name(key)),
      Fixed('), ('), Var(Name(value)), Fixed('))')), NativeCase(py, Fixed('('),
      Var(Name(self)), Fixed(')['), Var(Name(key)), Fixed('] = ('),
-     Var(Name(value)), Fixed(')')))),
+     Var(Name(value)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(').set(('), Var(Name(key)), Fixed('), ('), Var(Name(value)),
+     Fixed('))')))),
 
   MethodMacro(Type(Name(V)), Name(__get__),
    Param(Type(Name(K)), Name(key)),
@@ -124,16 +138,20 @@ File(
 
   MethodMacro(Type(Name(int)), Name(contains),
    Param(Type(Name(K)), Name(key)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').containsKey('),
-     Var(Name(key)), Fixed(')'))))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').containsKey('), Var(Name(key)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(key)), Fixed(') in ('),
+     Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(').has('), Var(Name(key)), Fixed(')'))))),
 
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg)),
   Native(NativeCase(java,
     Fixed('System.out.println('), Var(Name(msg)), Fixed(')')), NativeCase(py,
-    Fixed('_println('), Var(Name(msg)), Fixed(')')))),
+    Fixed('_println('), Var(Name(msg)), Fixed(')')), NativeCase(js,
+    Fixed('console.log(_Q_toString('), Var(Name(msg)), Fixed('))')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,
-    Fixed('long(time.time()*1000)'))))
+    Fixed('long(time.time()*1000)')), NativeCase(js, Fixed('Date.now()'))))
 )
