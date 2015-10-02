@@ -482,18 +482,20 @@ class Compiler:
 
 import os
 from docopt import docopt
-from backend import Java, Python
+from backend import Java, Python, JavaScript
 
 def _main(args):
     srcs = args["<file>"]
 
     java = args["--java"]
     python = args["--python"]
+    javascript = args["--javascript"]
 
     c = Compiler()
 
     if java: c.emitter(Java, java)
     if python: c.emitter(Python, python)
+    if javascript: c.emitter(JavaScript, javascript)
 
     try:
         for src in srcs:
@@ -512,14 +514,15 @@ def main():
 Quark compiler.
 
 Usage:
-  quark [--java=<dir>] [--python=<dir>] <file> ...
+  quark [--java=<dir>] [--python=<dir>] [--javascript=<dir>] <file> ...
   quark -h | --help
   quark --version
 
 Options:
-  -h --help       Show this screen.
-  --version       Show version.
-  --java=<dir>    Emit java code to specified directory.
-  --python=<dir>  Emit python code to specified directory.
+  -h --help           Show this screen.
+  --version           Show version.
+  --java=<dir>        Emit java code to specified directory.
+  --python=<dir>      Emit python code to specified directory.
+  --javascript=<dir>  Emit javascript code to specified directory.
 """
     exit(_main(docopt(main.__doc__)))
