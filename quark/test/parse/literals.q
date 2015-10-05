@@ -19,4 +19,5 @@ void literals() {
     {"one": 1,
       2: "two",
       3: "three"};
+    3.14149265359;
 }
