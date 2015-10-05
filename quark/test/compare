@@ -17,6 +17,28 @@
 import sys, os
 
 
+# Copy-pasta from datawire-common/dw
+def csi(*args):
+    result = ""
+    numeric = []
+    for a in args:
+        if isinstance(a, int):
+            numeric.append(str(a))
+        else:
+            result = "%s\x1B[%s%s" % (result, ";".join(numeric), a)
+            numeric = []
+    return result
+
+CLS = csi(2, "J", 1, 1, "H")
+RED = csi(1, 91, "m")
+PURPLE = csi(1, 95, "m")
+RESET = csi(0, "m")
+
+
+def ansi(mode, st):
+    return "%s%s%s" % (mode, st, RESET)
+
+
 def find_cmp_files():
     res = []
     for dirpath, dirnames, filenames in os.walk("."):
@@ -32,7 +54,7 @@ def main():
         names = find_cmp_files()
     for f in names:
         name, ext = os.path.splitext(f)
-        print name, (78 - len(name)) * "="
+        print ansi(CLS, ""), name, ansi(PURPLE, (78 - len(name)) * "=")
         if os.path.exists(name):
             os.system("git diff --no-index %s %s" % (name, f))
         else:
