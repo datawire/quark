@@ -8,6 +8,8 @@ public class Functions {
         float den = (float) (100);
         float pi = (num) / (den);
         System.out.println(Float.toString(pi));
+        Integer n = (Integer) (-(100));
+        float x = (float) (-(100));
     }
     public static void main(String[] args) {
         main();

@@ -9,4 +9,7 @@ void main() {
     float den = 100;
     float pi = num / den; // no float literals yet ;-)
     print(pi.toString());
+
+    int n = -100;
+    float x = -100;
 }

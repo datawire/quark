@@ -25,6 +25,9 @@ File(
 
  Primitive(Name(number),
 
+  MethodMacro(Type(Name(number)), Name(__neg__), Native(NativeCase(Fixed('-('),
+     Var(Name(self), $type=0.number), Fixed(')')))),
+
   MethodMacro(Type(Name(number)), Name(__add__),
    Param(Type(Name(number)), Name(other), $type=0.number),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.number),

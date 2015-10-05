@@ -21,3 +21,5 @@ def main():
     den = 100;
     pi = float(num) / float(den);
     _println(str(pi));
+    n = -(100);
+    x = -(100);
