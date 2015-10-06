@@ -24,4 +24,3 @@ class Test:
     
     def go(self):
         _println("TTGO!!");
-    

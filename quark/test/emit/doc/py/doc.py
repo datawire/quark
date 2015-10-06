@@ -28,4 +28,3 @@ class Test:
     
     def test(self, param):
         return 3;
-    

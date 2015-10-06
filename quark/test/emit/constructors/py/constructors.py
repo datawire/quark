@@ -23,3 +23,7 @@ def main():
     (test1).go();
     (test2).go();
     (test3).go();
+
+
+if __name__ == "__main__":
+    main()

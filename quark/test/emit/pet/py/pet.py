@@ -20,3 +20,7 @@ def main():
     good = pets.Dog();
     (evil).greet();
     (good).greet();
+
+
+if __name__ == "__main__":
+    main()

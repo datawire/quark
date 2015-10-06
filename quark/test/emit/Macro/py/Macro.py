@@ -30,4 +30,3 @@ class Macro:
         m8 = m1;
         m9 = m2;
         m10 = m2;
-    

@@ -48,3 +48,7 @@ def main():
     matrix = Matrix(3, 3);
     (matrix).__set__(2, 2, 123);
     _println((matrix).__get__(2, 2));
+
+
+if __name__ == "__main__":
+    main()

@@ -95,6 +95,9 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         params = [p.match(self) for p in fun.params]
         if isinstance(fun, Method):
             params = ["self"] + params
+        elif name == "main":
+                assert fun.parent.__class__ in (File, Package), fun.parent.pprint()
+                fun.parent.has_main = True
         body = fun.body.match(self.stmtr, header=init) if fun.body else ": assert False"
         return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
 
@@ -208,17 +211,25 @@ def _println(obj):
 
     def visit_Package(self, pkg):
         pkg.imports = OrderedDict()
+        pkg.has_main = False
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
+        if pkg.has_main:
+            content += '\n\nif __name__ == "__main__":\n    main()'
+        content = content.rstrip() + "\n"
         pname = self.dfnr.namer.package(pkg)
         fname = "%s/__init__.py" % pname.replace(".", "/")
         if fname in self.files:
-            self.files[fname] += "\n\n" + self.imports(pkg.imports) + content
+            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
         else:
             self.files[fname] = self.header + self.imports(pkg.imports) + content
 
     def visit_File(self, file):
         file.imports = OrderedDict()
+        file.has_main = False
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
+        if file.has_main:
+            content += '\n\nif __name__ == "__main__":\n    main()'
+        content = content.rstrip() + "\n"
         if content.strip() != "":
             fname = os.path.splitext(os.path.basename(file.name))[0]
             self.files["%s.py" % self.dfnr.namer.get(fname)] = \

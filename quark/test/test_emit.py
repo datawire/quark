@@ -91,19 +91,18 @@ def build_java(comp, base, srcs):
         assert expected == actual
 
 def build_py(comp, base, srcs):
-    env = {"PYTHONPATH": base}
-    pyout = subprocess.check_output(["python", "-m", "py_compile"] + srcs, env=env)
+    pyout = subprocess.check_output(["python", "-m", "py_compile"] + srcs, cwd=base)
     assert pyout == ""
     if "main" in comp.root.env:
         out = os.path.dirname(base) + ".out"
         import quark.python
         namer = quark.python.PythonNamer()
-        script = namer.get(os.path.basename(os.path.dirname(base)))
+        script = namer.get(os.path.basename(os.path.dirname(base))) + ".py"
         try:
             expected = open(out).read()
         except IOError, e:
             expected = None
-        actual = subprocess.check_output(["python", "-c", "import %s; %s.main()" % (script, script)], env=env)
+        actual = subprocess.check_output(["python", script], cwd=base)
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual

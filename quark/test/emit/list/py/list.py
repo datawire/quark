@@ -86,3 +86,7 @@ def main():
     test4();
     test5();
     test6();
+
+
+if __name__ == "__main__":
+    main()

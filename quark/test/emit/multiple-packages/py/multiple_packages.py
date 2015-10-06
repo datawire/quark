@@ -21,3 +21,7 @@ def main():
     ((p1).p2).b();
     (p1).c();
     (p1).d();
+
+
+if __name__ == "__main__":
+    main()

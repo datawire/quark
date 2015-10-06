@@ -126,3 +126,7 @@ def main():
     _println("");
     _println("test6:\n--");
     test6();
+
+
+if __name__ == "__main__":
+    main()

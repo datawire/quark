@@ -46,3 +46,7 @@ class Overload:
 def main():
     o = Overload("test");
     (o).test();
+
+
+if __name__ == "__main__":
+    main()

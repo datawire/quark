@@ -48,3 +48,7 @@ def main():
     (a).foo();
     a = c
     (a).foo();
+
+
+if __name__ == "__main__":
+    main()

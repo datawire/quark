@@ -21,4 +21,3 @@ class Native:
         n2 = Native();
         n1n2 = Native();
         n3 = n1n2;
-    

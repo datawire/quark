@@ -31,3 +31,7 @@ def main():
     _println(factorial(8));
     _println(factorial(9));
     _println(factorial(10));
+
+
+if __name__ == "__main__":
+    main()

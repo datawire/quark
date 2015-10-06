@@ -24,3 +24,7 @@ class Pie:
 
 def main():
     _println(3);
+
+
+if __name__ == "__main__":
+    main()

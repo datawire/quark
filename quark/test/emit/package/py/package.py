@@ -22,3 +22,7 @@ def main():
     t2 = test.test.Test();
     (t1).go();
     (t2).go();
+
+
+if __name__ == "__main__":
+    main()

@@ -20,6 +20,5 @@ def c():
     _println("c");
 
 
-
 def d():
     _println("d");

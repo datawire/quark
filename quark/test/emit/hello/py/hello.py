@@ -14,3 +14,7 @@ def _println(obj):
 
 def main():
     _println("Hello World");
+
+
+if __name__ == "__main__":
+    main()
