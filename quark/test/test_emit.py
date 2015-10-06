@@ -41,36 +41,39 @@ def walk(dir, ext):
 def path(request):
     return request.param
 
-def test_emit(path):
+@pytest.fixture(params=[Java, Python, JavaScript])
+def Backend(request):
+    return request.param
+
+def test_emit(path, Backend):
     text = open(path).read()
     base = os.path.splitext(path)[0]
     comp = Compiler()
     comp.parse(os.path.basename(path), text)
     comp.compile()
 
-    for Backend in (Java, Python, JavaScript):
-        backend = Backend()
-        comp.emit(backend)
-        extbase = os.path.join(base, backend.ext)
-        if not os.path.exists(extbase):
-            if Backend == JavaScript:
-                continue
-            os.makedirs(extbase)
+    backend = Backend()
+    comp.emit(backend)
+    extbase = os.path.join(base, backend.ext)
+    if not os.path.exists(extbase):
+        if Backend == JavaScript:
+            return
+        os.makedirs(extbase)
 
-        srcs = []
-        assertions = []
-        for name in backend.files:
-            path = os.path.join(extbase, name)
-            srcs.append(path)
-            computed = backend.files[name]
-            expected = check_file(path, computed)
-            assertions.append((expected, computed))
+    srcs = []
+    assertions = []
+    for name in backend.files:
+        path = os.path.join(extbase, name)
+        srcs.append(path)
+        computed = backend.files[name]
+        expected = check_file(path, computed)
+        assertions.append((expected, computed))
 
-        for expected, computed in assertions:
-            assert expected == computed
-        assert len(backend.files) == len(walk(extbase, ".%s" % backend.ext))
+    for expected, computed in assertions:
+        assert expected == computed
+    assert len(backend.files) == len(walk(extbase, ".%s" % backend.ext))
 
-        BUILDERS[backend.ext](comp, extbase, srcs)
+    BUILDERS[backend.ext](comp, extbase, srcs)
 
 def build_java(comp, base, srcs):
     build = os.path.join(base, "build")
