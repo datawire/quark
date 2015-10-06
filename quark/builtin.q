@@ -20,6 +20,10 @@ primitive number {
 }
 
 primitive int extends number {
+    macro int __neg__() ${-($self)};
+    macro int __div__(int other) $java{~((~($self)) / ($other))}
+                                 $py{($self) / ($other)}
+                                 $js{Math.floor(($self) / ($other))};
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $js{($self).toString()};

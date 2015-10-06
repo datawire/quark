@@ -60,6 +60,19 @@ File(
 
  Primitive(Name(int), Name(number),
 
+  MethodMacro(Type(Name(int)), Name(__neg__), Native(NativeCase(Fixed('-('),
+     Var(Name(self), $type=0.int), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__div__),
+   Param(Type(Name(int)), Name(other), $type=0.int),
+   Native(NativeCase(java,
+     Fixed('~((~('), Var(Name(self), $type=0.int), Fixed(')) / ('),
+     Var(Name(other), $type=0.int), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.int), Fixed(') / ('), Var(Name(other),
+     $type=0.int), Fixed(')')), NativeCase(js, Fixed('Math.floor(('),
+     Var(Name(self), $type=0.int), Fixed(') / ('), Var(Name(other),
+     $type=0.int), Fixed('))')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),

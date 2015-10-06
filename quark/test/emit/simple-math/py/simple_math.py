@@ -21,8 +21,12 @@ def main():
     den = 100;
     pi = float(num) / float(den);
     _println(str(pi));
-    n = -(100);
-    x = -(100);
+    pie = 3.14;
+    _println(str(pie));
+    n = (-(100)) / (3);
+    _println(str(n));
+    m = (100) / (-(3));
+    _println(str(m));
 
 
 if __name__ == "__main__":

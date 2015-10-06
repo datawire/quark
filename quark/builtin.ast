@@ -56,6 +56,17 @@ File(
 
  Primitive(Name(int), Name(number),
 
+  MethodMacro(Type(Name(int)), Name(__neg__), Native(NativeCase(Fixed('-('),
+     Var(Name(self)), Fixed(')')))),
+
+  MethodMacro(Type(Name(int)), Name(__div__),
+   Param(Type(Name(int)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('~((~('), Var(Name(self)), Fixed(')) / ('), Var(Name(other)),
+     Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') / ('),
+     Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('Math.floor(('),
+     Var(Name(self)), Fixed(') / ('), Var(Name(other)), Fixed('))')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),

@@ -10,6 +10,13 @@ void main() {
     float pi = num / den; // no float literals yet ;-)
     print(pi.toString());
 
-    int n = -100;
-    float x = -100;
+    float pie = 3.14;
+    print(pie.toString());
+
+    int n = (-100)/3; // XXX: the parens are required for the
+                      //      negative, is that right?
+    print(n.toString());
+
+    int m = 100/-3;
+    print(m.toString());
 }
