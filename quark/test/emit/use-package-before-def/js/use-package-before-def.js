@@ -17,3 +17,5 @@ function main() {
     test.go();
 }
 exports.main = main;
+
+main();

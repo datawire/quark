@@ -99,3 +99,5 @@ function main() {
     test6();
 }
 exports.main = main;
+
+main();

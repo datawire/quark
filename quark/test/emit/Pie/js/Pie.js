@@ -31,3 +31,5 @@ function main() {
     console.log(_Q_toString(3));
 }
 exports.main = main;
+
+main();

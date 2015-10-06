@@ -23,3 +23,5 @@ function main() {
     (t2).go();
 }
 exports.main = main;
+
+main();

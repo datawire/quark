@@ -22,3 +22,5 @@ function main() {
     p1.d();
 }
 exports.main = main;
+
+main();

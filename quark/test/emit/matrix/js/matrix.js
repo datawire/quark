@@ -51,3 +51,5 @@ function main() {
     console.log(_Q_toString((matrix).__get__(2, 2)));
 }
 exports.main = main;
+
+main();

@@ -29,3 +29,5 @@ function main() {
     (new Test()).test();
 }
 exports.main = main;
+
+main();

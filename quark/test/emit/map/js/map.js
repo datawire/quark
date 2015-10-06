@@ -22,3 +22,5 @@ function main() {
     test1();
 }
 exports.main = main;
+
+main();

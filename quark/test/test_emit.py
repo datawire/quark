@@ -120,7 +120,7 @@ def build_js(comp, base, srcs):
             expected = None
         convoluted_way_to_get_test_name = os.path.basename(os.path.dirname(base))
         script = convoluted_way_to_get_test_name + ".js"
-        actual = subprocess.check_output(["node", "-e", "m = require('./%s'); m.main();" % script], cwd=base)
+        actual = subprocess.check_output(["node", script], cwd=base)
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual

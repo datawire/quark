@@ -52,3 +52,5 @@ function main() {
     (o).test();
 }
 exports.main = main;
+
+main();

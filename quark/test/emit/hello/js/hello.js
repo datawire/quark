@@ -15,3 +15,5 @@ function main() {
     console.log(_Q_toString("Hello World"));
 }
 exports.main = main;
+
+main();

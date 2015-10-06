@@ -62,20 +62,28 @@ function _Q_toString(value) {
 
     def visit_Package(self, pkg):
         pkg.imports = OrderedDict()
+        pkg.has_main = False
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
         pname = self.dfnr.namer.package(pkg)
         fname = "%s/index.js" % pname.replace(".", "/")
+        if pkg.has_main:
+            content += "\n\nmain();"
+        content = content.rstrip() + "\n"
         if fname in self.files:
-            self.files[fname] += "\n\n" + self.imports(pkg.imports) + content
+            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
         else:
             self.files[fname] = self.header + self.imports(pkg.imports) + content
 
     def visit_File(self, file):
         file.imports = OrderedDict()
+        file.has_main = False
         content = "\n".join([d.match(self.dfnr) for d in file.definitions])
+        if file.has_main:
+            content = content.rstrip() + "\n\nmain();"
+        content = content.rstrip() + "\n"
         if content.strip() != "":
-            fname = os.path.splitext(os.path.basename(file.name))[0]
-            self.files["%s.js" % fname] = self.header + self.imports(file.imports) + content.rstrip() + "\n"
+            fname = "%s.js" % os.path.splitext(os.path.basename(file.name))[0]
+            self.files[fname] = self.header + self.imports(file.imports) + content
 
     def visit_Primitive(self, p):
         pass
@@ -157,6 +165,9 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         else:
             # Function
             trailer = "exports.%s = %s;" % (name, name)
+            if name == "main":
+                assert m.parent.__class__ in (ast.File, ast.Package), m.parent.pprint()
+                m.parent.has_main = True
         if m.body is None:
             if isinstance(m.clazz, ast.Interface):
                 body = " { /* interface */ }"

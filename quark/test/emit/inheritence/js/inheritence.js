@@ -69,3 +69,5 @@ function main() {
     (a).foo();
 }
 exports.main = main;
+
+main();

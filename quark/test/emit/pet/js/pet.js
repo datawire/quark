@@ -21,3 +21,5 @@ function main() {
     (good).greet();
 }
 exports.main = main;
+
+main();

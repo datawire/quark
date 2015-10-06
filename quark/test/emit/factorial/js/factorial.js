@@ -33,3 +33,5 @@ function main() {
     console.log(_Q_toString(factorial(10)));
 }
 exports.main = main;
+
+main();
