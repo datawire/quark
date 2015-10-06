@@ -7,7 +7,7 @@ public class Test {
     /**
      * field docs
      */
-    String name;
+    public String name;
     /**
      * method docs
      */

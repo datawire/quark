@@ -1,7 +1,7 @@
 package test3;
 
 public class Box<T> {
-    T contents;
+    public T contents;
     public Box(T contents) {
         (this).contents = contents;
     }

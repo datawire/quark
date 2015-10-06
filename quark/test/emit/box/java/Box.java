@@ -1,5 +1,5 @@
 public class Box<T> {
-    T contents;
+    public T contents;
     public void set(T contents) {
         (this).contents = contents;
     }

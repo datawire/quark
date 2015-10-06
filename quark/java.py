@@ -177,7 +177,7 @@ class DefinitionRenderer(object):
 
     def match_Field(self, f):
         doc = self.doc(f.annotations)
-        return "%s%s;" % (doc, f.match(self.stmtr))
+        return "%spublic %s;" % (doc, f.match(self.stmtr))
 
     def match_Param(self, p):
         return p.match(self.stmtr)
@@ -405,4 +405,3 @@ class SubstitutionNamer(NameRenderer):
             return self.env[n.text]
         else:
             return n.text
-

@@ -1,7 +1,7 @@
 public class Matrix<T> {
-    Integer width;
-    Integer height;
-    java.util.ArrayList<java.util.ArrayList<T>> columns;
+    public Integer width;
+    public Integer height;
+    public java.util.ArrayList<java.util.ArrayList<T>> columns;
     public Matrix(Integer width, Integer height) {
         (this).width = width;
         (this).height = height;

@@ -1,5 +1,5 @@
 public class Box<T> {
-    T contents;
+    public T contents;
     public T get() {
         return contents;
     }

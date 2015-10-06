@@ -1,5 +1,5 @@
 public class Overload {
-    String name;
+    public String name;
     public Overload(String name) {
         (this).name = name;
     }

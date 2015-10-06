@@ -1,3 +1,3 @@
 public class Sack {
-    Box<Integer> ints = new Box<Integer>();
+    public Box<Integer> ints = new Box<Integer>();
 }
