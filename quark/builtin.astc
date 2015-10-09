@@ -73,6 +73,17 @@ File(
      Var(Name(self), $type=0.int), Fixed(') / ('), Var(Name(other),
      $type=0.int), Fixed('))')))),
 
+  MethodMacro(Type(Name(int)), Name(__mod__),
+   Param(Type(Name(int)), Name(other), $type=0.int),
+   Native(NativeCase(java,
+     Fixed('Math.floorMod(('), Var(Name(self), $type=0.int), Fixed('), ('),
+     Var(Name(other), $type=0.int), Fixed('))')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.int), Fixed(') % ('), Var(Name(other),
+     $type=0.int), Fixed(')')), NativeCase(js, Fixed('(function(a,b)'),
+     Fixed('{'), Fixed('return(a%b+b)%b;'), Fixed('}'), Fixed(')(('),
+     Var(Name(self), $type=0.int), Fixed('), ('), Var(Name(other),
+     $type=0.int), Fixed('))')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),

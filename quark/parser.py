@@ -42,6 +42,7 @@ class Parser:
                "DOT": ".",
                "MUL": "*",
                "DIV": "/",
+               "MOD": "%",
                "GE": ">=",
                "LE": "<=",
                "LT": "<",
@@ -57,6 +58,7 @@ class Parser:
         "-": "__sub__",
         "*": "__mul__",
         "/": "__div__",
+        "%": "__mod__",
         "&&": "__and__",
         "||": "__or__",
         "<=": "__le__",
@@ -338,7 +340,7 @@ class Parser:
             remaining.pop(0)
         return result
 
-    @g.rule('mulop = MUL / DIV')
+    @g.rule('mulop = MUL / DIV / MOD')
     def visit_mulop(self, node, (op,)):
         return Name(self.aliases[op])
 

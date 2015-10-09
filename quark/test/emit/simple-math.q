@@ -19,4 +19,10 @@ void main() {
 
     int m = 100/-3;
     print(m.toString());
+
+    int l = 100 % 3;
+    print(l.toString());
+
+    int k = -100 % 3;
+    print(k.toString());
 }

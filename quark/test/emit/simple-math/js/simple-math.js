@@ -26,6 +26,10 @@ function main() {
     console.log(_Q_toString((n).toString()));
     var m = Math.floor((100) / (-(3)));
     console.log(_Q_toString((m).toString()));
+    var l = (function(a,b){return(a%b+b)%b;})((100), (3));
+    console.log(_Q_toString((l).toString()));
+    var k = (function(a,b){return(a%b+b)%b;})((-(100)), (3));
+    console.log(_Q_toString((k).toString()));
 }
 exports.main = main;
 

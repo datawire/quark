@@ -14,6 +14,10 @@ public class Functions {
         System.out.println(Integer.toString(n));
         Integer m = ~((~(100)) / (-(3)));
         System.out.println(Integer.toString(m));
+        Integer l = Math.floorMod((100), (3));
+        System.out.println(Integer.toString(l));
+        Integer k = Math.floorMod((-(100)), (3));
+        System.out.println(Integer.toString(k));
     }
     public static void main(String[] args) {
         main();

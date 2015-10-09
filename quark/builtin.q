@@ -24,6 +24,9 @@ primitive int extends number {
     macro int __div__(int other) $java{~((~($self)) / ($other))}
                                  $py{($self) / ($other)}
                                  $js{Math.floor(($self) / ($other))};
+    macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}
+                                 $py{($self) % ($other)}
+                                 $js{(function(a,b){return(a%b+b)%b;})(($self), ($other))};
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $js{($self).toString()};

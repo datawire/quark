@@ -27,6 +27,10 @@ def main():
     _println(str(n));
     m = (100) / (-(3));
     _println(str(m));
+    l = (100) % (3);
+    _println(str(l));
+    k = (-(100)) % (3);
+    _println(str(k));
 
 
 if __name__ == "__main__":
