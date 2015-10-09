@@ -129,11 +129,11 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
                 assert constructor is None
                 constructor = definition
             else:
-                methods.append(definition.match(self, class_name=name) % dict(class_name=name))
+                methods.append(definition.match(self, class_name=name))
 
         res = "\n// CLASS %s\n" % name + doc
         if constructor:
-            res += constructor.match(self, class_name=name) % dict(class_name=name)
+            res += constructor.match(self, class_name=name)
         else:
             res += "function %s() {\n    this.__init_fields__();\n}\n" % name
         res += "exports.%s = %s;\n" % (name, name)
