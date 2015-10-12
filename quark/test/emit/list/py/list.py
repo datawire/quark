@@ -49,7 +49,7 @@ def test4():
     list = _List(["one", "two", "three"])
     _println(list);
 
-class Box:
+class Box(object):
     def _init(self):
         self.contents = None
     

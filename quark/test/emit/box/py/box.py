@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Box:
+class Box(object):
     def _init(self):
         self.contents = None
     
@@ -26,7 +26,7 @@ class Box:
         return (self).contents;
     
 
-class Crate:
+class Crate(object):
     def _init(self):
         self.box = Box()
         self.ibox = Box()
@@ -43,7 +43,7 @@ class Crate:
         return ((self).box).get();
     
 
-class Sack:
+class Sack(object):
     def _init(self):
         self.ints = Box()
     

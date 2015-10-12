@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Matrix:
+class Matrix(object):
     def _init(self):
         self.width = None
         self.height = None

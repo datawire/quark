@@ -284,6 +284,9 @@ class Resolver(object):
     def leave_Declaration(self, d):
         d.resolved = d.type.resolved
 
+    def leave_Super(self, s):
+        s.resolved = texpr(s.clazz.base.definition)
+
     def leave_Var(self, v):
         v.resolved = v.definition.resolved
 

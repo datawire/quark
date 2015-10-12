@@ -400,6 +400,16 @@ class Local(Statement):
 class Expression(AST):
     pass
 
+class Super(Expression):
+
+    @property
+    def children(self):
+        return ()
+
+    @coder
+    def code(self, coder):
+        return "super"
+
 class Var(Expression):
 
     def __init__(self, name):

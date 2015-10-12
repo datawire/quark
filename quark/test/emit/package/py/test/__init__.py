@@ -17,7 +17,7 @@ import test
 def go():
     _println("GO!");
 
-class Test:
+class Test(object):
     def _init(self):
         self.name = None
     

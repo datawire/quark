@@ -16,6 +16,7 @@ import os
 from .ast import *
 from .compiler import TypeExpr
 from .dispatch import overload
+from .helpers import *
 from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
@@ -137,13 +138,46 @@ class DefinitionRenderer(object):
     def constructors(self, cls):
         return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
 
+    def class_initializer(self, cls):
+        pass
+
+    def default_constructors(self, cls):
+        cons = base_constructors(cls)
+        result = []
+        for con in cons:
+            name = cls.name.match(self.namer)
+            params = [p.match(self) for p in con.params]
+            args = [p.name.match(self.namer) for p in con.params]
+            result.append("public %s(%s) { super(%s); }" % (name, ", ".join(params), ", ".join(args)))
+        return result
+
+    def class_body(self, cls):
+        result = []
+        init = self.class_initializer(cls)
+        if init:
+            result.append(init)
+        if not self.constructors(cls):
+            result.extend(self.default_constructors(cls))
+        result.extend([d.match(self) for d in cls.definitions])
+        return result
+
+    def constructor_header(self, fun):
+        if fun.parent.base:
+            if not has_super(fun):
+                name = fun.parent.name.match(self.namer)
+                return [self.default_super()]
+            else:
+                return []
+        else:
+            return [self.invoke_init()]
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
         params = ""
         if c.parameters:
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = " extends %s" % c.base.match(self.namer) if c.base else ""
-        body = "\n".join([d.match(self) for d in c.definitions])
+        body = "\n".join(self.class_body(c))
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
         if not isinstance(c, Interface) and self.abstract(c):
@@ -333,6 +367,10 @@ class ExprRenderer(object):
         else:
             return "%s.%s" % (expr.match(self), attr_name)
 
+    @overload(Class, Super)
+    def invoke(self, cls, expr, args):
+        return "%s(%s)" % (expr.match(self), ", ".join(args))
+
     @overload(Class)
     def invoke(self, cls, expr, args):
         return "new %s(%s)" % (expr.match(self), ", ".join(args))
@@ -366,6 +404,9 @@ class ExprRenderer(object):
             env[p.name.text] = args[idx]
             idx += 1
         return method_macro.body.match(self.__class__(SubstitutionNamer(env)))
+
+    def match_Super(self, s):
+        return "super"
 
 class NameRenderer(object):
 

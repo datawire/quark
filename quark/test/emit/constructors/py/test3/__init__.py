@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Box:
+class Box(object):
     def _init(self):
         self.contents = None
     

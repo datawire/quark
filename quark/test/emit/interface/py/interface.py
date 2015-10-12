@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Foo:
+class Foo(object):
     def _init(self): pass
     def __init__(self): self._init()
     
@@ -21,7 +21,7 @@ class Foo:
     
     def m3(self, args): assert False
 
-class Bar:
+class Bar(object):
     def _init(self): pass
     def __init__(self): self._init()
     

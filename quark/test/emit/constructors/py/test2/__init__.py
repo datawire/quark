@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Test:
+class Test(object):
     def _init(self):
         self.name = None
     

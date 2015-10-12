@@ -20,6 +20,7 @@ import ast
 import backend
 import java
 from .dispatch import overload
+from .helpers import *
 
 
 class JavaScript(backend.Backend):
@@ -96,9 +97,6 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         self.stmtr = JSStatementRenderer(self.namer)
         self.fieldr = JSFieldRenderer(self.namer, self.stmtr.exprr)
 
-    def constructors(self, cls):
-        return [d for d in cls.definitions if isinstance(d, ast.Method) and d.type is None]
-
     def match_Package(self, p):
         if isinstance(p.parent, ast.Package):
             p.parent.imports[p.name.match(self.namer)] = True
@@ -107,6 +105,12 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
     def match_Field(self, f):
         doc = self.doc(f.annotations)
         return "%s%s;" % (doc, f.match(self.stmtr))
+
+    def default_super(self, class_name):
+        return "%s.super_.call(this);" % class_name
+
+    def invoke_init(self):
+        return "this.__init_fields__();"
 
     def match_Class(self, c):
         name = c.name.match(self.namer)
@@ -135,7 +139,18 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         if constructor:
             res += constructor.match(self, class_name=name)
         else:
-            res += "function %s() {\n    this.__init_fields__();\n}\n" % name
+            if c.base:
+                cons = base_constructors(c)
+                params = []
+                args = ["this"]
+                if cons:
+                    assert len(cons) == 1
+                    params = [p.match(self) for p in cons[0].params]
+                    args.extend([p.name.match(self.namer) for p in cons[0].params])
+                res += "function %s(%s) {\n    %s.super_.call(%s);\n}\n" % \
+                       (name, ", ".join(params), name, ", ".join(args))
+            else:
+                res += "function %s() {\n    this.__init_fields__();\n}\n" % name
         res += "exports.%s = %s;\n" % (name, name)
         if base_class:
             res += "_Q_util.inherits(%s, %s);\n" % (name, base_class)
@@ -160,7 +175,7 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
                 name = new_name
             else:
                 # Constructor
-                header.append("this.__init_fields__();")
+                header.extend(self.constructor_header(m))
                 trailer = ""
         else:
             # Function
@@ -274,6 +289,9 @@ class JSExprRenderer(java.ExprRenderer):
     def match_List(self, l):
         return "[%s]" % ", ".join([e.match(self) for e in l.elements])
 
+    @overload(ast.Class, ast.Super)
+    def invoke(self, cls, expr, args):
+        return "%s.super_.call(%s)" % (expr.clazz.name.match(self.namer), ", ".join(["this"] + args))
 
 class JSNamer(java.SubstitutionNamer):
 

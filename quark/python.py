@@ -15,6 +15,7 @@
 import os
 from .ast import *
 from .dispatch import overload
+from .helpers import *
 from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
@@ -48,6 +49,7 @@ class PythonNamer(SubstitutionNamer):
     def get(self, name):
         return self.env.get(name, name.replace("-", "_"))
 
+
 class PythonDefinitionRenderer(DefinitionRenderer):
 
     def __init__(self):
@@ -69,17 +71,28 @@ class PythonDefinitionRenderer(DefinitionRenderer):
             p.parent.imports[p.name.match(self.namer)] = True
         return ""
 
+    def class_initializer(self, cls):
+        fields = "\n".join([f.match(self.fieldr) for f in cls.definitions if isinstance(f, Field)])
+        if cls.base:
+            fields = "%s._init(self)\n%s" % (cls.base.match(self.namer), fields)
+        return "def _init(self):%s" % (indent(fields) or " pass")
+
+    def default_constructors(self, cls):
+        if not cls.base:
+            return ["def __init__(self): self._init()"]
+        else:
+            return []
+
+    def default_super(self, class_name):
+        return "super(%s, self).__init__()" % class_name
+
+    def invoke_init(self):
+        return "self._init()"
+
     def match_Class(self, c):
         name = c.name.match(self.namer)
-        base = c.base.match(self.namer) if c.base else ""
-        fields = "\n".join([f.match(self.fieldr) for f in c.definitions if isinstance(f, Field)])
-        if base:
-            fields = "%s._init(self)\n%s" % (base, fields)
-        extras = []
-        extras.append("def _init(self):%s" % (indent(fields) or " pass"))
-        if not c.base and not self.constructors(c):
-            extras.append("def __init__(self): self._init()")
-        body = indent("\n".join(extras + [d.match(self) for d in c.definitions]))
+        base = c.base.match(self.namer) if c.base else "object"
+        body = indent("\n".join(self.class_body(c)))
         bases = "(%s)" % base if base else ""
         doc = self.doc(c.annotations)
         return "%sclass %s%s:%s" % (doc, name, bases, body or " pass")
@@ -91,7 +104,7 @@ class PythonDefinitionRenderer(DefinitionRenderer):
             init = None
         else:
             name = "__init__"
-            init = None if fun.parent.base else ["self._init()"]
+            init = self.constructor_header(fun)
         params = [p.match(self) for p in fun.params]
         if isinstance(fun, Method):
             params = ["self"] + params
@@ -162,6 +175,10 @@ class PythonExprRenderer(ExprRenderer):
         attr_name = attr.attr.text
         return "(%s).%s" % (expr.match(self), attr_name)
 
+    @overload(Class, Super)
+    def invoke(self, cls, expr, args):
+        return "%s.__init__(%s)" % (expr.match(self), ", ".join(args))
+
     @overload(Class)
     def invoke(self, cls, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
@@ -171,6 +188,9 @@ class PythonExprRenderer(ExprRenderer):
 
     def match_Null(self, n):
         return "None"
+
+    def match_Super(self, s):
+        return "super(%s, self)" % s.clazz.name.match(self.namer)
 
 class Python(backend.Backend):
 

@@ -15,7 +15,7 @@ def _println(obj):
 def go():
     _println("GOGO!!");
 
-class Test:
+class Test(object):
     def _init(self):
         self.size = None
     

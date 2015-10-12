@@ -25,7 +25,7 @@ Pet.prototype.greet = Pet_greet;
 
 // CLASS Cat
 function Cat() {
-    this.__init_fields__();
+    Cat.super_.call(this);
 }
 exports.Cat = Cat;
 _Q_util.inherits(Cat, Pet);
@@ -42,7 +42,7 @@ Cat.prototype.greet = Cat_greet;
 
 // CLASS Dog
 function Dog() {
-    this.__init_fields__();
+    Dog.super_.call(this);
 }
 exports.Dog = Dog;
 _Q_util.inherits(Dog, Pet);

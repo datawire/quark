@@ -12,11 +12,14 @@ def _println(obj):
         sys.stdout.write("%s\n" % obj)
 
 class A(object):
-    def _init(self): pass
-    def __init__(self): self._init()
+    def _init(self):
+        self.name = None
     
-    def foo(self):
-        _println("A");
+    
+    
+    def __init__(self, name):
+        self._init()
+        (self).name = name
     
 
 class B(A):
@@ -25,8 +28,8 @@ class B(A):
         
     
     
-    def foo(self):
-        _println("B");
+    def greet(self):
+        _println(("Hello, my name is ") + ((self).name));
     
 
 class C(A):
@@ -34,20 +37,21 @@ class C(A):
         A._init(self)
         
     
+    
+    def __init__(self, name):
+        super(C, self).__init__(("C") + (name));
+    
+    
+    def greet(self):
+        _println(("Greetings, my name is ") + ((self).name));
+    
 
 
 def main():
-    a = A();
-    (a).foo();
-    b = B();
-    (b).foo();
-    c = C();
-    (c).foo();
-    _println("--");
-    a = b
-    (a).foo();
-    a = c
-    (a).foo();
+    b = B("Bob");
+    (b).greet();
+    c = C("arole");
+    (c).greet();
 
 
 if __name__ == "__main__":

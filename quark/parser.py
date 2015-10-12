@@ -22,7 +22,8 @@ g = grammar.Grammar()
 class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
-                "return", "macro", "new", "null", "if", "else", "while"]
+                "return", "macro", "new", "null", "if", "else", "while",
+                "super"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -395,7 +396,7 @@ class Parser:
     def visit_exprs(self, node, (first, rest)):
         return [first] + [n[-1] for n in rest]
 
-    @g.rule('atom = literal / paren / new / var / native')
+    @g.rule('atom = literal / paren / super / new / var / native')
     def visit_atom(self, node, (atom,)):
         return atom
 
@@ -414,6 +415,10 @@ class Parser:
     @g.rule('var = name ""')
     def visit_var(self, node, (name, _)):
         return Var(name)
+
+    @g.rule('super = SUPER ""')
+    def visit_super(self, node, (s, _)):
+        return Super()
 
     @g.rule('literal = number / string / list / map / null')
     def visit_literal(self, node, (literal,)):

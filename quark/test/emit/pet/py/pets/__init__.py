@@ -11,7 +11,7 @@ def _println(obj):
     else:
         sys.stdout.write("%s\n" % obj)
 
-class Pet:
+class Pet(object):
     def _init(self): pass
     def __init__(self): self._init()
     
