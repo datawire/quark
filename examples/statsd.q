@@ -1,11 +1,13 @@
 package statsd {
 
-    // XXX: we don't have super yet, so I had to copy the constructors
-    // to all the subclasses, this will go away soon!
-
     class Stat {
 	String name;
         int value;
+
+	Stat(String name, int value) {
+	    self.name = name;
+	    self.value = value;
+	}
 
 	String toString() {
 	    return name + ":" + value.toString() + "|" + self.type();
@@ -15,11 +17,6 @@ package statsd {
     }
 
     class Counter extends Stat {
-	Counter(String name, int value) {
-	    self.name = name;
-	    self.value = value;
-	}
-
 	String type() {
 	    return "c";
 	}
@@ -28,9 +25,7 @@ package statsd {
     class Sample extends Stat {
 	float interval;
 	Sample(String name, int value, float interval) {
-	    //super(name, value);
-	    self.name = name;
-	    self.value = value;
+	    super(name, value);
 	    self.interval = interval;
 	}
 
@@ -40,22 +35,12 @@ package statsd {
     }
 
     class Gauge extends Stat {
-	Gauge(String name, int value) {
-	    self.name = name;
-	    self.value = value;
-	}
-
 	String type() {
 	    return "g";
 	}
     }
 
     class Set extends Stat {
-	Set(String name, int value) {
-	    self.name = name;
-	    self.value = value;
-	}
-
 	String type() {
 	    return "s";
 	}
