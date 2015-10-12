@@ -110,6 +110,24 @@ def build_py(comp, base, srcs):
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
 
+NODE_OPTIONS = ("--harmony_collections",)
+NODE_TEST_SCRIPT = "new Map()"
+NODE_OUTPUT = "{}\n"
+
+def node_cmd(script):
+    args = ["node"]
+    attempts = []
+    for opt in NODE_OPTIONS:
+        args.append(opt)
+        try:
+            output = subprocess.check_output(args + ["-p", NODE_TEST_SCRIPT])
+            if output == NODE_OUTPUT:
+                return args + [script]
+            else:
+                attempts.append(output)
+        except subprocess.CalledProcessError, e:
+            attempts.append(str(e))
+    assert False, (args, attempts)
 
 def build_js(comp, base, srcs):
     #lint_output = subprocess.check_output(["jshint"] + srcs)
@@ -122,7 +140,7 @@ def build_js(comp, base, srcs):
             expected = None
         convoluted_way_to_get_test_name = os.path.basename(os.path.dirname(base))
         script = convoluted_way_to_get_test_name + ".js"
-        actual = subprocess.check_output(["node", script], cwd=base)
+        actual = subprocess.check_output(node_cmd(script), cwd=base)
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
