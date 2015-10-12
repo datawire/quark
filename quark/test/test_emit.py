@@ -56,8 +56,6 @@ def test_emit(path, Backend):
     comp.emit(backend)
     extbase = os.path.join(base, backend.ext)
     if not os.path.exists(extbase):
-        if Backend == JavaScript:
-            return
         os.makedirs(extbase)
 
     srcs = []
