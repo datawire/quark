@@ -15,6 +15,27 @@
 from .dispatch import dispatch
 from .ast import *
 
+DEFAULT = object()
+
+@dispatch(Class, Field)
+def get_field(cls, field, default=DEFAULT):
+    return get_field(cls, field.name, default)
+
+@dispatch(Class, Name)
+def get_field(cls, name, default=DEFAULT):
+    return get_field(cls, name.text, default)
+
+@dispatch(Class, basestring)
+def get_field(cls, name, default=DEFAULT):
+    if name in cls.env:
+        return cls.env[name]
+    elif cls.base and cls.base.definition:
+        return get_field(cls.base.definition, name)
+    elif default is DEFAULT:
+        raise KeyError(name)
+    else:
+        return default
+
 def has_super(fun):
     for stmt in fun.body.statements:
         if is_super(stmt):

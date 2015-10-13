@@ -17,6 +17,7 @@ from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
+from .helpers import *
 
 class Root(AST):
 
@@ -317,6 +318,18 @@ class Resolver(object):
             if value_texp:
                 map_texp.bindings[value_param] = value_texp
 
+class Check:
+
+    def __init__(self):
+        self.errors = []
+
+    def visit_Field(self, f):
+        if f.clazz.base and f.clazz.base.definition:
+            prev = get_field(f.clazz.base.definition, f, None)
+            if prev is not None:
+                self.errors.append("%s: duplicate field '%s', previous definition: %s" %
+                                   (lineinfo(f), f.name, lineinfo(prev)))
+
 class ParseError(Exception): pass
 class CompileError(Exception): pass
 
@@ -474,6 +487,11 @@ class Compiler:
         self.root.traverse(res)
         if res.errors:
             raise CompileError("\n".join(res.errors))
+
+        check = Check()
+        self.root.traverse(check)
+        if check.errors:
+            raise CompileError("\n".join(check.errors))
 
         for Backend, target in self.emitters:
             backend = Backend()
