@@ -36,6 +36,7 @@ primitive Map<K, V> {
     macro void __set__(K key, V value) $java{($self).put(($key), ($value))}$py{($self)[$key] = ($value)}$js{($self).set(($key), ($value))};
     macro V __get__(K key) ${($self).get($key)};
     macro int contains(K key) $java{($self).containsKey($key)}$py{($key) in ($self)}$js{($self).has($key)};
+    macro void update(Map<K, V> other) $java{($self).putAll($other)}$py{($self).update($other)}$js{for(var _ of ($other)){($self).set(_[0], _[1])}};
 }
 macro void print(String msg) $java{System.out.println($msg)}$py{_println($msg)}$js{_qrt.print($msg)};
 macro long now() $java{System.currentTimeMillis()}$py{long(time.time()*1000)}$js{Date.now()};

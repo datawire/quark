@@ -70,6 +70,9 @@ primitive Map<K,V> {
     macro int contains(K key) $java{($self).containsKey($key)}
                               $py{($key) in ($self)}
                               $js{($self).has($key)};
+    macro void update(Map<K,V> other) $java{($self).putAll($other)}
+                              $py{($self).update($other)}
+                              $js{for(var _ of ($other)){($self).set(_[0], _[1])}};
 }
 
 macro void print(String msg) $java{System.out.println($msg)}
