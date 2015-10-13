@@ -183,6 +183,9 @@ class PythonExprRenderer(ExprRenderer):
     def invoke(self, cls, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 
+    def invoke_super_method(self, method, expr, args):
+        return "%s(%s)" % (expr.match(self), ", ".join(args))
+
     def match_List(self, l):
         return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
 

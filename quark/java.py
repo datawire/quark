@@ -381,9 +381,16 @@ class ExprRenderer(object):
 
     @overload(Method)
     def invoke(self, method, expr, args):
-        return "(%s).%s(%s)" % (expr.expr.match(self),
-                                method.name.match(self.namer),
-                                ", ".join(args))
+        if isinstance(expr.expr, Super):
+            return self.invoke_super_method(method, expr, args)
+        else:
+            return "(%s).%s(%s)" % (expr.expr.match(self),
+                                    method.name.match(self.namer),
+                                    ", ".join(args))
+
+    def invoke_super_method(self, method, expr, args):
+        return "super.%s(%s)" % (method.name.match(self.namer),
+                                 ", ".join(args))
 
     @overload(Macro)
     def invoke(self, macro, expr, args):

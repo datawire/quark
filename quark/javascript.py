@@ -293,6 +293,10 @@ class JSExprRenderer(java.ExprRenderer):
     def invoke(self, cls, expr, args):
         return "%s.super_.call(%s)" % (expr.clazz.name.match(self.namer), ", ".join(["this"] + args))
 
+    def invoke_super_method(self, method, expr, args):
+        return "this.constructor.super_.prototype.%s.call(%s)" % \
+            (method.name.match(self.namer), ", ".join(["this"] + args))
+
 class JSNamer(java.SubstitutionNamer):
 
     def __init__(self):
