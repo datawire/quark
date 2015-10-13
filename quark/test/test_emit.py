@@ -108,24 +108,34 @@ def build_py(comp, base, srcs):
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
 
-NODE_OPTIONS = ("--harmony_collections",)
-NODE_TEST_SCRIPT = "new Map()"
-NODE_OUTPUT = "{}\n"
+class Node:
+    NODE_TEST_SCRIPT = "new Map()"
+    NODE_VARIANTS = (
+                    (("--harmony_collections",), "{}\n"), # older
+                    ((), "Map {}\n"),                   # v4.2.0
+                    )
 
-def node_cmd(script):
-    args = ["node"]
-    attempts = []
-    for opt in NODE_OPTIONS:
-        args.append(opt)
-        try:
-            output = subprocess.check_output(args + ["-p", NODE_TEST_SCRIPT])
-            if output == NODE_OUTPUT:
-                return args + [script]
-            else:
-                attempts.append(output)
-        except subprocess.CalledProcessError, e:
-            attempts.append(str(e))
-    assert False, (args, attempts)
+    def __init__(self):
+        self.attempts = []
+	self.args = None
+        for opt, expected in self.NODE_VARIANTS:
+            args = ("node",) + opt
+            try:
+                output = subprocess.check_output(args + ("-p", self.NODE_TEST_SCRIPT))
+                if output == expected:
+                    self.args = args
+                    break
+                else:
+                    self.attempts.append(output)
+            except subprocess.CalledProcessError, e:
+                self.attempts.append(str(e))
+
+    def __call__(self, *script):
+        if self.args:
+            return self.args + script
+        assert False, (args, attempts)
+        
+node_cmd = Node()
 
 def build_js(comp, base, srcs):
     #lint_output = subprocess.check_output(["jshint"] + srcs)
