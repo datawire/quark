@@ -165,7 +165,7 @@ class DefinitionRenderer(object):
         if fun.parent.base:
             if not has_super(fun):
                 name = fun.parent.name.match(self.namer)
-                return [self.default_super()]
+                return [self.default_super(name)]
             else:
                 return []
         else:

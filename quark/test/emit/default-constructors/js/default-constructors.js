@@ -60,11 +60,43 @@ function C_greet() {
 }
 C.prototype.greet = C_greet;
 
+// CLASS X
+function X() {
+    this.__init_fields__();
+}
+exports.X = X;
+
+function X__init_fields__() {}
+X.prototype.__init_fields__ = X__init_fields__;
+
+
+// CLASS Y
+
+function Y(name) {
+    Y.super_.call(this);
+    (this).name = name;
+}
+exports.Y = Y;
+_Q_util.inherits(Y, X);
+
+function Y__init_fields__() {
+    X.prototype.__init_fields__.call(this);
+    this.name = null;
+}
+Y.prototype.__init_fields__ = Y__init_fields__;
+
+function Y_test() {
+    console.log(_Q_toString((this).name));
+}
+Y.prototype.test = Y_test;
+
 function main() {
     var b = new B("Bob");
     (b).greet();
     var c = new C("arole");
     (c).greet();
+    var y = new Y("asdf");
+    (y).test();
 }
 exports.main = main;
 

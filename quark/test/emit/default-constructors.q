@@ -21,9 +21,24 @@ class C extends A {
     }
 }
 
+class X {}
+
+class Y extends X {
+    String name;
+    Y(String name) {
+	self.name = name;
+    }
+
+    void test() {
+	print(self.name);
+    }
+}
+
 void main() {
     B b = new B("Bob");
     b.greet();
     C c = new C("arole");
     c.greet();
+    Y y = new Y("asdf");
+    y.test();
 }

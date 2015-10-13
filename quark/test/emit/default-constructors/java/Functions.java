@@ -4,6 +4,8 @@ public class Functions {
         (b).greet();
         C c = new C("arole");
         (c).greet();
+        Y y = new Y("asdf");
+        (y).test();
     }
     public static void main(String[] args) {
         main();

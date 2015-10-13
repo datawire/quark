@@ -46,12 +46,34 @@ class C(A):
         _println(("Greetings, my name is ") + ((self).name));
     
 
+class X(object):
+    def _init(self): pass
+    def __init__(self): self._init()
+
+class Y(X):
+    def _init(self):
+        X._init(self)
+        self.name = None
+    
+    
+    
+    def __init__(self, name):
+        super(Y, self).__init__()
+        (self).name = name
+    
+    
+    def test(self):
+        _println((self).name);
+    
+
 
 def main():
     b = B("Bob");
     (b).greet();
     c = C("arole");
     (c).greet();
+    y = Y("asdf");
+    (y).test();
 
 
 if __name__ == "__main__":
