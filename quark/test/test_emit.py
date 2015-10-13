@@ -117,7 +117,7 @@ class Node:
 
     def __init__(self):
         self.attempts = []
-	self.args = None
+        self.args = None
         for opt, expected in self.NODE_VARIANTS:
             args = ("node",) + opt
             try:
@@ -134,7 +134,7 @@ class Node:
         if self.args:
             return self.args + script
         assert False, (args, attempts)
-        
+
 node_cmd = Node()
 
 def build_js(comp, base, srcs):
