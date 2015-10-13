@@ -330,6 +330,14 @@ class Check:
                 self.errors.append("%s: duplicate field '%s', previous definition: %s" %
                                    (lineinfo(f), f.name, lineinfo(prev)))
 
+    def visit_Constructor(self, c):
+        cons = base_constructors(c.clazz)
+        if not cons: return
+        for con in cons:
+            if con.params and not has_super(c):
+                self.errors.append("%s: superclass constructor has arguments, "
+                                   "explicit call to super is required" % lineinfo(c))
+
 class ParseError(Exception): pass
 class CompileError(Exception): pass
 
