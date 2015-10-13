@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS Box
 function Box() {
@@ -70,9 +59,9 @@ function test1() {
     var ibox = new Box();
     (ibox).set(3);
     var three = (ibox).get();
-    console.log(_Q_toString(three));
+    _qrt.print(three);
     (ibox).contents = 4;
-    console.log(_Q_toString((ibox).contents));
+    _qrt.print((ibox).contents);
 }
 exports.test1 = test1;
 
@@ -80,43 +69,43 @@ function test2() {
     var sbox = new Box();
     (sbox).set("hello");
     var hello = (sbox).get();
-    console.log(_Q_toString(hello));
+    _qrt.print(hello);
     (sbox).contents = "world";
-    console.log(_Q_toString((sbox).contents));
+    _qrt.print((sbox).contents);
 }
 exports.test2 = test2;
 
 function test3() {
     var icrate = new Crate();
     (icrate).set(3);
-    console.log(_Q_toString((icrate).get()));
+    _qrt.print((icrate).get());
     (icrate).set(4);
-    console.log(_Q_toString(((icrate).box).contents));
+    _qrt.print(((icrate).box).contents);
 }
 exports.test3 = test3;
 
 function test4() {
     var s = new Sack();
-    console.log(_Q_toString(((s).ints).get()));
-    console.log(_Q_toString(((s).ints).contents));
+    _qrt.print(((s).ints).get());
+    _qrt.print(((s).ints).contents);
     ((s).ints).set(3);
-    console.log(_Q_toString(((s).ints).get()));
-    console.log(_Q_toString(((s).ints).contents));
+    _qrt.print(((s).ints).get());
+    _qrt.print(((s).ints).contents);
     ((s).ints).contents = 4;
-    console.log(_Q_toString(((s).ints).get()));
-    console.log(_Q_toString(((s).ints).contents));
+    _qrt.print(((s).ints).get());
+    _qrt.print(((s).ints).contents);
 }
 exports.test4 = test4;
 
 function test5() {
     var scrate = new Crate();
-    console.log(_Q_toString((scrate).get()));
-    console.log(_Q_toString(((scrate).box).contents));
+    _qrt.print((scrate).get());
+    _qrt.print(((scrate).box).contents);
     (scrate).set("hello");
-    console.log(_Q_toString((scrate).get()));
-    console.log(_Q_toString(((scrate).box).contents));
+    _qrt.print((scrate).get());
+    _qrt.print(((scrate).box).contents);
     ((scrate).ibox).contents = 3;
-    console.log(_Q_toString(((scrate).ibox).contents));
+    _qrt.print(((scrate).ibox).contents);
 }
 exports.test5 = test5;
 
@@ -124,28 +113,28 @@ function test6() {
     var box = new Box();
     (box).set(new Box());
     ((box).get()).set(3);
-    console.log(_Q_toString(((box).get()).get()));
-    console.log(_Q_toString(((box).contents).contents));
+    _qrt.print(((box).get()).get());
+    _qrt.print(((box).contents).contents);
 }
 exports.test6 = test6;
 
 function main() {
-    console.log(_Q_toString("test1:\n--"));
+    _qrt.print("test1:\n--");
     test1();
-    console.log(_Q_toString(""));
-    console.log(_Q_toString("test2:\n--"));
+    _qrt.print("");
+    _qrt.print("test2:\n--");
     test2();
-    console.log(_Q_toString(""));
-    console.log(_Q_toString("test3:\n--"));
+    _qrt.print("");
+    _qrt.print("test3:\n--");
     test3();
-    console.log(_Q_toString(""));
-    console.log(_Q_toString("test4:\n--"));
+    _qrt.print("");
+    _qrt.print("test4:\n--");
     test4();
-    console.log(_Q_toString(""));
-    console.log(_Q_toString("test5:\n--"));
+    _qrt.print("");
+    _qrt.print("test5:\n--");
     test5();
-    console.log(_Q_toString(""));
-    console.log(_Q_toString("test6:\n--"));
+    _qrt.print("");
+    _qrt.print("test6:\n--");
     test6();
 }
 exports.main = main;

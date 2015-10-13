@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS A
 function A() {
@@ -21,7 +10,7 @@ function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
 
 function A_foo() {
-    console.log(_Q_toString("A"));
+    _qrt.print("A");
 }
 A.prototype.foo = A_foo;
 
@@ -30,7 +19,7 @@ function B() {
     B.super_.call(this);
 }
 exports.B = B;
-_Q_util.inherits(B, A);
+_qrt.util.inherits(B, A);
 
 function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
@@ -38,7 +27,7 @@ function B__init_fields__() {
 B.prototype.__init_fields__ = B__init_fields__;
 
 function B_foo() {
-    console.log(_Q_toString("B"));
+    _qrt.print("B");
 }
 B.prototype.foo = B_foo;
 
@@ -47,7 +36,7 @@ function C() {
     C.super_.call(this);
 }
 exports.C = C;
-_Q_util.inherits(C, A);
+_qrt.util.inherits(C, A);
 
 function C__init_fields__() {
     A.prototype.__init_fields__.call(this);
@@ -62,7 +51,7 @@ function main() {
     (b).foo();
     var c = new C();
     (c).foo();
-    console.log(_Q_toString("--"));
+    _qrt.print("--");
     a = b;
     (a).foo();
     a = c;

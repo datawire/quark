@@ -28,20 +28,9 @@ class JavaScript(backend.Backend):
     def __init__(self):
         backend.Backend.__init__(self, "js")
         self.dfnr = JSDefinitionRenderer()
-        self.header = """\
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
-"""
+        self.header = """var _qrt = require("quark_runtime.js");\n"""
+        self.files["node_modules/quark_runtime.js"] = open(os.path.join(os.path.dirname(__file__),
+                                                                        "quark_runtime.js")).read()
 
     def write(self, target):
         if not os.path.exists(target):
@@ -153,7 +142,7 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
                 res += "function %s() {\n    this.__init_fields__();\n}\n" % name
         res += "exports.%s = %s;\n" % (name, name)
         if base_class:
-            res += "_Q_util.inherits(%s, %s);\n" % (name, base_class)
+            res += "_qrt.util.inherits(%s, %s);\n" % (name, base_class)
 
         res += "\nfunction %s__init_fields__() {" % name + java.indent("\n".join(fields)) + "}\n"
         res += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (name, name)

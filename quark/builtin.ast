@@ -73,14 +73,13 @@ File(
      Fixed('Math.floorMod(('), Var(Name(self)), Fixed('), ('),
      Var(Name(other)), Fixed('))')), NativeCase(py, Fixed('('),
      Var(Name(self)), Fixed(') % ('), Var(Name(other)), Fixed(')')),
-    NativeCase(js, Fixed('(function(a,b)'), Fixed('{'),
-     Fixed('return(a%b+b)%b;'), Fixed('}'), Fixed(')(('), Var(Name(self)),
-     Fixed('), ('), Var(Name(other)), Fixed('))')))),
+    NativeCase(js, Fixed('_qrt.modulo(('), Var(Name(self)), Fixed('), ('),
+     Var(Name(other)), Fixed('))')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
-     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
-     Var(Name(self)), Fixed(').toString()'))))),
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
 
  Primitive(Name(long), Name(number)),
 
@@ -97,8 +96,8 @@ File(
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Float.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
-     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
-     Var(Name(self)), Fixed(').toString()'))))),
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
 
  Primitive(Name(String),
 
@@ -173,7 +172,7 @@ File(
   Native(NativeCase(java,
     Fixed('System.out.println('), Var(Name(msg)), Fixed(')')), NativeCase(py,
     Fixed('_println('), Var(Name(msg)), Fixed(')')), NativeCase(js,
-    Fixed('console.log(_Q_toString('), Var(Name(msg)), Fixed('))')))),
+    Fixed('_qrt.print('), Var(Name(msg)), Fixed(')')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,

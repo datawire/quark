@@ -79,16 +79,15 @@ File(
      Fixed('Math.floorMod(('), Var(Name(self), $type=0.int), Fixed('), ('),
      Var(Name(other), $type=0.int), Fixed('))')), NativeCase(py, Fixed('('),
      Var(Name(self), $type=0.int), Fixed(') % ('), Var(Name(other),
-     $type=0.int), Fixed(')')), NativeCase(js, Fixed('(function(a,b)'),
-     Fixed('{'), Fixed('return(a%b+b)%b;'), Fixed('}'), Fixed(')(('),
+     $type=0.int), Fixed(')')), NativeCase(js, Fixed('_qrt.modulo(('),
      Var(Name(self), $type=0.int), Fixed('), ('), Var(Name(other),
      $type=0.int), Fixed('))')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),
-    NativeCase(js, Fixed('('), Var(Name(self), $type=0.int),
-     Fixed(').toString()'))))),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.int),
+     Fixed(')'))))),
 
  Primitive(Name(long), Name(number)),
 
@@ -107,8 +106,8 @@ File(
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Float.toString('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.float), Fixed(')')),
-    NativeCase(js, Fixed('('), Var(Name(self), $type=0.float),
-     Fixed(').toString()'))))),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.float),
+     Fixed(')'))))),
 
  Primitive(Name(String),
 
@@ -194,8 +193,8 @@ File(
   Native(NativeCase(java,
     Fixed('System.out.println('), Var(Name(msg), $type=0.String), Fixed(')')),
    NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.String),
-    Fixed(')')), NativeCase(js, Fixed('console.log(_Q_toString('),
-    Var(Name(msg), $type=0.String), Fixed('))')))),
+    Fixed(')')), NativeCase(js, Fixed('_qrt.print('), Var(Name(msg),
+    $type=0.String), Fixed(')')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,

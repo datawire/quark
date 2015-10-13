@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS Pet
 function Pet() {
@@ -28,7 +17,7 @@ function Cat() {
     Cat.super_.call(this);
 }
 exports.Cat = Cat;
-_Q_util.inherits(Cat, Pet);
+_qrt.util.inherits(Cat, Pet);
 
 function Cat__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
@@ -36,7 +25,7 @@ function Cat__init_fields__() {
 Cat.prototype.__init_fields__ = Cat__init_fields__;
 
 function Cat_greet() {
-    console.log(_Q_toString("meow!"));
+    _qrt.print("meow!");
 }
 Cat.prototype.greet = Cat_greet;
 
@@ -45,7 +34,7 @@ function Dog() {
     Dog.super_.call(this);
 }
 exports.Dog = Dog;
-_Q_util.inherits(Dog, Pet);
+_qrt.util.inherits(Dog, Pet);
 
 function Dog__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
@@ -53,6 +42,6 @@ function Dog__init_fields__() {
 Dog.prototype.__init_fields__ = Dog__init_fields__;
 
 function Dog_greet() {
-    console.log(_Q_toString("woof!"));
+    _qrt.print("woof!");
 }
 Dog.prototype.greet = Dog_greet;

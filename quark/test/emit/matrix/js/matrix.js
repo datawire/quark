@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS Matrix
 
@@ -48,7 +37,7 @@ Matrix.prototype.__set__ = Matrix___set__;
 function main() {
     var matrix = new Matrix(3, 3);
     (matrix).__set__(2, 2, 123);
-    console.log(_Q_toString((matrix).__get__(2, 2)));
+    _qrt.print((matrix).__get__(2, 2));
 }
 exports.main = main;
 

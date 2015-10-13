@@ -1,24 +1,13 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 function test1() {
     var list = new Array();
     (list).push(1);
     (list).push(2);
     (list).push(3);
-    console.log(_Q_toString((list)[0]));
-    console.log(_Q_toString((list)[1]));
-    console.log(_Q_toString((list)[2]));
+    _qrt.print((list)[0]);
+    _qrt.print((list)[1]);
+    _qrt.print((list)[2]);
 }
 exports.test1 = test1;
 
@@ -27,29 +16,29 @@ function test2() {
     (list).push("one");
     (list).push("two");
     (list).push("three");
-    console.log(_Q_toString((list)[0]));
-    console.log(_Q_toString((list)[1]));
-    console.log(_Q_toString((list)[2]));
+    _qrt.print((list)[0]);
+    _qrt.print((list)[1]);
+    _qrt.print((list)[2]);
 }
 exports.test2 = test2;
 
 function test3() {
     var list = [];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
     list = [1];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
     list = [1, 2, 3];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
 }
 exports.test3 = test3;
 
 function test4() {
     var list = [];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
     list = ["one"];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
     list = ["one", "two", "three"];
-    console.log(_Q_toString(list));
+    _qrt.print(list);
 }
 exports.test4 = test4;
 
@@ -78,15 +67,15 @@ function test5() {
     var boxes = [];
     (boxes).push(new Box());
     ((boxes)[0]).set(3);
-    console.log(_Q_toString(((boxes)[0]).get()));
+    _qrt.print(((boxes)[0]).get());
     boxes = [new Box()];
-    console.log(_Q_toString(((boxes)[0]).get()));
+    _qrt.print(((boxes)[0]).get());
 }
 exports.test5 = test5;
 
 function test6() {
     var matrix = [[1, 2, 3], [4, 5, 6], [7, 8, 9]];
-    console.log(_Q_toString(matrix));
+    _qrt.print(matrix);
 }
 exports.test6 = test6;
 

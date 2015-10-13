@@ -26,10 +26,10 @@ primitive int extends number {
                                  $js{Math.floor(($self) / ($other))};
     macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}
                                  $py{($self) % ($other)}
-                                 $js{(function(a,b){return(a%b+b)%b;})(($self), ($other))};
+                                 $js{_qrt.modulo(($self), ($other))};
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
-                            $js{($self).toString()};
+                            $js{_qrt.toString($self)};
 }
 
 primitive long extends number {}
@@ -40,7 +40,7 @@ primitive float extends number {
                                      $js{($self) / ($other)};
     macro String toString() $java{Float.toString($self)}
                             $py{str($self)}
-                            $js{($self).toString()};
+                            $js{_qrt.toString($self)};
 }
 
 primitive String {
@@ -74,7 +74,7 @@ primitive Map<K,V> {
 
 macro void print(String msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
-                             $js{console.log(_Q_toString($msg))};
+                             $js{_qrt.print($msg)};
 
 macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)}

@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS Overload
 
@@ -38,11 +27,11 @@ function Overload_test() {
     var o1 = new Overload("one");
     var o2 = new Overload("two");
     var o3 = (o1).__add__(o2);
-    console.log(_Q_toString((o3).name));
+    _qrt.print((o3).name);
     o3 = (o1).__mul__(o2);
-    console.log(_Q_toString((o3).name));
+    _qrt.print((o3).name);
     if ((o3) === (o1)) {
-        console.log(_Q_toString("YAY!"));
+        _qrt.print("YAY!");
     }
 }
 Overload.prototype.test = Overload_test;

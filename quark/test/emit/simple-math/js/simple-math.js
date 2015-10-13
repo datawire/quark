@@ -1,35 +1,24 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 function main() {
     var four = (2) + (2);
-    console.log(_Q_toString((four).toString()));
+    _qrt.print(_qrt.toString(four));
     var half = Math.floor((1) / (2));
-    console.log(_Q_toString((half).toString()));
+    _qrt.print(_qrt.toString(half));
     var num = 314;
     var den = 100;
     var pi = (num) / (den);
-    console.log(_Q_toString((pi).toString()));
+    _qrt.print(_qrt.toString(pi));
     var pie = 3.14;
-    console.log(_Q_toString((pie).toString()));
+    _qrt.print(_qrt.toString(pie));
     var n = Math.floor((-(100)) / (3));
-    console.log(_Q_toString((n).toString()));
+    _qrt.print(_qrt.toString(n));
     var m = Math.floor((100) / (-(3)));
-    console.log(_Q_toString((m).toString()));
-    var l = (function(a,b){return(a%b+b)%b;})((100), (3));
-    console.log(_Q_toString((l).toString()));
-    var k = (function(a,b){return(a%b+b)%b;})((-(100)), (3));
-    console.log(_Q_toString((k).toString()));
+    _qrt.print(_qrt.toString(m));
+    var l = _qrt.modulo((100), (3));
+    _qrt.print(_qrt.toString(l));
+    var k = _qrt.modulo((-(100)), (3));
+    _qrt.print(_qrt.toString(k));
 }
 exports.main = main;
 

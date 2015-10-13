@@ -1,15 +1,4 @@
-var _Q_util = require("util");
-function _Q_toString(value) {
-    if (value === null) {
-        return "null";
-    }
-    if (Array.isArray(value)) {
-        return "[" + value.map(_Q_toString).join(", ") + "]";
-    }
-    return value.toString();
-}
-
-//
+var _qrt = require("quark_runtime.js");
 
 // CLASS Test
 function Test() {
@@ -29,16 +18,16 @@ function Test_test() {
     var x = 2;
     var y = 2;
     var z = (x) + (y);
-    console.log(_Q_toString(z));
+    _qrt.print(z);
     var hello = "hello";
-    console.log(_Q_toString(hello));
+    _qrt.print(hello);
     var t1 = new Test();
     var t2 = (t1).foo(t1);
     if ((t2) !== (t1)) {
-        console.log(_Q_toString("YAY!"));
+        _qrt.print("YAY!");
     }
     var four = (2) + (2);
-    console.log(_Q_toString(four));
+    _qrt.print(four);
 }
 Test.prototype.test = Test_test;
 
