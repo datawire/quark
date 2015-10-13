@@ -286,7 +286,10 @@ class Resolver(object):
         d.resolved = d.type.resolved
 
     def leave_Super(self, s):
-        s.resolved = texpr(s.clazz.base.definition)
+        if s.clazz.base is None:
+            self.errors.append("%s: %s has no base class" % (lineinfo(s), s.clazz.name))
+        else:
+            s.resolved = texpr(s.clazz.base.definition)
 
     def leave_Var(self, v):
         v.resolved = v.definition.resolved
@@ -337,6 +340,12 @@ class Check:
             if con.params and not has_super(c):
                 self.errors.append("%s: superclass constructor has arguments, "
                                    "explicit call to super is required" % lineinfo(c))
+
+    def visit_Super(self, s):
+        if (isinstance(s.parent, Attr) or
+            (isinstance(s.parent, Call) and s.parent.expr == s)):
+            return
+        self.errors.append("%s: super can only be used for constructor or method invocation" % lineinfo(s))
 
 class ParseError(Exception): pass
 class CompileError(Exception): pass
