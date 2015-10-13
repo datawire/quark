@@ -27,6 +27,8 @@ class Java(backend.Backend):
         backend.Backend.__init__(self, "java")
         self.dfnr = DefinitionRenderer()
         self.functions = []
+        self.files["io/datawire/quark_runtime.java"] = open(os.path.join(os.path.dirname(__file__),
+                                                                         "quark_runtime.java")).read()
 
     def write(self, target):
         src = os.path.join(target, "src/main/java")
