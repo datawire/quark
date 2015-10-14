@@ -1,7 +1,9 @@
 void test1() {
     Map<String,int> map = new Map<String,int>();
     map["pi"] = 3;
-    print(map["pi"]);
+    print(map["pi"]);  // It's interesting that this works w/o calling toString()
+    print(map["not_there"]);
+    print("^--- should be null");
 }
 
 void test_update() {

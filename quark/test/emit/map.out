@@ -1,4 +1,6 @@
 3
+null
+^--- should be null
 first_a
 second_b
 second_c

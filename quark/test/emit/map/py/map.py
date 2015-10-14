@@ -5,6 +5,8 @@ def test1():
     map = _Map();
     (map)["pi"] = (3);
     _println((map).get("pi"));
+    _println((map).get("not_there"));
+    _println("^--- should be null");
 
 
 def test_update():

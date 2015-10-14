@@ -156,8 +156,11 @@ File(
 
   MethodMacro(Type(Name(V)), Name(__get__),
    Param(Type(Name(K)), Name(key)),
-   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').get('),
-     Var(Name(key)), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').get('), Var(Name(key)), Fixed(')')),
+    NativeCase(py, Fixed('('), Var(Name(self)), Fixed(').get('),
+     Var(Name(key)), Fixed(')')), NativeCase(js, Fixed('_qrt.map_get(('),
+     Var(Name(self)), Fixed('), ('), Var(Name(key)), Fixed('))')))),
 
   MethodMacro(Type(Name(int)), Name(contains),
    Param(Type(Name(K)), Name(key)),
@@ -173,8 +176,9 @@ File(
      Fixed('('), Var(Name(self)), Fixed(').putAll('), Var(Name(other)),
      Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)),
      Fixed(').update('), Var(Name(other)), Fixed(')')), NativeCase(js,
-     Fixed('for(var _ of ('), Var(Name(other)), Fixed('))'), Fixed('{'),
-     Fixed('('), Var(Name(self)), Fixed(').set(_[0], _[1])'), Fixed('}'))))),
+     Fixed('('), Var(Name(other)), Fixed(').forEach(function (v, k) '),
+     Fixed('{'), Fixed(' ('), Var(Name(self)), Fixed(').set(k, v); '),
+     Fixed('}'), Fixed(')'))))),
 
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg)),

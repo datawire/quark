@@ -3,6 +3,8 @@ public class Functions {
         java.util.HashMap<String,Integer> map = new java.util.HashMap<String,Integer>();
         (map).put(("pi"), (3));
         System.out.println((map).get("pi"));
+        System.out.println((map).get("not_there"));
+        System.out.println("^--- should be null");
     }
     public static void test_update() {
         java.util.HashMap<String,String> first = new java.util.HashMap<String,String>();

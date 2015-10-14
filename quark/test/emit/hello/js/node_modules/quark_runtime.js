@@ -15,7 +15,7 @@
         }
         return value.toString();
     }
-    exports.toString = quark_toString
+    exports.toString = quark_toString;
 
     function print(message) {
         console.log(quark_toString(message));
@@ -26,5 +26,13 @@
         return (a % b + b) % b;
     }
     exports.modulo = modulo;
+
+    function map_get(m, key) {
+        if (m.has(key)) {
+            return m.get(key);
+        }
+        return null;
+    }
+    exports.map_get = map_get;
 
 })();
