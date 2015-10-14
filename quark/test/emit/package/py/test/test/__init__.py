@@ -7,9 +7,8 @@ def go():
 class Test(object):
     def _init(self):
         self.size = None
-    
+
     def __init__(self): self._init()
-    
-    
+
     def go(self):
         _println("TTGO!!");

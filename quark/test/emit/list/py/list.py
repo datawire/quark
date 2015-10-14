@@ -41,17 +41,15 @@ def test4():
 class Box(object):
     def _init(self):
         self.contents = None
-    
+
     def __init__(self): self._init()
-    
-    
+
     def get(self):
         return self.contents;
-    
-    
+
     def set(self, contents):
         (self).contents = contents
-    
+
 
 
 def test5():

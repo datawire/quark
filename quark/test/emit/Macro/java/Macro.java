@@ -1,7 +1,5 @@
 public class Macro {
-    
-    
-    
+
     
     public void test() {
         Macro m1 = new Macro();

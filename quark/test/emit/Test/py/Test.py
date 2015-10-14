@@ -3,11 +3,10 @@ from quark_runtime import *
 class Test(object):
     def _init(self): pass
     def __init__(self): self._init()
-    
+
     def foo(self, t):
         return Test();
-    
-    
+
     def test(self):
         x = 2;
         y = 2;
@@ -19,10 +18,10 @@ class Test(object):
         t2 = (t1).foo(t1);
         if ((t2) != (t1)):
             _println("YAY!");
-        
+
         four = (2) + (2);
         _println(four);
-    
+
 
 
 def main():

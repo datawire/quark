@@ -89,7 +89,13 @@ class Java(backend.Backend):
 def indent(st, level=4):
     if st:
         spaces = " "*level
-        return ("\n" + st).replace("\n", "\n%s" % spaces) + "\n"
+        pst = ""
+        while pst != st:
+            pst = st
+            st = st.replace("\n\n\n","\n\n")
+        st = ("\n" + st).replace("\n", "\n%s" % spaces) + "\n"
+        st = st.replace("\n%s\n" % spaces, "\n\n")
+        return st
     else:
         return ""
 

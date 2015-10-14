@@ -3,17 +3,14 @@ from quark_runtime import *
 class Box(object):
     def _init(self):
         self.contents = None
-    
-    
-    
+
     def __init__(self, contents):
         self._init()
         (self).contents = contents
-    
-    
+
     def get(self):
         return (self).contents;
-    
+
 
 
 def go():

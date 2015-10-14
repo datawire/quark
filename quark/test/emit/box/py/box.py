@@ -3,41 +3,36 @@ from quark_runtime import *
 class Box(object):
     def _init(self):
         self.contents = None
-    
+
     def __init__(self): self._init()
-    
-    
+
     def set(self, contents):
         (self).contents = contents
-    
-    
+
     def get(self):
         return (self).contents;
-    
+
 
 class Crate(object):
     def _init(self):
         self.box = Box()
         self.ibox = Box()
-    
+
     def __init__(self): self._init()
-    
-    
-    
+
     def set(self, stuff):
         ((self).box).set(stuff);
-    
-    
+
     def get(self):
         return ((self).box).get();
-    
+
 
 class Sack(object):
     def _init(self):
         self.ints = Box()
-    
+
     def __init__(self): self._init()
-    
+
 
 
 def test1():

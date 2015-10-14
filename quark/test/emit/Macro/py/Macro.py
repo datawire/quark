@@ -3,11 +3,7 @@ from quark_runtime import *
 class Macro(object):
     def _init(self): pass
     def __init__(self): self._init()
-    
-    
-    
-    
-    
+
     def test(self):
         m1 = Macro();
         m2 = Macro();
