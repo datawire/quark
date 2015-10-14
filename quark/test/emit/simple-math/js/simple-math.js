@@ -5,8 +5,8 @@ function main() {
     _qrt.print(_qrt.toString(four));
     var half = Math.floor((1) / (2));
     _qrt.print(_qrt.toString(half));
-    var num = 314;
-    var den = 100;
+    var num = 314.0;
+    var den = 100.0;
     var pi = (num) / (den);
     _qrt.print(_qrt.toString(pi));
     var pie = 3.14;

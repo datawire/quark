@@ -6,8 +6,8 @@ def main():
     _println(str(four));
     half = (1) / (2);
     _println(str(half));
-    num = 314;
-    den = 100;
+    num = 314.0;
+    den = 100.0;
     pi = float(num) / float(den);
     _println(str(pi));
     pie = 3.14;

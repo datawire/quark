@@ -95,7 +95,7 @@ File(
      Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
-     Fixed('Float.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('Double.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
      Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
 

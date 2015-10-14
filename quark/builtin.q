@@ -38,7 +38,7 @@ primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}
                                      $py{float($self) / float($other)}
                                      $js{($self) / ($other)};
-    macro String toString() $java{Float.toString($self)}
+    macro String toString() $java{Double.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
 }

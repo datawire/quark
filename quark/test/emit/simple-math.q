@@ -5,9 +5,9 @@ void main() {
     int half = 1 / 2;
     print(half.toString());
 
-    float num = 314;
-    float den = 100;
-    float pi = num / den; // no float literals yet ;-)
+    float num = 314.0;
+    float den = 100.0;
+    float pi = num / den;
     print(pi.toString());
 
     float pie = 3.14;

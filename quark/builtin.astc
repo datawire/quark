@@ -104,7 +104,7 @@ File(
      $type=0.float), Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
-     Fixed('Float.toString('), Var(Name(self), $type=0.float), Fixed(')')),
+     Fixed('Double.toString('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.float),
      Fixed(')'))))),

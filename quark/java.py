@@ -119,7 +119,7 @@ class DocEvaluator:
 class DefinitionRenderer(object):
 
     def __init__(self):
-        self.namer = SubstitutionNamer({"self": "this", "int": "Integer",
+        self.namer = SubstitutionNamer({"self": "this", "int": "Integer", "float": "Double",
                                         "List": "java.util.ArrayList",
                                         "Map": "java.util.HashMap"})
         self.stmtr = StatementRenderer(self.namer)
