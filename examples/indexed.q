@@ -29,7 +29,7 @@ package indexed {
         Subscriber state;
         IndexState() {
             rcu = new FakeAtomicReference();
-            state = new Subscribing();
+            state = new Subscribing(self);
         }
         Map<String, String> get() {
             // kinda promise thing
@@ -69,7 +69,7 @@ package indexed {
             next.update(update);
             index.rcu.set(next);
         }
-        void subscrinbed() { /* should not happen */ }
+        void subscribed() { /* should not happen */ }
     }
 
     class Index {
@@ -89,7 +89,7 @@ package indexed {
 
         Directory(Subscription sub, String address) {
             index = new Index();
-            sub.subscribe(address, index);
+            sub.subscribe(address, index.state);
         }
         String lookup(String address) {
             return index.lookup(address);
