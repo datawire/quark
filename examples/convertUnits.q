@@ -1,4 +1,4 @@
-package convert2 {
+package convert {
 
     class Unit {
         String type;
@@ -58,9 +58,9 @@ package convert2 {
 }
 
 void main() {
-    convert2.Unit length1 = new convert2.Unit("length","meter",20.0);
-    convert2.Unit length2 = new convert2.Unit("length","foot",0);
-    convert2.Conversion conversion = new convert2.Conversion();
+    convert.Unit length1 = new convert.Unit("length","meter",20.0);
+    convert.Unit length2 = new convert.Unit("length","foot",0);
+    convert.Conversion conversion = new convert.Conversion();
 
     length2.value= conversion.Convert(length1,length2);
     print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " feet.");
@@ -97,5 +97,4 @@ void main() {
     length2.value= conversion.Convert(length1,length2);
     print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " " + length2.label + "s.");
 
-       
 }
