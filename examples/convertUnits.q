@@ -1,101 +1,101 @@
-package convert {
-
-/* This file is deliberately basic for now with the expectation that it will be expanded to be more generic and more complex later. */
+package convert2 {
 
     class Unit {
         String type;
+        String label;
         String system;
         String subsystem=null;
-        float baseValue;
         float value=0;
+        float conversionFactor=0;
+
+        Unit(String unitType, String unitLabel, float unitValue) {
+            type=unitType;
+            label=unitLabel;
+            value=unitValue;
+        }
     }
 
-    class Meter extends Unit {
-        String type="length";
-        String system="SI";
-        String subsystem="mks";
-        float baseValue=1;
-    }
-
-    class Foot extends Unit {
-       String type="length";
-       String system="English";
-       float baseValue=3.2808399;
-    }
-
-    class Centimeter extends Unit {
-        String type="length";
-        String system="SI";
-        String subsystem="cgs";
-        float baseValue=100;
-    }
-
-    class Mile extends Unit {
-        String type="length";
-        String system="English";
-        float baseValue=0.000621371;
-    }
-
-    class Parsec extends Unit {
-        String type="length";
-        String system="Astronomical";
-        float baseValue=0.000000000000000032407557442396;
-    }
-
-    class League extends Unit {
-        String type="length";
-        String system="Nautical";
-        float baseValue=0.00020712330174427;
+    class ConversionFactors {
+         Map<String,float> initializeConversion() {
+             Map<String,float> lengthFactors = new Map<String,float>();  
+             lengthFactors.__set__("meter",1);
+             lengthFactors.__set__("centimeter",100);
+             lengthFactors.__set__("foot",3.2808399); 
+             lengthFactors.__set__("mile",0.000621371);
+             lengthFactors.__set__("parsec",0.000000000000000032407557442396);
+             lengthFactors.__set__("league",0.00020712330174427);
+             return lengthFactors;
+         }
     }
 
     class Conversion {
        float answer;
+       ConversionFactors conversionFactors = new ConversionFactors();
+       Map<String,float> relativeLengths = conversionFactors.initializeConversion();
        float Convert ( Unit input, Unit output){
 /*
+           && is not yet implemented. Commenting out for now and changing to nested if statements.
+            
+           if (input.type=="length" && output.type=="length") {
 
-Error handling not yet supported - this is a placeholder for when it is
-
-          if input.type != output.type {
-             return error;
-          } 
-          else {
-             float answer =           float answer = input.value.__mul__((output.baseValue.__div__(input.baseValue)));
-             return answer;
-          }
 */
-          float answer = input.value.__mul__((output.baseValue.__div__(input.baseValue)));
-          return answer;
-       }
-    
+           if (input.type=="length") {
+               if (output.type=="length") {
+                   input.conversionFactor=relativeLengths.__get__(input.label);
+                   output.conversionFactor=relativeLengths.__get__(output.label);
+                   float answer = input.value.__mul__((output.conversionFactor.__div__(input.conversionFactor)));
+                   return answer;          
+               }
+               else {
+                   return -123456789;
+               }
+           } 
+           else {
+               return -987654321;
+           }    
+       } 
     }
-   
 }
 
 void main() {
-    convert.Unit meters = new convert.Meter();
-    convert.Unit feet = new convert.Foot();
-    convert.Unit centimeters = new convert.Centimeter();
-    convert.Unit miles = new convert.Mile();
-    convert.Unit parsecs = new convert.Parsec();
-    convert.Unit leagues = new convert.League();
-    convert.Conversion conversion = new convert.Conversion();
+    convert2.Unit length1 = new convert2.Unit("length","meter",20.0);
+    convert2.Unit length2 = new convert2.Unit("length","foot",0);
+    convert2.Conversion conversion = new convert2.Conversion();
 
-    meters.value=20.0;
-    feet.value= conversion.Convert(meters,feet);
-    print(meters.value.toString() + " meters is " + feet.value.toString() + " feet.");
+    length2.value= conversion.Convert(length1,length2);
+    print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " feet.");
+    
+    length1.label="mile";
+    length1.value= conversion.Convert(length2, length1);
+    print(length2.value.toString() + " feet is " + length1.value.toString() + " " + length1.label + "s.");
 
-    miles.value= conversion.Convert(feet,miles);
-    print(feet.value.toString() + " feet is " + miles.value.toString() + " miles.");
+    length2.label="centimeter";
+    length2.value= conversion.Convert(length1,length2);
+    print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " " + length2.label + "s.");
 
-    centimeters.value= conversion.Convert(miles,centimeters);
-    print(miles.value.toString() + " miles is " + centimeters.value.toString() + " centimeters.");
+    length1.label="parsec";
+    length1.value= conversion.Convert(length2, length1);
+    print(length2.value.toString() + " " + length2.label + "s is " + length1.value.toString() + " " + length1.label + "s.");
 
-    parsecs.value= conversion.Convert(centimeters,parsecs);
-    print(centimeters.value.toString() + " centimeters is " + parsecs.value.toString() + " parsecs.");
+    length2.label="league";
+    length2.value= conversion.Convert(length1,length2);
+    print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " " + length2.label + "s.");
 
-    leagues.value= conversion.Convert(parsecs,leagues);
-    print(parsecs.value.toString() + " parsecs is " + leagues.value.toString() + " leagues.");
+    length1.label="meter";
+    length1.value= conversion.Convert(length2, length1);
+    print(length2.value.toString() + " " + length2.label + "s is " + length1.value.toString() + " " + length1.label + "s.");
 
-    meters.value= conversion.Convert(leagues,meters);
-    print(leagues.value.toString() + " leagues is " + meters.value.toString() + " meters.");
+    print("");
+    print("Showing error cases where the unit types don't match:");
+    print("");
+
+    length2.type="volume";
+    length1.value= conversion.Convert(length2, length1);
+    print(length2.value.toString() + " " + length2.label + "s is " + length1.value.toString() + " " + length1.label + "s.");
+
+    length1.value=20.0;
+    length2.value= conversion.Convert(length1,length2);
+    print(length1.value.toString() + " " + length1.label + "s is " + length2.value.toString() + " " + length2.label + "s.");
+
+       
 }
