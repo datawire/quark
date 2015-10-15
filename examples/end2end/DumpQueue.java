@@ -14,10 +14,6 @@ public class DumpQueue {
         int counter = 0;
         while (true) {
             String value = q.pop();
-            if (value == "") {
-                sleep(250);
-                continue;
-            }
             System.out.println("q: " + counter + " " + value);
             counter += 1;
             sleep(100);  // Avoiding scrolling the screen too fast

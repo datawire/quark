@@ -1,8 +1,6 @@
 # Squares stuff
 
 import sys
-import time
-
 sys.path.append("./out")
 
 from importable import Queue
@@ -12,13 +10,7 @@ def main():
     q = Queue("http://127.0.0.1:8080/simple")
     tracked = set()
     while True:
-        time.sleep(0.25)
-
-        item = q.pop()
-        if not item:
-            continue
-
-        pieces = item.split(":")
+        pieces = q.pop().split(":")
         if pieces[0] in tracked:
             if pieces[1] == "done":
                 tracked.remove(pieces[0])

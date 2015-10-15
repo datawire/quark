@@ -23,9 +23,7 @@
             }
         });
 
-        var item = q.pop();
-        if (item === "") { return; }
-        var pieces = item.split(":");
+        var pieces = q.pop().split(":");
         if (pieces[0] !== "sequence") { return; }
         var count = parseInt(pieces[1]);
         var tag = pieces[2];
@@ -34,5 +32,5 @@
         finValues.set(tag, count);
     }
 
-    setInterval(doit, 250);
+    setInterval(doit, 300);
 })();

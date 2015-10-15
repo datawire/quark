@@ -14,12 +14,18 @@ package importable {
         }
 
         String pop() {
-            String res = url_get(self.baseUrl + "/retrieve/" + self.index.toString());
-            if (res != "error") {
-                self.index = self.index + 1;
-                return res;
+            String res = "error";
+
+            while (/* True */ res == res) {
+                res = url_get(self.baseUrl + "/retrieve/" + self.index.toString());
+                if (res != "error") {
+                    self.index = self.index + 1;
+                    return res;
+                }
+                sleep(0.1);
             }
-            return "";
+
+            return "Not reachable";
         }
     }
 }

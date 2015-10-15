@@ -14,11 +14,17 @@ package importable {
         }
 
         String pop() {
-            String res = url_get(self.baseUrl + "/pop/" + self.sessionId);
-            if (res == "error") {
-                return "";
+            String res = "error";
+
+            while (/* True */ res == res) {
+                res = url_get(self.baseUrl + "/pop/" + self.sessionId);
+                if (res != "error") {
+                    return res;
+                }
+                sleep(0.1);
             }
-            return res;
+
+            return "Not reachable";
         }
     }
 }
