@@ -3,7 +3,7 @@
 import sys
 sys.path.append("./out")
 
-from importable import Queue
+from Franz import Queue
 
 
 def main():

@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    var Queue = require("./out/importable").Queue;
+    var Queue = require("./out/Franz").Queue;
 
     var q = new Queue("http://127.0.0.1:8080/simple");
     var curValues = new Map();
