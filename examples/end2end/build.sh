@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 rm -rf out out.*
 
 quark --java out --python out --javascript out firstlib.q
