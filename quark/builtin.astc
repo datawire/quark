@@ -218,5 +218,21 @@ File(
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,
-    Fixed('long(time.time()*1000)')), NativeCase(js, Fixed('Date.now()'))))
+    Fixed('long(time.time()*1000)')), NativeCase(js, Fixed('Date.now()')))),
+
+ Macro(Type(Name(String)), Name(url_get),
+  Param(Type(Name(String)), Name(url), $type=0.String),
+  Native(NativeCase(java,
+    Fixed('io.datawire.quark_runtime.url_get('), Var(Name(url),
+    $type=0.String), Fixed(')')), NativeCase(py, Fixed('_url_get('),
+    Var(Name(url), $type=0.String), Fixed(')')), NativeCase(js,
+    Fixed('_qrt.url_get('), Var(Name(url), $type=0.String), Fixed(')')))),
+
+ Macro(Type(Name(int)), Name(parseInt),
+  Param(Type(Name(String)), Name(st), $type=0.String),
+  Native(NativeCase(java,
+    Fixed('Integer.parseInt('), Var(Name(st), $type=0.String), Fixed(')')),
+   NativeCase(py, Fixed('int('), Var(Name(st), $type=0.String), Fixed(')')),
+   NativeCase(js, Fixed('parseInt('), Var(Name(st), $type=0.String),
+    Fixed(')'))))
 )

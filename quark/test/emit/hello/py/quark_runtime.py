@@ -6,9 +6,10 @@
 import os    # unused?
 import sys
 import time  # used by the builtin now() macro
+import urllib2
 
 
-__all__ = "os sys time _Map _List _println".split()
+__all__ = "os sys time _Map _List _println _url_get".split()
 
 
 _Map = dict
@@ -24,3 +25,10 @@ def _println(obj):
         sys.stdout.write("null\n")
     else:
         sys.stdout.write("%s\n" % obj)
+
+
+def _url_get(url):
+    try:
+        return urllib2.urlopen(url).read()
+    except Exception:
+        return "error"

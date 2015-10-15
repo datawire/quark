@@ -84,3 +84,11 @@ macro void print(String msg) $java{System.out.println($msg)}
 macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)}
                  $js{Date.now()};
+
+macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
+                                 $py{_url_get($url)}
+                                 $js{_qrt.url_get($url)};
+
+macro int parseInt(String st) $java{Integer.parseInt($st)}
+                              $py{int($st)}
+                              $js{parseInt($st)};

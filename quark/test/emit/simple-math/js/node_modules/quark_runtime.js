@@ -35,4 +35,15 @@
     }
     exports.map_get = map_get;
 
+    var execSync = require("child_process").execSync;
+    function url_get(url) {
+        var resBuffer = execSync('curl -s -w "\n\n%{http_code}" ' + url);
+        var res = resBuffer.toString("UTF-8");
+        if (res.substr(-5) === "\n\n200") {
+            return res.substr(0, res.length - 5);
+        }
+        return "error";
+    }
+    exports.url_get = url_get;
+
 })();
