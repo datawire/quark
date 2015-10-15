@@ -1,6 +1,6 @@
 import importable.Queue;
 
-public class dumpq {
+public class DumpQueue {
     static void sleep(int duration) {
         try {
             Thread.sleep(duration);

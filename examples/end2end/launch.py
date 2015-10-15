@@ -18,10 +18,10 @@ from docopt import docopt
 
 commands = """
 python out/server.py devnull
-env CLASSPATH=out:out/src/main/java java kickoff
+env CLASSPATH=out:out/src/main/java java Begin
 python square.py
 node seq_gen.js
-env CLASSPATH=out:out/src/main/java java dumpq
+env CLASSPATH=out:out/src/main/java java DumpQueue
 """
 
 
