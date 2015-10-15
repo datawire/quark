@@ -35,3 +35,24 @@ Bar.prototype.m2 = Bar_m2;
 
 function Bar_m3(args) { /* interface */ }
 Bar.prototype.m3 = Bar_m3;
+
+// CLASS Baz
+function Baz() {
+    Baz.super_.call(this);
+}
+exports.Baz = Baz;
+_qrt.util.inherits(Baz, Foo);
+
+function Baz__init_fields__() {
+    Foo.prototype.__init_fields__.call(this);
+}
+Baz.prototype.__init_fields__ = Baz__init_fields__;
+
+function Baz_m2(arg) {}
+Baz.prototype.m2 = Baz_m2;
+
+function Baz_m1() {}
+Baz.prototype.m1 = Baz_m1;
+
+function Baz_m3(args) {}
+Baz.prototype.m3 = Baz_m3;

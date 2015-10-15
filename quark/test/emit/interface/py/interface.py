@@ -19,3 +19,13 @@ class Bar(object):
     def m2(self, arg): assert False
 
     def m3(self, args): assert False
+
+class Baz(Foo):
+    def _init(self):
+        Foo._init(self)
+
+    def m2(self, arg): pass
+
+    def m1(self): pass
+
+    def m3(self, args): pass
