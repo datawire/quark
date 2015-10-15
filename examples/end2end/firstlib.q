@@ -1,18 +1,22 @@
-package importable {
+package Franz {
 
+    @doc("Queue interface to a remote topic")
     class Queue {
         String baseUrl;
         String sessionId;
 
+        @doc("Specify URL of remote topic on creation")
         Queue(String baseUrl) {
             self.baseUrl = baseUrl;
             self.sessionId = url_get(self.baseUrl + "/newsession");
         }
 
+        @doc("Push a string value onto the remote topic")
         void push(String value) {
             url_get(self.baseUrl + "/push/" + self.sessionId + "/" + value);
         }
 
+        @doc("Retrieve the next value from the topic, blocking until a value is available.")
         String pop() {
             String res = "error";
 
