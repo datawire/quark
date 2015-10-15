@@ -9,7 +9,7 @@ from importable import Queue
 
 
 def main():
-    q = Queue("http://localhost:8080/simple")
+    q = Queue("http://127.0.0.1:8080/simple")
     tracked = set()
     while True:
         time.sleep(0.25)

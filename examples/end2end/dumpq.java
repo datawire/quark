@@ -10,7 +10,7 @@ public class dumpq {
     }
 
     public static void main(String [] args) {
-        Queue q = new Queue("http://localhost:8080/simple");
+        Queue q = new Queue("http://127.0.0.1:8080/simple");
         int counter = 0;
         while (true) {
             String value = q.pop();

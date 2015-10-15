@@ -6,7 +6,7 @@
 
     var Queue = require("./out/importable").Queue;
 
-    var q = new Queue("http://localhost:8080/simple");
+    var q = new Queue("http://127.0.0.1:8080/simple");
     var curValues = new Map();
     var finValues = new Map();
 
