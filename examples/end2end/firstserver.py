@@ -18,17 +18,15 @@ def new_session():
 
 @app.route("/simple/push/<session_id>/<value>")
 def push(session_id, value):
-    assert session_id in sessions
+    assert session_id in sessions     # Or crash, aka return error
     data.append(value)
     return str(len(data) - 1)
 
 
 @app.route("/simple/pop/<session_id>")
 def pop(session_id):
-    assert session_id in sessions
-    if sessions[session_id] >= len(data):
-        return ""
-    res = data[sessions[session_id]]
+    assert session_id in sessions     # Or crash, aka return error
+    res = data[sessions[session_id]]  # Or crash, aka return error
     sessions[session_id] += 1
     return res
 
