@@ -15,7 +15,7 @@
 import os, pytest, subprocess
 from quark.backend import Java, Python, JavaScript
 from quark.compiler import Compiler, CompileError
-from .util import check_file
+from .util import check_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
 
@@ -47,6 +47,7 @@ def Backend(request):
 
 def test_emit(path, Backend):
     text = open(path).read()
+    maybe_xfail(text)
     base = os.path.splitext(path)[0]
     comp = Compiler()
     comp.parse(os.path.basename(path), text)

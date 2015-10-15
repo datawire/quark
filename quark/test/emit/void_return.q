@@ -1,0 +1,2 @@
+// xfail
+void foo() { return; }

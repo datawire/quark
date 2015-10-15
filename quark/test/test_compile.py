@@ -14,7 +14,7 @@
 
 import os, pytest
 from quark.compiler import Compiler, CompileError, ParseError
-from .util import assert_file
+from .util import assert_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "compile")
 
@@ -28,6 +28,7 @@ def path(request):
 def test_compile(path):
     dir = os.path.dirname(path)
     text = open(path).read()
+    maybe_xfail(text)
     base = os.path.splitext(path)[0]
     c = Compiler()
     try:

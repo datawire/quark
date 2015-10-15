@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
+import os, pytest
 
 def check_file(path, content):
     try:
@@ -31,3 +31,7 @@ def check_file(path, content):
 def assert_file(path, content):
     expected = check_file(path, content)
     assert content == expected
+
+def maybe_xfail(code):
+    if "xfail" in code:
+        pytest.xfail()
