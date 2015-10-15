@@ -85,6 +85,10 @@ macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)}
                  $js{Date.now()};
 
+macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}
+                                $py{time.sleep($seconds)}
+                                $js{_qrt.sleep($seconds)};
+
 macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
                                  $py{_url_get($url)}
                                  $js{_qrt.url_get($url)};

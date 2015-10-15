@@ -220,6 +220,14 @@ File(
     Fixed('System.currentTimeMillis()')), NativeCase(py,
     Fixed('long(time.time()*1000)')), NativeCase(js, Fixed('Date.now()')))),
 
+ Macro(Type(Name(void)), Name(sleep),
+  Param(Type(Name(float)), Name(seconds), $type=0.float),
+  Native(NativeCase(java,
+    Fixed('io.datawire.quark_runtime.sleep('), Var(Name(seconds),
+    $type=0.float), Fixed(')')), NativeCase(py, Fixed('time.sleep('),
+    Var(Name(seconds), $type=0.float), Fixed(')')), NativeCase(js,
+    Fixed('_qrt.sleep('), Var(Name(seconds), $type=0.float), Fixed(')')))),
+
  Macro(Type(Name(String)), Name(url_get),
   Param(Type(Name(String)), Name(url), $type=0.String),
   Native(NativeCase(java,

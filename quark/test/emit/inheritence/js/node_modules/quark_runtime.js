@@ -36,6 +36,7 @@
     exports.map_get = map_get;
 
     var execSync = require("child_process").execSync;
+
     function url_get(url) {
         var resBuffer = execSync('curl -s -w "\n\n%{http_code}" ' + url);
         var res = resBuffer.toString("UTF-8");
@@ -45,5 +46,10 @@
         return "error";
     }
     exports.url_get = url_get;
+
+    function sleep(seconds) {
+        execSync("sleep " + seconds);
+    }
+    exports.sleep = sleep;
 
 })();

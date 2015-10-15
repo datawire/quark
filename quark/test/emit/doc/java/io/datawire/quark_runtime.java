@@ -25,4 +25,12 @@ public class quark_runtime {
         }
     }
 
+    public static void sleep(double seconds) {
+        try {
+            Thread.sleep((int)(seconds * 1000));
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
 }
