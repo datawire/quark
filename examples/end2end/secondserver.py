@@ -1,5 +1,7 @@
 # Topic server
 
+import gevent
+from gevent.pywsgi import WSGIServer
 import flask
 
 
@@ -28,5 +30,14 @@ def simple_retrieve(idx):
     return data[int(idx)]
 
 
+@app.route("/simple/retrieve_block/<idx>")
+def simple_retrieve_block(idx):
+    int_idx = int(idx)
+    while len(data) <= int_idx:
+        gevent.sleep(0.1)
+    return data[int_idx]
+
+
 if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=8080)
+    http_server = WSGIServer(("127.0.0.1", 8080), app)
+    http_server.serve_forever()
