@@ -1,4 +1,4 @@
-import Franz.Queue;
+import franz.Queue;
 
 public class DumpQueue {
     static void sleep(int duration) {

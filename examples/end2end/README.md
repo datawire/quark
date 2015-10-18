@@ -9,17 +9,17 @@ Later the service writer decides that tracking clients in the service is too muc
 ```
 $ ./build.sh
 wrote out/src/main/java/io/datawire/quark_runtime.java
-wrote out/src/main/java/Franz/Queue.java
+wrote out/src/main/java/franz/Queue.java
 wrote out/quark_runtime.py
-wrote out/Franz/__init__.py
+wrote out/franz/__init__.py
 wrote out/node_modules/quark_runtime.js
-wrote out/Franz/index.js
+wrote out/franz/index.js
 wrote out/src/main/java/io/datawire/quark_runtime.java
-wrote out/src/main/java/Franz/Queue.java
+wrote out/src/main/java/franz/Queue.java
 wrote out/quark_runtime.py
-wrote out/Franz/__init__.py
+wrote out/franz/__init__.py
 wrote out/node_modules/quark_runtime.js
-wrote out/Franz/index.js
+wrote out/franz/index.js
 ./launch.py first
 ... or ...
 ./launch.py second

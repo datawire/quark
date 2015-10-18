@@ -1,4 +1,4 @@
-package Franz {
+package franz {
 
     @doc("Queue interface to a remote topic")
     class Queue {
