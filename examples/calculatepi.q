@@ -15,11 +15,11 @@ void main() {
     //r.test(5, 1000000);  # Fails for now. See random.q for details.
     int trial = 0;
 
-    float inCircleCount = 0;
-    float outCircleCount = 0;
-    float curX = 0;
-    float curY = 0;
-    float radiusSq = 0;
+    float inCircleCount = 0.0;
+    float outCircleCount = 0.0;
+    float curX = 0.0;
+    float curY = 0.0;
+    float radiusSq = 0.0;
     while (trial < numTrials) {
         curX = r.random();
         curY = r.random();
