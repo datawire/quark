@@ -94,11 +94,11 @@ class PythonDefinitionRenderer(DefinitionRenderer):
         base = c.base.match(self.namer) if c.base else "object"
         body = indent("\n".join(self.class_body(c)))
         bases = "(%s)" % base if base else ""
-        doc = self.doc(c.annotations)
-        return "%sclass %s%s:%s" % (doc, name, bases, body or " pass")
+        doc = indent(self.doc(c.annotations)).rstrip()
+        return "class %s%s:%s%s" % (name, bases, doc, body or " pass")
 
     def match_Function(self, fun):
-        doc = self.doc(fun.annotations)
+        doc = indent(self.doc(fun.annotations)).rstrip()
         if fun.type:
             name = fun.name.match(self.namer)
             init = None
@@ -112,7 +112,8 @@ class PythonDefinitionRenderer(DefinitionRenderer):
                 assert fun.parent.__class__ in (File, Package), fun.parent.pprint()
                 fun.parent.has_main = True
         body = fun.body.match(self.stmtr, header=init) if fun.body else ": assert False"
-        return "%s\ndef %s(%s)%s" % (doc, name, ", ".join(params), body)
+        body_with_doc = ":" + doc + body[1:]
+        return "\ndef %s(%s)%s" % (name, ", ".join(params), body_with_doc)
 
     def match_Field(self, f):
         return ""
