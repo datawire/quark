@@ -7,7 +7,7 @@ package franz {
 
         @doc("Specify URL of remote topic on creation")
         Queue(String baseUrl) {
-            self.baseUrl = baseUrl;
+            self.baseUrl = baseUrl + "/v2";
             self.index = parseInt(url_get(self.baseUrl + "/firstIdx"));
         }
 
