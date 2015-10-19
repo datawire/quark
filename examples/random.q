@@ -4,10 +4,14 @@
 // https://en.wikipedia.org/wiki/Random_number_generation
 
 package importable {
+    @doc("Simple pseudorandom number generator. See:",
+         "http://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation",
+         "https://en.wikipedia.org/wiki/Random_number_generation")
     class Random {
         int m_z;
         int m_w;
 
+        @doc("The supplied seed value determines the sequence produced")
         Random(int seed) {
             self.m_z = seed;
             self.m_w = 38632;
@@ -28,7 +32,9 @@ package importable {
             return numerator / denominator;
         }
 
-        @doc("Generate a histogram of random() results to demonstrate uniform distribution")
+        @doc("Generate a histogram of random() results to demonstrate uniform distribution",
+             "FIXME: Doesn't compile correctly, so important lines have been commented out.",
+             "(commented-out lines will not show up in the generated code)")
         void test(int numBins, int numTrials) {
             List<int> hist = new List<int>();
             int idx = 0;
