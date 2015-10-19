@@ -13,7 +13,7 @@ package franz {
 
         @doc("Push a string value onto the remote topic")
         void push(String value) {
-            url_get(self.baseUrl + "/push/" + self.sessionId + "/" + value);
+            url_get(self.baseUrl + "/push/" + value);
         }
 
         @doc("Retrieve the next value from the topic, blocking until a value is available.")

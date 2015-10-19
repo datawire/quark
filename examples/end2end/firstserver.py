@@ -16,9 +16,8 @@ def new_session():
     return session_id
 
 
-@app.route("/simple/push/<session_id>/<value>")
-def push(session_id, value):
-    assert session_id in sessions     # Or crash, aka return error
+@app.route("/simple/push/<value>")
+def push(value):
     data.append(value)
     return str(len(data) - 1)
 
