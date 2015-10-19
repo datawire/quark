@@ -18,7 +18,10 @@ package franz {
 
         @doc("Retrieve the next value from the topic, blocking until a value is available.")
         String pop() {
-            String res = url_get(self.baseUrl + "/retrieve_block/" + self.index.toString());
+            String res = "error";
+            while (res == "error") {
+                res = url_get(self.baseUrl + "/retrieve_block/" + self.index.toString());
+            }
             self.index = self.index + 1;
             return res;
         }
