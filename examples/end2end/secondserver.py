@@ -7,6 +7,7 @@ import flask
 
 app = flask.Flask(__name__)
 data = []
+event = gevent.event.Event()
 
 
 @app.route("/simple/v2/firstIdx")
@@ -22,6 +23,9 @@ def simple_lastIdx():
 @app.route("/simple/v2/submit/<value>")
 def simple_submit(value):
     data.append(value)
+    global event
+    event.set()
+    event = gevent.event.Event()
     return simple_lastIdx()
 
 
@@ -33,9 +37,12 @@ def simple_retrieve(idx):
 @app.route("/simple/v2/retrieve_block/<idx>")
 def simple_retrieve_block(idx):
     int_idx = int(idx)
-    while len(data) <= int_idx:
-        gevent.sleep(0.1)
-    return data[int_idx]
+    while True:
+        try:
+            return data[int_idx]
+        except IndexError:
+            pass
+        event.wait()
 
 
 if __name__ == "__main__":
