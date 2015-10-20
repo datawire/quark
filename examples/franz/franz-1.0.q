@@ -3,12 +3,12 @@ package franz {
     @doc("Interface to a remote topic")
     class Topic {
         String baseUrl;
-        String sessionId;
+        String subscriptionId;
 
         @doc("Specify URL of remote topic on creation")
         Topic(String baseUrl) {
             self.baseUrl = baseUrl;
-            self.sessionId = url_get(self.baseUrl + "/newsession");
+            self.subscriptionId = url_get(self.baseUrl + "/subscribe");
         }
 
         @doc("Push a string value onto the remote topic")
@@ -21,7 +21,7 @@ package franz {
             String res = "error";
 
             while (/* True */ res == res) {
-                res = url_get(self.baseUrl + "/pop/" + self.sessionId);
+                res = url_get(self.baseUrl + "/pop/" + self.subscriptionId);
                 if (res != "error") {
                     return res;
                 }

@@ -10,18 +10,18 @@ data = []
 event = gevent.event.Event()
 
 
-@app.route("/v2/firstIdx")
-def firstIdx():
+@app.route("/v2/first")
+def first():
     return "0"
 
 
-@app.route("/v2/lastIdx")
-def lastIdx():
+@app.route("/v2/last")
+def last():
     return str(len(data) - 1)
 
 
-@app.route("/v2/submit/<value>")
-def submit(value):
+@app.route("/v2/push/<value>")
+def push(value):
     data.append(value)
     global event
     event.set()
@@ -29,13 +29,8 @@ def submit(value):
     return lastIdx()
 
 
-@app.route("/v2/retrieve/<idx>")
-def retrieve(idx):
-    return data[int(idx)]
-
-
-@app.route("/v2/retrieve_block/<idx>")
-def retrieve_block(idx):
+@app.route("/v2/fetch/<idx>")
+def fetch(idx):
     int_idx = int(idx)
     while True:
         try:
