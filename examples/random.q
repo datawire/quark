@@ -3,6 +3,7 @@
 // and
 // https://en.wikipedia.org/wiki/Random_number_generation
 
+@version("0.1.0")
 package importable {
     @doc("Simple pseudorandom number generator. See:",
          "http://www.codeproject.com/Articles/25172/Simple-Random-Number-Generation",
