@@ -31,10 +31,16 @@ class JavaScript(backend.Backend):
         self.header = """var _qrt = require("quark_runtime.js");\n"""
         self.files["node_modules/quark_runtime.js"] = open(os.path.join(os.path.dirname(__file__),
                                                                         "quark_runtime.js")).read()
+        self.packages = OrderedDict()  # Collect packages for package.json et al
 
     def write(self, target):
         if not os.path.exists(target):
             os.makedirs(target)
+        for pname, pkgList in self.packages.items():
+            pkg = pkgList[0]
+            ppath = pname.replace(".", "/")
+            self.files["%s/README.md" % ppath] = pkg.readme
+            self.files["%s/package.json" % ppath] = """{"name":"%s","version":"%s"}\n""" % (pname, pkg.version)
         for name, content in self.files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)
@@ -53,8 +59,13 @@ class JavaScript(backend.Backend):
     def visit_Package(self, pkg):
         pkg.imports = OrderedDict()
         pkg.has_main = False
+        pkg.readme = ""
         content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
         pname = self.dfnr.namer.package(pkg)
+        if pkg.package is None:  # Grab a list of top-level packages
+            self.packages.setdefault(pname, []).append(pkg)
+        pkg.version = get_package_version(pkg)
+        pkg.readme = "# %s %s\n\n" % (pname, pkg.version) + pkg.readme
         fname = "%s/index.js" % pname.replace(".", "/")
         if pkg.has_main:
             content += "\n\nmain();"
@@ -114,6 +125,10 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         else:
             base_class = None
 
+        if c.package:
+            c.package.readme += "## %s\n" % name
+            c.package.readme += self.doc(c.annotations, head="", prefix="", tail="")
+
         for definition in c.definitions:
             if isinstance(definition, ast.Field):
                 field_doc = self.doc(definition.annotations)
@@ -156,22 +171,33 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         name = m.name.match(self.namer)
         params = ", ".join([p.match(self) for p in m.params])
         header = []
+
         if isinstance(m, ast.Method):
             if m.type:
                 # Method
                 new_name = "%s_%s" % (class_name, name)
                 trailer = "%s.prototype.%s = %s;" % (class_name, name, new_name)
+                if m.package:
+                    m.package.readme += "### %s.%s(%s)\n" % (class_name, name, params)
+                    m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
                 name = new_name
             else:
                 # Constructor
                 header.extend(self.constructor_header(m))
                 trailer = ""
+                if m.package:
+                    m.package.readme += "### %s(%s) (constructor)\n" % (name, params)
+                    m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
+
         else:
             # Function
             trailer = "exports.%s = %s;" % (name, name)
             if name == "main":
                 assert m.parent.__class__ in (ast.File, ast.Package), m.parent.pprint()
                 m.parent.has_main = True
+            if m.package:
+                m.package.readme += "## %s(%s)\n" % (name, params)
+                m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
         if m.body is None:
             if isinstance(m.clazz, ast.Interface):
                 body = " { /* interface */ }"
