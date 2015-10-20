@@ -1,10 +1,13 @@
 # Generate log entries
 
+import sys
+sys.path.append("./out")
 
 from argparse import ArgumentParser
 from datetime import datetime
 import random
 import time
+import urllib
 
 from franz import Topic
 
@@ -88,8 +91,10 @@ def main():
     args = parser.parse_args()
 
     t = Topic("http://127.0.0.1:8080", "T")
+    print t.baseUrl
     while True:
-        t.push(make_random_entry())
+        entry = make_random_entry()
+        t.push(urllib.quote(entry))
         time.sleep(1.0 / args.rate)
 
 
