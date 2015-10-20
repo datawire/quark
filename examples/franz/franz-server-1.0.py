@@ -7,6 +7,7 @@ import flask
 app = flask.Flask(__name__)
 topics = {} # topic name -> topic data
 subscriptions = {}  # subscription ID -> current index  # FIXME No cleanup!
+lvc = {}
 
 def topic_data(topic):
     try:
@@ -27,7 +28,13 @@ def subscribe(topic):
 def push(topic, value):
     data = topic_data(topic)
     data.append(value)
+    k,v = value.rsplit(":",1)
+    lvc[k] = v
     return str(len(data) - 1)
+
+@app.route("/lookup/<key>")
+def simple_lookup(key):
+    return lvc[key]
 
 
 @app.route("/pop/<topic>/<subscription_id>")

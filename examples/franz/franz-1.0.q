@@ -33,5 +33,10 @@ package franz {
 
             return "Not reachable";
         }
+
+        @doc("Lookup the value for the key")
+        String lookup(String key) {
+            return url_get(self.baseUrl + "/lookup/" + key);
+        }
     }
 }
