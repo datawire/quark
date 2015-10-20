@@ -6,7 +6,7 @@
 
     var Topic = require("./out/franz").Topic;
 
-    var t = new Topic("http://127.0.0.1:8080");
+    var t = new Topic("http://127.0.0.1:8080", "T");
     var curValues = new Map();
     var finValues = new Map();
 

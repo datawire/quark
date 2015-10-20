@@ -7,7 +7,7 @@ from franz import Topic
 
 
 def main():
-    t = Topic("http://127.0.0.1:8080")
+    t = Topic("http://127.0.0.1:8080", "T")
     tracked = set()
     while True:
         pieces = t.pop().split(":")
