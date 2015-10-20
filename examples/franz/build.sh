@@ -5,10 +5,14 @@ set -e
 rm -rf out out.*
 
 quark --java out --python out --javascript out franz-1.0.q
+(cd out && python setup.py build_sphinx)
+(cd out && mvn javadoc:javadoc)
 mv out out.first
 cp franz-server-1.0.py out.first/server.py
 
 quark --java out --python out --javascript out franz-1.1.q
+(cd out && python setup.py build_sphinx)
+(cd out && mvn javadoc:javadoc)
 mv out out.second
 cp franz-server-2.0.py out.second/server.py
 
