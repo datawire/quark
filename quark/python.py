@@ -196,6 +196,77 @@ class PythonExprRenderer(ExprRenderer):
     def match_Super(self, s):
         return "super(%s, self)" % s.clazz.name.match(self.namer)
 
+
+setup_py = """# Setup file for package %(name)s
+
+from setuptools import setup
+
+setup(name="%(name)s",
+      version="%(version)s",
+      packages=%(pkg_list)s)
+"""
+
+conf_py = """# -*- coding: utf-8 -*-
+#
+# %(name)s documentation build configuration file, created by Quark
+extensions = [
+    'sphinx.ext.autodoc',
+    'sphinx.ext.napoleon'
+]
+templates_path = ['_templates']
+source_suffix = '.rst'
+master_doc = 'index'
+project = u'%(name)s'
+copyright = u'2015, %(name)s authors'
+author = u'%(name)s authors'
+version = '%(version)s'
+release = '%(version)s'
+language = None
+exclude_patterns = ['_build']
+pygments_style = 'sphinx'
+todo_include_todos = False
+html_theme = 'alabaster'
+html_static_path = ['_static']
+htmlhelp_basename = '%(name)sdoc'
+latex_elements = {}
+latex_documents = [
+    (master_doc, '%(name)s.tex', u'%(name)s Documentation',
+     u'%(name)s authors', 'manual'),
+]
+man_pages = [
+    (master_doc, '%(name)s', u'%(name)s Documentation',
+     [author], 1)
+]
+texinfo_documents = [
+    (master_doc, '%(name)s', u'%(name)s Documentation',
+     author, '%(name)s', 'One line description of %(name)s.',
+     'Miscellaneous'),
+]
+"""
+
+index_rst = """
+.. %(name)s documentation master file, created by Quark
+
+%(name)s %(version)s
+====
+
+Contents:
+
+.. toctree::
+   :maxdepth: 2
+
+.. automodule:: %(name)s
+   :members:
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
+"""
+
 class Python(backend.Backend):
 
     def __init__(self):
@@ -203,11 +274,23 @@ class Python(backend.Backend):
         self.dfnr = PythonDefinitionRenderer()
         self.header = "from quark_runtime import *\n\n"
         self.files["quark_runtime.py"] = open(os.path.join(os.path.dirname(__file__), "quark_runtime.py")).read()
+        self.packages = OrderedDict()  # Collect top-level packages for setup.py et al
 
     def write(self, target):
         src = target
         if not os.path.exists(src):
             os.makedirs(src)
+
+        firstPackageName, firstPackageList = self.packages.items()[0]
+        fmt_dict = {"name": firstPackageName,
+                    "version": firstPackageList[0].version,
+                    "pkg_list": repr(list(self.packages.keys()))}
+        self.files["setup.py"] = setup_py % fmt_dict
+        self.files["docs/conf.py"] = conf_py % fmt_dict
+        self.files["docs/index.rst"] = index_rst % fmt_dict
+        self.files["docs/_static/.keep"] = ""
+        self.files["docs/_templates/.keep"] = ""
+
         for name, content in self.files.items():
             path = os.path.join(src, name)
             dir = os.path.dirname(path)
@@ -234,6 +317,9 @@ class Python(backend.Backend):
             self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
         else:
             self.files[fname] = self.header + self.imports(pkg.imports) + content
+        if pkg.package is None:  # Grab a list of top-level packages
+            self.packages.setdefault(pname, []).append(pkg)
+        pkg.version = get_package_version(pkg)
 
     def visit_File(self, file):
         file.imports = OrderedDict()
