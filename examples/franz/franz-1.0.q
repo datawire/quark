@@ -1,3 +1,4 @@
+@version("1.0")
 package franz {
 
     @doc("Interface to a remote topic")
