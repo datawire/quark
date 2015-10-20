@@ -92,7 +92,6 @@ package franz {
         ReaderSubscription(Reader reader) {
             self.reader = reader;
             self.last = parseInt(url_get(self.baseUrl + "/last/" + self.reader.name));
-
         }
         void subscribe(Subscriber sub) {
             self.sub = sub;
@@ -113,6 +112,7 @@ package franz {
             url_get_async(self.reader._current_url(), self);
         }
     }
+
 
     class Reader {
         String baseUrl;
