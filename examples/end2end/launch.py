@@ -21,7 +21,7 @@ python out/server.py devnull
 env CLASSPATH=out:out/src/main/java java Begin
 python square.py
 node seq_gen.js
-env CLASSPATH=out:out/src/main/java java DumpQueue
+env CLASSPATH=out:out/src/main/java java DumpTopic
 """
 
 

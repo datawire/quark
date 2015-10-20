@@ -1,12 +1,12 @@
 package franz {
 
-    @doc("Queue interface to a remote topic")
-    class Queue {
+    @doc("Interface to a remote topic")
+    class Topic {
         String baseUrl;
         String sessionId;
 
         @doc("Specify URL of remote topic on creation")
-        Queue(String baseUrl) {
+        Topic(String baseUrl) {
             self.baseUrl = baseUrl;
             self.sessionId = url_get(self.baseUrl + "/newsession");
         }

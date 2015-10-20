@@ -1,6 +1,6 @@
-import franz.Queue;
+import franz.Topic;
 
-public class DumpQueue {
+public class DumpTopic {
     static void sleep(int duration) {
         try {
             Thread.sleep(duration);
@@ -10,11 +10,11 @@ public class DumpQueue {
     }
 
     public static void main(String [] args) {
-        Queue q = new Queue("http://127.0.0.1:8080/simple");
+        Topic t = new Topic("http://127.0.0.1:8080");
         int counter = 0;
         while (true) {
-            String value = q.pop();
-            System.out.println("q: " + counter + " " + value);
+            String value = t.pop();
+            System.out.println("t: " + counter + " " + value);
             counter += 1;
             sleep(100);  // Avoiding scrolling the screen too fast
         }

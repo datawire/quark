@@ -4,18 +4,18 @@ set -e
 
 rm -rf out out.*
 
-quark --java out --python out --javascript out firstlib.q
+quark --java out --python out --javascript out franz-1.0.q
 mv out out.first
-cp firstserver.py out.first/server.py
+cp franz-server-1.0.py out.first/server.py
 
-quark --java out --python out --javascript out secondlib.q
+quark --java out --python out --javascript out franz-1.1.q
 mv out out.second
-cp secondserver.py out.second/server.py
+cp franz-server-2.0.py out.second/server.py
 
-(cd out.first && cp ../DumpQueue.java . && env CLASSPATH=src/main/java javac DumpQueue.java)
+(cd out.first && cp ../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
 (cd out.first && cp ../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
 
-(cd out.second && cp ../DumpQueue.java . && env CLASSPATH=src/main/java javac DumpQueue.java)
+(cd out.second && cp ../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
 (cd out.second && cp ../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
 
 echo ./launch.py first

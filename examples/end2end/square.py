@@ -3,20 +3,20 @@
 import sys
 sys.path.append("./out")
 
-from franz import Queue
+from franz import Topic
 
 
 def main():
-    q = Queue("http://127.0.0.1:8080/simple")
+    t = Topic("http://127.0.0.1:8080")
     tracked = set()
     while True:
-        pieces = q.pop().split(":")
+        pieces = t.pop().split(":")
         if pieces[0] in tracked:
             if pieces[1] == "done":
                 tracked.remove(pieces[0])
             else:
                 value = int(pieces[1])
-                q.push("squared:" + pieces[0] + ":" + str(value * value))
+                t.push("squared:" + pieces[0] + ":" + str(value * value))
         elif pieces[0] == "square":
             tracked.add(pieces[1])
 

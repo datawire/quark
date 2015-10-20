@@ -4,26 +4,26 @@
 (function () {
     "use strict";
 
-    var Queue = require("./out/franz").Queue;
+    var Topic = require("./out/franz").Topic;
 
-    var q = new Queue("http://127.0.0.1:8080/simple");
+    var t = new Topic("http://127.0.0.1:8080");
     var curValues = new Map();
     var finValues = new Map();
 
     function doit() {
         curValues.forEach(function (curValue, tag) {
-            q.push(tag + ":" + curValue.toString());
+            t.push(tag + ":" + curValue.toString());
             curValue += 1;
             if (curValue === finValues.get(tag)) {
                 curValues.delete(tag);
                 finValues.delete(tag);
-                q.push(tag + ":done");
+                t.push(tag + ":done");
             } else {
                 curValues.set(tag, curValue);
             }
         });
 
-        var pieces = q.pop().split(":");
+        var pieces = t.pop().split(":");
         if (pieces[0] !== "sequence") { return; }
         var count = parseInt(pieces[1]);
         var tag = pieces[2];
