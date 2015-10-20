@@ -71,3 +71,18 @@ def base_constructors(cls):
         else:
             base = base.definition.base
     return cons
+
+@dispatch(String)
+def literal_to_str(lit):
+    return str(lit)[1:-1]
+
+@dispatch(Number)
+def literal_to_str(lit):
+    return str(lit)
+
+def get_package_version(pkg):
+    for ann in pkg.annotations:
+        if ann.name.text == "version":
+            assert len(ann.arguments) == 1
+            return literal_to_str(ann.arguments[0])
+    return "0.0"

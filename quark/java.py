@@ -19,6 +19,28 @@ from .dispatch import overload
 from .helpers import *
 from collections import OrderedDict
 
+pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>org.apache.qpid</groupId>
+  <artifactId>test</artifactId>
+  <version>%(version)s</version>
+  <name>%(name)s</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+        <configuration>
+          <excludePackageNames>io.datawire:*.Functions</excludePackageNames>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+"""
+
 # XXX: danger!!! circular import reference hack
 import backend
 class Java(backend.Backend):
@@ -29,6 +51,7 @@ class Java(backend.Backend):
         self.functions = []
         self.files["io/datawire/quark_runtime.java"] = open(os.path.join(os.path.dirname(__file__),
                                                                          "quark_runtime.java")).read()
+        self.packages = OrderedDict()  # Collect packages for package.json et al
 
     def write(self, target):
         src = os.path.join(target, "src/main/java")
@@ -41,16 +64,11 @@ class Java(backend.Backend):
                 os.makedirs(dir)
             open(path, "wb").write(content)
             print "wrote", path
-        open(os.path.join(target, "pom.xml"), "wb").write("""<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-
-  <groupId>org.apache.qpid</groupId>
-  <artifactId>test</artifactId>
-  <version>1.0</version>
-  <name>test</name>
-</project>
-        """)
+        firstPackageName, firstPackageList = self.packages.items()[0]
+        fmt_dict = {"name": firstPackageName,
+                    "version": firstPackageList[0].version,
+                    "pkg_list": repr(list(self.packages.keys()))}
+        open(os.path.join(target, "pom.xml"), "wb").write(pom_xml % fmt_dict)
 
     def visit_Class(self, c):
         pkg = self.dfnr.namer.package(c)
@@ -82,6 +100,12 @@ class Java(backend.Backend):
                     self.files["%s/Functions.java" % pkg.replace(".", "/")] = "package %s;\n\n%s" % (pkg, cls)
                 else:
                     self.files["Functions.java"] = cls
+
+    def visit_Package(self, pkg):
+        pname = self.dfnr.namer.package(pkg)
+        if pkg.package is None:  # Grab a list of top-level packages
+            self.packages.setdefault(pname, []).append(pkg)
+            pkg.version = get_package_version(pkg)
 
     def visit_Primitive(self, p):
         pass
