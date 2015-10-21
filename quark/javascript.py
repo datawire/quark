@@ -47,7 +47,7 @@ class JavaScript(backend.Backend):
             if not os.path.exists(dir):
                 os.makedirs(dir)
             open(path, "wb").write(content)
-            print "wrote", path
+            print "quark (compiler): wrote", path
 
     def imports(self, packages):
         result = "\n".join(["var %s = require('./%s');\nexports.%s = %s;" % (pkg, pkg, pkg, pkg)

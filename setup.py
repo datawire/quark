@@ -28,6 +28,6 @@ setup(name='datawire-quark',
       packages=['quark'],
       install_requires=["docopt==0.6.2",
                         "parsimonious==0.6.2"],
-      entry_points={"console_scripts": ["quark = quark.compiler:main",
+      entry_points={"console_scripts": ["quark = quark.command:call_main",
                                         "quark-grammar = quark.parser:rules"]}
       )

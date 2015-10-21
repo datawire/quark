@@ -63,7 +63,7 @@ class Java(backend.Backend):
             if not os.path.exists(dir):
                 os.makedirs(dir)
             open(path, "wb").write(content)
-            print "wrote", path
+            print "quark (compiler): wrote", path
         firstPackageName, firstPackageList = self.packages.items()[0]
         fmt_dict = {"name": firstPackageName,
                     "version": firstPackageList[0].version,
