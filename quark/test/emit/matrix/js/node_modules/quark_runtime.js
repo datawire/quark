@@ -5,6 +5,7 @@
     "use strict";
 
     exports.util = require("util");
+    var http = require("http")
 
     function quark_toString(value) {
         if (value === null) {
@@ -46,6 +47,23 @@
         return "error";
     }
     exports.url_get = url_get;
+
+    function url_get_async(url, cb) {
+        var req = http.get(url, function(response) {
+            var body = '';
+            response.on('data', function(chunk) {
+                body += chunk;
+            });
+            response.on('end', function() {
+                cb.callback(body);
+            });
+        });
+        req.on('error', function(e) {
+            cb.errback('error');
+        });
+        req.end();
+    }
+    exports.url_get_async = url_get_async
 
     function sleep(seconds) {
         execSync("sleep " + seconds);

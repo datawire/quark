@@ -7,9 +7,9 @@ import os    # unused?
 import sys
 import time  # used by the builtin now() macro
 import urllib2
+import threading
 
-
-__all__ = "os sys time _Map _List _println _url_get _Async".split()
+__all__ = "os sys time _Map _List _println _url_get _url_get_async _Async".split()
 
 
 _Map = dict
@@ -32,6 +32,15 @@ def _url_get(url):
         return urllib2.urlopen(url).read()
     except Exception:
         return "error"
+
+def _url_get_async(url, cb):
+    def do_get():
+        try:
+            cb.callback(urllib2.urlopen(url).read())
+        except Exception:
+            cb.errback("error")
+    async = threading.Thread(target=do_get)
+    async.start()
 
 class _Async(object):
     def callback(self, result):
