@@ -1,0 +1,7 @@
+size: 6
+piece[0] = 'a'
+piece[1] = 'b'
+piece[2] = 'c'
+piece[3] = 'd'
+piece[4] = 'e'
+piece[5] = 'f'

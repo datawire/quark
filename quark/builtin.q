@@ -45,6 +45,9 @@ primitive float extends number {
 
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
+    macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep))))}
+                                         $py{($self).split($sep)}
+                                         $js{($self).split($sep)};
 }
 
 primitive List<T> {
