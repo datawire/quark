@@ -18,5 +18,11 @@ File(
    Param(Type(Name(T)), Name(arg), $type=1.Bar.T)),
 
   Method(Type(Name(void)), Name(m3),
-   Param(Type(Name(List), Type(Name(T))), Name(args), $type=0.List<1.Bar.T>)))
+   Param(Type(Name(List), Type(Name(T))), Name(args), $type=0.List<1.Bar.T>))),
+
+ Interface(Name(BazFoo), Name(Foo)),
+
+ Interface(Name(BazBar), Name(Bar), TypeParam(Name(String))),
+
+ Interface(Name(BatBar), TypeParam(Name(T)), Name(Bar), TypeParam(Name(T)))
 )

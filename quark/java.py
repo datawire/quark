@@ -210,11 +210,13 @@ class DefinitionRenderer(object):
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = ""
         if c.base:
-            if isinstance(c.base.definition, Interface):
+            if isinstance(c.base.definition, Interface) and not isinstance(c, Interface):
                 extends = "implements"
             else:
                 extends = "extends"
             extends = " %s %s" % (extends, c.base.match(self.namer))
+            if c.base_parameters:
+                extends += "<%s>" % (", ".join(p.match(self) for p in c.base_parameters))
         body = "\n".join(self.class_body(c))
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)

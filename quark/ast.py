@@ -211,11 +211,12 @@ class Class(Definition):
     indent = ["definitions"]
     keyword = "class"
 
-    def __init__(self, name, parameters, base, definitions):
+    def __init__(self, name, parameters, base, base_parameters, definitions):
         Definition.__init__(self)
         self.name = name
         self.parameters = parameters
         self.base = base
+        self.base_parameters = base_parameters
         self.definitions = definitions
 
     @property
@@ -226,6 +227,8 @@ class Class(Definition):
         for p in self.parameters:
             yield p
         yield self.base
+        for bp in self.base_parameters:
+            yield bp
         for d in self.definitions:
             yield d
 
@@ -238,6 +241,8 @@ class Class(Definition):
             head += "<%s>" % coder.code(self.parameters, ", ")
         if self.base:
             head += " extends %s" % self.base.code(coder)
+            if self.base_parameters:
+                head += "<%s>" % coder.code(self.base_parameters, ", ")
         with coder.indentation():
             body = coder.code(self.definitions, "\n", head="\n", tail="\n")
         return "%s {%s}" % (head, body)
