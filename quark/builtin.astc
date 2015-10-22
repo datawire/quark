@@ -208,6 +208,14 @@ File(
      Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>), Fixed(').set(k, v); '),
      Fixed('}'), Fixed(')'))))),
 
+ Primitive(Name(Async), TypeParam(Name(R)),
+
+  Method(Type(Name(void)), Name(callback),
+   Param(Type(Name(R)), Name(value), $type=0.Async.R)),
+
+  Method(Type(Name(void)), Name(errback),
+   Param(Type(Name(String)), Name(failure), $type=0.String))),
+
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg), $type=0.String),
   Native(NativeCase(java,
@@ -235,6 +243,19 @@ File(
     $type=0.String), Fixed(')')), NativeCase(py, Fixed('_url_get('),
     Var(Name(url), $type=0.String), Fixed(')')), NativeCase(js,
     Fixed('_qrt.url_get('), Var(Name(url), $type=0.String), Fixed(')')))),
+
+ Macro(Type(Name(void)), Name(url_get_async),
+  Param(Type(Name(String)), Name(url), $type=0.String),
+  Param(Type(Name(Async), Type(Name(String))), Name(cb),
+  $type=0.Async<0.String>),
+  Native(NativeCase(java,
+    Fixed('io.datawire.quark_runtime.url_get_async(('), Var(Name(url),
+    $type=0.String), Fixed('), ('), Var(Name(cb), $type=0.Async<0.String>),
+    Fixed('))')), NativeCase(py, Fixed('_url_get_async(('), Var(Name(url),
+    $type=0.String), Fixed('),('), Var(Name(cb), $type=0.Async<0.String>),
+    Fixed('))')), NativeCase(js, Fixed('_qrt.url_get_async(('), Var(Name(url),
+    $type=0.String), Fixed('),('), Var(Name(cb), $type=0.Async<0.String>),
+    Fixed('))')))),
 
  Macro(Type(Name(int)), Name(parseInt),
   Param(Type(Name(String)), Name(st), $type=0.String),

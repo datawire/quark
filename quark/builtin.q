@@ -77,6 +77,11 @@ primitive Map<K,V> {
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
 }
 
+primitive Async<R> {
+    void callback(R value);
+    void errback(String failure);
+}
+
 macro void print(String msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
                              $js{_qrt.print($msg)};
@@ -88,10 +93,14 @@ macro long now() $java{System.currentTimeMillis()}
 macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}
                                 $py{time.sleep($seconds)}
                                 $js{_qrt.sleep($seconds)};
-
 macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
                                  $py{_url_get($url)}
                                  $js{_qrt.url_get($url)};
+
+
+macro void url_get_async(String url, Async<String> cb) $java{io.datawire.quark_runtime.url_get_async(($url), ($cb))}
+                                 $py{_url_get_async(($url),($cb))}
+                                 $js{_qrt.url_get_async(($url),($cb))};
 
 macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}

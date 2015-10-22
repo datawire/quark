@@ -9,7 +9,7 @@ import time  # used by the builtin now() macro
 import urllib2
 
 
-__all__ = "os sys time _Map _List _println _url_get".split()
+__all__ = "os sys time _Map _List _println _url_get _Async".split()
 
 
 _Map = dict
@@ -32,3 +32,9 @@ def _url_get(url):
         return urllib2.urlopen(url).read()
     except Exception:
         return "error"
+
+class _Async(object):
+    def callback(self, result):
+        raise "Abstract"
+    def errback(self, failure):
+        raise "Abstract"

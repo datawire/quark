@@ -38,7 +38,7 @@ class FieldRenderer(object):
 class PythonNamer(SubstitutionNamer):
 
     def __init__(self):
-        SubstitutionNamer.__init__(self, {"List": "_List", "Map": "_Map", "print": "print_"})
+        SubstitutionNamer.__init__(self, {"List": "_List", "Map": "_Map", "print": "print_", "Async": "_Async"})
 
     def match_Type(self, t):
         if len(t.path) > 1:

@@ -151,7 +151,8 @@ class DefinitionRenderer(object):
     def __init__(self):
         self.namer = SubstitutionNamer({"self": "this", "int": "Integer", "float": "Double",
                                         "List": "java.util.ArrayList",
-                                        "Map": "java.util.HashMap"})
+                                        "Map": "java.util.HashMap",
+                                        "Async": "io.datawire.quark_runtime.Async"})
         self.stmtr = StatementRenderer(self.namer)
 
     def doc(self, annotations, head="/**", prefix=" * ", tail=" */"):

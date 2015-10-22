@@ -5,5 +5,51 @@ File(
    Param(Type(Name(int)), Name(a), $type=0.int),
    Param(Type(Name(int)), Name(b), $type=0.int),
    Param(Type(Name(String)), Name(c), $type=0.String),
-   Block()))
+   Block())),
+
+ Class(Name(Reader),
+  Field(Type(Name(String)), Name(baseUrl), $type=0.String),
+  Field(Type(Name(int)), Name(index), $type=0.int),
+
+  Constructor(Name(Reader),
+   Param(Type(Name(String)), Name(baseUrl), $type=0.String),
+   Block(
+    Assign(Attr(Var(Name(self), $type=1.Reader), Name(baseUrl),
+     $type=0.String), Var(Name(baseUrl), $type=0.String)),
+    Assign(Attr(Var(Name(self), $type=1.Reader), Name(index), $type=0.int),
+     Call(Var(Name(parseInt), $type=0.parseInt), Call(Var(Name(url_get),
+       $type=0.url_get), Call(Attr(Attr(Var(Name(self), $type=1.Reader),
+          Name(baseUrl), $type=0.String), Name(__add__),
+        $type=0.String.__add__), String("/firstIdx", $type=0.String),
+       $type=0.String), $type=0.String), $type=0.int)))),
+
+  Method(Type(Name(String)), Name(_next_url), Block(
+    Local(
+     Declaration(Type(Name(String)), Name(ret),
+      Call(Attr(Call(Attr(Attr(Var(Name(self), $type=1.Reader), Name(baseUrl),
+          $type=0.String), Name(__add__), $type=0.String.__add__),
+         String("/retrieve_block/", $type=0.String), $type=0.String),
+        Name(__add__), $type=0.String.__add__), Call(Attr(Attr(Var(Name(self),
+          $type=1.Reader), Name(index), $type=0.int), Name(toString),
+        $type=0.int.toString), $type=0.String), $type=0.String),
+     $type=0.String)),
+    Assign(Attr(Var(Name(self), $type=1.Reader), Name(index), $type=0.int),
+     Call(Attr(Attr(Var(Name(self), $type=1.Reader), Name(index), $type=0.int),
+       Name(__add__), $type=0.number.__add__), Number(1, $type=0.int),
+     $type=0.number)),
+    Return(Var(Name(ret), $type=0.String)))),
+
+  Method(Type(Name(String)), Name(next), Block(
+    Return(Call(Var(Name(url_get), $type=0.url_get), Call(Attr(Var(Name(self),
+        $type=1.Reader), Name(_next_url), $type=1.Reader._next_url),
+      $type=0.String), $type=0.String)))),
+
+  Method(Type(Name(void)), Name(next_async),
+   Param(Type(Name(Async), Type(Name(String))), Name(cb),
+   $type=0.Async<0.String>),
+   Block(
+    ExprStmt(Call(Var(Name(url_get_async), $type=0.url_get_async),
+      Call(Attr(Var(Name(self), $type=1.Reader), Name(_next_url),
+       $type=1.Reader._next_url), $type=0.String), Var(Name(cb),
+      $type=0.Async<0.String>), $type=0.void)))))
 )

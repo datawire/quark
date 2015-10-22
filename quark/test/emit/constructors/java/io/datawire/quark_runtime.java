@@ -33,4 +33,8 @@ public class quark_runtime {
         }
     }
 
+    public static abstract class Async<T> {
+        public abstract void callback(T result);
+        public abstract void errback(String failure);
+    }
 }

@@ -315,7 +315,7 @@ class JSExprRenderer(java.ExprRenderer):
 class JSNamer(java.SubstitutionNamer):
 
     def __init__(self):
-        java.SubstitutionNamer.__init__(self, ({"self": "this", "int": "Number", "List": "Array"}))
+        java.SubstitutionNamer.__init__(self, ({"self": "this", "int": "Number", "List": "Array", "Async":"_qrt.Async"}))
 
     def match_Type(self, t):
         if len(t.path) > 1:

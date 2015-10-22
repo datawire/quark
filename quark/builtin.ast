@@ -180,6 +180,14 @@ File(
      Fixed('{'), Fixed(' ('), Var(Name(self)), Fixed(').set(k, v); '),
      Fixed('}'), Fixed(')'))))),
 
+ Primitive(Name(Async), TypeParam(Name(R)),
+
+  Method(Type(Name(void)), Name(callback),
+   Param(Type(Name(R)), Name(value))),
+
+  Method(Type(Name(void)), Name(errback),
+   Param(Type(Name(String)), Name(failure)))),
+
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg)),
   Native(NativeCase(java,
@@ -204,6 +212,16 @@ File(
     Fixed('io.datawire.quark_runtime.url_get('), Var(Name(url)), Fixed(')')),
    NativeCase(py, Fixed('_url_get('), Var(Name(url)), Fixed(')')),
    NativeCase(js, Fixed('_qrt.url_get('), Var(Name(url)), Fixed(')')))),
+
+ Macro(Type(Name(void)), Name(url_get_async),
+  Param(Type(Name(String)), Name(url)),
+  Param(Type(Name(Async), Type(Name(String))), Name(cb)),
+  Native(NativeCase(java,
+    Fixed('io.datawire.quark_runtime.url_get_async(('), Var(Name(url)),
+    Fixed('), ('), Var(Name(cb)), Fixed('))')), NativeCase(py,
+    Fixed('_url_get_async(('), Var(Name(url)), Fixed('),('), Var(Name(cb)),
+    Fixed('))')), NativeCase(js, Fixed('_qrt.url_get_async(('), Var(Name(url)),
+    Fixed('),('), Var(Name(cb)), Fixed('))')))),
 
  Macro(Type(Name(int)), Name(parseInt),
   Param(Type(Name(String)), Name(st)),
