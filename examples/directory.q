@@ -29,12 +29,20 @@ package directory {
 	}
 
 	void onMessage(WebSocket socket, String message) {
-	    JSONObject jobj = JSONObject.parse(message);
-	    String op = jobj["op"];
+	    JSONObject jobj = json_from_string(message);
+	    String op = jobj["op"].getString();
 	    if (op == "entry") {
 		Entry entry = new Entry();
-		entry.service = jobj["service"];
-		entry.endpoints = jobj["endpoints"];
+		entry.service = jobj["service"].getString();
+                entry.endpoints = new List<String>();
+                int i = 0;
+                JSONObject endpoints = jobj["endpoints"];
+                JsonObject endpoint = endpoints.getListItem(i);
+                while (endpoint != endpoints.undefined()) {
+                    entry.endpoints.add(endpoint.getString());
+                    i = i + 1;
+                    endpoint = endpoints.getListItem(i);
+                }
 		entries[entry.service] = entry;
 	    } else {
 		if (op == "initialized") {

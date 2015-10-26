@@ -77,6 +77,54 @@ primitive Map<K,V> {
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
 }
 
+primitive JSONObject {
+    JSONObject();                          // return new empty object of type null
+
+    // accessors
+
+    String     getType();                  // object/list/string/number/true/false/null
+    JSONObject getObjectItem(String key);  // object accessor, may return undefined()
+    JSONObject __get__(String key);        // object accessor
+    JSONObject getListItem(int index);     // list accessor, may return undefined()
+    String     getString();                // string accessor
+    float      getNumber();                // number accessor
+    int        getBool();                  // true/false accessor
+    int        isNull();                   // null accessor
+    JSONObject undefined();                // undefined object returend by object and list accessors
+
+    // V2:
+    // List<String> keys();                   // object keys or null if type is not 'object'
+    // List<Pair<String,JSONObject>> items(); // object items or null if type is not 'object'
+    // List<JsonObject> values();             // list values or null if type is not 'list'
+
+    String     toString();              // serialize to json
+
+    // mutators
+
+    JSONObject addToObject(String key);      // set current object type to 'object' and return added null sub-object
+    JSONObject addToList();                  // set current object type to 'list' and return appended null sub-object
+
+    void       setString(String value);      // set current object type to 'string' and set it's value
+    void       setNumber(float value);       // set current object type to 'number' and set it's value
+    void       setBool(int value);           // set current object type to 'true' or 'false'
+    void       setNull();                    // set current object type to 'null'
+
+    void       setObject();                  // set current object type to 'object', (for empty objects)
+    void       setList();                    // set current object type to 'list', 
+
+
+    void __set__(String key, String value);  // === addToObject(key).setString(value)
+    // TODO a while bunch of __set__ overloads
+
+    // V2:
+    // JSONObject mergeMap(Map<String,Object> map); // set current object type to 'object' and merge in all map pairs
+    // JSONObject mergeObject(Map<String,Object> other); // set current object type to 'object' and merge in all object
+}
+
+macro JSONObject json_from_string(String json) $java{io.datawire.quark_runtime.jsonFromString($json)}
+                                               $py{_json_from_string($json)}
+                                               $js{_qrt.json_from_string($json)};
+
 macro void print(String msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
                              $js{_qrt.print($msg)};
