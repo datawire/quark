@@ -78,7 +78,7 @@ primitive Map<K,V> {
 }
 
 primitive JSONObject {
-    JSONObject();                          // return new empty object of type null
+    JSONObject() {}                          // return new empty object of type null
 
     // accessors
 
@@ -95,7 +95,7 @@ primitive JSONObject {
     // V2:
     // List<String> keys();                   // object keys or null if type is not 'object'
     // List<Pair<String,JSONObject>> items(); // object items or null if type is not 'object'
-    // List<JsonObject> values();             // list values or null if type is not 'list'
+    // List<JSONObject> values();             // list values or null if type is not 'list'
 
     String     toString();              // serialize to json
 

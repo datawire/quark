@@ -37,7 +37,7 @@ package directory {
                 entry.endpoints = new List<String>();
                 int i = 0;
                 JSONObject endpoints = jobj["endpoints"];
-                JsonObject endpoint = endpoints.getListItem(i);
+                JSONObject endpoint = endpoints.getListItem(i);
                 while (endpoint != endpoints.undefined()) {
                     entry.endpoints.add(endpoint.getString());
                     i = i + 1;
