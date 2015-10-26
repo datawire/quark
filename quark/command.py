@@ -105,19 +105,19 @@ def main(args):
 
     assert "compile" in commands, (commands, args)
 
-    try:
-        if "compile" in commands:
-            compiler_args = {"<file>": filenames}
-            if java:
-                compiler_args["--java"] = java_dir
-            if python:
-                compiler_args["--python"] = py_dir
-            if javascript:
-                compiler_args["--javascript"] = js_dir
-            res = compiler._main(compiler_args)
-            if res is not None:
-                exit(res)
+    if "compile" in commands:
+        compiler_args = {"<file>": filenames}
+        if java:
+            compiler_args["--java"] = java_dir
+        if python:
+            compiler_args["--python"] = py_dir
+        if javascript:
+            compiler_args["--javascript"] = js_dir
+        res = compiler._main(compiler_args)
+        if res is not None:
+            exit(res)
 
+    try:
         if "build" in commands:
             if java:
                 call_and_show("build", java_dir, ["mvn", "-q", "compile"])
