@@ -13,6 +13,11 @@ class Future<T> {}
 
 package directory {
 
+    class Entry {
+	String service;
+	List<String> endpoints;
+    }
+
     class Directory { // implements WebHandler, Task
 
 	Runtime runtime;
@@ -106,11 +111,6 @@ package directory {
 	    self.result = self.directory.entries[self.name];
 	    // fire completion on future here???
 	}
-    }
-
-    class Entry {
-	String service;
-	List<String> endpoints;
     }
 
 }

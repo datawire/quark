@@ -14,6 +14,12 @@
 
 import os, pytest
 
+def is_excluded_file(name):
+    if name.endswith("quark/builtin.q"):
+        return True
+    else:
+        return False
+
 def check_file(path, content):
     try:
         with open(path) as fd:
