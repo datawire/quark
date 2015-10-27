@@ -295,10 +295,9 @@ class Python(backend.Backend):
         src = target
         if not os.path.exists(src):
             os.makedirs(src)
-
-        firstPackageName, firstPackageList = self.packages.items()[0]
-        fmt_dict = {"name": firstPackageName,
-                    "version": firstPackageList[0].version,
+        name, version = namever(self.packages)
+        fmt_dict = {"name": name,
+                    "version": version,
                     "pkg_list": repr(list(self.packages.keys()))}
         self.files["setup.py"] = setup_py % fmt_dict
         self.files["docs/conf.py"] = conf_py % fmt_dict

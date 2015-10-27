@@ -86,3 +86,12 @@ def get_package_version(pkg):
             assert len(ann.arguments) == 1
             return literal_to_str(ann.arguments[0])
     return "0.0"
+
+def namever(packages):
+    if packages:
+        firstPackageName, firstPackageList = packages.items()[0]
+        version = firstPackageList[0].version
+    else:
+        firstPackageName = ""
+        version = "0.0"
+    return firstPackageName, version

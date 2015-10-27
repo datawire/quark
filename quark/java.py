@@ -64,9 +64,9 @@ class Java(backend.Backend):
                 os.makedirs(dir)
             open(path, "wb").write(content)
             print "quark (compiler): wrote", path
-        firstPackageName, firstPackageList = self.packages.items()[0]
-        fmt_dict = {"name": firstPackageName,
-                    "version": firstPackageList[0].version,
+        name, version = namever(self.packages)
+        fmt_dict = {"name": name,
+                    "version": version,
                     "pkg_list": repr(list(self.packages.keys()))}
         open(os.path.join(target, "pom.xml"), "wb").write(pom_xml % fmt_dict)
 
