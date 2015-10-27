@@ -1,0 +1,4 @@
+// xfail
+void main() {
+    print("\"");
+}
