@@ -131,7 +131,7 @@ class Parser:
     def visit_type_param(self, node, (name, _)):
         return TypeParam(name)
 
-    @g.rule('class_definition = annotation* (field / constructor / method / method_macro)')
+    @g.rule('class_definition = annotation* (field / constructor / method / constructor_macro / method_macro)')
     def visit_class_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn
@@ -147,6 +147,10 @@ class Parser:
     @g.rule('constructor = name LPR parameters RPR block')
     def visit_constructor(self, node, (name, lp, parameters, rp, body)):
         return Constructor(name, tuple(parameters), body)
+
+    @g.rule('constructor_macro = MACRO name LPR parameters RPR expr SEMI')
+    def visit_constructor_macro(self, node, (m, name, lp, parameters, rp, expr, s)):
+        return ConstructorMacro(name, tuple(parameters), expr)
 
     @g.rule('method = type name LPR parameters RPR body')
     def visit_method(self, node, (type, name, lp, parameters, rp, body)):

@@ -386,7 +386,12 @@ class ExprRenderer(object):
 
     @overload(Class)
     def invoke(self, cls, expr, args):
-        return "new %s(%s)" % (expr.match(self), ", ".join(args))
+        cons = constructors(cls)
+        con = cons[0] if cons else None
+        if isinstance(con, Macro):
+            return self.apply_macro(con, expr, args)
+        else:
+            return "new %s(%s)" % (expr.match(self), ", ".join(args))
 
     @overload(Function)
     def invoke(self, func, expr, args):
@@ -407,23 +412,19 @@ class ExprRenderer(object):
 
     @overload(Macro)
     def invoke(self, macro, expr, args):
-        # macros are evaluated at compile time, so we don't use expr
+        return self.apply_macro(macro, expr, args)
+
+    def apply_macro(self, macro, expr, args):
         env = {}
+        if macro.clazz and macro.type:
+            print macro, macro.clazz, macro.type
+            # for method macros we use expr to access self
+            env["self"] = expr.expr.match(self)
         idx = 0
         for p in macro.params:
             env[p.name.text] = args[idx]
             idx += 1
         return macro.body.match(self.__class__(SubstitutionNamer(env)))
-
-    @overload(MethodMacro)
-    def invoke(self, method_macro, expr, args):
-        # for method macros we use expr to access self
-        env = {"self": expr.expr.match(self)}
-        idx = 0
-        for p in method_macro.params:
-            env[p.name.text] = args[idx]
-            idx += 1
-        return method_macro.body.match(self.__class__(SubstitutionNamer(env)))
 
     def match_Super(self, s):
         return "super"

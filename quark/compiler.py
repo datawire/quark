@@ -411,7 +411,7 @@ class Contextualize:
         self.clazzes.append(self.clazz)
         self.clazz = c
 
-    def leave_Clazz(self, c):
+    def leave_Class(self, c):
         self.clazz = self.clazzes.pop()
 
     def visit_Callable(self, c):

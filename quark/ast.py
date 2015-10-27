@@ -254,6 +254,14 @@ class Constructor(Method):
         return self.__class__(copy(self.name), copy(self.params),
                               copy(self.body))
 
+class ConstructorMacro(Macro):
+    def __init__(self, name, params, body):
+        Callable.__init__(self, None, name, params, body)
+
+    def copy(self):
+        return self.__class__(copy(self.name), copy(self.params),
+                              copy(self.body))
+
 class MethodMacro(Macro):
 
     @coder

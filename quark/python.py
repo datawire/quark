@@ -176,7 +176,12 @@ class PythonExprRenderer(ExprRenderer):
 
     @overload(Class)
     def invoke(self, cls, expr, args):
-        return "%s(%s)" % (expr.match(self), ", ".join(args))
+        cons = constructors(cls)
+        con = cons[0] if cons else None
+        if isinstance(con, Macro):
+            return self.apply_macro(con, expr, args)
+        else:
+            return "%s(%s)" % (expr.match(self), ", ".join(args))
 
     def invoke_super_method(self, method, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
