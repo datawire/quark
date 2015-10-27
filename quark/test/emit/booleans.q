@@ -9,6 +9,12 @@ void main() {
 	print("Hey!");
     }
 
+    bool c = false;
+
+    if (!c) {
+	print("Ho!");
+    }
+
     int count = 0;
     while (true) {
 	if (count > 3) {

@@ -9,6 +9,10 @@ def main():
     if (b):
         _println("Hey!");
 
+    c = False;
+    if (not (c)):
+        _println("Ho!");
+
     count = 0;
     while (True) :
         if ((count) > (3)):

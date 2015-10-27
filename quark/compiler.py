@@ -279,6 +279,9 @@ class Use:
     def visit_Map(self, n):
         self.leaf(n, "Map")
 
+    def visit_Bool(self, n):
+        self.leaf(n, "bool")
+
 class Resolver(object):
 
     def __init__(self):

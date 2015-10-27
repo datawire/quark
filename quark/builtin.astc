@@ -27,7 +27,12 @@ File(
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Boolean')),
     NativeCase(py, Fixed('bool')), NativeCase(js, Fixed('Boolean')))),
-  Name(bool)),
+  Name(bool),
+
+  MethodMacro(Type(Name(bool)), Name(__not__), Native(NativeCase(java,
+     Fixed('!('), Var(Name(self), $type=0.bool), Fixed(')')), NativeCase(py,
+     Fixed('not ('), Var(Name(self), $type=0.bool), Fixed(')')), NativeCase(js,
+     Fixed('!('), Var(Name(self), $type=0.bool), Fixed(')'))))),
 
  Primitive(Name(number),
 

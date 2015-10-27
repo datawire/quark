@@ -11,7 +11,9 @@ primitive Object {
 primitive void {}
 
 @mapping($java{Boolean} $py{bool} $js{Boolean})
-primitive bool {}
+primitive bool {
+    macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
+}
 
 primitive number {
     macro number __neg__() ${-($self)};

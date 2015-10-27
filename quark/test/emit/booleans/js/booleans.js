@@ -8,6 +8,10 @@ function main() {
     if (b) {
         _qrt.print("Hey!");
     }
+    var c = false;
+    if (!(c)) {
+        _qrt.print("Ho!");
+    }
     var count = 0;
     while (true) {
         if ((count) > (3)) {
