@@ -10,6 +10,9 @@ primitive Object {
 
 primitive void {}
 
+@mapping($java{Boolean} $py{bool} $js{Boolean})
+primitive bool {}
+
 primitive number {
     macro number __neg__() ${-($self)};
     macro number __add__(number other) ${($self) + ($other)};

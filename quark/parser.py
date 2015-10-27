@@ -23,7 +23,7 @@ class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
                 "return", "macro", "new", "null", "if", "else", "while",
-                "super"]
+                "super", "true", "false"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -225,8 +225,9 @@ class Parser:
     def visit_statement(self, node, (stmt,)):
         return stmt
 
-    @g.rule('return = RETURN expr SEMI')
-    def visit_return(self, node, (r, expr, s)):
+    @g.rule('return = RETURN expr? SEMI')
+    def visit_return(self, node, (r, opt, s)):
+        expr = opt[0] if opt else None
         return Return(expr)
 
     @g.rule('exprstmt = expr SEMI')
@@ -424,7 +425,7 @@ class Parser:
     def visit_super(self, node, (s, _)):
         return Super()
 
-    @g.rule('literal = number / string / list / map / null')
+    @g.rule('literal = number / string / list / map / null / bool')
     def visit_literal(self, node, (literal,)):
         return literal
 
@@ -464,6 +465,10 @@ class Parser:
     @g.rule('null = NULL ""')
     def visit_null(self, node, (null, _)):
         return Null(null)
+
+    @g.rule('bool = TRUE / FALSE')
+    def visit_bool(self, node, (atom,)):
+        return Bool(atom)
 
     @g.rule('entries = entry (COMMA entry)*')
     def visit_entries(self, node, (first, rest)):

@@ -488,6 +488,9 @@ class PrimitiveLiteral(Literal):
     def copy(self):
         return self.__class__(self.text)
 
+class Bool(PrimitiveLiteral):
+    pass
+
 class Null(PrimitiveLiteral):
     pass
 

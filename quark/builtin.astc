@@ -25,6 +25,10 @@ File(
 
  Primitive(Name(void)),
 
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Boolean')),
+    NativeCase(py, Fixed('bool')), NativeCase(js, Fixed('Boolean')))),
+  Name(bool)),
+
  Primitive(Name(number),
 
   MethodMacro(Type(Name(number)), Name(__neg__), Native(NativeCase(Fixed('-('),

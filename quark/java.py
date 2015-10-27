@@ -265,7 +265,10 @@ class StatementRenderer(object):
         return result
 
     def match_Return(self, r):
-        return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
+        if r.expr:
+            return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
+        else:
+            return "return;"
 
     def match_Local(self, stmt):
         return "%s;" % stmt.declaration.match(self)
@@ -313,6 +316,9 @@ class ExprRenderer(object):
     @property
     def lang(self):
         return "java"
+
+    def match_Bool(self, b):
+        return b.text
 
     def match_Null(self, n):
         return n.text
@@ -417,7 +423,6 @@ class ExprRenderer(object):
     def apply_macro(self, macro, expr, args):
         env = {}
         if macro.clazz and macro.type:
-            print macro, macro.clazz, macro.type
             # for method macros we use expr to access self
             env["self"] = expr.expr.match(self)
         idx = 0

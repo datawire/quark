@@ -146,7 +146,10 @@ class PythonStatementRenderer(StatementRenderer):
         return "%s = %s" % (ass.lhs.match(self.exprr), ass.rhs.match(self.exprr))
 
     def match_Return(self, r):
-        return "return %s;" % r.expr.match(self.exprr)
+        if r.expr:
+            return "return %s" % r.expr.match(self.exprr)
+        else:
+            return "return"
 
 class PythonExprRenderer(ExprRenderer):
 
@@ -188,6 +191,9 @@ class PythonExprRenderer(ExprRenderer):
 
     def match_List(self, l):
         return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
+
+    def match_Bool(self, b):
+        return b.text.capitalize()
 
     def match_Null(self, n):
         return "None"

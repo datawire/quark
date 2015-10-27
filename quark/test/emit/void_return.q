@@ -1,2 +1,1 @@
-// xfail
 void foo() { return; }
