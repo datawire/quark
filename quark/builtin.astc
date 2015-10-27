@@ -300,18 +300,18 @@ File(
 
   Method(Type(Name(JSONObject)), Name(setObjectItem),
    Param(Type(Name(String)), Name(key), $type=0.String),
-   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject.JSONObject)),
+   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject)),
 
   Method(Type(Name(JSONObject)), Name(setListItem),
    Param(Type(Name(int)), Name(index), $type=0.int),
-   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject.JSONObject)),
+   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject)),
 
   MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(String)), Name(key), $type=0.String),
-   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject.JSONObject),
+   Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject),
    Native(NativeCase(Fixed(' ('), Var(Name(self), $type=0.JSONObject),
      Fixed(').setObjectItem(('), Var(Name(key), $type=0.String), Fixed('), ('),
-     Var(Name(value), $type=0.JSONObject.JSONObject), Fixed('))'))))),
+     Var(Name(value), $type=0.JSONObject), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg), $type=0.String),
