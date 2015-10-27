@@ -1,3 +1,4 @@
+@mapping($java{Object} $py{object} $js{Object})
 primitive Object {
     macro int __eq__(Object other) $java{($self).equals($other)}
                                    $py{($self) == ($other)}
@@ -19,6 +20,7 @@ primitive number {
     macro number __gt__(number other) ${($self) > ($other)};
 }
 
+@mapping($java{Integer} $py{int} $js{Number})
 primitive int extends number {
     macro int __neg__() ${-($self)};
     macro int __div__(int other) $java{~((~($self)) / ($other))}
@@ -32,8 +34,10 @@ primitive int extends number {
                             $js{_qrt.toString($self)};
 }
 
+@mapping($java{Long} $py{long} $js{Number})
 primitive long extends number {}
 
+@mapping($java{Double}$py{float}$js{Number})
 primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}
                                      $py{float($self) / float($other)}
@@ -43,10 +47,12 @@ primitive float extends number {
                             $js{_qrt.toString($self)};
 }
 
+@mapping($java{String} $py{str} $js{String})
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
 }
 
+@mapping($java{java.util.ArrayList} $py{_List} $js{Array})
 primitive List<T> {
     macro void add(T element) $java{($self).add($element)}
                               $py{($self).append($element)}
@@ -62,6 +68,7 @@ primitive List<T> {
                      $js{($self).length};
 }
 
+@mapping($java{java.util.HashMap} $py{_Map} $js{Map})
 primitive Map<K,V> {
     macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
                                        $py{($self)[$key] = ($value)}
