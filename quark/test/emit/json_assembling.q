@@ -1,4 +1,4 @@
-// xfail:py xfail:java
+// xfail:java
 
 void test_assembling() {
     JSONObject innerObject = new JSONObject();

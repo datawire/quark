@@ -59,7 +59,7 @@ primitive String {
     macro String __add__(String other) ${($self) + ($other)};
     macro JSONObject toJSON() new JSONObject().setString(self);
     macro JSONObject parseJSON() $java{io.datawire.quark_runtime.jsonFromString($self)}
-                                 $py{_json_from_string($self)}
+                                 $py{_JSONObject.parse($self)}
                                  $js{_qrt.json_from_string($self)};
 }
 

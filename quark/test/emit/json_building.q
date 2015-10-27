@@ -1,4 +1,4 @@
-// xfail:py xfail:java
+// xfail:java
 
 void test_building() {
     print(new JSONObject()
