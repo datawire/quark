@@ -86,11 +86,10 @@ primitive Map<K,V> {
 }
 
 primitive JSONObject {
-    JSONObject() {}                          // return new empty object of type null
 
     // accessors
 
-    String     getType();                  // object/list/string/number/true/false/null
+    String     getType();                  // object/list/string/number/boolean/null
     JSONObject getObjectItem(String key);  // object accessor, may return undefined()
     macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
     JSONObject getListItem(int index);     // list accessor, may return undefined()
@@ -114,7 +113,7 @@ primitive JSONObject {
     JSONObject setNull();                    // set current object type to 'null'
 
     JSONObject setObject();                  // set current object type to 'object', (for empty objects)
-    JSONObject setList();                    // set current object type to 'list', 
+    JSONObject setList();                    // set current object type to 'list', (for empty lists) 
 
     JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
     JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
