@@ -9,10 +9,10 @@ class Overload(object):
         (self).name = name
 
     def __add__(self, o):
-        return o;
+        return o
 
     def __mul__(self, o):
-        return self;
+        return self
 
     def test(self):
         o1 = Overload("one");

@@ -19,7 +19,7 @@ class Matrix(object):
             (self.columns).append(column);
 
     def __get__(self, i, j):
-        return ((self.columns)[i])[j];
+        return ((self.columns)[i])[j]
 
     def __set__(self, i, j, value):
         ((self.columns)[i])[j] = (value);

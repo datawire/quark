@@ -45,7 +45,7 @@ class Box(object):
     def __init__(self): self._init()
 
     def get(self):
-        return self.contents;
+        return self.contents
 
     def set(self, contents):
         (self).contents = contents

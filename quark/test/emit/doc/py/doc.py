@@ -15,4 +15,4 @@ class Test(object):
         """
         method docs
         """
-        return 3;
+        return 3

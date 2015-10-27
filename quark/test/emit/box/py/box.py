@@ -10,7 +10,7 @@ class Box(object):
         (self).contents = contents
 
     def get(self):
-        return (self).contents;
+        return (self).contents
 
 
 class Crate(object):
@@ -24,7 +24,7 @@ class Crate(object):
         ((self).box).set(stuff);
 
     def get(self):
-        return ((self).box).get();
+        return ((self).box).get()
 
 
 class Sack(object):

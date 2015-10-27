@@ -5,7 +5,7 @@ class Test(object):
     def __init__(self): self._init()
 
     def foo(self, t):
-        return Test();
+        return Test()
 
     def test(self):
         x = 2;
