@@ -8,18 +8,18 @@ Quark defines the following keywords:
 .. toctree::
   :maxdepth: 1
 
-class
-else
-extends
-if
-interface
-macro
-new
-null
-package
-primitive
-return
-while
+  class
+  else
+  extends
+  if
+  interface
+  macro
+  new
+  null
+  package
+  primitive
+  return
+  while
 
 .. _classKeyword:
 

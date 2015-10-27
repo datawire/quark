@@ -6,15 +6,15 @@ Quark defines the following data types:
 .. toctree::
   :maxdepth: 1
 
-float
-int
-List
-long
-number
-Map
-Object
-String
-void
+  float
+  int
+  List
+  long
+  number
+  Map
+  Object
+  String
+  void
 
 .. _float:
 

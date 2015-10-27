@@ -1,5 +1,5 @@
 Annotations
----------
+-----------
 
 Quark defines the following annotations:
 
