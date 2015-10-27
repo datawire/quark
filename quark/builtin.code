@@ -1,3 +1,4 @@
+@mapping($java{Object}$py{object}$js{Object})
 primitive Object {
     macro int __eq__(Object other) $java{($self).equals($other)}$py{($self) == ($other)}$js{($self) === ($other)};
     macro int __ne__(Object other) $java{!(($self).equals($other))}$py{($self) != ($other)}$js{($self) !== ($other)};
@@ -12,26 +13,32 @@ primitive number {
     macro number __lt__(number other) ${($self) < ($other)};
     macro number __gt__(number other) ${($self) > ($other)};
 }
+@mapping($java{Integer}$py{int}$js{Number})
 primitive int extends number {
     macro int __neg__() ${-($self)};
     macro int __div__(int other) $java{~((~($self)) / ($other))}$py{($self) / ($other)}$js{Math.floor(($self) / ($other))};
     macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}$py{($self) % ($other)}$js{_qrt.modulo(($self), ($other))};
     macro String toString() $java{Integer.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
 }
+@mapping($java{Long}$py{long}$js{Number})
 primitive long extends number {}
+@mapping($java{Double}$py{float}$js{Number})
 primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}$py{float($self) / float($other)}$js{($self) / ($other)};
     macro String toString() $java{Double.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
 }
+@mapping($java{String}$py{str}$js{String})
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
 }
+@mapping($java{java.util.ArrayList}$py{_List}$js{Array})
 primitive List<T> {
     macro void add(T element) $java{($self).add($element)}$py{($self).append($element)}$js{($self).push($element)};
     macro T __get__(int index) $java{($self).get($index)}$py{($self)[$index]}$js{($self)[$index]};
     macro void __set__(int index, T value) $java{($self).set(($index), ($value))}$py{($self)[$index] = ($value)}$js{($self)[$index] = ($value)};
     macro int size() $java{($self).size()}$py{len($self)}$js{($self).length};
 }
+@mapping($java{java.util.HashMap}$py{_Map}$js{Map})
 primitive Map<K, V> {
     macro void __set__(K key, V value) $java{($self).put(($key), ($value))}$py{($self)[$key] = ($value)}$js{($self).set(($key), ($value))};
     macro V __get__(K key) $java{($self).get($key)}$py{($self).get($key)}$js{_qrt.map_get(($self), ($key))};

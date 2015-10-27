@@ -312,16 +312,21 @@ class JSExprRenderer(java.ExprRenderer):
         return "this.constructor.super_.prototype.%s.call(%s)" % \
             (method.name.match(self.namer), ", ".join(["this"] + args))
 
+    @overload(Class, dict)
+    def type(self, cls, bindings, expr):
+        return self.type(cls, expr)
+
+    @overload(Type)
+    def type(self, t):
+        if len(t.path) > 1:
+            root = t.path[0].match(self.namer)
+            t.file.imports[root] = True
+        return self.type(t.resolved, t)
+
 class JSNamer(java.SubstitutionNamer):
 
     def __init__(self):
-        java.SubstitutionNamer.__init__(self, ({"self": "this", "int": "Number", "List": "Array", "JSONObject": "_qrt.JSONObject"}))
-
-    def match_Type(self, t):
-        if len(t.path) > 1:
-            root = t.path[0].match(self)
-            t.file.imports[root] = True
-        return ".".join([p.match(self) for p in t.path])
+        java.SubstitutionNamer.__init__(self, ({"self": "this"}))
 
     def get(self, name):
         return self.env.get(name, name.replace("-", "_"))

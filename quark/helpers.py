@@ -59,7 +59,7 @@ def is_super(call):
     return isinstance(call.expr, Super)
 
 def constructors(cls):
-    return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
+    return [d for d in cls.definitions if isinstance(d, Callable) and d.type is None]
 
 def base_constructors(cls):
     base = cls.base

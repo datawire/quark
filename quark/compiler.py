@@ -411,7 +411,7 @@ class Contextualize:
         self.clazzes.append(self.clazz)
         self.clazz = c
 
-    def leave_Clazz(self, c):
+    def leave_Class(self, c):
         self.clazz = self.clazzes.pop()
 
     def visit_Callable(self, c):
@@ -519,16 +519,10 @@ class Compiler:
         self.root.traverse(backend)
 
 import os
-from docopt import docopt
 from backend import Java, Python, JavaScript
 
-def _main(args):
-    srcs = args["<file>"]
 
-    java = args["--java"]
-    python = args["--python"]
-    javascript = args["--javascript"]
-
+def main(srcs, java=None, python=None, javascript=None):
     c = Compiler()
 
     if java: c.emitter(Java, java)
@@ -546,21 +540,3 @@ def _main(args):
         return e
     except CompileError, e:
         return e
-
-def main():
-    """
-Quark compiler.
-
-Usage:
-  quark [--java=<dir>] [--python=<dir>] [--javascript=<dir>] <file> ...
-  quark -h | --help
-  quark --version
-
-Options:
-  -h --help           Show this screen.
-  --version           Show version.
-  --java=<dir>        Emit java code to specified directory.
-  --python=<dir>      Emit python code to specified directory.
-  --javascript=<dir>  Emit javascript code to specified directory.
-"""
-    exit(_main(docopt(main.__doc__)))

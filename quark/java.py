@@ -149,9 +149,7 @@ class DocEvaluator:
 class DefinitionRenderer(object):
 
     def __init__(self):
-        self.namer = SubstitutionNamer({"self": "this", "int": "Integer", "float": "Double",
-                                        "List": "java.util.ArrayList",
-                                        "Map": "java.util.HashMap"})
+        self.namer = SubstitutionNamer({"self": "this"})
         self.stmtr = StatementRenderer(self.namer)
 
     def doc(self, annotations, head="/**", prefix=" * ", tail=" */"):
@@ -232,7 +230,7 @@ class DefinitionRenderer(object):
 
     def match_Function(self, m):
         doc = self.doc(m.annotations)
-        type = "%s " % m.type.match(self.namer) if m.type else ""
+        type = "%s " % self.stmtr.exprr.type(m.type.resolved, m.type) if m.type else ""
         name = m.name.match(self.namer)
         params = ", ".join([p.match(self) for p in m.params])
         body = " %s" % m.body.match(self.stmtr) if m.body else ";"
@@ -260,33 +258,10 @@ class StatementRenderer(object):
         self.namer = namer
         self.exprr = ExprRenderer(self.namer)
 
-    @overload(TypeExpr)
-    def type(self, texpr):
-        return self.type(texpr.type, texpr.bindings)
-
-    @overload(Class)
-    def type(self, cls, bindings):
-        if cls.parameters:
-            params = [self.type(bindings[p]) for p in cls.parameters]
-            result = "%s<%s>" % (cls.name.match(self.namer), ",".join(params))
-        else:
-            result = cls.name.match(self.namer)
-        if cls.package:
-            return "%s.%s" % (self.namer.package(cls), result)
-        else:
-            return result
-
-    @overload(TypeParam)
-    def type(self, tparam, bindings):
-        if tparam in bindings:
-            return self.type(bindings[tparam])
-        else:
-            return tparam.name.match(self.namer)
-
     def maybe_cast(self, type, expr):
         result = expr.match(self.exprr)
         if type.resolved.id != expr.resolved.id:
-            result = "(%s) (%s)" % (self.type(type.resolved), result)
+            result = "(%s) (%s)" % (self.exprr.type(type.resolved, type), result)
         return result
 
     def match_Return(self, r):
@@ -296,7 +271,7 @@ class StatementRenderer(object):
         return "%s;" % stmt.declaration.match(self)
 
     def match_Declaration(self, d):
-        type = d.type.match(self.namer)
+        type = self.exprr.type(d.resolved, d)
         name = d.name.match(self.namer)
         if d.value:
             value = self.maybe_cast(d.type, d.value)
@@ -361,7 +336,7 @@ class ExprRenderer(object):
         return self.get(type, a)
 
     def match_Type(self, t):
-        return t.match(self.namer)
+        return self.type(t)
 
     def match_Var(self, v):
         return self.var(v.definition, v)
@@ -411,7 +386,12 @@ class ExprRenderer(object):
 
     @overload(Class)
     def invoke(self, cls, expr, args):
-        return "new %s(%s)" % (expr.match(self), ", ".join(args))
+        cons = constructors(cls)
+        con = cons[0] if cons else None
+        if isinstance(con, Macro):
+            return self.apply_macro(con, expr, args)
+        else:
+            return "new %s(%s)" % (expr.match(self), ", ".join(args))
 
     @overload(Function)
     def invoke(self, func, expr, args):
@@ -432,38 +412,68 @@ class ExprRenderer(object):
 
     @overload(Macro)
     def invoke(self, macro, expr, args):
-        # macros are evaluated at compile time, so we don't use expr
+        return self.apply_macro(macro, expr, args)
+
+    def apply_macro(self, macro, expr, args):
         env = {}
+        if macro.clazz and macro.type:
+            print macro, macro.clazz, macro.type
+            # for method macros we use expr to access self
+            env["self"] = expr.expr.match(self)
         idx = 0
         for p in macro.params:
             env[p.name.text] = args[idx]
             idx += 1
         return macro.body.match(self.__class__(SubstitutionNamer(env)))
 
-    @overload(MethodMacro)
-    def invoke(self, method_macro, expr, args):
-        # for method macros we use expr to access self
-        env = {"self": expr.expr.match(self)}
-        idx = 0
-        for p in method_macro.params:
-            env[p.name.text] = args[idx]
-            idx += 1
-        return method_macro.body.match(self.__class__(SubstitutionNamer(env)))
-
     def match_Super(self, s):
         return "super"
+
+    @overload(TypeExpr)
+    def type(self, texpr, expr):
+        return self.type(texpr.type, texpr.bindings, expr)
+
+    @overload(Class, dict)
+    def type(self, cls, bindings, expr):
+        if cls.parameters:
+            params = [self.type(bindings[p], expr) for p in cls.parameters]
+            return "%s<%s>" % (self.type(cls, expr), ",".join(params))
+        else:
+            return self.type(cls, expr)
+
+    @overload(Class)
+    def type(self, cls, expr):
+        mapping = None
+        for a in cls.annotations:
+            if a.name.text == "mapping":
+                mapping = a
+                break
+        if mapping is None:
+            result = cls.name.match(self.namer)
+            cpkg = self.namer.package(cls)
+            epkg = self.namer.package(expr)
+            if cpkg and (epkg is None or not epkg.startswith(cpkg)):
+                return "%s.%s" % (cpkg, result)
+            else:
+                return result
+        else:
+            return mapping.arguments[0].match(self)
+
+    @overload(TypeParam)
+    def type(self, tparam, bindings, expr):
+        if tparam in bindings:
+            return self.type(bindings[tparam], expr)
+        else:
+            return tparam.name.match(self.namer)
+
+    @overload(Type)
+    def type(self, t):
+        return self.type(t.resolved, t)
 
 class NameRenderer(object):
 
     def match_Name(self, n):
         return n.text
-
-    def match_Type(self, t):
-        if t.parameters:
-            params = [p.match(self) for p in t.parameters]
-            return "%s<%s>" % (".".join([p.match(self) for p in t.path]), ",".join(params))
-        else:
-            return ".".join([p.match(self) for p in t.path])
 
     def match_Var(self, v):
         return v.name.match(self)

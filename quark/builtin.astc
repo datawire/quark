@@ -1,5 +1,7 @@
 File(
- Primitive(Name(Object),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Object')),
+    NativeCase(py, Fixed('object')), NativeCase(js, Fixed('Object')))),
+  Name(Object),
 
   MethodMacro(Type(Name(int)), Name(__eq__),
    Param(Type(Name(Object)), Name(other), $type=0.Object),
@@ -58,7 +60,9 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.number),
      Fixed(') > ('), Var(Name(other), $type=0.number), Fixed(')'))))),
 
- Primitive(Name(int), Name(number),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Integer')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))), Name(int),
+  Name(number),
 
   MethodMacro(Type(Name(int)), Name(__neg__), Native(NativeCase(Fixed('-('),
      Var(Name(self), $type=0.int), Fixed(')')))),
@@ -89,9 +93,13 @@ File(
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.int),
      Fixed(')'))))),
 
- Primitive(Name(long), Name(number)),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
+    NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
+  Name(long), Name(number)),
 
- Primitive(Name(float), Name(number),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Double')),
+    NativeCase(py, Fixed('float')), NativeCase(js, Fixed('Number')))),
+  Name(float), Name(number),
 
   MethodMacro(Type(Name(float)), Name(__div__),
    Param(Type(Name(float)), Name(other), $type=0.float),
@@ -109,14 +117,18 @@ File(
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.float),
      Fixed(')'))))),
 
- Primitive(Name(String),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('String')),
+    NativeCase(py, Fixed('str')), NativeCase(js, Fixed('String')))),
+  Name(String),
 
   MethodMacro(Type(Name(String)), Name(__add__),
    Param(Type(Name(String)), Name(other), $type=0.String),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.String),
      Fixed(') + ('), Var(Name(other), $type=0.String), Fixed(')'))))),
 
- Primitive(Name(List), TypeParam(Name(T)),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('java.util.ArrayList')), NativeCase(py, Fixed('_List')),
+    NativeCase(js, Fixed('Array')))), Name(List), TypeParam(Name(T)),
 
   MethodMacro(Type(Name(void)), Name(add),
    Param(Type(Name(T)), Name(element), $type=0.List.T),
@@ -157,7 +169,9 @@ File(
      Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self),
      $type=0.List<0.List.T>), Fixed(').length'))))),
 
- Primitive(Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('java.util.HashMap')), NativeCase(py, Fixed('_Map')), NativeCase(js,
+     Fixed('Map')))), Name(Map), TypeParam(Name(K)), TypeParam(Name(V)),
 
   MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(K)), Name(key), $type=0.Map.K),

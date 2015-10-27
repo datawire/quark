@@ -106,16 +106,16 @@ def main(args):
     assert "compile" in commands, (commands, args)
 
     if "compile" in commands:
-        compiler_args = {"<file>": filenames}
+        compiler_args = {}
         if java:
-            compiler_args["--java"] = java_dir
+            compiler_args["java"] = java_dir
         if python:
-            compiler_args["--python"] = py_dir
+            compiler_args["python"] = py_dir
         if javascript:
-            compiler_args["--javascript"] = js_dir
-        res = compiler._main(compiler_args)
+            compiler_args["javascript"] = js_dir
+        res = compiler.main(filenames, **compiler_args)
         if res is not None:
-            exit(res)
+            return "quark (compiler): %s" % res
 
     try:
         if "build" in commands:

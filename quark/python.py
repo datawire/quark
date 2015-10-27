@@ -38,13 +38,7 @@ class FieldRenderer(object):
 class PythonNamer(SubstitutionNamer):
 
     def __init__(self):
-        SubstitutionNamer.__init__(self, {"List": "_List", "Map": "_Map", "print": "print_"})
-
-    def match_Type(self, t):
-        if len(t.path) > 1:
-            root = t.path[0].match(self)
-            t.file.imports[root] = True
-        return ".".join([p.match(self) for p in t.path])
+        SubstitutionNamer.__init__(self, {"print": "print_"})
 
     def get(self, name):
         return self.env.get(name, name.replace("-", "_"))
@@ -182,7 +176,12 @@ class PythonExprRenderer(ExprRenderer):
 
     @overload(Class)
     def invoke(self, cls, expr, args):
-        return "%s(%s)" % (expr.match(self), ", ".join(args))
+        cons = constructors(cls)
+        con = cons[0] if cons else None
+        if isinstance(con, Macro):
+            return self.apply_macro(con, expr, args)
+        else:
+            return "%s(%s)" % (expr.match(self), ", ".join(args))
 
     def invoke_super_method(self, method, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
@@ -196,6 +195,16 @@ class PythonExprRenderer(ExprRenderer):
     def match_Super(self, s):
         return "super(%s, self)" % s.clazz.name.match(self.namer)
 
+    @overload(Class, dict)
+    def type(self, cls, bindings, expr):
+        return self.type(cls, expr)
+
+    @overload(Type)
+    def type(self, t):
+        if len(t.path) > 1:
+            root = t.path[0].match(self.namer)
+            t.file.imports[root] = True
+        return self.type(t.resolved, t)
 
 setup_py = """# Setup file for package %(name)s
 
