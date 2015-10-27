@@ -25,6 +25,7 @@ Or (||)<Or>
 Subtract (-)<Subtract>
 
 .. _AddOperator:
+
 Add
 ~~~
 
@@ -40,6 +41,7 @@ The Add operator syntax is:
 where *A* and *B* are the two values being added together. If the values are numbers, the addition is standard arithmetic addition. If the values are strings, the addition appends the string on the right side to the string on the left side.
 
 .. _AndOperator:
+
 And
 ~~~
 
@@ -61,9 +63,9 @@ Note that Quark uses 1/0 for true/false and the && operator is not supported for
 [[JMK Unless I'm missing something, this means && isn't supported at all right now - should I just say that]]
 
 .. _ComplementOperator:
+
 Bitwise Complement
 ~~~~~~~~~~~~~~~~~~
-
 The Bitwise Complement operator is a unary operator that evaluates switches the bits of the supplied value.
 
 Syntax
@@ -80,6 +82,7 @@ The Bitwise Complement operator is only partially supported at the moment. See `
 .. _linkIssue34: https://github.com/datawire/quark/issues/34
 
 .. _DivideOperator:
+
 Divide
 ~~~~~~
 
@@ -95,6 +98,7 @@ The Divide operator syntax is:
 where *A* is any numerical value and *B* is any non-zero numerical value.
 
 .. EqualsOperator:
+
 Equals
 ~~~~~~
 The Equals operator is a binary operator that sets the value on the left hand side to the value on the right hand side.
@@ -110,6 +114,7 @@ where *A* is the value being set and *B* is the new value it is assigned.
 
 
 .. _EquivalentOperator:
+
 Equivalent
 ~~~~~~~~~~
 The Equivalent operator is a binary operator that evaluates to true if the value on the left side is equivalent to the value on the right hand side and evaluates to false if they are not equivalent.
@@ -124,6 +129,7 @@ The Equivalent operator syntax is:
 where *A* and *B* are the values being evaluated for equivalence.
 
 .. _GreaterThanOperator:
+
 Greater Than
 ~~~~~~~~~~~~
 
@@ -139,6 +145,7 @@ The Greater Than operator syntax is:
 where *A* and *B* are both numerical values.
 
 .. _GreaterThanOrEqualOperator:
+
 Greater Than or Equal
 ~~~~~~~~~~~~~~~~~~~~~
 The Greater Than or Equal operator is a binary operator that evaluates to true if the value on the left side is greater than the value on the right side or if the two values are equal. It evaluates to false if the value on the right side is greater than the value on the left side.
@@ -154,6 +161,7 @@ where *A* and *B* are both numerical values.
 
 
 .. _LessThanOperator:
+
 Less Than
 ~~~~~~~~~
 
@@ -170,6 +178,7 @@ where *A* and *B* are both numerical values.
 
 
 .. _LessThanOrEqualOperator:
+
 Less Than or Equal
 ~~~~~~~~~~~~~~~~~~
 The Less Than or Equal operator is a binary operator that evaluates to true if the value on the left side is less than the value on the right side or if the two values are the equal. It evaluates to false if the value on the right side is less than the value on the left side.
@@ -184,6 +193,7 @@ The Less Than or Equal operator syntax is:
 where *A* and *B* are both numerical values.
 
 .. _ModuloOperator:
+
 Modulo
 ~~~~~~
 The Modulo operator is a binary operator that evaluates to the remainder when the value on the right hand side is divided into the value on the left hand side.
@@ -198,6 +208,7 @@ The Modulo operator syntax is:
 where *A* and *B* are both integers.
 
 .. _MultiplyOperator:
+
 Multiply
 ~~~~~~~~
 The Multiply operator is a binary operator that multiplies the value on the left of the operator and the value on the right of the operator together.
@@ -213,6 +224,7 @@ where *A* and *B* are the two numbers being multiplied together.
 
 
 .. _NegateOperator:
+
 Negate
 ~~~~~~
 The Negate operator is a unary operator that switches the sign of a signed number.
@@ -227,6 +239,7 @@ The Negate operator syntax is:
 where *A* is a number.
 
 .. _NotOperator:
+
 Not
 ~~~
 The Not operator is a unary operator that inverts the truthfulness of an expression. If the expression evaluates to true on its own then it will evaluate to false when the Not operator is applied and vice versa.
@@ -247,6 +260,7 @@ Note that Quark uses 1/0 for true/false and the ! operator is not supported for 
 [[JMK Should I just say it's not currently supported? Clearly there is no case where ! will work given the above and that ! only operates on true/false]]
 
 .. _NotEquivalentOperator:
+
 Not Equivalent
 ~~~~~~~~~~~~~~
 The Not Equivalent operator is a binary operator that evaluates to true if the value on the left side of the operator is not equivalent to the value on the right side of the operator and evaluates to false if the two values are equivalent.
@@ -263,6 +277,7 @@ where *expression1* and *expression2* are the expressions being compared.
 .. _linkIssue24: https://github.com/datawire/quark/issues/24
 
 .. _OrOperator:
+
 Or
 ~~
 
@@ -284,6 +299,7 @@ Note that Quark uses 1/0 for true/false and the && operator is not supported for
 [[JMK Unless I'm missing something, this means || isn't supported at all right now - should I just say that?]]
 
 .. _SubtractOperator:
+
 Subtract
 ~~~~~~~~
 The Subtract operator is a binary operator that subtracts the value on the right hand side of the operator from the value on the left hand side of the operator.
