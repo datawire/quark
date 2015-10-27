@@ -249,6 +249,9 @@ class Use:
         else:
             t.resolved = texpr(type.resolved.type, bindings, type.resolved.bindings)
 
+    def leave_Declaration(self, d):
+        d.resolved = d.type.resolved
+
     def visit_Var(self, v):
         v.definition = self.lookup(v)
         if v.definition is None:
@@ -286,9 +289,6 @@ class Resolver(object):
 
     def __init__(self):
         self.errors = []
-
-    def leave_Declaration(self, d):
-        d.resolved = d.type.resolved
 
     def leave_Super(self, s):
         if s.clazz.base is None:
