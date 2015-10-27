@@ -14,7 +14,7 @@
 
 import os, pytest
 from quark.compiler import Compiler
-from .util import assert_file, maybe_xfail
+from .util import assert_file, maybe_xfail, is_excluded_file
 
 directory = os.path.join(os.path.dirname(__file__), "parse")
 
@@ -26,12 +26,19 @@ def path(request):
     return request.param
 
 def test_parse(path):
+    parse(path, is_excluded_file)
+
+def test_parse_builtin():
+    parse(os.path.join(directory, "empty-file.q"), lambda x: False)
+
+def parse(path, file_filter):
     dir = os.path.dirname(path)
     text = open(path).read()
     maybe_xfail(text)
     c = Compiler()
     c.parse(os.path.basename(path), text)
     for ast in c.root.files:
+        if file_filter(ast.filename): continue
         base = os.path.splitext(ast.filename)[0]
         assert_file(os.path.join(dir, base + ".ast"), ast.pprint())
         code = ast.code()
