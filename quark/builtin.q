@@ -30,9 +30,12 @@ primitive int extends number {
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
+    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
 }
 
-primitive long extends number {}
+primitive long extends number {
+    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
+}
 
 primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}
@@ -41,10 +44,15 @@ primitive float extends number {
     macro String toString() $java{Double.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
+    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
 }
 
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
+    macro JSONObject toJSON() ${new JSONObject().setString($self)};
+    macro JSONObject parseJSON() $java{io.datawire.quark_runtime.jsonFromString($self)}
+                                 $py{_json_from_string($self)}
+                                 $js{_qrt.json_from_string($self)};
 }
 
 primitive List<T> {
@@ -84,7 +92,7 @@ primitive JSONObject {
 
     String     getType();                  // object/list/string/number/true/false/null
     JSONObject getObjectItem(String key);  // object accessor, may return undefined()
-    JSONObject __get__(String key);        // object accessor
+    macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
     JSONObject getListItem(int index);     // list accessor, may return undefined()
     String     getString();                // string accessor
     float      getNumber();                // number accessor
@@ -99,31 +107,27 @@ primitive JSONObject {
 
     String     toString();              // serialize to json
 
-    // mutators
+    // returning self
+    JSONObject setString(String value);      // set current object type to 'string' and set it's value
+    JSONObject setNumber(float value);       // set current object type to 'number' and set it's value
+    JSONObject setBool(int value);           // set current object type to 'true' or 'false'
+    JSONObject setNull();                    // set current object type to 'null'
 
-    JSONObject addToObject(String key);      // set current object type to 'object' and return added null sub-object
-    JSONObject addToList();                  // set current object type to 'list' and return appended null sub-object
+    JSONObject setObject();                  // set current object type to 'object', (for empty objects)
+    JSONObject setList();                    // set current object type to 'list', 
 
-    void       setString(String value);      // set current object type to 'string' and set it's value
-    void       setNumber(float value);       // set current object type to 'number' and set it's value
-    void       setBool(int value);           // set current object type to 'true' or 'false'
-    void       setNull();                    // set current object type to 'null'
+    JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
+    JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
 
-    void       setObject();                  // set current object type to 'object', (for empty objects)
-    void       setList();                    // set current object type to 'list', 
-
-
-    void __set__(String key, String value);  // === addToObject(key).setString(value)
+    macro void __set__(String key, JSONObject value) ${ ($self).setObjectItem(($key), ($value))};
     // TODO a while bunch of __set__ overloads
 
     // V2:
     // JSONObject mergeMap(Map<String,Object> map); // set current object type to 'object' and merge in all map pairs
-    // JSONObject mergeObject(Map<String,Object> other); // set current object type to 'object' and merge in all object
+    // JSONObject mergeObject(JSONObject other);    // set current object type to 'object' and merge in all other.items()
+    // JSONObject extendList(List<Object> list);    // set current object type to 'list' and extend with all list values
+    // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
 }
-
-macro JSONObject json_from_string(String json) $java{io.datawire.quark_runtime.jsonFromString($json)}
-                                               $py{_json_from_string($json)}
-                                               $js{_qrt.json_from_string($json)};
 
 macro void print(String msg) $java{System.out.println($msg)}
                              $py{_println($msg)}

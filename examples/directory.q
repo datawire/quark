@@ -16,7 +16,7 @@ package directory {
 	    self.socket = self.runtime.open(url);
 	    self.socket.setHandler(self);
 	    JSONObject jobj = new JSONObject(); // or maybe just new Map<String,Object> if that can work
-	    jobj["tether-info"] = "...";
+	    jobj["tether-info"] = "...".toJSON();
 	    self.socket.send(jobj.toString()); // might need to be toJSON() or something like that
 
 	    self.runtime.schedule(self, 3.0); // heartbeat interval
@@ -29,7 +29,7 @@ package directory {
 	}
 
 	void onMessage(WebSocket socket, String message) {
-	    JSONObject jobj = json_from_string(message);
+	    JSONObject jobj = message.parseJSON();
 	    String op = jobj["op"].getString();
 	    if (op == "entry") {
 		Entry entry = new Entry();
