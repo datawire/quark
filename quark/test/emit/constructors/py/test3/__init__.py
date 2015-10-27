@@ -9,7 +9,7 @@ class Box(object):
         (self).contents = contents
 
     def get(self):
-        return (self).contents;
+        return (self).contents
 
 
 
