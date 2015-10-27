@@ -98,16 +98,18 @@ File(
      Fixed(')')))),
 
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self),
-     $type=0.int), Fixed(')'))))),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
+    $type=0.JSONObject.setNumber), Var(Name(self), $type=0.int),
+   $type=0.JSONObject))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
   Name(long), Name(number),
 
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self),
-     $type=0.long), Fixed(')'))))),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
+    $type=0.JSONObject.setNumber), Var(Name(self), $type=0.long),
+   $type=0.JSONObject))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Double')),
     NativeCase(py, Fixed('float')), NativeCase(js, Fixed('Number')))),
@@ -130,8 +132,9 @@ File(
      Fixed(')')))),
 
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self),
-     $type=0.float), Fixed(')'))))),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
+    $type=0.JSONObject.setNumber), Var(Name(self), $type=0.float),
+   $type=0.JSONObject))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('String')),
     NativeCase(py, Fixed('str')), NativeCase(js, Fixed('String')))),
@@ -143,8 +146,9 @@ File(
      Fixed(') + ('), Var(Name(other), $type=0.String), Fixed(')')))),
 
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Native(NativeCase(Fixed('new JSONObject().setString('), Var(Name(self),
-     $type=0.String), Fixed(')')))),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setString),
+    $type=0.JSONObject.setString), Var(Name(self), $type=0.String),
+   $type=0.JSONObject)),
 
   MethodMacro(Type(Name(JSONObject)), Name(parseJSON), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.jsonFromString('), Var(Name(self),

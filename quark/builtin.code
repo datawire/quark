@@ -21,22 +21,22 @@ primitive int extends number {
     macro int __div__(int other) $java{~((~($self)) / ($other))}$py{($self) / ($other)}$js{Math.floor(($self) / ($other))};
     macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}$py{($self) % ($other)}$js{_qrt.modulo(($self), ($other))};
     macro String toString() $java{Integer.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
-    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
+    macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
 }
 @mapping($java{Long}$py{long}$js{Number})
 primitive long extends number {
-    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
+    macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
 }
 @mapping($java{Double}$py{float}$js{Number})
 primitive float extends number {
     macro float __div__(float other) $java{($self) / ($other)}$py{float($self) / float($other)}$js{($self) / ($other)};
     macro String toString() $java{Double.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
-    macro JSONObject toJSON() ${new JSONObject().setNumber($self)};
+    macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
 }
 @mapping($java{String}$py{str}$js{String})
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
-    macro JSONObject toJSON() ${new JSONObject().setString($self)};
+    macro JSONObject toJSON() ((new JSONObject()).setString)(self);
     macro JSONObject parseJSON() $java{io.datawire.quark_runtime.jsonFromString($self)}$py{_json_from_string($self)}$js{_qrt.json_from_string($self)};
 }
 @mapping($java{java.util.ArrayList}$py{_List}$js{Array})
