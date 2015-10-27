@@ -32,6 +32,10 @@ def assert_file(path, content):
     expected = check_file(path, content)
     assert content == expected
 
-def maybe_xfail(code):
-    if "xfail" in code:
+def maybe_xfail(code, ext=None):
+    if "xfail" in code and "xfail:" not in code:
+        pytest.xfail()
+    if ext:
+        print ext
+    if ext and ("xfail:%s"%ext) in code:
         pytest.xfail()

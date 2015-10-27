@@ -47,13 +47,13 @@ def Backend(request):
 
 def test_emit(path, Backend):
     text = open(path).read()
-    maybe_xfail(text)
+    backend = Backend()
+    maybe_xfail(text, backend.ext)
     base = os.path.splitext(path)[0]
     comp = Compiler()
     comp.parse(os.path.basename(path), text)
     comp.compile()
 
-    backend = Backend()
     comp.emit(backend)
     extbase = os.path.join(base, backend.ext)
     if not os.path.exists(extbase):
