@@ -16,7 +16,7 @@ package directory {
 	    self.socket = self.runtime.open(url);
 	    self.socket.setHandler(self);
 	    JSONObject jobj = new JSONObject(); // or maybe just new Map<String,Object> if that can work
-	    jobj["tether-info"] = "...";
+	    jobj["tether-info"] = "...".toJSON();
 	    self.socket.send(jobj.toString()); // might need to be toJSON() or something like that
 
 	    self.runtime.schedule(self, 3.0); // heartbeat interval
@@ -29,12 +29,20 @@ package directory {
 	}
 
 	void onMessage(WebSocket socket, String message) {
-	    JSONObject jobj = JSONObject.parse(message);
-	    String op = jobj["op"];
+	    JSONObject jobj = message.parseJSON();
+	    String op = jobj["op"].getString();
 	    if (op == "entry") {
 		Entry entry = new Entry();
-		entry.service = jobj["service"];
-		entry.endpoints = jobj["endpoints"];
+		entry.service = jobj["service"].getString();
+                entry.endpoints = new List<String>();
+                int i = 0;
+                JSONObject endpoints = jobj["endpoints"];
+                JSONObject endpoint = endpoints.getListItem(i);
+                while (endpoint != endpoints.undefined()) {
+                    entry.endpoints.add(endpoint.getString());
+                    i = i + 1;
+                    endpoint = endpoints.getListItem(i);
+                }
 		entries[entry.service] = entry;
 	    } else {
 		if (op == "initialized") {
