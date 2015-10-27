@@ -1,3 +1,16 @@
+class WebSocket {
+    void setHandler(Object o) {}
+    void send(String s) {}
+}
+class Runtime {
+    void acquire() {}
+    void release() {}
+    void wait() {}
+    WebSocket open(String url) { return null; }
+    void schedule(Object o, float t) {}
+}
+class Future<T> {}
+
 package directory {
 
     class Directory { // implements WebHandler, Task
