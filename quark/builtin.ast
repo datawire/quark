@@ -21,6 +21,10 @@ File(
 
  Primitive(Name(void)),
 
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Boolean')),
+    NativeCase(py, Fixed('bool')), NativeCase(js, Fixed('Boolean')))),
+  Name(bool)),
+
  Primitive(Name(number),
 
   MethodMacro(Type(Name(number)), Name(__neg__), Native(NativeCase(Fixed('-('),
@@ -83,11 +87,19 @@ File(
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
-     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self)),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
-  Name(long), Name(number)),
+  Name(long), Name(number),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self)),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Double')),
     NativeCase(py, Fixed('float')), NativeCase(js, Fixed('Number')))),
@@ -105,7 +117,11 @@ File(
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Double.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
-     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Native(NativeCase(Fixed('new JSONObject().setNumber('), Var(Name(self)),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('String')),
     NativeCase(py, Fixed('str')), NativeCase(js, Fixed('String')))),
@@ -114,7 +130,17 @@ File(
   MethodMacro(Type(Name(String)), Name(__add__),
    Param(Type(Name(String)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') + ('),
-     Var(Name(other)), Fixed(')'))))),
+     Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Native(NativeCase(Fixed('new JSONObject().setString('), Var(Name(self)),
+     Fixed(')')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(parseJSON), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.jsonFromString('), Var(Name(self)),
+     Fixed(')')), NativeCase(py, Fixed('_json_from_string('), Var(Name(self)),
+     Fixed(')')), NativeCase(js, Fixed('_qrt.json_from_string('),
+     Var(Name(self)), Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('java.util.ArrayList')), NativeCase(py, Fixed('_List')),
@@ -193,6 +219,69 @@ File(
      Fixed('('), Var(Name(other)), Fixed(').forEach(function (v, k) '),
      Fixed('{'), Fixed(' ('), Var(Name(self)), Fixed(').set(k, v); '),
      Fixed('}'), Fixed(')'))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.JSONObject')), NativeCase(py,
+     Fixed('_JSONObject')), NativeCase(js, Fixed('_qrt.JSONObject')))),
+  Name(JSONObject),
+
+  ConstructorMacro(Name(JSONObject), Native(NativeCase(java,
+     Fixed('new io.datawire.quark_runtime.JSONObject()')), NativeCase(py,
+     Fixed('_JSONObject()')), NativeCase(js, Fixed('new _qrt.JSONObject()')))),
+
+  Method(Type(Name(String)), Name(getType)),
+
+  Method(Type(Name(JSONObject)), Name(getObjectItem),
+   Param(Type(Name(String)), Name(key))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__get__),
+   Param(Type(Name(String)), Name(key)),
+   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').getObjectItem('),
+     Var(Name(key)), Fixed(')')))),
+
+  Method(Type(Name(JSONObject)), Name(getListItem),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Type(Name(String)), Name(getString)),
+
+  Method(Type(Name(float)), Name(getNumber)),
+
+  Method(Type(Name(int)), Name(getBool)),
+
+  Method(Type(Name(int)), Name(isNull)),
+
+  Method(Type(Name(JSONObject)), Name(undefined)),
+
+  Method(Type(Name(String)), Name(toString)),
+
+  Method(Type(Name(JSONObject)), Name(setString),
+   Param(Type(Name(String)), Name(value))),
+
+  Method(Type(Name(JSONObject)), Name(setNumber),
+   Param(Type(Name(float)), Name(value))),
+
+  Method(Type(Name(JSONObject)), Name(setBool),
+   Param(Type(Name(int)), Name(value))),
+
+  Method(Type(Name(JSONObject)), Name(setNull)),
+
+  Method(Type(Name(JSONObject)), Name(setObject)),
+
+  Method(Type(Name(JSONObject)), Name(setList)),
+
+  Method(Type(Name(JSONObject)), Name(setObjectItem),
+   Param(Type(Name(String)), Name(key)),
+   Param(Type(Name(JSONObject)), Name(value))),
+
+  Method(Type(Name(JSONObject)), Name(setListItem),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(JSONObject)), Name(value))),
+
+  MethodMacro(Type(Name(void)), Name(__set__),
+   Param(Type(Name(String)), Name(key)),
+   Param(Type(Name(JSONObject)), Name(value)),
+   Native(NativeCase(Fixed(' ('), Var(Name(self)), Fixed(').setObjectItem(('),
+     Var(Name(key)), Fixed('), ('), Var(Name(value)), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),
   Param(Type(Name(String)), Name(msg)),
