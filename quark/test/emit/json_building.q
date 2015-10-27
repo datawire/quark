@@ -1,4 +1,4 @@
-// xfail
+
 void test_building() {
     print(new JSONObject()
           .setObjectItem("sub-object", new JSONObject()
