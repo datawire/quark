@@ -65,15 +65,19 @@ package directory {
             } else {
                 if (op == "initialized") {
                     self.initialized = true;
-                    self.fireDeferred();
+                    int idx = 0;
+                    while (idx < self.deferred.size()) {
+                        self.runtime.schedule(self.deferred[idx], 0.0);
+                        idx = idx + 1;
+                    }
                 }
             }
         }
 
         Entry lookup(String name) {
             Entry result = null;
-            self.runtime.aquire();
-            while (!self.initialized) {
+            self.runtime.acquire();
+            while (self.initialized != true) {
                 self.runtime.wait(self.timeout);
             }
             result = entries[name];
@@ -83,14 +87,14 @@ package directory {
 
         Future<Entry> lookupAsync(String name) {
             AsyncLookup result;
-            self.directory.runtime.acquire();
+            self.runtime.acquire();
             result = new AsyncLookup(self, name);
             if (self.initialized) {
-                self.runtime.schedule(result);
+                self.runtime.schedule(result, 0.0);
             } else {
-                self.deferred.append(result);
+                self.deferred.add(result);
             }
-            self.directory.runtime.release();
+            self.runtime.release();
             return result;
         }
 
