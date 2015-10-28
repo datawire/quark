@@ -78,7 +78,16 @@ def build_java(comp, base, srcs):
     build = os.path.join(base, "build")
     if not os.path.exists(build):
         os.makedirs(build)
-    jexit = os.system("javac -d %s %s" % (build, " ".join(srcs)))
+    print base
+    print build
+    depdir = os.path.join(directory, "java-deps")
+    cp = list(os.path.join(depdir,jar) for jar in os.listdir(depdir) if jar.endswith(".jar"))
+    if cp:
+        ccp = "-cp " + ":".join(cp);
+    else:
+        ccp = ""
+    print cp
+    jexit = os.system("javac %s -d %s %s" % (ccp, build, " ".join(srcs)))
     assert jexit == 0
 
     if "main" in comp.root.env:
@@ -87,7 +96,8 @@ def build_java(comp, base, srcs):
             expected = open(out).read()
         except IOError, e:
             expected = None
-        actual = subprocess.check_output(["java", "-cp", build, "Functions"])
+        cp.append(build)
+        actual = subprocess.check_output(["java", "-cp", ":".join(cp), "Functions"])
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual

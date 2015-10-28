@@ -1,4 +1,3 @@
-// xfail:java
 
 void test_building() {
     print(new JSONObject()

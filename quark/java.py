@@ -38,6 +38,13 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
       </plugin>
     </plugins>
   </build>
+  <dependencies>
+    <dependency>
+      <groupId>com.fasterxml.jackson.jr</groupId>
+      <artifactId>jackson-jr-objects</artifactId>
+      <version>2.5.3</version>
+    </dependency>
+  </dependencies>
 </project>
 """
 

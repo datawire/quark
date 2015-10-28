@@ -1,5 +1,3 @@
-// xfail:java
-
 void test_assembling() {
     JSONObject innerObject = new JSONObject();
 
