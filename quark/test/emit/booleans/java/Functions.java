@@ -16,7 +16,7 @@ public class Functions {
             if ((count) > (3)) {
                 return;
             }
-            count = (Integer) ((count) + (1));
+            count = (count) + (1);
         }
     }
     public static void main(String[] args) {

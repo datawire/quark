@@ -68,7 +68,7 @@ class PythonDefinitionRenderer(DefinitionRenderer):
     def class_initializer(self, cls):
         fields = "\n".join([f.match(self.fieldr) for f in cls.definitions if isinstance(f, Field)])
         if cls.base:
-            fields = "%s._init(self)\n%s" % (cls.base.match(self.namer), fields)
+            fields = "%s._init(self)\n%s" % (self.stmtr.exprr.type(cls.base), fields)
         return "def _init(self):%s" % (indent(fields) or " pass")
 
     def default_constructors(self, cls):
@@ -85,7 +85,7 @@ class PythonDefinitionRenderer(DefinitionRenderer):
 
     def match_Class(self, c):
         name = c.name.match(self.namer)
-        base = c.base.match(self.namer) if c.base else "object"
+        base = self.stmtr.exprr.type(c.base) if c.base else "object"
         body = indent("\n".join(self.class_body(c)))
         bases = "(%s)" % base if base else ""
         doc = indent(self.doc(c.annotations)).rstrip()

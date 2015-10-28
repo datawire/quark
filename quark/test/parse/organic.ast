@@ -31,7 +31,7 @@ File(
     ExprStmt(Var(Name(blueberry))),
     ExprStmt(Var(Name(huckleberry))))),
 
-  Class(Name(Foo), Name(Bar),
+  Class(Name(Foo), Type(Name(Bar)),
 
    Method(Type(Name(void)), Name(doFoo), Block(
      Assign(Var(Name(x)), Call(Attr(Var(Name(this)), Name(x)), Var(Name(a)),

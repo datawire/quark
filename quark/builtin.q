@@ -15,19 +15,18 @@ primitive bool {
     macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
 }
 
-primitive number {
-    macro number __neg__() ${-($self)};
-    macro number __add__(number other) ${($self) + ($other)};
-    macro number __sub__(number other) ${($self) - ($other)};
-    macro number __mul__(number other) ${($self) * ($other)};
-    macro number __div__(number other) ${($self) / ($other)};
-    macro number __lt__(number other) ${($self) < ($other)};
-    macro number __gt__(number other) ${($self) > ($other)};
+primitive numeric<T> {
+    macro T __neg__() ${-($self)};
+    macro T __add__(T other) ${($self) + ($other)};
+    macro T __sub__(T other) ${($self) - ($other)};
+    macro T __mul__(T other) ${($self) * ($other)};
+    macro T __div__(T other) ${($self) / ($other)};
+    macro T __lt__(T other) ${($self) < ($other)};
+    macro T __gt__(T other) ${($self) > ($other)};
 }
 
 @mapping($java{Integer} $py{int} $js{Number})
-primitive int extends number {
-    macro int __neg__() ${-($self)};
+primitive int extends numeric<int> {
     macro int __div__(int other) $java{~((~($self)) / ($other))}
                                  $py{($self) / ($other)}
                                  $js{Math.floor(($self) / ($other))};
@@ -41,7 +40,13 @@ primitive int extends number {
 }
 
 @mapping($java{Long} $py{long} $js{Number})
-primitive long extends number {
+primitive long extends numeric<long> {
+    macro long __div__(long other) $java{~((~($self)) / ($other))}
+                                   $py{($self) / ($other)}
+                                   $js{Math.floor(($self) / ($other))};
+    macro long __mod__(long other) $java{Math.floorMod(($self), ($other))}
+                                   $py{($self) % ($other)}
+                                   $js{_qrt.modulo(($self), ($other))};
     macro String toString() $java{Long.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
@@ -49,7 +54,7 @@ primitive long extends number {
 }
 
 @mapping($java{Double}$py{float}$js{Number})
-primitive float extends number {
+primitive float extends numeric<float> {
     macro float __div__(float other) $java{($self) / ($other)}
                                      $py{float($self) / float($other)}
                                      $js{($self) / ($other)};

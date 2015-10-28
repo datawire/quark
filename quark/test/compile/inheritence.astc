@@ -5,13 +5,13 @@ File(
     ExprStmt(Call(Var(Name(print), $type=0.print), String("A", $type=0.String),
      $type=0.void))))),
 
- Class(Name(B), Name(A),
+ Class(Name(B), Type(Name(A)),
 
   Method(Type(Name(void)), Name(foo), Block(
     ExprStmt(Call(Var(Name(print), $type=0.print), String("B", $type=0.String),
      $type=0.void))))),
 
- Class(Name(C), Name(A)),
+ Class(Name(C), Type(Name(A))),
 
  Function(Type(Name(void)), Name(main), Block(
    Local(
