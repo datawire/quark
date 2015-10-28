@@ -121,10 +121,11 @@
     }
     JSONObject.prototype.isNull = JSONObject_isNull;
 
+    var _JSONObject_undefined = new JSONObject();
+    _JSONObject_undefined.value = undefined;
+
     function JSONObject_undefined() {
-        var u = new JSONObject();
-        u.value = undefined;
-        return u;
+        return _JSONObject_undefined;
     }
     JSONObject.prototype.undefined = JSONObject_undefined;
 
@@ -139,36 +140,42 @@
         return this;
     }
     JSONObject.prototype.setString = JSONObject_setString;
+    _JSONObject_undefined.setString = undefined;
 
     function JSONObject_setNumber(value) {
         this.value = value;
         return this;
     }
     JSONObject.prototype.setNumber = JSONObject_setNumber;
+    _JSONObject_undefined.setNumber = undefined;
 
     function JSONObject_setBool(value) {
         this.value = !!value;
         return this;
     }
     JSONObject.prototype.setBool = JSONObject_setBool;
+    _JSONObject_undefined.setBool = undefined;
 
     function JSONObject_setNull() {
         this.value = null;
         return this;
     }
     JSONObject.prototype.setNull = JSONObject_setNull;
+    _JSONObject_undefined.setNull = undefined;
 
     function JSONObject_setObject() {
         this.value = {};
         return this;
     }
     JSONObject.prototype.setObject = JSONObject_setObject;
+    _JSONObject_undefined.setObject = undefined;
 
     function JSONObject_setList() {
         this.value = [];
         return this;
     }
     JSONObject.prototype.setList = JSONObject_setList;
+    _JSONObject_undefined.setList = undefined;
 
     function JSONObject_setObjectItem(key, value) {
         if (this.getType() !== 'object') {
@@ -178,6 +185,7 @@
         return this;
     }
     JSONObject.prototype.setObjectItem = JSONObject_setObjectItem;
+    _JSONObject_undefined.setObjectItem = undefined;
 
     function JSONObject_setListItem(index, value) {
         if (this.getType() !== 'list') {
@@ -190,6 +198,7 @@
         return this;
     }
     JSONObject.prototype.setListItem = JSONObject_setListItem;
+    _JSONObject_undefined.setListItem = undefined;
 
     function json_from_string(json) {
         var raw = JSON.parse(json);

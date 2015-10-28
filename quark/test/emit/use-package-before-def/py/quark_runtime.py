@@ -37,7 +37,7 @@ def _url_get(url):
 class _JSONObject(object):
     _backend = json
     _dict = collections.OrderedDict
-    _undefined = object()
+    _undefined = None
 
     def __init__(self):
         self.value = None
@@ -47,6 +47,9 @@ class _JSONObject(object):
         wrapped = cls()
         wrapped.value = value
         return wrapped
+
+    def __eq__(self, other):
+        return self.value == other.value
 
     def getType(self):
         if isinstance(self.value, dict):
@@ -101,8 +104,11 @@ class _JSONObject(object):
     def isNull(self):
         return self.value is None
 
-    def undefined(self):
-        return self._wrap(self._undefined)
+    @classmethod
+    def undefined(cls):
+        if cls._undefined is None:
+            cls._undefined = _UndefinedJSON._wrap(object())
+        return cls._undefined
 
     def toString(self):
         return self._backend.dumps(self.value, separators=(',', ':'))
@@ -152,3 +158,29 @@ class _JSONObject(object):
     @classmethod
     def parse(cls, value):
         return cls._wrap(cls._backend.loads(value, object_pairs_hook=cls._dict))
+
+
+class _UndefinedJSON(_JSONObject):
+    def setString(self, value):
+        pass
+
+    def setNumber(self, value):
+        pass
+
+    def setBool(self, value):
+        pass
+
+    def setNull(self):
+        pass
+
+    def setObject(self):
+        pass
+
+    def setList(self):
+        pass
+
+    def setObjectItem(self, key, value):
+        pass
+
+    def setListItem(self, index, value):
+        pass
