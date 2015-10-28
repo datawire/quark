@@ -6,7 +6,7 @@ class Test(object):
 
     def __init__(self):
         self._init()
-        (self).name = "Hello World!"
+        (self).name = u"Hello World!"
 
 
 

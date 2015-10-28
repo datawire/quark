@@ -11,6 +11,6 @@ class Test(object):
 
 
 def go():
-    t = Test("Hello World!!");
+    t = Test(u"Hello World!!");
     _println((t).name);
-    _println((Test("Hello World!!")).name);
+    _println((Test(u"Hello World!!")).name);

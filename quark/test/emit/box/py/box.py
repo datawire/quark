@@ -46,10 +46,10 @@ def test1():
 
 def test2():
     sbox = Box();
-    (sbox).set("hello");
+    (sbox).set(u"hello");
     hello = (sbox).get();
     _println(hello);
-    (sbox).contents = "world"
+    (sbox).contents = u"world"
     _println((sbox).contents);
 
 
@@ -77,7 +77,7 @@ def test5():
     scrate = Crate();
     _println((scrate).get());
     _println(((scrate).box).contents);
-    (scrate).set("hello");
+    (scrate).set(u"hello");
     _println((scrate).get());
     _println(((scrate).box).contents);
     ((scrate).ibox).contents = 3
@@ -93,22 +93,22 @@ def test6():
 
 
 def main():
-    _println("test1:\n--");
+    _println(u"test1:\n--");
     test1();
-    _println("");
-    _println("test2:\n--");
+    _println(u"");
+    _println(u"test2:\n--");
     test2();
-    _println("");
-    _println("test3:\n--");
+    _println(u"");
+    _println(u"test3:\n--");
     test3();
-    _println("");
-    _println("test4:\n--");
+    _println(u"");
+    _println(u"test4:\n--");
     test4();
-    _println("");
-    _println("test5:\n--");
+    _println(u"");
+    _println(u"test5:\n--");
     test5();
-    _println("");
-    _println("test6:\n--");
+    _println(u"");
+    _println(u"test6:\n--");
     test6();
 
 

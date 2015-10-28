@@ -5,7 +5,7 @@ class Test(object):
     def __init__(self): self._init()
 
     def test(self):
-        _println("Hello World!");
+        _println(u"Hello World!");
 
 
 

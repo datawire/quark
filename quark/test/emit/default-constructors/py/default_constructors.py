@@ -14,7 +14,7 @@ class B(A):
         A._init(self)
 
     def greet(self):
-        _println(("Hello, my name is ") + ((self).name));
+        _println((u"Hello, my name is ") + ((self).name));
 
 
 class C(A):
@@ -22,10 +22,10 @@ class C(A):
         A._init(self)
 
     def __init__(self, name):
-        super(C, self).__init__(("C") + (name));
+        super(C, self).__init__((u"C") + (name));
 
     def greet(self):
-        _println(("Greetings, my name is ") + ((self).name));
+        _println((u"Greetings, my name is ") + ((self).name));
 
 
 class X(object):
@@ -47,11 +47,11 @@ class Y(X):
 
 
 def main():
-    b = B("Bob");
+    b = B(u"Bob");
     (b).greet();
-    c = C("arole");
+    c = C(u"arole");
     (c).greet();
-    y = Y("asdf");
+    y = Y(u"asdf");
     (y).test();
 
 

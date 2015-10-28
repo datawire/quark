@@ -4,7 +4,7 @@ import test
 
 
 def go():
-    _println("GO!");
+    _println(u"GO!");
 
 class Test(object):
     def _init(self):
@@ -13,4 +13,4 @@ class Test(object):
     def __init__(self): self._init()
 
     def go(self):
-        _println("TGO!");
+        _println(u"TGO!");

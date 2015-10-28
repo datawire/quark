@@ -442,8 +442,7 @@ class Parser:
     def visit_string(self, node, (pre, string, post)):
         return String(string)
 
-    # lame string literals here
-    @g.rule(r'STRING = ~"\"[^\"]*\""')
+    @g.rule(r'STRING = ~"\"(\\\\[\"nrt\\\\]|\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\\\x[0-9a-fA-F][0-9a-fA-F]|[^\\\\\"])*\""')
     def visit_STRING(self, node, children):
         return node.text
 

@@ -2,8 +2,8 @@ from quark_runtime import *
 
 
 def a():
-    _println("a");
+    _println(u"a");
 
 
 def b():
-    _println("b");
+    _println(u"b");

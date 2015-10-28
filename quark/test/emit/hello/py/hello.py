@@ -2,7 +2,7 @@ from quark_runtime import *
 
 
 def main():
-    _println("Hello World");
+    _println(u"Hello World");
 
 
 if __name__ == "__main__":

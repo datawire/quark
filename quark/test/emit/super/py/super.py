@@ -9,7 +9,7 @@ class A(object):
         (self).name = name
 
     def greet(self):
-        _println("Hello");
+        _println(u"Hello");
 
 
 class B(A):
@@ -17,11 +17,11 @@ class B(A):
         A._init(self)
 
     def __init__(self):
-        super(B, self).__init__("Bob");
+        super(B, self).__init__(u"Bob");
 
     def greet(self):
         (super(B, self)).greet();
-        _println(("I'm ") + ((self).name));
+        _println((u"I'm ") + ((self).name));
 
 
 

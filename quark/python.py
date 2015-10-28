@@ -198,6 +198,9 @@ class PythonExprRenderer(ExprRenderer):
     def match_Null(self, n):
         return "None"
 
+    def match_String(self, s):
+        return "u" + s.text
+
     def match_Super(self, s):
         return "super(%s, self)" % s.clazz.name.match(self.namer)
 

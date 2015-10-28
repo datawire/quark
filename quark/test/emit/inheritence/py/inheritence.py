@@ -5,7 +5,7 @@ class A(object):
     def __init__(self): self._init()
 
     def foo(self):
-        _println("A");
+        _println(u"A");
 
 
 class B(A):
@@ -13,7 +13,7 @@ class B(A):
         A._init(self)
 
     def foo(self):
-        _println("B");
+        _println(u"B");
 
 
 class C(A):
@@ -30,7 +30,7 @@ def main():
     (b).foo();
     c = C();
     (c).foo();
-    _println("--");
+    _println(u"--");
     a = b
     (a).foo();
     a = c

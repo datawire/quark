@@ -327,7 +327,19 @@ class ExprRenderer(object):
         return n.text
 
     def match_String(self, s):
-        return s.text
+        result = s.text[0]
+        idx = 1
+        while idx < len(s.text) - 1:
+            c = s.text[idx]
+            next = s.text[idx + 1]
+            if c == "\\" and next == "x":
+                result += "\\u00"
+                idx += 1
+            else:
+                result += c
+            idx += 1
+        result += s.text[-1]
+        return result
 
     def match_List(self, l):
         return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \

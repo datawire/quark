@@ -13,9 +13,9 @@ def test1():
 
 def test2():
     list = _List();
-    (list).append("one");
-    (list).append("two");
-    (list).append("three");
+    (list).append(u"one");
+    (list).append(u"two");
+    (list).append(u"three");
     _println((list)[0]);
     _println((list)[1]);
     _println((list)[2]);
@@ -33,9 +33,9 @@ def test3():
 def test4():
     list = _List([]);
     _println(list);
-    list = _List(["one"])
+    list = _List([u"one"])
     _println(list);
-    list = _List(["one", "two", "three"])
+    list = _List([u"one", u"two", u"three"])
     _println(list);
 
 class Box(object):
