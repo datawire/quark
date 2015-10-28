@@ -5,6 +5,9 @@ package io.datawire;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Scanner;
+import com.cedarsoftware.util.io.JsonReader;
+import com.cedarsoftware.util.io.JsonWriter;
+import com.cedarsoftware.util.io.JsonObject;
 
 public class quark_runtime {
     // Unused because Math.floorMod exists
@@ -33,4 +36,29 @@ public class quark_runtime {
         }
     }
 
+    public static class JSONObject {
+        private Object value;
+
+        public JSONObject() {
+            this.value = null;
+        }
+
+        private JSONObject(Object value) {
+            this.value = value;
+        }
+
+        public String toString() {
+            return JsonWriter.objectToJson(this.value);
+        }
+
+        public static JSONObject parse(String json) {
+            return wrap(JsonReader.jsonToMaps(json));
+        }
+
+        private static JSONObject wrap(Object o) {
+            return new JSONObject(o);
+        }
+    }
+
+    
 }
