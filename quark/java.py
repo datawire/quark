@@ -192,7 +192,7 @@ class DefinitionRenderer(object):
         return result
 
     def constructor_header(self, fun):
-        if fun.parent.base:
+        if fun.parent.base and is_extendable(fun.parent.base):
             if not has_super(fun):
                 name = fun.parent.name.match(self.namer)
                 return [self.default_super(name)]
@@ -208,7 +208,7 @@ class DefinitionRenderer(object):
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = ""
         if c.base:
-            if isinstance(c.base.resolved.type, Interface) and not isinstance(c, Interface):
+            if isinstance(c.base.resolved.type, (Interface, Primitive)) and not isinstance(c, Interface):
                 extends = "implements"
             else:
                 extends = "extends"

@@ -119,7 +119,7 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         constructor = None
         doc = self.doc(c.annotations)
 
-        if c.base:
+        if c.base and is_extendable(c.base):
             base_class = self.stmtr.exprr.type(c.base)
             fields.append(base_class + ".prototype.__init_fields__.call(this);")
         else:
@@ -143,7 +143,7 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         if constructor:
             res += constructor.match(self, class_name=name)
         else:
-            if c.base:
+            if c.base and is_extendable(c.base):
                 cons = base_constructors(c)
                 params = []
                 args = ["this"]
