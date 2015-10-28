@@ -11,7 +11,7 @@ class Cat(Pet):
         Pet._init(self)
 
     def greet(self):
-        _println("meow!");
+        _println(u"meow!");
 
 
 class Dog(Pet):
@@ -19,4 +19,4 @@ class Dog(Pet):
         Pet._init(self)
 
     def greet(self):
-        _println("woof!");
+        _println(u"woof!");

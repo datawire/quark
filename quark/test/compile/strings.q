@@ -1,4 +1,3 @@
-// xfail
 void main() {
-    print("\"");
+    print("\uZZZZ");
 }

@@ -12,12 +12,12 @@ class Test(object):
         y = 2;
         z = (x) + (y);
         _println(z);
-        hello = "hello";
+        hello = u"hello";
         _println(hello);
         t1 = Test();
         t2 = (t1).foo(t1);
         if ((t2) != (t1)):
-            _println("YAY!");
+            _println(u"YAY!");
 
         four = (2) + (2);
         _println(four);

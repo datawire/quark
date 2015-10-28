@@ -29,8 +29,8 @@ def get_field(cls, name, default=DEFAULT):
 def get_field(cls, name, default=DEFAULT):
     if name in cls.env:
         return cls.env[name]
-    elif cls.base and cls.base.definition:
-        return get_field(cls.base.definition, name)
+    elif cls.base and cls.base.resolved.type:
+        return get_field(cls.base.resolved.type, name)
     elif default is DEFAULT:
         raise KeyError(name)
     else:
@@ -65,11 +65,11 @@ def base_constructors(cls):
     base = cls.base
     cons = []
     while base:
-        cons = constructors(base.definition)
+        cons = constructors(base.resolved.type)
         if cons:
             break
         else:
-            base = base.definition.base
+            base = base.resolved.type.base
     return cons
 
 @dispatch(String)

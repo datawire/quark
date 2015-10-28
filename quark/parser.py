@@ -23,7 +23,7 @@ class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
                 "return", "macro", "new", "null", "if", "else", "while",
-                "super", "true", "false"]
+                "super", "true", "false", "break", "continue"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -106,7 +106,7 @@ class Parser:
         dfn.annotations = annotations
         return dfn
 
-    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS name )? LBR class_definition* RBR')
+    @g.rule('class = (CLASS / INTERFACE / PRIMITIVE) name type_params? ( EXTENDS type )? LBR class_definition* RBR')
     def visit_class(self, node, ((kw,), name, params, extends, l, definitions, r)):
         if params:
             params = params[0]
@@ -116,6 +116,7 @@ class Parser:
             base = extends[0][-1]
         else:
             base = None
+
         if kw == "class":
             return Class(name, params, base, definitions)
         elif kw == "interface":
@@ -221,7 +222,7 @@ class Parser:
     #   Box<int> x; looks like a declaration
     #      vs
     #    a < b > c; looks like a comparison
-    @g.rule('statement = return / assign / local / if / while / exprstmt')
+    @g.rule('statement = return / break / continue / assign / local / if / while / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
@@ -229,6 +230,14 @@ class Parser:
     def visit_return(self, node, (r, opt, s)):
         expr = opt[0] if opt else None
         return Return(expr)
+
+    @g.rule('break = BREAK SEMI')
+    def visit_break(self, node, _):
+        return Break()
+
+    @g.rule('continue = CONTINUE SEMI')
+    def visit_continue(self, node, _):
+        return Continue()
 
     @g.rule('exprstmt = expr SEMI')
     def visit_exprstmt(self, node, (expr, s)):
@@ -441,8 +450,7 @@ class Parser:
     def visit_string(self, node, (pre, string, post)):
         return String(string)
 
-    # lame string literals here
-    @g.rule(r'STRING = ~"\"[^\"]*\""')
+    @g.rule(r'STRING = ~"\"(\\\\[\"nrt\\\\]|\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\\\x[0-9a-fA-F][0-9a-fA-F]|[^\\\\\"])*\""')
     def visit_STRING(self, node, children):
         return node.text
 

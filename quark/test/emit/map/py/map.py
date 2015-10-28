@@ -3,23 +3,23 @@ from quark_runtime import *
 
 def test1():
     map = _Map();
-    (map)["pi"] = (3);
-    _println((map).get("pi"));
-    _println((map).get("not_there"));
-    _println("^--- should be null");
+    (map)[u"pi"] = (3);
+    _println((map).get(u"pi"));
+    _println((map).get(u"not_there"));
+    _println(u"^--- should be null");
 
 
 def test_update():
     first = _Map();
     second = _Map();
-    (first)["a"] = ("first_a");
-    (first)["b"] = ("first_b");
-    (second)["b"] = ("second_b");
-    (second)["c"] = ("second_c");
+    (first)[u"a"] = (u"first_a");
+    (first)[u"b"] = (u"first_b");
+    (second)[u"b"] = (u"second_b");
+    (second)[u"c"] = (u"second_c");
     (first).update(second);
-    _println((first).get("a"));
-    _println((first).get("b"));
-    _println((first).get("c"));
+    _println((first).get(u"a"));
+    _println((first).get(u"b"));
+    _println((first).get(u"c"));
 
 
 def main():

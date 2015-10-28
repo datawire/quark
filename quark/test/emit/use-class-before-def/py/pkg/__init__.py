@@ -6,7 +6,7 @@ class Bar(object):
 
     def go(self):
         foo = Foo();
-        (foo).name = "bob"
+        (foo).name = u"bob"
         _println((foo).name);
 
 

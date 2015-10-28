@@ -2,7 +2,7 @@ from quark_runtime import *
 
 
 def go():
-    _println("GOGO!!");
+    _println(u"GOGO!!");
 
 class Test(object):
     def _init(self):
@@ -11,4 +11,4 @@ class Test(object):
     def __init__(self): self._init()
 
     def go(self):
-        _println("TTGO!!");
+        _println(u"TTGO!!");

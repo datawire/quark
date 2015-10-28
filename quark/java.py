@@ -208,11 +208,11 @@ class DefinitionRenderer(object):
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = ""
         if c.base:
-            if isinstance(c.base.definition, Interface):
+            if isinstance(c.base.resolved.type, Interface) and not isinstance(c, Interface):
                 extends = "implements"
             else:
                 extends = "extends"
-            extends = " %s %s" % (extends, c.base.match(self.namer))
+            extends = " %s %s" % (extends, self.stmtr.exprr.type(c.base))
         body = "\n".join(self.class_body(c))
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
@@ -308,6 +308,12 @@ class StatementRenderer(object):
     def match_Block(self, b):
         return "{%s}" % indent("\n".join([s.match(self) for s in b.statements]))
 
+    def match_Break(self, b):
+        return "break;"
+
+    def match_Continue(self, c):
+        return "continue;"
+
 class ExprRenderer(object):
 
     def __init__(self, namer):
@@ -327,7 +333,19 @@ class ExprRenderer(object):
         return n.text
 
     def match_String(self, s):
-        return s.text
+        result = s.text[0]
+        idx = 1
+        while idx < len(s.text) - 1:
+            c = s.text[idx]
+            next = s.text[idx + 1]
+            if c == "\\" and next == "x":
+                result += "\\u00"
+                idx += 1
+            else:
+                result += c
+            idx += 1
+        result += s.text[-1]
+        return result
 
     def match_List(self, l):
         return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \

@@ -14,8 +14,8 @@ class Box(object):
 
 
 def go():
-    box = Box("Hello World!!!");
+    box = Box(u"Hello World!!!");
     _println((box).get());
     _println((box).contents);
-    _println((Box("Hello World!!!")).get());
-    _println((Box("Hello World!!!")).contents);
+    _println((Box(u"Hello World!!!")).get());
+    _println((Box(u"Hello World!!!")).contents);

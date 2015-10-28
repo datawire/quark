@@ -6,8 +6,8 @@ import p2
 
 
 def c():
-    _println("c");
+    _println(u"c");
 
 
 def d():
-    _println("d");
+    _println(u"d");

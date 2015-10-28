@@ -3,15 +3,15 @@ from quark_runtime import *
 
 def main():
     if (True):
-        _println("Hi!");
+        _println(u"Hi!");
 
     b = (1) > (0);
     if (b):
-        _println("Hey!");
+        _println(u"Hey!");
 
     c = False;
     if (not (c)):
-        _println("Ho!");
+        _println(u"Ho!");
 
     count = 0;
     while (True) :

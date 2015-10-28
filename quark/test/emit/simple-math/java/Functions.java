@@ -1,6 +1,6 @@
 public class Functions {
     public static void main() {
-        Integer four = (Integer) ((2) + (2));
+        Integer four = (2) + (2);
         System.out.println(Integer.toString(four));
         Integer half = ~((~(1)) / (2));
         System.out.println(Integer.toString(half));

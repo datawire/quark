@@ -144,23 +144,25 @@ class TypeExpr(object):
 
     def get(self, attr, errors):
         name = attr.text
-        for env in self.environments(self.type):
+        bindings = {}
+        for env in self.environments(self.type, bindings):
             if name in env:
                 tgt = env[name].resolved
-                return texpr(tgt.type, self.bindings, tgt.bindings)
+                return texpr(tgt.type, self.bindings, bindings, tgt.bindings)
         errors.append("%s:%s has no such attribute: %s" % (lineinfo(attr), self.type.name, name))
         return None
 
     @overload(Package)
-    def environments(self, pkg):
+    def environments(self, pkg, bindings):
         yield pkg.env
 
     @overload(Class)
-    def environments(self, cls):
+    def environments(self, cls, bindings):
         yield cls.env
         if cls.base:
-            base = cls.base.definition
-            for e in self.environments(base):
+            base = cls.base.resolved.type
+            bindings.update(cls.base.resolved.bindings)
+            for e in self.environments(base, bindings):
                 yield e
         else:
             yield cls.root.env["Object"].env
@@ -214,14 +216,13 @@ def texpr(type, *bindingses):
         type = expr.type
     return TypeExpr(type, bindings)
 
-class Use:
+class Use(object):
 
     def __init__(self):
         self.unresolved = []
 
-    def lookup(self, node, name=None):
-        if name is None:
-            name = node.name.text
+    @overload(AST, str)
+    def lookup(self, node, name):
         while node:
             if name in node.env:
                 return node.env[name]
@@ -229,14 +230,22 @@ class Use:
                 node = node.parent
         return None
 
-    def leave_Type(self, t):
+    @overload(AST)
+    def lookup(self, node):
+        return self.lookup(node, node.name.text)
+
+    @overload(Type)
+    def lookup(self, t):
         type = self.lookup(t, t.path[0].text)
         for n in t.path[1:]:
             if n.text in type.env:
                 type = type.env[n.text]
             else:
                 type = None
+        return type
 
+    def leave_Type(self, t):
+        type = self.lookup(t)
         bindings = {}
         if type and t.parameters:
             idx = 0
@@ -256,10 +265,6 @@ class Use:
         v.definition = self.lookup(v)
         if v.definition is None:
             self.unresolved.append((v.name, v.name.text))
-
-    def visit_Class(self, c):
-        if c.base:
-            c.base.definition = self.lookup(c.base, c.base.text)
 
     def leaf(self, n, name):
         type = self.lookup(n, name)
@@ -294,7 +299,7 @@ class Resolver(object):
         if s.clazz.base is None:
             self.errors.append("%s: %s has no base class" % (lineinfo(s), s.clazz.name))
         else:
-            s.resolved = texpr(s.clazz.base.definition)
+            s.resolved = texpr(s.clazz.base.resolved.type)
 
     def leave_Var(self, v):
         v.resolved = v.definition.resolved
@@ -332,8 +337,8 @@ class Check:
         self.errors = []
 
     def visit_Field(self, f):
-        if f.clazz.base and f.clazz.base.definition:
-            prev = get_field(f.clazz.base.definition, f, None)
+        if f.clazz.base and f.clazz.base.resolved.type:
+            prev = get_field(f.clazz.base.resolved.type, f, None)
             if prev is not None:
                 self.errors.append("%s: duplicate field '%s', previous definition: %s" %
                                    (lineinfo(f), f.name, lineinfo(prev)))

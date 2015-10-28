@@ -3,7 +3,7 @@ public class Functions {
         if ((n).equals(0)) {
             return 1;
         } else {
-            return (Integer) ((n) * (Functions.factorial((n) - (1))));
+            return (n) * (Functions.factorial((n) - (1)));
         }
     }
     public static void main() {

@@ -120,7 +120,7 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         doc = self.doc(c.annotations)
 
         if c.base:
-            base_class = c.base.match(self.namer)
+            base_class = self.stmtr.exprr.type(c.base)
             fields.append(base_class + ".prototype.__init_fields__.call(this);")
         else:
             base_class = None
