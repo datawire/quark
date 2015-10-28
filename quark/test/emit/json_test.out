@@ -11,3 +11,7 @@ l[3] = 4
 l[4] = 5
 l[5] = 6
 l[6] = 7
+{"endpoints":["endpoint0","endpoint1","endpoint2"]}
+endpoint0
+endpoint1
+endpoint2

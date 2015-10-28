@@ -26,9 +26,26 @@ function test_iterate_list() {
 }
 exports.test_iterate_list = test_iterate_list;
 
+function test_iterate_list_directory() {
+    var message = ((new _qrt.JSONObject()).setObjectItem("endpoints", (((new _qrt.JSONObject()).setListItem(0, (new _qrt.JSONObject()).setString("endpoint0"))).setListItem(1, (new _qrt.JSONObject()).setString("endpoint1"))).setListItem(2, (new _qrt.JSONObject()).setString("endpoint2")))).toString();
+    _qrt.print(message);
+    var jobj = _qrt.json_from_string(message);
+    var endpoints = (jobj).getObjectItem("endpoints");
+    var i = 0;
+    var endpoint = (endpoints).getListItem(i);
+    while ((endpoint) !== ((endpoints).undefined())) {
+        var ep = (endpoint).getString();
+        _qrt.print(ep);
+        i = (i) + (1);
+        endpoint = (endpoints).getListItem(i);
+    }
+}
+exports.test_iterate_list_directory = test_iterate_list_directory;
+
 function main() {
     test_roundtrip();
     test_iterate_list();
+    test_iterate_list_directory();
 }
 exports.main = main;
 

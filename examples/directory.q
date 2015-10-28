@@ -70,14 +70,11 @@ package directory {
                 JSONObject endpoints = jobj["endpoints"];
                 JSONObject endpoint = endpoints.getListItem(i);
 
-                /* Loops forever in JS
                 while (endpoint != endpoints.undefined()) {
                     entry.endpoints.add(endpoint.getString());
                     i = i + 1;
                     endpoint = endpoints.getListItem(i);
                 }
-                */
-                entry.endpoints.add(endpoint.getString());  // XXX
 
                 entries[entry.service] = entry;
             } else {

@@ -22,7 +22,31 @@ void test_iterate_list() {
         }
     }
 }
+
+void test_iterate_list_directory() {
+    String message = new JSONObject()
+        .setObjectItem("endpoints",
+                       new JSONObject()
+                       .setListItem(0, "endpoint0".toJSON())
+                       .setListItem(1, "endpoint1".toJSON())
+                       .setListItem(2, "endpoint2".toJSON())
+                       )
+        .toString();
+    print(message);
+    JSONObject jobj = message.parseJSON();
+    JSONObject endpoints = jobj["endpoints"];
+    int i = 0;
+    JSONObject endpoint = endpoints.getListItem(i);
+    while (endpoint != endpoints.undefined()) {
+        String ep = endpoint.getString();
+        print(ep);
+        i = i + 1;
+        endpoint = endpoints.getListItem(i);
+    }
+}
+
 void main() {
     test_roundtrip();
     test_iterate_list();
+    test_iterate_list_directory();
 }

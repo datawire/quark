@@ -25,9 +25,25 @@ def test_iterate_list():
     
 
 
+def test_iterate_list_directory():
+    message = ((_JSONObject()).setObjectItem("endpoints", (((_JSONObject()).setListItem(0, (_JSONObject()).setString("endpoint0"))).setListItem(1, (_JSONObject()).setString("endpoint1"))).setListItem(2, (_JSONObject()).setString("endpoint2")))).toString();
+    _println(message);
+    jobj = _JSONObject.parse(message);
+    endpoints = (jobj).getObjectItem("endpoints");
+    i = 0;
+    endpoint = (endpoints).getListItem(i);
+    while ((endpoint) != ((endpoints).undefined())) :
+        ep = (endpoint).getString();
+        _println(ep);
+        i = (i) + (1)
+        endpoint = (endpoints).getListItem(i)
+
+
+
 def main():
     test_roundtrip();
     test_iterate_list();
+    test_iterate_list_directory();
 
 
 if __name__ == "__main__":
