@@ -9,7 +9,10 @@ class Runtime {
     WebSocket open(String url) { return null; }
     void schedule(Object o, float t) {}
 }
-class Future<T> {}
+class Future {
+    void succeed(Object o);
+    void fail(Object o);
+}
 
 package directory {
 
@@ -23,19 +26,26 @@ package directory {
         Runtime runtime;
         WebSocket socket;
 
-        bool initialized;
-        Map<String,Entry> entries;
+        bool initialized = false;
+        Map<String,Entry> entries = new Map<String, Entry>();
         float timeout = 60.0;
         List<AsyncLookup> deferred = [];
 
-        Directory(Runtime runtime, String url) {
+        Directory(Runtime runtime, String url, String service, String endpoint) {
             self.runtime = runtime;
             self.runtime.acquire(); // would be nice to have a with statement or something
             self.socket = self.runtime.open(url);
             self.socket.setHandler(self);
-            JSONObject jobj = new JSONObject(); // or maybe just new Map<String,Object> if that can work
-            jobj["tether-info"] = "...".toJSON();
-            self.socket.send(jobj.toString()); // might need to be toJSON() or something like that
+
+            JSONObject tetherInfo = new JSONObject()
+                .setObjectItem("op", "tether".toJSON())
+                .setObjectItem("service", service.toJSON())
+                .setObjectItem("endpoint", endpoint.toJSON());
+            self.socket.send(tetherInfo.toString());
+
+            JSONObject subscribeInfo = new JSONObject()
+                .setObjectItem("op", "subscribe".toJSON());
+            self.socket.send(subscribeInfo.toString());
 
             self.runtime.schedule(self, 3.0); // heartbeat interval
 
@@ -43,7 +53,10 @@ package directory {
         }
 
         void onExecute(Runtime runtime) {
-            self.socket.send("{heartbeat-info...}");
+            JSONObject heartbeatInfo = new JSONObject()
+                .setObjectItem("op", "heartbeat".toJSON());
+            self.socket.send(heartbeatInfo.toString());
+            self.runtime.schedule(self, 3.0);
         }
 
         void onMessage(WebSocket socket, String message) {
@@ -56,11 +69,16 @@ package directory {
                 int i = 0;
                 JSONObject endpoints = jobj["endpoints"];
                 JSONObject endpoint = endpoints.getListItem(i);
+
+                /* Loops forever in JS
                 while (endpoint != endpoints.undefined()) {
                     entry.endpoints.add(endpoint.getString());
                     i = i + 1;
                     endpoint = endpoints.getListItem(i);
                 }
+                */
+                entry.endpoints.add(endpoint.getString());  // XXX
+
                 entries[entry.service] = entry;
             } else {
                 if (op == "initialized") {
@@ -70,6 +88,9 @@ package directory {
                         self.runtime.schedule(self.deferred[idx], 0.0);
                         idx = idx + 1;
                     }
+                } else {
+                    print("Got message with unknown op: " + op);
+                    print(message);
                 }
             }
         }
@@ -100,20 +121,20 @@ package directory {
 
     }
 
-    class AsyncLookup { // implements Task, Future<Entry>
+    class AsyncLookup extends Future { // implements Task, Future<Entry>
         Directory directory;
         String name;
         Entry result;
 
         AsyncLookup(Directory directory, String name) {
-            self.name = name;
             self.directory = directory;
+            self.name = name;
             self.result = null;
         }
 
         void onExecute(Runtime runtime) {
             self.result = self.directory.entries[self.name];
-            // fire completion on future here???
+            self.succeed(self.result);
         }
     }
 
