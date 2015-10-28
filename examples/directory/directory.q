@@ -5,7 +5,7 @@ package directory {
         List<String> endpoints;
     }
 
-    class Directory { // implements WebHandler, Task
+    class Directory extends Task { // implements WebHandler, Task
 
         Runtime runtime;
         WebSocket socket;
@@ -104,7 +104,7 @@ package directory {
         void run(Entry result);
     }
 
-    class AsyncLookup /* extends Task */ {
+    class AsyncLookup extends Task {
         Directory directory;
         String name;
         LookupCallback callback;

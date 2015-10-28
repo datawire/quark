@@ -3,5 +3,5 @@ package p {
 }
 
 void main() {
-    p.f();
+    p.f(1, 2, "three");
 }

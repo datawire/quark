@@ -345,10 +345,10 @@ File(
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
   Method(Type(Name(JSONObject)), Name(setNumber),
-   Param(Type(Name(float)), Name(value), $type=0.float)),
+   Param(Type(Name(Object)), Name(value), $type=0.Object)),
 
   Method(Type(Name(JSONObject)), Name(setBool),
-   Param(Type(Name(int)), Name(value), $type=0.int)),
+   Param(Type(Name(bool)), Name(value), $type=0.bool)),
 
   Method(Type(Name(JSONObject)), Name(setNull)),
 
@@ -372,12 +372,12 @@ File(
      Var(Name(value), $type=0.JSONObject), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),
-  Param(Type(Name(String)), Name(msg), $type=0.String),
+  Param(Type(Name(Object)), Name(msg), $type=0.Object),
   Native(NativeCase(java,
-    Fixed('System.out.println('), Var(Name(msg), $type=0.String), Fixed(')')),
-   NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.String),
+    Fixed('System.out.println('), Var(Name(msg), $type=0.Object), Fixed(')')),
+   NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.Object),
     Fixed(')')), NativeCase(js, Fixed('_qrt.print('), Var(Name(msg),
-    $type=0.String), Fixed(')')))),
+    $type=0.Object), Fixed(')')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,
@@ -432,7 +432,8 @@ File(
 
   Method(Type(Name(void)), Name(release)),
 
-  Method(Type(Name(void)), Name(wait)),
+  Method(Type(Name(void)), Name(wait),
+   Param(Type(Name(float)), Name(timeoutInSeconds), $type=0.float)),
 
   Method(Type(Name(WebSocket)), Name(open),
    Param(Type(Name(String)), Name(url), $type=0.String)),

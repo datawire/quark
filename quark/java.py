@@ -260,7 +260,7 @@ class StatementRenderer(object):
 
     def maybe_cast(self, type, expr):
         result = expr.match(self.exprr)
-        if type.resolved.id != expr.resolved.id:
+        if not type.resolved.assignableFrom(expr.resolved):
             result = "(%s) (%s)" % (self.exprr.type(type.resolved, type), result)
         return result
 

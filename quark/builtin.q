@@ -139,8 +139,8 @@ primitive JSONObject {
 
     // returning self
     JSONObject setString(String value);      // set current object type to 'string' and set it's value
-    JSONObject setNumber(float value);       // set current object type to 'number' and set it's value
-    JSONObject setBool(int value);           // set current object type to 'true' or 'false'
+    JSONObject setNumber(Object value);       // set current object type to 'number' and set it's value
+    JSONObject setBool(bool value);           // set current object type to 'true' or 'false'
     JSONObject setNull();                    // set current object type to 'null'
 
     JSONObject setObject();                  // set current object type to 'object', (for empty objects)
@@ -159,7 +159,7 @@ primitive JSONObject {
     // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
 }
 
-macro void print(String msg) $java{System.out.println($msg)}
+macro void print(Object msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
                              $js{_qrt.print($msg)};
 
@@ -195,7 +195,7 @@ primitive Task {
 primitive Runtime {
     void acquire();
     void release();
-    void wait();
+    void wait(float timeoutInSeconds);
     WebSocket open(String url);
     void schedule(Task handler, float delayInSeconds);
 }

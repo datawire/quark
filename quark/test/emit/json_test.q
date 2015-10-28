@@ -3,8 +3,8 @@ void test_roundtrip() {
     print(new JSONObject().setObject().toString().parseJSON().toString());
     print(new JSONObject().setList().toString().parseJSON().toString());
     print(new JSONObject().setString("").toString().parseJSON().toString());
-    print(new JSONObject().setBool(0).toString().parseJSON().toString());
-    print(new JSONObject().setBool(1).toString().parseJSON().toString());
+    print(new JSONObject().setBool(false).toString().parseJSON().toString());
+    print(new JSONObject().setBool(true).toString().parseJSON().toString());
     print(new JSONObject().setNull().toString().parseJSON().toString());
 }
 

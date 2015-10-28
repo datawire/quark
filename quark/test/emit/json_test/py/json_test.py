@@ -5,8 +5,8 @@ def test_roundtrip():
     _println((_JSONObject.parse(((_JSONObject()).setObject()).toString())).toString());
     _println((_JSONObject.parse(((_JSONObject()).setList()).toString())).toString());
     _println((_JSONObject.parse(((_JSONObject()).setString(u"")).toString())).toString());
-    _println((_JSONObject.parse(((_JSONObject()).setBool(0)).toString())).toString());
-    _println((_JSONObject.parse(((_JSONObject()).setBool(1)).toString())).toString());
+    _println((_JSONObject.parse(((_JSONObject()).setBool(False)).toString())).toString());
+    _println((_JSONObject.parse(((_JSONObject()).setBool(True)).toString())).toString());
     _println((_JSONObject.parse(((_JSONObject()).setNull()).toString())).toString());
 
 

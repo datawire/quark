@@ -8,6 +8,7 @@ File(
    Block())),
 
  Function(Type(Name(void)), Name(main), Block(
-   ExprStmt(Call(Attr(Var(Name(p), $type=1.p), Name(f), $type=1.p.f),
+   ExprStmt(Call(Attr(Var(Name(p), $type=1.p), Name(f), $type=1.p.f), Number(1,
+     $type=0.int), Number(2, $type=0.int), String("three", $type=0.String),
     $type=0.void))))
 )
