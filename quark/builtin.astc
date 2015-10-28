@@ -111,6 +111,12 @@ File(
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
   Name(long), Name(number),
 
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Long.toString('), Var(Name(self), $type=0.long), Fixed(')')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.long), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.long),
+     Fixed(')')))),
+
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
    Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
     $type=0.JSONObject.setNumber), Var(Name(self), $type=0.long),

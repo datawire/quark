@@ -42,6 +42,9 @@ primitive int extends number {
 
 @mapping($java{Long} $py{long} $js{Number})
 primitive long extends number {
+    macro String toString() $java{Long.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
 }
 
