@@ -23,7 +23,7 @@ class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
                 "return", "macro", "new", "null", "if", "else", "while",
-                "super", "true", "false"]
+                "super", "true", "false", "break", "continue"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -222,7 +222,7 @@ class Parser:
     #   Box<int> x; looks like a declaration
     #      vs
     #    a < b > c; looks like a comparison
-    @g.rule('statement = return / assign / local / if / while / exprstmt')
+    @g.rule('statement = return / break / continue / assign / local / if / while / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
 
@@ -230,6 +230,14 @@ class Parser:
     def visit_return(self, node, (r, opt, s)):
         expr = opt[0] if opt else None
         return Return(expr)
+
+    @g.rule('break = BREAK SEMI')
+    def visit_break(self, node, _):
+        return Break()
+
+    @g.rule('continue = CONTINUE SEMI')
+    def visit_continue(self, node, _):
+        return Continue()
 
     @g.rule('exprstmt = expr SEMI')
     def visit_exprstmt(self, node, (expr, s)):

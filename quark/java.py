@@ -308,6 +308,12 @@ class StatementRenderer(object):
     def match_Block(self, b):
         return "{%s}" % indent("\n".join([s.match(self) for s in b.statements]))
 
+    def match_Break(self, b):
+        return "break;"
+
+    def match_Continue(self, c):
+        return "continue;"
+
 class ExprRenderer(object):
 
     def __init__(self, namer):

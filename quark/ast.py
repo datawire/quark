@@ -331,6 +331,24 @@ class Return(Statement):
     def code(self, coder):
         return "return %s;" % (self.expr.code(coder))
 
+class Break(Statement):
+
+    @property
+    def children(self): ()
+
+    @coder
+    def code(self, coder):
+        return "break;"
+
+class Continue(Statement):
+
+    @property
+    def children(self): ()
+
+    @coder
+    def code(self, coder):
+        return "continue;"
+
 class Assign(Statement):
 
     def __init__(self, lhs, rhs):
