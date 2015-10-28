@@ -15,9 +15,18 @@ function main() {
     var count = 0;
     while (true) {
         if ((count) > (3)) {
-            return;
+            break;
         }
         count = (count) + (1);
+    }
+    var troo = (true) && (true);
+    _qrt.print((troo).toString());
+    var fols = (false) || (false);
+    _qrt.print((fols).toString());
+    var foo = "foo";
+    var bar = "bar";
+    if (((foo) === ("foo")) && ((bar) === ("bar"))) {
+        _qrt.print("foobar!!");
     }
 }
 exports.main = main;

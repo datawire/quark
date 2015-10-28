@@ -1,11 +1,11 @@
 @mapping($java{Object} $py{object} $js{Object})
 primitive Object {
-    macro int __eq__(Object other) $java{($self).equals($other)}
-                                   $py{($self) == ($other)}
-                                   $js{($self) === ($other)};
-    macro int __ne__(Object other) $java{!(($self).equals($other))}
-                                   $py{($self) != ($other)}
-                                   $js{($self) !== ($other)};
+    macro bool __eq__(Object other) $java{($self).equals($other)}
+                                    $py{($self) == ($other)}
+                                    $js{($self) === ($other)};
+    macro bool __ne__(Object other) $java{!(($self).equals($other))}
+                                    $py{($self) != ($other)}
+                                    $js{($self) !== ($other)};
 }
 
 primitive void {}
@@ -13,6 +13,13 @@ primitive void {}
 @mapping($java{Boolean} $py{bool} $js{Boolean})
 primitive bool {
     macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
+    macro bool __and__(bool other) $java{($self) && ($other)}
+                                   $py{($self) and ($other)}
+				   $js{($self) && ($other)};
+    macro bool __or__(bool other) $java{($self) || ($other)}
+                                  $py{($self) or ($other)}
+				  $js{($self) || ($other)};
+    macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
 }
 
 primitive numeric<T> {
@@ -21,8 +28,8 @@ primitive numeric<T> {
     macro T __sub__(T other) ${($self) - ($other)};
     macro T __mul__(T other) ${($self) * ($other)};
     macro T __div__(T other) ${($self) / ($other)};
-    macro T __lt__(T other) ${($self) < ($other)};
-    macro T __gt__(T other) ${($self) > ($other)};
+    macro bool __lt__(T other) ${($self) < ($other)};
+    macro bool __gt__(T other) ${($self) > ($other)};
 }
 
 @mapping($java{Integer} $py{int} $js{Number})
