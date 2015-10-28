@@ -144,7 +144,7 @@ primitive JSONObject {
     JSONObject setNull();                    // set current object type to 'null'
 
     JSONObject setObject();                  // set current object type to 'object', (for empty objects)
-    JSONObject setList();                    // set current object type to 'list', (for empty lists) 
+    JSONObject setList();                    // set current object type to 'list', (for empty lists)
 
     JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
     JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
@@ -178,3 +178,24 @@ macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
 macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
+
+primitive WebSocketHandler {
+    void onMessage(WebSocket socket, String message);
+}
+
+primitive WebSocket {
+    void setHandler(Object handler);
+    void send(String message);
+}
+
+primitive Task {
+    void onExecute(Runtime runtime);
+}
+
+primitive Runtime {
+    void acquire();
+    void release();
+    void wait();
+    WebSocket open(String url);
+    void schedule(Task handler, float delayInSeconds);
+}

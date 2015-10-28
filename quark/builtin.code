@@ -88,3 +88,20 @@ macro long now() $java{System.currentTimeMillis()}$py{long(time.time()*1000)}$js
 macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}$py{time.sleep($seconds)}$js{_qrt.sleep($seconds)};
 macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}$py{_url_get($url)}$js{_qrt.url_get($url)};
 macro int parseInt(String st) $java{Integer.parseInt($st)}$py{int($st)}$js{parseInt($st)};
+primitive WebSocketHandler {
+    void onMessage(WebSocket socket, String message);
+}
+primitive WebSocket {
+    void setHandler(Object handler);
+    void send(String message);
+}
+primitive Task {
+    void onExecute(Runtime runtime);
+}
+primitive Runtime {
+    void acquire();
+    void release();
+    void wait();
+    WebSocket open(String url);
+    void schedule(Task handler, float delayInSeconds);
+}

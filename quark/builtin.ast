@@ -357,5 +357,39 @@ File(
   Native(NativeCase(java,
     Fixed('Integer.parseInt('), Var(Name(st)), Fixed(')')), NativeCase(py,
     Fixed('int('), Var(Name(st)), Fixed(')')), NativeCase(js,
-    Fixed('parseInt('), Var(Name(st)), Fixed(')'))))
+    Fixed('parseInt('), Var(Name(st)), Fixed(')')))),
+
+ Primitive(Name(WebSocketHandler),
+
+  Method(Type(Name(void)), Name(onMessage),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Param(Type(Name(String)), Name(message)))),
+
+ Primitive(Name(WebSocket),
+
+  Method(Type(Name(void)), Name(setHandler),
+   Param(Type(Name(Object)), Name(handler))),
+
+  Method(Type(Name(void)), Name(send),
+   Param(Type(Name(String)), Name(message)))),
+
+ Primitive(Name(Task),
+
+  Method(Type(Name(void)), Name(onExecute),
+   Param(Type(Name(Runtime)), Name(runtime)))),
+
+ Primitive(Name(Runtime),
+
+  Method(Type(Name(void)), Name(acquire)),
+
+  Method(Type(Name(void)), Name(release)),
+
+  Method(Type(Name(void)), Name(wait)),
+
+  Method(Type(Name(WebSocket)), Name(open),
+   Param(Type(Name(String)), Name(url))),
+
+  Method(Type(Name(void)), Name(schedule),
+   Param(Type(Name(Task)), Name(handler)),
+   Param(Type(Name(float)), Name(delayInSeconds))))
 )
