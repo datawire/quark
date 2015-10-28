@@ -82,6 +82,7 @@
         }
         return JSONObject_wrap(value);
     }
+    JSONObject.prototype.getObjectItem = JSONObject_getObjectItem;
 
     function JSONObject_getListItem(index) {
         var value = this.value[index];

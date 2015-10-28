@@ -26,10 +26,10 @@ def test_iterate_list():
 
 
 def test_iterate_list_directory():
-    message = ((_JSONObject()).setObjectItem("endpoints", (((_JSONObject()).setListItem(0, (_JSONObject()).setString("endpoint0"))).setListItem(1, (_JSONObject()).setString("endpoint1"))).setListItem(2, (_JSONObject()).setString("endpoint2")))).toString();
+    message = ((_JSONObject()).setObjectItem(u"endpoints", (((_JSONObject()).setListItem(0, (_JSONObject()).setString(u"endpoint0"))).setListItem(1, (_JSONObject()).setString(u"endpoint1"))).setListItem(2, (_JSONObject()).setString(u"endpoint2")))).toString();
     _println(message);
     jobj = _JSONObject.parse(message);
-    endpoints = (jobj).getObjectItem("endpoints");
+    endpoints = (jobj).getObjectItem(u"endpoints");
     i = 0;
     endpoint = (endpoints).getListItem(i);
     while ((endpoint) != ((endpoints).undefined())) :
