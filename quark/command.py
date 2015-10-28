@@ -31,6 +31,9 @@ Options:
   --version             Show version.
   -o DIR, --output DIR  Target directory for output files
                         [defaults to basename of the first input file]
+  --in-place            Outputs everything to the current directory
+                        [overrides all other directory/subdirectory options and
+                         does not delete existing output files; use with care]
 
 Target language options:
   --all                 Emit code for all available target languages.
@@ -88,20 +91,23 @@ def main(args):
 
     filenames = args["<file>"]
 
-    output = args["--output"]
-    if not output:
-        output = os.path.basename(filenames[0])
-        if output.endswith(".q"):
-            output = output[:-2]
-        else:
-            exit("quark: First filename must end with .q (or use --output)")
-    if os.path.exists(output):
-        shutil.rmtree(output)
-    os.mkdir(output)
+    if args["--in-place"]:
+        output = java_dir = py_dir = js_dir = "."
+    else:
+        output = args["--output"]
+        if not output:
+            output = os.path.basename(filenames[0])
+            if output.endswith(".q"):
+                output = output[:-2]
+            else:
+                exit("quark: First filename must end with .q (or use --output)")
+        if os.path.exists(output):
+            shutil.rmtree(output)
+        os.mkdir(output)
 
-    java_dir = os.path.join(output, args["--java-out"])
-    py_dir = os.path.join(output, args["--python-out"])
-    js_dir = os.path.join(output, args["--javascript-out"])
+        java_dir = os.path.join(output, args["--java-out"])
+        py_dir = os.path.join(output, args["--python-out"])
+        js_dir = os.path.join(output, args["--javascript-out"])
 
     assert "compile" in commands, (commands, args)
 
