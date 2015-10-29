@@ -12,7 +12,7 @@
         console.log("[" + date + " " + time + "] " + message);
     }
 
-    var data = new Map();  // service name -> endpoint  // FIXME should be [ endpoint, ... ]
+    var data = new Map();  // service name -> [ endpoint, ... ]
 
     var clients = [];
 
@@ -43,7 +43,11 @@
             this.subscribed = true;
             sendAllEntries(this.socket);
         } else if (message.op === "tether") {
-            data.set(message.service, message.endpoint);
+            if (data.has(message.service)) {
+                data.get(message.service).push(message.endpoint);
+            } else {
+                data.set(message.service, [message.endpoint]);
+            }
             this.service = message.service;
             publishEntry(message.service);
         } else if (message.op === "lookup") {
@@ -78,7 +82,7 @@
     Client.prototype.onError = Client_onError;
 
     function sendEntry(socket, service) {
-        var res = { "op": "entry", "service": service, "endpoints": [data.get(service), "bogus"] };
+        var res = { "op": "entry", "service": service, "endpoints": data.get(service) };
         socket.send(JSON.stringify(res));
     }
 
