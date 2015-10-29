@@ -17,12 +17,7 @@
         this.service = service;
     }
     ShowAnswer.prototype.run = function(entry) {
-        if (entry) {
-            console.log("Looked up " + this.service + " and got back " +
-                        entry.service + " -> " + entry.endpoints.toString());
-        } else {
-            console.log("Looked up " + this.service + " and got back " + entry);
-        }
+        console.log("Looked up " + this.service + " and got back " + entry);
     };
 
     ["A", "B", "C", "D", "E"].forEach(function (letter) {
