@@ -1,11 +1,11 @@
 @mapping($java{Object} $py{object} $js{Object})
 primitive Object {
-    macro int __eq__(Object other) $java{($self).equals($other)}
-                                   $py{($self) == ($other)}
-                                   $js{($self) === ($other)};
-    macro int __ne__(Object other) $java{!(($self).equals($other))}
-                                   $py{($self) != ($other)}
-                                   $js{($self) !== ($other)};
+    macro bool __eq__(Object other) $java{($self).equals($other)}
+                                    $py{($self) == ($other)}
+                                    $js{($self) === ($other)};
+    macro bool __ne__(Object other) $java{!(($self).equals($other))}
+                                    $py{($self) != ($other)}
+                                    $js{($self) !== ($other)};
 }
 
 primitive void {}
@@ -13,6 +13,13 @@ primitive void {}
 @mapping($java{Boolean} $py{bool} $js{Boolean})
 primitive bool {
     macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
+    macro bool __and__(bool other) $java{($self) && ($other)}
+                                   $py{($self) and ($other)}
+				   $js{($self) && ($other)};
+    macro bool __or__(bool other) $java{($self) || ($other)}
+                                  $py{($self) or ($other)}
+				  $js{($self) || ($other)};
+    macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
 }
 
 primitive numeric<T> {
@@ -21,8 +28,8 @@ primitive numeric<T> {
     macro T __sub__(T other) ${($self) - ($other)};
     macro T __mul__(T other) ${($self) * ($other)};
     macro T __div__(T other) ${($self) / ($other)};
-    macro T __lt__(T other) ${($self) < ($other)};
-    macro T __gt__(T other) ${($self) > ($other)};
+    macro bool __lt__(T other) ${($self) < ($other)};
+    macro bool __gt__(T other) ${($self) > ($other)};
 }
 
 @mapping($java{Integer} $py{int} $js{Number})
@@ -132,12 +139,12 @@ primitive JSONObject {
 
     // returning self
     JSONObject setString(String value);      // set current object type to 'string' and set it's value
-    JSONObject setNumber(float value);       // set current object type to 'number' and set it's value
-    JSONObject setBool(int value);           // set current object type to 'true' or 'false'
+    JSONObject setNumber(Object value);       // set current object type to 'number' and set it's value
+    JSONObject setBool(bool value);           // set current object type to 'true' or 'false'
     JSONObject setNull();                    // set current object type to 'null'
 
     JSONObject setObject();                  // set current object type to 'object', (for empty objects)
-    JSONObject setList();                    // set current object type to 'list', (for empty lists) 
+    JSONObject setList();                    // set current object type to 'list', (for empty lists)
 
     JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
     JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
@@ -152,7 +159,7 @@ primitive JSONObject {
     // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
 }
 
-macro void print(String msg) $java{System.out.println($msg)}
+macro void print(Object msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
                              $js{_qrt.print($msg)};
 
@@ -171,3 +178,24 @@ macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
 macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
+
+primitive WebSocketHandler {
+    void onMessage(WebSocket socket, String message);
+}
+
+primitive WebSocket {
+    void setHandler(Object handler);
+    void send(String message);
+}
+
+primitive Task {
+    void onExecute(Runtime runtime);
+}
+
+primitive Runtime {
+    void acquire();
+    void release();
+    void wait(float timeoutInSeconds);
+    WebSocket open(String url);
+    void schedule(Task handler, float delayInSeconds);
+}

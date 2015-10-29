@@ -95,3 +95,7 @@ def namever(packages):
         firstPackageName = ""
         version = "0.0"
     return firstPackageName, version
+
+def is_extendable(node):
+    return isinstance(node.resolved.type, Class) and \
+        not isinstance(node.resolved.type, (Primitive, Interface))

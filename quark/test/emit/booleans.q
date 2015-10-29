@@ -18,8 +18,19 @@ void main() {
     int count = 0;
     while (true) {
 	if (count > 3) {
-	    return;
+	    break;
 	}
 	count = count + 1;
+    }
+
+    bool troo = true && true;
+    print(troo.toString());
+    bool fols = false || false;
+    print(fols.toString());
+
+    String foo = "foo";
+    String bar = "bar";
+    if (foo == "foo" && bar == "bar") {
+	print("foobar!!");
     }
 }

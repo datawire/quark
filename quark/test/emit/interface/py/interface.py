@@ -20,9 +20,9 @@ class Bar(object):
 
     def m3(self, args): assert False
 
-class Baz(Foo):
-    def _init(self):
-        Foo._init(self)
+class Baz(object):
+    def _init(self): pass
+    def __init__(self): self._init()
 
     def m2(self, arg): pass
 
@@ -30,21 +30,17 @@ class Baz(Foo):
 
     def m3(self, args): pass
 
-class RazBar(Bar):
-    def _init(self):
-        Bar._init(self)
+class RazBar(object):
+    def _init(self): pass
+    def __init__(self): self._init()
 
-    
+class RazFaz(object):
+    def _init(self): pass
+    def __init__(self): self._init()
 
-class RazFaz(Bar):
-    def _init(self):
-        Bar._init(self)
-
-    
-
-class BazBar(Bar):
-    def _init(self):
-        Bar._init(self)
+class BazBar(object):
+    def _init(self): pass
+    def __init__(self): self._init()
 
     def m1(self): pass
 
@@ -52,9 +48,9 @@ class BazBar(Bar):
 
     def m3(self, args): pass
 
-class BazFaz(Bar):
-    def _init(self):
-        Bar._init(self)
+class BazFaz(object):
+    def _init(self): pass
+    def __init__(self): self._init()
 
     def m1(self): pass
 

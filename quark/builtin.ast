@@ -3,7 +3,7 @@ File(
     NativeCase(py, Fixed('object')), NativeCase(js, Fixed('Object')))),
   Name(Object),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
+  MethodMacro(Type(Name(bool)), Name(__eq__),
    Param(Type(Name(Object)), Name(other)),
    Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
@@ -11,7 +11,7 @@ File(
      Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
      Fixed(') === ('), Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__ne__),
+  MethodMacro(Type(Name(bool)), Name(__ne__),
    Param(Type(Name(Object)), Name(other)),
    Native(NativeCase(java,
      Fixed('!(('), Var(Name(self)), Fixed(').equals('), Var(Name(other)),
@@ -28,7 +28,28 @@ File(
   MethodMacro(Type(Name(bool)), Name(__not__), Native(NativeCase(java,
      Fixed('!('), Var(Name(self)), Fixed(')')), NativeCase(py, Fixed('not ('),
      Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('!('), Var(Name(self)),
-     Fixed(')'))))),
+     Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__and__),
+   Param(Type(Name(bool)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(') && ('), Var(Name(other)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') and ('),
+     Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(') && ('), Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__or__),
+   Param(Type(Name(bool)), Name(other)),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(') || ('), Var(Name(other)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') or ('),
+     Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(') || ('), Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('('), Var(Name(self)), Fixed(').toString()')), NativeCase(py,
+     Fixed('str('), Var(Name(self)), Fixed(').lower()')), NativeCase(js,
+     Fixed('('), Var(Name(self)), Fixed(').toString()'))))),
 
  Primitive(Name(numeric), TypeParam(Name(T)),
 
@@ -55,12 +76,12 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') / ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(__lt__),
+  MethodMacro(Type(Name(bool)), Name(__lt__),
    Param(Type(Name(T)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') < ('),
      Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(__gt__),
+  MethodMacro(Type(Name(bool)), Name(__gt__),
    Param(Type(Name(T)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') > ('),
      Var(Name(other)), Fixed(')'))))),
@@ -281,10 +302,10 @@ File(
    Param(Type(Name(String)), Name(value))),
 
   Method(Type(Name(JSONObject)), Name(setNumber),
-   Param(Type(Name(float)), Name(value))),
+   Param(Type(Name(Object)), Name(value))),
 
   Method(Type(Name(JSONObject)), Name(setBool),
-   Param(Type(Name(int)), Name(value))),
+   Param(Type(Name(bool)), Name(value))),
 
   Method(Type(Name(JSONObject)), Name(setNull)),
 
@@ -307,7 +328,7 @@ File(
      Var(Name(key)), Fixed('), ('), Var(Name(value)), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),
-  Param(Type(Name(String)), Name(msg)),
+  Param(Type(Name(Object)), Name(msg)),
   Native(NativeCase(java,
     Fixed('System.out.println('), Var(Name(msg)), Fixed(')')), NativeCase(py,
     Fixed('_println('), Var(Name(msg)), Fixed(')')), NativeCase(js,
@@ -336,5 +357,40 @@ File(
   Native(NativeCase(java,
     Fixed('Integer.parseInt('), Var(Name(st)), Fixed(')')), NativeCase(py,
     Fixed('int('), Var(Name(st)), Fixed(')')), NativeCase(js,
-    Fixed('parseInt('), Var(Name(st)), Fixed(')'))))
+    Fixed('parseInt('), Var(Name(st)), Fixed(')')))),
+
+ Primitive(Name(WebSocketHandler),
+
+  Method(Type(Name(void)), Name(onMessage),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Param(Type(Name(String)), Name(message)))),
+
+ Primitive(Name(WebSocket),
+
+  Method(Type(Name(void)), Name(setHandler),
+   Param(Type(Name(Object)), Name(handler))),
+
+  Method(Type(Name(void)), Name(send),
+   Param(Type(Name(String)), Name(message)))),
+
+ Primitive(Name(Task),
+
+  Method(Type(Name(void)), Name(onExecute),
+   Param(Type(Name(Runtime)), Name(runtime)))),
+
+ Primitive(Name(Runtime),
+
+  Method(Type(Name(void)), Name(acquire)),
+
+  Method(Type(Name(void)), Name(release)),
+
+  Method(Type(Name(void)), Name(wait),
+   Param(Type(Name(float)), Name(timeoutInSeconds))),
+
+  Method(Type(Name(WebSocket)), Name(open),
+   Param(Type(Name(String)), Name(url))),
+
+  Method(Type(Name(void)), Name(schedule),
+   Param(Type(Name(Task)), Name(handler)),
+   Param(Type(Name(float)), Name(delayInSeconds))))
 )

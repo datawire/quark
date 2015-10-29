@@ -7,9 +7,9 @@ public class Functions {
         C c = new C();
         (c).foo();
         System.out.println("--");
-        a = (A) (b);
+        a = b;
         (a).foo();
-        a = (A) (c);
+        a = c;
         (a).foo();
     }
     public static void main(String[] args) {

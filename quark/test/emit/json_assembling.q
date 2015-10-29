@@ -3,8 +3,8 @@ void test_assembling() {
 
     innerObject.setObjectItem("astring", "string value".toJSON());
     innerObject.setObjectItem("aint", 9.toJSON());
-    innerObject.setObjectItem("atrue", new JSONObject().setBool(1));
-    innerObject.setObjectItem("afalse", new JSONObject().setBool(0));
+    innerObject.setObjectItem("atrue", new JSONObject().setBool(true));
+    innerObject.setObjectItem("afalse", new JSONObject().setBool(false));
     innerObject.setObjectItem("anull", new JSONObject().setNull());
 
     JSONObject innerList = new JSONObject();

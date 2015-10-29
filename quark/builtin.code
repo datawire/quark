@@ -1,12 +1,15 @@
 @mapping($java{Object}$py{object}$js{Object})
 primitive Object {
-    macro int __eq__(Object other) $java{($self).equals($other)}$py{($self) == ($other)}$js{($self) === ($other)};
-    macro int __ne__(Object other) $java{!(($self).equals($other))}$py{($self) != ($other)}$js{($self) !== ($other)};
+    macro bool __eq__(Object other) $java{($self).equals($other)}$py{($self) == ($other)}$js{($self) === ($other)};
+    macro bool __ne__(Object other) $java{!(($self).equals($other))}$py{($self) != ($other)}$js{($self) !== ($other)};
 }
 primitive void {}
 @mapping($java{Boolean}$py{bool}$js{Boolean})
 primitive bool {
     macro bool __not__() $java{!($self)}$py{not ($self)}$js{!($self)};
+    macro bool __and__(bool other) $java{($self) && ($other)}$py{($self) and ($other)}$js{($self) && ($other)};
+    macro bool __or__(bool other) $java{($self) || ($other)}$py{($self) or ($other)}$js{($self) || ($other)};
+    macro String toString() $java{($self).toString()}$py{str($self).lower()}$js{($self).toString()};
 }
 primitive numeric<T> {
     macro T __neg__() ${-($self)};
@@ -14,8 +17,8 @@ primitive numeric<T> {
     macro T __sub__(T other) ${($self) - ($other)};
     macro T __mul__(T other) ${($self) * ($other)};
     macro T __div__(T other) ${($self) / ($other)};
-    macro T __lt__(T other) ${($self) < ($other)};
-    macro T __gt__(T other) ${($self) > ($other)};
+    macro bool __lt__(T other) ${($self) < ($other)};
+    macro bool __gt__(T other) ${($self) > ($other)};
 }
 @mapping($java{Integer}$py{int}$js{Number})
 primitive int extends numeric<int> {
@@ -71,8 +74,8 @@ primitive JSONObject {
     JSONObject undefined();
     String toString();
     JSONObject setString(String value);
-    JSONObject setNumber(float value);
-    JSONObject setBool(int value);
+    JSONObject setNumber(Object value);
+    JSONObject setBool(bool value);
     JSONObject setNull();
     JSONObject setObject();
     JSONObject setList();
@@ -80,8 +83,25 @@ primitive JSONObject {
     JSONObject setListItem(int index, JSONObject value);
     macro void __set__(String key, JSONObject value) ${ ($self).setObjectItem(($key), ($value))};
 }
-macro void print(String msg) $java{System.out.println($msg)}$py{_println($msg)}$js{_qrt.print($msg)};
+macro void print(Object msg) $java{System.out.println($msg)}$py{_println($msg)}$js{_qrt.print($msg)};
 macro long now() $java{System.currentTimeMillis()}$py{long(time.time()*1000)}$js{Date.now()};
 macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}$py{time.sleep($seconds)}$js{_qrt.sleep($seconds)};
 macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}$py{_url_get($url)}$js{_qrt.url_get($url)};
 macro int parseInt(String st) $java{Integer.parseInt($st)}$py{int($st)}$js{parseInt($st)};
+primitive WebSocketHandler {
+    void onMessage(WebSocket socket, String message);
+}
+primitive WebSocket {
+    void setHandler(Object handler);
+    void send(String message);
+}
+primitive Task {
+    void onExecute(Runtime runtime);
+}
+primitive Runtime {
+    void acquire();
+    void release();
+    void wait(float timeoutInSeconds);
+    WebSocket open(String url);
+    void schedule(Task handler, float delayInSeconds);
+}

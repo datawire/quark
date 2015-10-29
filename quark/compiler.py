@@ -142,6 +142,32 @@ class TypeExpr(object):
         self.type = type
         self.bindings = bindings
 
+    def assignableFrom(self, other):
+        for sup in other.supertypes():
+            if self.id == sup.id:
+                return True
+        return False
+
+    @overload()
+    def supertypes(self):
+        for sup in self.supertypes(self.type):
+            yield sup
+
+    @overload(Class)
+    def supertypes(self, cls):
+        yield self
+        if cls.base:
+            for sup in cls.base.resolved.supertypes():
+                yield texpr(sup.type, sup.bindings, self.bindings)
+        else:
+            sup = cls.root.env["Object"].resolved
+            yield texpr(sup.type, sup.bindings, self.bindings)
+
+    @overload(TypeParam)
+    def supertypes(self, param):
+        # should we check in bindings here and try supertypes?
+        yield self
+
     def get(self, attr, errors):
         name = attr.text
         bindings = {}
@@ -167,16 +193,28 @@ class TypeExpr(object):
         else:
             yield cls.root.env["Object"].env
 
-    @overload(list)
-    def invoke(self, errors):
-        return self.invoke(self.type, errors)
+    @overload(Call, list)
+    def invoke(self, c, errors):
+        return self.invoke(self.type, c, errors)
 
     @overload(Callable)
-    def invoke(self, dfn, errors):
+    def invoke(self, dfn, call, errors):
+        idx = 0
+        if len(dfn.params) == len(call.args):
+            for param in dfn.params:
+                pexpr = texpr(param.resolved.type, param.resolved.bindings, self.bindings)
+                arg = call.args[idx]
+                idx += 1
+                if not isinstance(arg, Null) and not pexpr.assignableFrom(arg.resolved):
+                    errors.append("%s:type mismatch: expected %s, got %s" %
+                                  (lineinfo(arg), pexpr, arg.resolved))
+        else:
+            errors.append("%s: expected %s args, got %s" %
+                          (lineinfo(call), len(dfn.params), len(call.args)))
         return texpr(dfn.type.resolved.type, self.bindings)
 
     @overload(Class)
-    def invoke(self, cls, errors):
+    def invoke(self, cls, call, errors):
         return texpr(cls, self.bindings)
 
     @property
@@ -276,7 +314,10 @@ class Use(object):
         self.leaf(n, "Object")
 
     def visit_Number(self, n):
-        self.leaf(n, "int")
+        if "." in n.text:
+            self.leaf(n, "float")
+        else:
+            self.leaf(n, "int")
 
     def visit_String(self, n):
         self.leaf(n, "String")
@@ -310,7 +351,7 @@ class Resolver(object):
 
     def leave_Call(self, c):
         if c.expr.resolved:
-            c.resolved = c.expr.resolved.invoke(self.errors)
+            c.resolved = c.expr.resolved.invoke(c, self.errors)
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:

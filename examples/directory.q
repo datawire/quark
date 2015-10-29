@@ -1,18 +1,24 @@
-class WebSocket {
-    void setHandler(Object o) {}
-    void send(String s) {}
+interface WebSocketHandler {
+    void onMessage(WebSocket socket, String message);
 }
-class Runtime {
-    void acquire() {}
-    void release() {}
-    void wait() {}
-    WebSocket open(String url) { return null; }
-    void schedule(Object o, float t) {}
+
+interface WebSocket {
+    void setHandler(Object handler);
+    void send(String message);
 }
-class Future {
-    void succeed(Object o);
-    void fail(Object o);
+
+interface Task {
+    void onExecute(Runtime runtime);
 }
+
+interface Runtime {
+    void acquire();
+    void release();
+    void wait();
+    WebSocket open(String url);
+    void schedule(Task handler, float delayInSeconds);
+}
+
 
 package directory {
 
@@ -103,35 +109,37 @@ package directory {
             return result;
         }
 
-        Future<Entry> lookupAsync(String name) {
-            AsyncLookup result;
+        void lookupAsync(String name, LookupCallback callback) {
             self.runtime.acquire();
-            result = new AsyncLookup(self, name);
+            AsyncLookup task = new AsyncLookup(self, name, callback);
             if (self.initialized) {
-                self.runtime.schedule(result, 0.0);
+                self.runtime.schedule(task, 0.0);
             } else {
-                self.deferred.add(result);
+                self.deferred.add(task);
             }
             self.runtime.release();
-            return result;
         }
 
     }
 
-    class AsyncLookup extends Future { // implements Task, Future<Entry>
+    interface LookupCallback {
+        void run(Entry result);
+    }
+
+    class AsyncLookup /* extends Task */ {
         Directory directory;
         String name;
-        Entry result;
+        LookupCallback callback;
 
-        AsyncLookup(Directory directory, String name) {
+        AsyncLookup(Directory directory, String name, LookupCallback callback) {
             self.directory = directory;
             self.name = name;
-            self.result = null;
+            self.callback = callback;
         }
 
         void onExecute(Runtime runtime) {
-            self.result = self.directory.entries[self.name];
-            self.succeed(self.result);
+            Entry result = self.directory.entries[self.name];
+            self.callback.run(result);
         }
     }
 

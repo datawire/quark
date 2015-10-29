@@ -38,14 +38,11 @@ Bar.prototype.m3 = Bar_m3;
 
 // CLASS Baz
 function Baz() {
-    Baz.super_.call(this);
+    this.__init_fields__();
 }
 exports.Baz = Baz;
-_qrt.util.inherits(Baz, Foo);
 
-function Baz__init_fields__() {
-    Foo.prototype.__init_fields__.call(this);
-}
+function Baz__init_fields__() {}
 Baz.prototype.__init_fields__ = Baz__init_fields__;
 
 function Baz_m2(arg) {}
@@ -59,40 +56,31 @@ Baz.prototype.m3 = Baz_m3;
 
 // CLASS RazBar
 function RazBar() {
-    RazBar.super_.call(this);
+    this.__init_fields__();
 }
 exports.RazBar = RazBar;
-_qrt.util.inherits(RazBar, Bar);
 
-function RazBar__init_fields__() {
-    Bar.prototype.__init_fields__.call(this);
-}
+function RazBar__init_fields__() {}
 RazBar.prototype.__init_fields__ = RazBar__init_fields__;
 
 
 // CLASS RazFaz
 function RazFaz() {
-    RazFaz.super_.call(this);
+    this.__init_fields__();
 }
 exports.RazFaz = RazFaz;
-_qrt.util.inherits(RazFaz, Bar);
 
-function RazFaz__init_fields__() {
-    Bar.prototype.__init_fields__.call(this);
-}
+function RazFaz__init_fields__() {}
 RazFaz.prototype.__init_fields__ = RazFaz__init_fields__;
 
 
 // CLASS BazBar
 function BazBar() {
-    BazBar.super_.call(this);
+    this.__init_fields__();
 }
 exports.BazBar = BazBar;
-_qrt.util.inherits(BazBar, Bar);
 
-function BazBar__init_fields__() {
-    Bar.prototype.__init_fields__.call(this);
-}
+function BazBar__init_fields__() {}
 BazBar.prototype.__init_fields__ = BazBar__init_fields__;
 
 function BazBar_m1() {}
@@ -106,14 +94,11 @@ BazBar.prototype.m3 = BazBar_m3;
 
 // CLASS BazFaz
 function BazFaz() {
-    BazFaz.super_.call(this);
+    this.__init_fields__();
 }
 exports.BazFaz = BazFaz;
-_qrt.util.inherits(BazFaz, Bar);
 
-function BazFaz__init_fields__() {
-    Bar.prototype.__init_fields__.call(this);
-}
+function BazFaz__init_fields__() {}
 BazFaz.prototype.__init_fields__ = BazFaz__init_fields__;
 
 function BazFaz_m1() {}

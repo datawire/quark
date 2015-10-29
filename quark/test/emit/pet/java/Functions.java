@@ -1,7 +1,7 @@
 public class Functions {
     public static void main() {
-        pets.Pet evil = (pets.Pet) (new pets.Cat());
-        pets.Pet good = (pets.Pet) (new pets.Dog());
+        pets.Pet evil = new pets.Cat();
+        pets.Pet good = new pets.Dog();
         (evil).greet();
         (good).greet();
     }

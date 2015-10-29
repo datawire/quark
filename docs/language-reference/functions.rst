@@ -36,6 +36,7 @@ Quark defines the following functions:
   long::__mul__()
   long::__neg__()
   long::__sub__()
+  long::toString()
   Map::__get__()
   Map::__set__()
   Map::contains()
@@ -43,13 +44,6 @@ Quark defines the following functions:
   Object::__eq__()
   Object::__nq__()
   now()
-  number::__add__()
-  number::__div__()
-  number::__gt__()
-  number::__lt__()
-  number::__mul__()
-  number::__neg__()
-  number::__sub__()
   parseInt()
   print()
   sleep()
@@ -425,6 +419,18 @@ where *A* and *B* are long integers and *B* is being subtracted from *A*.
 
 This function is used under the covers by the - operator; *A* **-** *B* is equivalent to *A*.__div__(*B*).
 
+long::toString()
+~~~~~~~~~~~~~~~~
+Used to cast a long integer to a string.
+
+Syntax
+++++++
+
+int *A*.toString()
+
+where *A* is a long integer.
+
+
 Map::__get__()
 Map::__set__()
 Map::contains()
@@ -442,111 +448,6 @@ Syntax
 ++++++
 
 void now()
-
-.. _numberAdd:
-
-number::__add__()
-~~~~~~~~~~~~~~~~~
-Used to add two numerical values together.
-
-Syntax
-++++++
-
-number *A*.__add__(*B*)
-
-where *A* and *B* are any numerical values
-
-This function is used under the covers by the + operator; *A* **+** *B* is equivalent to *A*.__add__(*B*).
-
-.. _numberDivide:
-
-number::__div__()
-~~~~~~~~~~~~~~~~~
-Used to divide one number into another.
-
-Syntax
-++++++
-
-number *A*.__div__(*B*)
-
-where *A* is the numerator and *B* is the denominator.
-
-This function is used under the covers by the / operator; *A* **/** *B* is equivalent to *A*.__div__(*B*).
-
-.. _numberGreaterThan:
-
-number::__gt__()
-~~~~~~~~~~~~~~~~
-Used to evaluate whether one number is greater than another.
-
-Syntax
-++++++
-
-number *A*.__gt__(*B*)
-
-where *A* and *B* are any numerical values. Returns true (1) if *A* is greater than *B* and false (0) if *A* is less than or equal to *B*.
-
-This function is used under the covers by the > operator; *A* **>** *B* is equivalent to *A*.__gt__(*B*).
-
-.. _numberLessThan:
-
-number::__lt__()
-~~~~~~~~~~~~~~~~
-Used to evaluate whether one numerical value is less than another.
-
-Syntax
-++++++
-
-number *A*.__lt__(*B*)
-
-where *A* and *B* are any numerical values. Returns true (1) if *A* is less than *B* and false (0) if *A* is greater than or equal to *B*.
-
-This function is used under the covers by the < operator; *A* **<** *B* is equivalent to *A*.__lt__(*B*).
-
-.. _numberMultiply:
-
-number::__mul__()
-~~~~~~~~~~~~~~~~~
-Used to multiply two numerical values together.
-
-Syntax
-++++++
-
-number *A*.__mul__(*B*)
-
-where *A* and *B* are any numerical values
-
-This function is used under the covers by the * operator; *A* **\*** *B* is equivalent to *A*.__mul__(*B*).
-
-.. _numberNegate:
-
-number::__neg__()
-~~~~~~~~~~~~~~~~~
-Used to flip the sign of a numerical value.
-
-Syntax
-++++++
-
-number *A*.__neg__()
-
-where *A* is any numerical value.
-
-This function is used under the covers by the - operator; **-** *A* is equivalent to *A*.__neg__().
-
-.. _numberSubtract:
-
-number::__sub__()
-~~~~~~~~~~~~~~~~~
-Used to subtract one number from another.
-
-Syntax
-++++++
-
-number *A*.__sub__(*B*)
-
-where *A* and *B* are any numerical values and *B* is being subtracted from *A*.
-
-This function is used under the covers by the - operator; *A* **-** *B* is equivalent to *A*.__div__(*B*).
 
 .. _parseInt:
 

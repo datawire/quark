@@ -199,7 +199,7 @@ class DefinitionRenderer(object):
         return result
 
     def constructor_header(self, fun):
-        if fun.parent.base:
+        if fun.parent.base and is_extendable(fun.parent.base):
             if not has_super(fun):
                 name = fun.parent.name.match(self.namer)
                 return [self.default_super(name)]
@@ -215,7 +215,7 @@ class DefinitionRenderer(object):
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = ""
         if c.base:
-            if isinstance(c.base.resolved.type, Interface) and not isinstance(c, Interface):
+            if isinstance(c.base.resolved.type, (Interface, Primitive)) and not isinstance(c, Interface):
                 extends = "implements"
             else:
                 extends = "extends"
@@ -267,7 +267,7 @@ class StatementRenderer(object):
 
     def maybe_cast(self, type, expr):
         result = expr.match(self.exprr)
-        if type.resolved.id != expr.resolved.id:
+        if not type.resolved.assignableFrom(expr.resolved):
             result = "(%s) (%s)" % (self.exprr.type(type.resolved, type), result)
         return result
 

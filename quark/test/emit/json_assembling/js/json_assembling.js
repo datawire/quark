@@ -4,8 +4,8 @@ function test_assembling() {
     var innerObject = new _qrt.JSONObject();
     (innerObject).setObjectItem("astring", (new _qrt.JSONObject()).setString("string value"));
     (innerObject).setObjectItem("aint", (new _qrt.JSONObject()).setNumber(9));
-    (innerObject).setObjectItem("atrue", (new _qrt.JSONObject()).setBool(1));
-    (innerObject).setObjectItem("afalse", (new _qrt.JSONObject()).setBool(0));
+    (innerObject).setObjectItem("atrue", (new _qrt.JSONObject()).setBool(true));
+    (innerObject).setObjectItem("afalse", (new _qrt.JSONObject()).setBool(false));
     (innerObject).setObjectItem("anull", (new _qrt.JSONObject()).setNull());
     var innerList = new _qrt.JSONObject();
     (innerList).setListItem(0, (new _qrt.JSONObject()).setString("after this string expect 42 and null"));

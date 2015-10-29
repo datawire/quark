@@ -3,7 +3,7 @@ File(
     NativeCase(py, Fixed('object')), NativeCase(js, Fixed('Object')))),
   Name(Object),
 
-  MethodMacro(Type(Name(int)), Name(__eq__),
+  MethodMacro(Type(Name(bool)), Name(__eq__),
    Param(Type(Name(Object)), Name(other), $type=0.Object),
    Native(NativeCase(java,
      Fixed('('), Var(Name(self), $type=0.Object), Fixed(').equals('),
@@ -13,7 +13,7 @@ File(
      $type=0.Object), Fixed(') === ('), Var(Name(other), $type=0.Object),
      Fixed(')')))),
 
-  MethodMacro(Type(Name(int)), Name(__ne__),
+  MethodMacro(Type(Name(bool)), Name(__ne__),
    Param(Type(Name(Object)), Name(other), $type=0.Object),
    Native(NativeCase(java,
      Fixed('!(('), Var(Name(self), $type=0.Object), Fixed(').equals('),
@@ -32,7 +32,33 @@ File(
   MethodMacro(Type(Name(bool)), Name(__not__), Native(NativeCase(java,
      Fixed('!('), Var(Name(self), $type=0.bool), Fixed(')')), NativeCase(py,
      Fixed('not ('), Var(Name(self), $type=0.bool), Fixed(')')), NativeCase(js,
-     Fixed('!('), Var(Name(self), $type=0.bool), Fixed(')'))))),
+     Fixed('!('), Var(Name(self), $type=0.bool), Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__and__),
+   Param(Type(Name(bool)), Name(other), $type=0.bool),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.bool), Fixed(') && ('),
+     Var(Name(other), $type=0.bool), Fixed(')')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.bool), Fixed(') and ('), Var(Name(other),
+     $type=0.bool), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self),
+     $type=0.bool), Fixed(') && ('), Var(Name(other), $type=0.bool),
+     Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__or__),
+   Param(Type(Name(bool)), Name(other), $type=0.bool),
+   Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.bool), Fixed(') || ('),
+     Var(Name(other), $type=0.bool), Fixed(')')), NativeCase(py, Fixed('('),
+     Var(Name(self), $type=0.bool), Fixed(') or ('), Var(Name(other),
+     $type=0.bool), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self),
+     $type=0.bool), Fixed(') || ('), Var(Name(other), $type=0.bool),
+     Fixed(')')))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('('), Var(Name(self), $type=0.bool), Fixed(').toString()')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.bool),
+     Fixed(').lower()')), NativeCase(js, Fixed('('), Var(Name(self),
+     $type=0.bool), Fixed(').toString()'))))),
 
  Primitive(Name(numeric), TypeParam(Name(T)),
 
@@ -59,12 +85,12 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
      Fixed(') / ('), Var(Name(other), $type=0.numeric.T), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(__lt__),
+  MethodMacro(Type(Name(bool)), Name(__lt__),
    Param(Type(Name(T)), Name(other), $type=0.numeric.T),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
      Fixed(') < ('), Var(Name(other), $type=0.numeric.T), Fixed(')')))),
 
-  MethodMacro(Type(Name(T)), Name(__gt__),
+  MethodMacro(Type(Name(bool)), Name(__gt__),
    Param(Type(Name(T)), Name(other), $type=0.numeric.T),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
      Fixed(') > ('), Var(Name(other), $type=0.numeric.T), Fixed(')'))))),
@@ -319,10 +345,10 @@ File(
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
   Method(Type(Name(JSONObject)), Name(setNumber),
-   Param(Type(Name(float)), Name(value), $type=0.float)),
+   Param(Type(Name(Object)), Name(value), $type=0.Object)),
 
   Method(Type(Name(JSONObject)), Name(setBool),
-   Param(Type(Name(int)), Name(value), $type=0.int)),
+   Param(Type(Name(bool)), Name(value), $type=0.bool)),
 
   Method(Type(Name(JSONObject)), Name(setNull)),
 
@@ -346,12 +372,12 @@ File(
      Var(Name(value), $type=0.JSONObject), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),
-  Param(Type(Name(String)), Name(msg), $type=0.String),
+  Param(Type(Name(Object)), Name(msg), $type=0.Object),
   Native(NativeCase(java,
-    Fixed('System.out.println('), Var(Name(msg), $type=0.String), Fixed(')')),
-   NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.String),
+    Fixed('System.out.println('), Var(Name(msg), $type=0.Object), Fixed(')')),
+   NativeCase(py, Fixed('_println('), Var(Name(msg), $type=0.Object),
     Fixed(')')), NativeCase(js, Fixed('_qrt.print('), Var(Name(msg),
-    $type=0.String), Fixed(')')))),
+    $type=0.Object), Fixed(')')))),
 
  Macro(Type(Name(long)), Name(now), Native(NativeCase(java,
     Fixed('System.currentTimeMillis()')), NativeCase(py,
@@ -379,5 +405,40 @@ File(
     Fixed('Integer.parseInt('), Var(Name(st), $type=0.String), Fixed(')')),
    NativeCase(py, Fixed('int('), Var(Name(st), $type=0.String), Fixed(')')),
    NativeCase(js, Fixed('parseInt('), Var(Name(st), $type=0.String),
-    Fixed(')'))))
+    Fixed(')')))),
+
+ Primitive(Name(WebSocketHandler),
+
+  Method(Type(Name(void)), Name(onMessage),
+   Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
+   Param(Type(Name(String)), Name(message), $type=0.String))),
+
+ Primitive(Name(WebSocket),
+
+  Method(Type(Name(void)), Name(setHandler),
+   Param(Type(Name(Object)), Name(handler), $type=0.Object)),
+
+  Method(Type(Name(void)), Name(send),
+   Param(Type(Name(String)), Name(message), $type=0.String))),
+
+ Primitive(Name(Task),
+
+  Method(Type(Name(void)), Name(onExecute),
+   Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime))),
+
+ Primitive(Name(Runtime),
+
+  Method(Type(Name(void)), Name(acquire)),
+
+  Method(Type(Name(void)), Name(release)),
+
+  Method(Type(Name(void)), Name(wait),
+   Param(Type(Name(float)), Name(timeoutInSeconds), $type=0.float)),
+
+  Method(Type(Name(WebSocket)), Name(open),
+   Param(Type(Name(String)), Name(url), $type=0.String)),
+
+  Method(Type(Name(void)), Name(schedule),
+   Param(Type(Name(Task)), Name(handler), $type=0.Task),
+   Param(Type(Name(float)), Name(delayInSeconds), $type=0.float)))
 )

@@ -5,8 +5,8 @@ def test_assembling():
     innerObject = _JSONObject();
     (innerObject).setObjectItem(u"astring", (_JSONObject()).setString(u"string value"));
     (innerObject).setObjectItem(u"aint", (_JSONObject()).setNumber(9));
-    (innerObject).setObjectItem(u"atrue", (_JSONObject()).setBool(1));
-    (innerObject).setObjectItem(u"afalse", (_JSONObject()).setBool(0));
+    (innerObject).setObjectItem(u"atrue", (_JSONObject()).setBool(True));
+    (innerObject).setObjectItem(u"afalse", (_JSONObject()).setBool(False));
     (innerObject).setObjectItem(u"anull", (_JSONObject()).setNull());
     innerList = _JSONObject();
     (innerList).setListItem(0, (_JSONObject()).setString(u"after this string expect 42 and null"));
