@@ -43,6 +43,13 @@ primitive float extends numeric<float> {
 @mapping($java{String}$py{str}$js{String})
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
+    macro int size() $java{($self).length()}$py{len($self)}$js{($self).length};
+    macro bool startsWith(String other) $java{Boolean.valueOf(($self).startsWith($other))}$py{($self).startswith($other)}$js{(($self).indexOf($other)===0)};
+    macro bool endsWith(String other) $java{Boolean.valueOf(($self).endsWith($other))}$py{($self).endswith($other)}$js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
+    macro int find(String other) $java{($self).indexOf($other)}$py{($self).find($other)}$js{($self).indexOf($other)};
+    macro String substring(int start, int end) $java{($self).substring(($start), ($end))}$py{($self)[($start):($end)]}$js{($self).substring(($start), ($end))};
+    macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}$py{($self).replace(($from), ($to), 1)}$js{($self).replace(($from), ($to))};
+    macro String join(List<String> parts) $java{io.datawire.quark_runtime.join(($self), ($parts))}$py{($self).join($parts)}$js{($parts).join($self)};
     macro JSONObject toJSON() ((new JSONObject()).setString)(self);
     macro JSONObject parseJSON() $java{io.datawire.quark_runtime.JSONObject.parse($self)}$py{_JSONObject.parse($self)}$js{_qrt.json_from_string($self)};
 }

@@ -175,4 +175,18 @@ public class quark_runtime {
         }
         private static JSONObject _undefined = new Undefined();
     }
+
+    public static String join(String sep, List<String> parts) {
+        StringBuilder b = new StringBuilder();
+        boolean first = true;
+        for (String part : parts) {
+            if (first) {
+                first = false;
+            } else {
+                b.append(sep);
+            }
+            b.append(part);
+        }
+        return b.toString();
+    }
 }
