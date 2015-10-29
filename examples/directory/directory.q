@@ -3,6 +3,30 @@ package directory {
     class Entry {
         String service;
         List<String> endpoints;
+
+        String toString() {
+            String res = "Entry: ";
+            if (service != null) {
+                res = res + service;
+            } else {
+                res = res + "(null service)";
+            }
+
+            res = res + " -> ";
+            if (endpoints != null) {
+                res = res + "[ ";
+                int idx = 0;
+                while (idx < endpoints.size()) {
+                    res = res + endpoints[idx] + " ";
+                    idx = idx + 1;
+                }
+                res = res + "]";
+            } else {
+                res = res + "(null endpoints)";
+            }
+
+            return res;
+        }
     }
 
     class Directory extends Task { // implements WebHandler, Task
