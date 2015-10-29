@@ -119,6 +119,11 @@ File(
      Var(Name(self), $type=0.int), Fixed('), ('), Var(Name(other),
      $type=0.int), Fixed('))')))),
 
+  MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
+     Fixed('Double.valueOf('), Var(Name(self), $type=0.int), Fixed(')')),
+    NativeCase(py, Fixed('float('), Var(Name(self), $type=0.int), Fixed(')')),
+    NativeCase(js, Fixed('('), Var(Name(self), $type=0.int), Fixed(')')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),
@@ -153,6 +158,11 @@ File(
      $type=0.long), Fixed(')')), NativeCase(js, Fixed('_qrt.modulo(('),
      Var(Name(self), $type=0.long), Fixed('), ('), Var(Name(other),
      $type=0.long), Fixed('))')))),
+
+  MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
+     Fixed('Double.valueOf('), Var(Name(self), $type=0.long), Fixed(')')),
+    NativeCase(py, Fixed('float('), Var(Name(self), $type=0.long), Fixed(')')),
+    NativeCase(js, Fixed('('), Var(Name(self), $type=0.long), Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Long.toString('), Var(Name(self), $type=0.long), Fixed(')')),

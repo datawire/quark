@@ -107,6 +107,11 @@ File(
     NativeCase(js, Fixed('_qrt.modulo(('), Var(Name(self)), Fixed('), ('),
      Var(Name(other)), Fixed('))')))),
 
+  MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
+     Fixed('Double.valueOf('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('float('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self)), Fixed(')')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
@@ -136,6 +141,11 @@ File(
      Var(Name(self)), Fixed(') % ('), Var(Name(other)), Fixed(')')),
     NativeCase(js, Fixed('_qrt.modulo(('), Var(Name(self)), Fixed('), ('),
      Var(Name(other)), Fixed('))')))),
+
+  MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
+     Fixed('Double.valueOf('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('float('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self)), Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Long.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,

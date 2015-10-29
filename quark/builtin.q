@@ -40,6 +40,7 @@ primitive int extends numeric<int> {
     macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}
                                  $py{($self) % ($other)}
                                  $js{_qrt.modulo(($self), ($other))};
+    macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
@@ -54,6 +55,7 @@ primitive long extends numeric<long> {
     macro long __mod__(long other) $java{Math.floorMod(($self), ($other))}
                                    $py{($self) % ($other)}
                                    $js{_qrt.modulo(($self), ($other))};
+    macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
     macro String toString() $java{Long.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
