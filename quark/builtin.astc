@@ -205,7 +205,7 @@ File(
    $type=0.JSONObject)),
 
   MethodMacro(Type(Name(JSONObject)), Name(parseJSON), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.jsonFromString('), Var(Name(self),
+     Fixed('io.datawire.quark_runtime.JSONObject.parse('), Var(Name(self),
      $type=0.String), Fixed(')')), NativeCase(py, Fixed('_JSONObject.parse('),
      Var(Name(self), $type=0.String), Fixed(')')), NativeCase(js,
      Fixed('_qrt.json_from_string('), Var(Name(self), $type=0.String),

@@ -11,7 +11,7 @@ def test_roundtrip():
 
 
 def test_iterate_list():
-    l = _JSONObject.parse(u"[1,2,3,4,5,6,7]");
+    l = _JSONObject.parse(u"[1.2,2.3,3.4,4.5,5.6,6.7,7.8]");
     i = 0;
     item = (l).getListItem(i);
     while ((item) != ((l).undefined())) :

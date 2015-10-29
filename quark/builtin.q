@@ -15,10 +15,10 @@ primitive bool {
     macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
     macro bool __and__(bool other) $java{($self) && ($other)}
                                    $py{($self) and ($other)}
-				   $js{($self) && ($other)};
+                                   $js{($self) && ($other)};
     macro bool __or__(bool other) $java{($self) || ($other)}
                                   $py{($self) or ($other)}
-				  $js{($self) || ($other)};
+                                  $js{($self) || ($other)};
     macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
 }
 
@@ -75,7 +75,7 @@ primitive float extends numeric<float> {
 primitive String {
     macro String __add__(String other) ${($self) + ($other)};
     macro JSONObject toJSON() new JSONObject().setString(self);
-    macro JSONObject parseJSON() $java{io.datawire.quark_runtime.jsonFromString($self)}
+    macro JSONObject parseJSON() $java{io.datawire.quark_runtime.JSONObject.parse($self)}
                                  $py{_JSONObject.parse($self)}
                                  $js{_qrt.json_from_string($self)};
 }
