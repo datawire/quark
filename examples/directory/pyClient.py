@@ -2,7 +2,7 @@
 
 import sys
 
-from quark_twisted_runtime import runtime
+import quark_twisted_runtime
 import directory
 
 
@@ -12,7 +12,7 @@ class ShowAnswer(object):
 
     def run(self, entry):
         if entry:
-            print "Looked up " + self.service + " and got back " + entry.service + " -> " + str(entry.endpoints)
+            print "Looked up " + self.service + " and got back " + entry.toString()
         else:
             print "Looked up " + self.service + " and got back " + str(entry)
 
@@ -21,6 +21,7 @@ def main(identity):
     name = "service-" + identity
     address = "Python-endpoint-" + identity
 
+    runtime = quark_twisted_runtime.get_twisted_runtime()
     d = directory.Directory(runtime, "ws://127.0.0.1:8910", name, address)
 
     for letter in "ABCDE":

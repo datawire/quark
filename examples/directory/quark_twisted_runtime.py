@@ -70,7 +70,7 @@ class _QuarkWebSocket(WebSocketClientProtocol):
             self.buffered.append(message)
 
 
-class Runtime(object):
+class TwistedRuntime(object):
 
     def __init__(self, reactor):
         self.locked = False
@@ -84,14 +84,9 @@ class Runtime(object):
         assert self.locked
         self.locked = False
 
-    def wait(self):
-        # FIXME This is just a yield
+    def wait(self, timeoutInSeconds):
         assert self.locked
-        d = defer.Deferred()
-        self.reactor.callLater(0.0, d.callback, None)
-        self.release()
-        yield d
-        self.acquire()
+        assert False
 
     def open(self, url):
         is_secure, host, port, resource, path, params = parseWsUrl(url)
@@ -100,10 +95,69 @@ class Runtime(object):
         return _QuarkWebSocket(factory)
 
     def schedule(self, handler, delayInSeconds):
-        self.reactor.callLater(delayInSeconds, lambda _: handler.onExecute(self), None)
+        self.reactor.callLater(delayInSeconds, handler.onExecute, self)
 
     def launch(self):
         self.reactor.run()
 
+    def finish(self):
+        self.reactor.callLater(0, self.tw.reactor.stop)
 
-runtime = Runtime(reactor)
+
+_twisted_runtime = TwistedRuntime(reactor)
+
+
+def get_twisted_runtime():
+    return _twisted_runtime
+
+
+def make_twisted_runtime():
+    return TwistedRuntime(reactor)
+
+
+import threading
+
+
+class ThreadedRuntime(object):
+
+    def __init__(self, reactor):
+        self.lock = threading.Condition()
+        self.tw = TwistedRuntime(reactor)
+
+    def acquire(self):
+        self.lock.acquire()
+
+    def release(self):
+        self.lock.release()
+
+    def _notify(self):
+        self.lock.acquire()
+        self.lock.notify_all()
+        self.lock.release()
+
+    def wait(self, timeoutInSeconds):
+        self.tw.reactor.callLater(0, self._notify)
+        self.lock.wait()
+
+    def open(self, url):
+        return self.tw.open(url)
+
+    def schedule(self, handler, delayInSeconds):
+        return self.tw.schedule(handler, delayInSeconds)
+
+    def launch(self):
+        threading.Thread(target=self.tw.reactor.run, args=(False,)).start()  # False: Don't try to install sig handlers
+
+    def finish(self):
+        self.tw.reactor.callLater(0, self.tw.reactor.stop)
+
+
+_threaded_runtime = ThreadedRuntime(reactor)
+
+
+def get_threaded_runtime():
+    return _threaded_runtime
+
+
+def make_threaded_runtime():
+    return ThreadedRuntime(reactor)
