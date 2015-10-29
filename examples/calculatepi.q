@@ -26,9 +26,9 @@ void main() {
         radiusSq = curX * curX + curY * curY;
 
         if (radiusSq > 1.0) {
-            outCircleCount = outCircleCount + 1;
+            outCircleCount = outCircleCount + 1.0;
         } else {
-            inCircleCount = inCircleCount + 1;
+            inCircleCount = inCircleCount + 1.0;
         }
         trial = trial + 1;
     }

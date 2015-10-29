@@ -275,11 +275,13 @@ class Use(object):
     @overload(Type)
     def lookup(self, t):
         type = self.lookup(t, t.path[0].text)
-        for n in t.path[1:]:
-            if n.text in type.env:
-                type = type.env[n.text]
-            else:
-                type = None
+        if type:
+            for n in t.path[1:]:
+                if n.text in type.env:
+                    type = type.env[n.text]
+                else:
+                    type = None
+                    break;
         return type
 
     def leave_Type(self, t):

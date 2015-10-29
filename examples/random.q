@@ -28,7 +28,7 @@ package importable {
 
         @doc("Return a random float f such that 0 <= f < 1")
         float random() {
-            float numerator = self.next() * 1.0;
+            float numerator = self.next().toFloat() * 1.0;
             float denominator = 65536.0;
             return numerator / denominator;
         }

@@ -24,6 +24,7 @@ primitive numeric<T> {
 primitive int extends numeric<int> {
     macro int __div__(int other) $java{~((~($self)) / ($other))}$py{($self) / ($other)}$js{Math.floor(($self) / ($other))};
     macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}$py{($self) % ($other)}$js{_qrt.modulo(($self), ($other))};
+    macro float toFloat() $java{Double.valueOf($self)}$py{float($self)}$js{($self)};
     macro String toString() $java{Integer.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
 }
@@ -31,6 +32,7 @@ primitive int extends numeric<int> {
 primitive long extends numeric<long> {
     macro long __div__(long other) $java{~((~($self)) / ($other))}$py{($self) / ($other)}$js{Math.floor(($self) / ($other))};
     macro long __mod__(long other) $java{Math.floorMod(($self), ($other))}$py{($self) % ($other)}$js{_qrt.modulo(($self), ($other))};
+    macro float toFloat() $java{Double.valueOf($self)}$py{float($self)}$js{($self)};
     macro String toString() $java{Long.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
 }
