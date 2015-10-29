@@ -288,7 +288,7 @@ File(
 
   Method(Type(Name(String)), Name(getString)),
 
-  Method(Type(Name(Object)), Name(getNumber)),
+  Method(Type(Name(float)), Name(getNumber)),
 
   Method(Type(Name(int)), Name(getBool)),
 
