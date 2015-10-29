@@ -4,13 +4,13 @@
 false
 true
 null
-l[0] = 1
-l[1] = 2
-l[2] = 3
-l[3] = 4
-l[4] = 5
-l[5] = 6
-l[6] = 7
+l[0] = 1.2
+l[1] = 2.3
+l[2] = 3.4
+l[3] = 4.5
+l[4] = 5.6
+l[5] = 6.7
+l[6] = 7.8
 {"endpoints":["endpoint0","endpoint1","endpoint2"]}
 endpoint0
 endpoint1

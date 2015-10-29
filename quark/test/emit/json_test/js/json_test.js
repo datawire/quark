@@ -11,7 +11,7 @@ function test_roundtrip() {
 exports.test_roundtrip = test_roundtrip;
 
 function test_iterate_list() {
-    var l = _qrt.json_from_string("[1,2,3,4,5,6,7]");
+    var l = _qrt.json_from_string("[1.2,2.3,3.4,4.5,5.6,6.7,7.8]");
     var i = 0;
     var item = (l).getListItem(i);
     while ((item) !== ((l).undefined())) {

@@ -146,9 +146,9 @@ public class quark_runtime {
             return undefined();
         }
 
-        public Number getNumber() {
+        public double getNumber() {
             if (this.value instanceof Number) {
-                return (Number) this.value;
+                return ((Number) this.value).doubleValue();
             }
             return 0; // XXX
         }

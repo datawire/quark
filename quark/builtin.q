@@ -125,7 +125,7 @@ primitive JSONObject {
     macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
     JSONObject getListItem(int index);     // list accessor, may return undefined()
     String     getString();                // string accessor
-    Object     getNumber();                // number accessor
+    float      getNumber();                // number accessor
     int        getBool();                  // true/false accessor
     int        isNull();                   // null accessor
     JSONObject undefined();                // undefined object returend by object and list accessors

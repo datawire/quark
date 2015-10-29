@@ -8,7 +8,7 @@ public class Functions {
         System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setNull()).toString())).toString());
     }
     public static void test_iterate_list() {
-        io.datawire.quark_runtime.JSONObject l = io.datawire.quark_runtime.JSONObject.parse("[1,2,3,4,5,6,7]");
+        io.datawire.quark_runtime.JSONObject l = io.datawire.quark_runtime.JSONObject.parse("[1.2,2.3,3.4,4.5,5.6,6.7,7.8]");
         Integer i = 0;
         io.datawire.quark_runtime.JSONObject item = (l).getListItem(i);
         while (!((item).equals((l).undefined()))) {
