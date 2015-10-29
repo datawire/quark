@@ -15,10 +15,10 @@ primitive bool {
     macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
     macro bool __and__(bool other) $java{($self) && ($other)}
                                    $py{($self) and ($other)}
-				   $js{($self) && ($other)};
+                                   $js{($self) && ($other)};
     macro bool __or__(bool other) $java{($self) || ($other)}
                                   $py{($self) or ($other)}
-				  $js{($self) || ($other)};
+                                  $js{($self) || ($other)};
     macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
 }
 
@@ -125,7 +125,7 @@ primitive JSONObject {
     macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
     JSONObject getListItem(int index);     // list accessor, may return undefined()
     String     getString();                // string accessor
-    float      getNumber();                // number accessor
+    Object     getNumber();                // number accessor
     int        getBool();                  // true/false accessor
     int        isNull();                   // null accessor
     JSONObject undefined();                // undefined object returend by object and list accessors

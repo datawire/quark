@@ -3,8 +3,8 @@ public class Functions {
         System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setObject()).toString())).toString());
         System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setList()).toString())).toString());
         System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setString("")).toString())).toString());
-        System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setBool(0)).toString())).toString());
-        System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setBool(1)).toString())).toString());
+        System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setBool(false)).toString())).toString());
+        System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setBool(true)).toString())).toString());
         System.out.println((io.datawire.quark_runtime.JSONObject.parse(((new io.datawire.quark_runtime.JSONObject()).setNull()).toString())).toString());
     }
     public static void test_iterate_list() {

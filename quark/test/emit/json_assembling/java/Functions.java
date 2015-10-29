@@ -3,8 +3,8 @@ public class Functions {
         io.datawire.quark_runtime.JSONObject innerObject = new io.datawire.quark_runtime.JSONObject();
         (innerObject).setObjectItem("astring", (new io.datawire.quark_runtime.JSONObject()).setString("string value"));
         (innerObject).setObjectItem("aint", (new io.datawire.quark_runtime.JSONObject()).setNumber(9));
-        (innerObject).setObjectItem("atrue", (new io.datawire.quark_runtime.JSONObject()).setBool(1));
-        (innerObject).setObjectItem("afalse", (new io.datawire.quark_runtime.JSONObject()).setBool(0));
+        (innerObject).setObjectItem("atrue", (new io.datawire.quark_runtime.JSONObject()).setBool(true));
+        (innerObject).setObjectItem("afalse", (new io.datawire.quark_runtime.JSONObject()).setBool(false));
         (innerObject).setObjectItem("anull", (new io.datawire.quark_runtime.JSONObject()).setNull());
         io.datawire.quark_runtime.JSONObject innerList = new io.datawire.quark_runtime.JSONObject();
         (innerList).setListItem(0, (new io.datawire.quark_runtime.JSONObject()).setString("after this string expect 42 and null"));

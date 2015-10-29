@@ -51,7 +51,9 @@ public class quark_runtime {
 
         public String toString() {
             try {
-                return JSON.std.asString(this.value);
+                return JSON.std
+                    .with(JSON.Feature.WRITE_NULL_PROPERTIES)
+                    .asString(this.value);
             } catch (Exception ex) {
                 return null; // XXX
             }
@@ -88,13 +90,13 @@ public class quark_runtime {
             return this;
         }
 
-        public JSONObject setNumber(float value) {
+        public JSONObject setNumber(Number value) {
             this.value = value;
             return this;
         }
 
-        public JSONObject setBool(int value) {
-            this.value = value != 0;
+        public JSONObject setBool(boolean value) {
+            this.value = value;
             return this;
         }
 
@@ -144,9 +146,9 @@ public class quark_runtime {
             return undefined();
         }
 
-        public float getNumber() {
+        public Number getNumber() {
             if (this.value instanceof Number) {
-                return ((Number)this.value).floatValue();
+                return (Number) this.value;
             }
             return 0; // XXX
         }
@@ -165,8 +167,8 @@ public class quark_runtime {
             @Override public JSONObject setObject() { return this; }
             @Override public JSONObject setList() { return this; }
             @Override public JSONObject setString(String v) { return this; }
-            @Override public JSONObject setNumber(float v) { return this; }
-            @Override public JSONObject setBool(int v) { return this; }
+            @Override public JSONObject setNumber(Number v) { return this; }
+            @Override public JSONObject setBool(boolean v) { return this; }
             @Override public JSONObject setNull() { return this; }
             @Override public JSONObject setListItem(int i, JSONObject v) { return this; }
             @Override public JSONObject setObjectItem(String k, JSONObject v) { return this; }

@@ -93,8 +93,8 @@ public class quark_runtime {
             return this;
         }
 
-        public JSONObject setBool(int value) {
-            this.value = value != 0;
+        public JSONObject setBool(boolean value) {
+            this.value = value;
             return this;
         }
 
@@ -166,7 +166,7 @@ public class quark_runtime {
             @Override public JSONObject setList() { return this; }
             @Override public JSONObject setString(String v) { return this; }
             @Override public JSONObject setNumber(float v) { return this; }
-            @Override public JSONObject setBool(int v) { return this; }
+            @Override public JSONObject setBool(boolean v) { return this; }
             @Override public JSONObject setNull() { return this; }
             @Override public JSONObject setListItem(int i, JSONObject v) { return this; }
             @Override public JSONObject setObjectItem(String k, JSONObject v) { return this; }
