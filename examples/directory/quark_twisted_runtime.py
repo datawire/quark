@@ -34,12 +34,17 @@ class _QWSCProtocol(WebSocketClientProtocol):
 
     def onOpen(self):
         self.factory.qws.is_open = True
-        for message in self.factory.qws.buffered:
-            self.sendMessage(message)
-        self.factory.qws.buffered = None
+        self.factory.qws.handler.onConnected(self.factory.qws)
 
     def onMessage(self, payload, isBinary):
-        self.factory.qws.handler.onMessage(self, payload)
+        self.factory.qws.handler.onMessage(self.factory.qws, payload)
+
+    def onClose(self, wasClean, code, reason):
+        if wasClean:
+            self.factory.qws.handler.onClosed(self.factory.qws)
+        else:
+            self.factory.qws.handler.onError(self.factory.qws)
+        self.factory.qws.handler.onFinal(self.factory.qws)
 
 
 class _QWSCFactory(WebSocketClientFactory):
@@ -53,21 +58,18 @@ class _QWSCFactory(WebSocketClientFactory):
 
 class _QuarkWebSocket(WebSocketClientProtocol):
 
-    def __init__(self, factory):
+    def __init__(self, factory, handler):
         factory.qws = self
         self.protocol = None  # filled in by the factory
-        self.handler = None
-        self.is_open = []
-        self.buffered = []
-
-    def setHandler(self, handler):
         self.handler = handler
+        self.is_open = False
+        self.handler.onInit(self)
 
     def send(self, message):
         if self.is_open:
             self.protocol.sendMessage(message)
-        else:
-            self.buffered.append(message)
+            return 1
+        return 0
 
 
 class TwistedRuntime(object):
@@ -88,11 +90,11 @@ class TwistedRuntime(object):
         assert self.locked
         assert False
 
-    def open(self, url):
+    def open(self, url, handler):
         is_secure, host, port, resource, path, params = parseWsUrl(url)
         factory = _QWSCFactory(url, debug=False)
         self.reactor.connectTCP(host, port, factory)
-        return _QuarkWebSocket(factory)
+        _QuarkWebSocket(factory, handler)
 
     def schedule(self, handler, delayInSeconds):
         self.reactor.callLater(delayInSeconds, handler.onExecute, self)
@@ -139,8 +141,8 @@ class ThreadedRuntime(object):
         self.tw.reactor.callLater(0, self._notify)
         self.lock.wait()
 
-    def open(self, url):
-        return self.tw.open(url)
+    def open(self, url, handler):
+        return self.tw.open(url, handler)
 
     def schedule(self, handler, delayInSeconds):
         return self.tw.schedule(handler, delayInSeconds)
