@@ -207,13 +207,35 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
 
 @mapping($java{io.datawire.quark_runtime.WebSocketHandler})
 primitive WebSocketHandler {
+    void onInit(WebSocket socket);
+    void onConnected(WebSocket socket);
     void onMessage(WebSocket socket, String message);
+    void onClose(WebSocket socket);
+    void onError(WebSocket socket);
+    void onFinal(WebSocket socket);
 }
 
 @mapping($java{io.datawire.quark_runtime.WebSocket})
 primitive WebSocket {
-    void setHandler(WebSocketHandler handler);
     void send(String message);
+}
+
+primitive HTTPHandler {
+    void onInit(HTTPRequest request);
+    void onResponse(HTTPRequest request, HTTPResponse response);
+    void onError(HTTPRequest request);
+    void onFinal(HTTPRequest request);
+}
+
+primitive HTTPRequest {
+    macro HTTPRequest(String url) ${};
+    void setMethod(String method);
+    void setBody(String data);
+}
+
+primitive HTTPResponse {
+    int getCode();
+    String getBody();
 }
 
 @mapping($java{io.datawire.quark_runtime.Task})
@@ -226,6 +248,7 @@ primitive Runtime {
     void acquire();
     void release();
     void wait(float timeoutInSeconds);
-    WebSocket open(String url);
+    void open(String url, WebSocketHandler handler);
+    void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
 }

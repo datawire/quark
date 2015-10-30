@@ -443,18 +443,63 @@ File(
      Fixed('io.datawire.quark_runtime.WebSocketHandler')))),
   Name(WebSocketHandler),
 
+  Method(Type(Name(void)), Name(onInit),
+   Param(Type(Name(WebSocket)), Name(socket))),
+
+  Method(Type(Name(void)), Name(onConnected),
+   Param(Type(Name(WebSocket)), Name(socket))),
+
   Method(Type(Name(void)), Name(onMessage),
    Param(Type(Name(WebSocket)), Name(socket)),
-   Param(Type(Name(String)), Name(message)))),
+   Param(Type(Name(String)), Name(message))),
+
+  Method(Type(Name(void)), Name(onClose),
+   Param(Type(Name(WebSocket)), Name(socket))),
+
+  Method(Type(Name(void)), Name(onError),
+   Param(Type(Name(WebSocket)), Name(socket))),
+
+  Method(Type(Name(void)), Name(onFinal),
+   Param(Type(Name(WebSocket)), Name(socket)))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.WebSocket')))), Name(WebSocket),
 
-  Method(Type(Name(void)), Name(setHandler),
-   Param(Type(Name(WebSocketHandler)), Name(handler))),
-
   Method(Type(Name(void)), Name(send),
    Param(Type(Name(String)), Name(message)))),
+
+ Primitive(Name(HTTPHandler),
+
+  Method(Type(Name(void)), Name(onInit),
+   Param(Type(Name(HTTPRequest)), Name(request))),
+
+  Method(Type(Name(void)), Name(onResponse),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPResponse)), Name(response))),
+
+  Method(Type(Name(void)), Name(onError),
+   Param(Type(Name(HTTPRequest)), Name(request))),
+
+  Method(Type(Name(void)), Name(onFinal),
+   Param(Type(Name(HTTPRequest)), Name(request)))),
+
+ Primitive(Name(HTTPRequest),
+
+  ConstructorMacro(Name(HTTPRequest),
+   Param(Type(Name(String)), Name(url)),
+   Native(NativeCase())),
+
+  Method(Type(Name(void)), Name(setMethod),
+   Param(Type(Name(String)), Name(method))),
+
+  Method(Type(Name(void)), Name(setBody),
+   Param(Type(Name(String)), Name(data)))),
+
+ Primitive(Name(HTTPResponse),
+
+  Method(Type(Name(int)), Name(getCode)),
+
+  Method(Type(Name(String)), Name(getBody))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.Task')))), Name(Task),
@@ -472,8 +517,13 @@ File(
   Method(Type(Name(void)), Name(wait),
    Param(Type(Name(float)), Name(timeoutInSeconds))),
 
-  Method(Type(Name(WebSocket)), Name(open),
-   Param(Type(Name(String)), Name(url))),
+  Method(Type(Name(void)), Name(open),
+   Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(WebSocketHandler)), Name(handler))),
+
+  Method(Type(Name(void)), Name(request),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPHandler)), Name(handler))),
 
   Method(Type(Name(void)), Name(schedule),
    Param(Type(Name(Task)), Name(handler)),
