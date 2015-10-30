@@ -97,16 +97,20 @@ macro long now() $java{System.currentTimeMillis()}$py{long(time.time()*1000)}$js
 macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}$py{time.sleep($seconds)}$js{_qrt.sleep($seconds)};
 macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}$py{_url_get($url)}$js{_qrt.url_get($url)};
 macro int parseInt(String st) $java{Integer.parseInt($st)}$py{int($st)}$js{parseInt($st)};
+@mapping($java{io.datawire.quark_runtime.WebSocketHandler})
 primitive WebSocketHandler {
     void onMessage(WebSocket socket, String message);
 }
+@mapping($java{io.datawire.quark_runtime.WebSocket})
 primitive WebSocket {
-    void setHandler(Object handler);
+    void setHandler(WebSocketHandler handler);
     void send(String message);
 }
+@mapping($java{io.datawire.quark_runtime.Task})
 primitive Task {
     void onExecute(Runtime runtime);
 }
+@mapping($java{io.datawire.quark_runtime.Runtime})
 primitive Runtime {
     void acquire();
     void release();
