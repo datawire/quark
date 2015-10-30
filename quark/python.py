@@ -67,12 +67,14 @@ class PythonDefinitionRenderer(DefinitionRenderer):
 
     def class_initializer(self, cls):
         fields = "\n".join([f.match(self.fieldr) for f in cls.definitions if isinstance(f, Field)])
-        if cls.base and is_extendable(cls.base):
-            fields = "%s._init(self)\n%s" % (self.stmtr.exprr.type(cls.base), fields)
+        btype = base_type(cls)
+        if btype:
+            fields = "%s._init(self)\n%s" % (self.stmtr.exprr.type(btype), fields)
         return "def _init(self):%s" % (indent(fields) or " pass")
 
     def default_constructors(self, cls):
-        if not (cls.base and is_extendable(cls.base)):
+        btype = base_type(cls)
+        if not btype:
             return ["def __init__(self): self._init()"]
         else:
             return []
@@ -85,13 +87,14 @@ class PythonDefinitionRenderer(DefinitionRenderer):
 
     def match_Class(self, c):
         name = c.name.match(self.namer)
-        base = self.stmtr.exprr.type(c.base) if c.base and is_extendable(c.base) else "object"
+        btype = base_type(c)
+        base = self.stmtr.exprr.type(btype) if btype else "object"
         body = indent("\n".join(self.class_body(c)))
         bases = "(%s)" % base if base else ""
         doc = indent(self.doc(c.annotations)).rstrip()
         return "class %s%s:%s%s" % (name, bases, doc, body or " pass")
 
-    def match_Function(self, fun):
+    def match_Function(self, fun, defaulting=False):
         doc = indent(self.doc(fun.annotations)).rstrip()
         if fun.type:
             name = fun.name.match(self.namer)

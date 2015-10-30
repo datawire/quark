@@ -202,10 +202,11 @@ class DefinitionRenderer(object):
         if not self.constructors(cls):
             result.extend(self.default_constructors(cls))
         result.extend([d.match(self) for d in cls.definitions])
+        result.extend([d.match(self, True) for d in get_defaulted_methods(cls).values()])
         return result
 
     def constructor_header(self, fun):
-        if fun.parent.base and is_extendable(fun.parent.base):
+        if base_type(fun.parent):
             if not has_super(fun):
                 name = fun.parent.name.match(self.namer)
                 return [self.default_super(name)]
@@ -220,18 +221,28 @@ class DefinitionRenderer(object):
         if c.parameters:
             params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
         extends = ""
-        if c.base:
-            if isinstance(c.base.resolved.type, (Interface, Primitive)) and not isinstance(c, Interface):
-                extends = "implements"
-            else:
-                extends = "extends"
-            extends = " %s %s" % (extends, self.stmtr.exprr.type(c.base))
+        bt = base_type(c)
+        if bt:
+            extends += " extends %s" % self.stmtr.exprr.type(bt)
+        else:
+            extends = ""
+        implements = ""
+        for base in c.bases:
+            if isinstance(base.resolved.type, Interface):
+                if not implements:
+                    if isinstance(c, Interface):
+                        implements += " extends "
+                    else:
+                        implements += " implements "
+                else:
+                    implements += ", "
+                implements += self.stmtr.exprr.type(base)
         body = "\n".join(self.class_body(c))
         kw = "interface" if isinstance(c, Interface) else "class"
         doc = self.doc(c.annotations)
         if not isinstance(c, Interface) and self.abstract(c):
             kw = "abstract " + kw
-        cls = "%spublic %s %s%s%s {%s}" % (doc, kw, name, params, extends, indent(body))
+        cls = "%spublic %s %s%s%s%s {%s}" % (doc, kw, name, params, extends, implements, indent(body))
         pkg = self.namer.package(c)
         if pkg:
             return "package %s;\n\n%s" % (pkg, cls)
@@ -241,12 +252,15 @@ class DefinitionRenderer(object):
     def match_TypeParam(self, p):
         return p.name.match(self.namer)
 
-    def match_Function(self, m):
+    def match_Function(self, m, defaulting=False):
         doc = self.doc(m.annotations)
         type = "%s " % self.stmtr.exprr.type(m.type.resolved, m.type) if m.type else ""
         name = m.name.match(self.namer)
         params = ", ".join([p.match(self) for p in m.params])
-        body = " %s" % m.body.match(self.stmtr) if m.body else ";"
+        if isinstance(m.clazz, Interface) and not defaulting:
+            body = ";"
+        else:
+            body = " %s" % m.body.match(self.stmtr) if m.body else ";"
         if isinstance(m, Method):
             mods = "public"
         else:
