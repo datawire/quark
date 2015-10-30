@@ -79,8 +79,10 @@ primitive JSONObject {
     JSONObject getListItem(int index);
     String getString();
     float getNumber();
-    int getBool();
-    int isNull();
+    bool getBool();
+    bool isNull();
+    bool isDefined();
+    bool isUndefined();
     JSONObject undefined();
     String toString();
     JSONObject setString(String value);
@@ -100,22 +102,22 @@ macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}$
 macro int parseInt(String st) $java{Integer.parseInt($st)}$py{int($st)}$js{parseInt($st)};
 @mapping($java{io.datawire.quark_runtime.WebSocketHandler})
 primitive WebSocketHandler {
-    void onInit(WebSocket socket);
-    void onConnected(WebSocket socket);
-    void onMessage(WebSocket socket, String message);
-    void onClose(WebSocket socket);
-    void onError(WebSocket socket);
-    void onFinal(WebSocket socket);
+    void onInit(WebSocket socket) {}
+    void onConnected(WebSocket socket) {}
+    void onMessage(WebSocket socket, String message) {}
+    void onClose(WebSocket socket) {}
+    void onError(WebSocket socket) {}
+    void onFinal(WebSocket socket) {}
 }
 @mapping($java{io.datawire.quark_runtime.WebSocket})
 primitive WebSocket {
     void send(String message);
 }
 primitive HTTPHandler {
-    void onInit(HTTPRequest request);
-    void onResponse(HTTPRequest request, HTTPResponse response);
-    void onError(HTTPRequest request);
-    void onFinal(HTTPRequest request);
+    void onInit(HTTPRequest request) {}
+    void onResponse(HTTPRequest request, HTTPResponse response) {}
+    void onError(HTTPRequest request) {}
+    void onFinal(HTTPRequest request) {}
 }
 primitive HTTPRequest {
     macro HTTPRequest(String url) $py{_HTTPRequest($url)}$js{new _qrt.HTTPRequest($url)};

@@ -132,6 +132,16 @@
     }
     JSONObject.prototype.isNull = JSONObject_isNull;
 
+    function JSONObject_isUndefined() {
+        return this === _JSONObject_undefined;
+    }
+    JSONObject.prototype.isUndefined = JSONObject_isUndefined;
+
+    function JSONObject_isDefined() {
+        return !this.isUndefined();
+    }
+    JSONObject.prototype.isDefined = JSONObject_isDefined;
+
     var _JSONObject_undefined = new JSONObject();
     _JSONObject_undefined.value = undefined;
 

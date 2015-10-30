@@ -370,9 +370,13 @@ File(
 
   Method(Type(Name(float)), Name(getNumber)),
 
-  Method(Type(Name(int)), Name(getBool)),
+  Method(Type(Name(bool)), Name(getBool)),
 
-  Method(Type(Name(int)), Name(isNull)),
+  Method(Type(Name(bool)), Name(isNull)),
+
+  Method(Type(Name(bool)), Name(isDefined)),
+
+  Method(Type(Name(bool)), Name(isUndefined)),
 
   Method(Type(Name(JSONObject)), Name(undefined)),
 
@@ -444,23 +448,29 @@ File(
   Name(WebSocketHandler),
 
   Method(Type(Name(void)), Name(onInit),
-   Param(Type(Name(WebSocket)), Name(socket))),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Block()),
 
   Method(Type(Name(void)), Name(onConnected),
-   Param(Type(Name(WebSocket)), Name(socket))),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Block()),
 
   Method(Type(Name(void)), Name(onMessage),
    Param(Type(Name(WebSocket)), Name(socket)),
-   Param(Type(Name(String)), Name(message))),
+   Param(Type(Name(String)), Name(message)),
+   Block()),
 
   Method(Type(Name(void)), Name(onClose),
-   Param(Type(Name(WebSocket)), Name(socket))),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Block()),
 
   Method(Type(Name(void)), Name(onError),
-   Param(Type(Name(WebSocket)), Name(socket))),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Block()),
 
   Method(Type(Name(void)), Name(onFinal),
-   Param(Type(Name(WebSocket)), Name(socket)))),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Block())),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.WebSocket')))), Name(WebSocket),
@@ -471,17 +481,21 @@ File(
  Primitive(Name(HTTPHandler),
 
   Method(Type(Name(void)), Name(onInit),
-   Param(Type(Name(HTTPRequest)), Name(request))),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Block()),
 
   Method(Type(Name(void)), Name(onResponse),
    Param(Type(Name(HTTPRequest)), Name(request)),
-   Param(Type(Name(HTTPResponse)), Name(response))),
+   Param(Type(Name(HTTPResponse)), Name(response)),
+   Block()),
 
   Method(Type(Name(void)), Name(onError),
-   Param(Type(Name(HTTPRequest)), Name(request))),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Block()),
 
   Method(Type(Name(void)), Name(onFinal),
-   Param(Type(Name(HTTPRequest)), Name(request)))),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Block())),
 
  Primitive(Name(HTTPRequest),
 

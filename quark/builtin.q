@@ -152,8 +152,10 @@ primitive JSONObject {
     JSONObject getListItem(int index);     // list accessor, may return undefined()
     String     getString();                // string accessor
     float      getNumber();                // number accessor
-    int        getBool();                  // true/false accessor
-    int        isNull();                   // null accessor
+    bool       getBool();                  // true/false accessor
+    bool       isNull();                   // null accessor
+    bool       isDefined();
+    bool       isUndefined();
     JSONObject undefined();                // undefined object returend by object and list accessors
 
     // V2:
@@ -207,12 +209,12 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
 
 @mapping($java{io.datawire.quark_runtime.WebSocketHandler})
 primitive WebSocketHandler {
-    void onInit(WebSocket socket);
-    void onConnected(WebSocket socket);
-    void onMessage(WebSocket socket, String message);
-    void onClose(WebSocket socket);
-    void onError(WebSocket socket);
-    void onFinal(WebSocket socket);
+    void onInit(WebSocket socket) {}
+    void onConnected(WebSocket socket) {}
+    void onMessage(WebSocket socket, String message) {}
+    void onClose(WebSocket socket) {}
+    void onError(WebSocket socket) {}
+    void onFinal(WebSocket socket) {}
 }
 
 @mapping($java{io.datawire.quark_runtime.WebSocket})
@@ -221,10 +223,10 @@ primitive WebSocket {
 }
 
 primitive HTTPHandler {
-    void onInit(HTTPRequest request);
-    void onResponse(HTTPRequest request, HTTPResponse response);
-    void onError(HTTPRequest request);
-    void onFinal(HTTPRequest request);
+    void onInit(HTTPRequest request) {}
+    void onResponse(HTTPRequest request, HTTPResponse response) {}
+    void onError(HTTPRequest request) {}
+    void onFinal(HTTPRequest request) {}
 }
 
 primitive HTTPRequest {

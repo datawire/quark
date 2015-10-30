@@ -22,16 +22,18 @@ package slack {
     }
 
     class SlackEvent {
+        String type;
         User user = null;
         Channel channel = null;
 
         void load(JSONObject obj, Runtime runtime) {
+            self.type = obj["type"].getString();
             JSONObject uobj = obj["user"];
-            if (!uobj.isNull()) {
+            if (uobj.isDefined()) {
                 self.user = new User(runtime, uobj.getString());
             }
             JSONObject chobj = obj["channel"];
-            if (!chobj.isNull()) {
+            if (chobj.isDefined()) {
                 self.channel = new Channel(runtime, chobj.getString());
             }
         }
@@ -63,23 +65,24 @@ package slack {
     }
 
     class Message extends SlackEvent {
-        @doc("The type field indicates the type of message.")
-        String type;
+        @doc("The subtype field indicates the type of message.")
+        String subtype;
         bool hidden = false;
         String text;
         String timestamp;
         Edited edited;
 
         void load(JSONObject obj, Runtime runtime) {
+            print(obj);
             super.load(obj, runtime);
-            self.type = obj["subtype"];
+            self.subtype = obj["subtype"];
             if (obj["hidden"] != null) {
                 self.hidden = true;
             }
             self.text = obj["text"].getString();
             self.timestamp = obj["timestamp"].getString();
             JSONObject edited = obj["edited"];
-            if (!edited.isNull()) {
+            if (edited.isDefined()) {
                 self.edited = new Edited();
                 self.edited.user = new User(runtime, edited["user"].getString());
                 self.edited.timestamp = edited["timestamp"].getString();
@@ -162,6 +165,7 @@ package slack {
             JSONObject obj = message.parseJSON();
             String type = obj["type"].getString();
             SlackEvent event = self.construct(type);
+            event.load(obj, self.runtime);
             event.dispatch(self.handler);
         }
 
