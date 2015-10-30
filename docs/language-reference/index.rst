@@ -5,7 +5,7 @@ Quark Language Reference
 .. toctree::
   :maxdepth: 3
 
-  Introduction <intro>
-  Core Concepts <core>
-  Language Elements <language>
-  References <links>
+  Introduction [TODO] <intro>
+  Core Concepts [Outlined] <core>
+  Language Elements [In Progress] <language>
+  References [TODO] <links>
