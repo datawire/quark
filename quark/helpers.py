@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
 
@@ -29,12 +30,18 @@ def get_field(cls, name, default=DEFAULT):
 def get_field(cls, name, default=DEFAULT):
     if name in cls.env:
         return cls.env[name]
-    elif cls.base and cls.base.resolved.type:
-        return get_field(cls.base.resolved.type, name)
-    elif default is DEFAULT:
-        raise KeyError(name)
     else:
-        return default
+        for type in cls.bases:
+            if type.resolved.type:
+                try:
+                    return get_field(type.resolved.type, name)
+                except KeyError:
+                    pass
+        else:
+            if default is DEFAULT:
+                raise KeyError(name)
+            else:
+                return default
 
 def has_super(fun):
     for stmt in fun.body.statements:
@@ -69,15 +76,20 @@ def constructor(cls):
 def constructors(cls):
     return [d for d in cls.definitions if isinstance(d, Callable) and d.type is None]
 
+def base_type(cls):
+    for b in cls.bases:
+        if is_extendable(b.resolved.type):
+            return b
+
 def base_constructors(cls):
-    base = cls.base
+    base = base_type(cls)
     cons = []
     while base:
         cons = constructors(base.resolved.type)
         if cons:
             break
         else:
-            base = base.resolved.type.base
+            base = base_type(base.resolved.type)
     return cons
 
 @dispatch(String)
@@ -107,3 +119,35 @@ def namever(packages):
 def is_extendable(node):
     return isinstance(node.resolved.type, Class) and \
         not isinstance(node.resolved.type, (Primitive, Interface))
+
+@dispatch(Class, dict)
+def get_methods(cls, result, predicate):
+    for dfn in cls.definitions:
+        if isinstance(dfn, Callable) and dfn.type and predicate(dfn):
+            name = dfn.name.text
+            if name not in result:
+                result[name] = dfn
+
+@dispatch(Class)
+def get_methods(cls, predicate):
+    result = OrderedDict()
+    get_methods(cls, result, predicate)
+    return result
+
+@dispatch(Class)
+def get_methods(cls):
+    return get_methods(cls, lambda x: True)
+
+@dispatch(Class, dict, dict)
+def get_defaulted_methods(cls, result, derived):
+    if isinstance(cls, Interface):
+        get_methods(cls, result, lambda dfn: dfn.body and dfn.name.text not in derived)
+    for base in cls.bases:
+        get_defaulted_methods(base.resolved.type, result, derived)
+
+@dispatch(Class)
+def get_defaulted_methods(cls):
+    result = OrderedDict()
+    derived = get_methods(cls)
+    get_defaulted_methods(cls, result, derived)
+    return result

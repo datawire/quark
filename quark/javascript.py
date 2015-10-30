@@ -119,8 +119,9 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
         constructor = None
         doc = self.doc(c.annotations)
 
-        if c.base and is_extendable(c.base):
-            base_class = self.stmtr.exprr.type(c.base)
+        btype = base_type(c)
+        if btype:
+            base_class = self.stmtr.exprr.type(btype)
             fields.append(base_class + ".prototype.__init_fields__.call(this);")
         else:
             base_class = None
@@ -139,11 +140,14 @@ class JSDefinitionRenderer(java.DefinitionRenderer):
             else:
                 methods.append(definition.match(self, class_name=name))
 
+        for definition in get_defaulted_methods(c).values():
+            methods.append(definition.match(self, class_name=name))
+
         res = "\n// CLASS %s\n" % name + doc
         if constructor:
             res += constructor.match(self, class_name=name)
         else:
-            if c.base and is_extendable(c.base):
+            if btype:
                 cons = base_constructors(c)
                 params = []
                 args = ["this"]

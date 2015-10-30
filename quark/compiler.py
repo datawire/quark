@@ -156,9 +156,10 @@ class TypeExpr(object):
     @overload(Class)
     def supertypes(self, cls):
         yield self
-        if cls.base:
-            for sup in cls.base.resolved.supertypes():
-                yield texpr(sup.type, sup.bindings, self.bindings)
+        if cls.bases:
+            for base in cls.bases:
+                for sup in base.resolved.supertypes():
+                    yield texpr(sup.type, sup.bindings, self.bindings)
         else:
             sup = cls.root.env["Object"].resolved
             yield texpr(sup.type, sup.bindings, self.bindings)
@@ -185,11 +186,12 @@ class TypeExpr(object):
     @overload(Class)
     def environments(self, cls, bindings):
         yield cls.env
-        if cls.base:
-            base = cls.base.resolved.type
-            bindings.update(cls.base.resolved.bindings)
-            for e in self.environments(base, bindings):
-                yield e
+        if cls.bases:
+            for btype in cls.bases:
+                base = btype.resolved.type
+                bindings.update(btype.resolved.bindings)
+                for e in self.environments(base, bindings):
+                    yield e
         else:
             yield cls.root.env["Object"].env
 
@@ -360,10 +362,11 @@ class Resolver(object):
         self.errors = []
 
     def leave_Super(self, s):
-        if s.clazz.base is None:
+        bt = base_type(s.clazz)
+        if bt is None:
             self.errors.append("%s: %s has no base class" % (lineinfo(s), s.clazz.name))
         else:
-            s.resolved = texpr(s.clazz.base.resolved.type)
+            s.resolved = texpr(bt.resolved.type)
 
     def leave_Var(self, v):
         v.resolved = v.definition.resolved
@@ -401,11 +404,12 @@ class Check:
         self.errors = []
 
     def visit_Field(self, f):
-        if f.clazz.base and f.clazz.base.resolved.type:
-            prev = get_field(f.clazz.base.resolved.type, f, None)
-            if prev is not None:
-                self.errors.append("%s: duplicate field '%s', previous definition: %s" %
-                                   (lineinfo(f), f.name, lineinfo(prev)))
+        for base in f.clazz.bases:
+            if base.resolved.type:
+                prev = get_field(base.resolved.type, f, None)
+                if prev is not None:
+                    self.errors.append("%s: duplicate field '%s', previous definition: %s" %
+                                       (lineinfo(f), f.name, lineinfo(prev)))
 
     def visit_Constructor(self, c):
         cons = base_constructors(c.clazz)
