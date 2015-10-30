@@ -3,6 +3,10 @@
 Annotations
 -----------
 
+Annotations are compiler directives used to add additional functionality or perform a specific task during code generation.
+
+Unlike most Quark code, annotations do not use the standard end of line character and should not be followed by a semi-colon (;).
+
 Quark defines the following annotations:
 
 .. toctree::
