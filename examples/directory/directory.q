@@ -52,9 +52,7 @@ package directory {
             self.endpoint = endpoint;
         }
 
-        void onInit(WebSocket socket) {
-            print("On init");
-        }
+        void onInit(WebSocket socket) {}
 
         void onConnected(WebSocket socket) {
             self.socket = socket;
