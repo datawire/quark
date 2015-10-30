@@ -12,7 +12,7 @@ Handler.prototype.onMessage = function(message) {
     console.log(message.text);
 };
 
-// you need to go to the slack api page and generate an access token
+// you need to go to https://api.slack.com/web and generate an access token
 var token = "*replace-me*"
 client = new slack.Client(runtime, token, new Handler(0));
 client.connect();
