@@ -12,7 +12,7 @@ package ipify {
         MyExternalIP(Runtime runtime, IPConsumer callback) {
             self.runtime = runtime;
             self.callback = callback;
-            self.runtime.request(new HTTPRequest("https://api.ipify.org?format=json"), self);
+            self.runtime.request(new HTTPRequest("https://api.ipify.org/"), self);
         }
 
         void onInit(HTTPRequest req) {}
@@ -20,8 +20,7 @@ package ipify {
         void onError(HTTPRequest req) {}
 
         void onResponse(HTTPRequest req, HTTPResponse resp) {
-            JSONObject jobj = resp.getBody().parseJSON();
-            self.callback.consume(jobj["ip"].getString());
+            self.callback.consume(resp.getBody());
         }
 
         void onFinal(HTTPRequest req) {}
