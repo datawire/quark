@@ -547,7 +547,9 @@ File(
 
   ConstructorMacro(Name(HTTPRequest),
    Param(Type(Name(String)), Name(url), $type=0.String),
-   Native(NativeCase())),
+   Native(NativeCase(js,
+     Fixed('new _qrt.HTTPRequest('), Var(Name(url), $type=0.String),
+     Fixed(')')))),
 
   Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method), $type=0.String)),

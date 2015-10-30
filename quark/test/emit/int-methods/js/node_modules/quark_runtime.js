@@ -220,4 +220,22 @@
 
     exports.json_from_string = json_from_string;
 
+    function HTTPRequest(url) {
+        this.url = url;
+        this.method = "GET";
+        this.body = null;
+    }
+
+    function HTTPRequest_setMethod(method) {
+        this.method = method;
+    }
+    HTTPRequest.prototype.setMethod = HTTPRequest_setMethod;
+
+    function HTTPRequest_setBody(body) {
+        this.body = body;
+    }
+    HTTPRequest.prototype.setBody = HTTPRequest_setBody;
+
+    exports.HTTPRequest = HTTPRequest;
+
 })();

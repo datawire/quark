@@ -11,7 +11,7 @@ import json
 import collections
 from urllib import urlencode as _urlencode
 
-__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject".split()
+__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest".split()
 
 
 _Map = dict
@@ -185,3 +185,17 @@ class _UndefinedJSON(_JSONObject):
 
     def setListItem(self, index, value):
         pass
+
+
+class _HTTPRequest(object):
+
+    def __init__(self, url):
+        self.url = url
+        self.method = "GET"
+        self.body = None
+
+    def setMethod(self, method):
+        self.method = method
+
+    def setBody(self, body):
+        self.body = body
