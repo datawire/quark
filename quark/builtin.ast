@@ -433,26 +433,31 @@ File(
     Fixed('int('), Var(Name(st)), Fixed(')')), NativeCase(js,
     Fixed('parseInt('), Var(Name(st)), Fixed(')')))),
 
- Primitive(Name(WebSocketHandler),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.WebSocketHandler')))),
+  Name(WebSocketHandler),
 
   Method(Type(Name(void)), Name(onMessage),
    Param(Type(Name(WebSocket)), Name(socket)),
    Param(Type(Name(String)), Name(message)))),
 
- Primitive(Name(WebSocket),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.WebSocket')))), Name(WebSocket),
 
   Method(Type(Name(void)), Name(setHandler),
-   Param(Type(Name(Object)), Name(handler))),
+   Param(Type(Name(WebSocketHandler)), Name(handler))),
 
   Method(Type(Name(void)), Name(send),
    Param(Type(Name(String)), Name(message)))),
 
- Primitive(Name(Task),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.Task')))), Name(Task),
 
   Method(Type(Name(void)), Name(onExecute),
    Param(Type(Name(Runtime)), Name(runtime)))),
 
- Primitive(Name(Runtime),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.Runtime')))), Name(Runtime),
 
   Method(Type(Name(void)), Name(acquire)),
 

@@ -189,4 +189,26 @@ public class quark_runtime {
         }
         return b.toString();
     }
+
+    public interface WebSocketHandler {
+        void onMessage(WebSocket socket, String message);
+    }
+
+    public interface WebSocket {
+        void setHandler(WebSocketHandler handler);
+        void send(String message);
+    }
+
+    public interface Task {
+        void onExecute(Runtime runtime);
+    }
+
+    public interface Runtime {
+        void acquire();
+        void release();
+        void wait(Double timeoutInSeconds);
+        WebSocket open(String url);
+        void schedule(Task handler, Double delayInSeconds);
+    }
+
 }
