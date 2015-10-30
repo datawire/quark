@@ -58,6 +58,14 @@ def is_super(expr):
 def is_super(call):
     return isinstance(call.expr, Super)
 
+def constructor(cls):
+    cons = constructors(cls)
+    if not cons:
+        cons = base_constructors(cls)
+    if cons:
+        assert len(cons) == 1
+        return cons[0]
+
 def constructors(cls):
     return [d for d in cls.definitions if isinstance(d, Callable) and d.type is None]
 

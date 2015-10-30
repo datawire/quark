@@ -66,7 +66,7 @@ File(
    ExprStmt(Call(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(get),
      $type=1.Crate.get), $type=0.int)),
    ExprStmt(Attr(Attr(Var(Name(icrate), $type=1.Crate<0.int>), Name(box),
-     $type=1.Box<1.Crate.T>), Name(contents), $type=0.int)))),
+     $type=1.Box<0.int>), Name(contents), $type=0.int)))),
 
  Function(Type(Name(void)), Name(test4), Block(
    Local(
@@ -80,7 +80,7 @@ File(
     Declaration(Type(Name(Crate), Type(Name(String))), Name(scrate),
     $type=1.Crate<0.String>)),
    ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(box),
-     $type=1.Box<1.Crate.T>), Name(contents), $type=0.String)),
+     $type=1.Box<0.String>), Name(contents), $type=0.String)),
    ExprStmt(Attr(Attr(Var(Name(scrate), $type=1.Crate<0.String>), Name(ibox),
      $type=1.Box<0.int>), Name(contents), $type=0.int)))),
 

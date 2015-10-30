@@ -197,24 +197,34 @@ class TypeExpr(object):
     def invoke(self, c, errors):
         return self.invoke(self.type, c, errors)
 
-    @overload(Callable)
-    def invoke(self, dfn, call, errors):
+    def check(self, params, call, errors):
         idx = 0
-        if len(dfn.params) == len(call.args):
-            for param in dfn.params:
+        if len(params) == len(call.args):
+            for param in params:
                 pexpr = texpr(param.resolved.type, param.resolved.bindings, self.bindings)
                 arg = call.args[idx]
                 idx += 1
                 if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
+                    print param, arg, param.resolved.bindings, self.bindings
                     errors.append("%s:type mismatch: expected %s, got %s" %
                                   (lineinfo(arg), pexpr, arg.resolved))
         else:
             errors.append("%s: expected %s args, got %s" %
-                          (lineinfo(call), len(dfn.params), len(call.args)))
+                          (lineinfo(call), len(params), len(call.args)))
+
+    @overload(Callable)
+    def invoke(self, dfn, call, errors):
+        self.check(dfn.params, call, errors)
         return texpr(dfn.type.resolved.type, self.bindings)
 
     @overload(Class)
     def invoke(self, cls, call, errors):
+        con = constructor(cls)
+        if con:
+            self.check(con.params, call, errors)
+        else:
+            if len(call.args) != 0:
+                errors.append("%s: expected 0 args, got %s" % (lineinfo(call), len(call.args)))
         return texpr(cls, self.bindings)
 
     @property
@@ -225,10 +235,22 @@ class TypeExpr(object):
     def pprint(self, pkg):
         return pkg.id
 
+    def resolve(self, param):
+        bindings = {}
+        done = set()
+        while param in self.bindings:
+            done.add(param)
+            pexpr = self.bindings[param]
+            param = pexpr.type
+            bindings.update(pexpr.bindings)
+            if param in done:
+                break
+        return texpr(param, bindings)
+
     @overload(Class)
     def pprint(self, cls):
         if cls.parameters:
-            params = [repr(self.bindings.get(p, p)) for p in cls.parameters]
+            params = [repr(self.resolve(p)) for p in cls.parameters]
             return "%s<%s>" % (cls.id, ",".join(params))
         else:
             return cls.id

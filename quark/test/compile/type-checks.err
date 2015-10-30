@@ -1,4 +1,9 @@
-type-checks.q:6:7:type mismatch: expected 0.int, got 0.String
-type-checks.q:6:12:type mismatch: expected 0.float, got 0.String
-type-checks.q:6:23:type mismatch: expected 0.String, got 0.int
-type-checks.q:7:5: expected 3 args, got 0
+type-checks.q:12:7:type mismatch: expected 0.int, got 0.String
+type-checks.q:12:12:type mismatch: expected 0.float, got 0.String
+type-checks.q:12:23:type mismatch: expected 0.String, got 0.int
+type-checks.q:13:5: expected 3 args, got 0
+type-checks.q:14:11:type mismatch: expected 0.int, got 0.String
+type-checks.q:14:16:type mismatch: expected 0.float, got 0.String
+type-checks.q:14:27:type mismatch: expected 0.String, got 0.int
+type-checks.q:15:5: expected 3 args, got 0
+type-checks.q:16:5: expected 0 args, got 1
