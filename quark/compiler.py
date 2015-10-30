@@ -205,7 +205,6 @@ class TypeExpr(object):
                 arg = call.args[idx]
                 idx += 1
                 if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
-                    print param, arg, param.resolved.bindings, self.bindings
                     errors.append("%s:type mismatch: expected %s, got %s" %
                                   (lineinfo(arg), pexpr, arg.resolved))
         else:
