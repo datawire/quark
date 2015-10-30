@@ -228,7 +228,7 @@ primitive HTTPHandler {
 }
 
 primitive HTTPRequest {
-    macro HTTPRequest(String url) ${};
+    macro HTTPRequest(String url) $js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
     void setBody(String data);
 }
