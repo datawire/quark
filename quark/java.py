@@ -228,7 +228,7 @@ class DefinitionRenderer(object):
             extends = ""
         implements = ""
         for base in c.bases:
-            if isinstance(base.resolved.type, Interface):
+            if isinstance(base.resolved.type, (Interface, Primitive)):
                 if not implements:
                     if isinstance(c, Interface):
                         implements += " extends "

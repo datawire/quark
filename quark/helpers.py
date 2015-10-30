@@ -140,7 +140,7 @@ def get_methods(cls):
 
 @dispatch(Class, dict, dict)
 def get_defaulted_methods(cls, result, derived):
-    if isinstance(cls, Interface):
+    if isinstance(cls, (Interface, Primitive)):
         get_methods(cls, result, lambda dfn: dfn.body and dfn.name.text not in derived)
     for base in cls.bases:
         get_defaulted_methods(base.resolved.type, result, derived)
