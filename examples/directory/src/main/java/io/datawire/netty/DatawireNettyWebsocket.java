@@ -3,6 +3,7 @@ package io.datawire.netty;
 import java.util.ArrayList;
 
 import io.datawire.quark_runtime.WebSocket;
+import io.datawire.quark_runtime.WebSocketHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -17,7 +18,7 @@ import io.netty.util.CharsetUtil;
 public class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> implements WebSocket {
 
 	private final WebSocketClientHandshaker handshaker;
-	private Object handler;
+	private WebSocketHandler handler;
 	private ArrayList<String> pending = new ArrayList<>();
 	private Channel ch;
 
@@ -28,7 +29,7 @@ public class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> 
 	}
 	
 	/// quark_runtime.WebSocket
-	public void setHandler(Object handler) {
+	public void setHandler(WebSocketHandler handler) {
 		this.handler = handler;
 	}
 
@@ -71,6 +72,9 @@ public class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> 
         if (frame instanceof TextWebSocketFrame) {
             TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
             System.out.println("WebSocket Client received message: " + textFrame.text());
+            if (handler != null) {
+                handler.onMessage(this, textFrame.text());
+            }
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");
         } else if (frame instanceof CloseWebSocketFrame) {
