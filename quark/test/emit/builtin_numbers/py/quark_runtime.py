@@ -9,8 +9,9 @@ import time  # used by the builtin now() macro
 import urllib2
 import json
 import collections
+from urllib import urlencode as _urlencode
 
-__all__ = "os sys time _Map _List _println _url_get _JSONObject".split()
+__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject".split()
 
 
 _Map = dict

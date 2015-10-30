@@ -336,7 +336,13 @@ File(
      Fixed(').update('), Var(Name(other)), Fixed(')')), NativeCase(js,
      Fixed('('), Var(Name(other)), Fixed(').forEach(function (v, k) '),
      Fixed('{'), Fixed(' ('), Var(Name(self)), Fixed(').set(k, v); '),
-     Fixed('}'), Fixed(')'))))),
+     Fixed('}'), Fixed(')')))),
+
+  MethodMacro(Type(Name(String)), Name(urlencode), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.urlencode('), Var(Name(self)),
+     Fixed(')')), NativeCase(py, Fixed('_urlencode('), Var(Name(self)),
+     Fixed(')')), NativeCase(js, Fixed('_qrt.urlencode('), Var(Name(self)),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.JSONObject')), NativeCase(py,

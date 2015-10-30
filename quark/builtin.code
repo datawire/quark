@@ -68,6 +68,7 @@ primitive Map<K, V> {
     macro V __get__(K key) $java{($self).get($key)}$py{($self).get($key)}$js{_qrt.map_get(($self), ($key))};
     macro int contains(K key) $java{($self).containsKey($key)}$py{($key) in ($self)}$js{($self).has($key)};
     macro void update(Map<K, V> other) $java{($self).putAll($other)}$py{($self).update($other)}$js{($other).forEach(function (v, k) { ($self).set(k, v); })};
+    macro String urlencode() $java{io.datawire.quark_runtime.urlencode($self)}$py{_urlencode($self)}$js{_qrt.urlencode($self)};
 }
 @mapping($java{io.datawire.quark_runtime.JSONObject}$py{_JSONObject}$js{_qrt.JSONObject})
 primitive JSONObject {

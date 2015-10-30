@@ -4,6 +4,7 @@ package io.datawire;
 
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Scanner;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
@@ -36,6 +37,23 @@ public class quark_runtime {
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    public static String urlencode(Map map) {
+        StringBuilder result = new StringBuilder();
+        boolean first = true;
+        for (Object obj : map.entrySet()) {
+            Map.Entry entry = (Map.Entry) obj;
+            if (first) {
+                first = false;
+            } else {
+                result.append("&");
+            }
+            result.append(URLEncoder.encode(entry.getKey() + ""));
+            result.append("=");
+            result.append(entry.getValue() + "");
+        }
+        return result.toString();
     }
 
     public static class JSONObject {

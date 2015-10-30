@@ -133,6 +133,9 @@ primitive Map<K,V> {
     macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                       $py{($self).update($other)}
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
+    macro String urlencode() $java{io.datawire.quark_runtime.urlencode($self)}
+                             $py{_urlencode($self)}
+                             $js{_qrt.urlencode($self)};
 }
 
 @mapping($java{io.datawire.quark_runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
