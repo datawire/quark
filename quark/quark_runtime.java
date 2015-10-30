@@ -199,7 +199,7 @@ public class quark_runtime {
 }
 
 public interface WebSocket {
-    void setHandler(Object handler);
+    void setHandler(WebSocketHandler handler);
     void send(String message);
 }
 
