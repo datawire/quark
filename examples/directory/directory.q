@@ -29,7 +29,7 @@ package directory {
         }
     }
 
-    class Directory extends Task { // implements WebHandler, Task
+    class Directory extends Task, WebSocketHandler { // implements WebHandler, Task
 
         Runtime runtime;
         WebSocket socket;

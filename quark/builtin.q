@@ -209,7 +209,7 @@ primitive WebSocketHandler {
 
 @mapping($java{io.datawire.quark_runtime.WebSocket})
 primitive WebSocket {
-    void setHandler(Object handler);
+    void setHandler(WebSocketHandler handler);
     void send(String message);
 }
 
