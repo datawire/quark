@@ -7,7 +7,7 @@
     var runtime = require("quark_node_runtime.js");
     var ipify = require("./ipify");
 
-    function Consumer() {};
+    function Consumer() {}
     Consumer.prototype.consume = function (ip) {
         console.log("IP is " + ip);
         process.exit();
