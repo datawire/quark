@@ -44,6 +44,12 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
       <artifactId>jackson-jr-objects</artifactId>
       <version>2.5.3</version>
     </dependency>
+    <dependency>
+      <groupId>io.netty</groupId>
+      <artifactId>netty-all</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
+      <version>4.0.32.Final</version>
+      <scope>compile</scope>
+    </dependency>
   </dependencies>
 </project>
 """

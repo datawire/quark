@@ -202,19 +202,23 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
 
+@mapping($java{io.datawire.quark_runtime.WebSocketHandler})
 primitive WebSocketHandler {
     void onMessage(WebSocket socket, String message);
 }
 
+@mapping($java{io.datawire.quark_runtime.WebSocket})
 primitive WebSocket {
     void setHandler(Object handler);
     void send(String message);
 }
 
+@mapping($java{io.datawire.quark_runtime.Task})
 primitive Task {
     void onExecute(Runtime runtime);
 }
 
+@mapping($java{io.datawire.quark_runtime.Runtime})
 primitive Runtime {
     void acquire();
     void release();
