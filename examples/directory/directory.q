@@ -39,25 +39,34 @@ package directory {
         float timeout = 60.0;
         List<AsyncLookup> deferred = [];
 
+        String service;
+        String endpoint;
+
         Directory(Runtime runtime, String url, String service, String endpoint) {
             self.runtime = runtime;
             self.runtime.acquire(); // would be nice to have a with statement or something
-            self.socket = self.runtime.open(url);
-            self.socket.setHandler(self);
+            self.runtime.open(url, self);
+            self.runtime.schedule(self, 3.0); // heartbeat interval
+            self.runtime.release();
+            self.service = service;
+            self.endpoint = endpoint;
+        }
 
+        void onInit(WebSocket socket) {
+            print("On init");
+        }
+
+        void onConnected(WebSocket socket) {
+            self.socket = socket;
             JSONObject tetherInfo = new JSONObject()
                 .setObjectItem("op", "tether".toJSON())
-                .setObjectItem("service", service.toJSON())
-                .setObjectItem("endpoint", endpoint.toJSON());
+                .setObjectItem("service", self.service.toJSON())
+                .setObjectItem("endpoint", self.endpoint.toJSON());
             self.socket.send(tetherInfo.toString());
 
             JSONObject subscribeInfo = new JSONObject()
                 .setObjectItem("op", "subscribe".toJSON());
             self.socket.send(subscribeInfo.toString());
-
-            self.runtime.schedule(self, 3.0); // heartbeat interval
-
-            self.runtime.release();
         }
 
         void onExecute(Runtime runtime) {
@@ -98,7 +107,12 @@ package directory {
                     print(message);
                 }
             }
+
         }
+
+        void onClose(WebSocket socket) {}
+        void onError(WebSocket socket) {}
+        void onFinal(WebSocket socket) {}
 
         Entry lookup(String name) {
             Entry result = null;
