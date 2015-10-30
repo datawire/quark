@@ -1,10 +1,14 @@
 # Quark's Twisted Runtime and associated
 
+from StringIO import StringIO
+
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
 from autobahn.websocket.protocol import parseWsUrl
 
 from twisted.internet import defer, reactor
 from twisted.python import log
+from twisted.web.client import Agent, FileBodyProducer, readBody
+from twisted.web.http_headers import Headers
 
 
 def _dumper(reason):
@@ -72,6 +76,50 @@ class _QuarkWebSocket(WebSocketClientProtocol):
         return 0
 
 
+class _QuarkRequest(object):
+
+    def __init__(self, agent, request, handler):
+        self.request = request
+        self.handler = handler
+        self.response = None
+
+        if self.request.body:
+            body = FileBodyProducer(StringIO(self.request.body))
+        else:
+            body = None
+
+        deferred = agent.request(request.method, request.url.encode("utf-8"), Headers({}), body)
+        deferred.addCallback(self.onResponse)
+        deferred.addErrback(self.onError)
+
+        self.handler.onInit(self.request)
+
+    def onResponse(self, response):
+        self.response = response
+        deferred = readBody(response)
+        deferred.addCallback(self.onBody)
+        deferred.addErrback(self.onError)
+
+    def onBody(self, body):
+        self.handler.onResponse(self.request, _QuarkResponse(self.response.code, body))
+
+    def onError(self, something):
+        self.handler.onError(self.request)
+
+
+class _QuarkResponse(object):
+
+    def __init__(self, code, body):
+        self.code = code
+        self.body = body
+
+    def getCode(self):
+        return self.code
+
+    def getBody(self):
+        return self.body
+
+
 class TwistedRuntime(object):
 
     def __init__(self, reactor):
@@ -96,6 +144,10 @@ class TwistedRuntime(object):
         self.reactor.connectTCP(host, port, factory)
         _QuarkWebSocket(factory, handler)
 
+    def request(self, request, handler):
+        agent = Agent(self.reactor)
+        _QuarkRequest(agent, request, handler)
+
     def schedule(self, handler, delayInSeconds):
         self.reactor.callLater(delayInSeconds, handler.onExecute, self)
 
@@ -103,7 +155,7 @@ class TwistedRuntime(object):
         self.reactor.run()
 
     def finish(self):
-        self.reactor.callLater(0, self.tw.reactor.stop)
+        self.reactor.callLater(0, self.reactor.stop)
 
 
 _twisted_runtime = TwistedRuntime(reactor)
@@ -142,7 +194,10 @@ class ThreadedRuntime(object):
         self.lock.wait()
 
     def open(self, url, handler):
-        return self.tw.open(url, handler)
+        self.tw.open(url, handler)
+
+    def request(self, request, handler):
+        self.tw.request(request, handler)
 
     def schedule(self, handler, delayInSeconds):
         return self.tw.schedule(handler, delayInSeconds)
