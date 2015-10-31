@@ -193,9 +193,13 @@ class _HTTPRequest(object):
         self.url = url
         self.method = "GET"
         self.body = None
+        self.headers = {}
 
     def setMethod(self, method):
         self.method = method
 
     def setBody(self, body):
         self.body = body
+
+    def setHeader(self, key, value):
+        self.headers[key] = value

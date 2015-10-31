@@ -234,6 +234,7 @@
         this.url = url;
         this.method = "GET";
         this.body = null;
+        this.headers = {};
     }
 
     function HTTPRequest_setMethod(method) {
@@ -245,6 +246,11 @@
         this.body = body;
     }
     HTTPRequest.prototype.setBody = HTTPRequest_setBody;
+
+    function HTTPRequest_setHeader(key, value) {
+        this.headers[key] = value;
+    }
+    HTTPRequest.prototype.setHeader = HTTPRequest_setHeader;
 
     exports.HTTPRequest = HTTPRequest;
 

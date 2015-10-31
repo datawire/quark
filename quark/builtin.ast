@@ -509,7 +509,11 @@ File(
    Param(Type(Name(String)), Name(method))),
 
   Method(Type(Name(void)), Name(setBody),
-   Param(Type(Name(String)), Name(data)))),
+   Param(Type(Name(String)), Name(data))),
+
+  Method(Type(Name(void)), Name(setHeader),
+   Param(Type(Name(String)), Name(key)),
+   Param(Type(Name(String)), Name(value)))),
 
  Primitive(Name(HTTPResponse),
 

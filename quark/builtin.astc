@@ -570,7 +570,11 @@ File(
    Param(Type(Name(String)), Name(method), $type=0.String)),
 
   Method(Type(Name(void)), Name(setBody),
-   Param(Type(Name(String)), Name(data), $type=0.String))),
+   Param(Type(Name(String)), Name(data), $type=0.String)),
+
+  Method(Type(Name(void)), Name(setHeader),
+   Param(Type(Name(String)), Name(key), $type=0.String),
+   Param(Type(Name(String)), Name(value), $type=0.String))),
 
  Primitive(Name(HTTPResponse),
 

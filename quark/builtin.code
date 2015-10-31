@@ -123,6 +123,7 @@ primitive HTTPRequest {
     macro HTTPRequest(String url) $py{_HTTPRequest($url)}$js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
     void setBody(String data);
+    void setHeader(String key, String value);
 }
 primitive HTTPResponse {
     int getCode();

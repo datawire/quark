@@ -83,12 +83,16 @@ class _QuarkRequest(object):
         self.handler = handler
         self.response = None
 
+        headers = {key.encode("utf-8"): [str(value).encode("utf-8")] for key, value in request.headers.items()}
+
         if self.request.body:
-            body = FileBodyProducer(StringIO(self.request.body))
+            bodyBytes = self.request.body.encode("utf-8")
+            body = FileBodyProducer(StringIO(bodyBytes))
+            headers["Content-Length"] = [str(len(bodyBytes))]
         else:
             body = None
 
-        deferred = agent.request(request.method, request.url.encode("utf-8"), Headers({}), body)
+        deferred = agent.request(request.method.encode("utf-8"), request.url.encode("utf-8"), Headers(headers), body)
         deferred.addCallback(self.onResponse)
         deferred.addErrback(self.onError)
 
