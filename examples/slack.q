@@ -142,6 +142,7 @@ package slack {
             req.setMethod("POST");
             params["token"] = self.token;
             req.setBody(params.urlencode());
+            req.setHeader("Content-Type", "application/x-www-form-urlencoded");
             self.runtime.request(req, handler);
         }
 
@@ -171,7 +172,7 @@ package slack {
 
         void onResponse(HTTPRequest request, HTTPResponse response) {
             int code = response.getCode();
-            SlackError error;
+            SlackError error = null;
             if (code != 200) {
                 error = new SlackError();
                 error.code = code;
