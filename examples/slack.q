@@ -2,22 +2,33 @@
 package slack {
 
     class User {
-        Runtime runtime;
+        Client client;
         String user;
 
-        User(Runtime runtime, String user) {
-            self.runtime = runtime;
+        User(Client client, String user) {
+            self.client = client;
             self.user = user;
         }
     }
 
     class Channel {
-        Runtime runtime;
+        Client client;
         String channel;
 
-        Channel(Runtime runtime, String channel) {
-            self.runtime = runtime;
+        Channel(Client client, String channel) {
+            self.client = client;
             self.channel = channel;
+        }
+
+        void send(String message) {
+            int id = client.event_id;
+            client.event_id = client.event_id + 1;
+            JSONObject msg = new JSONObject();
+            msg["id"] = id.toJSON();
+            msg["type"] = "message".toJSON();
+            msg["channel"] = self.channel.toJSON();
+            msg["text"] = message.toJSON();
+            client.ws_send(msg.toString());
         }
     }
 
@@ -26,15 +37,15 @@ package slack {
         User user = null;
         Channel channel = null;
 
-        void load(JSONObject obj, Runtime runtime) {
+        void load(Client client, JSONObject obj) {
             self.type = obj["type"].getString();
             JSONObject uobj = obj["user"];
             if (uobj.isDefined()) {
-                self.user = new User(runtime, uobj.getString());
+                self.user = new User(client, uobj.getString());
             }
             JSONObject chobj = obj["channel"];
             if (chobj.isDefined()) {
-                self.channel = new Channel(runtime, chobj.getString());
+                self.channel = new Channel(client, chobj.getString());
             }
         }
 
@@ -47,8 +58,8 @@ package slack {
         int code;
         String text;
 
-        void load(JSONObject obj, Runtime runtime) {
-            super.load(obj, runtime);
+        void load(Client client, JSONObject obj) {
+            super.load(client, obj);
             self.code = obj["code"].getNumber();
             self.text = obj["text"].getString();
         }
@@ -72,10 +83,9 @@ package slack {
         String timestamp;
         Edited edited;
 
-        void load(JSONObject obj, Runtime runtime) {
-            print(obj);
-            super.load(obj, runtime);
-            self.subtype = obj["subtype"];
+        void load(Client client, JSONObject obj) {
+            super.load(client, obj);
+            self.subtype = obj["subtype"].getString();
             if (obj["hidden"] != null) {
                 self.hidden = true;
             }
@@ -84,7 +94,7 @@ package slack {
             JSONObject edited = obj["edited"];
             if (edited.isDefined()) {
                 self.edited = new Edited();
-                self.edited.user = new User(runtime, edited["user"].getString());
+                self.edited.user = new User(client, edited["user"].getString());
                 self.edited.timestamp = edited["timestamp"].getString();
             }
         }
@@ -125,6 +135,8 @@ package slack {
         Runtime runtime;
 	String token;
         SlackHandler handler;
+        int event_id = 0;
+        WebSocket socket = null;
 
 	Client(Runtime runtime, String token, SlackHandler handler) {
             self.runtime = runtime;
@@ -150,8 +162,12 @@ package slack {
             self.runtime.open(wsurl, self);
         }
 
+        void ws_send(String message) {
+            socket.send(message);
+        }
+
         void onConnected(WebSocket socket) {
-            print("connected");
+            self.socket = socket;
         }
 
         SlackEvent construct(String type) {
@@ -166,7 +182,7 @@ package slack {
             JSONObject obj = message.parseJSON();
             String type = obj["type"].getString();
             SlackEvent event = self.construct(type);
-            event.load(obj, self.runtime);
+            event.load(self, obj);
             event.dispatch(self.handler);
         }
 
