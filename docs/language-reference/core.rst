@@ -1,6 +1,8 @@
 Core Concepts
 =============
 
+Quark is a Turing-complete language designed primarily for facilitating microservice communication pathways although it is not limited to this function.
+
 .. toctree::
   :maxdepth: 2
 
@@ -17,11 +19,92 @@ Core Concepts
 
 Language Structure
 ------------------
-packages, classes, methods, list of types of elements (covered in detail in Language Elements), etc
+
+Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, method and operator overloading, and property and method overriding capabilities.
+
+[[JMK do we want to use the term field or property for the names of data containers inside a class?]]
+
+[[JMK we did fix the issues with overriding in the recent changes, right? double check this.]]
+
+Quark may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.
+
+Files
+~~~~~
+
+Quark code is stored in text files with a .q file extension. Unlike some languages, Quark is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Packages may be defined across multiple files or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single .q file. However, the set of files comprising an application may only have one main() function declaration.
+
+Packages
+~~~~~~~~
+
+Packages provide namespaces for class and function definitions. Packages cannot directly contain variables or runnable code; only classes, functions, and other packages are allowed. Packages are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.
+
+As mentioned above, packages can be nested. Classes and functions directly inside a top-level package must use nested package name when referencing classes or functions defined inside a nested package but the members of the nested package have direct access to classes and functions in the top-level package without needing to specify their package name.
+
+Classes and functions defined outside of a package belong to a default, unnamed root package. This package is logically identical to any named package. Named packages are nested inside this root package so classes and functions in the root package may be referenced inside any package directly without specifying a package name.
+
+Classes
+~~~~~~~
+
+
+Methods
++++++++
+
+
+Abstract
+++++++++
+
+Quark does not support explicitly declaring abstract classes or methods using a keyword. Instead, just define method signatures without a corresponding body component. Doing so will automatically make both that method and the class containing it abstract. Trying to instantiate such a class directly will result in an error.
+
+[[JMK test this!]]
+
+Properties
+++++++++++
+
+
+Functions
+~~~~~~~~~
+
+
+Interfaces
+~~~~~~~~~~
+
+Interfaces define a group of default methods and method signatures that can be used and defined in other classes. Interfaces cannot contain properties and may not be directly instantiated in any way. They are essentially template code ensuring that a library or application implements a common feature somewhat consistently throughout and making maintenance of common code easier.
+
+Classes that use an interface must provide a body definition for each method signature (without changing the signature) or the class will automatically include the method signature and become abstract.
+
+[[JMK check this last statement]]
+
+Quark does not contain a default keyword; rather default methods are defined by providing a functional method body inside the interface instead of just a method signature. Classes that use an interface may use the default method as is or redefine it (without changing the signature). If a class using the interface declares the method signature of a default method a without redefining the body contents, the method and class becomes abstract.
+
+[[JMK check this last statement]]
+
+[[JMK defining some stuff below to be in a later version in Sphinx comments]]
+
+.. To be added later
+  
+  Scoping
+  ~~~~~~~
+  
+  Constants
+  ~~~~~~~~~
+  
+  Quark does not currently have a mechanism for declaring global constants.
+
 
 Naming and Other Conventions
 ----------------------------
+Quark names are case sensitive and may contain only alphanumeric characters or underscores (_). Names of elements must be unique within the scope of a package, library, or application (in the case of a library or application, fully-qualified names are considered so package1.name1 and package2.name1 are perfectly acceptable).
 
+Package names are not tied to the location of files and are not expected to match directory structures. There are no global rules for naming conventions; if generating Java code this may result in unconventional package names and file locations within the resulting Java files.
+
+By convention, Quark expects the following casing rules:
+
+* Package names are lower case
+* Class names are upper case
+* variable, property, method, and function names are camel case
+* annotation names are lower case
+
+[[JMK I'm sure I'm missing stuff that should be mentioned. Will look at this in more detail later.]]
 
 Inheritance
 -----------
@@ -29,19 +112,33 @@ Inheritance
 
 Object Instantiation
 --------------------
-
+Quark objects must be explicitly instantiated in all cases. This is done using the :ref:`new keyword <newKeyword>`.
 
 Typing
 ------
 
+Quark is a strongly, statically typed language with support for type inheritance and generics.
 
 Comments
 --------
 
+Single line comments in Quark can be specified using //. Multiple line comments can be specified using /\* *comment* \*/.
 
 White Space
 -----------
 
+In general, Quark requires at least one white space character between language elements. It typically ignores any additional whitespace, allowing for variances in indentation conventions and extra lines within code.
+
+White space may be supplied between operators and the elements they act upon (either to their left or to their right) but it is not required.
+
+[[JMK Are there any additional white space rules? I can't think of any]]
 
 End of Line
 -----------
+
+Each line of Quark code must end with a semi-colon (;). The only exceptions to this are:
+
+* Keywords followed by an opening curly brace ({)
+* The corresponding closing curly brace (})
+* Annotations (which typically end with parentheses).
+* Comments
