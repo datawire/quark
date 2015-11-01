@@ -408,7 +408,7 @@ File(
   MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(String)), Name(key)),
    Param(Type(Name(JSONObject)), Name(value)),
-   Native(NativeCase(Fixed(' ('), Var(Name(self)), Fixed(').setObjectItem(('),
+   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').setObjectItem(('),
      Var(Name(key)), Fixed('), ('), Var(Name(value)), Fixed('))'))))),
 
  Macro(Type(Name(void)), Name(print),

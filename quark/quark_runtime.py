@@ -88,19 +88,19 @@ class _JSONObject(object):
         if isinstance(self.value, (str, unicode)):
             return self.value
         else:
-            return self.undefined()
+            return None
 
     def getNumber(self):
         if isinstance(self.value, (int, long, float)):
             return self.value
         else:
-            return self.undefined()
+            return None
 
     def getBool(self):
         if isinstance(self.value, bool):
             return self.value
         else:
-            return self.undefined()
+            return None
 
     def isNull(self):
         return self.value is None

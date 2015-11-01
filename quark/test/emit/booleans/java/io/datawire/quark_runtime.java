@@ -164,18 +164,25 @@ public class quark_runtime {
             return undefined();
         }
 
-        public double getNumber() {
+        public Double getNumber() {
             if (this.value instanceof Number) {
                 return ((Number) this.value).doubleValue();
             }
-            return 0; // XXX
+            return null;
         }
 
         public String getString() {
             if (this.value instanceof String) {
                 return (String) this.value;
             }
-            return ""; // XXX
+            return null;
+        }
+
+        public Boolean getBool() {
+            if (this.value instanceof Boolean) {
+                return (Boolean) this.value;
+            }
+            return null;
         }
 
         static class Undefined extends JSONObject {

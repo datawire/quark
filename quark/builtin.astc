@@ -463,7 +463,7 @@ File(
   MethodMacro(Type(Name(void)), Name(__set__),
    Param(Type(Name(String)), Name(key), $type=0.String),
    Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject),
-   Native(NativeCase(Fixed(' ('), Var(Name(self), $type=0.JSONObject),
+   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.JSONObject),
      Fixed(').setObjectItem(('), Var(Name(key), $type=0.String), Fixed('), ('),
      Var(Name(value), $type=0.JSONObject), Fixed('))'))))),
 

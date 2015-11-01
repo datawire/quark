@@ -105,7 +105,7 @@
 
     function JSONObject_getString() {
         if (typeof this.value !== 'string') {
-            return this.undefined();
+            return null;
         }
         return this.value;
     }
@@ -113,7 +113,7 @@
 
     function JSONObject_getNumber() {
         if (typeof this.value !== 'number') {
-            return this.undefined();
+            return null;
         }
         return this.value;
     }
@@ -121,7 +121,7 @@
 
     function JSONObject_getBool() {
         if (typeof this.value !== 'boolean') {
-            return this.undefined();
+            return null;
         }
         return this.value ? 1 : 0;
     }

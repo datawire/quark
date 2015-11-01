@@ -177,7 +177,7 @@ primitive JSONObject {
     JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
     JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
 
-    macro void __set__(String key, JSONObject value) ${ ($self).setObjectItem(($key), ($value))};
+    macro void __set__(String key, JSONObject value) ${($self).setObjectItem(($key), ($value))};
     // TODO a while bunch of __set__ overloads
 
     // V2:

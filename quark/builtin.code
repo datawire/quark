@@ -93,7 +93,7 @@ primitive JSONObject {
     JSONObject setList();
     JSONObject setObjectItem(String key, JSONObject value);
     JSONObject setListItem(int index, JSONObject value);
-    macro void __set__(String key, JSONObject value) ${ ($self).setObjectItem(($key), ($value))};
+    macro void __set__(String key, JSONObject value) ${($self).setObjectItem(($key), ($value))};
 }
 macro void print(Object msg) $java{System.out.println($msg)}$py{_println($msg)}$js{_qrt.print($msg)};
 macro long now() $java{System.currentTimeMillis()}$py{long(time.time()*1000)}$js{Date.now()};
