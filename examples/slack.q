@@ -326,7 +326,6 @@ package slack {
         }
 
         void onMessage(WebSocket socket, String message) {
-            print(message);
             JSONObject obj = message.parseJSON();
             String type = obj["type"].getString();
             SlackEvent event = self.construct(type);
