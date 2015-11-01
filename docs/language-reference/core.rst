@@ -4,7 +4,7 @@ Core Concepts
 Quark is a Turing-complete language designed primarily for facilitating microservice communication pathways although it is not limited to this function.
 
 .. toctree::
-  :maxdepth: 2
+  :maxdepth: 3
 
   Language Structure
   Naming and Other Conventions
@@ -36,7 +36,7 @@ Quark code is stored in text files with a .q file extension. Unlike some languag
 Packages
 ~~~~~~~~
 
-Packages provide namespaces for class and function definitions. Packages cannot directly contain variables or runnable code; only classes, functions, and other packages are allowed. Packages are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.
+Packages are defined using the :ref:`package keyword <packageKeyword>` and provide namespaces for class and function definitions. Packages cannot directly contain variables or runnable code; only classes, functions, and other packages are allowed. Packages are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.
 
 As mentioned above, packages can be nested. Classes and functions directly inside a top-level package must use nested package name when referencing classes or functions defined inside a nested package but the members of the nested package have direct access to classes and functions in the top-level package without needing to specify their package name.
 
@@ -45,25 +45,48 @@ Classes and functions defined outside of a package belong to a default, unnamed 
 Classes
 ~~~~~~~
 
+Classes are defined using the :ref:`class keyword <classKeyword>` and provide a template for a specific type of object. Classes can contain properties to store data and methods to provide actions that can be performed on that data. Quark classes cannot be nested and do not support static properties or methods.
+
+Properties
+++++++++++
+
+Properties are typed variables meant to store a specific piece of data within an object. Properties are declared within the class definition and may be given default values. Properties defined within a specific class may be accessed and manipulated within the methods of that class.
 
 Methods
 +++++++
 
+Methods typically define actions that can be taken on data within an object. Methods may require input parameters (which are typed) and may return a value (also typed). Methods are defined as follows:
 
-Abstract
-++++++++
+*returnType* *methodName* **(** *parameters* **) {**
+    *codeToExecute*
+**}**
+
+where *returnType* is the type of the return value (void if no value is returned), *methodName* is the name of the method, *parameters* is a comma-separated list of parameter type and parameter name pairs, and *codeToExecute* is the code executed by the method.
+
+Methods can directly access any properties defined within the same class as well as methods defined in other classes using dot syntax references to those methods. Quark does not support static or class methods; all methods are invoked on a specific object.
+
+Abstractness
+++++++++++++
 
 Quark does not support explicitly declaring abstract classes or methods using a keyword. Instead, just define method signatures without a corresponding body component. Doing so will automatically make both that method and the class containing it abstract. Trying to instantiate such a class directly will result in an error.
 
 [[JMK test this!]]
 
-Properties
-++++++++++
+Constructors
+++++++++++++
 
+Constructors are methods called when an object is instantiated. Every instantiable class has a default constructor with no parameters defined for it automatically, but additional constructors that accept initial values for properties defined within the class may be added to any class.
 
 Functions
 ~~~~~~~~~
 
+Functions typically define actions that can be taken outside of the context of a specific class. Functions may require input parameters (which are typed) and may return a value (also typed). Functions do not act on specific objects unless those objects are passed in as input parameters. Functions may belong to a package or be defined as part of the default unnamed package. They are defined as follows:
+
+*returnType* *functionName* **(** *parameters* **) {**
+    *codeToExecute*
+**}**
+
+where *returnType* is the type of the return value (void if no value is returned), *functionName* is the name of the function, *parameters* is a comma-separated list of parameter type and parameter name pairs, and *codeToExecute* is the code executed by the function.
 
 Interfaces
 ~~~~~~~~~~
@@ -108,7 +131,11 @@ By convention, Quark expects the following casing rules:
 
 Inheritance
 -----------
+TODO
 
+
+Overloading
+-----------
 
 Object Instantiation
 --------------------
@@ -117,7 +144,7 @@ Quark objects must be explicitly instantiated in all cases. This is done using t
 Typing
 ------
 
-Quark is a strongly, statically typed language with support for type inheritance and generics.
+Quark is a strongly, statically typed language with support for type inheritance and generics. Quark uses primitives as the base data types; primitives are defined by the system and cannot be modified by users.
 
 Comments
 --------
