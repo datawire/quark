@@ -1,10 +1,8 @@
 package bot;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
 import slack.ChannelArchive;
@@ -25,15 +23,21 @@ import slack.SlackHandler;
 import slack.UserTyping;
 
 public class SlackBot implements SlackHandler {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		io.datawire.quark_runtime.netty.DatawireNettyRuntime runtime = new io.datawire.quark_runtime.netty.DatawireNettyRuntime();
 		Client client = new Client(runtime, getToken(), new SlackBot());
+		client.connect();
 		runtime.launch();
 		
 }
-	private static String  getToken() throws IOException {
-		return new String(Files.readAllBytes(Paths.get(".slack.token").toAbsolutePath()), StandardCharsets.UTF_8);
-		
+	private static String  getToken() throws Exception {
+		try {
+			String token = new String(Files.readAllBytes(Paths.get(".slack.token").toAbsolutePath()), StandardCharsets.UTF_8);
+            return token.replaceFirst("\r", "").replaceFirst("\n", "");
+		} catch (NoSuchFileException fnfe) {
+			throw new Exception("You can generate a token at https://api.slack.com/web", fnfe);
+		}
+	
 	}
 	@Override
 	public void onSlackEvent(SlackEvent event) {
@@ -59,7 +63,7 @@ public class SlackBot implements SlackHandler {
 	@Override
 	public void onMessage(Message message) {
 		print(message, message.text);
-		if (message.text != null && message.text.indexOf("quark") > -1 ) {
+		if (message.text != null && message.text.indexOf("java quark") > -1 ) {
 			message.channel.send("java quarkbot: " + message.text);
 		}
 	}
