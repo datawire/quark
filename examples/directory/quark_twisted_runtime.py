@@ -38,17 +38,17 @@ class _QWSCProtocol(WebSocketClientProtocol):
 
     def onOpen(self):
         self.factory.qws.is_open = True
-        self.factory.qws.handler.onConnected(self.factory.qws)
+        self.factory.qws.handler.onWSConnected(self.factory.qws)
 
     def onMessage(self, payload, isBinary):
-        self.factory.qws.handler.onMessage(self.factory.qws, payload)
+        self.factory.qws.handler.onWSMessage(self.factory.qws, payload)
 
     def onClose(self, wasClean, code, reason):
         if wasClean:
-            self.factory.qws.handler.onClosed(self.factory.qws)
+            self.factory.qws.handler.onWSClosed(self.factory.qws)
         else:
-            self.factory.qws.handler.onError(self.factory.qws)
-        self.factory.qws.handler.onFinal(self.factory.qws)
+            self.factory.qws.handler.onWSError(self.factory.qws)
+        self.factory.qws.handler.onWSFinal(self.factory.qws)
 
 
 class _QWSCFactory(WebSocketClientFactory):
@@ -67,7 +67,7 @@ class _QuarkWebSocket(WebSocketClientProtocol):
         self.protocol = None  # filled in by the factory
         self.handler = handler
         self.is_open = False
-        self.handler.onInit(self)
+        self.handler.onWSInit(self)
 
     def send(self, message):
         if self.is_open:
@@ -96,7 +96,7 @@ class _QuarkRequest(object):
         deferred.addCallback(self.onResponse)
         deferred.addErrback(self.onError)
 
-        self.handler.onInit(self.request)
+        self.handler.onHTTPInit(self.request)
 
     def onResponse(self, response):
         self.response = response
@@ -105,10 +105,12 @@ class _QuarkRequest(object):
         deferred.addErrback(self.onError)
 
     def onBody(self, body):
-        self.handler.onResponse(self.request, _QuarkResponse(self.response.code, body))
+        self.handler.onHTTPResponse(self.request, _QuarkResponse(self.response.code, body))
+        self.handler.onHTTPFinal(self.request)
 
     def onError(self, something):
-        self.handler.onError(self.request)
+        self.handler.onHTTPError(self.request)
+        self.handler.onHTTPFinal(self.request)
 
 
 class _QuarkResponse(object):
