@@ -4,7 +4,7 @@
    contain the root `toctree` directive.
 
 Welcome to the Quark Documentation!
-=================================
+===================================
 
 Available documents:
 
@@ -12,7 +12,7 @@ Available documents:
    :maxdepth: 1
 
    Quark Language Reference <language-reference/index>
-
+   Quark Quick Start <quick-start/index>
 
 
 Indices and tables
