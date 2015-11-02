@@ -197,6 +197,12 @@ File(
      Var(Name(self), $type=0.float), Fixed(') / ('), Var(Name(other),
      $type=0.float), Fixed(')')))),
 
+  MethodMacro(Type(Name(long)), Name(round), Native(NativeCase(java,
+     Fixed('Math.round('), Var(Name(self), $type=0.float), Fixed(')')),
+    NativeCase(py, Fixed('long(round('), Var(Name(self), $type=0.float),
+     Fixed('))')), NativeCase(javascript, Fixed('Math.round('), Var(Name(self),
+     $type=0.float), Fixed(')')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Double.toString('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.float), Fixed(')')),
@@ -431,6 +437,18 @@ File(
   MethodMacro(Type(Name(float)), Name(__to_float), Call(Attr(Var(Name(self),
      $type=0.JSONObject), Name(getNumber), $type=0.JSONObject.getNumber),
    $type=0.float)),
+
+  MethodMacro(Type(Name(int)), Name(__to_int), Native(NativeCase(java,
+     Fixed('((int) Math.round(('), Var(Name(self), $type=0.JSONObject),
+     Fixed(').getNumber()))')), NativeCase(py, Fixed('int(round(('),
+     Var(Name(self), $type=0.JSONObject), Fixed(').getNumber()))')),
+    NativeCase(javascript, Fixed('Math.round(('), Var(Name(self),
+     $type=0.JSONObject), Fixed(').getNumber())')))),
+
+  MethodMacro(Type(Name(long)), Name(__to_long),
+   Call(Attr(Call(Attr(Var(Name(self), $type=0.JSONObject), Name(getNumber),
+      $type=0.JSONObject.getNumber), $type=0.float), Name(round),
+    $type=0.float.round), $type=0.long)),
 
   MethodMacro(Type(Name(bool)), Name(__to_bool), Call(Attr(Var(Name(self),
      $type=0.JSONObject), Name(getBool), $type=0.JSONObject.getBool),

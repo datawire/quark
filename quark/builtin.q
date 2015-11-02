@@ -69,6 +69,9 @@ primitive float extends numeric<float> {
     macro float __div__(float other) $java{($self) / ($other)}
                                      $py{float($self) / float($other)}
                                      $js{($self) / ($other)};
+    macro long round() $java{Math.round($self)}
+                       $py{long(round($self))}
+                       $javascript{Math.round($self)};
     macro String toString() $java{Double.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
@@ -151,6 +154,10 @@ primitive JSONObject {
 
     macro String __to_String() self.getString();
     macro float __to_float() self.getNumber();
+    macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
+                         $py{int(round(($self).getNumber()))}
+                         $javascript{Math.round(($self).getNumber())};
+    macro long __to_long() self.getNumber().round();
     macro bool __to_bool() self.getBool();
 
     // accessors

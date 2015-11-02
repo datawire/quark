@@ -173,6 +173,12 @@ File(
      Fixed('('), Var(Name(self)), Fixed(') / ('), Var(Name(other)),
      Fixed(')')))),
 
+  MethodMacro(Type(Name(long)), Name(round), Native(NativeCase(java,
+     Fixed('Math.round('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('long(round('), Var(Name(self)), Fixed('))')),
+    NativeCase(javascript, Fixed('Math.round('), Var(Name(self)),
+     Fixed(')')))),
+
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Double.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
@@ -367,6 +373,15 @@ File(
 
   MethodMacro(Type(Name(float)), Name(__to_float), Call(Attr(Var(Name(self)),
      Name(getNumber)))),
+
+  MethodMacro(Type(Name(int)), Name(__to_int), Native(NativeCase(java,
+     Fixed('((int) Math.round(('), Var(Name(self)), Fixed(').getNumber()))')),
+    NativeCase(py, Fixed('int(round(('), Var(Name(self)),
+     Fixed(').getNumber()))')), NativeCase(javascript, Fixed('Math.round(('),
+     Var(Name(self)), Fixed(').getNumber())')))),
+
+  MethodMacro(Type(Name(long)), Name(__to_long),
+   Call(Attr(Call(Attr(Var(Name(self)), Name(getNumber))), Name(round)))),
 
   MethodMacro(Type(Name(bool)), Name(__to_bool), Call(Attr(Var(Name(self)),
      Name(getBool)))),

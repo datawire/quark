@@ -219,6 +219,14 @@ public class quark_runtime {
             return null;
         }
 
+        public Boolean isDefined() {
+            return !isUndefined();
+        }
+
+        public Boolean isUndefined() {
+            return this == _undefined;
+        }
+
         static class Undefined extends JSONObject {
             public Undefined() {
                 super(new Object());
@@ -476,7 +484,7 @@ public class quark_runtime {
 
             private final WebSocketClientHandshaker handshaker;
             private final WebSocketHandler handler;
-            private ArrayList<String> pending = new ArrayList<>();
+            private ArrayList<String> pending = new ArrayList<String>();
             private Channel ch;
 
             public DatawireNettyWebsocket(WebSocketClientHandshaker handshaker, WebSocketHandler handler) {
