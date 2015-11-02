@@ -147,7 +147,7 @@ def main(args):
             if javascript:
                 for pkg_file_path in glob(os.path.join(js_dir, "*/index.js")):
                     pkg_dir_path = os.path.dirname(pkg_file_path)
-                    call_and_show("package", ".", ["tar", "czf", pkg_dir_path + ".tgz", pkg_dir_path])
+                    call_and_show("package", ".", ["tar", "czf", pkg_dir_path + ".tgz", "-C", pkg_dir_path, "."])
     except Exception as exc:
         return exc
 
