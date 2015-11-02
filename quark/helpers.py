@@ -33,10 +33,8 @@ def get_field(cls, name, default=DEFAULT):
     else:
         for type in cls.bases:
             if type.resolved.type:
-                try:
-                    return get_field(type.resolved.type, name)
-                except KeyError:
-                    pass
+                result = get_field(type.resolved.type, name, None)
+                if result: return result
         else:
             if default is DEFAULT:
                 raise KeyError(name)

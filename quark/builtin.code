@@ -27,6 +27,7 @@ primitive int extends numeric<int> {
     macro float toFloat() $java{Double.valueOf($self)}$py{float($self)}$js{($self)};
     macro String toString() $java{Integer.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
+    macro JSONObject __to_JSONObject() ((self).toJSON)();
 }
 @mapping($java{Long}$py{long}$js{Number})
 primitive long extends numeric<long> {
@@ -35,12 +36,14 @@ primitive long extends numeric<long> {
     macro float toFloat() $java{Double.valueOf($self)}$py{float($self)}$js{($self)};
     macro String toString() $java{Long.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
+    macro JSONObject __to_JSONObject() ((self).toJSON)();
 }
 @mapping($java{Double}$py{float}$js{Number})
 primitive float extends numeric<float> {
     macro float __div__(float other) $java{($self) / ($other)}$py{float($self) / float($other)}$js{($self) / ($other)};
     macro String toString() $java{Double.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
+    macro JSONObject __to_JSONObject() ((self).toJSON)();
 }
 @mapping($java{String}$py{str}$js{String})
 primitive String {
@@ -53,6 +56,7 @@ primitive String {
     macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}$py{($self).replace(($from), ($to), 1)}$js{($self).replace(($from), ($to))};
     macro String join(List<String> parts) $java{io.datawire.quark_runtime.join(($self), ($parts))}$py{($self).join($parts)}$js{($parts).join($self)};
     macro JSONObject toJSON() ((new JSONObject()).setString)(self);
+    macro JSONObject __to_JSONObject() ((self).toJSON)();
     macro JSONObject parseJSON() $java{io.datawire.quark_runtime.JSONObject.parse($self)}$py{_JSONObject.parse($self)}$js{_qrt.json_from_string($self)};
 }
 @mapping($java{java.util.ArrayList}$py{_List}$js{Array})
@@ -73,6 +77,9 @@ primitive Map<K, V> {
 @mapping($java{io.datawire.quark_runtime.JSONObject}$py{_JSONObject}$js{_qrt.JSONObject})
 primitive JSONObject {
     macro JSONObject() $java{new io.datawire.quark_runtime.JSONObject()}$py{_JSONObject()}$js{new _qrt.JSONObject()};
+    macro String __to_String() ((self).getString)();
+    macro float __to_float() ((self).getNumber)();
+    macro bool __to_bool() ((self).getBool)();
     String getType();
     JSONObject getObjectItem(String key);
     macro JSONObject __get__(String key) ${($self).getObjectItem($key)};

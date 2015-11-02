@@ -124,7 +124,7 @@ class PythonStatementRenderer(StatementRenderer):
     def match_Declaration(self, d):
         name = d.name.match(self.namer)
         if d.value:
-            return "%s = %s" % (name, d.value.match(self.exprr))
+            return "%s = %s" % (name, self.exprr.coerce(d.value))
         else:
             # XXX: will probably need to adjust this to deal with
             #      different declaration cases in python
@@ -146,7 +146,7 @@ class PythonStatementRenderer(StatementRenderer):
         return result
 
     def match_Assign(self, ass):
-        return "%s = %s" % (ass.lhs.match(self.exprr), ass.rhs.match(self.exprr))
+        return "%s = %s" % (ass.lhs.match(self.exprr), self.exprr.coerce(ass.rhs))
 
     def match_Return(self, r):
         if r.expr:
@@ -171,10 +171,8 @@ class PythonExprRenderer(ExprRenderer):
             return name
 
     @overload(AST)
-    def get(self, cls, attr):
-        expr = attr.expr
-        attr_name = attr.attr.text
-        return "(%s).%s" % (expr.match(self), attr_name)
+    def get(self, cls, type, expr, attr):
+        return "(%s).%s" % (expr.match(self), attr.text)
 
     @overload(Class, Super)
     def invoke(self, cls, expr, args):

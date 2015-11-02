@@ -286,6 +286,8 @@ class StatementRenderer(object):
         self.exprr = ExprRenderer(self.namer)
 
     def maybe_cast(self, type, expr):
+        if expr.coersion:
+            return self.exprr.coerce(expr)
         result = expr.match(self.exprr)
         if not type.resolved.assignableFrom(expr.resolved):
             result = "(%s) (%s)" % (self.exprr.type(type.resolved, type), result)
@@ -380,11 +382,24 @@ class ExprRenderer(object):
 
     def match_Call(self, c):
         type = c.expr.resolved.type
-        return self.invoke(type, c.expr, [a.match(self) for a in c.args])
+        return self.invoke(type, c.expr, [self.coerce(a) for a in c.args])
+
+    @overload(Expression)
+    def coerce(self, expr):
+        if expr.coersion:
+            if isinstance(expr.coersion, Macro):
+                class FakeExpr: pass
+                fake = FakeExpr()
+                fake.expr = expr
+                return self.apply_macro(expr.coersion, fake, ())
+            else:
+                return "%s()" % self.get(expr.resolved.type, expr.coersion, expr, expr.coersion.name)
+        else:
+            return expr.match(self)
 
     def match_Attr(self, a):
         type = a.expr.resolved.type
-        return self.get(type, a)
+        return self.get(type, a.resolved.type, a.expr, a.attr)
 
     def match_Type(self, t):
         return self.type(t)
@@ -416,20 +431,17 @@ class ExprRenderer(object):
     def match_Fixed(self, f):
         return f.text
 
-    @overload(Class)
-    def get(self, cls, attr):
-        expr = attr.expr
-        attr_name = attr.attr.text
-        return "(%s).%s" % (expr.match(self), attr_name)
+    @overload(Class, AST)
+    def get(self, cls, type, expr, attr):
+        return "(%s).%s" % (expr.match(self), attr.text)
 
-    @overload(Package)
-    def get(self, pkg, attr):
-        expr = attr.expr
-        attr_name = attr.attr.text
-        if isinstance(attr.resolved.type, Function):
-            return "%s.Functions.%s" % (expr.match(self), attr_name)
-        else:
-            return "%s.%s" % (expr.match(self), attr_name)
+    @overload(Package, Function)
+    def get(self, pkg, type, expr, attr):
+        return "%s.Functions.%s" % (expr.match(self), attr.text)
+
+    @overload(Package, Package)
+    def get(self, pkg, type, expr, attr):
+        return "%s.%s" % (expr.match(self), attr.text)
 
     @overload(Class, Super)
     def invoke(self, cls, expr, args):

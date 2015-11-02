@@ -254,12 +254,12 @@ class JSStatementRenderer(java.StatementRenderer):
     def match_Declaration(self, d):
         name = d.name.match(self.namer)
         if d.value:
-            return "var %s = %s" % (name, d.value.match(self.exprr))
+            return "var %s = %s" % (name, self.exprr.coerce(d.value))
         else:
             return "var %s" % name
 
     def match_Assign(self, ass):
-        return "%s = %s;" % (ass.lhs.match(self.exprr), ass.rhs.match(self.exprr))
+        return "%s = %s;" % (ass.lhs.match(self.exprr), self.exprr.coerce(ass.rhs))
 
     def match_Block(self, b, header=None):
         header = header or []
@@ -294,16 +294,12 @@ class JSExprRenderer(java.ExprRenderer):
             return "%s" % v.match(self.namer)
 
     @overload(ast.Class)
-    def get(self, cls, attr):
-        expr = attr.expr
-        attr_name = attr.attr.text
-        return "(%s).%s" % (expr.match(self), attr_name)
+    def get(self, cls, type, expr, attr):
+        return "(%s).%s" % (expr.match(self), attr.text)
 
     @overload(ast.Package)
-    def get(self, pkg, attr):
-        expr = attr.expr
-        attr_name = attr.attr.text
-        return "%s.%s" % (expr.match(self), attr_name)
+    def get(self, pkg, type, expr, attr):
+        return "%s.%s" % (expr.match(self), attr.text)
 
     def match_List(self, l):
         return "[%s]" % ", ".join([e.match(self) for e in l.elements])

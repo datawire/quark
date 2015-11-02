@@ -48,6 +48,7 @@ class InitParent:
 
     def visit_AST(self, ast):
         ast.resolved = None
+        ast.coersion = None
         ast.count = 0
         if self.stack:
             ast.parent = self.stack[-1]
@@ -207,8 +208,12 @@ class TypeExpr(object):
                 arg = call.args[idx]
                 idx += 1
                 if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
-                    errors.append("%s:type mismatch: expected %s, got %s" %
-                                  (lineinfo(arg), pexpr, arg.resolved))
+                    dfn = get_field(arg.resolved.type, "__to_%s" % pexpr.type.name, None)
+                    if dfn and len(dfn.params) == 0 and pexpr.assignableFrom(dfn.type.resolved):
+                        arg.coersion = dfn
+                    else:
+                        errors.append("%s:type mismatch: expected %s, got %s" %
+                                      (lineinfo(arg), pexpr, arg.resolved))
         else:
             errors.append("%s: expected %s args, got %s" %
                           (lineinfo(call), len(params), len(call.args)))
@@ -227,6 +232,15 @@ class TypeExpr(object):
             if len(call.args) != 0:
                 errors.append("%s: expected 0 args, got %s" % (lineinfo(call), len(call.args)))
         return texpr(cls, self.bindings)
+
+    def assign(self, expr, errors):
+        if not isinstance(expr, Null) and not self.assignableFrom(expr.resolved):
+            dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
+            if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
+                expr.coersion = dfn
+            else:
+                # should signal errors here
+                pass
 
     @property
     def id(self):
@@ -378,6 +392,14 @@ class Resolver(object):
     def leave_Call(self, c):
         if c.expr.resolved:
             c.resolved = c.expr.resolved.invoke(c, self.errors)
+
+    def leave_Assign(self, a):
+        if a.lhs.resolved and a.rhs.resolved:
+            a.lhs.resolved.assign(a.rhs, self.errors)
+
+    def leave_Declaration(self, d):
+        if d.type.resolved and d.value and d.value.resolved:
+            d.type.resolved.assign(d.value, self.errors)
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:

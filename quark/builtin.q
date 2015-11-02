@@ -45,6 +45,7 @@ primitive int extends numeric<int> {
                             $py{str($self)}
                             $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
+    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 @mapping($java{Long} $py{long} $js{Number})
@@ -60,6 +61,7 @@ primitive long extends numeric<long> {
                             $py{str($self)}
                             $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
+    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 @mapping($java{Double}$py{float}$js{Number})
@@ -71,6 +73,7 @@ primitive float extends numeric<float> {
                             $py{str($self)}
                             $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
+    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 @mapping($java{String} $py{str} $js{String})
@@ -98,6 +101,7 @@ primitive String {
                                           $py{($self).join($parts)}
                                           $js{($parts).join($self)};
     macro JSONObject toJSON() new JSONObject().setString(self);
+    macro JSONObject __to_JSONObject() self.toJSON();
     macro JSONObject parseJSON() $java{io.datawire.quark_runtime.JSONObject.parse($self)}
                                  $py{_JSONObject.parse($self)}
                                  $js{_qrt.json_from_string($self)};
@@ -144,6 +148,11 @@ primitive JSONObject {
     macro JSONObject() $java{new io.datawire.quark_runtime.JSONObject()}
                        $py{_JSONObject()}
                        $js{new _qrt.JSONObject()};
+
+    macro String __to_String() self.getString();
+    macro float __to_float() self.getNumber();
+    macro bool __to_bool() self.getBool();
+
     // accessors
 
     String     getType();                  // object/list/string/number/boolean/null
