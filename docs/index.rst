@@ -11,8 +11,8 @@ Available documents:
 .. toctree::
    :maxdepth: 1
 
+   Quark Installation and Configuration Guide <install/index>
    Quark Language Reference <language-reference/index>
-   Quark Quick Start <quick-start/index>
 
 
 Indices and tables
