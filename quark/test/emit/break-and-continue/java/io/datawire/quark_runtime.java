@@ -3,6 +3,7 @@
 package io.datawire;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -14,10 +15,16 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
+import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpClientCodec;
+import io.netty.handler.codec.http.HttpContentDecompressor;
+import io.netty.handler.codec.http.HttpHeaders;
+import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -35,11 +42,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.Scanner;
 import java.util.LinkedHashMap;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLException;
@@ -57,9 +66,15 @@ public class quark_runtime {
             URL url = new URL(urlStr);
             InputStreamReader reader = new InputStreamReader(url.openStream());
             // Stolen from https://tfetimes.com/readconvert-an-inputstream-to-a-string/
-            Scanner scanner = new Scanner(reader).useDelimiter("\\A");
-            String res = scanner.hasNext() ? scanner.next() : "";
-            return res;
+            Scanner scanner = null;
+            try {
+                scanner = new Scanner(reader).useDelimiter("\\A");
+                return scanner.hasNext() ? scanner.next() : "";
+            } finally { 
+                if (scanner != null) {
+                    scanner.close();
+                }
+            }
         } catch (Exception e) {
             return "error";
         }
@@ -73,6 +88,7 @@ public class quark_runtime {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public static String urlencode(Map map) {
         StringBuilder result = new StringBuilder();
         boolean first = true;
@@ -161,6 +177,7 @@ public class quark_runtime {
             if (!(this.value instanceof List)) {
                 setList();
             }
+            @SuppressWarnings("unchecked")
             List<Object> l = (List<Object>) this.value;
             for(int i = l.size(); i < index; i++) {
                 l.add(null);
@@ -171,6 +188,7 @@ public class quark_runtime {
 
         public JSONObject getListItem(int index) {
             if (this.value instanceof List) {
+                @SuppressWarnings("unchecked")
                 List<Object> l = (List<Object>) this.value;
                 if (0 <= index && index < l.size()) {
                     return wrap(l.get(index));
@@ -183,6 +201,7 @@ public class quark_runtime {
             if (!(this.value instanceof Map)) {
                 setObject();
             }
+            @SuppressWarnings("unchecked")
             Map<String,Object> m = (Map<String,Object>) this.value;
             m.put(key, value.value);
             return this;
@@ -190,6 +209,7 @@ public class quark_runtime {
 
         public JSONObject getObjectItem(String key) {
             if (this.value instanceof Map) {
+                @SuppressWarnings("unchecked")
                 Map<String,Object> m = (Map<String,Object>) this.value;
                 if (m.containsKey(key)) {
                     return wrap(m.get(key));
@@ -469,15 +489,185 @@ public class quark_runtime {
             }
 
             public void launch() {
+                try {
+                    group.awaitTermination(1, TimeUnit.SECONDS);
+                } catch (InterruptedException e) {
+                    // empty
+                }
+            }
+
+            @Override
+            public void request(final HTTPRequest request, final HTTPHandler handler) {
+                final URI uri;
+                try {
+                    uri = new URI(request.getUrl());
+                } catch (URISyntaxException e) {
+                    handler.onHTTPError(request);
+                    return;
+                }
+                String scheme = uri.getScheme() == null? "http" : uri.getScheme();
+                final String host = uri.getHost() == null? "127.0.0.1" : uri.getHost();
+                int port = uri.getPort();
+                if (port == -1) {
+                    if ("http".equalsIgnoreCase(scheme)) {
+                        port = 80;
+                    } else if ("https".equalsIgnoreCase(scheme)) {
+                        port = 443;
+                    }
+                }
+
+                if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
+                    System.err.println("Only HTTP(S) is supported.");
+                    handler.onHTTPError(request);
+                    return;
+                }
+
+                // Configure SSL context if necessary.
+                final boolean ssl = "https".equalsIgnoreCase(scheme);
+                final SslContext sslCtx;
+                if (ssl) {
+                    try {
+                        sslCtx = SslContextBuilder.forClient()
+                                .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
+                    } catch (SSLException e) {
+                        handler.onHTTPError(null);
+                        return;
+                    }
+                } else {
+                    sslCtx = null;
+                }
+
+                final ByteBuf content;
+                if (request.getBody() != null) {
+                    content = io.netty.buffer.Unpooled.copiedBuffer(request.getBody(), CharsetUtil.UTF_8);
+                } else {
+                    content = io.netty.buffer.Unpooled.buffer(0);
+                }
+                final FullHttpRequest request1;
+                request1 = new DefaultFullHttpRequest(
+                        HttpVersion.HTTP_1_1, HttpMethod.valueOf(request.getMethod().toUpperCase()), uri.getRawPath(), content);
+                request1.headers().set("Host", host);
+                request1.headers().set("Connection", "close");
+                // request1.headers().set("Accept-Encoding", "gzip"); // XXX: extra runtime dependencies
+                HttpHeaders.setContentLength(request1, content.readableBytes());
+
+                for(Map.Entry<String, String> header : request.getHeaders().entrySet()) {
+                    request1.headers().set(header.getKey(), header.getValue());
+                }
+
+                // Configure the client.
+                Bootstrap b = new Bootstrap();
+                b.group(group)
+                .channel(NioSocketChannel.class)
+                .handler(new ChannelInitializer<SocketChannel>() {
+
+                    @Override
+                    protected void initChannel(SocketChannel ch)
+                            throws Exception {
+                        ChannelPipeline p = ch.pipeline();
+
+                        // Enable HTTPS if necessary.
+                        if (sslCtx != null) {
+                            p.addLast(sslCtx.newHandler(ch.alloc()));
+                        }
+
+                        p.addLast(new HttpClientCodec());
+
+                        // Remove the following line if you don't want automatic content decompression.
+                        p.addLast(new HttpContentDecompressor());
+
+                        // Uncomment the following line if you don't want to handle HttpContents.
+                        p.addLast(new HttpObjectAggregator(1048576));
+
+                        p.addLast(new DatawireNettyHttpHandler(request, handler));
+
+                        ch.closeFuture().addListener(new ChannelFutureListener() {
+
+                            @Override
+                            public void operationComplete(ChannelFuture future) throws Exception {
+                                handler.onHTTPFinal(request);
+                            }
+                        });
+
+                    }
+                });
+
+                // Make the connection attempt.
+                ChannelFuture connecting = b.connect(host, port);
+                connecting.addListener(new ChannelFutureListener() {
+
+                    @Override
+                    public void operationComplete(ChannelFuture future) throws Exception {
+                        if (future.isDone()) {
+                            if (!future.isSuccess()) {
+                                handler.onHTTPError(request);
+                            } else {
+                                // Send the HTTP request.
+                                future.channel().writeAndFlush(request1).addListener(new ChannelFutureListener() {
+
+                                    @Override
+                                    public void operationComplete(ChannelFuture future) throws Exception {
+                                        if (future.isDone()) {
+                                            if (future.isSuccess()) {
+                                                // yay
+                                            } else {
+                                                handler.onHTTPError(request);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+
+        }
+
+        public static class DatawireNettyHttpHandler extends SimpleChannelInboundHandler<Object> implements WebSocket {
+
+            private HTTPRequest request;
+            private HTTPHandler handler;
+
+            public DatawireNettyHttpHandler(HTTPRequest request,
+                    HTTPHandler handler) {
+                this.request = request;
+                this.handler = handler;
+            }
+
+            @Override
+            public void send(String message) {
                 // TODO Auto-generated method stub
 
             }
 
             @Override
-            public void request(HTTPRequest request, HTTPHandler handler) {
-                handler.onHTTPError(request); // XXX
-            }
+            protected void channelRead0(ChannelHandlerContext ctx, Object msg)
+                    throws Exception {
+                if (msg instanceof FullHttpResponse) {
+                    final FullHttpResponse resp = (FullHttpResponse)msg;
+                    handler.onHTTPResponse(request, new HTTPResponse() {
 
+                        @Override
+                        public int getCode() {
+                            // TODO Auto-generated method stub
+                            return resp.getStatus().code();
+                        }
+
+                        @Override
+                        public String getBody() {
+                            String encoding = resp.headers().get(HttpHeaders.Names.CONTENT_ENCODING);
+                            Charset charset = CharsetUtil.UTF_8;
+                            Set<String> aliases = charset.aliases();
+                            if (encoding != null && aliases.contains(encoding)) {
+                                charset = Charset.forName(encoding);
+                            }
+                            return resp.content().toString(charset);
+                        }
+                    });
+                    ctx.close();
+                }
+            }
         }
 
         public static class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> implements WebSocket {
