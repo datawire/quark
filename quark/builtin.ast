@@ -377,7 +377,7 @@ File(
   MethodMacro(Type(Name(int)), Name(__to_int), Native(NativeCase(java,
      Fixed('((int) Math.round(('), Var(Name(self)), Fixed(').getNumber()))')),
     NativeCase(py, Fixed('int(round(('), Var(Name(self)),
-     Fixed(').getNumber()))')), NativeCase(javascript, Fixed('Math.round(('),
+     Fixed(').getNumber()))')), NativeCase(js, Fixed('Math.round(('),
      Var(Name(self)), Fixed(').getNumber())')))),
 
   MethodMacro(Type(Name(long)), Name(__to_long),
@@ -477,31 +477,30 @@ File(
     Fixed('parseInt('), Var(Name(st)), Fixed(')')))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.WebSocketHandler')))),
-  Name(WebSocketHandler),
+     Fixed('io.datawire.quark_runtime.WSHandler')))), Name(WSHandler),
 
-  Method(Type(Name(void)), Name(onInit),
+  Method(Type(Name(void)), Name(onWSInit),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(Type(Name(void)), Name(onConnected),
+  Method(Type(Name(void)), Name(onWSConnected),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(Type(Name(void)), Name(onMessage),
+  Method(Type(Name(void)), Name(onWSMessage),
    Param(Type(Name(WebSocket)), Name(socket)),
    Param(Type(Name(String)), Name(message)),
    Block()),
 
-  Method(Type(Name(void)), Name(onClose),
+  Method(Type(Name(void)), Name(onWSClosed),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(Type(Name(void)), Name(onError),
+  Method(Type(Name(void)), Name(onWSError),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(Type(Name(void)), Name(onFinal),
+  Method(Type(Name(void)), Name(onWSFinal),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block())),
 
@@ -514,20 +513,20 @@ File(
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.HTTPHandler')))), Name(HTTPHandler),
 
-  Method(Type(Name(void)), Name(onInit),
+  Method(Type(Name(void)), Name(onHTTPInit),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block()),
 
-  Method(Type(Name(void)), Name(onResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block()),
 
-  Method(Type(Name(void)), Name(onError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block()),
 
-  Method(Type(Name(void)), Name(onFinal),
+  Method(Type(Name(void)), Name(onHTTPFinal),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block())),
 
@@ -577,7 +576,7 @@ File(
 
   Method(Type(Name(void)), Name(open),
    Param(Type(Name(String)), Name(url)),
-   Param(Type(Name(WebSocketHandler)), Name(handler))),
+   Param(Type(Name(WSHandler)), Name(handler))),
 
   Method(Type(Name(void)), Name(request),
    Param(Type(Name(HTTPRequest)), Name(request)),

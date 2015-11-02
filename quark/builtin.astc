@@ -442,8 +442,8 @@ File(
      Fixed('((int) Math.round(('), Var(Name(self), $type=0.JSONObject),
      Fixed(').getNumber()))')), NativeCase(py, Fixed('int(round(('),
      Var(Name(self), $type=0.JSONObject), Fixed(').getNumber()))')),
-    NativeCase(javascript, Fixed('Math.round(('), Var(Name(self),
-     $type=0.JSONObject), Fixed(').getNumber())')))),
+    NativeCase(js, Fixed('Math.round(('), Var(Name(self), $type=0.JSONObject),
+     Fixed(').getNumber())')))),
 
   MethodMacro(Type(Name(long)), Name(__to_long),
    Call(Attr(Call(Attr(Var(Name(self), $type=0.JSONObject), Name(getNumber),
@@ -550,31 +550,30 @@ File(
     Fixed(')')))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.WebSocketHandler')))),
-  Name(WebSocketHandler),
+     Fixed('io.datawire.quark_runtime.WSHandler')))), Name(WSHandler),
 
-  Method(Type(Name(void)), Name(onInit),
+  Method(Type(Name(void)), Name(onWSInit),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(Type(Name(void)), Name(onConnected),
+  Method(Type(Name(void)), Name(onWSConnected),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(Type(Name(void)), Name(onMessage),
+  Method(Type(Name(void)), Name(onWSMessage),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Param(Type(Name(String)), Name(message), $type=0.String),
    Block()),
 
-  Method(Type(Name(void)), Name(onClose),
+  Method(Type(Name(void)), Name(onWSClosed),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(Type(Name(void)), Name(onError),
+  Method(Type(Name(void)), Name(onWSError),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(Type(Name(void)), Name(onFinal),
+  Method(Type(Name(void)), Name(onWSFinal),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block())),
 
@@ -587,20 +586,20 @@ File(
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark_runtime.HTTPHandler')))), Name(HTTPHandler),
 
-  Method(Type(Name(void)), Name(onInit),
+  Method(Type(Name(void)), Name(onHTTPInit),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Block()),
 
-  Method(Type(Name(void)), Name(onResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
    Block()),
 
-  Method(Type(Name(void)), Name(onError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Block()),
 
-  Method(Type(Name(void)), Name(onFinal),
+  Method(Type(Name(void)), Name(onHTTPFinal),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Block())),
 
@@ -651,8 +650,7 @@ File(
 
   Method(Type(Name(void)), Name(open),
    Param(Type(Name(String)), Name(url), $type=0.String),
-   Param(Type(Name(WebSocketHandler)), Name(handler),
-   $type=0.WebSocketHandler)),
+   Param(Type(Name(WSHandler)), Name(handler), $type=0.WSHandler)),
 
   Method(Type(Name(void)), Name(request),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),

@@ -156,7 +156,7 @@ primitive JSONObject {
     macro float __to_float() self.getNumber();
     macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
                          $py{int(round(($self).getNumber()))}
-                         $javascript{Math.round(($self).getNumber())};
+                         $js{Math.round(($self).getNumber())};
     macro long __to_long() self.getNumber().round();
     macro bool __to_bool() self.getBool();
 
@@ -223,14 +223,14 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
 
-@mapping($java{io.datawire.quark_runtime.WebSocketHandler})
-primitive WebSocketHandler {
-    void onInit(WebSocket socket) {}
-    void onConnected(WebSocket socket) {}
-    void onMessage(WebSocket socket, String message) {}
-    void onClose(WebSocket socket) {}
-    void onError(WebSocket socket) {}
-    void onFinal(WebSocket socket) {}
+@mapping($java{io.datawire.quark_runtime.WSHandler})
+primitive WSHandler {
+    void onWSInit(WebSocket socket) {}
+    void onWSConnected(WebSocket socket) {}
+    void onWSMessage(WebSocket socket, String message) {}
+    void onWSClosed(WebSocket socket) {}
+    void onWSError(WebSocket socket) {}
+    void onWSFinal(WebSocket socket) {}
 }
 
 @mapping($java{io.datawire.quark_runtime.WebSocket})
@@ -240,10 +240,10 @@ primitive WebSocket {
 
 @mapping($java{io.datawire.quark_runtime.HTTPHandler})
 primitive HTTPHandler {
-    void onInit(HTTPRequest request) {}
-    void onResponse(HTTPRequest request, HTTPResponse response) {}
-    void onError(HTTPRequest request) {}
-    void onFinal(HTTPRequest request) {}
+    void onHTTPInit(HTTPRequest request) {}
+    void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
+    void onHTTPError(HTTPRequest request) {}
+    void onHTTPFinal(HTTPRequest request) {}
 }
 
 @mapping($java{io.datawire.quark_runtime.HTTPRequest})
@@ -270,7 +270,7 @@ primitive Runtime {
     void acquire();
     void release();
     void wait(float timeoutInSeconds);
-    void open(String url, WebSocketHandler handler);
+    void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
 }

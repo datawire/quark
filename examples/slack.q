@@ -268,7 +268,7 @@ package slack {
 
     }
 
-    class Client extends WebSocketHandler, HTTPHandler {
+    class Client extends WSHandler, HTTPHandler {
 
         Runtime runtime;
 	String token;
@@ -304,15 +304,15 @@ package slack {
             socket.send(message);
         }
 
-        void onConnected(WebSocket socket) {
+        void onWSConnected(WebSocket socket) {
             self.socket = socket;
         }
 
-        void onClose(WebSocket socket) {
+        void onWSClose(WebSocket socket) {
             print("socket closed");
         }
 
-        void onError(WebSocket socket) {
+        void onWSError(WebSocket socket) {
             print("socket error");
         }
 
@@ -333,7 +333,7 @@ package slack {
             return new SlackEvent();
         }
 
-        void onMessage(WebSocket socket, String message) {
+        void onWSMessage(WebSocket socket, String message) {
             JSONObject obj = message.parseJSON();
             String type = obj["type"].getString();
             SlackEvent event = self.construct(type);
@@ -341,7 +341,7 @@ package slack {
             event.dispatch(self.handler);
         }
 
-        void onResponse(HTTPRequest request, HTTPResponse response) {
+        void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
             int code = response.getCode();
             SlackError error = null;
             if (code != 200) {

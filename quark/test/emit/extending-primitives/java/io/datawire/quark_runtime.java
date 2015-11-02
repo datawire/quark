@@ -257,22 +257,22 @@ public class quark_runtime {
         return b.toString();
     }
 
-    public interface WebSocketHandler {
-        void onInit(WebSocket socket);
-        void onConnected(WebSocket socket);
-        void onMessage(WebSocket socket, String message);
-        void onClose(WebSocket socket);
-        void onError(WebSocket socket);
-        void onFinal(WebSocket socket);
+    public interface WSHandler {
+        void onWSInit(WebSocket socket);
+        void onWSConnected(WebSocket socket);
+        void onWSMessage(WebSocket socket, String message);
+        void onWSClosed(WebSocket socket);
+        void onWSError(WebSocket socket);
+        void onWSFinal(WebSocket socket);
     }
 
-    public static abstract class AbstractWebSocketHandler implements WebSocketHandler {
-        @Override public void onInit(WebSocket socket) {}
-        @Override public void onConnected(WebSocket socket) {}
-        @Override public void onMessage(WebSocket socket, String message) {}
-        @Override public void onClose(WebSocket socket) {}
-        @Override public void onError(WebSocket socket) {}
-        @Override public void onFinal(WebSocket socket) {}
+    public static abstract class AbstractWSHandler implements WSHandler {
+        @Override public void onWSInit(WebSocket socket) {}
+        @Override public void onWSConnected(WebSocket socket) {}
+        @Override public void onWSMessage(WebSocket socket, String message) {}
+        @Override public void onWSClosed(WebSocket socket) {}
+        @Override public void onWSError(WebSocket socket) {}
+        @Override public void onWSFinal(WebSocket socket) {}
     }
 
     public interface WebSocket {
@@ -280,17 +280,17 @@ public class quark_runtime {
     }
 
     public interface HTTPHandler {
-        void onInit(HTTPRequest request);
-        void onResponse(HTTPRequest request, HTTPResponse response);
-        void onError(HTTPRequest request);
-        void onFinal(HTTPRequest request);
+        void onHTTPInit(HTTPRequest request);
+        void onHTTPResponse(HTTPRequest request, HTTPResponse response);
+        void onHTTPError(HTTPRequest request);
+        void onHTTPFinal(HTTPRequest request);
     }
 
     public static abstract class AbstractHTTPHandler implements HTTPHandler {
-        @Override public void onInit(HTTPRequest request) {}
-        @Override public void onResponse(HTTPRequest request, HTTPResponse response) {}
-        @Override public void onError(HTTPRequest request) {}
-        @Override public void onFinal(HTTPRequest request) {}
+        @Override public void onHTTPInit(HTTPRequest request) {}
+        @Override public void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
+        @Override public void onHTTPError(HTTPRequest request) {}
+        @Override public void onHTTPFinal(HTTPRequest request) {}
     }
 
     public static class HTTPRequest {
@@ -327,7 +327,7 @@ public class quark_runtime {
         void acquire();
         void release();
         void wait(Double timeoutInSeconds);
-        void open(String url, WebSocketHandler handler);
+        void open(String url, WSHandler handler);
         void request(HTTPRequest request, HTTPHandler handler);
         void schedule(Task handler, Double delayInSeconds);
     }
@@ -360,12 +360,12 @@ public class quark_runtime {
                 }
             }
 
-            public void open(String url, final WebSocketHandler ws_handler) {
+            public void open(String url, final WSHandler ws_handler) {
                 URI uri;
                 try {
                     uri = new URI(url);
                 } catch (URISyntaxException e) {
-                    ws_handler.onError(null); // XXX
+                    ws_handler.onWSError(null); // XXX
                     return;
                 }
                 String scheme = uri.getScheme() == null? "ws" : uri.getScheme();
@@ -385,7 +385,7 @@ public class quark_runtime {
 
                 if (!"ws".equalsIgnoreCase(scheme) && !"wss".equalsIgnoreCase(scheme)) {
                     System.err.println("Only WS(S) is supported.");
-                    ws_handler.onError(null); // XXX
+                    ws_handler.onWSError(null); // XXX
                     return;
                 }
 
@@ -396,7 +396,7 @@ public class quark_runtime {
                         sslCtx = SslContextBuilder.forClient()
                                 .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
                     } catch (SSLException e) {
-                        ws_handler.onError(null); // XXX
+                        ws_handler.onWSError(null); // XXX
                         return;
                     }
                 } else {
@@ -408,7 +408,7 @@ public class quark_runtime {
                                         uri, WebSocketVersion.V13, null, false, new DefaultHttpHeaders()),
                                         ws_handler);
 
-                ws_handler.onInit(ws);
+                ws_handler.onWSInit(ws);
 
                 Bootstrap b = new Bootstrap();
                 b.group(group)
@@ -431,11 +431,11 @@ public class quark_runtime {
                             public void operationComplete(ChannelFuture future) throws Exception {
                                 if (future.isDone()) {
                                     if (future.isSuccess()) {
-                                        ws_handler.onClose(ws);
+                                        ws_handler.onWSClosed(ws);
                                     } else {
-                                        ws_handler.onError(ws);
+                                        ws_handler.onWSError(ws);
                                     }
-                                    ws_handler.onFinal(ws);
+                                    ws_handler.onWSFinal(ws);
                                 }
                             }
                         });
@@ -449,7 +449,7 @@ public class quark_runtime {
                             if (future.isSuccess()) {
                                 // fire onConnected only when websocket is fully connected
                             } else {
-                                ws_handler.onError(ws);
+                                ws_handler.onWSError(ws);
                             }
                         }
                     }
@@ -475,7 +475,7 @@ public class quark_runtime {
 
             @Override
             public void request(HTTPRequest request, HTTPHandler handler) {
-                handler.onError(request); // XXX
+                handler.onHTTPError(request); // XXX
             }
 
         }
@@ -483,11 +483,11 @@ public class quark_runtime {
         public static class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> implements WebSocket {
 
             private final WebSocketClientHandshaker handshaker;
-            private final WebSocketHandler handler;
+            private final WSHandler handler;
             private ArrayList<String> pending = new ArrayList<String>();
             private Channel ch;
 
-            public DatawireNettyWebsocket(WebSocketClientHandshaker handshaker, WebSocketHandler handler) {
+            public DatawireNettyWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
                 this.handshaker = handshaker;
                 this.handler = handler;
                 this.ch = null;
@@ -514,7 +514,7 @@ public class quark_runtime {
                 if (!handshaker.isHandshakeComplete()) {
                     handshaker.finishHandshake(ch, (FullHttpResponse) msg);
                     System.out.println("WebSocket Client connected!");
-                    this.handler.onConnected(this);
+                    this.handler.onWSConnected(this);
                     this.ch = ch;
                     for (String message : pending) {
                         send(message);
@@ -536,7 +536,7 @@ public class quark_runtime {
                     TextWebSocketFrame textFrame = (TextWebSocketFrame) frame;
                     System.out.println("WebSocket Client received message: " + textFrame.text());
                     if (handler != null) {
-                        handler.onMessage(this, textFrame.text());
+                        handler.onWSMessage(this, textFrame.text());
                     }
                 } else if (frame instanceof PongWebSocketFrame) {
                     System.out.println("WebSocket Client received pong");
