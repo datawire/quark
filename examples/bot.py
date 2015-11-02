@@ -4,7 +4,7 @@ import quark_twisted_runtime
 import slack
 
 
-class Handler(object):
+class Handler(slack.SlackHandler):
 
     def onHello(self, greeting):
         print "Hello received:", greeting
