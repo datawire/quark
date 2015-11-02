@@ -20,6 +20,40 @@ Quark defines the following annotations:
 @doc
 ~~~~
 
+@doc allows users to specify a description or public comment for packages, classes, properties, methods, and interfaces. The content inside @docs attributions will automatically be included in Javadoc comments for generated Java code, Sphinx source for generated Python code, and a README.md file for generated Javascript code.
+
+Syntax
+++++++
+
+**@doc(** *content* **)**
+
+*element*
+
+where *versionNumber* is a string representing the version number and *element* is the language element being described. Note that there is no semi-colon (;) at the end of the line.
+
+Constraints
++++++++++++
+
+Support for automatic documentation generation in Quark is still in its early stages and will be improved in the future. Some currently known issues include:
+
+* Generated Sphinx source does not include a make file. See `linkIssue48`_ for more information.
+
+.. _linkIssue48: https://github.com/datawire/quark/issues/48
+
+* Javadoc does not include content of @doc annotations for methods. See `linkIssue46`_ for more information.
+
+.. _linkIssue48: https://github.com/datawire/quark/issues/46
+
+* If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See `linkIssue45`_ for more information.
+
+.. _linkIssue48: https://github.com/datawire/quark/issues/45
+
+* Javascript documentation is very basic and omits many @doc annotations. See `linkIssue47`_ for more information.
+
+.. _linkIssue48: https://github.com/datawire/quark/issues/47
+
+[[JMK I have not seen actual generated Sphinx doc; I see a compiler directive to automatically pull content from the source directory but have not written a make file to generate actual doc to see what gets included so there may also be missing content]]
+
 .. _versionAnnotation:
 
 @version
@@ -32,7 +66,7 @@ Syntax
 
 **@version(** *versionNumber* **)**
 
-where *versionNumber* is a string representing the version number.
+where *versionNumber* is a string representing the version number. Note that there is no semi-colon (;) at the end of the line.
 
 Constraints
 +++++++++++

@@ -309,10 +309,63 @@ int *A*.toString()
 
 where *A* is an integer.
 
+.. _listGet:
+
 List::__get__()
+~~~~~~~~~~~~~~~
+Used to retrieve the value of a specific element in a list.
+
+Syntax
+++++++
+
+*elementType* *A*.__get__(*B*)
+
+where *elementType* is the declared type of list elements, *A* is the list and *B* is the 0-based index of the element value to return.
+
+This function is used under the covers by list [] notation; *A* **[** *B* **]** is equivalent to *A*.__get__(*B*)
+
+.. _listSet:
+
 List::__set__()
+~~~~~~~~~~~~~~~
+Used to modify an existing element in a list.
+
+Syntax
+++++++
+
+void *A*.__set__(*B*,*C*)
+
+where *A* is the list, *B* is the 0-based index number of the element to modify, and *C* is the new value of the element.
+
+This function is used under the covers by list [] notation; *A* **[** *B* **] =** *C* is equivalent to *A*.__set__(*B*,*C*)
+
+.. _listAdd:
+
 List::add()
+~~~~~~~~~~~
+Used to add a new element to a list. The element is always added to the end of the list.
+
+Syntax
+++++++
+
+void *A*.__add__(*B*)
+
+where *A* is the list and *B* is the element to add to the list.
+
+This function is used under the covers by list [] notation; *A* **[** *B* **]** is equivalent to *A*.__add__(*B*)
+
+.. _listSize:
+
 List::size()
+~~~~~~~~~~~~
+Returns the number of elements in a list.
+
+Syntax
+++++++
+
+int *A*.__size__()
+
+where *A* is the list.
 
 .. _longAdd:
 

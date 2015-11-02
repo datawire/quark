@@ -2,10 +2,9 @@
 
 from StringIO import StringIO
 
-from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
-from autobahn.websocket.protocol import parseWsUrl
+from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
 
-from twisted.internet import defer, reactor
+from twisted.internet import defer, reactor, ssl
 from twisted.python import log
 from twisted.web.client import Agent, FileBodyProducer, readBody
 from twisted.web.http_headers import Headers
@@ -38,17 +37,17 @@ class _QWSCProtocol(WebSocketClientProtocol):
 
     def onOpen(self):
         self.factory.qws.is_open = True
-        self.factory.qws.handler.onConnected(self.factory.qws)
+        self.factory.qws.handler.onWSConnected(self.factory.qws)
 
     def onMessage(self, payload, isBinary):
-        self.factory.qws.handler.onMessage(self.factory.qws, payload)
+        self.factory.qws.handler.onWSMessage(self.factory.qws, payload)
 
     def onClose(self, wasClean, code, reason):
         if wasClean:
-            self.factory.qws.handler.onClosed(self.factory.qws)
+            self.factory.qws.handler.onWSClosed(self.factory.qws)
         else:
-            self.factory.qws.handler.onError(self.factory.qws)
-        self.factory.qws.handler.onFinal(self.factory.qws)
+            self.factory.qws.handler.onWSError(self.factory.qws)
+        self.factory.qws.handler.onWSFinal(self.factory.qws)
 
 
 class _QWSCFactory(WebSocketClientFactory):
@@ -67,7 +66,7 @@ class _QuarkWebSocket(WebSocketClientProtocol):
         self.protocol = None  # filled in by the factory
         self.handler = handler
         self.is_open = False
-        self.handler.onInit(self)
+        self.handler.onWSInit(self)
 
     def send(self, message):
         if self.is_open:
@@ -96,7 +95,7 @@ class _QuarkRequest(object):
         deferred.addCallback(self.onResponse)
         deferred.addErrback(self.onError)
 
-        self.handler.onInit(self.request)
+        self.handler.onHTTPInit(self.request)
 
     def onResponse(self, response):
         self.response = response
@@ -105,10 +104,12 @@ class _QuarkRequest(object):
         deferred.addErrback(self.onError)
 
     def onBody(self, body):
-        self.handler.onResponse(self.request, _QuarkResponse(self.response.code, body))
+        self.handler.onHTTPResponse(self.request, _QuarkResponse(self.response.code, body))
+        self.handler.onHTTPFinal(self.request)
 
     def onError(self, something):
-        self.handler.onError(self.request)
+        self.handler.onHTTPError(self.request)
+        self.handler.onHTTPFinal(self.request)
 
 
 class _QuarkResponse(object):
@@ -143,9 +144,12 @@ class TwistedRuntime(object):
         assert False
 
     def open(self, url, handler):
-        is_secure, host, port, resource, path, params = parseWsUrl(url)
         factory = _QWSCFactory(url, debug=False)
-        self.reactor.connectTCP(host, port, factory)
+        if factory.isSecure:
+            contextFactory = ssl.ClientContextFactory()
+        else:
+            contextFactory = None
+        connectWS(factory, contextFactory)
         _QuarkWebSocket(factory, handler)
 
     def request(self, request, handler):
