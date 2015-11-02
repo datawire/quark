@@ -496,7 +496,8 @@ File(
   Method(Type(Name(void)), Name(send),
    Param(Type(Name(String)), Name(message)))),
 
- Primitive(Name(HTTPHandler),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.HTTPHandler')))), Name(HTTPHandler),
 
   Method(Type(Name(void)), Name(onInit),
    Param(Type(Name(HTTPRequest)), Name(request)),
@@ -515,13 +516,16 @@ File(
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block())),
 
- Primitive(Name(HTTPRequest),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.HTTPRequest')))), Name(HTTPRequest),
 
   ConstructorMacro(Name(HTTPRequest),
    Param(Type(Name(String)), Name(url)),
-   Native(NativeCase(py,
-     Fixed('_HTTPRequest('), Var(Name(url)), Fixed(')')), NativeCase(js,
-     Fixed('new _qrt.HTTPRequest('), Var(Name(url)), Fixed(')')))),
+   Native(NativeCase(java,
+     Fixed('new io.datawire.quark_runtime.HTTPRequest('), Var(Name(url)),
+     Fixed(')')), NativeCase(py, Fixed('_HTTPRequest('), Var(Name(url)),
+     Fixed(')')), NativeCase(js, Fixed('new _qrt.HTTPRequest('),
+     Var(Name(url)), Fixed(')')))),
 
   Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method))),
@@ -533,7 +537,8 @@ File(
    Param(Type(Name(String)), Name(key)),
    Param(Type(Name(String)), Name(value)))),
 
- Primitive(Name(HTTPResponse),
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark_runtime.HTTPResponse')))), Name(HTTPResponse),
 
   Method(Type(Name(int)), Name(getCode)),
 
