@@ -29,10 +29,10 @@ package slack {
             int id = client.event_id;
             client.event_id = client.event_id + 1;
             JSONObject msg = new JSONObject();
-            msg["id"] = id.toJSON();
-            msg["type"] = "message".toJSON();
-            msg["channel"] = self.channel.toJSON();
-            msg["text"] = message.toJSON();
+            msg["id"] = id;
+            msg["type"] = "message";
+            msg["channel"] = self.channel;
+            msg["text"] = message;
             client.ws_send(msg.toString());
         }
     }
@@ -53,16 +53,16 @@ package slack {
         String timestamp;
 
         void load(Client client, JSONObject obj) {
-            self.type = obj["type"].getString();
-            String uid = obj["user"].getString();
+            self.type = obj["type"];
+            String uid = obj["user"];
             if (uid != null) {
                 self.user = new User(client, uid);
             }
-            String chid = obj["channel"].getString();
+            String chid = obj["channel"];
             if (chid != null) {
                 self.channel = new Channel(client, chid);
             }
-            self.timestamp = obj["ts"].getString();
+            self.timestamp = obj["ts"];
         }
 
         void dispatch(SlackHandler handler) {
@@ -80,8 +80,8 @@ package slack {
 
         void load(Client client, JSONObject obj) {
             super.load(client, obj);
-            self.code = obj["code"].getNumber();
-            self.text = obj["text"].getString();
+            self.code = obj["code"];
+            self.text = obj["text"];
         }
 
         void dispatch(SlackHandler handler) {
@@ -106,14 +106,14 @@ package slack {
 
         void load(Client client, JSONObject obj) {
             super.load(client, obj);
-            self.subtype = obj["subtype"].getString();
-            self.hidden = obj["hidden"].getBool();
-            self.text = obj["text"].getString();
+            self.subtype = obj["subtype"];
+            self.hidden = obj["hidden"];
+            self.text = obj["text"];
             JSONObject edited = obj["edited"];
             if (edited.isDefined()) {
                 self.edited = new Edited();
-                self.edited.user = new User(client, edited["user"].getString());
-                self.edited.timestamp = edited["ts"].getString();
+                self.edited.user = new User(client, edited["user"]);
+                self.edited.timestamp = edited["ts"];
             }
         }
 
@@ -308,6 +308,14 @@ package slack {
             self.socket = socket;
         }
 
+        void onClose(WebSocket socket) {
+            print("socket closed");
+        }
+
+        void onError(WebSocket socket) {
+            print("socket error");
+        }
+
         SlackEvent construct(String type) {
             if (type == "error") { return new SlackError(); }
             if (type == "hello") { return new Hello(); }
@@ -344,10 +352,10 @@ package slack {
                 JSONObject login_data = response.getBody().parseJSON();
                 if (login_data["ok"].getBool()) {
                     // parse login data here
-                    self.ws_connect(login_data["url"].getString());
+                    self.ws_connect(login_data["url"]);
                 } else {
                     error = new SlackError();
-                    error.text = login_data["error"].getString();
+                    error.text = login_data["error"];
                     error.dispatch(self.handler);
                 }
             }
