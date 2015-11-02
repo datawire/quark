@@ -58,12 +58,6 @@ The And operator syntax is:
 
 where *A* and *B* are the two values being evaluated.
 
-Note that Quark uses 1/0 for true/false and the && operator is not supported for integers.   See `linkIssue24`_ for more information. 
-
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
-
-[[JMK Unless I'm missing something, this means && isn't supported at all right now - should I just say that]]
-
 .. _ComplementOperator:
 
 Bitwise Complement
@@ -255,10 +249,6 @@ The Not operator syntax is:
 
 where *expression* is the expression being inverted.
 
-Note that Quark uses 1/0 for true/false and the ! operator is not supported for integers.   See `linkIssue24`_ for more information. 
-
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
-
 [[JMK Should I just say it's not currently supported? Clearly there is no case where ! will work given the above and that ! only operates on true/false]]
 
 .. _NotEquivalentOperator:
@@ -276,10 +266,6 @@ The Not Equivalent operator syntax is:
 
 where *expression1* and *expression2* are the expressions being compared.
 
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
-
-.. _OrOperator:
-
 Or
 ~~
 
@@ -293,12 +279,6 @@ The Or operator syntax is:
 *A* **||** *B*
 
 where *A* and *B* are the two values being evaluated.
-
-Note that Quark uses 1/0 for true/false and the && operator is not supported for integers.   See `linkIssue24`_ for more information. 
-
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
-
-[[JMK Unless I'm missing something, this means || isn't supported at all right now - should I just say that?]]
 
 .. _SubtractOperator:
 
