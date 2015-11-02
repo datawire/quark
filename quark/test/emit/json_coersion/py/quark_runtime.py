@@ -105,6 +105,12 @@ class _JSONObject(object):
     def isNull(self):
         return self.value is None
 
+    def isUndefined(self):
+        return self is self.undefined()
+
+    def isDefined(self):
+        return not self.isUndefined()
+
     @classmethod
     def undefined(cls):
         if cls._undefined is None:
