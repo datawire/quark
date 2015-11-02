@@ -2,10 +2,9 @@
 
 from StringIO import StringIO
 
-from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory
-from autobahn.websocket.protocol import parseWsUrl
+from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
 
-from twisted.internet import defer, reactor
+from twisted.internet import defer, reactor, ssl
 from twisted.python import log
 from twisted.web.client import Agent, FileBodyProducer, readBody
 from twisted.web.http_headers import Headers
@@ -145,9 +144,12 @@ class TwistedRuntime(object):
         assert False
 
     def open(self, url, handler):
-        is_secure, host, port, resource, path, params = parseWsUrl(url)
         factory = _QWSCFactory(url, debug=False)
-        self.reactor.connectTCP(host, port, factory)
+        if factory.isSecure:
+            contextFactory = ssl.ClientContextFactory()
+        else:
+            contextFactory = None
+        connectWS(factory, contextFactory)
         _QuarkWebSocket(factory, handler)
 
     def request(self, request, handler):
