@@ -31,6 +31,8 @@ class JavaScript(backend.Backend):
         self.header = """var _qrt = require("quark_runtime.js");\n"""
         self.files["node_modules/quark_runtime.js"] = open(os.path.join(os.path.dirname(__file__),
                                                                         "quark_runtime.js")).read()
+        self.files["node_modules/quark_node_runtime.js"] = open(os.path.join(os.path.dirname(__file__),
+                                                                             "quark_node_runtime.js")).read()
         self.packages = OrderedDict()  # Collect packages for package.json et al
 
     def write(self, target):

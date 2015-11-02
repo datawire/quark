@@ -20,6 +20,9 @@ def is_excluded_file(name):
     else:
         return False
 
+def is_runtime(path):
+    return "quark_" in path and "_runtime" in path
+
 def check_file(path, content):
     try:
         with open(path) as fd:
@@ -30,8 +33,11 @@ def check_file(path, content):
         dir = os.path.dirname(path)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        with open(path + ".cmp", "wb") as fd:
-            fd.write(content)
+        if is_runtime(path):
+            with open(path, "wb") as fd: fd.write(content)
+            return content
+        else:
+            with open(path + ".cmp", "wb") as fd: fd.write(content)
     return expected
 
 def assert_file(path, content):
