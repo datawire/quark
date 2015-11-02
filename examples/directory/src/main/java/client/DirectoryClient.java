@@ -3,12 +3,11 @@ package client;
 import directory.Directory;
 import directory.Entry;
 import directory.LookupCallback;
-import io.datawire.netty.DatawireNettyRuntime;
 import io.datawire.quark_runtime.Runtime;
 
 public class DirectoryClient {
 	public static void main(String[] args) {
-		DatawireNettyRuntime runtime = new DatawireNettyRuntime();
+		io.datawire.quark_runtime.netty.DatawireNettyRuntime runtime = new io.datawire.quark_runtime.netty.DatawireNettyRuntime();
 		String name = "service-" + args[0];
 		String endpoint = "Java-endpoint-" + args[0];
 		Directory directory = new Directory(runtime, "ws://127.0.0.1:8910", name , endpoint);
