@@ -216,12 +216,65 @@ public class quark_runtime {
     }
 
     public interface WebSocketHandler {
+        void onInit(WebSocket socket);
+        void onConnected(WebSocket socket);
         void onMessage(WebSocket socket, String message);
+        void onClose(WebSocket socket);
+        void onError(WebSocket socket);
+        void onFinal(WebSocket socket);
+    }
+
+    public static abstract class AbstractWebSocketHandler implements WebSocketHandler {
+        @Override public void onInit(WebSocket socket) {}
+        @Override public void onConnected(WebSocket socket) {}
+        @Override public void onMessage(WebSocket socket, String message) {}
+        @Override public void onClose(WebSocket socket) {}
+        @Override public void onError(WebSocket socket) {}
+        @Override public void onFinal(WebSocket socket) {}
     }
 
     public interface WebSocket {
-        void setHandler(WebSocketHandler handler);
         void send(String message);
+    }
+
+    public interface HTTPHandler {
+        void onInit(HTTPRequest request);
+        void onResponse(HTTPRequest request, HTTPResponse response);
+        void onError(HTTPRequest request);
+        void onFinal(HTTPRequest request);
+    }
+
+    public static abstract class AbstractHTTPHandler implements HTTPHandler {
+        @Override public void onInit(HTTPRequest request) {}
+        @Override public void onResponse(HTTPRequest request, HTTPResponse response) {}
+        @Override public void onError(HTTPRequest request) {}
+        @Override public void onFinal(HTTPRequest request) {}
+    }
+
+    public static class HTTPRequest {
+        private String url;
+        private String method;
+        private String body;
+        private Map<String,String> headers;
+        public HTTPRequest(String url) {
+            this.url = url;
+            this.method = "GET";
+            this.body = null;
+            this.headers = new LinkedHashMap<String,String>();
+        }
+        public void setMethod(String method) { this.method = method; }
+        public void setBody(String body) { this.body = body; }
+        public void setHeader(String key, String value) { this.headers.put(key, value); }
+
+        public String getUrl() { return url; }
+        public String getMethod() { return method; }
+        public String getBody() { return body; }
+        public Map<String,String> getHeaders() { return headers; }
+    }
+
+    public interface HTTPResponse {
+        int getCode();
+        String getBody();
     }
 
     public interface Task {
@@ -232,8 +285,8 @@ public class quark_runtime {
         void acquire();
         void release();
         void wait(Double timeoutInSeconds);
-        WebSocket open(String url);
+        void open(String url, WebSocketHandler handler);
+        void request(HTTPRequest request, HTTPHandler handler);
         void schedule(Task handler, Double delayInSeconds);
     }
-
 }

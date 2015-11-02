@@ -18,21 +18,16 @@ import io.netty.util.CharsetUtil;
 public class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> implements WebSocket {
 
 	private final WebSocketClientHandshaker handshaker;
-	private WebSocketHandler handler;
+	private final WebSocketHandler handler;
 	private ArrayList<String> pending = new ArrayList<>();
 	private Channel ch;
 
-	public DatawireNettyWebsocket(WebSocketClientHandshaker handshaker) {
+	public DatawireNettyWebsocket(WebSocketClientHandshaker handshaker, WebSocketHandler handler) {
 		this.handshaker = handshaker;
-		this.handler = null;
+		this.handler = handler;
 		this.ch = null;
 	}
 	
-	/// quark_runtime.WebSocket
-	public void setHandler(WebSocketHandler handler) {
-		this.handler = handler;
-	}
-
 	/// quark_runtime.WebSocket
 	public void send(String message) {
 		if (ch != null) {
@@ -54,10 +49,13 @@ public class DatawireNettyWebsocket extends SimpleChannelInboundHandler<Object> 
         if (!handshaker.isHandshakeComplete()) {
             handshaker.finishHandshake(ch, (FullHttpResponse) msg);
             System.out.println("WebSocket Client connected!");
+            this.handler.onConnected(this);
             this.ch = ch;
             for (String message : pending) {
             	send(message);
             }
+            pending.clear();
+            pending = null;
             return;
         }
 

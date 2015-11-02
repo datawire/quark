@@ -231,6 +231,7 @@ primitive WebSocket {
     void send(String message);
 }
 
+@mapping($java{io.datawire.quark_runtime.HTTPHandler})
 primitive HTTPHandler {
     void onInit(HTTPRequest request) {}
     void onResponse(HTTPRequest request, HTTPResponse response) {}
@@ -238,13 +239,15 @@ primitive HTTPHandler {
     void onFinal(HTTPRequest request) {}
 }
 
+@mapping($java{io.datawire.quark_runtime.HTTPRequest})
 primitive HTTPRequest {
-    macro HTTPRequest(String url) $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+    macro HTTPRequest(String url) $java{new io.datawire.quark_runtime.HTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
     void setBody(String data);
     void setHeader(String key, String value);
 }
 
+@mapping($java{io.datawire.quark_runtime.HTTPResponse})
 primitive HTTPResponse {
     int getCode();
     String getBody();
