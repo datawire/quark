@@ -13,6 +13,7 @@ Quark defines the following keywords:
   class
   else
   extends
+  false
   if
   interface
   macro
@@ -21,6 +22,7 @@ Quark defines the following keywords:
   package
   primitive
   return
+  true
   while
 
 .. _classKeyword:
@@ -79,7 +81,7 @@ See the :ref:`if keyword syntax section <ifElseSyntax>` for more information abo
 extends
 ~~~~~~~
 
-The extends keyword indicates a parent class of the class currently being defined.
+The extends keyword indicates a parent class of the class currently being defined or an interface used by the class.
 
 Syntax
 ++++++
@@ -92,13 +94,40 @@ The extends keyword syntax is:
 
 where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
 
+or
+
+**class** *className* **extends** *interfaces* **{**
+*additionalClassDefinition*
+**}**
+
+where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+
+or
+
+**class** *className* **extends** *superClassName* **,** *interfaces* **{**
+*additionalClassDefinition*
+**}**
+
+where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+
+.. _falseKeyword:
+
+false
+~~~~~
+
+The false keyword indicates that a particular condition is not true. It is one of the two allowed states of a boolean.
+
+Syntax
+++++++
+
+The false keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.
+
 .. _ifKeyword:
 
 if
 ~~
 
 The if keyword is used to provide code to be run only if the supplied condition evaluates to true. It can be used in conjunction with the :ref:`else keyword <elseKeyword>` to provide alternate code paths when the condition evaluates to true and when it evaluates to false.
-
 
 .. _ifSyntax:
 
@@ -113,10 +142,6 @@ The if keyword syntax is:
 
 where *condition* is the code being evaluated and *executeIfConditionTrue* is run if *condition* evaluates to true. 
 
-Note that Quark uses 1/0 for true/false and each independent clause of the condition is treated like an integer. This currently places some limitations on the construction of conditionals. See `linkIssue24`_ for more information.
-
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
-
 See the :ref:`else keyword syntax section <ifElseSyntax>` for the syntax of if-else statements.
 
 .. _interfaceKeyword:
@@ -124,7 +149,18 @@ See the :ref:`else keyword syntax section <ifElseSyntax>` for the syntax of if-e
 interface
 ~~~~~~~~~
 
-[[JMK this isn't working at all like I expected - skipping for now]]
+The interface keyword defines an interface containing template information for classes. Interfaces can contain default methods (which can be redefined in classes using the interface) and method signatures (to be defined in classes using the interface).
+
+Syntax
+++++++
+
+The interface keyword syntax is:
+
+**interface** *interfaceName* {
+*interfaceDefinition*
+}
+
+where *interfaceName* is the name of the interface, used to include it in class definitions, and *interfaceDefinition* is the content of the interface.
 
 .. _macroKeyword:
 
@@ -229,6 +265,18 @@ The return keyword syntax is:
 
 where *functionType* is the type of the value returned by the function, *functionName* is the name of the function, *parameters* is a comma-separated list of parameters for the function, *code* is the code being run by the function, and *valueOfTypeFunctionType* is the value returned by the function. It must use the data type specified in the *functionType* declaration.
 
+.. _trueKeyword:
+
+true
+~~~~
+
+The true keyword indicates that a particular condition is true. It is one of the two allowed states of a boolean.
+
+Syntax
+++++++
+
+The true keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.
+
 .. _whileKeyword:
 
 while
@@ -246,7 +294,3 @@ The while keyword syntax is:
 **}**
 
 where *condition* is the code being evaluated and *executeIfConditionTrue* is run as long as *condition* evaluates to true. If the state of the condition is not changed in some way within this code block so it eventually evaluates to false the code will continue to execute in an infinite loop.
-
-Note that Quark uses 1/0 for true/false and each independent clause of the condition is treated like an integer. This currently places some limitations on the construction of conditionals. See `linkIssue24`_ for more information.
-
-.. _linkIssue24: https://github.com/datawire/quark/issues/24
