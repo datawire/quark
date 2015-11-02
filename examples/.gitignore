@@ -1,4 +1,5 @@
 **/node_modules/
+slack/java/bin/
 slack/java/pom.xml
 slack/java/src/main/java/io/datawire/quark_runtime.java
 slack/java/src/main/java/slack/Channel.java
