@@ -29,7 +29,7 @@ package directory {
         }
     }
 
-    class Directory extends Task, WebSocketHandler { // implements WebHandler, Task
+    class Directory extends Task, WSHandler {
 
         Runtime runtime;
         WebSocket socket;
@@ -52,9 +52,9 @@ package directory {
             self.endpoint = endpoint;
         }
 
-        void onInit(WebSocket socket) {}
+        void onWSInit(WebSocket socket) {}
 
-        void onConnected(WebSocket socket) {
+        void onWSConnected(WebSocket socket) {
             self.socket = socket;
             JSONObject tetherInfo = new JSONObject()
                 .setObjectItem("op", "tether".toJSON())
@@ -74,7 +74,7 @@ package directory {
             self.runtime.schedule(self, 3.0);
         }
 
-        void onMessage(WebSocket socket, String message) {
+        void onWSMessage(WebSocket socket, String message) {
             JSONObject jobj = message.parseJSON();
             String op = jobj["op"].getString();
             if (op == "entry") {
@@ -107,10 +107,6 @@ package directory {
             }
 
         }
-
-        void onClose(WebSocket socket) {}
-        void onError(WebSocket socket) {}
-        void onFinal(WebSocket socket) {}
 
         Entry lookup(String name) {
             Entry result = null;
