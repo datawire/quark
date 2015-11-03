@@ -1,6 +1,7 @@
 # Quark
 
-Quark is a lightweight programming language that lets you define and implement rich (micro)service APIs that work with your existing application frameworks. Quark lets you:
+Quark lets you define and implement rich (micro)service APIs that work
+with your existing application frameworks. Quark lets you:
 
 * Rapidly prototype and iterate service APIs
 * Build service APIs with rich protocol semantics including request/response, event-driven, and idempotency
@@ -19,6 +20,8 @@ The Datawire Directory service replicates an application-specific data structure
 [[JMK Need to clean this up a bit - needs clarification and expansion]]
 
 ##Rich Semantics
+
+We support idempotency, one way async, RPC, flow control, timeouts
 
 [[JMK Not sure what else to say here/what example to use]]
 
