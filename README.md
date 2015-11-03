@@ -23,7 +23,11 @@ The Datawire Directory service replicates an application-specific data structure
 
 We support idempotency, one way async, RPC, flow control, timeouts
 
-[[JMK Not sure what else to say here/what example to use]]
+[[JMK Not sure what else to say here]]
+
+###Example
+
+Examples of many of the features Quark supports can be found in the Examples Repository.
 
 ## Multiple Language and Framework Support
 
@@ -68,6 +72,6 @@ Please read the Quark Installation and Configuration Guide for more detailed inf
 
 The Quark Language Reference provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
 
-The Quark Examples repository (located in the examples directory) includes a wide variety of examples both illustrating simple language features and full end-to-end service implementations.
+The Quark Examples repository (located in the examples directory) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
 
 The Quark Issues list provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
