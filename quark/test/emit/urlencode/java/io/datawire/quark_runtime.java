@@ -25,6 +25,7 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -90,20 +91,12 @@ public class quark_runtime {
 
     @SuppressWarnings("rawtypes")
     public static String urlencode(Map map) {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
+        QueryStringEncoder enc = new QueryStringEncoder("");
         for (Object obj : map.entrySet()) {
             Map.Entry entry = (Map.Entry) obj;
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
-            result.append(URLEncoder.encode(entry.getKey() + ""));
-            result.append("=");
-            result.append(entry.getValue() + "");
+            enc.addParam(entry.getKey().toString(), entry.getValue().toString());
         }
-        return result.toString();
+        return enc.toString().substring(1);
     }
 
     public static class JSONObject {
@@ -376,11 +369,173 @@ public class quark_runtime {
             public void wait(Double timeoutInSeconds) {
                 synchronized(lock) {
                     assert locked;
-                    assert false;
+                    if (!allowSync) {
+                        throw new IllegalStateException("Runtime is not configured for synchronous mode");
+                    }
+                    double timeoutInMs = timeoutInSeconds * 1000;
+                    long millis = (long) (timeoutInMs);
+                    int nanos = (int)((timeoutInMs - millis) * 1000000);
+                    try {
+                        lock.wait(millis, nanos);
+                    } catch (InterruptedException e) {
+                        // ignore, wait is best effort
+                    }
                 }
             }
 
-            public void open(String url, final WSHandler ws_handler) {
+            boolean allowSync = false;
+            boolean initialized = false;
+
+            /**
+             * Allow synchronous waiting on this instance of runtime
+             * @param allowSync
+             */
+            void setAllowSync(boolean allowSync) {
+                synchronized (lock) {
+                    if (initialized) {
+                        throw new IllegalStateException("setAllowSync can only be called once, before runtime is used");
+                    }
+                    this.allowSync = allowSync;
+                    initialize();
+                }
+            }
+
+            private Runnable notifier = new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (lock) {
+                        lock.notifyAll();
+                    }
+                }
+            };
+            private void wakeup() {
+                group.submit(notifier );
+            }
+
+            private void initialize() {
+                synchronized (lock) {
+                    initialized = true;
+                }
+            }
+
+            private WSHandler wrap(final WSHandler handler) {
+                initialize();
+                if (!allowSync) {
+                    return handler;
+                }
+                return new WSHandler() {
+                    @Override
+                    public void onWSMessage(WebSocket socket, String message) {
+                        try {
+                            handler.onWSMessage(socket, message);
+                        } finally {
+                            wakeup();
+                        }
+
+                    }
+                    @Override
+                    public void onWSInit(WebSocket socket) {
+                        try {
+                            handler.onWSInit(socket);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onWSFinal(WebSocket socket) {
+                        try {
+                            handler.onWSFinal(socket);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onWSError(WebSocket socket) {
+                        try {
+                            handler.onWSError(socket);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onWSConnected(WebSocket socket) {
+                        try {
+                            handler.onWSConnected(socket);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onWSClosed(WebSocket socket) {
+                        try {
+                            handler.onWSClosed(socket);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                };
+            }
+
+            private HTTPHandler wrap(final HTTPHandler handler) {
+                initialize();
+                if (!allowSync) {
+                    return handler;
+                }
+                return new HTTPHandler() {
+                    @Override
+                    public void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+                        try {
+                            handler.onHTTPResponse(request, response);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onHTTPInit(HTTPRequest request) {
+                        try {
+                            handler.onHTTPInit(request);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onHTTPFinal(HTTPRequest request) {
+                        try {
+                            handler.onHTTPFinal(request);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                    @Override
+                    public void onHTTPError(HTTPRequest request) {
+                        try {
+                            handler.onHTTPError(request);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                };
+            }
+
+            private Task wrap(final Task handler) {
+                initialize();
+                if (!allowSync) {
+                    return handler;
+                }
+                return new Task() {
+                    @Override
+                    public void onExecute(Runtime runtime) {
+                        try {
+                            handler.onExecute(runtime);
+                        } finally {
+                            wakeup();
+                        }
+                    }
+                };
+            }
+
+            public void open(String url, final WSHandler handler) {
+                final WSHandler ws_handler = wrap(handler);
                 URI uri;
                 try {
                     uri = new URI(url);
@@ -477,13 +632,14 @@ public class quark_runtime {
             }
 
             @Override
-            public void schedule(final Task handler, Double delayInSeconds) {
+            public void schedule(Task handler, Double delayInSeconds) {
+                final Task t_handler = wrap(handler);
                 final Runtime self = this;
                 group.schedule(new Runnable() {
 
                     @Override
                     public void run() {
-                        handler.onExecute(self);
+                        t_handler.onExecute(self);
                     }
                 }, Double.valueOf(delayInSeconds * 1000).intValue(), TimeUnit.MILLISECONDS);
             }
@@ -497,12 +653,13 @@ public class quark_runtime {
             }
 
             @Override
-            public void request(final HTTPRequest request, final HTTPHandler handler) {
+            public void request(final HTTPRequest request, HTTPHandler handler) {
+                final HTTPHandler ht_handler = wrap(handler);
                 final URI uri;
                 try {
                     uri = new URI(request.getUrl());
                 } catch (URISyntaxException e) {
-                    handler.onHTTPError(request);
+                    ht_handler.onHTTPError(request);
                     return;
                 }
                 String scheme = uri.getScheme() == null? "http" : uri.getScheme();
@@ -518,7 +675,7 @@ public class quark_runtime {
 
                 if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
                     System.err.println("Only HTTP(S) is supported.");
-                    handler.onHTTPError(request);
+                    ht_handler.onHTTPError(request);
                     return;
                 }
 
@@ -530,7 +687,7 @@ public class quark_runtime {
                         sslCtx = SslContextBuilder.forClient()
                                 .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
                     } catch (SSLException e) {
-                        handler.onHTTPError(null);
+                        ht_handler.onHTTPError(null);
                         return;
                     }
                 } else {
@@ -579,13 +736,13 @@ public class quark_runtime {
                         // Uncomment the following line if you don't want to handle HttpContents.
                         p.addLast(new HttpObjectAggregator(1048576));
 
-                        p.addLast(new DatawireNettyHttpHandler(request, handler));
+                        p.addLast(new DatawireNettyHttpHandler(request, ht_handler));
 
                         ch.closeFuture().addListener(new ChannelFutureListener() {
 
                             @Override
                             public void operationComplete(ChannelFuture future) throws Exception {
-                                handler.onHTTPFinal(request);
+                                ht_handler.onHTTPFinal(request);
                             }
                         });
 
@@ -600,7 +757,7 @@ public class quark_runtime {
                     public void operationComplete(ChannelFuture future) throws Exception {
                         if (future.isDone()) {
                             if (!future.isSuccess()) {
-                                handler.onHTTPError(request);
+                                ht_handler.onHTTPError(request);
                             } else {
                                 // Send the HTTP request.
                                 future.channel().writeAndFlush(request1).addListener(new ChannelFutureListener() {
@@ -611,7 +768,7 @@ public class quark_runtime {
                                             if (future.isSuccess()) {
                                                 // yay
                                             } else {
-                                                handler.onHTTPError(request);
+                                                ht_handler.onHTTPError(request);
                                             }
                                         }
                                     }
