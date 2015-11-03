@@ -25,6 +25,7 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpVersion;
+import io.netty.handler.codec.http.QueryStringEncoder;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -90,20 +91,12 @@ public class quark_runtime {
 
     @SuppressWarnings("rawtypes")
     public static String urlencode(Map map) {
-        StringBuilder result = new StringBuilder();
-        boolean first = true;
+        QueryStringEncoder enc = new QueryStringEncoder("");
         for (Object obj : map.entrySet()) {
             Map.Entry entry = (Map.Entry) obj;
-            if (first) {
-                first = false;
-            } else {
-                result.append("&");
-            }
-            result.append(URLEncoder.encode(entry.getKey() + ""));
-            result.append("=");
-            result.append(entry.getValue() + "");
+            enc.addParam(entry.getKey().toString(), entry.getValue().toString());
         }
-        return result.toString();
+        return enc.toString().substring(1);
     }
 
     public static class JSONObject {
