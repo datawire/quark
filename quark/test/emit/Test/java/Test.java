@@ -11,7 +11,7 @@ public class Test {
         System.out.println(hello);
         Test t1 = new Test();
         Test t2 = (t1).foo(t1);
-        if (!((t2).equals(t1))) {
+        if (!((t2)==(t1) || ((t2) != null && (t2).equals(t1)))) {
             System.out.println("YAY!");
         }
         Integer four = (2) + (2);

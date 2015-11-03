@@ -1,6 +1,6 @@
 public class Functions {
     public static Integer factorial(Integer n) {
-        if ((n).equals(0)) {
+        if ((n)==(0) || ((n) != null && (n).equals(0))) {
             return 1;
         } else {
             return (n) * (Functions.factorial((n) - (1)));

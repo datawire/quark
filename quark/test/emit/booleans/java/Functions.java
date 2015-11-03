@@ -24,7 +24,7 @@ public class Functions {
         System.out.println((fols).toString());
         String foo = "foo";
         String bar = "bar";
-        if (((foo).equals("foo")) && ((bar).equals("bar"))) {
+        if (((foo)==("foo") || ((foo) != null && (foo).equals("foo"))) && ((bar)==("bar") || ((bar) != null && (bar).equals("bar")))) {
             System.out.println("foobar!!");
         }
     }

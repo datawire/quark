@@ -46,7 +46,13 @@ public class SlackBot implements SlackHandler {
 	}
 	private void print(SlackEvent evt, String...objects) {
 		StringBuilder b = new StringBuilder();
-		b.append(evt.timestamp).append(" ").append(evt.channel.channel).append(":");
+		if (evt.timestamp != null) {
+		    b.append(evt.timestamp);
+		}
+		if (evt.channel != null) {
+		    b.append(" ").append(evt.channel.channel);
+		}
+		b.append(":");
 		for (String o : objects) {
 			b.append(" ").append(o != null ? o : "null");
 		}

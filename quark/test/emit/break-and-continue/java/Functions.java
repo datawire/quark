@@ -4,7 +4,7 @@ public class Functions {
         Integer idx = 0;
         while (true) {
             String s = (stuff).get(idx);
-            if ((s).equals("three")) {
+            if ((s)==("three") || ((s) != null && (s).equals("three"))) {
                 System.out.println("breaking");
                 break;
             }
@@ -15,7 +15,7 @@ public class Functions {
         Boolean loop = true;
         while (loop) {
             String s2 = (stuff).get(idx);
-            if (!((s2).equals("three"))) {
+            if (!((s2)==("three") || ((s2) != null && (s2).equals("three")))) {
                 idx = (idx) + (1);
                 System.out.println("continuing");
                 continue;
