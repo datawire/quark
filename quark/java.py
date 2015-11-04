@@ -49,14 +49,9 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
   </build>
   <dependencies>
     <dependency>
-      <groupId>com.fasterxml.jackson.jr</groupId>
-      <artifactId>jackson-jr-objects</artifactId>
-      <version>2.5.3</version>
-    </dependency>
-    <dependency>
-      <groupId>io.netty</groupId>
-      <artifactId>netty-all</artifactId> <!-- Use 'netty-all' for 4.0 or above -->
-      <version>4.0.32.Final</version>
+      <groupId>io.datawire.quark</groupId>
+      <artifactId>quark-core</artifactId>
+      <version>0.1.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
@@ -71,8 +66,6 @@ class Java(backend.Backend):
         backend.Backend.__init__(self, "java")
         self.dfnr = DefinitionRenderer()
         self.functions = []
-        self.files["io/datawire/quark_runtime.java"] = open(os.path.join(os.path.dirname(__file__),
-                                                                         "quark_runtime.java")).read()
         self.packages = OrderedDict()  # Collect packages for package.json et al
 
     def write(self, target):

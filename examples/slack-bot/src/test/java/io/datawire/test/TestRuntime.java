@@ -1,18 +1,17 @@
 package io.datawire.test;
 
 import static org.junit.Assert.*;
-import io.datawire.quark_runtime.HTTPHandler;
-import io.datawire.quark_runtime.HTTPRequest;
-import io.datawire.quark_runtime.HTTPResponse;
-import io.datawire.quark_runtime.netty.DatawireNettyRuntime;
-
+import io.datawire.quark.netty.QuarkNettyRuntime;
+import io.datawire.quark.runtime.HTTPHandler;
+import io.datawire.quark.runtime.HTTPRequest;
+import io.datawire.quark.runtime.HTTPResponse;
 import org.junit.Test;
 
 public class TestRuntime {
 
 	@Test
 	public void test() {
-		DatawireNettyRuntime runtime = new DatawireNettyRuntime();
+		QuarkNettyRuntime runtime = new QuarkNettyRuntime();
 		HTTPRequest request = new HTTPRequest("http://www.google.com");
 		HTTPHandler handler = new HTTPHandler() {
 			

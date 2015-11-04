@@ -1,5 +1,7 @@
 package bot;
 
+import io.datawire.quark.netty.QuarkNettyRuntime;
+
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
@@ -24,7 +26,7 @@ import slack.UserTyping;
 
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
-        io.datawire.quark_runtime.netty.DatawireNettyRuntime runtime = new io.datawire.quark_runtime.netty.DatawireNettyRuntime();
+        QuarkNettyRuntime runtime = new QuarkNettyRuntime();
         Client client = new Client(runtime, getToken(), new SlackBot());
         client.connect();
         runtime.launch();
