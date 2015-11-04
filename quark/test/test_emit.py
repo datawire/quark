@@ -37,6 +37,13 @@ def walk(dir, ext):
     os.path.walk(dir, Walker(ext), result)
     return result
 
+@pytest.fixture(scope="session")
+def java_deps(request):
+    pom = os.path.join(directory, "java-deps", "pom.xml")
+    java = os.path.join(directory, "..", "..", "java.py")
+    if not os.path.exists(pom) or os.path.getmtime(java) > os.path.getmtime(pom):
+        assert False, "Java dependencies potentially out of date, update them with quark/test/emit/update-deps.sh"
+
 @pytest.fixture(params=paths)
 def path(request):
     return request.param
@@ -45,7 +52,7 @@ def path(request):
 def Backend(request):
     return request.param
 
-def test_emit(path, Backend):
+def test_emit(path, Backend, java_deps):
     text = open(path).read()
     backend = Backend()
     maybe_xfail(text, backend.ext)

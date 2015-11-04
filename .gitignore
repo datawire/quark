@@ -43,6 +43,8 @@ nosetests.xml
 coverage.xml
 *,cover
 
+quark/test/emit/java-deps
+
 # Translations
 *.mo
 *.pot

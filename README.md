@@ -64,6 +64,8 @@ To install Quark, do the following:
 
 `python setup.py develop`
 
+mvn install # installs java quark runtime
+
 ### Compiling Quark Files
 
 The Quark compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages.

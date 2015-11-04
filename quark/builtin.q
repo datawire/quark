@@ -100,12 +100,12 @@ primitive String {
     macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}
                                                  $py{($self).replace(($from), ($to), 1)}
                                                  $js{($self).replace(($from), ($to))};
-    macro String join(List<String> parts) $java{io.datawire.quark_runtime.join(($self), ($parts))}
+    macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
                                           $py{($self).join($parts)}
                                           $js{($parts).join($self)};
     macro JSONObject toJSON() new JSONObject().setString(self);
     macro JSONObject __to_JSONObject() self.toJSON();
-    macro JSONObject parseJSON() $java{io.datawire.quark_runtime.JSONObject.parse($self)}
+    macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
                                  $py{_JSONObject.parse($self)}
                                  $js{_qrt.json_from_string($self)};
 }
@@ -140,15 +140,15 @@ primitive Map<K,V> {
     macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                       $py{($self).update($other)}
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
-    macro String urlencode() $java{io.datawire.quark_runtime.urlencode($self)}
+    macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                              $py{_urlencode($self)}
                              $js{_qrt.urlencode($self)};
 }
 
-@mapping($java{io.datawire.quark_runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
+@mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
 primitive JSONObject {
 
-    macro JSONObject() $java{new io.datawire.quark_runtime.JSONObject()}
+    macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
                        $py{_JSONObject()}
                        $js{new _qrt.JSONObject()};
 
@@ -211,11 +211,11 @@ macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)}
                  $js{Date.now()};
 
-macro void sleep(float seconds) $java{io.datawire.quark_runtime.sleep($seconds)}
+macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
                                 $py{time.sleep($seconds)}
                                 $js{_qrt.sleep($seconds)};
 
-macro String url_get(String url) $java{io.datawire.quark_runtime.url_get($url)}
+macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
                                  $py{_url_get($url)}
                                  $js{_qrt.url_get($url)};
 
@@ -223,7 +223,7 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
 
-@mapping($java{io.datawire.quark_runtime.WSHandler})
+@mapping($java{io.datawire.quark.runtime.WSHandler})
 primitive WSHandler {
     void onWSInit(WebSocket socket) {}
     void onWSConnected(WebSocket socket) {}
@@ -233,12 +233,12 @@ primitive WSHandler {
     void onWSFinal(WebSocket socket) {}
 }
 
-@mapping($java{io.datawire.quark_runtime.WebSocket})
+@mapping($java{io.datawire.quark.runtime.WebSocket})
 primitive WebSocket {
     void send(String message);
 }
 
-@mapping($java{io.datawire.quark_runtime.HTTPHandler})
+@mapping($java{io.datawire.quark.runtime.HTTPHandler})
 primitive HTTPHandler {
     void onHTTPInit(HTTPRequest request) {}
     void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
@@ -246,26 +246,26 @@ primitive HTTPHandler {
     void onHTTPFinal(HTTPRequest request) {}
 }
 
-@mapping($java{io.datawire.quark_runtime.HTTPRequest})
+@mapping($java{io.datawire.quark.runtime.HTTPRequest})
 primitive HTTPRequest {
-    macro HTTPRequest(String url) $java{new io.datawire.quark_runtime.HTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+    macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.HTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
     void setBody(String data);
     void setHeader(String key, String value);
 }
 
-@mapping($java{io.datawire.quark_runtime.HTTPResponse})
+@mapping($java{io.datawire.quark.runtime.HTTPResponse})
 primitive HTTPResponse {
     int getCode();
     String getBody();
 }
 
-@mapping($java{io.datawire.quark_runtime.Task})
+@mapping($java{io.datawire.quark.runtime.Task})
 primitive Task {
     void onExecute(Runtime runtime);
 }
 
-@mapping($java{io.datawire.quark_runtime.Runtime})
+@mapping($java{io.datawire.quark.runtime.Runtime})
 primitive Runtime {
     void acquire();
     void release();
