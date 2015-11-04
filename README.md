@@ -60,13 +60,12 @@ To install Quark, do the following:
 
 1. Pull the quark repository from GitHub using the following command:
 
-`git clone https://github.com/datawire/quark.git`
+        git clone https://github.com/datawire/quark.git
 
 2. Run the following command from the top-level quark directory:
 
-`python setup.py develop`
-
-mvn install # installs java quark runtime
+        python setup.py develop
+        mvn install               # installs java quark runtime
 
 ### Compiling Quark Files
 
