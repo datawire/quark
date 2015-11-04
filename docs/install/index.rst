@@ -17,3 +17,7 @@ Quark Installation and Configuration Guide
   Packaging Options[TODO] <package>
   Documentation Options [TODO] <doc>
   References [TODO] <links>
+
+Document Version
+================
+Quark Installation and Configuration Guide 0.1.0-1

@@ -22,3 +22,6 @@ Indices and tables
 * :ref:`modindex`
 * :ref:`search`
 
+Document Version
+================
+Quark Documentation Set 0.1.0-1

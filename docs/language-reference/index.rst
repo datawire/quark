@@ -9,3 +9,7 @@ Quark Language Reference
   Core Concepts [Outlined] <core>
   Language Elements [In Progress] <language>
   References [TODO] <links>
+
+Document Version
+================
+Quark Language Reference 0.1.0-1
