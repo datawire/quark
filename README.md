@@ -4,7 +4,7 @@ Quark lets you define and implement rich (micro)service APIs that work
 with your existing application frameworks. Quark lets you:
 
 * Rapidly prototype and iterate service APIs
-* Build service APIs with rich protocol semantics including request/response, event-driven, and idempotency
+* Build service APIs with rich protocol semantics
 * Support multiple programming languages and application frameworks
 
 In addition to developing and implementing APIs, Quark also offers a packaging service for each of its component languages, allowing easy distribution and advertising of service availability to potential users. Quark also generates API documentation for your libraries in standard formats for each language (when they exist) including Javadoc for Java and Sphinx for Python.
@@ -15,15 +15,11 @@ Quark is designed to rapidly prototype and iterate service APIs. In a typical us
 
 ### Example
 
-The Datawire Directory service replicates an application-specific data structure to its clients. Quark lets the service author define an API for replicating this data, and create clients that support this API. The service author can iterate on the protocol without changing the application interface presented by the Quark-generated client libraries. In other words, client authors can take advantage of new enhancements to the Quark API without changing any of the client code -- they just need to update the library.
-
-[[JMK Need to clean this up a bit - needs clarification and expansion]]
+The Datawire Directory service allows client applications to obtain and store data within complex data structures from a central source, replicating the data with an eventual consistency model. Clients can subscribe to get notifications when data is updated or added to the central directory; the directory pushes the new or modified data to subscribers asynchronously in an eventual consistency model. The service author can iterate on the protocol without changing the application interface presented by the Quark-generated client libraries. In other words, client authors can take advantage of new enhancements to the Quark API without changing any of the client code -- they just need to update the library.
 
 ##Rich Semantics
 
-We support idempotency, one way async, RPC, flow control, timeouts
-
-[[JMK Not sure what else to say here]]
+Quark supports request/response and event-driven programming models. It also supports many modern features including idempotency, RPC, flow controls, timeouts, and one-way asynchronous processing.
 
 ###Example
 
@@ -39,20 +35,46 @@ The Slack service includes a real-time API for processing messages (https://api.
 
 ## Installation and Configuration
 
-- Basic info here
-- Reference to Install and Config guide for more info
+This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the Quark Installation and Configuration Guide.
 
 ### Prerequisites
 
-- just the basics, no examples/extras
+Quark requires a modern Linux distribution or Mac OS X. It has been successfully tested on the following:
+
+* Mac OS 10.10 (Yosemite)
+* Mac OS 10.11 (El Capitain)
+* Ubuntu 14.04 (Trusty)
+* Fedora 22
+
+Quark also requires the following:
+
+* Python 2.7+
+* pip
+* a local git installation (to access the code base)
 
 ### Installation
 
-python setup.py develop
+To install Quark, do the following:
+
+1. Pull the quark repository from GitHub using the following command:
+
+`git clone https://github.com/datawire/quark.git`
+
+2. Run the following command from the top-level quark directory:
+
+`python setup.py develop`
 
 ### Compiling Quark Files
 
-- just the basics, see guide for full options
+The Quark compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages.
+
+The simplest command generates code in all supported target languages in default output directories. It is:
+
+`quark compile <files>`
+
+where <files> is a space-separated list of the Quark files to compile.
+
+This will output code in a subdirectory of your base quark directory (given the name of the first file in the <files> list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.
 
 ## Quark Language Basics
 
