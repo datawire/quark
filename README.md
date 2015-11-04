@@ -46,6 +46,8 @@ The Slack service includes a real-time API for processing messages (https://api.
 
 python setup.py develop
 
+mvn install # installs java quark runtime
+
 ### Compiling Quark Files
 
 - just the basics, see guide for full options
