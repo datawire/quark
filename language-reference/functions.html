@@ -1,0 +1,531 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Functions &mdash; Quark 0.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.1 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="Annotations" href="annotations.html" />
+    <link rel="prev" title="Data Types" href="types.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../index.html ">
+        Quark 0.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="types.html" title="Previous document">Data Types</a>
+        </li>
+        <li>
+          <a href="annotations.html" title="Next document">Annotations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Quark 0.1 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="functions">
+<h1>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h1>
+<p>Quark defines the following functions:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<p>[[JMK Some of these may be pulled into a separate library - but we&#8217;ll need to document that library if that happens so we can just pull out those entries]]</p>
+<p>[[JMK I know we agreed to list by type first then put the supported functions underneath, but I&#8217;m wondering if it would make more sense to list by function and then indicate which types support it/any variations]]</p>
+<div class="section" id="float-add">
+<span id="floatadd"></span><h2>float::__add__()<a class="headerlink" href="#float-add" title="Permalink to this headline">¶</a></h2>
+<p>Used to add two floating point values together.</p>
+<div class="section" id="syntax">
+<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.__add__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are floating point values</p>
+<p>This function is used under the covers by the + operator; <em>A</em> <strong>+</strong> <em>B</em> is equivalent to <em>A</em>.__add__(<em>B</em>).</p>
+<p>[[JMK Also, we should clarify what we want to call a function vs a method - I find myself stumbling over this a bit]]</p>
+</div>
+</div>
+<div class="section" id="float-div">
+<span id="floatdivide"></span><h2>float::__div__()<a class="headerlink" href="#float-div" title="Permalink to this headline">¶</a></h2>
+<p>Used to divide one floating point value into another.</p>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.__div__(<em>B</em>)</p>
+<p>where <em>A</em> is the floating point numerator and <em>B</em> is the floating point denominator.</p>
+<p>This function is used under the covers by the / operator; <em>A</em> <strong>/</strong> <em>B</em> is equivalent to <em>A</em>.__div__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="float-gt">
+<span id="floatgreaterthan"></span><h2>float::__gt__()<a class="headerlink" href="#float-gt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one floating point value is greater than another.</p>
+<div class="section" id="id2">
+<h3>Syntax<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__gt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are floating point values. Returns true (1) if <em>A</em> is greater than <em>B</em> and false (0) if <em>A</em> is less than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &gt; operator; <em>A</em> <strong>&gt;</strong> <em>B</em> is equivalent to <em>A</em>.__gt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="float-lt">
+<span id="floatlessthan"></span><h2>float::__lt__()<a class="headerlink" href="#float-lt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one floating point value is less than another.</p>
+<div class="section" id="id3">
+<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__lt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are floating point values. Returns true (1) if <em>A</em> is less than <em>B</em> and false (0) if <em>A</em> is greater than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &lt; operator; <em>A</em> <strong>&lt;</strong> <em>B</em> is equivalent to <em>A</em>.__lt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="float-mul">
+<span id="floatmultiply"></span><h2>float::__mul__()<a class="headerlink" href="#float-mul" title="Permalink to this headline">¶</a></h2>
+<p>Used to multiply two floating point values together.</p>
+<div class="section" id="id4">
+<h3>Syntax<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.__mul__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are floating point values</p>
+<p>This function is used under the covers by the * operator; <em>A</em> <strong>*</strong> <em>B</em> is equivalent to <em>A</em>.__mul__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="float-neg">
+<span id="floatnegate"></span><h2>float::__neg__()<a class="headerlink" href="#float-neg" title="Permalink to this headline">¶</a></h2>
+<p>Used to flip the sign of a floating point value.</p>
+<div class="section" id="id5">
+<h3>Syntax<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.__neg__()</p>
+<p>where <em>A</em> is a floating point value.</p>
+<p>This function is used under the covers by the - operator; <strong>-</strong> <em>A</em> is equivalent to <em>A</em>.__neg__().</p>
+</div>
+</div>
+<div class="section" id="float-sub">
+<span id="floatsubtract"></span><h2>float::__sub__()<a class="headerlink" href="#float-sub" title="Permalink to this headline">¶</a></h2>
+<p>Used to subtract one floating point value from another.</p>
+<div class="section" id="id6">
+<h3>Syntax<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.__sub__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are floating point values and <em>B</em> is being subtracted from <em>A</em>.</p>
+<p>This function is used under the covers by the - operator; <em>A</em> <strong>-</strong> <em>B</em> is equivalent to <em>A</em>.__sub__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="float-tostring">
+<span id="floattostring"></span><h2>float::toString()<a class="headerlink" href="#float-tostring" title="Permalink to this headline">¶</a></h2>
+<p>Used to cast a floating point value to a string.</p>
+<div class="section" id="id7">
+<h3>Syntax<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>float <em>A</em>.toString()</p>
+<p>where <em>A</em> is a floating point value.</p>
+</div>
+</div>
+<div class="section" id="int-add">
+<span id="intadd"></span><h2>int::__add__()<a class="headerlink" href="#int-add" title="Permalink to this headline">¶</a></h2>
+<p>Used to add two integers together.</p>
+<div class="section" id="id8">
+<h3>Syntax<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__add__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are integers.</p>
+<p>This function is used under the covers by the + operator; <em>A</em> <strong>+</strong> <em>B</em> is equivalent to <em>A</em>.__add__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-div">
+<span id="intdivide"></span><h2>int::__div__()<a class="headerlink" href="#int-div" title="Permalink to this headline">¶</a></h2>
+<p>Used to divide one integer value into another.</p>
+<div class="section" id="id9">
+<h3>Syntax<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__div__(<em>B</em>)</p>
+<p>where <em>A</em> is the integer numerator and <em>B</em> is the integer denominator.</p>
+<p>This function is used under the covers by the / operator; <em>A</em> <strong>/</strong> <em>B</em> is equivalent to <em>A</em>.__div__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-gt">
+<span id="intgreaterthan"></span><h2>int::__gt__()<a class="headerlink" href="#int-gt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one integer value is greater than another.</p>
+<div class="section" id="id10">
+<h3>Syntax<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__gt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are both integers. Returns true (1) if <em>A</em> is greater than <em>B</em> and false (0) if <em>A</em> is less than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &gt; operator; <em>A</em> <strong>&gt;</strong> <em>B</em> is equivalent to <em>A</em>.__gt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-lt">
+<span id="intlessthan"></span><h2>int::__lt__()<a class="headerlink" href="#int-lt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one integer value is less than another.</p>
+<div class="section" id="id11">
+<h3>Syntax<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__lt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are integers. Returns true (1) if <em>A</em> is less than <em>B</em> and false (0) if <em>A</em> is greater than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &lt; operator; <em>A</em> <strong>&lt;</strong> <em>B</em> is equivalent to <em>A</em>.__lt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-mod">
+<span id="intmodulo"></span><h2>int::__mod__()<a class="headerlink" href="#int-mod" title="Permalink to this headline">¶</a></h2>
+<p>Used to determine the remainer (modulo) when one integer value is divided into another.</p>
+<div class="section" id="id12">
+<h3>Syntax<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__mod__(<em>B</em>)</p>
+<p>where <em>A</em> is the integer numerator and <em>B</em> is the integer denominator.</p>
+<p>This function is used under the covers by the % operator; <em>A</em> <strong>%</strong> <em>B</em> is equivalent to <em>A</em>.__mod__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-mul">
+<span id="intmultiply"></span><h2>int::__mul__()<a class="headerlink" href="#int-mul" title="Permalink to this headline">¶</a></h2>
+<p>Used to multiply two integers values together.</p>
+<div class="section" id="id13">
+<h3>Syntax<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__mul__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are integers.</p>
+<p>This function is used under the covers by the * operator; <em>A</em> <strong>*</strong> <em>B</em> is equivalent to <em>A</em>.__mul__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-neg">
+<span id="intnegate"></span><h2>int::__neg__()<a class="headerlink" href="#int-neg" title="Permalink to this headline">¶</a></h2>
+<p>Used to flip the sign of an integer.</p>
+<div class="section" id="id14">
+<h3>Syntax<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__neg__()</p>
+<p>where <em>A</em> is any integer value.</p>
+<p>This function is used under the covers by the - operator; <strong>-</strong> <em>A</em> is equivalent to <em>A</em>.__neg__().</p>
+</div>
+</div>
+<div class="section" id="int-sub">
+<span id="intsubtract"></span><h2>int::__sub__()<a class="headerlink" href="#int-sub" title="Permalink to this headline">¶</a></h2>
+<p>Used to subtract one integer from another.</p>
+<div class="section" id="id15">
+<h3>Syntax<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__sub__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are integers and <em>B</em> is being subtracted from <em>A</em>.</p>
+<p>This function is used under the covers by the - operator; <em>A</em> <strong>-</strong> <em>B</em> is equivalent to <em>A</em>.__sub__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="int-tostring">
+<span id="inttostring"></span><h2>int::toString()<a class="headerlink" href="#int-tostring" title="Permalink to this headline">¶</a></h2>
+<p>Used to cast an integer to a string.</p>
+<div class="section" id="id16">
+<h3>Syntax<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.toString()</p>
+<p>where <em>A</em> is an integer.</p>
+</div>
+</div>
+<div class="section" id="list-get">
+<span id="listget"></span><h2>List::__get__()<a class="headerlink" href="#list-get" title="Permalink to this headline">¶</a></h2>
+<p>Used to retrieve the value of a specific element in a list.</p>
+<div class="section" id="id17">
+<h3>Syntax<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p><em>elementType</em> <em>A</em>.__get__(<em>B</em>)</p>
+<p>where <em>elementType</em> is the declared type of list elements, <em>A</em> is the list and <em>B</em> is the 0-based index of the element value to return.</p>
+<p>This function is used under the covers by list [] notation; <em>A</em> <strong>[</strong> <em>B</em> <strong>]</strong> is equivalent to <em>A</em>.__get__(<em>B</em>)</p>
+</div>
+</div>
+<div class="section" id="list-set">
+<span id="listset"></span><h2>List::__set__()<a class="headerlink" href="#list-set" title="Permalink to this headline">¶</a></h2>
+<p>Used to modify an existing element in a list.</p>
+<div class="section" id="id18">
+<h3>Syntax<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>void <em>A</em>.__set__(<em>B</em>,*C*)</p>
+<p>where <em>A</em> is the list, <em>B</em> is the 0-based index number of the element to modify, and <em>C</em> is the new value of the element.</p>
+<p>This function is used under the covers by list [] notation; <em>A</em> <strong>[</strong> <em>B</em> <strong>] =</strong> <em>C</em> is equivalent to <em>A</em>.__set__(<em>B</em>,*C*)</p>
+</div>
+</div>
+<div class="section" id="list-add">
+<span id="listadd"></span><h2>List::add()<a class="headerlink" href="#list-add" title="Permalink to this headline">¶</a></h2>
+<p>Used to add a new element to a list. The element is always added to the end of the list.</p>
+<div class="section" id="id19">
+<h3>Syntax<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>void <em>A</em>.__add__(<em>B</em>)</p>
+<p>where <em>A</em> is the list and <em>B</em> is the element to add to the list.</p>
+<p>This function is used under the covers by list [] notation; <em>A</em> <strong>[</strong> <em>B</em> <strong>]</strong> is equivalent to <em>A</em>.__add__(<em>B</em>)</p>
+</div>
+</div>
+<div class="section" id="list-size">
+<span id="listsize"></span><h2>List::size()<a class="headerlink" href="#list-size" title="Permalink to this headline">¶</a></h2>
+<p>Returns the number of elements in a list.</p>
+<div class="section" id="id20">
+<h3>Syntax<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.__size__()</p>
+<p>where <em>A</em> is the list.</p>
+</div>
+</div>
+<div class="section" id="long-add">
+<span id="longadd"></span><h2>long::__add__()<a class="headerlink" href="#long-add" title="Permalink to this headline">¶</a></h2>
+<p>Used to add two long integers together.</p>
+<div class="section" id="id21">
+<h3>Syntax<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__add__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are long integers.</p>
+<p>This function is used under the covers by the + operator; <em>A</em> <strong>+</strong> <em>B</em> is equivalent to <em>A</em>.__add__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-div">
+<span id="longdivide"></span><h2>long::__div__()<a class="headerlink" href="#long-div" title="Permalink to this headline">¶</a></h2>
+<p>Used to divide one long integer into another.</p>
+<div class="section" id="id22">
+<h3>Syntax<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__div__(<em>B</em>)</p>
+<p>where <em>A</em> is the long integer numerator and <em>B</em> is the long integer denominator.</p>
+<p>This function is used under the covers by the / operator; <em>A</em> <strong>/</strong> <em>B</em> is equivalent to <em>A</em>.__div__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-gt">
+<span id="longgreaterthan"></span><h2>long::__gt__()<a class="headerlink" href="#long-gt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one long integer is greater than another.</p>
+<div class="section" id="id23">
+<h3>Syntax<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__gt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are long integers. Returns true (1) if <em>A</em> is greater than <em>B</em> and false (0) if <em>A</em> is less than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &gt; operator; <em>A</em> <strong>&gt;</strong> <em>B</em> is equivalent to <em>A</em>.__gt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-lt">
+<span id="longlessthan"></span><h2>long::__lt__()<a class="headerlink" href="#long-lt" title="Permalink to this headline">¶</a></h2>
+<p>Used to evaluate whether one long integer is less than another.</p>
+<div class="section" id="id24">
+<h3>Syntax<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__lt__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are long integers. Returns true (1) if <em>A</em> is less than <em>B</em> and false (0) if <em>A</em> is greater than or equal to <em>B</em>.</p>
+<p>This function is used under the covers by the &lt; operator; <em>A</em> <strong>&lt;</strong> <em>B</em> is equivalent to <em>A</em>.__lt__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-mul">
+<span id="longmultiply"></span><h2>long::__mul__()<a class="headerlink" href="#long-mul" title="Permalink to this headline">¶</a></h2>
+<p>Used to multiply two long integers together.</p>
+<div class="section" id="id25">
+<h3>Syntax<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__mul__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are long integers.</p>
+<p>This function is used under the covers by the * operator; <em>A</em> <strong>*</strong> <em>B</em> is equivalent to <em>A</em>.__mul__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-neg">
+<span id="longnegate"></span><h2>long::__neg__()<a class="headerlink" href="#long-neg" title="Permalink to this headline">¶</a></h2>
+<p>Used to flip the sign of a long integer.</p>
+<div class="section" id="id26">
+<h3>Syntax<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__neg__()</p>
+<p>where <em>A</em> is a long integer.</p>
+<p>This function is used under the covers by the - operator; <strong>-</strong> <em>A</em> is equivalent to <em>A</em>.__neg__().</p>
+</div>
+</div>
+<div class="section" id="long-sub">
+<span id="longsubtract"></span><h2>long::__sub__()<a class="headerlink" href="#long-sub" title="Permalink to this headline">¶</a></h2>
+<p>Used to subtract one long integer from another.</p>
+<div class="section" id="id27">
+<h3>Syntax<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
+<p>long <em>A</em>.__sub__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are long integers and <em>B</em> is being subtracted from <em>A</em>.</p>
+<p>This function is used under the covers by the - operator; <em>A</em> <strong>-</strong> <em>B</em> is equivalent to <em>A</em>.__div__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="long-tostring">
+<h2>long::toString()<a class="headerlink" href="#long-tostring" title="Permalink to this headline">¶</a></h2>
+<p>Used to cast a long integer to a string.</p>
+<div class="section" id="id28">
+<h3>Syntax<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>int <em>A</em>.toString()</p>
+<p>where <em>A</em> is a long integer.</p>
+<p>Map::__get__() - coming soon
+Map::__set__() - coming soon
+Map::contains() - coming soon
+Map::update() - coming soon
+Object::__eq__() - coming soon
+Object::__nq__() - coming soon</p>
+</div>
+</div>
+<div class="section" id="now">
+<span id="id29"></span><h2>now()<a class="headerlink" href="#now" title="Permalink to this headline">¶</a></h2>
+<p>Returns the current time in UTC milliseconds.</p>
+<div class="section" id="id30">
+<h3>Syntax<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
+<p>void now()</p>
+</div>
+</div>
+<div class="section" id="parseint">
+<span id="id31"></span><h2>parseInt()<a class="headerlink" href="#parseint" title="Permalink to this headline">¶</a></h2>
+<p>Used to represent a string as a base 10 integer. If rounding is needed, the value is rounded according to the default rounding rules of the target language.</p>
+<div class="section" id="id32">
+<h3>Syntax<a class="headerlink" href="#id32" title="Permalink to this headline">¶</a></h3>
+<p>int parseInt(<em>A</em>)</p>
+<p>where <em>A</em> is the string to convert.</p>
+</div>
+</div>
+<div class="section" id="print">
+<span id="id33"></span><h2>print()<a class="headerlink" href="#print" title="Permalink to this headline">¶</a></h2>
+<p>Used to print strings to stdout. Integers and floats can be printed if passed through toString() first.</p>
+<div class="section" id="id34">
+<h3>Syntax<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p>void print(<em>A</em>)</p>
+<p>where <em>A</em> is the string to print.</p>
+</div>
+</div>
+<div class="section" id="sleep">
+<span id="id35"></span><h2>sleep()<a class="headerlink" href="#sleep" title="Permalink to this headline">¶</a></h2>
+<p>Used to pause code execution for a specified period of time.</p>
+<div class="section" id="id36">
+<h3>Syntax<a class="headerlink" href="#id36" title="Permalink to this headline">¶</a></h3>
+<p>void sleep(<em>A</em>)</p>
+<p>where <em>A</em> is the number of seconds to halt execution of code.</p>
+</div>
+</div>
+<div class="section" id="string-add">
+<span id="stringadd"></span><h2>String::__add__()<a class="headerlink" href="#string-add" title="Permalink to this headline">¶</a></h2>
+<p>Used to concatenate strings.</p>
+<div class="section" id="id37">
+<h3>Syntax<a class="headerlink" href="#id37" title="Permalink to this headline">¶</a></h3>
+<p>String <em>A</em>.__add__(<em>B</em>)</p>
+<p>where <em>A</em> and <em>B</em> are both strings.</p>
+<p>This function is used under the covers by the + operator; <em>A</em> <strong>+</strong> <em>B</em> is equivalent to <em>A</em>.__add__(<em>B</em>).</p>
+</div>
+</div>
+<div class="section" id="url-get">
+<span id="urlget"></span><h2>url_get()<a class="headerlink" href="#url-get" title="Permalink to this headline">¶</a></h2>
+<p>TBD</p>
+<p>[[JMK need to sort this out further. Also, should this be renamed to camel case? The _ looks odd to me]]</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Functions</a><ul>
+<li><a class="reference internal" href="#float-add">float::__add__()</a></li>
+<li><a class="reference internal" href="#float-div">float::__div__()</a></li>
+<li><a class="reference internal" href="#float-gt">float::__gt__()</a></li>
+<li><a class="reference internal" href="#float-lt">float::__lt__()</a></li>
+<li><a class="reference internal" href="#float-mul">float::__mul__()</a></li>
+<li><a class="reference internal" href="#float-neg">float::__neg__()</a></li>
+<li><a class="reference internal" href="#float-sub">float::__sub__()</a></li>
+<li><a class="reference internal" href="#float-tostring">float::toString()</a></li>
+<li><a class="reference internal" href="#int-add">int::__add__()</a></li>
+<li><a class="reference internal" href="#int-div">int::__div__()</a></li>
+<li><a class="reference internal" href="#int-gt">int::__gt__()</a></li>
+<li><a class="reference internal" href="#int-lt">int::__lt__()</a></li>
+<li><a class="reference internal" href="#int-mod">int::__mod__()</a></li>
+<li><a class="reference internal" href="#int-mul">int::__mul__()</a></li>
+<li><a class="reference internal" href="#int-neg">int::__neg__()</a></li>
+<li><a class="reference internal" href="#int-sub">int::__sub__()</a></li>
+<li><a class="reference internal" href="#int-tostring">int::toString()</a></li>
+<li><a class="reference internal" href="#list-get">List::__get__()</a></li>
+<li><a class="reference internal" href="#list-set">List::__set__()</a></li>
+<li><a class="reference internal" href="#list-add">List::add()</a></li>
+<li><a class="reference internal" href="#list-size">List::size()</a></li>
+<li><a class="reference internal" href="#long-add">long::__add__()</a></li>
+<li><a class="reference internal" href="#long-div">long::__div__()</a></li>
+<li><a class="reference internal" href="#long-gt">long::__gt__()</a></li>
+<li><a class="reference internal" href="#long-lt">long::__lt__()</a></li>
+<li><a class="reference internal" href="#long-mul">long::__mul__()</a></li>
+<li><a class="reference internal" href="#long-neg">long::__neg__()</a></li>
+<li><a class="reference internal" href="#long-sub">long::__sub__()</a></li>
+<li><a class="reference internal" href="#long-tostring">long::toString()</a></li>
+<li><a class="reference internal" href="#now">now()</a></li>
+<li><a class="reference internal" href="#parseint">parseInt()</a></li>
+<li><a class="reference internal" href="#print">print()</a></li>
+<li><a class="reference internal" href="#sleep">sleep()</a></li>
+<li><a class="reference internal" href="#string-add">String::__add__()</a></li>
+<li><a class="reference internal" href="#url-get">url_get()</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="types.html"
+                        title="previous chapter">Data Types</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="annotations.html"
+                        title="next chapter">Annotations</a></p>
+<div class="sourcelink">
+  <a href="../_sources/language-reference/functions.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="types.html" title="Previous document">Data Types</a>
+        </li>
+        <li>
+          <a href="annotations.html" title="Next document">Annotations</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Quark 0.1 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.1.
+
+  </footer>
+
+  
+  </body>
+</html>
