@@ -101,17 +101,15 @@ Quark does not contain a default keyword; rather default methods are defined by 
 
 [[JMK check this last statement]]
 
-[[JMK defining some stuff below to be in a later version in Sphinx comments]]
-
 .. To be added later
   
   Scoping
   ~~~~~~~
   
-  Constants
-  ~~~~~~~~~
+Constants
+~~~~~~~~~
   
-  Quark does not currently have a mechanism for declaring global constants.
+Quark does not currently have a mechanism for declaring global constants.
 
 
 Naming and Other Conventions
@@ -131,11 +129,14 @@ By convention, Quark expects the following casing rules:
 
 Inheritance
 -----------
-TODO
+
+Coming Soon
 
 
 Overloading
 -----------
+
+Coming Soon
 
 Object Instantiation
 --------------------

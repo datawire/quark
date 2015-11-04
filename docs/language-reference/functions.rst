@@ -484,12 +484,12 @@ int *A*.toString()
 where *A* is a long integer.
 
 
-Map::__get__()
-Map::__set__()
-Map::contains()
-Map::update()
-Object::__eq__()
-Object::__nq__()
+Map::__get__() - coming soon
+Map::__set__() - coming soon
+Map::contains() - coming soon
+Map::update() - coming soon
+Object::__eq__() - coming soon
+Object::__nq__() - coming soon
 
 .. _now:
 
