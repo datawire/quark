@@ -19,7 +19,7 @@ public class test_join extends string_test {
         return this;
     }
     public test_join does(String expected) {
-        (this).check(io.datawire.quark_runtime.join(((this).what), ((this).parts)), expected, (((("'") + ((this).what)) + ("'.join([")) + ((this).strparts)) + ("])"), "'");
+        (this).check(io.datawire.quark.runtime.Builtins.join(((this).what), ((this).parts)), expected, (((("'") + ((this).what)) + ("'.join([")) + ((this).strparts)) + ("])"), "'");
         return this;
     }
 }

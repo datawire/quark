@@ -299,7 +299,7 @@ File(
    Param(Type(Name(List), Type(Name(String))), Name(parts),
    $type=0.List<0.String>),
    Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.join(('), Var(Name(self),
+     Fixed('io.datawire.quark.runtime.Builtins.join(('), Var(Name(self),
      $type=0.String), Fixed('), ('), Var(Name(parts), $type=0.List<0.String>),
      Fixed('))')), NativeCase(py, Fixed('('), Var(Name(self), $type=0.String),
      Fixed(').join('), Var(Name(parts), $type=0.List<0.String>), Fixed(')')),
@@ -316,7 +316,7 @@ File(
     $type=0.String.toJSON), $type=0.JSONObject)),
 
   MethodMacro(Type(Name(JSONObject)), Name(parseJSON), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.JSONObject.parse('), Var(Name(self),
+     Fixed('io.datawire.quark.runtime.JSONObject.parse('), Var(Name(self),
      $type=0.String), Fixed(')')), NativeCase(py, Fixed('_JSONObject.parse('),
      Var(Name(self), $type=0.String), Fixed(')')), NativeCase(js,
      Fixed('_qrt.json_from_string('), Var(Name(self), $type=0.String),
@@ -419,19 +419,19 @@ File(
      Fixed('}'), Fixed(')')))),
 
   MethodMacro(Type(Name(String)), Name(urlencode), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.urlencode('), Var(Name(self),
+     Fixed('io.datawire.quark.runtime.Builtins.urlencode('), Var(Name(self),
      $type=0.Map<0.Map.K,0.Map.V>), Fixed(')')), NativeCase(py,
      Fixed('_urlencode('), Var(Name(self), $type=0.Map<0.Map.K,0.Map.V>),
      Fixed(')')), NativeCase(js, Fixed('_qrt.urlencode('), Var(Name(self),
      $type=0.Map<0.Map.K,0.Map.V>), Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.JSONObject')), NativeCase(py,
+     Fixed('io.datawire.quark.runtime.JSONObject')), NativeCase(py,
      Fixed('_JSONObject')), NativeCase(js, Fixed('_qrt.JSONObject')))),
   Name(JSONObject),
 
   ConstructorMacro(Name(JSONObject), Native(NativeCase(java,
-     Fixed('new io.datawire.quark_runtime.JSONObject()')), NativeCase(py,
+     Fixed('new io.datawire.quark.runtime.JSONObject()')), NativeCase(py,
      Fixed('_JSONObject()')), NativeCase(js, Fixed('new _qrt.JSONObject()')))),
 
   MethodMacro(Type(Name(String)), Name(__to_String), Call(Attr(Var(Name(self),
@@ -532,7 +532,7 @@ File(
  Macro(Type(Name(void)), Name(sleep),
   Param(Type(Name(float)), Name(seconds), $type=0.float),
   Native(NativeCase(java,
-    Fixed('io.datawire.quark_runtime.sleep('), Var(Name(seconds),
+    Fixed('io.datawire.quark.runtime.Builtins.sleep('), Var(Name(seconds),
     $type=0.float), Fixed(')')), NativeCase(py, Fixed('time.sleep('),
     Var(Name(seconds), $type=0.float), Fixed(')')), NativeCase(js,
     Fixed('_qrt.sleep('), Var(Name(seconds), $type=0.float), Fixed(')')))),
@@ -540,7 +540,7 @@ File(
  Macro(Type(Name(String)), Name(url_get),
   Param(Type(Name(String)), Name(url), $type=0.String),
   Native(NativeCase(java,
-    Fixed('io.datawire.quark_runtime.url_get('), Var(Name(url),
+    Fixed('io.datawire.quark.runtime.Builtins.url_get('), Var(Name(url),
     $type=0.String), Fixed(')')), NativeCase(py, Fixed('_url_get('),
     Var(Name(url), $type=0.String), Fixed(')')), NativeCase(js,
     Fixed('_qrt.url_get('), Var(Name(url), $type=0.String), Fixed(')')))),
@@ -554,7 +554,7 @@ File(
     Fixed(')')))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.WSHandler')))), Name(WSHandler),
+     Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
 
   Method(Type(Name(void)), Name(onWSInit),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
@@ -582,13 +582,13 @@ File(
    Block())),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.WebSocket')))), Name(WebSocket),
+     Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
   Method(Type(Name(void)), Name(send),
    Param(Type(Name(String)), Name(message), $type=0.String))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.HTTPHandler')))), Name(HTTPHandler),
+     Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
 
   Method(Type(Name(void)), Name(onHTTPInit),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
@@ -608,12 +608,12 @@ File(
    Block())),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.HTTPRequest')))), Name(HTTPRequest),
+     Fixed('io.datawire.quark.runtime.HTTPRequest')))), Name(HTTPRequest),
 
   ConstructorMacro(Name(HTTPRequest),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Native(NativeCase(java,
-     Fixed('new io.datawire.quark_runtime.HTTPRequest('), Var(Name(url),
+     Fixed('new io.datawire.quark.runtime.HTTPRequest('), Var(Name(url),
      $type=0.String), Fixed(')')), NativeCase(py, Fixed('_HTTPRequest('),
      Var(Name(url), $type=0.String), Fixed(')')), NativeCase(js,
      Fixed('new _qrt.HTTPRequest('), Var(Name(url), $type=0.String),
@@ -630,20 +630,20 @@ File(
    Param(Type(Name(String)), Name(value), $type=0.String))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.HTTPResponse')))), Name(HTTPResponse),
+     Fixed('io.datawire.quark.runtime.HTTPResponse')))), Name(HTTPResponse),
 
   Method(Type(Name(int)), Name(getCode)),
 
   Method(Type(Name(String)), Name(getBody))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.Task')))), Name(Task),
+     Fixed('io.datawire.quark.runtime.Task')))), Name(Task),
 
   Method(Type(Name(void)), Name(onExecute),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark_runtime.Runtime')))), Name(Runtime),
+     Fixed('io.datawire.quark.runtime.Runtime')))), Name(Runtime),
 
   Method(Type(Name(void)), Name(acquire)),
 
