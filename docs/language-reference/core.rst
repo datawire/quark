@@ -15,8 +15,6 @@ Quark is a Turing-complete language designed primarily for facilitating microser
   White Space
   End of Line
 
-[[JMK: white space, comments, end of line may work better as subsections of Language Structure - need to figure that out. Leaving as is for now.]]
-
 Language Structure
 ------------------
 
@@ -70,7 +68,9 @@ Abstractness
 
 Quark does not support explicitly declaring abstract classes or methods using a keyword. Instead, just define method signatures without a corresponding body component. Doing so will automatically make both that method and the class containing it abstract. Trying to instantiate such a class directly will result in an error.
 
-[[JMK test this!]]
+Note: Quark is not currently throwing an error in this case. See `linkIssue54`_ for more information.
+
+.. _linkIssue24: https://github.com/datawire/quark/issues/54
 
 Constructors
 ++++++++++++
@@ -125,8 +125,6 @@ By convention, Quark expects the following casing rules:
 * variable, property, method, and function names are camel case
 * annotation names are lower case
 
-[[JMK I'm sure I'm missing stuff that should be mentioned. Will look at this in more detail later.]]
-
 Inheritance
 -----------
 
@@ -158,8 +156,6 @@ White Space
 In general, Quark requires at least one white space character between language elements. It typically ignores any additional whitespace, allowing for variances in indentation conventions and extra lines within code.
 
 White space may be supplied between operators and the elements they act upon (either to their left or to their right) but it is not required.
-
-[[JMK Are there any additional white space rules? I can't think of any]]
 
 End of Statement
 ----------------
