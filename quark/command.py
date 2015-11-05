@@ -16,7 +16,7 @@
 Quark compiler.
 
 Usage:
-  quark [options] <command> <file> ...
+  quark [options] <command> <file>...
   quark -h | --help
   quark --version
 
@@ -139,7 +139,6 @@ def main(args):
                                                md_file_path.replace(".md", ".html")])
 
         if "package" in commands:
-            print "quark (package): WARNING: Packages are broken."
             if java:
                 call_and_show("package", java_dir, ["mvn", "-q", "package"])
             if python:
