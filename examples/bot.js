@@ -23,6 +23,6 @@ function Handler() {
 util.inherits(Handler, slack.SlackHandler)
 
 // you need to go to https://api.slack.com/web and generate an access token
-var token = "xoxp-3910618990-4153681316-13601165377-914ddc6f19"
+var token = "*replace-me*"
 client = new slack.Client(runtime, token, new Handler());
 client.connect();

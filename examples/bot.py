@@ -23,7 +23,7 @@ class Handler(slack.SlackHandler):
 
 def main():
     # you need to go to https://api.slack.com/web and generate an access token
-    token = "xoxp-3910618990-4153681316-13601165377-914ddc6f19"
+    token = "*replace-me*"
 
     runtime = quark_twisted_runtime.get_twisted_runtime()
     client = slack.Client(runtime, token, Handler())
