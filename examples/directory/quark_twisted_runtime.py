@@ -1,5 +1,7 @@
 # Quark's Twisted Runtime and associated
 
+__version__ = "0.1.0"
+
 from StringIO import StringIO
 
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
