@@ -258,21 +258,21 @@ Generated Code
 
 Strings are translated in generated code as follows:
 
-+------------+---------+--------------------------------------------------------------+
-| Language   | Type    | Allowed Values                                               |
-+============+=========+==============================================================+
-| Java       | String  | Can contain up to 2\ :sup: 31 - 1 characters                 |
-+            +         +                                                              + 
-|            |         | Can contain any character that can be UTF-16 encoded         |
-+------------+---------+--------------------------------------------------------------+
-| Javascript | String  | Can contain an unlimited number of characters                |
-+            +         +                                                              + 
-|            |         | Can contain any character that can be UTF-16 encoded         |
-+------------+---------+--------------------------------------------------------------+
-| Python     | str     | Can contain an unlimited number of characters                |
-+            +         +                                                              +
-|            |         | Can contain any character that can be UTF-8 encoded          |
-+------------+---------+--------------------------------------------------------------+
++------------+---------+-----------------------------------------------------------------+
+| Language   | Type    | Allowed Values                                                  |
++============+=========+=================================================================+
+| Java       | String  | Can contain up to 2\ :sup: `31`\ - 1 characters                 |
++            +         +                                                                 + 
+|            |         | Can contain any character that can be UTF-16 encoded            |
++------------+---------+-----------------------------------------------------------------+
+| Javascript | String  | Can contain an unlimited number of characters                   |
++            +         +                                                                 + 
+|            |         | Can contain any character that can be UTF-16 encoded            |
++------------+---------+-----------------------------------------------------------------+
+| Python     | str     | Can contain an unlimited number of characters                   |
++            +         +                                                                 +
+|            |         | Can contain any character that can be UTF-8 encoded             |
++------------+---------+-----------------------------------------------------------------+
 
 .. _void:
 
