@@ -222,6 +222,7 @@ from setuptools import setup
 
 setup(name="%(name)s",
       version="%(version)s",
+      install_requires=["datawire-quark-core"],
       packages=%(pkg_list)s)
 """
 
@@ -292,7 +293,6 @@ class Python(backend.Backend):
         backend.Backend.__init__(self, "py")
         self.dfnr = PythonDefinitionRenderer()
         self.header = "from quark_runtime import *\n\n"
-        self.files["quark_runtime.py"] = open(os.path.join(os.path.dirname(__file__), "quark_runtime.py")).read()
         self.packages = OrderedDict()  # Collect top-level packages for setup.py et al
 
     def write(self, target):
