@@ -25,7 +25,7 @@ Quark supports request/response and event-driven programming models. It also sup
 
 ###Example
 
-Examples of many of the features Quark supports can be found in the Examples Repository.
+Examples of many of the features Quark supports can be found in the [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples).
 
 ## Multiple Language and Framework Support
 
@@ -97,6 +97,6 @@ Please read the [Quark Installation and Configuration Guide](http://datawire.git
 
 The [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
 
-The [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples) (located in the examples subdirectory of the repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
+The [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples) (located in the examples subdirectory of the quark github repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
 
 The [Quark Issues list](https://github.com/datawire/quark/issues) provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
