@@ -249,8 +249,6 @@ The Not operator syntax is:
 
 where *expression* is the expression being inverted.
 
-[[JMK Should I just say it's not currently supported? Clearly there is no case where ! will work given the above and that ! only operates on true/false]]
-
 .. _NotEquivalentOperator:
 
 Not Equivalent
@@ -262,7 +260,7 @@ Syntax
 
 The Not Equivalent operator syntax is:
 
-* expression1* **!=** *expression2*
+*expression1* **!=** *expression2*
 
 where *expression1* and *expression2* are the expressions being compared.
 
