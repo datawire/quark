@@ -37,7 +37,7 @@ The Slack service includes a real-time API for processing messages (https://api.
 
 ## Installation and Configuration
 
-This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the Quark Installation and Configuration Guide.
+This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the [Quark Installation and Configuration Guide](http://datawire.github.io/quark/install/index.html).
 
 ### Prerequisites
 
@@ -89,14 +89,14 @@ Quark may be used to write libraries or applications. Applications must contain 
 
 Quark code is stored in text files with a .q file extension.
 
-See the Quark Language Reference for more specifics about language structure and language elements.
+See the [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) for more specifics about language structure and language elements.
 
 ## Next Steps
 
-Please read the Quark Installation and Configuration Guide for more detailed information about installation, configuration, compilation, packaging, and documentation generation.
+Please read the [Quark Installation and Configuration Guide](http://datawire.github.io/quark/install/index.html) for more detailed information about installation, configuration, compilation, packaging, and documentation generation.
 
-The Quark Language Reference provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
+The [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
 
-The Quark Examples repository (located in the examples directory) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
+The [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples) (located in the examples subdirectory of the repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
 
-The Quark Issues list provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
+The [Quark Issues list](https://github.com/datawire/quark/issues) provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
