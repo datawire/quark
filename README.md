@@ -65,7 +65,6 @@ To install Quark, do the following:
 2. Run the following command from the top-level quark directory:
 
         python setup.py develop
-        mvn install               # installs java quark runtime
 
 ### Compiling Quark Files
 
