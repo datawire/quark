@@ -311,7 +311,7 @@ class Use(object):
 
     @overload(Type)
     def lookup(self, t):
-        type = self.lookup(t, t.path[0].text)
+        type = self.lookup(t.clazz or t.package or t.root, t.path[0].text)
         if type:
             for n in t.path[1:]:
                 if n.text in type.env:

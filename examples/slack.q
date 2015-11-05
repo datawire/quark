@@ -3,6 +3,240 @@
 @doc("This includes both regular http and realtime web sockets functionality.")
 package slack {
 
+    @doc("This package contains all slack events.")
+    package event {
+        @doc("Base class for all slack events.")
+        class SlackEvent {
+
+            @doc("The event type.")
+            String type;
+
+            @doc("The user associated with the event.")
+            User user = null;
+
+            @doc("The channel associated with the event.")
+            Channel channel = null;
+
+            @doc("The timestamp associated with the event.")
+            String timestamp;
+
+            void load(Client client, JSONObject obj) {
+                self.type = obj["type"];
+                String uid = obj["user"];
+                if (uid != null) {
+                    self.user = new User(client, uid);
+                }
+                String chid = obj["channel"];
+                if (chid != null) {
+                    self.channel = new Channel(client, chid);
+                }
+                self.timestamp = obj["ts"];
+            }
+
+            void dispatch(SlackHandler handler) {
+                handler.onSlackEvent(self);
+            }
+        }
+
+        @doc("The server has indicated an error has occurred.")
+        class SlackError extends SlackEvent {
+
+            @doc("The numeric code associated with the error condition.")
+            int code;
+            @doc("A text description of the error condition.")
+            String text;
+
+            void load(Client client, JSONObject obj) {
+                super.load(client, obj);
+                self.code = obj["code"];
+                self.text = obj["text"];
+            }
+
+            void dispatch(SlackHandler handler) {
+                handler.onSlackError(self);
+            }
+        }
+
+        @doc("The client successfully connected to the server.")
+        class Hello extends SlackEvent {
+            void dispatch(SlackHandler handler) {
+                handler.onHello(self);
+            }
+        }
+
+        @doc("A message was sent to a channel.")
+        class Message extends SlackEvent {
+            @doc("The subtype field indicates the type of message.")
+            String subtype;
+            bool hidden = false;
+            String text;
+            Edited edited;
+
+            void load(Client client, JSONObject obj) {
+                super.load(client, obj);
+                self.subtype = obj["subtype"];
+                self.hidden = obj["hidden"];
+                self.text = obj["text"];
+                JSONObject edited = obj["edited"];
+                if (edited.isDefined()) {
+                    self.edited = new Edited();
+                    self.edited.user = new User(client, edited["user"]);
+                    self.edited.timestamp = edited["ts"];
+                }
+            }
+
+            void dispatch(SlackHandler handler) {
+                handler.onMessage(self);
+            }
+        }
+
+        @doc("Metadata about an edit to a message.")
+        class Edited {
+            User user;
+            String timestamp;
+        }
+
+        @doc("A channel member is typing a message.")
+        class UserTyping extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onUserTyping(self);
+            }
+        }
+
+        @doc("Your channel read marker was updated.")
+        class ChannelMarked extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelMarked(self);
+            }
+        }
+
+        @doc("A team channel was created.")
+        class ChannelCreated extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelCreated(self);
+            }
+        }
+
+        @doc("You joined a channel.")
+        class ChannelJoined extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelJoined(self);
+            }
+        }
+
+        @doc("You left a channel.")
+        class ChannelLeft extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelLeft(self);
+            }
+        }
+
+        @doc("A team channel was deleted.")
+        class ChannelDeleted extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelDeleted(self);
+            }
+        }
+
+        @doc("A team channel was renamed.")
+        class ChannelRename extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelRename(self);
+            }
+        }
+
+        @doc("A team channel was archived.")
+        class ChannelArchive extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelArchive(self);
+            }
+        }
+
+        @doc("A team channel was unarchived.")
+        class ChannelUnarchive extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelUnarchive(self);
+            }
+        }
+
+        @doc("Bulk updates were made to a channel's history.")
+        class ChannelHistoryChanged extends SlackEvent {
+
+            void dispatch(SlackHandler handler) {
+                handler.onChannelHistoryChanged(self);
+            }
+        }
+    }
+
+    @doc("Event handler for slack events. All unhandled events")
+    @doc("are delegated to onSlackEvent by default.")
+    interface SlackHandler {
+
+        void onSlackEvent(event.SlackEvent event) {}
+
+        void onHello(event.Hello hello) {
+            self.onSlackEvent(hello);
+        }
+
+        void onSlackError(event.SlackError error) {
+            self.onSlackEvent(error);
+        }
+
+        void onMessage(event.Message message) {
+            self.onSlackEvent(message);
+        }
+
+        void onUserTyping(event.UserTyping typing) {
+            self.onSlackEvent(typing);
+        }
+
+        void onChannelMarked(event.ChannelMarked marked) {
+            self.onSlackEvent(marked);
+        }
+
+        void onChannelCreated(event.ChannelCreated created) {
+            self.onSlackEvent(created);
+        }
+
+        void onChannelJoined(event.ChannelJoined joined) {
+            self.onSlackEvent(joined);
+        }
+
+        void onChannelLeft(event.ChannelLeft left) {
+            self.onSlackEvent(left);
+        }
+
+        void onChannelDeleted(event.ChannelDeleted deleted) {
+            self.onSlackEvent(deleted);
+        }
+
+        void onChannelRename(event.ChannelRename renamed) {
+            self.onSlackEvent(renamed);
+        }
+
+        void onChannelArchive(event.ChannelArchive archived) {
+            self.onSlackEvent(archived);
+        }
+
+        void onChannelUnarchive(event.ChannelUnarchive unarchived) {
+            self.onSlackEvent(unarchived);
+        }
+
+        void onChannelHistoryChanged(event.ChannelHistoryChanged historyChanged) {
+            self.onSlackEvent(historyChanged);
+        }
+
+    }
+
     @doc("A reference to a user.")
     class User {
         Client client;
@@ -37,237 +271,7 @@ package slack {
         }
     }
 
-    @doc("Base class for all slack events.")
-    class SlackEvent {
-
-        @doc("The event type.")
-        String type;
-
-        @doc("The user associated with the event.")
-        User user = null;
-
-        @doc("The channel associated with the event.")
-        Channel channel = null;
-
-        @doc("The timestamp associated with the event.")
-        String timestamp;
-
-        void load(Client client, JSONObject obj) {
-            self.type = obj["type"];
-            String uid = obj["user"];
-            if (uid != null) {
-                self.user = new User(client, uid);
-            }
-            String chid = obj["channel"];
-            if (chid != null) {
-                self.channel = new Channel(client, chid);
-            }
-            self.timestamp = obj["ts"];
-        }
-
-        void dispatch(SlackHandler handler) {
-            handler.onSlackEvent(self);
-        }
-    }
-
-    @doc("The server has indicated an error has occurred.")
-    class SlackError extends SlackEvent {
-
-        @doc("The numeric code associated with the error condition.")
-        int code;
-        @doc("A text description of the error condition.")
-        String text;
-
-        void load(Client client, JSONObject obj) {
-            super.load(client, obj);
-            self.code = obj["code"];
-            self.text = obj["text"];
-        }
-
-        void dispatch(SlackHandler handler) {
-            handler.onSlackError(self);
-        }
-    }
-
-    @doc("The client successfully connected to the server.")
-    class Hello extends SlackEvent {
-        void dispatch(SlackHandler handler) {
-            handler.onHello(self);
-        }
-    }
-
-    @doc("A message was sent to a channel.")
-    class Message extends SlackEvent {
-        @doc("The subtype field indicates the type of message.")
-        String subtype;
-        bool hidden = false;
-        String text;
-        Edited edited;
-
-        void load(Client client, JSONObject obj) {
-            super.load(client, obj);
-            self.subtype = obj["subtype"];
-            self.hidden = obj["hidden"];
-            self.text = obj["text"];
-            JSONObject edited = obj["edited"];
-            if (edited.isDefined()) {
-                self.edited = new Edited();
-                self.edited.user = new User(client, edited["user"]);
-                self.edited.timestamp = edited["ts"];
-            }
-        }
-
-        void dispatch(SlackHandler handler) {
-            handler.onMessage(self);
-        }
-    }
-
-    @doc("Metadata about an edit to a message.")
-    class Edited {
-        User user;
-        String timestamp;
-    }
-
-    @doc("A channel member is typing a message.")
-    class UserTyping extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onUserTyping(self);
-        }
-    }
-
-    @doc("Your channel read marker was updated.")
-    class ChannelMarked extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelMarked(self);
-        }
-    }
-
-    @doc("A team channel was created.")
-    class ChannelCreated extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelCreated(self);
-        }
-    }
-
-    @doc("You joined a channel.")
-    class ChannelJoined extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelJoined(self);
-        }
-    }
-
-    @doc("You left a channel.")
-    class ChannelLeft extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelLeft(self);
-        }
-    }
-
-    @doc("A team channel was deleted.")
-    class ChannelDeleted extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelDeleted(self);
-        }
-    }
-
-    @doc("A team channel was renamed.")
-    class ChannelRename extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelRename(self);
-        }
-    }
-
-    @doc("A team channel was archived.")
-    class ChannelArchive extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelArchive(self);
-        }
-    }
-
-    @doc("A team channel was unarchived.")
-    class ChannelUnarchive extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelUnarchive(self);
-        }
-    }
-
-    @doc("Bulk updates were made to a channel's history.")
-    class ChannelHistoryChanged extends SlackEvent {
-
-        void dispatch(SlackHandler handler) {
-            handler.onChannelHistoryChanged(self);
-        }
-    }
-
-    @doc("Event handler for slack events. All unhandled events")
-    @doc("are delegated to onSlackEvent by default.")
-    interface SlackHandler {
-
-        void onSlackEvent(SlackEvent event) {}
-
-        void onHello(Hello hello) {
-            self.onSlackEvent(hello);
-        }
-
-        void onSlackError(SlackError error) {
-            self.onSlackEvent(error);
-        }
-
-        void onMessage(Message message) {
-            self.onSlackEvent(message);
-        }
-
-        void onUserTyping(UserTyping typing) {
-            self.onSlackEvent(typing);
-        }
-
-        void onChannelMarked(ChannelMarked marked) {
-            self.onSlackEvent(marked);
-        }
-
-        void onChannelCreated(ChannelCreated created) {
-            self.onSlackEvent(created);
-        }
-
-        void onChannelJoined(ChannelJoined joined) {
-            self.onSlackEvent(joined);
-        }
-
-        void onChannelLeft(ChannelLeft left) {
-            self.onSlackEvent(left);
-        }
-
-        void onChannelDeleted(ChannelDeleted deleted) {
-            self.onSlackEvent(deleted);
-        }
-
-        void onChannelRename(ChannelRename renamed) {
-            self.onSlackEvent(renamed);
-        }
-
-        void onChannelArchive(ChannelArchive archived) {
-            self.onSlackEvent(archived);
-        }
-
-        void onChannelUnarchive(ChannelUnarchive unarchived) {
-            self.onSlackEvent(unarchived);
-        }
-
-        void onChannelHistoryChanged(ChannelHistoryChanged historyChanged) {
-            self.onSlackEvent(historyChanged);
-        }
-
-    }
-
+    @doc("Represents a persistent connection to the slack service.")
     class Client extends WSHandler, HTTPHandler {
 
         Runtime runtime;
@@ -282,6 +286,7 @@ package slack {
             self.handler = handler;
         }
 
+        @doc("Connect the client to the slack service.")
         void connect() {
             self.request("rtm.start", new Map<String,Object>(), self);
         }
@@ -316,36 +321,36 @@ package slack {
             print("socket error");
         }
 
-        SlackEvent construct(String type) {
-            if (type == "error") { return new SlackError(); }
-            if (type == "hello") { return new Hello(); }
-            if (type == "message") { return new Message(); }
-            if (type == "user_typing") { return new UserTyping(); }
-            if (type == "channel_marked") { return new ChannelMarked(); }
-            if (type == "channel_created") { return new ChannelCreated(); }
-            if (type == "channel_joined") { return new ChannelJoined(); }
-            if (type == "channel_left") { return new ChannelLeft(); }
-            if (type == "channel_deleted") { return new ChannelDeleted(); }
-            if (type == "channel_rename") { return new ChannelRename(); }
-            if (type == "channel_archive") { return new ChannelArchive(); }
-            if (type == "channel_unarchive") { return new ChannelUnarchive(); }
-            if (type == "channel_history_changed") { return new ChannelHistoryChanged(); }
-            return new SlackEvent();
+        event.SlackEvent construct(String type) {
+            if (type == "error") { return new event.SlackError(); }
+            if (type == "hello") { return new event.Hello(); }
+            if (type == "message") { return new event.Message(); }
+            if (type == "user_typing") { return new event.UserTyping(); }
+            if (type == "channel_marked") { return new event.ChannelMarked(); }
+            if (type == "channel_created") { return new event.ChannelCreated(); }
+            if (type == "channel_joined") { return new event.ChannelJoined(); }
+            if (type == "channel_left") { return new event.ChannelLeft(); }
+            if (type == "channel_deleted") { return new event.ChannelDeleted(); }
+            if (type == "channel_rename") { return new event.ChannelRename(); }
+            if (type == "channel_archive") { return new event.ChannelArchive(); }
+            if (type == "channel_unarchive") { return new event.ChannelUnarchive(); }
+            if (type == "channel_history_changed") { return new event.ChannelHistoryChanged(); }
+            return new event.SlackEvent();
         }
 
         void onWSMessage(WebSocket socket, String message) {
             JSONObject obj = message.parseJSON();
             String type = obj["type"].getString();
-            SlackEvent event = self.construct(type);
+            event.SlackEvent event = self.construct(type);
             event.load(self, obj);
             event.dispatch(self.handler);
         }
 
         void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
             int code = response.getCode();
-            SlackError error = null;
+            event.SlackError error = null;
             if (code != 200) {
-                error = new SlackError();
+                error = new event.SlackError();
                 error.code = code;
                 error.dispatch(self.handler);
             } else {
@@ -354,7 +359,7 @@ package slack {
                     // parse login data here
                     self.ws_connect(login_data["url"]);
                 } else {
-                    error = new SlackError();
+                    error = new event.SlackError();
                     error.text = login_data["error"];
                     error.dispatch(self.handler);
                 }

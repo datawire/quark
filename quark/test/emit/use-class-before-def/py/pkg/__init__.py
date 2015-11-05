@@ -1,5 +1,7 @@
 from quark_runtime import *
 
+import pkg
+
 class Bar(object):
     def _init(self): pass
     def __init__(self): self._init()

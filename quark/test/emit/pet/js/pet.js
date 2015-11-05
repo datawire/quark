@@ -3,6 +3,7 @@ var pets = require('./pets');
 exports.pets = pets;
 
 
+
 function main() {
     var evil = new pets.Cat();
     var good = new pets.Dog();

@@ -1,5 +1,7 @@
 from quark_runtime import *
 
+import pets
+
 class Pet(object):
     def _init(self): pass
     def __init__(self): self._init()

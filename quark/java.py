@@ -88,7 +88,7 @@ class Java(backend.Backend):
     def visit_Class(self, c):
         pkg = self.dfnr.namer.package(c)
         if pkg:
-            self.files["%s/%s.java" % (pkg, c.name.text)] = c.match(self.dfnr)
+            self.files["%s/%s.java" % (pkg.replace(".", "/"), c.name.text)] = c.match(self.dfnr)
         else:
             self.files["%s.java" % c.name.text] = c.match(self.dfnr)
 
@@ -505,6 +505,21 @@ class ExprRenderer(object):
         else:
             return self.type(cls, expr)
 
+    def qualify(self, cpkg, epkg):
+        if self.lang == "java":
+            if cpkg and cpkg != epkg:
+                return cpkg
+            else:
+                return None
+        else:
+            if cpkg is None: return None
+            if epkg is None:
+                return cpkg
+            elif cpkg.startswith(epkg):
+                return cpkg[len(epkg)+1:]
+            else:
+                return cpkg
+
     @overload(Class)
     def type(self, cls, expr):
         mapping = None
@@ -516,8 +531,9 @@ class ExprRenderer(object):
             result = cls.name.match(self.namer)
             cpkg = self.namer.package(cls)
             epkg = self.namer.package(expr)
-            if cpkg and (epkg is None or not epkg.startswith(cpkg)):
-                return "%s.%s" % (cpkg, result)
+            pfx = self.qualify(cpkg, epkg)
+            if pfx:
+                return "%s.%s" % (pfx, result)
             else:
                 return result
         else:

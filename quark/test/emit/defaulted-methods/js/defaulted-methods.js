@@ -3,6 +3,7 @@ var pkg = require('./pkg');
 exports.pkg = pkg;
 
 
+
 function main() {
     var t1 = new pkg.T1();
     (t1).foo();

@@ -1,4 +1,6 @@
 var _qrt = require("quark_runtime.js");
+var test1 = require('../test1');
+
 
 // CLASS Test
 

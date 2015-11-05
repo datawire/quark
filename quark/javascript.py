@@ -47,11 +47,35 @@ class JavaScript(backend.Backend):
             open(path, "wb").write(content)
             print "quark (compiler): wrote", path
 
-    def imports(self, packages):
-        result = "\n".join(["var %s = require('./%s');\nexports.%s = %s;" % (pkg, pkg, pkg, pkg)
-                            for pkg in packages.keys()])
+    def imports(self, packages, origin=None):
+        if origin:
+            origin_name = self.dfnr.namer.package(origin)
+        else:
+            origin_name = ""
+
+        result = ""
+
+        for pkg in packages.keys():
+            path = pkg.split(".")
+            if origin and path[0] in origin.env and isinstance(origin.env[path[0]], Package):
+                subpackage = True
+            elif origin:
+                subpackage = False
+            else:
+                subpackage = True
+
+            if subpackage:
+                prefix = "./"
+            else:
+                prefix = "../"*len(origin_name.split("."))
+
+            result += "var %s = require('%s%s');\n" % (path[0], prefix, path[0])
+            if subpackage:
+                result += "exports.%s = %s;\n" % (pkg, pkg)
+
         if result:
             result += "\n"
+
         return result
 
     def visit_Package(self, pkg):
@@ -69,9 +93,9 @@ class JavaScript(backend.Backend):
             content += "\n\nmain();"
         content = content.rstrip() + "\n"
         if fname in self.files:
-            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
+            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports, pkg) + content
         else:
-            self.files[fname] = self.header + self.imports(pkg.imports) + content
+            self.files[fname] = self.header + self.imports(pkg.imports, pkg) + content
 
     def visit_File(self, file):
         file.imports = OrderedDict()
@@ -316,9 +340,12 @@ class JSExprRenderer(java.ExprRenderer):
 
     @overload(Type)
     def type(self, t):
-        if len(t.path) > 1:
-            root = t.path[0].match(self.namer)
-            t.file.imports[root] = True
+        pkg = self.namer.package(t.resolved.type)
+        if pkg:
+            if t.package:
+                t.package.imports[pkg] = True
+            else:
+                t.file.imports[pkg] = True
         return self.type(t.resolved, t)
 
 class JSNamer(java.SubstitutionNamer):

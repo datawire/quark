@@ -1,4 +1,6 @@
 var _qrt = require("quark_runtime.js");
+var pets = require('../pets');
+
 
 // CLASS Pet
 function Pet() {

@@ -211,9 +211,12 @@ class PythonExprRenderer(ExprRenderer):
 
     @overload(Type)
     def type(self, t):
-        if len(t.path) > 1:
-            root = t.path[0].match(self.namer)
-            t.file.imports[root] = True
+        pkg = self.namer.package(t.resolved.type)
+        if pkg:
+            if t.package:
+                t.package.imports[pkg] = True
+            else:
+                t.file.imports[pkg] = True
         return self.type(t.resolved, t)
 
 setup_py = """# Setup file for package %(name)s

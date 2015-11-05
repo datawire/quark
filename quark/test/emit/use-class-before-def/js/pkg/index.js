@@ -1,4 +1,6 @@
 var _qrt = require("quark_runtime.js");
+var pkg = require('../pkg');
+
 
 // CLASS Bar
 function Bar() {

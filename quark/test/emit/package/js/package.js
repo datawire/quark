@@ -1,6 +1,9 @@
 var _qrt = require("quark_runtime.js");
 var test = require('./test');
 exports.test = test;
+var test = require('./test');
+exports.test.test = test.test;
+
 
 
 function main() {

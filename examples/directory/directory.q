@@ -1,5 +1,7 @@
+@version("0.1.0")
 package directory {
 
+    @doc("A directory entry maps a named service to a set of physical endpoints.")
     class Entry {
         String service;
         List<String> endpoints;
@@ -108,6 +110,7 @@ package directory {
 
         }
 
+        @doc("Lookup a directory entry by name.")
         Entry lookup(String name) {
             Entry result = null;
             self.runtime.acquire();

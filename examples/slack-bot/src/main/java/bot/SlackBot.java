@@ -7,22 +7,23 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
-import slack.ChannelArchive;
-import slack.ChannelCreated;
-import slack.ChannelDeleted;
-import slack.ChannelHistoryChanged;
-import slack.ChannelJoined;
-import slack.ChannelLeft;
-import slack.ChannelMarked;
-import slack.ChannelRename;
-import slack.ChannelUnarchive;
 import slack.Client;
-import slack.Hello;
-import slack.Message;
-import slack.SlackError;
-import slack.SlackEvent;
 import slack.SlackHandler;
-import slack.UserTyping;
+
+import slack.event.ChannelArchive;
+import slack.event.ChannelCreated;
+import slack.event.ChannelDeleted;
+import slack.event.ChannelHistoryChanged;
+import slack.event.ChannelJoined;
+import slack.event.ChannelLeft;
+import slack.event.ChannelMarked;
+import slack.event.ChannelRename;
+import slack.event.ChannelUnarchive;
+import slack.event.Hello;
+import slack.event.Message;
+import slack.event.SlackError;
+import slack.event.SlackEvent;
+import slack.event.UserTyping;
 
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
