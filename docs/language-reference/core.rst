@@ -161,10 +161,10 @@ White space may be supplied between operators and the elements they act upon (ei
 
 [[JMK Are there any additional white space rules? I can't think of any]]
 
-End of Line
------------
+End of Statement
+----------------
 
-Each line of Quark code must end with a semi-colon (;). The only exceptions to this are:
+Executable statements in Quark must end with a semi-colon (;). Using a modern code presentation style, this typically means that each line of Quark code ends with a semi-colon excepting the following:
 
 * Keywords followed by an opening curly brace ({)
 * The corresponding closing curly brace (})
