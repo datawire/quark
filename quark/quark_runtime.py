@@ -3,6 +3,8 @@
 # This brings in the stuff mentioned in __all__ below.
 # The wrong way to do this, but minimizes the code change.
 
+__version__ = "0.1.0"
+
 import os    # unused?
 import sys
 import time  # used by the builtin now() macro
