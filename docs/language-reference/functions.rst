@@ -51,10 +51,6 @@ Quark defines the following functions:
   url_get()
   
   
-[[JMK Some of these may be pulled into a separate library - but we'll need to document that library if that happens so we can just pull out those entries]]
-
-[[JMK I know we agreed to list by type first then put the supported functions underneath, but I'm wondering if it would make more sense to list by function and then indicate which types support it/any variations]]
-  
 .. _floatAdd:
 
 float::__add__()
@@ -69,8 +65,6 @@ float *A*.__add__(*B*)
 where *A* and *B* are floating point values
 
 This function is used under the covers by the + operator; *A* **+** *B* is equivalent to *A*.__add__(*B*).
-
-[[JMK Also, we should clarify what we want to call a function vs a method - I find myself stumbling over this a bit]]
   
 .. _floatDivide:
 

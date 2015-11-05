@@ -20,9 +20,7 @@ Language Structure
 
 Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, method and operator overloading, and property and method overriding capabilities.
 
-[[JMK do we want to use the term field or property for the names of data containers inside a class?]]
-
-[[JMK we did fix the issues with overriding in the recent changes, right? double check this.]]
+[[JMK Method overloading does not appear to be working right now and I can't figure out how to do operator overloading; need to sort it out]]
 
 Quark may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.
 
@@ -70,7 +68,7 @@ Quark does not support explicitly declaring abstract classes or methods using a 
 
 Note: Quark is not currently throwing an error in this case. See `linkIssue54`_ for more information.
 
-.. _linkIssue24: https://github.com/datawire/quark/issues/54
+.. _linkIssue54: https://github.com/datawire/quark/issues/54
 
 Constructors
 ++++++++++++
@@ -95,11 +93,11 @@ Interfaces define a group of default methods and method signatures that can be u
 
 Classes that use an interface must provide a body definition for each method signature (without changing the signature) or the class will automatically include the method signature and become abstract.
 
-[[JMK check this last statement]]
+[[JMK check this last statement ETA issue 55 preventing testing]]
 
 Quark does not contain a default keyword; rather default methods are defined by providing a functional method body inside the interface instead of just a method signature. Classes that use an interface may use the default method as is or redefine it (without changing the signature). If a class using the interface declares the method signature of a default method a without redefining the body contents, the method and class becomes abstract.
 
-[[JMK check this last statement]]
+[[JMK check this last statement ETA issue 55 preventing testing]]
 
 .. To be added later
   
@@ -128,13 +126,16 @@ By convention, Quark expects the following casing rules:
 Inheritance
 -----------
 
-Coming Soon
+Quark supports single inheritance of classes using the :ref:`extends keyword <extendsKeyword>`. Multiple inheritance is not supported.
 
+Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass must be referenced as super.propertyName within definitions in the subclass.
+
+Methods are inherited and may be overridden in the subclass. The superclass constructor must be used in subclasses if any parameters are defined. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.
 
 Overloading
 -----------
 
-Coming Soon
+[JMK as far as I can tell we aren't allowing overloading right now. I get errors when I try it]]
 
 Object Instantiation
 --------------------

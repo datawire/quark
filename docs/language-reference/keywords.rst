@@ -242,9 +242,7 @@ where *definition* is the content of the package and *packageName* is the name o
 
 primitive
 ~~~~~~~~~
-The primitive keyword is used to define basic data types in Quark.
-
-[JMK Can users define new primitives and if so will they work/what can they do with them/how are they mapped to the languages - should I just say this is a reserved keyword?]]
+The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.
 
 .. _returnKeyword:
 
