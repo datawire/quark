@@ -1,5 +1,3 @@
-**Note**: This is the master branch, where fresh development occurs.
-
 # Quark
 
 Quark lets you define and implement rich (micro)service APIs that work
