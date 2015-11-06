@@ -14,52 +14,42 @@ Avoid running multiple bots simultaneously. The Python bot censors itself, but t
 
 Log into Slack, then grab an API token from https://api.slack.com/web#authentication
 
+Store that token in a file
+
+    echo 'your API token here' > slack-bot/.slack.token
+
 
 ### Python
 
-Edit `bot.py` to include your API token.
-
 Compile the quark interface into a package. Install that package.
-```
-quark --python package slack.q
-pip install slack/py/dist/slack-0.1.0-py2-none-any.whl
-```
+
+    quark --python package slack.q
+    pip install slack/py/dist/slack-0.1.0-py2-none-any.whl
 
 Run the bot
-```
-python bot.py
-```
+
+    cd slack-bot && python bot.py
 
 
 ### JavaScript
 
-Edit `bot.js` to include your API token.
-
 Compile the quark interface into a package. Install that package.
-```
-quark --javascript package slack.q
-npm install slack/js/slack.tgz
-```
+
+    quark --javascript package slack.q
+    npm install slack/js/slack.tgz
 
 Run the bot
-```
-node bot.js
-```
+
+    cd slack-bot && node bot.js
 
 
 ### Java
 
-Store the token in a file
-```
-echo 'your API token here' > slack-bot/.slack.token
-```
-
 Compile the quark interface. Install the result using Maven.
-```
-quark --java compile slack.q && ( cd slack/java && mvn install; )
-```
+
+    quark --java compile slack.q && ( cd slack/java && mvn install; )
+
 
 Build and run the bot
-```
-cd slack-bot && mvn compile && mvn exec:java -Dexec.mainClass="bot.SlackBot"
-```
+
+    cd slack-bot && mvn compile && mvn exec:java -Dexec.mainClass="bot.SlackBot"
