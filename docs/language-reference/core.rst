@@ -59,6 +59,11 @@ where *returnType* is the type of the return value (void if no value is returned
 
 Methods can directly access any properties defined within the same class as well as methods defined in other classes using dot syntax references to those methods. Quark does not support static or class methods; all methods are invoked on a specific object.
 
+self
+++++
+
+Quark uses self to reference the current object inside method definitions. In particular, the value of a property of the current object is referenced as self.propertyName.
+
 Abstractness
 ++++++++++++
 
@@ -126,9 +131,7 @@ Inheritance
 
 Quark supports single inheritance of classes using the :ref:`extends keyword <extendsKeyword>`. Multiple inheritance is not supported.
 
-Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass must be referenced as super.propertyName within definitions in the subclass.
-
-[[JMK This does not appear to be working right now - unclear if it is broken or user error]]
+Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass may be referenced directly using self.propertyName within methods of the subclass.
 
 Methods are inherited and may be overridden in the subclass. The superclass constructor is called automatically for all subclasses. A subclass may define its own constructor with fewer input parameters than its superclass so long as default values are provided for all of the other parameters in a super() call at the top of the constructor. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.
 
