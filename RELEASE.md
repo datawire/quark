@@ -1,13 +1,5 @@
 # Releasing Quark
 
-## Branching for a release
-
-1. Release branches should be named *major*.*minor*.x (with a literal "x" as the third component), e.g., `0.1.x`. This convention avoids a name conflict with tag names.
-2. Edit the branch's copy of README.md. The master branch version has a warning at the top pointing to the latest release branch; the release branch's version should not have this warning.
-3. Make sure all the appropriate version numbers are up-to-date. Refer to the section below.
-4. At this point, version-specific development, including documentation for the upcoming release, should occur on this release branch. Other work should proceed on the master branch.
-
-
 ## Before releasing...
 
 Make sure the goals of the release are met. As an example, consider the goals for release 0.1.0.
@@ -29,12 +21,24 @@ Prerequisites for every release:
 - Documentation is in sync with code (correct but not necessarily complete)
 
 
+## Branching for a release
+
+The goal is to have a stable set of features that are the target for what will be released, making the release easier to test and document. Create the branch when the right set of features is ready.
+
+1. Release branches should be named *major*.*minor*.x (with a literal "x" as the third component), e.g., `0.1.x`. This convention avoids a name conflict with tag names.
+2. Edit the branch's copy of README.md. The master branch version has a warning at the top pointing to the latest release branch; the release branch's version should not have this warning.
+3. Make sure all the appropriate version numbers are up-to-date. Refer to the section below.
+4. At this point, version-specific development, including documentation for the upcoming release, should occur on this release branch. Other work should proceed on the master branch.
+
+
 ## Releasing
 
 1. Create a release tag named *major*.*minor*.*revision*, e.g., `0.1.0`.
 2. **(future)** Build, test, and push a release artifact, i.e. push to PyPI, npmjs.org, Maven, etc.
 3. **(future)** Update the website
 4. Announce the release
+
+The goal of the tag is to record exactly what source was used to build the release artifact.
 
 
 ## Post-release
