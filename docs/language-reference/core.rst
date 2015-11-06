@@ -18,9 +18,7 @@ Quark is a Turing-complete language designed primarily for facilitating microser
 Language Structure
 ------------------
 
-Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, method and operator overloading, and property and method overriding capabilities.
-
-[[JMK Method overloading does not appear to be working right now and I can't figure out how to do operator overloading; need to sort it out]]
+Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.
 
 Quark may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.
 
@@ -130,12 +128,14 @@ Quark supports single inheritance of classes using the :ref:`extends keyword <ex
 
 Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass must be referenced as super.propertyName within definitions in the subclass.
 
-Methods are inherited and may be overridden in the subclass. The superclass constructor must be used in subclasses if any parameters are defined. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.
+[[JMK This does not appear to be working right now - unclear if it is broken or user error]]
+
+Methods are inherited and may be overridden in the subclass. The superclass constructor is called automatically for all subclasses. A subclass may define its own constructor with fewer input parameters than its superclass so long as default values are provided for all of the other parameters in a super() call at the top of the constructor. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.
 
 Overloading
 -----------
 
-[JMK as far as I can tell we aren't allowing overloading right now. I get errors when I try it]]
+Quark does not currently support method overloading. Quark supports operator overloading by defining classes that provide alternate code for the functions underlying the operator execution. When the related operators are used on objects of that type, this code is executed.
 
 Object Instantiation
 --------------------
