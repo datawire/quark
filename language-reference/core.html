@@ -68,12 +68,9 @@
 <ul class="simple">
 </ul>
 </div>
-<p>[[JMK: white space, comments, end of line may work better as subsections of Language Structure - need to figure that out. Leaving as is for now.]]</p>
 <div class="section" id="language-structure">
 <h2>Language Structure<a class="headerlink" href="#language-structure" title="Permalink to this headline">¶</a></h2>
-<p>Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, method and operator overloading, and property and method overriding capabilities.</p>
-<p>[[JMK do we want to use the term field or property for the names of data containers inside a class?]]</p>
-<p>[[JMK we did fix the issues with overriding in the recent changes, right? double check this.]]</p>
+<p>Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.</p>
 <p>Quark may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.</p>
 <div class="section" id="files">
 <h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
@@ -103,10 +100,14 @@
 <p>where <em>returnType</em> is the type of the return value (void if no value is returned), <em>methodName</em> is the name of the method, <em>parameters</em> is a comma-separated list of parameter type and parameter name pairs, and <em>codeToExecute</em> is the code executed by the method.</p>
 <p>Methods can directly access any properties defined within the same class as well as methods defined in other classes using dot syntax references to those methods. Quark does not support static or class methods; all methods are invoked on a specific object.</p>
 </div>
+<div class="section" id="self">
+<h4>self<a class="headerlink" href="#self" title="Permalink to this headline">¶</a></h4>
+<p>Quark uses self to reference the current object inside method definitions. In particular, the value of a property of the current object is referenced as self.propertyName.</p>
+</div>
 <div class="section" id="abstractness">
 <h4>Abstractness<a class="headerlink" href="#abstractness" title="Permalink to this headline">¶</a></h4>
 <p>Quark does not support explicitly declaring abstract classes or methods using a keyword. Instead, just define method signatures without a corresponding body component. Doing so will automatically make both that method and the class containing it abstract. Trying to instantiate such a class directly will result in an error.</p>
-<p>[[JMK test this!]]</p>
+<p>Note: Quark is not currently throwing an error in this case. See <a class="reference external" href="https://github.com/datawire/quark/issues/54">linkIssue54</a> for more information.</p>
 </div>
 <div class="section" id="constructors">
 <h4>Constructors<a class="headerlink" href="#constructors" title="Permalink to this headline">¶</a></h4>
@@ -127,9 +128,9 @@
 <h3>Interfaces<a class="headerlink" href="#interfaces" title="Permalink to this headline">¶</a></h3>
 <p>Interfaces define a group of default methods and method signatures that can be used and defined in other classes. Interfaces cannot contain properties and may not be directly instantiated in any way. They are essentially template code ensuring that a library or application implements a common feature somewhat consistently throughout and making maintenance of common code easier.</p>
 <p>Classes that use an interface must provide a body definition for each method signature (without changing the signature) or the class will automatically include the method signature and become abstract.</p>
-<p>[[JMK check this last statement]]</p>
+<p>[[JMK check this last statement ETA issue 55 preventing testing]]</p>
 <p>Quark does not contain a default keyword; rather default methods are defined by providing a functional method body inside the interface instead of just a method signature. Classes that use an interface may use the default method as is or redefine it (without changing the signature). If a class using the interface declares the method signature of a default method a without redefining the body contents, the method and class becomes abstract.</p>
-<p>[[JMK check this last statement]]</p>
+<p>[[JMK check this last statement ETA issue 55 preventing testing]]</p>
 </div>
 <div class="section" id="constants">
 <h3>Constants<a class="headerlink" href="#constants" title="Permalink to this headline">¶</a></h3>
@@ -147,15 +148,16 @@
 <li>variable, property, method, and function names are camel case</li>
 <li>annotation names are lower case</li>
 </ul>
-<p>[[JMK I&#8217;m sure I&#8217;m missing stuff that should be mentioned. Will look at this in more detail later.]]</p>
 </div>
 <div class="section" id="inheritance">
 <h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
-<p>Coming Soon</p>
+<p>Quark supports single inheritance of classes using the <a class="reference internal" href="keywords.html#extendskeyword"><span>extends keyword</span></a>. Multiple inheritance is not supported.</p>
+<p>Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass may be referenced directly using self.propertyName within methods of the subclass.</p>
+<p>Methods are inherited and may be overridden in the subclass. The superclass constructor is called automatically for all subclasses. A subclass may define its own constructor with fewer input parameters than its superclass so long as default values are provided for all of the other parameters in a super() call at the top of the constructor. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.</p>
 </div>
 <div class="section" id="overloading">
 <h2>Overloading<a class="headerlink" href="#overloading" title="Permalink to this headline">¶</a></h2>
-<p>Coming Soon</p>
+<p>Quark does not currently support method overloading. Quark supports operator overloading by defining classes that provide alternate code for the functions underlying the operator execution. When the related operators are used on objects of that type, this code is executed.</p>
 </div>
 <div class="section" id="object-instantiation">
 <h2>Object Instantiation<a class="headerlink" href="#object-instantiation" title="Permalink to this headline">¶</a></h2>
@@ -173,11 +175,10 @@
 <h2>White Space<a class="headerlink" href="#white-space" title="Permalink to this headline">¶</a></h2>
 <p>In general, Quark requires at least one white space character between language elements. It typically ignores any additional whitespace, allowing for variances in indentation conventions and extra lines within code.</p>
 <p>White space may be supplied between operators and the elements they act upon (either to their left or to their right) but it is not required.</p>
-<p>[[JMK Are there any additional white space rules? I can&#8217;t think of any]]</p>
 </div>
-<div class="section" id="end-of-line">
-<h2>End of Line<a class="headerlink" href="#end-of-line" title="Permalink to this headline">¶</a></h2>
-<p>Each line of Quark code must end with a semi-colon (;). The only exceptions to this are:</p>
+<div class="section" id="end-of-statement">
+<h2>End of Statement<a class="headerlink" href="#end-of-statement" title="Permalink to this headline">¶</a></h2>
+<p>Executable statements in Quark must end with a semi-colon (;). Using a modern code presentation style, this typically means that each line of Quark code ends with a semi-colon excepting the following:</p>
 <ul class="simple">
 <li>Keywords followed by an opening curly brace ({)</li>
 <li>The corresponding closing curly brace (})</li>
@@ -202,6 +203,7 @@
 <li><a class="reference internal" href="#classes">Classes</a><ul>
 <li><a class="reference internal" href="#properties">Properties</a></li>
 <li><a class="reference internal" href="#methods">Methods</a></li>
+<li><a class="reference internal" href="#self">self</a></li>
 <li><a class="reference internal" href="#abstractness">Abstractness</a></li>
 <li><a class="reference internal" href="#constructors">Constructors</a></li>
 </ul>
@@ -218,7 +220,7 @@
 <li><a class="reference internal" href="#typing">Typing</a></li>
 <li><a class="reference internal" href="#comments">Comments</a></li>
 <li><a class="reference internal" href="#white-space">White Space</a></li>
-<li><a class="reference internal" href="#end-of-line">End of Line</a></li>
+<li><a class="reference internal" href="#end-of-statement">End of Statement</a></li>
 </ul>
 </li>
 </ul>

@@ -212,8 +212,7 @@ else {</strong>
 </div>
 <div class="section" id="primitive">
 <span id="primitivekeyword"></span><h2>primitive<a class="headerlink" href="#primitive" title="Permalink to this headline">¶</a></h2>
-<p>The primitive keyword is used to define basic data types in Quark.</p>
-<p>[JMK Can users define new primitives and if so will they work/what can they do with them/how are they mapped to the languages - should I just say this is a reserved keyword?]]</p>
+<p>The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.</p>
 </div>
 <div class="section" id="return">
 <span id="returnkeyword"></span><h2>return<a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h2>
@@ -230,19 +229,44 @@ else {</strong>
 <p>where <em>functionType</em> is the type of the value returned by the function, <em>functionName</em> is the name of the function, <em>parameters</em> is a comma-separated list of parameters for the function, <em>code</em> is the code being run by the function, and <em>valueOfTypeFunctionType</em> is the value returned by the function. It must use the data type specified in the <em>functionType</em> declaration.</p>
 </div>
 </div>
+<div class="section" id="self">
+<span id="selfkeyword"></span><h2>self<a class="headerlink" href="#self" title="Permalink to this headline">¶</a></h2>
+<p>The self keyword is used to reference the current object inside method definitions particularly the value of a property of the current object.</p>
+<div class="section" id="id11">
+<h3>Syntax<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>The self keyword syntax is:</p>
+<p><strong>self.</strong> <em>propertyName</em></p>
+<p>where <em>propertyName</em> is the name of a property defined in the current class and the entire expression evaluates to the value stored in the current object&#8217;s <em>propertyName</em> property.</p>
+</div>
+</div>
+<div class="section" id="super">
+<span id="superkeyword"></span><h2>super<a class="headerlink" href="#super" title="Permalink to this headline">¶</a></h2>
+<p>The super keyword is used to indicate that a referenced method is defined in the current class&#8217;s superclass.</p>
+<p>Note: A variant of the super keyword, super(), is used to reference the constructor of the superclass inside the subclass&#8217;s constructor. Any parameters defined in the superclass constructor must be supplied when super() is called (either as variables or as default values).</p>
+<div class="section" id="id12">
+<h3>Syntax<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>The super keyword syntax is:</p>
+<p><strong>super.</strong> <em>method</em></p>
+<p>where <em>method</em> is the method being called including the trailing parentheses and any necessary parameters.</p>
+<p>For instance, the following method is defined in class A:</p>
+<p><code class="docutils literal"><span class="pre">void</span> <span class="pre">enrollInClass(String</span> <span class="pre">classId,</span> <span class="pre">String</span> <span class="pre">studentId){...}</span></code></p>
+<p>Class B is a subclass of class A. A method inside class B calls the enrollInClass() method as follows:</p>
+<p><code class="docutils literal"><span class="pre">super.enrollInClass(&quot;Phys123&quot;,</span> <span class="pre">&quot;84-42956&quot;);</span></code></p>
+</div>
+</div>
 <div class="section" id="true">
 <span id="truekeyword"></span><h2>true<a class="headerlink" href="#true" title="Permalink to this headline">¶</a></h2>
 <p>The true keyword indicates that a particular condition is true. It is one of the two allowed states of a boolean.</p>
-<div class="section" id="id11">
-<h3>Syntax<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>Syntax<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>The true keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.</p>
 </div>
 </div>
 <div class="section" id="while">
 <span id="whilekeyword"></span><h2>while<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
 <p>The while keyword is used to provide code to be run repeatedly as long as the supplied condition continues to evaluate to true.</p>
-<div class="section" id="id12">
-<h3>Syntax<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>Syntax<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <p>The while keyword syntax is:</p>
 <p><strong>while (</strong> <em>condition</em> <strong>) {</strong>
 <em>executeIfConditionTrue</em>
@@ -273,6 +297,8 @@ else {</strong>
 <li><a class="reference internal" href="#package">package</a></li>
 <li><a class="reference internal" href="#primitive">primitive</a></li>
 <li><a class="reference internal" href="#return">return</a></li>
+<li><a class="reference internal" href="#self">self</a></li>
+<li><a class="reference internal" href="#super">super</a></li>
 <li><a class="reference internal" href="#true">true</a></li>
 <li><a class="reference internal" href="#while">while</a></li>
 </ul>
