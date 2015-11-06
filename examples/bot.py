@@ -22,8 +22,11 @@ class Handler(slack.SlackHandler):
 
 
 def main():
-    # you need to go to https://api.slack.com/web and generate an access token
-    token = "*replace-me*"
+    try:
+        token = open(".slack.token").read().strip()
+    except IOError:
+        # you need to go to https://api.slack.com/web and generate an access token
+        exit("Failed to read Slack token. See examples/README.md for more information.")
 
     runtime = quark_twisted_runtime.get_twisted_runtime()
     client = slack.Client(runtime, token, Handler())
