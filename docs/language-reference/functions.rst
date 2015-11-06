@@ -554,6 +554,5 @@ This function is used under the covers by the + operator; *A* **+** *B* is equiv
 
 url_get()
 ~~~~~~~~~
-TBD
 
-[[JMK need to sort this out further. Also, should this be renamed to camel case? The _ looks odd to me]]
+Coming Soon
