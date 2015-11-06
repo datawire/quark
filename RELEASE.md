@@ -58,5 +58,9 @@ The goal of the tag is to record exactly what source was used to build the relea
   - `quark/java.py` near the bottom of the pom_xml template for generated code to require the quark-core package
   - `runtime/netty/pom.xml` for the Netty integration to require the quark-core package
 - The Java Netty Integration version is in `runtime/netty/pom.xml`
+- The Python backend core runtime version is at the top of `runtime/python-core/quark_runtime.py`
+- The Python Twisted Integration version is in `runtime/twisted/quark_twisted_runtime.py`
+- FIXME: The JS backend core runtime is in `node_modules/quark_runtime.js` with no packaging or version number
+- FIXME: The JS Node Integration is in `node_modules/quark_node_runtime.js` with no packaging or version number
 
 More version stuff to follow...
