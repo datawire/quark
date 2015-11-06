@@ -24,4 +24,4 @@ Indices and tables
 
 Document Version
 ================
-Quark Documentation Set 0.1.0-1
+Quark Documentation Set 0.1.0-2
