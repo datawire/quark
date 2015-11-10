@@ -43,7 +43,7 @@ Target language options:
   --python              Emit Python code.
   --python-out DIR      Subdirectory for Python code [default: py].
   --javascript          Emit JavaScript code.
-  --javascript-out DIR  Subdirectory for Python code [default: js].
+  --javascript-out DIR  Subdirectory for JavaScript code [default: js].
 """
 
 from glob import glob
