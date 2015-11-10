@@ -35,6 +35,7 @@ The goal is to have a stable set of features that are the target for what will b
 
 1. Create a release tag named *major*.*minor*.*revision*, e.g., `0.1.0`.
 2. **(future)** Build, test, and push a release artifact, i.e. push to PyPI, npmjs.org, Maven, etc.
+   the maven deployment is supposed to go according to [Performing a Release Deployment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment)
 3. **(future)** Update the website
 4. Announce the release
 
