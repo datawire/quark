@@ -68,7 +68,7 @@ def call_and_show(stage, workdir, command):
 
 def main(args):
     if args["--version"]:
-        sys.stderr.write("Quark %s\n" % _metadata.__version__)
+        sys.stdout.write("Quark %s\n" % _metadata.__version__)
         return
 
     command = args["<command>"].lower()
