@@ -43,6 +43,14 @@ class Overload(object):
 
 bar = Overload().bar
 
+@dispatch(int)
+def baz(x, y=None):
+    return type(x), type(y)
+
+@dispatch(str)
+def baz(x, y=None):
+    return type(x), type(y)
+
 @pytest.mark.parametrize("callable,arguments,expected", [
     (foo, (1, 2), (int, int)),
     (foo, ("a", "b"), (str, str)),
@@ -53,7 +61,11 @@ bar = Overload().bar
     (bar, ("a", "b"), (str, str)),
     (bar, (1, "a"), TypeError("no matching method: (int, str)")),
     (bar, (1.0, 1), (float, int)),
-    (bar, (1.0, [1, 2, 3]), (float, list))
+    (bar, (1.0, [1, 2, 3]), (float, list)),
+    (baz, (1,), (int, type(None))),
+    (baz, (1, 2), (int, int)),
+    (baz, ("one",), (str, type(None))),
+    (baz, ("one", 2), (str, int)),
 ])
 def test_dispatch(callable, arguments, expected):
     try:

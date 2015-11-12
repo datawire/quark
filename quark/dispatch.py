@@ -63,6 +63,7 @@ class _Dispatcher(object):
         self.methods[types] = method
 
     def get(self, types):
+        print types, self.methods
         for sig in signatures(types):
             if sig in self.methods:
                 return self.methods[sig]
@@ -91,7 +92,8 @@ def _decorate(namespace, function, types, offset=0):
     nargs = len(argspec.args) - offset
     defaulted = types + (object,)*(nargs - len(types))
     assert len(defaulted) == nargs
-    dispatcher.add(defaulted, function)
+    for i in range(len(argspec.defaults or ()) + 1):
+        dispatcher.add(defaulted[:nargs-i], function)
     return dispatcher
 
 def dispatch(*types):
