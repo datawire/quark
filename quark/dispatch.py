@@ -63,7 +63,6 @@ class _Dispatcher(object):
         self.methods[types] = method
 
     def get(self, types):
-        print types, self.methods
         for sig in signatures(types):
             if sig in self.methods:
                 return self.methods[sig]
