@@ -32,36 +32,30 @@ primitive numeric<T> {
     macro bool __gt__(T other) ${($self) > ($other)};
 }
 
-@mapping($java{Integer} $py{int} $js{Number})
-primitive int extends numeric<int> {
-    macro int __div__(int other) $java{~((~($self)) / ($other))}
-                                 $py{($self) / ($other)}
-                                 $js{Math.floor(($self) / ($other))};
-    macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}
-                                 $py{($self) % ($other)}
-                                 $js{_qrt.modulo(($self), ($other))};
+primitive integral<T> extends numeric<T> {
+    macro T __div__(T other) $java{~((~($self)) / ($other))}
+                             $py{($self) / ($other)}
+                             $js{Math.floor(($self) / ($other))};
+    macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
+                             $py{($self) % ($other)}
+                             $js{_qrt.modulo(($self), ($other))};
     macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
-    macro String toString() $java{Integer.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
     macro JSONObject __to_JSONObject() self.toJSON();
 }
 
+@mapping($java{Integer} $py{int} $js{Number})
+primitive int extends integral<int> {
+    macro String toString() $java{Integer.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
 @mapping($java{Long} $py{long} $js{Number})
-primitive long extends numeric<long> {
-    macro long __div__(long other) $java{~((~($self)) / ($other))}
-                                   $py{($self) / ($other)}
-                                   $js{Math.floor(($self) / ($other))};
-    macro long __mod__(long other) $java{Math.floorMod(($self), ($other))}
-                                   $py{($self) % ($other)}
-                                   $js{_qrt.modulo(($self), ($other))};
-    macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
+primitive long extends integral<long> {
     macro String toString() $java{Long.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
-    macro JSONObject toJSON() new JSONObject().setNumber(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 @mapping($java{Double}$py{float}$js{Number})
