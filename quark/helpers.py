@@ -41,6 +41,19 @@ def get_field(cls, name, default=DEFAULT):
             else:
                 return default
 
+def get_fields_r(cls, result):
+    for b in cls.bases:
+        get_fields_r(b.resolved.type, result)
+    for d in cls.definitions:
+        if isinstance(d, Field):
+            result.append(d)
+    return result
+
+def get_fields(cls):
+    result = []
+    get_fields_r(cls, result)
+    return result
+
 def has_super(fun):
     for stmt in fun.body.statements:
         if is_super(stmt):
