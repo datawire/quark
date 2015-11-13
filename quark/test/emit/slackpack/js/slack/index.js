@@ -197,6 +197,9 @@ Client.prototype.onHTTPResponse = Client_onHTTPResponse;
 function Client_onWSInit(socket) {}
 Client.prototype.onWSInit = Client_onWSInit;
 
+function Client_onWSBinary(socket, message) {}
+Client.prototype.onWSBinary = Client_onWSBinary;
+
 function Client_onWSClosed(socket) {}
 Client.prototype.onWSClosed = Client_onWSClosed;
 

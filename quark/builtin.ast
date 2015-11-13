@@ -491,6 +491,11 @@ File(
    Param(Type(Name(String)), Name(message)),
    Block()),
 
+  Method(Type(Name(void)), Name(onWSBinary),
+   Param(Type(Name(WebSocket)), Name(socket)),
+   Param(Type(Name(Buffer)), Name(message)),
+   Block()),
+
   Method(Type(Name(void)), Name(onWSClosed),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
@@ -507,7 +512,10 @@ File(
      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
   Method(Type(Name(void)), Name(send),
-   Param(Type(Name(String)), Name(message)))),
+   Param(Type(Name(String)), Name(message))),
+
+  Method(Type(Name(void)), Name(sendBinary),
+   Param(Type(Name(Buffer)), Name(bytes)))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
@@ -583,5 +591,113 @@ File(
 
   Method(Type(Name(void)), Name(schedule),
    Param(Type(Name(Task)), Name(handler)),
-   Param(Type(Name(float)), Name(delayInSeconds))))
+   Param(Type(Name(float)), Name(delayInSeconds))),
+
+  Method(Type(Name(Codec)), Name(codec))),
+
+ Primitive(Annotation(Name(doc), String("A stateless buffer of bytes")),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.Buffer')))), Name(Buffer),
+
+  Method(Annotation(Name(doc), String("capacity of the buffer")),
+   Type(Name(int)), Name(capacity)),
+
+  Method(Annotation(Name(doc), String("read a byte at the specified index")),
+   Type(Name(byte)), Name(getByte),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Annotation(Name(doc), String("write a byte at the specified index")),
+   Type(Name(void)), Name(putByte),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(byte)), Name(value))),
+
+  Method(Annotation(Name(doc), String("read a short at the specified index")),
+   Type(Name(short)), Name(getShort),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Annotation(Name(doc), String("write a short at the specified index")),
+   Type(Name(void)), Name(putShort),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(short)), Name(value))),
+
+  Method(Annotation(Name(doc), String("read a int at the specified index")),
+   Type(Name(int)), Name(getInt),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Annotation(Name(doc), String("write a int at the specified index")),
+   Type(Name(void)), Name(putInt),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(int)), Name(value))),
+
+  Method(Annotation(Name(doc), String("read a long at the specified index")),
+   Type(Name(long)), Name(getLong),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Annotation(Name(doc), String("write a long at the specified index")),
+   Type(Name(void)), Name(putLong),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(long)), Name(value))),
+
+  Method(Annotation(Name(doc), String("read a float at the specified index")),
+   Type(Name(float)), Name(getFloat),
+   Param(Type(Name(int)), Name(index))),
+
+  Method(Annotation(Name(doc), String("write a float at the specified index")),
+   Type(Name(void)), Name(putFloat),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(float)), Name(value))),
+
+  Method(Annotation(Name(doc),
+    String("decode length bytes as a UTF8 string at the specified index")),
+   Type(Name(String)), Name(getStringUTF8),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(int)), Name(length))),
+
+  Method(Annotation(Name(doc),
+    String("write a string encoded in UTF8 at the specified index and return encoded length")),
+   Type(Name(int)), Name(putStringUTF8),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(String)), Name(value))),
+
+  Method(Annotation(Name(doc), String("get a view of the range")),
+   Type(Name(Buffer)), Name(getSlice),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(int)), Name(length))),
+
+  Method(Annotation(Name(doc),
+    String("copy length bytes from the source buffer starting at offset to the specified index")),
+   Type(Name(void)), Name(putSlice),
+   Param(Type(Name(int)), Name(index)),
+   Param(Type(Name(Buffer)), Name(source)),
+   Param(Type(Name(int)), Name(offset)),
+   Param(Type(Name(int)), Name(length)))),
+
+ Primitive(Annotation(Name(doc),
+   String("Various String and Buffer conversion routines")),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.Codec')))), Name(Codec),
+
+  Method(Annotation(Name(doc),
+    String("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")),
+   Type(Name(String)), Name(toHexdump),
+   Param(Type(Name(Buffer)), Name(buffer)),
+   Param(Type(Name(int)), Name(offeset)),
+   Param(Type(Name(int)), Name(length)),
+   Param(Type(Name(int)), Name(spaceScale))),
+
+  Method(Annotation(Name(doc),
+    String("decode the hexdump ignoring leading 0x and any intervening spaces")),
+   Type(Name(Buffer)), Name(fromHexdump),
+   Param(Type(Name(String)), Name(hex))),
+
+  Method(Annotation(Name(doc),
+    String("Encode the specified slice of the buffer as Base64")),
+   Type(Name(String)), Name(toBase64),
+   Param(Type(Name(Buffer)), Name(buffer)),
+   Param(Type(Name(int)), Name(offset)),
+   Param(Type(Name(int)), Name(length))),
+
+  Method(Annotation(Name(doc), String("decode the Base64 enccoded string")),
+   Type(Name(Buffer)), Name(fromBase64),
+   Param(Type(Name(String)), Name(base64))))
 )

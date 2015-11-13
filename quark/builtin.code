@@ -120,6 +120,7 @@ primitive WSHandler {
     void onWSInit(WebSocket socket) {}
     void onWSConnected(WebSocket socket) {}
     void onWSMessage(WebSocket socket, String message) {}
+    void onWSBinary(WebSocket socket, Buffer message) {}
     void onWSClosed(WebSocket socket) {}
     void onWSError(WebSocket socket) {}
     void onWSFinal(WebSocket socket) {}
@@ -127,6 +128,7 @@ primitive WSHandler {
 @mapping($java{io.datawire.quark.runtime.WebSocket})
 primitive WebSocket {
     void send(String message);
+    void sendBinary(Buffer bytes);
 }
 @mapping($java{io.datawire.quark.runtime.HTTPHandler})
 primitive HTTPHandler {
@@ -159,4 +161,51 @@ primitive Runtime {
     void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
+    Codec codec();
+}
+@doc("A stateless buffer of bytes")
+@mapping($java{io.datawire.quark.runtime.Buffer})
+primitive Buffer {
+    @doc("capacity of the buffer")
+    int capacity();
+    @doc("read a byte at the specified index")
+    byte getByte(int index);
+    @doc("write a byte at the specified index")
+    void putByte(int index, byte value);
+    @doc("read a short at the specified index")
+    short getShort(int index);
+    @doc("write a short at the specified index")
+    void putShort(int index, short value);
+    @doc("read a int at the specified index")
+    int getInt(int index);
+    @doc("write a int at the specified index")
+    void putInt(int index, int value);
+    @doc("read a long at the specified index")
+    long getLong(int index);
+    @doc("write a long at the specified index")
+    void putLong(int index, long value);
+    @doc("read a float at the specified index")
+    float getFloat(int index);
+    @doc("write a float at the specified index")
+    void putFloat(int index, float value);
+    @doc("decode length bytes as a UTF8 string at the specified index")
+    String getStringUTF8(int index, int length);
+    @doc("write a string encoded in UTF8 at the specified index and return encoded length")
+    int putStringUTF8(int index, String value);
+    @doc("get a view of the range")
+    Buffer getSlice(int index, int length);
+    @doc("copy length bytes from the source buffer starting at offset to the specified index")
+    void putSlice(int index, Buffer source, int offset, int length);
+}
+@doc("Various String and Buffer conversion routines")
+@mapping($java{io.datawire.quark.runtime.Codec})
+primitive Codec {
+    @doc("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")
+    String toHexdump(Buffer buffer, int offeset, int length, int spaceScale);
+    @doc("decode the hexdump ignoring leading 0x and any intervening spaces")
+    Buffer fromHexdump(String hex);
+    @doc("Encode the specified slice of the buffer as Base64")
+    String toBase64(Buffer buffer, int offset, int length);
+    @doc("decode the Base64 enccoded string")
+    Buffer fromBase64(String base64);
 }
