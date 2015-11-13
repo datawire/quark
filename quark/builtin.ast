@@ -595,7 +595,8 @@ File(
 
   Method(Type(Name(Codec)), Name(codec))),
 
- Primitive(Annotation(Name(doc), String("A stateless buffer of bytes")),
+ Primitive(Annotation(Name(doc),
+   String("A stateless buffer of bytes. Default byte order is network byte order.")),
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Buffer')))), Name(Buffer),
 
@@ -670,7 +671,15 @@ File(
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(Buffer)), Name(source)),
    Param(Type(Name(int)), Name(offset)),
-   Param(Type(Name(int)), Name(length)))),
+   Param(Type(Name(int)), Name(length))),
+
+  Method(Annotation(Name(doc),
+    String("get a littleEndian view of the same buffer")), Type(Name(Buffer)),
+   Name(littleEndian)),
+
+  Method(Annotation(Name(doc),
+    String("true if the buffer decodes in network byte order")),
+   Type(Name(bool)), Name(isNetworkByteOrder))),
 
  Primitive(Annotation(Name(doc),
    String("Various String and Buffer conversion routines")),

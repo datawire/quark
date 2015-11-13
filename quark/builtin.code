@@ -163,7 +163,7 @@ primitive Runtime {
     void schedule(Task handler, float delayInSeconds);
     Codec codec();
 }
-@doc("A stateless buffer of bytes")
+@doc("A stateless buffer of bytes. Default byte order is network byte order.")
 @mapping($java{io.datawire.quark.runtime.Buffer})
 primitive Buffer {
     @doc("capacity of the buffer")
@@ -196,6 +196,10 @@ primitive Buffer {
     Buffer getSlice(int index, int length);
     @doc("copy length bytes from the source buffer starting at offset to the specified index")
     void putSlice(int index, Buffer source, int offset, int length);
+    @doc("get a littleEndian view of the same buffer")
+    Buffer littleEndian();
+    @doc("true if the buffer decodes in network byte order")
+    bool isNetworkByteOrder();
 }
 @doc("Various String and Buffer conversion routines")
 @mapping($java{io.datawire.quark.runtime.Codec})

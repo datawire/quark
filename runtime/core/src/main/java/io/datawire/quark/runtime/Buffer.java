@@ -2,7 +2,8 @@ package io.datawire.quark.runtime;
 
 
 /**
- * A stateless buffer of bytes
+ * A stateless buffer of bytes. Default byte order is network byte order.
+ * For little endian byte order buffer get a view of the buffer through littleEndian() accessor
  */
 public interface Buffer {
     /**
@@ -72,4 +73,14 @@ public interface Buffer {
      * copy length bytes from the source buffer starting at offset to the specified index
      */
     void putSlice(int index, Buffer source, int offset, int length);
+
+    /**
+     * get a littleEndian view of the same buffer
+     */
+    Buffer littleEndian();
+
+    /**
+     * true if the buffer decodes in network byte order
+     */
+    boolean isNetworkByteOrder();
 }
