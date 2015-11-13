@@ -139,6 +139,26 @@ File(
    Call(Attr(Var(Name(self), $type=0.integral<0.integral.T>), Name(toJSON),
     $type=0.integral.toJSON), $type=0.JSONObject))),
 
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Byte')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(byte), Type(Name(integral), Type(Name(byte))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Byte.toString('), Var(Name(self), $type=0.byte), Fixed(')')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.byte), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.byte),
+     Fixed(')'))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Short')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(short), Type(Name(integral), Type(Name(short))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Short.toString('), Var(Name(self), $type=0.short), Fixed(')')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.short), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.short),
+     Fixed(')'))))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Integer')),
     NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))), Name(int),
   Type(Name(integral), Type(Name(int))),

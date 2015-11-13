@@ -44,6 +44,22 @@ primitive integral<T> extends numeric<T> {
     macro JSONObject __to_JSONObject() self.toJSON();
 }
 
+@mapping($java{Byte} $py{int} $js{Number})
+primitive byte extends integral<byte> {
+    macro String toString() $java{Byte.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
+
+@mapping($java{Short} $py{int} $js{Number})
+primitive short extends integral<short> {
+    macro String toString() $java{Short.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
+
 @mapping($java{Integer} $py{int} $js{Number})
 primitive int extends integral<int> {
     macro String toString() $java{Integer.toString($self)}

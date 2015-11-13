@@ -121,6 +121,24 @@ File(
   MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
    Call(Attr(Var(Name(self)), Name(toJSON))))),
 
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Byte')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(byte), Type(Name(integral), Type(Name(byte))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Byte.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Short')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(short), Type(Name(integral), Type(Name(short))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Short.toString('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('str('), Var(Name(self)), Fixed(')')), NativeCase(js,
+     Fixed('_qrt.toString('), Var(Name(self)), Fixed(')'))))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Integer')),
     NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))), Name(int),
   Type(Name(integral), Type(Name(int))),

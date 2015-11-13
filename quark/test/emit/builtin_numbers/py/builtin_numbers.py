@@ -1,5 +1,33 @@
 from quark_runtime import *
 
+class TestByte(object):
+    def _init(self): pass
+    def __init__(self): self._init()
+
+    def run(self):
+        map = _Map();
+        b = 3;
+        _println(str(b));
+        _println(str((self).func()));
+
+    def func(self):
+        return int()
+
+
+class TestShort(object):
+    def _init(self): pass
+    def __init__(self): self._init()
+
+    def run(self):
+        map = _Map();
+        b = 3;
+        _println(str(b));
+        _println(str((self).func()));
+
+    def func(self):
+        return int()
+
+
 class TestInt(object):
     def _init(self): pass
     def __init__(self): self._init()
@@ -28,20 +56,12 @@ class TestLong(object):
         return long()
 
 
-class Test(object):
-    def _init(self): pass
-    def __init__(self): self._init()
-
-    def run(self):
-        map = _Map();
-
-
 
 def main():
+    (TestByte()).run();
+    (TestShort()).run();
     (TestInt()).run();
     (TestLong()).run();
-    (Test()).run();
-    (Test()).run();
 
 
 if __name__ == "__main__":
