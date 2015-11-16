@@ -233,6 +233,10 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
 
+macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
+                           $py{_default_codec()}
+                           $js{_qrt.defaultCodec()};
+
 @mapping($java{io.datawire.quark.runtime.WSHandler})
 primitive WSHandler {
     void onWSInit(WebSocket socket) {}
@@ -304,9 +308,9 @@ primitive Buffer {
     @doc("write a short at the specified index")
     void putShort(int index, short value);
 
-    @doc("read a int at the specified index")
+    @doc("read an int at the specified index")
     int getInt(int index);
-    @doc("write a int at the specified index")
+    @doc("write an int at the specified index")
     void putInt(int index, int value);
 
     @doc("read a long at the specified index")
@@ -340,6 +344,9 @@ primitive Buffer {
 @doc("Various String and Buffer conversion routines")
 @mapping($java{io.datawire.quark.runtime.Codec})
 primitive Codec {
+    @doc("Create an empty buffer with the specified capacity")
+    Buffer buffer(int capacity);
+
     @doc("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")
     String toHexdump(Buffer buffer, int offeset, int length, int spaceScale);
 
