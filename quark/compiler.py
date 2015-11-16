@@ -233,14 +233,16 @@ class TypeExpr(object):
                 errors.append("%s: expected 0 args, got %s" % (lineinfo(call), len(call.args)))
         return texpr(cls, self.bindings)
 
-    def assign(self, expr, errors):
+    def assign(self, expr, errors=None):
         if not isinstance(expr, Null) and not self.assignableFrom(expr.resolved):
             dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
                 expr.coersion = dfn
             else:
-                # should signal errors here
-                pass
+                # XXX: should always signal errors, this is for autocast
+                if errors is not None:
+                    errors.append("%s:type mismatch: expected %s, got %s" %
+                                  (lineinfo(expr), self, expr.resolved))
 
     @property
     def id(self):
@@ -395,11 +397,28 @@ class Resolver(object):
 
     def leave_Assign(self, a):
         if a.lhs.resolved and a.rhs.resolved:
-            a.lhs.resolved.assign(a.rhs, self.errors)
+            a.lhs.resolved.assign(a.rhs)
+
+    def leave_Return(self, r):
+        if r.expr is None:
+            if r.callable.type is None:
+                return
+            if r.callable.type.code() != "void":
+                self.errors.append("%s: %s is not declared void" %
+                                   (lineinfo(r), r.callable.name))
+            return
+
+        if not r.callable.type or r.callable.type.code() == "void":
+            if r.expr:
+                self.errors.append("%s: %s cannot return a value" % (lineinfo(r), r.callable.name))
+            return
+
+        if r.callable.type.resolved:
+            r.callable.type.resolved.assign(r.expr, self.errors)
 
     def leave_Declaration(self, d):
         if d.type.resolved and d.value and d.value.resolved:
-            d.type.resolved.assign(d.value, self.errors)
+            d.type.resolved.assign(d.value)
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:
