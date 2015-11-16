@@ -545,6 +545,10 @@ File(
    NativeCase(js, Fixed('parseInt('), Var(Name(st), $type=0.String),
     Fixed(')')))),
 
+ Macro(Type(Name(Codec)), Name(defaultCodec), Native(NativeCase(java,
+    Fixed('io.datawire.quark.runtime.Builtins.defaultCodec()')), NativeCase(py,
+    Fixed('_default_codec()')), NativeCase(js, Fixed('_qrt.defaultCodec()')))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
 
@@ -692,11 +696,11 @@ File(
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(short)), Name(value), $type=0.short)),
 
-  Method(Annotation(Name(doc), String("read a int at the specified index",
+  Method(Annotation(Name(doc), String("read an int at the specified index",
     $type=0.String)), Type(Name(int)), Name(getInt),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(Annotation(Name(doc), String("write a int at the specified index",
+  Method(Annotation(Name(doc), String("write an int at the specified index",
     $type=0.String)), Type(Name(void)), Name(putInt),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(int)), Name(value), $type=0.int)),
@@ -756,6 +760,11 @@ File(
    String("Various String and Buffer conversion routines", $type=0.String)),
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Codec')))), Name(Codec),
+
+  Method(Annotation(Name(doc),
+    String("Create an empty buffer with the specified capacity",
+    $type=0.String)), Type(Name(Buffer)), Name(buffer),
+   Param(Type(Name(int)), Name(capacity), $type=0.int)),
 
   Method(Annotation(Name(doc),
     String("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes",
