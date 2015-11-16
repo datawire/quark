@@ -24,5 +24,11 @@
       <version>4.0.32.Final</version>
       <scope>compile</scope>
     </dependency>
+        <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <scope>test</scope>
+    </dependency>
+    
   </dependencies>
 </project>
