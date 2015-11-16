@@ -18,7 +18,7 @@ public interface Buffer {
     /**
      * write a byte at the specified index
      */
-    void putByte(int index, byte value);
+    void putByte(int index, int value);
 
     /**
      * read a short at the specified index
@@ -27,7 +27,7 @@ public interface Buffer {
     /**
      * write a short at the specified index
      */
-    void putShort(int index, short value);
+    void putShort(int index, int value);
 
     /**
      * read a int at the specified index
@@ -50,11 +50,11 @@ public interface Buffer {
     /**
      * read a float at the specified index
      */
-    float getFloat(int index);
+    Double getFloat(int index);
     /**
      * write a float at the specified index
      */
-    void putFloat(int index, float value);
+    void putFloat(int index, Double value);
 
     /**
      * decode length bytes as a UTF8 string at the specified index
