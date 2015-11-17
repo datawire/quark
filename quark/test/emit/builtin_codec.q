@@ -26,7 +26,6 @@ String hexl(long v) {
     return c.toHexdump(b,0,8,10);
 }
 
-// xfail:py
 // xfail:js
 
 void main() {

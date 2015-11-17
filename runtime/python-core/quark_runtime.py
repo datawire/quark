@@ -12,8 +12,11 @@ import urllib2
 import json
 import collections
 from urllib import urlencode as _urlencode
+from collections import namedtuple
+from struct import Struct
+import base64
 
-__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest".split()
+__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _default_codec".split()
 
 
 _Map = dict
@@ -211,3 +214,111 @@ class _HTTPRequest(object):
 
     def setHeader(self, key, value):
         self.headers[key] = value
+
+
+class _default_codec(object):
+    def buffer(self, capacity):
+        return Buffer()
+
+    def toHexdump(self, buffer, offset, length, spaceScale):
+        h = map(lambda x:"%02x"%x, buffer.data[offset:offset+length])
+        stride = 2 ** spaceScale
+        return " ".join("".join(h[i:i+stride]) for i in range(0,len(h),stride))
+
+    def fromHexdump(self, hexstr):
+        hexstr = hexstr.replace(" ","").replace("\t","").replace("\r","").replace("\n","")
+        if hexstr.startswith("0x") or hexstr.startswith("0X"):
+            hexstr = hexstr[2:]
+        return Buffer(bytearray(int(hexstr[i:i+2],16) for i in range(0,len(hexstr), 2)))
+
+    def toBase64(self, buffer, offset, length):
+        return base64.b64encode(buffer.data[offset:offset+length])
+
+    def fromBase64(self, b64str):
+        return Buffer(bytearray(base64.b64decode(b64str)))
+
+
+class Buffer(object):
+    Packer = namedtuple("Packer", "byte short int long float".split())
+    BE = Packer(*map(Struct, [">"+c for c in "bhiqd"]))
+    LE = Packer(*map(Struct, ["<"+c for c in "bhiqd"]))
+    def __init__(self, _data=None):
+        if _data is None:
+            _data = bytearray()
+        self.data = _data
+        self._order(self.BE)
+
+    def _order(self, packer):
+        self.packer = packer
+        self._b = self.packer.byte
+        self._h = self.packer.short
+        self._i = self.packer.int
+        self._q = self.packer.long
+        self._d = self.packer.float
+
+    def capacity(self):
+        return len(self.data)
+
+    def getByte(self, index):
+        return self._b.unpack_from(self.data, index)[0]
+
+    def putByte(self, index, value):
+        self.data[index:index+1] = [0]
+        self._b.pack_into(self.data, index, value)
+
+
+    def getShort(self, index):
+        return self._h.unpack_from(self.data, index)[0]
+
+    def putShort(self, index, value):
+        self.data[index:index+2] = [0]*2
+        self._h.pack_into(self.data, index, value)
+
+
+    def getInt(self, index):
+        return self._i.unpack_from(self.data, index)[0]
+
+    def putInt(self, index, value):
+        self.data[index:index+4] = [0]*4
+        self._i.pack_into(self.data, index, value)
+
+
+    def getLong(self, index):
+        return self._q.unpack_from(self.data, index)[0]
+
+    def putLong(self, index, value):
+        self.data[index:index+8] = [0]*8
+        self._q.pack_into(self.data, index, value)
+
+
+
+    def getFloat(self, index):
+        return self._d.unpack_from(self.data, index)[0]
+
+    def putFloat(self, index, value):
+        self.data[index:index+8] = [0]*8
+        self._d.pack_into(self.data, index, value)
+
+
+    def getStringUTF8(self, index, length):
+        return self.data[index:index+length].decode("utf-8")
+
+    def putStringUTF8(self, index, value):
+        value = value.encode("utf-8")
+        self.data[index:index+len(value)] = value
+        return len(value)
+
+    def getSlice(self, index, length):
+        other = self.__class__(self.data[index:index + value])
+        other._order(self.packer)
+
+    def putSlice(self, index, source, offset, length):
+        self.data[index:index+length] = source.data[offset:offset+length]
+
+    def littleEndian(self):
+        other = self.__class__(self.data)
+        other._order(self.LE)
+        return other
+
+    def isNetworkByteOrder(self):
+        return self.packer is self.BE
