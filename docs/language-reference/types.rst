@@ -178,6 +178,10 @@ Long integers are translated in generated code as follows:
 | Python     | int     | unlimited                                                   |
 +------------+---------+-------------------------------------------------------------+
 
+Note: Currently Quark can only handle up to 48bit values. See `linkIssue58`_ for more information.
+
+.. _linkIssue58: https://github.com/datawire/quark/issues/58
+
 .. _numerical:
 
 numerical
