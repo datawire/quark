@@ -99,93 +99,85 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
      Fixed(') > ('), Var(Name(other), $type=0.numeric.T), Fixed(')'))))),
 
- Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Integer')),
-    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))), Name(int),
-  Type(Name(numeric), Type(Name(int))),
+ Primitive(Name(integral), TypeParam(Name(T)), Type(Name(numeric),
+   Type(Name(T))),
 
-  MethodMacro(Type(Name(int)), Name(__div__),
-   Param(Type(Name(int)), Name(other), $type=0.int),
+  MethodMacro(Type(Name(T)), Name(__div__),
+   Param(Type(Name(T)), Name(other), $type=0.integral.T),
    Native(NativeCase(java,
-     Fixed('~((~('), Var(Name(self), $type=0.int), Fixed(')) / ('),
-     Var(Name(other), $type=0.int), Fixed('))')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.int), Fixed(') / ('), Var(Name(other),
-     $type=0.int), Fixed(')')), NativeCase(js, Fixed('Math.floor(('),
-     Var(Name(self), $type=0.int), Fixed(') / ('), Var(Name(other),
-     $type=0.int), Fixed('))')))),
+     Fixed('~((~('), Var(Name(self), $type=0.integral<0.integral.T>),
+     Fixed(')) / ('), Var(Name(other), $type=0.integral.T), Fixed('))')),
+    NativeCase(py, Fixed('('), Var(Name(self), $type=0.integral<0.integral.T>),
+     Fixed(') / ('), Var(Name(other), $type=0.integral.T), Fixed(')')),
+    NativeCase(js, Fixed('Math.floor(('), Var(Name(self),
+     $type=0.integral<0.integral.T>), Fixed(') / ('), Var(Name(other),
+     $type=0.integral.T), Fixed('))')))),
 
-  MethodMacro(Type(Name(int)), Name(__mod__),
-   Param(Type(Name(int)), Name(other), $type=0.int),
+  MethodMacro(Type(Name(T)), Name(__mod__),
+   Param(Type(Name(T)), Name(other), $type=0.integral.T),
    Native(NativeCase(java,
-     Fixed('Math.floorMod(('), Var(Name(self), $type=0.int), Fixed('), ('),
-     Var(Name(other), $type=0.int), Fixed('))')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.int), Fixed(') % ('), Var(Name(other),
-     $type=0.int), Fixed(')')), NativeCase(js, Fixed('_qrt.modulo(('),
-     Var(Name(self), $type=0.int), Fixed('), ('), Var(Name(other),
-     $type=0.int), Fixed('))')))),
+     Fixed('Math.floorMod(('), Var(Name(self), $type=0.integral<0.integral.T>),
+     Fixed('), ('), Var(Name(other), $type=0.integral.T), Fixed('))')),
+    NativeCase(py, Fixed('('), Var(Name(self), $type=0.integral<0.integral.T>),
+     Fixed(') % ('), Var(Name(other), $type=0.integral.T), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.modulo(('), Var(Name(self),
+     $type=0.integral<0.integral.T>), Fixed('), ('), Var(Name(other),
+     $type=0.integral.T), Fixed('))')))),
 
   MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
-     Fixed('Double.valueOf('), Var(Name(self), $type=0.int), Fixed(')')),
-    NativeCase(py, Fixed('float('), Var(Name(self), $type=0.int), Fixed(')')),
-    NativeCase(js, Fixed('('), Var(Name(self), $type=0.int), Fixed(')')))),
+     Fixed('Double.valueOf('), Var(Name(self), $type=0.integral<0.integral.T>),
+     Fixed(')')), NativeCase(py, Fixed('float('), Var(Name(self),
+     $type=0.integral<0.integral.T>), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self), $type=0.integral<0.integral.T>), Fixed(')')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
+    $type=0.JSONObject.setNumber), Var(Name(self),
+    $type=0.integral<0.integral.T>), $type=0.JSONObject)),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+   Call(Attr(Var(Name(self), $type=0.integral<0.integral.T>), Name(toJSON),
+    $type=0.integral.toJSON), $type=0.JSONObject))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Byte')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(byte), Type(Name(integral), Type(Name(byte))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Byte.toString('), Var(Name(self), $type=0.byte), Fixed(')')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.byte), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.byte),
+     Fixed(')'))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Short')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))),
+  Name(short), Type(Name(integral), Type(Name(short))),
+
+  MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
+     Fixed('Short.toString('), Var(Name(self), $type=0.short), Fixed(')')),
+    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.short), Fixed(')')),
+    NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.short),
+     Fixed(')'))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Integer')),
+    NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')))), Name(int),
+  Type(Name(integral), Type(Name(int))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.int),
-     Fixed(')')))),
-
-  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
-    $type=0.JSONObject.setNumber), Var(Name(self), $type=0.int),
-   $type=0.JSONObject)),
-
-  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
-   Call(Attr(Var(Name(self), $type=0.int), Name(toJSON), $type=0.int.toJSON),
-   $type=0.JSONObject))),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
-  Name(long), Type(Name(numeric), Type(Name(long))),
-
-  MethodMacro(Type(Name(long)), Name(__div__),
-   Param(Type(Name(long)), Name(other), $type=0.long),
-   Native(NativeCase(java,
-     Fixed('~((~('), Var(Name(self), $type=0.long), Fixed(')) / ('),
-     Var(Name(other), $type=0.long), Fixed('))')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.long), Fixed(') / ('), Var(Name(other),
-     $type=0.long), Fixed(')')), NativeCase(js, Fixed('Math.floor(('),
-     Var(Name(self), $type=0.long), Fixed(') / ('), Var(Name(other),
-     $type=0.long), Fixed('))')))),
-
-  MethodMacro(Type(Name(long)), Name(__mod__),
-   Param(Type(Name(long)), Name(other), $type=0.long),
-   Native(NativeCase(java,
-     Fixed('Math.floorMod(('), Var(Name(self), $type=0.long), Fixed('), ('),
-     Var(Name(other), $type=0.long), Fixed('))')), NativeCase(py, Fixed('('),
-     Var(Name(self), $type=0.long), Fixed(') % ('), Var(Name(other),
-     $type=0.long), Fixed(')')), NativeCase(js, Fixed('_qrt.modulo(('),
-     Var(Name(self), $type=0.long), Fixed('), ('), Var(Name(other),
-     $type=0.long), Fixed('))')))),
-
-  MethodMacro(Type(Name(float)), Name(toFloat), Native(NativeCase(java,
-     Fixed('Double.valueOf('), Var(Name(self), $type=0.long), Fixed(')')),
-    NativeCase(py, Fixed('float('), Var(Name(self), $type=0.long), Fixed(')')),
-    NativeCase(js, Fixed('('), Var(Name(self), $type=0.long), Fixed(')')))),
+  Name(long), Type(Name(integral), Type(Name(long))),
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Long.toString('), Var(Name(self), $type=0.long), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.long), Fixed(')')),
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.long),
-     Fixed(')')))),
-
-  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setNumber),
-    $type=0.JSONObject.setNumber), Var(Name(self), $type=0.long),
-   $type=0.JSONObject)),
-
-  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
-   Call(Attr(Var(Name(self), $type=0.long), Name(toJSON), $type=0.long.toJSON),
-   $type=0.JSONObject))),
+     Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Double')),
     NativeCase(py, Fixed('float')), NativeCase(js, Fixed('Number')))),
@@ -209,7 +201,7 @@ File(
 
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('Double.toString('), Var(Name(self), $type=0.float), Fixed(')')),
-    NativeCase(py, Fixed('str('), Var(Name(self), $type=0.float), Fixed(')')),
+    NativeCase(py, Fixed('repr('), Var(Name(self), $type=0.float), Fixed(')')),
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.float),
      Fixed(')')))),
 
@@ -553,6 +545,10 @@ File(
    NativeCase(js, Fixed('parseInt('), Var(Name(st), $type=0.String),
     Fixed(')')))),
 
+ Macro(Type(Name(Codec)), Name(defaultCodec), Native(NativeCase(java,
+    Fixed('io.datawire.quark.runtime.Builtins.defaultCodec()')), NativeCase(py,
+    Fixed('_default_codec()')), NativeCase(js, Fixed('_qrt.defaultCodec()')))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
 
@@ -567,6 +563,11 @@ File(
   Method(Type(Name(void)), Name(onWSMessage),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Param(Type(Name(String)), Name(message), $type=0.String),
+   Block()),
+
+  Method(Type(Name(void)), Name(onWSBinary),
+   Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
+   Param(Type(Name(Buffer)), Name(message), $type=0.Buffer),
    Block()),
 
   Method(Type(Name(void)), Name(onWSClosed),
@@ -585,7 +586,10 @@ File(
      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
   Method(Type(Name(void)), Name(send),
-   Param(Type(Name(String)), Name(message), $type=0.String))),
+   Param(Type(Name(String)), Name(message), $type=0.String)),
+
+  Method(Type(Name(void)), Name(sendBinary),
+   Param(Type(Name(Buffer)), Name(bytes), $type=0.Buffer))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
@@ -662,5 +666,127 @@ File(
 
   Method(Type(Name(void)), Name(schedule),
    Param(Type(Name(Task)), Name(handler), $type=0.Task),
-   Param(Type(Name(float)), Name(delayInSeconds), $type=0.float)))
+   Param(Type(Name(float)), Name(delayInSeconds), $type=0.float)),
+
+  Method(Type(Name(Codec)), Name(codec))),
+
+ Primitive(Annotation(Name(doc),
+   String("A stateless buffer of bytes. Default byte order is network byte order.",
+   $type=0.String)), Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.Buffer')))), Name(Buffer),
+
+  Method(Annotation(Name(doc), String("capacity of the buffer",
+    $type=0.String)), Type(Name(int)), Name(capacity)),
+
+  Method(Annotation(Name(doc), String("read a byte at the specified index",
+    $type=0.String)), Type(Name(byte)), Name(getByte),
+   Param(Type(Name(int)), Name(index), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("write a byte at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putByte),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(byte)), Name(value), $type=0.byte)),
+
+  Method(Annotation(Name(doc), String("read a short at the specified index",
+    $type=0.String)), Type(Name(short)), Name(getShort),
+   Param(Type(Name(int)), Name(index), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("write a short at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putShort),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(short)), Name(value), $type=0.short)),
+
+  Method(Annotation(Name(doc), String("read an int at the specified index",
+    $type=0.String)), Type(Name(int)), Name(getInt),
+   Param(Type(Name(int)), Name(index), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("write an int at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putInt),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(int)), Name(value), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("read a long at the specified index",
+    $type=0.String)), Type(Name(long)), Name(getLong),
+   Param(Type(Name(int)), Name(index), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("write a long at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putLong),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(long)), Name(value), $type=0.long)),
+
+  Method(Annotation(Name(doc), String("read a float at the specified index",
+    $type=0.String)), Type(Name(float)), Name(getFloat),
+   Param(Type(Name(int)), Name(index), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("write a float at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putFloat),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(float)), Name(value), $type=0.float)),
+
+  Method(Annotation(Name(doc),
+    String("decode length bytes as a UTF8 string at the specified index",
+    $type=0.String)), Type(Name(String)), Name(getStringUTF8),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(int)), Name(length), $type=0.int)),
+
+  Method(Annotation(Name(doc),
+    String("write a string encoded in UTF8 at the specified index and return encoded length",
+    $type=0.String)), Type(Name(int)), Name(putStringUTF8),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(String)), Name(value), $type=0.String)),
+
+  Method(Annotation(Name(doc), String("get a view of the range",
+    $type=0.String)), Type(Name(Buffer)), Name(getSlice),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(int)), Name(length), $type=0.int)),
+
+  Method(Annotation(Name(doc),
+    String("copy length bytes from the source buffer starting at offset to the specified index",
+    $type=0.String)), Type(Name(void)), Name(putSlice),
+   Param(Type(Name(int)), Name(index), $type=0.int),
+   Param(Type(Name(Buffer)), Name(source), $type=0.Buffer),
+   Param(Type(Name(int)), Name(offset), $type=0.int),
+   Param(Type(Name(int)), Name(length), $type=0.int)),
+
+  Method(Annotation(Name(doc),
+    String("get a littleEndian view of the same buffer", $type=0.String)),
+   Type(Name(Buffer)), Name(littleEndian)),
+
+  Method(Annotation(Name(doc),
+    String("true if the buffer decodes in network byte order",
+    $type=0.String)), Type(Name(bool)), Name(isNetworkByteOrder))),
+
+ Primitive(Annotation(Name(doc),
+   String("Various String and Buffer conversion routines", $type=0.String)),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.Codec')))), Name(Codec),
+
+  Method(Annotation(Name(doc),
+    String("Create an empty buffer with the specified capacity",
+    $type=0.String)), Type(Name(Buffer)), Name(buffer),
+   Param(Type(Name(int)), Name(capacity), $type=0.int)),
+
+  Method(Annotation(Name(doc),
+    String("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes",
+    $type=0.String)), Type(Name(String)), Name(toHexdump),
+   Param(Type(Name(Buffer)), Name(buffer), $type=0.Buffer),
+   Param(Type(Name(int)), Name(offeset), $type=0.int),
+   Param(Type(Name(int)), Name(length), $type=0.int),
+   Param(Type(Name(int)), Name(spaceScale), $type=0.int)),
+
+  Method(Annotation(Name(doc),
+    String("decode the hexdump ignoring leading 0x and any intervening spaces",
+    $type=0.String)), Type(Name(Buffer)), Name(fromHexdump),
+   Param(Type(Name(String)), Name(hex), $type=0.String)),
+
+  Method(Annotation(Name(doc),
+    String("Encode the specified slice of the buffer as Base64",
+    $type=0.String)), Type(Name(String)), Name(toBase64),
+   Param(Type(Name(Buffer)), Name(buffer), $type=0.Buffer),
+   Param(Type(Name(int)), Name(offset), $type=0.int),
+   Param(Type(Name(int)), Name(length), $type=0.int)),
+
+  Method(Annotation(Name(doc), String("decode the Base64 enccoded string",
+    $type=0.String)), Type(Name(Buffer)), Name(fromBase64),
+   Param(Type(Name(String)), Name(base64), $type=0.String)))
 )

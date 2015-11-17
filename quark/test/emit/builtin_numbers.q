@@ -1,3 +1,27 @@
+class TestByte {
+    void run() {
+        Map<byte,byte> map = new Map<byte,byte>();
+        byte b = 3;
+        print(b.toString());
+        print(self.func().toString());
+    }
+    byte func() {
+        return new byte();
+    }
+}
+
+class TestShort {
+    void run() {
+        Map<short,short> map = new Map<short,short>();
+        short b = 3;
+        print(b.toString());
+        print(self.func().toString());
+    }
+    short func() {
+        return new short();
+    }
+}
+
 class TestInt {
     void run() {
         Map<int,int> map = new Map<int,int>();
@@ -24,23 +48,9 @@ class TestLong {
     }
 }
 
-class Test<T> {
-    void run() {
-        Map<T,T> map = new Map<T,T>();
-// this bit crashes the compiler so we need an xfail for now
-// NOTE: the above xfail:java masks this xfail
-//      T b = 3;
-//      print(b.toString());
-//      print(self.func().toString());
-    }
-//  T func() {
-//      return new T();
-//  }
-}
-
 void main() {
+    new TestByte().run();
+    new TestShort().run();
     new TestInt().run();
     new TestLong().run();
-    new Test<int>().run();
-    new Test<long>().run();
 }

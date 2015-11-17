@@ -32,36 +32,46 @@ primitive numeric<T> {
     macro bool __gt__(T other) ${($self) > ($other)};
 }
 
-@mapping($java{Integer} $py{int} $js{Number})
-primitive int extends numeric<int> {
-    macro int __div__(int other) $java{~((~($self)) / ($other))}
-                                 $py{($self) / ($other)}
-                                 $js{Math.floor(($self) / ($other))};
-    macro int __mod__(int other) $java{Math.floorMod(($self), ($other))}
-                                 $py{($self) % ($other)}
-                                 $js{_qrt.modulo(($self), ($other))};
+primitive integral<T> extends numeric<T> {
+    macro T __div__(T other) $java{~((~($self)) / ($other))}
+                             $py{($self) / ($other)}
+                             $js{Math.floor(($self) / ($other))};
+    macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
+                             $py{($self) % ($other)}
+                             $js{_qrt.modulo(($self), ($other))};
     macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
-    macro String toString() $java{Integer.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
     macro JSONObject __to_JSONObject() self.toJSON();
 }
 
+@mapping($java{Byte} $py{int} $js{Number})
+primitive byte extends integral<byte> {
+    macro String toString() $java{Byte.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
+
+@mapping($java{Short} $py{int} $js{Number})
+primitive short extends integral<short> {
+    macro String toString() $java{Short.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
+
+@mapping($java{Integer} $py{int} $js{Number})
+primitive int extends integral<int> {
+    macro String toString() $java{Integer.toString($self)}
+                            $py{str($self)}
+                            $js{_qrt.toString($self)};
+}
+
 @mapping($java{Long} $py{long} $js{Number})
-primitive long extends numeric<long> {
-    macro long __div__(long other) $java{~((~($self)) / ($other))}
-                                   $py{($self) / ($other)}
-                                   $js{Math.floor(($self) / ($other))};
-    macro long __mod__(long other) $java{Math.floorMod(($self), ($other))}
-                                   $py{($self) % ($other)}
-                                   $js{_qrt.modulo(($self), ($other))};
-    macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
+primitive long extends integral<long> {
     macro String toString() $java{Long.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
-    macro JSONObject toJSON() new JSONObject().setNumber(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 @mapping($java{Double}$py{float}$js{Number})
@@ -73,7 +83,7 @@ primitive float extends numeric<float> {
                        $py{long(round($self))}
                        $javascript{Math.round($self)};
     macro String toString() $java{Double.toString($self)}
-                            $py{str($self)}
+                            $py{repr($self)}
                             $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
     macro JSONObject __to_JSONObject() self.toJSON();
@@ -223,11 +233,16 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
                               $py{int($st)}
                               $js{parseInt($st)};
 
+macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
+                           $py{_default_codec()}
+                           $js{_qrt.defaultCodec()};
+
 @mapping($java{io.datawire.quark.runtime.WSHandler})
 primitive WSHandler {
     void onWSInit(WebSocket socket) {}
     void onWSConnected(WebSocket socket) {}
     void onWSMessage(WebSocket socket, String message) {}
+    void onWSBinary(WebSocket socket, Buffer message) {}
     void onWSClosed(WebSocket socket) {}
     void onWSError(WebSocket socket) {}
     void onWSFinal(WebSocket socket) {}
@@ -236,6 +251,7 @@ primitive WSHandler {
 @mapping($java{io.datawire.quark.runtime.WebSocket})
 primitive WebSocket {
     void send(String message);
+    void sendBinary(Buffer bytes);
 }
 
 @mapping($java{io.datawire.quark.runtime.HTTPHandler})
@@ -273,4 +289,73 @@ primitive Runtime {
     void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
+    Codec codec();
+}
+
+@doc("A stateless buffer of bytes. Default byte order is network byte order.")
+@mapping($java{io.datawire.quark.runtime.Buffer})
+primitive Buffer {
+    @doc("capacity of the buffer")
+    int capacity();
+
+    @doc("read a byte at the specified index")
+    byte getByte(int index);
+    @doc("write a byte at the specified index")
+    void putByte(int index, byte value);
+
+    @doc("read a short at the specified index")
+    short getShort(int index);
+    @doc("write a short at the specified index")
+    void putShort(int index, short value);
+
+    @doc("read an int at the specified index")
+    int getInt(int index);
+    @doc("write an int at the specified index")
+    void putInt(int index, int value);
+
+    @doc("read a long at the specified index")
+    long getLong(int index);
+    @doc("write a long at the specified index")
+    void putLong(int index, long value);
+
+    @doc("read a float at the specified index")
+    float getFloat(int index);
+    @doc("write a float at the specified index")
+    void putFloat(int index, float value);
+
+    @doc("decode length bytes as a UTF8 string at the specified index")
+    String getStringUTF8(int index, int length);
+    @doc("write a string encoded in UTF8 at the specified index and return encoded length")
+    int putStringUTF8(int index, String value);
+
+    @doc("get a view of the range")
+    Buffer getSlice(int index, int length);
+    @doc("copy length bytes from the source buffer starting at offset to the specified index")
+    void putSlice(int index, Buffer source, int offset, int length);
+
+    @doc("get a littleEndian view of the same buffer")
+    Buffer littleEndian();
+
+    @doc("true if the buffer decodes in network byte order")
+    bool isNetworkByteOrder();
+
+}
+
+@doc("Various String and Buffer conversion routines")
+@mapping($java{io.datawire.quark.runtime.Codec})
+primitive Codec {
+    @doc("Create an empty buffer with the specified capacity")
+    Buffer buffer(int capacity);
+
+    @doc("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")
+    String toHexdump(Buffer buffer, int offeset, int length, int spaceScale);
+
+    @doc("decode the hexdump ignoring leading 0x and any intervening spaces")
+    Buffer fromHexdump(String hex);
+
+    @doc("Encode the specified slice of the buffer as Base64")
+    String toBase64(Buffer buffer, int offset, int length);
+
+    @doc("decode the Base64 enccoded string")
+    Buffer fromBase64(String base64);
 }

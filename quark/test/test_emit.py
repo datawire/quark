@@ -87,8 +87,8 @@ def build_java(comp, base, srcs):
         os.makedirs(build)
     print base
     print build
-    depdir = os.path.join(directory, "java-deps")
-    cp = list(os.path.join(depdir,jar) for jar in os.listdir(depdir) if jar.endswith(".jar"))
+    depfile = os.path.join(directory, "java-deps", "classpath")
+    cp = open(depfile).read().split(":")
     if cp:
         ccp = "-cp " + ":".join(cp);
     else:

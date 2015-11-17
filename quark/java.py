@@ -51,7 +51,7 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
     <dependency>
       <groupId>io.datawire.quark</groupId>
       <artifactId>quark-core</artifactId>
-      <version>0.1.0</version>
+      <version>0.1.1-SNAPSHOT</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>

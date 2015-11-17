@@ -1,5 +1,49 @@
 var _qrt = require("quark_runtime.js");
 
+// CLASS TestByte
+function TestByte() {
+    this.__init_fields__();
+}
+exports.TestByte = TestByte;
+
+function TestByte__init_fields__() {}
+TestByte.prototype.__init_fields__ = TestByte__init_fields__;
+
+function TestByte_run() {
+    var map = new Map();
+    var b = 3;
+    _qrt.print(_qrt.toString(b));
+    _qrt.print(_qrt.toString((this).func()));
+}
+TestByte.prototype.run = TestByte_run;
+
+function TestByte_func() {
+    return new Number();
+}
+TestByte.prototype.func = TestByte_func;
+
+// CLASS TestShort
+function TestShort() {
+    this.__init_fields__();
+}
+exports.TestShort = TestShort;
+
+function TestShort__init_fields__() {}
+TestShort.prototype.__init_fields__ = TestShort__init_fields__;
+
+function TestShort_run() {
+    var map = new Map();
+    var b = 3;
+    _qrt.print(_qrt.toString(b));
+    _qrt.print(_qrt.toString((this).func()));
+}
+TestShort.prototype.run = TestShort_run;
+
+function TestShort_func() {
+    return new Number();
+}
+TestShort.prototype.func = TestShort_func;
+
 // CLASS TestInt
 function TestInt() {
     this.__init_fields__();
@@ -44,25 +88,11 @@ function TestLong_func() {
 }
 TestLong.prototype.func = TestLong_func;
 
-// CLASS Test
-function Test() {
-    this.__init_fields__();
-}
-exports.Test = Test;
-
-function Test__init_fields__() {}
-Test.prototype.__init_fields__ = Test__init_fields__;
-
-function Test_run() {
-    var map = new Map();
-}
-Test.prototype.run = Test_run;
-
 function main() {
+    (new TestByte()).run();
+    (new TestShort()).run();
     (new TestInt()).run();
     (new TestLong()).run();
-    (new Test()).run();
-    (new Test()).run();
 }
 exports.main = main;
 

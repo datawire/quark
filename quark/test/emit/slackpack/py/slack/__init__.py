@@ -148,6 +148,8 @@ class Client(object):
 
     def onWSInit(self, socket): pass
 
+    def onWSBinary(self, socket, message): pass
+
     def onWSClosed(self, socket): pass
 
     def onWSFinal(self, socket): pass

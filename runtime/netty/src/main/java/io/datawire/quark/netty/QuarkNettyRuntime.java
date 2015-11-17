@@ -1,6 +1,8 @@
 package io.datawire.quark.netty;
 
 import io.datawire.quark.runtime.AbstractDatawireRuntime;
+import io.datawire.quark.runtime.Builtins;
+import io.datawire.quark.runtime.Codec;
 import io.datawire.quark.runtime.HTTPHandler;
 import io.datawire.quark.runtime.HTTPRequest;
 import io.datawire.quark.runtime.Runtime;
@@ -365,6 +367,11 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 }
             }
         });
+    }
+
+    @Override
+    public Codec codec() {
+        return Builtins.defaultCodec();
     }
 
 }
