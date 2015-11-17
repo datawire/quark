@@ -36,7 +36,7 @@ def main():
     _println(str((b).putStringUTF8(0, hello)));
     _println((c).toHexdump(b, 0, len(hello), 2));
     _println((c).toBase64(b, 0, len(hello)));
-    d = (c).fromHexdump(u"0x0102 0304 0506 0708 09");
+    d = (c).fromHexdump(u"0x0000000102 0304 0506");
     _println((c).toHexdump(d, 0, (d).capacity(), 1));
     i = 0;
     e = (d).capacity();

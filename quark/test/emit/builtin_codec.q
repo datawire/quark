@@ -26,8 +26,6 @@ String hexl(long v) {
     return c.toHexdump(b,0,8,10);
 }
 
-// xfail:js
-
 void main() {
     Codec c = defaultCodec();
     String hello = "hello world!";
@@ -36,7 +34,7 @@ void main() {
     print(c.toHexdump(b, 0, hello.size(), 2));
     print(c.toBase64(b, 0, hello.size()));
 
-    Buffer d = c.fromHexdump("0x0102 0304 0506 0708 09");
+    Buffer d = c.fromHexdump("0x0000000102 0304 0506");
     print(c.toHexdump(d, 0, d.capacity(), 1));
     int i = 0;
     int e = d.capacity();

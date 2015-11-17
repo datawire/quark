@@ -30,7 +30,7 @@ public class Functions {
         System.out.println(Integer.toString((b).putStringUTF8(0, hello)));
         System.out.println((c).toHexdump(b, 0, (hello).length(), 2));
         System.out.println((c).toBase64(b, 0, (hello).length()));
-        io.datawire.quark.runtime.Buffer d = (c).fromHexdump("0x0102 0304 0506 0708 09");
+        io.datawire.quark.runtime.Buffer d = (c).fromHexdump("0x0000000102 0304 0506");
         System.out.println((c).toHexdump(d, 0, (d).capacity(), 1));
         Integer i = 0;
         Integer e = (d).capacity();
