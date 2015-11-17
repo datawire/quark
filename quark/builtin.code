@@ -47,7 +47,7 @@ primitive long extends integral<long> {
 primitive float extends numeric<float> {
     macro float __div__(float other) $java{($self) / ($other)}$py{float($self) / float($other)}$js{($self) / ($other)};
     macro long round() $java{Math.round($self)}$py{long(round($self))}$javascript{Math.round($self)};
-    macro String toString() $java{Double.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
+    macro String toString() $java{Double.toString($self)}$py{repr($self)}$js{_qrt.toString($self)};
     macro JSONObject toJSON() ((new JSONObject()).setNumber)(self);
     macro JSONObject __to_JSONObject() ((self).toJSON)();
 }

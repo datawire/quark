@@ -83,7 +83,7 @@ primitive float extends numeric<float> {
                        $py{long(round($self))}
                        $javascript{Math.round($self)};
     macro String toString() $java{Double.toString($self)}
-                            $py{str($self)}
+                            $py{repr($self)}
                             $js{_qrt.toString($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
     macro JSONObject __to_JSONObject() self.toJSON();

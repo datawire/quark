@@ -15,7 +15,7 @@ def test_iterate_list():
     i = 0;
     item = (l).getListItem(i);
     while ((item) != ((l).undefined())) :
-        _println((((u"l[") + (str(i))) + (u"] = ")) + (str((item).getNumber())));
+        _println((((u"l[") + (str(i))) + (u"] = ")) + (repr((item).getNumber())));
         i = (i) + (1)
         item = (l).getListItem(i)
         if ((i) > (10)):
