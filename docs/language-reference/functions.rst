@@ -479,10 +479,15 @@ where *A* is a long integer.
 
 
 Map::__get__() - coming soon
+
 Map::__set__() - coming soon
+
 Map::contains() - coming soon
+
 Map::update() - coming soon
+
 Object::__eq__() - coming soon
+
 Object::__nq__() - coming soon
 
 .. _now:
