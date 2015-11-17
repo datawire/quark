@@ -23,6 +23,12 @@ public class Functions {
         (b).putLong(0, v);
         return (c).toHexdump(b, 0, 8, 10);
     }
+    public static String hexf(Double v) {
+        io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
+        io.datawire.quark.runtime.Buffer b = (c).buffer(8);
+        (b).putFloat(0, v);
+        return (c).toHexdump(b, 0, 8, 10);
+    }
     public static void main() {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         String hello = "hello world!";
@@ -55,6 +61,12 @@ public class Functions {
         }
         io.datawire.quark.runtime.Buffer f = (c).fromBase64("eWF5");
         System.out.println((f).getStringUTF8(0, 3));
+        io.datawire.quark.runtime.Buffer g = (c).fromHexdump("3f d5 55 55 55 55 84 3f");
+        System.out.println(("float BE ") + ((c).toHexdump(g, 0, 8, 1)));
+        System.out.println(("float ") + (Double.toString((g).getFloat(0))));
+        io.datawire.quark.runtime.Buffer h = ((c).buffer(8)).littleEndian();
+        (h).putFloat(0, (g).getFloat(0));
+        System.out.println(("float LE ") + ((c).toHexdump(h, 0, 8, 1)));
     }
     public static void main(String[] args) {
         main();

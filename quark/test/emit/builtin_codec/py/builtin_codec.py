@@ -29,6 +29,13 @@ def hexl(v):
     return (c).toHexdump(b, 0, 8, 10)
 
 
+def hexf(v):
+    c = _default_codec();
+    b = (c).buffer(8);
+    (b).putFloat(0, v);
+    return (c).toHexdump(b, 0, 8, 10)
+
+
 def main():
     c = _default_codec();
     hello = u"hello world!";
@@ -61,6 +68,12 @@ def main():
 
     f = (c).fromBase64(u"eWF5");
     _println((f).getStringUTF8(0, 3));
+    g = (c).fromHexdump(u"3f d5 55 55 55 55 84 3f");
+    _println((u"float BE ") + ((c).toHexdump(g, 0, 8, 1)));
+    _println((u"float ") + (repr((g).getFloat(0))));
+    h = ((c).buffer(8)).littleEndian();
+    (h).putFloat(0, (g).getFloat(0));
+    _println((u"float LE ") + ((c).toHexdump(h, 0, 8, 1)));
 
 
 if __name__ == "__main__":

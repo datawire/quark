@@ -32,6 +32,14 @@ function hexl(v) {
 }
 exports.hexl = hexl;
 
+function hexf(v) {
+    var c = _qrt.defaultCodec();
+    var b = (c).buffer(8);
+    (b).putFloat(0, v);
+    return (c).toHexdump(b, 0, 8, 10);
+}
+exports.hexf = hexf;
+
 function main() {
     var c = _qrt.defaultCodec();
     var hello = "hello world!";
@@ -64,6 +72,12 @@ function main() {
     }
     var f = (c).fromBase64("eWF5");
     _qrt.print((f).getStringUTF8(0, 3));
+    var g = (c).fromHexdump("3f d5 55 55 55 55 84 3f");
+    _qrt.print(("float BE ") + ((c).toHexdump(g, 0, 8, 1)));
+    _qrt.print(("float ") + (_qrt.toString((g).getFloat(0))));
+    var h = ((c).buffer(8)).littleEndian();
+    (h).putFloat(0, (g).getFloat(0));
+    _qrt.print(("float LE ") + ((c).toHexdump(h, 0, 8, 1)));
 }
 exports.main = main;
 

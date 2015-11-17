@@ -26,6 +26,13 @@ String hexl(long v) {
     return c.toHexdump(b,0,8,10);
 }
 
+String hexf(float v) {
+    Codec c = defaultCodec();
+    Buffer b = c.buffer(8);
+    b.putFloat(0, v);
+    return c.toHexdump(b,0,8,10);
+}
+
 void main() {
     Codec c = defaultCodec();
     String hello = "hello world!";
@@ -60,4 +67,11 @@ void main() {
 
     Buffer f = c.fromBase64("eWF5");
     print(f.getStringUTF8(0,3));
+
+    Buffer g = c.fromHexdump("3f d5 55 55 55 55 84 3f");
+    print("float BE " + c.toHexdump(g,0,8,1));
+    print("float " + g.getFloat(0).toString());
+    Buffer h = c.buffer(8).littleEndian();
+    h.putFloat(0, g.getFloat(0));
+    print("float LE " + c.toHexdump(h,0,8,1));
 }
