@@ -19,7 +19,15 @@ void test_update() {
     print(first["c"]);
 }
 
+void test_literal() {
+    Map<String,Object> map = {};
+    map = {"pi": 3.14159, "e": 2.718};
+    print(map["pi"]);
+    print(map["e"]);
+}
+
 void main() {
     test1();
     test_update();
+    test_literal();
 }

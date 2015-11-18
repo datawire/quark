@@ -23,9 +23,18 @@ function test_update() {
 }
 exports.test_update = test_update;
 
+function test_literal() {
+    var map = new Map([]);
+    map = new Map([["pi", 3.14159], ["e", 2.718]]);
+    _qrt.print(_qrt.map_get((map), ("pi")));
+    _qrt.print(_qrt.map_get((map), ("e")));
+}
+exports.test_literal = test_literal;
+
 function main() {
     test1();
     test_update();
+    test_literal();
 }
 exports.main = main;
 

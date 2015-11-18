@@ -382,8 +382,8 @@ def castify(type, expr):
             expr.resolved = type.resolved
         else:
             expr.resolved = texpr(expr.root.env["Object"])
-    if type and isinstance(expr, List):
-        if type.resolved.type.name.text == "List":
+    if type and isinstance(expr, (List, Map)):
+        if type.resolved.type.name.text == expr.__class__.__name__:
             expr.resolved = type.resolved
 
 class Resolver(object):

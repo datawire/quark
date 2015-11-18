@@ -22,9 +22,17 @@ def test_update():
     _println((first).get(u"c"));
 
 
+def test_literal():
+    map = {};
+    map = {u"pi": 3.14159, u"e": 2.718}
+    _println((map).get(u"pi"));
+    _println((map).get(u"e"));
+
+
 def main():
     test1();
     test_update();
+    test_literal();
 
 
 if __name__ == "__main__":

@@ -18,9 +18,16 @@ public class Functions {
         System.out.println((first).get("b"));
         System.out.println((first).get("c"));
     }
+    public static void test_literal() {
+        java.util.HashMap<String,Object> map = io.datawire.quark.runtime.Builtins.map(new Object[]{});
+        map = io.datawire.quark.runtime.Builtins.map(new Object[]{"pi", 3.14159, "e", 2.718});
+        System.out.println((map).get("pi"));
+        System.out.println((map).get("e"));
+    }
     public static void main() {
         Functions.test1();
         Functions.test_update();
+        Functions.test_literal();
     }
     public static void main(String[] args) {
         main();

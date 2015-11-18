@@ -203,6 +203,11 @@ class PythonExprRenderer(ExprRenderer):
     def match_List(self, l):
         return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
 
+    def match_Map(self, m):
+        return "{%s}" % \
+            (", ".join(["%s: %s" % (e.key.match(self), e.value.match(self))
+                        for e in m.entries]))
+
     def match_Bool(self, b):
         return b.text.capitalize()
 

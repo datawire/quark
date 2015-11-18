@@ -386,6 +386,11 @@ class ExprRenderer(object):
         return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \
             (", ".join([e.match(self) for e in l.elements]))
 
+    def match_Map(self, m):
+        return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
+            (", ".join(["%s, %s" % (e.key.match(self), e.value.match(self))
+                        for e in m.entries]))
+
     def match_Cast(self, c):
         return self.maybe_cast(c, c.expr)
 

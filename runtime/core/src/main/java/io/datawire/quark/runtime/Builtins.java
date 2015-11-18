@@ -11,6 +11,7 @@ import io.netty.util.CharsetUtil;
 
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.List;
@@ -70,6 +71,16 @@ public class Builtins {
             b.append(part);
         }
         return b.toString();
+    }
+
+    @SuppressWarnings("rawtypes")
+    public static HashMap map(Object[] items) {
+        HashMap result = new HashMap();
+        for (int i = 0; i < items.length; i++) {
+            result.put(items[i], items[i+1]);
+            i++;
+        }
+        return result;
     }
 
     public static Codec defaultCodec() {

@@ -326,6 +326,11 @@ class JSExprRenderer(java.ExprRenderer):
     def match_List(self, l):
         return "[%s]" % ", ".join([e.match(self) for e in l.elements])
 
+    def match_Map(self, m):
+        return "new Map([%s])" % \
+            (", ".join(["[%s, %s]" % (e.key.match(self), e.value.match(self))
+                        for e in m.entries]))
+
     @overload(ast.Class, ast.Super)
     def invoke(self, cls, expr, args):
         return "%s.super_.call(%s)" % (expr.clazz.name.match(self.namer), ", ".join(["this"] + args))
