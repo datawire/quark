@@ -122,6 +122,29 @@ class test_join extends string_test {
     }
 }
 
+class test_split extends string_test {
+    String what;
+    String sep;
+    String altsep;
+    test_split(String sep, String altsep) {
+        self.sep = sep;
+        self.altsep = altsep;
+    }
+    test_split that(String what) {
+        self.what = what;
+        return self;
+    }
+    test_split does(String expected) {
+        List<String> parts = self.what.split(self.sep);
+        String actual = self.altsep.join(parts);
+        self.check(actual,
+                   expected,
+                   "'" + self.altsep + "'.join('" + self.what + "'.split('" + self.sep + "'))",
+                   "'");
+        return self;
+    }
+}
+
 void main() {
     new test_size("").does(0);
     new test_size("1").does(1);
@@ -180,4 +203,24 @@ void main() {
         .that().a("a").does("a")
         .that().a("a").a("b").does("a,b")
         .that().a("a").a("b").a("c").does("a,b,c");
+
+    new test_split(",", "|")
+        .that("").does("")
+        .that("a").does("a")
+        .that(",").does("|")
+        .that("a,").does("a|")
+        .that(",a").does("|a")
+        .that("a,b").does("a|b")
+        .that("a,,b").does("a||b")
+        .that("a,b,c").does("a|b|c");
+
+    new test_split("foo", "|")
+        .that("").does("")
+        .that("a").does("a")
+        .that("foo").does("|")
+        .that("afoo").does("a|")
+        .that("fooa").does("|a")
+        .that("afoob").does("a|b")
+        .that("afoofoob").does("a||b")
+        .that("afoobfooc").does("a|b|c");
 }

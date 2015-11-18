@@ -110,6 +110,9 @@ primitive String {
     macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}
                                                  $py{($self).replace(($from), ($to), 1)}
                                                  $js{($self).replace(($from), ($to))};
+    macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
+                                         $py{($self).split($sep)}
+                                         $js{($self).split($sep)};
     macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
                                           $py{($self).join($parts)}
                                           $js{($parts).join($self)};

@@ -251,6 +251,16 @@ File(
      Var(Name(self)), Fixed(').replace(('), Var(Name(from)), Fixed('), ('),
      Var(Name(to)), Fixed('))')))),
 
+  MethodMacro(Type(Name(List), Type(Name(String))), Name(split),
+   Param(Type(Name(String)), Name(sep)),
+   Native(NativeCase(java,
+     Fixed('new java.util.ArrayList<String>(java.util.Arrays.asList(('),
+     Var(Name(self)), Fixed(').split(java.util.regex.Pattern.quote('),
+     Var(Name(sep)), Fixed('), -1)))')), NativeCase(py, Fixed('('),
+     Var(Name(self)), Fixed(').split('), Var(Name(sep)), Fixed(')')),
+    NativeCase(js, Fixed('('), Var(Name(self)), Fixed(').split('),
+     Var(Name(sep)), Fixed(')')))),
+
   MethodMacro(Type(Name(String)), Name(join),
    Param(Type(Name(List), Type(Name(String))), Name(parts)),
    Native(NativeCase(java,
