@@ -225,6 +225,38 @@ function test_join_does(expected) {
 }
 test_join.prototype.does = test_join_does;
 
+// CLASS test_split
+
+function test_split(sep, altsep) {
+    test_split.super_.call(this);
+    (this).sep = sep;
+    (this).altsep = altsep;
+}
+exports.test_split = test_split;
+_qrt.util.inherits(test_split, string_test);
+
+function test_split__init_fields__() {
+    string_test.prototype.__init_fields__.call(this);
+    this.what = null;
+    this.sep = null;
+    this.altsep = null;
+}
+test_split.prototype.__init_fields__ = test_split__init_fields__;
+
+function test_split_that(what) {
+    (this).what = what;
+    return this;
+}
+test_split.prototype.that = test_split_that;
+
+function test_split_does(expected) {
+    var parts = ((this).what).split((this).sep);
+    var actual = (parts).join((this).altsep);
+    (this).check(actual, expected, (((((("'") + ((this).altsep)) + ("'.join('")) + ((this).what)) + ("'.split('")) + ((this).sep)) + ("'))"), "'");
+    return this;
+}
+test_split.prototype.does = test_split_does;
+
 function main() {
     (new test_size("")).does(0);
     (new test_size("1")).does(1);
@@ -238,6 +270,8 @@ function main() {
     ((((((((((((((new test_replace("abcd")).that("ab", "AB")).does("ABcd")).that("b", "bb")).does("abbcd")).that("ab", "ab")).does("abcd")).that("", "EE")).does("EEabcd")).that("c", "EE")).does("abEEd")).that("d", "EE")).does("abcEE")).that("x", "EE")).does("abcd");
     ((((((((((((((new test_join("")).that()).does("")).that()).a("a")).does("a")).that()).a("a")).a("b")).does("ab")).that()).a("a")).a("b")).a("c")).does("abc");
     ((((((((((((((new test_join(",")).that()).does("")).that()).a("a")).does("a")).that()).a("a")).a("b")).does("a,b")).that()).a("a")).a("b")).a("c")).does("a,b,c");
+    ((((((((((((((((new test_split(",", "|")).that("")).does("")).that("a")).does("a")).that(",")).does("|")).that("a,")).does("a|")).that(",a")).does("|a")).that("a,b")).does("a|b")).that("a,,b")).does("a||b")).that("a,b,c")).does("a|b|c");
+    ((((((((((((((((new test_split("foo", "|")).that("")).does("")).that("a")).does("a")).that("foo")).does("|")).that("afoo")).does("a|")).that("fooa")).does("|a")).that("afoob")).does("a|b")).that("afoofoob")).does("a||b")).that("afoobfooc")).does("a|b|c");
 }
 exports.main = main;
 
