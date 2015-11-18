@@ -29,8 +29,9 @@ def main():
         exit("Failed to read Slack token. See examples/README.md for more information.")
 
     runtime = quark_twisted_runtime.get_twisted_runtime()
-    client = slack.Client(runtime, token, Handler())
-    client.connect()
+    client = slack.Client(runtime, token)
+    client.post("#demo", "testing...")
+    client.subscribe(Handler())
     runtime.launch()
 
 

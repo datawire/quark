@@ -135,8 +135,6 @@ class test_split extends string_test {
         return self;
     }
     test_split does(String expected) {
-        // xfail the following line fails with
-        // CompileError: string_methods.q:138:30:type mismatch: expected 0.List<0.String>, got 0.List<0.List.T>
         List<String> parts = self.what.split(self.sep);
         String actual = self.altsep.join(parts);
         self.check(actual,

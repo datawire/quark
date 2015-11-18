@@ -1,0 +1,8 @@
+File(
+ Function(Type(Name(void)), Name(test), Block(
+   Local(
+    Declaration(Type(Name(List), Type(Name(String))), Name(parts),
+     Call(Attr(String("foo bar baz", $type=0.String), Name(split),
+      $type=0.String.split), String(" ", $type=0.String),
+     $type=0.List<0.String>), $type=0.List<0.String>))))
+)

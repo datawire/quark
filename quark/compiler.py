@@ -225,7 +225,7 @@ class TypeExpr(object):
     @overload(Callable)
     def invoke(self, dfn, call, errors):
         self.check(dfn.params, call, errors)
-        return texpr(dfn.type.resolved.type, self.bindings)
+        return texpr(dfn.type.resolved.type, dfn.type.resolved.bindings, self.bindings)
 
     @overload(Class)
     def invoke(self, cls, call, errors):
@@ -243,7 +243,6 @@ class TypeExpr(object):
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
                 expr.coersion = dfn
             else:
-                # XXX: should always signal errors, this is for autocast
                 if errors is not None:
                     errors.append("%s:type mismatch: expected %s, got %s" %
                                   (lineinfo(expr), self, expr.resolved))
