@@ -59,3 +59,6 @@ We should drop the semi-colon. Just a personal preference, but modern languages 
 # Other Thoughts and Comments
 
 A class-based language for defining client-service communication is weird. I think it immediately feels too low-level as a language construct. Why are we not defining constructs in terms of Services, for example, a Service <identifier> { } construct where the top-level methods in the Service construct map to the service API somehow.
+
+
+I'm not actually sure I could write a functional quark service implementation right now given the documentation. What about stuff like the standard library? It seems I absolutely **must** at this time look at the examples to see how things are put together.
