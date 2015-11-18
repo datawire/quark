@@ -1,9 +1,17 @@
 var _qrt = require("quark_runtime.js");
 
-function test() {
+function foo(s) {
+    _qrt.print(s);
+}
+exports.foo = foo;
+
+function main() {
     var o = "Hello World!";
     var s = o;
     var s2;
     s2 = o;
+    foo(o);
 }
-exports.test = test;
+exports.main = main;
+
+main();

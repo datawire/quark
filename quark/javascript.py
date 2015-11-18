@@ -263,9 +263,6 @@ class JSStatementRenderer(java.StatementRenderer):
         self.namer = namer
         self.exprr = JSExprRenderer(self.namer)
 
-    def maybe_cast(self, type, expr):
-        return expr.match(self.exprr)
-
     def match_Param(self, d):
         name = d.name.match(self.namer)
         if d.value:
@@ -296,6 +293,9 @@ class JSExprRenderer(java.ExprRenderer):
     @property
     def lang(self):
         return "js"
+
+    def maybe_cast(self, type, expr):
+        return expr.match(self)
 
     @overload(ast.AST)
     def var(self, dfn, v):

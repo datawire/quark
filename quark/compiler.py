@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
+import os, inspect
 from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
@@ -207,6 +207,10 @@ class TypeExpr(object):
                 pexpr = texpr(param.resolved.type, param.resolved.bindings, self.bindings)
                 arg = call.args[idx]
                 idx += 1
+                class FakeType: pass
+                ft = FakeType()
+                ft.resolved = pexpr
+                castify(ft, arg)
                 if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
                     dfn = get_field(arg.resolved.type, "__to_%s" % pexpr.type.name, None)
                     if dfn and len(dfn.params) == 0 and pexpr.assignableFrom(dfn.type.resolved):
@@ -372,6 +376,16 @@ class Use(object):
     def visit_Bool(self, n):
         self.leaf(n, "bool")
 
+def castify(type, expr):
+    if isinstance(expr, Cast):
+        if type:
+            expr.resolved = type.resolved
+        else:
+            expr.resolved = texpr(expr.root.env["Object"])
+    if type and isinstance(expr, List):
+        if type.resolved.type.name.text == "List":
+            expr.resolved = type.resolved
+
 class Resolver(object):
 
     def __init__(self):
@@ -396,8 +410,12 @@ class Resolver(object):
             c.resolved = c.expr.resolved.invoke(c, self.errors)
 
     def leave_Assign(self, a):
+        castify(a.lhs, a.rhs)
         if a.lhs.resolved and a.rhs.resolved:
-            a.lhs.resolved.assign(a.rhs)
+            a.lhs.resolved.assign(a.rhs, self.errors)
+
+    def leave_ExprStmt(self, es):
+        castify(None, es.expr)
 
     def leave_Return(self, r):
         if r.expr is None:
@@ -414,11 +432,13 @@ class Resolver(object):
             return
 
         if r.callable.type.resolved:
+            castify(r.callable.type, r.expr)
             r.callable.type.resolved.assign(r.expr, self.errors)
 
     def leave_Declaration(self, d):
+        castify(d.type, d.value)
         if d.type.resolved and d.value and d.value.resolved:
-            d.type.resolved.assign(d.value)
+            d.type.resolved.assign(d.value, self.errors)
 
     def leave_List(self, l):
         if l.elements and l.elements[0].resolved:
@@ -470,7 +490,15 @@ class ParseError(Exception): pass
 class CompileError(Exception): pass
 
 def lineinfo(node):
-    return "%s:%s:%s" % (getattr(node, "filename", "<none>"), node.line, node.column)
+    trace = getattr(node, "_trace", None)
+    stack = [getattr(node, "filename", "<none>")]
+    while trace:
+        stack.append("%s:%s:" % (inspect.getfile(trace.annotator), trace.annotator.__name__))
+        stack.append(trace.text)
+        stack.append("<generated>")
+        trace = trace.prev
+    stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
+    return "\n".join(stack)
 
 class SetFile:
 
@@ -480,11 +508,29 @@ class SetFile:
     def visit_AST(self, ast):
         ast.file = self.file
 
+class SetTrace:
+
+    def __init__(self, node, annotator, text):
+        self.node = node
+        self.annotator = annotator
+        self.text = text
+
+    def visit_AST(self, ast):
+        ast._trace = Trace(self.annotator, self.text, getattr(ast, "_trace", None))
+
+class Trace:
+
+    def __init__(self, annotator, text, prev):
+        self.annotator = annotator
+        self.text = text
+        self.prev = prev
+
 class ApplyAnnotators:
 
     def __init__(self, annotators):
         self.annotators = annotators
-        self.output = []
+        self.modified = False
+        self.parser = Parser()
 
     def visit_AST(self, node):
         if hasattr(node, "annotations"):
@@ -494,10 +540,15 @@ class ApplyAnnotators:
                 name = ann.name.text
                 if name not in done and name in self.annotators:
                     for afun in self.annotators[name]:
-                        code = afun(node)
-                        if not isinstance(code, str):
-                            raise TypeError("annotators need to produce string data: %s" % afun)
-                        self.output.append((name, code))
+                        result = afun(node)
+                        if isinstance(result, basestring):
+                            text = afun(node)
+                            node._replacement = self.parser.rule(node._rule, text)
+                        else:
+                            node._replacement = result
+                            text = result.code()
+                        node._replacement.traverse(SetTrace(node._replacement, afun, text))
+                        self.modified = True
                     done.add(name)
 
 class Contextualize:
@@ -543,6 +594,21 @@ class Contextualize:
 
 BUILTIN = os.path.join(os.path.dirname(__file__), "builtin.q")
 
+def delegate(node):
+    delegate = [a for a in node.annotations if a.name.text == "delegate"][0].arguments[0].code()
+    args = ["\"%s\"" % node.name]
+    if len(node.params) == 1:
+        args.append(node.params[0].name.code())
+    else:
+        args.append("[%s]" % ", ".join([p.name.code() for p in node.params]))
+    if node.type and node.type.code() != "void":
+        body = "{ return ?(%s(%s)); }" % (delegate, ", ".join(args))
+    else:
+        body = "{ %s(%s); }" % (delegate, ", ".join(args))
+    node.body = Parser().rule("body", body)
+    node.annotations = [a for a in node.annotations if a.name.text != "delegate"]
+    return node
+
 class Compiler:
 
     def __init__(self):
@@ -553,6 +619,7 @@ class Compiler:
         with open(BUILTIN, "rb") as fd:
             self.parse(BUILTIN, fd.read())
         self.generated = OrderedDict()
+        self.annotator("delegate", delegate)
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -565,40 +632,20 @@ class Compiler:
 
     def parse(self, name, text):
         try:
-            self.parse_r(name, text)
-        finally:
-            for _, target in self.emitters:
-                self.write(target)
-
-    def parse_r(self, name, text):
-        try:
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
-        file.traverse(SetFile(file))
-        file.name = name
+        while True:
+            file.traverse(SetFile(file))
+            file.name = name
+            file.traverse(Contextualize(self.root))
+            aa = ApplyAnnotators(self.annotators)
+            file.traverse(aa)
+            if aa.modified:
+                file = copy(file)
+            else:
+                break
         self.root.add(file)
-        file.traverse(Contextualize(self.root))
-        aa = ApplyAnnotators(self.annotators)
-        file.traverse(aa)
-        for ann_name, code in aa.output:
-            base, ext = os.path.splitext(name)
-            gen_name = "%s@%s%s" % (base, ann_name, ext)
-            assert gen_name not in self.generated
-            self.generated[gen_name] = code
-            self.parse_r(gen_name, code)
-
-    def write(self, target):
-        if not os.path.exists(target):
-            os.makedirs(target)
-        for name, content in self.generated.items():
-            path = os.path.join(target, name)
-            dir = os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            with open(path, "wb") as fd:
-                fd.write(content)
-                print "wrote", path
 
     def compile(self):
         self.root.traverse(InitParent())

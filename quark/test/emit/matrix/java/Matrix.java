@@ -5,9 +5,9 @@ public class Matrix<T> {
     public Matrix(Integer width, Integer height) {
         (this).width = width;
         (this).height = height;
-        columns = (java.util.ArrayList<java.util.ArrayList<T>>) (new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        columns = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         while (((columns).size()) < (width)) {
-            java.util.ArrayList<T> column = (java.util.ArrayList<T>) (new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+            java.util.ArrayList<T> column = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             while (((column).size()) < (height)) {
                 (column).add(null);
             }

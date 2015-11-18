@@ -24,9 +24,16 @@ def copy(node):
     elif isinstance(node, list):
         return [copy(n) for n in node]
     else:
-        result = node.copy()
-        if hasattr(node, "annotations"):
-            result.annotations = copy(node.annotations)
+        if hasattr(node, "_replacement"):
+            origin = node._replacement
+        else:
+            origin = node
+        result = origin.copy()
+        if hasattr(origin, "annotations"):
+            result.annotations = copy(origin.annotations)
+        for attr in "node", "line", "column", "_trace":
+            if hasattr(origin, attr):
+                setattr(result, attr, getattr(origin, attr))
         return result
 
 def code(*args, **kwargs):
@@ -127,6 +134,11 @@ class File(AST):
     @coder
     def code(self, coder):
         return coder.code(self.definitions, "\n")
+
+    def copy(self):
+        result = File(copy(self.definitions))
+        result.name = self.name
+        return result
 
 ## Definitions
 
@@ -243,6 +255,9 @@ class Class(Definition):
             body = coder.code(self.definitions, "\n", head="\n", tail="\n")
         return "%s {%s}" % (head, body)
 
+    def copy(self):
+        return Class(copy(self.name), copy(self.parameters), copy(self.bases), copy(self.definitions))
+
 class Method(Function):
     pass
 
@@ -332,6 +347,9 @@ class Return(Statement):
     def code(self, coder):
         return "return %s;" % (self.expr.code(coder))
 
+    def copy(self):
+        return Return(copy(self.expr))
+
 class Break(Statement):
 
     @property
@@ -385,6 +403,9 @@ class If(Statement):
             result += " else %s" % self.alternative.code(coder)
         return result
 
+    def copy(self):
+        return If(copy(self.predicate), copy(self.consequence), copy(self.alternative))
+
 class While(Statement):
 
     def __init__(self, condition, body):
@@ -409,6 +430,9 @@ class ExprStmt(Statement):
     def code(self, coder):
         return "%s;" % self.expr.code(coder)
 
+    def copy(self):
+        return ExprStmt(copy(self.expr))
+
 class Local(Statement):
 
     def __init__(self, declaration):
@@ -421,6 +445,9 @@ class Local(Statement):
     @coder
     def code(self, coder):
         return "%s;" % self.declaration.code(coder)
+
+    def copy(self):
+        return Local(copy(self.declaration))
 
 ## Expressions
 
@@ -450,6 +477,9 @@ class Var(Expression):
     def code(self, coder):
         return self.name.code(coder)
 
+    def copy(self):
+        return Var(copy(self.name))
+
 class Attr(Expression):
 
     def __init__(self, expr, attr):
@@ -464,6 +494,9 @@ class Attr(Expression):
     @coder
     def code(self, coder):
         return "(%s).%s" % (self.expr.code(coder), self.attr.code(coder))
+
+    def copy(self):
+        return Attr(copy(self.expr), copy(self.attr))
 
 class Call(Expression):
 
@@ -484,6 +517,9 @@ class Call(Expression):
         else:
             expr = "(%s)" % self.expr.code(coder)
         return "%s(%s)" % (expr, coder.code(self.args, ", "))
+
+    def copy(self):
+        return Call(copy(self.expr), copy(self.args))
 
 class Literal(Expression):
     pass
@@ -531,6 +567,9 @@ class List(CompoundLiteral):
     @coder
     def code(self, coder):
         return "[%s]" % coder.code(self.elements, ", ")
+
+    def copy(self):
+        return List(copy(self.elements))
 
 class Map(CompoundLiteral):
 
@@ -604,6 +643,22 @@ class Fixed(Expression):
     @coder
     def code(self, coder):
         return self.text
+
+class Cast(Expression):
+
+    def __init__(self, expr):
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.expr
+
+    @coder
+    def code(self, coder):
+        return "?(%s)" % self.expr.code(coder)
+
+    def copy(self):
+        return Cast(copy(self.expr))
 
 ## Miscelaneous
 
@@ -687,6 +742,9 @@ class Block(AST):
         with coder.indentation():
             return "{%s}" % coder.code(self.statements, "\n", head="\n",
                                        tail="\n")
+
+    def copy(self):
+        return Block(copy(self.statements))
 
 class Annotation(AST):
 

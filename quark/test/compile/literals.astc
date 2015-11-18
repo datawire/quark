@@ -2,7 +2,7 @@ File(
  Function(Type(Name(void)), Name(test1), Block(
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(zero), List(,
-     $type=0.List<0.List.T>), $type=0.List<0.int>)),
+     $type=0.List<0.int>), $type=0.List<0.int>)),
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(one), List(Number(1,
       $type=0.int), $type=0.List<0.int>), $type=0.List<0.int>)),
@@ -14,7 +14,7 @@ File(
  Function(Type(Name(void)), Name(test2), Block(
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(zero), List(,
-     $type=0.List<0.List.T>), $type=0.List<0.String>)),
+     $type=0.List<0.String>), $type=0.List<0.String>)),
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(one),
      List(String("one", $type=0.String), $type=0.List<0.String>),

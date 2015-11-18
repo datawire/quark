@@ -52,7 +52,8 @@ class Parser:
                "NEQ": "!=",
                "AND": "&&",
                "OR": "||",
-               "AT": "@"}
+               "AT": "@",
+               "CAST": "?"}
 
     aliases = {
         "+": "__add__",
@@ -362,13 +363,16 @@ class Parser:
     @g.rule("muloperand = uop? prim")
     def visit_muloperand(self, node, (uop, expr)):
         if uop:
-            return Call(Attr(expr, uop[0]), [])
+            return uop[0](expr)
         else:
             return expr
 
-    @g.rule('uop = MINUS / TWIDDLE')
+    @g.rule('uop = MINUS / TWIDDLE / CAST')
     def visit_uop(self, node, (op,)):
-        return Name(self.unary_aliases[op])
+        if op == "?":
+            return lambda e: Cast(e)
+        else:
+            return lambda e: Call(Attr(e, Name(self.unary_aliases[op])), [])
 
     @g.rule('prim = atom modifier*')
     def visit_prim(self, node, (atom, mods)):

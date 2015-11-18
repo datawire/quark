@@ -167,7 +167,15 @@ File(
      Fixed('Integer.toString('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.int), Fixed(')')),
     NativeCase(js, Fixed('_qrt.toString('), Var(Name(self), $type=0.int),
-     Fixed(')'))))),
+     Fixed(')')))),
+
+  MethodMacro(Type(Name(byte)), Name(__to_byte), Var(Name(self), $type=0.int)),
+
+  MethodMacro(Type(Name(short)), Name(__to_short), Var(Name(self),
+   $type=0.int)),
+
+  MethodMacro(Type(Name(long)), Name(__to_long), Var(Name(self),
+   $type=0.int))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),

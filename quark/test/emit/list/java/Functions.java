@@ -18,7 +18,7 @@ public class Functions {
         System.out.println((list).get(2));
     }
     public static void test3() {
-        java.util.ArrayList<Integer> list = (java.util.ArrayList<Integer>) (new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        java.util.ArrayList<Integer> list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         System.out.println(list);
         list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{1}));
         System.out.println(list);
@@ -26,7 +26,7 @@ public class Functions {
         System.out.println(list);
     }
     public static void test4() {
-        java.util.ArrayList<String> list = (java.util.ArrayList<String>) (new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        java.util.ArrayList<String> list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         System.out.println(list);
         list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"one"}));
         System.out.println(list);
@@ -34,7 +34,7 @@ public class Functions {
         System.out.println(list);
     }
     public static void test5() {
-        java.util.ArrayList<Box<Integer>> boxes = (java.util.ArrayList<Box<Integer>>) (new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        java.util.ArrayList<Box<Integer>> boxes = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (boxes).add(new Box<Integer>());
         ((boxes).get(0)).set(3);
         System.out.println(((boxes).get(0)).get());

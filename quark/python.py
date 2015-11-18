@@ -128,7 +128,10 @@ class PythonStatementRenderer(StatementRenderer):
         else:
             # XXX: will probably need to adjust this to deal with
             #      different declaration cases in python
-            return name
+            if isinstance(d, Param):
+                return name
+            else:
+                return "%s = None" % name
 
     def match_Block(self, b, header=None):
         header = header or []
@@ -159,6 +162,13 @@ class PythonExprRenderer(ExprRenderer):
     @property
     def lang(self):
         return "py"
+
+    @property
+    def selfie(self):
+        return "self"
+
+    def maybe_cast(self, type, expr):
+        return expr.match(self)
 
     @overload(AST)
     def var(self, dfn, v):

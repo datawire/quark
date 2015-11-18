@@ -1,8 +1,17 @@
 from quark_runtime import *
 
 
-def test():
+def foo(s):
+    _println(s);
+
+
+def main():
     o = u"Hello World!";
     s = o;
-    s2;
+    s2 = None;
     s2 = o
+    foo(o);
+
+
+if __name__ == "__main__":
+    main()

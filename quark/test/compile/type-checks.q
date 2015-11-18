@@ -32,4 +32,8 @@ void main() {
     new C("1", "3.14159", 3);
     new C();
     new D("asdf");
+    Object o = "asdf";
+    String s = o;
+    String s2;
+    s2 = o;
 }

@@ -11,3 +11,5 @@ type-checks.q:32:16:type mismatch: expected 0.float, got 0.String
 type-checks.q:32:27:type mismatch: expected 0.String, got 0.int
 type-checks.q:33:5: expected 3 args, got 0
 type-checks.q:34:5: expected 0 args, got 1
+type-checks.q:36:16:type mismatch: expected 0.String, got 0.Object
+type-checks.q:38:10:type mismatch: expected 0.String, got 0.Object

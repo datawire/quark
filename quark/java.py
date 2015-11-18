@@ -287,17 +287,9 @@ class StatementRenderer(object):
         self.namer = namer
         self.exprr = ExprRenderer(self.namer)
 
-    def maybe_cast(self, type, expr):
-        if expr.coersion:
-            return self.exprr.coerce(expr)
-        result = expr.match(self.exprr)
-        if not type.resolved.assignableFrom(expr.resolved):
-            result = "(%s) (%s)" % (self.exprr.type(type.resolved, type), result)
-        return result
-
     def match_Return(self, r):
         if r.expr:
-            return "return %s;" % self.maybe_cast(r.callable.type, r.expr)
+            return "return %s;" % self.exprr.maybe_cast(r.callable.type, r.expr)
         else:
             return "return;"
 
@@ -308,7 +300,7 @@ class StatementRenderer(object):
         type = self.exprr.type(d.resolved, d)
         name = d.name.match(self.namer)
         if d.value:
-            value = self.maybe_cast(d.type, d.value)
+            value = self.exprr.maybe_cast(d.type, d.value)
             return "%s %s = %s" % (type, name, value)
         else:
             return "%s %s" % (type, name)
@@ -317,7 +309,7 @@ class StatementRenderer(object):
         return "%s;" % stmt.expr.match(self.exprr)
 
     def match_Assign(self, a):
-        return "%s = %s;" % (a.lhs.match(self), self.maybe_cast(a.lhs, a.rhs))
+        return "%s = %s;" % (a.lhs.match(self), self.exprr.maybe_cast(a.lhs, a.rhs))
 
     def match_Attr(self, a):
         return "(%s).%s" % (a.expr.match(self.exprr), a.attr.text)
@@ -354,6 +346,18 @@ class ExprRenderer(object):
     def lang(self):
         return "java"
 
+    @property
+    def selfie(self):
+        return "this"
+
+    def maybe_cast(self, type, expr):
+        if expr.coersion:
+            return self.coerce(expr)
+        result = expr.match(self)
+        if not type.resolved.assignableFrom(expr.resolved):
+            result = "(%s) (%s)" % (self.type(type.resolved, type), result)
+        return result
+
     def match_Bool(self, b):
         return b.text
 
@@ -381,6 +385,9 @@ class ExprRenderer(object):
     def match_List(self, l):
         return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \
             (", ".join([e.match(self) for e in l.elements]))
+
+    def match_Cast(self, c):
+        return self.maybe_cast(c, c.expr)
 
     def match_Call(self, c):
         type = c.expr.resolved.type
@@ -462,14 +469,16 @@ class ExprRenderer(object):
     def invoke(self, func, expr, args):
         return "%s(%s)" % (expr.match(self), ", ".join(args))
 
-    @overload(Method)
+    @overload(Method, Var)
+    def invoke(self, method, expr, args):
+        return "(%s).%s(%s)" % (self.selfie, method.name.match(self.namer), ", ".join(args))
+
+    @overload(Method, Attr)
     def invoke(self, method, expr, args):
         if isinstance(expr.expr, Super):
             return self.invoke_super_method(method, expr, args)
         else:
-            return "(%s).%s(%s)" % (expr.expr.match(self),
-                                    method.name.match(self.namer),
-                                    ", ".join(args))
+            return "%s(%s)" % (expr.match(self), ", ".join(args))
 
     def invoke_super_method(self, method, expr, args):
         return "super.%s(%s)" % (method.name.match(self.namer),

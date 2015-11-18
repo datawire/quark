@@ -65,6 +65,9 @@ primitive int extends integral<int> {
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $js{_qrt.toString($self)};
+    macro byte __to_byte() self;
+    macro short __to_short() self;
+    macro long __to_long() self;
 }
 
 @mapping($java{Long} $py{long} $js{Number})

@@ -24,9 +24,11 @@ class Grammar:
         self.rules.append(r)
         def decorate(action):
             def decorator(self, node, children):
+                rule_name = action.__name__[len("visit_"):]
                 result = action(self, node, children)
                 if hasattr(result, "origin"):
                     result.origin(node)
+                    result._rule = rule_name
                 return result
             return decorator
         return decorate
@@ -45,6 +47,9 @@ class Grammar:
         class Parser(cls, parsimonious.NodeVisitor):
             rules = "\n".join(self.rules + extra_rules)
             grammar = parsimonious.Grammar(rules)
+
+            def rule(self, name, text):
+                return self.visit(self.grammar[name].parse(text))
 
         for k, v, in visitors.items():
             cls.__dict__[k] = v
