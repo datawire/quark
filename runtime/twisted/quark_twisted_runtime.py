@@ -4,6 +4,7 @@ __version__ = "0.1.0"
 
 from StringIO import StringIO
 
+from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
 
 from twisted.internet import defer, reactor, ssl
@@ -42,7 +43,10 @@ class _QWSCProtocol(WebSocketClientProtocol):
         self.factory.qws.handler.onWSConnected(self.factory.qws)
 
     def onMessage(self, payload, isBinary):
-        self.factory.qws.handler.onWSMessage(self.factory.qws, payload)
+        if isBinary:
+            self.factory.qws.handler.onWSBinary(self.factory.qws, Buffer(payload))
+        else:
+            self.factory.qws.handler.onWSMessage(self.factory.qws, payload.decode("utf-8"))
 
     def onClose(self, wasClean, code, reason):
         if wasClean:
@@ -72,7 +76,13 @@ class _QuarkWebSocket(WebSocketClientProtocol):
 
     def send(self, message):
         if self.is_open:
-            self.protocol.sendMessage(message)
+            self.protocol.sendMessage(message.encode('utf-8', false))
+            return 1
+        return 0
+
+    def sendBinary(self, message):
+        if self.is_open:
+            self.protocol.sendMessage(message.data, true)
             return 1
         return 0
 
