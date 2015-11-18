@@ -62,3 +62,5 @@ A class-based language for defining client-service communication is weird. I thi
 
 
 I'm not actually sure I could write a functional quark service implementation right now given the documentation. What about stuff like the standard library? It seems I absolutely **must** at this time look at the examples to see how things are put together.
+
+Enum type? 
