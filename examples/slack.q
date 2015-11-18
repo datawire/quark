@@ -3,7 +3,7 @@
 @doc("This includes both regular http and realtime web sockets functionality.")
 package slack {
 
-    @doc("Represents a persistent connection to the slack service.")
+    @doc("A slack client can be used to make requests or subscribe to events from the slack service.")
     class Client extends HTTPHandler {
 
         Runtime runtime;
