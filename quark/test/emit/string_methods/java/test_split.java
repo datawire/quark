@@ -11,7 +11,7 @@ public class test_split extends string_test {
         return this;
     }
     public test_split does(String expected) {
-        java.util.ArrayList<String> parts = (java.util.ArrayList<String>) (new java.util.ArrayList<String>(java.util.Arrays.asList(((this).what).split(java.util.regex.Pattern.quote((this).sep), -1))));
+        java.util.ArrayList<String> parts = new java.util.ArrayList<String>(java.util.Arrays.asList(((this).what).split(java.util.regex.Pattern.quote((this).sep), -1)));
         String actual = io.datawire.quark.runtime.Builtins.join(((this).altsep), (parts));
         (this).check(actual, expected, (((((("'") + ((this).altsep)) + ("'.join('")) + ((this).what)) + ("'.split('")) + ((this).sep)) + ("'))"), "'");
         return this;
