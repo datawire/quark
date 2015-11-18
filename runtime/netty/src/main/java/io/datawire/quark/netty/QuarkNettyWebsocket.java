@@ -1,11 +1,15 @@
 package io.datawire.quark.netty;
 
+import io.datawire.quark.runtime.Buffer;
+import io.datawire.quark.runtime.BufferImpl;
 import io.datawire.quark.runtime.WSHandler;
 import io.datawire.quark.runtime.WebSocket;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpResponse;
+import io.netty.handler.codec.http.websocketx.BinaryWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.CloseWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -19,7 +23,7 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
 
     private final WebSocketClientHandshaker handshaker;
     private final WSHandler handler;
-    private ArrayList<String> pending = new ArrayList<String>();
+    private ArrayList<WebSocketFrame> pending = new ArrayList<>();
     private Channel ch;
 
     public QuarkNettyWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
@@ -30,10 +34,22 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
 
     /// quark_runtime.WebSocket
     public void send(String message) {
+        TextWebSocketFrame frame = new TextWebSocketFrame(message);
         if (ch != null) {
-            ch.writeAndFlush(new TextWebSocketFrame(message));
+            ch.writeAndFlush(frame);
         } else {
-            pending.add(message);
+            pending.add(frame);
+        }
+    }
+
+    @Override
+    public void sendBinary(Buffer message) {
+        ByteBuf binaryData = QuarkNettyRuntime.adaptBuffer(message);
+        BinaryWebSocketFrame frame = new BinaryWebSocketFrame(binaryData);
+        if (ch != null) {
+            ch.writeAndFlush(frame);
+        } else {
+            pending.add(frame);
         }
     }
 
@@ -51,9 +67,10 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
             System.out.println("WebSocket Client connected!");
             this.handler.onWSConnected(this);
             this.ch = ch;
-            for (String message : pending) {
-                send(message);
+            for (WebSocketFrame frame : pending) {
+                ch.write(frame);
             }
+            ch.flush();
             pending.clear();
             pending = null;
             return;
@@ -72,6 +89,12 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
             System.out.println("WebSocket Client received message: " + textFrame.text());
             if (handler != null) {
                 handler.onWSMessage(this, textFrame.text());
+            }
+        } else if (frame instanceof BinaryWebSocketFrame) {
+            BinaryWebSocketFrame binFrame = (BinaryWebSocketFrame) frame;
+            System.out.println("WebSocket Client received binary message: " + binFrame.content().readableBytes() + " bytes");
+            if (handler != null) {
+                handler.onWSBinary(this, new BufferImpl(binFrame.content().slice()));
             }
         } else if (frame instanceof PongWebSocketFrame) {
             System.out.println("WebSocket Client received pong");

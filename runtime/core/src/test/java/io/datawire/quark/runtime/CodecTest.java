@@ -2,8 +2,6 @@ package io.datawire.quark.runtime;
 
 import static org.junit.Assert.*;
 
-import javax.xml.ws.ServiceMode;
-
 import org.junit.Before;
 import org.junit.Test;
 

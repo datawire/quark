@@ -1,6 +1,8 @@
 package io.datawire.quark.netty;
 
 import io.datawire.quark.runtime.AbstractDatawireRuntime;
+import io.datawire.quark.runtime.Buffer;
+import io.datawire.quark.runtime.BufferImpl;
 import io.datawire.quark.runtime.Builtins;
 import io.datawire.quark.runtime.Codec;
 import io.datawire.quark.runtime.HTTPHandler;
@@ -10,6 +12,7 @@ import io.datawire.quark.runtime.Task;
 import io.datawire.quark.runtime.WSHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelInitializer;
@@ -372,6 +375,18 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     public Codec codec() {
         return Builtins.defaultCodec();
+    }
+
+    public static ByteBuf adaptBuffer(Buffer quarkBuffer) {
+        // TODO: add netty implementation of runtime buffer and short-circuit here
+        if (quarkBuffer instanceof BufferImpl) {
+            return ((BufferImpl)quarkBuffer).data();
+        }
+        ByteBuf copy = ByteBufAllocator.DEFAULT.buffer(quarkBuffer.capacity());
+        for(int i = 0; i < quarkBuffer.capacity(); i++) { // XXX: really? :)
+            copy.writeByte(quarkBuffer.getByte(i));
+        }
+        return copy;
     }
 
 }

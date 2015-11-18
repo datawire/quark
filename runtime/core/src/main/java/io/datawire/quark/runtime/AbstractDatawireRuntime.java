@@ -19,6 +19,14 @@ public abstract class AbstractDatawireRuntime {
 	        return handler;
 	    }
 	    return new WSHandler() {
+            @Override
+            public void onWSBinary(WebSocket socket, Buffer message) {
+                try {
+                    handler.onWSBinary(socket, message);
+                } finally {
+                    wakeup();
+                }
+            }
 	        @Override
 	        public void onWSMessage(WebSocket socket, String message) {
 	            try {

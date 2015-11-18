@@ -1,14 +1,12 @@
 package io.datawire.quark.runtime;
 
 import java.nio.ByteOrder;
-import java.nio.charset.Charset;
-
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.util.CharsetUtil;
 
-class BufferImpl implements Buffer {
+public class BufferImpl implements Buffer {
 
     private ByteBuf b;
 
@@ -17,7 +15,7 @@ class BufferImpl implements Buffer {
     }
 
 
-    BufferImpl(ByteBuf b) {
+    public BufferImpl(ByteBuf b) {
         this.b = b;
         b.retain();
     }
@@ -124,4 +122,8 @@ class BufferImpl implements Buffer {
         return b.order().equals(ByteOrder.BIG_ENDIAN);
     }
 
+
+    public ByteBuf data() {
+        return this.b;
+    }
 }
