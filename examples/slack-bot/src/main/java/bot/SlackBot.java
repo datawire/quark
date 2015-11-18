@@ -28,8 +28,8 @@ import slack.event.UserTyping;
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
-        Client client = new Client(runtime, getToken(), new SlackBot());
-        client.connect();
+        Client client = new Client(runtime, getToken());
+        client.subscribe(new SlackBot());
         runtime.launch();
 
     }

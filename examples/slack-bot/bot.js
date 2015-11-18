@@ -34,5 +34,5 @@ try {
     console.log("Failed to read Slack token. See examples/README.md for more information.");
     process.exit(1);
 }
-var client = new slack.Client(runtime, token, new Handler());
-client.connect();
+var client = new slack.Client(runtime, token);
+client.subscribe(new Handler());
