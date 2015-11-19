@@ -1,4 +1,4 @@
-var _qrt = require("quark_runtime.js");
+var _qrt = require("datawire-quark-core");
 var test1 = require('./test1');
 exports.test1 = test1;
 var test2 = require('./test2');

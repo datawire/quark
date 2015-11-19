@@ -1,4 +1,4 @@
-var _qrt = require("quark_runtime.js");
+var _qrt = require("datawire-quark-core");
 
 function test1() {
     var map = new Map();

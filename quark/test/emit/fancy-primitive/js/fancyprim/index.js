@@ -1,2 +1,2 @@
-var _qrt = require("quark_runtime.js");
+var _qrt = require("datawire-quark-core");
 

@@ -28,7 +28,7 @@ class JavaScript(backend.Backend):
     def __init__(self):
         backend.Backend.__init__(self, "js")
         self.dfnr = JSDefinitionRenderer()
-        self.header = """var _qrt = require("quark_runtime.js");\n"""
+        self.header = """var _qrt = require("datawire-quark-core");\n"""
         self.packages = OrderedDict()  # Collect packages for package.json et al
 
     def write(self, target):

@@ -5,7 +5,7 @@
 var util = require("util");
 var fs = require("fs");
 
-var runtime = require("quark_node_runtime.js");
+var runtime = require("datawire-quark-node");
 var slack = require("slack");
 
 function Handler() {

@@ -24,7 +24,7 @@
 
     var WebSocket = require("ws");
 
-    var runtime = require("quark_runtime.js");
+    var runtime = require("datawire-quark-core");
 
     // CLASS QuarkWebsocket
     function QuarkWebSocket(url, handler) {
