@@ -1,0 +1,14 @@
+{
+    "name" : "quark_node_runtime",
+    "version" : "0.1.1",
+    "description" : "Quark compiler generates code against this runtime api",
+    "main" : "quark_node_runtime.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "datawire <hello@datawire.io> (https://github.com/datawire/quark)",
+    "license": "Apache-2.0",
+    "bugs": "https://github.com/datawire/quark/issues",
+    "repository": "datawire/quark"
+}
