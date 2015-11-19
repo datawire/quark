@@ -29,5 +29,19 @@ setup(name='datawire-quark',
       install_requires=["docopt==0.6.2",
                         "parsimonious==0.6.2"],
       entry_points={"console_scripts": ["quark = quark.command:call_main",
-                                        "quark-grammar = quark.parser:rules"]}
-      )
+                                        "quark-grammar = quark.parser:rules"]},
+      keywords=['IDL', 'service', 'microservice', 'RPC', 'async'],
+      classifiers=[
+          'Development Status :: 3 - Alpha',
+          'Environment :: Console',
+          'Intended Audience :: Developers',
+          'License :: OSI Approved :: Apache Software License',
+          'Operating System :: MacOS',
+          'Operating System :: OS Independent',
+          'Operating System :: POSIX',
+          'Programming Language :: Java',
+          'Programming Language :: JavaScript',
+          'Programming Language :: Python',
+          'Topic :: Software Development'
+      ]
+)
