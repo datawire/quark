@@ -20,6 +20,8 @@ primitive bool {
                                   $py{($self) or ($other)}
                                   $js{($self) || ($other)};
     macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
+    macro JSONObject toJSON() new JSONObject().setBool(self);
+    macro JSONObject __to_JSONObject() self.toJSON();
 }
 
 primitive numeric<T> {

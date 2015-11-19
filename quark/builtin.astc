@@ -62,7 +62,16 @@ File(
      Fixed('('), Var(Name(self), $type=0.bool), Fixed(').toString()')),
     NativeCase(py, Fixed('str('), Var(Name(self), $type=0.bool),
      Fixed(').lower()')), NativeCase(js, Fixed('('), Var(Name(self),
-     $type=0.bool), Fixed(').toString()'))))),
+     $type=0.bool), Fixed(').toString()')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setBool),
+    $type=0.JSONObject.setBool), Var(Name(self), $type=0.bool),
+   $type=0.JSONObject)),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+   Call(Attr(Var(Name(self), $type=0.bool), Name(toJSON), $type=0.bool.toJSON),
+   $type=0.JSONObject))),
 
  Primitive(Name(numeric), TypeParam(Name(T)),
 

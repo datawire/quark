@@ -53,7 +53,13 @@ File(
   MethodMacro(Type(Name(String)), Name(toString), Native(NativeCase(java,
      Fixed('('), Var(Name(self)), Fixed(').toString()')), NativeCase(py,
      Fixed('str('), Var(Name(self)), Fixed(').lower()')), NativeCase(js,
-     Fixed('('), Var(Name(self)), Fixed(').toString()'))))),
+     Fixed('('), Var(Name(self)), Fixed(').toString()')))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Call(Attr(Call(Type(Name(JSONObject))), Name(setBool)), Var(Name(self)))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+   Call(Attr(Var(Name(self)), Name(toJSON))))),
 
  Primitive(Name(numeric), TypeParam(Name(T)),
 

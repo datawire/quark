@@ -8,8 +8,8 @@ void main() {
     JSONObject dec = encoded.parseJSON();
     String string = dec["string"];
     float number = dec["number"];
-    bool boolean = dec["boolean"];
+    bool boolean_ = dec["boolean"];
     print(string);
     print(number);
-    print(boolean);
+    print(boolean_.toString());
 }
