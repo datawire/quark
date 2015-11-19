@@ -274,14 +274,23 @@ primitive HTTPHandler {
 primitive HTTPRequest {
     macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.HTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
+    String getMethod();
     void setBody(String data);
+    String getBody();
     void setHeader(String key, String value);
+    String getHeader(String key);
+    Map<String,String> getHeaders();
 }
 
 @mapping($java{io.datawire.quark.runtime.HTTPResponse})
 primitive HTTPResponse {
     int getCode();
+    void setCode();
     String getBody();
+    void setBody();
+    void setHeader(String key, String value);
+    String getHeader(String key);
+    Map<String,String> getHeaders();
 }
 
 @mapping($java{io.datawire.quark.runtime.Task})
@@ -298,6 +307,7 @@ primitive Runtime {
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
     Codec codec();
+    void respond(HTTPRequest request, HTTPResponse response);
 }
 
 @doc("A stateless buffer of bytes. Default byte order is network byte order.")
@@ -366,4 +376,11 @@ primitive Codec {
 
     @doc("decode the Base64 enccoded string")
     Buffer fromBase64(String base64);
+}
+
+@doc("Http servlet")
+@mapping($java{io.datawire.quark.runtime.HTTPServlet})
+primitive HTTPServlet {
+    void onInit(String url, Runtime runtime);
+    void onHTTPRequest(HTTPRequest request, HTTPResponse response);
 }
