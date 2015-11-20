@@ -137,4 +137,39 @@ public abstract class AbstractDatawireRuntime {
 	    };
 	}
 
+    protected HTTPServlet wrap(final HTTPServlet servlet) {
+        initialize();
+        if (!isAllowSync()) {
+            return servlet;
+        }
+        return new HTTPServlet() {
+            
+            @Override
+            public void onHTTPInit(String url, Runtime runtime) {
+               try {
+                   servlet.onHTTPInit(url, runtime);
+               } finally {
+                   wakeup();
+               }
+            }
+            
+            @Override
+            public void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
+                try {
+                    servlet.onHTTPRequest(request, response);
+                } finally {
+                    wakeup();
+                }
+            }
+
+            @Override
+            public void onHTTPError(String url) {
+                try {
+                    servlet.onHTTPError(url);
+                } finally {
+                    wakeup();
+                }
+            }
+        };
+    }
 }

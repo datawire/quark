@@ -9,4 +9,6 @@ public interface Runtime {
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, Double delayInSeconds);
     Codec codec();
+    void serveHTTP(String url, HTTPServlet servlet);
+    void respond(HTTPRequest request, HTTPResponse response);
 }

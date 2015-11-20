@@ -10,6 +10,8 @@ import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.util.CharsetUtil;
 
 import java.nio.charset.Charset;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
@@ -28,8 +30,13 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
             throws Exception {
         if (msg instanceof FullHttpResponse) {
             final FullHttpResponse resp = (FullHttpResponse)msg;
+            resp.retain();
             handler.onHTTPResponse(request, new HTTPResponse() {
 
+                @Override
+                protected void finalize() throws Throwable {
+                    resp.release();
+                }
                 @Override
                 public int getCode() {
                     return resp.getStatus().code();
@@ -44,6 +51,31 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
                         charset = Charset.forName(encoding);
                     }
                     return resp.content().toString(charset);
+                }
+
+                @Override
+                public void setCode(int code) {
+                    // nope
+                }
+
+                @Override
+                public void setBody(String body) {
+                    // nope
+                }
+
+                @Override
+                public String getHeader(String key) {
+                    return resp.headers().get(key);
+                }
+
+                @Override
+                public void setHeader(String key, String value) {
+                    // nope;
+                }
+
+                @Override
+                public List<String> getHeaders() {
+                    return new ArrayList<>(resp.headers().names());
                 }
             });
             ctx.close();

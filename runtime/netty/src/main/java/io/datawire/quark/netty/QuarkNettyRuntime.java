@@ -7,10 +7,13 @@ import io.datawire.quark.runtime.Builtins;
 import io.datawire.quark.runtime.Codec;
 import io.datawire.quark.runtime.HTTPHandler;
 import io.datawire.quark.runtime.HTTPRequest;
+import io.datawire.quark.runtime.HTTPResponse;
+import io.datawire.quark.runtime.HTTPServlet;
 import io.datawire.quark.runtime.Runtime;
 import io.datawire.quark.runtime.Task;
 import io.datawire.quark.runtime.WSHandler;
 import io.netty.bootstrap.Bootstrap;
+import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.channel.ChannelFuture;
@@ -20,6 +23,7 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.DefaultFullHttpRequest;
 import io.netty.handler.codec.http.DefaultHttpHeaders;
@@ -29,16 +33,20 @@ import io.netty.handler.codec.http.HttpContentDecompressor;
 import io.netty.handler.codec.http.HttpHeaders;
 import io.netty.handler.codec.http.HttpMethod;
 import io.netty.handler.codec.http.HttpObjectAggregator;
+import io.netty.handler.codec.http.HttpRequestDecoder;
+import io.netty.handler.codec.http.HttpResponseEncoder;
 import io.netty.handler.codec.http.HttpVersion;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
+import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.util.CharsetUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.security.cert.CertificateException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -387,6 +395,93 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             copy.writeByte(quarkBuffer.getByte(i));
         }
         return copy;
+    }
+
+    @Override
+    public void serveHTTP(final String url, HTTPServlet servlet) {
+        final HTTPServlet servlet_w = wrap(servlet);
+        final URI uri;
+        try {
+            uri = new URI(url);
+        } catch (URISyntaxException e) {
+            servlet_w.onHTTPError(url);
+            return;
+        }
+        String scheme = uri.getScheme() == null? "http" : uri.getScheme();
+        final String host = uri.getHost() == null? "127.0.0.1" : uri.getHost();
+        int port = uri.getPort();
+        if (port == -1) {
+            if ("http".equalsIgnoreCase(scheme)) {
+                port = 80;
+            } else if ("https".equalsIgnoreCase(scheme)) {
+                port = 443;
+            }
+        }
+
+        if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
+            System.err.println("Only HTTP(S) is supported.");
+            servlet_w.onHTTPError(url);
+            return;
+        }
+
+        final SslContext sslCtx;
+        final boolean ssl = "https".equalsIgnoreCase(scheme);
+        if (ssl) {
+            try {
+                SelfSignedCertificate ssc = new SelfSignedCertificate();
+                sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
+            } catch (SSLException e) {
+                servlet_w.onHTTPError(url);
+                return;
+            } catch (CertificateException e) {
+                servlet_w.onHTTPError(url);
+                return;
+            }
+        } else {
+            sslCtx = null;
+        }
+        
+        ServerBootstrap b = new ServerBootstrap();
+        b.group(this.group)
+         .channel(NioServerSocketChannel.class)
+         .childHandler(new ChannelInitializer<SocketChannel>() {
+
+            @Override
+            protected void initChannel(SocketChannel ch) throws Exception {
+                ChannelPipeline p = ch.pipeline();
+                if (sslCtx != null) {
+                    p.addLast(sslCtx.newHandler(ch.alloc()));
+                }
+                p.addLast(new HttpRequestDecoder());
+                p.addLast(new HttpResponseEncoder());
+                p.addLast(new DatawireNettyHttpRequestHandler(QuarkNettyRuntime.this, servlet_w));
+            }
+        });
+        b.bind(host,port).addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                if (future.isDone()) {
+                    if (future.isSuccess()) {
+                        servlet_w.onHTTPInit(url, QuarkNettyRuntime.this);
+                    } else {
+                        servlet_w.onHTTPError(url);
+                    }
+                }
+            }
+        });
+    }
+
+    @Override
+    public void respond(HTTPRequest request_in, HTTPResponse response_in) {
+        if (response_in instanceof DatawireNettyHttpRequestHandler.Response) {
+            DatawireNettyHttpRequestHandler.Response response = (DatawireNettyHttpRequestHandler.Response) response_in; 
+            if (response.request() == request_in) {
+                response.respond();
+                return;
+            } else {
+                response.fail();
+            }
+        }
     }
 
 }

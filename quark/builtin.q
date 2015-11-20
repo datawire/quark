@@ -285,9 +285,9 @@ primitive HTTPRequest {
 @mapping($java{io.datawire.quark.runtime.HTTPResponse})
 primitive HTTPResponse {
     int getCode();
-    void setCode();
+    void setCode(int code);
     String getBody();
-    void setBody();
+    void setBody(String body);
     void setHeader(String key, String value);
     String getHeader(String key);
     Map<String,String> getHeaders();
@@ -307,6 +307,7 @@ primitive Runtime {
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
     Codec codec();
+    void serveHTTP(String url, HTTPServlet servlet);
     void respond(HTTPRequest request, HTTPResponse response);
 }
 
@@ -381,6 +382,7 @@ primitive Codec {
 @doc("Http servlet")
 @mapping($java{io.datawire.quark.runtime.HTTPServlet})
 primitive HTTPServlet {
-    void onInit(String url, Runtime runtime);
+    void onHTTPInit(String url, Runtime runtime);
+    void onHTTPError(String url);
     void onHTTPRequest(HTTPRequest request, HTTPResponse response);
 }
