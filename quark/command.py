@@ -57,8 +57,20 @@ from docopt import docopt
 import _metadata
 import compiler
 
+PREREQS = {
+    "mvn": (["mvn", "-v"], "please install maven in order to build java packages")
+}
+
+def check(cmd, workdir):
+    if cmd in PREREQS:
+        check, msg = PREREQS[cmd]
+        try:
+            out = subprocess.check_output(check, cwd=workdir)
+        except (subprocess.CalledProcessError, OSError):
+            raise Exception("unable to find %s: %s" % (cmd, msg))
 
 def call_and_show(stage, workdir, command):
+    check(command[0], workdir)
     print "quark (%s):" % stage, " ".join(command)
     try:
         subprocess.check_call(command, cwd=workdir)
@@ -135,7 +147,7 @@ def main(args):
                 call_and_show("doc", py_dir, ["python", "setup.py", "-q", "build_sphinx"])
             if javascript:
                 for md_file_path in glob(os.path.join(js_dir, "*/README.md")):
-                    call_and_show("doc", ".", ["marked", "--input", md_file_path, "--output",
+                    call_and_show("doc", ".", ["markdown_py", md_file_path, "-f",
                                                md_file_path.replace(".md", ".html")])
 
         if "package" in commands:
