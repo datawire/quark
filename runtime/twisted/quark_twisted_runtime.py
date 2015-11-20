@@ -1,6 +1,6 @@
 # Quark's Twisted Runtime and associated
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from StringIO import StringIO
 
