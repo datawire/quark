@@ -38,7 +38,15 @@ class JavaScript(backend.Backend):
             pkg = pkgList[0]
             ppath = pname.replace(".", "/")
             self.files["%s/README.md" % ppath] = pkg.readme
-            self.files["%s/package.json" % ppath] = """{"name":"%s","version":"%s"}\n""" % (pname, pkg.version)
+            self.files["%s/package.json" % ppath] = """
+{
+    "name":"%s",
+    "version":"%s",
+    "dependencies": {
+        "datawire-quark-core": ">=0.1.0"
+    }
+}
+            """ % (pname, pkg.version)
         for name, content in self.files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)
