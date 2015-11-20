@@ -19,6 +19,29 @@ from .dispatch import overload
 from .helpers import *
 from collections import OrderedDict
 
+runtime_version = "0.1.1-SNAPSHOT"
+
+if runtime_version.endswith("-SNAPSHOT"):
+    repository = """
+  <repositories>
+      <repository>
+          <releases>
+            <enabled>false</enabled>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <id>datawire-snapshots</id>
+          <name>Sonatype snapshot repo for datawire runtime</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      </repository>
+  </repositories>
+"""
+else:
+    repository = ""
+
 pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
@@ -51,10 +74,11 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
     <dependency>
       <groupId>io.datawire.quark</groupId>
       <artifactId>quark-core</artifactId>
-      <version>0.1.1-SNAPSHOT</version>
+      <version>%(runtime_version)s</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
+  %(repository)s
 </project>
 """
 
@@ -82,7 +106,10 @@ class Java(backend.Backend):
         name, version = namever(self.packages)
         fmt_dict = {"name": name,
                     "version": version,
-                    "pkg_list": repr(list(self.packages.keys()))}
+                    "pkg_list": repr(list(self.packages.keys())),
+                    "runtime_version": runtime_version,
+                    "repository": repository,
+                    }
         open(os.path.join(target, "pom.xml"), "wb").write(pom_xml % fmt_dict)
 
     def visit_Class(self, c):

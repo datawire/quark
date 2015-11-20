@@ -56,7 +56,7 @@ The goal of the tag is to record exactly what source was used to build the relea
 - Quark's documentation has its own version (based on the code's version) in `docs/FIXME/where/is/it?`
 - The Java backend core runtime version is in every file that has "quark-core" in it (or really: `<artifactId>quark-core</artifactID>`)
   - `runtime/core/pom.xml` for Maven's quark-core package
-  - `quark/java.py` near the bottom of the pom_xml template for generated code to require the quark-core package
+  - `quark/java.py` in a variable runtime_version above the pom template
   - `runtime/netty/pom.xml` for the Netty integration to require the quark-core package
 - The Java Netty Integration version is in `runtime/netty/pom.xml`
 - The Python backend core runtime version is at the top of `runtime/python-core/quark_runtime.py`
