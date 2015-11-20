@@ -353,8 +353,7 @@ class Python(backend.Backend):
             self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
         else:
             self.files[fname] = self.header + self.imports(pkg.imports) + content
-        if pkg.package is None:  # Grab a list of top-level packages
-            self.packages.setdefault(pname, []).append(pkg)
+        self.packages.setdefault(pname, []).append(pkg)
         pkg.version = get_package_version(pkg)
 
     def visit_File(self, file):
