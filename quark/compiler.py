@@ -683,7 +683,7 @@ class Compiler:
     def emit(self, backend):
         self.root.traverse(backend)
 
-import os
+import os, urllib
 from backend import Java, Python, JavaScript
 
 
@@ -696,9 +696,12 @@ def main(srcs, java=None, python=None, javascript=None):
 
     try:
         for src in srcs:
-            with open(src, "rb") as fd:
+            try:
+                fd = urllib.urlopen(src)
                 c.parse(src, fd.read())
-        c.compile()
+            finally:
+                fd.close()
+            c.compile()
     except IOError, e:
         return e
     except ParseError, e:
