@@ -34,9 +34,16 @@ The goal is to have a stable set of features that are the target for what will b
 ## Releasing
 
 1. Create a release tag named *major*.*minor*.*revision*, e.g., `0.1.0`.
-2. **(future)** Build, test, and push a release artifact, i.e. push to PyPI, npmjs.org, Maven, etc.
+2. Build, test, and push a release artifact, i.e. push to PyPI, npmjs.org, Maven, etc.
    the maven deployment is supposed to go according to [Performing a Release Deployment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment)
-3. **(future)** Update the website
+   TODO: insert java instructions here
+   From runtime/js-core: npm publish .
+   From runtime/js-node: npm publish .
+   From runtime/python-core: python setup.py bdist_wheel && twine upload dist/...
+   From runtime/twisted: python setup.py bdist_wheel && twine upload dist/...
+   From root of git checkout: python setup.py bdist_wheel && twine upload dist/...
+
+3. Update the website
 4. Announce the release
 
 The goal of the tag is to record exactly what source was used to build the release artifact.
@@ -55,13 +62,14 @@ The goal of the tag is to record exactly what source was used to build the relea
   - `docs/conf.py` for the documentation
 - Quark's documentation has its own version (based on the code's version) in `docs/FIXME/where/is/it?`
 - The Java backend core runtime version is in every file that has "quark-core" in it (or really: `<artifactId>quark-core</artifactID>`)
+  - `pom.xml`
   - `runtime/core/pom.xml` for Maven's quark-core package
   - `quark/java.py` in a variable runtime_version above the pom template
   - `runtime/netty/pom.xml` for the Netty integration to require the quark-core package
 - The Java Netty Integration version is in `runtime/netty/pom.xml`
 - The Python backend core runtime version is at the top of `runtime/python-core/quark_runtime.py`
 - The Python Twisted Integration version is in `runtime/twisted/quark_twisted_runtime.py`
-- FIXME: The JS backend core runtime is in `node_modules/quark_runtime.js` with no packaging or version number
-- FIXME: The JS Node Integration is in `node_modules/quark_node_runtime.js` with no packaging or version number
+- The JS backend core runtime is in `runtime/js-core/package.json`
+- The JS Node Integration is in `runtime/js-node/package.json`
 
 More version stuff to follow...

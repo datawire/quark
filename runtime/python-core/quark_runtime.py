@@ -3,7 +3,7 @@
 # This brings in the stuff mentioned in __all__ below.
 # The wrong way to do this, but minimizes the code change.
 
-__version__ = "0.1.1"
+__version__ = "0.1.12"
 
 import os    # unused?
 import sys

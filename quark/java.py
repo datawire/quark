@@ -19,7 +19,7 @@ from .dispatch import overload
 from .helpers import *
 from collections import OrderedDict
 
-runtime_version = "0.1.1-SNAPSHOT"
+runtime_version = "0.1.12"
 
 if runtime_version.endswith("-SNAPSHOT"):
     repository = """
