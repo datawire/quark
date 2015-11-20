@@ -21,22 +21,27 @@ Store that token in a file
 
 ### Python
 
-Compile the quark interface into a package. Install that package.
+**Note**: This will require twisted.
+
+Compile the quark interface into a package. Install the quark twisted
+integration and the generated package:
 
     quark --python package slack.q
     pip install datawire-quark-twisted slack/py/dist/slack-0.1.0-py2-none-any.whl
 
 Run the bot
 
-    cd slack-bot && python bot.py
+    slack-bot && python bot.py
 
 
 ### JavaScript
 
+**Note**: This will require node 4.2.2 or later.
+
 Compile the quark interface into a package. Install that package.
 
     quark --javascript package slack.q
-    npm install slack/js/slack.tgz
+    npm install datawire-quark-node slack/js/slack.tgz
 
 Run the bot
 
@@ -44,6 +49,8 @@ Run the bot
 
 
 ### Java
+
+**Note**: This will require maven.
 
 Compile the quark interface. Install the result using Maven.
 
