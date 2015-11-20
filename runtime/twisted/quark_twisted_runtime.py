@@ -1,6 +1,6 @@
 # Quark's Twisted Runtime and associated
 
-__version__ = "0.1.2"
+__version__ = "0.1.3"
 
 from StringIO import StringIO
 
@@ -76,7 +76,7 @@ class _QuarkWebSocket(WebSocketClientProtocol):
 
     def send(self, message):
         if self.is_open:
-            self.protocol.sendMessage(message.encode('utf-8', False))
+            self.protocol.sendMessage(message.encode('utf-8'), False)
             return 1
         return 0
 
