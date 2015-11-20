@@ -36,7 +36,10 @@ The goal is to have a stable set of features that are the target for what will b
 1. Create a release tag named *major*.*minor*.*revision*, e.g., `0.1.0`.
 2. Build, test, and push a release artifact, i.e. push to PyPI, npmjs.org, Maven, etc.
    the maven deployment is supposed to go according to [Performing a Release Deployment](http://central.sonatype.org/pages/apache-maven.html#performing-a-release-deployment)
-   TODO: insert java instructions here
+   From root of git checkout:
+     mvn versions:set -DnewVersion=1.2.3
+     mvn clean deploy -P release
+     mvn nexus-staging:release
    From runtime/js-core: npm publish .
    From runtime/js-node: npm publish .
    From runtime/python-core: python setup.py bdist_wheel && twine upload dist/...
