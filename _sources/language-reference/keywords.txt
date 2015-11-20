@@ -22,6 +22,7 @@ Quark defines the following keywords:
   package
   primitive
   return
+  super
   true
   while
 
@@ -242,9 +243,7 @@ where *definition* is the content of the package and *packageName* is the name o
 
 primitive
 ~~~~~~~~~
-The primitive keyword is used to define basic data types in Quark.
-
-[JMK Can users define new primitives and if so will they work/what can they do with them/how are they mapped to the languages - should I just say this is a reserved keyword?]]
+The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.
 
 .. _returnKeyword:
 
@@ -264,6 +263,49 @@ The return keyword syntax is:
 **}**
 
 where *functionType* is the type of the value returned by the function, *functionName* is the name of the function, *parameters* is a comma-separated list of parameters for the function, *code* is the code being run by the function, and *valueOfTypeFunctionType* is the value returned by the function. It must use the data type specified in the *functionType* declaration.
+
+.. _selfKeyword:
+
+self
+~~~~
+
+The self keyword is used to reference the current object inside method definitions particularly the value of a property of the current object.
+
+Syntax
+++++++
+
+The self keyword syntax is:
+
+**self.** *propertyName*
+
+where *propertyName* is the name of a property defined in the current class and the entire expression evaluates to the value stored in the current object's *propertyName* property.
+
+.. _superKeyword:
+
+super
+~~~~~
+
+The super keyword is used to indicate that a referenced method is defined in the current class's superclass.
+
+Note: A variant of the super keyword, super(), is used to reference the constructor of the superclass inside the subclass's constructor. Any parameters defined in the superclass constructor must be supplied when super() is called (either as variables or as default values).
+
+Syntax
+++++++
+
+The super keyword syntax is:
+
+**super.** *method*
+
+where *method* is the method being called including the trailing parentheses and any necessary parameters. 
+
+For instance, the following method is defined in class A:
+
+``void enrollInClass(String classId, String studentId){...}``
+
+Class B is a subclass of class A. A method inside class B calls the enrollInClass() method as follows:
+
+``super.enrollInClass("Phys123", "84-42956");``
+
 
 .. _trueKeyword:
 
