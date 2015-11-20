@@ -24,7 +24,7 @@ Store that token in a file
 Compile the quark interface into a package. Install that package.
 
     quark --python package slack.q
-    pip install slack/py/dist/slack-0.1.0-py2-none-any.whl
+    pip install datawire-quark-twisted slack/py/dist/slack-0.1.0-py2-none-any.whl
 
 Run the bot
 
