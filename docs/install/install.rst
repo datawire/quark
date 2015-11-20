@@ -23,6 +23,7 @@ Quark also requires the following:
 
 * Python 2.7+
 * pip
+* tar
 
 
 Java Requirements
