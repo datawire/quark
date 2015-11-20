@@ -13,7 +13,7 @@ you:
 
 ### Example
 
-The Slack service includes both a JSON RPC over HTTP (https://api.slack.com) and a real-time API for processing messages (https://api.slack.com/rtm). Quark lets a service author easily create and maintain rich clients for both these APIs. By describing the API using Quark, the service author can quickly produce clients in multiple languages that interface directly with this API.
+The Slack service includes both a JSON RPC over HTTP (https://api.slack.com) and a real-time API for processing events (https://api.slack.com/rtm). Quark lets a service author easily create and maintain rich clients for both these APIs. By describing the API using Quark, the service author can quickly produce clients in multiple languages that interface directly with this API.
 
 Examples of this and more can be found in the [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples).
 
