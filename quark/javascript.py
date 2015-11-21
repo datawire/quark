@@ -21,6 +21,7 @@ import backend
 import java
 from .dispatch import overload
 from .helpers import *
+from ._metadata import __js_runtime_version__
 
 
 class JavaScript(backend.Backend):
@@ -43,10 +44,10 @@ class JavaScript(backend.Backend):
     "name":"%s",
     "version":"%s",
     "dependencies": {
-        "datawire-quark-core": ">=0.1.0"
+        "datawire-quark-core": "%s"
     }
 }
-            """ % (pname, pkg.version)
+            """ % (pname, pkg.version, __js_runtime_version__)
         for name, content in self.files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)

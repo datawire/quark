@@ -16,6 +16,7 @@ import os
 from .ast import *
 from .dispatch import overload
 from .helpers import *
+from ._metadata import __py_runtime_version__
 from collections import OrderedDict
 
 # XXX: danger!!! circular import reference hack
@@ -240,7 +241,7 @@ from setuptools import setup
 
 setup(name="%(name)s",
       version="%(version)s",
-      install_requires=["datawire-quark-core"],
+      install_requires=["datawire-quark-core==%(runtime_version)s"],
       packages=%(pkg_list)s)
 """
 
@@ -320,6 +321,7 @@ class Python(backend.Backend):
         name, version = namever(self.packages)
         fmt_dict = {"name": name,
                     "version": version,
+                    "runtime_version": __py_runtime_version__,
                     "pkg_list": repr(list(self.packages.keys()))}
         self.files["setup.py"] = setup_py % fmt_dict
         self.files["docs/conf.py"] = conf_py % fmt_dict

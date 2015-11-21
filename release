@@ -1,0 +1,174 @@
+#!/usr/bin/env python
+
+"""
+Quark release tool. Because quark involves a variety of different
+support packages for backend languages, the release process involves
+dealing with a lot of different packaging tools and environments. This
+utility captures all this in a single place.
+
+Usage:
+  release version <version> [options]
+  release push
+
+  Version Options:
+    --quark <version>      Quark version.
+    --java <version>       Java runtime version.
+    --js <version>         Javascript runtime version.
+    --py <version>         Python runtime version.
+    --doc <version>        Documentation version.
+"""
+
+import json, os, subprocess, tempfile
+from docopt import docopt
+from collections import OrderedDict
+
+__dir__ = os.path.dirname(__file__)
+
+def base(name=None):
+    if name:
+        return os.path.join(__dir__, name)
+    else:
+        return __dir__
+
+metadata = {}
+with open(base("quark/_metadata.py")) as fp:
+    exec(fp.read(), metadata)
+
+## utilities
+
+class ReleaseError(Exception):
+    """An anticipated error."""
+
+def check(*commands):
+    """Check whether the supplied commands are available."""
+    cmd = ["which"] + list(commands)
+    try:
+        subprocess.check_output(cmd, stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError, e:
+        raise ReleaseError("Please install and configure missing prereqs: %s\n\n%s" %
+                           (", ".join(commands), e.output))
+def run(*command, **kwargs):
+    """Execute the supplied command."""
+    subprocess.check_call(command, **kwargs)
+
+def call(*command, **kwargs):
+    """Execute the supplied command and return the output."""
+    return subprocess.check_output(command, **kwargs)
+
+def update_json(name, **kwargs):
+    """Update a json file with supplied overrides."""
+    with open(name, "r") as fd:
+        obj = json.loads(fd.read(), object_pairs_hook=OrderedDict)
+        obj.update(kwargs)
+    with open(name, "w") as fd:
+        fd.write(json.dumps(obj, indent=4, separators=(',', ': ')) + "\n")
+
+def substitute(line, vars):
+    """
+    Substitute a line of python code declaring a variable of the form
+    __<name>__ = <value>.  The name must be at the beginning of the
+    line in order to match.
+    """
+    for key in vars:
+        varname = "__%s__" % key
+        if line.startswith(varname):
+            return "%s = %s\n" % (varname, repr(vars[key]))
+    else:
+        return line
+
+def update_python(name, **kwargs):
+    """Update a python file with supplied overrides."""
+    lines = []
+    with open(name, "r") as fd:
+        for line in fd:
+            lines.append(substitute(line, kwargs))
+    text = "".join(lines)
+    with open(name, "w") as fd:
+        fd.write(text)
+
+def push_wheel(path):
+    dest = tempfile.mkdtemp()
+    run("python", "setup.py", "-q", "clean", "bdist_wheel", "-d", dest, cwd=base(path))
+    for name in os.listdir(dest):
+        run("twine", "upload", "--skip-existing", os.path.join(dest, name), cwd=base())
+
+## version update logic
+
+def quark_version(version):
+    update_python(base("quark/_metadata.py"), version=version)
+
+def java_version(version):
+    run("mvn", "-q", "versions:set", "-DgenerateBackupPoms=false", "-DnewVersion=%s" % version,
+        cwd=base())
+    update_python(base("quark/_metadata.py"), java_runtime_version=version)
+
+def js_version(version):
+    for name in ("runtime/js-core/package.json", "runtime/js-node/package.json"):
+        update_json(base(name), version=version)
+    update_python(base("quark/_metadata.py"), js_runtime_version=version)
+
+def py_version(version):
+    for name in ("runtime/python-core/quark_runtime.py", "runtime/twisted/quark_twisted_runtime.py"):
+        update_python(base(name), version=version)
+    update_python(base("quark/_metadata.py"), py_runtime_version=version)
+
+def doc_version(version):
+    update_python(base("docs/conf.py"), doc_version=version)
+
+## push logic
+
+def push_java():
+    run("mvn", "clean", "deploy", "-P", "release", cwd=base())
+    run("mvn", "nexus-staging:release", cwd=base())
+
+def push_js():
+    for sfx in ("core", "node"):
+        info = call("npm", "info", "datawire-quark-%s" % sfx, "--json", cwd=base())
+        latest = json.loads(info)["dist-tags"]["latest"]
+        if latest == metadata["__js_runtime_version__"]:
+            print "Skipping javascript %s, version %s already pushed." % (sfx, latest)
+        else:
+            run("npm", "publish", base("runtime/js-%s" % sfx), cwd=base())
+
+def push_py():
+    for path in ("runtime/python-core", "runtime/twisted"):
+        push_wheel(base(path))
+
+def push_quark():
+    push_wheel(base())
+
+## subcommands
+
+def version(args):
+    version = args["<version>"]
+    quark_version(args["--quark"] or version)
+    java_version(args["--java"] or version)
+    js_version(args["--js"] or version)
+    py_version(args["--py"] or version)
+    doc_version(args["--doc"] or version)
+
+def push(args):
+    push_java()
+    push_js()
+    push_py()
+    push_quark()
+
+## main
+
+def main(args):
+    check("mvn", "twine", "docker", "npm")
+    if args["version"]:
+        version(args)
+    elif args["push"]:
+        push(args)
+    else:
+        assert False
+
+def call_main(args):
+    try:
+        return main(args)
+    except ReleaseError, e:
+        return e
+
+if __name__ == "__main__":
+    exit(call_main(docopt(__doc__)))

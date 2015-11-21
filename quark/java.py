@@ -17,11 +17,10 @@ from .ast import *
 from .compiler import TypeExpr
 from .dispatch import overload
 from .helpers import *
+from ._metadata import __java_runtime_version__
 from collections import OrderedDict
 
-runtime_version = "0.1.12"
-
-if runtime_version.endswith("-SNAPSHOT"):
+if __java_runtime_version__.endswith("-SNAPSHOT"):
     repository = """
   <repositories>
       <repository>
@@ -107,7 +106,7 @@ class Java(backend.Backend):
         fmt_dict = {"name": name,
                     "version": version,
                     "pkg_list": repr(list(self.packages.keys())),
-                    "runtime_version": runtime_version,
+                    "runtime_version": __java_runtime_version__,
                     "repository": repository,
                     }
         open(os.path.join(target, "pom.xml"), "wb").write(pom_xml % fmt_dict)
