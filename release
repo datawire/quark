@@ -7,10 +7,12 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
-  release version <version> [options]
+  release version [<version>] [options]
   release push
 
   Version Options:
+    --dev                  Apply development suffix to all versions.
+
     --quark <version>      Quark version.
     --java <version>       Java runtime version.
     --js <version>         Javascript runtime version.
@@ -139,13 +141,27 @@ def push_quark():
 
 ## subcommands
 
+def relver(args, component):
+    return args[component] or args["<version>"] or metadata["__version__"]
+
+def devver(args, component):
+    version = relver(args, component)
+    if component in ("--quark", "--py"):
+        return "%s.dev0" % version
+    else:
+        return "%s-SNAPSHOT" % version
+
 def version(args):
-    version = args["<version>"]
-    quark_version(args["--quark"] or version)
-    java_version(args["--java"] or version)
-    js_version(args["--js"] or version)
-    py_version(args["--py"] or version)
-    doc_version(args["--doc"] or version)
+    if args["--dev"]:
+        getver = devver
+    else:
+        getver = relver
+
+    quark_version(getver(args, "--quark"))
+    java_version(getver(args, "--java"))
+    js_version(getver(args, "--js"))
+    py_version(getver(args, "--py"))
+    doc_version(getver(args, "--doc"))
 
 def push(args):
     push_java()

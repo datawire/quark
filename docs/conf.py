@@ -23,7 +23,7 @@ except ImportError:
     sys.stderr.write("Could not import bootstrap theme. Is it installed?%s" % os.linesep)
     better_theme = False
 
-__doc_version__ = '0.1.14'
+__doc_version__ = '0.2.0-SNAPSHOT'
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the

@@ -4,7 +4,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>io.datawire.quark</groupId>
   <artifactId>quark</artifactId>
-  <version>0.1.14</version>
+  <version>0.2.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <name>quark runtime</name>
   <description>Java runtime for the quark compiler</description>
