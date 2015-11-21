@@ -287,7 +287,7 @@ index_rst = """
 .. %(name)s documentation master file, created by Quark
 
 %(name)s %(version)s
-====
+=$(underline)s
 
 Contents:
 
@@ -322,6 +322,7 @@ class Python(backend.Backend):
         fmt_dict = {"name": name,
                     "version": version,
                     "runtime_version": __py_runtime_version__,
+                    "underline" : "=" * len(name + version),
                     "pkg_list": repr(list(self.packages.keys()))}
         self.files["setup.py"] = setup_py % fmt_dict
         self.files["docs/conf.py"] = conf_py % fmt_dict
