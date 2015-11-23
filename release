@@ -7,12 +7,14 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
-  release version [<version>] [options]
-  release push
-  release docs
-  release metadata
+  release [--dry] version [<version>] [--dev] [--quark=<ver>] [--java=<ver>] [--js=<ver>] [--py=<ver>] [--doc=<ver>]
+  release [--dry] push
+  release [--dry] docs
+  release [--dry] metadata
 
-  Version Options:
+  Options:
+    --dry                  Dry run.
+
     --dev                  Apply development suffix to all versions.
 
     --quark <version>      Quark version.
@@ -27,6 +29,7 @@ from docopt import docopt
 from collections import OrderedDict
 
 __dir__ = os.path.dirname(__file__)
+__dry__ = False
 
 def base(name=None):
     if name:
@@ -69,10 +72,16 @@ def pipcheck(*packages):
 
 def run(*command, **kwargs):
     """Execute the supplied command."""
+    dry = kwargs.pop("dry", __dry__)
+    print " ".join(command), kwargs
+    if dry: return
     subprocess.check_call(command, **kwargs)
 
 def call(*command, **kwargs):
     """Execute the supplied command and return the output."""
+    dry = kwargs.pop("dry", __dry__)
+    print " ".join(command), kwargs
+    if dry: return
     return subprocess.check_output(command, **kwargs)
 
 def update_json(name, **kwargs):
@@ -80,6 +89,9 @@ def update_json(name, **kwargs):
     with open(name, "r") as fd:
         obj = json.loads(fd.read(), object_pairs_hook=OrderedDict)
         obj.update(kwargs)
+    if __dry__:
+        print "Updating json %s: %s" % (name, kwargs)
+        return
     with open(name, "w") as fd:
         fd.write(json.dumps(obj, indent=4, separators=(',', ': ')) + "\n")
 
@@ -103,12 +115,15 @@ def update_python(name, **kwargs):
         for line in fd:
             lines.append(substitute(line, kwargs))
     text = "".join(lines)
+    if __dry__:
+        print "Updating python %s: %s" % (name, kwargs)
+        return
     with open(name, "w") as fd:
         fd.write(text)
 
 def push_wheel(path):
     dest = tempfile.mkdtemp()
-    run("python", "setup.py", "-q", "clean", "bdist_wheel", "-d", dest, cwd=base(path))
+    run("python", "setup.py", "-q", "clean", "bdist_wheel", "-d", dest, cwd=base(path), dry=False)
     for name in os.listdir(dest):
         run("twine", "upload", "--skip-existing", os.path.join(dest, name), cwd=base())
 
@@ -143,7 +158,7 @@ def push_java():
 
 def push_js():
     for sfx in ("core", "node"):
-        info = call("npm", "info", "datawire-quark-%s" % sfx, "--json", cwd=base())
+        info = call("npm", "info", "datawire-quark-%s" % sfx, "--json", cwd=base(), dry=False)
         latest = json.loads(info)["dist-tags"]["latest"]
         if latest == metadata["__js_runtime_version__"]:
             print "Skipping javascript %s, version %s already pushed." % (sfx, latest)
@@ -199,11 +214,16 @@ VERSIONS = [("quark", metadata["__version__"]),
             ("js runtime", metadata["__js_runtime_version__"]),
             ("py runtime", metadata["__py_runtime_version__"])]
 
-def challenge():
+def randstr():
     result = ""
     for i in range(4):
         result += chr(ord('a') + random.randint(0, 25))
     return result
+
+def challenge():
+    chal = randstr()
+    text = raw_input('Please type "%s" to confirm: ' % chal)
+    return text == chal
 
 def push(args):
     print "You are about to push the following packages live:"
@@ -212,9 +232,7 @@ def push(args):
     for name, version in VERSIONS:
         print "    %*s: %s" % (width, name, version)
     print
-    chal = challenge()
-    text = raw_input('Please type "%s" to confirm: ' % chal)
-    if text == chal:
+    if challenge():
         print "Pushing"
         push_java()
         push_js()
@@ -224,7 +242,20 @@ def push(args):
         print "Canceled"
 
 def docs(args):
-    pass
+    print "You are about to push the documentation live:"
+    print
+    print "    doc: %s" % metadata["__doc_version__"]
+    print
+    if challenge():
+        print "Pushing docs"
+        dest = tempfile.mkdtemp()
+        run("git", "clone", call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
+            dest)
+        run("git", "checkout", "gh-pages", cwd=dest)
+        run("sphinx-build", "-q", "docs", dest, cwd=base())
+        print "Docs are in %s, please inspect and commit/push." % dest
+    else:
+        print "Canceled"
 
 def show_metadata(args):
     names = metadata["__all__"] + ["__doc_version__"]
@@ -235,6 +266,8 @@ def show_metadata(args):
 ## main
 
 def main(args):
+    global __dry__
+    __dry__ = args["--dry"]
     check("pip", "mvn", "twine", "docker", "npm")
     pipcheck("wheel", "sphinx")
     if args["version"]:
