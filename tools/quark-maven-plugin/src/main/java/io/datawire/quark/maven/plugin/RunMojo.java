@@ -227,7 +227,10 @@ public class RunMojo extends AbstractMojo {
 
         if (outputDirectory==null){
             String subdir = "generated-"+("test".equals(addSources)?"test-":"")+"sources";
-            outputDirectory = new File(project.getBuild().getDirectory()+File.separator+subdir+File.separator);
+            outputDirectory = new File(project.getBuild().getDirectory()
+                    + File.separator + subdir
+                    + File.separator + "quark"
+                    + File.separator);
         }
 
         performQuarkCompilation();
@@ -291,13 +294,15 @@ public class RunMojo extends AbstractMojo {
         }
         boolean mainAddSources = "main".endsWith(addSources);
         boolean testAddSources = "test".endsWith(addSources);
+        File realOutDir = outputDirectory.toPath().resolve("src").resolve("main").resolve("java").toFile();
+        String absOutDir = realOutDir.getAbsolutePath();
         if (mainAddSources){
-            getLog().info("Adding generated classes to classpath");
-            project.addCompileSourceRoot( outputDirectory.getAbsolutePath() );
+            getLog().info("Adding generated classes to classpath " + absOutDir);
+            project.addCompileSourceRoot( absOutDir);
         }
         if (testAddSources){
-            getLog().info("Adding generated classes to test classpath");
-            project.addTestCompileSourceRoot( outputDirectory.getAbsolutePath() );
+            getLog().info("Adding generated classes to test classpath" + absOutDir);
+            project.addTestCompileSourceRoot( absOutDir);
         }
         if (mainAddSources || testAddSources){
             buildContext.refresh(outputDirectory);
@@ -327,12 +332,7 @@ public class RunMojo extends AbstractMojo {
         cmd.add("--output=" + outputDir);
         if (javaOutput) {
             cmd.add("--java");
-        }
-        if (jsOutput) {
-            cmd.add("--javascript-out=" + outputDir);
-        }
-        if (pythonOutput) {
-            cmd.add("--python-out=" + outputDir);
+            cmd.add("--java-out=.");
         }
         cmd.add("compile");
         cmd.add(file.toString());
