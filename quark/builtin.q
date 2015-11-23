@@ -382,7 +382,7 @@ primitive Codec {
 @doc("Http servlet")
 @mapping($java{io.datawire.quark.runtime.HTTPServlet})
 primitive HTTPServlet {
-    void onHTTPInit(String url, Runtime runtime);
-    void onHTTPError(String url);
-    void onHTTPRequest(HTTPRequest request, HTTPResponse response);
+    void onHTTPInit(String url, Runtime runtime) {}
+    void onHTTPError(String url) {}
+    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
 }
