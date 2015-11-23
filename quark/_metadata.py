@@ -13,8 +13,10 @@
 # limitations under the License.
 
 __all__ = [
-    "__title__", "__summary__", "__uri__", "__version__", "__author__",
-    "__email__", "__license__", "__copyright__"
+    "__title__", "__summary__", "__uri__", "__author__",
+    "__email__", "__license__", "__copyright__",
+    "__version__", "__java_runtime_version__",
+    "__py_runtime_version__", "__js_runtime_version__"
 ]
 
 __title__ = "datawire-quark"

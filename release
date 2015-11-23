@@ -9,6 +9,7 @@ utility captures all this in a single place.
 Usage:
   release version [<version>] [options]
   release push
+  release metadata
 
   Version Options:
     --dev                  Apply development suffix to all versions.
@@ -49,6 +50,18 @@ def check(*commands):
     except subprocess.CalledProcessError, e:
         raise ReleaseError("Please install and configure missing prereqs: %s\n\n%s" %
                            (", ".join(commands), e.output))
+
+
+def pipcheck(*packages):
+    missing = []
+    for pkg in packages:
+        try:
+            subprocess.check_output(["pip", "show", pkg], stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError, e:
+            missing.append(pkg)
+    if missing:
+        raise ReleaseError("Please install missing python packages: %s" % ", ".join(missing))
+
 def run(*command, **kwargs):
     """Execute the supplied command."""
     subprocess.check_call(command, **kwargs)
@@ -169,14 +182,23 @@ def push(args):
     push_py()
     push_quark()
 
+def show_metadata(args):
+    names = metadata["__all__"]
+    width = max(map(lambda n: len(n.strip("_")), names))
+    for name in names:
+        print "%*s: %s" % (width, name.strip("_"), metadata[name])
+
 ## main
 
 def main(args):
-    check("mvn", "twine", "docker", "npm")
+    check("pip", "mvn", "twine", "docker", "npm")
+    pipcheck("wheel", "sphinx")
     if args["version"]:
         version(args)
     elif args["push"]:
         push(args)
+    elif args["metadata"]:
+        show_metadata(args)
     else:
         assert False
 
