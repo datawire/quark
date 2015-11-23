@@ -1,8 +1,9 @@
 package hello_server {
     class HelloServlet extends HTTPServlet {
         Runtime runtime;
-        void onInit(String url, Runtime runtime) {
+        void onHTTPInit(String url, Runtime runtime) {
             self.runtime = runtime;
+            print("Registered on " + url);
         }
 
         void onHTTPRequest(HTTPRequest rq, HTTPResponse rs) {
