@@ -22,7 +22,7 @@ Usage:
     --doc <version>        Documentation version.
 """
 
-import json, os, subprocess, tempfile
+import json, os, random, subprocess, tempfile
 from docopt import docopt
 from collections import OrderedDict
 
@@ -194,11 +194,34 @@ def version(args):
     py_version(getver(args, "--py"))
     doc_version(getver(args, "--doc"))
 
+VERSIONS = [("quark", metadata["__version__"]),
+            ("java runtime", metadata["__java_runtime_version__"]),
+            ("js runtime", metadata["__js_runtime_version__"]),
+            ("py runtime", metadata["__py_runtime_version__"])]
+
+def challenge():
+    result = ""
+    for i in range(4):
+        result += chr(ord('a') + random.randint(0, 25))
+    return result
+
 def push(args):
-    push_java()
-    push_js()
-    push_py()
-    push_quark()
+    print "You are about to push the following packages live:"
+    print
+    width = max(map(lambda x: len(x[0]), VERSIONS))
+    for name, version in VERSIONS:
+        print "    %*s: %s" % (width, name, version)
+    print
+    chal = challenge()
+    text = raw_input('Please type "%s" to confirm: ' % chal)
+    if text == chal:
+        print "Pushing"
+        push_java()
+        push_js()
+        push_py()
+        push_quark()
+    else:
+        print "Canceled"
 
 def docs(args):
     pass
