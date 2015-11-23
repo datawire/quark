@@ -1,0 +1,3 @@
+FROM ubuntu-pip
+RUN curl https://nodejs.org/dist/v4.2.2/node-v4.2.2-linux-x64.tar.gz | tar --strip-components=1 -k -xzf -
+CMD /bin/bash

@@ -1,0 +1,3 @@
+FROM fedora-pip
+RUN dnf -y install maven
+CMD /bin/bash
