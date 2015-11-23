@@ -9,6 +9,7 @@ utility captures all this in a single place.
 Usage:
   release version [<version>] [options]
   release push
+  release docs
   release metadata
 
   Version Options:
@@ -36,6 +37,10 @@ def base(name=None):
 metadata = {}
 with open(base("quark/_metadata.py")) as fp:
     exec(fp.read(), metadata)
+with open(base("docs/conf.py")) as fp:
+    for line in fp:
+        if line.startswith("__doc_version__"):
+            exec(line, metadata)
 
 ## utilities
 
@@ -154,12 +159,25 @@ def push_quark():
 
 ## subcommands
 
+ALIASES = {
+    "--quark": "__version__",
+    "--java": "__java_runtime_version__",
+    "--js": "__js_runtime_version__",
+    "--py": "__py_runtime_version__",
+    "--doc": "__doc_version__"
+}
+
 def relver(args, component):
-    return args[component] or args["<version>"] or metadata["__version__"]
+    return args[component] or args["<version>"] or metadata[ALIASES[component]]
+
+def is_dev(version):
+    return version.endswith("-SNAPSHOT") or version.endswith(".dev0")
 
 def devver(args, component):
     version = relver(args, component)
-    if component in ("--quark", "--py"):
+    if is_dev(version):
+        return version
+    elif component in ("--quark", "--py"):
         return "%s.dev0" % version
     else:
         return "%s-SNAPSHOT" % version
@@ -182,8 +200,11 @@ def push(args):
     push_py()
     push_quark()
 
+def docs(args):
+    pass
+
 def show_metadata(args):
-    names = metadata["__all__"]
+    names = metadata["__all__"] + ["__doc_version__"]
     width = max(map(lambda n: len(n.strip("_")), names))
     for name in names:
         print "%*s: %s" % (width, name.strip("_"), metadata[name])
@@ -197,6 +218,8 @@ def main(args):
         version(args)
     elif args["push"]:
         push(args)
+    elif args["docs"]:
+        docs(args)
     elif args["metadata"]:
         show_metadata(args)
     else:
