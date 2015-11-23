@@ -13,6 +13,7 @@ import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.DefaultFullHttpResponse;
+import io.netty.handler.codec.http.DefaultHttpHeaders;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.handler.codec.http.FullHttpResponse;
 import io.netty.handler.codec.http.HttpHeaders;
@@ -32,6 +33,7 @@ public class DatawireNettyHttpRequestHandler extends SimpleChannelInboundHandler
         public Response(ChannelHandlerContext ctx, IncomingRequest request) {
             this.ctx = ctx;
             this.request = request;
+            this.headers = new DefaultHttpHeaders();
         }
 
         @Override
@@ -78,6 +80,7 @@ public class DatawireNettyHttpRequestHandler extends SimpleChannelInboundHandler
             ByteBufUtil.writeUtf8(content, body);
             FullHttpRequest req = this.request.impl();
             FullHttpResponse resp = new DefaultFullHttpResponse(req.getProtocolVersion(), HttpResponseStatus.valueOf(this.code), content);
+            resp.headers().add(this.headers);
             this.ctx.writeAndFlush(resp);
             if (!HttpHeaders.isKeepAlive(req)) {
                 this.ctx.close();
