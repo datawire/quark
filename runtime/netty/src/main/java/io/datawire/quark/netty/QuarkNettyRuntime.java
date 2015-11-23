@@ -47,7 +47,6 @@ import io.netty.util.CharsetUtil;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.SSLException;
@@ -141,7 +140,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            ws_handler.onWSError(null); // XXX
+            ws_handler.onWSError(null); // XXX websocket error handling
             return;
         }
         String scheme = uri.getScheme() == null? "ws" : uri.getScheme();
@@ -161,7 +160,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
 
         if (!"ws".equalsIgnoreCase(scheme) && !"wss".equalsIgnoreCase(scheme)) {
             System.err.println("Only WS(S) is supported.");
-            ws_handler.onWSError(null); // XXX
+            ws_handler.onWSError(null); // XXX websocket error handling
             return;
         }
 
@@ -172,7 +171,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 sslCtx = SslContextBuilder.forClient()
                         .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             } catch (SSLException e) {
-                ws_handler.onWSError(null); // XXX
+                ws_handler.onWSError(null); // XXX websocket error handling
                 return;
             }
         } else {
@@ -309,8 +308,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         // request1.headers().set("Accept-Encoding", "gzip"); // XXX: extra runtime dependencies
         HttpHeaders.setContentLength(request1, content.readableBytes());
 
-        for(Map.Entry<String, String> header : request.getHeaders().entrySet()) {
-            request1.headers().set(header.getKey(), header.getValue());
+        for(String header : request.getHeaders()) {
+            request1.headers().set(header, request.getHeader(header));
         }
 
         // Configure the client.
@@ -390,8 +389,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         if (quarkBuffer instanceof BufferImpl) {
             return ((BufferImpl)quarkBuffer).data();
         }
-        ByteBuf copy = ByteBufAllocator.DEFAULT.buffer(quarkBuffer.capacity());
-        for(int i = 0; i < quarkBuffer.capacity(); i++) { // XXX: really? :)
+        // Slow path
+        int capacity = quarkBuffer.capacity();
+        ByteBuf copy = ByteBufAllocator.DEFAULT.buffer(capacity);
+        for(int i = 0; i < capacity; i++) { // XXX: really? :)
             copy.writeByte(quarkBuffer.getByte(i));
         }
         return copy;
@@ -454,6 +455,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 }
                 p.addLast(new HttpRequestDecoder());
                 p.addLast(new HttpResponseEncoder());
+                p.addLast(new HttpObjectAggregator(1024*1024)); // XXX: nobody needs more than one megabytez
                 p.addLast(new DatawireNettyHttpRequestHandler(QuarkNettyRuntime.this, servlet_w));
             }
         });
@@ -479,8 +481,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 response.respond();
                 return;
             } else {
-                response.fail();
+                response.fail(500, "Unmatched request and response");
             }
+        } else {
+            // XXX what to do with a response from a different runtime?
         }
     }
 

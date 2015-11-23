@@ -272,14 +272,14 @@ primitive HTTPHandler {
 
 @mapping($java{io.datawire.quark.runtime.HTTPRequest})
 primitive HTTPRequest {
-    macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.HTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+    macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
     void setMethod(String method);
     String getMethod();
     void setBody(String data);
     String getBody();
     void setHeader(String key, String value);
     String getHeader(String key);
-    Map<String,String> getHeaders();
+    List<String> getHeaders();
 }
 
 @mapping($java{io.datawire.quark.runtime.HTTPResponse})
@@ -290,7 +290,7 @@ primitive HTTPResponse {
     void setBody(String body);
     void setHeader(String key, String value);
     String getHeader(String key);
-    Map<String,String> getHeaders();
+    List<String> getHeaders();
 }
 
 @mapping($java{io.datawire.quark.runtime.Task})

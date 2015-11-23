@@ -24,7 +24,7 @@ public class JSONObject {
                     .with(JSON.Feature.WRITE_NULL_PROPERTIES)
                     .asString(this.value);
         } catch (Exception ex) {
-            return null; // XXX
+            return null; // XXX json error handling
         }
     }
 
