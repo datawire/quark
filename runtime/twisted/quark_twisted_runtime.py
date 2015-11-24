@@ -3,6 +3,7 @@
 __version__ = '0.2.0.dev0'
 
 from StringIO import StringIO
+import urlparse
 
 from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
@@ -11,7 +12,7 @@ from twisted.internet import defer, reactor, ssl
 from twisted.python import log
 from twisted.web.client import Agent, FileBodyProducer, readBody
 from twisted.web.http_headers import Headers
-
+from twisted.web import server, resource
 
 def _dumper(reason):
     log.err(reason, "From the future!")
@@ -136,6 +137,92 @@ class _QuarkResponse(object):
     def getBody(self):
         return self.body
 
+class _QuarkSite(server.Site):
+    def __init__(self, uri, url, servlet):
+        servlet_resource = _ServletResource(url, servlet)
+        root = servlet_resource
+        for segment in uri.path.split('/')[-1:0:-1]:
+            if not segment:
+                continue
+            new_root = resource.Resource()
+            new_root.putChild(segment, root)
+            root = new_root
+        server.Site.__init__(self, root)
+        self.servlet_resource = servlet_resource
+
+class _ServletResource(resource.Resource):
+    isLeaf = True
+    def __init__(self, url, servlet):
+        resource.Resource.__init__(self)
+        self.servlet_url = url
+        self.servlet = servlet
+
+    def render(self, request):
+        rq = _ServletRequest(request)
+        rs = _ServletResponse(request)
+        rs.servlet_request = rq
+        self.servlet.onHTTPRequest(rq, rs)
+        return server.NOT_DONE_YET
+
+class _ServletRequest(object):
+    def __init__(self, request):
+        self.request = request
+
+    def setMethod(self, method): pass
+    def getMethod(self):
+        return self.request.method
+
+    def setBody(self, body): pass
+    def getBody(self):
+        return self.request.content.read().decode('utf-8')
+
+    def setHeader(self, key, value): pass
+    def getHeader(self, key):
+        return self.request.getHeader(key).decode('utf-8')
+
+    def getHeaders(self):
+        return list(set(h[0].decode('utf-8') for h in self.request.requestHeaders.getAllRawHeaders()))
+
+class _ServletResponse(object):
+    def __init__(self, request):
+        self.request = request
+        self.code = None
+        self.body = None
+        self.headers = dict()
+
+    def getCode(self):
+        return self.code
+
+    def setCode(self, code):
+        self.code = code
+
+    def getBody(self):
+        return self.body
+
+    def setBody(self, body):
+        self.body = body
+
+    def getHeader(self, key):
+        return self.headers.get(key)
+
+    def setHeader(self, key, value):
+        self.headers[key] = value
+
+    def getHeaders(self):
+        return self.headers.keys()
+
+    def respond(self):
+        self.request.setResponseCode(self.code)
+        for key, value in self.headers.iteritems():
+            self.request.setHeader(key.encode('utf-8'), value.encode('utf-8'))
+        self.request.write(self.body.encode('utf-8'))
+        self.request.finish()
+
+    def fail(self, code, message):
+        self.code = code
+        self.headers.clear()
+        self.body = message
+        self.respond();
 
 class TwistedRuntime(object):
 
@@ -170,6 +257,34 @@ class TwistedRuntime(object):
 
     def schedule(self, handler, delayInSeconds):
         self.reactor.callLater(delayInSeconds, handler.onExecute, self)
+
+    def serveHTTP(self, url, servlet):
+        uri = urlparse.urlparse(url, "http", False)
+        host = uri.hostname or "127.0.0.1"
+        port_no = uri.port or dict(http=80, https=443).get(uri.scheme)
+        # TODO: more servlets per site
+        site = _QuarkSite(uri, url, servlet)
+        if uri.scheme == "https":
+            # XXX: we need a certificate.... abuse url.params?
+            servlet.onHTTPError(url)
+            return
+        elif uri.scheme == "http":
+            port = self.reactor.listenTCP(port_no, site, interface=host)
+            bound = port.getHost()
+            actual = urlparse.urlunparse((uri.scheme,
+                        "%s:%s"%(bound.host, bound.port), uri.path,
+                         "", "", "",))
+            servlet.onHTTPInit(actual, self)
+
+    def respond(self, request, response):
+        if isinstance(response, _ServletResponse):
+            if response.servlet_request is request:
+                response.respond()
+            else:
+                response.fail(500, "unmatched request and response")
+        else:
+            # XXX: what to do with a response from a different runtime
+            pass
 
     def launch(self):
         self.reactor.run()
@@ -221,6 +336,12 @@ class ThreadedRuntime(object):
 
     def schedule(self, handler, delayInSeconds):
         return self.tw.schedule(handler, delayInSeconds)
+
+    def serveHTTP(self, url, servlet):
+        self.tw.serveHTTP(url, servlet)
+
+    def respond(self, request, response):
+        self.tw.respond(request, response)
 
     def launch(self):
         threading.Thread(target=self.tw.reactor.run, args=(False,)).start()  # False: Don't try to install sig handlers
