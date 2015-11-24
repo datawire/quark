@@ -75,11 +75,11 @@
 
     var http = require("http");
     var https = require("https");
-    var url = require("url");
+    var URL = require("url");
 
     // CLASS QuarkRequest
     function QuarkRequest(request, handler) {
-        var options = url.parse(request.url);
+        var options = URL.parse(request.url);
         options.method = request.method;
 
         handler.onHTTPInit(request);
@@ -131,6 +131,74 @@
         return this.body;
     };
 
+    function IncomingRequest(request) {
+        this.request = request;
+        this.body = new runtime.Buffer(1024*1024); // XXX: nobody needs more than one megabytez
+        this.content_length = 0;
+        var self = this;
+        request.on("data", function(chunk) {
+            chunk.copy(self.body.data, self.content_length);
+            self.content_length += chunk.length;
+        });
+    }
+
+    IncomingRequest.prototype.getMethod = function() {
+        return this.request.method;
+    }
+
+    IncomingRequest.prototype.getBody = function() {
+        return this.body.getStringUTF8(0, this.content_length);
+    }
+
+    IncomingRequest.prototype.getHeader = function(key) {
+        return this.request.headers[key.toLowerCase()];
+    }
+
+    IncomingRequest.prototype.getHeaders = function() {
+        return Object.keys(this.request.headers);
+    }
+
+    function ServletResponse(response) {
+        this.response = response;
+        this.code = 500;
+        this.body = null;
+        this.headers = {}
+    }
+
+    ServletResponse.prototype.getCode = function() {
+        return this.code;
+    }
+    ServletResponse.prototype.setCode = function(code) {
+        this.code = code;
+    }
+    ServletResponse.prototype.getBody = function() {
+        return body;
+    }
+    ServletResponse.prototype.setBody = function(body) {
+        this.body = body;
+    }
+    ServletResponse.prototype.setHeader = function(key, value) {
+        this.headers[key.toLowerCase()] = value;
+    }
+    ServletResponse.prototype.getHeader = function(key) {
+        return this.headers[key.toLowerCase()];
+    }
+    ServletResponse.prototype.getHeaders = function() {
+        return Object.keys(this.headers);
+    }
+    ServletResponse.prototype.respond = function() {
+        this.setHeader('content-length', Buffer.byteLength(this.body));
+        this.response.writeHead(this.code, this.headers);
+        this.response.write(this.body, "utf-8");
+        this.response.end();
+    }
+    ServletResponse.prototype.fail = function(code, message) {
+        this.code = code;
+        this.body = message;
+        this.headers = {}
+        this.respond();
+    }
+
     // CLASS Runtime
     function Runtime() {
         this.locked = false;
@@ -164,6 +232,41 @@
 
     Runtime.prototype.codec = function() { return runtime.defaultCodec(); };
 
+    Runtime.prototype.serveHTTP = function(url, servlet) {
+        var self = this;
+        var uri = URL.parse(url, false, true);
+        var server = http.createServer(function(request, response) {
+            var rq = new IncomingRequest(request);
+            var rs = new ServletResponse(response);
+            rs.servlet_request = rq;
+            request.on("end", function() {
+                servlet.onHTTPRequest(rq, rs);
+            });
+        });
+        server.on("listening", function() {
+            var addr = server.address()
+            var url = URL.format({
+                protocol: uri.protocol,
+                slashes: uri.slashes,
+                hostname: addr.address,
+                port: addr.port,
+                pathname: uri.pathname})
+            servlet.onHTTPInit(url, self);
+        });
+        server.listen(uri.port, uri.hostname)
+    }
+
+    Runtime.prototype.respond = function(request, response) {
+        if (response instanceof ServletResponse) {
+            if (response.servlet_request === request) {
+                response.respond();
+            } else {
+                response.fail(500, "mismatched request and response");
+            }
+        } else {
+            // XXX: what to do with a response from another runtime
+        }
+    }
 
     module.exports = new Runtime();
 
