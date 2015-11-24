@@ -60,3 +60,6 @@ target/
 
 # Linux
 .directory
+
+# node modules
+**/node_modules/
