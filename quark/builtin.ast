@@ -569,7 +569,7 @@ File(
   ConstructorMacro(Name(HTTPRequest),
    Param(Type(Name(String)), Name(url)),
    Native(NativeCase(java,
-     Fixed('new io.datawire.quark.runtime.HTTPRequest('), Var(Name(url)),
+     Fixed('new io.datawire.quark.runtime.ClientHTTPRequest('), Var(Name(url)),
      Fixed(')')), NativeCase(py, Fixed('_HTTPRequest('), Var(Name(url)),
      Fixed(')')), NativeCase(js, Fixed('new _qrt.HTTPRequest('),
      Var(Name(url)), Fixed(')')))),
@@ -577,19 +577,43 @@ File(
   Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method))),
 
+  Method(Type(Name(String)), Name(getMethod)),
+
   Method(Type(Name(void)), Name(setBody),
    Param(Type(Name(String)), Name(data))),
 
+  Method(Type(Name(String)), Name(getBody)),
+
   Method(Type(Name(void)), Name(setHeader),
    Param(Type(Name(String)), Name(key)),
-   Param(Type(Name(String)), Name(value)))),
+   Param(Type(Name(String)), Name(value))),
+
+  Method(Type(Name(String)), Name(getHeader),
+   Param(Type(Name(String)), Name(key))),
+
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPResponse')))), Name(HTTPResponse),
 
   Method(Type(Name(int)), Name(getCode)),
 
-  Method(Type(Name(String)), Name(getBody))),
+  Method(Type(Name(void)), Name(setCode),
+   Param(Type(Name(int)), Name(code))),
+
+  Method(Type(Name(String)), Name(getBody)),
+
+  Method(Type(Name(void)), Name(setBody),
+   Param(Type(Name(String)), Name(body))),
+
+  Method(Type(Name(void)), Name(setHeader),
+   Param(Type(Name(String)), Name(key)),
+   Param(Type(Name(String)), Name(value))),
+
+  Method(Type(Name(String)), Name(getHeader),
+   Param(Type(Name(String)), Name(key))),
+
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Task')))), Name(Task),
@@ -619,7 +643,15 @@ File(
    Param(Type(Name(Task)), Name(handler)),
    Param(Type(Name(float)), Name(delayInSeconds))),
 
-  Method(Type(Name(Codec)), Name(codec))),
+  Method(Type(Name(Codec)), Name(codec)),
+
+  Method(Type(Name(void)), Name(serveHTTP),
+   Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(HTTPServlet)), Name(servlet))),
+
+  Method(Type(Name(void)), Name(respond),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPResponse)), Name(response)))),
 
  Primitive(Annotation(Name(doc),
    String("A stateless buffer of bytes. Default byte order is network byte order.")),
@@ -739,5 +771,23 @@ File(
 
   Method(Annotation(Name(doc), String("decode the Base64 enccoded string")),
    Type(Name(Buffer)), Name(fromBase64),
-   Param(Type(Name(String)), Name(base64))))
+   Param(Type(Name(String)), Name(base64)))),
+
+ Primitive(Annotation(Name(doc), String("Http servlet")),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.HTTPServlet')))), Name(HTTPServlet),
+
+  Method(Type(Name(void)), Name(onHTTPInit),
+   Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(Runtime)), Name(runtime)),
+   Block()),
+
+  Method(Type(Name(void)), Name(onHTTPError),
+   Param(Type(Name(String)), Name(url)),
+   Block()),
+
+  Method(Type(Name(void)), Name(onHTTPRequest),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPResponse)), Name(response)),
+   Block()))
 )

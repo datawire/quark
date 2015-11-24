@@ -22,7 +22,7 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     }
     public void request(String request, java.util.HashMap<String,Object> params, io.datawire.quark.runtime.HTTPHandler handler) {
         String url = ("https://slack.com/api/") + (request);
-        io.datawire.quark.runtime.HTTPRequest req = new io.datawire.quark.runtime.HTTPRequest(url);
+        io.datawire.quark.runtime.HTTPRequest req = new io.datawire.quark.runtime.ClientHTTPRequest(url);
         (req).setMethod("POST");
         (params).put(("token"), ((this).token));
         (req).setBody(io.datawire.quark.runtime.Builtins.urlencode(params));
