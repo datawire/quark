@@ -26,7 +26,7 @@ except ImportError:
 __version__ = '0.1.14'
 __doc_version__ = '3'
 
-rst_epilog = ".. |doc_version| replace:: %s" % __doc_version__
+rst_epilog = "\n.. |doc_version| replace:: %s" % __doc_version__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
