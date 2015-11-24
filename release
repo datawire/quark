@@ -285,7 +285,7 @@ def main(args):
     global __dry__
     __dry__ = args["--dry"]
     check("pip", "mvn", "twine", "docker", "npm")
-    pipcheck("wheel", "sphinx")
+    pipcheck("wheel", "sphinx", "sphinx-better-theme")
     if args["version"]:
         version(args)
     elif args["push"]:
