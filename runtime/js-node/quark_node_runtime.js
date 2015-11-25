@@ -235,12 +235,35 @@
     Runtime.prototype.serveHTTP = function(url, servlet) {
         var self = this;
         var uri = URL.parse(url, false, true);
-        var server = http.createServer(function(request, response) {
+        var path = uri.pathname ? uri.pathname : "";
+        if (!path.startsWith("/")) {
+            path = "/" + path;
+        }
+        var pathslash = path + (path.endsWith("/") ? "" : "/");
+        var server = undefined;
+        
+        if (uri.protocol == "http:") {
+            server = http.createServer();
+        } else if (uri.protocol == "https:") {
+            // XXX: certificates...
+            servlet.onHTTPError(url);
+            return;
+        } else {
+            servlet.onHTTPError(url);
+            return;
+        }
+
+        server.on("request", function(request, response) {
             var rq = new IncomingRequest(request);
             var rs = new ServletResponse(response);
             rs.servlet_request = rq;
             request.on("end", function() {
-                servlet.onHTTPRequest(rq, rs);
+                var rq_url = URL.parse(request.url, false);
+                if (rq_url.pathname == path || rq_url.pathname.startsWith(pathslash)) {
+                    servlet.onHTTPRequest(rq, rs);
+                } else {
+                    rs.fail(404, "Servlet not found");
+                }
             });
         });
         server.on("listening", function() {
@@ -250,7 +273,7 @@
                 slashes: uri.slashes,
                 hostname: addr.address,
                 port: addr.port,
-                pathname: uri.pathname})
+                pathname: path})
             servlet.onHTTPInit(url, self);
         });
         server.listen(uri.port, uri.hostname)
