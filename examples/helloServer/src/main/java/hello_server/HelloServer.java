@@ -7,6 +7,7 @@ public class HelloServer {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
         HelloServlet server = new HelloServlet();
         runtime.serveHTTP("http://localhost:8765/foo", server);
+        runtime.serveHTTP("http://0.0.0.0:0/foo", server);
         runtime.launch();
     }
 }

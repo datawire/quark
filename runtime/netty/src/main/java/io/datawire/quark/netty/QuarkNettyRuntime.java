@@ -44,6 +44,7 @@ import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.util.CharsetUtil;
 
+import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.security.cert.CertificateException;
@@ -106,15 +107,15 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     }
 
     @Override
-	public boolean isAllowSync() {
-		return allowSync;
-	}
+    public boolean isAllowSync() {
+        return allowSync;
+    }
 
-	public boolean isInitialized() {
-		return initialized;
-	}
+    public boolean isInitialized() {
+        return initialized;
+    }
 
-	private Runnable notifier = new Runnable() {
+    private Runnable notifier = new Runnable() {
         @Override
         public void run() {
             synchronized (lock) {
@@ -123,12 +124,12 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         }
     };
     @Override
-	protected void wakeup() {
+    protected void wakeup() {
         group.submit(notifier );
     }
 
     @Override
-	protected void initialize() {
+    protected void initialize() {
         synchronized (lock) {
             initialized = true;
         }
@@ -441,11 +442,11 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         } else {
             sslCtx = null;
         }
-        
+
         ServerBootstrap b = new ServerBootstrap();
         b.group(this.group)
-         .channel(NioServerSocketChannel.class)
-         .childHandler(new ChannelInitializer<SocketChannel>() {
+        .channel(NioServerSocketChannel.class)
+        .childHandler(new ChannelInitializer<SocketChannel>() {
 
             @Override
             protected void initChannel(SocketChannel ch) throws Exception {
@@ -464,7 +465,12 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             public void operationComplete(ChannelFuture future) throws Exception {
                 if (future.isDone()) {
                     if (future.isSuccess()) {
-                        servlet_w.onHTTPInit(url, QuarkNettyRuntime.this);
+                        InetSocketAddress addr = (InetSocketAddress)future.channel().localAddress();
+                        URI actual = new URI(
+                                uri.getScheme(), null,
+                                addr.getHostString(), addr.getPort(),
+                                uri.getPath(), null, null);
+                        servlet_w.onHTTPInit(actual.toString(), QuarkNettyRuntime.this);
                     } else {
                         servlet_w.onHTTPError(url);
                     }

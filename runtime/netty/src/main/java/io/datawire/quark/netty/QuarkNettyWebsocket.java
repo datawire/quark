@@ -17,8 +17,6 @@ import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.util.CharsetUtil;
 
-import java.util.ArrayList;
-
 public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> implements WebSocket {
 
     private final WebSocketClientHandshaker handshaker;
