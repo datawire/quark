@@ -411,13 +411,17 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         }
         String scheme = uri.getScheme() == null? "http" : uri.getScheme();
         final String host = uri.getHost() == null? "127.0.0.1" : uri.getHost();
-        int port = uri.getPort();
-        if (port == -1) {
+        final int port;
+        if (uri.getPort() == -1) {
             if ("http".equalsIgnoreCase(scheme)) {
                 port = 80;
             } else if ("https".equalsIgnoreCase(scheme)) {
                 port = 443;
+            } else {
+                port = -1;
             }
+        } else {
+            port = uri.getPort();
         }
 
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
@@ -472,7 +476,11 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                                 uri.getPath(), null, null);
                         servlet_w.onHTTPInit(actual.toString(), QuarkNettyRuntime.this);
                     } else {
-                        servlet_w.onHTTPError(url);
+                        URI actual = new URI(
+                                uri.getScheme(), null,
+                                host, port,
+                                uri.getPath(), null, null);
+                        servlet_w.onHTTPError(actual.toString());
                     }
                 }
             }
