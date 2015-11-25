@@ -250,10 +250,12 @@ def push(args):
         print "Canceled"
 
 def docs(args):
+    version = metadata["__version__"]
+    docver = metadata["__doc_version__"]
     print "You are about to push the documentation live:"
     print
-    print "    version: %s" % metadata["__version__"]
-    print "        doc: %s" % metadata["__doc_version__"]
+    print "    version: %s" % version
+    print "        doc: %s" % docver
     print
     if challenge():
         print "Pushing docs"
@@ -261,8 +263,13 @@ def docs(args):
         run("git", "clone", call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
             dest)
         run("git", "checkout", "gh-pages", cwd=dest)
+        # XXX: this seems to break things
+#        run("git", "rm", "-r", ".", cwd=dest)
         run("sphinx-build", "-q", "docs", dest, cwd=base())
-        print "Docs are in %s, please inspect and commit/push." % dest
+        run("git", "add", ".", cwd=dest)
+        run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
+        run("git", "push", cwd=dest)
+        print "Documentation is pushed."
     else:
         print "Canceled"
 
@@ -278,7 +285,7 @@ def main(args):
     global __dry__
     __dry__ = args["--dry"]
     check("pip", "mvn", "twine", "docker", "npm")
-    pipcheck("wheel", "sphinx")
+    pipcheck("wheel", "sphinx", "sphinx-better-theme")
     if args["version"]:
         version(args)
     elif args["push"]:
