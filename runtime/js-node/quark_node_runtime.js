@@ -251,8 +251,14 @@
         
         if (uri.protocol == "http:") {
             server = http.createServer();
+            if (uri.port === null ) {
+                uri.port = 80;
+            }
         } else if (uri.protocol == "https:") {
             // XXX: certificates...
+            if (uri.port === null ) {
+                uri.port = 443;
+            }
             servlet.onHTTPError(url);
             return;
         } else {
