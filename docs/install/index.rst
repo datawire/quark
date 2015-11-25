@@ -11,4 +11,4 @@ Quark Installation and Configuration Guide
 
 Document Version
 ================
-Quark Installation and Configuration Guide |version|-|doc_version|
+Quark Installation and Configuration Guide |release|-|doc_version|
