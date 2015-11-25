@@ -12,4 +12,4 @@ Quark Language Reference
 
 Document Version
 ================
-Quark Language Reference 0.1.0-2
+Quark Language Reference |version|-|doc_version|

@@ -24,7 +24,7 @@ except ImportError:
     better_theme = False
 
 __version__ = '0.1.14'
-__doc_version__ = '3'
+__doc_version__ = '4'
 
 rst_epilog = "\n.. |doc_version| replace:: %s" % __doc_version__
 
