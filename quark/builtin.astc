@@ -614,11 +614,13 @@ File(
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
-  Method(Type(Name(void)), Name(send),
+  Method(Type(Name(bool)), Name(send),
    Param(Type(Name(String)), Name(message), $type=0.String)),
 
-  Method(Type(Name(void)), Name(sendBinary),
-   Param(Type(Name(Buffer)), Name(bytes), $type=0.Buffer))),
+  Method(Type(Name(bool)), Name(sendBinary),
+   Param(Type(Name(Buffer)), Name(bytes), $type=0.Buffer)),
+
+  Method(Type(Name(bool)), Name(close))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
