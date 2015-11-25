@@ -72,6 +72,13 @@
         }
         return false;
     };
+    QuarkWebSocket.prototype.close = function() {
+        if (this.isOpen) {
+            this.socket.close();
+            return true;
+        }
+        return false;
+    }
 
     var http = require("http");
     var https = require("https");

@@ -53,6 +53,16 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
     }
 
     @Override
+    public boolean close() {
+        if (ch != null) {
+            CloseWebSocketFrame frame = new CloseWebSocketFrame();
+            ch.writeAndFlush(frame);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
         handshaker.handshake(ctx.channel());
     }

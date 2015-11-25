@@ -78,14 +78,20 @@ class _QuarkWebSocket(WebSocketClientProtocol):
     def send(self, message):
         if self.is_open:
             self.protocol.sendMessage(message.encode('utf-8'), False)
-            return 1
-        return 0
+            return True
+        return False
 
     def sendBinary(self, message):
         if self.is_open:
             self.protocol.sendMessage(message.data, True)
-            return 1
-        return 0
+            return True
+        return False
+
+    def close(self):
+        if self.is_open:
+            self.protocol.sendClose();
+            return True
+        return False
 
 
 class _QuarkRequest(object):

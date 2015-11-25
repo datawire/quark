@@ -260,6 +260,7 @@ primitive WSHandler {
 primitive WebSocket {
     bool send(String message);
     bool sendBinary(Buffer bytes);
+    bool close();
 }
 
 @mapping($java{io.datawire.quark.runtime.HTTPHandler})
