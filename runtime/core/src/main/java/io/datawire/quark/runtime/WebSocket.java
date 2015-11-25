@@ -1,6 +1,6 @@
 package io.datawire.quark.runtime;
 
 public interface WebSocket {
-    void send(String message);
-    void sendBinary(Buffer message);
+    boolean send(String message);
+    boolean sendBinary(Buffer message);
 }

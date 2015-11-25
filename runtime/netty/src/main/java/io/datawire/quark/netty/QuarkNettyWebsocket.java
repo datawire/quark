@@ -23,7 +23,6 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
 
     private final WebSocketClientHandshaker handshaker;
     private final WSHandler handler;
-    private ArrayList<WebSocketFrame> pending = new ArrayList<>();
     private Channel ch;
 
     public QuarkNettyWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
@@ -33,24 +32,24 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
     }
 
     /// quark_runtime.WebSocket
-    public void send(String message) {
+    public boolean send(String message) {
         TextWebSocketFrame frame = new TextWebSocketFrame(message);
         if (ch != null) {
             ch.writeAndFlush(frame);
-        } else {
-            pending.add(frame);
+            return true;
         }
+        return false;
     }
 
     @Override
-    public void sendBinary(Buffer message) {
+    public boolean sendBinary(Buffer message) {
         ByteBuf binaryData = QuarkNettyRuntime.adaptBuffer(message);
         BinaryWebSocketFrame frame = new BinaryWebSocketFrame(binaryData);
         if (ch != null) {
             ch.writeAndFlush(frame);
-        } else {
-            pending.add(frame);
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -65,14 +64,8 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
         if (!handshaker.isHandshakeComplete()) {
             handshaker.finishHandshake(ch, (FullHttpResponse) msg);
             System.out.println("WebSocket Client connected!");
-            this.handler.onWSConnected(this);
             this.ch = ch;
-            for (WebSocketFrame frame : pending) {
-                ch.write(frame);
-            }
-            ch.flush();
-            pending.clear();
-            pending = null;
+            this.handler.onWSConnected(this);
             return;
         }
 
@@ -103,4 +96,5 @@ public class QuarkNettyWebsocket extends SimpleChannelInboundHandler<Object> imp
             ch.close();
         }
     }
+
 }

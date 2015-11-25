@@ -61,16 +61,16 @@
     QuarkWebSocket.prototype.send = function (message) {
         if (this.isOpen) {
             this.socket.send(message);
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     };
     QuarkWebSocket.prototype.sendBinary = function(message) {
         if (this.isOpen) {
             this.socket.send(message.data, {binary:true});
-            return 1;
+            return true;
         }
-        return 0;
+        return false;
     };
 
     var http = require("http");
