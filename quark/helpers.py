@@ -116,15 +116,15 @@ def get_package_version(pkg):
         if ann.name.text == "version":
             assert len(ann.arguments) == 1
             return literal_to_str(ann.arguments[0])
-    return "0.0"
+    return "0.0.1"
 
 def namever(packages):
     if packages:
         firstPackageName, firstPackageList = packages.items()[0]
         version = firstPackageList[0].version
     else:
-        firstPackageName = ""
-        version = "0.0"
+        firstPackageName = "TBD"
+        version = "0.0.1"
     return firstPackageName, version
 
 def is_extendable(node):
