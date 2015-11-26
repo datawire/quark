@@ -17,152 +17,7 @@ from .ast import *
 from .compiler import TypeExpr
 from .dispatch import overload
 from .helpers import *
-from ._metadata import __java_runtime_version__
 from collections import OrderedDict
-
-if __java_runtime_version__.endswith("-SNAPSHOT"):
-    repository = """
-  <repositories>
-      <repository>
-          <releases>
-            <enabled>false</enabled>
-            <checksumPolicy>warn</checksumPolicy>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-            <checksumPolicy>fail</checksumPolicy>
-          </snapshots>
-          <id>datawire-snapshots</id>
-          <name>Sonatype snapshot repo for datawire runtime</name>
-          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-      </repository>
-  </repositories>
-"""
-else:
-    repository = ""
-
-pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>%(name)s</groupId>
-  <artifactId>%(name)s</artifactId>
-  <version>%(version)s</version>
-  <name>%(name)s</name>
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.3</version>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.3</version>
-        <configuration>
-          <excludePackageNames>io.datawire:*.Functions</excludePackageNames>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-  <dependencies>
-    <dependency>
-      <groupId>io.datawire.quark</groupId>
-      <artifactId>quark-core</artifactId>
-      <version>%(runtime_version)s</version>
-      <scope>compile</scope>
-    </dependency>
-  </dependencies>
-  %(repository)s
-</project>
-"""
-
-# XXX: danger!!! circular import reference hack
-import backend
-class Java(backend.Backend):
-
-    def __init__(self):
-        backend.Backend.__init__(self, "java")
-        self.dfnr = DefinitionRenderer()
-        self.functions = []
-        self.packages = OrderedDict()  # Collect packages for package.json et al
-
-    def write(self, target):
-        src = os.path.join(target, "src/main/java")
-        if not os.path.exists(src):
-            os.makedirs(src)
-        for name, content in self.files.items():
-            path = os.path.join(src, name)
-            dir = os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            open(path, "wb").write(content)
-            print "quark (compiler): wrote", path
-        name, version = namever(self.packages)
-        fmt_dict = {"name": name,
-                    "version": version,
-                    "pkg_list": repr(list(self.packages.keys())),
-                    "runtime_version": __java_runtime_version__,
-                    "repository": repository,
-                    }
-        open(os.path.join(target, "pom.xml"), "wb").write(pom_xml % fmt_dict)
-
-    def visit_Class(self, c):
-        pkg = self.dfnr.namer.package(c)
-        if pkg:
-            self.files["%s/%s.java" % (pkg.replace(".", "/"), c.name.text)] = c.match(self.dfnr)
-        else:
-            self.files["%s.java" % c.name.text] = c.match(self.dfnr)
-
-    def visit_Function(self, f):
-        if not isinstance(f, Method):
-            self.functions.append(f)
-
-    def leave_Root(self, r):
-        if self.functions:
-            packages = OrderedDict()
-            for f in self.functions:
-                pkg = self.dfnr.namer.package(f)
-                if pkg in packages:
-                    functions = packages[pkg]
-                else:
-                    functions = []
-                    packages[pkg] = functions
-                functions.append(f.match(self.dfnr))
-                if f.name.text == "main":
-                    functions.append("public static void main(String[] args) {\n    main();\n}")
-            for pkg, functions in packages.items():
-                cls = "public class Functions {%s}" % indent("\n".join(functions))
-                if pkg:
-                    self.files["%s/Functions.java" % pkg.replace(".", "/")] = "package %s;\n\n%s" % (pkg, cls)
-                else:
-                    self.files["Functions.java"] = cls
-
-    def visit_Package(self, pkg):
-        pname = self.dfnr.namer.package(pkg)
-        if pkg.package is None:  # Grab a list of top-level packages
-            self.packages.setdefault(pname, []).append(pkg)
-            pkg.version = get_package_version(pkg)
-
-    def visit_Primitive(self, p):
-        pass
-
-def indent(st, level=4):
-    if st:
-        spaces = " "*level
-        pst = ""
-        while pst != st:
-            pst = st
-            st = st.replace("\n\n\n","\n\n")
-        st = ("\n" + st).replace("\n", "\n%s" % spaces) + "\n"
-        st = st.replace("\n%s\n" % spaces, "\n\n")
-        return st
-    else:
-        return ""
 
 class DocEvaluator:
 
@@ -621,3 +476,80 @@ class SubstitutionNamer(NameRenderer):
             return self.env[n.text]
         else:
             return n.text
+
+from ._metadata import __java_runtime_version__
+
+if __java_runtime_version__.endswith("-SNAPSHOT"):
+    repository = """
+  <repositories>
+      <repository>
+          <releases>
+            <enabled>false</enabled>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <id>datawire-snapshots</id>
+          <name>Sonatype snapshot repo for datawire runtime</name>
+          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+      </repository>
+  </repositories>
+"""
+else:
+    repository = ""
+
+pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>%(name)s</groupId>
+  <artifactId>%(name)s</artifactId>
+  <version>%(version)s</version>
+  <name>%(name)s</name>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.3</version>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.10.3</version>
+        <configuration>
+          <excludePackageNames>io.datawire:*.Functions</excludePackageNames>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>io.datawire.quark</groupId>
+      <artifactId>quark-core</artifactId>
+      <version>%(runtime_version)s</version>
+      <scope>compile</scope>
+    </dependency>
+  </dependencies>
+  %(repository)s
+</project>
+"""
+
+def package(packages, srcs):
+    files = OrderedDict()
+    for name, content in srcs.items():
+        files["src/main/java" + name] = content
+
+    name, version = namever(packages)
+    fmt_dict = {"name": name,
+                "version": version,
+                "pkg_list": repr(list(packages.keys())),
+                "runtime_version": __java_runtime_version__,
+                "repository": repository}
+    files["pom.xml"] = pom_xml % fmt_dict
+    return files

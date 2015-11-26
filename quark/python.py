@@ -19,8 +19,6 @@ from .helpers import *
 from ._metadata import __py_runtime_version__
 from collections import OrderedDict
 
-# XXX: danger!!! circular import reference hack
-import backend
 from java import *
 
 class FieldRenderer(object):
@@ -306,70 +304,18 @@ Indices and tables
 * :ref:`search`
 """
 
-class Python(backend.Backend):
-
-    def __init__(self):
-        backend.Backend.__init__(self, "py")
-        self.dfnr = PythonDefinitionRenderer()
-        self.header = "from quark_runtime import *\n\n"
-        self.packages = OrderedDict()  # Collect top-level packages for setup.py et al
-
-    def write(self, target):
-        src = target
-        if not os.path.exists(src):
-            os.makedirs(src)
-        name, version = namever(self.packages)
-        fmt_dict = {"name": name,
-                    "version": version,
-                    "runtime_version": __py_runtime_version__,
-                    "underline" : "=" * len(name + version),
-                    "pkg_list": repr(list(self.packages.keys()))}
-        self.files["setup.py"] = setup_py % fmt_dict
-        self.files["docs/conf.py"] = conf_py % fmt_dict
-        self.files["docs/index.rst"] = index_rst % fmt_dict
-        self.files["docs/_static/.keep"] = ""
-        self.files["docs/_templates/.keep"] = ""
-
-        for name, content in self.files.items():
-            path = os.path.join(src, name)
-            dir = os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            open(path, "wb").write(content)
-            print "quark (compiler): wrote", path
-
-    def imports(self, packages):
-        result = "\n".join(["import %s" % pkg for pkg in packages.keys()])
-        if result: result += "\n\n"
-        return result
-
-    def visit_Package(self, pkg):
-        pkg.imports = OrderedDict()
-        pkg.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
-        if pkg.has_main:
-            content += '\n\nif __name__ == "__main__":\n    main()'
-        content = content.rstrip() + "\n"
-        pname = self.dfnr.namer.package(pkg)
-        fname = "%s/__init__.py" % pname.replace(".", "/")
-        if fname in self.files:
-            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
-        else:
-            self.files[fname] = self.header + self.imports(pkg.imports) + content
-        self.packages.setdefault(pname, []).append(pkg)
-        pkg.version = get_package_version(pkg)
-
-    def visit_File(self, file):
-        file.imports = OrderedDict()
-        file.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        if file.has_main:
-            content += '\n\nif __name__ == "__main__":\n    main()'
-        content = content.rstrip() + "\n"
-        if content.strip() != "":
-            fname = os.path.splitext(os.path.basename(file.name))[0]
-            self.files["%s.py" % self.dfnr.namer.get(fname)] = \
-                self.header + self.imports(file.imports) + content
-
-    def visit_Primitive(self, p):
-        pass
+def package(packages, srcs):
+    name, version = namever(packages)
+    fmt_dict = {"name": name,
+                "version": version,
+                "runtime_version": __py_runtime_version__,
+                "underline" : "=" * len(name + version),
+                "pkg_list": repr(list(packages.keys()))}
+    files = OrderedDict()
+    files.update(srcs)
+    files["setup.py"] = setup_py % fmt_dict
+    files["docs/conf.py"] = conf_py % fmt_dict
+    files["docs/index.rst"] = index_rst % fmt_dict
+    files["docs/_static/.keep"] = ""
+    files["docs/_templates/.keep"] = ""
+    return files

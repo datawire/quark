@@ -15,111 +15,11 @@
 import os
 from collections import OrderedDict
 
-# XXX: danger!!! circular import reference hack
 import ast
-import backend
 import java
 from .dispatch import overload
 from .helpers import *
 from ._metadata import __js_runtime_version__
-
-
-class JavaScript(backend.Backend):
-
-    def __init__(self):
-        backend.Backend.__init__(self, "js")
-        self.dfnr = JSDefinitionRenderer()
-        self.header = """var _qrt = require("datawire-quark-core");\n"""
-        self.packages = OrderedDict()  # Collect packages for package.json et al
-
-    def write(self, target):
-        if not os.path.exists(target):
-            os.makedirs(target)
-        for pname, pkgList in self.packages.items():
-            pkg = pkgList[0]
-            ppath = pname.replace(".", "/")
-            self.files["%s/README.md" % ppath] = pkg.readme
-            self.files["%s/package.json" % ppath] = """
-{
-    "name":"%s",
-    "version":"%s",
-    "dependencies": {
-        "datawire-quark-core": "%s"
-    }
-}
-            """ % (pname, pkg.version, __js_runtime_version__)
-        for name, content in self.files.items():
-            path = os.path.join(target, name)
-            dir = os.path.dirname(path)
-            if not os.path.exists(dir):
-                os.makedirs(dir)
-            open(path, "wb").write(content)
-            print "quark (compiler): wrote", path
-
-    def imports(self, packages, origin=None):
-        if origin:
-            origin_name = self.dfnr.namer.package(origin)
-        else:
-            origin_name = ""
-
-        result = ""
-
-        for pkg in packages.keys():
-            path = pkg.split(".")
-            if origin and path[0] in origin.env and isinstance(origin.env[path[0]], Package):
-                subpackage = True
-            elif origin:
-                subpackage = False
-            else:
-                subpackage = True
-
-            if subpackage:
-                prefix = "./"
-            else:
-                prefix = "../"*len(origin_name.split("."))
-
-            result += "var %s = require('%s%s');\n" % (path[0], prefix, path[0])
-            if subpackage:
-                result += "exports.%s = %s;\n" % (pkg, pkg)
-
-        if result:
-            result += "\n"
-
-        return result
-
-    def visit_Package(self, pkg):
-        pkg.imports = OrderedDict()
-        pkg.has_main = False
-        pkg.readme = ""
-        content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
-        pname = self.dfnr.namer.package(pkg)
-        if pkg.package is None:  # Grab a list of top-level packages
-            self.packages.setdefault(pname, []).append(pkg)
-        pkg.version = get_package_version(pkg)
-        pkg.readme = "# %s %s\n\n" % (pname, pkg.version) + pkg.readme
-        fname = "%s/index.js" % pname.replace(".", "/")
-        if pkg.has_main:
-            content += "\n\nmain();"
-        content = content.rstrip() + "\n"
-        if fname in self.files:
-            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports, pkg) + content
-        else:
-            self.files[fname] = self.header + self.imports(pkg.imports, pkg) + content
-
-    def visit_File(self, file):
-        file.imports = OrderedDict()
-        file.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        if file.has_main:
-            content = content.rstrip() + "\n\nmain();"
-        content = content.rstrip() + "\n"
-        if content.strip() != "":
-            fname = "%s.js" % os.path.splitext(os.path.basename(file.name))[0]
-            self.files[fname] = self.header + self.imports(file.imports) + content
-
-    def visit_Primitive(self, p):
-        pass
-
 
 class JSDefinitionRenderer(java.DefinitionRenderer):
 
@@ -369,3 +269,21 @@ class JSNamer(java.SubstitutionNamer):
 
     def get(self, name):
         return self.env.get(name, name.replace("-", "_"))
+
+def package(packages, srcs):
+    files = OrderedDict()
+    files.update(srcs)
+    for pname, pkgList in packages.items():
+        pkg = pkgList[0]
+        ppath = pname.replace(".", "/")
+        files["%s/README.md" % ppath] = pkg.readme
+        files["%s/package.json" % ppath] = """
+{
+    "name":"%s",
+    "version":"%s",
+    "dependencies": {
+        "datawire-quark-core": "%s"
+    }
+}
+        """ % (pname, pkg.version, __js_runtime_version__)
+    return files
