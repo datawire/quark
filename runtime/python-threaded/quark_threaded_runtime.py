@@ -54,10 +54,10 @@ class _QuarkRequest(threading.Thread):
         self.request = request
         self.handler = handler
         self.response = None
-        headers = {key.encode("utf-8"): [str(value).encode("utf-8")] for key, value in request.headers.items()}
+        headers = {key.encode("utf-8"): str(value).encode("utf-8") for key, value in request.headers.items()}
         if self.request.body:
             bodyBytes = self.request.body.encode("utf-8")
-            headers["Content-Length"] = [str(len(bodyBytes))]
+            headers["Content-Length"] = str(len(bodyBytes))
         else:
             bodyBytes = None
         self.py_request = _RequestWithMethod(self.request.url, bodyBytes, headers, method=self.request.method)
