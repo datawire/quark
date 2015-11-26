@@ -4,7 +4,7 @@ __version__ = "0.1.0"
 
 import threading
 import time
-from Queue import Queue
+from Queue import Queue, Empty
 
 
 class EventProcessor(threading.Thread):
@@ -17,11 +17,21 @@ class EventProcessor(threading.Thread):
 
     def run(self):
         while True:
-            event = self.runtime.events.get()
-            if event == self.QUIT:
-                return
-            function, args, kwargs = event
-            function(*args, **kwargs)
+            event = self.runtime.events.get(block=True)
+            self.runtime.acquire()
+            try:
+                while True:
+                    if event == self.QUIT:
+                        return
+                    function, args, kwargs = event
+                    function(*args, **kwargs)
+
+                    event = self.runtime.events.get(block=False)  # Raises Empty to break out of loop
+            except Empty:
+                pass
+            finally:
+                self.runtime._notify()
+                self.runtime.release()
 
 
 class ThreadedRuntime(object):
@@ -38,9 +48,7 @@ class ThreadedRuntime(object):
         self.lock.release()
 
     def _notify(self):
-        self.lock.acquire()
         self.lock.notify_all()
-        self.lock.release()
 
     def wait(self):
         raise NotImplementedError()
