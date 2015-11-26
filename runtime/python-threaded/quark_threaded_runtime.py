@@ -4,15 +4,16 @@ __version__ = "0.1.0"
 
 import threading
 import time
+import urllib2
 from Queue import Queue, Empty
 
 
-class EventProcessor(threading.Thread):
+class _EventProcessor(threading.Thread):
 
     QUIT = ("QUIT",)
 
     def __init__(self, runtime):
-        super(EventProcessor, self).__init__()
+        super(_EventProcessor, self).__init__()
         self.runtime = runtime
 
     def run(self):
@@ -32,6 +33,61 @@ class EventProcessor(threading.Thread):
             finally:
                 self.runtime._notify()
                 self.runtime.release()
+
+
+# http://stackoverflow.com/questions/4511598/how-to-make-http-delete-method-using-urllib2
+class _RequestWithMethod(urllib2.Request):
+
+    def __init__(self, *args, **kwargs):
+        self._method = kwargs.pop('method', None)
+        urllib2.Request.__init__(self, *args, **kwargs)
+
+    def get_method(self):
+        return self._method if self._method else super(_RequestWithMethod, self).get_method()
+
+
+class _QuarkRequest(threading.Thread):
+
+    def __init__(self, runtime, request, handler):
+        super(_QuarkRequest, self).__init__()
+        self.runtime = runtime
+        self.request = request
+        self.handler = handler
+        self.response = None
+        headers = {key.encode("utf-8"): [str(value).encode("utf-8")] for key, value in request.headers.items()}
+        if self.request.body:
+            bodyBytes = self.request.body.encode("utf-8")
+            headers["Content-Length"] = [str(len(bodyBytes))]
+        else:
+            bodyBytes = None
+        self.py_request = _RequestWithMethod(self.request.url, bodyBytes, headers, method=self.request.method)
+
+    def run(self):
+        self.runtime.events.put((self.handler.onHTTPInit, (self.request,), {}))
+        try:
+            handle = urllib2.urlopen(self.py_request)
+            body = handle.read()
+        except urllib2.URLError as exc:
+            print exc
+            self.runtime.events.put((self.handler.onHTTPError, (self.request,), {}))
+        else:
+            response = _QuarkResponse(handle.getcode(), body)
+            self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
+
+        self.runtime.events.put((self.handler.onHTTPFinal, (self.request,), {}))
+
+
+class _QuarkResponse(object):
+
+    def __init__(self, code, body):
+        self.code = code
+        self.body = body
+
+    def getCode(self):
+        return self.code
+
+    def getBody(self):
+        return self.body
 
 
 class ThreadedRuntime(object):
@@ -57,7 +113,9 @@ class ThreadedRuntime(object):
         raise NotImplementedError()
 
     def request(self, request, handler):
-        raise NotImplementedError()
+        thread = _QuarkRequest(self, request, handler)
+        thread.setDaemon(True)
+        thread.start()
 
     def schedule(self, handler, delayInSeconds):
         def run_scheduled(runtime, handler, delayInSeconds):
@@ -75,11 +133,11 @@ class ThreadedRuntime(object):
 
     def launch(self):
         assert self.event_thread is None, self.event_thread
-        self.event_thread = EventProcessor(self)
+        self.event_thread = _EventProcessor(self)
         self.event_thread.start()
 
     def finish(self):
-        self.events.put(EventProcessor.QUIT)
+        self.events.put(_EventProcessor.QUIT)
         self.event_thread.join()
 
 
