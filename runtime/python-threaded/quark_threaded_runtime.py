@@ -7,6 +7,8 @@ import time
 import urllib2
 from Queue import Queue, Empty
 
+from ws4py.client.threadedclient import WebSocketClient
+
 
 class _EventProcessor(threading.Thread):
 
@@ -90,6 +92,35 @@ class _QuarkResponse(object):
         return self.body
 
 
+class _QuarkWS(WebSocketClient):
+    def __init__(self, runtime, url, handler):
+        super(_QuarkWS, self).__init__(url)
+        self.runtime = runtime
+        self.url = url
+        self.handler = handler
+
+    def opened(self):
+        self.runtime.events.put((self.handler.onWSInit, (self,), {}))
+        self.runtime.events.put((self.handler.onWSConnected, (self,), {}))
+
+    def received_message(self, message):
+        if message.is_text:
+            self.runtime.events.put((self.handler.onWSMessage, (self, unicode(message)), {}))
+        else:
+            self.runtime.events.put((self.handler.onWSBinary, (self, str(message)), {}))
+
+    def closed(self, code, reason=None):
+        if code == 1000:
+            self.runtime.events.put((self.handler.onWSClosed, (self,), {}))
+        else:
+            print code
+            self.runtime.events.put((self.handler.onWSError, (self,), {}))
+        self.runtime.events.put((self.handler.onWSFinal, (self,), {}))
+
+    def __str__(self):
+        return "WS: %s" % self.url
+
+
 class ThreadedRuntime(object):
 
     def __init__(self):
@@ -110,7 +141,13 @@ class ThreadedRuntime(object):
         raise NotImplementedError()
 
     def open(self, url, handler):
-        raise NotImplementedError()
+        def pump_websocket(runtime, url, handler):
+            ws = _QuarkWS(runtime, url, handler)
+            ws.connect()
+            ws.run_forever()
+        thread = threading.Thread(target=pump_websocket, args=(self, url, handler))
+        thread.setDaemon(True)
+        thread.start()
 
     def request(self, request, handler):
         thread = _QuarkRequest(self, request, handler)
