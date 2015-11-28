@@ -1,6 +1,7 @@
 # Connect to Slack
 
-import quark_twisted_runtime
+from quark_twisted_runtime import get_twisted_runtime as bot_get_runtime
+#from quark_threaded_runtime import get_threaded_runtime as bot_get_runtime
 import slack
 
 
@@ -28,7 +29,7 @@ def main():
         # you need to go to https://api.slack.com/web and generate an access token
         exit("Failed to read Slack token. See examples/README.md for more information.")
 
-    runtime = quark_twisted_runtime.get_twisted_runtime()
+    runtime = bot_get_runtime()
     client = slack.Client(runtime, token)
     client.post("#demo", "testing...")
     client.subscribe(Handler())
