@@ -2,7 +2,7 @@
 
 import sys
 
-import quark_twisted_runtime
+import quark_threaded_runtime
 import directory
 
 
@@ -10,7 +10,7 @@ def main(identity):
     name = "service-" + identity
     address = "Python-endpoint-" + identity
 
-    runtime = quark_twisted_runtime.get_threaded_runtime()
+    runtime = quark_threaded_runtime.get_threaded_runtime()
     d = directory.Directory(runtime, "ws://127.0.0.1:8910", name, address)
 
     runtime.launch()

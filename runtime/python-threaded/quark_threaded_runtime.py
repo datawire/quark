@@ -137,8 +137,8 @@ class ThreadedRuntime(object):
     def _notify(self):
         self.lock.notify_all()
 
-    def wait(self):
-        raise NotImplementedError()
+    def wait(self, timeoutInSeconds):
+        self.lock.wait()
 
     def open(self, url, handler):
         def pump_websocket(runtime, url, handler):
