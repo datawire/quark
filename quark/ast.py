@@ -65,14 +65,12 @@ class AST(object):
         return self.file.name
 
     def _lineinfo(self, node):
-        line = 1
-        column = 1
-        for c in self.node.full_text[:self.node.start]:
-            if c == "\n":
-                line += 1
-                column = 1
-            else:
-                column += 1
+        text = self.node.full_text[:self.node.start]
+        line = text.count("\n") + 1
+        try:
+            column = len(text) - text.rindex("\n")
+        except ValueError:
+            column = len(text) or 1
         return line, column
 
     def lookup(self, target, prefix=None, default=None):
