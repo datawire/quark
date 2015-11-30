@@ -3,22 +3,22 @@ package io.datawire.quark.runtime;
 
 public abstract class AbstractDatawireRuntime {
 
-	public AbstractDatawireRuntime() {
-		super();
-	}
+    public AbstractDatawireRuntime() {
+        super();
+    }
 
-	protected abstract void initialize();
+    protected abstract void initialize();
 
-	protected abstract void wakeup();
+    protected abstract void wakeup();
 
-	public abstract boolean isAllowSync();
+    public abstract boolean isAllowSync();
 
-	protected WSHandler wrap(final WSHandler handler) {
-	    initialize();
-	    if (!isAllowSync()) {
-	        return handler;
-	    }
-	    return new WSHandler() {
+    protected WSHandler wrap(final WSHandler handler) {
+        initialize();
+        if (!isAllowSync() || handler == null) {
+            return handler;
+        }
+        return new WSHandler() {
             @Override
             public void onWSBinary(WebSocket socket, Buffer message) {
                 try {
@@ -27,132 +27,132 @@ public abstract class AbstractDatawireRuntime {
                     wakeup();
                 }
             }
-	        @Override
-	        public void onWSMessage(WebSocket socket, String message) {
-	            try {
-	                handler.onWSMessage(socket, message);
-	            } finally {
-	                wakeup();
-	            }
-	
-	        }
-	        @Override
-	        public void onWSInit(WebSocket socket) {
-	            try {
-	                handler.onWSInit(socket);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onWSFinal(WebSocket socket) {
-	            try {
-	                handler.onWSFinal(socket);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onWSError(WebSocket socket) {
-	            try {
-	                handler.onWSError(socket);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onWSConnected(WebSocket socket) {
-	            try {
-	                handler.onWSConnected(socket);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onWSClosed(WebSocket socket) {
-	            try {
-	                handler.onWSClosed(socket);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	    };
-	}
+            @Override
+            public void onWSMessage(WebSocket socket, String message) {
+                try {
+                    handler.onWSMessage(socket, message);
+                } finally {
+                    wakeup();
+                }
 
-	protected HTTPHandler wrap(final HTTPHandler handler) {
-	    initialize();
-	    if (!isAllowSync()) {
-	        return handler;
-	    }
-	    return new HTTPHandler() {
-	        @Override
-	        public void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
-	            try {
-	                handler.onHTTPResponse(request, response);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onHTTPInit(HTTPRequest request) {
-	            try {
-	                handler.onHTTPInit(request);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onHTTPFinal(HTTPRequest request) {
-	            try {
-	                handler.onHTTPFinal(request);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	        @Override
-	        public void onHTTPError(HTTPRequest request) {
-	            try {
-	                handler.onHTTPError(request);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	    };
-	}
+            }
+            @Override
+            public void onWSInit(WebSocket socket) {
+                try {
+                    handler.onWSInit(socket);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onWSFinal(WebSocket socket) {
+                try {
+                    handler.onWSFinal(socket);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onWSError(WebSocket socket) {
+                try {
+                    handler.onWSError(socket);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onWSConnected(WebSocket socket) {
+                try {
+                    handler.onWSConnected(socket);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onWSClosed(WebSocket socket) {
+                try {
+                    handler.onWSClosed(socket);
+                } finally {
+                    wakeup();
+                }
+            }
+        };
+    }
 
-	protected Task wrap(final Task handler) {
-	    initialize();
-	    if (!isAllowSync()) {
-	        return handler;
-	    }
-	    return new Task() {
-	        @Override
-	        public void onExecute(Runtime runtime) {
-	            try {
-	                handler.onExecute(runtime);
-	            } finally {
-	                wakeup();
-	            }
-	        }
-	    };
-	}
+    protected HTTPHandler wrap(final HTTPHandler handler) {
+        initialize();
+        if (!isAllowSync() || handler == null) {
+            return handler;
+        }
+        return new HTTPHandler() {
+            @Override
+            public void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+                try {
+                    handler.onHTTPResponse(request, response);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onHTTPInit(HTTPRequest request) {
+                try {
+                    handler.onHTTPInit(request);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onHTTPFinal(HTTPRequest request) {
+                try {
+                    handler.onHTTPFinal(request);
+                } finally {
+                    wakeup();
+                }
+            }
+            @Override
+            public void onHTTPError(HTTPRequest request) {
+                try {
+                    handler.onHTTPError(request);
+                } finally {
+                    wakeup();
+                }
+            }
+        };
+    }
+
+    protected Task wrap(final Task handler) {
+        initialize();
+        if (!isAllowSync() || handler == null) {
+            return handler;
+        }
+        return new Task() {
+            @Override
+            public void onExecute(Runtime runtime) {
+                try {
+                    handler.onExecute(runtime);
+                } finally {
+                    wakeup();
+                }
+            }
+        };
+    }
 
     protected HTTPServlet wrap(final HTTPServlet servlet) {
         initialize();
-        if (!isAllowSync()) {
+        if (!isAllowSync() || servlet == null) {
             return servlet;
         }
         return new HTTPServlet() {
-            
+
             @Override
-            public void onHTTPInit(String url, Runtime runtime) {
-               try {
-                   servlet.onHTTPInit(url, runtime);
-               } finally {
-                   wakeup();
-               }
+            public void onServletInit(String url, Runtime runtime) {
+                try {
+                    servlet.onServletInit(url, runtime);
+                } finally {
+                    wakeup();
+                }
             }
-            
+
             @Override
             public void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
                 try {
@@ -163,9 +163,63 @@ public abstract class AbstractDatawireRuntime {
             }
 
             @Override
-            public void onHTTPError(String url) {
+            public void onServletError(String url, String error) {
                 try {
-                    servlet.onHTTPError(url);
+                    servlet.onServletError(url, error);
+                } finally {
+                    wakeup();
+                }
+            }
+
+            @Override
+            public void onServletEnd(String url) {
+                try {
+                    servlet.onServletEnd(url);
+                } finally {
+                    wakeup();
+                }
+            }
+        };
+    }
+
+    protected WSServlet wrap(final WSServlet servlet) {
+        initialize();
+        if (!isAllowSync() || servlet == null) {
+            return servlet;
+        }
+        return new WSServlet() {
+
+            @Override
+            public void onServletInit(String url, Runtime runtime) {
+                try {
+                    servlet.onServletInit(url, runtime);
+                } finally {
+                    wakeup();
+                }
+            }
+
+            @Override
+            public void onServletError(String url, String error) {
+                try {
+                    servlet.onServletError(url, error);
+                } finally {
+                    wakeup();
+                }
+            }
+
+            @Override
+            public void onServletEnd(String url) {
+                try {
+                    servlet.onServletEnd(url);
+                } finally {
+                    wakeup();
+                }
+            }
+
+            @Override
+            public WSHandler onWSConnect(HTTPRequest upgrade_request) {
+                try {
+                    return servlet.onWSConnect(upgrade_request);
                 } finally {
                     wakeup();
                 }

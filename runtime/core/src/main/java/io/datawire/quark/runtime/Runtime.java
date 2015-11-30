@@ -10,5 +10,6 @@ public interface Runtime {
     void schedule(Task handler, Double delayInSeconds);
     Codec codec();
     void serveHTTP(String url, HTTPServlet servlet);
+    void serveWS(String url, WSServlet server);
     void respond(HTTPRequest request, HTTPResponse response);
 }

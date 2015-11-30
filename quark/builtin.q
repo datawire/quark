@@ -274,6 +274,7 @@ primitive HTTPHandler {
 @mapping($java{io.datawire.quark.runtime.HTTPRequest})
 primitive HTTPRequest {
     macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+    String getUrl();
     void setMethod(String method);
     String getMethod();
     void setBody(String data);
@@ -309,6 +310,7 @@ primitive Runtime {
     void schedule(Task handler, float delayInSeconds);
     Codec codec();
     void serveHTTP(String url, HTTPServlet servlet);
+    void serveWS(String url, WSServlet servlet);
     void respond(HTTPRequest request, HTTPResponse response);
 }
 
@@ -380,10 +382,28 @@ primitive Codec {
     Buffer fromBase64(String base64);
 }
 
+@doc("A service addresable with an url")
+@mapping($java{io.datawire.quark.runtime.Servlet})
+primitive Servlet {
+    @doc("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")
+    void onServletInit(String url, Runtime runtime) {}
+    @doc("called if the servlet could not be installed")
+    void onServletError(String url, String error) {}
+    @doc("called when the servlet is removed")
+    void onServletEnd(String url) {}
+}
+
 @doc("Http servlet")
 @mapping($java{io.datawire.quark.runtime.HTTPServlet})
-primitive HTTPServlet {
-    void onHTTPInit(String url, Runtime runtime) {}
-    void onHTTPError(String url) {}
+primitive HTTPServlet extends Servlet {
+    @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
 }
+
+@doc("Websocket servlet")
+@mapping($java{io.datawire.quark.runtime.WSServlet})
+primitive WSServlet extends Servlet {
+    @doc("called for each new incoming WebSocket connection")
+    WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
+}
+
