@@ -168,7 +168,7 @@ where *interfaceName* is the name of the interface, used to include it in class 
 macro
 ~~~~~
 
-The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. After compilation they become part of the Quark runtime code generated along with your other generated code.
+The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by Quark.
 
 Syntax
 ++++++

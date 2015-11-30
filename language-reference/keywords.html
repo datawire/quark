@@ -162,7 +162,7 @@ else {</strong>
 </div>
 <div class="section" id="macro">
 <span id="macrokeyword"></span><h2>macro<a class="headerlink" href="#macro" title="Permalink to this headline">¶</a></h2>
-<p>The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. After compilation they become part of the Quark runtime code generated along with your other generated code.</p>
+<p>The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by Quark.</p>
 <div class="section" id="id6">
 <h3>Syntax<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>The macro keyword syntax is:</p>
@@ -359,6 +359,7 @@ else {</strong>
     </ul>
   </nav>
   </div>
+
   <footer id="pagefooter">&copy; 2015, Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.1.
@@ -366,5 +367,17 @@ else {</strong>
   </footer>
 
   
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
   </body>
 </html>
