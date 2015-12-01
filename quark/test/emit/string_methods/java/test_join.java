@@ -4,6 +4,7 @@ public class test_join extends string_test {
     public String strparts;
     public String sep;
     public test_join(String what) {
+        super();
         (this).what = what;
     }
     public test_join that() {

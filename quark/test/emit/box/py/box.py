@@ -34,7 +34,6 @@ class Sack(object):
     def __init__(self): self._init()
 
 
-
 def test1():
     ibox = Box();
     (ibox).set(3);

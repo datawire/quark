@@ -1,1 +1,5 @@
-public class Ping extends Message {}
+public class Ping extends Message {
+    public Ping() {
+        super();
+    }
+}

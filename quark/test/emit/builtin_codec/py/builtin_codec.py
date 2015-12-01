@@ -47,7 +47,7 @@ def main():
     _println((c).toHexdump(d, 0, (d).capacity(), 1));
     i = 0;
     e = (d).capacity();
-    while ((i) < (e)) :
+    while ((i) < (e)):
         if (((i) + (1)) < ((e) + (1))):
             vb = (d).getByte(i);
             _println((((((u"B[") + (str(i))) + (u"]=")) + (str(vb))) + (u"   ")) + (hexb(vb)));

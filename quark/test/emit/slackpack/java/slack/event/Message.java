@@ -1,5 +1,7 @@
 package slack.event;
 
+
+
 /**
  * A message was sent to a channel.
  */
@@ -11,6 +13,9 @@ public class Message extends SlackEvent {
     public Boolean hidden = false;
     public String text;
     public Edited edited;
+    public Message() {
+        super();
+    }
     public void load(slack.Client client, io.datawire.quark.runtime.JSONObject obj) {
         super.load(client, obj);
         (this).subtype = ((obj).getObjectItem("subtype")).getString();

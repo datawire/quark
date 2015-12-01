@@ -8,7 +8,9 @@ class B(A):
     def _init(self):
         A._init(self)
 
-    
+    def __init__(self):
+        super(B, self).__init__();
+
 
 class X(object):
     def _init(self): pass
@@ -18,7 +20,9 @@ class Y(X):
     def _init(self):
         X._init(self)
 
-    
+    def __init__(self):
+        super(Y, self).__init__();
+
 
 
 def main():

@@ -1,9 +1,7 @@
 from quark_runtime import *
 
-import pkg
 import slack
-
-
+import pkg
 
 
 def main():

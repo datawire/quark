@@ -1,5 +1,7 @@
 package slack.event;
 
+
+
 /**
  * Base class for all slack events.
  */
@@ -11,15 +13,16 @@ public class SlackEvent {
     /**
      * The user associated with the event.
      */
-    public slack.User user = (slack.User) (null);
+    public slack.User user = null;
     /**
      * The channel associated with the event.
      */
-    public slack.Channel channel = (slack.Channel) (null);
+    public slack.Channel channel = null;
     /**
      * The timestamp associated with the event.
      */
     public String timestamp;
+    public SlackEvent() {}
     public void load(slack.Client client, io.datawire.quark.runtime.JSONObject obj) {
         (this).type = ((obj).getObjectItem("type")).getString();
         String uid = ((obj).getObjectItem("user")).getString();

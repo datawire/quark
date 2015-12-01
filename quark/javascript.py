@@ -14,270 +14,15 @@
 
 import os
 from collections import OrderedDict
-
-import ast
-import java
-from .dispatch import overload
 from .helpers import *
 from ._metadata import __js_runtime_version__
 
-class JSDefinitionRenderer(java.DefinitionRenderer):
-
-    def __init__(self):
-        self.namer = JSNamer()
-        self.stmtr = JSStatementRenderer(self.namer)
-        self.fieldr = JSFieldRenderer(self.namer, self.stmtr.exprr)
-
-    def match_Package(self, p):
-        if isinstance(p.parent, ast.Package):
-            p.parent.imports[p.name.match(self.namer)] = True
-        return ""
-
-    def match_Field(self, f):
-        doc = self.doc(f.annotations)
-        return "%s%s;" % (doc, f.match(self.stmtr))
-
-    def default_super(self, class_name):
-        return "%s.super_.call(this);" % class_name
-
-    def invoke_init(self):
-        return "this.__init_fields__();"
-
-    def match_Class(self, c):
-        name = c.name.match(self.namer)
-        fields = []
-        methods = []
-        constructor = None
-        doc = self.doc(c.annotations)
-
-        btype = base_type(c)
-        if btype:
-            base_class = self.stmtr.exprr.type(btype)
-            fields.append(base_class + ".prototype.__init_fields__.call(this);")
-        else:
-            base_class = None
-
-        if c.package:
-            c.package.readme += "## %s\n" % name
-            c.package.readme += self.doc(c.annotations, head="", prefix="", tail="")
-
-        for definition in c.definitions:
-            if isinstance(definition, ast.Field):
-                field_doc = self.doc(definition.annotations)
-                fields.append(field_doc + definition.match(self.fieldr))
-            elif not definition.type:
-                assert constructor is None
-                constructor = definition
-            else:
-                methods.append(definition.match(self, class_name=name))
-
-        for definition in get_defaulted_methods(c).values():
-            methods.append(definition.match(self, class_name=name))
-
-        res = "\n// CLASS %s\n" % name + doc
-        if constructor:
-            res += constructor.match(self, class_name=name)
-        else:
-            if btype:
-                cons = base_constructors(c)
-                params = []
-                args = ["this"]
-                if cons:
-                    assert len(cons) == 1
-                    params = [p.match(self) for p in cons[0].params]
-                    args.extend([p.name.match(self.namer) for p in cons[0].params])
-                res += "function %s(%s) {\n    %s.super_.call(%s);\n}\n" % \
-                       (name, ", ".join(params), name, ", ".join(args))
-            else:
-                res += "function %s() {\n    this.__init_fields__();\n}\n" % name
-        res += "exports.%s = %s;\n" % (name, name)
-        if base_class:
-            res += "_qrt.util.inherits(%s, %s);\n" % (name, base_class)
-
-        res += "\nfunction %s__init_fields__() {" % name + java.indent("\n".join(fields)) + "}\n"
-        res += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (name, name)
-
-        res += "\n".join(methods)
-
-        return res
-
-    def match_Function(self, m, class_name=None):
-        doc = self.doc(m.annotations)
-        name = m.name.match(self.namer)
-        params = ", ".join([p.match(self) for p in m.params])
-        header = []
-
-        if isinstance(m, ast.Method):
-            if m.type:
-                # Method
-                new_name = "%s_%s" % (class_name, name)
-                trailer = "%s.prototype.%s = %s;" % (class_name, name, new_name)
-                if m.package:
-                    m.package.readme += "### %s.%s(%s)\n" % (class_name, name, params)
-                    m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
-                name = new_name
-            else:
-                # Constructor
-                header.extend(self.constructor_header(m))
-                trailer = ""
-                if m.package:
-                    m.package.readme += "### %s(%s) (constructor)\n" % (name, params)
-                    m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
-
-        else:
-            # Function
-            trailer = "exports.%s = %s;" % (name, name)
-            if name == "main":
-                assert m.parent.__class__ in (ast.File, ast.Package), m.parent.pprint()
-                m.parent.has_main = True
-            if m.package:
-                m.package.readme += "## %s(%s)\n" % (name, params)
-                m.package.readme += self.doc(m.annotations, head="", prefix="", tail="")
-        if m.body is None:
-            if isinstance(m.clazz, ast.Interface):
-                body = " { /* interface */ }"
-            else:
-                body = " { /* abstract */ }"
-        else:
-            body = " %s" % m.body.match(self.stmtr, header=header)
-        return "\n%sfunction %s(%s)%s\n" % (doc, name, params, body) + trailer
-
-    def match_Macro(self, m, class_name=None):
-        return ""
-
-    def match_MethodMacro(self, mm, class_name=None):
-        return ""
-
-    def match_Primitive(self, p):
-        return ""
-
-
-class JSFieldRenderer(object):
-
-    def __init__(self, namer, exprr):
-        self.namer = namer
-        self.exprr = exprr
-
-    def match_Field(self, field):
-        name = field.name.match(self.namer)
-        if field.value:
-            return "this.%s = %s;" % (name, field.value.match(self.exprr))
-        else:
-            return "this.%s = null;" % name
-
-
-class JSStatementRenderer(java.StatementRenderer):
-
-    def __init__(self, namer):
-        self.namer = namer
-        self.exprr = JSExprRenderer(self.namer)
-
-    def match_Param(self, d):
-        name = d.name.match(self.namer)
-        if d.value:
-            return "%s = %s /* FIXME */" % (name, d.value.match(self.exprr))
-        else:
-            return name
-
-    def match_Declaration(self, d):
-        name = d.name.match(self.namer)
-        if d.value:
-            return "var %s = %s" % (name, self.exprr.coerce(d.value))
-        else:
-            return "var %s" % name
-
-    def match_Assign(self, ass):
-        return "%s = %s;" % (ass.lhs.match(self.exprr), self.exprr.coerce(ass.rhs))
-
-    def match_Block(self, b, header=None):
-        header = header or []
-        return "{%s}" % java.indent("\n".join(header + [s.match(self) for s in b.statements]))
-
-
-class JSExprRenderer(java.ExprRenderer):
-
-    def __init__(self, namer):
-        java.ExprRenderer.__init__(self, namer)
-
-    @property
-    def lang(self):
-        return "js"
-
-    def maybe_cast(self, type, expr):
-        return expr.match(self)
-
-    @overload(ast.AST)
-    def var(self, dfn, v):
-        if isinstance(v.definition, ast.Field):
-            return "this.%s" % v.match(self.namer)
-        else:
-            name = v.match(self.namer)
-            if isinstance(v.definition, ast.Package):
-                v.file.imports[name] = True
-            return name
-
-    @overload(ast.Function)
-    def var(self, dfn, v):
-        pkg = self.namer.package(dfn)
-        if pkg:
-            return "%s.%s" % (pkg, v.match(self.namer))
-        else:
-            return "%s" % v.match(self.namer)
-
-    @overload(ast.Class)
-    def get(self, cls, type, expr, attr):
-        return "(%s).%s" % (expr.match(self), attr.text)
-
-    @overload(ast.Package)
-    def get(self, pkg, type, expr, attr):
-        return "%s.%s" % (expr.match(self), attr.text)
-
-    def match_List(self, l):
-        return "[%s]" % ", ".join([e.match(self) for e in l.elements])
-
-    def match_Map(self, m):
-        return "new Map([%s])" % \
-            (", ".join(["[%s, %s]" % (e.key.match(self), e.value.match(self))
-                        for e in m.entries]))
-
-    @overload(ast.Class, ast.Super)
-    def invoke(self, cls, expr, args):
-        return "%s.super_.call(%s)" % (expr.clazz.name.match(self.namer), ", ".join(["this"] + args))
-
-    def invoke_super_method(self, method, expr, args):
-        return "this.constructor.super_.prototype.%s.call(%s)" % \
-            (method.name.match(self.namer), ", ".join(["this"] + args))
-
-    @overload(Class, dict)
-    def type(self, cls, bindings, expr):
-        return self.type(cls, expr)
-
-    @overload(Type)
-    def type(self, t):
-        pkg = self.namer.package(t.resolved.type)
-        if pkg:
-            if t.package:
-                t.package.imports[pkg] = True
-            else:
-                t.file.imports[pkg] = True
-        return self.type(t.resolved, t)
-
-class JSNamer(java.SubstitutionNamer):
-
-    def __init__(self):
-        java.SubstitutionNamer.__init__(self, ({"self": "this"}))
-
-    def get(self, name):
-        return self.env.get(name, name.replace("-", "_"))
-
-def package(packages, srcs):
+def package(name, version, packages, srcs):
     files = OrderedDict()
     files.update(srcs)
-    for pname, pkgList in packages.items():
-        pkg = pkgList[0]
-        ppath = pname.replace(".", "/")
-        files["%s/README.md" % ppath] = pkg.readme
-        files["%s/package.json" % ppath] = """
+    for path, readme in packages.items():
+        files["%s/README.md" % "/".join(path)] = readme
+        files["%s/package.json" % "/".join(path)] = """
 {
     "name":"%s",
     "version":"%s",
@@ -285,5 +30,219 @@ def package(packages, srcs):
         "datawire-quark-core": "%s"
     }
 }
-        """ % (pname, pkg.version, __js_runtime_version__)
+        """ % (name, version, __js_runtime_version__)
     return files
+
+SUBS = {"self": "this"}
+def name(n):
+    return SUBS.get(n, n)
+
+def type(path, name, parameters):
+    return ".".join(path + [name])
+
+def doc(lines):
+    return doc_helper(lines, "/**", " * ", " */")
+
+def method(doc, clazz, type, name, parameters, body):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (clazz, name)
+    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
+    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
+
+def abstract_method(doc, clazz, type, name, parameters):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (clazz, name)
+    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
+    return "\n%sfunction %s(%s) { /* abstract */ }\n" % (doc, full_name, params) + trailer
+
+def interface_method(doc, iface, type, name, parameters, body):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (iface, name)
+    trailer = "%s.prototype.%s = %s;" % (iface, name, full_name)
+    if body is None:
+        body = " { /* interface */ }"
+
+    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
+
+def function(doc, type, name, parameters, body):
+    trailer = "exports.%s = %s;" % (name, name)
+    return "\n%sfunction %s(%s)%s\n" % (doc, name, ", ".join(parameters), body) + trailer
+
+def block(statements):
+    return " {%s}" % indent("\n".join(statements))
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def local(type, name, value):
+    return "var %s = %s;" % (name, value or "null")
+
+def assign(lhs, rhs):
+    return "%s = %s;" % (lhs, rhs)
+
+def string(s):
+    result = s.text[0]
+    idx = 1
+    while idx < len(s.text) - 1:
+        c = s.text[idx]
+        next = s.text[idx + 1]
+        if c == "\\" and next == "x":
+            result += "\\u00"
+            idx += 1
+        else:
+            result += c
+        idx += 1
+    result += s.text[-1]
+    return result
+
+def number(n):
+    return n.text
+
+def bool_(b):
+    return b.text
+
+def list(elements):
+    return "[%s]" % ", ".join(elements)
+
+def map(entries):
+    return "new Map([%s])" % (", ".join(["[%s, %s]" % e for e in entries]))
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    if base: fields = [base + ".prototype.__init_fields__.call(this);"] + fields
+
+    result = "\n// CLASS %s\n" % clazz + doc
+    result += "\n".join(constructors)
+    if base:
+        result += "_qrt.util.inherits(%s, %s);\n" % (clazz, base)
+
+    result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
+    result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
+
+    result += "\n".join(methods)
+
+    return result
+
+def interface(doc, iface, parameters, bases, methods):
+    return clazz(doc, False, iface, parameters, None, [], [], [default_constructor(iface)], methods)
+
+def class_file(path, name, fname):
+    if path:
+        return "/".join(path + ["index.js"])
+    else:
+        return "%s.js" % fname
+
+def function_file(path, name, fname):
+    return class_file(path, name, fname)
+
+def package_file(path, name, fname):
+    return "/".join(path + [name, "index.js"])
+
+def make_class_file(path, name):
+    return Code(head='var _qrt = require("datawire-quark-core");\n')
+
+def make_function_file(path, name):
+    return make_class_file(path, name)
+
+def make_package_file(path, name):
+    return make_class_file(path, name)
+
+def default_constructor(clazz):
+    return "function %s() {\n    this.__init_fields__();\n}\nexports.%s = %s;\n" % \
+        (clazz, clazz, clazz)
+
+def invoke_super(clazz, base, args):
+    return "%s.super_.call(%s)" % (clazz, ", ".join(["this"] + args))
+
+def constructor(doc, name, parameters, body):
+    return "\n%sfunction %s(%s)%s\nexports.%s = %s;\n" % \
+        (doc, name, ", ".join(parameters), body, name, name)
+
+def main():
+    return "\n\nmain();\n"
+
+def construct(clazz, args):
+    return "new %s(%s)" % (clazz, ", ".join(args))
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "this.%s(%s)" % (method, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "this.constructor.super_.prototype.%s.call(%s)" % (method, ", ".join(["this"] + args))
+
+def invoke_function(path, name, args):
+    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
+def field_init():
+    return "this.__init_fields__();"
+
+def field(doc, type, name, value):
+    return "%sthis.%s = %s;" % (doc, name, value or "null")
+
+def param(type, name, value):
+    if value is None:
+        return "%s" % name
+    else:
+        return "%s = %s" % (name, value)
+
+def return_(expr):
+    if expr:
+        return "return %s;" % expr
+    else:
+        return "return;"
+
+def import_(path, origin):
+    qual = qualify(path, origin)
+    if tuple(origin) + tuple(qual) == tuple(path):
+        prefix = "./"
+    else:
+        prefix = "../"*len(origin)
+    return "var %s = require('%s%s');\nexports.%s = %s;" % (qual[0], prefix, qual[0], qual[0], qual[0])
+
+def if_(pred, cons, alt):
+    result = "if (%s)%s" % (pred, cons)
+    if alt:
+        result += " else%s" % alt
+    return result
+
+def while_(cond, body):
+    return "while (%s)%s" % (cond, body)
+
+def break_():
+    return "break;"
+
+def continue_():
+    return "continue;"
+
+def null():
+    return "null"
+
+def qualify(package, origin):
+    if package == origin: return []
+    if not package: return []
+    if not origin:
+        return package
+    elif package[:len(origin)] == origin:
+        return package[len(origin):]
+    else:
+        return package
+
+def class_ref(v):
+    return v
+
+def method_ref(v):
+    return "this.%s" % v
+
+def field_ref(v):
+    return "this.%s" % v
+
+def local_ref(v):
+    return v
+
+def cast(type, expr):
+    return expr

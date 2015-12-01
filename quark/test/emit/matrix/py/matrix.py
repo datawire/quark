@@ -11,9 +11,9 @@ class Matrix(object):
         (self).width = width
         (self).height = height
         self.columns = _List([])
-        while ((len(self.columns)) < (width)) :
+        while ((len(self.columns)) < (width)):
             column = _List([]);
-            while ((len(column)) < (height)) :
+            while ((len(column)) < (height)):
                 (column).append(None);
 
             (self.columns).append(column);

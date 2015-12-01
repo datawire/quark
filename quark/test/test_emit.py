@@ -85,15 +85,12 @@ def build_java(comp, base, srcs):
     build = os.path.join(base, "build")
     if not os.path.exists(build):
         os.makedirs(build)
-    print base
-    print build
     depfile = os.path.join(directory, "java-deps", "classpath")
     cp = open(depfile).read().split(":")
     if cp:
         ccp = "-cp " + ":".join(cp);
     else:
         ccp = ""
-    print cp
     jexit = os.system("javac %s -d %s %s" % (ccp, build, " ".join(srcs)))
     assert jexit == 0
 
@@ -115,8 +112,7 @@ def build_py(comp, base, srcs):
     if "main" in comp.root.env:
         out = os.path.dirname(base) + ".out"
         import quark.python
-        namer = quark.python.PythonNamer()
-        script = namer.get(os.path.basename(os.path.dirname(base))) + ".py"
+        script = quark.python.name(os.path.basename(os.path.dirname(base))) + ".py"
         try:
             expected = open(out).read()
         except IOError, e:

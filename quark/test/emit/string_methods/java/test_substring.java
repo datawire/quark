@@ -3,6 +3,7 @@ public class test_substring extends string_test {
     public Integer start;
     public Integer end;
     public test_substring(String what) {
+        super();
         (this).what = what;
     }
     public test_substring that(Integer start, Integer end) {

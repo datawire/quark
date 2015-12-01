@@ -1,7 +1,7 @@
 from quark_runtime import *
 
 import slack
-import slack.event
+
 
 class SlackEvent(object):
     """
@@ -40,8 +40,11 @@ class SlackError(SlackEvent):
         self.code = None
         self.text = None
 
+    def __init__(self):
+        super(SlackError, self).__init__();
+
     def load(self, client, obj):
-        (super(SlackError, self)).load(client, obj);
+        super(SlackError, self).load(client, obj);
         (self).code = int(round(((obj).getObjectItem(u"code")).getNumber()))
         (self).text = ((obj).getObjectItem(u"text")).getString()
 
@@ -55,6 +58,9 @@ class Hello(SlackEvent):
     """
     def _init(self):
         SlackEvent._init(self)
+
+    def __init__(self):
+        super(Hello, self).__init__();
 
     def dispatch(self, handler):
         (handler).onHello(self);
@@ -71,8 +77,11 @@ class Message(SlackEvent):
         self.text = None
         self.edited = None
 
+    def __init__(self):
+        super(Message, self).__init__();
+
     def load(self, client, obj):
-        (super(Message, self)).load(client, obj);
+        super(Message, self).load(client, obj);
         (self).subtype = ((obj).getObjectItem(u"subtype")).getString()
         (self).hidden = ((obj).getObjectItem(u"hidden")).getBool()
         (self).text = ((obj).getObjectItem(u"text")).getString()

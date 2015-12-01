@@ -1,4 +1,10 @@
 var _qrt = require("datawire-quark-core");
+var slack = require('../slack');
+exports.slack = slack;
+var slack = require('../slack');
+exports.slack = slack;
+
+
 
 // CLASS Handler
 function Handler() {

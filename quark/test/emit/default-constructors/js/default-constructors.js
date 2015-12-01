@@ -15,6 +15,7 @@ A.prototype.__init_fields__ = A__init_fields__;
 
 
 // CLASS B
+
 function B(name) {
     B.super_.call(this, name);
 }

@@ -1,5 +1,4 @@
 var _qrt = require("datawire-quark-core");
-var pets = require('../pets');
 
 
 // CLASS Pet
@@ -15,6 +14,7 @@ function Pet_greet() { /* abstract */ }
 Pet.prototype.greet = Pet_greet;
 
 // CLASS Cat
+
 function Cat() {
     Cat.super_.call(this);
 }
@@ -32,6 +32,7 @@ function Cat_greet() {
 Cat.prototype.greet = Cat_greet;
 
 // CLASS Dog
+
 function Dog() {
     Dog.super_.call(this);
 }

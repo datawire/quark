@@ -1,5 +1,6 @@
 var _qrt = require("datawire-quark-core");
 
+
 // CLASS A
 function A() {
     this.__init_fields__();

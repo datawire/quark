@@ -2,6 +2,7 @@ public class test_endsWith extends string_test {
     public String what;
     public String _that;
     public test_endsWith(String what) {
+        super();
         (this).what = what;
     }
     public test_endsWith that(String _that) {

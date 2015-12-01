@@ -6,6 +6,8 @@ public class Functions {
             return (n) * (Functions.factorial((n) - (1)));
         }
     }
+
+
     public static void main() {
         System.out.println(Functions.factorial(1));
         System.out.println(Functions.factorial(2));

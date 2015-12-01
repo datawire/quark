@@ -12,6 +12,9 @@ class B(A):
     def _init(self):
         A._init(self)
 
+    def __init__(self):
+        super(B, self).__init__();
+
     def foo(self):
         _println(u"B");
 
@@ -20,7 +23,9 @@ class C(A):
     def _init(self):
         A._init(self)
 
-    
+    def __init__(self):
+        super(C, self).__init__();
+
 
 
 def main():

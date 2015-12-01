@@ -1,4 +1,5 @@
 public class Test {
+    public Test() {}
     public Object bar(String name, java.util.ArrayList<Object> args) {
         System.out.println(args);
         return null;
@@ -15,6 +16,6 @@ public class Test {
         }
     }
     public Pong hello(Ping ping) {
-        return (Pong) ((this).rpc("hello", ping));
+        return (Pong) (this.rpc("hello", ping));
     }
 }

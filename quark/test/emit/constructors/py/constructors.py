@@ -5,13 +5,10 @@ import test2
 import test3
 
 
-
-
-
 def main():
-    (test1).go();
-    (test2).go();
-    (test3).go();
+    test1.go();
+    test2.go();
+    test3.go();
 
 
 if __name__ == "__main__":

@@ -12,9 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, java, python, javascript
+import os, types, java, python, javascript
 from collections import OrderedDict
 from .ast import *
+from .compiler import TypeExpr
+from .dispatch import *
 from .helpers import *
 
 class Backend(object):
@@ -23,14 +25,99 @@ class Backend(object):
         self.ext = ext
         self.gen = gen
         self.files = OrderedDict()
-        self.packages = OrderedDict()  # Collect packages
-        self.functions = OrderedDict()
-        self.classes = OrderedDict()
+        self._imports = OrderedDict()
+        self.current_file = None
+        self.current_package = None
+        self.packages = []
+        self.definitions = []
+        self.names = []
+
+    def visit_Class(self, cls):
+        self.definitions.append(cls)
+
+    def visit_Primitive(self, p):
+        pass
+
+    def visit_Function(self, f):
+        if not isinstance(f, Method):
+            self.definitions.append(f)
+
+    def visit_Package(self, p):
+        self.packages.append(p)
+        self.definitions.append(p)
+
+    def leave_Root(self, r):
+        for d in self.definitions:
+            fname = self.file(d)
+            if fname is None:
+                continue
+            self.current_file = fname
+            self.current_package = d.package
+            if fname not in self._imports:
+                self._imports[fname] = OrderedDict()
+            if fname not in self.files:
+                self.files[fname] = self.make_file(d)
+            else:
+                self.files[fname] += "\n"
+            self.files[fname] += self.definition(d)
+
+        for name in self.files:
+            code = self.files[name]
+            imports = [self.gen.import_(pkg, org) for (pkg, org) in self._imports[name].keys()]
+            code.head += "\n".join(filter(lambda x: x is not None, imports))
+            if imports: code.head += "\n\n"
+            content = str(code)
+            if content[-1:] != "\n": content += "\n"
+            self.files[name] = content
+
+    def add_import(self, obj):
+        imports = self._imports[self.current_file]
+        pkg = tuple(self.package(obj))
+        if pkg:
+            if self.current_package:
+                org = tuple(self.package(self.current_package))
+            else:
+                org = ()
+            if pkg != org:
+                imports[(pkg, org)] = True
+
+    @overload(Class)
+    def file(self, cls):
+        return self.gen.class_file(self.package(cls), self.name(cls.name), self.fname(cls))
+
+    @overload(Function)
+    def file(self, fun):
+        return self.gen.function_file(self.package(fun), self.name(fun.name), self.fname(fun))
+
+    @overload(Package)
+    def file(self, pkg):
+        return self.gen.package_file(self.package(pkg.parent), self.name(pkg.name), self.fname(pkg))
+
+    def fname(self, obj):
+        return os.path.splitext(os.path.basename(obj.file.name))[0]
+
+    @overload(Class)
+    def make_file(self, cls):
+        return self.gen.make_class_file(self.package(cls), self.name(cls.name))
+
+    @overload(Function)
+    def make_file(self, fun):
+        return self.gen.make_function_file(self.package(fun), self.name(fun.name))
+
+    @overload(Package)
+    def make_file(self, pkg):
+        return self.gen.make_package_file(self.package(pkg.parent), self.name(pkg.name))
 
     def write(self, target):
         if not os.path.exists(target):
             os.makedirs(target)
-        files = self.gen.package(self.packages, self.files)
+        name, version = namever(self.packages)
+        packages = OrderedDict()
+        for pkg in self.packages:
+            lines = []
+            readme(pkg, lines)
+            packages[tuple(self.package(pkg))] = "\n".join(lines)
+        files = self.gen.package(name, version, packages, self.files)
         for name, content in files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)
@@ -39,164 +126,436 @@ class Backend(object):
             open(path, "wb").write(content)
             print "quark (compile): wrote", path
 
+    @overload(Package)
+    def definition(self, pkg):
+        self.current_package = pkg
+        for d in pkg.definitions:
+            if isinstance(d, Package):
+                self.add_import(d)
+        return "" # self.doc(pkg)
+
+    @overload(Function)
+    def definition(self, fun):
+        if fun.name.text == "main":
+            extra = self.gen.main()
+        else:
+            extra = ""
+
+        return self.gen.function(self.doc(fun),
+                                 self.type(fun.type),
+                                 self.name(fun.name),
+                                 [self.param(p) for p in fun.params],
+                                 self.block(fun.body)) + extra
+
+    @overload(Class)
+    def definition(self, cls):
+        clazz = self.name(cls.name)
+        parameters = [self.name(p.name) for p in cls.parameters]
+        base = self.type(base_type(cls))
+        interfaces = [self.type(t) for t in cls.bases
+                      if isinstance(t.resolved.type, (Interface, Primitive))]
+
+        fields = []
+        methods = []
+        constructors = []
+
+        for d in cls.definitions + get_defaulted_methods(cls).values():
+            if isinstance(d, Macro): continue
+            doc = self.doc(d)
+            if isinstance(d, Field):
+                fields.append(self.gen.field(doc,
+                                             self.type(d.type),
+                                             self.name(d.name),
+                                             self.expr(d.value)))
+            elif d.type:
+                if d.body:
+                    methods.append(self.gen.method(doc,
+                                                   clazz,
+                                                   self.type(d.type),
+                                                   self.name(d.name),
+                                                   [self.param(p) for p in d.params],
+                                                   self.block(d.body)))
+                else:
+                    methods.append(self.gen.abstract_method(doc,
+                                                            clazz,
+                                                            self.type(d.type),
+                                                            self.name(d.name),
+                                                            [self.param(p) for p in d.params]))
+            else:
+                if base and not has_super(d):
+                    header = [self.gen.expr_stmt(self.gen.invoke_super(clazz,
+                                                                       self.name(base_type(cls).resolved.type.name),
+                                                                       []))]
+                elif not base:
+                    finit = self.gen.field_init()
+                    if finit:
+                        header = [finit]
+                    else:
+                        header = None
+                else:
+                    header = None
+                constructors.append(self.gen.constructor(doc,
+                                                         clazz,
+                                                         [self.param(p) for p in d.params],
+                                                         self.block(d.body, header)))
+
+        if not constructors:
+            constructors = self.default_constructors(cls)
+
+        return self.gen.clazz(self.doc(cls), is_abstract(cls), clazz, parameters, base,
+                              interfaces, fields, constructors, methods)
+
+    @overload(Interface)
+    def definition(self, iface):
+        name = self.name(iface.name)
+        parameters = [self.name(p.name) for p in iface.parameters]
+        bases = [self.type(t) for t in iface.bases]
+
+        methods = []
+
+        for d in iface.definitions:
+            if isinstance(d, Method):
+                methods.append(self.gen.interface_method(self.doc(d),
+                                                         name,
+                                                         self.type(d.type),
+                                                         self.name(d.name),
+                                                         [self.param(p) for p in d.params],
+                                                         self.block(d.body)))
+
+        return self.gen.interface(self.doc(iface), name, parameters, bases,
+                                  methods)
+
+    def default_constructors(self, cls):
+        name = self.name(cls.name)
+        btype = base_type(cls)
+        base = btype.resolved.type if btype else None
+        cons = base_constructors(cls)
+        result = []
+        for con in cons:
+            params = [self.param(p) for p in con.params]
+            args = [self.name(p.name) for p in con.params]
+            stmt = self.gen.expr_stmt(self.gen.invoke_super(name, self.name(base.name), args))
+            result.append(self.gen.constructor("", name, params, self.gen.block([stmt])))
+
+        if result:
+            return result
+        elif base:
+            body = self.gen.block([self.gen.expr_stmt(self.gen.invoke_super(name, self.name(base.name), []))])
+            result.append(self.gen.constructor("", name, [], body))
+        else:
+            result.append(self.gen.default_constructor(name))
+
+        return result
+
+    def doc(self, obj):
+        return self.gen.doc(doc(obj))
+
+    def push(self, env):
+        self.names.append(env)
+
+    def pop(self):
+        self.names.pop()
+
+    def name(self, n):
+        if self.names:
+            env = self.names[-1]
+            if n.text in env:
+                return env[n.text]
+        return self.gen.name(n.text)
+
+    def package(self, node):
+        if isinstance(node, Package):
+            me = self.name(node.name)
+            parent = self.package(node.parent)
+            return parent + [me]
+        elif node.parent:
+            return self.package(node.parent)
+        else:
+            return []
+
+    @overload(Type)
+    def type(self, t):
+        return self.type(t.resolved, t)
+
+    @overload(TypeExpr)
+    def type(self, texpr, expr):
+        return self.type(texpr.type, texpr.bindings, expr)
+
+    @overload(Class, dict)
+    def type(self, cls, bindings, expr):
+        mapping = None
+        for a in cls.annotations:
+            if a.name.text == "mapping":
+                mapping = a
+                break
+        if mapping:
+            path = []
+            name = self.expr(mapping.arguments[0])
+        else:
+            cpkg = self.package(cls)
+            epkg = self.package(expr)
+            path = self.qualify(cpkg, epkg)
+            self.add_import(cls)
+            name = self.name(cls.name)
+
+        if cls.parameters:
+            params = [self.type(bindings[p], expr) for p in cls.parameters]
+        else:
+            params = []
+
+        return self.gen.type(path, name, params)
+
+    def qualify(self, package, origin):
+        return self.gen.qualify(package, origin)
+
+    @overload(TypeParam)
+    def type(self, tparam, bindings, expr):
+        if tparam in bindings:
+            return self.type(bindings[tparam], expr)
+        else:
+            return self.name(tparam.name)
+
+    @overload(types.NoneType)
+    def type(self, n):
+        return None
+
+    def param(self, p):
+        return self.gen.param(self.type(p.type),
+                              self.name(p.name),
+                              self.expr(p.value))
+
+    def block(self, b, header=None):
+        if b is None:
+            return header
+        else:
+            return self.gen.block((header or []) + [self.statement(s) for s in b.statements])
+
+    @overload(Local)
+    def statement(self, s):
+        return self.gen.local(self.type(s.declaration.type),
+                              self.name(s.declaration.name),
+                              self.maybe_cast(s.declaration.type, s.declaration.value))
+
+    @overload(ExprStmt)
+    def statement(self, s):
+        return self.gen.expr_stmt(self.expr(s.expr))
+
+    @overload(Assign)
+    def statement(self, ass):
+        return self.gen.assign(self.expr(ass.lhs), self.maybe_cast(ass.lhs, ass.rhs))
+
+    @overload(Return)
+    def statement(self, ret):
+        return self.gen.return_(self.maybe_cast(ret.callable.type, ret.expr))
+
+    @overload(If)
+    def statement(self, iff):
+        return self.gen.if_(self.expr(iff.predicate),
+                            self.block(iff.consequence),
+                            self.block(iff.alternative))
+
+    @overload(While)
+    def statement(self, wh):
+        return self.gen.while_(self.expr(wh.condition), self.block(wh.body))
+
+    @overload(Break)
+    def statement(self, brk):
+        return self.gen.break_()
+
+    @overload(Continue)
+    def statement(self, cnt):
+        return self.gen.continue_()
+
+    @overload(Var)
+    def expr(self, v):
+        return self.var(v.definition, v)
+
+    @overload(Call)
+    def expr(self, c):
+        type = c.expr.resolved.type
+        return self.invoke(type, c.expr, [self.coerce(a) for a in c.args])
+
+    @overload(String)
+    def expr(self, s):
+        return self.gen.string(s)
+
+    @overload(Number)
+    def expr(self, n):
+        return self.gen.number(n)
+
+    @overload(Bool)
+    def expr(self, b):
+        return self.gen.bool_(b)
+
+    @overload(List)
+    def expr(self, l):
+        return self.gen.list([self.expr(e) for e in l.elements])
+
+    @overload(Map)
+    def expr(self, m):
+        return self.gen.map([(self.expr(e.key), self.expr(e.value)) for e in m.entries])
+
+    @overload(Null)
+    def expr(self, n):
+        return self.gen.null()
+
+    @overload(Native)
+    def expr(self, n):
+        return "".join([self.expr(c) for c in n.cases])
+
+    @overload(NativeCase)
+    def expr(self, nc):
+        if nc.name in (None, self.ext):
+            return "".join([self.expr(c) for c in nc.children])
+        else:
+            return ""
+
+    @overload(Fixed)
+    def expr(self, f):
+        return f.text
+
+    @overload(Attr)
+    def expr(self, a):
+        type = a.expr.resolved.type
+        return self.get(type, a.resolved.type, a.expr, a.attr)
+
+    @overload(Type)
+    def expr(self, t):
+        return self.type(t)
+
+    @overload(Cast)
+    def expr(self, c):
+        return self.maybe_cast(c, c.expr)
+
+    @overload(types.NoneType)
+    def expr(self, n):
+        return None
+
+    @overload(Param)
+    def var(self, _, v):
+        return self.gen.local_ref(self.name(v.name))
+
+    @overload(Declaration)
+    def var(self, _, v):
+        return self.gen.local_ref(self.name(v.name))
+
+    @overload(Class)
+    def var(self, _, v):
+        return self.gen.class_ref(self.name(v.name))
+
+    @overload(Method)
+    def var(self, _, v):
+        return self.gen.method_ref(self.name(v.name))
+
+    @overload(Field)
+    def var(self, _, v):
+        return self.gen.field_ref(self.name(v.name))
+
+    @overload(Class, Class)
+    def get(self, cls, type, expr, attr):
+        return self.gen.get_field(self.expr(expr), self.name(attr))
+
+    @overload(Class, TypeParam)
+    def get(self, cls, type, expr, attr):
+        return self.gen.get_field(self.expr(expr), self.name(attr))
+
+    @overload(Class, Method)
+    def get(self, cls, type, expr, attr):
+        return self.gen.get_method(self.expr(expr), self.name(attr))
+
+    @overload(Package, Package)
+    def get(self, pkg, type, expr, attr):
+        return self.gen.get_package(self.expr(expr), self.name(attr))
+
+    @overload(Package, Function)
+    def get(self, pkg, type, expr, attr):
+        return self.gen.get_function(self.expr(expr), self.name(attr))
+
+    @overload(Function)
+    def invoke(self, func, expr, args):
+        self.add_import(func)
+        return self.gen.invoke_function(self.package(func), self.name(func.name), args)
+
+    @overload(Method, Attr)
+    def invoke(self, method, expr, args):
+        if isinstance(expr.expr, Super):
+            return self.gen.invoke_super_method(self.name(expr.clazz.name),
+                                                self.name(expr.expr.resolved.type.name),
+                                                self.name(method.name),
+                                                args)
+        else:
+            return self.gen.invoke_method(self.expr(expr.expr), self.name(method.name), args)
+
+    @overload(Method, Var)
+    def invoke(self, method, var, args):
+        return self.gen.invoke_method_implicit(self.name(method.name), args)
+
+    @overload(Class)
+    def invoke(self, cls, expr, args):
+        cons = constructors(cls)
+        con = cons[0] if cons else None
+        if isinstance(con, Macro):
+            return self.apply_macro(con, expr, args)
+        else:
+            return self.gen.construct(self.type(expr.resolved, expr), args)
+
+    @overload(Class, Super)
+    def invoke(self, cls, sup, args):
+        return self.gen.invoke_super(self.name(sup.clazz.name), self.name(cls.name), args)
+
+    @overload(Macro)
+    def invoke(self, macro, expr, args):
+        return self.apply_macro(macro, expr, args)
+
+    @overload(Expression)
+    def coerce(self, expr):
+        if expr.coersion:
+            if isinstance(expr.coersion, Macro):
+                class FakeExpr: pass
+                fake = FakeExpr()
+                fake.expr = expr
+                return self.apply_macro(expr.coersion, fake, ())
+            else:
+                return "%s()" % self.get(expr.resolved.type, expr.coersion, expr, expr.coersion.name)
+        else:
+            return self.expr(expr)
+
+    def apply_macro(self, macro, expr, args):
+        env = {}
+        if macro.clazz and macro.type:
+            # for method macros we use expr to access self
+            env["self"] = self.expr(expr.expr)
+        idx = 0
+        for p in macro.params:
+            env[p.name.text] = args[idx]
+            idx += 1
+        self.push(env)
+        try:
+            result = self.expr(macro.body)
+            return result
+        finally:
+            self.pop()
+
+    def maybe_cast(self, type, expr):
+        if expr is None: return None
+        if expr.coersion:
+            return self.coerce(expr)
+        if type.resolved.assignableFrom(expr.resolved):
+            return self.expr(expr)
+        else:
+            return self.gen.cast(self.type(type.resolved, type), self.expr(expr))
+
 class Java(Backend):
 
     def __init__(self):
         Backend.__init__(self, "java", java)
-        self.dfnr = java.DefinitionRenderer()
-        self.functions = []
-
-    def visit_Class(self, c):
-        pkg = self.dfnr.namer.package(c)
-        if pkg:
-            self.files["%s/%s.java" % (pkg.replace(".", "/"), c.name.text)] = c.match(self.dfnr)
-        else:
-            self.files["%s.java" % c.name.text] = c.match(self.dfnr)
-
-    def visit_Function(self, f):
-        if not isinstance(f, Method):
-            self.functions.append(f)
-
-    def leave_Root(self, r):
-        if self.functions:
-            packages = OrderedDict()
-            for f in self.functions:
-                pkg = self.dfnr.namer.package(f)
-                if pkg in packages:
-                    functions = packages[pkg]
-                else:
-                    functions = []
-                    packages[pkg] = functions
-                functions.append(f.match(self.dfnr))
-                if f.name.text == "main":
-                    functions.append("public static void main(String[] args) {\n    main();\n}")
-            for pkg, functions in packages.items():
-                cls = "public class Functions {%s}" % indent("\n".join(functions))
-                if pkg:
-                    self.files["%s/Functions.java" % pkg.replace(".", "/")] = "package %s;\n\n%s" % (pkg, cls)
-                else:
-                    self.files["Functions.java"] = cls
-
-    def visit_Package(self, pkg):
-        pname = self.dfnr.namer.package(pkg)
-        if pkg.package is None:  # Grab a list of top-level packages
-            self.packages.setdefault(pname, []).append(pkg)
-            pkg.version = get_package_version(pkg)
-
-    def visit_Primitive(self, p):
-        pass
 
 class Python(Backend):
 
     def __init__(self):
         Backend.__init__(self, "py", python)
-        self.gen = python
-        self.dfnr = python.PythonDefinitionRenderer()
-        self.header = "from quark_runtime import *\n\n"
-
-    def imports(self, packages):
-        result = "\n".join(["import %s" % pkg for pkg in packages.keys()])
-        if result: result += "\n\n"
-        return result
-
-    def visit_Package(self, pkg):
-        pkg.imports = OrderedDict()
-        pkg.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
-        if pkg.has_main:
-            content += '\n\nif __name__ == "__main__":\n    main()'
-        content = content.rstrip() + "\n"
-        pname = self.dfnr.namer.package(pkg)
-        fname = "%s/__init__.py" % pname.replace(".", "/")
-        if fname in self.files:
-            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports) + content
-        else:
-            self.files[fname] = self.header + self.imports(pkg.imports) + content
-        self.packages.setdefault(pname, []).append(pkg)
-        pkg.version = get_package_version(pkg)
-
-    def visit_File(self, file):
-        file.imports = OrderedDict()
-        file.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        if file.has_main:
-            content += '\n\nif __name__ == "__main__":\n    main()'
-        content = content.rstrip() + "\n"
-        if content.strip() != "":
-            fname = os.path.splitext(os.path.basename(file.name))[0]
-            self.files["%s.py" % self.dfnr.namer.get(fname)] = \
-                self.header + self.imports(file.imports) + content
-
-    def visit_Primitive(self, p):
-        pass
 
 class JavaScript(Backend):
 
     def __init__(self):
         Backend.__init__(self, "js", javascript)
-        self.dfnr = javascript.JSDefinitionRenderer()
-        self.header = """var _qrt = require("datawire-quark-core");\n"""
-
-    def imports(self, packages, origin=None):
-        if origin:
-            origin_name = self.dfnr.namer.package(origin)
-        else:
-            origin_name = ""
-
-        result = ""
-
-        for pkg in packages.keys():
-            path = pkg.split(".")
-            if origin and path[0] in origin.env and isinstance(origin.env[path[0]], Package):
-                subpackage = True
-            elif origin:
-                subpackage = False
-            else:
-                subpackage = True
-
-            if subpackage:
-                prefix = "./"
-            else:
-                prefix = "../"*len(origin_name.split("."))
-
-            result += "var %s = require('%s%s');\n" % (path[0], prefix, path[0])
-            if subpackage:
-                result += "exports.%s = %s;\n" % (pkg, pkg)
-
-        if result:
-            result += "\n"
-
-        return result
-
-    def visit_Package(self, pkg):
-        pkg.imports = OrderedDict()
-        pkg.has_main = False
-        pkg.readme = ""
-        content = "\n".join([d.match(self.dfnr) for d in pkg.definitions])
-        pname = self.dfnr.namer.package(pkg)
-        if pkg.package is None:  # Grab a list of top-level packages
-            self.packages.setdefault(pname, []).append(pkg)
-        pkg.version = get_package_version(pkg)
-        pkg.readme = "# %s %s\n\n" % (pname, pkg.version) + pkg.readme
-        fname = "%s/index.js" % pname.replace(".", "/")
-        if pkg.has_main:
-            content += "\n\nmain();"
-        content = content.rstrip() + "\n"
-        if fname in self.files:
-            self.files[fname] = self.files[fname].strip() + "\n\n" + self.imports(pkg.imports, pkg) + content
-        else:
-            self.files[fname] = self.header + self.imports(pkg.imports, pkg) + content
-
-    def visit_File(self, file):
-        file.imports = OrderedDict()
-        file.has_main = False
-        content = "\n".join([d.match(self.dfnr) for d in file.definitions])
-        if file.has_main:
-            content = content.rstrip() + "\n\nmain();"
-        content = content.rstrip() + "\n"
-        if content.strip() != "":
-            fname = "%s.js" % os.path.splitext(os.path.basename(file.name))[0]
-            self.files[fname] = self.header + self.imports(file.imports) + content
-
-    def visit_Primitive(self, p):
-        pass

@@ -1,1 +1,3 @@
-public class X<T> {}
+public class X<T> {
+    public X() {}
+}

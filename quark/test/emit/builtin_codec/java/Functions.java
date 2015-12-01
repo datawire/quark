@@ -5,30 +5,40 @@ public class Functions {
         (b).putByte(0, v);
         return (c).toHexdump(b, 0, 1, 10);
     }
+
+
     public static String hexs(Short v) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         io.datawire.quark.runtime.Buffer b = (c).buffer(2);
         (b).putShort(0, v);
         return (c).toHexdump(b, 0, 2, 10);
     }
+
+
     public static String hexi(Integer v) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         io.datawire.quark.runtime.Buffer b = (c).buffer(4);
         (b).putInt(0, v);
         return (c).toHexdump(b, 0, 4, 10);
     }
+
+
     public static String hexl(Long v) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         io.datawire.quark.runtime.Buffer b = (c).buffer(8);
         (b).putLong(0, v);
         return (c).toHexdump(b, 0, 8, 10);
     }
+
+
     public static String hexf(Double v) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         io.datawire.quark.runtime.Buffer b = (c).buffer(8);
         (b).putFloat(0, v);
         return (c).toHexdump(b, 0, 8, 10);
     }
+
+
     public static void main() {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         String hello = "hello world!";

@@ -4,8 +4,7 @@ import test
 
 
 def main():
-    (test).go();
-
+    test.go();
 
 
 if __name__ == "__main__":

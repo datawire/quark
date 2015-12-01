@@ -1,5 +1,7 @@
 package slack;
 
+
+
 /**
  * Represents a persistent connection to the slack service.
  */
@@ -8,7 +10,7 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     public String token;
     public SlackHandler handler;
     public Integer event_id = 0;
-    public io.datawire.quark.runtime.WebSocket socket = (io.datawire.quark.runtime.WebSocket) (null);
+    public io.datawire.quark.runtime.WebSocket socket = null;
     public Client(io.datawire.quark.runtime.Runtime runtime, String token, SlackHandler handler) {
         (this).runtime = runtime;
         (this).token = token;
@@ -33,7 +35,7 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
         ((this).runtime).open(wsurl, this);
     }
     public void ws_send(String message) {
-        (socket).send(message);
+        (this.socket).send(message);
     }
     public void onWSConnected(io.datawire.quark.runtime.WebSocket socket) {
         (this).socket = socket;

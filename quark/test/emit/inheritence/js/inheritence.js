@@ -15,6 +15,7 @@ function A_foo() {
 A.prototype.foo = A_foo;
 
 // CLASS B
+
 function B() {
     B.super_.call(this);
 }
@@ -32,6 +33,7 @@ function B_foo() {
 B.prototype.foo = B_foo;
 
 // CLASS C
+
 function C() {
     C.super_.call(this);
 }

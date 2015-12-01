@@ -3,6 +3,7 @@ public class test_split extends string_test {
     public String sep;
     public String altsep;
     public test_split(String sep, String altsep) {
+        super();
         (this).sep = sep;
         (this).altsep = altsep;
     }

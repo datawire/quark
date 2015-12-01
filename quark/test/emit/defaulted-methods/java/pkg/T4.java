@@ -1,6 +1,7 @@
 package pkg;
 
 public class T4 implements A, C {
+    public T4() {}
     public void bar() {
         System.out.println("A bar");
         (this).foo();

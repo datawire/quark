@@ -12,11 +12,16 @@ class Ping(Message):
     def _init(self):
         Message._init(self)
 
-    
+    def __init__(self):
+        super(Ping, self).__init__();
+
 
 class Pong(Message):
     def _init(self):
         Message._init(self)
+
+    def __init__(self):
+        super(Pong, self).__init__();
 
     def toString(self):
         return u"PONG"
@@ -41,7 +46,7 @@ class Test(object):
             return None
 
     def hello(self, ping):
-        return (self).rpc(u"hello", ping)
+        return self.rpc(u"hello", ping)
 
 
 

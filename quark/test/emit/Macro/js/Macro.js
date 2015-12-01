@@ -9,10 +9,6 @@ exports.Macro = Macro;
 function Macro__init_fields__() {}
 Macro.prototype.__init_fields__ = Macro__init_fields__;
 
-
-
-
-
 function Macro_test() {
     var m1 = new Macro();
     var m2 = new Macro();

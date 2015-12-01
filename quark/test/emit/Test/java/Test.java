@@ -1,4 +1,5 @@
 public class Test {
+    public Test() {}
     public Test foo(Test t) {
         return new Test();
     }

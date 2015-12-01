@@ -2,6 +2,7 @@ public class test_find extends string_test {
     public String what;
     public String _that;
     public test_find(String what) {
+        super();
         (this).what = what;
     }
     public test_find that(String _that) {

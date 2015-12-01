@@ -1,5 +1,9 @@
 from quark_runtime import *
 
+import slack
+import slack.event
+
+
 class Handler(object):
     def _init(self): pass
     def __init__(self): self._init()
@@ -20,3 +24,4 @@ class Handler(object):
 
     def onMessage(self, message):
         (self).onSlackEvent(message);
+

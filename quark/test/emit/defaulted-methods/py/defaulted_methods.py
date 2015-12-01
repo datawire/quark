@@ -3,7 +3,6 @@ from quark_runtime import *
 import pkg
 
 
-
 def main():
     t1 = pkg.T1();
     (t1).foo();

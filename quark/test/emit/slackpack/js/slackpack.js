@@ -1,10 +1,8 @@
 var _qrt = require("datawire-quark-core");
-var pkg = require('./pkg');
-exports.pkg = pkg;
 var slack = require('./slack');
 exports.slack = slack;
-
-
+var pkg = require('./pkg');
+exports.pkg = pkg;
 
 
 function main() {

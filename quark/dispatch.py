@@ -72,7 +72,8 @@ class _Dispatcher(object):
         return _BoundDispatcher(clazz, object, self)
 
     def error(self, types):
-        raise TypeError("no matching method: (%s)" % ", ".join([t.__name__ for t in types]))
+        raise TypeError("%s has no matching method: (%s)" %
+                        (self.name, ", ".join([t.__name__ for t in types])))
 
     def __call__(self, *args, **kwargs):
         types = tuple([type(arg) for arg in args])

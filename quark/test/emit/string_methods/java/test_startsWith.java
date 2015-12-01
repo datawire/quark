@@ -2,6 +2,7 @@ public class test_startsWith extends string_test {
     public String what;
     public String _that;
     public test_startsWith(String what) {
+        super();
         (this).what = what;
     }
     public test_startsWith that(String _that) {

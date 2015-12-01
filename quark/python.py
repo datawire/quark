@@ -19,220 +19,6 @@ from .helpers import *
 from ._metadata import __py_runtime_version__
 from collections import OrderedDict
 
-from java import *
-
-class FieldRenderer(object):
-
-    def __init__(self, namer, exprr):
-        self.namer = namer
-        self.exprr = exprr
-
-    def match_Field(self, field):
-        name = field.name.match(self.namer)
-        if field.value:
-            return "self.%s = %s" % (name, field.value.match(self.exprr))
-        else:
-            return "self.%s = None" % name
-
-class PythonNamer(SubstitutionNamer):
-
-    def __init__(self):
-        SubstitutionNamer.__init__(self, {"print": "print_"})
-
-    def get(self, name):
-        return self.env.get(name, name.replace("-", "_"))
-
-
-class PythonDefinitionRenderer(DefinitionRenderer):
-
-    def __init__(self):
-        self.namer = PythonNamer()
-        self.stmtr = PythonStatementRenderer(self.namer)
-        self.fieldr = FieldRenderer(self.namer, self.stmtr.exprr)
-
-    def doc(self, annotations):
-        return DefinitionRenderer.doc(self, annotations, head='"""', prefix="", tail='"""')
-
-    def match_Macro(self, m):
-        return ""
-
-    def match_Primitive(self, p):
-        return ""
-
-    def match_Package(self, p):
-        if isinstance(p.parent, Package):
-            p.parent.imports[p.name.match(self.namer)] = True
-        return ""
-
-    def class_initializer(self, cls):
-        fields = "\n".join([f.match(self.fieldr) for f in cls.definitions if isinstance(f, Field)])
-        btype = base_type(cls)
-        if btype:
-            fields = "%s._init(self)\n%s" % (self.stmtr.exprr.type(btype), fields)
-        return "def _init(self):%s" % (indent(fields) or " pass")
-
-    def default_constructors(self, cls):
-        btype = base_type(cls)
-        if not btype:
-            return ["def __init__(self): self._init()"]
-        else:
-            return []
-
-    def default_super(self, class_name):
-        return "super(%s, self).__init__()" % class_name
-
-    def invoke_init(self):
-        return "self._init()"
-
-    def match_Class(self, c):
-        name = c.name.match(self.namer)
-        btype = base_type(c)
-        base = self.stmtr.exprr.type(btype) if btype else "object"
-        body = indent("\n".join(self.class_body(c)))
-        bases = "(%s)" % base if base else ""
-        doc = indent(self.doc(c.annotations)).rstrip()
-        return "class %s%s:%s%s" % (name, bases, doc, body or " pass")
-
-    def match_Function(self, fun, defaulting=False):
-        doc = indent(self.doc(fun.annotations)).rstrip()
-        if fun.type:
-            name = fun.name.match(self.namer)
-            init = None
-        else:
-            name = "__init__"
-            init = self.constructor_header(fun)
-        params = [p.match(self) for p in fun.params]
-        if isinstance(fun, Method):
-            params = ["self"] + params
-        elif name == "main":
-                assert fun.parent.__class__ in (File, Package), fun.parent.pprint()
-                fun.parent.has_main = True
-        body = fun.body.match(self.stmtr, header=init) if fun.body else ": assert False"
-        body_with_doc = ":" + doc + body[1:]
-        return "\ndef %s(%s)%s" % (name, ", ".join(params), body_with_doc)
-
-    def match_Field(self, f):
-        return ""
-
-class PythonStatementRenderer(StatementRenderer):
-
-    def __init__(self, namer):
-        self.namer = namer
-        self.exprr = PythonExprRenderer(self.namer)
-
-    def match_Declaration(self, d):
-        name = d.name.match(self.namer)
-        if d.value:
-            return "%s = %s" % (name, self.exprr.coerce(d.value))
-        else:
-            # XXX: will probably need to adjust this to deal with
-            #      different declaration cases in python
-            if isinstance(d, Param):
-                return name
-            else:
-                return "%s = None" % name
-
-    def match_Block(self, b, header=None):
-        header = header or []
-        stmts = "\n".join(header + [s.match(self) for s in b.statements])
-        if stmts:
-            return ":%s" % indent(stmts)
-        else:
-            return ": pass"
-
-    def match_If(self, i):
-        result = "if (%s)%s" % (i.predicate.match(self.exprr),
-                                 i.consequence.match(self))
-        if i.alternative:
-            result += "else%s" % i.alternative.match(self)
-        return result
-
-    def match_Assign(self, ass):
-        return "%s = %s" % (ass.lhs.match(self.exprr), self.exprr.coerce(ass.rhs))
-
-    def match_Return(self, r):
-        if r.expr:
-            return "return %s" % r.expr.match(self.exprr)
-        else:
-            return "return"
-
-class PythonExprRenderer(ExprRenderer):
-
-    @property
-    def lang(self):
-        return "py"
-
-    @property
-    def selfie(self):
-        return "self"
-
-    def maybe_cast(self, type, expr):
-        return expr.match(self)
-
-    @overload(AST)
-    def var(self, dfn, v):
-        if isinstance(v.definition, Field):
-            return "self.%s" % v.match(self.namer)
-        else:
-            name = v.match(self.namer)
-            if isinstance(v.definition, Package):
-                v.file.imports[name] = True
-            return name
-
-    @overload(AST)
-    def get(self, cls, type, expr, attr):
-        return "(%s).%s" % (expr.match(self), attr.text)
-
-    @overload(Class, Super)
-    def invoke(self, cls, expr, args):
-        return "%s.__init__(%s)" % (expr.match(self), ", ".join(args))
-
-    @overload(Class)
-    def invoke(self, cls, expr, args):
-        cons = constructors(cls)
-        con = cons[0] if cons else None
-        if isinstance(con, Macro):
-            return self.apply_macro(con, expr, args)
-        else:
-            return "%s(%s)" % (expr.match(self), ", ".join(args))
-
-    def invoke_super_method(self, method, expr, args):
-        return "%s(%s)" % (expr.match(self), ", ".join(args))
-
-    def match_List(self, l):
-        return "_List([%s])" % ", ".join([e.match(self) for e in l.elements])
-
-    def match_Map(self, m):
-        return "{%s}" % \
-            (", ".join(["%s: %s" % (e.key.match(self), e.value.match(self))
-                        for e in m.entries]))
-
-    def match_Bool(self, b):
-        return b.text.capitalize()
-
-    def match_Null(self, n):
-        return "None"
-
-    def match_String(self, s):
-        return "u" + s.text
-
-    def match_Super(self, s):
-        return "super(%s, self)" % s.clazz.name.match(self.namer)
-
-    @overload(Class, dict)
-    def type(self, cls, bindings, expr):
-        return self.type(cls, expr)
-
-    @overload(Type)
-    def type(self, t):
-        pkg = self.namer.package(t.resolved.type)
-        if pkg:
-            if t.package:
-                t.package.imports[pkg] = True
-            else:
-                t.file.imports[pkg] = True
-        return self.type(t.resolved, t)
-
 setup_py = """# Setup file for package %(name)s
 
 from setuptools import setup
@@ -285,7 +71,7 @@ index_rst = """
 .. %(name)s documentation master file, created by Quark
 
 %(name)s %(version)s
-=$(underline)s
+=%(underline)s
 
 Contents:
 
@@ -304,13 +90,12 @@ Indices and tables
 * :ref:`search`
 """
 
-def package(packages, srcs):
-    name, version = namever(packages)
+def package(name, version, packages, srcs):
     fmt_dict = {"name": name,
                 "version": version,
                 "runtime_version": __py_runtime_version__,
                 "underline" : "=" * len(name + version),
-                "pkg_list": repr(list(packages.keys()))}
+                "pkg_list": repr([".".join(p) for p in packages])}
     files = OrderedDict()
     files.update(srcs)
     files["setup.py"] = setup_py % fmt_dict
@@ -319,3 +104,187 @@ def package(packages, srcs):
     files["docs/_static/.keep"] = ""
     files["docs/_templates/.keep"] = ""
     return files
+
+SUBS = {"print": "print_"}
+def name(n):
+    return SUBS.get(n, n).replace("-", "_")
+
+def type(path, name, parameters):
+    return ".".join(path + [name])
+
+def doc(lines):
+    return indent(doc_helper(lines, '"""', "", '"""')).rstrip()
+
+def method(doc, clazz, type, name, parameters, body):
+    if body is None: body = ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
+
+def abstract_method(doc, clazz, type, name, parameters):
+    return "\ndef %s(%s):%s assert False" % (name, ", ".join(["self"] + parameters), doc)
+
+def interface_method(doc, iface, type, name, parameters, body):
+    if body is None: body = ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
+
+def function(doc, type, name, parameters, body):
+    body = body if body else ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(parameters), body_with_doc)
+
+def block(statements):
+    if statements:
+        return ":%s" % indent("\n".join(statements))
+    else:
+        return ": pass"
+
+def local(type, name, value):
+    return "%s = %s;" % (name, value or "None")
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def construct(clazz, args):
+    return "%s(%s)" % (clazz, ", ".join(args))
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "self.%s(%s)" % (method, ", ".join(args))
+
+def invoke_function(path, name, args):
+    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
+def assign(lhs, rhs):
+    return "%s = %s" % (lhs, rhs)
+
+def string(s):
+    return "u" + s.text
+
+def number(n):
+    return n.text
+
+def bool_(b):
+    return b.text.capitalize()
+
+def list(elements):
+    return "_List([%s])" % ", ".join(elements)
+
+def map(entries):
+    return "{%s}" % (", ".join(["%s: %s" % e for e in entries]))
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    if base: fields = ["%s._init(self)" % base] + fields
+    finit = ["def _init(self):%s" % (indent("\n".join(fields)) or " pass")]
+    body = indent("\n".join(finit + constructors + methods))
+    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or " pass")
+
+def interface(doc, iface, parameters, bases, methods):
+    body = indent("\n".join(methods))
+    return "class %s(object):%s%s" % (iface, doc, body or " pass")
+
+def class_file(path, name, fname):
+    if path:
+        return "/".join(path + ["__init__.py"])
+    else:
+        fname = fname.replace("-", "_")
+        return "%s.py" % SUBS.get(fname, fname)
+
+def function_file(path, name, fname):
+    return class_file(path, name, fname)
+
+def package_file(path, name, fname):
+    return "/".join(path + [name, "__init__.py"])
+
+def make_class_file(path, name):
+    return Code(head="from quark_runtime import *\n\n")
+
+def make_function_file(path, name):
+    return make_class_file(path, name)
+
+def make_package_file(path, name):
+    return make_class_file(path, name)
+
+def main():
+    return '\n\nif __name__ == "__main__":\n    main()\n'
+
+def default_constructor(clazz):
+    return "def __init__(self): self._init()"
+
+def invoke_super(clazz, base, args):
+    return "super(%s, self).__init__(%s)" % (clazz, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "super(%s, self).%s(%s)" % (clazz, method, ", ".join(args))
+
+def constructor(doc, name, parameters, body):
+    return "def __init__(%s)%s" % (", ".join(["self"] + parameters), body)
+
+def field_init():
+    return "self._init()"
+
+def field(doc, type, name, value):
+    return "self.%s = %s" % (name, value or "None")
+
+def param(type, name, value):
+    if value is None:
+        return "%s" % name
+    else:
+        return "%s = %s" % (name, value)
+
+def return_(expr):
+    if expr:
+        return "return %s" % expr
+    else:
+        return "return"
+
+def import_(path, origin):
+    return "import %s" % ".".join(qualify(path, origin))
+
+def if_(pred, cons, alt):
+    result = "if (%s)%s" % (pred, cons)
+    if alt:
+        result += "else%s" % alt
+    return result
+
+def while_(cond, body):
+    return "while (%s)%s" % (cond, body)
+
+def break_():
+    return "break;"
+
+def continue_():
+    return "continue;"
+
+def null():
+    return "None"
+
+def cast(type, expr):
+    return expr
+
+def qualify(package, origin):
+    if package == origin: return []
+    if not package: return []
+    if not origin:
+        return package
+    elif package[:len(origin)] == origin:
+        return package[len(origin):]
+    else:
+        return package
+
+def class_ref(v):
+    return v
+
+def method_ref(v):
+    return "self.%s" % v
+
+def field_ref(v):
+    return "self.%s" % v
+
+def local_ref(v):
+    return v

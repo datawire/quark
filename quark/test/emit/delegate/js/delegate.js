@@ -15,6 +15,7 @@ function Message_encode() {
 Message.prototype.encode = Message_encode;
 
 // CLASS Ping
+
 function Ping() {
     Ping.super_.call(this);
 }
@@ -28,6 +29,7 @@ Ping.prototype.__init_fields__ = Ping__init_fields__;
 
 
 // CLASS Pong
+
 function Pong() {
     Pong.super_.call(this);
 }
@@ -75,7 +77,7 @@ function Test_rpc(name, msg) {
 Test.prototype.rpc = Test_rpc;
 
 function Test_hello(ping) {
-    return (this).rpc("hello", ping);
+    return this.rpc("hello", ping);
 }
 Test.prototype.hello = Test_hello;
 

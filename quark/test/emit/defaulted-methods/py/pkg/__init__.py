@@ -1,8 +1,7 @@
 from quark_runtime import *
 
+
 class A(object):
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def foo(self): assert False
 
@@ -12,16 +11,12 @@ class A(object):
 
 
 class B(object):
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def bar(self):
         _println(u"B bar");
 
 
 class C(object):
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def foo(self):
         _println(u"C mixin for foo");
@@ -84,3 +79,4 @@ class T5(object):
     def bar(self):
         _println(u"A bar");
         (self).foo();
+

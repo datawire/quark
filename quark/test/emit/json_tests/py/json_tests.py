@@ -14,7 +14,7 @@ def test_iterate_list():
     l = _JSONObject.parse(u"[1.2,2.3,3.4,4.5,5.6,6.7,7.8]");
     i = 0;
     item = (l).getListItem(i);
-    while ((item) != ((l).undefined())) :
+    while ((item) != ((l).undefined())):
         _println((((u"l[") + (str(i))) + (u"] = ")) + (repr((item).getNumber())));
         i = (i) + (1)
         item = (l).getListItem(i)
@@ -32,7 +32,7 @@ def test_iterate_list_directory():
     endpoints = (jobj).getObjectItem(u"endpoints");
     i = 0;
     endpoint = (endpoints).getListItem(i);
-    while ((endpoint) != ((endpoints).undefined())) :
+    while ((endpoint) != ((endpoints).undefined())):
         ep = (endpoint).getString();
         _println(ep);
         i = (i) + (1)

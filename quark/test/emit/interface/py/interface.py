@@ -1,8 +1,6 @@
 from quark_runtime import *
 
 class Foo(object):
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def m1(self): assert False
 
@@ -11,8 +9,6 @@ class Foo(object):
     def m3(self, args): assert False
 
 class Bar(object):
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def m1(self): assert False
 
@@ -30,14 +26,8 @@ class Baz(object):
 
     def m3(self, args): pass
 
-class RazBar(object):
-    def _init(self): pass
-    def __init__(self): self._init()
-
-class RazFaz(object):
-    def _init(self): pass
-    def __init__(self): self._init()
-
+class RazBar(object): pass
+class RazFaz(object): pass
 class BazBar(object):
     def _init(self): pass
     def __init__(self): self._init()

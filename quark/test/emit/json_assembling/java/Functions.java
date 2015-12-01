@@ -16,6 +16,8 @@ public class Functions {
         (outer).setObjectItem("sub-string", (new io.datawire.quark.runtime.JSONObject()).setString("a string"));
         System.out.println((outer).toString());
     }
+
+
     public static void main() {
         Functions.test_assembling();
     }

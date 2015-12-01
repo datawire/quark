@@ -13,6 +13,9 @@ class B(A):
     def _init(self):
         A._init(self)
 
+    def __init__(self, name):
+        super(B, self).__init__(name);
+
     def greet(self):
         _println((u"Hello, my name is ") + ((self).name));
 
@@ -38,7 +41,7 @@ class Y(X):
         self.name = None
 
     def __init__(self, name):
-        super(Y, self).__init__()
+        super(Y, self).__init__();
         (self).name = name
 
     def test(self):

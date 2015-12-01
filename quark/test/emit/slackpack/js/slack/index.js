@@ -1,7 +1,6 @@
 var _qrt = require("datawire-quark-core");
 var event = require('./event');
 exports.event = event;
-var slack = require('../slack');
 
 
 

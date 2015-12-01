@@ -8,6 +8,8 @@ public class Functions {
         System.out.println((list).get(1));
         System.out.println((list).get(2));
     }
+
+
     public static void test2() {
         java.util.ArrayList<String> list = new java.util.ArrayList<String>();
         (list).add("one");
@@ -17,6 +19,8 @@ public class Functions {
         System.out.println((list).get(1));
         System.out.println((list).get(2));
     }
+
+
     public static void test3() {
         java.util.ArrayList<Integer> list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         System.out.println(list);
@@ -25,6 +29,8 @@ public class Functions {
         list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{1, 2, 3}));
         System.out.println(list);
     }
+
+
     public static void test4() {
         java.util.ArrayList<String> list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         System.out.println(list);
@@ -33,6 +39,8 @@ public class Functions {
         list = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"one", "two", "three"}));
         System.out.println(list);
     }
+
+
     public static void test5() {
         java.util.ArrayList<Box<Integer>> boxes = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (boxes).add(new Box<Integer>());
@@ -41,10 +49,14 @@ public class Functions {
         boxes = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Box<Integer>()}));
         System.out.println(((boxes).get(0)).get());
     }
+
+
     public static void test6() {
         java.util.ArrayList<java.util.ArrayList<Integer>> matrix = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new java.util.ArrayList(java.util.Arrays.asList(new Object[]{1, 2, 3})), new java.util.ArrayList(java.util.Arrays.asList(new Object[]{4, 5, 6})), new java.util.ArrayList(java.util.Arrays.asList(new Object[]{7, 8, 9}))}));
         System.out.println(matrix);
     }
+
+
     public static void main() {
         Functions.test1();
         Functions.test2();

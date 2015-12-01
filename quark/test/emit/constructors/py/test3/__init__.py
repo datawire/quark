@@ -1,6 +1,5 @@
 from quark_runtime import *
 
-import test3
 
 class Box(object):
     def _init(self):

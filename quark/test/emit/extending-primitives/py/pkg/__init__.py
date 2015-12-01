@@ -1,7 +1,6 @@
 from quark_runtime import *
 
 
-
 class C(object):
     def _init(self): pass
     def __init__(self): self._init()
@@ -14,3 +13,4 @@ class C(object):
 
     def event2(self):
         _println(u"default event2");
+

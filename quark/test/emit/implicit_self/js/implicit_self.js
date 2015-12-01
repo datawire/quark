@@ -13,6 +13,6 @@ function Foo_next() {}
 Foo.prototype.next = Foo_next;
 
 function Foo_test() {
-    (this).next();
+    this.next();
 }
 Foo.prototype.test = Foo_test;

@@ -4,7 +4,7 @@ from quark_runtime import *
 def main():
     stuff = _List([u"one", u"two", u"three", u"four"]);
     idx = 0;
-    while (True) :
+    while (True):
         s = (stuff)[idx];
         if ((s) == (u"three")):
             _println(u"breaking");
@@ -15,7 +15,7 @@ def main():
 
     idx = 0
     loop = True;
-    while (loop) :
+    while (loop):
         s2 = (stuff)[idx];
         if ((s2) != (u"three")):
             idx = (idx) + (1)

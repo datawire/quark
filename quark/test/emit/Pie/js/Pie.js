@@ -9,7 +9,6 @@ exports.Pie = Pie;
 function Pie__init_fields__() {}
 Pie.prototype.__init_fields__ = Pie__init_fields__;
 
-
 function Pie_test() {
     var p = new Pie();
     var x = 3;

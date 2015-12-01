@@ -3,6 +3,7 @@ from quark_runtime import *
 import test
 
 
+
 def go():
     _println(u"GO!");
 
@@ -14,3 +15,4 @@ class Test(object):
 
     def go(self):
         _println(u"TGO!");
+

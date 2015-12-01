@@ -1,4 +1,6 @@
 public class Functions {
+
+
     public static void main() {
         test1.Functions.go();
         test2.Functions.go();

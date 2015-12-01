@@ -7,6 +7,8 @@ public class Functions {
         System.out.println((io.datawire.quark.runtime.JSONObject.parse(((new io.datawire.quark.runtime.JSONObject()).setBool(true)).toString())).toString());
         System.out.println((io.datawire.quark.runtime.JSONObject.parse(((new io.datawire.quark.runtime.JSONObject()).setNull()).toString())).toString());
     }
+
+
     public static void test_iterate_list() {
         io.datawire.quark.runtime.JSONObject l = io.datawire.quark.runtime.JSONObject.parse("[1.2,2.3,3.4,4.5,5.6,6.7,7.8]");
         Integer i = 0;
@@ -21,6 +23,8 @@ public class Functions {
             }
         }
     }
+
+
     public static void test_iterate_list_directory() {
         String message = ((new io.datawire.quark.runtime.JSONObject()).setObjectItem("endpoints", (((new io.datawire.quark.runtime.JSONObject()).setListItem(0, (new io.datawire.quark.runtime.JSONObject()).setString("endpoint0"))).setListItem(1, (new io.datawire.quark.runtime.JSONObject()).setString("endpoint1"))).setListItem(2, (new io.datawire.quark.runtime.JSONObject()).setString("endpoint2")))).toString();
         System.out.println(message);
@@ -35,6 +39,8 @@ public class Functions {
             endpoint = (endpoints).getListItem(i);
         }
     }
+
+
     public static void main() {
         Functions.test_roundtrip();
         Functions.test_iterate_list();

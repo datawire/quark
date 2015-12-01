@@ -1,6 +1,5 @@
 from quark_runtime import *
 
-import pets
 
 class Pet(object):
     def _init(self): pass
@@ -12,6 +11,9 @@ class Cat(Pet):
     def _init(self):
         Pet._init(self)
 
+    def __init__(self):
+        super(Cat, self).__init__();
+
     def greet(self):
         _println(u"meow!");
 
@@ -20,5 +22,9 @@ class Dog(Pet):
     def _init(self):
         Pet._init(self)
 
+    def __init__(self):
+        super(Dog, self).__init__();
+
     def greet(self):
         _println(u"woof!");
+

@@ -7,6 +7,8 @@ public class Functions {
         (ibox).contents = 4;
         System.out.println((ibox).contents);
     }
+
+
     public static void test2() {
         Box<String> sbox = new Box<String>();
         (sbox).set("hello");
@@ -15,6 +17,8 @@ public class Functions {
         (sbox).contents = "world";
         System.out.println((sbox).contents);
     }
+
+
     public static void test3() {
         Crate<Integer> icrate = new Crate<Integer>();
         (icrate).set(3);
@@ -22,6 +26,8 @@ public class Functions {
         (icrate).set(4);
         System.out.println(((icrate).box).contents);
     }
+
+
     public static void test4() {
         Sack s = new Sack();
         System.out.println(((s).ints).get());
@@ -33,6 +39,8 @@ public class Functions {
         System.out.println(((s).ints).get());
         System.out.println(((s).ints).contents);
     }
+
+
     public static void test5() {
         Crate<String> scrate = new Crate<String>();
         System.out.println((scrate).get());
@@ -43,6 +51,8 @@ public class Functions {
         ((scrate).ibox).contents = 3;
         System.out.println(((scrate).ibox).contents);
     }
+
+
     public static void test6() {
         Box<Box<Integer>> box = new Box<Box<Integer>>();
         (box).set(new Box<Integer>());
@@ -50,6 +60,8 @@ public class Functions {
         System.out.println(((box).get()).get());
         System.out.println(((box).contents).contents);
     }
+
+
     public static void main() {
         System.out.println("test1:\n--");
         Functions.test1();

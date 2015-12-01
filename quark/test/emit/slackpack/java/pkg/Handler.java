@@ -1,6 +1,9 @@
 package pkg;
 
+
+
 public class Handler implements slack.SlackHandler {
+    public Handler() {}
     public void onSlackEvent(slack.event.SlackEvent event) {
         System.out.println((event).type);
         if (!(((event).user)==(null) || (((event).user) != null && ((event).user).equals(null)))) {

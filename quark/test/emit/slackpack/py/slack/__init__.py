@@ -1,7 +1,6 @@
 from quark_runtime import *
 
 import event
-import slack.event
 
 
 class SlackHandler(object):
@@ -9,8 +8,6 @@ class SlackHandler(object):
     Event handler for slack events. All unhandled events
     are delegated to onSlackEvent by default.
     """
-    def _init(self): pass
-    def __init__(self): self._init()
 
     def onSlackEvent(self, event): pass
 

@@ -1,5 +1,5 @@
 public class Native {
-
+    public Native() {}
     public void test() {
         Native n1 = new Native();
         Native n2 = new Native();

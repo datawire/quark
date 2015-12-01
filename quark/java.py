@@ -18,465 +18,6 @@ from .compiler import TypeExpr
 from .dispatch import overload
 from .helpers import *
 from collections import OrderedDict
-
-class DocEvaluator:
-
-    def __init__(self):
-        self.lines = []
-
-    def doc(self, head, prefix, tail):
-        if self.lines:
-            lines = [head]
-            lines.extend([("%s%s" % (prefix, l)).rstrip() for l in self.lines])
-            lines.append(tail)
-            lines.append("")
-            return "\n".join(lines)
-        else:
-            return ""
-
-    def match_Annotation(self, a):
-        for e in a.arguments:
-            e.match(self)
-
-    def match_String(self, s):
-        # XXX: need to properly process string literal
-        self.lines.append(s.text[1:-1])
-
-class DefinitionRenderer(object):
-
-    def __init__(self):
-        self.namer = SubstitutionNamer({"self": "this"})
-        self.stmtr = StatementRenderer(self.namer)
-
-    def doc(self, annotations, head="/**", prefix=" * ", tail=" */"):
-        doc_eval = DocEvaluator()
-        for a in annotations:
-            if a.name.text == "doc":
-                a.match(doc_eval)
-        return doc_eval.doc(head, prefix, tail)
-
-    def abstract(self, cls):
-        for d in cls.definitions:
-            if isinstance(d, Method) and d.body is None:
-                return True
-        return False
-
-    def constructors(self, cls):
-        return [d for d in cls.definitions if isinstance(d, Method) and d.type is None]
-
-    def class_initializer(self, cls):
-        pass
-
-    def default_constructors(self, cls):
-        cons = base_constructors(cls)
-        result = []
-        for con in cons:
-            name = cls.name.match(self.namer)
-            params = [p.match(self) for p in con.params]
-            args = [p.name.match(self.namer) for p in con.params]
-            result.append("public %s(%s) { super(%s); }" % (name, ", ".join(params), ", ".join(args)))
-        return result
-
-    def class_body(self, cls):
-        result = []
-        init = self.class_initializer(cls)
-        if init:
-            result.append(init)
-        if not self.constructors(cls):
-            result.extend(self.default_constructors(cls))
-        result.extend([d.match(self) for d in cls.definitions])
-        result.extend([d.match(self, True) for d in get_defaulted_methods(cls).values()])
-        return result
-
-    def constructor_header(self, fun):
-        if base_type(fun.parent):
-            if not has_super(fun):
-                name = fun.parent.name.match(self.namer)
-                return [self.default_super(name)]
-            else:
-                return []
-        else:
-            return [self.invoke_init()]
-
-    def match_Class(self, c):
-        name = c.name.match(self.namer)
-        params = ""
-        if c.parameters:
-            params = "<%s>" % (", ".join([p.match(self) for p in c.parameters]))
-        extends = ""
-        bt = base_type(c)
-        if bt:
-            extends += " extends %s" % self.stmtr.exprr.type(bt)
-        else:
-            extends = ""
-        implements = ""
-        for base in c.bases:
-            if isinstance(base.resolved.type, (Interface, Primitive)):
-                if not implements:
-                    if isinstance(c, Interface):
-                        implements += " extends "
-                    else:
-                        implements += " implements "
-                else:
-                    implements += ", "
-                implements += self.stmtr.exprr.type(base)
-        body = "\n".join(self.class_body(c))
-        kw = "interface" if isinstance(c, Interface) else "class"
-        doc = self.doc(c.annotations)
-        if not isinstance(c, Interface) and self.abstract(c):
-            kw = "abstract " + kw
-        cls = "%spublic %s %s%s%s%s {%s}" % (doc, kw, name, params, extends, implements, indent(body))
-        pkg = self.namer.package(c)
-        if pkg:
-            return "package %s;\n\n%s" % (pkg, cls)
-        else:
-            return cls
-
-    def match_TypeParam(self, p):
-        return p.name.match(self.namer)
-
-    def match_Function(self, m, defaulting=False):
-        doc = self.doc(m.annotations)
-        type = "%s " % self.stmtr.exprr.type(m.type.resolved, m.type) if m.type else ""
-        name = m.name.match(self.namer)
-        params = ", ".join([p.match(self) for p in m.params])
-        if isinstance(m.clazz, Interface) and not defaulting:
-            body = ";"
-        else:
-            body = " %s" % m.body.match(self.stmtr) if m.body else ";"
-        if isinstance(m, Method):
-            mods = "public"
-        else:
-            mods = "public static"
-        if m.body is None and not isinstance(m.clazz, Interface):
-            mods = mods + " abstract"
-        return "%s%s %s%s(%s)%s" % (doc, mods, type, name, params, body)
-
-    def match_MethodMacro(self, mm):
-        return ""
-
-    def match_Field(self, f):
-        doc = self.doc(f.annotations)
-        return "%spublic %s;" % (doc, f.match(self.stmtr))
-
-    def match_Param(self, p):
-        return p.match(self.stmtr)
-
-class StatementRenderer(object):
-
-    def __init__(self, namer):
-        self.namer = namer
-        self.exprr = ExprRenderer(self.namer)
-
-    def match_Return(self, r):
-        if r.expr:
-            return "return %s;" % self.exprr.maybe_cast(r.callable.type, r.expr)
-        else:
-            return "return;"
-
-    def match_Local(self, stmt):
-        return "%s;" % stmt.declaration.match(self)
-
-    def match_Declaration(self, d):
-        type = self.exprr.type(d.resolved, d)
-        name = d.name.match(self.namer)
-        if d.value:
-            value = self.exprr.maybe_cast(d.type, d.value)
-            return "%s %s = %s" % (type, name, value)
-        else:
-            return "%s %s" % (type, name)
-
-    def match_ExprStmt(self, stmt):
-        return "%s;" % stmt.expr.match(self.exprr)
-
-    def match_Assign(self, a):
-        return "%s = %s;" % (a.lhs.match(self), self.exprr.maybe_cast(a.lhs, a.rhs))
-
-    def match_Attr(self, a):
-        return "(%s).%s" % (a.expr.match(self.exprr), a.attr.text)
-
-    def match_Var(self, v):
-        return v.match(self.namer)
-
-    def match_If(self, i):
-        result = "if (%s) %s" % (i.predicate.match(self.exprr),
-                                 i.consequence.match(self))
-        if i.alternative:
-            result += " else %s" % i.alternative.match(self)
-        return result
-
-    def match_While(self, w):
-        return "while (%s) %s" % (w.condition.match(self.exprr),
-                                  w.body.match(self))
-
-    def match_Block(self, b):
-        return "{%s}" % indent("\n".join([s.match(self) for s in b.statements]))
-
-    def match_Break(self, b):
-        return "break;"
-
-    def match_Continue(self, c):
-        return "continue;"
-
-class ExprRenderer(object):
-
-    def __init__(self, namer):
-        self.namer = namer
-
-    @property
-    def lang(self):
-        return "java"
-
-    @property
-    def selfie(self):
-        return "this"
-
-    def maybe_cast(self, type, expr):
-        if expr.coersion:
-            return self.coerce(expr)
-        result = expr.match(self)
-        if not type.resolved.assignableFrom(expr.resolved):
-            result = "(%s) (%s)" % (self.type(type.resolved, type), result)
-        return result
-
-    def match_Bool(self, b):
-        return b.text
-
-    def match_Null(self, n):
-        return n.text
-
-    def match_Number(self, n):
-        return n.text
-
-    def match_String(self, s):
-        result = s.text[0]
-        idx = 1
-        while idx < len(s.text) - 1:
-            c = s.text[idx]
-            next = s.text[idx + 1]
-            if c == "\\" and next == "x":
-                result += "\\u00"
-                idx += 1
-            else:
-                result += c
-            idx += 1
-        result += s.text[-1]
-        return result
-
-    def match_List(self, l):
-        return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % \
-            (", ".join([e.match(self) for e in l.elements]))
-
-    def match_Map(self, m):
-        return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
-            (", ".join(["%s, %s" % (e.key.match(self), e.value.match(self))
-                        for e in m.entries]))
-
-    def match_Cast(self, c):
-        return self.maybe_cast(c, c.expr)
-
-    def match_Call(self, c):
-        type = c.expr.resolved.type
-        return self.invoke(type, c.expr, [self.coerce(a) for a in c.args])
-
-    @overload(Expression)
-    def coerce(self, expr):
-        if expr.coersion:
-            if isinstance(expr.coersion, Macro):
-                class FakeExpr: pass
-                fake = FakeExpr()
-                fake.expr = expr
-                return self.apply_macro(expr.coersion, fake, ())
-            else:
-                return "%s()" % self.get(expr.resolved.type, expr.coersion, expr, expr.coersion.name)
-        else:
-            return expr.match(self)
-
-    def match_Attr(self, a):
-        type = a.expr.resolved.type
-        return self.get(type, a.resolved.type, a.expr, a.attr)
-
-    def match_Type(self, t):
-        return self.type(t)
-
-    def match_Var(self, v):
-        return self.var(v.definition, v)
-
-    @overload(AST)
-    def var(self, dfn, v):
-        return v.match(self.namer)
-
-    @overload(Function)
-    def var(self, dfn, v):
-        pkg = self.namer.package(dfn)
-        if pkg:
-            return "%s.Functions.%s" % (pkg, v.match(self.namer))
-        else:
-            return "Functions.%s" % v.match(self.namer)
-
-    def match_Native(self, n):
-        return "".join([c.match(self) for c in n.cases])
-
-    def match_NativeCase(self, nc):
-        if nc.name in (None, self.lang):
-            return "".join([c.match(self) for c in nc.children])
-        else:
-            return ""
-
-    def match_Fixed(self, f):
-        return f.text
-
-    @overload(Class, AST)
-    def get(self, cls, type, expr, attr):
-        return "(%s).%s" % (expr.match(self), attr.text)
-
-    @overload(Package, Function)
-    def get(self, pkg, type, expr, attr):
-        return "%s.Functions.%s" % (expr.match(self), attr.text)
-
-    @overload(Package, Package)
-    def get(self, pkg, type, expr, attr):
-        return "%s.%s" % (expr.match(self), attr.text)
-
-    @overload(Class, Super)
-    def invoke(self, cls, expr, args):
-        return "%s(%s)" % (expr.match(self), ", ".join(args))
-
-    @overload(Class)
-    def invoke(self, cls, expr, args):
-        cons = constructors(cls)
-        con = cons[0] if cons else None
-        if isinstance(con, Macro):
-            return self.apply_macro(con, expr, args)
-        else:
-            return "new %s(%s)" % (expr.match(self), ", ".join(args))
-
-    @overload(Function)
-    def invoke(self, func, expr, args):
-        return "%s(%s)" % (expr.match(self), ", ".join(args))
-
-    @overload(Method, Var)
-    def invoke(self, method, expr, args):
-        return "(%s).%s(%s)" % (self.selfie, method.name.match(self.namer), ", ".join(args))
-
-    @overload(Method, Attr)
-    def invoke(self, method, expr, args):
-        if isinstance(expr.expr, Super):
-            return self.invoke_super_method(method, expr, args)
-        else:
-            return "%s(%s)" % (expr.match(self), ", ".join(args))
-
-    def invoke_super_method(self, method, expr, args):
-        return "super.%s(%s)" % (method.name.match(self.namer),
-                                 ", ".join(args))
-
-    @overload(Macro)
-    def invoke(self, macro, expr, args):
-        return self.apply_macro(macro, expr, args)
-
-    def apply_macro(self, macro, expr, args):
-        env = {}
-        if macro.clazz and macro.type:
-            # for method macros we use expr to access self
-            env["self"] = expr.expr.match(self)
-        idx = 0
-        for p in macro.params:
-            env[p.name.text] = args[idx]
-            idx += 1
-        return macro.body.match(self.__class__(SubstitutionNamer(env)))
-
-    def match_Super(self, s):
-        return "super"
-
-    @overload(TypeExpr)
-    def type(self, texpr, expr):
-        return self.type(texpr.type, texpr.bindings, expr)
-
-    @overload(Class, dict)
-    def type(self, cls, bindings, expr):
-        if cls.parameters:
-            params = [self.type(bindings[p], expr) for p in cls.parameters]
-            return "%s<%s>" % (self.type(cls, expr), ",".join(params))
-        else:
-            return self.type(cls, expr)
-
-    def qualify(self, cpkg, epkg):
-        if self.lang == "java":
-            if cpkg and cpkg != epkg:
-                return cpkg
-            else:
-                return None
-        else:
-            if cpkg is None: return None
-            if epkg is None:
-                return cpkg
-            elif cpkg.startswith(epkg):
-                return cpkg[len(epkg)+1:]
-            else:
-                return cpkg
-
-    @overload(Class)
-    def type(self, cls, expr):
-        mapping = None
-        for a in cls.annotations:
-            if a.name.text == "mapping":
-                mapping = a
-                break
-        if mapping is None:
-            result = cls.name.match(self.namer)
-            cpkg = self.namer.package(cls)
-            epkg = self.namer.package(expr)
-            pfx = self.qualify(cpkg, epkg)
-            if pfx:
-                return "%s.%s" % (pfx, result)
-            else:
-                return result
-        else:
-            return mapping.arguments[0].match(self)
-
-    @overload(TypeParam)
-    def type(self, tparam, bindings, expr):
-        if tparam in bindings:
-            return self.type(bindings[tparam], expr)
-        else:
-            return tparam.name.match(self.namer)
-
-    @overload(Type)
-    def type(self, t):
-        return self.type(t.resolved, t)
-
-class NameRenderer(object):
-
-    def match_Name(self, n):
-        return n.text
-
-    def match_Var(self, v):
-        return v.name.match(self)
-
-    def package(self, node):
-        if isinstance(node, Package):
-            me = node.name.match(self)
-            parent = self.package(node.parent)
-            if parent:
-                return "%s.%s" % (parent, me)
-            else:
-                return me
-        elif node.parent:
-            return self.package(node.parent)
-        else:
-            return None
-
-class SubstitutionNamer(NameRenderer):
-
-    def __init__(self, env):
-        self.env = env
-
-    def match_Name(self, n):
-        if n.text in self.env:
-            return self.env[n.text]
-        else:
-            return n.text
-
 from ._metadata import __java_runtime_version__
 
 if __java_runtime_version__.endswith("-SNAPSHOT"):
@@ -540,16 +81,220 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
 </project>
 """
 
-def package(packages, srcs):
+def package(name, version, packages, srcs):
     files = OrderedDict()
-    for name, content in srcs.items():
-        files["src/main/java" + name] = content
+    for fname, content in srcs.items():
+        files[os.path.join("src/main/java", fname)] = content
 
-    name, version = namever(packages)
     fmt_dict = {"name": name,
                 "version": version,
-                "pkg_list": repr(list(packages.keys())),
+                "pkg_list": repr([".".join(p) for p in packages]),
                 "runtime_version": __java_runtime_version__,
                 "repository": repository}
     files["pom.xml"] = pom_xml % fmt_dict
     return files
+
+SUBS = {"self": "this"}
+def name(n):
+    return SUBS.get(n, n)
+
+def type(path, name, parameters):
+    base = ".".join(path + [name])
+    if parameters:
+        return base + ("<%s>" % ",".join(parameters))
+    else:
+        return base
+
+def doc(lines):
+    return doc_helper(lines, "/**", " * ", " */")
+
+def method(doc, clazz, type, name, parameters, body):
+    return "%spublic %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body)
+
+def abstract_method(doc, clazz, type, name, parameters):
+    return "%spublic abstract %s %s(%s);" % (doc, type, name, ", ".join(parameters))
+
+def interface_method(doc, iface, type, name, parameters, body):
+    return "%s %s %s(%s);" % (doc, type, name, ", ".join(parameters))
+
+def function(doc, type, name, parameters, body):
+    return indent("%spublic static %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body))
+
+def block(statements):
+    return " {%s}" % indent("\n".join(statements))
+
+def local(type, name, value):
+    if value is None:
+        return "%s %s;" % (type, name)
+    else:
+        return "%s %s = %s;" % (type, name, value)
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def construct(clazz, args):
+    return "new %s(%s)" % (clazz, ", ".join(args))
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "this.%s(%s)" % (method, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "super.%s(%s)" % (method, ", ".join(args))
+
+def invoke_function(pkg, name, args):
+    return "%s(%s)" % (".".join(pkg + ["Functions", name]), ", ".join(args))
+
+def get_method(expr, method):
+    return "(%s).%s" % (expr, method)
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
+def assign(lhs, rhs):
+    return "%s = %s;" % (lhs, rhs)
+
+def string(s):
+    result = s.text[0]
+    idx = 1
+    while idx < len(s.text) - 1:
+        c = s.text[idx]
+        next = s.text[idx + 1]
+        if c == "\\" and next == "x":
+            result += "\\u00"
+            idx += 1
+        else:
+            result += c
+        idx += 1
+    result += s.text[-1]
+    return result
+
+def number(n):
+    return n.text
+
+def bool_(b):
+    return b.text
+
+def list(elements):
+    return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % ", ".join(elements)
+
+def map(entries):
+    return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
+        (", ".join(["%s, %s" % e for e in entries]))
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    kw = "abstract " if abstract else ""
+    params = "<%s>" % ", ".join(parameters) if parameters else ""
+    extends = " extends %s" % base if base else ""
+    implements = " implements %s" % ", ".join(interfaces) if interfaces else ""
+    body = "\n".join(fields + constructors + methods)
+    return "%spublic %sclass %s%s%s%s {%s}" % (doc, kw, clazz, params, extends, implements, indent(body))
+
+def interface(doc, iface, parameters, bases, methods):
+    params = "<%s>" % ", ".join(parameters) if parameters else ""
+    extends = " extends %s" % ", ".join(bases) if bases else ""
+    body = "\n".join(methods)
+    return "%spublic interface %s%s%s {%s}" % (doc, iface, params, extends, indent(body))
+
+def class_file(path, name, fname):
+    return "/".join(path + ["%s.java" % name])
+
+def function_file(path, name, fname):
+    return "/".join(path + ["Functions.java"])
+
+def package_file(path, name, fname):
+    return None
+
+def make_class_file(path, name):
+    if path:
+        return Code(head="package %s;\n\n" % ".".join(path))
+    else:
+        return Code()
+
+def make_function_file(path, name):
+    if path:
+        return Code(head="package %s;\n\npublic class Functions {" % ".".join(path),
+                    tail="}")
+    else:
+        return Code(head="public class Functions {",
+                    tail="}")
+
+def make_package_file(path, name):
+    assert False
+
+def main():
+    return indent("public static void main(String[] args) {\n    main();\n}")[1:]
+
+def default_constructor(clazz):
+    return "public %s() {}" % clazz
+
+def invoke_super(clazz, base, args):
+    return "super(%s)" % ", ".join(args)
+
+def constructor(doc, clazz, parameters, body):
+    return "public %s(%s)%s" % (clazz, ", ".join(parameters), body)
+
+def field_init():
+    return None
+
+def field(doc, type, name, value):
+    if value is None:
+        return "%spublic %s %s;" % (doc, type, name)
+    else:
+        return "%spublic %s %s = %s;" % (doc, type, name, value)
+
+def param(type, name, value):
+    if value is None:
+        return "%s %s" % (type, name)
+    else:
+        return "%s %s = %s" % (type, name, value)
+
+def return_(expr):
+    if expr:
+        return "return %s;" % expr
+    else:
+        return "return;"
+
+def import_(path, origin):
+    return None
+
+def if_(pred, cons, alt):
+    result = "if (%s)%s" % (pred, cons)
+    if alt:
+        result += " else%s" % alt
+    return result
+
+def while_(cond, body):
+    return "while (%s)%s" % (cond, body)
+
+def break_():
+    return "break;"
+
+def continue_():
+    return "continue;"
+
+def null():
+    return "null"
+
+def cast(type, expr):
+    return "(%s) (%s)" % (type, expr)
+
+def qualify(package, origin):
+    if package and package != origin:
+        return package
+    else:
+        return []
+
+def class_ref(v):
+    return v
+
+def method_ref(v):
+    return "this.%s" % v
+
+def field_ref(v):
+    return "this.%s" % v
+
+def local_ref(v):
+    return v

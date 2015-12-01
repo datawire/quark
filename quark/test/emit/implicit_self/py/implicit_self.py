@@ -7,4 +7,5 @@ class Foo(object):
     def next(self): pass
 
     def test(self):
-        (self).next();
+        self.next();
+

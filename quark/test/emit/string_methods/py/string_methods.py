@@ -18,7 +18,7 @@ class test_size(string_test):
         self.what = None
 
     def __init__(self, what):
-        super(test_size, self).__init__()
+        super(test_size, self).__init__();
         (self).what = what
 
     def does(self, expected):
@@ -35,7 +35,7 @@ class test_startsWith(string_test):
         self._that = None
 
     def __init__(self, what):
-        super(test_startsWith, self).__init__()
+        super(test_startsWith, self).__init__();
         (self).what = what
 
     def that(self, _that):
@@ -54,7 +54,7 @@ class test_endsWith(string_test):
         self._that = None
 
     def __init__(self, what):
-        super(test_endsWith, self).__init__()
+        super(test_endsWith, self).__init__();
         (self).what = what
 
     def that(self, _that):
@@ -73,7 +73,7 @@ class test_find(string_test):
         self._that = None
 
     def __init__(self, what):
-        super(test_find, self).__init__()
+        super(test_find, self).__init__();
         (self).what = what
 
     def that(self, _that):
@@ -93,7 +93,7 @@ class test_substring(string_test):
         self.end = None
 
     def __init__(self, what):
-        super(test_substring, self).__init__()
+        super(test_substring, self).__init__();
         (self).what = what
 
     def that(self, start, end):
@@ -114,7 +114,7 @@ class test_replace(string_test):
         self.end = None
 
     def __init__(self, what):
-        super(test_replace, self).__init__()
+        super(test_replace, self).__init__();
         (self).what = what
 
     def that(self, start, end):
@@ -136,7 +136,7 @@ class test_join(string_test):
         self.sep = None
 
     def __init__(self, what):
-        super(test_join, self).__init__()
+        super(test_join, self).__init__();
         (self).what = what
 
     def that(self):
@@ -164,7 +164,7 @@ class test_split(string_test):
         self.altsep = None
 
     def __init__(self, sep, altsep):
-        super(test_split, self).__init__()
+        super(test_split, self).__init__();
         (self).sep = sep
         (self).altsep = altsep
 

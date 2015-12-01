@@ -76,6 +76,12 @@ def is_super(expr):
 def is_super(call):
     return isinstance(call.expr, Super)
 
+def is_abstract(cls):
+    for d in cls.definitions:
+        if isinstance(d, Method) and d.body is None:
+            return True
+    return False
+
 def constructor(cls):
     cons = constructors(cls)
     if not cons:
@@ -120,12 +126,13 @@ def get_package_version(pkg):
 
 def namever(packages):
     if packages:
-        firstPackageName, firstPackageList = packages.items()[0]
-        version = firstPackageList[0].version
+        firstPackage = packages[0]
+        name = firstPackage.name.text
+        version = get_package_version(firstPackage)
     else:
-        firstPackageName = ""
+        name = ""
         version = "0.0"
-    return firstPackageName, version
+    return name, version
 
 def is_extendable(node):
     return isinstance(node.resolved.type, Class) and \
@@ -175,3 +182,63 @@ def indent(st, level=4):
         return st
     else:
         return ""
+
+class Code:
+
+    def __init__(self, body="", head="", tail=""):
+        self.body = body
+        self.head = head
+        self.tail = tail
+
+    def __add__(self, code):
+        return Code(self.body + code, self.head, self.tail)
+
+    def __str__(self):
+        return "%s%s%s" % (self.head, self.body, self.tail)
+
+def doc(obj):
+    lines = []
+    for a in obj.annotations:
+        if a.name.text == "doc":
+            doc_eval(a, lines)
+    return lines
+
+@dispatch(Annotation)
+def doc_eval(ann, lines):
+    for arg in ann.arguments:
+        doc_eval(arg, lines)
+
+@dispatch(String)
+def doc_eval(st, lines):
+    # XXX: need to properly process string literal
+    lines.append(st.text[1:-1])
+
+def doc_helper(lines, head="", prefix="", tail=""):
+    if lines:
+        result = [head]
+        result.extend([("%s%s" % (prefix, l)).rstrip() for l in lines])
+        result.append(tail)
+        result.append("")
+        return "\n".join(result)
+    else:
+        return ""
+
+@dispatch(Package)
+def readme(pkg, lines):
+    for d in pkg.definitions:
+        readme(d, lines)
+
+@dispatch(Function)
+def readme(fun, lines):
+    lines.append("## %s(%s)" % (fun.name, fun.params))
+    lines.append(doc_helper(doc(fun)))
+
+@dispatch(Method)
+def readme(m, lines):
+    lines.append("### %s.%s(%s)" % (m.clazz.name, m.name, m.params))
+    lines.append(doc_helper(doc(m)))
+
+@dispatch(Class)
+def readme(cls, lines):
+    lines.append("## %s" % cls.name)
+    lines.append(doc_helper(doc(cls)))

@@ -1,4 +1,5 @@
 public class Test {
+    public Test() {}
     public void test() {
         Integer x = 1;
         Integer y = 2;

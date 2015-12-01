@@ -1,6 +1,7 @@
 var _qrt = require("datawire-quark-core");
 var slack = require('../../slack');
-var slack = require('../../slack');
+exports.slack = slack;
+
 
 
 // CLASS SlackEvent
@@ -55,6 +56,7 @@ SlackEvent.prototype.dispatch = SlackEvent_dispatch;
 /**
  * The server has indicated an error has occurred.
  */
+
 function SlackError() {
     SlackError.super_.call(this);
 }
@@ -90,6 +92,7 @@ SlackError.prototype.dispatch = SlackError_dispatch;
 /**
  * The client successfully connected to the server.
  */
+
 function Hello() {
     Hello.super_.call(this);
 }
@@ -110,6 +113,7 @@ Hello.prototype.dispatch = Hello_dispatch;
 /**
  * A message was sent to a channel.
  */
+
 function Message() {
     Message.super_.call(this);
 }

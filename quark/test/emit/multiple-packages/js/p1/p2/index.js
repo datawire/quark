@@ -1,5 +1,6 @@
 var _qrt = require("datawire-quark-core");
 
+
 function a() {
     _qrt.print("a");
 }

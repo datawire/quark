@@ -14,7 +14,7 @@ def main():
         _println(u"Ho!");
 
     count = 0;
-    while (True) :
+    while (True):
         if ((count) > (3)):
             break;
 

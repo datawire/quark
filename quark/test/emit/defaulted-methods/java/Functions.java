@@ -1,4 +1,6 @@
 public class Functions {
+
+
     public static void main() {
         pkg.T1 t1 = new pkg.T1();
         (t1).foo();

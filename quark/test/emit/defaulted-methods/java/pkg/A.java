@@ -1,6 +1,6 @@
 package pkg;
 
 public interface A {
-    public void foo();
-    public void bar();
+     void foo();
+     void bar();
 }

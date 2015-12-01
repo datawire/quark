@@ -98,9 +98,6 @@ class AST(object):
                     c.traverse(visitor, *args, **kwargs)
         leave(self, *args, **kwargs)
 
-    def match(self, transform, *args, **kwargs):
-        return self.lookup(transform, "match")(self, *args, **kwargs)
-
     def __repr__(self):
         if hasattr(self, "id"):
             return self.id

@@ -11,6 +11,7 @@ A.prototype.__init_fields__ = A__init_fields__;
 
 
 // CLASS B
+
 function B() {
     B.super_.call(this);
 }
@@ -34,6 +35,7 @@ X.prototype.__init_fields__ = X__init_fields__;
 
 
 // CLASS Y
+
 function Y() {
     Y.super_.call(this);
 }

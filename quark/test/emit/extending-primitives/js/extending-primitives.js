@@ -3,7 +3,6 @@ var pkg = require('./pkg');
 exports.pkg = pkg;
 
 
-
 function main() {
     var c = new pkg.C();
     (c).event1();

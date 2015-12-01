@@ -20,7 +20,7 @@ class B(A):
         super(B, self).__init__(u"Bob");
 
     def greet(self):
-        (super(B, self)).greet();
+        super(B, self).greet();
         _println((u"I'm ") + ((self).name));
 
 

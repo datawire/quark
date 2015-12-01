@@ -1,5 +1,4 @@
 var _qrt = require("datawire-quark-core");
-var test1 = require('../test1');
 
 
 // CLASS Test

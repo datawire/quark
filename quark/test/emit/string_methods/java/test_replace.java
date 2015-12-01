@@ -3,6 +3,7 @@ public class test_replace extends string_test {
     public String start;
     public String end;
     public test_replace(String what) {
+        super();
         (this).what = what;
     }
     public test_replace that(String start, String end) {

@@ -8,7 +8,7 @@ exports.foo = foo;
 function main() {
     var o = "Hello World!";
     var s = o;
-    var s2;
+    var s2 = null;
     s2 = o;
     foo(o);
 }
