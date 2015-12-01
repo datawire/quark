@@ -20,6 +20,8 @@ from .helpers import *
 from collections import OrderedDict
 from ._metadata import __java_runtime_version__
 
+## Packaging
+
 if __java_runtime_version__.endswith("-SNAPSHOT"):
     repository = """
   <repositories>
@@ -94,109 +96,6 @@ def package(name, version, packages, srcs):
     files["pom.xml"] = pom_xml % fmt_dict
     return files
 
-SUBS = {"self": "this"}
-def name(n):
-    return SUBS.get(n, n)
-
-def type(path, name, parameters):
-    base = ".".join(path + [name])
-    if parameters:
-        return base + ("<%s>" % ",".join(parameters))
-    else:
-        return base
-
-def doc(lines):
-    return doc_helper(lines, "/**", " * ", " */")
-
-def method(doc, clazz, type, name, parameters, body):
-    return "%spublic %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body)
-
-def abstract_method(doc, clazz, type, name, parameters):
-    return "%spublic abstract %s %s(%s);" % (doc, type, name, ", ".join(parameters))
-
-def interface_method(doc, iface, type, name, parameters, body):
-    return "%s %s %s(%s);" % (doc, type, name, ", ".join(parameters))
-
-def function(doc, type, name, parameters, body):
-    return indent("%spublic static %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body))
-
-def block(statements):
-    return " {%s}" % indent("\n".join(statements))
-
-def local(type, name, value):
-    if value is None:
-        return "%s %s;" % (type, name)
-    else:
-        return "%s %s = %s;" % (type, name, value)
-
-def expr_stmt(e):
-    return "%s;" % e
-
-def construct(clazz, args):
-    return "new %s(%s)" % (clazz, ", ".join(args))
-
-def invoke_method(expr, method, args):
-    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
-
-def invoke_method_implicit(method, args):
-    return "this.%s(%s)" % (method, ", ".join(args))
-
-def invoke_super_method(clazz, base, method, args):
-    return "super.%s(%s)" % (method, ", ".join(args))
-
-def invoke_function(pkg, name, args):
-    return "%s(%s)" % (".".join(pkg + ["Functions", name]), ", ".join(args))
-
-def get_method(expr, method):
-    return "(%s).%s" % (expr, method)
-
-def get_field(expr, field):
-    return "(%s).%s" % (expr, field)
-
-def assign(lhs, rhs):
-    return "%s = %s;" % (lhs, rhs)
-
-def string(s):
-    result = s.text[0]
-    idx = 1
-    while idx < len(s.text) - 1:
-        c = s.text[idx]
-        next = s.text[idx + 1]
-        if c == "\\" and next == "x":
-            result += "\\u00"
-            idx += 1
-        else:
-            result += c
-        idx += 1
-    result += s.text[-1]
-    return result
-
-def number(n):
-    return n.text
-
-def bool_(b):
-    return b.text
-
-def list(elements):
-    return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % ", ".join(elements)
-
-def map(entries):
-    return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
-        (", ".join(["%s, %s" % e for e in entries]))
-
-def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
-    kw = "abstract " if abstract else ""
-    params = "<%s>" % ", ".join(parameters) if parameters else ""
-    extends = " extends %s" % base if base else ""
-    implements = " implements %s" % ", ".join(interfaces) if interfaces else ""
-    body = "\n".join(fields + constructors + methods)
-    return "%spublic %sclass %s%s%s%s {%s}" % (doc, kw, clazz, params, extends, implements, indent(body))
-
-def interface(doc, iface, parameters, bases, methods):
-    params = "<%s>" % ", ".join(parameters) if parameters else ""
-    extends = " extends %s" % ", ".join(bases) if bases else ""
-    body = "\n".join(methods)
-    return "%spublic interface %s%s%s {%s}" % (doc, iface, params, extends, indent(body))
 
 def class_file(path, name, fname):
     return "/".join(path + ["%s.java" % name])
@@ -227,17 +126,42 @@ def make_package_file(path, name):
 def main():
     return indent("public static void main(String[] args) {\n    main();\n}")[1:]
 
-def default_constructor(clazz):
-    return "public %s() {}" % clazz
+## Naming and imports
 
-def invoke_super(clazz, base, args):
-    return "super(%s)" % ", ".join(args)
+SUBS = {"self": "this"}
+def name(n):
+    return SUBS.get(n, n)
 
-def constructor(doc, clazz, parameters, body):
-    return "public %s(%s)%s" % (clazz, ", ".join(parameters), body)
+def type(path, name, parameters):
+    base = ".".join(path + [name])
+    if parameters:
+        return base + ("<%s>" % ",".join(parameters))
+    else:
+        return base
 
-def field_init():
+def import_(path, origin):
     return None
+
+def qualify(package, origin):
+    if package and package != origin:
+        return package
+    else:
+        return []
+
+## Documentation
+
+def doc(lines):
+    return doc_helper(lines, "/**", " * ", " */")
+
+## Class definition
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    kw = "abstract " if abstract else ""
+    params = "<%s>" % ", ".join(parameters) if parameters else ""
+    extends = " extends %s" % base if base else ""
+    implements = " implements %s" % ", ".join(interfaces) if interfaces else ""
+    body = "\n".join(fields + constructors + methods)
+    return "%spublic %sclass %s%s%s%s {%s}" % (doc, kw, clazz, params, extends, implements, indent(body))
 
 def field(doc, type, name, value):
     if value is None:
@@ -245,20 +169,63 @@ def field(doc, type, name, value):
     else:
         return "%spublic %s %s = %s;" % (doc, type, name, value)
 
+def field_init():
+    return None
+
+def default_constructor(clazz):
+    return "public %s() {}" % clazz
+
+def constructor(doc, clazz, parameters, body):
+    return "public %s(%s)%s" % (clazz, ", ".join(parameters), body)
+
+def method(doc, clazz, type, name, parameters, body):
+    return "%spublic %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body)
+
+def abstract_method(doc, clazz, type, name, parameters):
+    return "%spublic abstract %s %s(%s);" % (doc, type, name, ", ".join(parameters))
+
+## Interface definition
+
+def interface(doc, iface, parameters, bases, methods):
+    params = "<%s>" % ", ".join(parameters) if parameters else ""
+    extends = " extends %s" % ", ".join(bases) if bases else ""
+    body = "\n".join(methods)
+    return "%spublic interface %s%s%s {%s}" % (doc, iface, params, extends, indent(body))
+
+def interface_method(doc, iface, type, name, parameters, body):
+    return "%s %s %s(%s);" % (doc, type, name, ", ".join(parameters))
+
+## Function definition
+
+def function(doc, type, name, parameters, body):
+    return indent("%spublic static %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body))
+
+## Parameters for methods and functions
+
 def param(type, name, value):
     if value is None:
         return "%s %s" % (type, name)
     else:
         return "%s %s = %s" % (type, name, value)
 
-def return_(expr):
-    if expr:
-        return "return %s;" % expr
-    else:
-        return "return;"
+## Blocks
 
-def import_(path, origin):
-    return None
+def block(statements):
+    return " {%s}" % indent("\n".join(statements))
+
+## Statements
+
+def local(type, name, value):
+    if value is None:
+        return "%s %s;" % (type, name)
+    else:
+        return "%s %s = %s;" % (type, name, value)
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def assign(lhs, rhs):
+    return "%s = %s;" % (lhs, rhs)
 
 def if_(pred, cons, alt):
     result = "if (%s)%s" % (pred, cons)
@@ -275,17 +242,13 @@ def break_():
 def continue_():
     return "continue;"
 
-def null():
-    return "null"
-
-def cast(type, expr):
-    return "(%s) (%s)" % (type, expr)
-
-def qualify(package, origin):
-    if package and package != origin:
-        return package
+def return_(expr):
+    if expr:
+        return "return %s;" % expr
     else:
-        return []
+        return "return;"
+
+## Expressions
 
 def class_ref(v):
     return v
@@ -298,3 +261,60 @@ def field_ref(v):
 
 def local_ref(v):
     return v
+
+def invoke_function(pkg, name, args):
+    return "%s(%s)" % (".".join(pkg + ["Functions", name]), ", ".join(args))
+
+def construct(clazz, args):
+    return "new %s(%s)" % (clazz, ", ".join(args))
+
+def invoke_super(clazz, base, args):
+    return "super(%s)" % ", ".join(args)
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "this.%s(%s)" % (method, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "super.%s(%s)" % (method, ", ".join(args))
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
+def cast(type, expr):
+    return "(%s) (%s)" % (type, expr)
+
+## Literals
+
+def null():
+    return "null"
+
+def bool_(b):
+    return b.text
+
+def number(n):
+    return n.text
+
+def string(s):
+    result = s.text[0]
+    idx = 1
+    while idx < len(s.text) - 1:
+        c = s.text[idx]
+        next = s.text[idx + 1]
+        if c == "\\" and next == "x":
+            result += "\\u00"
+            idx += 1
+        else:
+            result += c
+        idx += 1
+    result += s.text[-1]
+    return result
+
+def list(elements):
+    return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % ", ".join(elements)
+
+def map(entries):
+    return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
+        (", ".join(["%s, %s" % e for e in entries]))

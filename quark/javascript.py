@@ -17,6 +17,8 @@ from collections import OrderedDict
 from .helpers import *
 from ._metadata import __js_runtime_version__
 
+## Packaging
+
 def package(name, version, packages, srcs):
     files = OrderedDict()
     files.update(srcs)
@@ -32,98 +34,6 @@ def package(name, version, packages, srcs):
 }
         """ % (name, version, __js_runtime_version__)
     return files
-
-SUBS = {"self": "this"}
-def name(n):
-    return SUBS.get(n, n)
-
-def type(path, name, parameters):
-    return ".".join(path + [name])
-
-def doc(lines):
-    return doc_helper(lines, "/**", " * ", " */")
-
-def method(doc, clazz, type, name, parameters, body):
-    params = ", ".join(parameters)
-    full_name = "%s_%s" % (clazz, name)
-    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
-    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
-
-def abstract_method(doc, clazz, type, name, parameters):
-    params = ", ".join(parameters)
-    full_name = "%s_%s" % (clazz, name)
-    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
-    return "\n%sfunction %s(%s) { /* abstract */ }\n" % (doc, full_name, params) + trailer
-
-def interface_method(doc, iface, type, name, parameters, body):
-    params = ", ".join(parameters)
-    full_name = "%s_%s" % (iface, name)
-    trailer = "%s.prototype.%s = %s;" % (iface, name, full_name)
-    if body is None:
-        body = " { /* interface */ }"
-
-    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
-
-def function(doc, type, name, parameters, body):
-    trailer = "exports.%s = %s;" % (name, name)
-    return "\n%sfunction %s(%s)%s\n" % (doc, name, ", ".join(parameters), body) + trailer
-
-def block(statements):
-    return " {%s}" % indent("\n".join(statements))
-
-def expr_stmt(e):
-    return "%s;" % e
-
-def local(type, name, value):
-    return "var %s = %s;" % (name, value or "null")
-
-def assign(lhs, rhs):
-    return "%s = %s;" % (lhs, rhs)
-
-def string(s):
-    result = s.text[0]
-    idx = 1
-    while idx < len(s.text) - 1:
-        c = s.text[idx]
-        next = s.text[idx + 1]
-        if c == "\\" and next == "x":
-            result += "\\u00"
-            idx += 1
-        else:
-            result += c
-        idx += 1
-    result += s.text[-1]
-    return result
-
-def number(n):
-    return n.text
-
-def bool_(b):
-    return b.text
-
-def list(elements):
-    return "[%s]" % ", ".join(elements)
-
-def map(entries):
-    return "new Map([%s])" % (", ".join(["[%s, %s]" % e for e in entries]))
-
-def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
-    if base: fields = [base + ".prototype.__init_fields__.call(this);"] + fields
-
-    result = "\n// CLASS %s\n" % clazz + doc
-    result += "\n".join(constructors)
-    if base:
-        result += "_qrt.util.inherits(%s, %s);\n" % (clazz, base)
-
-    result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
-    result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
-
-    result += "\n".join(methods)
-
-    return result
-
-def interface(doc, iface, parameters, bases, methods):
-    return clazz(doc, False, iface, parameters, None, [], [], [default_constructor(iface)], methods)
 
 def class_file(path, name, fname):
     if path:
@@ -146,55 +56,17 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     return make_class_file(path, name)
 
-def default_constructor(clazz):
-    return "function %s() {\n    this.__init_fields__();\n}\nexports.%s = %s;\n" % \
-        (clazz, clazz, clazz)
-
-def invoke_super(clazz, base, args):
-    return "%s.super_.call(%s)" % (clazz, ", ".join(["this"] + args))
-
-def constructor(doc, name, parameters, body):
-    return "\n%sfunction %s(%s)%s\nexports.%s = %s;\n" % \
-        (doc, name, ", ".join(parameters), body, name, name)
-
 def main():
     return "\n\nmain();\n"
 
-def construct(clazz, args):
-    return "new %s(%s)" % (clazz, ", ".join(args))
+## Naming and imports
 
-def invoke_method(expr, method, args):
-    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+SUBS = {"self": "this"}
+def name(n):
+    return SUBS.get(n, n)
 
-def invoke_method_implicit(method, args):
-    return "this.%s(%s)" % (method, ", ".join(args))
-
-def invoke_super_method(clazz, base, method, args):
-    return "this.constructor.super_.prototype.%s.call(%s)" % (method, ", ".join(["this"] + args))
-
-def invoke_function(path, name, args):
-    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
-
-def get_field(expr, field):
-    return "(%s).%s" % (expr, field)
-
-def field_init():
-    return "this.__init_fields__();"
-
-def field(doc, type, name, value):
-    return "%sthis.%s = %s;" % (doc, name, value or "null")
-
-def param(type, name, value):
-    if value is None:
-        return "%s" % name
-    else:
-        return "%s = %s" % (name, value)
-
-def return_(expr):
-    if expr:
-        return "return %s;" % expr
-    else:
-        return "return;"
+def type(path, name, parameters):
+    return ".".join(path + [name])
 
 def import_(path, origin):
     qual = qualify(path, origin)
@@ -203,6 +75,108 @@ def import_(path, origin):
     else:
         prefix = "../"*len(origin)
     return "var %s = require('%s%s');\nexports.%s = %s;" % (qual[0], prefix, qual[0], qual[0], qual[0])
+
+def qualify(package, origin):
+    if package == origin: return []
+    if not package: return []
+    if not origin:
+        return package
+    elif package[:len(origin)] == origin:
+        return package[len(origin):]
+    else:
+        return package
+
+## Documentation
+
+def doc(lines):
+    return doc_helper(lines, "/**", " * ", " */")
+
+## Class definition
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    if base: fields = [base + ".prototype.__init_fields__.call(this);"] + fields
+
+    result = "\n// CLASS %s\n" % clazz + doc
+    result += "\n".join(constructors)
+    if base:
+        result += "_qrt.util.inherits(%s, %s);\n" % (clazz, base)
+
+    result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
+    result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
+
+    result += "\n".join(methods)
+
+    return result
+
+def field(doc, type, name, value):
+    return "%sthis.%s = %s;" % (doc, name, value or "null")
+
+def field_init():
+    return "this.__init_fields__();"
+
+def default_constructor(clazz):
+    return "function %s() {\n    this.__init_fields__();\n}\nexports.%s = %s;\n" % \
+        (clazz, clazz, clazz)
+
+def constructor(doc, name, parameters, body):
+    return "\n%sfunction %s(%s)%s\nexports.%s = %s;\n" % \
+        (doc, name, ", ".join(parameters), body, name, name)
+
+def method(doc, clazz, type, name, parameters, body):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (clazz, name)
+    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
+    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
+
+def abstract_method(doc, clazz, type, name, parameters):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (clazz, name)
+    trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
+    return "\n%sfunction %s(%s) { /* abstract */ }\n" % (doc, full_name, params) + trailer
+
+## Interface definition
+
+def interface(doc, iface, parameters, bases, methods):
+    return clazz(doc, False, iface, parameters, None, [], [], [default_constructor(iface)], methods)
+
+def interface_method(doc, iface, type, name, parameters, body):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (iface, name)
+    trailer = "%s.prototype.%s = %s;" % (iface, name, full_name)
+    if body is None:
+        body = " { /* interface */ }"
+
+    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
+
+## Function definition
+
+def function(doc, type, name, parameters, body):
+    trailer = "exports.%s = %s;" % (name, name)
+    return "\n%sfunction %s(%s)%s\n" % (doc, name, ", ".join(parameters), body) + trailer
+
+## Parameters for methods and functions
+
+def param(type, name, value):
+    if value is None:
+        return "%s" % name
+    else:
+        return "%s = %s" % (name, value)
+
+## Blocks
+
+def block(statements):
+    return " {%s}" % indent("\n".join(statements))
+
+## Statements
+
+def local(type, name, value):
+    return "var %s = %s;" % (name, value or "null")
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def assign(lhs, rhs):
+    return "%s = %s;" % (lhs, rhs)
 
 def if_(pred, cons, alt):
     result = "if (%s)%s" % (pred, cons)
@@ -219,18 +193,13 @@ def break_():
 def continue_():
     return "continue;"
 
-def null():
-    return "null"
-
-def qualify(package, origin):
-    if package == origin: return []
-    if not package: return []
-    if not origin:
-        return package
-    elif package[:len(origin)] == origin:
-        return package[len(origin):]
+def return_(expr):
+    if expr:
+        return "return %s;" % expr
     else:
-        return package
+        return "return;"
+
+## Expressions
 
 def class_ref(v):
     return v
@@ -244,5 +213,58 @@ def field_ref(v):
 def local_ref(v):
     return v
 
+def invoke_function(path, name, args):
+    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
+
+def construct(clazz, args):
+    return "new %s(%s)" % (clazz, ", ".join(args))
+
+def invoke_super(clazz, base, args):
+    return "%s.super_.call(%s)" % (clazz, ", ".join(["this"] + args))
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "this.%s(%s)" % (method, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "this.constructor.super_.prototype.%s.call(%s)" % (method, ", ".join(["this"] + args))
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
 def cast(type, expr):
     return expr
+
+## Literals
+
+def null():
+    return "null"
+
+def bool_(b):
+    return b.text
+
+def number(n):
+    return n.text
+
+def string(s):
+    result = s.text[0]
+    idx = 1
+    while idx < len(s.text) - 1:
+        c = s.text[idx]
+        next = s.text[idx + 1]
+        if c == "\\" and next == "x":
+            result += "\\u00"
+            idx += 1
+        else:
+            result += c
+        idx += 1
+    result += s.text[-1]
+    return result
+
+def list(elements):
+    return "[%s]" % ", ".join(elements)
+
+def map(entries):
+    return "new Map([%s])" % (", ".join(["[%s, %s]" % e for e in entries]))

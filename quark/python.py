@@ -19,6 +19,8 @@ from .helpers import *
 from ._metadata import __py_runtime_version__
 from collections import OrderedDict
 
+## Packaging
+
 setup_py = """# Setup file for package %(name)s
 
 from setuptools import setup
@@ -105,89 +107,6 @@ def package(name, version, packages, srcs):
     files["docs/_templates/.keep"] = ""
     return files
 
-SUBS = {"print": "print_"}
-def name(n):
-    return SUBS.get(n, n).replace("-", "_")
-
-def type(path, name, parameters):
-    return ".".join(path + [name])
-
-def doc(lines):
-    return indent(doc_helper(lines, '"""', "", '"""')).rstrip()
-
-def method(doc, clazz, type, name, parameters, body):
-    if body is None: body = ": assert False"
-    body_with_doc = ":" + doc + body[1:]
-    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
-
-def abstract_method(doc, clazz, type, name, parameters):
-    return "\ndef %s(%s):%s assert False" % (name, ", ".join(["self"] + parameters), doc)
-
-def interface_method(doc, iface, type, name, parameters, body):
-    if body is None: body = ": assert False"
-    body_with_doc = ":" + doc + body[1:]
-    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
-
-def function(doc, type, name, parameters, body):
-    body = body if body else ": assert False"
-    body_with_doc = ":" + doc + body[1:]
-    return "\ndef %s(%s)%s" % (name, ", ".join(parameters), body_with_doc)
-
-def block(statements):
-    if statements:
-        return ":%s" % indent("\n".join(statements))
-    else:
-        return ": pass"
-
-def local(type, name, value):
-    return "%s = %s;" % (name, value or "None")
-
-def expr_stmt(e):
-    return "%s;" % e
-
-def construct(clazz, args):
-    return "%s(%s)" % (clazz, ", ".join(args))
-
-def invoke_method(expr, method, args):
-    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
-
-def invoke_method_implicit(method, args):
-    return "self.%s(%s)" % (method, ", ".join(args))
-
-def invoke_function(path, name, args):
-    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
-
-def get_field(expr, field):
-    return "(%s).%s" % (expr, field)
-
-def assign(lhs, rhs):
-    return "%s = %s" % (lhs, rhs)
-
-def string(s):
-    return "u" + s.text
-
-def number(n):
-    return n.text
-
-def bool_(b):
-    return b.text.capitalize()
-
-def list(elements):
-    return "_List([%s])" % ", ".join(elements)
-
-def map(entries):
-    return "{%s}" % (", ".join(["%s: %s" % e for e in entries]))
-
-def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
-    if base: fields = ["%s._init(self)" % base] + fields
-    finit = ["def _init(self):%s" % (indent("\n".join(fields)) or " pass")]
-    body = indent("\n".join(finit + constructors + methods))
-    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or " pass")
-
-def interface(doc, iface, parameters, bases, methods):
-    body = indent("\n".join(methods))
-    return "class %s(object):%s%s" % (iface, doc, body or " pass")
-
 def class_file(path, name, fname):
     if path:
         return "/".join(path + ["__init__.py"])
@@ -213,23 +132,80 @@ def make_package_file(path, name):
 def main():
     return '\n\nif __name__ == "__main__":\n    main()\n'
 
-def default_constructor(clazz):
-    return "def __init__(self): self._init()"
+## Naming and imports
 
-def invoke_super(clazz, base, args):
-    return "super(%s, self).__init__(%s)" % (clazz, ", ".join(args))
+SUBS = {"print": "print_"}
+def name(n):
+    return SUBS.get(n, n).replace("-", "_")
 
-def invoke_super_method(clazz, base, method, args):
-    return "super(%s, self).%s(%s)" % (clazz, method, ", ".join(args))
+def type(path, name, parameters):
+    return ".".join(path + [name])
 
-def constructor(doc, name, parameters, body):
-    return "def __init__(%s)%s" % (", ".join(["self"] + parameters), body)
+def import_(path, origin):
+    return "import %s" % ".".join(qualify(path, origin))
+
+def qualify(package, origin):
+    if package == origin: return []
+    if not package: return []
+    if not origin:
+        return package
+    elif package[:len(origin)] == origin:
+        return package[len(origin):]
+    else:
+        return package
+
+## Documentation
+
+def doc(lines):
+    return indent(doc_helper(lines, '"""', "", '"""')).rstrip()
+
+## Class definition
+
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    if base: fields = ["%s._init(self)" % base] + fields
+    finit = ["def _init(self):%s" % (indent("\n".join(fields)) or " pass")]
+    body = indent("\n".join(finit + constructors + methods))
+    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or " pass")
+
+def field(doc, type, name, value):
+    return "self.%s = %s" % (name, value or "None")
 
 def field_init():
     return "self._init()"
 
-def field(doc, type, name, value):
-    return "self.%s = %s" % (name, value or "None")
+def default_constructor(clazz):
+    return "def __init__(self): self._init()"
+
+def constructor(doc, name, parameters, body):
+    return "def __init__(%s)%s" % (", ".join(["self"] + parameters), body)
+
+def method(doc, clazz, type, name, parameters, body):
+    if body is None: body = ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
+
+def abstract_method(doc, clazz, type, name, parameters):
+    return "\ndef %s(%s):%s assert False" % (name, ", ".join(["self"] + parameters), doc)
+
+## Interface definition
+
+def interface(doc, iface, parameters, bases, methods):
+    body = indent("\n".join(methods))
+    return "class %s(object):%s%s" % (iface, doc, body or " pass")
+
+def interface_method(doc, iface, type, name, parameters, body):
+    if body is None: body = ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
+
+## Function definition
+
+def function(doc, type, name, parameters, body):
+    body = body if body else ": assert False"
+    body_with_doc = ":" + doc + body[1:]
+    return "\ndef %s(%s)%s" % (name, ", ".join(parameters), body_with_doc)
+
+## Parameters for methods and functions
 
 def param(type, name, value):
     if value is None:
@@ -237,14 +213,24 @@ def param(type, name, value):
     else:
         return "%s = %s" % (name, value)
 
-def return_(expr):
-    if expr:
-        return "return %s" % expr
-    else:
-        return "return"
+## Blocks
 
-def import_(path, origin):
-    return "import %s" % ".".join(qualify(path, origin))
+def block(statements):
+    if statements:
+        return ":%s" % indent("\n".join(statements))
+    else:
+        return ": pass"
+
+## Statements
+
+def local(type, name, value):
+    return "%s = %s;" % (name, value or "None")
+
+def expr_stmt(e):
+    return "%s;" % e
+
+def assign(lhs, rhs):
+    return "%s = %s" % (lhs, rhs)
 
 def if_(pred, cons, alt):
     result = "if (%s)%s" % (pred, cons)
@@ -261,21 +247,13 @@ def break_():
 def continue_():
     return "continue;"
 
-def null():
-    return "None"
-
-def cast(type, expr):
-    return expr
-
-def qualify(package, origin):
-    if package == origin: return []
-    if not package: return []
-    if not origin:
-        return package
-    elif package[:len(origin)] == origin:
-        return package[len(origin):]
+def return_(expr):
+    if expr:
+        return "return %s" % expr
     else:
-        return package
+        return "return"
+
+## Expressions
 
 def class_ref(v):
     return v
@@ -288,3 +266,47 @@ def field_ref(v):
 
 def local_ref(v):
     return v
+
+def invoke_function(path, name, args):
+    return "%s(%s)" % (".".join(path + [name]), ", ".join(args))
+
+def construct(clazz, args):
+    return "%s(%s)" % (clazz, ", ".join(args))
+
+def invoke_super(clazz, base, args):
+    return "super(%s, self).__init__(%s)" % (clazz, ", ".join(args))
+
+def invoke_method(expr, method, args):
+    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+
+def invoke_method_implicit(method, args):
+    return "self.%s(%s)" % (method, ", ".join(args))
+
+def invoke_super_method(clazz, base, method, args):
+    return "super(%s, self).%s(%s)" % (clazz, method, ", ".join(args))
+
+def get_field(expr, field):
+    return "(%s).%s" % (expr, field)
+
+def cast(type, expr):
+    return expr
+
+## Literals
+
+def null():
+    return "None"
+
+def bool_(b):
+    return b.text.capitalize()
+
+def number(n):
+    return n.text
+
+def string(s):
+    return "u" + s.text
+
+def list(elements):
+    return "_List([%s])" % ", ".join(elements)
+
+def map(entries):
+    return "{%s}" % (", ".join(["%s: %s" % e for e in entries]))
