@@ -9,6 +9,7 @@ from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
 
 from twisted.internet import defer, reactor, ssl
+from twisted.internet.error import CannotListenError
 from twisted.python import log
 from twisted.web.client import Agent, FileBodyProducer, readBody
 from twisted.web.http_headers import Headers
@@ -267,7 +268,10 @@ class TwistedRuntime(object):
     def serveHTTP(self, url, servlet):
         uri = urlparse.urlparse(url, "http", False)
         host = uri.hostname or "127.0.0.1"
-        port_no = uri.port or dict(http=80, https=443).get(uri.scheme)
+        if uri.port is not None:
+            port_no = uri.port
+        else:
+            port_no = dict(http=80, https=443).get(uri.scheme)
         # TODO: more servlets per site
         site = _QuarkSite(uri, url, servlet)
         if uri.scheme == "https":
@@ -275,12 +279,20 @@ class TwistedRuntime(object):
             servlet.onHTTPError(url)
             return
         elif uri.scheme == "http":
-            port = self.reactor.listenTCP(port_no, site, interface=host)
+            try:
+                port = self.reactor.listenTCP(port_no, site, interface=host)
+            except CannotListenError, e:
+                actual = urlparse.urlunparse((uri.scheme, "%s:%s"%(host, port_no), uri.path,
+                                              "", "", "",))
+                servlet.onHTTPError(actual)
+                return
             bound = port.getHost()
             actual = urlparse.urlunparse((uri.scheme,
                         "%s:%s"%(bound.host, bound.port), uri.path,
                          "", "", "",))
             servlet.onHTTPInit(actual, self)
+        else:
+            servlet.onHTTPError(url)
 
     def respond(self, request, response):
         if isinstance(response, _ServletResponse):

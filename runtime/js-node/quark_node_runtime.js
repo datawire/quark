@@ -248,11 +248,17 @@
         }
         var pathslash = path + (path.endsWith("/") ? "" : "/");
         var server = undefined;
-        
+
         if (uri.protocol == "http:") {
             server = http.createServer();
+            if (uri.port === null ) {
+                uri.port = '80';
+            }
         } else if (uri.protocol == "https:") {
             // XXX: certificates...
+            if (uri.port === null ) {
+                uri.port = '443';
+            }
             servlet.onHTTPError(url);
             return;
         } else {
@@ -282,6 +288,9 @@
                 port: addr.port,
                 pathname: path})
             servlet.onHTTPInit(url, self);
+        });
+        server.on("error", function() {
+            servlet.onHTTPError(URL.format(uri));
         });
         server.listen(uri.port, uri.hostname)
     }

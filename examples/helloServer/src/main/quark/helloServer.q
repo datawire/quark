@@ -12,5 +12,9 @@ package hello_server {
             rs.setHeader("Content-Type", "text/plain");
             self.runtime.respond(rq, rs);
         }
+        
+        void onHTTPError(String url) {
+            print("Trouble with registering at " + url);
+        }
     }
 }
