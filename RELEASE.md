@@ -20,6 +20,29 @@ Prerequisites for every release:
 - All tests pass (xfails are okay)
 - Documentation is in sync with code (correct but not necessarily complete)
 
+## Release versions and dependencies
+
+The quark repository contains both the quark compiler and a number of
+different support packages that must all be published in order to
+complete a full release. The following diagram illustrates the
+packages and dependencies involved:
+
+```
+                  Application 
+                       |
+                       |
+             +---------+---------------+
+             |                         |
+            \|/                       \|/
+     Compiled-Package       Runtime-Implementation
+             |                   |          |
+             |                   |          |
+             +---------+---------+          +---------+
+                       |                              |
+                      \|/                            \|/
+               Runtime-Interface                  Framework
+          (Java/Python/Javascript/...)      (twisted/netty/gevent/node/...)
+```
 
 ## Branching for a release
 
