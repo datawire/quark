@@ -48,9 +48,9 @@ class IncomingRequest implements HTTPRequest {
 
     @Override
     public String getBody() {
-       // XXX: parse charset out of Content-Type
-       Charset charset = CharsetUtil.UTF_8;
-       return msg.content().toString(charset);
+        // XXX: parse charset out of Content-Type
+        Charset charset = CharsetUtil.UTF_8;
+        return msg.content().toString(charset);
     }
 
     @Override

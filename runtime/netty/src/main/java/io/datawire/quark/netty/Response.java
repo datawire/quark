@@ -69,7 +69,7 @@ class Response implements HTTPResponse {
     }
 
     void respond() {
-        
+
         ByteBuf content = ctx.alloc().buffer(2*body.length());
         int length = ByteBufUtil.writeUtf8(content, body);
         FullHttpRequest req = this.request.impl();
@@ -91,6 +91,6 @@ class Response implements HTTPResponse {
     }
 
     public void finish() {
-       request.release();
+        request.release();
     }
 }

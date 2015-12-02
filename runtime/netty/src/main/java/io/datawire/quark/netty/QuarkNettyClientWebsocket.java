@@ -15,6 +15,7 @@ import io.netty.handler.codec.http.websocketx.PongWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshaker;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.handler.codec.http.websocketx.WebSocketHandshakeException;
 import io.netty.util.CharsetUtil;
 
 public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Object> {
@@ -23,17 +24,17 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
     private final WSHandler handler;
     private Channel ch;
     private QuarkWebSocket webSocket = new QuarkWebSocket() {
-        
+
         @Override
         protected Channel getCh() {
             return ch;
         }
-        
+
         @Override protected WSHandler getHandler() {
             return handler;
         }
     };
-    
+
 
     public QuarkNettyClientWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
         this.handshaker = handshaker;
@@ -51,7 +52,14 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
             throws Exception {
         Channel ch = ctx.channel();
         if (!handshaker.isHandshakeComplete()) {
-            handshaker.finishHandshake(ch, (FullHttpResponse) msg);
+            try {
+                handshaker.finishHandshake(ch, (FullHttpResponse) msg);
+            } catch (WebSocketHandshakeException e) {
+                this.handler.onWSError(webSocket);
+                // XXX: this will fire onWSClosed, do we need to stop that?
+                ctx.channel().close();
+                return;
+            }
             System.out.println("WebSocket Client connected!");
             this.ch = ch;
             this.handler.onWSConnected(webSocket);

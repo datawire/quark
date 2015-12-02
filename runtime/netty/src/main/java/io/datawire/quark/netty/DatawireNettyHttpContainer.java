@@ -92,32 +92,24 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
         void invoke(final ChannelHandlerContext ctx, IncomingRequest rq, Response rs) {
             final WSHandler handler = this.servlet.onWSConnect(rq);
             if (handler == null) {
-                rs.fail(403, "Forbidden");
+                rs.fail(403, "Forbidden\r\n");
             } else {
                 WebSocketServerHandshakerFactory factory = new WebSocketServerHandshakerFactory(root.urlOf(this), null, true);
-                WebSocketServerHandshaker handshaker = factory.newHandshaker(rq.impl());
+                FullHttpRequest request = rq.impl();
+                WebSocketServerHandshaker handshaker = factory.newHandshaker(request);
                 if (handshaker == null) {
-                    rs.finish(); // release rq
+                    rs.finish();
                     WebSocketServerHandshakerFactory.sendUnsupportedVersionResponse(ctx.channel());
                 } else {
                     ctx.pipeline().remove(DatawireNettyHttpContainer.class);
                     final QuarkNettyServerWebsocket socket = new QuarkNettyServerWebsocket(handshaker, handler);
                     ctx.pipeline().addLast(socket);
-                    handler.onWSInit(socket.getWebSocket());
-                    handshaker.handshake(ctx.channel(), rq.impl()).addListener(new ChannelFutureListener() {
-                        @Override
-                        public void operationComplete(ChannelFuture future) throws Exception {
-                            if (future.isDone()) {
-                                if (future.isSuccess()) {
-                                    handler.onWSConnected(socket.getWebSocket());
-                                } else {
-                                    handler.onWSError(socket.getWebSocket());
-                                    future.channel().close();
-                                    handler.onWSFinal(socket.getWebSocket());
-                                }
-                            }
-                        }
-                    });
+                    if (socket.handshake(ctx, request)) {
+                        rs.finish();
+                    } else {
+                        rs.fail(400, "websockets here, move along\r\n");
+                        ctx.close();
+                    }
                 }
             }
         }
