@@ -10,7 +10,9 @@ Quark defines the following operators:
 
   Add (+) <Add>
   And (&&) <And>
+  At (@) <At>
   Bitwise Complement (~) <Bitwise Complement>
+  Cast (?) <Cast>
   Divide (/) <Divide>
   Equals (=) <Equals>
   Equivalent (==) <Equivalent>
@@ -58,6 +60,13 @@ The And operator syntax is:
 
 where *A* and *B* are the two values being evaluated.
 
+.. _AtOperator:
+
+At
+~~
+
+Documentation Coming Soon
+
 .. _ComplementOperator:
 
 Bitwise Complement
@@ -76,6 +85,13 @@ where *A* is the value to switch.
 The Bitwise Complement operator is only partially supported at the moment. See `linkIssue34`_ for more information.
 
 .. _linkIssue34: https://github.com/datawire/quark/issues/34
+
+.. _CastOperator:
+
+Cast
+~~~~
+
+Documentation Coming Soon
 
 .. _DivideOperator:
 

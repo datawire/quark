@@ -10,7 +10,9 @@ Quark defines the following keywords:
 .. toctree::
   :maxdepth: 1
 
+  break
   class
+  continue
   else
   extends
   false
@@ -25,6 +27,13 @@ Quark defines the following keywords:
   super
   true
   while
+
+.. _breakKeyword:
+
+break
+~~~~~
+
+Documentation Coming Soon
 
 .. _classKeyword:
 
@@ -43,6 +52,13 @@ The class keyword syntax is:
 **}**
 
 where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined) and *definition* is the list of properties and methods within the class and their definitions.
+
+.. _continueKeyword:
+
+continue
+~~~~~~~~
+
+Documentation Coming Soon
 
 .. _elseKeyword:
 
