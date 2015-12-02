@@ -117,7 +117,7 @@ Javascript Options
 The following options control generating code in Javascript:
 
 ================ ========================================== ===========================================
-Command         Description                          Default Behavior                                
+Command          Description                                Default Behavior                              
 ================ ========================================== ===========================================
 --javascript     generate Javascript code and related files Javascript code is generated        
 --javascript-out location for generated code.               js subdirectory under directory with name of the first file in the list of files
