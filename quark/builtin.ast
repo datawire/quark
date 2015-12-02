@@ -576,6 +576,8 @@ File(
      Fixed(')')), NativeCase(js, Fixed('new _qrt.HTTPRequest('),
      Var(Name(url)), Fixed(')')))),
 
+  Method(Type(Name(String)), Name(getUrl)),
+
   Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method))),
 
@@ -650,6 +652,10 @@ File(
   Method(Type(Name(void)), Name(serveHTTP),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(HTTPServlet)), Name(servlet))),
+
+  Method(Type(Name(void)), Name(serveWS),
+   Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(WSServlet)), Name(servlet))),
 
   Method(Type(Name(void)), Name(respond),
    Param(Type(Name(HTTPRequest)), Name(request)),
@@ -775,21 +781,50 @@ File(
    Type(Name(Buffer)), Name(fromBase64),
    Param(Type(Name(String)), Name(base64)))),
 
- Primitive(Annotation(Name(doc), String("Http servlet")),
+ Primitive(Annotation(Name(doc), String("A service addresable with an url")),
   Annotation(Name(mapping), Native(NativeCase(java,
-     Fixed('io.datawire.quark.runtime.HTTPServlet')))), Name(HTTPServlet),
+     Fixed('io.datawire.quark.runtime.Servlet')))), Name(Servlet),
 
-  Method(Type(Name(void)), Name(onHTTPInit),
+  Method(Annotation(Name(doc),
+    String("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")),
+   Type(Name(void)), Name(onServletInit),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(Runtime)), Name(runtime)),
    Block()),
 
-  Method(Type(Name(void)), Name(onHTTPError),
+  Method(Annotation(Name(doc),
+    String("called if the servlet could not be installed")), Type(Name(void)),
+   Name(onServletError),
    Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(String)), Name(error)),
    Block()),
 
-  Method(Type(Name(void)), Name(onHTTPRequest),
+  Method(Annotation(Name(doc), String("called when the servlet is removed")),
+   Type(Name(void)), Name(onServletEnd),
+   Param(Type(Name(String)), Name(url)),
+   Block())),
+
+ Primitive(Annotation(Name(doc), String("Http servlet")),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.HTTPServlet')))), Name(HTTPServlet),
+  Type(Name(Servlet)),
+
+  Method(Annotation(Name(doc),
+    String("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")),
+   Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
-   Block()))
+   Block())),
+
+ Primitive(Annotation(Name(doc), String("Websocket servlet")),
+  Annotation(Name(mapping), Native(NativeCase(java,
+     Fixed('io.datawire.quark.runtime.WSServlet')))), Name(WSServlet),
+  Type(Name(Servlet)),
+
+  Method(Annotation(Name(doc),
+    String("called for each new incoming WebSocket connection")),
+   Type(Name(WSHandler)), Name(onWSConnect),
+   Param(Type(Name(HTTPRequest)), Name(upgrade_request)),
+   Block(
+    Return(Null(null)))))
 )
