@@ -4,7 +4,8 @@ The service writer wrote `franz-server-1.0.py` and `franz-1.0.q`. Other people w
 
 Later the service writer decides that tracking clients in the service is too much work, so `franz-server-2.0.py` doesn't keep session info. Instead, `franz-1.1.q` keeps state in the client. Since the service writer can keep both synchronized, the client code can run against either version of the service without change. Client writers do not need to worry about it.
 
-`build.sh` compiles everything, placing the results into the `out.first` and `out.second` directories. The client code expects the library to be in `out`, so you'll have to rename or make link or something. `launch.py` shows how to launch things using a symlink.
+`build.sh` compiles everything, placing the results into the `out.first` and `out.second` directories. If you encounter build issues, make sure you've followed the instructions in examples/README.md first.
+The client code expects the library to be in `out`, so you'll have to rename or make link or something. `launch.py` shows how to launch things using a symlink.
 
 The servers run on ports 8081 and 8082 respectively, while the client code expects them on 8080. Use `haproxy` and the provided `haproxy.conf` to allow both servers to run simultaneously.
 
