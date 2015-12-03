@@ -1,7 +1,8 @@
 from quark_runtime import *
 
 class string_test(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def check(self, actual, expected, op, q):

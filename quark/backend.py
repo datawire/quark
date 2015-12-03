@@ -31,6 +31,7 @@ class Backend(object):
         self.packages = []
         self.definitions = []
         self.names = []
+        self.bindings = None
 
     def visit_Class(self, cls):
         self.definitions.append(cls)
@@ -159,7 +160,8 @@ class Backend(object):
         methods = []
         constructors = []
 
-        for d in cls.definitions + get_defaulted_methods(cls).values():
+        defaulted, self.bindings = get_defaulted_methods(cls)
+        for d in cls.definitions + defaulted.values():
             if isinstance(d, Macro): continue
             doc = self.doc(d)
             if isinstance(d, Field):
@@ -275,14 +277,14 @@ class Backend(object):
 
     @overload(Type)
     def type(self, t):
-        return self.type(t.resolved, t)
+        return self.type(t.resolved)
 
     @overload(TypeExpr)
-    def type(self, texpr, expr):
-        return self.type(texpr.type, texpr.bindings, expr)
+    def type(self, texpr):
+        return self.type(texpr.type, texpr.bindings)
 
     @overload(Class, dict)
-    def type(self, cls, bindings, expr):
+    def type(self, cls, bindings):
         mapping = None
         for a in cls.annotations:
             if a.name.text == "mapping":
@@ -292,14 +294,17 @@ class Backend(object):
             path = []
             name = self.expr(mapping.arguments[0])
         else:
-            cpkg = self.package(cls)
-            epkg = self.package(expr)
-            path = self.qualify(cpkg, epkg)
+            pkg = self.package(cls)
+            if self.current_package:
+                org = self.package(self.current_package)
+            else:
+                org = []
+            path = self.qualify(pkg, org)
             self.add_import(cls)
             name = self.name(cls.name)
 
         if cls.parameters:
-            params = [self.type(bindings[p], expr) for p in cls.parameters]
+            params = [self.type(bindings[p]) for p in cls.parameters]
         else:
             params = []
 
@@ -309,9 +314,11 @@ class Backend(object):
         return self.gen.qualify(package, origin)
 
     @overload(TypeParam)
-    def type(self, tparam, bindings, expr):
+    def type(self, tparam, bindings):
         if tparam in bindings:
-            return self.type(bindings[tparam], expr)
+            return self.type(bindings[tparam])
+        elif self.bindings and tparam in self.bindings:
+            return self.type(self.bindings[tparam])
         else:
             return self.name(tparam.name)
 
@@ -497,7 +504,7 @@ class Backend(object):
         if isinstance(con, Macro):
             return self.apply_macro(con, expr, args)
         else:
-            return self.gen.construct(self.type(expr.resolved, expr), args)
+            return self.gen.construct(self.type(expr.resolved), args)
 
     @overload(Class, Super)
     def invoke(self, cls, sup, args):
@@ -516,7 +523,7 @@ class Backend(object):
                 fake.expr = expr
                 return self.apply_macro(expr.coersion, fake, ())
             else:
-                return "%s()" % self.get(expr.resolved.type, expr.coersion, expr, expr.coersion.name)
+                return self.gen.invoke_method(self.expr(expr), self.name(expr.coersion.name), [])
         else:
             return self.expr(expr)
 
@@ -543,7 +550,7 @@ class Backend(object):
         if type.resolved.assignableFrom(expr.resolved):
             return self.expr(expr)
         else:
-            return self.gen.cast(self.type(type.resolved, type), self.expr(expr))
+            return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
 class Java(Backend):
 

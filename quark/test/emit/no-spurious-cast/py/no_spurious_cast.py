@@ -1,7 +1,8 @@
 from quark_runtime import *
 
 class A(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
 class B(A):
@@ -13,7 +14,8 @@ class B(A):
 
 
 class X(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
 class Y(X):

@@ -32,7 +32,8 @@ class C(A):
 
 
 class X(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
 class Y(X):

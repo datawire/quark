@@ -1,7 +1,8 @@
 from quark_runtime import *
 
 class Message(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def encode(self):
@@ -28,7 +29,8 @@ class Pong(Message):
 
 
 class Test(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def bar(self, name, args):

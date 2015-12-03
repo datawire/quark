@@ -23,7 +23,8 @@ class C(object):
 
 
 class T1(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def foo(self):
@@ -35,7 +36,8 @@ class T1(object):
 
 
 class T2(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def foo(self):
@@ -47,7 +49,8 @@ class T2(object):
 
 
 class T3(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def foo(self):
@@ -58,7 +61,8 @@ class T3(object):
 
 
 class T4(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def bar(self):
@@ -70,7 +74,8 @@ class T4(object):
 
 
 class T5(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def foo(self):

@@ -109,6 +109,14 @@ def base_constructors(cls):
             base = base_type(base.resolved.type)
     return cons
 
+def base_bindings(cls):
+    bindings = OrderedDict()
+    for b in cls.bases:
+        bindings.update(b.resolved.bindings)
+        bb = base_bindings(b.resolved.type)
+        bindings.update(bb)
+    return bindings
+
 @dispatch(String)
 def literal_to_str(lit):
     return str(lit)[1:-1]
@@ -156,19 +164,21 @@ def get_methods(cls, predicate):
 def get_methods(cls):
     return get_methods(cls, lambda x: True)
 
-@dispatch(Class, dict, dict)
-def get_defaulted_methods(cls, result, derived):
+@dispatch(Class, dict, dict, dict)
+def get_defaulted_methods(cls, result, derived, bindings):
     if isinstance(cls, (Interface, Primitive)):
         get_methods(cls, result, lambda dfn: dfn.body and dfn.name.text not in derived)
     for base in cls.bases:
-        get_defaulted_methods(base.resolved.type, result, derived)
+        bindings.update(base.resolved.bindings)
+        get_defaulted_methods(base.resolved.type, result, derived, bindings)
 
 @dispatch(Class)
 def get_defaulted_methods(cls):
     result = OrderedDict()
     derived = get_methods(cls)
-    get_defaulted_methods(cls, result, derived)
-    return result
+    bindings = OrderedDict()
+    get_defaulted_methods(cls, result, derived, bindings)
+    return result, bindings
 
 def indent(st, level=4):
     if st:

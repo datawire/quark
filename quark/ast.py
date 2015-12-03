@@ -170,6 +170,9 @@ class Package(Definition):
                 (self.name.code(coder), coder.code(self.definitions, "\n",
                                                    head="\n", tail="\n"))
 
+    def copy(self):
+        return Package(copy(self.name), copy(self.definitions))
+
 class Callable(Definition):
 
     def __init__(self, type, name, params, body):
@@ -251,7 +254,7 @@ class Class(Definition):
         return "%s {%s}" % (head, body)
 
     def copy(self):
-        return Class(copy(self.name), copy(self.parameters), copy(self.bases), copy(self.definitions))
+        return self.__class__(copy(self.name), copy(self.parameters), copy(self.bases), copy(self.definitions))
 
 class Method(Function):
     pass
@@ -378,6 +381,9 @@ class Assign(Statement):
     def code(self, coder):
         return "%s = %s;" % (self.lhs.code(coder), self.rhs.code(coder))
 
+    def copy(self):
+        return Assign(copy(self.lhs), copy(self.rhs))
+
 class If(Statement):
 
     def __init__(self, predicate, consequence, alternative):
@@ -458,6 +464,9 @@ class Super(Expression):
     @coder
     def code(self, coder):
         return "super"
+
+    def copy(self):
+        return Super()
 
 class Var(Expression):
 
@@ -720,6 +729,9 @@ class TypeParam(AST):
     def code(self, coder):
         return self.name.code(coder)
 
+    def copy(self):
+        return TypeParam(copy(self.name))
+
 class Block(AST):
 
     indent = ["statements"]
@@ -759,3 +771,6 @@ class Annotation(AST):
         if self.arguments:
             result += "(%s)" % coder.code(self.arguments, ", ")
         return result
+
+    def copy(self):
+        return Annotation(copy(self.name), copy(self.arguments))

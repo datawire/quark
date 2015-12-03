@@ -1,7 +1,8 @@
 from quark_runtime import *
 
 class TestByte(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def run(self):
@@ -15,7 +16,8 @@ class TestByte(object):
 
 
 class TestShort(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def run(self):
@@ -29,7 +31,8 @@ class TestShort(object):
 
 
 class TestInt(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def run(self):
@@ -43,7 +46,8 @@ class TestInt(object):
 
 
 class TestLong(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def run(self):

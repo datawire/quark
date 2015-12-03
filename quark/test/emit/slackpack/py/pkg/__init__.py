@@ -5,7 +5,8 @@ import slack.event
 
 
 class Handler(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
     def onSlackEvent(self, event):

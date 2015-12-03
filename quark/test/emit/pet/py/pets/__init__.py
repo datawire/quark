@@ -2,10 +2,12 @@ from quark_runtime import *
 
 
 class Pet(object):
-    def _init(self): pass
+    def _init(self):
+        pass
     def __init__(self): self._init()
 
-    def greet(self): assert False
+    def greet(self):
+        assert False
 
 class Cat(Pet):
     def _init(self):

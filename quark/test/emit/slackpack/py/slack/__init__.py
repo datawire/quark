@@ -9,7 +9,8 @@ class SlackHandler(object):
     are delegated to onSlackEvent by default.
     """
 
-    def onSlackEvent(self, event): pass
+    def onSlackEvent(self, event):
+        pass
 
     def onHello(self, hello):
         (self).onSlackEvent(hello);
@@ -143,16 +144,23 @@ class Client(object):
 
         
 
-    def onWSInit(self, socket): pass
+    def onWSInit(self, socket):
+        pass
 
-    def onWSBinary(self, socket, message): pass
+    def onWSBinary(self, socket, message):
+        pass
 
-    def onWSClosed(self, socket): pass
+    def onWSClosed(self, socket):
+        pass
 
-    def onWSFinal(self, socket): pass
+    def onWSFinal(self, socket):
+        pass
 
-    def onHTTPInit(self, request): pass
+    def onHTTPInit(self, request):
+        pass
 
-    def onHTTPError(self, request): pass
+    def onHTTPError(self, request):
+        pass
 
-    def onHTTPFinal(self, request): pass
+    def onHTTPFinal(self, request):
+        pass

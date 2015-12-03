@@ -163,9 +163,9 @@ def doc(lines):
 
 def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
     if base: fields = ["%s._init(self)" % base] + fields
-    finit = ["def _init(self):%s" % (indent("\n".join(fields)) or " pass")]
+    finit = ["def _init(self):%s" % (indent("\n".join(fields)) or "\n    pass")]
     body = indent("\n".join(finit + constructors + methods))
-    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or " pass")
+    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or "\n    pass")
 
 def field(doc, type, name, value):
     return "self.%s = %s" % (name, value or "None")
@@ -180,18 +180,18 @@ def constructor(doc, name, parameters, body):
     return "def __init__(%s)%s" % (", ".join(["self"] + parameters), body)
 
 def method(doc, clazz, type, name, parameters, body):
-    if body is None: body = ": assert False"
+    if body is None: body = ":\n    assert False"
     body_with_doc = ":" + doc + body[1:]
     return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
 
 def abstract_method(doc, clazz, type, name, parameters):
-    return "\ndef %s(%s):%s assert False" % (name, ", ".join(["self"] + parameters), doc)
+    return "\ndef %s(%s):%s\n    assert False" % (name, ", ".join(["self"] + parameters), doc)
 
 ## Interface definition
 
 def interface(doc, iface, parameters, bases, methods):
     body = indent("\n".join(methods))
-    return "class %s(object):%s%s" % (iface, doc, body or " pass")
+    return "class %s(object):%s%s" % (iface, doc, body or "\n    pass")
 
 def interface_method(doc, iface, type, name, parameters, body):
     if body is None: body = ": assert False"
@@ -219,7 +219,7 @@ def block(statements):
     if statements:
         return ":%s" % indent("\n".join(statements))
     else:
-        return ": pass"
+        return ":\n    pass"
 
 ## Statements
 

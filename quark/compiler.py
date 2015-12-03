@@ -200,11 +200,11 @@ class TypeExpr(object):
     def invoke(self, c, errors):
         return self.invoke(self.type, c, errors)
 
-    def check(self, params, call, errors):
+    def check(self, params, call, errors, bindings=None):
         idx = 0
         if len(params) == len(call.args):
             for param in params:
-                pexpr = texpr(param.resolved.type, param.resolved.bindings, self.bindings)
+                pexpr = texpr(param.resolved.type, param.resolved.bindings, self.bindings, bindings or {})
                 arg = call.args[idx]
                 idx += 1
                 class FakeType: pass
@@ -230,8 +230,9 @@ class TypeExpr(object):
     @overload(Class)
     def invoke(self, cls, call, errors):
         con = constructor(cls)
+        bindings = base_bindings(cls)
         if con:
-            self.check(con.params, call, errors)
+            self.check(con.params, call, errors, bindings)
         else:
             if len(call.args) != 0:
                 errors.append("%s: expected 0 args, got %s" % (lineinfo(call), len(call.args)))
