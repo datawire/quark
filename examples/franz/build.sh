@@ -4,23 +4,23 @@ set -e
 
 rm -rf out out.*
 
-quark --java out --python out --javascript out franz-1.0.q
-(cd out && python setup.py build_sphinx)
-(cd out && mvn javadoc:javadoc)
+quark --all -o out compile franz-1.0.q
+(cd out/py && python setup.py build_sphinx)
+(cd out/java && mvn javadoc:javadoc)
 mv out out.first
-cp franz-server-1.0.py out.first/server.py
+cp franz-server-1.0.py out.first/py/server.py
 
-quark --java out --python out --javascript out franz-1.1.q
-(cd out && python setup.py build_sphinx)
-(cd out && mvn javadoc:javadoc)
+quark --all -o out compile franz-1.1.q
+(cd out/py && python setup.py build_sphinx)
+(cd out/java && mvn javadoc:javadoc)
 mv out out.second
-cp franz-server-2.0.py out.second/server.py
+cp franz-server-2.0.py out.second/py/server.py
 
-(cd out.first && cp ../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
-(cd out.first && cp ../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
+(cd out.first/java && cp ../../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
+(cd out.first/java && cp ../../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
 
-(cd out.second && cp ../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
-(cd out.second && cp ../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
+(cd out.second/java && cp ../../DumpTopic.java . && env CLASSPATH=src/main/java javac DumpTopic.java)
+(cd out.second/java && cp ../../Begin.java . && env CLASSPATH=src/main/java javac Begin.java)
 
 echo ./launch.py first
 echo ... or ...

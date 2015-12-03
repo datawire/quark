@@ -24,7 +24,7 @@ This section provides an overview of the prerequisites, installation, and compil
 Quark requires a modern Linux distribution or Mac OS X. It has been successfully tested on the following:
 
 * Mac OS 10.10 (Yosemite)
-* Mac OS 10.11 (El Capitain)
+* Mac OS 10.11 (El Capitan)
 * Ubuntu 14.04 (Trusty)
 * Fedora 22
 
