@@ -239,7 +239,7 @@ class TypeExpr(object):
         return texpr(cls, self.bindings)
 
     def assign(self, expr, errors=None):
-        if not isinstance(expr, Null) and not self.assignableFrom(expr.resolved):
+        if not isinstance(expr, Null) and expr.resolved and not self.assignableFrom(expr.resolved):
             dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
                 expr.coersion = dfn
