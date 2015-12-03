@@ -57,7 +57,6 @@ class _QWSCProtocol(WebSocketClientProtocol):
             self.factory.qws.handler.onWSError(self.factory.qws)
         self.factory.qws.handler.onWSFinal(self.factory.qws)
 
-
 class _QWSCFactory(WebSocketClientFactory):
 
     def buildProtocol(self, addr):
@@ -124,7 +123,7 @@ class _QuarkRequest(object):
         deferred.addErrback(self.onError)
 
     def onBody(self, body):
-        self.handler.onHTTPResponse(self.request, _QuarkResponse(self.response.code, body))
+        self.handler.onHTTPResponse(self.request, _QuarkResponse(self.response.code, body, self.response.headers))
         self.handler.onHTTPFinal(self.request)
 
     def onError(self, something):
@@ -134,9 +133,10 @@ class _QuarkRequest(object):
 
 class _QuarkResponse(object):
 
-    def __init__(self, code, body):
+    def __init__(self, code, body, headers):
         self.code = code
         self.body = body
+        self.headers = headers
 
     def getCode(self):
         return self.code
@@ -144,24 +144,50 @@ class _QuarkResponse(object):
     def getBody(self):
         return self.body
 
-class _QuarkSite(server.Site):
-    def __init__(self, uri, url, servlet):
-        servlet_resource = _ServletResource(url, servlet)
-        root = servlet_resource
-        for segment in uri.path.split('/')[-1:0:-1]:
-            if not segment:
-                continue
-            new_root = resource.Resource()
-            new_root.putChild(segment, root)
-            root = new_root
-        server.Site.__init__(self, root)
-        self.servlet_resource = servlet_resource
+    def getHeader(self, key):
+        return self.headers.getRawHeaders(key, [None])[0]
 
-class _ServletResource(resource.Resource):
+    def getHeaders(self):
+        return list(set(k for k,v in self.headers.getAllRawHeaders()))
+
+class _QuarkSite(server.Site):
+    def __init__(self, runtime):
+        container = _ContainerResource()
+        server.Site.__init__(self, container)
+        self.container = container
+        self.port = None
+        self.hostname = None
+        self.runtime = runtime
+
+    def register(self, uri, servlet, resource):
+        actual = urlparse.urlunparse((uri.scheme,
+                            "%s:%s"%(self.hostname, self.port), uri.path,
+                            "", "", "",))
+        servlet_resource = resource(actual, servlet)
+        servlet.onServletInit(actual, self.runtime)
+        self.container.register(uri.path, servlet_resource)
+
+class _ContainerResource(resource.Resource):
     isLeaf = True
-    def __init__(self, url, servlet):
+    def __init__(self):
         resource.Resource.__init__(self)
-        self.servlet_url = url
+        self.servlets = {}
+
+    def render(self, request):
+        delegate = self.servlets.get(request.path)
+        if delegate is not None:
+            return delegate.render(request)
+        else:
+            rs = _ServletResponse(request)
+            rs.fail(404, "Not found\r\n")
+            return server.NOT_DONE_YET
+
+    def register(self, path, delegate):
+        self.servlets[path] = delegate
+
+class _HTTPServletResource:
+    def __init__(self, actual, servlet):
+        self.actual = actual
         self.servlet = servlet
 
     def render(self, request):
@@ -169,6 +195,16 @@ class _ServletResource(resource.Resource):
         rs = _ServletResponse(request)
         rs.servlet_request = rq
         self.servlet.onHTTPRequest(rq, rs)
+        return server.NOT_DONE_YET
+
+class _WSServletResource:
+    def __init__(self, actual, servlet):
+        self.actual = actual
+        self.servlet = servlet
+
+    def render(self, request):
+        rs = _ServletResponse(request)
+        rs.fail(500, "TODO\r\n")
         return server.NOT_DONE_YET
 
 class _ServletRequest(object):
@@ -236,6 +272,7 @@ class TwistedRuntime(object):
     def __init__(self, reactor):
         self.locked = False
         self.reactor = reactor
+        self.sites = {}
 
     def acquire(self):
         assert not self.locked
@@ -272,27 +309,46 @@ class TwistedRuntime(object):
             port_no = uri.port
         else:
             port_no = dict(http=80, https=443).get(uri.scheme)
-        # TODO: more servlets per site
-        site = _QuarkSite(uri, url, servlet)
-        if uri.scheme == "https":
-            # XXX: we need a certificate.... abuse url.params?
-            servlet.onHTTPError(url)
+        try:
+            site = self._make_site(uri.scheme, port_no, host)
+        except Exception, e:
+            #import traceback
+            #traceback.print_exc()
+            servlet.onServletError(url, str(e))
             return
-        elif uri.scheme == "http":
-            try:
-                port = self.reactor.listenTCP(port_no, site, interface=host)
-            except CannotListenError, e:
-                actual = urlparse.urlunparse((uri.scheme, "%s:%s"%(host, port_no), uri.path,
-                                              "", "", "",))
-                servlet.onHTTPError(actual)
-                return
-            bound = port.getHost()
-            actual = urlparse.urlunparse((uri.scheme,
-                        "%s:%s"%(bound.host, bound.port), uri.path,
-                         "", "", "",))
-            servlet.onHTTPInit(actual, self)
+        site.register(uri, servlet, _HTTPServletResource)
+
+    def serveWS(self, url, servlet):
+        uri = urlparse.urlparse(url, "ws", False)
+        host = uri.hostname or "127.0.0.1"
+        if uri.port is not None:
+            port_no = uri.port
         else:
-            servlet.onHTTPError(url)
+            port_no = dict(ws=80, wss=443).get(uri.scheme)
+        try:
+            site = self._make_site(uri.scheme, port_no, host)
+        except Exception, e:
+            servlet.onServletError(url, str(e))
+            return
+        site.register(uri, servlet, _WSServletResource)
+
+    def _make_site(self, scheme, port_no, host):
+        site = self.sites.get(port_no)
+        if site is not None:
+            return site
+        site = _QuarkSite(self)
+        if scheme in ["https", "wss"]:
+            # XXX: we need a certificate.... abuse url.params?
+            raise Exception( scheme + " is not supported yet")
+        elif scheme in ("http", "ws"):
+            port = self.reactor.listenTCP(port_no, site, interface=host)
+            bound = port.getHost()
+            site.port = bound.port
+            site.hostname = bound.host
+        else:
+            raise Exception("unsupported protocol")
+        self.sites[site.port] = site
+        return site
 
     def respond(self, request, response):
         if isinstance(response, _ServletResponse):
