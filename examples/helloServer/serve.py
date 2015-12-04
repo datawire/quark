@@ -42,8 +42,6 @@ class PrintHTTPHandler:
         print self.id, "client.onHTTPFinal"
 
     def onHTTPError(self, request):
-        import pdb
-        pdb.set_trace()
         print self.id, "client.onHTTPError"
 
     def onHTTPResponse(self, request, response):
@@ -95,7 +93,8 @@ def main():
     runtime.serveHTTP("http://127.0.0.1:9876/foo", servlet)
     runtime.serveHTTP("http://127.0.0.1:0/foo", servlet)
     runtime.serveHTTP("http://127.0.0.1/foo", servlet)
-    runtime.serveWS("ws://127.0.0.1:9876/ws", servlet)
+    msservlet = hello_server.MySocketServlet()
+    runtime.serveWS("ws://127.0.0.1:9876/ws", msservlet)
     runtime.schedule(client_ws(),    0.1)
     runtime.schedule(client_wsx(),   0.2)
     runtime.schedule(client_xws(),   0.3)

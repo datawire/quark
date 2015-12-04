@@ -7,6 +7,9 @@ import urlparse
 
 from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
+from autobahn.twisted.websocket import WebSocketServerFactory, \
+     WebSocketServerProtocol
+from autobahn.twisted.resource import WebSocketResource
 
 from twisted.internet import defer, reactor, ssl
 from twisted.internet.error import CannotListenError
@@ -38,7 +41,7 @@ class Future(object):
         self.deferred.addCallback(callback)
 
 
-class _QWSCProtocol(WebSocketClientProtocol):
+class _QWSProtocol(object):
 
     def onOpen(self):
         self.factory.qws.is_open = True
@@ -57,7 +60,20 @@ class _QWSCProtocol(WebSocketClientProtocol):
             self.factory.qws.handler.onWSError(self.factory.qws)
         self.factory.qws.handler.onWSFinal(self.factory.qws)
 
+class _QWSCProtocol(_QWSProtocol, WebSocketClientProtocol):
+
+    def __init__(self, *args, **kwargs):
+        WebSocketClientProtocol.__init__(self, *args, **kwargs)
+
+class _QWSSProtocol(_QWSProtocol, WebSocketServerProtocol):
+
+    def __init__(self, *args, **kwargs):
+        WebSocketServerProtocol.__init__(self, *args, **kwargs)
+
 class _QWSCFactory(WebSocketClientFactory):
+
+    def __init__(self, *args, **kwargs):
+        WebSocketClientFactory.__init__(self, *args, **kwargs)
 
     def buildProtocol(self, addr):
         p = _QWSCProtocol()
@@ -65,8 +81,19 @@ class _QWSCFactory(WebSocketClientFactory):
         self.qws.protocol = p
         return p
 
+class _QWSSFactory(WebSocketServerFactory):
 
-class _QuarkWebSocket(WebSocketClientProtocol):
+    def __init__(self, *args, **kwargs):
+        WebSocketServerFactory.__init__(self, *args, **kwargs)
+
+    def buildProtocol(self, addr):
+        p = _QWSSProtocol()
+        p.factory = self
+        self.qws.protocol = p
+        return p
+
+
+class _QuarkWebSocket(object):
 
     def __init__(self, factory, handler):
         factory.qws = self
@@ -203,13 +230,24 @@ class _WSServletResource:
         self.servlet = servlet
 
     def render(self, request):
+        rq = _ServletRequest(request)
         rs = _ServletResponse(request)
-        rs.fail(500, "TODO\r\n")
-        return server.NOT_DONE_YET
+        handler = self.servlet.onWSConnect(rq)
+        if handler is not None:
+            factory = _QWSSFactory()
+            resource = WebSocketResource(factory)
+            qws = _QuarkWebSocket(factory, handler)
+            return resource.render(request)
+        else:
+            rs.fail(403, "not happening")
+            return server.NOT_DONE_YET
 
 class _ServletRequest(object):
     def __init__(self, request):
         self.request = request
+
+    def getUrl(self):
+        return self.request.uri
 
     def setMethod(self, method): pass
     def getMethod(self):
@@ -312,8 +350,6 @@ class TwistedRuntime(object):
         try:
             site = self._make_site(uri.scheme, port_no, host)
         except Exception, e:
-            #import traceback
-            #traceback.print_exc()
             servlet.onServletError(url, str(e))
             return
         site.register(uri, servlet, _HTTPServletResource)
