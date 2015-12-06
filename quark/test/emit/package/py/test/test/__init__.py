@@ -14,3 +14,17 @@ class Test(object):
     def go(self):
         _println(u"TTGO!!");
 
+    def _getClass(self):
+        return u"test.test.Test"
+
+    def _getField(self, name):
+        if ((name) == (u"size")):
+            return (self).size
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"size")):
+            (self).size = value
+
+    

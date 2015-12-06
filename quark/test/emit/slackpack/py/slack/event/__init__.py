@@ -30,6 +30,38 @@ class SlackEvent(object):
     def dispatch(self, handler):
         (handler).onSlackEvent(self);
 
+    def _getClass(self):
+        return u"slack.event.SlackEvent"
+
+    def _getField(self, name):
+        if ((name) == (u"type")):
+            return (self).type
+
+        if ((name) == (u"user")):
+            return (self).user
+
+        if ((name) == (u"channel")):
+            return (self).channel
+
+        if ((name) == (u"timestamp")):
+            return (self).timestamp
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"type")):
+            (self).type = value
+
+        if ((name) == (u"user")):
+            (self).user = value
+
+        if ((name) == (u"channel")):
+            (self).channel = value
+
+        if ((name) == (u"timestamp")):
+            (self).timestamp = value
+
+    
 
 class SlackError(SlackEvent):
     """
@@ -51,6 +83,50 @@ class SlackError(SlackEvent):
     def dispatch(self, handler):
         (handler).onSlackError(self);
 
+    def _getClass(self):
+        return u"slack.event.SlackError"
+
+    def _getField(self, name):
+        if ((name) == (u"type")):
+            return (self).type
+
+        if ((name) == (u"user")):
+            return (self).user
+
+        if ((name) == (u"channel")):
+            return (self).channel
+
+        if ((name) == (u"timestamp")):
+            return (self).timestamp
+
+        if ((name) == (u"code")):
+            return (self).code
+
+        if ((name) == (u"text")):
+            return (self).text
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"type")):
+            (self).type = value
+
+        if ((name) == (u"user")):
+            (self).user = value
+
+        if ((name) == (u"channel")):
+            (self).channel = value
+
+        if ((name) == (u"timestamp")):
+            (self).timestamp = value
+
+        if ((name) == (u"code")):
+            (self).code = value
+
+        if ((name) == (u"text")):
+            (self).text = value
+
+    
 
 class Hello(SlackEvent):
     """
@@ -65,6 +141,38 @@ class Hello(SlackEvent):
     def dispatch(self, handler):
         (handler).onHello(self);
 
+    def _getClass(self):
+        return u"slack.event.Hello"
+
+    def _getField(self, name):
+        if ((name) == (u"type")):
+            return (self).type
+
+        if ((name) == (u"user")):
+            return (self).user
+
+        if ((name) == (u"channel")):
+            return (self).channel
+
+        if ((name) == (u"timestamp")):
+            return (self).timestamp
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"type")):
+            (self).type = value
+
+        if ((name) == (u"user")):
+            (self).user = value
+
+        if ((name) == (u"channel")):
+            (self).channel = value
+
+        if ((name) == (u"timestamp")):
+            (self).timestamp = value
+
+    
 
 class Message(SlackEvent):
     """
@@ -94,6 +202,62 @@ class Message(SlackEvent):
     def dispatch(self, handler):
         (handler).onMessage(self);
 
+    def _getClass(self):
+        return u"slack.event.Message"
+
+    def _getField(self, name):
+        if ((name) == (u"type")):
+            return (self).type
+
+        if ((name) == (u"user")):
+            return (self).user
+
+        if ((name) == (u"channel")):
+            return (self).channel
+
+        if ((name) == (u"timestamp")):
+            return (self).timestamp
+
+        if ((name) == (u"subtype")):
+            return (self).subtype
+
+        if ((name) == (u"hidden")):
+            return (self).hidden
+
+        if ((name) == (u"text")):
+            return (self).text
+
+        if ((name) == (u"edited")):
+            return (self).edited
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"type")):
+            (self).type = value
+
+        if ((name) == (u"user")):
+            (self).user = value
+
+        if ((name) == (u"channel")):
+            (self).channel = value
+
+        if ((name) == (u"timestamp")):
+            (self).timestamp = value
+
+        if ((name) == (u"subtype")):
+            (self).subtype = value
+
+        if ((name) == (u"hidden")):
+            (self).hidden = value
+
+        if ((name) == (u"text")):
+            (self).text = value
+
+        if ((name) == (u"edited")):
+            (self).edited = value
+
+    
 
 class Edited(object):
     """
@@ -104,3 +268,24 @@ class Edited(object):
         self.timestamp = None
 
     def __init__(self): self._init()
+
+    def _getClass(self):
+        return u"slack.event.Edited"
+
+    def _getField(self, name):
+        if ((name) == (u"user")):
+            return (self).user
+
+        if ((name) == (u"timestamp")):
+            return (self).timestamp
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"user")):
+            (self).user = value
+
+        if ((name) == (u"timestamp")):
+            (self).timestamp = value
+
+    

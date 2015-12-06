@@ -1,7 +1,38 @@
 File(
  Class(Name(Test),
   Field(Type(Name(int)), Name(x), $type=0.int),
-  Field(Type(Name(String)), Name(y), $type=0.String)),
+  Field(Type(Name(String)), Name(y), $type=0.String),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Test", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("x", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=1.Test), Name(x), $type=0.int)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("y", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=1.Test), Name(y), $type=0.String)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("x", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.Test), Name(x), $type=0.int),
+       Cast(Var(Name(value), $type=0.Object), $type=0.int)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("y", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.Test), Name(y), $type=0.String),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
 
  Function(Type(Name(void)), Name(f), Block(
    Local(

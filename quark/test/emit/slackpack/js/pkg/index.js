@@ -26,6 +26,19 @@ function Handler_onSlackEvent(event) {
 }
 Handler.prototype.onSlackEvent = Handler_onSlackEvent;
 
+function Handler__getClass() {
+    return "pkg.Handler";
+}
+Handler.prototype._getClass = Handler__getClass;
+
+function Handler__getField(name) {
+    return null;
+}
+Handler.prototype._getField = Handler__getField;
+
+function Handler__setField(name, value) {}
+Handler.prototype._setField = Handler__setField;
+
 function Handler_onHello(hello) {
     (this).onSlackEvent(hello);
 }

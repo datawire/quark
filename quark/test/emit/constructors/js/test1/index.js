@@ -14,6 +14,25 @@ function Test__init_fields__() {
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
 
+function Test__getClass() {
+    return "test1.Test";
+}
+Test.prototype._getClass = Test__getClass;
+
+function Test__getField(name) {
+    if ((name) === ("name")) {
+        return (this).name;
+    }
+    return null;
+}
+Test.prototype._getField = Test__getField;
+
+function Test__setField(name, value) {
+    if ((name) === ("name")) {
+        (this).name = value;
+    }
+}
+Test.prototype._setField = Test__setField;
 
 function go() {
     var t = new Test();

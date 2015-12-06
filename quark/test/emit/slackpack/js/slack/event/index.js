@@ -52,6 +52,44 @@ function SlackEvent_dispatch(handler) {
 }
 SlackEvent.prototype.dispatch = SlackEvent_dispatch;
 
+function SlackEvent__getClass() {
+    return "slack.event.SlackEvent";
+}
+SlackEvent.prototype._getClass = SlackEvent__getClass;
+
+function SlackEvent__getField(name) {
+    if ((name) === ("type")) {
+        return (this).type;
+    }
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    if ((name) === ("channel")) {
+        return (this).channel;
+    }
+    if ((name) === ("timestamp")) {
+        return (this).timestamp;
+    }
+    return null;
+}
+SlackEvent.prototype._getField = SlackEvent__getField;
+
+function SlackEvent__setField(name, value) {
+    if ((name) === ("type")) {
+        (this).type = value;
+    }
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+    if ((name) === ("channel")) {
+        (this).channel = value;
+    }
+    if ((name) === ("timestamp")) {
+        (this).timestamp = value;
+    }
+}
+SlackEvent.prototype._setField = SlackEvent__setField;
+
 // CLASS SlackError
 /**
  * The server has indicated an error has occurred.
@@ -88,6 +126,56 @@ function SlackError_dispatch(handler) {
 }
 SlackError.prototype.dispatch = SlackError_dispatch;
 
+function SlackError__getClass() {
+    return "slack.event.SlackError";
+}
+SlackError.prototype._getClass = SlackError__getClass;
+
+function SlackError__getField(name) {
+    if ((name) === ("type")) {
+        return (this).type;
+    }
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    if ((name) === ("channel")) {
+        return (this).channel;
+    }
+    if ((name) === ("timestamp")) {
+        return (this).timestamp;
+    }
+    if ((name) === ("code")) {
+        return (this).code;
+    }
+    if ((name) === ("text")) {
+        return (this).text;
+    }
+    return null;
+}
+SlackError.prototype._getField = SlackError__getField;
+
+function SlackError__setField(name, value) {
+    if ((name) === ("type")) {
+        (this).type = value;
+    }
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+    if ((name) === ("channel")) {
+        (this).channel = value;
+    }
+    if ((name) === ("timestamp")) {
+        (this).timestamp = value;
+    }
+    if ((name) === ("code")) {
+        (this).code = value;
+    }
+    if ((name) === ("text")) {
+        (this).text = value;
+    }
+}
+SlackError.prototype._setField = SlackError__setField;
+
 // CLASS Hello
 /**
  * The client successfully connected to the server.
@@ -108,6 +196,44 @@ function Hello_dispatch(handler) {
     (handler).onHello(this);
 }
 Hello.prototype.dispatch = Hello_dispatch;
+
+function Hello__getClass() {
+    return "slack.event.Hello";
+}
+Hello.prototype._getClass = Hello__getClass;
+
+function Hello__getField(name) {
+    if ((name) === ("type")) {
+        return (this).type;
+    }
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    if ((name) === ("channel")) {
+        return (this).channel;
+    }
+    if ((name) === ("timestamp")) {
+        return (this).timestamp;
+    }
+    return null;
+}
+Hello.prototype._getField = Hello__getField;
+
+function Hello__setField(name, value) {
+    if ((name) === ("type")) {
+        (this).type = value;
+    }
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+    if ((name) === ("channel")) {
+        (this).channel = value;
+    }
+    if ((name) === ("timestamp")) {
+        (this).timestamp = value;
+    }
+}
+Hello.prototype._setField = Hello__setField;
 
 // CLASS Message
 /**
@@ -151,6 +277,68 @@ function Message_dispatch(handler) {
 }
 Message.prototype.dispatch = Message_dispatch;
 
+function Message__getClass() {
+    return "slack.event.Message";
+}
+Message.prototype._getClass = Message__getClass;
+
+function Message__getField(name) {
+    if ((name) === ("type")) {
+        return (this).type;
+    }
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    if ((name) === ("channel")) {
+        return (this).channel;
+    }
+    if ((name) === ("timestamp")) {
+        return (this).timestamp;
+    }
+    if ((name) === ("subtype")) {
+        return (this).subtype;
+    }
+    if ((name) === ("hidden")) {
+        return (this).hidden;
+    }
+    if ((name) === ("text")) {
+        return (this).text;
+    }
+    if ((name) === ("edited")) {
+        return (this).edited;
+    }
+    return null;
+}
+Message.prototype._getField = Message__getField;
+
+function Message__setField(name, value) {
+    if ((name) === ("type")) {
+        (this).type = value;
+    }
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+    if ((name) === ("channel")) {
+        (this).channel = value;
+    }
+    if ((name) === ("timestamp")) {
+        (this).timestamp = value;
+    }
+    if ((name) === ("subtype")) {
+        (this).subtype = value;
+    }
+    if ((name) === ("hidden")) {
+        (this).hidden = value;
+    }
+    if ((name) === ("text")) {
+        (this).text = value;
+    }
+    if ((name) === ("edited")) {
+        (this).edited = value;
+    }
+}
+Message.prototype._setField = Message__setField;
+
 // CLASS Edited
 /**
  * Metadata about an edit to a message.
@@ -165,3 +353,29 @@ function Edited__init_fields__() {
     this.timestamp = null;
 }
 Edited.prototype.__init_fields__ = Edited__init_fields__;
+
+function Edited__getClass() {
+    return "slack.event.Edited";
+}
+Edited.prototype._getClass = Edited__getClass;
+
+function Edited__getField(name) {
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    if ((name) === ("timestamp")) {
+        return (this).timestamp;
+    }
+    return null;
+}
+Edited.prototype._getField = Edited__getField;
+
+function Edited__setField(name, value) {
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+    if ((name) === ("timestamp")) {
+        (this).timestamp = value;
+    }
+}
+Edited.prototype._setField = Edited__setField;

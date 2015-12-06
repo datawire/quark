@@ -10,7 +10,31 @@ File(
 
   Method(Type(Name(T)), Name(get), Block(
     Return(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
-     $type=1.Box.T))))),
+     $type=1.Box.T)))),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Box<Object>", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("contents", $type=0.String),
+     $type=0.bool), Block(
+      Return(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
+       $type=1.Box.T)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("contents", $type=0.String),
+     $type=0.bool), Block(
+      Assign(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
+       $type=1.Box.T), Cast(Var(Name(value), $type=0.Object),
+       $type=1.Box.T))))))),
 
  Class(Name(Crate), TypeParam(Name(T)),
   Field(Type(Name(Box), Type(Name(T))), Name(box), $type=1.Box<1.Crate.T>),
@@ -26,10 +50,69 @@ File(
   Method(Type(Name(T)), Name(get), Block(
     Return(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(box),
        $type=1.Box<1.Crate.T>), Name(get), $type=1.Box.get),
-     $type=1.Crate.T))))),
+     $type=1.Crate.T)))),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Crate<Object>", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("box", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(box),
+       $type=1.Box<1.Crate.T>)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("ibox", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(ibox),
+       $type=1.Box<0.int>)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("box", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(box),
+       $type=1.Box<1.Crate.T>), Cast(Var(Name(value), $type=0.Object),
+       $type=1.Box<1.Crate.T>)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("ibox", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(ibox),
+       $type=1.Box<0.int>), Cast(Var(Name(value), $type=0.Object),
+       $type=1.Box<0.int>))))))),
 
  Class(Name(Sack),
-  Field(Type(Name(Box), Type(Name(int))), Name(ints), $type=1.Box<0.int>)),
+  Field(Type(Name(Box), Type(Name(int))), Name(ints), $type=1.Box<0.int>),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Sack", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("ints", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=1.Sack), Name(ints),
+       $type=1.Box<0.int>)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("ints", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=1.Sack), Name(ints),
+       $type=1.Box<0.int>), Cast(Var(Name(value), $type=0.Object),
+       $type=1.Box<0.int>))))))),
 
  Function(Type(Name(void)), Name(test1), Block(
    Local(

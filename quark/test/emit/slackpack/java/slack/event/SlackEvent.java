@@ -5,7 +5,7 @@ package slack.event;
 /**
  * Base class for all slack events.
  */
-public class SlackEvent {
+public class SlackEvent implements io.datawire.quark.runtime.QObject {
     /**
      * The event type.
      */
@@ -37,5 +37,37 @@ public class SlackEvent {
     }
     public void dispatch(slack.SlackHandler handler) {
         (handler).onSlackEvent(this);
+    }
+    public String _getClass() {
+        return "slack.event.SlackEvent";
+    }
+    public Object _getField(String name) {
+        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+            return (this).type;
+        }
+        if ((name)==("user") || ((name) != null && (name).equals("user"))) {
+            return (this).user;
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            return (this).channel;
+        }
+        if ((name)==("timestamp") || ((name) != null && (name).equals("timestamp"))) {
+            return (this).timestamp;
+        }
+        return null;
+    }
+    public void _setField(String name, Object value) {
+        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+            (this).type = (String) (value);
+        }
+        if ((name)==("user") || ((name) != null && (name).equals("user"))) {
+            (this).user = (slack.User) (value);
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            (this).channel = (slack.Channel) (value);
+        }
+        if ((name)==("timestamp") || ((name) != null && (name).equals("timestamp"))) {
+            (this).timestamp = (String) (value);
+        }
     }
 }

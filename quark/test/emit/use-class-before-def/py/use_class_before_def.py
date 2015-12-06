@@ -1,12 +1,4 @@
-from quark_runtime import *
-
-import pkg
-
-
-def main():
-    bar = pkg.Bar();
-    (bar).go();
-
+from pkg import main
 
 if __name__ == "__main__":
     main()

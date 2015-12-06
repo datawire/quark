@@ -1,18 +1,4 @@
-from quark_runtime import *
-
-class Test(object):
-    def _init(self):
-        pass
-    def __init__(self): self._init()
-
-    def test(self):
-        _println(u"Hello World!");
-
-
-
-def main():
-    (Test()).test();
-
+from print__lib import main
 
 if __name__ == "__main__":
     main()

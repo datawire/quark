@@ -1,15 +1,4 @@
-from quark_runtime import *
-
-import test1
-import test2
-import test3
-
-
-def main():
-    test1.go();
-    test2.go();
-    test3.go();
-
+from test1_test2_test3_common import main
 
 if __name__ == "__main__":
     main()

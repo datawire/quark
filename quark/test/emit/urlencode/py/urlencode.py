@@ -1,11 +1,4 @@
-from quark_runtime import *
-
-
-def main():
-    map = _Map();
-    (map)[u"pi"] = (3.14159);
-    _println(_urlencode(map));
-
+from urlencode_lib import main
 
 if __name__ == "__main__":
     main()

@@ -1,8 +1,3 @@
-var _qrt = require("datawire-quark-core");
+var common = require('./hello_lib');
 
-function main() {
-    _qrt.print("Hello World");
-}
-exports.main = main;
-
-main();
+common.main();

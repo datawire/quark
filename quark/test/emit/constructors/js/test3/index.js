@@ -19,6 +19,26 @@ function Box_get() {
 }
 Box.prototype.get = Box_get;
 
+function Box__getClass() {
+    return "test3.Box<Object>";
+}
+Box.prototype._getClass = Box__getClass;
+
+function Box__getField(name) {
+    if ((name) === ("contents")) {
+        return (this).contents;
+    }
+    return null;
+}
+Box.prototype._getField = Box__getField;
+
+function Box__setField(name, value) {
+    if ((name) === ("contents")) {
+        (this).contents = value;
+    }
+}
+Box.prototype._setField = Box__setField;
+
 function go() {
     var box = new Box("Hello World!!!");
     _qrt.print((box).get());

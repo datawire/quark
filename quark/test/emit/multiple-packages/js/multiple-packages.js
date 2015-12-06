@@ -1,16 +1,3 @@
-var _qrt = require("datawire-quark-core");
-var p1 = require('./p1');
-exports.p1 = p1;
-var p1 = require('./p1');
-exports.p1 = p1;
+var common = require('./p1_p1_common');
 
-
-function main() {
-    p1.p2.a();
-    p1.p2.b();
-    p1.c();
-    p1.d();
-}
-exports.main = main;
-
-main();
+common.main();

@@ -2,7 +2,7 @@ package pkg;
 
 
 
-public class Handler implements slack.SlackHandler {
+public class Handler implements slack.SlackHandler, io.datawire.quark.runtime.QObject {
     public Handler() {}
     public void onSlackEvent(slack.event.SlackEvent event) {
         System.out.println((event).type);
@@ -13,6 +13,13 @@ public class Handler implements slack.SlackHandler {
             System.out.println(((event).channel).channel);
         }
     }
+    public String _getClass() {
+        return "pkg.Handler";
+    }
+    public Object _getField(String name) {
+        return null;
+    }
+    public void _setField(String name, Object value) {}
     public void onHello(slack.event.Hello hello) {
         (this).onSlackEvent(hello);
     }

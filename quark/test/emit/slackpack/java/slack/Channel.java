@@ -3,7 +3,7 @@ package slack;
 /**
  * A reference to a channel.
  */
-public class Channel {
+public class Channel implements io.datawire.quark.runtime.QObject {
     public Client client;
     public String channel;
     public Channel(Client client, String channel) {
@@ -19,5 +19,25 @@ public class Channel {
         (msg).setObjectItem(("channel"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).channel)));
         (msg).setObjectItem(("text"), ((new io.datawire.quark.runtime.JSONObject()).setString(message)));
         (this.client).ws_send((msg).toString());
+    }
+    public String _getClass() {
+        return "slack.Channel";
+    }
+    public Object _getField(String name) {
+        if ((name)==("client") || ((name) != null && (name).equals("client"))) {
+            return (this).client;
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            return (this).channel;
+        }
+        return null;
+    }
+    public void _setField(String name, Object value) {
+        if ((name)==("client") || ((name) != null && (name).equals("client"))) {
+            (this).client = (Client) (value);
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            (this).channel = (String) (value);
+        }
     }
 }

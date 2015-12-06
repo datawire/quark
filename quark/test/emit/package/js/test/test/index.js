@@ -21,3 +21,23 @@ function Test_go() {
     _qrt.print("TTGO!!");
 }
 Test.prototype.go = Test_go;
+
+function Test__getClass() {
+    return "test.test.Test";
+}
+Test.prototype._getClass = Test__getClass;
+
+function Test__getField(name) {
+    if ((name) === ("size")) {
+        return (this).size;
+    }
+    return null;
+}
+Test.prototype._getField = Test__getField;
+
+function Test__setField(name, value) {
+    if ((name) === ("size")) {
+        (this).size = value;
+    }
+}
+Test.prototype._setField = Test__setField;

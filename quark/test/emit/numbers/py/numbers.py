@@ -1,11 +1,4 @@
-from quark_runtime import *
-
-
-def main():
-    a = 2;
-    b = 2;
-    _println(str((a) + (b)));
-
+from numbers_lib import main
 
 if __name__ == "__main__":
     main()

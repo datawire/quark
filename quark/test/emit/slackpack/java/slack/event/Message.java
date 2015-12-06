@@ -5,7 +5,7 @@ package slack.event;
 /**
  * A message was sent to a channel.
  */
-public class Message extends SlackEvent {
+public class Message extends SlackEvent implements io.datawire.quark.runtime.QObject {
     /**
      * The subtype field indicates the type of message.
      */
@@ -30,5 +30,61 @@ public class Message extends SlackEvent {
     }
     public void dispatch(slack.SlackHandler handler) {
         (handler).onMessage(this);
+    }
+    public String _getClass() {
+        return "slack.event.Message";
+    }
+    public Object _getField(String name) {
+        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+            return (this).type;
+        }
+        if ((name)==("user") || ((name) != null && (name).equals("user"))) {
+            return (this).user;
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            return (this).channel;
+        }
+        if ((name)==("timestamp") || ((name) != null && (name).equals("timestamp"))) {
+            return (this).timestamp;
+        }
+        if ((name)==("subtype") || ((name) != null && (name).equals("subtype"))) {
+            return (this).subtype;
+        }
+        if ((name)==("hidden") || ((name) != null && (name).equals("hidden"))) {
+            return (this).hidden;
+        }
+        if ((name)==("text") || ((name) != null && (name).equals("text"))) {
+            return (this).text;
+        }
+        if ((name)==("edited") || ((name) != null && (name).equals("edited"))) {
+            return (this).edited;
+        }
+        return null;
+    }
+    public void _setField(String name, Object value) {
+        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+            (this).type = (String) (value);
+        }
+        if ((name)==("user") || ((name) != null && (name).equals("user"))) {
+            (this).user = (slack.User) (value);
+        }
+        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+            (this).channel = (slack.Channel) (value);
+        }
+        if ((name)==("timestamp") || ((name) != null && (name).equals("timestamp"))) {
+            (this).timestamp = (String) (value);
+        }
+        if ((name)==("subtype") || ((name) != null && (name).equals("subtype"))) {
+            (this).subtype = (String) (value);
+        }
+        if ((name)==("hidden") || ((name) != null && (name).equals("hidden"))) {
+            (this).hidden = (Boolean) (value);
+        }
+        if ((name)==("text") || ((name) != null && (name).equals("text"))) {
+            (this).text = (String) (value);
+        }
+        if ((name)==("edited") || ((name) != null && (name).equals("edited"))) {
+            (this).edited = (Edited) (value);
+        }
     }
 }

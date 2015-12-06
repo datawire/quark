@@ -1,14 +1,4 @@
-from quark_runtime import *
-
-import slack
-import pkg
-
-
-def main():
-    cli = slack.Client(None, u"fake-token", pkg.Handler());
-    (cli).onWSMessage(None, u"{\"type\": \"hello\"}");
-    (cli).onWSMessage(None, u"{\"type\": \"message\", \"user\": \"uid-1\", \"channel\": \"chanel-1\"}");
-
+from pkg_slack_common import main
 
 if __name__ == "__main__":
     main()

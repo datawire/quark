@@ -1,17 +1,3 @@
-var _qrt = require("datawire-quark-core");
+var common = require('./autocast_lib');
 
-function foo(s) {
-    _qrt.print(s);
-}
-exports.foo = foo;
-
-function main() {
-    var o = "Hello World!";
-    var s = o;
-    var s2 = null;
-    s2 = o;
-    foo(o);
-}
-exports.main = main;
-
-main();
+common.main();

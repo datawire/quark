@@ -1,9 +1,3 @@
-var _qrt = require("datawire-quark-core");
+var common = require('./fancyprim');
 
-function main() {
-    var s = [1, 2, 3];
-    _qrt.print(s);
-}
-exports.main = main;
-
-main();
+common.main();

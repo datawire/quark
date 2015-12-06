@@ -5,7 +5,7 @@ package slack;
 /**
  * Represents a persistent connection to the slack service.
  */
-public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.quark.runtime.HTTPHandler {
+public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.quark.runtime.HTTPHandler, io.datawire.quark.runtime.QObject {
     public io.datawire.quark.runtime.Runtime runtime;
     public String token;
     public SlackHandler handler;
@@ -81,6 +81,44 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
                 (error).text = ((login_data).getObjectItem("error")).getString();
                 (error).dispatch((this).handler);
             }
+        }
+    }
+    public String _getClass() {
+        return "slack.Client";
+    }
+    public Object _getField(String name) {
+        if ((name)==("runtime") || ((name) != null && (name).equals("runtime"))) {
+            return (this).runtime;
+        }
+        if ((name)==("token") || ((name) != null && (name).equals("token"))) {
+            return (this).token;
+        }
+        if ((name)==("handler") || ((name) != null && (name).equals("handler"))) {
+            return (this).handler;
+        }
+        if ((name)==("event_id") || ((name) != null && (name).equals("event_id"))) {
+            return (this).event_id;
+        }
+        if ((name)==("socket") || ((name) != null && (name).equals("socket"))) {
+            return (this).socket;
+        }
+        return null;
+    }
+    public void _setField(String name, Object value) {
+        if ((name)==("runtime") || ((name) != null && (name).equals("runtime"))) {
+            (this).runtime = (io.datawire.quark.runtime.Runtime) (value);
+        }
+        if ((name)==("token") || ((name) != null && (name).equals("token"))) {
+            (this).token = (String) (value);
+        }
+        if ((name)==("handler") || ((name) != null && (name).equals("handler"))) {
+            (this).handler = (SlackHandler) (value);
+        }
+        if ((name)==("event_id") || ((name) != null && (name).equals("event_id"))) {
+            (this).event_id = (Integer) (value);
+        }
+        if ((name)==("socket") || ((name) != null && (name).equals("socket"))) {
+            (this).socket = (io.datawire.quark.runtime.WebSocket) (value);
         }
     }
     public void onWSInit(io.datawire.quark.runtime.WebSocket socket) {}

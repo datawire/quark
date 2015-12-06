@@ -35,6 +35,26 @@ class User(object):
         (self).client = client
         (self).user = user
 
+    def _getClass(self):
+        return u"slack.User"
+
+    def _getField(self, name):
+        if ((name) == (u"client")):
+            return (self).client
+
+        if ((name) == (u"user")):
+            return (self).user
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"client")):
+            (self).client = value
+
+        if ((name) == (u"user")):
+            (self).user = value
+
+    
 
 class Channel(object):
     """
@@ -59,6 +79,26 @@ class Channel(object):
         (msg).setObjectItem((u"text"), ((_JSONObject()).setString(message)));
         (self.client).ws_send((msg).toString());
 
+    def _getClass(self):
+        return u"slack.Channel"
+
+    def _getField(self, name):
+        if ((name) == (u"client")):
+            return (self).client
+
+        if ((name) == (u"channel")):
+            return (self).channel
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"client")):
+            (self).client = value
+
+        if ((name) == (u"channel")):
+            (self).channel = value
+
+    
 
 class Client(object):
     """
@@ -143,6 +183,43 @@ class Client(object):
                 (error).dispatch((self).handler);
 
         
+
+    def _getClass(self):
+        return u"slack.Client"
+
+    def _getField(self, name):
+        if ((name) == (u"runtime")):
+            return (self).runtime
+
+        if ((name) == (u"token")):
+            return (self).token
+
+        if ((name) == (u"handler")):
+            return (self).handler
+
+        if ((name) == (u"event_id")):
+            return (self).event_id
+
+        if ((name) == (u"socket")):
+            return (self).socket
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"runtime")):
+            (self).runtime = value
+
+        if ((name) == (u"token")):
+            (self).token = value
+
+        if ((name) == (u"handler")):
+            (self).handler = value
+
+        if ((name) == (u"event_id")):
+            (self).event_id = value
+
+        if ((name) == (u"socket")):
+            (self).socket = value
 
     def onWSInit(self, socket):
         pass

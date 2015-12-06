@@ -53,6 +53,31 @@ function User__init_fields__() {
 }
 User.prototype.__init_fields__ = User__init_fields__;
 
+function User__getClass() {
+    return "slack.User";
+}
+User.prototype._getClass = User__getClass;
+
+function User__getField(name) {
+    if ((name) === ("client")) {
+        return (this).client;
+    }
+    if ((name) === ("user")) {
+        return (this).user;
+    }
+    return null;
+}
+User.prototype._getField = User__getField;
+
+function User__setField(name, value) {
+    if ((name) === ("client")) {
+        (this).client = value;
+    }
+    if ((name) === ("user")) {
+        (this).user = value;
+    }
+}
+User.prototype._setField = User__setField;
 
 // CLASS Channel
 /**
@@ -83,6 +108,32 @@ function Channel_send(message) {
     (this.client).ws_send((msg).toString());
 }
 Channel.prototype.send = Channel_send;
+
+function Channel__getClass() {
+    return "slack.Channel";
+}
+Channel.prototype._getClass = Channel__getClass;
+
+function Channel__getField(name) {
+    if ((name) === ("client")) {
+        return (this).client;
+    }
+    if ((name) === ("channel")) {
+        return (this).channel;
+    }
+    return null;
+}
+Channel.prototype._getField = Channel__getField;
+
+function Channel__setField(name, value) {
+    if ((name) === ("client")) {
+        (this).client = value;
+    }
+    if ((name) === ("channel")) {
+        (this).channel = value;
+    }
+}
+Channel.prototype._setField = Channel__setField;
 
 // CLASS Client
 /**
@@ -192,6 +243,50 @@ function Client_onHTTPResponse(request, response) {
     }
 }
 Client.prototype.onHTTPResponse = Client_onHTTPResponse;
+
+function Client__getClass() {
+    return "slack.Client";
+}
+Client.prototype._getClass = Client__getClass;
+
+function Client__getField(name) {
+    if ((name) === ("runtime")) {
+        return (this).runtime;
+    }
+    if ((name) === ("token")) {
+        return (this).token;
+    }
+    if ((name) === ("handler")) {
+        return (this).handler;
+    }
+    if ((name) === ("event_id")) {
+        return (this).event_id;
+    }
+    if ((name) === ("socket")) {
+        return (this).socket;
+    }
+    return null;
+}
+Client.prototype._getField = Client__getField;
+
+function Client__setField(name, value) {
+    if ((name) === ("runtime")) {
+        (this).runtime = value;
+    }
+    if ((name) === ("token")) {
+        (this).token = value;
+    }
+    if ((name) === ("handler")) {
+        (this).handler = value;
+    }
+    if ((name) === ("event_id")) {
+        (this).event_id = value;
+    }
+    if ((name) === ("socket")) {
+        (this).socket = value;
+    }
+}
+Client.prototype._setField = Client__setField;
 
 function Client_onWSInit(socket) {}
 Client.prototype.onWSInit = Client_onWSInit;

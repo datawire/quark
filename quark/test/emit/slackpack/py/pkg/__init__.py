@@ -17,6 +17,15 @@ class Handler(object):
         if (((event).channel) != (None)):
             _println(((event).channel).channel);
 
+    def _getClass(self):
+        return u"pkg.Handler"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
     def onHello(self, hello):
         (self).onSlackEvent(hello);
 

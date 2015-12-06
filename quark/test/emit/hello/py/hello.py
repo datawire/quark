@@ -1,9 +1,4 @@
-from quark_runtime import *
-
-
-def main():
-    _println(u"Hello World");
-
+from hello_lib import main
 
 if __name__ == "__main__":
     main()
