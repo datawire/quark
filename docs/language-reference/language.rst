@@ -9,5 +9,6 @@ Quark supports the following language elements:
    Keywords <keywords>
    Operators <operators>
    Data Types <types>
+   Integration Types <integrationTypes>
    Functions <functions>
    Annotations <annotations>

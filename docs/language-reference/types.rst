@@ -11,31 +11,18 @@ Quark defines the following data types:
    :maxdepth: 1
 
    bool
-   Buffer
    byte
-   Codec
    float
-   HTTPHandler
-   HTTPRequest
-   HTTPResponse
-   HTTPServlet
    int
    integral
-   JSONObject
    List
    long
    numerical
    Map
    Object
-   Runtime
-   Servlet
    short
    String
-   Task
    void
-   WebSocket
-   WSHandler
-   WSServlet
 
 .. _bool:
 
@@ -64,24 +51,10 @@ Javascript   Boolean true|false
 Python       bool    True|False
 ===========  ======= ==============
 
-.. _Buffer:
-
-Buffer
-~~~~~~
-
-Documentation coming soon
-
 .. _byte:
 
 byte
 ~~~~
-
-Documentation coming soon
-
-.. _Buffer:
-
-Codec
-~~~~~
 
 Documentation coming soon
 
@@ -120,34 +93,6 @@ Floats are translated in generated code as follows:
 | Python     | float   | varies; see sys.float.info                                  |
 +------------+---------+-------------------------------------------------------------+
 
-.. _HTTPHandler:
-
-HTTPHandler
-~~~~~~~~~~~
-
-Documentation coming soon
-
-.. _HTTPRequest:
-
-HTTPRequest
-~~~~~~~~~~~
-
-Documentation coming soon
-
-.. _HTTPResponse:
-
-HTTPResponse
-~~~~~~~~~~~~
-
-Documentation coming soon
-
-.. _HTTPServlet:
-
-HTTPServlet
-~~~~~~~~~~~
-
-Documentation coming soon
-
 .. _int:
 
 int
@@ -185,13 +130,6 @@ integral
 ~~~~~~~~
 
 The integral type is a base type for all integers. It should not be used directly within Quark code.
-
-.. _JSONObject:
-
-JSONObject
-~~~~~~~~~~
-
-Documentation coming soon
 
 .. _list:
 
@@ -323,27 +261,12 @@ Javascript   Object            constrained by definition
 Python       object            constrained by definition
 ===========  ================= =========================
 
-.. _Runtime:
-
-Runtime
-~~~~~~~
-
-Documentation coming soon
-
-.. _Servlet:
-
-Servlet
-~~~~~~~
-
-Documentation coming soon
-
 .. _short:
 
 short
 ~~~~~
 
 Documentation coming soon
-
 
 .. _String:
 
@@ -377,13 +300,6 @@ Strings are translated in generated code as follows:
 |            |         | Can contain any character that can be UTF-8 encoded             |
 +------------+---------+-----------------------------------------------------------------+
 
-.. _Task:
-
-Task
-~~~~
-
-Documentation coming soon
-
 .. _void:
 
 void
@@ -408,24 +324,3 @@ Java         void              any function without a return value
 Javascript   N/A               any function returning undefined
 Python       N/A               any function returning None        
 ===========  ================= ===================================
-
-.. _WebSocket:
-
-WebSocket
-~~~~~~~~~
-
-Documentation coming soon
-
-.. _WSHandler:
-
-WSHandler
-~~~~~~~~~
-
-Documentation coming soon
-
-.. _WSServlet:
-
-WSServlet
-~~~~~~~~~
-
-Documentation coming soon
