@@ -1,5 +1,5 @@
-References
-==========
+More Information
+================
 
 For further information about Quark, see the following:
 
