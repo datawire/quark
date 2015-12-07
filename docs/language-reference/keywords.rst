@@ -8,25 +8,25 @@ Keywords are reserved words that have a specific meaning within Quark. They cann
 Quark defines the following keywords:
 
 .. toctree::
-  :maxdepth: 1
+   :maxdepth: 1
 
-  break
-  class
-  continue
-  else
-  extends
-  false
-  if
-  interface
-  macro
-  new
-  null
-  package
-  primitive
-  return
-  super
-  true
-  while
+   break
+   class
+   continue
+   else
+   extends
+   false
+   if
+   interface
+   macro
+   new
+   null
+   package
+   primitive
+   return
+   super
+   true
+   while
 
 .. _breakKeyword:
 

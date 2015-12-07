@@ -4,16 +4,16 @@ Core Concepts
 Quark is a Turing-complete language designed primarily for facilitating microservice communication pathways although it is not limited to this function.
 
 .. toctree::
-  :maxdepth: 3
+   :maxdepth: 3
 
-  Language Structure
-  Naming and Other Conventions
-  Inheritance
-  Object Instantiation
-  Typing
-  Comments
-  White Space
-  End of Line
+   Language Structure
+   Naming and Other Conventions
+   Inheritance
+   Object Instantiation
+   Typing
+   Comments
+   White Space
+   End of Line
 
 Language Structure
 ------------------
