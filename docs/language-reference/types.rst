@@ -8,34 +8,34 @@ Quark data types typically have analogues in each target language and Quark uses
 Quark defines the following data types:
 
 .. toctree::
-  :maxdepth: 1
+   :maxdepth: 1
 
-  bool
-  Buffer
-  byte
-  Codec
-  float
-  HTTPHandler
-  HTTPRequest
-  HTTPResponse
-  HTTPServlet
-  int
-  integral
-  JSONObject
-  List
-  long
-  numerical
-  Map
-  Object
-  Runtime
-  Servlet
-  short
-  String
-  Task
-  void
-  WebSocket
-  WSHandler
-  WSServlet
+   bool
+   Buffer
+   byte
+   Codec
+   float
+   HTTPHandler
+   HTTPRequest
+   HTTPResponse
+   HTTPServlet
+   int
+   integral
+   JSONObject
+   List
+   long
+   numerical
+   Map
+   Object
+   Runtime
+   Servlet
+   short
+   String
+   Task
+   void
+   WebSocket
+   WSHandler
+   WSServlet
 
 .. _bool:
 
