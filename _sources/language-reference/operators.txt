@@ -6,25 +6,27 @@ Operators
 Quark defines the following operators:
 
 .. toctree::
-  :maxdepth: 1
+   :maxdepth: 1
 
-  Add (+) <Add>
-  And (&&) <And>
-  Bitwise Complement (~) <Bitwise Complement>
-  Divide (/) <Divide>
-  Equals (=) <Equals>
-  Equivalent (==) <Equivalent>
-  Greater Than (>) <Greater Than>
-  Greater Than or Equal (>=) <Greater Than or Equal>
-  Less Than (<) <Less Than>
-  Less Than or Equal (<=) <Less Than or Equal>
-  Modulo (%) <Modulo>
-  Multiply (*) <Multiply>
-  Negate (-) <Negate>
-  Not (!) <Not>
-  Not Equivalent (!=) <Not Equivalent>
-  Or (||) <Or>
-  Subtract (-) <Subtract>
+   Add (+) <Add>
+   And (&&) <And>
+   At (@) <At>
+   Bitwise Complement (~) <Bitwise Complement>
+   Cast (?) <Cast>
+   Divide (/) <Divide>
+   Equals (=) <Equals>
+   Equivalent (==) <Equivalent>
+   Greater Than (>) <Greater Than>
+   Greater Than or Equal (>=) <Greater Than or Equal>
+   Less Than (<) <Less Than>
+   Less Than or Equal (<=) <Less Than or Equal>
+   Modulo (%) <Modulo>
+   Multiply (*) <Multiply>
+   Negate (-) <Negate>
+   Not (!) <Not>
+   Not Equivalent (!=) <Not Equivalent>
+   Or (||) <Or>
+   Subtract (-) <Subtract>
 
 .. _AddOperator:
 
@@ -58,6 +60,13 @@ The And operator syntax is:
 
 where *A* and *B* are the two values being evaluated.
 
+.. _AtOperator:
+
+At
+~~
+
+Documentation Coming Soon
+
 .. _ComplementOperator:
 
 Bitwise Complement
@@ -76,6 +85,13 @@ where *A* is the value to switch.
 The Bitwise Complement operator is only partially supported at the moment. See `linkIssue34`_ for more information.
 
 .. _linkIssue34: https://github.com/datawire/quark/issues/34
+
+.. _CastOperator:
+
+Cast
+~~~~
+
+Documentation Coming Soon
 
 .. _DivideOperator:
 

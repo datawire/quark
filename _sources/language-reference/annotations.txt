@@ -10,10 +10,10 @@ Unlike most Quark code, annotations do not use the standard end of line characte
 Quark defines the following annotations:
 
 .. toctree::
-  :maxdepth: 1
+   :maxdepth: 1
 
-  @doc
-  @version
+   @doc
+   @version
 
 .. _docAnnotation:
 
@@ -42,15 +42,15 @@ Support for automatic documentation generation in Quark is still in its early st
 
 * Javadoc does not include content of @doc annotations for methods. See `linkIssue46`_ for more information.
 
-.. _linkIssue48: https://github.com/datawire/quark/issues/46
+.. _linkIssue46: https://github.com/datawire/quark/issues/46
 
 * If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See `linkIssue45`_ for more information.
 
-.. _linkIssue48: https://github.com/datawire/quark/issues/45
+.. _linkIssue45: https://github.com/datawire/quark/issues/45
 
 * Javascript documentation is very basic and omits many @doc annotations. See `linkIssue47`_ for more information.
 
-.. _linkIssue48: https://github.com/datawire/quark/issues/47
+.. _linkIssue47: https://github.com/datawire/quark/issues/47
 
 [[JMK I have not seen actual generated Sphinx doc; I see a compiler directive to automatically pull content from the source directory but have not written a make file to generate actual doc to see what gets included so there may also be missing content]]
 

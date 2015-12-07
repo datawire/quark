@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../_static/doctools.js"></script>
     <link rel="top" title="Quark 0.1.15 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
-    <link rel="next" title="References" href="links.html" />
+    <link rel="next" title="More Information" href="links.html" />
     <link rel="prev" title="Functions" href="functions.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
@@ -41,7 +41,7 @@
           <a href="functions.html" title="Previous document">Functions</a>
         </li>
         <li>
-          <a href="links.html" title="Next document">References</a>
+          <a href="links.html" title="Next document">More Information</a>
           &rarr;
         </li>
     </ul>
@@ -86,16 +86,16 @@
 <h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
 <p>Support for automatic documentation generation in Quark is still in its early stages and will be improved in the future. Some currently known issues include:</p>
 <ul class="simple">
-<li>Generated Sphinx source does not include a make file. See <a href="#id6"><span class="problematic" id="id7">`linkIssue48`_</span></a> for more information.</li>
+<li>Generated Sphinx source does not include a make file. See <a class="reference external" href="https://github.com/datawire/quark/issues/48">linkIssue48</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>Javadoc does not include content of &#64;doc annotations for methods. See <a href="#id8"><span class="problematic" id="id9">`linkIssue46`_</span></a> for more information.</li>
+<li>Javadoc does not include content of &#64;doc annotations for methods. See <a class="reference external" href="https://github.com/datawire/quark/issues/46">linkIssue46</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See <a href="#id10"><span class="problematic" id="id11">`linkIssue45`_</span></a> for more information.</li>
+<li>If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See <a class="reference external" href="https://github.com/datawire/quark/issues/45">linkIssue45</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>Javascript documentation is very basic and omits many &#64;doc annotations. See <a href="#id12"><span class="problematic" id="id13">`linkIssue47`_</span></a> for more information.</li>
+<li>Javascript documentation is very basic and omits many &#64;doc annotations. See <a class="reference external" href="https://github.com/datawire/quark/issues/47">linkIssue47</a> for more information.</li>
 </ul>
 <p>[[JMK I have not seen actual generated Sphinx doc; I see a compiler directive to automatically pull content from the source directory but have not written a make file to generate actual doc to see what gets included so there may also be missing content]]</p>
 </div>
@@ -103,13 +103,13 @@
 <div class="section" id="version">
 <span id="versionannotation"></span><h2>&#64;version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
 <p>&#64;version allows users to specify a version for a package or group of packages. If no version is specified, the version is set to the default &#8220;0.0&#8221;. Versions will be set in a global pom.xml for all generated Java, a global setup.py for all generated Python, and package.json inside each Javascript package.</p>
-<div class="section" id="id4">
-<h3>Syntax<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p><strong>&#64;version(</strong> <em>versionNumber</em> <strong>)</strong></p>
 <p>where <em>versionNumber</em> is a string representing the version number. Note that there is no semi-colon (;) at the end of the line.</p>
 </div>
-<div class="section" id="id5">
-<h3>Constraints<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h3>Constraints<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
 <p>&#64;version must be defined at the top level of a Quark file. It should be used directly above a package declaration. By default it applies to all packages defined underneath it in a file. If more than one &#64;version annotation is included in a Quark file, each annotation applies only to the package it directly proceeds; any package without its own &#64;version annotation will default to version &#8220;0.0&#8221;.</p>
 </div>
 </div>
@@ -135,7 +135,7 @@
                         title="previous chapter">Functions</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="links.html"
-                        title="next chapter">References</a></p>
+                        title="next chapter">More Information</a></p>
 <div class="sourcelink">
   <a href="../_sources/language-reference/annotations.txt" rel="nofollow">
     Show page source
@@ -167,7 +167,7 @@
           <a href="functions.html" title="Previous document">Functions</a>
         </li>
         <li>
-          <a href="links.html" title="Next document">References</a>
+          <a href="links.html" title="Next document">More Information</a>
           &rarr;
         </li>
     </ul>

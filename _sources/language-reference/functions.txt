@@ -6,50 +6,288 @@ Functions
 Quark defines the following functions:
 
 .. toctree::
-  :maxdepth: 1
+   :maxdepth: 1
   
-  float::__add__()
-  float::__div__()
-  float::__gt__()
-  float::__lt__()
-  float::__mul__()
-  float::__neg__()
-  float::__sub__()
-  float::toString()
-  int::__add__()
-  int::__div__()
-  int::__gt__()
-  int::__lt__()
-  int::__mod__()
-  int::__mul__()
-  int::__neg__()
-  int::__sub__()
-  int::toString()
-  List::__get__()
-  List::__set__()
-  List::add()
-  List::size()
-  long::__add__()
-  long::__div__()
-  long::__gt__()
-  long::__lt__()
-  long::__mul__()
-  long::__neg__()
-  long::__sub__()
-  long::toString()
-  Map::__get__()
-  Map::__set__()
-  Map::contains()
-  Map::update()
-  Object::__eq__()
-  Object::__nq__()
-  now()
-  parseInt()
-  print()
-  sleep()
-  String::__add__()
-  url_get()
+   bool::__and__()
+   bool::__eq__()
+   bool::__ne__()
+   bool::__not__()
+   bool::__or__()
+   bool::toJSON()
+   bool::_to_JSONObject()
+   bool::toString()
+   byte::__add__()
+   byte::__div__()
+   byte::__eq__()
+   byte::__gt__()
+   byte::__lt__()
+   byte::__mod__()
+   byte::__mul__()
+   byte::__ne__()
+   byte::__neg__()
+   byte::__sub__()
+   byte::toFloat()
+   byte::toJSON()
+   byte::_to_JSONObject()
+   byte::toString()
+   defaultCodec()
+   float::__add__()
+   float::__div__()
+   float::__eq__()
+   float::__gt__()
+   float::__lt__()
+   float::__mul__()
+   float::__ne__()
+   float::__neg__()
+   float::__round__()
+   float::__sub__()
+   float::toJSON()
+   float::_to_JSONObject()
+   float::toString()
+   int::__add__()
+   int::__div__()
+   int::__eq__()
+   int::__gt__()
+   int::__lt__()
+   int::__mod__()
+   int::__mul__()
+   int::__ne__()
+   int::__neg__()
+   int::__sub__()
+   int::_to_byte()
+   int::toFloat()
+   int::toJSON()
+   int::_to_JSONObject()
+   int::_to_long()
+   int::_to_short()
+   int::toString()
+   List::__eq__()
+   List::__get__()
+   List::__ne__()
+   List::__set__()
+   List::add()
+   List::size()
+   long::__add__()
+   long::__div__()
+   long::__eq__()
+   long::__gt__()
+   long::__lt__()
+   long::__mod__()
+   long::__mul__()
+   long::__ne__()
+   long::__neg__()
+   long::__sub__()
+   long::toFloat()
+   long::toJSON()
+   long::_to_JSONObject()
+   long::toString()
+   Map::__eq__()
+   Map::__get__()
+   Map::__ne__()
+   Map::__set__()
+   Map::contains()
+   Map::update()
+   Map::urlencode()
+   Object::__eq__()
+   Object::__nq__()
+   now()
+   parseInt()
+   print()
+   short::__add__()
+   short::__div__()
+   short::__eq__()
+   short::__gt__()
+   short::__lt__()
+   short::__mod__()
+   short::__mul__()
+   short::__ne__()
+   short::__neg__()
+   short::__sub__()
+   short::toFloat()
+   short::toJSON()
+   short::_to_JSONObject()
+   short::toString()
+   sleep()
+   String::__add__()
+   String::endsWith()
+   String::__eq__()
+   String::find()
+   String::join()
+   String::__ne__()
+   String::parseJSON()
+   String::replace()
+   String::size()
+   String::split()
+   String::startsWith()
+   String::substring()
+   String::toJSON()
+   String::_to_JSONObject()
+   url_get()
   
+
+.. _boolAnd:
+
+bool::__and__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolEqual:
+
+bool::__eq__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolNotEqual:
+
+bool::__ne__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolNot:
+
+bool::__not__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolOr:
+
+bool::__or__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolToJson:
+
+bool::toJSON()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolToJSONObject:
+
+bool::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolToString:
+
+bool::toString()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
+.. _byteAdd:
+
+byte::__add__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteDivide:
+
+byte::__div__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteEqual:
+
+byte::__eq__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteGreaterThan:
+
+byte::__gt__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteLessThan:
+
+byte::__lt__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteModulo:
+
+byte::__mod__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteMultiply:
+
+byte::__mul__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteNotEqual:
+
+byte::__ne__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteNegate:
+
+byte::__neg__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteSubtract:
+
+byte::__sub__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteToFloat:
+
+byte::toFloat()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteToJSON:
+
+byte::toJSON()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteToJSONObject:
+
+byte::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
+.. _byteToString:
+
+byte::toString()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
+.. _defaultCodec:
+
+defaultCodec()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
   
 .. _floatAdd:
 
@@ -81,6 +319,12 @@ where *A* is the floating point numerator and *B* is the floating point denomina
 
 This function is used under the covers by the / operator; *A* **/** *B* is equivalent to *A*.__div__(*B*).
 
+.. _floatEqual:
+
+float::__eq__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
 
 .. _floatGreaterThan:
 
@@ -142,6 +386,20 @@ where *A* is a floating point value.
 
 This function is used under the covers by the - operator; **-** *A* is equivalent to *A*.__neg__().
 
+.. _floatNotEqual:
+
+float::__ne__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _floatRound:
+
+float::round()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _floatSubtract:
 
 float::__sub__()
@@ -156,6 +414,21 @@ float *A*.__sub__(*B*)
 where *A* and *B* are floating point values and *B* is being subtracted from *A*.
 
 This function is used under the covers by the - operator; *A* **-** *B* is equivalent to *A*.__sub__(*B*).
+
+.. _floatToJSON:
+
+float::toJSON()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _floatToJSONObject:
+
+float::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 
 .. _floatToString:
 
@@ -199,6 +472,13 @@ int *A*.__div__(*B*)
 where *A* is the integer numerator and *B* is the integer denominator.
 
 This function is used under the covers by the / operator; *A* **/** *B* is equivalent to *A*.__div__(*B*).
+
+.. _intEqual:
+
+int::__equal__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
 
 .. _intGreaterThan:
 
@@ -275,6 +555,13 @@ where *A* is any integer value.
 
 This function is used under the covers by the - operator; **-** *A* is equivalent to *A*.__neg__().
 
+.. _intNotEqual:
+
+int::__ne__()
+~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _intSubtract:
 
 int::__sub__()
@@ -289,6 +576,48 @@ int *A*.__sub__(*B*)
 where *A* and *B* are integers and *B* is being subtracted from *A*.
 
 This function is used under the covers by the - operator; *A* **-** *B* is equivalent to *A*.__sub__(*B*).
+
+.. _intToByte:
+
+int::_to_Byte()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intToFloat:
+
+float::toFloat()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intToJSON:
+
+int::toJSON()
+~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intToJSONObject:
+
+int::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intToLong:
+
+int::_to_Long()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intToShort:
+
+int::_to_Short()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
 
 .. _intToString:
 
@@ -391,6 +720,13 @@ where *A* is the long integer numerator and *B* is the long integer denominator.
 
 This function is used under the covers by the / operator; *A* **/** *B* is equivalent to *A*.__div__(*B*).
 
+.. _longEqual:
+
+long::__eq__()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _longGreaterThan:
 
 long::__gt__()
@@ -466,6 +802,29 @@ where *A* and *B* are long integers and *B* is being subtracted from *A*.
 
 This function is used under the covers by the - operator; *A* **-** *B* is equivalent to *A*.__div__(*B*).
 
+.. _longToFloat:
+
+long::toFloat()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _longToJSON:
+
+long::toJSON()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _longToJSONObject:
+
+long::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _longToString:
+
 long::toString()
 ~~~~~~~~~~~~~~~~
 Used to cast a long integer to a string.
@@ -473,22 +832,66 @@ Used to cast a long integer to a string.
 Syntax
 ++++++
 
-int *A*.toString()
+long *A*.toString()
 
 where *A* is a long integer.
 
+.. _MapContains:
 
-Map::__get__() - coming soon
+Map::contains()
+~~~~~~~~~~~~~~~
 
-Map::__set__() - coming soon
+Documentation Coming Soon
 
-Map::contains() - coming soon
 
-Map::update() - coming soon
+.. _MapEqual:
 
-Object::__eq__() - coming soon
+Map::__eq__()
+~~~~~~~~~~~~~
 
-Object::__nq__() - coming soon
+Documentation Coming Soon
+
+.. _MapGet:
+
+Map::get()
+~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _MapNotEqual:
+
+Map::__ne__()
+~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _MapSet:
+
+Map::set()
+~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _MapUpdate:
+
+Map::update()
+~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _ObjectEqual:
+
+Object::__eq__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _ObjectNotEqual:
+
+Object::__ne__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
 
 .. _now:
 
@@ -527,6 +930,104 @@ void print(*A*)
 
 where *A* is the string to print.
 
+.. _shortAdd:
+
+short::__add__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortDivide:
+
+short::__div__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortEqual:
+
+short::__eq__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortGreaterThan:
+
+short::__gt__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortLessThan:
+
+short::__lt__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortModulo:
+
+short::__mod__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortMultiply:
+
+short::__mul__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortNotEqual:
+
+short::__ne__()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortNegate:
+
+short::__neg__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortSubtract:
+
+short::__sub__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortToFloat:
+
+short::toFloat()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortToJSON:
+
+short::toJSON()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortToJSONObject:
+
+short::toJSONObject()
+~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortToString:
+
+short::toString()
+~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _sleep:
 
 sleep()
@@ -555,9 +1056,100 @@ where *A* and *B* are both strings.
 
 This function is used under the covers by the + operator; *A* **+** *B* is equivalent to *A*.__add__(*B*).
 
+.. _stringEndsWith:
+
+string::endsWith()
+~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringEqual:
+
+string::__eq__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringFind:
+
+string::find()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringJoin:
+
+string::join()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringNotEqual:
+
+string::__ne__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringParseJSON:
+
+string::parseJSON()
+~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringReplace:
+
+string::replace()
+~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringSize:
+
+string::size()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringSplit:
+
+string::split()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringStartsWith:
+
+string::startsWith()
+~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringSubstring:
+
+string::substring()
+~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringToJSON:
+
+string::toJSON()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringToJSONObject:
+
+string::_to_JSONObject()
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _urlGet:
 
 url_get()
 ~~~~~~~~~
 
-Coming Soon
+Documentation Coming Soon
