@@ -25,9 +25,185 @@ File(
     NativeCase(py, Fixed('('), Var(Name(self), $type=0.Object),
      Fixed(') != ('), Var(Name(other), $type=0.Object), Fixed(')')),
     NativeCase(js, Fixed('('), Var(Name(self), $type=0.Object),
-     Fixed(') !== ('), Var(Name(other), $type=0.Object), Fixed(')'))))),
+     Fixed(') !== ('), Var(Name(other), $type=0.Object), Fixed(')')))),
 
- Primitive(Name(void)),
+  MethodMacro(Type(Name(Class)), Name(getClass), Call(Var(Name(Class),
+    $type=0.Class), Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.Builtins._getClass('), Var(Name(self),
+      $type=0.Object), Fixed(')')), NativeCase(py, Fixed('_getClass('),
+      Var(Name(self), $type=0.Object), Fixed(')')), NativeCase(js,
+      Fixed('_qrt._getClass('), Var(Name(self), $type=0.Object), Fixed(')'))),
+   $type=0.Class)),
+
+  MethodMacro(Type(Name(Object)), Name(getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Native(NativeCase(java,
+     Fixed('((io.datawire.quark.runtime.QObject) ('), Var(Name(self),
+     $type=0.Object), Fixed('))._getField('), Var(Name(name), $type=0.String),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self), $type=0.Object),
+     Fixed(')._getField('), Var(Name(name), $type=0.String), Fixed(')')),
+    NativeCase(js, Fixed('('), Var(Name(self), $type=0.Object),
+     Fixed(')._getField('), Var(Name(name), $type=0.String), Fixed(')')))),
+
+  MethodMacro(Type(Name(void)), Name(setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Native(NativeCase(java,
+     Fixed('((io.datawire.quark.runtime.QObject) ('), Var(Name(self),
+     $type=0.Object), Fixed('))._setField('), Var(Name(name), $type=0.String),
+     Fixed(', '), Var(Name(value), $type=0.Object), Fixed(')')), NativeCase(py,
+     Fixed('('), Var(Name(self), $type=0.Object), Fixed(')._setField(('),
+     Var(Name(name), $type=0.String), Fixed('), ('), Var(Name(value),
+     $type=0.Object), Fixed('))')), NativeCase(js, Fixed('('), Var(Name(self),
+     $type=0.Object), Fixed(')._setField(('), Var(Name(name), $type=0.String),
+     Fixed('), ('), Var(Name(value), $type=0.Object), Fixed('))'))))),
+
+ Function(Type(Name(void)), Name(_class),
+  Param(Type(Name(Class)), Name(cls), $type=0.Class)),
+
+ Function(Type(Name(Object)), Name(_construct),
+  Param(Type(Name(String)), Name(className), $type=0.String),
+  Param(Type(Name(List), Type(Name(Object))), Name(args),
+  $type=0.List<0.Object>)),
+
+ Function(Type(Name(List), Type(Name(Field))), Name(_fields),
+  Param(Type(Name(String)), Name(className), $type=0.String)),
+
+ Class(Name(Class),
+  Field(Type(Name(String)), Name(id), $type=0.String),
+  Field(Type(Name(String)), Name(name), $type=0.String),
+  Field(Type(Name(List), Type(Name(Class))), Name(parameters),
+  $type=0.List<0.Class>),
+
+  Constructor(Name(Class),
+   Param(Type(Name(String)), Name(id), $type=0.String),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.Class), Name(id), $type=0.String),
+     Var(Name(id), $type=0.String)),
+    ExprStmt(Call(Var(Name(_class), $type=0._class), Var(Name(self),
+      $type=0.Class), $type=0.void)))),
+
+  Method(Type(Name(String)), Name(getId), Block(
+    Return(Var(Name(id), $type=0.String)))),
+
+  Method(Type(Name(String)), Name(getName), Block(
+    Return(Var(Name(name), $type=0.String)))),
+
+  Method(Type(Name(List), Type(Name(Class))), Name(getParameters), Block(
+    Return(Var(Name(parameters), $type=0.List<0.Class>)))),
+
+  Method(Type(Name(Object)), Name(construct),
+   Param(Type(Name(List), Type(Name(Object))), Name(args),
+   $type=0.List<0.Object>),
+   Block(
+    Return(Call(Var(Name(_construct), $type=0._construct),
+      Call(Var(Name(getId), $type=0.Class.getId), $type=0.String),
+      Var(Name(args), $type=0.List<0.Object>), $type=0.Object)))),
+
+  Method(Type(Name(List), Type(Name(Field))), Name(getFields), Block(
+    Return(Call(Var(Name(_fields), $type=0._fields), Attr(Var(Name(self),
+       $type=0.Class), Name(id), $type=0.String), $type=0.List<0.Field>)))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Call(Attr(Call(Type(Name(JSONObject)), $type=0.JSONObject), Name(setString),
+    $type=0.JSONObject.setString), Attr(Var(Name(self), $type=0.Class),
+     Name(id), $type=0.String), $type=0.JSONObject)),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+   Call(Attr(Var(Name(self), $type=0.Class), Name(toJSON),
+    $type=0.Class.toJSON), $type=0.JSONObject)),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Class", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("id", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Class), Name(id), $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("name", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Class), Name(name),
+       $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("parameters", $type=0.String),
+     $type=0.bool), Block(
+      Return(Attr(Var(Name(self), $type=0.Class), Name(parameters),
+       $type=0.List<0.Class>)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("id", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Class), Name(id), $type=0.String),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("name", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Class), Name(name), $type=0.String),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("parameters", $type=0.String),
+     $type=0.bool), Block(
+      Assign(Attr(Var(Name(self), $type=0.Class), Name(parameters),
+       $type=0.List<0.Class>), Cast(Var(Name(value), $type=0.Object),
+       $type=0.List<0.Class>))))))),
+
+ Class(Name(Field),
+  Field(Type(Name(Class)), Name(type), $type=0.Class),
+  Field(Type(Name(String)), Name(name), $type=0.String),
+
+  Constructor(Name(Field),
+   Param(Type(Name(Class)), Name(type), $type=0.Class),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.Field), Name(type), $type=0.Class),
+     Var(Name(type), $type=0.Class)),
+    Assign(Attr(Var(Name(self), $type=0.Field), Name(name), $type=0.String),
+     Var(Name(name), $type=0.String)))),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Field", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("type", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Field), Name(type),
+       $type=0.Class)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("name", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Field), Name(name),
+       $type=0.String)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("type", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Field), Name(type), $type=0.Class),
+       Cast(Var(Name(value), $type=0.Object), $type=0.Class)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("name", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Field), Name(name), $type=0.String),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('void')))),
+  Name(void)),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Boolean')),
     NativeCase(py, Fixed('bool')), NativeCase(js, Fixed('Boolean')))),
@@ -446,6 +622,245 @@ File(
      Fixed(')')), NativeCase(js, Fixed('_qrt.urlencode('), Var(Name(self),
      $type=0.Map<0.Map.K,0.Map.V>), Fixed(')'))))),
 
+ Function(Type(Name(JSONObject)), Name(toJSON),
+  Param(Type(Name(Object)), Name(obj), $type=0.Object),
+  Block(
+   Local(
+    Declaration(Type(Name(JSONObject)), Name(result),
+     Call(Type(Name(JSONObject)), $type=0.JSONObject), $type=0.JSONObject)),
+   If(Call(Attr(Var(Name(obj), $type=0.Object), Name(__eq__),
+     $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(setNull),
+       $type=0.JSONObject.setNull), $type=0.JSONObject)),
+     Return(Var(Name(result), $type=0.JSONObject)))),
+   Local(
+    Declaration(Type(Name(Class)), Name(cls), Call(Attr(Var(Name(obj),
+       $type=0.Object), Name(getClass), $type=0.Object.getClass),
+     $type=0.Class), $type=0.Class)),
+   Local(
+    Declaration(Type(Name(int)), Name(idx), Number(0, $type=0.int),
+    $type=0.int)),
+   If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+      $type=0.String), Name(__eq__), $type=0.Object.__eq__), String("String",
+     $type=0.String), $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(setString),
+       $type=0.JSONObject.setString), Cast(Var(Name(obj), $type=0.Object),
+       $type=0.String), $type=0.JSONObject)),
+     Return(Var(Name(result), $type=0.JSONObject)))),
+   If(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Attr(Var(Name(cls),
+               $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+             $type=0.Object.__eq__), String("byte", $type=0.String),
+            $type=0.bool), Name(__or__), $type=0.bool.__or__),
+           Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+             $type=0.String), Name(__eq__), $type=0.Object.__eq__),
+            String("short", $type=0.String), $type=0.bool), $type=0.bool),
+          Name(__or__), $type=0.bool.__or__), Call(Attr(Attr(Var(Name(cls),
+            $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+          $type=0.Object.__eq__), String("int", $type=0.String), $type=0.bool),
+        $type=0.bool), Name(__or__), $type=0.bool.__or__),
+       Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+         $type=0.String), Name(__eq__), $type=0.Object.__eq__), String("long",
+        $type=0.String), $type=0.bool), $type=0.bool), Name(__or__),
+     $type=0.bool.__or__), Call(Attr(Attr(Var(Name(cls), $type=0.Class),
+        Name(name), $type=0.String), Name(__eq__), $type=0.Object.__eq__),
+      String("float", $type=0.String), $type=0.bool), $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(setNumber),
+       $type=0.JSONObject.setNumber), Var(Name(obj), $type=0.Object),
+      $type=0.JSONObject)),
+     Return(Var(Name(result), $type=0.JSONObject)))),
+   If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+      $type=0.String), Name(__eq__), $type=0.Object.__eq__), String("List",
+     $type=0.String), $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(setList),
+       $type=0.JSONObject.setList), $type=0.JSONObject)),
+     Local(
+      Declaration(Type(Name(List), Type(Name(Object))), Name(list),
+       Cast(Var(Name(obj), $type=0.Object), $type=0.List<0.Object>),
+      $type=0.List<0.Object>)),
+     While(Call(Attr(Var(Name(idx), $type=0.int), Name(__lt__),
+       $type=0.numeric.__lt__), Call(Attr(Var(Name(list),
+         $type=0.List<0.Object>), Name(size), $type=0.List.size), $type=0.int),
+      $type=0.bool), Block(
+       ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject),
+          Name(setListItem), $type=0.JSONObject.setListItem), Var(Name(idx),
+         $type=0.int), Call(Var(Name(toJSON), $type=0.toJSON),
+          Call(Attr(Var(Name(list), $type=0.List<0.Object>), Name(__get__),
+           $type=0.List.__get__), Var(Name(idx), $type=0.int), $type=0.Object),
+         $type=0.JSONObject), $type=0.JSONObject)),
+       Assign(Var(Name(idx), $type=0.int), Call(Attr(Var(Name(idx),
+          $type=0.int), Name(__add__), $type=0.numeric.__add__), Number(1,
+         $type=0.int), $type=0.int)))),
+     Return(Var(Name(result), $type=0.JSONObject)))),
+   If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+      $type=0.String), Name(__eq__), $type=0.Object.__eq__), String("Map",
+     $type=0.String), $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(setObject),
+       $type=0.JSONObject.setObject), $type=0.JSONObject)),
+     Local(
+      Declaration(Type(Name(Map), Type(Name(String)), Type(Name(Object))),
+       Name(map), Cast(Var(Name(obj), $type=0.Object),
+       $type=0.Map<0.String,0.Object>), $type=0.Map<0.String,0.Object>)),
+     Return(Var(Name(result), $type=0.JSONObject)))),
+   ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(__set__),
+     $type=0.JSONObject.__set__), String("$class", $type=0.String),
+     Var(Name(cls), $type=0.Class), $type=0.void)),
+   Local(
+    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
+     Call(Attr(Var(Name(cls), $type=0.Class), Name(getFields),
+      $type=0.Class.getFields), $type=0.List<0.Field>),
+    $type=0.List<0.Field>)),
+   While(Call(Attr(Var(Name(idx), $type=0.int), Name(__lt__),
+     $type=0.numeric.__lt__), Call(Attr(Var(Name(fields),
+       $type=0.List<0.Field>), Name(size), $type=0.List.size), $type=0.int),
+    $type=0.bool), Block(
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.JSONObject), Name(__set__),
+       $type=0.JSONObject.__set__), Attr(Call(Attr(Var(Name(fields),
+          $type=0.List<0.Field>), Name(__get__), $type=0.List.__get__),
+         Var(Name(idx), $type=0.int), $type=0.Field), Name(name),
+       $type=0.String), Call(Var(Name(toJSON), $type=0.toJSON),
+        Call(Attr(Var(Name(obj), $type=0.Object), Name(getField),
+         $type=0.Object.getField), Attr(Call(Attr(Var(Name(fields),
+            $type=0.List<0.Field>), Name(__get__), $type=0.List.__get__),
+           Var(Name(idx), $type=0.int), $type=0.Field), Name(name),
+         $type=0.String), $type=0.Object), $type=0.JSONObject), $type=0.void)),
+     Assign(Var(Name(idx), $type=0.int), Call(Attr(Var(Name(idx), $type=0.int),
+        Name(__add__), $type=0.numeric.__add__), Number(1, $type=0.int),
+      $type=0.int)))),
+   Return(Var(Name(result), $type=0.JSONObject)))),
+
+ Function(Type(Name(Object)), Name(fromJSON),
+  Param(Type(Name(Class)), Name(cls), $type=0.Class),
+  Param(Type(Name(JSONObject)), Name(json), $type=0.JSONObject),
+  Block(
+   If(Call(Attr(Call(Attr(Var(Name(json), $type=0.JSONObject), Name(__eq__),
+       $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
+      Name(__or__), $type=0.bool.__or__), Call(Attr(Var(Name(json),
+       $type=0.JSONObject), Name(isNull), $type=0.JSONObject.isNull),
+     $type=0.bool), $type=0.bool), Block(
+     Return(Null(null, $type=0.Object)))),
+   Local(
+    Declaration(Type(Name(int)), Name(idx), Number(0, $type=0.int),
+    $type=0.int)),
+   If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(name),
+      $type=0.String), Name(__eq__), $type=0.Object.__eq__), String("List",
+     $type=0.String), $type=0.bool), Block(
+     Local(
+      Declaration(Type(Name(List), Type(Name(Object))), Name(list),
+       Cast(Call(Attr(Var(Name(cls), $type=0.Class), Name(construct),
+         $type=0.Class.construct), List(, $type=0.List<0.Object>),
+        $type=0.Object), $type=0.List<0.Object>), $type=0.List<0.Object>)),
+     While(Call(Attr(Var(Name(idx), $type=0.int), Name(__lt__),
+       $type=0.numeric.__lt__), Call(Attr(Var(Name(json), $type=0.JSONObject),
+         Name(size), $type=0.JSONObject.size), $type=0.int), $type=0.bool),
+      Block(
+       ExprStmt(Call(Attr(Var(Name(list), $type=0.List<0.Object>), Name(add),
+         $type=0.List.add), Call(Var(Name(fromJSON), $type=0.fromJSON),
+          Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(parameters),
+            $type=0.List<0.Class>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Class), Call(Attr(Var(Name(json),
+            $type=0.JSONObject), Name(getListItem),
+           $type=0.JSONObject.getListItem), Var(Name(idx), $type=0.int),
+          $type=0.JSONObject), $type=0.Object), $type=0.void)),
+       Assign(Var(Name(idx), $type=0.int), Call(Attr(Var(Name(idx),
+          $type=0.int), Name(__add__), $type=0.numeric.__add__), Number(1,
+         $type=0.int), $type=0.int)))),
+     Return(Var(Name(list), $type=0.List<0.Object>)))),
+   Local(
+    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
+     Call(Attr(Var(Name(cls), $type=0.Class), Name(getFields),
+      $type=0.Class.getFields), $type=0.List<0.Field>),
+    $type=0.List<0.Field>)),
+   Local(
+    Declaration(Type(Name(Object)), Name(result), Call(Attr(Var(Name(cls),
+       $type=0.Class), Name(construct), $type=0.Class.construct), List(,
+      $type=0.List<0.Object>), $type=0.Object), $type=0.Object)),
+   While(Call(Attr(Var(Name(idx), $type=0.int), Name(__lt__),
+     $type=0.numeric.__lt__), Call(Attr(Var(Name(fields),
+       $type=0.List<0.Field>), Name(size), $type=0.List.size), $type=0.int),
+    $type=0.bool), Block(
+     Local(
+      Declaration(Type(Name(Field)), Name(f), Call(Attr(Var(Name(fields),
+         $type=0.List<0.Field>), Name(__get__), $type=0.List.__get__),
+        Var(Name(idx), $type=0.int), $type=0.Field), $type=0.Field)),
+     Assign(Var(Name(idx), $type=0.int), Call(Attr(Var(Name(idx), $type=0.int),
+        Name(__add__), $type=0.numeric.__add__), Number(1, $type=0.int),
+      $type=0.int)),
+     If(Call(Attr(Attr(Attr(Var(Name(f), $type=0.Field), Name(type),
+         $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("String", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(String)), Name(s), Call(Attr(Var(Name(json),
+           $type=0.JSONObject), Name(__get__), $type=0.JSONObject.__get__),
+          Attr(Var(Name(f), $type=0.Field), Name(name), $type=0.String),
+         $type=0.JSONObject), $type=0.String)),
+       ExprStmt(Call(Attr(Var(Name(result), $type=0.Object), Name(setField),
+         $type=0.Object.setField), Attr(Var(Name(f), $type=0.Field),
+          Name(name), $type=0.String), Var(Name(s), $type=0.String),
+        $type=0.void)),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f), $type=0.Field), Name(type),
+         $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("float", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(float)), Name(flt), Call(Attr(Var(Name(json),
+           $type=0.JSONObject), Name(__get__), $type=0.JSONObject.__get__),
+          Attr(Var(Name(f), $type=0.Field), Name(name), $type=0.String),
+         $type=0.JSONObject), $type=0.float)),
+       ExprStmt(Call(Attr(Var(Name(result), $type=0.Object), Name(setField),
+         $type=0.Object.setField), Attr(Var(Name(f), $type=0.Field),
+          Name(name), $type=0.String), Var(Name(flt), $type=0.float),
+        $type=0.void)),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f), $type=0.Field), Name(type),
+         $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("int", $type=0.String), $type=0.bool),
+      Block(
+       If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json), $type=0.JSONObject),
+              Name(__get__), $type=0.JSONObject.__get__), Attr(Var(Name(f),
+              $type=0.Field), Name(name), $type=0.String), $type=0.JSONObject),
+            Name(isNull), $type=0.JSONObject.isNull), $type=0.bool),
+          Name(__not__), $type=0.bool.__not__), $type=0.bool), Block(
+         Local(
+          Declaration(Type(Name(int)), Name(i), Call(Attr(Var(Name(json),
+             $type=0.JSONObject), Name(__get__), $type=0.JSONObject.__get__),
+            Attr(Var(Name(f), $type=0.Field), Name(name), $type=0.String),
+           $type=0.JSONObject), $type=0.int)),
+         ExprStmt(Call(Attr(Var(Name(result), $type=0.Object), Name(setField),
+           $type=0.Object.setField), Attr(Var(Name(f), $type=0.Field),
+            Name(name), $type=0.String), Var(Name(i), $type=0.int),
+          $type=0.void)))),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f), $type=0.Field), Name(type),
+         $type=0.Class), Name(name), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("bool", $type=0.String), $type=0.bool),
+      Block(
+       If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json), $type=0.JSONObject),
+              Name(__get__), $type=0.JSONObject.__get__), Attr(Var(Name(f),
+              $type=0.Field), Name(name), $type=0.String), $type=0.JSONObject),
+            Name(isNull), $type=0.JSONObject.isNull), $type=0.bool),
+          Name(__not__), $type=0.bool.__not__), $type=0.bool), Block(
+         Local(
+          Declaration(Type(Name(bool)), Name(b), Call(Attr(Var(Name(json),
+             $type=0.JSONObject), Name(__get__), $type=0.JSONObject.__get__),
+            Attr(Var(Name(f), $type=0.Field), Name(name), $type=0.String),
+           $type=0.JSONObject), $type=0.bool)),
+         ExprStmt(Call(Attr(Var(Name(result), $type=0.Object), Name(setField),
+           $type=0.Object.setField), Attr(Var(Name(f), $type=0.Field),
+            Name(name), $type=0.String), Var(Name(b), $type=0.bool),
+          $type=0.void)))),
+       Continue())),
+     ExprStmt(Call(Attr(Var(Name(result), $type=0.Object), Name(setField),
+       $type=0.Object.setField), Attr(Var(Name(f), $type=0.Field), Name(name),
+       $type=0.String), Call(Var(Name(fromJSON), $type=0.fromJSON),
+        Attr(Var(Name(f), $type=0.Field), Name(type), $type=0.Class),
+        Call(Attr(Var(Name(json), $type=0.JSONObject), Name(__get__),
+         $type=0.JSONObject.__get__), Attr(Var(Name(f), $type=0.Field),
+          Name(name), $type=0.String), $type=0.JSONObject), $type=0.Object),
+      $type=0.void)))),
+   Return(Var(Name(result), $type=0.Object)))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.JSONObject')), NativeCase(py,
      Fixed('_JSONObject')), NativeCase(js, Fixed('_qrt.JSONObject')))),
@@ -492,9 +907,15 @@ File(
   Method(Type(Name(JSONObject)), Name(getListItem),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
+  Method(Type(Name(int)), Name(size)),
+
   Method(Type(Name(String)), Name(getString)),
 
+  Method(Type(Name(bool)), Name(isString)),
+
   Method(Type(Name(float)), Name(getNumber)),
+
+  Method(Type(Name(bool)), Name(isNumber)),
 
   Method(Type(Name(bool)), Name(getBool)),
 

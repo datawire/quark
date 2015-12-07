@@ -16,7 +16,7 @@ from collections import namedtuple
 from struct import Struct
 import base64
 
-__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _default_codec".split()
+__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _default_codec _getClass".split()
 
 
 _Map = dict
@@ -55,7 +55,10 @@ class _JSONObject(object):
         return wrapped
 
     def __eq__(self, other):
-        return self.value == other.value
+        if other is None:
+            return False
+        else:
+            return self.value == other.value
 
     def getType(self):
         if isinstance(self.value, dict):
@@ -89,17 +92,29 @@ class _JSONObject(object):
             pass
         return self.undefined()
 
+    def size(self):
+        if self.isList() or self.isObject():
+            return len(self.value)
+        else:
+            return 1
+
     def getString(self):
-        if isinstance(self.value, (str, unicode)):
+        if isinstance(self.value, basestring):
             return self.value
         else:
             return None
+
+    def isString(self):
+        return isinstance(self.value, basestring)
 
     def getNumber(self):
         if isinstance(self.value, (int, long, float)):
             return self.value
         else:
             return None
+
+    def isNumber(self):
+        return isinstance(self.value, (int, long, float))
 
     def getBool(self):
         if isinstance(self.value, bool):
@@ -145,9 +160,15 @@ class _JSONObject(object):
         self.value = self._dict()
         return self
 
+    def isObject(self):
+        return isinstance(self.value, dict)
+
     def setList(self):
         self.value = []
         return self
+
+    def isList(self):
+        return isinstance(self.value, list)
 
     def setObjectItem(self, key, value):
         if not isinstance(self.value, dict):
@@ -322,3 +343,17 @@ class Buffer(object):
 
     def isNetworkByteOrder(self):
         return self.packer is self.BE
+
+def _getClass(obj):
+    if obj is None: return None
+    if isinstance(obj, basestring):
+        return "String"
+    if isinstance(obj, int):
+        return "int"
+    if isinstance(obj, float):
+        return "float"
+    if isinstance(obj, (list, tuple)):
+        return "List<Object>"
+    if isinstance(obj, dict):
+        return "Map<Object,Object>"
+    return obj._getClass()

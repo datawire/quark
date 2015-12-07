@@ -2,7 +2,48 @@
 primitive Object {
     macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}$py{($self) == ($other)}$js{($self) === ($other)};
     macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}$py{($self) != ($other)}$js{($self) !== ($other)};
+    macro Class getClass() (Class)($java{io.datawire.quark.runtime.Builtins._getClass($self)}$py{_getClass($self)}$js{_qrt._getClass($self)});
+    macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}$py{($self)._getField($name)}$js{($self)._getField($name)};
+    macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}$py{($self)._setField(($name), ($value))}$js{($self)._setField(($name), ($value))};
 }
+void _class(Class cls);
+Object _construct(String className, List<Object> args);
+List<Field> _fields(String className);
+class Class {
+    String id;
+    String name;
+    List<Class> parameters;
+    Class(String id) {
+        (self).id = id;
+        (_class)(self);
+    }
+    String getId() {
+        return id;
+    }
+    String getName() {
+        return name;
+    }
+    List<Class> getParameters() {
+        return parameters;
+    }
+    Object construct(List<Object> args) {
+        return (_construct)((getId)(), args);
+    }
+    List<Field> getFields() {
+        return (_fields)((self).id);
+    }
+    macro JSONObject toJSON() ((new JSONObject()).setString)((self).id);
+    macro JSONObject __to_JSONObject() ((self).toJSON)();
+}
+class Field {
+    Class type;
+    String name;
+    Field(Class type, String name) {
+        (self).type = type;
+        (self).name = name;
+    }
+}
+@mapping($java{void})
 primitive void {}
 @mapping($java{Boolean}$py{bool}$js{Boolean})
 primitive bool {
@@ -86,6 +127,90 @@ primitive Map<K, V> {
     macro void update(Map<K, V> other) $java{($self).putAll($other)}$py{($self).update($other)}$js{($other).forEach(function (v, k) { ($self).set(k, v); })};
     macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}$py{_urlencode($self)}$js{_qrt.urlencode($self)};
 }
+JSONObject toJSON(Object obj) {
+    JSONObject result = new JSONObject();
+    if (((obj).__eq__)(null)) {
+        ((result).setNull)();
+        return result;
+    }
+    Class cls = ((obj).getClass)();
+    int idx = 0;
+    if ((((cls).name).__eq__)("String")) {
+        ((result).setString)(?(obj));
+        return result;
+    }
+    if ((((((((((((cls).name).__eq__)("byte")).__or__)((((cls).name).__eq__)("short"))).__or__)((((cls).name).__eq__)("int"))).__or__)((((cls).name).__eq__)("long"))).__or__)((((cls).name).__eq__)("float"))) {
+        ((result).setNumber)(obj);
+        return result;
+    }
+    if ((((cls).name).__eq__)("List")) {
+        ((result).setList)();
+        List<Object> list = ?(obj);
+        while (((idx).__lt__)(((list).size)())) {
+            ((result).setListItem)(idx, (toJSON)(((list).__get__)(idx)));
+            idx = ((idx).__add__)(1);
+        }
+        return result;
+    }
+    if ((((cls).name).__eq__)("Map")) {
+        ((result).setObject)();
+        Map<String, Object> map = ?(obj);
+        return result;
+    }
+    ((result).__set__)("$class", cls);
+    List<Field> fields = ((cls).getFields)();
+    while (((idx).__lt__)(((fields).size)())) {
+        ((result).__set__)((((fields).__get__)(idx)).name, (toJSON)(((obj).getField)((((fields).__get__)(idx)).name)));
+        idx = ((idx).__add__)(1);
+    }
+    return result;
+}
+Object fromJSON(Class cls, JSONObject json) {
+    if (((((json).__eq__)(null)).__or__)(((json).isNull)())) {
+        return null;
+    }
+    int idx = 0;
+    if ((((cls).name).__eq__)("List")) {
+        List<Object> list = ?(((cls).construct)([]));
+        while (((idx).__lt__)(((json).size)())) {
+            ((list).add)((fromJSON)((((cls).parameters).__get__)(0), ((json).getListItem)(idx)));
+            idx = ((idx).__add__)(1);
+        }
+        return list;
+    }
+    List<Field> fields = ((cls).getFields)();
+    Object result = ((cls).construct)([]);
+    while (((idx).__lt__)(((fields).size)())) {
+        Field f = ((fields).__get__)(idx);
+        idx = ((idx).__add__)(1);
+        if (((((f).type).name).__eq__)("String")) {
+            String s = ((json).__get__)((f).name);
+            ((result).setField)((f).name, s);
+            continue;
+        }
+        if (((((f).type).name).__eq__)("float")) {
+            float flt = ((json).__get__)((f).name);
+            ((result).setField)((f).name, flt);
+            continue;
+        }
+        if (((((f).type).name).__eq__)("int")) {
+            if (((((((json).__get__)((f).name)).isNull)()).__not__)()) {
+                int i = ((json).__get__)((f).name);
+                ((result).setField)((f).name, i);
+            }
+            continue;
+        }
+        if (((((f).type).name).__eq__)("bool")) {
+            if (((((((json).__get__)((f).name)).isNull)()).__not__)()) {
+                bool b = ((json).__get__)((f).name);
+                ((result).setField)((f).name, b);
+            }
+            continue;
+        }
+        ((result).setField)((f).name, (fromJSON)((f).type, ((json).__get__)((f).name)));
+    }
+    return result;
+}
 @mapping($java{io.datawire.quark.runtime.JSONObject}$py{_JSONObject}$js{_qrt.JSONObject})
 primitive JSONObject {
     macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}$py{_JSONObject()}$js{new _qrt.JSONObject()};
@@ -98,8 +223,11 @@ primitive JSONObject {
     JSONObject getObjectItem(String key);
     macro JSONObject __get__(String key) ${($self).getObjectItem($key)};
     JSONObject getListItem(int index);
+    int size();
     String getString();
+    bool isString();
     float getNumber();
+    bool isNumber();
     bool getBool();
     bool isNull();
     bool isDefined();

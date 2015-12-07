@@ -145,4 +145,22 @@ public class Builtins {
         };
     }
 
+    public static String _getClass(Object obj) {
+        if (obj instanceof Boolean) { return "bool"; }
+
+        if (obj instanceof Byte) { return "byte"; }
+        if (obj instanceof Short) { return "short"; }
+        if (obj instanceof Integer) { return "int"; }
+        if (obj instanceof Long) { return "long"; }
+        if (obj instanceof Double) { return "float"; } 
+
+        if (obj instanceof String) { return "String"; }
+        if (obj instanceof List) { return "List<Object>"; }
+        if (obj instanceof Map) { return "Map<Object,Object>"; }
+
+        if (obj instanceof QObject) { return ((QObject) obj)._getClass(); }
+
+        return null;
+    }
+
 }

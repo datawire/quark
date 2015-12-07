@@ -129,8 +129,9 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     return make_class_file(path, name)
 
-def main():
-    return '\n\nif __name__ == "__main__":\n    main()\n'
+def main(fname, common):
+    return Code(head="from %s import main" % common,
+                body='\n\nif __name__ == "__main__":\n    main()\n')
 
 ## Naming and imports
 

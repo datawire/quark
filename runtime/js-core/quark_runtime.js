@@ -127,6 +127,11 @@
     }
     JSONObject.prototype.getString = JSONObject_getString;
 
+    function JSONObject_isString() {
+        return typeof this.value == 'string';
+    }
+    JSONObject.prototype.isString = JSONObject_isString;
+
     function JSONObject_getNumber() {
         if (typeof this.value !== 'number') {
             return null;
@@ -135,6 +140,11 @@
     }
     JSONObject.prototype.getNumber = JSONObject_getNumber;
 
+    function JSONObject_isNumber() {
+        return typeof this.value == 'number';
+    }
+    JSONObject.prototype.isNumber = JSONObject_isNumber;
+
     function JSONObject_getBool() {
         if (typeof this.value !== 'boolean') {
             return null;
@@ -142,6 +152,11 @@
         return this.value;
     }
     JSONObject.prototype.getBool = JSONObject_getBool;
+
+    function JSONObject_isBool() {
+        return typeof this.value == 'boolean';
+    }
+    JSONObject.prototype.isBool = JSONObject_isBool;
 
     function JSONObject_isNull() {
         return this.value === null;
@@ -207,12 +222,22 @@
     JSONObject.prototype.setObject = JSONObject_setObject;
     _JSONObject_undefined.setObject = undefined;
 
+    function JSONObject_isObject() {
+        return this.getType() == 'object';
+    }
+    JSONObject.prototype.isObject = JSONObject_isObject;
+
     function JSONObject_setList() {
         this.value = [];
         return this;
     }
     JSONObject.prototype.setList = JSONObject_setList;
     _JSONObject_undefined.setList = undefined;
+
+    function JSONObject_isList() {
+        return this.getType() == 'list';
+    }
+    JSONObject.prototype.isList = JSONObject_isList;
 
     function JSONObject_setObjectItem(key, value) {
         if (this.getType() !== 'object') {
@@ -236,6 +261,18 @@
     }
     JSONObject.prototype.setListItem = JSONObject_setListItem;
     _JSONObject_undefined.setListItem = undefined;
+
+    function JSONObject_size() {
+        if (this.getType() == 'list') {
+            return this.value.length;
+        } else if (this.getType() == 'object') {
+            return Object.keys(this.value).length;
+        } else {
+            return 1;
+        }
+    }
+    JSONObject.prototype.size = JSONObject_size;
+    _JSONObject_undefined.size = undefined;
 
     function json_from_string(json) {
         var raw = JSON.parse(json);
@@ -463,5 +500,18 @@
     }
 
     exports.defaultCodec = defaultCodec;
+
+    function _getClass(obj) {
+        if (typeof obj == "boolean") { return "bool"; }
+        if (typeof obj == "number") { return "float"; }
+        if (typeof obj == "string") { return "String"; }
+        if (obj instanceof Array) { return "List<Object>"; }
+        if (obj instanceof Map) { return "Map<Object,Object>"; }
+
+        if (obj._getClass) { return obj._getClass(); }
+
+        return null;
+    }
+    exports._getClass = _getClass;
 
 })();

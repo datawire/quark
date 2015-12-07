@@ -123,14 +123,19 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     assert False
 
-def main():
-    return indent("public static void main(String[] args) {\n    main();\n}")[1:]
+def main(fname, common):
+    return Code("public class %s {\n%s}\n" % \
+                (fname,
+                 indent("public static void main(String[] args) {\n    %s.Functions.main();\n}" % common)[1:]))
 
 ## Naming and imports
 
-SUBS = {"self": "this"}
+SUBS = {"self": "this",
+        "package": "package_",
+        "interface": "interface_",
+        "super": "super_"}
 def name(n):
-    return SUBS.get(n, n)
+    return SUBS.get(n, n).replace("-", "_")
 
 def type(path, name, parameters):
     base = ".".join(path + [name])
@@ -159,6 +164,7 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructo
     kw = "abstract " if abstract else ""
     params = "<%s>" % ", ".join(parameters) if parameters else ""
     extends = " extends %s" % base if base else ""
+    interfaces = interfaces + ["io.datawire.quark.runtime.QObject"]
     implements = " implements %s" % ", ".join(interfaces) if interfaces else ""
     body = "\n".join(fields + constructors + methods)
     return "%spublic %sclass %s%s%s%s {%s}" % (doc, kw, clazz, params, extends, implements, indent(body))

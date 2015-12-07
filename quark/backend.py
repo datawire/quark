@@ -32,6 +32,7 @@ class Backend(object):
         self.definitions = []
         self.names = []
         self.bindings = None
+        self.rootname = None
 
     def visit_Class(self, cls):
         self.definitions.append(cls)
@@ -48,6 +49,20 @@ class Backend(object):
         self.definitions.append(p)
 
     def leave_Root(self, r):
+        roots = [p.name.text for p in self.packages if p.package is None]
+        if len(roots) > 1:
+            roots.sort()
+            roots += ["common"]
+        elif not roots:
+            for d in self.definitions:
+                if isinstance(d, Function) and d.name.text == "main":
+                    roots = [self.gen.name(self.fname(d)), "lib"]
+                    break
+            else:
+                # XXX: first file is builtin, last file is reflector
+                roots = [self.gen.name(self.fname(r.files[1]))]
+        self.rootname = "_".join(roots)
+
         for d in self.definitions:
             fname = self.file(d)
             if fname is None:
@@ -64,7 +79,8 @@ class Backend(object):
 
         for name in self.files:
             code = self.files[name]
-            imports = [self.gen.import_(pkg, org) for (pkg, org) in self._imports[name].keys()]
+            imports = [self.gen.import_(pkg, org)
+                       for (pkg, org) in self._imports[name].keys()]
             code.head += "\n".join(filter(lambda x: x is not None, imports))
             if imports: code.head += "\n\n"
             content = str(code)
@@ -74,13 +90,13 @@ class Backend(object):
     def add_import(self, obj):
         imports = self._imports[self.current_file]
         pkg = tuple(self.package(obj))
-        if pkg:
-            if self.current_package:
-                org = tuple(self.package(self.current_package))
-            else:
-                org = ()
-            if pkg != org:
-                imports[(pkg, org)] = True
+        if self.current_package:
+            org = tuple(self.package(self.current_package))
+        else:
+            org = (self.rootname,)
+        if pkg != org:
+            imports[(pkg, org)] = True
+        return list(self.qualify(pkg, org))
 
     @overload(Class)
     def file(self, cls):
@@ -92,7 +108,7 @@ class Backend(object):
 
     @overload(Package)
     def file(self, pkg):
-        return self.gen.package_file(self.package(pkg.parent), self.name(pkg.name), self.fname(pkg))
+        return self.gen.package_file(self.package(pkg.package), self.name(pkg.name), self.fname(pkg))
 
     def fname(self, obj):
         return os.path.splitext(os.path.basename(obj.file.name))[0]
@@ -107,7 +123,7 @@ class Backend(object):
 
     @overload(Package)
     def make_file(self, pkg):
-        return self.gen.make_package_file(self.package(pkg.parent), self.name(pkg.name))
+        return self.gen.make_package_file(self.package(pkg.package), self.name(pkg.name))
 
     def write(self, target):
         if not os.path.exists(target):
@@ -137,16 +153,20 @@ class Backend(object):
 
     @overload(Function)
     def definition(self, fun):
-        if fun.name.text == "main":
-            extra = self.gen.main()
-        else:
-            extra = ""
+        if fun.body is None: return ""
+        if fun.package is None and fun.name.text == "main":
+            fname = self.gen.name(self.fname(fun))
+            old = self.current_file
+            self.current_file = fname + ".%s" % self.ext
+            self._imports[self.current_file] = OrderedDict()
+            self.files[self.current_file] = self.gen.main(fname, self.rootname)
+            self.current_file = old
 
         return self.gen.function(self.doc(fun),
                                  self.type(fun.type),
                                  self.name(fun.name),
                                  [self.param(p) for p in fun.params],
-                                 self.block(fun.body)) + extra
+                                 self.block(fun.body))
 
     @overload(Class)
     def definition(self, cls):
@@ -266,14 +286,17 @@ class Backend(object):
         return self.gen.name(n.text)
 
     def package(self, node):
+        if node is None: return []
         if isinstance(node, Package):
             me = self.name(node.name)
-            parent = self.package(node.parent)
-            return parent + [me]
-        elif node.parent:
-            return self.package(node.parent)
+            if node.package:
+                return self.package(node.package) + [me]
+            else:
+                return [me]
+        elif node.package:
+            return self.package(node.package)
         else:
-            return []
+            return [self.rootname]
 
     @overload(Type)
     def type(self, t):
@@ -295,12 +318,7 @@ class Backend(object):
             name = self.expr(mapping.arguments[0])
         else:
             pkg = self.package(cls)
-            if self.current_package:
-                org = self.package(self.current_package)
-            else:
-                org = []
-            path = self.qualify(pkg, org)
-            self.add_import(cls)
+            path = self.add_import(cls)
             name = self.name(cls.name)
 
         if cls.parameters:
@@ -480,8 +498,8 @@ class Backend(object):
 
     @overload(Function)
     def invoke(self, func, expr, args):
-        self.add_import(func)
-        return self.gen.invoke_function(self.package(func), self.name(func.name), args)
+        path = self.add_import(func)
+        return self.gen.invoke_function(path, self.name(func.name), args)
 
     @overload(Method, Attr)
     def invoke(self, method, expr, args):

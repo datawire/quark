@@ -56,8 +56,8 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     return make_class_file(path, name)
 
-def main():
-    return "\n\nmain();\n"
+def main(fname, common):
+    return Code("var common = require('./%s');\n\ncommon.main();\n" % common)
 
 ## Naming and imports
 

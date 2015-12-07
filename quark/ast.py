@@ -418,6 +418,10 @@ class While(Statement):
         yield self.condition
         yield self.body
 
+    @coder
+    def code(self, coder):
+        return "while (%s) %s" % (self.condition.code(coder), self.body.code(coder))
+
 class ExprStmt(Statement):
 
     def __init__(self, expr):

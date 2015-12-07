@@ -36,7 +36,8 @@ class Root(AST):
 
 class InitParent:
 
-    def __init__(self):
+    def __init__(self, root = None):
+        self.root = root
         self.stack = []
         self.count = 0
 
@@ -52,8 +53,13 @@ class InitParent:
         ast.count = 0
         if self.stack:
             ast.parent = self.stack[-1]
+        else:
+            ast.parent = self.root
+
+        if ast.parent:
             ast.index = ast.parent.count
             ast.parent.count += 1
+
         self.stack.append(ast)
         ast.id = ".".join([self.name(a) for a in self.stack[1:]])
 
@@ -96,11 +102,11 @@ class Def:
     def __init__(self):
         self.duplicates = []
 
-    def define(self, env, node, name=None, leaf=True, dup=True):
+    def define(self, env, node, name=None, leaf=True, dup=lambda x: True):
         if name is None:
             name = node.name.text
         if name in env:
-            if dup:
+            if dup(env[name]):
                 self.duplicates.append((node, name, env[name]))
         else:
             env[name] = node
@@ -108,7 +114,7 @@ class Def:
             node.resolved = texpr(node)
 
     def visit_Package(self, p):
-        self.define(p.parent.env, p, dup=False)
+        self.define(p.parent.env, p, dup=lambda x: False)
 
     def visit_Class(self, c):
         self.define(c.parent.env, c)
@@ -116,7 +122,8 @@ class Def:
             self.define(c.env, p)
 
     def visit_Function(self, f):
-        self.define(f.parent.env, f)
+        self.define(f.parent.env, f, dup=lambda x: ((isinstance(x, Function) and x.body) or
+                                                    (not isinstance(x, Function))))
 
     def visit_Method(self, m):
         # we don't put constructors in the namespace
@@ -169,6 +176,7 @@ class TypeExpr(object):
     def supertypes(self, param):
         # should we check in bindings here and try supertypes?
         yield self
+        yield param.root.env["Object"].resolved
 
     def get(self, attr, errors):
         name = attr.text
@@ -609,6 +617,125 @@ def delegate(node):
     node.annotations = [a for a in node.annotations if a.name.text != "delegate"]
     return node
 
+class Reflector:
+
+    def __init__(self):
+        self.methods = OrderedDict()
+        self.code = "Object _construct(String className, List<Object> args) {\n"
+        self.fieldcode = "List<Field> _fields(String className) {\n"
+        self.classes = []
+        self.parameters = OrderedDict()
+
+    def package(self, pkg):
+        if pkg is None:
+            return []
+        else:
+            return self.package(pkg.package) + [pkg.name.text]
+
+    def qtype(self, texpr):
+        if isinstance(texpr.type, TypeParam): return "Object"
+        result = ".".join(self.package(texpr.type.package) + [texpr.type.name.text])
+        if isinstance(texpr.type, Class) and texpr.type.parameters:
+            result += "<%s>" % ",".join([self.qtype(texpr.bindings.get(p, TypeExpr(p, {})))
+                                         for p in texpr.type.parameters])
+        return result
+
+    def qname(self, texpr):
+        if isinstance(texpr.type, TypeParam): return "Object"
+        return ".".join(self.package(texpr.type.package) + [texpr.type.name.text])
+
+    def qparams(self, texpr):
+        if isinstance(texpr.type, Class) and texpr.type.parameters:
+            return "[%s]" % ", ".join([self.qexpr(texpr.bindings[p]) for p in texpr.type.parameters])
+        else:
+            return "[]"
+
+    def qexpr(self, texpr):
+        return 'Class("%s")' % self.qtype(texpr)
+
+    def visit_Type(self, type):
+        cls = type.resolved.type
+        if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
+            if cls.name.text not in ("List", "Map"):
+                return
+        if cls.parameters:
+            if cls not in self.parameters:
+                self.parameters[cls] = OrderedDict()
+            use = self.qtype(type.resolved)
+            if use not in self.parameters[cls]:
+                self.parameters[cls][use] = self.qparams(type.resolved)
+
+    def fields(self, cls):
+        fields = []
+        for f in get_fields(cls):
+            fields.append((self.qtype(f.resolved), f.name.text))
+        return fields
+
+    def qual(self, cls):
+        return ".".join(self.package(cls.package) + [cls.name.text])
+
+    def visit_Class(self, cls):
+        if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
+            if cls.package is None and cls.name.text in ("List", "Map"):
+                self.classes.append(cls)
+            return
+
+        getclass = 'String _getClass() { return "%s"; }' % self.qtype(cls.resolved)
+
+        getter = "Object _getField(String name) {\n"
+        setter = "void _setField(String name, Object value) {\n"
+
+        for ftype, fname in self.fields(cls):
+            getter += '    if (name == "%s") { return self.%s; }\n' % (fname, fname)
+            setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
+
+        getter += '    return null;\n'
+        getter += "}\n"
+        setter += "}\n"
+
+        self.methods[cls] = (getclass, getter, setter)
+        self.classes.append(cls)
+
+    def leave_Root(self, root):
+        init = "void _class(Class cls) {\n"
+        for cls in self.classes:
+            fields = self.fields(cls)
+            qual = self.qual(cls)
+            if cls.parameters:
+                clsid = qual + "<%s>" % ",".join(["Object"*len(cls.parameters)])
+                params = "[%s]" % ",".join(['Class("Object")']*len(cls.parameters))
+            else:
+                clsid = qual
+                params = "[]"
+            cons = constructor(cls)
+            nparams = len(cons.params) if cons else 0
+
+            uses = self.parameters.get(cls, OrderedDict([(clsid, params)]))
+
+            for qn in uses:
+                init += '    if (cls.id == "%s") {\n' % qn
+                init += '        cls.name = "%s";\n' % qual
+                init += '        cls.parameters = %s;\n' % uses[qn]
+                init += '        return;\n'
+                init += '    }\n'
+
+                self.code += '    if (className == "%s") {\n' % qn
+                self.code += '        return new %s(%s);\n' % (qn,
+                                                               ", ".join(['?args[%s]' % i for i in range(nparams)]))
+                self.code += '    }\n'
+                self.fieldcode += '    if (className == "%s") { return [%s]; }\n' % \
+                                  (qn, ", ".join(['Field(Class("%s"), "%s")' % (ftype, fname)
+                                                  for ftype, fname in fields]))
+
+        init += "    cls.name = cls.id;\n"
+        init += "}\n"
+        self.code += '    return null;\n'
+        self.code += "}\n"
+        self.fieldcode += '    return null;\n'
+        self.fieldcode += "}\n"
+        self.code += self.fieldcode
+        self.code += init
+
 class Compiler:
 
     def __init__(self):
@@ -647,12 +774,12 @@ class Compiler:
                 break
         self.root.add(file)
 
-    def compile(self):
-        self.root.traverse(InitParent())
-        self.root.traverse(InitEnv())
+    def icompile(self, parent, ast):
+        ast.traverse(InitParent(parent))
+        ast.traverse(InitEnv())
 
         def_ = Def()
-        self.root.traverse(def_)
+        ast.traverse(def_)
         if def_.duplicates:
             dups = ["%s: duplicate definition of %s (first definition %s)" %
                     (lineinfo(node), name, lineinfo(first))
@@ -660,22 +787,45 @@ class Compiler:
             raise CompileError("\n".join(dups))
 
         use = Use()
-        self.root.traverse(use)
+        ast.traverse(use)
         if use.unresolved:
             vars = ["%s: unresolved variable: %s" % (lineinfo(node), name)
                     for node, name in use.unresolved]
             raise CompileError("\n".join(vars))
 
         res = Resolver()
-        self.root.traverse(res)
+        ast.traverse(res)
         if res.errors:
             raise CompileError("\n".join(res.errors))
 
         check = Check()
-        self.root.traverse(check)
+        ast.traverse(check)
         if check.errors:
             raise CompileError("\n".join(check.errors))
 
+    def reflect(self):
+        ref = Reflector()
+        self.root.traverse(ref)
+        self.parse("reflector", ref.code)
+        self.icompile(self.root, self.root.files[-1])
+        uncompiled = []
+        for cls, methods in ref.methods.items():
+            for m in methods:
+                method = Parser().rule("method", m)
+                cls.definitions.append(method)
+                uncompiled.append((cls, method))
+        files = OrderedDict()
+        for cls in ref.methods:
+            files[cls.file] = True
+        for f in files:
+            f.traverse(SetFile(f))
+            f.traverse(Contextualize(self.root))
+        for cls, method in uncompiled:
+            self.icompile(cls, method)
+
+    def compile(self):
+        self.icompile(None, self.root)
+        self.reflect()
         for Backend, target in self.emitters:
             backend = Backend()
             self.emit(backend)

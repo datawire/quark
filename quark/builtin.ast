@@ -21,9 +21,95 @@ File(
      Var(Name(self)), Fixed(').equals('), Var(Name(other)), Fixed(')))')),
     NativeCase(py, Fixed('('), Var(Name(self)), Fixed(') != ('),
      Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
-     Fixed(') !== ('), Var(Name(other)), Fixed(')'))))),
+     Fixed(') !== ('), Var(Name(other)), Fixed(')')))),
 
- Primitive(Name(void)),
+  MethodMacro(Type(Name(Class)), Name(getClass), Call(Var(Name(Class)),
+    Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.Builtins._getClass('), Var(Name(self)),
+      Fixed(')')), NativeCase(py, Fixed('_getClass('), Var(Name(self)),
+      Fixed(')')), NativeCase(js, Fixed('_qrt._getClass('), Var(Name(self)),
+      Fixed(')'))))),
+
+  MethodMacro(Type(Name(Object)), Name(getField),
+   Param(Type(Name(String)), Name(name)),
+   Native(NativeCase(java,
+     Fixed('((io.datawire.quark.runtime.QObject) ('), Var(Name(self)),
+     Fixed('))._getField('), Var(Name(name)), Fixed(')')), NativeCase(py,
+     Fixed('('), Var(Name(self)), Fixed(')._getField('), Var(Name(name)),
+     Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(')._getField('), Var(Name(name)), Fixed(')')))),
+
+  MethodMacro(Type(Name(void)), Name(setField),
+   Param(Type(Name(String)), Name(name)),
+   Param(Type(Name(Object)), Name(value)),
+   Native(NativeCase(java,
+     Fixed('((io.datawire.quark.runtime.QObject) ('), Var(Name(self)),
+     Fixed('))._setField('), Var(Name(name)), Fixed(', '), Var(Name(value)),
+     Fixed(')')), NativeCase(py, Fixed('('), Var(Name(self)),
+     Fixed(')._setField(('), Var(Name(name)), Fixed('), ('), Var(Name(value)),
+     Fixed('))')), NativeCase(js, Fixed('('), Var(Name(self)),
+     Fixed(')._setField(('), Var(Name(name)), Fixed('), ('), Var(Name(value)),
+     Fixed('))'))))),
+
+ Function(Type(Name(void)), Name(_class),
+  Param(Type(Name(Class)), Name(cls))),
+
+ Function(Type(Name(Object)), Name(_construct),
+  Param(Type(Name(String)), Name(className)),
+  Param(Type(Name(List), Type(Name(Object))), Name(args))),
+
+ Function(Type(Name(List), Type(Name(Field))), Name(_fields),
+  Param(Type(Name(String)), Name(className))),
+
+ Class(Name(Class),
+  Field(Type(Name(String)), Name(id)),
+  Field(Type(Name(String)), Name(name)),
+  Field(Type(Name(List), Type(Name(Class))), Name(parameters)),
+
+  Constructor(Name(Class),
+   Param(Type(Name(String)), Name(id)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(id)), Var(Name(id))),
+    ExprStmt(Call(Var(Name(_class)), Var(Name(self)))))),
+
+  Method(Type(Name(String)), Name(getId), Block(
+    Return(Var(Name(id))))),
+
+  Method(Type(Name(String)), Name(getName), Block(
+    Return(Var(Name(name))))),
+
+  Method(Type(Name(List), Type(Name(Class))), Name(getParameters), Block(
+    Return(Var(Name(parameters))))),
+
+  Method(Type(Name(Object)), Name(construct),
+   Param(Type(Name(List), Type(Name(Object))), Name(args)),
+   Block(
+    Return(Call(Var(Name(_construct)), Call(Var(Name(getId))),
+      Var(Name(args)))))),
+
+  Method(Type(Name(List), Type(Name(Field))), Name(getFields), Block(
+    Return(Call(Var(Name(_fields)), Attr(Var(Name(self)), Name(id)))))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+   Call(Attr(Call(Type(Name(JSONObject))), Name(setString)),
+    Attr(Var(Name(self)), Name(id)))),
+
+  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+   Call(Attr(Var(Name(self)), Name(toJSON))))),
+
+ Class(Name(Field),
+  Field(Type(Name(Class)), Name(type)),
+  Field(Type(Name(String)), Name(name)),
+
+  Constructor(Name(Field),
+   Param(Type(Name(Class)), Name(type)),
+   Param(Type(Name(String)), Name(name)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(type)), Var(Name(type))),
+    Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name)))))),
+
+ Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('void')))),
+  Name(void)),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Boolean')),
     NativeCase(py, Fixed('bool')), NativeCase(js, Fixed('Boolean')))),
@@ -378,6 +464,152 @@ File(
      Fixed(')')), NativeCase(js, Fixed('_qrt.urlencode('), Var(Name(self)),
      Fixed(')'))))),
 
+ Function(Type(Name(JSONObject)), Name(toJSON),
+  Param(Type(Name(Object)), Name(obj)),
+  Block(
+   Local(
+    Declaration(Type(Name(JSONObject)), Name(result),
+     Call(Type(Name(JSONObject))))),
+   If(Call(Attr(Var(Name(obj)), Name(__eq__)), Null(null)), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setNull)))),
+     Return(Var(Name(result))))),
+   Local(
+    Declaration(Type(Name(Class)), Name(cls), Call(Attr(Var(Name(obj)),
+       Name(getClass))))),
+   Local(
+    Declaration(Type(Name(int)), Name(idx), Number(0))),
+   If(Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+     String("String")), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setString)),
+       Cast(Var(Name(obj))))),
+     Return(Var(Name(result))))),
+   If(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Attr(Var(Name(cls)),
+               Name(name)), Name(__eq__)), String("byte")), Name(__or__)),
+           Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+            String("short"))), Name(__or__)), Call(Attr(Attr(Var(Name(cls)),
+            Name(name)), Name(__eq__)), String("int"))), Name(__or__)),
+       Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+        String("long"))), Name(__or__)), Call(Attr(Attr(Var(Name(cls)),
+        Name(name)), Name(__eq__)), String("float"))), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setNumber)), Var(Name(obj)))),
+     Return(Var(Name(result))))),
+   If(Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+     String("List")), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setList)))),
+     Local(
+      Declaration(Type(Name(List), Type(Name(Object))), Name(list),
+       Cast(Var(Name(obj))))),
+     While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(list)),
+         Name(size)))), Block(
+       ExprStmt(Call(Attr(Var(Name(result)), Name(setListItem)),
+         Var(Name(idx)), Call(Var(Name(toJSON)), Call(Attr(Var(Name(list)),
+            Name(__get__)), Var(Name(idx)))))),
+       Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+         Number(1))))),
+     Return(Var(Name(result))))),
+   If(Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+     String("Map")), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setObject)))),
+     Local(
+      Declaration(Type(Name(Map), Type(Name(String)), Type(Name(Object))),
+       Name(map), Cast(Var(Name(obj))))),
+     Return(Var(Name(result))))),
+   ExprStmt(Call(Attr(Var(Name(result)), Name(__set__)), String("$class"),
+     Var(Name(cls)))),
+   Local(
+    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
+     Call(Attr(Var(Name(cls)), Name(getFields))))),
+   While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
+       Name(size)))), Block(
+     ExprStmt(Call(Attr(Var(Name(result)), Name(__set__)),
+       Attr(Call(Attr(Var(Name(fields)), Name(__get__)), Var(Name(idx))),
+        Name(name)), Call(Var(Name(toJSON)), Call(Attr(Var(Name(obj)),
+          Name(getField)), Attr(Call(Attr(Var(Name(fields)), Name(__get__)),
+           Var(Name(idx))), Name(name)))))),
+     Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+       Number(1))))),
+   Return(Var(Name(result))))),
+
+ Function(Type(Name(Object)), Name(fromJSON),
+  Param(Type(Name(Class)), Name(cls)),
+  Param(Type(Name(JSONObject)), Name(json)),
+  Block(
+   If(Call(Attr(Call(Attr(Var(Name(json)), Name(__eq__)), Null(null)),
+      Name(__or__)), Call(Attr(Var(Name(json)), Name(isNull)))), Block(
+     Return(Null(null)))),
+   Local(
+    Declaration(Type(Name(int)), Name(idx), Number(0))),
+   If(Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
+     String("List")), Block(
+     Local(
+      Declaration(Type(Name(List), Type(Name(Object))), Name(list),
+       Cast(Call(Attr(Var(Name(cls)), Name(construct)), List())))),
+     While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(json)),
+         Name(size)))), Block(
+       ExprStmt(Call(Attr(Var(Name(list)), Name(add)),
+         Call(Var(Name(fromJSON)), Call(Attr(Attr(Var(Name(cls)),
+             Name(parameters)), Name(__get__)), Number(0)),
+          Call(Attr(Var(Name(json)), Name(getListItem)), Var(Name(idx)))))),
+       Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+         Number(1))))),
+     Return(Var(Name(list))))),
+   Local(
+    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
+     Call(Attr(Var(Name(cls)), Name(getFields))))),
+   Local(
+    Declaration(Type(Name(Object)), Name(result), Call(Attr(Var(Name(cls)),
+       Name(construct)), List()))),
+   While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
+       Name(size)))), Block(
+     Local(
+      Declaration(Type(Name(Field)), Name(f), Call(Attr(Var(Name(fields)),
+         Name(__get__)), Var(Name(idx))))),
+     Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+       Number(1))),
+     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+        Name(__eq__)), String("String")), Block(
+       Local(
+        Declaration(Type(Name(String)), Name(s), Call(Attr(Var(Name(json)),
+           Name(__get__)), Attr(Var(Name(f)), Name(name))))),
+       ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
+         Attr(Var(Name(f)), Name(name)), Var(Name(s)))),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+        Name(__eq__)), String("float")), Block(
+       Local(
+        Declaration(Type(Name(float)), Name(flt), Call(Attr(Var(Name(json)),
+           Name(__get__)), Attr(Var(Name(f)), Name(name))))),
+       ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
+         Attr(Var(Name(f)), Name(name)), Var(Name(flt)))),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+        Name(__eq__)), String("int")), Block(
+       If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json)), Name(__get__)),
+             Attr(Var(Name(f)), Name(name))), Name(isNull))), Name(__not__))),
+        Block(
+         Local(
+          Declaration(Type(Name(int)), Name(i), Call(Attr(Var(Name(json)),
+             Name(__get__)), Attr(Var(Name(f)), Name(name))))),
+         ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
+           Attr(Var(Name(f)), Name(name)), Var(Name(i)))))),
+       Continue())),
+     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+        Name(__eq__)), String("bool")), Block(
+       If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json)), Name(__get__)),
+             Attr(Var(Name(f)), Name(name))), Name(isNull))), Name(__not__))),
+        Block(
+         Local(
+          Declaration(Type(Name(bool)), Name(b), Call(Attr(Var(Name(json)),
+             Name(__get__)), Attr(Var(Name(f)), Name(name))))),
+         ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
+           Attr(Var(Name(f)), Name(name)), Var(Name(b)))))),
+       Continue())),
+     ExprStmt(Call(Attr(Var(Name(result)), Name(setField)), Attr(Var(Name(f)),
+        Name(name)), Call(Var(Name(fromJSON)), Attr(Var(Name(f)), Name(type)),
+        Call(Attr(Var(Name(json)), Name(__get__)), Attr(Var(Name(f)),
+          Name(name)))))))),
+   Return(Var(Name(result))))),
+
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.JSONObject')), NativeCase(py,
      Fixed('_JSONObject')), NativeCase(js, Fixed('_qrt.JSONObject')))),
@@ -418,9 +650,15 @@ File(
   Method(Type(Name(JSONObject)), Name(getListItem),
    Param(Type(Name(int)), Name(index))),
 
+  Method(Type(Name(int)), Name(size)),
+
   Method(Type(Name(String)), Name(getString)),
 
+  Method(Type(Name(bool)), Name(isString)),
+
   Method(Type(Name(float)), Name(getNumber)),
+
+  Method(Type(Name(bool)), Name(isNumber)),
 
   Method(Type(Name(bool)), Name(getBool)),
 

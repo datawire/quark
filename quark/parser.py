@@ -169,7 +169,7 @@ class Parser:
     def visit_method_macro(self, node, (macro, type, name, lp, parameters, rp, expr, s)):
         return MethodMacro(type, name, tuple(parameters), expr)
 
-    @g.rule('function = type name LPR parameters RPR block')
+    @g.rule('function = type name LPR parameters RPR body')
     def visit_function(self, node, (type, name, lp, parameters, rp, body)):
         return Function(type, name, tuple(parameters), body)
 

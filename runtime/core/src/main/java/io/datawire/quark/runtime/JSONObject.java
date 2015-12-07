@@ -54,13 +54,17 @@ public class JSONObject {
         return this;
     }
 
+    public Boolean isList() {
+        return this.value instanceof List;
+    }
+
     public JSONObject setString(String value) {
         this.value = value;
         return this;
     }
 
-    public JSONObject setNumber(Number value) {
-        this.value = value;
+    public JSONObject setNumber(Object value) {
+        this.value = (Number) value;
         return this;
     }
 
@@ -74,6 +78,10 @@ public class JSONObject {
         return this;
     }
 
+    public Boolean isNull() {
+        return this.value == null;
+    }
+
     public JSONObject setListItem(int index, JSONObject value) {
         if (!(this.value instanceof List)) {
             setList();
@@ -85,6 +93,16 @@ public class JSONObject {
         }
         l.add(value.value);
         return this;
+    }
+
+    public int size() {
+        if (this.value instanceof List) {
+            return ((List) this.value).size();
+        } else if (this.value instanceof Map) {
+            return ((Map) this.value).size();
+        } else {
+            return 1;
+        }
     }
 
     public JSONObject getListItem(int index) {
@@ -126,6 +144,10 @@ public class JSONObject {
         return null;
     }
 
+    public Boolean isNumber() {
+        return this.value instanceof Number;
+    }
+
     public String getString() {
         if (this.value instanceof String) {
             return (String) this.value;
@@ -133,11 +155,19 @@ public class JSONObject {
         return null;
     }
 
+    public Boolean isString() {
+        return this.value instanceof String;
+    }
+
     public Boolean getBool() {
         if (this.value instanceof Boolean) {
             return (Boolean) this.value;
         }
         return null;
+    }
+
+    public Boolean isBool() {
+        return this.value instanceof Boolean;
     }
 
     public Boolean isDefined() {
@@ -155,7 +185,7 @@ public class JSONObject {
         @Override public JSONObject setObject() { return this; }
         @Override public JSONObject setList() { return this; }
         @Override public JSONObject setString(String v) { return this; }
-        @Override public JSONObject setNumber(Number v) { return this; }
+        @Override public JSONObject setNumber(Object v) { return this; }
         @Override public JSONObject setBool(boolean v) { return this; }
         @Override public JSONObject setNull() { return this; }
         @Override public JSONObject setListItem(int i, JSONObject v) { return this; }
