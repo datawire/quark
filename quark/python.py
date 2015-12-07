@@ -160,6 +160,15 @@ def qualify(package, origin):
 def doc(lines):
     return indent(doc_helper(lines, '"""', "", '"""')).rstrip()
 
+## Comments
+
+def comment(stuff):
+    # Use triple quotes to be multiline safe.
+    if "\n" in stuff:
+        return '"""%s"""' % stuff
+    else:
+        return "# %s\n" % stuff
+
 ## Class definition
 
 def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):

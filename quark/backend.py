@@ -75,7 +75,13 @@ class Backend(object):
                 self.files[fname] = self.make_file(d)
             else:
                 self.files[fname] += "\n"
-            self.files[fname] += self.definition(d)
+            dfn_code = self.definition(d)
+            if dfn_code and d.package is None and d.file.name.endswith("builtin.q"):
+                self.files[fname] += self.gen.comment("BEGIN_BUILTIN") + "\n"
+                self.files[fname] += dfn_code
+                self.files[fname] += "\n" + self.gen.comment("END_BUILTIN")
+            else:
+                self.files[fname] += dfn_code
 
         for name in self.files:
             code = self.files[name]

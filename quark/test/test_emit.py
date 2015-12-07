@@ -77,7 +77,7 @@ def test_emit(path, Backend, java_deps):
 
     for expected, computed in assertions:
         assert expected == computed
-    assert len(backend.files) == len(walk(extbase, ".%s" % backend.ext))
+    assert len(list(backend.files.keys())) == len(walk(extbase, ".%s" % backend.ext))
 
     BUILDERS[backend.ext](comp, extbase, srcs)
 
@@ -101,7 +101,9 @@ def build_java(comp, base, srcs):
         except IOError, e:
             expected = None
         cp.append(build)
-        actual = subprocess.check_output(["java", "-cp", ":".join(cp), "Functions"])
+        import quark.java
+        mainclass = quark.java.name(os.path.basename(os.path.dirname(base)))
+        actual = subprocess.check_output(["java", "-cp", ":".join(cp), mainclass])
         if expected != actual:
             open(out + ".cmp", "write").write(actual)
         assert expected == actual

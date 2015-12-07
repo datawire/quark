@@ -158,6 +158,11 @@ def qualify(package, origin):
 def doc(lines):
     return doc_helper(lines, "/**", " * ", " */")
 
+## Comments
+
+def comment(stuff):
+    return "/* %s */\n" % stuff
+
 ## Class definition
 
 def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):

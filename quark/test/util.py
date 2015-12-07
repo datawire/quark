@@ -15,13 +15,30 @@
 import os, pytest
 
 def is_excluded_file(name):
-    if name.endswith("quark/builtin.q"):
+    if name.endswith("quark/builtin.q") or name == "reflector":
         return True
     else:
         return False
 
 def is_runtime(path):
     return "quark_" in path and "_runtime" in path
+
+def filter_builtin(content):
+    lines = content.split("\n")
+    result = []
+    skipping = False
+    for line in lines:
+        if "BEGIN_BUILTIN" in line:
+            skipping = True
+        if not skipping:
+            result.append(line)
+        if "END_BUILTIN" in line:
+            skipping = False
+    return "\n".join(result)
+
+def is_valid_change(path, content, expected):
+    if is_runtime(path): return True
+    return filter_builtin(content) == filter_builtin(expected)
 
 def check_file(path, content):
     try:
@@ -33,7 +50,7 @@ def check_file(path, content):
         dir = os.path.dirname(path)
         if not os.path.exists(dir):
             os.makedirs(dir)
-        if is_runtime(path):
+        if is_valid_change(path, content, expected):
             with open(path, "wb") as fd: fd.write(content)
             return content
         else:
