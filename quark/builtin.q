@@ -566,3 +566,70 @@ primitive WSServlet extends Servlet {
     WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
 }
 
+class ResponseHolder extends HTTPHandler {
+    HTTPResponse response;
+
+    void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+        self.response = response;
+    }
+
+}
+
+interface Service {
+
+    String getURL();
+    Runtime getRuntime();
+
+    Object rpc(String name, Object message) {
+        HTTPRequest request = new HTTPRequest(getURL() + "/" + name);
+        JSONObject json = toJSON(message);
+        request.setBody(json);
+        Runtime rt = self.getRuntime();
+
+        ResponseHolder rh = new ResponseHolder();
+        rt.acquire();
+        rt.request(request, rh);
+        while (rh.response == null) {
+            rt.wait(3.14);
+        }
+        HTTPResponse response = rh.response;
+        rt.release();
+
+        String body = response.getBody();
+        JSONObject obj = body.parseJSON();
+        return fromJSON(Class(obj["$class"]), obj);
+    }
+
+}
+
+class Client {
+
+    Runtime runtime;
+    String url;
+    Client(Runtime runtime, String url) {
+        self.runtime = runtime;
+        self.url = url;
+    }
+
+    Runtime getRuntime() { return self.runtime; }
+    String getURL() { return self.url; }
+
+}
+
+class Server<T> extends HTTPServlet {
+
+    Runtime runtime;
+    T impl;
+
+    Server(Runtime runtime, T impl) {
+        self.runtime = runtime;
+        self.impl = impl;
+    }
+
+    Runtime getRuntime() { return self.runtime; }
+
+    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
+        // XXX: need to finish this stuff off
+    }
+
+}

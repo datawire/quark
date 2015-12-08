@@ -1064,5 +1064,95 @@ File(
    Type(Name(WSHandler)), Name(onWSConnect),
    Param(Type(Name(HTTPRequest)), Name(upgrade_request)),
    Block(
-    Return(Null(null)))))
+    Return(Null(null))))),
+
+ Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
+  Field(Type(Name(HTTPResponse)), Name(response)),
+
+  Method(Type(Name(void)), Name(onHTTPResponse),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPResponse)), Name(response)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(response)), Var(Name(response)))))),
+
+ Interface(Name(Service),
+
+  Method(Type(Name(String)), Name(getURL)),
+
+  Method(Type(Name(Runtime)), Name(getRuntime)),
+
+  Method(Type(Name(Object)), Name(rpc),
+   Param(Type(Name(String)), Name(name)),
+   Param(Type(Name(Object)), Name(message)),
+   Block(
+    Local(
+     Declaration(Type(Name(HTTPRequest)), Name(request),
+      Call(Type(Name(HTTPRequest)),
+       Call(Attr(Call(Attr(Call(Var(Name(getURL))), Name(__add__)),
+          String("/")), Name(__add__)), Var(Name(name)))))),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(json), Call(Var(Name(toJSON)),
+       Var(Name(message))))),
+    ExprStmt(Call(Attr(Var(Name(request)), Name(setBody)), Var(Name(json)))),
+    Local(
+     Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self)),
+        Name(getRuntime))))),
+    Local(
+     Declaration(Type(Name(ResponseHolder)), Name(rh),
+      Call(Type(Name(ResponseHolder))))),
+    ExprStmt(Call(Attr(Var(Name(rt)), Name(acquire)))),
+    ExprStmt(Call(Attr(Var(Name(rt)), Name(request)), Var(Name(request)),
+      Var(Name(rh)))),
+    While(Call(Attr(Attr(Var(Name(rh)), Name(response)), Name(__eq__)),
+      Null(null)), Block(
+      ExprStmt(Call(Attr(Var(Name(rt)), Name(wait)), Number(3.14))))),
+    Local(
+     Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh)),
+       Name(response)))),
+    ExprStmt(Call(Attr(Var(Name(rt)), Name(release)))),
+    Local(
+     Declaration(Type(Name(String)), Name(body), Call(Attr(Var(Name(response)),
+        Name(getBody))))),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(obj), Call(Attr(Var(Name(body)),
+        Name(parseJSON))))),
+    Return(Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
+       Call(Attr(Var(Name(obj)), Name(__get__)), String("$class"))),
+      Var(Name(obj))))))),
+
+ Class(Name(Client),
+  Field(Type(Name(Runtime)), Name(runtime)),
+  Field(Type(Name(String)), Name(url)),
+
+  Constructor(Name(Client),
+   Param(Type(Name(Runtime)), Name(runtime)),
+   Param(Type(Name(String)), Name(url)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(runtime)), Var(Name(runtime))),
+    Assign(Attr(Var(Name(self)), Name(url)), Var(Name(url))))),
+
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
+    Return(Attr(Var(Name(self)), Name(runtime))))),
+
+  Method(Type(Name(String)), Name(getURL), Block(
+    Return(Attr(Var(Name(self)), Name(url)))))),
+
+ Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
+  Field(Type(Name(Runtime)), Name(runtime)),
+  Field(Type(Name(T)), Name(impl)),
+
+  Constructor(Name(Server),
+   Param(Type(Name(Runtime)), Name(runtime)),
+   Param(Type(Name(T)), Name(impl)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(runtime)), Var(Name(runtime))),
+    Assign(Attr(Var(Name(self)), Name(impl)), Var(Name(impl))))),
+
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
+    Return(Attr(Var(Name(self)), Name(runtime))))),
+
+  Method(Type(Name(void)), Name(onHTTPRequest),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(HTTPResponse)), Name(response)),
+   Block()))
 )

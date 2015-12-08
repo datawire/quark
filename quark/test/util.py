@@ -24,6 +24,8 @@ def is_runtime(path):
     return "quark_" in path and "_runtime" in path
 
 def filter_builtin(content):
+    if content is None:
+        return None
     lines = content.split("\n")
     result = []
     skipping = False

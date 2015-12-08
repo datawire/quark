@@ -189,6 +189,167 @@ def fromJSON(cls, json):
 
 # END_BUILTIN
 
+# BEGIN_BUILTIN
+
+class ResponseHolder(object):
+    def _init(self):
+        self.response = None
+
+    def __init__(self): self._init()
+
+    def onHTTPResponse(self, request, response):
+        (self).response = response
+
+    def _getClass(self):
+        return u"ResponseHolder"
+
+    def _getField(self, name):
+        if ((name) == (u"response")):
+            return (self).response
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"response")):
+            (self).response = value
+
+    def onHTTPInit(self, request):
+        pass
+
+    def onHTTPError(self, request):
+        pass
+
+    def onHTTPFinal(self, request):
+        pass
+
+# END_BUILTIN
+
+# BEGIN_BUILTIN
+
+class Service(object):
+
+    def getURL(self): assert False
+
+    def getRuntime(self): assert False
+
+    def rpc(self, name, message):
+        request = _HTTPRequest(((self.getURL()) + (u"/")) + (name));
+        json = toJSON(message);
+        (request).setBody((json).getString());
+        rt = (self).getRuntime();
+        rh = ResponseHolder();
+        (rt).acquire();
+        (rt).request(request, rh);
+        while (((rh).response) == (None)):
+            (rt).wait(3.14);
+
+        response = (rh).response;
+        (rt).release();
+        body = (response).getBody();
+        obj = _JSONObject.parse(body);
+        return fromJSON(Class(((obj).getObjectItem(u"$class")).getString()), obj)
+
+
+# END_BUILTIN
+
+# BEGIN_BUILTIN
+
+class Client(object):
+    def _init(self):
+        self.runtime = None
+        self.url = None
+
+    def __init__(self, runtime, url):
+        self._init()
+        (self).runtime = runtime
+        (self).url = url
+
+    def getRuntime(self):
+        return (self).runtime
+
+    def getURL(self):
+        return (self).url
+
+    def _getClass(self):
+        return u"Client"
+
+    def _getField(self, name):
+        if ((name) == (u"runtime")):
+            return (self).runtime
+
+        if ((name) == (u"url")):
+            return (self).url
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"runtime")):
+            (self).runtime = value
+
+        if ((name) == (u"url")):
+            (self).url = value
+
+    
+
+# END_BUILTIN
+
+# BEGIN_BUILTIN
+
+class Server(object):
+    def _init(self):
+        self.runtime = None
+        self.impl = None
+
+    def __init__(self, runtime, impl):
+        self._init()
+        (self).runtime = runtime
+        (self).impl = impl
+
+    def getRuntime(self):
+        return (self).runtime
+
+    def onHTTPRequest(self, request, response):
+        pass
+
+    def _getClass(self):
+        return u"Server<Object>"
+
+    def _getField(self, name):
+        if ((name) == (u"runtime")):
+            return (self).runtime
+
+        if ((name) == (u"impl")):
+            return (self).impl
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"runtime")):
+            (self).runtime = value
+
+        if ((name) == (u"impl")):
+            (self).impl = value
+
+    def onServletInit(self, url, runtime):
+        """
+        called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
+        """
+        pass
+
+    def onServletError(self, url, error):
+        """
+        called if the servlet could not be installed
+        """
+        pass
+
+    def onServletEnd(self, url):
+        """
+        called when the servlet is removed
+        """
+        pass
+
+# END_BUILTIN
+
 class Test(object):
     def _init(self):
         pass
@@ -236,6 +397,15 @@ def _construct(className, args):
     if ((className) == (u"Map<String,Object>")):
         return _Map()
 
+    if ((className) == (u"ResponseHolder")):
+        return ResponseHolder()
+
+    if ((className) == (u"Client")):
+        return Client((args)[0], (args)[1])
+
+    if ((className) == (u"Server<Object>")):
+        return Server((args)[0], (args)[1])
+
     if ((className) == (u"Test")):
         return Test()
 
@@ -266,6 +436,15 @@ def _fields(className):
 
     if ((className) == (u"Map<String,Object>")):
         return _List([])
+
+    if ((className) == (u"ResponseHolder")):
+        return _List([Field(Class(u"HTTPResponse"), u"response")])
+
+    if ((className) == (u"Client")):
+        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url")])
+
+    if ((className) == (u"Server<Object>")):
+        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"Object"), u"impl")])
 
     if ((className) == (u"Test")):
         return _List([])
@@ -312,6 +491,21 @@ def _class(cls):
     if (((cls).id) == (u"Map<String,Object>")):
         (cls).name = u"Map"
         (cls).parameters = _List([Class(u"String"), Class(u"Object")])
+        return
+
+    if (((cls).id) == (u"ResponseHolder")):
+        (cls).name = u"ResponseHolder"
+        (cls).parameters = _List([])
+        return
+
+    if (((cls).id) == (u"Client")):
+        (cls).name = u"Client"
+        (cls).parameters = _List([])
+        return
+
+    if (((cls).id) == (u"Server<Object>")):
+        (cls).name = u"Server"
+        (cls).parameters = _List([Class(u"Object")])
         return
 
     if (((cls).id) == (u"Test")):
