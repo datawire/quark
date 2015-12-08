@@ -149,6 +149,15 @@ public class Functions {
         if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {
             return new java.util.HashMap<String,Object>();
         }
+        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
+            return new ResponseHolder();
+        }
+        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
+            return new Client((io.datawire.quark.runtime.Runtime) ((args).get(0)), (String) ((args).get(1)));
+        }
+        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
+            return new Server<Object>((io.datawire.quark.runtime.Runtime) ((args).get(0)), (args).get(1));
+        }
         return null;
     }
 
@@ -177,6 +186,15 @@ public class Functions {
         }
         if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+        }
+        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("HTTPResponse"), "response")}));
+        }
+        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")}));
+        }
+        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")}));
         }
         return (java.util.ArrayList<Field>) (null);
     }
@@ -221,6 +239,21 @@ public class Functions {
         if (((cls).id)==("Map<String,Object>") || (((cls).id) != null && ((cls).id).equals("Map<String,Object>"))) {
             (cls).name = "Map";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("String"), new Class("Object")}));
+            return;
+        }
+        if (((cls).id)==("ResponseHolder") || (((cls).id) != null && ((cls).id).equals("ResponseHolder"))) {
+            (cls).name = "ResponseHolder";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
+        if (((cls).id)==("Client") || (((cls).id) != null && ((cls).id).equals("Client"))) {
+            (cls).name = "Client";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
+        if (((cls).id)==("Server<Object>") || (((cls).id) != null && ((cls).id).equals("Server<Object>"))) {
+            (cls).name = "Server";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
             return;
         }
         (cls).name = (cls).id;

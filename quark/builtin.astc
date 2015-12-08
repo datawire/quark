@@ -1325,5 +1325,213 @@ File(
     $type=0.String)), Type(Name(WSHandler)), Name(onWSConnect),
    Param(Type(Name(HTTPRequest)), Name(upgrade_request), $type=0.HTTPRequest),
    Block(
-    Return(Null(null, $type=0.Object)))))
+    Return(Null(null, $type=0.Object))))),
+
+ Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
+  Field(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
+
+  Method(Type(Name(void)), Name(onHTTPResponse),
+   Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
+   Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
+     $type=0.HTTPResponse), Var(Name(response), $type=0.HTTPResponse)))),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("ResponseHolder", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("response", $type=0.String),
+     $type=0.bool), Block(
+      Return(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
+       $type=0.HTTPResponse)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("response", $type=0.String),
+     $type=0.bool), Block(
+      Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
+       $type=0.HTTPResponse), Cast(Var(Name(value), $type=0.Object),
+       $type=0.HTTPResponse))))))),
+
+ Interface(Name(Service),
+
+  Method(Type(Name(String)), Name(getURL)),
+
+  Method(Type(Name(Runtime)), Name(getRuntime)),
+
+  Method(Type(Name(Object)), Name(rpc),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(message), $type=0.Object),
+   Block(
+    Local(
+     Declaration(Type(Name(HTTPRequest)), Name(request),
+      Call(Type(Name(HTTPRequest)), Call(Attr(Call(Attr(Call(Var(Name(getURL),
+            $type=0.Service.getURL), $type=0.String), Name(__add__),
+          $type=0.String.__add__), String("/", $type=0.String),
+         $type=0.String), Name(__add__), $type=0.String.__add__),
+        Var(Name(name), $type=0.String), $type=0.String), $type=0.HTTPRequest),
+     $type=0.HTTPRequest)),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(json), Call(Var(Name(toJSON),
+       $type=0.toJSON), Var(Name(message), $type=0.Object),
+      $type=0.JSONObject), $type=0.JSONObject)),
+    ExprStmt(Call(Attr(Var(Name(request), $type=0.HTTPRequest), Name(setBody),
+      $type=0.HTTPRequest.setBody), Var(Name(json), $type=0.JSONObject),
+     $type=0.void)),
+    Local(
+     Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self),
+        $type=0.Service), Name(getRuntime), $type=0.Service.getRuntime),
+      $type=0.Runtime), $type=0.Runtime)),
+    Local(
+     Declaration(Type(Name(ResponseHolder)), Name(rh),
+      Call(Type(Name(ResponseHolder)), $type=0.ResponseHolder),
+     $type=0.ResponseHolder)),
+    ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(acquire),
+      $type=0.Runtime.acquire), $type=0.void)),
+    ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(request),
+      $type=0.Runtime.request), Var(Name(request), $type=0.HTTPRequest),
+      Var(Name(rh), $type=0.ResponseHolder), $type=0.void)),
+    While(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder), Name(response),
+       $type=0.HTTPResponse), Name(__eq__), $type=0.Object.__eq__), Null(null,
+      $type=0.Object), $type=0.bool), Block(
+      ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(wait),
+        $type=0.Runtime.wait), Number(3.14, $type=0.float), $type=0.void)))),
+    Local(
+     Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh),
+       $type=0.ResponseHolder), Name(response), $type=0.HTTPResponse),
+     $type=0.HTTPResponse)),
+    ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(release),
+      $type=0.Runtime.release), $type=0.void)),
+    Local(
+     Declaration(Type(Name(String)), Name(body), Call(Attr(Var(Name(response),
+        $type=0.HTTPResponse), Name(getBody), $type=0.HTTPResponse.getBody),
+      $type=0.String), $type=0.String)),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(obj), Call(Attr(Var(Name(body),
+        $type=0.String), Name(parseJSON), $type=0.String.parseJSON),
+      $type=0.JSONObject), $type=0.JSONObject)),
+    Return(Call(Var(Name(fromJSON), $type=0.fromJSON), Call(Var(Name(Class),
+       $type=0.Class), Call(Attr(Var(Name(obj), $type=0.JSONObject),
+         Name(__get__), $type=0.JSONObject.__get__), String("$class",
+        $type=0.String), $type=0.JSONObject), $type=0.Class), Var(Name(obj),
+      $type=0.JSONObject), $type=0.Object))))),
+
+ Class(Name(Client),
+  Field(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+  Field(Type(Name(String)), Name(url), $type=0.String),
+
+  Constructor(Name(Client),
+   Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+   Param(Type(Name(String)), Name(url), $type=0.String),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.Client), Name(runtime),
+     $type=0.Runtime), Var(Name(runtime), $type=0.Runtime)),
+    Assign(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String),
+     Var(Name(url), $type=0.String)))),
+
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
+    Return(Attr(Var(Name(self), $type=0.Client), Name(runtime),
+     $type=0.Runtime)))),
+
+  Method(Type(Name(String)), Name(getURL), Block(
+    Return(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String)))),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Client", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("runtime", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Client), Name(runtime),
+       $type=0.Runtime)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("url", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Client), Name(url),
+       $type=0.String)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("runtime", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Client), Name(runtime),
+       $type=0.Runtime), Cast(Var(Name(value), $type=0.Object),
+       $type=0.Runtime)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("url", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
+
+ Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
+  Field(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+  Field(Type(Name(T)), Name(impl), $type=0.Server.T),
+
+  Constructor(Name(Server),
+   Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+   Param(Type(Name(T)), Name(impl), $type=0.Server.T),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(runtime),
+     $type=0.Runtime), Var(Name(runtime), $type=0.Runtime)),
+    Assign(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(impl),
+     $type=0.Server.T), Var(Name(impl), $type=0.Server.T)))),
+
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
+    Return(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(runtime),
+     $type=0.Runtime)))),
+
+  Method(Type(Name(void)), Name(onHTTPRequest),
+   Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
+   Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
+   Block()),
+
+  Method(Type(Name(String)), Name(_getClass), Block(
+    Return(String("Server<Object>", $type=0.String)))),
+
+  Method(Type(Name(Object)), Name(_getField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("runtime", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(runtime),
+       $type=0.Runtime)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("impl", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(impl),
+       $type=0.Server.T)))),
+    Return(Null(null, $type=0.Object)))),
+
+  Method(Type(Name(void)), Name(_setField),
+   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Block(
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("runtime", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(runtime),
+       $type=0.Runtime), Cast(Var(Name(value), $type=0.Object),
+       $type=0.Runtime)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("impl", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(impl),
+       $type=0.Server.T), Cast(Var(Name(value), $type=0.Object),
+       $type=0.Server.T)))))))
 )

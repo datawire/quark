@@ -220,6 +220,219 @@ function fromJSON(cls, json) {
 exports.fromJSON = fromJSON;
 /* END_BUILTIN */
 
+/* BEGIN_BUILTIN */
+
+
+// CLASS ResponseHolder
+function ResponseHolder() {
+    this.__init_fields__();
+}
+exports.ResponseHolder = ResponseHolder;
+
+function ResponseHolder__init_fields__() {
+    this.response = null;
+}
+ResponseHolder.prototype.__init_fields__ = ResponseHolder__init_fields__;
+
+function ResponseHolder_onHTTPResponse(request, response) {
+    (this).response = response;
+}
+ResponseHolder.prototype.onHTTPResponse = ResponseHolder_onHTTPResponse;
+
+function ResponseHolder__getClass() {
+    return "ResponseHolder";
+}
+ResponseHolder.prototype._getClass = ResponseHolder__getClass;
+
+function ResponseHolder__getField(name) {
+    if ((name) === ("response")) {
+        return (this).response;
+    }
+    return null;
+}
+ResponseHolder.prototype._getField = ResponseHolder__getField;
+
+function ResponseHolder__setField(name, value) {
+    if ((name) === ("response")) {
+        (this).response = value;
+    }
+}
+ResponseHolder.prototype._setField = ResponseHolder__setField;
+
+function ResponseHolder_onHTTPInit(request) {}
+ResponseHolder.prototype.onHTTPInit = ResponseHolder_onHTTPInit;
+
+function ResponseHolder_onHTTPError(request) {}
+ResponseHolder.prototype.onHTTPError = ResponseHolder_onHTTPError;
+
+function ResponseHolder_onHTTPFinal(request) {}
+ResponseHolder.prototype.onHTTPFinal = ResponseHolder_onHTTPFinal;
+/* END_BUILTIN */
+
+/* BEGIN_BUILTIN */
+
+
+// CLASS Service
+function Service() {
+    this.__init_fields__();
+}
+exports.Service = Service;
+
+function Service__init_fields__() {}
+Service.prototype.__init_fields__ = Service__init_fields__;
+
+function Service_getURL() { /* interface */ }
+Service.prototype.getURL = Service_getURL;
+
+function Service_getRuntime() { /* interface */ }
+Service.prototype.getRuntime = Service_getRuntime;
+
+function Service_rpc(name, message) {
+    var request = new _qrt.HTTPRequest(((this.getURL()) + ("/")) + (name));
+    var json = toJSON(message);
+    (request).setBody((json).getString());
+    var rt = (this).getRuntime();
+    var rh = new ResponseHolder();
+    (rt).acquire();
+    (rt).request(request, rh);
+    while (((rh).response) === (null)) {
+        (rt).wait(3.14);
+    }
+    var response = (rh).response;
+    (rt).release();
+    var body = (response).getBody();
+    var obj = _qrt.json_from_string(body);
+    return fromJSON(new Class(((obj).getObjectItem("$class")).getString()), obj);
+}
+Service.prototype.rpc = Service_rpc;
+/* END_BUILTIN */
+
+/* BEGIN_BUILTIN */
+
+
+// CLASS Client
+
+function Client(runtime, url) {
+    this.__init_fields__();
+    (this).runtime = runtime;
+    (this).url = url;
+}
+exports.Client = Client;
+
+function Client__init_fields__() {
+    this.runtime = null;
+    this.url = null;
+}
+Client.prototype.__init_fields__ = Client__init_fields__;
+
+function Client_getRuntime() {
+    return (this).runtime;
+}
+Client.prototype.getRuntime = Client_getRuntime;
+
+function Client_getURL() {
+    return (this).url;
+}
+Client.prototype.getURL = Client_getURL;
+
+function Client__getClass() {
+    return "Client";
+}
+Client.prototype._getClass = Client__getClass;
+
+function Client__getField(name) {
+    if ((name) === ("runtime")) {
+        return (this).runtime;
+    }
+    if ((name) === ("url")) {
+        return (this).url;
+    }
+    return null;
+}
+Client.prototype._getField = Client__getField;
+
+function Client__setField(name, value) {
+    if ((name) === ("runtime")) {
+        (this).runtime = value;
+    }
+    if ((name) === ("url")) {
+        (this).url = value;
+    }
+}
+Client.prototype._setField = Client__setField;
+/* END_BUILTIN */
+
+/* BEGIN_BUILTIN */
+
+
+// CLASS Server
+
+function Server(runtime, impl) {
+    this.__init_fields__();
+    (this).runtime = runtime;
+    (this).impl = impl;
+}
+exports.Server = Server;
+
+function Server__init_fields__() {
+    this.runtime = null;
+    this.impl = null;
+}
+Server.prototype.__init_fields__ = Server__init_fields__;
+
+function Server_getRuntime() {
+    return (this).runtime;
+}
+Server.prototype.getRuntime = Server_getRuntime;
+
+function Server_onHTTPRequest(request, response) {}
+Server.prototype.onHTTPRequest = Server_onHTTPRequest;
+
+function Server__getClass() {
+    return "Server<Object>";
+}
+Server.prototype._getClass = Server__getClass;
+
+function Server__getField(name) {
+    if ((name) === ("runtime")) {
+        return (this).runtime;
+    }
+    if ((name) === ("impl")) {
+        return (this).impl;
+    }
+    return null;
+}
+Server.prototype._getField = Server__getField;
+
+function Server__setField(name, value) {
+    if ((name) === ("runtime")) {
+        (this).runtime = value;
+    }
+    if ((name) === ("impl")) {
+        (this).impl = value;
+    }
+}
+Server.prototype._setField = Server__setField;
+
+/**
+ * called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
+ */
+function Server_onServletInit(url, runtime) {}
+Server.prototype.onServletInit = Server_onServletInit;
+
+/**
+ * called if the servlet could not be installed
+ */
+function Server_onServletError(url, error) {}
+Server.prototype.onServletError = Server_onServletError;
+
+/**
+ * called when the servlet is removed
+ */
+function Server_onServletEnd(url) {}
+Server.prototype.onServletEnd = Server_onServletEnd;
+/* END_BUILTIN */
+
 
 function hexb(v) {
     var c = _qrt.defaultCodec();
@@ -327,6 +540,15 @@ function _construct(className, args) {
     if ((className) === ("Map<String,Object>")) {
         return new Map();
     }
+    if ((className) === ("ResponseHolder")) {
+        return new ResponseHolder();
+    }
+    if ((className) === ("Client")) {
+        return new Client((args)[0], (args)[1]);
+    }
+    if ((className) === ("Server<Object>")) {
+        return new Server((args)[0], (args)[1]);
+    }
     return null;
 }
 exports._construct = _construct;
@@ -355,6 +577,15 @@ function _fields(className) {
     }
     if ((className) === ("Map<String,Object>")) {
         return [];
+    }
+    if ((className) === ("ResponseHolder")) {
+        return [new Field(new Class("HTTPResponse"), "response")];
+    }
+    if ((className) === ("Client")) {
+        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")];
+    }
+    if ((className) === ("Server<Object>")) {
+        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")];
     }
     return null;
 }
@@ -399,6 +630,21 @@ function _class(cls) {
     if (((cls).id) === ("Map<String,Object>")) {
         (cls).name = "Map";
         (cls).parameters = [new Class("String"), new Class("Object")];
+        return;
+    }
+    if (((cls).id) === ("ResponseHolder")) {
+        (cls).name = "ResponseHolder";
+        (cls).parameters = [];
+        return;
+    }
+    if (((cls).id) === ("Client")) {
+        (cls).name = "Client";
+        (cls).parameters = [];
+        return;
+    }
+    if (((cls).id) === ("Server<Object>")) {
+        (cls).name = "Server";
+        (cls).parameters = [new Class("Object")];
         return;
     }
     (cls).name = (cls).id;

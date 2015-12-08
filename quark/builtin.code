@@ -388,3 +388,56 @@ primitive WSServlet extends Servlet {
         return null;
     }
 }
+class ResponseHolder extends HTTPHandler {
+    HTTPResponse response;
+    void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+        (self).response = response;
+    }
+}
+interface Service {
+    String getURL();
+    Runtime getRuntime();
+    Object rpc(String name, Object message) {
+        HTTPRequest request = new HTTPRequest((((((getURL)()).__add__)("/")).__add__)(name));
+        JSONObject json = (toJSON)(message);
+        ((request).setBody)(json);
+        Runtime rt = ((self).getRuntime)();
+        ResponseHolder rh = new ResponseHolder();
+        ((rt).acquire)();
+        ((rt).request)(request, rh);
+        while ((((rh).response).__eq__)(null)) {
+            ((rt).wait)(3.14);
+        }
+        HTTPResponse response = (rh).response;
+        ((rt).release)();
+        String body = ((response).getBody)();
+        JSONObject obj = ((body).parseJSON)();
+        return (fromJSON)((Class)(((obj).__get__)("$class")), obj);
+    }
+}
+class Client {
+    Runtime runtime;
+    String url;
+    Client(Runtime runtime, String url) {
+        (self).runtime = runtime;
+        (self).url = url;
+    }
+    Runtime getRuntime() {
+        return (self).runtime;
+    }
+    String getURL() {
+        return (self).url;
+    }
+}
+class Server<T> extends HTTPServlet {
+    Runtime runtime;
+    T impl;
+    Server(Runtime runtime, T impl) {
+        (self).runtime = runtime;
+        (self).impl = impl;
+    }
+    Runtime getRuntime() {
+        return (self).runtime;
+    }
+    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
+}
