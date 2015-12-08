@@ -10,26 +10,12 @@ Quark defines the following data types:
 .. toctree::
    :maxdepth: 1
 
-   bool
-   byte
-   float
-   int
-   integral
-   List
-   long
-   numerical
-   Map
-   Object
-   short
-   String
-   void
-
 .. _bool:
 
 bool
 ~~~~
 
-Quark bool values are booleans and indicate truthfulness. 
+Quark bool values are booleans and indicate truthfulness.
 
 Constraints
 +++++++++++
@@ -63,7 +49,7 @@ Documentation coming soon
 float
 ~~~~~
 
-Quark float values are floating point numbers. 
+Quark float values are floating point numbers.
 
 Constraints
 +++++++++++
@@ -174,7 +160,7 @@ Quark longs are long integers.
 Constraints
 +++++++++++
 
-Quark does not permit declaration of long literal values by adding L to the end of an integer. 
+Quark does not permit declaration of long literal values by adding L to the end of an integer.
 
 Long integers may be further constrained by the rules of each generated language.
 
@@ -208,12 +194,12 @@ The numerical type is a base type for all numbers. It should not be used directl
 Map
 ~~~
 
-Quark Maps are sets of key-value pairs. They do not have an inherent order. 
+Quark Maps are sets of key-value pairs. They do not have an inherent order.
 
 Constraints
 +++++++++++
 
-Quark Maps are strongly typed. Quark supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, Quark expect the values of keys to be immutable. Quark Maps are also constrained by additional rules in 
+Quark Maps are strongly typed. Quark supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, Quark expect the values of keys to be immutable. Quark Maps are also constrained by additional rules in
 
 Map types are specified as follows when a new Map is declared:
 

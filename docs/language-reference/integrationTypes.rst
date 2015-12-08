@@ -8,20 +8,6 @@ Quark defines the following integration types:
 .. toctree::
    :maxdepth: 1
 
-   Buffer
-   Codec
-   HTTPHandler
-   HTTPRequest
-   HTTPResponse
-   HTTPServlet
-   JSONObject
-   Runtime
-   Servlet
-   Task
-   WebSocket
-   WSHandler
-   WSServlet
-
 .. _Buffer:
 
 Buffer

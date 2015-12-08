@@ -8,26 +8,6 @@ Quark defines the following operators:
 .. toctree::
    :maxdepth: 1
 
-   Add (+) <Add>
-   And (&&) <And>
-   At (@) <At>
-   Bitwise Complement (~) <Bitwise Complement>
-   Cast (?) <Cast>
-   Divide (/) <Divide>
-   Equals (=) <Equals>
-   Equivalent (==) <Equivalent>
-   Greater Than (>) <Greater Than>
-   Greater Than or Equal (>=) <Greater Than or Equal>
-   Less Than (<) <Less Than>
-   Less Than or Equal (<=) <Less Than or Equal>
-   Modulo (%) <Modulo>
-   Multiply (*) <Multiply>
-   Negate (-) <Negate>
-   Not (!) <Not>
-   Not Equivalent (!=) <Not Equivalent>
-   Or (||) <Or>
-   Subtract (-) <Subtract>
-
 .. _AddOperator:
 
 Add

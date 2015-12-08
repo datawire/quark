@@ -10,24 +10,6 @@ Quark defines the following keywords:
 .. toctree::
    :maxdepth: 1
 
-   break
-   class
-   continue
-   else
-   extends
-   false
-   if
-   interface
-   macro
-   new
-   null
-   package
-   primitive
-   return
-   super
-   true
-   while
-
 .. _breakKeyword:
 
 break
@@ -157,7 +139,7 @@ The if keyword syntax is:
 *executeIfConditionTrue*
 **}**
 
-where *condition* is the code being evaluated and *executeIfConditionTrue* is run if *condition* evaluates to true. 
+where *condition* is the code being evaluated and *executeIfConditionTrue* is run if *condition* evaluates to true.
 
 See the :ref:`else keyword syntax section <ifElseSyntax>` for the syntax of if-else statements.
 
@@ -197,7 +179,7 @@ where *type* is the expected type of the macro results, *parameters* is a comma-
 
 **macro** *type* **(** *parameters* **) $java{** *javaMacroDefinition* **}**
                                         **$js{** *javascriptMacroDefinition* **}**
-                                        **$py{** *pythonMacroDefinition* **}** 
+                                        **$py{** *pythonMacroDefinition* **}**
 
 The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See `linkIssue27`_ for more information.
 
@@ -239,7 +221,7 @@ where *variable* is the handle to the value you want to set to null.
 package
 ~~~~~~~
 
-The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any Quark files compiled at the same time as the file or files with the package definition. 
+The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any Quark files compiled at the same time as the file or files with the package definition.
 
 Syntax
 ++++++
@@ -248,6 +230,7 @@ The package keyword syntax is:
 
 **package** *packageName* **{**
     *definition*
+
 **}**
 
 where *definition* is the content of the package and *packageName* is the name of the package. Package names are treated as unique within the scope of the Quark files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. Quark packages cannot be the same as the name of the file they are defined within. See `linkIssue6`_ for more information.
@@ -276,6 +259,7 @@ The return keyword syntax is:
 *functionType* *functionType* **(** *parameters* **) {**
     *code*
     **return** *valueOfTypeFunctionType*
+
 **}**
 
 where *functionType* is the type of the value returned by the function, *functionName* is the name of the function, *parameters* is a comma-separated list of parameters for the function, *code* is the code being run by the function, and *valueOfTypeFunctionType* is the value returned by the function. It must use the data type specified in the *functionType* declaration.
@@ -312,7 +296,7 @@ The super keyword syntax is:
 
 **super.** *method*
 
-where *method* is the method being called including the trailing parentheses and any necessary parameters. 
+where *method* is the method being called including the trailing parentheses and any necessary parameters.
 
 For instance, the following method is defined in class A:
 

@@ -6,15 +6,6 @@ Quark is a Turing-complete language designed primarily for facilitating microser
 .. toctree::
    :maxdepth: 3
 
-   Language Structure
-   Naming and Other Conventions
-   Inheritance
-   Object Instantiation
-   Typing
-   Comments
-   White Space
-   End of Line
-
 Language Structure
 ------------------
 
@@ -53,6 +44,7 @@ Methods typically define actions that can be taken on data within an object. Met
 
 *returnType* *methodName* **(** *parameters* **) {**
     *codeToExecute*
+
 **}**
 
 where *returnType* is the type of the return value (void if no value is returned), *methodName* is the name of the method, *parameters* is a comma-separated list of parameter type and parameter name pairs, and *codeToExecute* is the code executed by the method.
@@ -85,6 +77,7 @@ Functions typically define actions that can be taken outside of the context of a
 
 *returnType* *functionName* **(** *parameters* **) {**
     *codeToExecute*
+
 **}**
 
 where *returnType* is the type of the return value (void if no value is returned), *functionName* is the name of the function, *parameters* is a comma-separated list of parameter type and parameter name pairs, and *codeToExecute* is the code executed by the function.
@@ -103,13 +96,13 @@ Quark does not contain a default keyword; rather default methods are defined by 
 [[JMK check this last statement ETA issue 55 preventing testing]]
 
 .. To be added later
-  
+
   Scoping
   ~~~~~~~
-  
+
 Constants
 ~~~~~~~~~
-  
+
 Quark does not currently have a mechanism for declaring global constants.
 
 
