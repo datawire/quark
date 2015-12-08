@@ -34,6 +34,7 @@ Options:
   --in-place            Outputs everything to the current directory
                         [overrides all other directory/subdirectory options and
                          does not delete existing output files; use with care]
+  --skip-doc            Skip the target language documentation step, used for testing
 
 Target language options:
   --all                 Emit code for all available target languages.
@@ -87,9 +88,13 @@ def main(args):
     if command not in "compile build doc package".split():
         exit("quark: %r is not a quark command. Try quark --help" % command)
 
+    skip_doc = args["--skip-doc"]
     commands = set([command])
     if "package" in commands:
-        commands.add("doc")
+        if skip_doc:
+            commands.add("build")
+        else:
+            commands.add("doc")
     if "doc" in commands:
         commands.add("build")
     if "build" in commands:
