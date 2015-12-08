@@ -1,15 +1,14 @@
 @version("0.1.0")
 @doc("A high level API for accessing all aspects of the the slack web service.")
 @doc("This includes both regular http and realtime web sockets functionality.")
-package slack {
 
+package slack {
     @doc("A slack client can be used to make requests or subscribe to events from the slack service.")
     class Client extends HTTPHandler {
-
         Runtime runtime;
-	String token;
+        String token;
 
-	Client(Runtime runtime, String token) {
+        Client(Runtime runtime, String token) {
             self.runtime = runtime;
             self.token = token;
         }
@@ -33,7 +32,6 @@ package slack {
         void subscribe(SlackHandler handler) {
             self.request("rtm.start", {}, new Subscription(self, handler));
         }
-
     }
 
     class Subscription extends WSHandler, HTTPHandler {
