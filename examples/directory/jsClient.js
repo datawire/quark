@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    var runtime = require("quark_node_runtime.js");
+    var runtime = require("datawire-quark-node");
     var directory = require("./directory");
 
     var identity = process.argv[2];
