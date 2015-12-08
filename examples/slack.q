@@ -67,6 +67,7 @@ package slack {
         }
 
         event.SlackEvent construct(String type) {
+            if (type == null) { return new event.MessageSent(); }
             if (type == "error") { return new event.SlackError(); }
             if (type == "hello") { return new event.Hello(); }
             if (type == "message") { return new event.Message(); }
@@ -234,6 +235,21 @@ package slack {
             }
         }
 
+        @doc("A message we sent has been acknowledged by Slack.")
+        class MessageSent extends SlackEvent {
+            String text;
+            Edited edited;
+
+            void load(Subscription subscription, JSONObject obj) {
+                super.load(subscription, obj);
+                self.text = obj["text"];
+            }
+
+            void dispatch(SlackHandler handler) {
+                handler.onMessageSent(self);
+            }
+        }
+
         @doc("Metadata about an edit to a message.")
         class Edited {
             User user;
@@ -336,6 +352,10 @@ package slack {
         }
 
         void onMessage(event.Message message) {
+            self.onSlackEvent(message);
+        }
+
+        void onMessageSent(event.MessageSent message) {
             self.onSlackEvent(message);
         }
 
