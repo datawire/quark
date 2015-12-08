@@ -6,6 +6,7 @@ Quark Installation and Configuration Guide
    :maxdepth: 3
 
    Installation <install>
+   Integrations <integration>
    Compilation <compile>
    More Information <links>
 
