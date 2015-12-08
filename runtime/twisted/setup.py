@@ -29,6 +29,6 @@ setup(name="datawire-quark-twisted",
       author_email="hello@datawire.io",
       url="http://datawire.github.io/quark",
       license="Apache License, Version 2.0",
-      install_requires=["Twisted==15.4.0", "autobahn==0.10.9", "service_identity==14.0.0"],
+      install_requires=["autobahn[twisted]==0.10.9", "txaio==1.1", "service_identity==14.0.0"],
       py_modules=["quark_twisted_runtime"]
 )
