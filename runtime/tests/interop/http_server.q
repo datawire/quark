@@ -191,7 +191,7 @@ package interop { // package interop is mandatory
                 .url("/http_server")
                 .expectCode(200)
                 .expectBody("Hello World!\r\n")
-                .expectHeader("X-Custom-Header", "custom-value")
+                .expectHeader("X-Custom-Header", "custom value")
                 .check(0.5);
         }
     }
