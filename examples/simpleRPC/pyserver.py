@@ -16,7 +16,7 @@ def main():
     runtime = get_runtime()
     implementation = HelloImpl()
     server = hello.HelloServer(runtime, implementation)
-    runtime.serveHTTP("http://127.0.0.1:8910/hellopy", server)
+    runtime.serveHTTP("http://127.0.0.1:8910/hello", server)
     runtime.launch()
     runtime.join()
 

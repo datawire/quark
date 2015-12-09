@@ -8,7 +8,7 @@ def main():
     runtime = get_runtime()
     runtime.launch()
 
-    client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hellopy")
+    client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")
     request = hello.Request()
     request.requestyStuff = "Oh hai!"
     print "Request says %r" % request.requestyStuff

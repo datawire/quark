@@ -9,7 +9,7 @@ public class SimpleRPCClient {
     public static void main(String[] args) {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
         runtime.setAllowSync(true);
-        HelloClient client = new HelloClient(runtime, "http://localhost:8888/hello");
+        HelloClient client = new HelloClient(runtime, "http://localhost:8910/hello");
         Request request = new Request();
         request.requestyStuff = "hello? world?";
         Response response = client.hello(request);

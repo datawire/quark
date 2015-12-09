@@ -9,7 +9,7 @@ public class SimpleRPCServer {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
         HelloImpl impl = new HelloImpl();
         HelloServer server = new HelloServer(runtime, impl);
-        runtime.serveHTTP("http://127.0.0.1:8888/hello", server);
+        runtime.serveHTTP("http://127.0.0.1:8910/hello", server);
         runtime.launch();                    // XXX: do we want to promote this
     }
 }
