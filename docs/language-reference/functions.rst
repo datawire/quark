@@ -326,6 +326,14 @@ float *A*.toString()
 
 where *A* is a floating point value.
 
+.. _fromJSON:
+
+fromJSON()
+~~~~~~~~~~
+
+Documentation Coming Soon
+
+
 .. _intAdd:
 
 int::__add__()
@@ -1027,6 +1035,13 @@ Documentation Coming Soon
 
 string::_to_JSONObject()
 ~~~~~~~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _toJSON:
+
+toJSON()
+~~~~~~~~
 
 Documentation Coming Soon
 
