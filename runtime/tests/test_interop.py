@@ -60,6 +60,11 @@ class QuarkCompile(object):
         return self.tmpdir / self.outdir / "java" / "target" / (
             "interop-%s.jar" % self.version)
 
+    def __repr__(self):
+        return "%scompiled %s in %s" % (
+            (self.compiled and "Already " or "Un-"),
+            self.path, self.tmpdir)
+
 class IntegrationMeta(type):
     def __init__(cls, name, bases, dct):
         if not hasattr(cls, 'registry'):
@@ -112,8 +117,8 @@ class BackgroundProcess(object):
 
 class Integration(object):
     __metaclass__ = IntegrationMeta
-    def __init__(self, tmpdir, compile):
-        self.tmpdir = tmpdir
+    def __init__(self, compile):
+        self.tmpdir = compile.tmpdir
         self.compile = compile
         self.built = False
 
@@ -123,8 +128,13 @@ class Integration(object):
     def check_build(self):
         if self.built:
             return
+        print "need to build integration", self.name, "for", self.compile.path
         self.build()
         self.built = True
+
+    def __repr__(self):
+        return "%s %s integration of %s" % ((self.built and "Built" or "Unbuilt"),
+                                            self.name, self.compile)
 
     @property
     def rundir(self):
@@ -225,28 +235,52 @@ directory = os.path.join(os.path.dirname(__file__), "interop")
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
 
+class CompileCache(object):
+    def __init__(self):
+        self.compiles = {}
+
+    def get(self, path, tmpdir):
+        if path not in self.compiles:
+            self.compiles[path] = QuarkCompile(tmpdir, path)
+        return self.compiles[path]
+
+class IntegrationCache(object):
+    def __init__(self):
+        self.integrations = {}
+
+    def get(self, cls, compile):
+        key = (cls, compile)
+        if key not in self.integrations:
+            self.integrations[key] = cls(compile=compile)
+        return self.integrations[key]
+
 @pytest.fixture(params=paths)
 def path(request):
     return request.param
 
-@pytest.fixture
-def compile(tmpdir, path):
-    return QuarkCompile(tmpdir, path)
+@pytest.fixture(scope='module')
+def compile_cache():
+    return CompileCache()
 
 @pytest.fixture
-def integration_cache(tmpdir, compile):
-    return dict((clz, clz(tmpdir=tmpdir, compile=compile))
-                 for clz in Integration.registry)
+def compile(path, tmpdir, compile_cache):
+    return compile_cache.get(path, tmpdir)
+
+@pytest.fixture(scope='module')
+def integration_cache():
+    return IntegrationCache()
 
 @pytest.fixture(params=Integration.registry)
-def client(request, integration_cache):
-    return integration_cache[request.param].client
+def client_integration(request, compile, integration_cache):
+    return integration_cache.get(request.param, compile)
 
 @pytest.fixture(params=Integration.registry)
-def server(request, integration_cache):
-    return integration_cache[request.param].server
+def server_integration(request, compile, integration_cache):
+    return integration_cache.get(request.param, compile)
 
-def test_interop(client, server):
+def test_interop(client_integration, server_integration):
+    client = client_integration.client
+    server = server_integration.server
     with server.wait(0), client.wait(1):
         pass
     assert "FAIL" not in client.stdout
