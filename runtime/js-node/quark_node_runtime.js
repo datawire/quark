@@ -113,7 +113,11 @@
                 body += data;
             });
             response.on("end", function () {
-                handler.onHTTPResponse(request, new QuarkResponse(response.statusCode, body));
+                handler.onHTTPResponse(
+                    request,
+                    new QuarkResponse(response.statusCode,
+                                      body,
+                                      response.headers));
                 req.abort();
                 handler.onHTTPFinal(request);
             });
@@ -132,16 +136,30 @@
     }
 
     // CLASS QuarkResponse
-    function QuarkResponse(code, body) {
+    function QuarkResponse(code, body, headers) {
         this.code = code;
         this.body = body;
+        this.headers = headers;
     }
     QuarkResponse.prototype.getCode = function () {
         return this.code;
     };
+    QuarkResponse.prototype.setCode = function(code) {};
     QuarkResponse.prototype.getBody = function () {
         return this.body;
     };
+    QuarkResponse.prototype.setBody = function(body) {};
+    QuarkResponse.prototype.getHeader = function(key) {
+        return this.headers[key.toLowerCase()];
+    };
+    QuarkResponse.prototype.setHeader = function(key,value) {};
+    QuarkResponse.prototype.getHeaders = function() {
+        var keys = new Array();
+        for (var key in this.headers) {
+            keys.push(key);
+        }
+        return keys;
+    }
 
     function IncomingRequest(request) {
         this.request = request;

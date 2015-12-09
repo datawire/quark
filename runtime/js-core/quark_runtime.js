@@ -290,20 +290,49 @@
         this.headers = {};
     }
 
+    function HTTPRequest_getUrl() {
+        return this.url;
+    }
+    HTTPRequest.prototype.getUrl = HTTPRequest_getUrl;
+
     function HTTPRequest_setMethod(method) {
         this.method = method;
     }
     HTTPRequest.prototype.setMethod = HTTPRequest_setMethod;
+
+    function HTTPRequest_getMethod() {
+        return this.method;
+    }
+    HTTPRequest.prototype.getMethod = HTTPRequest_getMethod;
 
     function HTTPRequest_setBody(body) {
         this.body = body;
     }
     HTTPRequest.prototype.setBody = HTTPRequest_setBody;
 
+    function HTTPRequest_getBody() {
+        return this.body;
+    }
+    HTTPRequest.prototype.getBody = HTTPRequest_getBody;
+
     function HTTPRequest_setHeader(key, value) {
-        this.headers[key] = value;
+        this.headers[key.toLowerCase()] = value;
     }
     HTTPRequest.prototype.setHeader = HTTPRequest_setHeader;
+
+    function HTTPRequest_getHeader(key) {
+        return this.headers[key.toLowerCase()];
+    }
+    HTTPRequest.prototype.getHeader = HTTPRequest_getHeader;
+
+    function HTTPRequest_getHeaders() {
+        var keys = new Array();
+        for (key in this.headers) {
+            keys.push(key);
+        }
+        return keys;
+    }
+    HTTPRequest.prototype.getHeaders = HTTPRequest_getHeaders;
 
     exports.HTTPRequest = HTTPRequest;
 
