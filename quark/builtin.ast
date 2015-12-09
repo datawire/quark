@@ -1119,13 +1119,19 @@ File(
    Block(
     Local(
      Declaration(Type(Name(HTTPRequest)), Name(request),
-      Call(Type(Name(HTTPRequest)),
-       Call(Attr(Call(Attr(Call(Var(Name(getURL))), Name(__add__)),
-          String("/")), Name(__add__)), Var(Name(name)))))),
+      Call(Type(Name(HTTPRequest)), Call(Var(Name(getURL)))))),
     Local(
      Declaration(Type(Name(JSONObject)), Name(json), Call(Var(Name(toJSON)),
        Var(Name(message))))),
-    ExprStmt(Call(Attr(Var(Name(request)), Name(setBody)), Var(Name(json)))),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(envelope),
+      Call(Type(Name(JSONObject))))),
+    ExprStmt(Call(Attr(Var(Name(envelope)), Name(__set__)), String("$method"),
+      Var(Name(name)))),
+    ExprStmt(Call(Attr(Var(Name(envelope)), Name(__set__)), String("rpc"),
+      Var(Name(json)))),
+    ExprStmt(Call(Attr(Var(Name(request)), Name(setBody)),
+      Var(Name(envelope)))),
     Local(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self)),
         Name(getRuntime))))),
@@ -1188,19 +1194,15 @@ File(
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block(
     Local(
-     Declaration(Type(Name(String)), Name(url), Call(Attr(Var(Name(request)),
-        Name(getUrl))))),
-    Local(
-     Declaration(Type(Name(List), Type(Name(String))), Name(parts),
-      Call(Attr(Var(Name(url)), Name(split)), String("/")))),
-    Local(
-     Declaration(Type(Name(String)), Name(method), Call(Attr(Var(Name(parts)),
-        Name(__get__)), Call(Attr(Call(Attr(Var(Name(parts)), Name(size))),
-         Name(__sub__)), Number(1))))),
-    Local(
-     Declaration(Type(Name(JSONObject)), Name(json),
+     Declaration(Type(Name(JSONObject)), Name(envelope),
       Call(Attr(Call(Attr(Var(Name(request)), Name(getBody))),
         Name(parseJSON))))),
+    Local(
+     Declaration(Type(Name(String)), Name(method),
+      Call(Attr(Var(Name(envelope)), Name(__get__)), String("$method")))),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(json),
+      Call(Attr(Var(Name(envelope)), Name(__get__)), String("rpc")))),
     Local(
      Declaration(Type(Name(Object)), Name(argument), Call(Var(Name(fromJSON)),
        Call(Var(Name(Class)), Call(Attr(Var(Name(json)), Name(__get__)),

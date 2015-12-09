@@ -13,10 +13,9 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         return (this).runtime;
     }
     public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
-        String url = (request).getUrl();
-        java.util.ArrayList<String> parts = new java.util.ArrayList<String>(java.util.Arrays.asList((url).split(java.util.regex.Pattern.quote("/"), -1)));
-        String method = (parts).get(((parts).size()) - (1));
-        io.datawire.quark.runtime.JSONObject json = io.datawire.quark.runtime.JSONObject.parse((request).getBody());
+        io.datawire.quark.runtime.JSONObject envelope = io.datawire.quark.runtime.JSONObject.parse((request).getBody());
+        String method = ((envelope).getObjectItem("$method")).getString();
+        io.datawire.quark.runtime.JSONObject json = (envelope).getObjectItem("rpc");
         Object argument = Functions.fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
         Object result = (((new Class(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).type).invoke(this.impl, method, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
         (response).setBody((Functions.toJSON(result)).getString());

@@ -1418,18 +1418,24 @@ File(
    Block(
     Local(
      Declaration(Type(Name(HTTPRequest)), Name(request),
-      Call(Type(Name(HTTPRequest)), Call(Attr(Call(Attr(Call(Var(Name(getURL),
-            $type=0.Service.getURL), $type=0.String), Name(__add__),
-          $type=0.String.__add__), String("/", $type=0.String),
-         $type=0.String), Name(__add__), $type=0.String.__add__),
-        Var(Name(name), $type=0.String), $type=0.String), $type=0.HTTPRequest),
+      Call(Type(Name(HTTPRequest)), Call(Var(Name(getURL),
+        $type=0.Service.getURL), $type=0.String), $type=0.HTTPRequest),
      $type=0.HTTPRequest)),
     Local(
      Declaration(Type(Name(JSONObject)), Name(json), Call(Var(Name(toJSON),
        $type=0.toJSON), Var(Name(message), $type=0.Object),
       $type=0.JSONObject), $type=0.JSONObject)),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(envelope),
+      Call(Type(Name(JSONObject)), $type=0.JSONObject), $type=0.JSONObject)),
+    ExprStmt(Call(Attr(Var(Name(envelope), $type=0.JSONObject), Name(__set__),
+      $type=0.JSONObject.__set__), String("$method", $type=0.String),
+      Var(Name(name), $type=0.String), $type=0.void)),
+    ExprStmt(Call(Attr(Var(Name(envelope), $type=0.JSONObject), Name(__set__),
+      $type=0.JSONObject.__set__), String("rpc", $type=0.String),
+      Var(Name(json), $type=0.JSONObject), $type=0.void)),
     ExprStmt(Call(Attr(Var(Name(request), $type=0.HTTPRequest), Name(setBody),
-      $type=0.HTTPRequest.setBody), Var(Name(json), $type=0.JSONObject),
+      $type=0.HTTPRequest.setBody), Var(Name(envelope), $type=0.JSONObject),
      $type=0.void)),
     Local(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self),
@@ -1545,27 +1551,21 @@ File(
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
    Block(
     Local(
-     Declaration(Type(Name(String)), Name(url), Call(Attr(Var(Name(request),
-        $type=0.HTTPRequest), Name(getUrl), $type=0.HTTPRequest.getUrl),
-      $type=0.String), $type=0.String)),
-    Local(
-     Declaration(Type(Name(List), Type(Name(String))), Name(parts),
-      Call(Attr(Var(Name(url), $type=0.String), Name(split),
-       $type=0.String.split), String("/", $type=0.String),
-      $type=0.List<0.String>), $type=0.List<0.String>)),
-    Local(
-     Declaration(Type(Name(String)), Name(method), Call(Attr(Var(Name(parts),
-        $type=0.List<0.String>), Name(__get__), $type=0.List.__get__),
-       Call(Attr(Call(Attr(Var(Name(parts), $type=0.List<0.String>),
-           Name(size), $type=0.List.size), $type=0.int), Name(__sub__),
-        $type=0.numeric.__sub__), Number(1, $type=0.int), $type=0.int),
-      $type=0.String), $type=0.String)),
-    Local(
-     Declaration(Type(Name(JSONObject)), Name(json),
+     Declaration(Type(Name(JSONObject)), Name(envelope),
       Call(Attr(Call(Attr(Var(Name(request), $type=0.HTTPRequest),
           Name(getBody), $type=0.HTTPRequest.getBody), $type=0.String),
         Name(parseJSON), $type=0.String.parseJSON), $type=0.JSONObject),
      $type=0.JSONObject)),
+    Local(
+     Declaration(Type(Name(String)), Name(method),
+      Call(Attr(Var(Name(envelope), $type=0.JSONObject), Name(__get__),
+       $type=0.JSONObject.__get__), String("$method", $type=0.String),
+      $type=0.JSONObject), $type=0.String)),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(json),
+      Call(Attr(Var(Name(envelope), $type=0.JSONObject), Name(__get__),
+       $type=0.JSONObject.__get__), String("rpc", $type=0.String),
+      $type=0.JSONObject), $type=0.JSONObject)),
     Local(
      Declaration(Type(Name(Object)), Name(argument), Call(Var(Name(fromJSON),
        $type=0.fromJSON), Call(Var(Name(Class), $type=0.Class),

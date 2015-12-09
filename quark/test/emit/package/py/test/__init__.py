@@ -250,9 +250,12 @@ class Service(object):
     def getRuntime(self): assert False
 
     def rpc(self, name, message):
-        request = _HTTPRequest(((self.getURL()) + (u"/")) + (name));
+        request = _HTTPRequest(self.getURL());
         json = toJSON(message);
-        (request).setBody((json).getString());
+        envelope = _JSONObject();
+        (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString(name)));
+        (envelope).setObjectItem((u"rpc"), (json));
+        (request).setBody((envelope).getString());
         rt = (self).getRuntime();
         rh = ResponseHolder();
         (rt).acquire();
@@ -326,10 +329,9 @@ class Server(object):
         return (self).runtime
 
     def onHTTPRequest(self, request, response):
-        url = (request).getUrl();
-        parts = (url).split(u"/");
-        method = (parts)[(len(parts)) - (1)];
-        json = _JSONObject.parse((request).getBody());
+        envelope = _JSONObject.parse((request).getBody());
+        method = ((envelope).getObjectItem(u"$method")).getString();
+        json = (envelope).getObjectItem(u"rpc");
         argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
         result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
         (response).setBody((toJSON(result)).getString());

@@ -312,9 +312,12 @@ function Service_getRuntime() { /* interface */ }
 Service.prototype.getRuntime = Service_getRuntime;
 
 function Service_rpc(name, message) {
-    var request = new _qrt.HTTPRequest(((this.getURL()) + ("/")) + (name));
+    var request = new _qrt.HTTPRequest(this.getURL());
     var json = toJSON(message);
-    (request).setBody((json).getString());
+    var envelope = new _qrt.JSONObject();
+    (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString(name)));
+    (envelope).setObjectItem(("rpc"), (json));
+    (request).setBody((envelope).getString());
     var rt = (this).getRuntime();
     var rh = new ResponseHolder();
     (rt).acquire();
@@ -410,10 +413,9 @@ function Server_getRuntime() {
 Server.prototype.getRuntime = Server_getRuntime;
 
 function Server_onHTTPRequest(request, response) {
-    var url = (request).getUrl();
-    var parts = (url).split("/");
-    var method = (parts)[((parts).length) - (1)];
-    var json = _qrt.json_from_string((request).getBody());
+    var envelope = _qrt.json_from_string((request).getBody());
+    var method = ((envelope).getObjectItem("$method")).getString();
+    var json = (envelope).getObjectItem("rpc");
     var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
     var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
     (response).setBody((toJSON(result)).getString());
