@@ -2,6 +2,7 @@
 
 __version__ = "0.1.0"
 
+import signal
 import threading
 import time
 import urllib2
@@ -23,7 +24,7 @@ class _EventProcessor(threading.Thread):
         self.runtime = runtime
 
     def run(self):
-        while True:
+        while True:  # FIXME: Notice when there are no more event sources and quit automatically
             event = self.runtime.events.get(block=True)
             self.runtime.acquire()
             try:
@@ -198,8 +199,12 @@ class ThreadedRuntime(object):
     def open(self, url, handler):
         def pump_websocket(runtime, url, handler):
             ws = _QuarkWS(runtime, url, handler)
-            ws.connect()
-            ws.run_forever()
+            try:
+                ws.connect()
+                ws.run_forever()
+            except Exception:
+                runtime.events.put((handler.onWSError, (ws,), {}))
+                runtime.events.put((handler.onWSFinal, (ws,), {}))
         thread = threading.Thread(target=pump_websocket, args=(self, url, handler))
         thread.setDaemon(True)
         thread.start()
@@ -265,6 +270,12 @@ class ThreadedRuntime(object):
         assert self.event_thread is None, self.event_thread
         self.event_thread = _EventProcessor(self)
         self.event_thread.start()
+
+    def join(self):
+        try:
+            signal.pause()
+        finally:
+            self.finish()
 
     def finish(self):
         self.events.put(_EventProcessor.QUIT)
