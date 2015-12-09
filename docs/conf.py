@@ -25,8 +25,11 @@ except ImportError:
 
 __version__ = '0.2.0.dev0'
 __doc_version__ = '1'
+__branch__ = 'master'
 
 rst_epilog = "\n.. |doc_version| replace:: %s" % __doc_version__
+
+rst_epilog = rst_epilog + "\n.. |branch| replace:: %s" % __branch__
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
