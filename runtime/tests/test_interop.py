@@ -128,7 +128,8 @@ class Integration(object):
     def check_build(self):
         if self.built:
             return
-        print "need to build integration", self.name, "for", self.compile.path
+        print "need to build integration", self
+        self.rundir.ensure(dir=1)
         self.build()
         self.built = True
 
@@ -172,7 +173,6 @@ class Node(Integration):
         super(Node, self).__init__(**kwargs)
 
     def build(self):
-        self.rundir.ensure(dir=1)
         self.npm_install(self.js_core_package)
         self.npm_install(self.compile.js_package)
         self.npm_install(self.js_node_package)
@@ -214,18 +214,59 @@ class Twisted(Integration):
     def __init__(self, **kwargs):
         super(Twisted, self).__init__(**kwargs)
 
-    def invoke(self, name):
-        print self, name
-
     def build(self):
-        print "TODO, build twisted"
+        command("virtualenv", "x", cwd=self.rundir)
+        self.pip_install(self.py_core_package)
+        self.pip_install(self.compile.py_package)
+        self.pip_install(self.py_twisted_package)
+        self.rundir.join("run-client.py").write(textwrap.dedent("""\
+            import interop
+            import quark_twisted_runtime
+            import quark_runtime
+            runtime = quark_twisted_runtime.get_twisted_runtime()
+            interop.Entrypoint().client(runtime, 9876)
+            runtime.launch()
+        """))
+        self.rundir.join("run-server.py").write(textwrap.dedent("""\
+            import interop
+            import quark_twisted_runtime
+            import quark_runtime
+            runtime = quark_twisted_runtime.get_twisted_runtime()
+            interop.Entrypoint().server(runtime, 9876)
+            runtime.launch()
+        """))
+
+    @property
+    def pip(self):
+        return self.rundir / "x" / "bin" / "pip"
+
+    @property
+    def python(self):
+        return self.rundir / "x" / "bin" / "python"
+
+    def pip_install(self, package):
+        assert package.check()
+        command(self.pip.strpath, "install", package.strpath, cwd=self.rundir)
+
+    @property
+    def py_core_package(self):
+        return self.runtimes / "python-core"
+
+    @property
+    def py_twisted_package(self):
+        return self.runtimes / "twisted"
+
+    @property
+    def invoke_server(self):
+        return [self.python.strpath, "run-server.py"]
+
+    @property
+    def invoke_client(self):
+        return [self.python.strpath, "run-client.py"]
 
 class Netty(Integration):
     def __init__(self, **kwargs):
         super(Netty, self).__init__(**kwargs)
-
-    def invoke(self, name):
-        print self, name
 
     def build(self):
         print "TODO, build java"
