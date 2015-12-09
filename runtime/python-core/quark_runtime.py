@@ -16,7 +16,7 @@ from collections import namedtuple
 from struct import Struct
 import base64
 
-__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _default_codec _getClass".split()
+__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _HTTPResponse _default_codec _getClass".split()
 
 
 _Map = dict
@@ -227,14 +227,59 @@ class _HTTPRequest(object):
         self.body = None
         self.headers = {}
 
+    def getUrl(self):
+        return self.url
+
     def setMethod(self, method):
         self.method = method
+
+    def getMethod(self):
+        return self.method
+
+    def setBody(self, body):
+        self.body = body
+
+    def getBody(self):
+        return self.body
+
+    def setHeader(self, key, value):
+        self.headers[key] = value
+
+    def getHeader(self, key):
+        return self.headers.get(key)  # Maybe return None
+
+    def getHeaders(self):
+        return self.headers.keys()
+
+
+class _HTTPResponse(object):
+
+    def __init__(self):
+        self.code = 500
+        self.body = ""
+        self.headers = {}
+        self._responded = False
+
+    def getCode(self):
+        return self.code
+
+    def setCode(self, code):
+        self.code = code
+
+    def getBody(self):
+        return self.body
 
     def setBody(self, body):
         self.body = body
 
     def setHeader(self, key, value):
         self.headers[key] = value
+
+    def getHeader(self, key):
+        return self.headers.get(key)  # Maybe return None
+
+    def getHeaders(self):
+        return self.headers.keys()
 
 
 class _default_codec(object):
