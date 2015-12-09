@@ -128,6 +128,7 @@ class _QuarkWSGIApp(object):
             response.setCode(500)
             response.setBody("500 Internal Server Error (%s)" % exc)
             response.setHeader("Content-Type", "text/plain")
+            response._responded = True
 
     def __call__(self, environ, start_response):
         path = environ["PATH_INFO"]
