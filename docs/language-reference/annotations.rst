@@ -69,3 +69,22 @@ Constraints
 +++++++++++
 
 @version must be defined at the top level of a Quark file. It should be used directly above a package declaration. By default it applies to all packages defined underneath it in a file. If more than one @version annotation is included in a Quark file, each annotation applies only to the package it directly proceeds; any package without its own @version annotation will default to version "0.0".
+
+.. _delegateAnnotation:
+
+@delegate
+~~~~~~~~~
+
+@delegate allows users to specify an interaction pattern for communications between a client and a server.
+
+Syntax
+++++++
+
+**@delegate(** *interactionPattern* **)**
+
+where *interactionPattern* is the name of a defined interaction pattern supported by Quark. Note that there is no semi-colon (;) at the end of the line.
+
+Constraints
++++++++++++
+
+Quark currently supports only one interaction pattern, rpc, that expects a single request from the client and returns a single response from the server.
