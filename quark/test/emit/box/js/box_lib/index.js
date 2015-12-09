@@ -2,6 +2,7 @@ var _qrt = require("datawire-quark-core");
 
 
 
+
 /* BEGIN_BUILTIN */
 
 
@@ -45,6 +46,24 @@ function Class_getFields() {
     return _fields((this).id);
 }
 Class.prototype.getFields = Class_getFields;
+
+function Class_getField(name) {
+    var fields = this.getFields();
+    var idx = 0;
+    while ((idx) < ((fields).length)) {
+        if ((((fields)[idx]).name) === (name)) {
+            return (fields)[idx];
+        }
+        idx = (idx) + (1);
+    }
+    return null;
+}
+Class.prototype.getField = Class_getField;
+
+function Class_invoke(object, method, args) {
+    return _invoke((this).id, object, method, args);
+}
+Class.prototype.invoke = Class_invoke;
 
 function Class__getClass() {
     return "Class";
@@ -385,7 +404,16 @@ function Server_getRuntime() {
 }
 Server.prototype.getRuntime = Server_getRuntime;
 
-function Server_onHTTPRequest(request, response) {}
+function Server_onHTTPRequest(request, response) {
+    var url = (request).getUrl();
+    var parts = (url).split("/");
+    var method = (parts)[((parts).length) - (1)];
+    var json = _qrt.json_from_string((request).getBody());
+    var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
+    var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
+    (response).setBody((toJSON(result)).getString());
+    (this.getRuntime()).respond(request, response);
+}
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
 
 function Server__getClass() {
@@ -802,6 +830,11 @@ function _class(cls) {
         (cls).parameters = [];
         return;
     }
+    if (((cls).id) === ("Service")) {
+        (cls).name = "Service";
+        (cls).parameters = [];
+        return;
+    }
     if (((cls).id) === ("Client")) {
         (cls).name = "Client";
         (cls).parameters = [];
@@ -850,3 +883,154 @@ function _class(cls) {
     (cls).name = (cls).id;
 }
 exports._class = _class;
+
+function _invoke(className, object, method, args) {
+    if ((className) === ("Class")) {
+        if ((method) === ("getId")) {
+            var tmp_0 = object;
+            return (tmp_0).getId();
+        }
+        if ((method) === ("getName")) {
+            var tmp_1 = object;
+            return (tmp_1).getName();
+        }
+        if ((method) === ("getParameters")) {
+            var tmp_2 = object;
+            return (tmp_2).getParameters();
+        }
+        if ((method) === ("construct")) {
+            var tmp_3 = object;
+            return (tmp_3).construct((args)[0]);
+        }
+        if ((method) === ("getFields")) {
+            var tmp_4 = object;
+            return (tmp_4).getFields();
+        }
+        if ((method) === ("getField")) {
+            var tmp_5 = object;
+            return (tmp_5).getField((args)[0]);
+        }
+        if ((method) === ("invoke")) {
+            var tmp_6 = object;
+            return (tmp_6).invoke((args)[0], (args)[1], (args)[2]);
+        }
+    }
+    if ((className) === ("Field")) {}
+    if ((className) === ("List<Object>")) {}
+    if ((className) === ("List<Field>")) {}
+    if ((className) === ("List<Class>")) {}
+    if ((className) === ("List<String>")) {}
+    if ((className) === ("Map<Object,Object>")) {}
+    if ((className) === ("Map<String,Object>")) {}
+    if ((className) === ("ResponseHolder")) {
+        if ((method) === ("onHTTPResponse")) {
+            var tmp_7 = object;
+            (tmp_7).onHTTPResponse((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("Service")) {
+        if ((method) === ("getURL")) {
+            var tmp_8 = object;
+            return (tmp_8).getURL();
+        }
+        if ((method) === ("getRuntime")) {
+            var tmp_9 = object;
+            return (tmp_9).getRuntime();
+        }
+        if ((method) === ("rpc")) {
+            var tmp_10 = object;
+            return (tmp_10).rpc((args)[0], (args)[1]);
+        }
+    }
+    if ((className) === ("Client")) {
+        if ((method) === ("getRuntime")) {
+            var tmp_11 = object;
+            return (tmp_11).getRuntime();
+        }
+        if ((method) === ("getURL")) {
+            var tmp_12 = object;
+            return (tmp_12).getURL();
+        }
+    }
+    if ((className) === ("Server<Object>")) {
+        if ((method) === ("getRuntime")) {
+            var tmp_13 = object;
+            return (tmp_13).getRuntime();
+        }
+        if ((method) === ("onHTTPRequest")) {
+            var tmp_14 = object;
+            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("Box<Object>")) {
+        if ((method) === ("set")) {
+            var tmp_15 = object;
+            (tmp_15).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_16 = object;
+            return (tmp_16).get();
+        }
+    }
+    if ((className) === ("Box<int>")) {
+        if ((method) === ("set")) {
+            var tmp_17 = object;
+            (tmp_17).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_18 = object;
+            return (tmp_18).get();
+        }
+    }
+    if ((className) === ("Box<String>")) {
+        if ((method) === ("set")) {
+            var tmp_19 = object;
+            (tmp_19).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_20 = object;
+            return (tmp_20).get();
+        }
+    }
+    if ((className) === ("Box<Box<int>>")) {
+        if ((method) === ("set")) {
+            var tmp_21 = object;
+            (tmp_21).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_22 = object;
+            return (tmp_22).get();
+        }
+    }
+    if ((className) === ("Crate<int>")) {
+        if ((method) === ("set")) {
+            var tmp_23 = object;
+            (tmp_23).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_24 = object;
+            return (tmp_24).get();
+        }
+    }
+    if ((className) === ("Crate<String>")) {
+        if ((method) === ("set")) {
+            var tmp_25 = object;
+            (tmp_25).set((args)[0]);
+            return null;
+        }
+        if ((method) === ("get")) {
+            var tmp_26 = object;
+            return (tmp_26).get();
+        }
+    }
+    if ((className) === ("Sack")) {}
+    return null;
+}
+exports._invoke = _invoke;

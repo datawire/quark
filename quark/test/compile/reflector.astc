@@ -242,6 +242,14 @@ File(
       $type=0.List<0.Class>), List(, $type=0.List<0.Class>)),
      Return())),
    If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(id), $type=0.String),
+      Name(__eq__), $type=0.Object.__eq__), String("Service", $type=0.String),
+    $type=0.bool), Block(
+     Assign(Attr(Var(Name(cls), $type=0.Class), Name(name), $type=0.String),
+      String("Service", $type=0.String)),
+     Assign(Attr(Var(Name(cls), $type=0.Class), Name(parameters),
+      $type=0.List<0.Class>), List(, $type=0.List<0.Class>)),
+     Return())),
+   If(Call(Attr(Attr(Var(Name(cls), $type=0.Class), Name(id), $type=0.String),
       Name(__eq__), $type=0.Object.__eq__), String("Client", $type=0.String),
     $type=0.bool), Block(
      Assign(Attr(Var(Name(cls), $type=0.Class), Name(name), $type=0.String),
@@ -260,5 +268,206 @@ File(
       $type=0.List<0.Class>)),
      Return())),
    Assign(Attr(Var(Name(cls), $type=0.Class), Name(name), $type=0.String),
-    Attr(Var(Name(cls), $type=0.Class), Name(id), $type=0.String))))
+    Attr(Var(Name(cls), $type=0.Class), Name(id), $type=0.String)))),
+
+ Function(Type(Name(Object)), Name(_invoke),
+  Param(Type(Name(String)), Name(className), $type=0.String),
+  Param(Type(Name(Object)), Name(object), $type=0.Object),
+  Param(Type(Name(String)), Name(method), $type=0.String),
+  Param(Type(Name(List), Type(Name(Object))), Name(args),
+  $type=0.List<0.Object>),
+  Block(
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Class", $type=0.String), $type=0.bool),
+    Block(
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getId", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_0), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_0), $type=0.Class), Name(getId),
+         $type=0.Class.getId), $type=0.String)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getName", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_1), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_1), $type=0.Class), Name(getName),
+         $type=0.Class.getName), $type=0.String)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getParameters", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_2), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_2), $type=0.Class), Name(getParameters),
+         $type=0.Class.getParameters), $type=0.List<0.Class>)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("construct", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_3), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_3), $type=0.Class), Name(construct),
+         $type=0.Class.construct), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Object), $type=0.List<0.Object>),
+        $type=0.Object)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getFields", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_4), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_4), $type=0.Class), Name(getFields),
+         $type=0.Class.getFields), $type=0.List<0.Field>)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getField", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_5), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_5), $type=0.Class), Name(getField),
+         $type=0.Class.getField), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Object), $type=0.String),
+        $type=0.Field)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("invoke", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Class)), Name(tmp_6), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Class), $type=0.Class)),
+       Return(Call(Attr(Var(Name(tmp_6), $type=0.Class), Name(invoke),
+         $type=0.Class.invoke), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Object), $type=0.Object),
+         Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
+           $type=0.List.__get__), Number(1, $type=0.int), $type=0.Object),
+         $type=0.String), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(2, $type=0.int), $type=0.Object), $type=0.List<0.Object>),
+        $type=0.Object)))))),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Field", $type=0.String), $type=0.bool),
+    Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("List<Object>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("List<Field>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("List<Class>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("List<String>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Map<Object,Object>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Map<String,Object>", $type=0.String),
+    $type=0.bool), Block()),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("ResponseHolder", $type=0.String),
+    $type=0.bool), Block(
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("onHTTPResponse", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(ResponseHolder)), Name(tmp_7),
+         Cast(Var(Name(object), $type=0.Object), $type=0.ResponseHolder),
+        $type=0.ResponseHolder)),
+       ExprStmt(Call(Attr(Var(Name(tmp_7), $type=0.ResponseHolder),
+          Name(onHTTPResponse), $type=0.ResponseHolder.onHTTPResponse),
+         Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
+           $type=0.List.__get__), Number(0, $type=0.int), $type=0.Object),
+         $type=0.HTTPRequest), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(1, $type=0.int), $type=0.Object), $type=0.HTTPResponse),
+        $type=0.void)),
+       Return(Null(null, $type=0.Object)))))),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Service", $type=0.String), $type=0.bool),
+    Block(
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getURL", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Service)), Name(tmp_8), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Service), $type=0.Service)),
+       Return(Call(Attr(Var(Name(tmp_8), $type=0.Service), Name(getURL),
+         $type=0.Service.getURL), $type=0.String)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getRuntime", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Service)), Name(tmp_9), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Service), $type=0.Service)),
+       Return(Call(Attr(Var(Name(tmp_9), $type=0.Service), Name(getRuntime),
+         $type=0.Service.getRuntime), $type=0.Runtime)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("rpc", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Service)), Name(tmp_10), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Service), $type=0.Service)),
+       Return(Call(Attr(Var(Name(tmp_10), $type=0.Service), Name(rpc),
+         $type=0.Service.rpc), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Object), $type=0.String),
+         Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
+           $type=0.List.__get__), Number(1, $type=0.int), $type=0.Object),
+         $type=0.Object), $type=0.Object)))))),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Client", $type=0.String), $type=0.bool),
+    Block(
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getRuntime", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Client)), Name(tmp_11), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Client), $type=0.Client)),
+       Return(Call(Attr(Var(Name(tmp_11), $type=0.Client), Name(getRuntime),
+         $type=0.Client.getRuntime), $type=0.Runtime)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getURL", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Client)), Name(tmp_12), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Client), $type=0.Client)),
+       Return(Call(Attr(Var(Name(tmp_12), $type=0.Client), Name(getURL),
+         $type=0.Client.getURL), $type=0.String)))))),
+   If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
+     $type=0.Object.__eq__), String("Server<Object>", $type=0.String),
+    $type=0.bool), Block(
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getRuntime", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_13),
+         Cast(Var(Name(object), $type=0.Object), $type=0.Server<0.Object>),
+        $type=0.Server<0.Object>)),
+       Return(Call(Attr(Var(Name(tmp_13), $type=0.Server<0.Object>),
+          Name(getRuntime), $type=0.Server.getRuntime), $type=0.Runtime)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("onHTTPRequest", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_14),
+         Cast(Var(Name(object), $type=0.Object), $type=0.Server<0.Object>),
+        $type=0.Server<0.Object>)),
+       ExprStmt(Call(Attr(Var(Name(tmp_14), $type=0.Server<0.Object>),
+          Name(onHTTPRequest), $type=0.Server.onHTTPRequest),
+         Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
+           $type=0.List.__get__), Number(0, $type=0.int), $type=0.Object),
+         $type=0.HTTPRequest), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(1, $type=0.int), $type=0.Object), $type=0.HTTPResponse),
+        $type=0.void)),
+       Return(Null(null, $type=0.Object)))))),
+   Return(Null(null, $type=0.Object))))
 )

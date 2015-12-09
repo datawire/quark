@@ -21,6 +21,7 @@ primitive Object {
 void _class(Class cls);
 Object _construct(String className, List<Object> args);
 List<Field> _fields(String className);
+Object _invoke(String className, Object object, String name, List<Object> args);
 
 class Class {
 
@@ -51,6 +52,22 @@ class Class {
 
     List<Field> getFields() {
         return _fields(self.id);
+    }
+
+    Field getField(String name) {
+        List<Field> fields = getFields();
+        int idx = 0;
+        while (idx < fields.size()) {
+            if (fields[idx].name == name) {
+                return fields[idx];
+            }
+            idx = idx + 1;
+        }
+        return null;
+    }
+
+    Object invoke(Object object, String method, List<Object> args) {
+        return _invoke(self.id, object, method, args);
     }
 
     macro JSONObject toJSON() new JSONObject().setString(self.id);
@@ -629,7 +646,15 @@ class Server<T> extends HTTPServlet {
     Runtime getRuntime() { return self.runtime; }
 
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
-        // XXX: need to finish this stuff off
+        // XXX: need to actually error check all of this
+        String url = request.getUrl();
+        List<String> parts = url.split("/");
+        String method = parts[parts.size() - 1];
+        JSONObject json = request.getBody().parseJSON();
+        Object argument = fromJSON(Class(json["$class"]), json);
+        Object result = self.getClass().getField("impl").type.invoke(impl, method, [argument]);
+        response.setBody(toJSON(result));
+        getRuntime().respond(request, response);
     }
 
 }

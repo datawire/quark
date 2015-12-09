@@ -61,6 +61,12 @@ File(
  Function(Type(Name(List), Type(Name(Field))), Name(_fields),
   Param(Type(Name(String)), Name(className))),
 
+ Function(Type(Name(Object)), Name(_invoke),
+  Param(Type(Name(String)), Name(className)),
+  Param(Type(Name(Object)), Name(object)),
+  Param(Type(Name(String)), Name(name)),
+  Param(Type(Name(List), Type(Name(Object))), Name(args))),
+
  Class(Name(Class),
   Field(Type(Name(String)), Name(id)),
   Field(Type(Name(String)), Name(name)),
@@ -89,6 +95,32 @@ File(
 
   Method(Type(Name(List), Type(Name(Field))), Name(getFields), Block(
     Return(Call(Var(Name(_fields)), Attr(Var(Name(self)), Name(id)))))),
+
+  Method(Type(Name(Field)), Name(getField),
+   Param(Type(Name(String)), Name(name)),
+   Block(
+    Local(
+     Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
+      Call(Var(Name(getFields))))),
+    Local(
+     Declaration(Type(Name(int)), Name(idx), Number(0))),
+    While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
+        Name(size)))), Block(
+      If(Call(Attr(Attr(Call(Attr(Var(Name(fields)), Name(__get__)),
+           Var(Name(idx))), Name(name)), Name(__eq__)), Var(Name(name))),
+       Block(
+        Return(Call(Attr(Var(Name(fields)), Name(__get__)), Var(Name(idx)))))),
+      Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+        Number(1))))),
+    Return(Null(null)))),
+
+  Method(Type(Name(Object)), Name(invoke),
+   Param(Type(Name(Object)), Name(object)),
+   Param(Type(Name(String)), Name(method)),
+   Param(Type(Name(List), Type(Name(Object))), Name(args)),
+   Block(
+    Return(Call(Var(Name(_invoke)), Attr(Var(Name(self)), Name(id)),
+      Var(Name(object)), Var(Name(method)), Var(Name(args)))))),
 
   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
    Call(Attr(Call(Type(Name(JSONObject))), Name(setString)),
@@ -1154,5 +1186,32 @@ File(
   Method(Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
-   Block()))
+   Block(
+    Local(
+     Declaration(Type(Name(String)), Name(url), Call(Attr(Var(Name(request)),
+        Name(getUrl))))),
+    Local(
+     Declaration(Type(Name(List), Type(Name(String))), Name(parts),
+      Call(Attr(Var(Name(url)), Name(split)), String("/")))),
+    Local(
+     Declaration(Type(Name(String)), Name(method), Call(Attr(Var(Name(parts)),
+        Name(__get__)), Call(Attr(Call(Attr(Var(Name(parts)), Name(size))),
+         Name(__sub__)), Number(1))))),
+    Local(
+     Declaration(Type(Name(JSONObject)), Name(json),
+      Call(Attr(Call(Attr(Var(Name(request)), Name(getBody))),
+        Name(parseJSON))))),
+    Local(
+     Declaration(Type(Name(Object)), Name(argument), Call(Var(Name(fromJSON)),
+       Call(Var(Name(Class)), Call(Attr(Var(Name(json)), Name(__get__)),
+         String("$class"))), Var(Name(json))))),
+    Local(
+     Declaration(Type(Name(Object)), Name(result),
+      Call(Attr(Attr(Call(Attr(Call(Attr(Var(Name(self)), Name(getClass))),
+           Name(getField)), String("impl")), Name(type)), Name(invoke)),
+       Var(Name(impl)), Var(Name(method)), List(Var(Name(argument)))))),
+    ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
+      Call(Var(Name(toJSON)), Var(Name(result))))),
+    ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(respond)),
+      Var(Name(request)), Var(Name(response)))))))
 )

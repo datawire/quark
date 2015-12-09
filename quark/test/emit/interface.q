@@ -28,6 +28,7 @@ class BazBar extends Bar<String> {
     void m3(List<String> args) {}
 }
 
+//xfail:java
 class BazFaz<T> extends Bar<T> {
     void m1() {}
     void m2(T arg) {}

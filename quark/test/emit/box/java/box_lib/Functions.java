@@ -3,6 +3,7 @@ package box_lib;
 public class Functions {
 
 
+
 /* BEGIN_BUILTIN */
 
 
@@ -348,6 +349,11 @@ public class Functions {
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             return;
         }
+        if (((cls).id)==("Service") || (((cls).id) != null && ((cls).id).equals("Service"))) {
+            (cls).name = "Service";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
         if (((cls).id)==("Client") || (((cls).id) != null && ((cls).id).equals("Client"))) {
             (cls).name = "Client";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
@@ -394,5 +400,156 @@ public class Functions {
             return;
         }
         (cls).name = (cls).id;
+    }
+
+
+    public static Object _invoke(String className, Object object, String method, java.util.ArrayList<Object> args) {
+        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
+            if ((method)==("getId") || ((method) != null && (method).equals("getId"))) {
+                Class tmp_0 = (Class) (object);
+                return (tmp_0).getId();
+            }
+            if ((method)==("getName") || ((method) != null && (method).equals("getName"))) {
+                Class tmp_1 = (Class) (object);
+                return (tmp_1).getName();
+            }
+            if ((method)==("getParameters") || ((method) != null && (method).equals("getParameters"))) {
+                Class tmp_2 = (Class) (object);
+                return (tmp_2).getParameters();
+            }
+            if ((method)==("construct") || ((method) != null && (method).equals("construct"))) {
+                Class tmp_3 = (Class) (object);
+                return (tmp_3).construct((java.util.ArrayList<Object>) ((args).get(0)));
+            }
+            if ((method)==("getFields") || ((method) != null && (method).equals("getFields"))) {
+                Class tmp_4 = (Class) (object);
+                return (tmp_4).getFields();
+            }
+            if ((method)==("getField") || ((method) != null && (method).equals("getField"))) {
+                Class tmp_5 = (Class) (object);
+                return (tmp_5).getField((String) ((args).get(0)));
+            }
+            if ((method)==("invoke") || ((method) != null && (method).equals("invoke"))) {
+                Class tmp_6 = (Class) (object);
+                return (tmp_6).invoke((args).get(0), (String) ((args).get(1)), (java.util.ArrayList<Object>) ((args).get(2)));
+            }
+        }
+        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {}
+        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {}
+        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {}
+        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {}
+        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {}
+        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {}
+        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {}
+        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
+            if ((method)==("onHTTPResponse") || ((method) != null && (method).equals("onHTTPResponse"))) {
+                ResponseHolder tmp_7 = (ResponseHolder) (object);
+                (tmp_7).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("Service") || ((className) != null && (className).equals("Service"))) {
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Service tmp_8 = (Service) (object);
+                return (tmp_8).getURL();
+            }
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Service tmp_9 = (Service) (object);
+                return (tmp_9).getRuntime();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_10 = (Service) (object);
+                return (tmp_10).rpc((String) ((args).get(0)), (args).get(1));
+            }
+        }
+        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Client tmp_11 = (Client) (object);
+                return (tmp_11).getRuntime();
+            }
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Client tmp_12 = (Client) (object);
+                return (tmp_12).getURL();
+            }
+        }
+        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Server<Object> tmp_13 = (Server<Object>) (object);
+                return (tmp_13).getRuntime();
+            }
+            if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
+                Server<Object> tmp_14 = (Server<Object>) (object);
+                (tmp_14).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("Box<Object>") || ((className) != null && (className).equals("Box<Object>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Box<Object> tmp_15 = (Box<Object>) (object);
+                (tmp_15).set((args).get(0));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Box<Object> tmp_16 = (Box<Object>) (object);
+                return (tmp_16).get();
+            }
+        }
+        if ((className)==("Box<int>") || ((className) != null && (className).equals("Box<int>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Box<Integer> tmp_17 = (Box<Integer>) (object);
+                (tmp_17).set((Integer) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Box<Integer> tmp_18 = (Box<Integer>) (object);
+                return (tmp_18).get();
+            }
+        }
+        if ((className)==("Box<String>") || ((className) != null && (className).equals("Box<String>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Box<String> tmp_19 = (Box<String>) (object);
+                (tmp_19).set((String) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Box<String> tmp_20 = (Box<String>) (object);
+                return (tmp_20).get();
+            }
+        }
+        if ((className)==("Box<Box<int>>") || ((className) != null && (className).equals("Box<Box<int>>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Box<Box<Integer>> tmp_21 = (Box<Box<Integer>>) (object);
+                (tmp_21).set((Box<Integer>) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Box<Box<Integer>> tmp_22 = (Box<Box<Integer>>) (object);
+                return (tmp_22).get();
+            }
+        }
+        if ((className)==("Crate<int>") || ((className) != null && (className).equals("Crate<int>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Crate<Integer> tmp_23 = (Crate<Integer>) (object);
+                (tmp_23).set((Integer) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Crate<Integer> tmp_24 = (Crate<Integer>) (object);
+                return (tmp_24).get();
+            }
+        }
+        if ((className)==("Crate<String>") || ((className) != null && (className).equals("Crate<String>"))) {
+            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
+                Crate<String> tmp_25 = (Crate<String>) (object);
+                (tmp_25).set((String) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
+                Crate<String> tmp_26 = (Crate<String>) (object);
+                return (tmp_26).get();
+            }
+        }
+        if ((className)==("Sack") || ((className) != null && (className).equals("Sack"))) {}
+        return null;
     }
 }

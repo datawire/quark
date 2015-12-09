@@ -12,7 +12,16 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
     public io.datawire.quark.runtime.Runtime getRuntime() {
         return (this).runtime;
     }
-    public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {}
+    public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
+        String url = (request).getUrl();
+        java.util.ArrayList<String> parts = new java.util.ArrayList<String>(java.util.Arrays.asList((url).split(java.util.regex.Pattern.quote("/"), -1)));
+        String method = (parts).get(((parts).size()) - (1));
+        io.datawire.quark.runtime.JSONObject json = io.datawire.quark.runtime.JSONObject.parse((request).getBody());
+        Object argument = Functions.fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
+        Object result = (((new Class(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).type).invoke(this.impl, method, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
+        (response).setBody((Functions.toJSON(result)).getString());
+        (this.getRuntime()).respond(request, response);
+    }
     public String _getClass() {
         return "Server<Object>";
     }

@@ -25,6 +25,20 @@ public class Class implements io.datawire.quark.runtime.QObject {
     public java.util.ArrayList<Field> getFields() {
         return Functions._fields((this).id);
     }
+    public Field getField(String name) {
+        java.util.ArrayList<Field> fields = this.getFields();
+        Integer idx = 0;
+        while ((idx) < ((fields).size())) {
+            if ((((fields).get(idx)).name)==(name) || ((((fields).get(idx)).name) != null && (((fields).get(idx)).name).equals(name))) {
+                return (fields).get(idx);
+            }
+            idx = (idx) + (1);
+        }
+        return (Field) (null);
+    }
+    public Object invoke(Object object, String method, java.util.ArrayList<Object> args) {
+        return Functions._invoke((this).id, object, method, args);
+    }
     public String _getClass() {
         return "Class";
     }

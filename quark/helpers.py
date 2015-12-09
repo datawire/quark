@@ -153,6 +153,9 @@ def get_methods(cls, result, predicate):
             name = dfn.name.text
             if name not in result:
                 result[name] = dfn
+    for base in cls.bases:
+        if not isinstance(base.resolved.type, (Primitive, Interface)):
+            get_methods(base.resolved.type, result, predicate)
 
 @dispatch(Class)
 def get_methods(cls, predicate):

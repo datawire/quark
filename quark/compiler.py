@@ -621,8 +621,6 @@ class Reflector:
 
     def __init__(self):
         self.methods = OrderedDict()
-        self.code = "Object _construct(String className, List<Object> args) {\n"
-        self.fieldcode = "List<Field> _fields(String className) {\n"
         self.classes = []
         self.parameters = OrderedDict()
 
@@ -632,26 +630,26 @@ class Reflector:
         else:
             return self.package(pkg.package) + [pkg.name.text]
 
-    def qtype(self, texpr):
-        if isinstance(texpr.type, TypeParam): return "Object"
-        result = ".".join(self.package(texpr.type.package) + [texpr.type.name.text])
-        if isinstance(texpr.type, Class) and texpr.type.parameters:
-            result += "<%s>" % ",".join([self.qtype(texpr.bindings.get(p, TypeExpr(p, {})))
-                                         for p in texpr.type.parameters])
+    def qtype(self, texp):
+        if isinstance(texp.type, TypeParam): return "Object"
+        result = ".".join(self.package(texp.type.package) + [texp.type.name.text])
+        if isinstance(texp.type, Class) and texp.type.parameters:
+            result += "<%s>" % ",".join([self.qtype(texp.bindings.get(p, TypeExpr(p, {})))
+                                         for p in texp.type.parameters])
         return result
 
-    def qname(self, texpr):
-        if isinstance(texpr.type, TypeParam): return "Object"
-        return ".".join(self.package(texpr.type.package) + [texpr.type.name.text])
+    def qname(self, texp):
+        if isinstance(texp.type, TypeParam): return "Object"
+        return ".".join(self.package(texp.type.package) + [texp.type.name.text])
 
-    def qparams(self, texpr):
-        if isinstance(texpr.type, Class) and texpr.type.parameters:
-            return "[%s]" % ", ".join([self.qexpr(texpr.bindings[p]) for p in texpr.type.parameters])
+    def qparams(self, texp):
+        if isinstance(texp.type, Class) and texp.type.parameters:
+            return "[%s]" % ", ".join([self.qexpr(texp.bindings[p]) for p in texp.type.parameters])
         else:
             return "[]"
 
-    def qexpr(self, texpr):
-        return 'Class("%s")' % self.qtype(texpr)
+    def qexpr(self, texp):
+        return 'Class("%s")' % self.qtype(texp)
 
     def visit_Type(self, type):
         cls = type.resolved.type
@@ -667,8 +665,9 @@ class Reflector:
 
     def fields(self, cls):
         fields = []
+        bindings = base_bindings(cls)
         for f in get_fields(cls):
-            fields.append((self.qtype(f.resolved), f.name.text))
+            fields.append((self.qtype(texpr(f.resolved.type, bindings, f.resolved.bindings)), f.name.text))
         return fields
 
     def qual(self, cls):
@@ -676,7 +675,8 @@ class Reflector:
 
     def visit_Class(self, cls):
         if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
-            if cls.package is None and cls.name.text in ("List", "Map"):
+            if (cls.package is None and cls.name.text in ("List", "Map") or
+                isinstance(cls, Interface)):
                 self.classes.append(cls)
             return
 
@@ -697,7 +697,13 @@ class Reflector:
         self.classes.append(cls)
 
     def leave_Root(self, root):
+        construct = "Object _construct(String className, List<Object> args) {\n"
+        fieldcode = "List<Field> _fields(String className) {\n"
         init = "void _class(Class cls) {\n"
+        invoke = "Object _invoke(String className, Object object, String method, List<Object> args) {\n"
+
+        tmpcount = 0
+
         for cls in self.classes:
             fields = self.fields(cls)
             qual = self.qual(cls)
@@ -712,6 +718,7 @@ class Reflector:
 
             uses = self.parameters.get(cls, OrderedDict([(clsid, params)]))
 
+
             for qn in uses:
                 init += '    if (cls.id == "%s") {\n' % qn
                 init += '        cls.name = "%s";\n' % qual
@@ -719,22 +726,41 @@ class Reflector:
                 init += '        return;\n'
                 init += '    }\n'
 
-                self.code += '    if (className == "%s") {\n' % qn
-                self.code += '        return new %s(%s);\n' % (qn,
-                                                               ", ".join(['?args[%s]' % i for i in range(nparams)]))
-                self.code += '    }\n'
-                self.fieldcode += '    if (className == "%s") { return [%s]; }\n' % \
-                                  (qn, ", ".join(['Field(Class("%s"), "%s")' % (ftype, fname)
-                                                  for ftype, fname in fields]))
+                invoke += '    if (className == "%s") {\n' % qn
+                for meth in get_methods(cls).values():
+                    if isinstance(meth, Macro): continue
+                    invoke += '        if (method == "%s") {\n' % meth.name
+                    tmp = "tmp_%s" % tmpcount
+                    tmpcount += 1
+                    invoke += '            %s %s = ?object;\n' % (qn, tmp)
+                    args = ["?args[%s]" % i for i in range(len(meth.params))]
+                    if meth.type.resolved.type.name.text == "void":
+                        invoke += '            %s.%s(%s);\n' % (tmp, meth.name, ", ".join(args))
+                        invoke += '            return null;\n'
+                    else:
+                        invoke += '            return %s.%s(%s);\n' % (tmp, meth.name, ", ".join(args))
+                    invoke += '        }\n'
+                invoke += '    }\n'
+
+                if not isinstance(cls, Interface):
+                    construct += '    if (className == "%s") {\n' % qn
+                    construct += '        return new %s(%s);\n' % (qn,
+                                                                   ", ".join(['?args[%s]' % i for i in range(nparams)]))
+                    construct += '    }\n'
+                    fieldcode += '    if (className == "%s") { return [%s]; }\n' % \
+                                 (qn, ", ".join(['Field(Class("%s"), "%s")' % (ftype, fname)
+                                                 for ftype, fname in fields]))
 
         init += "    cls.name = cls.id;\n"
         init += "}\n"
-        self.code += '    return null;\n'
-        self.code += "}\n"
-        self.fieldcode += '    return null;\n'
-        self.fieldcode += "}\n"
-        self.code += self.fieldcode
-        self.code += init
+        construct += '    return null;\n'
+        construct += "}\n"
+        fieldcode += '    return null;\n'
+        fieldcode += "}\n"
+        invoke += "    return null;\n"
+        invoke += "}\n"
+
+        self.code = construct + fieldcode + init + invoke
 
 class Compiler:
 

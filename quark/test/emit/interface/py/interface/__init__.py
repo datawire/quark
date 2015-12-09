@@ -3,6 +3,7 @@ from quark_runtime import *
 
 
 
+
 # BEGIN_BUILTIN
 
 class Class(object):
@@ -30,6 +31,20 @@ class Class(object):
 
     def getFields(self):
         return _fields((self).id)
+
+    def getField(self, name):
+        fields = self.getFields();
+        idx = 0;
+        while ((idx) < (len(fields))):
+            if ((((fields)[idx]).name) == (name)):
+                return (fields)[idx]
+
+            idx = (idx) + (1)
+
+        return None
+
+    def invoke(self, object, method, args):
+        return _invoke((self).id, object, method, args)
 
     def _getClass(self):
         return u"Class"
@@ -309,7 +324,14 @@ class Server(object):
         return (self).runtime
 
     def onHTTPRequest(self, request, response):
-        pass
+        url = (request).getUrl();
+        parts = (url).split(u"/");
+        method = (parts)[(len(parts)) - (1)];
+        json = _JSONObject.parse((request).getBody());
+        argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
+        result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
+        (response).setBody((toJSON(result)).getString());
+        (self.getRuntime()).respond(request, response);
 
     def _getClass(self):
         return u"Server<Object>"
@@ -578,6 +600,11 @@ def _class(cls):
         (cls).parameters = _List([])
         return
 
+    if (((cls).id) == (u"Service")):
+        (cls).name = u"Service"
+        (cls).parameters = _List([])
+        return
+
     if (((cls).id) == (u"Client")):
         (cls).name = u"Client"
         (cls).parameters = _List([])
@@ -588,9 +615,29 @@ def _class(cls):
         (cls).parameters = _List([Class(u"Object")])
         return
 
+    if (((cls).id) == (u"Foo")):
+        (cls).name = u"Foo"
+        (cls).parameters = _List([])
+        return
+
+    if (((cls).id) == (u"Bar<Object>")):
+        (cls).name = u"Bar"
+        (cls).parameters = _List([Class(u"Object")])
+        return
+
     if (((cls).id) == (u"Baz")):
         (cls).name = u"Baz"
         (cls).parameters = _List([])
+        return
+
+    if (((cls).id) == (u"RazBar")):
+        (cls).name = u"RazBar"
+        (cls).parameters = _List([])
+        return
+
+    if (((cls).id) == (u"RazFaz<Object>")):
+        (cls).name = u"RazFaz"
+        (cls).parameters = _List([Class(u"Object")])
         return
 
     if (((cls).id) == (u"BazBar")):
@@ -604,3 +651,172 @@ def _class(cls):
         return
 
     (cls).name = (cls).id
+
+
+def _invoke(className, object, method, args):
+    if ((className) == (u"Class")):
+        if ((method) == (u"getId")):
+            tmp_0 = object;
+            return (tmp_0).getId()
+
+        if ((method) == (u"getName")):
+            tmp_1 = object;
+            return (tmp_1).getName()
+
+        if ((method) == (u"getParameters")):
+            tmp_2 = object;
+            return (tmp_2).getParameters()
+
+        if ((method) == (u"construct")):
+            tmp_3 = object;
+            return (tmp_3).construct((args)[0])
+
+        if ((method) == (u"getFields")):
+            tmp_4 = object;
+            return (tmp_4).getFields()
+
+        if ((method) == (u"getField")):
+            tmp_5 = object;
+            return (tmp_5).getField((args)[0])
+
+        if ((method) == (u"invoke")):
+            tmp_6 = object;
+            return (tmp_6).invoke((args)[0], (args)[1], (args)[2])
+
+    if ((className) == (u"Field")):
+        pass
+    if ((className) == (u"List<Object>")):
+        pass
+    if ((className) == (u"List<Field>")):
+        pass
+    if ((className) == (u"List<Class>")):
+        pass
+    if ((className) == (u"List<String>")):
+        pass
+    if ((className) == (u"Map<Object,Object>")):
+        pass
+    if ((className) == (u"Map<String,Object>")):
+        pass
+    if ((className) == (u"ResponseHolder")):
+        if ((method) == (u"onHTTPResponse")):
+            tmp_7 = object;
+            (tmp_7).onHTTPResponse((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"Service")):
+        if ((method) == (u"getURL")):
+            tmp_8 = object;
+            return (tmp_8).getURL()
+
+        if ((method) == (u"getRuntime")):
+            tmp_9 = object;
+            return (tmp_9).getRuntime()
+
+        if ((method) == (u"rpc")):
+            tmp_10 = object;
+            return (tmp_10).rpc((args)[0], (args)[1])
+
+    if ((className) == (u"Client")):
+        if ((method) == (u"getRuntime")):
+            tmp_11 = object;
+            return (tmp_11).getRuntime()
+
+        if ((method) == (u"getURL")):
+            tmp_12 = object;
+            return (tmp_12).getURL()
+
+    if ((className) == (u"Server<Object>")):
+        if ((method) == (u"getRuntime")):
+            tmp_13 = object;
+            return (tmp_13).getRuntime()
+
+        if ((method) == (u"onHTTPRequest")):
+            tmp_14 = object;
+            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"Foo")):
+        if ((method) == (u"m1")):
+            tmp_15 = object;
+            (tmp_15).m1();
+            return None
+
+        if ((method) == (u"m2")):
+            tmp_16 = object;
+            (tmp_16).m2((args)[0]);
+            return None
+
+        if ((method) == (u"m3")):
+            tmp_17 = object;
+            (tmp_17).m3((args)[0]);
+            return None
+
+    if ((className) == (u"Bar<Object>")):
+        if ((method) == (u"m1")):
+            tmp_18 = object;
+            (tmp_18).m1();
+            return None
+
+        if ((method) == (u"m2")):
+            tmp_19 = object;
+            (tmp_19).m2((args)[0]);
+            return None
+
+        if ((method) == (u"m3")):
+            tmp_20 = object;
+            (tmp_20).m3((args)[0]);
+            return None
+
+    if ((className) == (u"Baz")):
+        if ((method) == (u"m2")):
+            tmp_21 = object;
+            (tmp_21).m2((args)[0]);
+            return None
+
+        if ((method) == (u"m1")):
+            tmp_22 = object;
+            (tmp_22).m1();
+            return None
+
+        if ((method) == (u"m3")):
+            tmp_23 = object;
+            (tmp_23).m3((args)[0]);
+            return None
+
+    if ((className) == (u"RazBar")):
+        pass
+    if ((className) == (u"RazFaz<Object>")):
+        pass
+    if ((className) == (u"BazBar")):
+        if ((method) == (u"m1")):
+            tmp_24 = object;
+            (tmp_24).m1();
+            return None
+
+        if ((method) == (u"m2")):
+            tmp_25 = object;
+            (tmp_25).m2((args)[0]);
+            return None
+
+        if ((method) == (u"m3")):
+            tmp_26 = object;
+            (tmp_26).m3((args)[0]);
+            return None
+
+    if ((className) == (u"BazFaz<Object>")):
+        if ((method) == (u"m1")):
+            tmp_27 = object;
+            (tmp_27).m1();
+            return None
+
+        if ((method) == (u"m2")):
+            tmp_28 = object;
+            (tmp_28).m2((args)[0]);
+            return None
+
+        if ((method) == (u"m3")):
+            tmp_29 = object;
+            (tmp_29).m3((args)[0]);
+            return None
+
+    return None

@@ -5,6 +5,7 @@ public class Functions {
 
 
 
+
 /* BEGIN_BUILTIN */
 
 
@@ -285,6 +286,11 @@ public class Functions {
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             return;
         }
+        if (((cls).id)==("Service") || (((cls).id) != null && ((cls).id).equals("Service"))) {
+            (cls).name = "Service";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
         if (((cls).id)==("Client") || (((cls).id) != null && ((cls).id).equals("Client"))) {
             (cls).name = "Client";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
@@ -320,6 +326,11 @@ public class Functions {
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             return;
         }
+        if (((cls).id)==("slack.SlackHandler") || (((cls).id) != null && ((cls).id).equals("slack.SlackHandler"))) {
+            (cls).name = "slack.SlackHandler";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
         if (((cls).id)==("slack.User") || (((cls).id) != null && ((cls).id).equals("slack.User"))) {
             (cls).name = "slack.User";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
@@ -341,5 +352,226 @@ public class Functions {
             return;
         }
         (cls).name = (cls).id;
+    }
+
+
+    public static Object _invoke(String className, Object object, String method, java.util.ArrayList<Object> args) {
+        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
+            if ((method)==("getId") || ((method) != null && (method).equals("getId"))) {
+                Class tmp_0 = (Class) (object);
+                return (tmp_0).getId();
+            }
+            if ((method)==("getName") || ((method) != null && (method).equals("getName"))) {
+                Class tmp_1 = (Class) (object);
+                return (tmp_1).getName();
+            }
+            if ((method)==("getParameters") || ((method) != null && (method).equals("getParameters"))) {
+                Class tmp_2 = (Class) (object);
+                return (tmp_2).getParameters();
+            }
+            if ((method)==("construct") || ((method) != null && (method).equals("construct"))) {
+                Class tmp_3 = (Class) (object);
+                return (tmp_3).construct((java.util.ArrayList<Object>) ((args).get(0)));
+            }
+            if ((method)==("getFields") || ((method) != null && (method).equals("getFields"))) {
+                Class tmp_4 = (Class) (object);
+                return (tmp_4).getFields();
+            }
+            if ((method)==("getField") || ((method) != null && (method).equals("getField"))) {
+                Class tmp_5 = (Class) (object);
+                return (tmp_5).getField((String) ((args).get(0)));
+            }
+            if ((method)==("invoke") || ((method) != null && (method).equals("invoke"))) {
+                Class tmp_6 = (Class) (object);
+                return (tmp_6).invoke((args).get(0), (String) ((args).get(1)), (java.util.ArrayList<Object>) ((args).get(2)));
+            }
+        }
+        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {}
+        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {}
+        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {}
+        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {}
+        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {}
+        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {}
+        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {}
+        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
+            if ((method)==("onHTTPResponse") || ((method) != null && (method).equals("onHTTPResponse"))) {
+                ResponseHolder tmp_7 = (ResponseHolder) (object);
+                (tmp_7).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("Service") || ((className) != null && (className).equals("Service"))) {
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Service tmp_8 = (Service) (object);
+                return (tmp_8).getURL();
+            }
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Service tmp_9 = (Service) (object);
+                return (tmp_9).getRuntime();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_10 = (Service) (object);
+                return (tmp_10).rpc((String) ((args).get(0)), (args).get(1));
+            }
+        }
+        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Client tmp_11 = (Client) (object);
+                return (tmp_11).getRuntime();
+            }
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Client tmp_12 = (Client) (object);
+                return (tmp_12).getURL();
+            }
+        }
+        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Server<Object> tmp_13 = (Server<Object>) (object);
+                return (tmp_13).getRuntime();
+            }
+            if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
+                Server<Object> tmp_14 = (Server<Object>) (object);
+                (tmp_14).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("slack.event.SlackEvent") || ((className) != null && (className).equals("slack.event.SlackEvent"))) {
+            if ((method)==("load") || ((method) != null && (method).equals("load"))) {
+                slack.event.SlackEvent tmp_15 = (slack.event.SlackEvent) (object);
+                (tmp_15).load((slack.Client) ((args).get(0)), (io.datawire.quark.runtime.JSONObject) ((args).get(1)));
+                return null;
+            }
+            if ((method)==("dispatch") || ((method) != null && (method).equals("dispatch"))) {
+                slack.event.SlackEvent tmp_16 = (slack.event.SlackEvent) (object);
+                (tmp_16).dispatch((slack.SlackHandler) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("slack.event.SlackError") || ((className) != null && (className).equals("slack.event.SlackError"))) {
+            if ((method)==("load") || ((method) != null && (method).equals("load"))) {
+                slack.event.SlackError tmp_17 = (slack.event.SlackError) (object);
+                (tmp_17).load((slack.Client) ((args).get(0)), (io.datawire.quark.runtime.JSONObject) ((args).get(1)));
+                return null;
+            }
+            if ((method)==("dispatch") || ((method) != null && (method).equals("dispatch"))) {
+                slack.event.SlackError tmp_18 = (slack.event.SlackError) (object);
+                (tmp_18).dispatch((slack.SlackHandler) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("slack.event.Hello") || ((className) != null && (className).equals("slack.event.Hello"))) {
+            if ((method)==("dispatch") || ((method) != null && (method).equals("dispatch"))) {
+                slack.event.Hello tmp_19 = (slack.event.Hello) (object);
+                (tmp_19).dispatch((slack.SlackHandler) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("load") || ((method) != null && (method).equals("load"))) {
+                slack.event.Hello tmp_20 = (slack.event.Hello) (object);
+                (tmp_20).load((slack.Client) ((args).get(0)), (io.datawire.quark.runtime.JSONObject) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("slack.event.Message") || ((className) != null && (className).equals("slack.event.Message"))) {
+            if ((method)==("load") || ((method) != null && (method).equals("load"))) {
+                slack.event.Message tmp_21 = (slack.event.Message) (object);
+                (tmp_21).load((slack.Client) ((args).get(0)), (io.datawire.quark.runtime.JSONObject) ((args).get(1)));
+                return null;
+            }
+            if ((method)==("dispatch") || ((method) != null && (method).equals("dispatch"))) {
+                slack.event.Message tmp_22 = (slack.event.Message) (object);
+                (tmp_22).dispatch((slack.SlackHandler) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("slack.event.Edited") || ((className) != null && (className).equals("slack.event.Edited"))) {}
+        if ((className)==("slack.SlackHandler") || ((className) != null && (className).equals("slack.SlackHandler"))) {
+            if ((method)==("onSlackEvent") || ((method) != null && (method).equals("onSlackEvent"))) {
+                slack.SlackHandler tmp_23 = (slack.SlackHandler) (object);
+                (tmp_23).onSlackEvent((slack.event.SlackEvent) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onHello") || ((method) != null && (method).equals("onHello"))) {
+                slack.SlackHandler tmp_24 = (slack.SlackHandler) (object);
+                (tmp_24).onHello((slack.event.Hello) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onSlackError") || ((method) != null && (method).equals("onSlackError"))) {
+                slack.SlackHandler tmp_25 = (slack.SlackHandler) (object);
+                (tmp_25).onSlackError((slack.event.SlackError) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onMessage") || ((method) != null && (method).equals("onMessage"))) {
+                slack.SlackHandler tmp_26 = (slack.SlackHandler) (object);
+                (tmp_26).onMessage((slack.event.Message) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("slack.User") || ((className) != null && (className).equals("slack.User"))) {}
+        if ((className)==("slack.Channel") || ((className) != null && (className).equals("slack.Channel"))) {
+            if ((method)==("send") || ((method) != null && (method).equals("send"))) {
+                slack.Channel tmp_27 = (slack.Channel) (object);
+                (tmp_27).send((String) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("slack.Client") || ((className) != null && (className).equals("slack.Client"))) {
+            if ((method)==("connect") || ((method) != null && (method).equals("connect"))) {
+                slack.Client tmp_28 = (slack.Client) (object);
+                (tmp_28).connect();
+                return null;
+            }
+            if ((method)==("request") || ((method) != null && (method).equals("request"))) {
+                slack.Client tmp_29 = (slack.Client) (object);
+                (tmp_29).request((String) ((args).get(0)), (java.util.HashMap<String,Object>) ((args).get(1)), (io.datawire.quark.runtime.HTTPHandler) ((args).get(2)));
+                return null;
+            }
+            if ((method)==("ws_connect") || ((method) != null && (method).equals("ws_connect"))) {
+                slack.Client tmp_30 = (slack.Client) (object);
+                (tmp_30).ws_connect((String) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("ws_send") || ((method) != null && (method).equals("ws_send"))) {
+                slack.Client tmp_31 = (slack.Client) (object);
+                (tmp_31).ws_send((String) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onWSConnected") || ((method) != null && (method).equals("onWSConnected"))) {
+                slack.Client tmp_32 = (slack.Client) (object);
+                (tmp_32).onWSConnected((io.datawire.quark.runtime.WebSocket) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onWSClose") || ((method) != null && (method).equals("onWSClose"))) {
+                slack.Client tmp_33 = (slack.Client) (object);
+                (tmp_33).onWSClose((io.datawire.quark.runtime.WebSocket) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("onWSError") || ((method) != null && (method).equals("onWSError"))) {
+                slack.Client tmp_34 = (slack.Client) (object);
+                (tmp_34).onWSError((io.datawire.quark.runtime.WebSocket) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("construct") || ((method) != null && (method).equals("construct"))) {
+                slack.Client tmp_35 = (slack.Client) (object);
+                return (tmp_35).construct((String) ((args).get(0)));
+            }
+            if ((method)==("onWSMessage") || ((method) != null && (method).equals("onWSMessage"))) {
+                slack.Client tmp_36 = (slack.Client) (object);
+                (tmp_36).onWSMessage((io.datawire.quark.runtime.WebSocket) ((args).get(0)), (String) ((args).get(1)));
+                return null;
+            }
+            if ((method)==("onHTTPResponse") || ((method) != null && (method).equals("onHTTPResponse"))) {
+                slack.Client tmp_37 = (slack.Client) (object);
+                (tmp_37).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("pkg.Handler") || ((className) != null && (className).equals("pkg.Handler"))) {
+            if ((method)==("onSlackEvent") || ((method) != null && (method).equals("onSlackEvent"))) {
+                pkg.Handler tmp_38 = (pkg.Handler) (object);
+                (tmp_38).onSlackEvent((slack.event.SlackEvent) ((args).get(0)));
+                return null;
+            }
+        }
+        return null;
     }
 }

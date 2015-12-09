@@ -3,6 +3,7 @@ package interface_;
 public class Functions {
 
 
+
 /* BEGIN_BUILTIN */
 
 
@@ -240,6 +241,11 @@ public class Functions {
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             return;
         }
+        if (((cls).id)==("Service") || (((cls).id) != null && ((cls).id).equals("Service"))) {
+            (cls).name = "Service";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
         if (((cls).id)==("Client") || (((cls).id) != null && ((cls).id).equals("Client"))) {
             (cls).name = "Client";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
@@ -250,9 +256,29 @@ public class Functions {
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
             return;
         }
+        if (((cls).id)==("Foo") || (((cls).id) != null && ((cls).id).equals("Foo"))) {
+            (cls).name = "Foo";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
+        if (((cls).id)==("Bar<Object>") || (((cls).id) != null && ((cls).id).equals("Bar<Object>"))) {
+            (cls).name = "Bar";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
+            return;
+        }
         if (((cls).id)==("Baz") || (((cls).id) != null && ((cls).id).equals("Baz"))) {
             (cls).name = "Baz";
             (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
+        if (((cls).id)==("RazBar") || (((cls).id) != null && ((cls).id).equals("RazBar"))) {
+            (cls).name = "RazBar";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+            return;
+        }
+        if (((cls).id)==("RazFaz<Object>") || (((cls).id) != null && ((cls).id).equals("RazFaz<Object>"))) {
+            (cls).name = "RazFaz";
+            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
             return;
         }
         if (((cls).id)==("BazBar") || (((cls).id) != null && ((cls).id).equals("BazBar"))) {
@@ -266,5 +292,176 @@ public class Functions {
             return;
         }
         (cls).name = (cls).id;
+    }
+
+
+    public static Object _invoke(String className, Object object, String method, java.util.ArrayList<Object> args) {
+        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
+            if ((method)==("getId") || ((method) != null && (method).equals("getId"))) {
+                Class tmp_0 = (Class) (object);
+                return (tmp_0).getId();
+            }
+            if ((method)==("getName") || ((method) != null && (method).equals("getName"))) {
+                Class tmp_1 = (Class) (object);
+                return (tmp_1).getName();
+            }
+            if ((method)==("getParameters") || ((method) != null && (method).equals("getParameters"))) {
+                Class tmp_2 = (Class) (object);
+                return (tmp_2).getParameters();
+            }
+            if ((method)==("construct") || ((method) != null && (method).equals("construct"))) {
+                Class tmp_3 = (Class) (object);
+                return (tmp_3).construct((java.util.ArrayList<Object>) ((args).get(0)));
+            }
+            if ((method)==("getFields") || ((method) != null && (method).equals("getFields"))) {
+                Class tmp_4 = (Class) (object);
+                return (tmp_4).getFields();
+            }
+            if ((method)==("getField") || ((method) != null && (method).equals("getField"))) {
+                Class tmp_5 = (Class) (object);
+                return (tmp_5).getField((String) ((args).get(0)));
+            }
+            if ((method)==("invoke") || ((method) != null && (method).equals("invoke"))) {
+                Class tmp_6 = (Class) (object);
+                return (tmp_6).invoke((args).get(0), (String) ((args).get(1)), (java.util.ArrayList<Object>) ((args).get(2)));
+            }
+        }
+        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {}
+        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {}
+        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {}
+        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {}
+        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {}
+        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {}
+        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {}
+        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
+            if ((method)==("onHTTPResponse") || ((method) != null && (method).equals("onHTTPResponse"))) {
+                ResponseHolder tmp_7 = (ResponseHolder) (object);
+                (tmp_7).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("Service") || ((className) != null && (className).equals("Service"))) {
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Service tmp_8 = (Service) (object);
+                return (tmp_8).getURL();
+            }
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Service tmp_9 = (Service) (object);
+                return (tmp_9).getRuntime();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_10 = (Service) (object);
+                return (tmp_10).rpc((String) ((args).get(0)), (args).get(1));
+            }
+        }
+        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Client tmp_11 = (Client) (object);
+                return (tmp_11).getRuntime();
+            }
+            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
+                Client tmp_12 = (Client) (object);
+                return (tmp_12).getURL();
+            }
+        }
+        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
+            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
+                Server<Object> tmp_13 = (Server<Object>) (object);
+                return (tmp_13).getRuntime();
+            }
+            if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
+                Server<Object> tmp_14 = (Server<Object>) (object);
+                (tmp_14).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                return null;
+            }
+        }
+        if ((className)==("Foo") || ((className) != null && (className).equals("Foo"))) {
+            if ((method)==("m1") || ((method) != null && (method).equals("m1"))) {
+                Foo tmp_15 = (Foo) (object);
+                (tmp_15).m1();
+                return null;
+            }
+            if ((method)==("m2") || ((method) != null && (method).equals("m2"))) {
+                Foo tmp_16 = (Foo) (object);
+                (tmp_16).m2((Integer) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("m3") || ((method) != null && (method).equals("m3"))) {
+                Foo tmp_17 = (Foo) (object);
+                (tmp_17).m3((java.util.ArrayList<String>) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("Bar<Object>") || ((className) != null && (className).equals("Bar<Object>"))) {
+            if ((method)==("m1") || ((method) != null && (method).equals("m1"))) {
+                Bar<Object> tmp_18 = (Bar<Object>) (object);
+                (tmp_18).m1();
+                return null;
+            }
+            if ((method)==("m2") || ((method) != null && (method).equals("m2"))) {
+                Bar<Object> tmp_19 = (Bar<Object>) (object);
+                (tmp_19).m2((args).get(0));
+                return null;
+            }
+            if ((method)==("m3") || ((method) != null && (method).equals("m3"))) {
+                Bar<Object> tmp_20 = (Bar<Object>) (object);
+                (tmp_20).m3((java.util.ArrayList<T>) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("Baz") || ((className) != null && (className).equals("Baz"))) {
+            if ((method)==("m2") || ((method) != null && (method).equals("m2"))) {
+                Baz tmp_21 = (Baz) (object);
+                (tmp_21).m2((Integer) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("m1") || ((method) != null && (method).equals("m1"))) {
+                Baz tmp_22 = (Baz) (object);
+                (tmp_22).m1();
+                return null;
+            }
+            if ((method)==("m3") || ((method) != null && (method).equals("m3"))) {
+                Baz tmp_23 = (Baz) (object);
+                (tmp_23).m3((java.util.ArrayList<String>) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("RazBar") || ((className) != null && (className).equals("RazBar"))) {}
+        if ((className)==("RazFaz<Object>") || ((className) != null && (className).equals("RazFaz<Object>"))) {}
+        if ((className)==("BazBar") || ((className) != null && (className).equals("BazBar"))) {
+            if ((method)==("m1") || ((method) != null && (method).equals("m1"))) {
+                BazBar tmp_24 = (BazBar) (object);
+                (tmp_24).m1();
+                return null;
+            }
+            if ((method)==("m2") || ((method) != null && (method).equals("m2"))) {
+                BazBar tmp_25 = (BazBar) (object);
+                (tmp_25).m2((String) ((args).get(0)));
+                return null;
+            }
+            if ((method)==("m3") || ((method) != null && (method).equals("m3"))) {
+                BazBar tmp_26 = (BazBar) (object);
+                (tmp_26).m3((java.util.ArrayList<String>) ((args).get(0)));
+                return null;
+            }
+        }
+        if ((className)==("BazFaz<Object>") || ((className) != null && (className).equals("BazFaz<Object>"))) {
+            if ((method)==("m1") || ((method) != null && (method).equals("m1"))) {
+                BazFaz<Object> tmp_27 = (BazFaz<Object>) (object);
+                (tmp_27).m1();
+                return null;
+            }
+            if ((method)==("m2") || ((method) != null && (method).equals("m2"))) {
+                BazFaz<Object> tmp_28 = (BazFaz<Object>) (object);
+                (tmp_28).m2((args).get(0));
+                return null;
+            }
+            if ((method)==("m3") || ((method) != null && (method).equals("m3"))) {
+                BazFaz<Object> tmp_29 = (BazFaz<Object>) (object);
+                (tmp_29).m3((java.util.ArrayList<T>) ((args).get(0)));
+                return null;
+            }
+        }
+        return null;
     }
 }

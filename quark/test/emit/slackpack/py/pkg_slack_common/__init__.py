@@ -7,6 +7,7 @@ import slack.event
 
 
 
+
 # BEGIN_BUILTIN
 
 class Class(object):
@@ -34,6 +35,20 @@ class Class(object):
 
     def getFields(self):
         return _fields((self).id)
+
+    def getField(self, name):
+        fields = self.getFields();
+        idx = 0;
+        while ((idx) < (len(fields))):
+            if ((((fields)[idx]).name) == (name)):
+                return (fields)[idx]
+
+            idx = (idx) + (1)
+
+        return None
+
+    def invoke(self, object, method, args):
+        return _invoke((self).id, object, method, args)
 
     def _getClass(self):
         return u"Class"
@@ -313,7 +328,14 @@ class Server(object):
         return (self).runtime
 
     def onHTTPRequest(self, request, response):
-        pass
+        url = (request).getUrl();
+        parts = (url).split(u"/");
+        method = (parts)[(len(parts)) - (1)];
+        json = _JSONObject.parse((request).getBody());
+        argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
+        result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
+        (response).setBody((toJSON(result)).getString());
+        (self.getRuntime()).respond(request, response);
 
     def _getClass(self):
         return u"Server<Object>"
@@ -535,6 +557,11 @@ def _class(cls):
         (cls).parameters = _List([])
         return
 
+    if (((cls).id) == (u"Service")):
+        (cls).name = u"Service"
+        (cls).parameters = _List([])
+        return
+
     if (((cls).id) == (u"Client")):
         (cls).name = u"Client"
         (cls).parameters = _List([])
@@ -570,6 +597,11 @@ def _class(cls):
         (cls).parameters = _List([])
         return
 
+    if (((cls).id) == (u"slack.SlackHandler")):
+        (cls).name = u"slack.SlackHandler"
+        (cls).parameters = _List([])
+        return
+
     if (((cls).id) == (u"slack.User")):
         (cls).name = u"slack.User"
         (cls).parameters = _List([])
@@ -591,3 +623,219 @@ def _class(cls):
         return
 
     (cls).name = (cls).id
+
+
+def _invoke(className, object, method, args):
+    if ((className) == (u"Class")):
+        if ((method) == (u"getId")):
+            tmp_0 = object;
+            return (tmp_0).getId()
+
+        if ((method) == (u"getName")):
+            tmp_1 = object;
+            return (tmp_1).getName()
+
+        if ((method) == (u"getParameters")):
+            tmp_2 = object;
+            return (tmp_2).getParameters()
+
+        if ((method) == (u"construct")):
+            tmp_3 = object;
+            return (tmp_3).construct((args)[0])
+
+        if ((method) == (u"getFields")):
+            tmp_4 = object;
+            return (tmp_4).getFields()
+
+        if ((method) == (u"getField")):
+            tmp_5 = object;
+            return (tmp_5).getField((args)[0])
+
+        if ((method) == (u"invoke")):
+            tmp_6 = object;
+            return (tmp_6).invoke((args)[0], (args)[1], (args)[2])
+
+    if ((className) == (u"Field")):
+        pass
+    if ((className) == (u"List<Object>")):
+        pass
+    if ((className) == (u"List<Field>")):
+        pass
+    if ((className) == (u"List<Class>")):
+        pass
+    if ((className) == (u"List<String>")):
+        pass
+    if ((className) == (u"Map<Object,Object>")):
+        pass
+    if ((className) == (u"Map<String,Object>")):
+        pass
+    if ((className) == (u"ResponseHolder")):
+        if ((method) == (u"onHTTPResponse")):
+            tmp_7 = object;
+            (tmp_7).onHTTPResponse((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"Service")):
+        if ((method) == (u"getURL")):
+            tmp_8 = object;
+            return (tmp_8).getURL()
+
+        if ((method) == (u"getRuntime")):
+            tmp_9 = object;
+            return (tmp_9).getRuntime()
+
+        if ((method) == (u"rpc")):
+            tmp_10 = object;
+            return (tmp_10).rpc((args)[0], (args)[1])
+
+    if ((className) == (u"Client")):
+        if ((method) == (u"getRuntime")):
+            tmp_11 = object;
+            return (tmp_11).getRuntime()
+
+        if ((method) == (u"getURL")):
+            tmp_12 = object;
+            return (tmp_12).getURL()
+
+    if ((className) == (u"Server<Object>")):
+        if ((method) == (u"getRuntime")):
+            tmp_13 = object;
+            return (tmp_13).getRuntime()
+
+        if ((method) == (u"onHTTPRequest")):
+            tmp_14 = object;
+            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"slack.event.SlackEvent")):
+        if ((method) == (u"load")):
+            tmp_15 = object;
+            (tmp_15).load((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"dispatch")):
+            tmp_16 = object;
+            (tmp_16).dispatch((args)[0]);
+            return None
+
+    if ((className) == (u"slack.event.SlackError")):
+        if ((method) == (u"load")):
+            tmp_17 = object;
+            (tmp_17).load((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"dispatch")):
+            tmp_18 = object;
+            (tmp_18).dispatch((args)[0]);
+            return None
+
+    if ((className) == (u"slack.event.Hello")):
+        if ((method) == (u"dispatch")):
+            tmp_19 = object;
+            (tmp_19).dispatch((args)[0]);
+            return None
+
+        if ((method) == (u"load")):
+            tmp_20 = object;
+            (tmp_20).load((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"slack.event.Message")):
+        if ((method) == (u"load")):
+            tmp_21 = object;
+            (tmp_21).load((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"dispatch")):
+            tmp_22 = object;
+            (tmp_22).dispatch((args)[0]);
+            return None
+
+    if ((className) == (u"slack.event.Edited")):
+        pass
+    if ((className) == (u"slack.SlackHandler")):
+        if ((method) == (u"onSlackEvent")):
+            tmp_23 = object;
+            (tmp_23).onSlackEvent((args)[0]);
+            return None
+
+        if ((method) == (u"onHello")):
+            tmp_24 = object;
+            (tmp_24).onHello((args)[0]);
+            return None
+
+        if ((method) == (u"onSlackError")):
+            tmp_25 = object;
+            (tmp_25).onSlackError((args)[0]);
+            return None
+
+        if ((method) == (u"onMessage")):
+            tmp_26 = object;
+            (tmp_26).onMessage((args)[0]);
+            return None
+
+    if ((className) == (u"slack.User")):
+        pass
+    if ((className) == (u"slack.Channel")):
+        if ((method) == (u"send")):
+            tmp_27 = object;
+            (tmp_27).send((args)[0]);
+            return None
+
+    if ((className) == (u"slack.Client")):
+        if ((method) == (u"connect")):
+            tmp_28 = object;
+            (tmp_28).connect();
+            return None
+
+        if ((method) == (u"request")):
+            tmp_29 = object;
+            (tmp_29).request((args)[0], (args)[1], (args)[2]);
+            return None
+
+        if ((method) == (u"ws_connect")):
+            tmp_30 = object;
+            (tmp_30).ws_connect((args)[0]);
+            return None
+
+        if ((method) == (u"ws_send")):
+            tmp_31 = object;
+            (tmp_31).ws_send((args)[0]);
+            return None
+
+        if ((method) == (u"onWSConnected")):
+            tmp_32 = object;
+            (tmp_32).onWSConnected((args)[0]);
+            return None
+
+        if ((method) == (u"onWSClose")):
+            tmp_33 = object;
+            (tmp_33).onWSClose((args)[0]);
+            return None
+
+        if ((method) == (u"onWSError")):
+            tmp_34 = object;
+            (tmp_34).onWSError((args)[0]);
+            return None
+
+        if ((method) == (u"construct")):
+            tmp_35 = object;
+            return (tmp_35).construct((args)[0])
+
+        if ((method) == (u"onWSMessage")):
+            tmp_36 = object;
+            (tmp_36).onWSMessage((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"onHTTPResponse")):
+            tmp_37 = object;
+            (tmp_37).onHTTPResponse((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"pkg.Handler")):
+        if ((method) == (u"onSlackEvent")):
+            tmp_38 = object;
+            (tmp_38).onSlackEvent((args)[0]);
+            return None
+
+    return None

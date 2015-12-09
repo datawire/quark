@@ -9,6 +9,7 @@ primitive Object {
 void _class(Class cls);
 Object _construct(String className, List<Object> args);
 List<Field> _fields(String className);
+Object _invoke(String className, Object object, String name, List<Object> args);
 class Class {
     String id;
     String name;
@@ -31,6 +32,20 @@ class Class {
     }
     List<Field> getFields() {
         return (_fields)((self).id);
+    }
+    Field getField(String name) {
+        List<Field> fields = (getFields)();
+        int idx = 0;
+        while (((idx).__lt__)(((fields).size)())) {
+            if ((((((fields).__get__)(idx)).name).__eq__)(name)) {
+                return ((fields).__get__)(idx);
+            }
+            idx = ((idx).__add__)(1);
+        }
+        return null;
+    }
+    Object invoke(Object object, String method, List<Object> args) {
+        return (_invoke)((self).id, object, method, args);
     }
     macro JSONObject toJSON() ((new JSONObject()).setString)((self).id);
     macro JSONObject __to_JSONObject() ((self).toJSON)();
@@ -439,5 +454,14 @@ class Server<T> extends HTTPServlet {
     Runtime getRuntime() {
         return (self).runtime;
     }
-    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
+    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
+        String url = ((request).getUrl)();
+        List<String> parts = ((url).split)("/");
+        String method = ((parts).__get__)(((((parts).size)()).__sub__)(1));
+        JSONObject json = ((((request).getBody)()).parseJSON)();
+        Object argument = (fromJSON)((Class)(((json).__get__)("$class")), json);
+        Object result = (((((((self).getClass)()).getField)("impl")).type).invoke)(impl, method, [argument]);
+        ((response).setBody)((toJSON)(result));
+        (((getRuntime)()).respond)(request, response);
+    }
 }

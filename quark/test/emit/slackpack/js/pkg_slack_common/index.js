@@ -9,6 +9,7 @@ exports.slack = slack;
 
 
 
+
 /* BEGIN_BUILTIN */
 
 
@@ -52,6 +53,24 @@ function Class_getFields() {
     return _fields((this).id);
 }
 Class.prototype.getFields = Class_getFields;
+
+function Class_getField(name) {
+    var fields = this.getFields();
+    var idx = 0;
+    while ((idx) < ((fields).length)) {
+        if ((((fields)[idx]).name) === (name)) {
+            return (fields)[idx];
+        }
+        idx = (idx) + (1);
+    }
+    return null;
+}
+Class.prototype.getField = Class_getField;
+
+function Class_invoke(object, method, args) {
+    return _invoke((this).id, object, method, args);
+}
+Class.prototype.invoke = Class_invoke;
 
 function Class__getClass() {
     return "Class";
@@ -392,7 +411,16 @@ function Server_getRuntime() {
 }
 Server.prototype.getRuntime = Server_getRuntime;
 
-function Server_onHTTPRequest(request, response) {}
+function Server_onHTTPRequest(request, response) {
+    var url = (request).getUrl();
+    var parts = (url).split("/");
+    var method = (parts)[((parts).length) - (1)];
+    var json = _qrt.json_from_string((request).getBody());
+    var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
+    var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
+    (response).setBody((toJSON(result)).getString());
+    (this.getRuntime()).respond(request, response);
+}
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
 
 function Server__getClass() {
@@ -624,6 +652,11 @@ function _class(cls) {
         (cls).parameters = [];
         return;
     }
+    if (((cls).id) === ("Service")) {
+        (cls).name = "Service";
+        (cls).parameters = [];
+        return;
+    }
     if (((cls).id) === ("Client")) {
         (cls).name = "Client";
         (cls).parameters = [];
@@ -659,6 +692,11 @@ function _class(cls) {
         (cls).parameters = [];
         return;
     }
+    if (((cls).id) === ("slack.SlackHandler")) {
+        (cls).name = "slack.SlackHandler";
+        (cls).parameters = [];
+        return;
+    }
     if (((cls).id) === ("slack.User")) {
         (cls).name = "slack.User";
         (cls).parameters = [];
@@ -682,3 +720,224 @@ function _class(cls) {
     (cls).name = (cls).id;
 }
 exports._class = _class;
+
+function _invoke(className, object, method, args) {
+    if ((className) === ("Class")) {
+        if ((method) === ("getId")) {
+            var tmp_0 = object;
+            return (tmp_0).getId();
+        }
+        if ((method) === ("getName")) {
+            var tmp_1 = object;
+            return (tmp_1).getName();
+        }
+        if ((method) === ("getParameters")) {
+            var tmp_2 = object;
+            return (tmp_2).getParameters();
+        }
+        if ((method) === ("construct")) {
+            var tmp_3 = object;
+            return (tmp_3).construct((args)[0]);
+        }
+        if ((method) === ("getFields")) {
+            var tmp_4 = object;
+            return (tmp_4).getFields();
+        }
+        if ((method) === ("getField")) {
+            var tmp_5 = object;
+            return (tmp_5).getField((args)[0]);
+        }
+        if ((method) === ("invoke")) {
+            var tmp_6 = object;
+            return (tmp_6).invoke((args)[0], (args)[1], (args)[2]);
+        }
+    }
+    if ((className) === ("Field")) {}
+    if ((className) === ("List<Object>")) {}
+    if ((className) === ("List<Field>")) {}
+    if ((className) === ("List<Class>")) {}
+    if ((className) === ("List<String>")) {}
+    if ((className) === ("Map<Object,Object>")) {}
+    if ((className) === ("Map<String,Object>")) {}
+    if ((className) === ("ResponseHolder")) {
+        if ((method) === ("onHTTPResponse")) {
+            var tmp_7 = object;
+            (tmp_7).onHTTPResponse((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("Service")) {
+        if ((method) === ("getURL")) {
+            var tmp_8 = object;
+            return (tmp_8).getURL();
+        }
+        if ((method) === ("getRuntime")) {
+            var tmp_9 = object;
+            return (tmp_9).getRuntime();
+        }
+        if ((method) === ("rpc")) {
+            var tmp_10 = object;
+            return (tmp_10).rpc((args)[0], (args)[1]);
+        }
+    }
+    if ((className) === ("Client")) {
+        if ((method) === ("getRuntime")) {
+            var tmp_11 = object;
+            return (tmp_11).getRuntime();
+        }
+        if ((method) === ("getURL")) {
+            var tmp_12 = object;
+            return (tmp_12).getURL();
+        }
+    }
+    if ((className) === ("Server<Object>")) {
+        if ((method) === ("getRuntime")) {
+            var tmp_13 = object;
+            return (tmp_13).getRuntime();
+        }
+        if ((method) === ("onHTTPRequest")) {
+            var tmp_14 = object;
+            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.SlackEvent")) {
+        if ((method) === ("load")) {
+            var tmp_15 = object;
+            (tmp_15).load((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("dispatch")) {
+            var tmp_16 = object;
+            (tmp_16).dispatch((args)[0]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.SlackError")) {
+        if ((method) === ("load")) {
+            var tmp_17 = object;
+            (tmp_17).load((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("dispatch")) {
+            var tmp_18 = object;
+            (tmp_18).dispatch((args)[0]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.Hello")) {
+        if ((method) === ("dispatch")) {
+            var tmp_19 = object;
+            (tmp_19).dispatch((args)[0]);
+            return null;
+        }
+        if ((method) === ("load")) {
+            var tmp_20 = object;
+            (tmp_20).load((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.Message")) {
+        if ((method) === ("load")) {
+            var tmp_21 = object;
+            (tmp_21).load((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("dispatch")) {
+            var tmp_22 = object;
+            (tmp_22).dispatch((args)[0]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.Edited")) {}
+    if ((className) === ("slack.SlackHandler")) {
+        if ((method) === ("onSlackEvent")) {
+            var tmp_23 = object;
+            (tmp_23).onSlackEvent((args)[0]);
+            return null;
+        }
+        if ((method) === ("onHello")) {
+            var tmp_24 = object;
+            (tmp_24).onHello((args)[0]);
+            return null;
+        }
+        if ((method) === ("onSlackError")) {
+            var tmp_25 = object;
+            (tmp_25).onSlackError((args)[0]);
+            return null;
+        }
+        if ((method) === ("onMessage")) {
+            var tmp_26 = object;
+            (tmp_26).onMessage((args)[0]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.User")) {}
+    if ((className) === ("slack.Channel")) {
+        if ((method) === ("send")) {
+            var tmp_27 = object;
+            (tmp_27).send((args)[0]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.Client")) {
+        if ((method) === ("connect")) {
+            var tmp_28 = object;
+            (tmp_28).connect();
+            return null;
+        }
+        if ((method) === ("request")) {
+            var tmp_29 = object;
+            (tmp_29).request((args)[0], (args)[1], (args)[2]);
+            return null;
+        }
+        if ((method) === ("ws_connect")) {
+            var tmp_30 = object;
+            (tmp_30).ws_connect((args)[0]);
+            return null;
+        }
+        if ((method) === ("ws_send")) {
+            var tmp_31 = object;
+            (tmp_31).ws_send((args)[0]);
+            return null;
+        }
+        if ((method) === ("onWSConnected")) {
+            var tmp_32 = object;
+            (tmp_32).onWSConnected((args)[0]);
+            return null;
+        }
+        if ((method) === ("onWSClose")) {
+            var tmp_33 = object;
+            (tmp_33).onWSClose((args)[0]);
+            return null;
+        }
+        if ((method) === ("onWSError")) {
+            var tmp_34 = object;
+            (tmp_34).onWSError((args)[0]);
+            return null;
+        }
+        if ((method) === ("construct")) {
+            var tmp_35 = object;
+            return (tmp_35).construct((args)[0]);
+        }
+        if ((method) === ("onWSMessage")) {
+            var tmp_36 = object;
+            (tmp_36).onWSMessage((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("onHTTPResponse")) {
+            var tmp_37 = object;
+            (tmp_37).onHTTPResponse((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("pkg.Handler")) {
+        if ((method) === ("onSlackEvent")) {
+            var tmp_38 = object;
+            (tmp_38).onSlackEvent((args)[0]);
+            return null;
+        }
+    }
+    return null;
+}
+exports._invoke = _invoke;
