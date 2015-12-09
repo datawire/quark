@@ -103,12 +103,14 @@ package interop { // package interop is mandatory
         }
         void cancel() {
             if (self.timedOut) {
+                return;
             } else {
                 self.cancelled = true;
             }
         }
         void onExecute(Runtime runtime) {
             if (self.cancelled) {
+                return;
             } else {
                 self.timedOut = true;
             }
