@@ -110,7 +110,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
      * Allow synchronous waiting on this instance of runtime
      * @param allowSync
      */
-    void setAllowSync(boolean allowSync) {
+    public void setAllowSync(boolean allowSync) {
         synchronized (lock) {
             if (initialized) {
                 throw new IllegalStateException("setAllowSync can only be called once, before runtime is used");
