@@ -88,3 +88,7 @@ Constraints
 +++++++++++
 
 Quark currently supports only one interaction pattern, rpc, that expects a single request from the client and returns a single response from the server.
+
+At the current time, the preferred syntax outlined above is not working. For now, use @delegate(self.rpc) instead. See `linkIssue79`_ for more information.
+
+.. _linkIssue79: https://github.com/datawire/quark/issues/79
