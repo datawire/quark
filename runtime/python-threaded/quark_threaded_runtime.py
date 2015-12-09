@@ -5,9 +5,13 @@ __version__ = "0.1.0"
 import threading
 import time
 import urllib2
+import urlparse
+from wsgiref import simple_server, util
 from Queue import Queue, Empty
 
 from ws4py.client.threadedclient import WebSocketClient
+
+from quark_runtime import _HTTPRequest, _HTTPResponse
 
 
 class _EventProcessor(threading.Thread):
@@ -69,27 +73,15 @@ class _QuarkRequest(threading.Thread):
         try:
             handle = urllib2.urlopen(self.py_request)
             body = handle.read()
-        except urllib2.URLError as exc:
-            print exc
+        except urllib2.URLError:
             self.runtime.events.put((self.handler.onHTTPError, (self.request,), {}))
         else:
-            response = _QuarkResponse(handle.getcode(), body)
+            response = _HTTPResponse()
+            response.setCode(handle.getcode())
+            response.setBody(body)
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
         self.runtime.events.put((self.handler.onHTTPFinal, (self.request,), {}))
-
-
-class _QuarkResponse(object):
-
-    def __init__(self, code, body):
-        self.code = code
-        self.body = body
-
-    def getCode(self):
-        return self.code
-
-    def getBody(self):
-        return self.body
 
 
 class _QuarkWS(WebSocketClient):
@@ -113,12 +105,73 @@ class _QuarkWS(WebSocketClient):
         if code == 1000:
             self.runtime.events.put((self.handler.onWSClosed, (self,), {}))
         else:
-            print code
             self.runtime.events.put((self.handler.onWSError, (self,), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self,), {}))
 
     def __str__(self):
         return "WS: %s" % self.url
+
+
+class _QuarkWSGIApp(object):
+
+    def __init__(self, runtime, scheme, host, port):
+        self.runtime = runtime
+        self.scheme = scheme
+        self.host = host
+        self.port = port
+        self.servlets = {}  # path -> servlet
+
+    def call_servlet(self, servlet, request, response):
+        try:
+            servlet.onHTTPRequest(request, response)
+        except Exception as exc:
+            response.setCode(500)
+            response.setBody("500 Internal Server Error (%s)" % exc)
+            response.setHeader("Content-Type", "text/plain")
+
+    def __call__(self, environ, start_response):
+        path = environ["PATH_INFO"]
+        url = util.request_uri(environ)
+        try:
+            request_body_size = int(environ.get('CONTENT_LENGTH', 0))
+        except (ValueError):
+            request_body_size = 0
+        request_body = environ['wsgi.input'].read(request_body_size)
+
+        request = _HTTPRequest(url)
+        request.setMethod(environ["REQUEST_METHOD"])
+        request.setBody(request_body)
+        request.setHeader("Content-Type", environ["CONTENT_TYPE"])
+        request.setHeader("Content-Length", request_body_size)
+        for key in environ:
+            if key.startswith("HTTP_"):
+                request.setHeader(key[5:], environ[key])
+        response = _HTTPResponse()
+        try:
+            servlet = self.servlets[path]
+        except KeyError:
+            start_response("404 Not Found", [("Content-Type", "text/plain")])
+            return ["404 Not Found (%r)" % path]
+
+        self.runtime.events.put((self.call_servlet, (servlet, request, response), {}))
+        try:
+            self.runtime.acquire()
+            while not response._responded:
+                self.runtime.wait(60)
+        finally:
+            self.runtime.release()
+
+        if response.code == 200:
+            status = "200 OK"
+        elif response.code == 500:
+            status = "500 Internal Server Error"
+        else:
+            status = "%s Something something" % response.code
+        headers = [(key.encode("utf-8"), value.encode("utf-8")) for key, value in response.headers.items()]
+        start_response(status, headers)
+
+        body = response.body.encode("utf-8")
+        return [body]
 
 
 class ThreadedRuntime(object):
@@ -127,6 +180,7 @@ class ThreadedRuntime(object):
         self.lock = threading.Condition()
         self.events = Queue()
         self.event_thread = None
+        self.sites = {}  # host, port -> site
 
     def acquire(self):
         self.lock.acquire()
@@ -162,11 +216,49 @@ class ThreadedRuntime(object):
         thread.setDaemon(True)
         thread.start()
 
+    def _parse_url(self, url):
+        uri = urlparse.urlparse(url)
+        host = uri.hostname or "127.0.0.1"
+        if uri.port is not None:
+            port = uri.port
+        else:
+            port = dict(http=80, ws=80, https=443, wss=80).get(uri.scheme)
+        return uri.scheme, host, port, uri.path
+
     def serveHTTP(self, url, servlet):
+        def launch_web_server(runtime, url, host, port, app, servlet):
+            try:
+                server = simple_server.make_server(host, port, app)
+                server.serve_forever()
+            except Exception as exc:
+                runtime.events.put((servlet.onServletError,
+                                    (url, "Failed to bind to %s:%s (%s)" % (host, port, exc)), {}))
+        scheme, host, port, path = self._parse_url(url)
+        if scheme in ["https", "wss"]:
+            self.events.put((servlet.onServletError, (url, scheme + " is not supported yet"), {}))
+            return
+        try:
+            app = self.sites[host, port]
+            if app.scheme != scheme:
+                message = "%s:%s already serving %s, cannot also serve %s" % (host, port, app.scheme, scheme)
+                self.events.put((servlet.onServletError, (url, message), {}))
+                return
+        except KeyError:
+            app = _QuarkWSGIApp(self, scheme, host, port)
+            self.sites[host, port] = app
+            thread = threading.Thread(target=launch_web_server, args=(self, url, host, port, app, servlet))
+            thread.setDaemon(True)
+            thread.start()
+
+        app.servlets[path] = servlet
+        self.events.put((servlet.onServletInit, (url, self), {}))
+
+    def serveWS(self, url, servlet):
+        scheme, host, port, path = self._parse_url(url)
         raise NotImplementedError()
 
     def respond(self, request, response):
-        raise NotImplementedError()
+        response._responded = True
 
     def launch(self):
         assert self.event_thread is None, self.event_thread
