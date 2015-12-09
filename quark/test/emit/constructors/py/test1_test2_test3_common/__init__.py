@@ -257,7 +257,7 @@ class Service(object):
         envelope = _JSONObject();
         (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString(name)));
         (envelope).setObjectItem((u"rpc"), (json));
-        (request).setBody((envelope).getString());
+        (request).setBody((envelope).toString());
         rt = (self).getRuntime();
         rh = ResponseHolder();
         (rt).acquire();
@@ -336,7 +336,8 @@ class Server(object):
         json = (envelope).getObjectItem(u"rpc");
         argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
         result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
-        (response).setBody((toJSON(result)).getString());
+        (response).setBody((toJSON(result)).toString());
+        (response).setCode(200);
         (self.getRuntime()).respond(request, response);
 
     def _getClass(self):

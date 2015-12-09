@@ -1131,7 +1131,7 @@ File(
     ExprStmt(Call(Attr(Var(Name(envelope)), Name(__set__)), String("rpc"),
       Var(Name(json)))),
     ExprStmt(Call(Attr(Var(Name(request)), Name(setBody)),
-      Var(Name(envelope)))),
+      Call(Attr(Var(Name(envelope)), Name(toString))))),
     Local(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self)),
         Name(getRuntime))))),
@@ -1213,7 +1213,8 @@ File(
            Name(getField)), String("impl")), Name(type)), Name(invoke)),
        Var(Name(impl)), Var(Name(method)), List(Var(Name(argument)))))),
     ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
-      Call(Var(Name(toJSON)), Var(Name(result))))),
+      Call(Attr(Call(Var(Name(toJSON)), Var(Name(result))), Name(toString))))),
+    ExprStmt(Call(Attr(Var(Name(response)), Name(setCode)), Number(200))),
     ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(respond)),
       Var(Name(request)), Var(Name(response)))))))
 )

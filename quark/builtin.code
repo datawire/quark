@@ -418,7 +418,7 @@ interface Service {
         JSONObject envelope = new JSONObject();
         ((envelope).__set__)("$method", name);
         ((envelope).__set__)("rpc", json);
-        ((request).setBody)(envelope);
+        ((request).setBody)(((envelope).toString)());
         Runtime rt = ((self).getRuntime)();
         ResponseHolder rh = new ResponseHolder();
         ((rt).acquire)();
@@ -463,7 +463,8 @@ class Server<T> extends HTTPServlet {
         JSONObject json = ((envelope).__get__)("rpc");
         Object argument = (fromJSON)((Class)(((json).__get__)("$class")), json);
         Object result = (((((((self).getClass)()).getField)("impl")).type).invoke)(impl, method, [argument]);
-        ((response).setBody)((toJSON)(result));
+        ((response).setBody)((((toJSON)(result)).toString)());
+        ((response).setCode)(200);
         (((getRuntime)()).respond)(request, response);
     }
 }

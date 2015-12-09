@@ -319,7 +319,7 @@ function Service_rpc(name, message) {
     var envelope = new _qrt.JSONObject();
     (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString(name)));
     (envelope).setObjectItem(("rpc"), (json));
-    (request).setBody((envelope).getString());
+    (request).setBody((envelope).toString());
     var rt = (this).getRuntime();
     var rh = new ResponseHolder();
     (rt).acquire();
@@ -420,7 +420,8 @@ function Server_onHTTPRequest(request, response) {
     var json = (envelope).getObjectItem("rpc");
     var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
     var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
-    (response).setBody((toJSON(result)).getString());
+    (response).setBody((toJSON(result)).toString());
+    (response).setCode(200);
     (this.getRuntime()).respond(request, response);
 }
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
