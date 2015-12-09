@@ -598,9 +598,12 @@ interface Service {
     Runtime getRuntime();
 
     Object rpc(String name, Object message) {
-        HTTPRequest request = new HTTPRequest(getURL() + "/" + name);
+        HTTPRequest request = new HTTPRequest(getURL());
         JSONObject json = toJSON(message);
-        request.setBody(json);
+        JSONObject envelope = new JSONObject();
+        envelope["$method"] = name;
+        envelope["rpc"] = json;
+        request.setBody(envelope);
         Runtime rt = self.getRuntime();
 
         ResponseHolder rh = new ResponseHolder();
@@ -646,11 +649,9 @@ class Server<T> extends HTTPServlet {
     Runtime getRuntime() { return self.runtime; }
 
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
-        // XXX: need to actually error check all of this
-        String url = request.getUrl();
-        List<String> parts = url.split("/");
-        String method = parts[parts.size() - 1];
-        JSONObject json = request.getBody().parseJSON();
+        JSONObject envelope = request.getBody().parseJSON();
+        String method = envelope["$method"];
+        JSONObject json = envelope["rpc"];
         Object argument = fromJSON(Class(json["$class"]), json);
         Object result = self.getClass().getField("impl").type.invoke(impl, method, [argument]);
         response.setBody(toJSON(result));

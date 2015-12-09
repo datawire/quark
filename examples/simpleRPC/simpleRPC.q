@@ -1,3 +1,4 @@
+@version("0.1.0")
 package hello {
 
     class Request {
