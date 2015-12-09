@@ -603,7 +603,7 @@ interface Service {
         JSONObject envelope = new JSONObject();
         envelope["$method"] = name;
         envelope["rpc"] = json;
-        request.setBody(envelope);
+        request.setBody(envelope.toString());
         Runtime rt = self.getRuntime();
 
         ResponseHolder rh = new ResponseHolder();
@@ -654,7 +654,8 @@ class Server<T> extends HTTPServlet {
         JSONObject json = envelope["rpc"];
         Object argument = fromJSON(Class(json["$class"]), json);
         Object result = self.getClass().getField("impl").type.invoke(impl, method, [argument]);
-        response.setBody(toJSON(result));
+        response.setBody(toJSON(result).toString());
+        response.setCode(200);
         getRuntime().respond(request, response);
     }
 
