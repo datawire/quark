@@ -4,9 +4,15 @@ SimpleRPC demonstrates how Quark can implement cross-language RPC with very litt
 
 ## RPC Contract
 
+The RPC contract is expressed in simpleRPC.q. There are two value classes (Request and Response) and a service interface (Hello). The Quark code also contains the names of the client class (HelloClient) and the server stub class (HelloServer).
+
 ### Writing a client
 
+The client code files (pyclient.py, SimpleRPCClient.java) follow the same basic pattern. A client instance can be constructed by passing in to the client constructor the runtime integration and the URL of the server. The only defined function (hello) requires an argument, an instance of Request, and returns an instance of Response. The code `response = client.hello(request)` is what causes the remote procedure call to take place.
+
 ### Writing a server
+
+The server code files (pyserver.py, jsserver.js, SimpleRPCServer.java) also follow the same basic pattern. A server instance can be constructed by passing in to the server constructor the runtime integration and the implementation of the contract interface. Then the integration can serve the service on the given URL.
 
 ## Running this example
 
@@ -59,3 +65,9 @@ Run the Javascript server with
         node jsserver.js
 
 JavaScript client support is coming soon!
+
+# FIXME
+
+- Better answer for JS clients.
+- Any answer for failures. Right now client code hangs forever if the server is unavailable.
+- `mvn` stuff does not work for everybody.
