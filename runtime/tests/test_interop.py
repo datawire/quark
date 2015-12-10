@@ -6,6 +6,8 @@ import time
 import threading
 import textwrap
 import contextlib
+import socket
+import errno
 
 def command(*cmd, **kwargs):
     cwd = kwargs.pop('cwd', py.path.local())
@@ -413,8 +415,45 @@ class PortGenerator(object):
         self.port = 9876
 
     def next(self):
-        self.port += 1
-        return self.port
+        while not self.is_port_empty(self.port):
+            self.port += 1
+        return Port(self.port)
+
+    @staticmethod
+    def is_port_empty(port):
+        with contextlib.closing(socket.socket()) as s:
+            try:
+                s.connect(("127.0.0.1", port))
+            except socket.error, e:
+                if e.errno == errno.ECONNREFUSED:
+                    return True
+        return False
+
+class Port(object):
+    def __init__(self, port):
+        self.port = port
+
+    def wait_server_start(self, timeout=10, interval=0.05):
+        start = time.time()
+        for a in range(int(timeout/interval)):
+            print "check", a, "at", time.time()-start
+            with contextlib.closing(socket.socket()) as s:
+                try:
+                    s.connect(("127.0.0.1", self.port))
+                    print "server started up in %dmsec" % (
+                        1000 * (time.time() - start))
+                    return
+                except socket.error, e:
+                    if e.errno == errno.ECONNREFUSED:
+                        time.sleep(interval)
+                        continue
+                    raise
+        pytest.fail("server did not start up on port %s after %.2fs" % (
+            self.port, (time.time() - start)))
+
+    def __str__(self):
+        return str(self.port)
+
 
 @pytest.fixture(scope='module')
 def port_generator():
@@ -452,7 +491,7 @@ def test_interop(client_integration, server_integration, port):
     client = client_integration.client(port)
     server = server_integration.server(port)
     with server.wait(0):
-        time.sleep(1)
+        port.wait_server_start()
         with client.wait(1):
             print "server and client started"
             time.sleep(1)
