@@ -6,13 +6,21 @@
 Welcome to the Quark Documentation!
 ===================================
 
-Available documents:
+Available documentation:
 
 .. toctree::
    :maxdepth: 1
 
    Quark Installation and Configuration Guide <install/index>
    Quark Language Reference <language-reference/index>
+
+Available tutorials:
+
+.. toctree::
+   :maxdepth: 1
+
+   Getting Started with RPC Tutorial <tutorials/rpc-basic.rst>
+
 
 
 Indices and tables
