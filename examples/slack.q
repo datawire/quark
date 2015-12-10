@@ -1,15 +1,14 @@
 @version("0.1.0")
 @doc("A high level API for accessing all aspects of the the slack web service.")
 @doc("This includes both regular http and realtime web sockets functionality.")
-package slack {
 
+package slack {
     @doc("A slack client can be used to make requests or subscribe to events from the slack service.")
     class Client extends HTTPHandler {
-
         Runtime runtime;
-	String token;
+        String token;
 
-	Client(Runtime runtime, String token) {
+        Client(Runtime runtime, String token) {
             self.runtime = runtime;
             self.token = token;
         }
@@ -33,7 +32,6 @@ package slack {
         void subscribe(SlackHandler handler) {
             self.request("rtm.start", {}, new Subscription(self, handler));
         }
-
     }
 
     class Subscription extends WSHandler, HTTPHandler {
@@ -69,6 +67,7 @@ package slack {
         }
 
         event.SlackEvent construct(String type) {
+            if (type == null) { return new event.MessageSent(); }
             if (type == "error") { return new event.SlackError(); }
             if (type == "hello") { return new event.Hello(); }
             if (type == "message") { return new event.Message(); }
@@ -236,6 +235,21 @@ package slack {
             }
         }
 
+        @doc("A message we sent has been acknowledged by Slack.")
+        class MessageSent extends SlackEvent {
+            String text;
+            Edited edited;
+
+            void load(Subscription subscription, JSONObject obj) {
+                super.load(subscription, obj);
+                self.text = obj["text"];
+            }
+
+            void dispatch(SlackHandler handler) {
+                handler.onMessageSent(self);
+            }
+        }
+
         @doc("Metadata about an edit to a message.")
         class Edited {
             User user;
@@ -338,6 +352,10 @@ package slack {
         }
 
         void onMessage(event.Message message) {
+            self.onSlackEvent(message);
+        }
+
+        void onMessageSent(event.MessageSent message) {
             self.onSlackEvent(message);
         }
 
