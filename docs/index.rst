@@ -20,7 +20,7 @@ Available tutorials:
 .. toctree::
    :maxdepth: 1
 
-   Getting Started with RPC Tutorial <tutorials/rpc-basic.rst>
+   Getting Started with RPC Tutorial <tutorials/rpc-basic/index.rst>
 
 
 
