@@ -32,6 +32,7 @@ def _println(obj):
         sys.stdout.write(u"null\n".encode("utf8"))
     else:
         sys.stdout.write((u"%s\n" % obj).encode("utf8"))
+    sys.stdout.flush()
 
 
 def _url_get(url):
