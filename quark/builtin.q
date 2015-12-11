@@ -604,6 +604,7 @@ interface Service {
         envelope["$method"] = name;
         envelope["rpc"] = json;
         request.setBody(envelope.toString());
+        request.setMethod("POST");
         Runtime rt = self.getRuntime();
 
         ResponseHolder rh = new ResponseHolder();
