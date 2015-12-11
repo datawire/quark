@@ -15,4 +15,8 @@ Quark supports five integrations:
 
 [[JMK exact names TBD]]
 
+The Java integrations assume you are using Netty (version XXX). The Javascript integration assumes you're using Node.js (version XXX). The Python-twisted integration assumes you are using Twisted (version XXX). The Python-threaded integration assumes XXX.
+
+[[JMK prerequisites TBD, are there other requirements?]
+
 These integrations are installable through the normal install mechanism for your language of choice - pip for Python, npm for Javascript, and maven for Java. Once you've installed the appropriate integration, the integration types should be fully functional and work just like any other data types in Quark.
