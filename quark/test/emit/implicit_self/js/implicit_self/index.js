@@ -313,6 +313,7 @@ function Service_rpc(name, message) {
     (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString(name)));
     (envelope).setObjectItem(("rpc"), (json));
     (request).setBody((envelope).toString());
+    (request).setMethod("POST");
     var rt = (this).getRuntime();
     var rh = new ResponseHolder();
     (rt).acquire();

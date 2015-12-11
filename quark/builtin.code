@@ -419,6 +419,7 @@ interface Service {
         ((envelope).__set__)("$method", name);
         ((envelope).__set__)("rpc", json);
         ((request).setBody)(((envelope).toString)());
+        ((request).setMethod)("POST");
         Runtime rt = ((self).getRuntime)();
         ResponseHolder rh = new ResponseHolder();
         ((rt).acquire)();

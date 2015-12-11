@@ -1132,6 +1132,7 @@ File(
       Var(Name(json)))),
     ExprStmt(Call(Attr(Var(Name(request)), Name(setBody)),
       Call(Attr(Var(Name(envelope)), Name(toString))))),
+    ExprStmt(Call(Attr(Var(Name(request)), Name(setMethod)), String("POST"))),
     Local(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self)),
         Name(getRuntime))))),

@@ -1438,6 +1438,9 @@ File(
       $type=0.HTTPRequest.setBody), Call(Attr(Var(Name(envelope),
         $type=0.JSONObject), Name(toString), $type=0.JSONObject.toString),
       $type=0.String), $type=0.void)),
+    ExprStmt(Call(Attr(Var(Name(request), $type=0.HTTPRequest),
+       Name(setMethod), $type=0.HTTPRequest.setMethod), String("POST",
+      $type=0.String), $type=0.void)),
     Local(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self),
         $type=0.Service), Name(getRuntime), $type=0.Service.getRuntime),

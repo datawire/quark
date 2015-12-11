@@ -256,6 +256,7 @@ class Service(object):
         (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString(name)));
         (envelope).setObjectItem((u"rpc"), (json));
         (request).setBody((envelope).toString());
+        (request).setMethod(u"POST");
         rt = (self).getRuntime();
         rh = ResponseHolder();
         (rt).acquire();
