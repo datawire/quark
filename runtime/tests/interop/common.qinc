@@ -1,19 +1,25 @@
 // pacakge interop {
 
-    interface Check {
+    interface ClientCheck {
         void check(TimeoutClient client);
     }
 
+    interface ResponseCheck {
+        void checkResponse(HTTPResponse response);
+    }
 
-    class ResponseCheck extends Check {
+    class ClientResponseCheck extends ClientCheck, ResponseCheck {
         void check(TimeoutClient client) {
             if (client.response != null) {
-                checkResponse(client.response);
+                self.checkResponse(client.response);
             } else {
                 print("FAIL: No response");
             }
         }
-        void checkResponse(HTTPResponse response);
+    }
+
+    interface RequestCheck {
+        void checkRequest(HTTPRequest request);
     }
 
     class CheckCode extends ResponseCheck {
@@ -31,6 +37,8 @@
         }
     }
 
+    class ClientResponseCheckCode extends CheckCode, ClientResponseCheck {}
+
     class CheckBody extends ResponseCheck {
         String expected;
         CheckBody(String body) {
@@ -46,28 +54,53 @@
         }
     }
 
-    class CheckHeader extends ResponseCheck {
+    class ClientResponseCheckBody extends CheckBody, ClientResponseCheck {}
+
+    class Headers<T> {
+        T thing;
+        String name;
+        Headers(T thing, String name) { self.thing = thing; self.name = name; }
+        macro String getHeader(String key) self.thing.getHeader(key);
+        macro List<String> getHeaders() self.thing.getHeaders();
+    }
+
+    class CheckHeader<T> extends ResponseCheck {
         String key;
         String expected;
         CheckBody(String key, String value) {
             self.key = key;
             self.expected = value;
         }
-        void checkResponse(HTTPResponse response) {
-            String actual = response.getHeader(self.key);
+        void checkHeader(Headers<T> thing) {
+            String actual = thing.getHeader(self.key);
             if (actual != expected) {
                 if (actual == null) {
                     print("FAIL: missing header " + self.key +
-                          " in response headers: " +
-                          ", ".join(response.getHeaders()));
+                          " in " + thing.name + " headers: " +
+                          ", ".join(thing.getHeaders()));
                 } else {
-                    print("FAIL: Response header " + self.key + ": " + actual + " expected " + expected);
+                    print("FAIL: " + thing.name + " header " + self.key + ": " + actual + " expected " + expected);
                 }
             } else {
-                print("OK: Response header " + self.key + ": " + actual);
+                print("OK: " + thing.name + " header " + self.key + ": " + actual);
             }
         }
     }
+
+    class CheckRequestHeader extends CheckHeader<HTTPRequest>, RequestCheck {
+        void checkRequest(HTTPRequest request) {
+            self.checkHeader(Headers<HTTPRequest>(request), "request");
+        }
+    }
+
+
+    class CheckResponseHeader extends CheckHeader<HTTPResponse>, ResponseCheck {
+        void checkResponse(HTTPResponse response) {
+            self.checkHeader(Headers<HTTPResponse>(response), "response");
+        }
+    }
+
+    class ClientResponseCheckHeader extends CheckResponseHeader, ClientResponseCheck {}
 
     class Timeout extends Task {
         bool timedOut;
@@ -98,28 +131,28 @@
         HTTPResponse response;
         Runtime runtime;
         String prefix;
-        List<Check> expectations;
+        List<ClientCheck> expectations;
         Timeout timeout;
         TimeoutClient(Runtime runtime, int port) {
             self.runtime = runtime;
             self.prefix = "http://127.0.0.1:" + port.toString();
             self.timedOut = false;
-            self.expectations = new List<Check>();
+            self.expectations = new List<ClientCheck>();
         }
         TimeoutClient url(String path) {
             self.request = HTTPRequest(self.prefix + path);
             return self;
         }
         TimeoutClient expectCode(int code) {
-            self.expectations.add(CheckCode(code));
+            self.expectations.add(ClientResponseCheckCode(code));
             return self;
         }
         TimeoutClient expectBody(String body) {
-            self.expectations.add(CheckBody(body));
+            self.expectations.add(ClientResponseCheckBody(body));
             return self;
         }
         TimeoutClient expectHeader(String key, String value) {
-            self.expectations.add(CheckHeader(key, value));
+            self.expectations.add(ClientResponseCheckHeader(key, value));
             return self;
         }
         void check(float timeout) {
