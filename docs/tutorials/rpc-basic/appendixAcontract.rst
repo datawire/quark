@@ -22,6 +22,8 @@ At the end of part 1 of the contract creation, your file should contain the foll
 Part 2 simpleRPC.q contract
 ---------------------------
 
+At the end of part 2 of the contract creation, your file should contain the following:
+
 .. code-block:: none
 
    @version(0.1.0)
@@ -39,3 +41,72 @@ Part 2 simpleRPC.q contract
 
 
 :ref:`Return to Part 3 <part3Interface>` of the contract definition to continue the tutorial.
+
+.. _part3ContractFinished:
+
+Part 3 simpleRPC.q contract
+---------------------------
+
+At the end of part 3 of the contract creation, your file should contain the following:
+
+.. code-block:: none
+
+   @version(0.1.0)
+   package hello {
+   
+       class Request {
+           String requestyStuff;
+       }
+
+       class Response {
+           String responsyStuff;
+       }
+
+       interface Hello extends Service {
+           @delegate(self.rpc)
+           Response hello(Request request);
+       }   
+   
+   }
+
+
+:ref:`Return to Part 4 <part4Client>` of the contract definition to continue the tutorial.
+
+
+.. _part4ContractFinished:
+
+Part 4 simpleRPC.q contract
+---------------------------
+
+At the end of part 4 of the contract creation, your file should contain the following:
+
+.. code-block:: none
+
+   @version(0.1.0)
+   package hello {
+   
+       class Request {
+           String requestyStuff;
+       }
+
+       class Response {
+           String responsyStuff;
+       }
+
+       interface Hello extends Service {
+           @delegate(self.rpc)
+           Response hello(Request request);
+       }   
+   
+       class HelloClient extends Client, Hello {}
+
+   }
+
+
+
+:ref:`Return to Part 5 <part5Server>` of the contract definition to continue the tutorial.
+
+
+A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/simpleRPC/simpleRPC.q>`_ - the file you constructed following the instructions in parts 1-5 of the contract definition page should match it exactly.
+
+[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
