@@ -80,6 +80,9 @@ class _QuarkRequest(threading.Thread):
             response = _HTTPResponse()
             response.setCode(handle.getcode())
             response.setBody(body)
+            for h in handle.info().headers:
+                k,v = h.split(':', 1)
+                response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
         self.runtime.events.put((self.handler.onHTTPFinal, (self.request,), {}))
