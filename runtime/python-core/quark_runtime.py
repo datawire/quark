@@ -244,10 +244,10 @@ class _HTTPRequest(object):
         return self.body
 
     def setHeader(self, key, value):
-        self.headers[key] = value
+        self.headers[key.lower()] = value
 
     def getHeader(self, key):
-        return self.headers.get(key)  # Maybe return None
+        return self.headers.get(key.lower())  # Maybe return None
 
     def getHeaders(self):
         return self.headers.keys()
@@ -274,10 +274,10 @@ class _HTTPResponse(object):
         self.body = body
 
     def setHeader(self, key, value):
-        self.headers[key] = value
+        self.headers[key.lower()] = value
 
     def getHeader(self, key):
-        return self.headers.get(key)  # Maybe return None
+        return self.headers.get(key.lower())  # Maybe return None
 
     def getHeaders(self):
         return self.headers.keys()
