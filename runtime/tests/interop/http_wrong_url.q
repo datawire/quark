@@ -8,13 +8,12 @@ package interop { // package interop is mandatory
         void client(Runtime runtime, int port) {
 
             TimeoutClient(runtime, port)
-                .url("/http_server")
-                .expectCode(200)
-                .expectBody("Hello World!\r\n")
-                .expectHeader("X-Custom-Header", "custom value")
+                .url("/http_server_is_not_here")
+                .expectCode(404)
                 .check(0.5);
         }
     }
+
 ////include http_server.qinc
 ////include common.qinc
 }

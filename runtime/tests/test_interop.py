@@ -26,7 +26,7 @@ class QuarkCompile(object):
         self.outdir = "generated-sources"
         self.tmpdir = tmpdir
         self.path = path
-        with open(path) as f:
+        with path.open() as f:
             self.version = f.read()\
               .split("@version(",1)[1]\
               .split(")",1)[0]\
@@ -37,13 +37,41 @@ class QuarkCompile(object):
     def compile(self):
         if self.compiled:
             return
-        print "Need to compile", self.path, " in ", self.tmpdir
+        self.process_includes()
+        print "Need to compile", self.processed
         command("quark", "package", "--skip-doc",
                 "--output", self.outdir,
-                self.path,
+                self.processed.strpath,
                 cwd = self.tmpdir
                 )
         self.compiled = True
+
+    def process_includes(self):
+        loop = []
+        def include_expander(path, action, prefix=""):
+            if path in loop:
+                pytest.fail("include loop" + " -> ".join(map(str,loop)));
+            else:
+                print "%s%s: %s" % (prefix, action, path)
+                loop.append(path)
+            for line, row in enumerate(path.readlines(),1):
+                if row.startswith("////include "):
+                    row = row.split()
+                    if len(row) != 2:
+                        pytest.fail("%s:%s expected just filename after include"%(path, line))
+                    include_path = path.new(basename=row[1])
+                    assert include_path.check()
+                    include = include_expander(include_path,
+                                                "including",
+                                                prefix + "  ")
+                    yield "//begin included %s\n" % include_path
+                    for included in include:
+                        yield included
+                    yield "//end included %s\n" % include_path
+                else:
+                    yield row
+        self.processed = self.path.new(dirname=self.tmpdir)
+        self.processed.write("".join(include_expander(self.path, "processing")))
 
     @property
     def py_package(self):
@@ -428,11 +456,6 @@ class Netty(Integration):
                 "-q"]
 
 
-directory = os.path.join(os.path.dirname(__file__), "interop")
-
-files = [name for name in os.listdir(directory) if name.endswith(".q")]
-paths = [os.path.join(directory, name) for name in files]
-
 class CompileCache(object):
     def __init__(self):
         self.compiles = {}
@@ -504,7 +527,10 @@ def port_generator():
 def port(port_generator):
     return port_generator.next()
 
-@pytest.fixture(params=paths)
+paths = list(py.path.local(__file__)
+            .new(basename="interop")
+            .listdir(fil=lambda f: f.ext == '.q'))
+@pytest.fixture(params=paths, ids=[p.basename for p in paths])
 def path(request):
     return request.param
 

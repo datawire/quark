@@ -1,0 +1,28 @@
+// package interop { // package interop is mandatory
+
+    class HelloServlet extends HTTPServlet {
+        Runtime runtime;
+        void onServletInit(String url, Runtime runtime) {
+            self.runtime = runtime;
+            print("Hello Registered on " + url);
+        }
+
+        void onHTTPRequest(HTTPRequest rq, HTTPResponse rs) {
+            rs.setCode(200);
+            rs.setBody("Hello World!\r\n");
+            rs.setHeader("Content-Type", "text/plain");
+            rs.setHeader("X-Custom-Header", "custom value");
+            self.runtime.respond(rq, rs);
+        }
+
+        void onServletError(String url, String reason) {
+            print("Hello Trouble with registering at " + url + "   reason: " + reason);
+        }
+
+        void onServletEnd(String url) {
+            print("Hello End of serving on " + url);
+        }
+    }
+
+// }
+
