@@ -9,6 +9,7 @@ Getting Started with RPC Tutorial
    Requirements and Setup <setup>
    Defining the RPC Contract <contract>
    More Information <links>
+   Appendix A: Interim Example States - Contract <appendixAcontract>
 
 Document Version
 ================
