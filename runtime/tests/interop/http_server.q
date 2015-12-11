@@ -84,7 +84,9 @@ package interop { // package interop is mandatory
             String actual = response.getHeader(self.key);
             if (actual != expected) {
                 if (actual == null) {
-                    print("FAIL: missing header " + self.key);
+                    print("FAIL: missing header " + self.key +
+                          " in response headers: " +
+                          ", ".join(response.getHeaders()));
                 } else {
                     print("FAIL: Response header " + self.key + ": " + actual + " expected " + expected);
                 }
