@@ -71,6 +71,8 @@ class IntegrationMeta(type):
     def __init__(cls, name, bases, dct):
         if not hasattr(cls, 'registry'):
             cls.registry = []
+        elif name.startswith("Abstract"):
+            pass
         else:
             cls.registry.append(cls)
             cls.name = name
@@ -93,7 +95,6 @@ class BackgroundProcess(object):
                                 stderr=subprocess.PIPE)
         def comm():
             o, e = self.p.communicate()
-            print self.cmd, "produced", o, "and", e
             self.stdout, self.stderr = o, e
 
         self.w = threading.Thread(target=comm)
@@ -111,8 +112,10 @@ class BackgroundProcess(object):
             time.sleep(0.1)
         ret = self.p.wait()
         self.w.join()
-        print "out", self.stdout
-        print "err", self.stderr
+        print "--- output of", self.cmd, ""
+        print self.stdout
+        print "--- stderr of", self.cmd
+        print self.stderr, "\n--- ----"
         return ret
 
     @contextlib.contextmanager
@@ -215,14 +218,43 @@ class Node(Integration):
     def invoke_client(self, port):
         return ["node", "run-client.js", str(port)]
 
-class Twisted(Integration):
+class AbstractPython(Integration):
     def __init__(self, **kwargs):
-        super(Twisted, self).__init__(**kwargs)
+        super(AbstractPython, self).__init__(**kwargs)
 
     def build(self):
         command("virtualenv", "x", cwd=self.rundir)
         self.pip_install(self.py_core_package)
         self.pip_install(self.compile.py_package)
+
+    @property
+    def pip(self):
+        return self.rundir / "x" / "bin" / "pip"
+
+    @property
+    def python(self):
+        return self.rundir / "x" / "bin" / "python"
+
+    def pip_install(self, package):
+        assert package.check()
+        command(self.pip.strpath, "install", package.strpath, cwd=self.rundir)
+
+    @property
+    def py_core_package(self):
+        return self.runtimes / "python-core"
+
+    def invoke_server(self, port):
+        return [self.python.strpath, "run-server.py", str(port)]
+
+    def invoke_client(self, port):
+        return [self.python.strpath, "run-client.py", str(port)]
+
+class TwistedPython(AbstractPython):
+    def __init__(self, **kwargs):
+        super(TwistedPython, self).__init__(**kwargs)
+
+    def build(self):
+        super(TwistedPython,self).build()
         self.pip_install(self.py_twisted_package)
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
             import interop
@@ -246,30 +278,40 @@ class Twisted(Integration):
         """))
 
     @property
-    def pip(self):
-        return self.rundir / "x" / "bin" / "pip"
-
-    @property
-    def python(self):
-        return self.rundir / "x" / "bin" / "python"
-
-    def pip_install(self, package):
-        assert package.check()
-        command(self.pip.strpath, "install", package.strpath, cwd=self.rundir)
-
-    @property
-    def py_core_package(self):
-        return self.runtimes / "python-core"
-
-    @property
     def py_twisted_package(self):
         return self.runtimes / "twisted"
 
-    def invoke_server(self, port):
-        return [self.python.strpath, "run-server.py", str(port)]
+class ThreadedPython(AbstractPython):
+    def __init__(self, **kwargs):
+        super(ThreadedPython, self).__init__(**kwargs)
 
-    def invoke_client(self, port):
-        return [self.python.strpath, "run-client.py", str(port)]
+    def build(self):
+        super(ThreadedPython,self).build()
+        self.pip_install(self.py_threaded_package)
+        self.rundir.join("run-client.py").write(textwrap.dedent("""\
+            import interop
+            import quark_threaded_runtime
+            import quark_runtime
+            import sys
+            print "Threaded client harness is started"
+            runtime = quark_threaded_runtime.get_threaded_runtime()
+            runtime.launch()
+            interop.Entrypoint().client(runtime, int(sys.argv[1]))
+        """))
+        self.rundir.join("run-server.py").write(textwrap.dedent("""\
+            import interop
+            import quark_threaded_runtime
+            import quark_runtime
+            import sys
+            print "Threaded server harness is started"
+            runtime = quark_threaded_runtime.get_threaded_runtime()
+            runtime.launch()
+            interop.Entrypoint().server(runtime, int(sys.argv[1]))
+        """))
+
+    @property
+    def py_threaded_package(self):
+        return self.runtimes / "python-threaded"
 
 class Netty(Integration):
     def __init__(self, **kwargs):
@@ -436,7 +478,6 @@ class Port(object):
     def wait_server_start(self, timeout=10, interval=0.05):
         start = time.time()
         for a in range(int(timeout/interval)):
-            print "check", a, "at", time.time()-start
             with contextlib.closing(socket.socket()) as s:
                 try:
                     s.connect(("127.0.0.1", self.port))
@@ -504,5 +545,3 @@ def test_interop(client_integration, server_integration, port):
     s = server.stdout
     assert "Hello Registered on" in s
     assert "Hello Trouble" not in s
-    assert client.stderr == ""
-    assert server.stderr == ""
