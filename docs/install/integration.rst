@@ -15,7 +15,7 @@ Quark supports five integrations:
 
 [[JMK exact names TBD]]
 
-The Java integrations assume you are using Netty (version XXX). The Javascript integration assumes you're using Node.js (version XXX). The Python-twisted integration assumes you are using Twisted (version XXX). The Python-threaded integration assumes XXX.
+The Java integrations assume you are using Netty (tested with version 4.0.32.Final). The Javascript integration assumes you're using Node.js (version XXX). The Python-twisted integration assumes you are using Twisted (version XXX). The Python-threaded integration assumes XXX.
 
 [[JMK prerequisites TBD, are there other requirements?]
 
