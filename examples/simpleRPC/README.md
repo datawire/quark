@@ -37,7 +37,14 @@ Run the Python client with
 
 ### Java
 
-Compile the Java server and client with `mvn compile`.
+Compile and install the RPC Contract in simpleRPC.q:
+
+        quark --java package simpleRPC.q
+        (cd simpleRPC/java && mvn install)
+
+Compile the Java server and client with 
+
+        mvn compile
 
 Run the Java server with
 

@@ -24,38 +24,19 @@
           <excludePackageNames>io.datawire:*.Functions</excludePackageNames>
         </configuration>
       </plugin>
-      <plugin>
-        <groupId>io.datawire.quark.build</groupId>
-        <artifactId>quark-maven-plugin</artifactId>
-        <version>0.2.0-SNAPSHOT</version>
-        <executions>
-          <execution>
-            <goals>
-              <goal>run</goal>
-            </goals>
-          </execution>
-        </executions>
-        <configuration>
-        <quarkCommand>${quarkCommand}</quarkCommand>
-        <inputDirectories><file>${project.basedir}</file></inputDirectories>
-        </configuration>
-      </plugin>
     </plugins>
   </build>
-  <properties>
-    <!-- The purpose of the indirection for quark command is to allow
-         overriding it in a settings.xml profile and activating that
-         profile inside eclipse maven settings for the project
-         This is only necessary if the quark command is installed in a
-         non-standard location, for example inside a virtualenv
-    -->
-  <quarkCommand>quark</quarkCommand>
-  </properties>
   <dependencies>
     <dependency>
       <groupId>io.datawire.quark</groupId>
       <artifactId>quark-netty</artifactId>
       <version>0.2.0-SNAPSHOT</version>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>hello</groupId>
+      <artifactId>hello</artifactId>
+      <version>0.1.0</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
