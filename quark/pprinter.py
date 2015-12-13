@@ -84,7 +84,7 @@ class PPrinter(object):
         self.first = self.stack.pop()[-1]
         if (isinstance(node, (ast.Expression, ast.Declaration)) and
             not isinstance(node, (ast.Fixed, ast.Native))):
-            if hasattr(node, "resolved"):
+            if hasattr(node, "resolved") and node.resolved is not None:
                 self.append(",\n$type=%s" % node.resolved)
         if isinstance(node, ast.File) or not self.stack:
             self.append("\n\n")

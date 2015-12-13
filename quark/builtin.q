@@ -277,7 +277,7 @@ JSONObject toJSON(Object obj) {
     if (cls.name == "Map") {
         result.setObject();
         Map<String,Object> map = ?obj;
-        // XXX
+        // XXX: need more JSON APIs to actually finish this
         return result;
     }
 

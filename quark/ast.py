@@ -74,16 +74,33 @@ class AST(object):
         return line, column
 
     def lookup(self, target, prefix=None, default=None):
+        if hasattr(target, "lookup_cache"):
+            cache = target.lookup_cache
+        else:
+            cache = {}
+            target.lookup_cache = cache
+
+        key = (prefix, self.__class__)
+        if key in cache:
+            result = cache[key]
+            if result is None:
+                return default
+            else:
+                return cache[key]
+
         for cls in self.__class__.__mro__:
             if prefix is None:
                 method = cls.__name__
             else:
                 method = "%s_%s" % (prefix, cls.__name__)
             if hasattr(target, method):
-                return getattr(target, method)
+                result = getattr(target, method)
+                cache[key] = result
+                return result
         if default is None:
             raise AttributeError("%s has no suitable method for class: %s" % (target, self.__class__))
         else:
+            cache[key] = None
             return default
 
     def traverse(self, visitor, *args, **kwargs):

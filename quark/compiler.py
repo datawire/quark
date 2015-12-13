@@ -22,9 +22,18 @@ from .helpers import *
 class Root(AST):
 
     def __init__(self):
-        self.parent = None
         self.index = 0
         self.files = []
+        self.root = self
+        self.parent = None
+        self.file = None
+        self.package = None
+        self.clazz = None
+        self.callable = None
+        self.id = ""
+        self.index = 0
+        self.count = 0
+        self.env = {}
 
     def add(self, file):
         self.files.append(file)
@@ -34,12 +43,21 @@ class Root(AST):
         for f in self.files:
             yield f
 
-class InitParent:
+def pkg_name(pkg):
+    if pkg.package is None:
+        return code(pkg.name)
+    else:
+        return "%s.%s" % (pkg_name(pkg.package), code(pkg.name))
 
-    def __init__(self, root = None):
-        self.root = root
-        self.stack = []
-        self.count = 0
+class Crosswire:
+
+    def __init__(self, parent):
+        self.root = parent.root
+        self.parent = parent
+        self.file = parent.file
+        self.package = parent.package
+        self.clazz = parent.clazz
+        self.callable = parent.callable
 
     def name(self, ast):
         if isinstance(ast, (Definition, Param, TypeParam)):
@@ -48,33 +66,43 @@ class InitParent:
             return str(ast.index)
 
     def visit_AST(self, ast):
+        ast.root = self.root
+        ast.parent = self.parent
+        ast.file = self.file
+        ast.package = self.package
+        ast.clazz = self.clazz
+        ast.callable = self.callable
         ast.resolved = None
         ast.coersion = None
         ast.count = 0
-        if self.stack:
-            ast.parent = self.stack[-1]
-        else:
-            ast.parent = self.root
 
         if ast.parent:
             ast.index = ast.parent.count
             ast.parent.count += 1
+            ast.env = ast.parent.env
 
-        self.stack.append(ast)
-        ast.id = ".".join([self.name(a) for a in self.stack[1:]])
+        if ast.parent.parent:
+            ast.id = ".".join([ast.parent.id, self.name(ast)])
+        else:
+            ast.id = self.name(ast)
+
+        self.parent = ast
 
     def leave_AST(self, ast):
-        self.stack.pop()
+        self.parent = ast.parent
 
-def pkg_name(pkg):
-    if pkg.package is None:
-        return code(pkg.name)
-    else:
-        return "%s.%s" % (pkg_name(pkg.package), code(pkg.name))
+    def visit_File(self, f):
+        self.file = f
+        self.visit_AST(f)
 
-class InitEnv:
+    def leave_File(self, f):
+        self.leave_AST(f)
+        self.file = f.file
 
     def visit_Package(self, p):
+        self.visit_AST(p)
+        self.package = p
+
         name = pkg_name(p)
         if name in p.root.env:
             p.env = p.root.env[name].env
@@ -82,20 +110,27 @@ class InitEnv:
             p.env = {}
             p.root.env[name] = p
 
+    def leave_Package(self, p):
+        self.leave_AST(p)
+        self.package = p.package
+
     def visit_Class(self, c):
+        self.visit_AST(c)
+        self.clazz = c
         c.env = {}
 
-    def visit_Function(self, f):
-        f.env = {}
+    def leave_Class(self, c):
+        self.leave_AST(c)
+        self.clazz = c.clazz
 
-    def visit_Macro(self, m):
-        m.env = {}
+    def visit_Callable(self, c):
+        self.visit_AST(c)
+        self.callable = c
+        c.env = {}
 
-    def visit_AST(self, ast):
-        if ast.parent:
-            ast.env = ast.parent.env
-        else:
-            ast.env = {}
+    def leave_Callable(self, c):
+        self.leave_AST(c)
+        self.callable = c.callable
 
 class Def:
 
@@ -508,14 +543,6 @@ def lineinfo(node):
     stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
     return "\n".join(stack)
 
-class SetFile:
-
-    def __init__(self, file):
-        self.file = file
-
-    def visit_AST(self, ast):
-        ast.file = self.file
-
 class SetTrace:
 
     def __init__(self, node, annotator, text):
@@ -558,47 +585,6 @@ class ApplyAnnotators:
                         node._replacement.traverse(SetTrace(node._replacement, afun, text))
                         self.modified = True
                     done.add(name)
-
-class Contextualize:
-
-    def __init__(self, root):
-        self.root = root
-        self.packages = []
-        self.package = None
-        self.clazzes = []
-        self.clazz = None
-        self.callables = []
-        self.callable = None
-
-    def visit_AST(self, node):
-        node.root = self.root
-        node.package = self.package
-        node.clazz = self.clazz
-        node.callable = self.callable
-
-    def visit_Package(self, p):
-        self.visit_AST(p)
-        self.packages.append(self.package)
-        self.package = p
-
-    def leave_Package(self, p):
-        self.package = self.packages.pop()
-
-    def visit_Class(self, c):
-        self.visit_AST(c)
-        self.clazzes.append(self.clazz)
-        self.clazz = c
-
-    def leave_Class(self, c):
-        self.clazz = self.clazzes.pop()
-
-    def visit_Callable(self, c):
-        self.visit_AST(c)
-        self.callables.append(self.callable)
-        self.callable = c
-
-    def leave_Callable(self, c):
-        self.callable = self.callables.pop()
 
 BUILTIN = os.path.join(os.path.dirname(__file__), "builtin.q")
 
@@ -789,9 +775,8 @@ class Compiler:
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
         while True:
-            file.traverse(SetFile(file))
             file.name = name
-            file.traverse(Contextualize(self.root))
+            file.traverse(Crosswire(self.root))
             aa = ApplyAnnotators(self.annotators)
             file.traverse(aa)
             if aa.modified:
@@ -800,10 +785,7 @@ class Compiler:
                 break
         self.root.add(file)
 
-    def icompile(self, parent, ast):
-        ast.traverse(InitParent(parent))
-        ast.traverse(InitEnv())
-
+    def icompile(self, ast):
         def_ = Def()
         ast.traverse(def_)
         if def_.duplicates:
@@ -833,24 +815,16 @@ class Compiler:
         ref = Reflector()
         self.root.traverse(ref)
         self.parse("reflector", ref.code)
-        self.icompile(self.root, self.root.files[-1])
-        uncompiled = []
+        self.icompile(self.root.files[-1])
         for cls, methods in ref.methods.items():
             for m in methods:
                 method = Parser().rule("method", m)
                 cls.definitions.append(method)
-                uncompiled.append((cls, method))
-        files = OrderedDict()
-        for cls in ref.methods:
-            files[cls.file] = True
-        for f in files:
-            f.traverse(SetFile(f))
-            f.traverse(Contextualize(self.root))
-        for cls, method in uncompiled:
-            self.icompile(cls, method)
+                method.traverse(Crosswire(cls))
+                self.icompile(method)
 
     def compile(self):
-        self.icompile(None, self.root)
+        self.icompile(self.root)
         self.reflect()
         for Backend, target in self.emitters:
             backend = Backend()
