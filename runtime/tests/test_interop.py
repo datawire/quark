@@ -8,11 +8,15 @@ import textwrap
 import contextlib
 import socket
 import errno
+try:  # py3
+    from shlex import quote
+except ImportError:  # py2
+    from pipes import quote
 
 def command(*cmd, **kwargs):
     cwd = kwargs.pop('cwd', py.path.local())
     assert not kwargs
-    print "command in ", cwd or ".", cmd
+    print "command :   cd", cwd or ".", "&&", " ".join(map(quote,cmd))
     with cwd.as_cwd():
         p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
@@ -116,7 +120,7 @@ class BackgroundProcess(object):
         self.w = None
 
     def start(self):
-        print "background process", self.cwd, self.cmd
+        print "background process:  cd ", self.cwd, "&&", " ".join(map(quote,self.cmd))
         with self.cwd.as_cwd():
             self.p = subprocess.Popen(self.cmd,
                                 stdout=subprocess.PIPE,
