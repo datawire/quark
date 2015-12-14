@@ -2,12 +2,19 @@
 
     class HelloServlet extends HTTPServlet {
         Runtime runtime;
+        TimeoutServletRequestCheck check;
         void onServletInit(String url, Runtime runtime) {
             self.runtime = runtime;
+            if (self.check != null) {
+                self.check.init(self.runtime);
+            }
             print("Hello Registered on " + url);
         }
 
         void onHTTPRequest(HTTPRequest rq, HTTPResponse rs) {
+            if (self.check != null) {
+                self.check.onHTTPRequest(rq);
+            }
             rs.setCode(200);
             rs.setBody("Hello World!\r\n");
             rs.setHeader("Content-Type", "text/plain");
@@ -21,6 +28,11 @@
 
         void onServletEnd(String url) {
             print("Hello End of serving on " + url);
+        }
+
+        TimeoutServletRequestCheck expectRequest() {
+            self.check = TimeoutServletRequestCheck();
+            return self.check;
         }
     }
 

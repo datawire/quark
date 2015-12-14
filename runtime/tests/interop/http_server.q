@@ -5,15 +5,19 @@ package interop { // package interop is mandatory
             HelloServlet servlet = HelloServlet();
             runtime.serveHTTP("http://localhost:" + port.toString() + "/http_server", servlet);
             servlet.expectRequest()
-                .expectMedhod("GET")
+                .expectMethod("POST")
+                .expectUrl("/http_server")
                 .expectHeader("X-custom-header", "custom client value")
-                .expectBody("")
+                .expectBody("client body")
                 .check(0.5);
         }
         void client(Runtime runtime, int port) {
 
             TimeoutClient(runtime, port)
                 .url("/http_server")
+                .method("POST")
+                .header("X-Custom-Header", "custom client value")
+                .body("client body")
                 .expectCode(200)
                 .expectBody("Hello World!\r\n")
                 .expectHeader("X-Custom-Header", "custom value")

@@ -8,7 +8,7 @@
         void checkResponse(HTTPResponse response);
     }
 
-    class ClientResponseCheck extends ClientCheck, ResponseCheck {
+    interface ClientResponseCheck extends ClientCheck, ResponseCheck {
         void check(TimeoutClient client) {
             if (client.response != null) {
                 self.checkResponse(client.response);
@@ -39,13 +39,42 @@
 
     class ClientResponseCheckCode extends CheckCode, ClientResponseCheck {}
 
-    class CheckBody extends ResponseCheck {
+    class CheckRequestUrl extends RequestCheck {
+        String expected;
+        CheckRequestUrl(String url) {
+            self.expected = url;
+        }
+        void checkRequest(HTTPRequest request) {
+            String actual = request.getUrl();
+            if (actual != expected) {
+                print("FAIL: Request URL " + actual + " expected " + expected);
+            } else {
+                print("OK: Request URL " + actual);
+            }
+        }
+    }
+
+    class CheckRequestMethod extends RequestCheck {
+        String expected;
+        CheckRequestUrl(String method) {
+            self.expected = method;
+        }
+        void checkRequest(HTTPRequest request) {
+            String actual = request.getMethod();
+            if (actual != expected) {
+                print("FAIL: Request method " + actual + " expected " + expected);
+            } else {
+                print("OK: Request method " + actual);
+            }
+        }
+    }
+
+    class CheckBody {
         String expected;
         CheckBody(String body) {
             self.expected = body;
         }
-        void checkResponse(HTTPResponse response) {
-            String actual = response.getBody();
+        void checkBody(String actual) {
             if (actual != expected) {
                 print("FAIL: Response body " + actual + " expected " + expected);
             } else {
@@ -54,66 +83,99 @@
         }
     }
 
-    class ClientResponseCheckBody extends CheckBody, ClientResponseCheck {}
-
-    class Headers<T> {
-        T thing;
-        String name;
-        Headers(T thing, String name) { self.thing = thing; self.name = name; }
-        macro String getHeader(String key) self.thing.getHeader(key);
-        macro List<String> getHeaders() self.thing.getHeaders();
+    class ClientResponseCheckBody extends CheckBody, ClientResponseCheck {
+        void checkResponse(HTTPResponse response) {
+            self.checkBody(response.getBody());
+        }
     }
 
-    class CheckHeader<T> extends ResponseCheck {
+    class CheckRequestBody extends CheckBody, RequestCheck {
+        void checkRequest(HTTPRequest request) {
+            self.checkBody(request.getBody());
+        }
+    }
+
+    interface Headers {
+        String getHeader(String key);
+        List<String> getHeaders();
+    }
+
+    class CheckHeader {
         String key;
         String expected;
-        CheckBody(String key, String value) {
+        CheckHeader(String key, String value) {
             self.key = key;
             self.expected = value;
         }
-        void checkHeader(Headers<T> thing) {
+        void checkHeader(Headers thing, String name) {
             String actual = thing.getHeader(self.key);
             if (actual != expected) {
                 if (actual == null) {
                     print("FAIL: missing header " + self.key +
-                          " in " + thing.name + " headers: " +
+                          " in " + name + " headers: " +
                           ", ".join(thing.getHeaders()));
                 } else {
-                    print("FAIL: " + thing.name + " header " + self.key + ": " + actual + " expected " + expected);
+                    print("FAIL: " + name + " header " + self.key + ": " + actual + " expected " + expected);
                 }
             } else {
-                print("OK: " + thing.name + " header " + self.key + ": " + actual);
+                print("OK: " + name + " header " + self.key + ": " + actual);
             }
         }
     }
 
-    class CheckRequestHeader extends CheckHeader<HTTPRequest>, RequestCheck {
+    class RequestHeaders extends Headers {
+        HTTPRequest request;
+        RequestHeaders(HTTPRequest request) { self.request = request; }
+        String getHeader(String key) { return self.request.getHeader(key); }
+        List<String> getHeaders() { return self.request.getHeaders(); }
+    }
+
+    class CheckRequestHeader extends CheckHeader, RequestCheck {
         void checkRequest(HTTPRequest request) {
-            self.checkHeader(Headers<HTTPRequest>(request), "request");
+            self.checkHeader(RequestHeaders(request), "request");
         }
     }
 
 
+    class ResponseHeaders extends Headers {
+        HTTPResponse response;
+        ResponseHeaders(HTTPResponse response) { self.response = response; }
+        String getHeader(String key) { return self.response.getHeader(key); }
+        List<String> getHeaders() {
+            return self.response.getHeaders();
+        }
+    }
+
     class CheckResponseHeader extends CheckHeader<HTTPResponse>, ResponseCheck {
         void checkResponse(HTTPResponse response) {
-            self.checkHeader(Headers<HTTPResponse>(response), "response");
+            self.checkHeader(ResponseHeaders(response), "response");
         }
     }
 
     class ClientResponseCheckHeader extends CheckResponseHeader, ClientResponseCheck {}
 
     class Timeout extends Task {
+        float timeout;
         bool timedOut;
         bool cancelled;
-        Timeout() {
+        bool pending;
+        String name;
+        Timeout(float timeout, String name) {
+            self.timeout = timeout;
             self.timedOut = false;
             self.cancelled = false;
+            self.pending = true;
+            self.name = name;
+        }
+        void start(Runtime runtime) {
+            runtime.schedule(self, self.timeout);
         }
         void cancel() {
             if (self.timedOut) {
                 return;
             } else {
                 self.cancelled = true;
+                self.pending = false;
             }
         }
         void onExecute(Runtime runtime) {
@@ -121,12 +183,13 @@
                 return;
             } else {
                 self.timedOut = true;
+                self.pending = false;
+                print("FAIL: " + self.name + " timed out");
             }
         }
     }
 
     class TimeoutClient extends HTTPHandler {
-        bool timedOut;
         HTTPRequest request;
         HTTPResponse response;
         Runtime runtime;
@@ -136,11 +199,22 @@
         TimeoutClient(Runtime runtime, int port) {
             self.runtime = runtime;
             self.prefix = "http://127.0.0.1:" + port.toString();
-            self.timedOut = false;
             self.expectations = new List<ClientCheck>();
         }
         TimeoutClient url(String path) {
             self.request = HTTPRequest(self.prefix + path);
+            return self;
+        }
+        TimeoutClient body(String body) {
+            self.request.setBody(body);
+            return self;
+        }
+        TimeoutClient method(String method) {
+            self.request.setMethod(method);
+            return self;
+        }
+        TimeoutClient header(String key, String value) {
+            self.request.setHeader(key, value);
             return self;
         }
         TimeoutClient expectCode(int code) {
@@ -156,10 +230,10 @@
             return self;
         }
         void check(float timeout) {
-            self.timeout = Timeout();
+            self.timeout = Timeout(timeout, "http request");
             self.response = null;
             if (self.request != null) {
-                self.runtime.schedule(self.timeout, timeout);
+                self.timeout.start(self.runtime);
                 self.runtime.request(self.request, self);
             } else {
                 print("FAIL: cannot check without request");
@@ -185,6 +259,59 @@
 
             while (i < self.expectations.size()) {
                 self.expectations[i].check(self);
+                i = i + 1;
+            }
+        }
+    }
+
+
+    class TimeoutServletRequestCheck {
+        Runtime runtime;
+        List<RequestCheck> expectations;
+        Timeout timeout;
+        TimeoutServletRequestCheck() {
+            self.expectations = new List<RequestCheck>();
+            self.timeout = null;
+        }
+        void init(Runtime runtime) {
+            self.runtime = runtime;
+            self.timeout.start(self.runtime);
+        }
+        TimeoutServletRequestCheck expectMethod(String method) {
+            self.expectations.add(CheckRequestMethod(method));
+            return self;
+        }
+        TimeoutServletRequestCheck expectUrl(String url) {
+            self.expectations.add(CheckRequestUrl(url));
+            return self;
+        }
+        TimeoutServletRequestCheck expectBody(String body) {
+            self.expectations.add(CheckRequestBody(body));
+            return self;
+        }
+        TimeoutServletRequestCheck expectHeader(String key, String value) {
+            self.expectations.add(CheckRequestHeader(key, value));
+            return self;
+        }
+        void check(float timeout) {
+            self.timeout = Timeout(timeout, "incoming request");
+        }
+        void onHTTPRequest(HTTPRequest request) {
+            if (self.timeout == null) {
+                print("FAIL: timeout not set");
+                return;
+            } else {
+                self.timeout.cancel();
+                if (self.timeout.timedOut) {
+                    print("FAIL: too late HTTP request");
+                    return;
+                } else {
+                    print("OK: incoming HTTP request");
+                }
+            }
+            int i = 0;
+            while (i < self.expectations.size()) {
+                self.expectations[i].checkRequest(request);
                 i = i + 1;
             }
         }
