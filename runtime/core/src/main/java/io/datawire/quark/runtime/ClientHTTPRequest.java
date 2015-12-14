@@ -51,7 +51,7 @@ public class ClientHTTPRequest implements HTTPRequest {
      * @see io.datawire.quark.runtime.HTTPRequest#getHeaders()
      */
     @Override
-    public List<String> getHeaders() { return new ArrayList<>(headers.keySet()); }
+    public ArrayList<String> getHeaders() { return new ArrayList<>(headers.keySet()); }
     /* (non-Javadoc)
      * @see io.datawire.quark.runtime.HTTPRequest#getHeader(java.lang.String)
      */@Override

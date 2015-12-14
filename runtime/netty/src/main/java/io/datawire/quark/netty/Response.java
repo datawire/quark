@@ -60,7 +60,7 @@ class Response implements HTTPResponse {
     }
 
     @Override
-    public List<String> getHeaders() {
+    public ArrayList<String> getHeaders() {
         return new ArrayList<>(this.headers.names());
     }
 

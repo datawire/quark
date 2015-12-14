@@ -54,7 +54,7 @@ class IncomingRequest implements HTTPRequest {
     }
 
     @Override
-    public List<String> getHeaders() {
+    public ArrayList<String> getHeaders() {
         return new ArrayList<>(msg.headers().names());
     }
 

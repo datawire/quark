@@ -1,6 +1,6 @@
 package io.datawire.quark.runtime;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public interface HTTPRequest {
 
@@ -16,7 +16,7 @@ public interface HTTPRequest {
 
     public String getBody();
 
-    public List<String> getHeaders();
+    public ArrayList<String> getHeaders();
 
     public String getHeader(String key);
 

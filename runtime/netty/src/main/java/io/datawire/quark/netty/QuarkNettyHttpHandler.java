@@ -75,7 +75,7 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
                 }
 
                 @Override
-                public List<String> getHeaders() {
+                public ArrayList<String> getHeaders() {
                     return new ArrayList<>(resp.headers().names());
                 }
             });
