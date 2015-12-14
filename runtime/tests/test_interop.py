@@ -348,6 +348,34 @@ class Netty(Integration):
 
     def build(self):
         self.m2_repo.ensure(dir=1)
+        context = dict(
+            quark_netty_version = self.quark_netty_version,
+            m2_repo = self.m2_repo.strpath,
+            compile_version = self.compile.version,
+            )
+        self.settings_xml.write(textwrap.dedent("""
+            <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+                                  http://maven.apache.org/xsd/settings-1.0.0.xsd">
+              <localRepository>%(m2_repo)s</localRepository>
+              <profiles>
+                <profile>
+                  <id>integration_test</id>
+                  <activation>
+                    <activeByDefault>true</activeByDefault>
+                  </activation>
+                  <repositories>
+                    <repository>
+                      <id>user local repo</id>
+                      <url>file://${user.home}/.m2/repository</url>
+                    </repository>
+                  </repositories>
+                </profile>
+              </profiles>
+            </settings>
+        """ % context)
+        );
         self.rundir.join("pom.xml").write(textwrap.dedent("""\
             <?xml version="1.0" encoding="UTF-8"?>
             <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -369,12 +397,6 @@ class Netty(Integration):
                   </plugin>
                 </plugins>
               </build>
-              <repositories>
-               <repository>
-                <id>test repo</id>
-                <url>file://%(m2_repo)s</url>
-               </repository>
-              </repositories>
               <dependencies>
                 <dependency>
                   <groupId>io.datawire.quark</groupId>
@@ -389,10 +411,7 @@ class Netty(Integration):
                 </dependency>
               </dependencies>
             </project>
-        """ % dict(quark_netty_version = self.quark_netty_version,
-                   m2_repo = self.m2_repo.strpath,
-                   compile_version = self.compile.version,
-                   ))
+        """ % context)
         )
         harness = self.rundir / "src" / "main" / "java" / "interop"/ "harness"
         harness.ensure(dir=1)
@@ -420,15 +439,25 @@ class Netty(Integration):
             }
         """)
         )
-        command("mvn", "install::install-file",
+        self.mvn("install::install-file",
                 "-Dfile=%s" % self.compile.java_package.strpath,
                 "-DgroupId=io.datawire.quark.interop-test",
                 "-DartifactId=interop-quark",
                 "-Dversion=%s" % self.compile.version,
                 "-Dpackaging=jar",
-                "-DlocalRepositoryPath=%s" % self.m2_repo.strpath,
                 cwd=self.rundir)
-        command("mvn", "compile", cwd=self.rundir)
+        self.mvn("compile", cwd=self.rundir)
+        self.mvn("dependency:go-offline", cwd=self.rundir)
+
+    def mvn(self, *args, **kwargs):
+        command(*self.mvn_command(*args), **kwargs)
+
+    def mvn_command(self, *args):
+        return ["mvn", "--settings", self.settings_xml.strpath] + list(args)
+
+    @property
+    def settings_xml(self):
+        return self.rundir / "settings.xml"
 
     @property
     def quark_netty_version(self):
@@ -445,16 +474,16 @@ class Netty(Integration):
         return self.rundir / "m2repo"
 
     def invoke_client(self, port):
-        return ["mvn", "exec:java",
+        return self.mvn_command("exec:java",
                 "-Dexec.mainClass=interop.harness.Client",
                 "-Dexec.args=%s" % port,
-                "-q"]
+                )
 
     def invoke_server(self, port):
-        return ["mvn", "exec:java",
+        return self.mvn_command("exec:java",
                 "-Dexec.mainClass=interop.harness.Server",
                 "-Dexec.args=%s" % port,
-                "-q"]
+                )
 
 
 class CompileCache(object):
