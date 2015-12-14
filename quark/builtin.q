@@ -397,7 +397,7 @@ primitive JSONObject {
     // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
 }
 
-macro void print(Object msg) $java{System.out.println($msg)}
+macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
                              $js{_qrt.print($msg)};
 
