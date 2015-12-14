@@ -122,7 +122,7 @@ By convention, Quark expects the following casing rules:
 Inheritance
 -----------
 
-Quark supports single inheritance of classes using the :ref:`extends keyword <extendsKeyword>`. Multiple inheritance is not supported.
+Quark supports single inheritance of classes using the :ref:`extends keyword <extendsKeyword>`. Multiple inheritance is not supported. However, all types within Quark automatically inherit from the Object type and contain all properties and methods defined therein.
 
 Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass may be referenced directly using self.propertyName within methods of the subclass.
 
