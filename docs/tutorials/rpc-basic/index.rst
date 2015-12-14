@@ -12,6 +12,10 @@ Getting Started with RPC Tutorial
    Examining the Clients <clients>
    Writing the Server <server>
    More Information <links>
+
+.. toctree::
+   :hidden:
+
    Appendix A: Interim Example States - Contract <appendixAcontract>
 
 Document Version
