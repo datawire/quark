@@ -126,6 +126,7 @@ class BackgroundProcess(object):
             self.stdout, self.stderr = o, e
 
         self.w = threading.Thread(target=comm)
+        self.w.daemon = True
         self.w.start()
 
     def stop(self, timeout=0.1):
