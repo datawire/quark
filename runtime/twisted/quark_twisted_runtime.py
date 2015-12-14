@@ -259,7 +259,10 @@ class _ServletRequest(object):
 
     def setHeader(self, key, value): pass
     def getHeader(self, key):
-        return self.request.getHeader(key).decode('utf-8')
+        value = self.request.getHeader(key)
+        if value is None:
+            return None
+        return value.decode('utf-8') 
 
     def getHeaders(self):
         return list(set(h[0].decode('utf-8') for h in self.request.requestHeaders.getAllRawHeaders()))
