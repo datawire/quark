@@ -274,8 +274,17 @@
             self.timeout = null;
         }
         void init(Runtime runtime) {
-            self.runtime = runtime;
-            self.timeout.start(self.runtime);
+            if (runtime == null) {
+                print("FAIL: called with null runtime");
+            } else {
+                self.runtime = runtime;
+                if (self.timeout == null) {
+                    print("FAIL: servlet check without timeout");
+                } else {
+                    print("starting request check init timeout");
+                    self.timeout.start(self.runtime);
+                }
+            }
         }
         TimeoutServletRequestCheck expectMethod(String method) {
             self.expectations.add(CheckRequestMethod(method));
