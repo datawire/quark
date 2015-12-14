@@ -1,7 +1,7 @@
 Integration Types
 -----------------
 
-Integration types are Quark data types defined with signatures rather than code. The code for these types is specific to a particular integration and is defined within each specific integration module. You must be using an integration module to use any of these types.
+Integration types are Quark data types that depend on using an integration to execute. Typically these types are defines with method signatures rather than code because the code needed to execute the desired functionality is specific to a particular integration and is defined within that integration. However, some integration types may include method definitions that use other integration types - these look like normal Quark data types but can't be executed without an integration because of their dependencies. Essentially normal Quark data types can be used in code without installing an integration but integration types cannot. More information about the available integrations and how to install them can be found :doc:`here <../install/integration>`.
 
 Quark defines the following integration types:
 
@@ -14,6 +14,14 @@ Buffer
 ~~~~~~
 
 Documentation coming soon
+
+.. _Client:
+
+Client
+~~~~~~
+
+A factory class that can be used to create generic clients. Typically this class will be extended to define a more specific client for a particular application or service.
+
 
 .. _Codec:
 
@@ -57,12 +65,26 @@ JSONObject
 
 Documentation coming soon
 
+.. _ResponseHolder:
+
+ResponseHolder
+~~~~~~~~~~~~~~
+
+Holds a response while it is being formulated. This should only be used within types that are processing responses prior to their being sent to the client.
+
 .. _Runtime:
 
 Runtime
 ~~~~~~~
 
 Documentation coming soon
+
+.. _Server:
+
+Server
+~~~~~~
+
+A factory class that can be used to create generic servers. Typically this class will be extended to define a more specific server for a particular application or service.
 
 .. _Servlet:
 
