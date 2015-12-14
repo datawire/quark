@@ -443,18 +443,30 @@ class Netty(Integration):
             }
         """)
         )
+        harness.join("Warmup.java").write(textwrap.dedent("""\
+            package interop.harness;
+            import io.datawire.quark.netty.QuarkNettyRuntime;
+            public class Warmup {
+                public static void main(String[] args) {
+                    System.out.println("Netty warmup");
+                    QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+                    System.exit(0);
+                }
+            }
+        """)
+        )
         self.mvn("install::install-file",
                 "-Dfile=%s" % self.compile.java_package.strpath,
                 "-DgroupId=io.datawire.quark.interop-test",
                 "-DartifactId=interop-quark",
                 "-Dversion=%s" % self.compile.version,
-                "-Dpackaging=jar",
-                cwd=self.rundir)
-        self.mvn("compile", cwd=self.rundir)
-        self.mvn("dependency:go-offline", cwd=self.rundir)
+                "-Dpackaging=jar")
+        self.mvn("compile")
+        self.mvn("exec:java",
+                "-Dexec.mainClass=interop.harness.Warmup")
 
-    def mvn(self, *args, **kwargs):
-        command(*self.mvn_command(*args), **kwargs)
+    def mvn(self, *args):
+        command(*self.mvn_command(*args), cwd=self.rundir)
 
     def mvn_command(self, *args):
         return ["mvn", "--settings", self.settings_xml.strpath] + list(args)
@@ -591,7 +603,7 @@ def server_integration(request, compile, integration_cache):
 def test_interop(client_integration, server_integration, port):
     client = client_integration.client(port)
     server = server_integration.server(port)
-    with server.wait(0):
+    with server.wait(0.2):
         port.wait_server_start()
         with client.wait(1):
             print "server and client started"
