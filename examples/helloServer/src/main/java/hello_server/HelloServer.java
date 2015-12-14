@@ -6,8 +6,6 @@ import io.datawire.quark.runtime.ClientHTTPRequest;
 import io.datawire.quark.runtime.HTTPHandler;
 import io.datawire.quark.runtime.HTTPRequest;
 import io.datawire.quark.runtime.HTTPResponse;
-import io.datawire.quark.runtime.HTTPServlet;
-import io.datawire.quark.runtime.Runtime;
 import io.datawire.quark.runtime.WSHandler;
 import io.datawire.quark.runtime.WebSocket;
 
