@@ -1,8 +1,8 @@
 // package interop { // package interop is mandatory
 
     class HelloServlet extends HTTPServlet {
-        Runtime runtime;
-        TimeoutServletRequestCheck check;
+        Runtime runtime = null;
+        TimeoutServletRequestCheck check = null;
         void onServletInit(String url, Runtime runtime) {
             self.runtime = runtime;
             if (self.check != null) {
@@ -31,6 +31,7 @@
         }
 
         TimeoutServletRequestCheck expectRequest() {
+            print("Expecting a request");
             self.check = TimeoutServletRequestCheck();
             return self.check;
         }
