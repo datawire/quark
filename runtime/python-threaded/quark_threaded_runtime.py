@@ -74,6 +74,14 @@ class _QuarkRequest(threading.Thread):
         try:
             handle = urllib2.urlopen(self.py_request)
             body = handle.read()
+        except urllib2.HTTPError, e:
+            response = _HTTPResponse()
+            response.setCode(e.code)
+            response.setBody(e.read())
+            for h in e.info().headers:
+                k,v = h.split(':', 1)
+                response.setHeader(k, v.strip())
+            self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError:
             self.runtime.events.put((self.handler.onHTTPError, (self.request,), {}))
         else:
