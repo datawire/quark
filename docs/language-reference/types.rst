@@ -44,6 +44,21 @@ byte
 
 Documentation coming soon
 
+.. _Class:
+
+Class
+~~~~~
+
+Documentation coming soon
+
+.. _Field:
+
+Field
+~~~~~
+
+Documentation coming soon.
+
+
 .. _float:
 
 float

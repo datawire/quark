@@ -22,6 +22,20 @@ bool::__eq__()
 
 Documentation Coming Soon
 
+.. _boolGetClass:
+
+bool::getClass()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _boolGetField:
+
+bool::getField()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _boolNotEqual:
 
 bool::__ne__()
@@ -42,6 +56,14 @@ bool::__or__()
 ~~~~~~~~~~~~~~
 
 Documentation Coming Soon
+
+.. _boolSetClass:
+
+bool::setClass()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 
 .. _boolToJson:
 
@@ -86,6 +108,20 @@ byte::__eq__()
 
 Documentation Coming Soon
 
+.. _byteGetClass:
+
+byte::getClass()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteGetField:
+
+byte::getField()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _byteGreaterThan:
 
 byte::__gt__()
@@ -125,6 +161,13 @@ Documentation Coming Soon
 
 byte::__neg__()
 ~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _byteSetField:
+
+byte::setField()
+~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -209,6 +252,21 @@ float::__eq__()
 
 Documentation Coming Soon
 
+.. _floatGetClass:
+
+float::getClass()
+~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _floatGetField:
+
+float::getField()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
 .. _floatGreaterThan:
 
 float::__gt__()
@@ -280,6 +338,13 @@ Documentation Coming Soon
 
 float::round()
 ~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _floatSetField:
+
+float::setField()
+~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -371,6 +436,21 @@ int::__equal__()
 
 Documentation Coming Soon
 
+.. _intGetClass:
+
+int::getClass()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _intGetField:
+
+int::getField()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
 .. _intGreaterThan:
 
 int::__gt__()
@@ -453,6 +533,13 @@ int::__ne__()
 
 Documentation Coming Soon
 
+.. _intSetField:
+
+int::setField()
+~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _intSubtract:
 
 int::__sub__()
@@ -523,6 +610,21 @@ int *A*.toString()
 
 where *A* is an integer.
 
+.. _listAdd:
+
+List::add()
+~~~~~~~~~~~
+Used to add a new element to a list. The element is always added to the end of the list.
+
+Syntax
+++++++
+
+void *A*.__add__(*B*)
+
+where *A* is the list and *B* is the element to add to the list.
+
+This function is used under the covers by list [] notation; *A* **[** *B* **]** is equivalent to *A*.__add__(*B*)
+
 .. _listGet:
 
 List::__get__()
@@ -537,6 +639,21 @@ Syntax
 where *elementType* is the declared type of list elements, *A* is the list and *B* is the 0-based index of the element value to return.
 
 This function is used under the covers by list [] notation; *A* **[** *B* **]** is equivalent to *A*.__get__(*B*)
+
+.. _listGetClass:
+
+List::getClass()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _listGetField:
+
+List::getField()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 
 .. _listSet:
 
@@ -553,20 +670,12 @@ where *A* is the list, *B* is the 0-based index number of the element to modify,
 
 This function is used under the covers by list [] notation; *A* **[** *B* **] =** *C* is equivalent to *A*.__set__(*B*,*C*)
 
-.. _listAdd:
+.. _listSetField:
 
-List::add()
-~~~~~~~~~~~
-Used to add a new element to a list. The element is always added to the end of the list.
+List::setField()
+~~~~~~~~~~~~~~
 
-Syntax
-++++++
-
-void *A*.__add__(*B*)
-
-where *A* is the list and *B* is the element to add to the list.
-
-This function is used under the covers by list [] notation; *A* **[** *B* **]** is equivalent to *A*.__add__(*B*)
+Documentation Coming Soon
 
 .. _listSize:
 
@@ -615,6 +724,21 @@ This function is used under the covers by the / operator; *A* **/** *B* is equiv
 
 long::__eq__()
 ~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+
+.. _longGetClass:
+
+long::getClass()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _longGetField:
+
+long::getField()
+~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -677,6 +801,13 @@ long *A*.__neg__()
 where *A* is a long integer.
 
 This function is used under the covers by the - operator; **-** *A* is equivalent to *A*.__neg__().
+
+.. _longSetField:
+
+long::setField()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
 
 .. _longSubtract:
 
@@ -749,6 +880,20 @@ Map::get()
 
 Documentation Coming Soon
 
+.. _mapGetClass:
+
+Map::getClass()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _mapGetField:
+
+Map::getField()
+~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _MapNotEqual:
 
 Map::__ne__()
@@ -760,6 +905,13 @@ Documentation Coming Soon
 
 Map::set()
 ~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _mapGetField:
+
+Map::getField()
+~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -777,9 +929,30 @@ Object::__eq__()
 
 Documentation Coming Soon
 
+.. _objectGetClass:
+
+Object::getClass()
+~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _objectGetField:
+
+Object::getField()
+~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _ObjectNotEqual:
 
 Object::__ne__()
+~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _objectGetField:
+
+Object::setField()
 ~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
@@ -842,6 +1015,20 @@ short::__eq__()
 
 Documentation Coming Soon
 
+.. _shortGetClass:
+
+short::getClass()
+~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortGetField:
+
+short::getField()
+~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _shortGreaterThan:
 
 short::__gt__()
@@ -881,6 +1068,13 @@ Documentation Coming Soon
 
 short::__neg__()
 ~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _shortSetField:
+
+short::setField()
+~~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -968,6 +1162,20 @@ string::find()
 
 Documentation Coming Soon
 
+.. _stringGetClass:
+
+string::getClass()
+~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringGetField:
+
+string::getField()
+~~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
 .. _stringJoin:
 
 string::join()
@@ -993,6 +1201,13 @@ Documentation Coming Soon
 
 string::replace()
 ~~~~~~~~~~~~~~~~~
+
+Documentation Coming Soon
+
+.. _stringGetField:
+
+string::setField()
+~~~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
