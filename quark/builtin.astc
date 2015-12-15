@@ -1103,6 +1103,7 @@ File(
 
   Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
+   Param(Type(Name(String)), Name(message), $type=0.String),
    Block()),
 
   Method(Type(Name(void)), Name(onHTTPFinal),
@@ -1204,7 +1205,12 @@ File(
 
   Method(Type(Name(void)), Name(respond),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
-   Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse))),
+   Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse)),
+
+  Method(Annotation(Name(doc),
+    String("Display the explanatory message and then terminate the program",
+    $type=0.String)), Type(Name(void)), Name(fail),
+   Param(Type(Name(String)), Name(message), $type=0.String))),
 
  Primitive(Annotation(Name(doc),
    String("A stateless buffer of bytes. Default byte order is network byte order.",
@@ -1375,6 +1381,8 @@ File(
 
  Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
   Field(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
+  Field(Type(Name(String)), Name(failure), Null(null, $type=0.Object),
+  $type=0.String),
 
   Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
@@ -1382,6 +1390,13 @@ File(
    Block(
     Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
      $type=0.HTTPResponse), Var(Name(response), $type=0.HTTPResponse)))),
+
+  Method(Type(Name(void)), Name(onHTTPError),
+   Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
+   Param(Type(Name(String)), Name(message), $type=0.String),
+   Block(
+    Assign(Var(Name(failure), $type=0.String), Var(Name(message),
+     $type=0.String)))),
 
   Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("ResponseHolder", $type=0.String)))),
@@ -1394,6 +1409,11 @@ File(
      $type=0.bool), Block(
       Return(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
        $type=0.HTTPResponse)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("failure", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.ResponseHolder), Name(failure),
+       $type=0.String)))),
     Return(Null(null, $type=0.Object)))),
 
   Method(Type(Name(void)), Name(_setField),
@@ -1405,7 +1425,13 @@ File(
      $type=0.bool), Block(
       Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
        $type=0.HTTPResponse), Cast(Var(Name(value), $type=0.Object),
-       $type=0.HTTPResponse))))))),
+       $type=0.HTTPResponse)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("failure", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(failure),
+       $type=0.String), Cast(Var(Name(value), $type=0.Object),
+       $type=0.String))))))),
 
  Interface(Name(Service),
 
@@ -1455,17 +1481,49 @@ File(
     ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(request),
       $type=0.Runtime.request), Var(Name(request), $type=0.HTTPRequest),
       Var(Name(rh), $type=0.ResponseHolder), $type=0.void)),
-    While(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder), Name(response),
-       $type=0.HTTPResponse), Name(__eq__), $type=0.Object.__eq__), Null(null,
-      $type=0.Object), $type=0.bool), Block(
+    While(Call(Attr(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder),
+          Name(response), $type=0.HTTPResponse), Name(__eq__),
+        $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
+       Name(__and__), $type=0.bool.__and__), Call(Attr(Attr(Var(Name(rh),
+         $type=0.ResponseHolder), Name(failure), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
+     $type=0.bool), Block(
       ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(wait),
         $type=0.Runtime.wait), Number(3.14, $type=0.float), $type=0.void)))),
+    ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(release),
+      $type=0.Runtime.release), $type=0.void)),
+    If(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder), Name(failure),
+       $type=0.String), Name(__ne__), $type=0.Object.__ne__), Null(null,
+      $type=0.Object), $type=0.bool), Block(
+      ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(fail),
+        $type=0.Runtime.fail), Call(Attr(Call(Attr(Call(Attr(String("RPC ",
+              $type=0.String), Name(__add__), $type=0.String.__add__),
+             Var(Name(name), $type=0.String), $type=0.String), Name(__add__),
+           $type=0.String.__add__), String("(...) failed: ", $type=0.String),
+          $type=0.String), Name(__add__), $type=0.String.__add__),
+         Attr(Var(Name(rh), $type=0.ResponseHolder), Name(failure),
+         $type=0.String), $type=0.String), $type=0.void)),
+      Return(Null(null, $type=0.Object)))),
     Local(
      Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh),
        $type=0.ResponseHolder), Name(response), $type=0.HTTPResponse),
      $type=0.HTTPResponse)),
-    ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(release),
-      $type=0.Runtime.release), $type=0.void)),
+    If(Call(Attr(Call(Attr(Var(Name(response), $type=0.HTTPResponse),
+         Name(getCode), $type=0.HTTPResponse.getCode), $type=0.int),
+       Name(__ne__), $type=0.Object.__ne__), Number(200, $type=0.int),
+     $type=0.bool), Block(
+      ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(fail),
+        $type=0.Runtime.fail), Call(Attr(Call(Attr(Call(Attr(String("RPC ",
+              $type=0.String), Name(__add__), $type=0.String.__add__),
+             Var(Name(name), $type=0.String), $type=0.String), Name(__add__),
+           $type=0.String.__add__),
+           String("(...) failed: Server returned error ", $type=0.String),
+          $type=0.String), Name(__add__), $type=0.String.__add__),
+         Call(Attr(Call(Attr(Var(Name(response), $type=0.HTTPResponse),
+             Name(getCode), $type=0.HTTPResponse.getCode), $type=0.int),
+           Name(toString), $type=0.int.toString), $type=0.String),
+        $type=0.String), $type=0.void)),
+      Return(Null(null, $type=0.Object)))),
     Local(
      Declaration(Type(Name(String)), Name(body), Call(Attr(Var(Name(response),
         $type=0.HTTPResponse), Name(getBody), $type=0.HTTPResponse.getBody),
@@ -1601,6 +1659,18 @@ File(
        $type=0.Runtime), Name(respond), $type=0.Runtime.respond),
       Var(Name(request), $type=0.HTTPRequest), Var(Name(response),
       $type=0.HTTPResponse), $type=0.void)))),
+
+  Method(Type(Name(void)), Name(onServletError),
+   Param(Type(Name(String)), Name(url), $type=0.String),
+   Param(Type(Name(String)), Name(message), $type=0.String),
+   Block(
+    ExprStmt(Call(Var(Name(print), $type=0.print),
+      Call(Attr(Call(Attr(Call(Attr(String("RPC Server failed to register ",
+            $type=0.String), Name(__add__), $type=0.String.__add__),
+           Var(Name(url), $type=0.String), $type=0.String), Name(__add__),
+         $type=0.String.__add__), String(" due to: ", $type=0.String),
+        $type=0.String), Name(__add__), $type=0.String.__add__),
+       Var(Name(message), $type=0.String), $type=0.String), $type=0.void)))),
 
   Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Server<Object>", $type=0.String)))),

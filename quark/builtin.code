@@ -285,7 +285,7 @@ primitive WebSocket {
 primitive HTTPHandler {
     void onHTTPInit(HTTPRequest request) {}
     void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
-    void onHTTPError(HTTPRequest request) {}
+    void onHTTPError(HTTPRequest request, String message) {}
     void onHTTPFinal(HTTPRequest request) {}
 }
 @mapping($java{io.datawire.quark.runtime.HTTPRequest})
@@ -326,6 +326,8 @@ primitive Runtime {
     void serveHTTP(String url, HTTPServlet servlet);
     void serveWS(String url, WSServlet servlet);
     void respond(HTTPRequest request, HTTPResponse response);
+    @doc("Display the explanatory message and then terminate the program")
+    void fail(String message);
 }
 @doc("A stateless buffer of bytes. Default byte order is network byte order.")
 @mapping($java{io.datawire.quark.runtime.Buffer})
@@ -405,8 +407,12 @@ primitive WSServlet extends Servlet {
 }
 class ResponseHolder extends HTTPHandler {
     HTTPResponse response;
+    String failure = null;
     void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
         (self).response = response;
+    }
+    void onHTTPError(HTTPRequest request, String message) {
+        failure = message;
     }
 }
 interface Service {
@@ -424,11 +430,19 @@ interface Service {
         ResponseHolder rh = new ResponseHolder();
         ((rt).acquire)();
         ((rt).request)(request, rh);
-        while ((((rh).response).__eq__)(null)) {
+        while ((((((rh).response).__eq__)(null)).__and__)((((rh).failure).__eq__)(null))) {
             ((rt).wait)(3.14);
         }
-        HTTPResponse response = (rh).response;
         ((rt).release)();
+        if ((((rh).failure).__ne__)(null)) {
+            ((rt).fail)((((((("RPC ").__add__)(name)).__add__)("(...) failed: ")).__add__)((rh).failure));
+            return null;
+        }
+        HTTPResponse response = (rh).response;
+        if (((((response).getCode)()).__ne__)(200)) {
+            ((rt).fail)((((((("RPC ").__add__)(name)).__add__)("(...) failed: Server returned error ")).__add__)(((((response).getCode)()).toString)()));
+            return null;
+        }
         String body = ((response).getBody)();
         JSONObject obj = ((body).parseJSON)();
         return (fromJSON)((Class)(((obj).__get__)("$class")), obj);
@@ -467,5 +481,8 @@ class Server<T> extends HTTPServlet {
         ((response).setBody)((((toJSON)(result)).toString)());
         ((response).setCode)(200);
         (((getRuntime)()).respond)(request, response);
+    }
+    void onServletError(String url, String message) {
+        (print)((((((("RPC Server failed to register ").__add__)(url)).__add__)(" due to: ")).__add__)(message));
     }
 }

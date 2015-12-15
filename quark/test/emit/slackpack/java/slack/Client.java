@@ -126,6 +126,6 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     public void onWSClosed(io.datawire.quark.runtime.WebSocket socket) {}
     public void onWSFinal(io.datawire.quark.runtime.WebSocket socket) {}
     public void onHTTPInit(io.datawire.quark.runtime.HTTPRequest request) {}
-    public void onHTTPError(io.datawire.quark.runtime.HTTPRequest request) {}
+    public void onHTTPError(io.datawire.quark.runtime.HTTPRequest request, String message) {}
     public void onHTTPFinal(io.datawire.quark.runtime.HTTPRequest request) {}
 }

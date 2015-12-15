@@ -443,7 +443,7 @@ primitive WebSocket {
 primitive HTTPHandler {
     void onHTTPInit(HTTPRequest request) {}
     void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
-    void onHTTPError(HTTPRequest request) {}
+    void onHTTPError(HTTPRequest request, String message) {}
     void onHTTPFinal(HTTPRequest request) {}
 }
 
@@ -488,6 +488,9 @@ primitive Runtime {
     void serveHTTP(String url, HTTPServlet servlet);
     void serveWS(String url, WSServlet servlet);
     void respond(HTTPRequest request, HTTPResponse response);
+
+    @doc("Display the explanatory message and then terminate the program")
+    void fail(String message);
 }
 
 @doc("A stateless buffer of bytes. Default byte order is network byte order.")
@@ -585,9 +588,14 @@ primitive WSServlet extends Servlet {
 
 class ResponseHolder extends HTTPHandler {
     HTTPResponse response;
+    String failure = null;
 
     void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
         self.response = response;
+    }
+
+    void onHTTPError(HTTPRequest request, String message) {
+        failure = message;
     }
 
 }
@@ -610,11 +618,22 @@ interface Service {
         ResponseHolder rh = new ResponseHolder();
         rt.acquire();
         rt.request(request, rh);
-        while (rh.response == null) {
+        while (rh.response == null && rh.failure == null) {
             rt.wait(3.14);
         }
-        HTTPResponse response = rh.response;
         rt.release();
+
+        if (rh.failure != null) {
+            rt.fail("RPC " + name + "(...) failed: " + rh.failure);
+            return null;  // Not reached
+        }
+
+        HTTPResponse response = rh.response;
+
+        if (response.getCode() != 200) {
+            rt.fail("RPC " + name + "(...) failed: Server returned error " + response.getCode().toString());
+            return null;  // Not reached
+        }
 
         String body = response.getBody();
         JSONObject obj = body.parseJSON();
@@ -658,6 +677,10 @@ class Server<T> extends HTTPServlet {
         response.setBody(toJSON(result).toString());
         response.setCode(200);
         getRuntime().respond(request, response);
+    }
+
+    void onServletError(String url, String message) {
+        print("RPC Server failed to register " + url + " due to: " + message);
     }
 
 }

@@ -303,7 +303,7 @@ Client.prototype.onWSFinal = Client_onWSFinal;
 function Client_onHTTPInit(request) {}
 Client.prototype.onHTTPInit = Client_onHTTPInit;
 
-function Client_onHTTPError(request) {}
+function Client_onHTTPError(request, message) {}
 Client.prototype.onHTTPError = Client_onHTTPError;
 
 function Client_onHTTPFinal(request) {}

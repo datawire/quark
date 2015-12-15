@@ -236,7 +236,7 @@ class Client(object):
     def onHTTPInit(self, request):
         pass
 
-    def onHTTPError(self, request):
+    def onHTTPError(self, request, message):
         pass
 
     def onHTTPFinal(self, request):

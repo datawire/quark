@@ -209,11 +209,15 @@ def fromJSON(cls, json):
 class ResponseHolder(object):
     def _init(self):
         self.response = None
+        self.failure = None
 
     def __init__(self): self._init()
 
     def onHTTPResponse(self, request, response):
         (self).response = response
+
+    def onHTTPError(self, request, message):
+        self.failure = message
 
     def _getClass(self):
         return u"ResponseHolder"
@@ -222,16 +226,19 @@ class ResponseHolder(object):
         if ((name) == (u"response")):
             return (self).response
 
+        if ((name) == (u"failure")):
+            return (self).failure
+
         return None
 
     def _setField(self, name, value):
         if ((name) == (u"response")):
             (self).response = value
 
-    def onHTTPInit(self, request):
-        pass
+        if ((name) == (u"failure")):
+            (self).failure = value
 
-    def onHTTPError(self, request):
+    def onHTTPInit(self, request):
         pass
 
     def onHTTPFinal(self, request):
@@ -259,11 +266,19 @@ class Service(object):
         rh = ResponseHolder();
         (rt).acquire();
         (rt).request(request, rh);
-        while (((rh).response) == (None)):
+        while ((((rh).response) == (None)) and (((rh).failure) == (None))):
             (rt).wait(3.14);
 
-        response = (rh).response;
         (rt).release();
+        if (((rh).failure) != (None)):
+            (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: ")) + ((rh).failure));
+            return None
+
+        response = (rh).response;
+        if (((response).getCode()) != (200)):
+            (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: Server returned error ")) + (str((response).getCode())));
+            return None
+
         body = (response).getBody();
         obj = _JSONObject.parse(body);
         return fromJSON(Class(((obj).getObjectItem(u"$class")).getString()), obj)
@@ -337,6 +352,9 @@ class Server(object):
         (response).setCode(200);
         (self.getRuntime()).respond(request, response);
 
+    def onServletError(self, url, message):
+        _println((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
+
     def _getClass(self):
         return u"Server<Object>"
 
@@ -359,12 +377,6 @@ class Server(object):
     def onServletInit(self, url, runtime):
         """
         called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
-        """
-        pass
-
-    def onServletError(self, url, error):
-        """
-        called if the servlet could not be installed
         """
         pass
 
@@ -620,7 +632,7 @@ def _fields(className):
         return _List([])
 
     if ((className) == (u"ResponseHolder")):
-        return _List([Field(Class(u"HTTPResponse"), u"response")])
+        return _List([Field(Class(u"HTTPResponse"), u"response"), Field(Class(u"String"), u"failure")])
 
     if ((className) == (u"Client")):
         return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url")])
@@ -801,49 +813,49 @@ def _invoke(className, object, method, args):
             (tmp_7).onHTTPResponse((args)[0], (args)[1]);
             return None
 
+        if ((method) == (u"onHTTPError")):
+            tmp_8 = object;
+            (tmp_8).onHTTPError((args)[0], (args)[1]);
+            return None
+
     if ((className) == (u"Service")):
         if ((method) == (u"getURL")):
-            tmp_8 = object;
-            return (tmp_8).getURL()
+            tmp_9 = object;
+            return (tmp_9).getURL()
 
         if ((method) == (u"getRuntime")):
-            tmp_9 = object;
-            return (tmp_9).getRuntime()
+            tmp_10 = object;
+            return (tmp_10).getRuntime()
 
         if ((method) == (u"rpc")):
-            tmp_10 = object;
-            return (tmp_10).rpc((args)[0], (args)[1])
+            tmp_11 = object;
+            return (tmp_11).rpc((args)[0], (args)[1])
 
     if ((className) == (u"Client")):
         if ((method) == (u"getRuntime")):
-            tmp_11 = object;
-            return (tmp_11).getRuntime()
+            tmp_12 = object;
+            return (tmp_12).getRuntime()
 
         if ((method) == (u"getURL")):
-            tmp_12 = object;
-            return (tmp_12).getURL()
+            tmp_13 = object;
+            return (tmp_13).getURL()
 
     if ((className) == (u"Server<Object>")):
         if ((method) == (u"getRuntime")):
-            tmp_13 = object;
-            return (tmp_13).getRuntime()
+            tmp_14 = object;
+            return (tmp_14).getRuntime()
 
         if ((method) == (u"onHTTPRequest")):
-            tmp_14 = object;
-            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            tmp_15 = object;
+            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"onServletError")):
+            tmp_16 = object;
+            (tmp_16).onServletError((args)[0], (args)[1]);
             return None
 
     if ((className) == (u"Box<Object>")):
-        if ((method) == (u"set")):
-            tmp_15 = object;
-            (tmp_15).set((args)[0]);
-            return None
-
-        if ((method) == (u"get")):
-            tmp_16 = object;
-            return (tmp_16).get()
-
-    if ((className) == (u"Box<int>")):
         if ((method) == (u"set")):
             tmp_17 = object;
             (tmp_17).set((args)[0]);
@@ -853,7 +865,7 @@ def _invoke(className, object, method, args):
             tmp_18 = object;
             return (tmp_18).get()
 
-    if ((className) == (u"Box<String>")):
+    if ((className) == (u"Box<int>")):
         if ((method) == (u"set")):
             tmp_19 = object;
             (tmp_19).set((args)[0]);
@@ -863,7 +875,7 @@ def _invoke(className, object, method, args):
             tmp_20 = object;
             return (tmp_20).get()
 
-    if ((className) == (u"Box<Box<int>>")):
+    if ((className) == (u"Box<String>")):
         if ((method) == (u"set")):
             tmp_21 = object;
             (tmp_21).set((args)[0]);
@@ -873,7 +885,7 @@ def _invoke(className, object, method, args):
             tmp_22 = object;
             return (tmp_22).get()
 
-    if ((className) == (u"Crate<int>")):
+    if ((className) == (u"Box<Box<int>>")):
         if ((method) == (u"set")):
             tmp_23 = object;
             (tmp_23).set((args)[0]);
@@ -883,7 +895,7 @@ def _invoke(className, object, method, args):
             tmp_24 = object;
             return (tmp_24).get()
 
-    if ((className) == (u"Crate<String>")):
+    if ((className) == (u"Crate<int>")):
         if ((method) == (u"set")):
             tmp_25 = object;
             (tmp_25).set((args)[0]);
@@ -892,6 +904,16 @@ def _invoke(className, object, method, args):
         if ((method) == (u"get")):
             tmp_26 = object;
             return (tmp_26).get()
+
+    if ((className) == (u"Crate<String>")):
+        if ((method) == (u"set")):
+            tmp_27 = object;
+            (tmp_27).set((args)[0]);
+            return None
+
+        if ((method) == (u"get")):
+            tmp_28 = object;
+            return (tmp_28).get()
 
     if ((className) == (u"Sack")):
         pass

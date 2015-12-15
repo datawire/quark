@@ -22,6 +22,9 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         (response).setCode(200);
         (this.getRuntime()).respond(request, response);
     }
+    public void onServletError(String url, String message) {
+        do{System.out.println(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));System.out.flush();}while(false);
+    }
     public String _getClass() {
         return "Server<Object>";
     }
@@ -46,10 +49,6 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
      * called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
      */
     public void onServletInit(String url, io.datawire.quark.runtime.Runtime runtime) {}
-    /**
-     * called if the servlet could not be installed
-     */
-    public void onServletError(String url, String error) {}
     /**
      * called when the servlet is removed
      */

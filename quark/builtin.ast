@@ -830,6 +830,7 @@ File(
 
   Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(String)), Name(message)),
    Block()),
 
   Method(Type(Name(void)), Name(onHTTPFinal),
@@ -930,7 +931,12 @@ File(
 
   Method(Type(Name(void)), Name(respond),
    Param(Type(Name(HTTPRequest)), Name(request)),
-   Param(Type(Name(HTTPResponse)), Name(response)))),
+   Param(Type(Name(HTTPResponse)), Name(response))),
+
+  Method(Annotation(Name(doc),
+    String("Display the explanatory message and then terminate the program")),
+   Type(Name(void)), Name(fail),
+   Param(Type(Name(String)), Name(message)))),
 
  Primitive(Annotation(Name(doc),
    String("A stateless buffer of bytes. Default byte order is network byte order.")),
@@ -1101,12 +1107,19 @@ File(
 
  Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
   Field(Type(Name(HTTPResponse)), Name(response)),
+  Field(Type(Name(String)), Name(failure), Null(null)),
 
   Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block(
-    Assign(Attr(Var(Name(self)), Name(response)), Var(Name(response)))))),
+    Assign(Attr(Var(Name(self)), Name(response)), Var(Name(response))))),
+
+  Method(Type(Name(void)), Name(onHTTPError),
+   Param(Type(Name(HTTPRequest)), Name(request)),
+   Param(Type(Name(String)), Name(message)),
+   Block(
+    Assign(Var(Name(failure)), Var(Name(message)))))),
 
  Interface(Name(Service),
 
@@ -1143,13 +1156,31 @@ File(
     ExprStmt(Call(Attr(Var(Name(rt)), Name(acquire)))),
     ExprStmt(Call(Attr(Var(Name(rt)), Name(request)), Var(Name(request)),
       Var(Name(rh)))),
-    While(Call(Attr(Attr(Var(Name(rh)), Name(response)), Name(__eq__)),
-      Null(null)), Block(
+    While(Call(Attr(Call(Attr(Attr(Var(Name(rh)), Name(response)),
+         Name(__eq__)), Null(null)), Name(__and__)),
+      Call(Attr(Attr(Var(Name(rh)), Name(failure)), Name(__eq__)),
+       Null(null))), Block(
       ExprStmt(Call(Attr(Var(Name(rt)), Name(wait)), Number(3.14))))),
+    ExprStmt(Call(Attr(Var(Name(rt)), Name(release)))),
+    If(Call(Attr(Attr(Var(Name(rh)), Name(failure)), Name(__ne__)),
+      Null(null)), Block(
+      ExprStmt(Call(Attr(Var(Name(rt)), Name(fail)),
+        Call(Attr(Call(Attr(Call(Attr(String("RPC "), Name(__add__)),
+             Var(Name(name))), Name(__add__)), String("(...) failed: ")),
+          Name(__add__)), Attr(Var(Name(rh)), Name(failure))))),
+      Return(Null(null)))),
     Local(
      Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh)),
        Name(response)))),
-    ExprStmt(Call(Attr(Var(Name(rt)), Name(release)))),
+    If(Call(Attr(Call(Attr(Var(Name(response)), Name(getCode))), Name(__ne__)),
+      Number(200)), Block(
+      ExprStmt(Call(Attr(Var(Name(rt)), Name(fail)),
+        Call(Attr(Call(Attr(Call(Attr(String("RPC "), Name(__add__)),
+             Var(Name(name))), Name(__add__)),
+           String("(...) failed: Server returned error ")), Name(__add__)),
+         Call(Attr(Call(Attr(Var(Name(response)), Name(getCode))),
+           Name(toString)))))),
+      Return(Null(null)))),
     Local(
      Declaration(Type(Name(String)), Name(body), Call(Attr(Var(Name(response)),
         Name(getBody))))),
@@ -1218,5 +1249,14 @@ File(
       Call(Attr(Call(Var(Name(toJSON)), Var(Name(result))), Name(toString))))),
     ExprStmt(Call(Attr(Var(Name(response)), Name(setCode)), Number(200))),
     ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(respond)),
-      Var(Name(request)), Var(Name(response)))))))
+      Var(Name(request)), Var(Name(response)))))),
+
+  Method(Type(Name(void)), Name(onServletError),
+   Param(Type(Name(String)), Name(url)),
+   Param(Type(Name(String)), Name(message)),
+   Block(
+    ExprStmt(Call(Var(Name(print)),
+      Call(Attr(Call(Attr(Call(Attr(String("RPC Server failed to register "),
+            Name(__add__)), Var(Name(url))), Name(__add__)),
+         String(" due to: ")), Name(__add__)), Var(Name(message))))))))
 )

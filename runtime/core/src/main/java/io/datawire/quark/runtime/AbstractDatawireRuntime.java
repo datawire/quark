@@ -110,9 +110,9 @@ public abstract class AbstractDatawireRuntime {
                 }
             }
             @Override
-            public void onHTTPError(HTTPRequest request) {
+            public void onHTTPError(HTTPRequest request, String message) {
                 try {
-                    handler.onHTTPError(request);
+                    handler.onHTTPError(request, message);
                 } finally {
                     wakeup();
                 }

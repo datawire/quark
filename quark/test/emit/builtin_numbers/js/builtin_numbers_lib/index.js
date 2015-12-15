@@ -250,6 +250,7 @@ exports.ResponseHolder = ResponseHolder;
 
 function ResponseHolder__init_fields__() {
     this.response = null;
+    this.failure = null;
 }
 ResponseHolder.prototype.__init_fields__ = ResponseHolder__init_fields__;
 
@@ -257,6 +258,11 @@ function ResponseHolder_onHTTPResponse(request, response) {
     (this).response = response;
 }
 ResponseHolder.prototype.onHTTPResponse = ResponseHolder_onHTTPResponse;
+
+function ResponseHolder_onHTTPError(request, message) {
+    this.failure = message;
+}
+ResponseHolder.prototype.onHTTPError = ResponseHolder_onHTTPError;
 
 function ResponseHolder__getClass() {
     return "ResponseHolder";
@@ -267,6 +273,9 @@ function ResponseHolder__getField(name) {
     if ((name) === ("response")) {
         return (this).response;
     }
+    if ((name) === ("failure")) {
+        return (this).failure;
+    }
     return null;
 }
 ResponseHolder.prototype._getField = ResponseHolder__getField;
@@ -275,14 +284,14 @@ function ResponseHolder__setField(name, value) {
     if ((name) === ("response")) {
         (this).response = value;
     }
+    if ((name) === ("failure")) {
+        (this).failure = value;
+    }
 }
 ResponseHolder.prototype._setField = ResponseHolder__setField;
 
 function ResponseHolder_onHTTPInit(request) {}
 ResponseHolder.prototype.onHTTPInit = ResponseHolder_onHTTPInit;
-
-function ResponseHolder_onHTTPError(request) {}
-ResponseHolder.prototype.onHTTPError = ResponseHolder_onHTTPError;
 
 function ResponseHolder_onHTTPFinal(request) {}
 ResponseHolder.prototype.onHTTPFinal = ResponseHolder_onHTTPFinal;
@@ -318,11 +327,19 @@ function Service_rpc(name, message) {
     var rh = new ResponseHolder();
     (rt).acquire();
     (rt).request(request, rh);
-    while (((rh).response) === (null)) {
+    while ((((rh).response) === (null)) && (((rh).failure) === (null))) {
         (rt).wait(3.14);
     }
-    var response = (rh).response;
     (rt).release();
+    if (((rh).failure) !== (null)) {
+        (rt).fail(((("RPC ") + (name)) + ("(...) failed: ")) + ((rh).failure));
+        return null;
+    }
+    var response = (rh).response;
+    if (((response).getCode()) !== (200)) {
+        (rt).fail(((("RPC ") + (name)) + ("(...) failed: Server returned error ")) + (_qrt.toString((response).getCode())));
+        return null;
+    }
     var body = (response).getBody();
     var obj = _qrt.json_from_string(body);
     return fromJSON(new Class(((obj).getObjectItem("$class")).getString()), obj);
@@ -420,6 +437,11 @@ function Server_onHTTPRequest(request, response) {
 }
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
 
+function Server_onServletError(url, message) {
+    _qrt.print(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
+}
+Server.prototype.onServletError = Server_onServletError;
+
 function Server__getClass() {
     return "Server<Object>";
 }
@@ -451,12 +473,6 @@ Server.prototype._setField = Server__setField;
  */
 function Server_onServletInit(url, runtime) {}
 Server.prototype.onServletInit = Server_onServletInit;
-
-/**
- * called if the servlet could not be installed
- */
-function Server_onServletError(url, error) {}
-Server.prototype.onServletError = Server_onServletError;
 
 /**
  * called when the servlet is removed
@@ -714,7 +730,7 @@ function _fields(className) {
         return [];
     }
     if ((className) === ("ResponseHolder")) {
-        return [new Field(new Class("HTTPResponse"), "response")];
+        return [new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")];
     }
     if ((className) === ("Client")) {
         return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")];
@@ -891,54 +907,53 @@ function _invoke(className, object, method, args) {
             (tmp_7).onHTTPResponse((args)[0], (args)[1]);
             return null;
         }
+        if ((method) === ("onHTTPError")) {
+            var tmp_8 = object;
+            (tmp_8).onHTTPError((args)[0], (args)[1]);
+            return null;
+        }
     }
     if ((className) === ("Service")) {
         if ((method) === ("getURL")) {
-            var tmp_8 = object;
-            return (tmp_8).getURL();
+            var tmp_9 = object;
+            return (tmp_9).getURL();
         }
         if ((method) === ("getRuntime")) {
-            var tmp_9 = object;
-            return (tmp_9).getRuntime();
+            var tmp_10 = object;
+            return (tmp_10).getRuntime();
         }
         if ((method) === ("rpc")) {
-            var tmp_10 = object;
-            return (tmp_10).rpc((args)[0], (args)[1]);
+            var tmp_11 = object;
+            return (tmp_11).rpc((args)[0], (args)[1]);
         }
     }
     if ((className) === ("Client")) {
         if ((method) === ("getRuntime")) {
-            var tmp_11 = object;
-            return (tmp_11).getRuntime();
+            var tmp_12 = object;
+            return (tmp_12).getRuntime();
         }
         if ((method) === ("getURL")) {
-            var tmp_12 = object;
-            return (tmp_12).getURL();
+            var tmp_13 = object;
+            return (tmp_13).getURL();
         }
     }
     if ((className) === ("Server<Object>")) {
         if ((method) === ("getRuntime")) {
-            var tmp_13 = object;
-            return (tmp_13).getRuntime();
+            var tmp_14 = object;
+            return (tmp_14).getRuntime();
         }
         if ((method) === ("onHTTPRequest")) {
-            var tmp_14 = object;
-            (tmp_14).onHTTPRequest((args)[0], (args)[1]);
+            var tmp_15 = object;
+            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("onServletError")) {
+            var tmp_16 = object;
+            (tmp_16).onServletError((args)[0], (args)[1]);
             return null;
         }
     }
     if ((className) === ("TestByte")) {
-        if ((method) === ("run")) {
-            var tmp_15 = object;
-            (tmp_15).run();
-            return null;
-        }
-        if ((method) === ("func")) {
-            var tmp_16 = object;
-            return (tmp_16).func();
-        }
-    }
-    if ((className) === ("TestShort")) {
         if ((method) === ("run")) {
             var tmp_17 = object;
             (tmp_17).run();
@@ -949,7 +964,7 @@ function _invoke(className, object, method, args) {
             return (tmp_18).func();
         }
     }
-    if ((className) === ("TestInt")) {
+    if ((className) === ("TestShort")) {
         if ((method) === ("run")) {
             var tmp_19 = object;
             (tmp_19).run();
@@ -960,7 +975,7 @@ function _invoke(className, object, method, args) {
             return (tmp_20).func();
         }
     }
-    if ((className) === ("TestLong")) {
+    if ((className) === ("TestInt")) {
         if ((method) === ("run")) {
             var tmp_21 = object;
             (tmp_21).run();
@@ -969,6 +984,17 @@ function _invoke(className, object, method, args) {
         if ((method) === ("func")) {
             var tmp_22 = object;
             return (tmp_22).func();
+        }
+    }
+    if ((className) === ("TestLong")) {
+        if ((method) === ("run")) {
+            var tmp_23 = object;
+            (tmp_23).run();
+            return null;
+        }
+        if ((method) === ("func")) {
+            var tmp_24 = object;
+            return (tmp_24).func();
         }
     }
     return null;
