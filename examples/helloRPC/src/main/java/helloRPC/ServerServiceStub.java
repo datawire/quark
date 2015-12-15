@@ -1,4 +1,4 @@
-package simpleRPC;
+package helloRPC;
 
 import io.datawire.quark.runtime.Runtime;
 import hello.Service; // XXX: this should come from quark runtime package

@@ -1,4 +1,4 @@
-package simpleRPC;
+package helloRPC;
 
 import hello.Hello;
 import hello.Request;

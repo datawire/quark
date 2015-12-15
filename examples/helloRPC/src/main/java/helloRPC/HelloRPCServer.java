@@ -1,9 +1,9 @@
-package simpleRPC;
+package helloRPC;
 
 import io.datawire.quark.netty.QuarkNettyRuntime;
 import hello.HelloServer;
 
-public class SimpleRPCServer {
+public class HelloRPCServer {
 
     public static void main(String[] args) {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
