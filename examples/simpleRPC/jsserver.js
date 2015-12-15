@@ -9,7 +9,7 @@ var hello = require("hello");
 function HelloImpl() {
     this.hello = function(request) {
         var response = new hello.Response();
-        response.responsyStuff = "Responding to [" + request.requestyStuff + "] from JS";
+        response.result = "Responding to [" + request.text + "] from JS";
         return response;
     };
 }

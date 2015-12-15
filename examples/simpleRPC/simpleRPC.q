@@ -2,11 +2,11 @@
 package hello {
 
     class Request {
-        String requestyStuff;
+        String text;
     }
 
     class Response {
-        String responsyStuff;
+        String result;
     }
 
     interface Hello extends Service {

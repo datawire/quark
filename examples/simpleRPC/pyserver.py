@@ -8,7 +8,7 @@ class HelloImpl(object):
 
     def hello(self, request):
         res = hello.Response()
-        res.responsyStuff = "Responding to [%s]" % request.requestyStuff
+        res.result = "Responding to [%s]" % request.text
         return res
 
 

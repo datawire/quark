@@ -10,11 +10,11 @@ def main():
 
     client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")
     request = hello.Request()
-    request.requestyStuff = "Oh hai!"
-    print "Request says %r" % request.requestyStuff
+    request.text = "Oh hai!"
+    print "Request says %r" % request.text
 
     response = client.hello(request)
-    print "Response says %r" % response.responsyStuff
+    print "Response says %r" % response.result
 
     runtime.finish()
 

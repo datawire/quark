@@ -2,9 +2,9 @@
 
 SimpleRPC demonstrates how Quark can implement cross-language RPC with very little boilerplate code.
 
-## RPC Contract
+## Service Contract
 
-The RPC contract is expressed in simpleRPC.q. There are two value classes (Request and Response) and a service interface (Hello). The Quark code also contains the names of the client class (HelloClient) and the server stub class (HelloServer).
+The Service contract is expressed in simpleRPC.q. There are two value classes (Request and Response) and a service interface (Hello). The Quark code also contains the names of the client class (HelloClient) and the server stub class (HelloServer).
 
 ### Writing a client
 
@@ -22,7 +22,7 @@ The clients expect to find the service on http://127.0.0.1:8910/hello and each s
 
 Make sure the python-threaded runtime integration is installed (`pip install -U datawire-quark-threaded`).
 
-Compile and install the RPC Contract in simpleRPC.q:
+Compile and install the Service Contract in simpleRPC.q:
 
         quark --python package simpleRPC.q
         pip install simpleRPC/py/dist/hello-0.1.0-py2-none-any.whl
@@ -37,7 +37,7 @@ Run the Python client with
 
 ### Java
 
-Compile and install the RPC Contract in simpleRPC.q:
+Compile and install the Service Contract in simpleRPC.q:
 
         quark --java package simpleRPC.q
         (cd simpleRPC/java && mvn install)

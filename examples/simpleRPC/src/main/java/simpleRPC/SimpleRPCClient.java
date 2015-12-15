@@ -11,8 +11,8 @@ public class SimpleRPCClient {
         runtime.setAllowSync(true);
         HelloClient client = new HelloClient(runtime, "http://localhost:8910/hello");
         Request request = new Request();
-        request.requestyStuff = "hello? world?";
+        request.text = "hello? world?";
         Response response = client.hello(request);
-        System.out.println(response.responsyStuff);
+        System.out.println(response.result);
     }
 }
