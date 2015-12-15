@@ -275,7 +275,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         try {
             uri = new URI(request.getUrl());
         } catch (URISyntaxException e) {
-            ht_handler.onHTTPError(request);
+            ht_handler.onHTTPError(request, "" + e);
             return;
         }
         String scheme = uri.getScheme() == null? "http" : uri.getScheme();
@@ -291,7 +291,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
 
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
             System.err.println("Only HTTP(S) is supported.");
-            ht_handler.onHTTPError(request);
+            ht_handler.onHTTPError(request, "Only HTTP(S) is supported.");
             return;
         }
 
@@ -303,7 +303,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 sslCtx = SslContextBuilder.forClient()
                         .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             } catch (SSLException e) {
-                ht_handler.onHTTPError(null);
+                ht_handler.onHTTPError(null, "" + e);
                 return;
             }
         } else {
@@ -373,7 +373,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             public void operationComplete(ChannelFuture future) throws Exception {
                 if (future.isDone()) {
                     if (!future.isSuccess()) {
-                        ht_handler.onHTTPError(request);
+                        ht_handler.onHTTPError(request, "" + future.cause());
                     } else {
                         // Send the HTTP request.
                         future.channel().writeAndFlush(request1).addListener(new ChannelFutureListener() {
@@ -384,7 +384,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                                     if (future.isSuccess()) {
                                         // yay
                                     } else {
-                                        ht_handler.onHTTPError(request);
+                                        ht_handler.onHTTPError(request, "" + future.cause());
                                     }
                                 }
                             }

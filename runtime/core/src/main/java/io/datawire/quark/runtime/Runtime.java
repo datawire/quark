@@ -12,4 +12,5 @@ public interface Runtime {
     void serveHTTP(String url, HTTPServlet servlet);
     void serveWS(String url, WSServlet server);
     void respond(HTTPRequest request, HTTPResponse response);
+    void fail(String message);
 }

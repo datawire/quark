@@ -39,7 +39,7 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
                     resp.release();
                 }
                 @Override
-                public int getCode() {
+                public Integer getCode() {
                     return resp.getStatus().code();
                 }
 
@@ -55,7 +55,7 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
                 }
 
                 @Override
-                public void setCode(int code) {
+                public void setCode(Integer code) {
                     // nope
                 }
 

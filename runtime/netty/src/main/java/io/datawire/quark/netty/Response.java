@@ -30,12 +30,12 @@ class Response implements HTTPResponse {
     }
 
     @Override
-    public int getCode() {
+    public Integer getCode() {
         return this.code;
     }
 
     @Override
-    public void setCode(int code) { 
+    public void setCode(Integer code) { 
         this.code = code;
     }
 
