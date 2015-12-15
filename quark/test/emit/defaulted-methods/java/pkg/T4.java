@@ -10,10 +10,10 @@ public class T4 implements A, C, io.datawire.quark.runtime.QObject {
     }
     public void _setField(String name, Object value) {}
     public void bar() {
-        System.out.println("A bar");
+        do{System.out.println("A bar");System.out.flush();}while(false);
         (this).foo();
     }
     public void foo() {
-        System.out.println("C mixin for foo");
+        do{System.out.println("C mixin for foo");System.out.flush();}while(false);
     }
 }

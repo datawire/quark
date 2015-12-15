@@ -6,9 +6,9 @@ public class Test implements io.datawire.quark.runtime.QObject {
         Integer x = 1;
         Integer y = 2;
         Integer z = (((x) + (y)) - (3)) * (4);
-        System.out.println(z);
+        do{System.out.println(z);System.out.flush();}while(false);
         Integer four = (2) + (2);
-        System.out.println(four);
+        do{System.out.println(four);System.out.flush();}while(false);
     }
     public String _getClass() {
         return "Test";

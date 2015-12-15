@@ -107,7 +107,7 @@ public class Functions {
 
 
     public static void go() {
-        System.out.println("GO!");
+        do{System.out.println("GO!");System.out.flush();}while(false);
     }
 
 

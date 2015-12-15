@@ -105,9 +105,9 @@ public class Functions {
         Box<Integer> ibox = new Box<Integer>();
         (ibox).set(3);
         Integer three = (ibox).get();
-        System.out.println(three);
+        do{System.out.println(three);System.out.flush();}while(false);
         (ibox).contents = 4;
-        System.out.println((ibox).contents);
+        do{System.out.println((ibox).contents);System.out.flush();}while(false);
     }
 
 
@@ -115,43 +115,43 @@ public class Functions {
         Box<String> sbox = new Box<String>();
         (sbox).set("hello");
         String hello = (sbox).get();
-        System.out.println(hello);
+        do{System.out.println(hello);System.out.flush();}while(false);
         (sbox).contents = "world";
-        System.out.println((sbox).contents);
+        do{System.out.println((sbox).contents);System.out.flush();}while(false);
     }
 
 
     public static void test3() {
         Crate<Integer> icrate = new Crate<Integer>();
         (icrate).set(3);
-        System.out.println((icrate).get());
+        do{System.out.println((icrate).get());System.out.flush();}while(false);
         (icrate).set(4);
-        System.out.println(((icrate).box).contents);
+        do{System.out.println(((icrate).box).contents);System.out.flush();}while(false);
     }
 
 
     public static void test4() {
         Sack s = new Sack();
-        System.out.println(((s).ints).get());
-        System.out.println(((s).ints).contents);
+        do{System.out.println(((s).ints).get());System.out.flush();}while(false);
+        do{System.out.println(((s).ints).contents);System.out.flush();}while(false);
         ((s).ints).set(3);
-        System.out.println(((s).ints).get());
-        System.out.println(((s).ints).contents);
+        do{System.out.println(((s).ints).get());System.out.flush();}while(false);
+        do{System.out.println(((s).ints).contents);System.out.flush();}while(false);
         ((s).ints).contents = 4;
-        System.out.println(((s).ints).get());
-        System.out.println(((s).ints).contents);
+        do{System.out.println(((s).ints).get());System.out.flush();}while(false);
+        do{System.out.println(((s).ints).contents);System.out.flush();}while(false);
     }
 
 
     public static void test5() {
         Crate<String> scrate = new Crate<String>();
-        System.out.println((scrate).get());
-        System.out.println(((scrate).box).contents);
+        do{System.out.println((scrate).get());System.out.flush();}while(false);
+        do{System.out.println(((scrate).box).contents);System.out.flush();}while(false);
         (scrate).set("hello");
-        System.out.println((scrate).get());
-        System.out.println(((scrate).box).contents);
+        do{System.out.println((scrate).get());System.out.flush();}while(false);
+        do{System.out.println(((scrate).box).contents);System.out.flush();}while(false);
         ((scrate).ibox).contents = 3;
-        System.out.println(((scrate).ibox).contents);
+        do{System.out.println(((scrate).ibox).contents);System.out.flush();}while(false);
     }
 
 
@@ -159,28 +159,28 @@ public class Functions {
         Box<Box<Integer>> box = new Box<Box<Integer>>();
         (box).set(new Box<Integer>());
         ((box).get()).set(3);
-        System.out.println(((box).get()).get());
-        System.out.println(((box).contents).contents);
+        do{System.out.println(((box).get()).get());System.out.flush();}while(false);
+        do{System.out.println(((box).contents).contents);System.out.flush();}while(false);
     }
 
 
     public static void main() {
-        System.out.println("test1:\n--");
+        do{System.out.println("test1:\n--");System.out.flush();}while(false);
         Functions.test1();
-        System.out.println("");
-        System.out.println("test2:\n--");
+        do{System.out.println("");System.out.flush();}while(false);
+        do{System.out.println("test2:\n--");System.out.flush();}while(false);
         Functions.test2();
-        System.out.println("");
-        System.out.println("test3:\n--");
+        do{System.out.println("");System.out.flush();}while(false);
+        do{System.out.println("test3:\n--");System.out.flush();}while(false);
         Functions.test3();
-        System.out.println("");
-        System.out.println("test4:\n--");
+        do{System.out.println("");System.out.flush();}while(false);
+        do{System.out.println("test4:\n--");System.out.flush();}while(false);
         Functions.test4();
-        System.out.println("");
-        System.out.println("test5:\n--");
+        do{System.out.println("");System.out.flush();}while(false);
+        do{System.out.println("test5:\n--");System.out.flush();}while(false);
         Functions.test5();
-        System.out.println("");
-        System.out.println("test6:\n--");
+        do{System.out.println("");System.out.flush();}while(false);
+        do{System.out.println("test6:\n--");System.out.flush();}while(false);
         Functions.test6();
     }
 

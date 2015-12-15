@@ -107,10 +107,10 @@ public class Functions {
         while (true) {
             String s = (stuff).get(idx);
             if ((s)==("three") || ((s) != null && (s).equals("three"))) {
-                System.out.println("breaking");
+                do{System.out.println("breaking");System.out.flush();}while(false);
                 break;
             }
-            System.out.println("not breaking");
+            do{System.out.println("not breaking");System.out.flush();}while(false);
             idx = (idx) + (1);
         }
         idx = 0;
@@ -119,10 +119,10 @@ public class Functions {
             String s2 = (stuff).get(idx);
             if (!((s2)==("three") || ((s2) != null && (s2).equals("three")))) {
                 idx = (idx) + (1);
-                System.out.println("continuing");
+                do{System.out.println("continuing");System.out.flush();}while(false);
                 continue;
             }
-            System.out.println("not continuing");
+            do{System.out.println("not continuing");System.out.flush();}while(false);
             loop = false;
         }
     }

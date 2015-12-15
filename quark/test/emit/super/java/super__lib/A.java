@@ -6,7 +6,7 @@ public class A implements io.datawire.quark.runtime.QObject {
         (this).name = name;
     }
     public void greet() {
-        System.out.println("Hello");
+        do{System.out.println("Hello");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "A";

@@ -108,7 +108,7 @@ public class Functions {
         (b).foo();
         C c = new C();
         (c).foo();
-        System.out.println("--");
+        do{System.out.println("--");System.out.flush();}while(false);
         a = b;
         (a).foo();
         a = c;

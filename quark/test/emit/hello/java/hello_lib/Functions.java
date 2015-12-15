@@ -102,7 +102,7 @@ public class Functions {
 
 
     public static void main() {
-        System.out.println("Hello World");
+        do{System.out.println("Hello World");System.out.flush();}while(false);
     }
 
 

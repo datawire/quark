@@ -2,6 +2,6 @@ package test.test;
 
 public class Functions {
     public static void go() {
-        System.out.println("GOGO!!");
+        do{System.out.println("GOGO!!");System.out.flush();}while(false);
     }
 }

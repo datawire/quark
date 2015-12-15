@@ -5,7 +5,7 @@ public class Bar implements io.datawire.quark.runtime.QObject {
     public void go() {
         Foo foo = new Foo();
         (foo).name = "bob";
-        System.out.println((foo).name);
+        do{System.out.println((foo).name);System.out.flush();}while(false);
     }
     public String _getClass() {
         return "pkg.Bar";

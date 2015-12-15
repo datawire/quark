@@ -5,7 +5,7 @@ public class Cat extends Pet implements io.datawire.quark.runtime.QObject {
         super();
     }
     public void greet() {
-        System.out.println("meow!");
+        do{System.out.println("meow!");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "pets.Cat";

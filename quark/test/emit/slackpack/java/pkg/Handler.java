@@ -5,12 +5,12 @@ package pkg;
 public class Handler implements slack.SlackHandler, io.datawire.quark.runtime.QObject {
     public Handler() {}
     public void onSlackEvent(slack.event.SlackEvent event) {
-        System.out.println((event).type);
+        do{System.out.println((event).type);System.out.flush();}while(false);
         if (!(((event).user)==(null) || (((event).user) != null && ((event).user).equals(null)))) {
-            System.out.println(((event).user).user);
+            do{System.out.println(((event).user).user);System.out.flush();}while(false);
         }
         if (!(((event).channel)==(null) || (((event).channel) != null && ((event).channel).equals(null)))) {
-            System.out.println(((event).channel).channel);
+            do{System.out.println(((event).channel).channel);System.out.flush();}while(false);
         }
     }
     public String _getClass() {

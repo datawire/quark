@@ -4,9 +4,9 @@ public class string_test implements io.datawire.quark.runtime.QObject {
     public string_test() {}
     public void check(String actual, String expected, String op, String q) {
         if ((actual)==(expected) || ((actual) != null && (actual).equals(expected))) {
-            System.out.println(((((("OK   ") + (op)) + (" = ")) + (q)) + (actual)) + (q));
+            do{System.out.println(((((("OK   ") + (op)) + (" = ")) + (q)) + (actual)) + (q));System.out.flush();}while(false);
         } else {
-            System.out.println(((((((((("FAIL ") + (op)) + (" = ")) + (q)) + (actual)) + (q)) + (" != ")) + (q)) + (expected)) + (q));
+            do{System.out.println(((((((((("FAIL ") + (op)) + (" = ")) + (q)) + (actual)) + (q)) + (" != ")) + (q)) + (expected)) + (q));System.out.flush();}while(false);
         }
     }
     public String _getClass() {

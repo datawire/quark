@@ -103,15 +103,15 @@ public class Functions {
 
     public static void main() {
         if (true) {
-            System.out.println("Hi!");
+            do{System.out.println("Hi!");System.out.flush();}while(false);
         }
         Boolean b = (1) > (0);
         if (b) {
-            System.out.println("Hey!");
+            do{System.out.println("Hey!");System.out.flush();}while(false);
         }
         Boolean c = false;
         if (!(c)) {
-            System.out.println("Ho!");
+            do{System.out.println("Ho!");System.out.flush();}while(false);
         }
         Integer count = 0;
         while (true) {
@@ -121,13 +121,13 @@ public class Functions {
             count = (count) + (1);
         }
         Boolean troo = (true) && (true);
-        System.out.println((troo).toString());
+        do{System.out.println((troo).toString());System.out.flush();}while(false);
         Boolean fols = (false) || (false);
-        System.out.println((fols).toString());
+        do{System.out.println((fols).toString());System.out.flush();}while(false);
         String foo = "foo";
         String bar = "bar";
         if (((foo)==("foo") || ((foo) != null && (foo).equals("foo"))) && ((bar)==("bar") || ((bar) != null && (bar).equals("bar")))) {
-            System.out.println("foobar!!");
+            do{System.out.println("foobar!!");System.out.flush();}while(false);
         }
     }
 

@@ -2,11 +2,11 @@ package p1;
 
 public class Functions {
     public static void c() {
-        System.out.println("c");
+        do{System.out.println("c");System.out.flush();}while(false);
     }
 
 
     public static void d() {
-        System.out.println("d");
+        do{System.out.println("d");System.out.flush();}while(false);
     }
 }

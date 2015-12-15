@@ -5,7 +5,7 @@ public class B extends A implements io.datawire.quark.runtime.QObject {
         super();
     }
     public void foo() {
-        System.out.println("B");
+        do{System.out.println("B");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "B";

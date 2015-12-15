@@ -7,7 +7,7 @@ public class Y extends X implements io.datawire.quark.runtime.QObject {
         (this).name = name;
     }
     public void test() {
-        System.out.println((this).name);
+        do{System.out.println((this).name);System.out.flush();}while(false);
     }
     public String _getClass() {
         return "Y";

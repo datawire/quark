@@ -3,7 +3,7 @@ package pkg;
 public class T2 implements A, B, io.datawire.quark.runtime.QObject {
     public T2() {}
     public void foo() {
-        System.out.println("T2 foo");
+        do{System.out.println("T2 foo");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "pkg.T2";
@@ -13,7 +13,7 @@ public class T2 implements A, B, io.datawire.quark.runtime.QObject {
     }
     public void _setField(String name, Object value) {}
     public void bar() {
-        System.out.println("A bar");
+        do{System.out.println("A bar");System.out.flush();}while(false);
         (this).foo();
     }
 }

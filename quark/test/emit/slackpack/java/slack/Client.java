@@ -41,10 +41,10 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
         (this).socket = socket;
     }
     public void onWSClose(io.datawire.quark.runtime.WebSocket socket) {
-        System.out.println("socket closed");
+        do{System.out.println("socket closed");System.out.flush();}while(false);
     }
     public void onWSError(io.datawire.quark.runtime.WebSocket socket) {
-        System.out.println("socket error");
+        do{System.out.println("socket error");System.out.flush();}while(false);
     }
     public slack.event.SlackEvent construct(String type) {
         if ((type)==("error") || ((type) != null && (type).equals("error"))) {

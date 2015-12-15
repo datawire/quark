@@ -3,7 +3,7 @@ package inheritence_lib;
 public class A implements io.datawire.quark.runtime.QObject {
     public A() {}
     public void foo() {
-        System.out.println("A");
+        do{System.out.println("A");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "A";

@@ -3,7 +3,7 @@ package print_lib;
 public class Test implements io.datawire.quark.runtime.QObject {
     public Test() {}
     public void test() {
-        System.out.println("Hello World!");
+        do{System.out.println("Hello World!");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "Test";

@@ -103,23 +103,23 @@ public class Functions {
 
     public static void main() {
         Integer four = (2) + (2);
-        System.out.println(Integer.toString(four));
+        do{System.out.println(Integer.toString(four));System.out.flush();}while(false);
         Integer half = ~((~(1)) / (2));
-        System.out.println(Integer.toString(half));
+        do{System.out.println(Integer.toString(half));System.out.flush();}while(false);
         Double num = 314.0;
         Double den = 100.0;
         Double pi = (num) / (den);
-        System.out.println(Double.toString(pi));
+        do{System.out.println(Double.toString(pi));System.out.flush();}while(false);
         Double pie = 3.14;
-        System.out.println(Double.toString(pie));
+        do{System.out.println(Double.toString(pie));System.out.flush();}while(false);
         Integer n = ~((~(-(100))) / (3));
-        System.out.println(Integer.toString(n));
+        do{System.out.println(Integer.toString(n));System.out.flush();}while(false);
         Integer m = ~((~(100)) / (-(3)));
-        System.out.println(Integer.toString(m));
+        do{System.out.println(Integer.toString(m));System.out.flush();}while(false);
         Integer l = Math.floorMod((100), (3));
-        System.out.println(Integer.toString(l));
+        do{System.out.println(Integer.toString(l));System.out.flush();}while(false);
         Integer k = Math.floorMod((-(100)), (3));
-        System.out.println(Integer.toString(k));
+        do{System.out.println(Integer.toString(k));System.out.flush();}while(false);
     }
 
 

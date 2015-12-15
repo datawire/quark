@@ -116,7 +116,7 @@ public class Functions {
         (outer).setObjectItem("sub-object", innerObject);
         (outer).setObjectItem("sub-list", innerList);
         (outer).setObjectItem("sub-string", (new io.datawire.quark.runtime.JSONObject()).setString("a string"));
-        System.out.println((outer).toString());
+        do{System.out.println((outer).toString());System.out.flush();}while(false);
     }
 
 

@@ -4,7 +4,7 @@ public class Test implements io.datawire.quark.runtime.QObject {
     public Integer size;
     public Test() {}
     public void go() {
-        System.out.println("TTGO!!");
+        do{System.out.println("TTGO!!");System.out.flush();}while(false);
     }
     public String _getClass() {
         return "test.test.Test";
