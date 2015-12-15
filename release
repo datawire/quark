@@ -7,8 +7,8 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
-  release [--dry] version [<version>] [--dev] [--quark=<ver>] [--java=<ver>] [--js=<ver>] [--py=<ver>] [--doc=<ver>]
-  release [--dry] push
+  release [--dry] version [<version>] [--dev] [--runtime-only] [--quark=<ver>] [--java=<ver>] [--js=<ver>] [--py=<ver>] [--doc=<ver>]
+  release [--dry] push [--runtime-only]
   release [--dry] docs
   release [--dry] metadata
 
@@ -16,6 +16,7 @@ Usage:
     --dry                  Dry run.
 
     --dev                  Apply development suffix to all versions.
+    --runtime-only         Apply command to runtime only.
 
     --quark <version>      Quark version.
     --java <version>       Java runtime version.
@@ -211,7 +212,8 @@ def version(args):
     else:
         getver = relver
 
-    quark_version(getver(args, "--quark"))
+    if not args["--runtime-only"]:
+        quark_version(getver(args, "--quark"))
     java_version(getver(args, "--java"))
     js_version(getver(args, "--js"))
     py_version(getver(args, "--py"))
@@ -234,10 +236,15 @@ def challenge():
     return text == chal
 
 def push(args):
+    runtime_only = args["--runtime-only"]
     print "You are about to push the following packages live:"
     print
-    width = max(map(lambda x: len(x[0]), VERSIONS))
-    for name, version in VERSIONS:
+    if runtime_only:
+        versions = [v for v in VERSIONS if v[0] != "quark"]
+    else:
+        versions = VERSIONS
+    width = max(map(lambda x: len(x[0]), versions))
+    for name, version in versions:
         print "    %*s: %s" % (width, name, version)
     print
     if challenge():
@@ -245,7 +252,8 @@ def push(args):
         push_java()
         push_js()
         push_py()
-        push_quark()
+        if not runtime_only:
+            push_quark()
     else:
         print "Canceled"
 
