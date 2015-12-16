@@ -1,5 +1,7 @@
 package io.datawire.quark.netty;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import io.datawire.quark.runtime.HTTPServlet;
 import io.datawire.quark.runtime.Runtime;
@@ -26,6 +29,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 
 @Sharable
 public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Object> {
+    private static final Logger log = Logger.getLogger(DatawireNettyHttpContainer.class.getName());
     static class Root {
         final String scheme;
         final String host;
@@ -78,7 +82,15 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
         }
         @Override
         void invoke(ChannelHandlerContext ctx, IncomingRequest rq, Response rs) {
-            this.servlet.onHTTPRequest(rq, rs);
+            try {
+                this.servlet.onHTTPRequest(rq, rs);
+            } catch (Throwable e) {
+                StringWriter msg = new StringWriter();
+                PrintWriter p = new PrintWriter(msg);
+                e.printStackTrace(p);
+                p.close();
+                log.severe(msg.toString());
+            }
         }
     }
 
