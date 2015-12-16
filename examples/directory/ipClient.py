@@ -11,7 +11,7 @@ class Consumer(object):
 
     def consume(self, ip):
         print "IP is", ip
-        self.runtime.finish()
+        self.runtime.reactor.stop()
 
 
 def main():

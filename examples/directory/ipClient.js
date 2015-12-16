@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    var runtime = require("quark_node_runtime.js");
+    var runtime = require("datawire-quark-node");
     var ipify = require("./ipify");
 
     function Consumer() {}
@@ -14,5 +14,4 @@
     };
 
     var m = new ipify.MyExternalIP(runtime, new Consumer());
-    runtime.launch();
 })();

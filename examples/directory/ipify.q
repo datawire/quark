@@ -15,15 +15,13 @@ package ipify {
             self.runtime.request(new HTTPRequest("https://api.ipify.org/"), self);
         }
 
-        void onInit(HTTPRequest req) {}
-
-        void onError(HTTPRequest req) {}
-
-        void onResponse(HTTPRequest req, HTTPResponse resp) {
-            self.callback.consume(resp.getBody());
+        void onHTTPError(HTTPRequest req, String message) {
+            print("HTTP Request Error: " + message);
         }
 
-        void onFinal(HTTPRequest req) {}
+        void onHTTPResponse(HTTPRequest req, HTTPResponse resp) {
+            self.callback.consume(resp.getBody());
+        }
     }
 
 }
