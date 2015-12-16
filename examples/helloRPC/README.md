@@ -33,6 +33,12 @@ The clients expect to find the service on http://127.0.0.1:8910/hello
 and each server runs there. Thus you may run a single server at a
 time, as well as any number of clients.
 
+To get started, download the example by cloning its git repo as follows:
+
+        git clone https://github.com/datawire/quark.git`
+
+All of the directions below assume you are starting from <repoBase>/examples/helloRPC where <repoBase> is the location where you cloned the repository above.
+
 ### Python
 
 Make sure the python-threaded runtime integration is installed (`pip
