@@ -1,5 +1,5 @@
-Defining the RPC Contract
-=========================
+Defining the Service Contract
+=============================
 
 The first step when working with RPC is to define a contract in Quark. This contract defines the value classes, interfaces, and interaction patterns as well as how they can be used together.
 
@@ -10,9 +10,9 @@ Note: If you don't want step-by-step guidance about how to create the contract a
 Part 1: Creating the framework
 ------------------------------
 
-This section helps you define the necessary structure for your RPC contract.
+This section helps you define the necessary structure for your service contract.
 
-Step 1: Create a text file in your favorite editor called simpleRPC.q
+Step 1: Create a text file in your favorite editor called hello.q
 
 Step 2: Add ``@version(0.1.0)`` as the first line of the file. This sets the version number of the contract to 0.1.0
 
@@ -33,7 +33,7 @@ Do the following:
 
 a. Define a class called Request inside the hello package
 
-b. Add a String property called requestyStuff to the class. This will hold the contents of the request body.
+b. Add a String property called text to the class. This will hold the contents of the request body.
 
 Step 2: Add a Response value class
 
@@ -41,7 +41,7 @@ Do the following:
 
 a. Define a class called Response inside the hello package
 
-b. Add a String property called responsyStuff to the class. This will hold the contents of the response body.
+b. Add a String property called result to the class. This will hold the contents of the response body.
 
 See :ref:`this page <part2ContractFinished>` for the file state at the end of Part 2.
 

@@ -7,10 +7,11 @@ Getting Started with RPC Tutorial
 
    Introduction to RPC<intro>
    Requirements and Setup <setup>
-   Defining the RPC Contract <contract>
+   Defining the Service Contract <contract>
    Building the Example <build>
    Examining the Clients <clients>
    Writing the Server <server>
+   Putting It All Together <try>
    More Information <links>
 
 .. toctree::
