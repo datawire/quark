@@ -21,7 +21,7 @@ def main(identity):
     name = "service-" + identity
     address = "Python-endpoint-" + identity
 
-    runtime = quark_twisted_runtime.get_twisted_runtime()
+    runtime = quark_twisted_runtime.get_runtime()
     d = directory.Directory(runtime, "ws://127.0.0.1:8910", name, address)
 
     for letter in "ABCDE":
@@ -30,7 +30,7 @@ def main(identity):
 
     print "lookupAsync called"
 
-    runtime.launch()
+    runtime.reactor.run()  # Use the default twisted reactor
     # And now we wait...
 
 

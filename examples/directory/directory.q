@@ -34,7 +34,7 @@ package directory {
     class Directory extends Task, WSHandler {
 
         Runtime runtime;
-        WebSocket socket;
+        WebSocket socket = null;
 
         bool initialized = false;
         Map<String,Entry> entries = new Map<String, Entry>();
@@ -70,9 +70,11 @@ package directory {
         }
 
         void onExecute(Runtime runtime) {
-            JSONObject heartbeatInfo = new JSONObject()
-                .setObjectItem("op", "heartbeat".toJSON());
-            self.socket.send(heartbeatInfo.toString());
+            if (self.socket != null) {
+                JSONObject heartbeatInfo = new JSONObject()
+                    .setObjectItem("op", "heartbeat".toJSON());
+                self.socket.send(heartbeatInfo.toString());
+            }
             self.runtime.schedule(self, 3.0);
         }
 
@@ -108,6 +110,10 @@ package directory {
                 }
             }
 
+        }
+
+        void onWSError(WebSocket socket) {
+            self.runtime.fail("WebSocket Error!");
         }
 
         @doc("Lookup a directory entry by name.")

@@ -10,10 +10,8 @@ def main(identity):
     name = "service-" + identity
     address = "Python-endpoint-" + identity
 
-    runtime = quark_threaded_runtime.get_threaded_runtime()
+    runtime = quark_threaded_runtime.get_runtime()
     d = directory.Directory(runtime, "ws://127.0.0.1:8910", name, address)
-
-    runtime.launch()
 
     for letter in "ABCDE":
         service = "service-" + letter
@@ -23,7 +21,7 @@ def main(identity):
         else:
             print "Looked up " + service + " and got back " + str(entry)
 
-    runtime.finish()
+    runtime.join()
 
 
 if __name__ == '__main__':

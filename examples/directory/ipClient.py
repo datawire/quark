@@ -15,9 +15,9 @@ class Consumer(object):
 
 
 def main():
-    runtime = quark_twisted_runtime.get_twisted_runtime()
+    runtime = quark_twisted_runtime.get_runtime()
     ipify.MyExternalIP(runtime, Consumer(runtime))
-    runtime.launch()
+    runtime.reactor.run()  # Use the default twisted reactor
 
 
 if __name__ == '__main__':
