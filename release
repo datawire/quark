@@ -174,7 +174,7 @@ def push_js():
             run("npm", "publish", base("runtime/js-%s" % sfx), cwd=base())
 
 def push_py():
-    for path in ("runtime/python-core", "runtime/twisted"):
+    for path in ("runtime/python-core", "runtime/twisted", "runtime/python-threaded"):
         push_wheel(base(path))
 
 def push_quark():
