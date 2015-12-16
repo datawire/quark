@@ -33,7 +33,7 @@ The clients expect to find the service on http://127.0.0.1:8910/hello
 and each server runs there. Thus you may run a single server at a
 time, as well as any number of clients.
 
-To get started, download the example by cloning its git repo as follows:
+To get started, download the example by cloning its git repository as follows:
 
         git clone https://github.com/datawire/quark.git
 
@@ -41,7 +41,7 @@ All of the directions below assume you are starting from *repoBase*/examples/hel
 
 ### Python
 
-Make sure the python-threaded runtime integration is installed (`pip
+Make sure the python-threaded integration is installed (`pip
 install -U datawire-quark-threaded`).
 
 Compile and install the Service Contract in hello.q:
@@ -58,6 +58,8 @@ Run the Python client with
         python pyclient.py
 
 ### Java
+
+Note: This example requires the quark-netty integration. It will be installed automatically if you do not already have it installed.
 
 Compile and install the Service Contract in hello.q:
 
