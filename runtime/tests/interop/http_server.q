@@ -9,7 +9,7 @@ package interop { // package interop is mandatory
                 .expectHeader("X-custom-header", "custom client value")
                 .expectBody("client body")
                 .check(5.0);
-            runtime.serveHTTP("http://localhost:" + port.toString() + "/http_server", servlet);
+            runtime.serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server", servlet);
         }
         void client(Runtime runtime, int port) {
 

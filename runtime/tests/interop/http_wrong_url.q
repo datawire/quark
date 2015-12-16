@@ -2,7 +2,7 @@
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
         void server(Runtime runtime, int port) { // runtime and port are mandatory constructor parameters
-            runtime.serveHTTP("http://localhost:" + port.toString() + "/http_server", HelloServlet());
+            runtime.serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server", HelloServlet());
 
         }
         void client(Runtime runtime, int port) {
