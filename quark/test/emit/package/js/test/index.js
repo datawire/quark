@@ -345,7 +345,13 @@ function Service_rpc(name, message) {
     }
     var body = (response).getBody();
     var obj = _qrt.json_from_string(body);
-    return fromJSON(new Class(((obj).getObjectItem("$class")).getString()), obj);
+    var classname = ((obj).getObjectItem("$class")).getString();
+    if ((classname) === (null)) {
+        (rt).fail((("RPC ") + (name)) + ("(...) failed: Server returned unrecognizable content"));
+        return null;
+    } else {
+        return fromJSON(new Class(classname), obj);
+    }
 }
 Service.prototype.rpc = Service_rpc;
 /* END_BUILTIN */

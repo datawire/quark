@@ -445,7 +445,13 @@ interface Service {
         }
         String body = ((response).getBody)();
         JSONObject obj = ((body).parseJSON)();
-        return (fromJSON)((Class)(((obj).__get__)("$class")), obj);
+        String classname = ((obj).__get__)("$class");
+        if (((classname).__eq__)(null)) {
+            ((rt).fail)((((("RPC ").__add__)(name)).__add__)("(...) failed: Server returned unrecognizable content"));
+            return null;
+        } else {
+            return (fromJSON)((Class)(classname), obj);
+        }
     }
 }
 class Client {

@@ -1532,11 +1532,23 @@ File(
      Declaration(Type(Name(JSONObject)), Name(obj), Call(Attr(Var(Name(body),
         $type=0.String), Name(parseJSON), $type=0.String.parseJSON),
       $type=0.JSONObject), $type=0.JSONObject)),
-    Return(Call(Var(Name(fromJSON), $type=0.fromJSON), Call(Var(Name(Class),
-       $type=0.Class), Call(Attr(Var(Name(obj), $type=0.JSONObject),
-         Name(__get__), $type=0.JSONObject.__get__), String("$class",
-        $type=0.String), $type=0.JSONObject), $type=0.Class), Var(Name(obj),
-      $type=0.JSONObject), $type=0.Object))))),
+    Local(
+     Declaration(Type(Name(String)), Name(classname), Call(Attr(Var(Name(obj),
+        $type=0.JSONObject), Name(__get__), $type=0.JSONObject.__get__),
+       String("$class", $type=0.String), $type=0.JSONObject), $type=0.String)),
+    If(Call(Attr(Var(Name(classname), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool), Block(
+      ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(fail),
+        $type=0.Runtime.fail), Call(Attr(Call(Attr(String("RPC ",
+            $type=0.String), Name(__add__), $type=0.String.__add__),
+           Var(Name(name), $type=0.String), $type=0.String), Name(__add__),
+         $type=0.String.__add__),
+         String("(...) failed: Server returned unrecognizable content",
+         $type=0.String), $type=0.String), $type=0.void)),
+      Return(Null(null, $type=0.Object))), Block(
+      Return(Call(Var(Name(fromJSON), $type=0.fromJSON), Call(Var(Name(Class),
+         $type=0.Class), Var(Name(classname), $type=0.String), $type=0.Class),
+        Var(Name(obj), $type=0.JSONObject), $type=0.Object))))))),
 
  Class(Name(Client),
   Field(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),

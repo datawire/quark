@@ -285,8 +285,14 @@ class Service(object):
 
         body = (response).getBody();
         obj = _JSONObject.parse(body);
-        return fromJSON(Class(((obj).getObjectItem(u"$class")).getString()), obj)
+        classname = ((obj).getObjectItem(u"$class")).getString();
+        if ((classname) == (None)):
+            (rt).fail(((u"RPC ") + (name)) + (u"(...) failed: Server returned unrecognizable content"));
+            return None
+        else:
+            return fromJSON(Class(classname), obj)
 
+    
 
 # END_BUILTIN
 

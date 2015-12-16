@@ -1187,9 +1187,17 @@ File(
     Local(
      Declaration(Type(Name(JSONObject)), Name(obj), Call(Attr(Var(Name(body)),
         Name(parseJSON))))),
-    Return(Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
-       Call(Attr(Var(Name(obj)), Name(__get__)), String("$class"))),
-      Var(Name(obj))))))),
+    Local(
+     Declaration(Type(Name(String)), Name(classname), Call(Attr(Var(Name(obj)),
+        Name(__get__)), String("$class")))),
+    If(Call(Attr(Var(Name(classname)), Name(__eq__)), Null(null)), Block(
+      ExprStmt(Call(Attr(Var(Name(rt)), Name(fail)),
+        Call(Attr(Call(Attr(String("RPC "), Name(__add__)), Var(Name(name))),
+          Name(__add__)),
+         String("(...) failed: Server returned unrecognizable content")))),
+      Return(Null(null))), Block(
+      Return(Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
+         Var(Name(classname))), Var(Name(obj))))))))),
 
  Class(Name(Client),
   Field(Type(Name(Runtime)), Name(runtime)),

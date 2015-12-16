@@ -637,7 +637,13 @@ interface Service {
 
         String body = response.getBody();
         JSONObject obj = body.parseJSON();
-        return fromJSON(Class(obj["$class"]), obj);
+        String classname = obj["$class"];
+        if (classname == null) {
+            rt.fail("RPC " + name + "(...) failed: Server returned unrecognizable content");
+            return null; // Not reached
+        } else {
+            return fromJSON(Class(classname), obj);
+        }
     }
 
 }
