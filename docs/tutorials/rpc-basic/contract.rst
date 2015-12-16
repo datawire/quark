@@ -92,6 +92,6 @@ That's it! The contract is fully defined now. You can follow the link below to a
 Full Contract
 -------------
 
-A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/simpleRPC/simpleRPC.q>`_ - the file you constructed following the instructions on this page should match it exactly.
+A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/helloRPC.q>`_ - the file you constructed following the instructions on this page should match it exactly.
 
 [[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
