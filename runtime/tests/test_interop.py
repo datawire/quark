@@ -295,9 +295,9 @@ class TwistedPython(AbstractPython):
             import quark_runtime
             import sys
             print "Twisted client harness is started"
-            runtime = quark_twisted_runtime.get_twisted_runtime()
+            runtime = quark_twisted_runtime.get_runtime()
             interop.Entrypoint().client(runtime, int(sys.argv[1]))
-            runtime.launch()
+            runtime.reactor.run()
         """))
         self.rundir.join("run-server.py").write(textwrap.dedent("""\
             import interop
@@ -305,9 +305,9 @@ class TwistedPython(AbstractPython):
             import quark_runtime
             import sys
             print "Twisted server harness is started"
-            runtime = quark_twisted_runtime.get_twisted_runtime()
+            runtime = quark_twisted_runtime.get_runtime()
             interop.Entrypoint().server(runtime, int(sys.argv[1]))
-            runtime.launch()
+            runtime.reactor.run()
         """))
 
     @property
@@ -327,8 +327,7 @@ class ThreadedPython(AbstractPython):
             import quark_runtime
             import sys
             print "Threaded client harness is started"
-            runtime = quark_threaded_runtime.get_threaded_runtime()
-            runtime.launch()
+            runtime = quark_threaded_runtime.get_runtime()
             interop.Entrypoint().client(runtime, int(sys.argv[1]))
         """))
         self.rundir.join("run-server.py").write(textwrap.dedent("""\
@@ -337,8 +336,7 @@ class ThreadedPython(AbstractPython):
             import quark_runtime
             import sys
             print "Threaded server harness is started"
-            runtime = quark_threaded_runtime.get_threaded_runtime()
-            runtime.launch()
+            runtime = quark_threaded_runtime.get_runtime()
             interop.Entrypoint().server(runtime, int(sys.argv[1]))
         """))
 

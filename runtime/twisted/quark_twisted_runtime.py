@@ -7,38 +7,13 @@ import urlparse
 
 from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
-from autobahn.twisted.websocket import WebSocketServerFactory, \
-     WebSocketServerProtocol
+from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
 from autobahn.twisted.resource import WebSocketResource
 
-from twisted.internet import defer, reactor, ssl
-from twisted.internet.error import CannotListenError
-from twisted.python import log
+from twisted.internet import reactor as default_reactor, ssl
 from twisted.web.client import Agent, FileBodyProducer, readBody
 from twisted.web.http_headers import Headers
 from twisted.web import server, resource
-
-def _dumper(reason):
-    log.err(reason, "From the future!")
-    return reason
-
-
-class Future(object):
-
-    def __init__(self):
-        self.deferred = defer.Deferred()
-        self.deferred.addErrback(_dumper)
-
-    def succeed(self, value):
-        self.deferred.callback(value)
-
-    def fail(self, reason):
-        self.deferred.errback(Exception(reason))
-
-    def getResult(self, callback, errback=None):
-        if errback:
-            self.deferred.addErrback(errback)
-        self.deferred.addCallback(callback)
 
 
 class _QWSProtocol(object):
@@ -60,15 +35,18 @@ class _QWSProtocol(object):
             self.factory.qws.handler.onWSError(self.factory.qws)
         self.factory.qws.handler.onWSFinal(self.factory.qws)
 
+
 class _QWSCProtocol(_QWSProtocol, WebSocketClientProtocol):
 
     def __init__(self, *args, **kwargs):
         WebSocketClientProtocol.__init__(self, *args, **kwargs)
 
+
 class _QWSSProtocol(_QWSProtocol, WebSocketServerProtocol):
 
     def __init__(self, *args, **kwargs):
         WebSocketServerProtocol.__init__(self, *args, **kwargs)
+
 
 class _QWSCFactory(WebSocketClientFactory):
 
@@ -80,6 +58,7 @@ class _QWSCFactory(WebSocketClientFactory):
         p.factory = self
         self.qws.protocol = p
         return p
+
 
 class _QWSSFactory(WebSocketServerFactory):
 
@@ -116,7 +95,7 @@ class _QuarkWebSocket(object):
 
     def close(self):
         if self.is_open:
-            self.protocol.sendClose();
+            self.protocol.sendClose()
             return True
         return False
 
@@ -177,6 +156,7 @@ class _QuarkResponse(object):
     def getHeaders(self):
         return list(set(k for k,v in self.headers.getAllRawHeaders()))
 
+
 class _QuarkSite(server.Site):
     def __init__(self, runtime):
         container = _ContainerResource()
@@ -194,8 +174,10 @@ class _QuarkSite(server.Site):
         servlet.onServletInit(actual, self.runtime)
         self.container.register(uri.path, servlet_resource)
 
+
 class _ContainerResource(resource.Resource):
     isLeaf = True
+
     def __init__(self):
         resource.Resource.__init__(self)
         self.servlets = {}
@@ -212,6 +194,7 @@ class _ContainerResource(resource.Resource):
     def register(self, path, delegate):
         self.servlets[path] = delegate
 
+
 class _HTTPServletResource:
     def __init__(self, actual, servlet):
         self.actual = actual
@@ -223,6 +206,7 @@ class _HTTPServletResource:
         rs.servlet_request = rq
         self.servlet.onHTTPRequest(rq, rs)
         return server.NOT_DONE_YET
+
 
 class _WSServletResource:
     def __init__(self, actual, servlet):
@@ -236,11 +220,12 @@ class _WSServletResource:
         if handler is not None:
             factory = _QWSSFactory()
             resource = WebSocketResource(factory)
-            qws = _QuarkWebSocket(factory, handler)
+            _QuarkWebSocket(factory, handler)
             return resource.render(request)
         else:
             rs.fail(403, "not happening")
             return server.NOT_DONE_YET
+
 
 class _ServletRequest(object):
     def __init__(self, request):
@@ -262,10 +247,11 @@ class _ServletRequest(object):
         value = self.request.getHeader(key)
         if value is None:
             return None
-        return value.decode('utf-8') 
+        return value.decode('utf-8')
 
     def getHeaders(self):
         return list(set(h[0].decode('utf-8') for h in self.request.requestHeaders.getAllRawHeaders()))
+
 
 class _ServletResponse(object):
     def __init__(self, request):
@@ -306,7 +292,8 @@ class _ServletResponse(object):
         self.code = code
         self.headers.clear()
         self.body = message
-        self.respond();
+        self.respond()
+
 
 class TwistedRuntime(object):
 
@@ -378,7 +365,7 @@ class TwistedRuntime(object):
         site = _QuarkSite(self)
         if scheme in ["https", "wss"]:
             # XXX: we need a certificate.... abuse url.params?
-            raise Exception( scheme + " is not supported yet")
+            raise Exception(scheme + " is not supported yet")
         elif scheme in ("http", "ws"):
             port = self.reactor.listenTCP(port_no, site, interface=host)
             bound = port.getHost()
@@ -399,76 +386,31 @@ class TwistedRuntime(object):
             # XXX: what to do with a response from a different runtime
             pass
 
-    def launch(self):
-        self.reactor.run()
+    def fail(self, message):
+        exit(message)                # Comment out this line to see a full traceback via the next line
+        raise RuntimeError(message)
 
     def finish(self):
         self.reactor.callLater(0, self.reactor.stop)
 
 
-_twisted_runtime = TwistedRuntime(reactor)
+_twisted_runtime = None
 
 
-def get_twisted_runtime():
+def get_runtime(reactor=None):
+    global _twisted_runtime
+    if reactor is None:
+        reactor = default_reactor
+    if _twisted_runtime is None:
+        _twisted_runtime = TwistedRuntime(reactor)
+    else:
+        assert _twisted_runtime.reactor == reactor, "Reactor mismatch! Consider using make_runtime(reactor)"
     return _twisted_runtime
 
+getRuntime = get_runtime
 
-def make_twisted_runtime():
+
+def make_runtime(reactor):
     return TwistedRuntime(reactor)
 
-
-import threading
-
-
-class ThreadedRuntime(object):
-
-    def __init__(self, reactor):
-        self.lock = threading.Condition()
-        self.tw = TwistedRuntime(reactor)
-
-    def acquire(self):
-        self.lock.acquire()
-
-    def release(self):
-        self.lock.release()
-
-    def _notify(self):
-        self.lock.acquire()
-        self.lock.notify_all()
-        self.lock.release()
-
-    def wait(self, timeoutInSeconds):
-        self.tw.reactor.callLater(0, self._notify)
-        self.lock.wait()
-
-    def open(self, url, handler):
-        self.tw.open(url, handler)
-
-    def request(self, request, handler):
-        self.tw.request(request, handler)
-
-    def schedule(self, handler, delayInSeconds):
-        return self.tw.schedule(handler, delayInSeconds)
-
-    def serveHTTP(self, url, servlet):
-        self.tw.serveHTTP(url, servlet)
-
-    def respond(self, request, response):
-        self.tw.respond(request, response)
-
-    def launch(self):
-        threading.Thread(target=self.tw.reactor.run, args=(False,)).start()  # False: Don't try to install sig handlers
-
-    def finish(self):
-        self.tw.reactor.callLater(0, self.tw.reactor.stop)
-
-
-_threaded_runtime = ThreadedRuntime(reactor)
-
-
-def get_threaded_runtime():
-    return _threaded_runtime
-
-
-def make_threaded_runtime():
-    return ThreadedRuntime(reactor)
+makeRuntime = make_runtime

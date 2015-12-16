@@ -80,7 +80,7 @@ class _QuarkRequest(threading.Thread):
             response.setCode(e.code)
             response.setBody(e.read())
             for h in e.info().headers:
-                k,v = h.split(':', 1)
+                k, v = h.split(':', 1)
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError as exc:
@@ -90,7 +90,7 @@ class _QuarkRequest(threading.Thread):
             response.setCode(handle.getcode())
             response.setBody(body)
             for h in handle.info().headers:
-                k,v = h.split(':', 1)
+                k, v = h.split(':', 1)
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
@@ -195,8 +195,9 @@ class ThreadedRuntime(object):
     def __init__(self):
         self.lock = threading.Condition()
         self.events = Queue()
-        self.event_thread = None
         self.sites = {}  # host, port -> site
+        self.event_thread = _EventProcessor(self)
+        self.event_thread.start()
 
     def acquire(self):
         self.lock.acquire()
@@ -282,15 +283,10 @@ class ThreadedRuntime(object):
 
     def fail(self, message):
         try:
-            exit(message)
+            exit(message)                # Comment out this line to see a full traceback via the next line
             raise RuntimeError(message)
         finally:
             self.finish()
-
-    def launch(self):
-        assert self.event_thread is None, self.event_thread
-        self.event_thread = _EventProcessor(self)
-        self.event_thread.start()
 
     def join(self):
         try:
@@ -300,11 +296,20 @@ class ThreadedRuntime(object):
 
     def finish(self):
         self.events.put(_EventProcessor.QUIT)
-        self.event_thread.join()
+        try:
+            self.event_thread.join()
+        except RuntimeError:  # Trying to join current thread, e.g., fail() called from event handler
+            exit(1)
 
 
-_threaded_runtime = ThreadedRuntime()
+_threaded_runtime = None
 
 
-def get_threaded_runtime():
+def get_runtime():
+    global _threaded_runtime
+    if _threaded_runtime is None:
+        _threaded_runtime = ThreadedRuntime()
     return _threaded_runtime
+
+
+getRuntime = get_runtime
