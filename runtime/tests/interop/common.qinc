@@ -242,8 +242,8 @@
         void onHTTPInit(HTTPRequest request) {
             print("onHTTPInit " + request.getUrl());
         }
-        void onHTTPError(HTTPRequest request) {
-            print("onHTTPError " + request.getUrl());
+        void onHTTPError(HTTPRequest request, String error) {
+            print("onHTTPError " + request.getUrl() + " : " + error);
         }
         void onHTTPFinal(HTTPRequest request) {
             print("onHTTPFinal " + request.getUrl());
