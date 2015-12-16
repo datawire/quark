@@ -5,6 +5,7 @@ __version__ = '0.2.0'
 import signal
 import threading
 import time
+import traceback
 import urllib2
 import urlparse
 from wsgiref import simple_server, util
@@ -82,8 +83,8 @@ class _QuarkRequest(threading.Thread):
                 k,v = h.split(':', 1)
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
-        except urllib2.URLError:
-            self.runtime.events.put((self.handler.onHTTPError, (self.request,), {}))
+        except urllib2.URLError as exc:
+            self.runtime.events.put((self.handler.onHTTPError, (self.request, str(exc.reason)), {}))
         else:
             response = _HTTPResponse()
             response.setCode(handle.getcode())
@@ -141,6 +142,8 @@ class _QuarkWSGIApp(object):
             response.setBody("500 Internal Server Error (%s)" % exc)
             response.setHeader("Content-Type", "text/plain")
             response._responded = True
+            print "Servlet call for %s failed." % request.getUrl()
+            print traceback.format_exc()
 
     def __call__(self, environ, start_response):
         path = environ["PATH_INFO"]
@@ -276,6 +279,13 @@ class ThreadedRuntime(object):
 
     def respond(self, request, response):
         response._responded = True
+
+    def fail(self, message):
+        try:
+            exit(message)
+            raise RuntimeError(message)
+        finally:
+            self.finish()
 
     def launch(self):
         assert self.event_thread is None, self.event_thread
