@@ -30,11 +30,11 @@ At the end of part 2 of the contract creation, your file should contain the foll
    package hello {
    
        class Request {
-           String requestyStuff;
+           String text;
        }
 
        class Response {
-           String responsyStuff;
+           String result;
        }
    
    }
@@ -55,11 +55,11 @@ At the end of part 3 of the contract creation, your file should contain the foll
    package hello {
    
        class Request {
-           String requestyStuff;
+           String text;
        }
 
        class Response {
-           String responsyStuff;
+           String result;
        }
 
        interface Hello extends Service {
@@ -86,11 +86,11 @@ At the end of part 4 of the contract creation, your file should contain the foll
    package hello {
    
        class Request {
-           String requestyStuff;
+           String text;
        }
 
        class Response {
-           String responsyStuff;
+           String result;
        }
 
        interface Hello extends Service {
@@ -107,6 +107,6 @@ At the end of part 4 of the contract creation, your file should contain the foll
 :ref:`Return to Part 5 <part5Server>` of the contract definition to continue the tutorial.
 
 
-A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/simpleRPC/simpleRPC.q>`_ - the file you constructed following the instructions in parts 1-5 of the contract definition page should match it exactly.
+A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/hello.q>`_ - the file you constructed following the instructions in parts 1-5 of the contract definition page should match it exactly excepting comments and @doc annotations.
 
 [[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
