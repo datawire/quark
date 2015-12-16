@@ -150,7 +150,8 @@ def js_version(version):
     update_python(base("quark/_metadata.py"), js_runtime_version=version)
 
 def py_version(version):
-    for name in ("runtime/python-core/quark_runtime.py", "runtime/twisted/quark_twisted_runtime.py"):
+    for name in ("runtime/python-core/quark_runtime.py", "runtime/twisted/quark_twisted_runtime.py",
+                 "runtime/python-threaded/quark_threaded_runtime.py"):
         update_python(base(name), version=version)
     update_python(base("quark/_metadata.py"), py_runtime_version=version)
 
