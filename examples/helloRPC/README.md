@@ -35,9 +35,9 @@ time, as well as any number of clients.
 
 To get started, download the example by cloning its git repo as follows:
 
-        git clone https://github.com/datawire/quark.git`
+        git clone https://github.com/datawire/quark.git
 
-All of the directions below assume you are starting from <repoBase>/examples/helloRPC where <repoBase> is the location where you cloned the repository above.
+All of the directions below assume you are starting from *repoBase*/examples/helloRPC where *repoBase* is the location where you cloned the repository above.
 
 ### Python
 
