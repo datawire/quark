@@ -219,24 +219,27 @@ class Node(Integration):
         self.npm_install(self.js_core_package)
         self.npm_install(self.compile.js_package)
         self.npm_install(self.js_node_package)
+        context = dict(
+            datawire_quark_node=self.js_node_package_name,
+            )
         self.rundir.join("run-client.js").write(textwrap.dedent("""\
             "use strict";
-            var runtime = require("datawire-quark-node");
+            var runtime = require("%(datawire_quark_node)s");
             var runtime_core = require("datawire-quark-core");
             var interop = require("interop");
             var process = require("process");
             console.log("Node client harness is started")
             new interop.Entrypoint().client(runtime, process.argv[2]);
-        """))
+        """ % context))
         self.rundir.join("run-server.js").write(textwrap.dedent("""\
             "use strict";
-            var runtime = require("datawire-quark-node");
+            var runtime = require("%(datawire_quark_node)s");
             var runtime_core = require("datawire-quark-core");
             var interop = require("interop");
             var process = require("process");
             console.log("Node server harness is started")
             new interop.Entrypoint().server(runtime, process.argv[2]);
-        """))
+        """ % context))
 
     def npm_install(self, package):
         command("npm", "install", package.strpath, cwd=self.rundir)
@@ -248,6 +251,12 @@ class Node(Integration):
     @property
     def js_node_package(self):
         return self.runtimes / "js-node"
+
+    @property
+    def js_node_package_name(self):
+        import json
+        package = json.loads(self.js_node_package.join("package.json").read())
+        return package["name"]
 
     def invoke_server(self, port):
         return ["node", "run-server.js", str(port)]
