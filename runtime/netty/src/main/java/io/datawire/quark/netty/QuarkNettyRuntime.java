@@ -149,7 +149,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         public void run() {
             if (busy.get() == 0) {
                 if (!group.isShuttingDown()) {
-                    log.info("Quark runtime shutting down");
+                    log.fine("Quark runtime shutting down");
                     task.cancel(false);
                     group.shutdownGracefully();
                 }
@@ -160,7 +160,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             }
         }
         void start(NioEventLoopGroup group) {
-            log.finest("Quark runtime starting up");
+            log.fine("Quark runtime starting up");
             task = group.scheduleAtFixedRate(this, 200, 50, TimeUnit.MILLISECONDS);
         }
     };
