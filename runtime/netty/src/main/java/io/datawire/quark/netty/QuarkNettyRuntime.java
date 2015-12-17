@@ -160,7 +160,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             }
         }
         void start(NioEventLoopGroup group) {
-            task = group.scheduleAtFixedRate(idler , 2, 1, TimeUnit.SECONDS);
+            log.finest("Quark runtime starting up");
+            task = group.scheduleAtFixedRate(this, 200, 50, TimeUnit.MILLISECONDS);
         }
     };
 
