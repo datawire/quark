@@ -1,3 +1,3 @@
-var common = require('./pkg');
+var common = require('./pkg_lib');
 
 common.main();
