@@ -59,7 +59,7 @@ Run the Python client with
 
 ### Java
 
-Note: This example requires the quark-netty integration. It will be installed automatically if you do not already have it installed.
+Note: This example requires the datawire-quark-netty integration. It will be installed automatically if you do not already have it installed.
 
 Compile and install the Service Contract in hello.q:
 
@@ -86,10 +86,12 @@ Make sure the JS/Node setup has been completed:
         npm install datawire-quark-core
         npm install datawire-quark-node
 
-Compile and install the RPC Contract in hello.q:
+[[JMK preliminary testing shows ws is not required, core is installed automatically and does not need to be installed directly - must confirm can get to a fully working server without the explicit installs]]
+
+Compile and install the Service Contract in hello.q:
 
         quark --javascript package hello.q
-        npm install helloRPC/js/hello.tgz
+        npm install hello/js/hello.tgz
 
 Run the Javascript server with
 
