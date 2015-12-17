@@ -1,6 +1,6 @@
 # Quark's Twisted Runtime and associated
 
-__version__ = '0.2.4'
+__version__ = '0.2.5'
 
 from StringIO import StringIO
 import urlparse, traceback
