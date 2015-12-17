@@ -216,6 +216,11 @@ class Node(Integration):
         super(Node, self).__init__(**kwargs)
 
     def build(self):
+        self.rundir.join("package.json").write(textwrap.dedent("""\
+        {
+          "name" : "interop-harness"
+        }
+        """))
         self.npm_install(self.js_core_package)
         self.npm_install(self.compile.js_package)
         self.npm_install(self.js_node_package)
