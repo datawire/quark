@@ -243,6 +243,11 @@
             print("onHTTPInit " + request.getUrl());
         }
         void onHTTPError(HTTPRequest request, String error) {
+            self.timeout.cancel();
+            if (self.timeout.timedOut) {
+                print ("FAIL: too late error");
+                return;
+            }
             print("onHTTPError " + request.getUrl() + " : " + error);
         }
         void onHTTPFinal(HTTPRequest request) {
