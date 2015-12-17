@@ -82,11 +82,7 @@ Run the Java client with
 
 Make sure the JS/Node setup has been completed:
 
-        npm install ws
-        npm install datawire-quark-core
         npm install datawire-quark-node
-
-[[JMK preliminary testing shows ws is not required, core is installed automatically and does not need to be installed directly - must confirm can get to a fully working server without the explicit installs]]
 
 Compile and install the Service Contract in hello.q:
 
