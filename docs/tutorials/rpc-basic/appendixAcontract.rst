@@ -5,7 +5,7 @@ This file provides cross-checks for users who want to ensure they have properly 
 
 .. _part1ContractFinished:
 
-Part 1 simpleRPC.q contract
+Part 1 hello.q contract
 ---------------------------
 
 At the end of part 1 of the contract creation, your file should contain the following:
@@ -19,7 +19,7 @@ At the end of part 1 of the contract creation, your file should contain the foll
 
 .. _part2ContractFinished:
 
-Part 2 simpleRPC.q contract
+Part 2 hello.q contract
 ---------------------------
 
 At the end of part 2 of the contract creation, your file should contain the following:
@@ -44,7 +44,7 @@ At the end of part 2 of the contract creation, your file should contain the foll
 
 .. _part3ContractFinished:
 
-Part 3 simpleRPC.q contract
+Part 3 hello.q contract
 ---------------------------
 
 At the end of part 3 of the contract creation, your file should contain the following:
@@ -75,7 +75,7 @@ At the end of part 3 of the contract creation, your file should contain the foll
 
 .. _part4ContractFinished:
 
-Part 4 simpleRPC.q contract
+Part 4 hello.q contract
 ---------------------------
 
 At the end of part 4 of the contract creation, your file should contain the following:
