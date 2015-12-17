@@ -200,7 +200,9 @@ def push_java():
 
 def push_js():
     for sfx in ("core", "node"):
-        info = call("npm", "info", "datawire-quark-%s" % sfx, "--json", cwd=base(), dry=False)
+        with open(base("runtime/js-%s/package.json" % sfx)) as fd:
+            pkg = json.load(fd)
+        info = call("npm", "info", pkg["name"], "--json", cwd=base(), dry=False)
         latest = json.loads(info)["dist-tags"]["latest"]
         if latest == metadata["__js_runtime_version__"]:
             print "Skipping javascript %s, version %s already pushed." % (sfx, latest)
