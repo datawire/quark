@@ -90,6 +90,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                 e.printStackTrace(p);
                 p.close();
                 log.severe(msg.toString());
+                rs.fail(500, msg.toString());
             }
         }
     }
