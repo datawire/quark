@@ -21,4 +21,4 @@ Getting Started with RPC Tutorial
 
 Document Version
 ================
-Quark Language Reference |release|-|doc_version|
+Getting Started with RPC Tutorial |release|-|doc_version|

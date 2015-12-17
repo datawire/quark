@@ -53,3 +53,7 @@ Installation
 To install Quark, run the following command:
 
 ``pip install datawire-quark``
+
+Quark also includes core runtimes for each supported language and several runtime integrations that allow communication-related features of Quark to work in various languages and frameworks. More information about the runtime integrations and how to install them can be found on the :doc:`next page <integration>` of this documentation. The Python version of the core runtime is automatically installed by the base Quark installation above and the Java version will be installed automatically when needed, but you may need to manually install the Javascript core runtime if you aren't using the node runtime integration (if you are, it will be automatically installed when the node runtime integration is installed). To install the Javascript core runtime directly, run the following command:
+
+``npm install datawire-quark-core``
