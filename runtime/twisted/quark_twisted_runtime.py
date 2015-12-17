@@ -133,8 +133,6 @@ class _QuarkRequest(object):
         self.handler.onHTTPFinal(self.request)
 
     def onError(self, something):
-        import pdb
-        pdb.set_trace()
         self.handler.onHTTPError(self.request, str(something))
         self.handler.onHTTPFinal(self.request)
 
