@@ -343,7 +343,13 @@
                 var servlet = container.lookup(request.url)
                 if (servlet !== undefined) {
                     if (servlet.protocol.startsWith("http")) {
-                        servlet.servlet.onHTTPRequest(rq, rs);
+                        try {
+                            servlet.servlet.onHTTPRequest(rq, rs);
+                        } catch (err) {
+                            var e = ((err instanceof Error) ? err.stack : err);
+                            console.log(e);
+                            rs.fail(400, "" + e + "\r\n");
+                        }
                     } else {
                         rs.fail(400, "websockets here, move along\r\n");
                     }
