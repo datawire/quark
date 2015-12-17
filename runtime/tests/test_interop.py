@@ -91,8 +91,12 @@ class QuarkCompile(object):
     @property
     def java_package(self):
         self.compile()
-        return self.tmpdir / self.outdir / "java" / "target" / (
-            "interop-%s.jar" % self.version)
+        return self.java_dir / "target" / "interop-%s.jar" % self.version
+
+    @property
+    def java_dir(self):
+        self.compile()
+        return self.tmpdir / self.outdir / "java" 
 
     def __repr__(self):
         return "%scompiled %s in %s" % (
@@ -407,8 +411,8 @@ class Netty(Integration):
                   <scope>compile</scope>
                 </dependency>
                 <dependency>
-                  <groupId>io.datawire.quark.interop-test</groupId>
-                  <artifactId>interop-quark</artifactId>
+                  <groupId>interop</groupId>
+                  <artifactId>interop</artifactId>
                   <version>%(compile_version)s</version>
                 </dependency>
               </dependencies>
@@ -453,12 +457,7 @@ class Netty(Integration):
             }
         """)
         )
-        self.mvn("install::install-file",
-                "-Dfile=%s" % self.compile.java_package.strpath,
-                "-DgroupId=io.datawire.quark.interop-test",
-                "-DartifactId=interop-quark",
-                "-Dversion=%s" % self.compile.version,
-                "-Dpackaging=jar")
+        command(*self.mvn_command("install"), cwd=self.compile.java_dir)
         self.mvn("compile")
         self.mvn("exec:java",
                 "-Dexec.mainClass=interop.harness.Warmup")
@@ -491,12 +490,14 @@ class Netty(Integration):
         return self.mvn_command("exec:java",
                 "-Dexec.mainClass=interop.harness.Client",
                 "-Dexec.args=%s" % port,
+                "-q",
                 )
 
     def invoke_server(self, port):
         return self.mvn_command("exec:java",
                 "-Dexec.mainClass=interop.harness.Server",
                 "-Dexec.args=%s" % port,
+                "-q",
                 )
 
 
@@ -590,11 +591,16 @@ def compile(path, tmpdir, compile_cache):
 def integration_cache():
     return IntegrationCache()
 
-@pytest.fixture(params=Integration.registry)
+def integration_kwargs(tag):
+    return dict(params=Integration.registry,
+                ids=["%s-%s" % (tag, i.__name__) for i in Integration.registry],
+                )
+
+@pytest.fixture(**integration_kwargs("c"))
 def client_integration(request, compile, integration_cache):
     return integration_cache.get(request.param, compile)
 
-@pytest.fixture(params=Integration.registry)
+@pytest.fixture(**integration_kwargs("s"))
 def server_integration(request, compile, integration_cache):
     return integration_cache.get(request.param, compile)
 
