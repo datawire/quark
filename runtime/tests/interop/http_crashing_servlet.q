@@ -10,10 +10,8 @@ package interop { // package interop is mandatory
             TimeoutClient(runtime, port)
                 .url("/http_server")
                 .method("CRASH")
-                .expectCode(200)
-                .expectBody("Hello World!\r\n")
-                .expectHeader("X-Custom-Header", "custom value")
-                .check(0.5);
+                .expectCode(500)
+                .check(2.5);
         }
     }
 ////include http_server.qinc
