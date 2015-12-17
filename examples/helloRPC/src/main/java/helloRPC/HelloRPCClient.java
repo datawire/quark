@@ -7,7 +7,7 @@ import io.datawire.quark.netty.QuarkNettyRuntime;
 
 public class HelloRPCClient {
     public static void main(String[] args) {
-        QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+        QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
         runtime.setAllowSync(true);
         HelloClient client = new HelloClient(runtime, "http://localhost:8910/hello");
         Request request = new Request();

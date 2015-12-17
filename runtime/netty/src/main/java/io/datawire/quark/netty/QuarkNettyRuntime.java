@@ -76,6 +76,14 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     private final NioEventLoopGroup group = new NioEventLoopGroup();
     private Map<Integer,DatawireNettyHttpContainer> servers = new HashMap<>();
 
+    @Deprecated
+    public QuarkNettyRuntime() {
+    }
+
+    private QuarkNettyRuntime(boolean just_so_we_get_an_overload) {
+
+    }
+
     public void acquire() {
         synchronized(lock) {
             assert !locked;
@@ -627,4 +635,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         busy.getAndDecrement();
     }
 
+    static class NettyRuntimeHolder {
+        static final QuarkNettyRuntime runtime = new QuarkNettyRuntime(false);
+    }
+    public static QuarkNettyRuntime getRuntime() {
+        return NettyRuntimeHolder.runtime;
+    }
 }

@@ -437,7 +437,7 @@ class Netty(Integration):
             public class Client {
                 public static void main(String[] args) {
                     System.out.println("Netty client harness is started");
-                    QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
                     new interop.Entrypoint().client(runtime, Integer.parseInt(args[0]));
                 }
             }
@@ -449,7 +449,7 @@ class Netty(Integration):
             public class Server {
                 public static void main(String[] args) {
                     System.out.println("Netty server harness is started");
-                    QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
                     new interop.Entrypoint().server(runtime, Integer.parseInt(args[0]));
                 }
             }
@@ -461,7 +461,7 @@ class Netty(Integration):
             public class Warmup {
                 public static void main(String[] args) {
                     System.out.println("Netty warmup");
-                    QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
                     System.exit(0);
                 }
             }

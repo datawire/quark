@@ -28,7 +28,7 @@ import slack.event.UserTyping;
 
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
-        QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+        QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
         SlackClient client = new SlackClient(runtime, getToken());
         client.subscribe(new SlackBot());
         runtime.launch();

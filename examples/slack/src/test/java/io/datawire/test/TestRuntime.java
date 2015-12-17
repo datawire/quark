@@ -11,7 +11,7 @@ public class TestRuntime {
 
 	@Test
 	public void test() {
-		QuarkNettyRuntime runtime = new QuarkNettyRuntime();
+		QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
 		HTTPRequest request = new HTTPRequest("http://www.google.com");
 		HTTPHandler handler = new HTTPHandler() {
 			
