@@ -155,11 +155,27 @@ def update_package(name, dev):
         with open(name, "w") as fd:
             fd.write(updated)
 
+class Walker(object):
+
+    def __init__(self, ext):
+        self.ext = ext
+
+    def __call__(self, result, dir, fnames):
+        for f in fnames:
+            if f.endswith(self.ext):
+                result.append(os.path.join(dir, f))
+
+def walk(dir, ext):
+    result = []
+    os.path.walk(dir, Walker(ext), result)
+    return result
+
 def update_packages(dev):
-    for file in ("setup.py", "runtime/netty/pom.xml", "runtime/python-threaded/setup.py",
-                 "runtime/twisted/setup.py", "runtime/js-node/package.json",
-                 "examples/helloRPC/pom.xml", "examples/slack-bot/pom.xml"):
-        update_package(base(file), dev)
+    files = [base(f) for f in ("setup.py", "runtime/python-threaded/setup.py",
+                               "runtime/twisted/setup.py", "runtime/js-node/package.json")]
+    files.extend(walk(base(), "pom.xml"))
+    for f in files:
+        update_package(f, dev)
 
 def push_wheel(path):
     dest = tempfile.mkdtemp()
