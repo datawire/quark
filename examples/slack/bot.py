@@ -32,7 +32,7 @@ def main():
         exit("Failed to read Slack token. See examples/README.md for more information.")
 
     runtime = get_runtime()
-    client = slack.Client(runtime, token)
+    client = slack.SlackClient(runtime, token)
     client.post("#demo", "testing...")
     client.subscribe(Handler())
     runtime.join()

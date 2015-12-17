@@ -4,11 +4,11 @@
 
 package slack {
     @doc("A slack client can be used to make requests or subscribe to events from the slack service.")
-    class Client extends HTTPHandler {
+    class SlackClient extends HTTPHandler {
         Runtime runtime;
         String token;
 
-        Client(Runtime runtime, String token) {
+        SlackClient(Runtime runtime, String token) {
             self.runtime = runtime;
             self.token = token;
         }
@@ -41,7 +41,7 @@ package slack {
         WebSocket socket = null;
         int event_id = 0;
 
-        Subscription(Client client, SlackHandler handler) {
+        Subscription(SlackClient client, SlackHandler handler) {
             self.runtime = client.runtime;
             self.handler = handler;
         }

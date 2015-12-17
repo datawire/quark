@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 
-import slack.Client;
+import slack.SlackClient;
 import slack.SlackHandler;
 
 import slack.event.ChannelArchive;
@@ -21,6 +21,7 @@ import slack.event.ChannelRename;
 import slack.event.ChannelUnarchive;
 import slack.event.Hello;
 import slack.event.Message;
+import slack.event.MessageSent;
 import slack.event.SlackError;
 import slack.event.SlackEvent;
 import slack.event.UserTyping;
@@ -28,7 +29,7 @@ import slack.event.UserTyping;
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
         QuarkNettyRuntime runtime = new QuarkNettyRuntime();
-        Client client = new Client(runtime, getToken());
+        SlackClient client = new SlackClient(runtime, getToken());
         client.subscribe(new SlackBot());
         runtime.launch();
 
@@ -75,6 +76,10 @@ public class SlackBot implements SlackHandler {
         if (message.text != null && message.text.indexOf("java quark") > -1 ) {
             message.channel.send("java quarkbot: " + message.text);
         }
+    }
+    @Override
+    public void onMessageSent(MessageSent sent) {
+        // TODO Auto-generated method stub
     }
     @Override
     public void onUserTyping(UserTyping typing) {
