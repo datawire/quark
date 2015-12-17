@@ -1235,27 +1235,46 @@ File(
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block(
     Local(
+     Declaration(Type(Name(String)), Name(body), Call(Attr(Var(Name(request)),
+        Name(getBody))))),
+    Local(
      Declaration(Type(Name(JSONObject)), Name(envelope),
-      Call(Attr(Call(Attr(Var(Name(request)), Name(getBody))),
-        Name(parseJSON))))),
-    Local(
-     Declaration(Type(Name(String)), Name(method),
-      Call(Attr(Var(Name(envelope)), Name(__get__)), String("$method")))),
-    Local(
-     Declaration(Type(Name(JSONObject)), Name(json),
-      Call(Attr(Var(Name(envelope)), Name(__get__)), String("rpc")))),
-    Local(
-     Declaration(Type(Name(Object)), Name(argument), Call(Var(Name(fromJSON)),
-       Call(Var(Name(Class)), Call(Attr(Var(Name(json)), Name(__get__)),
-         String("$class"))), Var(Name(json))))),
-    Local(
-     Declaration(Type(Name(Object)), Name(result),
-      Call(Attr(Attr(Call(Attr(Call(Attr(Var(Name(self)), Name(getClass))),
-           Name(getField)), String("impl")), Name(type)), Name(invoke)),
-       Var(Name(impl)), Var(Name(method)), List(Var(Name(argument)))))),
-    ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
-      Call(Attr(Call(Var(Name(toJSON)), Var(Name(result))), Name(toString))))),
-    ExprStmt(Call(Attr(Var(Name(response)), Name(setCode)), Number(200))),
+      Call(Attr(Var(Name(body)), Name(parseJSON))))),
+    If(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(Name(envelope)),
+             Name(__get__)), String("$method")), Name(__eq__)),
+          Call(Attr(Var(Name(envelope)), Name(undefined)))), Name(__or__)),
+        Call(Attr(Call(Attr(Var(Name(envelope)), Name(__get__)),
+           String("rpc")), Name(__eq__)), Call(Attr(Var(Name(envelope)),
+           Name(undefined))))), Name(__or__)),
+      Call(Attr(Call(Attr(Call(Attr(Var(Name(envelope)), Name(__get__)),
+           String("rpc")), Name(__get__)), String("$class")), Name(__eq__)),
+       Call(Attr(Call(Attr(Var(Name(envelope)), Name(__get__)), String("rpc")),
+         Name(undefined))))), Block(
+      ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
+        Call(Attr(Call(Attr(String("Failed to understand request.\n\n"),
+            Name(__add__)), Var(Name(body))), Name(__add__)), String("\n")))),
+      ExprStmt(Call(Attr(Var(Name(response)), Name(setCode)), Number(400)))),
+     Block(
+      Local(
+       Declaration(Type(Name(String)), Name(method),
+        Call(Attr(Var(Name(envelope)), Name(__get__)), String("$method")))),
+      Local(
+       Declaration(Type(Name(JSONObject)), Name(json),
+        Call(Attr(Var(Name(envelope)), Name(__get__)), String("rpc")))),
+      Local(
+       Declaration(Type(Name(Object)), Name(argument),
+        Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
+          Call(Attr(Var(Name(json)), Name(__get__)), String("$class"))),
+         Var(Name(json))))),
+      Local(
+       Declaration(Type(Name(Object)), Name(result),
+        Call(Attr(Attr(Call(Attr(Call(Attr(Var(Name(self)), Name(getClass))),
+             Name(getField)), String("impl")), Name(type)), Name(invoke)),
+         Var(Name(impl)), Var(Name(method)), List(Var(Name(argument)))))),
+      ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
+        Call(Attr(Call(Var(Name(toJSON)), Var(Name(result))),
+          Name(toString))))),
+      ExprStmt(Call(Attr(Var(Name(response)), Name(setCode)), Number(200))))),
     ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(respond)),
       Var(Name(request)), Var(Name(response)))))),
 
@@ -1263,7 +1282,7 @@ File(
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(String)), Name(message)),
    Block(
-    ExprStmt(Call(Var(Name(print)),
+    ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(fail)),
       Call(Attr(Call(Attr(Call(Attr(String("RPC Server failed to register "),
             Name(__add__)), Var(Name(url))), Name(__add__)),
          String(" due to: ")), Name(__add__)), Var(Name(message))))))))

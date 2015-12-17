@@ -675,18 +675,26 @@ class Server<T> extends HTTPServlet {
     Runtime getRuntime() { return self.runtime; }
 
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
-        JSONObject envelope = request.getBody().parseJSON();
-        String method = envelope["$method"];
-        JSONObject json = envelope["rpc"];
-        Object argument = fromJSON(Class(json["$class"]), json);
-        Object result = self.getClass().getField("impl").type.invoke(impl, method, [argument]);
-        response.setBody(toJSON(result).toString());
-        response.setCode(200);
+        String body = request.getBody();
+        JSONObject envelope = body.parseJSON();
+        if (envelope["$method"] == envelope.undefined() ||
+            envelope["rpc"] == envelope.undefined() ||
+            envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
+            response.setBody("Failed to understand request.\n\n" + body + "\n");
+            response.setCode(400);
+        } else {
+            String method = envelope["$method"];
+            JSONObject json = envelope["rpc"];
+            Object argument = fromJSON(Class(json["$class"]), json);
+            Object result = self.getClass().getField("impl").type.invoke(impl, method, [argument]);
+            response.setBody(toJSON(result).toString());
+            response.setCode(200);
+        }
         getRuntime().respond(request, response);
     }
 
     void onServletError(String url, String message) {
-        print("RPC Server failed to register " + url + " due to: " + message);
+        getRuntime().fail("RPC Server failed to register " + url + " due to: " + message);
     }
 
 }

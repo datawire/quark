@@ -439,19 +439,25 @@ function Server_getRuntime() {
 Server.prototype.getRuntime = Server_getRuntime;
 
 function Server_onHTTPRequest(request, response) {
-    var envelope = _qrt.json_from_string((request).getBody());
-    var method = ((envelope).getObjectItem("$method")).getString();
-    var json = (envelope).getObjectItem("rpc");
-    var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
-    var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
-    (response).setBody((toJSON(result)).toString());
-    (response).setCode(200);
+    var body = (request).getBody();
+    var envelope = _qrt.json_from_string(body);
+    if (((((envelope).getObjectItem("$method")) === ((envelope).undefined())) || (((envelope).getObjectItem("rpc")) === ((envelope).undefined()))) || ((((envelope).getObjectItem("rpc")).getObjectItem("$class")) === (((envelope).getObjectItem("rpc")).undefined()))) {
+        (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
+        (response).setCode(400);
+    } else {
+        var method = ((envelope).getObjectItem("$method")).getString();
+        var json = (envelope).getObjectItem("rpc");
+        var argument = fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
+        var result = (((new Class(_qrt._getClass(this))).getField("impl")).type).invoke(this.impl, method, [argument]);
+        (response).setBody((toJSON(result)).toString());
+        (response).setCode(200);
+    }
     (this.getRuntime()).respond(request, response);
 }
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
 
 function Server_onServletError(url, message) {
-    _qrt.print(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
+    (this.getRuntime()).fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
 }
 Server.prototype.onServletError = Server_onServletError;
 

@@ -479,16 +479,22 @@ class Server<T> extends HTTPServlet {
         return (self).runtime;
     }
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
-        JSONObject envelope = ((((request).getBody)()).parseJSON)();
-        String method = ((envelope).__get__)("$method");
-        JSONObject json = ((envelope).__get__)("rpc");
-        Object argument = (fromJSON)((Class)(((json).__get__)("$class")), json);
-        Object result = (((((((self).getClass)()).getField)("impl")).type).invoke)(impl, method, [argument]);
-        ((response).setBody)((((toJSON)(result)).toString)());
-        ((response).setCode)(200);
+        String body = ((request).getBody)();
+        JSONObject envelope = ((body).parseJSON)();
+        if (((((((((envelope).__get__)("$method")).__eq__)(((envelope).undefined)())).__or__)(((((envelope).__get__)("rpc")).__eq__)(((envelope).undefined)()))).__or__)(((((((envelope).__get__)("rpc")).__get__)("$class")).__eq__)(((((envelope).__get__)("rpc")).undefined)()))) {
+            ((response).setBody)((((("Failed to understand request.\n\n").__add__)(body)).__add__)("\n"));
+            ((response).setCode)(400);
+        } else {
+            String method = ((envelope).__get__)("$method");
+            JSONObject json = ((envelope).__get__)("rpc");
+            Object argument = (fromJSON)((Class)(((json).__get__)("$class")), json);
+            Object result = (((((((self).getClass)()).getField)("impl")).type).invoke)(impl, method, [argument]);
+            ((response).setBody)((((toJSON)(result)).toString)());
+            ((response).setCode)(200);
+        }
         (((getRuntime)()).respond)(request, response);
     }
     void onServletError(String url, String message) {
-        (print)((((((("RPC Server failed to register ").__add__)(url)).__add__)(" due to: ")).__add__)(message));
+        (((getRuntime)()).fail)((((((("RPC Server failed to register ").__add__)(url)).__add__)(" due to: ")).__add__)(message));
     }
 }

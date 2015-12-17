@@ -13,17 +13,23 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         return (this).runtime;
     }
     public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
-        io.datawire.quark.runtime.JSONObject envelope = io.datawire.quark.runtime.JSONObject.parse((request).getBody());
-        String method = ((envelope).getObjectItem("$method")).getString();
-        io.datawire.quark.runtime.JSONObject json = (envelope).getObjectItem("rpc");
-        Object argument = Functions.fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
-        Object result = (((new Class(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).type).invoke(this.impl, method, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
-        (response).setBody((Functions.toJSON(result)).toString());
-        (response).setCode(200);
+        String body = (request).getBody();
+        io.datawire.quark.runtime.JSONObject envelope = io.datawire.quark.runtime.JSONObject.parse(body);
+        if (((((envelope).getObjectItem("$method"))==((envelope).undefined()) || (((envelope).getObjectItem("$method")) != null && ((envelope).getObjectItem("$method")).equals((envelope).undefined()))) || (((envelope).getObjectItem("rpc"))==((envelope).undefined()) || (((envelope).getObjectItem("rpc")) != null && ((envelope).getObjectItem("rpc")).equals((envelope).undefined())))) || ((((envelope).getObjectItem("rpc")).getObjectItem("$class"))==(((envelope).getObjectItem("rpc")).undefined()) || ((((envelope).getObjectItem("rpc")).getObjectItem("$class")) != null && (((envelope).getObjectItem("rpc")).getObjectItem("$class")).equals(((envelope).getObjectItem("rpc")).undefined())))) {
+            (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
+            (response).setCode(400);
+        } else {
+            String method = ((envelope).getObjectItem("$method")).getString();
+            io.datawire.quark.runtime.JSONObject json = (envelope).getObjectItem("rpc");
+            Object argument = Functions.fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
+            Object result = (((new Class(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).type).invoke(this.impl, method, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
+            (response).setBody((Functions.toJSON(result)).toString());
+            (response).setCode(200);
+        }
         (this.getRuntime()).respond(request, response);
     }
     public void onServletError(String url, String message) {
-        do{System.out.println(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));System.out.flush();}while(false);
+        (this.getRuntime()).fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
     }
     public String _getClass() {
         return "Server<Object>";

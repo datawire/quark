@@ -349,17 +349,23 @@ class Server(object):
         return (self).runtime
 
     def onHTTPRequest(self, request, response):
-        envelope = _JSONObject.parse((request).getBody());
-        method = ((envelope).getObjectItem(u"$method")).getString();
-        json = (envelope).getObjectItem(u"rpc");
-        argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
-        result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
-        (response).setBody((toJSON(result)).toString());
-        (response).setCode(200);
+        body = (request).getBody();
+        envelope = _JSONObject.parse(body);
+        if (((((envelope).getObjectItem(u"$method")) == ((envelope).undefined())) or (((envelope).getObjectItem(u"rpc")) == ((envelope).undefined()))) or ((((envelope).getObjectItem(u"rpc")).getObjectItem(u"$class")) == (((envelope).getObjectItem(u"rpc")).undefined()))):
+            (response).setBody(((u"Failed to understand request.\n\n") + (body)) + (u"\n"));
+            (response).setCode(400);
+        else:
+            method = ((envelope).getObjectItem(u"$method")).getString();
+            json = (envelope).getObjectItem(u"rpc");
+            argument = fromJSON(Class(((json).getObjectItem(u"$class")).getString()), json);
+            result = (((Class(_getClass(self))).getField(u"impl")).type).invoke(self.impl, method, _List([argument]));
+            (response).setBody((toJSON(result)).toString());
+            (response).setCode(200);
+
         (self.getRuntime()).respond(request, response);
 
     def onServletError(self, url, message):
-        _println((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
+        (self.getRuntime()).fail((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
 
     def _getClass(self):
         return u"Server<Object>"
