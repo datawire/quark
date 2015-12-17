@@ -3,7 +3,7 @@
 
 "use strict";
 
-var runtime = require("datawire-quark-node");
+var runtime = require("datawire-quarkdev-node");
 var hello = require("hello");
 
 function HelloImpl() {

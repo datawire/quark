@@ -142,7 +142,8 @@ def update_package(name, dev):
             orig_lines.append(line)
             if (('<artifactId>' in line and 'netty' in line) or
                 ('setup(name=' in line) or
-                ('"name":' in line)):
+                ('"name":' in line) or
+                ('require("' in line)):
                 lines.append(line.replace("quarkdev", "quark").replace("quark", target))
             else:
                 lines.append(line)
@@ -174,6 +175,7 @@ def update_packages(dev):
     files = [base(f) for f in ("setup.py", "runtime/python-threaded/setup.py",
                                "runtime/twisted/setup.py", "runtime/js-node/package.json")]
     files.extend(walk(base(), "pom.xml"))
+    files.extend(walk(base("examples"), ".js"))
     for f in files:
         update_package(f, dev)
 
