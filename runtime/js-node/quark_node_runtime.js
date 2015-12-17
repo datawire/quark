@@ -262,7 +262,6 @@
         setTimeout(function () { handler.onExecute(self); },
                    delayInSeconds * 1000);
     };
-    Runtime.prototype.launch = function () {};
 
     Runtime.prototype.codec = function() { return runtime.defaultCodec(); };
 
