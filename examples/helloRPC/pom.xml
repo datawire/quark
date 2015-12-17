@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>simpleRPC</groupId>
-  <artifactId>simpleRPC</artifactId>
+  <groupId>helloRPC</groupId>
+  <artifactId>helloRPC</artifactId>
   <version>0.0.1</version>
-  <name>simple rpc</name>
+  <name>hello rpc</name>
   <build>
     <plugins>
       <plugin>
@@ -30,7 +30,7 @@
     <dependency>
       <groupId>io.datawire.quark</groupId>
       <artifactId>quarkdev-netty</artifactId>
-      <version>0.2.0-SNAPSHOT</version>
+      <version>0.2.4</version>
       <scope>compile</scope>
     </dependency>
     <dependency>
