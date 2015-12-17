@@ -835,15 +835,16 @@ class Compiler:
         self.root.traverse(backend)
 
 import os, urllib
-from backend import Java, Python, JavaScript
+from backend import Java, Python, JavaScript, Ruby
 
 
-def main(srcs, java=None, python=None, javascript=None):
+def main(srcs, java=None, python=None, javascript=None, ruby=None):
     c = Compiler()
 
     if java: c.emitter(Java, java)
     if python: c.emitter(Python, python)
     if javascript: c.emitter(JavaScript, javascript)
+    if ruby: c.emitter(Ruby, ruby)
 
     try:
         for src in srcs:

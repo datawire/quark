@@ -104,7 +104,7 @@ def main(args):
     python = args["--python"]
     javascript = args["--javascript"]
     if args["--all"] or not (java or python or javascript):
-        java = python = javascript = True
+        java = python = javascript = ruby = True
 
     filenames = args["<file>"]
 
@@ -125,6 +125,7 @@ def main(args):
         java_dir = os.path.join(output, args["--java-out"])
         py_dir = os.path.join(output, args["--python-out"])
         js_dir = os.path.join(output, args["--javascript-out"])
+        rb_dir = os.path.join(output, "rb")
 
     assert "compile" in commands, (commands, args)
 
@@ -136,6 +137,8 @@ def main(args):
             compiler_args["python"] = py_dir
         if javascript:
             compiler_args["javascript"] = js_dir
+        if ruby:
+            compiler_args["ruby"] = rb_dir
         res = compiler.main(filenames, **compiler_args)
         if res is not None:
             return "quark (compile): %s" % res

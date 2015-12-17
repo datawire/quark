@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript
+import os, types, java, python, javascript, ruby
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr
@@ -590,3 +590,8 @@ class JavaScript(Backend):
 
     def __init__(self):
         Backend.__init__(self, "js", javascript)
+
+class Ruby(Backend):
+
+    def __init__(self):
+        Backend.__init__(self, "rb", ruby)
