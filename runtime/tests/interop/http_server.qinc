@@ -37,5 +37,12 @@
         }
     }
 
+    class CrashingServlet extends HelloServlet {
+        JSONObject trouble;
+        void onHTTPRequest(HTTPRequest rq, HTTPResponse rs) {
+            rs.setBody(self.trouble.getString());
+        }
+    }
+
 // }
 
