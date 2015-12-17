@@ -1,4 +1,4 @@
-from pkg_lib import main
+from pkg import main
 
 if __name__ == "__main__":
     main()

@@ -1,3 +1,3 @@
-var common = require('./pets_lib');
+var common = require('./pets');
 
 common.main();

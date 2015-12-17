@@ -1,3 +1,3 @@
-var common = require('./fancyprim_lib');
+var common = require('./fancyprim');
 
 common.main();

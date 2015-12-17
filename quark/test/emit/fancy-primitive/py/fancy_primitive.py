@@ -1,4 +1,4 @@
-from fancyprim_lib import main
+from fancyprim import main
 
 if __name__ == "__main__":
     main()

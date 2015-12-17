@@ -61,8 +61,6 @@ class Backend(object):
             else:
                 # XXX: first file is builtin, last file is reflector
                 roots = [self.gen.name(self.fname(r.files[1]))]
-        else:
-            roots += ["lib"]
         self.rootname = "_".join(roots)
 
         for d in self.definitions:

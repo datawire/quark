@@ -1,3 +1,3 @@
-var common = require('./test_lib');
+var common = require('./test');
 
 common.main();
