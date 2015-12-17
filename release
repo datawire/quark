@@ -269,7 +269,10 @@ ALIASES = {
 }
 
 def relver(args, component):
-    return args[component] or args["<version>"] or metadata[ALIASES[component]]
+    if component == "--doc":
+        return args[component] or metadata[ALIASES[component]]
+    else:
+        return args[component] or args["<version>"] or metadata[ALIASES[component]]
 
 def is_dev(version):
     return version.endswith("-SNAPSHOT") or version.endswith(".dev0")
