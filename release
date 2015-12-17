@@ -27,7 +27,7 @@ Usage:
     --doc <version>        Documentation version.
 """
 
-import json, os, random, subprocess, tempfile
+import json, os, random, re, subprocess, tempfile
 from docopt import docopt
 from collections import OrderedDict
 
@@ -138,6 +138,7 @@ def update_package(name, dev):
     lines = []
     orig_lines = []
     with open(name, "r") as fd:
+        update_version = False
         for line in fd:
             orig_lines.append(line)
             if (('<artifactId>' in line and 'netty' in line) or
@@ -191,10 +192,33 @@ def quark_version(version):
     update_python(base("quark/_metadata.py"), version=version)
     update_python(base("docs/conf.py"), version=version)
 
+def update_netty(name, version):
+    with open(name, "r") as fd:
+        orig_lines = []
+        lines = []
+        prev = ""
+        for line in fd:
+            orig_lines.append(line)
+            if '<version>' in line and '<artifactId>' in prev and 'quark' in prev and 'netty' in prev:
+                lines.append(re.sub('>.*<', '>%s<' % version, line))
+            else:
+                lines.append(line)
+            prev = line
+
+        updated = "".join(lines)
+        original = "".join(orig_lines)
+        if updated != original:
+            print "Updating %s: %s" % (name, version)
+            if __dry__: return
+            with open(name, "w") as fd:
+                fd.write(updated)
+
 def java_version(version):
     run("mvn", "-q", "versions:set", "-DgenerateBackupPoms=false", "-DnewVersion=%s" % version,
         cwd=base())
     update_python(base("quark/_metadata.py"), java_runtime_version=version)
+    for f in walk(base("examples"), "pom.xml"):
+        update_netty(f, version)
 
 def js_version(version):
     for name in ("runtime/js-core/package.json", "runtime/js-node/package.json"):
