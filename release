@@ -8,6 +8,8 @@ utility captures all this in a single place.
 
 Usage:
   release [--dry] version [<version>] [--dev] [--runtime-only] [--quark=<ver>] [--java=<ver>] [--js=<ver>] [--py=<ver>] [--doc=<ver>]
+  release [--dry] dev
+  release [--dry] prod
   release [--dry] push [--runtime-only]
   release [--dry] docs
   release [--dry] metadata
@@ -126,6 +128,38 @@ def update_python(name, **kwargs):
         if __dry__: return
         with open(name, "w") as fd:
             fd.write(updated)
+
+def update_package(name, dev):
+    if dev:
+        target = "quarkdev"
+    else:
+        target = "quark"
+
+    lines = []
+    orig_lines = []
+    with open(name, "r") as fd:
+        for line in fd:
+            orig_lines.append(line)
+            if (('<artifactId>' in line and 'netty' in line) or
+                ('setup(name=' in line) or
+                ('"name":' in line)):
+                lines.append(line.replace("quarkdev", "quark").replace("quark", target))
+            else:
+                lines.append(line)
+
+    updated = "".join(lines)
+    original = "".join(orig_lines)
+    if updated != original:
+        print "Updating %s: %s" % (name, target)
+        if __dry__: return
+        with open(name, "w") as fd:
+            fd.write(updated)
+
+def update_packages(dev):
+    for file in ("setup.py", "runtime/netty/pom.xml", "runtime/python-threaded/setup.py",
+                 "runtime/twisted/setup.py", "runtime/js-node/package.json",
+                 "examples/helloRPC/pom.xml", "examples/slack-bot/pom.xml"):
+        update_package(base(file), dev)
 
 def push_wheel(path):
     dest = tempfile.mkdtemp()
@@ -297,6 +331,10 @@ def main(args):
     pipcheck("wheel", "sphinx", "sphinx-better-theme")
     if args["version"]:
         version(args)
+    elif args["dev"]:
+        update_packages(dev=True)
+    elif args["prod"]:
+        update_packages(dev=False)
     elif args["push"]:
         push(args)
     elif args["docs"]:
