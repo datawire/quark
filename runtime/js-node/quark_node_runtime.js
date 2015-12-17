@@ -35,7 +35,7 @@
             this.url = options.url;
             this.socket = options.socket;
             this.isOpen = true;
-            handler.onWSConnected(self)
+            handler.onWSConnected(self);
         } else {
             this.url = options.url;
             this.socket = new WebSocket(options.url);
@@ -83,7 +83,7 @@
             return true;
         }
         return false;
-    }
+    };
 
     var http = require("http");
     var https = require("https");
@@ -144,22 +144,24 @@
     QuarkResponse.prototype.getCode = function () {
         return this.code;
     };
-    QuarkResponse.prototype.setCode = function(code) {};
+    QuarkResponse.prototype.setCode = function(code) {
+        this.code = code;
+    };
     QuarkResponse.prototype.getBody = function () {
         return this.body;
     };
-    QuarkResponse.prototype.setBody = function(body) {};
+    QuarkResponse.prototype.setBody = function(body) {
+        this.body = body;
+    };
     QuarkResponse.prototype.getHeader = function(key) {
         return this.headers[key.toLowerCase()];
     };
-    QuarkResponse.prototype.setHeader = function(key,value) {};
+    QuarkResponse.prototype.setHeader = function(key, value) {
+        this.headers[key.toLowerCase()] = value;
+    };
     QuarkResponse.prototype.getHeaders = function() {
-        var keys = new Array();
-        for (var key in this.headers) {
-            keys.push(key);
-        }
-        return keys;
-    }
+        return Object.keys(this.headers).slice();
+    };
 
     function IncomingRequest(request) {
         this.request = request;
@@ -174,64 +176,64 @@
 
     IncomingRequest.prototype.getUrl = function() {
         return this.request.url;
-    }
+    };
 
     IncomingRequest.prototype.getMethod = function() {
         return this.request.method;
-    }
+    };
 
     IncomingRequest.prototype.getBody = function() {
         return this.body.getStringUTF8(0, this.content_length);
-    }
+    };
 
     IncomingRequest.prototype.getHeader = function(key) {
         return this.request.headers[key.toLowerCase()];
-    }
+    };
 
     IncomingRequest.prototype.getHeaders = function() {
         return Object.keys(this.request.headers);
-    }
+    };
 
     function ServletResponse(response) {
         this.response = response;
         this.code = 500;
         this.body = "No response";
-        this.headers = {}
+        this.headers = {};
     }
 
     ServletResponse.prototype.getCode = function() {
         return this.code;
-    }
+    };
     ServletResponse.prototype.setCode = function(code) {
         this.code = code;
-    }
+    };
     ServletResponse.prototype.getBody = function() {
-        return body;
-    }
+        return this.body;
+    };
     ServletResponse.prototype.setBody = function(body) {
         this.body = body;
-    }
+    };
     ServletResponse.prototype.setHeader = function(key, value) {
         this.headers[key.toLowerCase()] = value;
-    }
+    };
     ServletResponse.prototype.getHeader = function(key) {
         return this.headers[key.toLowerCase()];
-    }
+    };
     ServletResponse.prototype.getHeaders = function() {
         return Object.keys(this.headers);
-    }
+    };
     ServletResponse.prototype.respond = function() {
-        this.setHeader('content-length', Buffer.byteLength(this.body));
+        this.setHeader("content-length", Buffer.byteLength(this.body));
         this.response.writeHead(this.code, this.headers);
         this.response.write(this.body, "utf-8");
         this.response.end();
-    }
+    };
     ServletResponse.prototype.fail = function(code, message) {
         this.code = code;
         this.body = message;
-        this.headers = {}
+        this.headers = {};
         this.respond();
-    }
+    };
 
     // CLASS Runtime
     function Runtime() {
@@ -267,19 +269,18 @@
 
 
     function QuarkContainer() {
-        this.servlets = {}
+        this.servlets = {};
     }
 
     QuarkContainer.prototype.register = function(uri, servlet) {
-        var old = this.servlets[uri.pathname];
         uri.servlet = servlet;
         this.servlets[uri.pathname] = uri;
-    }
+    };
 
     QuarkContainer.prototype.lookup = function(url) {
-        var uri = URL.parse(url, false)
-        return this.servlets[uri.pathname]
-    }
+        var uri = URL.parse(url, false);
+        return this.servlets[uri.pathname];
+    };
 
     function QuarkServer(container, runtime) {
         this.server = http.createServer();
@@ -296,13 +297,14 @@
                 slashes: uri.slashes,
                 hostname: addr.address,
                 port: addr.port,
-                pathname: uri.pathname})
+                pathname: uri.pathname
+            });
             servlet.onServletInit(url, self.runtime);
         });
         this.server.on("error", function(error) {
             servlet.onServletError(URL.format(uri), error.message);
         });
-    }
+    };
 
     QuarkServer.prototype.onListen = function(cb) {
         var self = this;
@@ -312,12 +314,12 @@
         } else {
             this.server.on("listening", function() {
                 addr = self.server.address();
-                cb(addr)
+                cb(addr);
             });
         }
-    }
+    };
 
-    var servers = {}
+    var servers = {};
 
     function make_server(port, hostname, runtime) {
         // XXX: we should be looking at host, too
@@ -325,13 +327,13 @@
         if (server !== undefined) {
             return server;
         }
-        var container = new QuarkContainer()
+        var container = new QuarkContainer();
         server = new QuarkServer(container, runtime);
-        if (port && port != 0 && port != '0') {
+        if (port && port !== 0 && port !== "0") {
             servers[port] = server;
         } else {
             server.server.on("listening", function() {
-                servers[server.server.address().port] = server
+                servers[server.server.address().port] = server;
             });
         }
         server.server.on("request", function(request, response) {
@@ -339,7 +341,7 @@
             var rs = new ServletResponse(response);
             rs.servlet_request = rq;
             request.on("end", function() {
-                var servlet = container.lookup(request.url)
+                var servlet = container.lookup(request.url);
                 if (servlet !== undefined) {
                     if (servlet.protocol.startsWith("http")) {
                         try {
@@ -358,7 +360,7 @@
             });
         });
         server.server.on("upgrade", function(request, socket, head) {
-            var handler = undefined;
+            var handler;
             var wss = new WebSocket.Server(
                 {noServer: true,
                  verifyClient : function(info, cb) {
@@ -377,13 +379,11 @@
                  }
                 });
             wss.handleUpgrade(request, socket, head, function(socket) {
-                new QuarkWebSocket({url: socket.upgradeReq.url,
-                                    socket: socket},
-                                   handler);
+                new QuarkWebSocket({url: socket.upgradeReq.url, socket: socket}, handler);
             });
         });
-        server.server.on("error", function(error) {
-            delete servers[port]
+        server.server.on("error", function(/* error */) {
+            delete servers[port];
         });
         server.server.listen(port, hostname);
         return server;
@@ -392,21 +392,16 @@
     Runtime.prototype.serveHTTP = function(url, servlet) {
         var self = this;
         var uri = URL.parse(url, false, true);
-        var path = uri.pathname ? uri.pathname : "";
-        if (!path.startsWith("/")) {
-            path = "/" + path;
-        }
-        var pathslash = path + (path.endsWith("/") ? "" : "/");
-        var server = undefined;
+        var server;
 
-        if (uri.protocol == "http:") {
+        if (uri.protocol === "http:") {
             if (uri.port === null ) {
-                uri.port = '80';
+                uri.port = "80";
             }
-        } else if (uri.protocol == "https:") {
+        } else if (uri.protocol === "https:") {
             // XXX: certificates...
             if (uri.port === null ) {
-                uri.port = '443';
+                uri.port = "443";
             }
             servlet.onHTTPError(url);
             return;
@@ -417,26 +412,21 @@
 
         server = make_server(uri.port, uri.hostname, self);
         server.bindServlet(uri, servlet);
-    }
+    };
 
     Runtime.prototype.serveWS = function(url, servlet) {
         var self = this;
         var uri = URL.parse(url, false, true);
-        var path = uri.pathname ? uri.pathname : "";
-        if (!path.startsWith("/")) {
-            path = "/" + path;
-        }
-        var pathslash = path + (path.endsWith("/") ? "" : "/");
-        var server = undefined;
+        var server;
 
-        if (uri.protocol == "ws:") {
+        if (uri.protocol === "ws:") {
             if (uri.port === null ) {
-                uri.port = '80';
+                uri.port = "80";
             }
-        } else if (uri.protocol == "wss:") {
+        } else if (uri.protocol === "wss:") {
             // XXX: certificates...
             if (uri.port === null ) {
-                uri.port = '443';
+                uri.port = "443";
             }
             servlet.onHTTPError(url);
             return;
@@ -446,7 +436,7 @@
         }
         server = make_server(uri.port, uri.hostname, self);
         server.bindServlet(uri, servlet);
-    }
+    };
 
     Runtime.prototype.respond = function(request, response) {
         if (response instanceof ServletResponse) {
@@ -458,7 +448,7 @@
         } else {
             // XXX: what to do with a response from another runtime
         }
-    }
+    };
 
     module.exports = new Runtime();
 

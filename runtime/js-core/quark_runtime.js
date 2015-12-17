@@ -67,8 +67,8 @@
     function urlencode(map) {
         var obj = {};
         map.forEach(function (value, key) {
-            obj[key.toString()] = value
-        })
+            obj[key.toString()] = value;
+        });
         return querystring.stringify(obj);
     }
     exports.urlencode = urlencode;
@@ -86,16 +86,18 @@
     function JSONObject_getType() {
         var t = typeof this.value;
         if (t === "object") {
-            if (this.value === null)
+            if (this.value === null) {
                 return "null";
-            if (Array.isArray(this.value))
+            }
+            if (Array.isArray(this.value)) {
                 return "list";
+            }
         }
         return t;
     }
     JSONObject.prototype.getType = JSONObject_getType;
 
-    function JSONObject_wrap(value) {
+    function _JSONObject_wrap(value) {
         var j = new JSONObject();
         j.value = value;
         return j;
@@ -106,7 +108,7 @@
         if (value === undefined) {
             return this.undefined();
         }
-        return JSONObject_wrap(value);
+        return _JSONObject_wrap(value);
     }
     JSONObject.prototype.getObjectItem = JSONObject_getObjectItem;
 
@@ -115,12 +117,12 @@
         if (value === undefined) {
             return this.undefined();
         }
-        return JSONObject_wrap(value);
+        return _JSONObject_wrap(value);
     }
     JSONObject.prototype.getListItem = JSONObject_getListItem;
 
     function JSONObject_getString() {
-        if (typeof this.value !== 'string') {
+        if (typeof this.value !== "string") {
             return null;
         }
         return this.value;
@@ -128,12 +130,12 @@
     JSONObject.prototype.getString = JSONObject_getString;
 
     function JSONObject_isString() {
-        return typeof this.value == 'string';
+        return typeof this.value === "string";
     }
     JSONObject.prototype.isString = JSONObject_isString;
 
     function JSONObject_getNumber() {
-        if (typeof this.value !== 'number') {
+        if (typeof this.value !== "number") {
             return null;
         }
         return this.value;
@@ -141,12 +143,12 @@
     JSONObject.prototype.getNumber = JSONObject_getNumber;
 
     function JSONObject_isNumber() {
-        return typeof this.value == 'number';
+        return typeof this.value === "number";
     }
     JSONObject.prototype.isNumber = JSONObject_isNumber;
 
     function JSONObject_getBool() {
-        if (typeof this.value !== 'boolean') {
+        if (typeof this.value !== "boolean") {
             return null;
         }
         return this.value;
@@ -154,7 +156,7 @@
     JSONObject.prototype.getBool = JSONObject_getBool;
 
     function JSONObject_isBool() {
-        return typeof this.value == 'boolean';
+        return typeof this.value === "boolean";
     }
     JSONObject.prototype.isBool = JSONObject_isBool;
 
@@ -223,7 +225,7 @@
     _JSONObject_undefined.setObject = undefined;
 
     function JSONObject_isObject() {
-        return this.getType() == 'object';
+        return this.getType() === "object";
     }
     JSONObject.prototype.isObject = JSONObject_isObject;
 
@@ -235,12 +237,12 @@
     _JSONObject_undefined.setList = undefined;
 
     function JSONObject_isList() {
-        return this.getType() == 'list';
+        return this.getType() === "list";
     }
     JSONObject.prototype.isList = JSONObject_isList;
 
     function JSONObject_setObjectItem(key, value) {
-        if (this.getType() !== 'object') {
+        if (this.getType() !== "object") {
             this.value = {};
         }
         this.value[key] = value.value;
@@ -250,10 +252,10 @@
     _JSONObject_undefined.setObjectItem = undefined;
 
     function JSONObject_setListItem(index, value) {
-        if (this.getType() !== 'list') {
+        if (this.getType() !== "list") {
             this.value = [];
         }
-        for(var i = this.value.length; i < index - 1; i++) {
+        for(var i = this.value.length; i < index - 1; i += 1) {
             this.value[i] = null;
         }
         this.value[index] = value.value;
@@ -263,9 +265,9 @@
     _JSONObject_undefined.setListItem = undefined;
 
     function JSONObject_size() {
-        if (this.getType() == 'list') {
+        if (this.getType() === "list") {
             return this.value.length;
-        } else if (this.getType() == 'object') {
+        } else if (this.getType() === "object") {
             return Object.keys(this.value).length;
         } else {
             return 1;
@@ -326,80 +328,76 @@
     HTTPRequest.prototype.getHeader = HTTPRequest_getHeader;
 
     function HTTPRequest_getHeaders() {
-        var keys = new Array();
-        for (key in this.headers) {
-            keys.push(key);
-        }
-        return keys;
+        return Object.keys(this.headers).slice();
     }
     HTTPRequest.prototype.getHeaders = HTTPRequest_getHeaders;
 
     exports.HTTPRequest = HTTPRequest;
 
-    function _Buffer(arg) {
+    function QuarkBuffer(arg) {
         if (Buffer.isBuffer(arg)) {
             this.data = arg;
         } else {
-            this.data = new Buffer(arg)
+            this.data = new Buffer(arg);
         }
         this.be = true;
     }
 
-    exports.Buffer = _Buffer;
+    exports.Buffer = QuarkBuffer;
 
-    function _Buffer_capacity() {
+    function QuarkBuffer_capacity() {
         return this.data.length;
     }
-    _Buffer.prototype.capacity = _Buffer_capacity;
+    QuarkBuffer.prototype.capacity = QuarkBuffer_capacity;
 
-    function _Buffer_getByte(index) {
+    function QuarkBuffer_getByte(index) {
         return this.data[index];
     }
-    _Buffer.prototype.getByte = _Buffer_getByte;
+    QuarkBuffer.prototype.getByte = QuarkBuffer_getByte;
 
-    function _Buffer_putByte(index, value) {
+    function QuarkBuffer_putByte(index, value) {
         this.data[index] = value;
     }
-    _Buffer.prototype.putByte = _Buffer_putByte;
+    QuarkBuffer.prototype.putByte = QuarkBuffer_putByte;
 
-    function _Buffer_getShort(index) {
+    function QuarkBuffer_getShort(index) {
         if (this.be) {
             return this.data.readInt16BE(index);
         } else {
             return this.data.readInt16LE(index);
         }
     }
-    _Buffer.prototype.getShort = _Buffer_getShort;
+    QuarkBuffer.prototype.getShort = QuarkBuffer_getShort;
 
-    function _Buffer_putShort(index, value) {
+    function QuarkBuffer_putShort(index, value) {
         if (this.be) {
             this.data.writeInt16BE(value, index);
         } else {
             this.data.writeInt16LE(value, index);
         }
     }
-    _Buffer.prototype.putShort = _Buffer_putShort;
+    QuarkBuffer.prototype.putShort = QuarkBuffer_putShort;
 
 
-    function _Buffer_getInt(index) {
+    function QuarkBuffer_getInt(index) {
         if (this.be) {
             return this.data.readInt32BE(index);
         } else {
             return this.data.readInt32LE(index);
         }
     }
-    _Buffer.prototype.getInt = _Buffer_getInt;
+    QuarkBuffer.prototype.getInt = QuarkBuffer_getInt;
 
-    function _Buffer_putInt(index, value) {
+    function QuarkBuffer_putInt(index, value) {
         if (this.be) {
             this.data.writeInt32BE(value, index);
         } else {
             this.data.writeInt32LE(value, index);
         }
     }
-    _Buffer.prototype.putInt = _Buffer_putInt;
+    QuarkBuffer.prototype.putInt = QuarkBuffer_putInt;
 
-    function _Buffer_getLong(index) {
+    function QuarkBuffer_getLong(index) {
         var sgn;
         if (this.be) {
             sgn = this.data.readIntBE(index, 2);
@@ -412,11 +410,11 @@
                 return this.data.readIntLE(index, 6);
             }
         }
-        throw new TypeError("value out of representable range " + this.data.toString('hex', index, index+8))
+        throw new TypeError("value out of representable range " + this.data.toString("hex", index, index+8));
     }
-    _Buffer.prototype.getLong = _Buffer_getLong;
+    QuarkBuffer.prototype.getLong = QuarkBuffer_getLong;
 
-    function _Buffer_putLong(index, value) {
+    function QuarkBuffer_putLong(index, value) {
         var sgn = value < 0 ? -1 : 0;
         if (this.be) {
             this.data.writeIntBE(value, index+2, 6);
@@ -426,64 +424,64 @@
             this.data.writeIntLE(sgn, index+6, 2);
         }
     }
-    _Buffer.prototype.putLong = _Buffer_putLong;
+    QuarkBuffer.prototype.putLong = QuarkBuffer_putLong;
 
-    function _Buffer_getFloat(index) {
+    function QuarkBuffer_getFloat(index) {
         if (this.be) {
             return this.data.readDoubleBE(index);
         } else {
             return this.data.readDoubleLE(index);
         }
     }
-    _Buffer.prototype.getFloat = _Buffer_getFloat;
+    QuarkBuffer.prototype.getFloat = QuarkBuffer_getFloat;
 
-    function _Buffer_putFloat(index, value) {
+    function QuarkBuffer_putFloat(index, value) {
         if (this.be) {
             this.data.writeDoubleBE(value, index);
         } else {
             this.data.writeDoubleLE(value, index);
         }
     }
-    _Buffer.prototype.putFloat = _Buffer_putFloat;
+    QuarkBuffer.prototype.putFloat = QuarkBuffer_putFloat;
 
-    function _Buffer_getStringUTF8(index, length) {
+    function QuarkBuffer_getStringUTF8(index, length) {
         return this.data.toString(undefined, index, index + length);
     }
-    _Buffer.prototype.getStringUTF8 = _Buffer_getStringUTF8;
+    QuarkBuffer.prototype.getStringUTF8 = QuarkBuffer_getStringUTF8;
 
-    function _Buffer_putStringUTF8(index, value) {
+    function QuarkBuffer_putStringUTF8(index, value) {
         var length = Buffer.byteLength(value);
         var actual = this.data.write(value, index, length);
-        if (length != actual) {
+        if (length !== actual) {
             throw new RangeError("String does not fit");
         }
         return actual;
     }
-    _Buffer.prototype.putStringUTF8 = _Buffer_putStringUTF8;
+    QuarkBuffer.prototype.putStringUTF8 = QuarkBuffer_putStringUTF8;
 
-    function _Buffer_getSlice(index, length) {
-        var other = new _Buffer(this.data.slice(index, index + length));
+    function QuarkBuffer_getSlice(index, length) {
+        var other = new QuarkBuffer(this.data.slice(index, index + length));
         other.be = this.be;
         return other;
     }
-    _Buffer.prototype.getSlice = _Buffer_getSlice;
+    QuarkBuffer.prototype.getSlice = QuarkBuffer_getSlice;
 
-    function _Buffer_setSlice(index, buffer, offset, length) {
+    function QuarkBuffer_setSlice(index, buffer, offset, length) {
         buffer.data.copy(this.data, index, offset, offset + length);
     }
-    _Buffer.prototype.setSlice = _Buffer_setSlice;
+    QuarkBuffer.prototype.setSlice = QuarkBuffer_setSlice;
 
-    function _Buffer_littleEndian() {
-        var other = new _Buffer(this.data);
+    function QuarkBuffer_littleEndian() {
+        var other = new QuarkBuffer(this.data);
         other.be = false;
         return other;
     }
-    _Buffer.prototype.littleEndian = _Buffer_littleEndian;
+    QuarkBuffer.prototype.littleEndian = QuarkBuffer_littleEndian;
 
-    function _Buffer_isNetworkByteOrder() {
+    function QuarkBuffer_isNetworkByteOrder() {
         return this.be;
     }
-    _Buffer.prototype.isNetworkByteOrder = _Buffer_isNetworkByteOrder;
+    QuarkBuffer.prototype.isNetworkByteOrder = QuarkBuffer_isNetworkByteOrder;
 
     function Codec() {
         // empty
@@ -492,12 +490,12 @@
     var codec = new Codec();
 
     function Codec_buffer(capacity) {
-        return new _Buffer(capacity);
+        return new QuarkBuffer(capacity);
     }
     Codec.prototype.buffer = Codec_buffer;
 
     function Codec_toHexdump(buffer, offset, length, spaceScale) {
-        var hex = buffer.data.toString('hex', offset, offset + length);
+        var hex = buffer.data.toString("hex", offset, offset + length);
         var stride = Math.pow(2, (spaceScale+1));
         var ret = hex.slice(0, stride);
         for (var i = stride; i < hex.length; i += stride) {
@@ -510,17 +508,17 @@
     function Codec_fromHexdump(hex) {
         hex = hex.replace(/[ \r\n\t]/g, "");
         hex = hex.replace(/^0[Xx]/, "");
-        return new _Buffer(new Buffer(hex, "hex"));
+        return new QuarkBuffer(new Buffer(hex, "hex"));
     }
     Codec.prototype.fromHexdump = Codec_fromHexdump;
 
     function Codec_toBase64(buffer, offset, length) {
-        return buffer.data.toString('base64', offset, offset + length);
+        return buffer.data.toString("base64", offset, offset + length);
     }
     Codec.prototype.toBase64 = Codec_toBase64;
 
     function Codec_fromBase64(base64) {
-        return new _Buffer(new Buffer(base64, "base64"));
+        return new QuarkBuffer(new Buffer(base64, "base64"));
     }
     Codec.prototype.fromBase64 = Codec_fromBase64;
 
@@ -531,9 +529,9 @@
     exports.defaultCodec = defaultCodec;
 
     function _getClass(obj) {
-        if (typeof obj == "boolean") { return "bool"; }
-        if (typeof obj == "number") { return "float"; }
-        if (typeof obj == "string") { return "String"; }
+        if (typeof obj === "boolean") { return "bool"; }
+        if (typeof obj === "number") { return "float"; }
+        if (typeof obj === "string") { return "String"; }
         if (obj instanceof Array) { return "List<Object>"; }
         if (obj instanceof Map) { return "Map<Object,Object>"; }
 
