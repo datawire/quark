@@ -142,6 +142,7 @@ class Backend(object):
             lines = []
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
+        packages[(self.rootname,)] = ""
         files = self.gen.package(name, version, packages, self.files)
         for name, content in files.items():
             path = os.path.join(target, name)
