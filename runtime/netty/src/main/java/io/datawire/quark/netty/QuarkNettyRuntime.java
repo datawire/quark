@@ -260,14 +260,6 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         }, Double.valueOf(delayInSeconds * 1000).intValue(), TimeUnit.MILLISECONDS);
     }
 
-    public void launch() {
-        try {
-            group.awaitTermination(1, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            // empty
-        }
-    }
-
     @Override
     public void request(final HTTPRequest request, HTTPHandler handler) {
         final HTTPHandler ht_handler = wrap(handler);
