@@ -356,6 +356,7 @@ class Netty(Integration):
         self.m2_repo.ensure(dir=1)
         context = dict(
             quark_netty_version = self.quark_netty_version,
+            quark_netty_artifact = self.quark_netty_artifact,
             m2_repo = self.m2_repo.strpath,
             compile_version = self.compile.version,
             )
@@ -406,7 +407,7 @@ class Netty(Integration):
               <dependencies>
                 <dependency>
                   <groupId>io.datawire.quark</groupId>
-                  <artifactId>quark-netty</artifactId>
+                  <artifactId>%(quark_netty_artifact)s</artifactId>
                   <version>%(quark_netty_version)s</version>
                   <scope>compile</scope>
                 </dependency>
@@ -477,6 +478,12 @@ class Netty(Integration):
         pom = self.quark_netty_package.join("pom.xml").read()
         version = pom.split("<version>",1)[1].split("</version>",1)[0]
         return version
+
+    @property
+    def quark_netty_artifact(self):
+        pom = self.quark_netty_package.join("pom.xml").read()
+        artifactId = pom.split("<artifactId>",1)[1].split("</artifactId>",1)[0]
+        return artifactId
 
     @property
     def quark_netty_package(self):
