@@ -3,7 +3,7 @@
 __version__ = '0.2.2'
 
 from StringIO import StringIO
-import urlparse
+import urlparse, traceback
 
 from quark_runtime import Buffer
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
@@ -206,7 +206,12 @@ class _HTTPServletResource:
         rq = _ServletRequest(request)
         rs = _ServletResponse(request)
         rs.servlet_request = rq
-        self.servlet.onHTTPRequest(rq, rs)
+        try:
+            self.servlet.onHTTPRequest(rq, rs)
+        except:
+            e = traceback.format_exc()
+            log.err()
+            rs.fail(500, e)
         return server.NOT_DONE_YET
 
 
