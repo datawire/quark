@@ -65,12 +65,12 @@ Separate packages are generated for each target language as follows:
 ========== ======================= ============================================
 Language   Package Format          Output Location                             
 ========== ======================= ============================================
-Java       Jar                     *base*/target/test-0.1.0.jar                
+Java       Jar                     *base*/target/test-*version*.jar                
 Javascript npm                     *base*/*package*.tgz                        
-Python     pip                     *base*/dist/*package*-0.1.0-py2-none-any.whl  
+Python     pip                     *base*/dist/*package*-*version*-py2-none-any.whl  
 ========== ======================= ============================================
 
-where *base* is the code output directory for the relevant target language and *package* is the name of the first package encountered within the compiled Quark code starting from the start of the first file in the list of files.
+where *base* is the code output directory for the relevant target language, *package* is the name of the first package encountered within the supplied Quark code starting from the start of the first file in the list of files, and *version* is the value of the first @version annotation encountered within the supplied Quark code starting from the start of the first file in the list of files. If no @version annotation is encountered, the default 0.0.1 version number is used.
 
 Command Options
 ---------------
