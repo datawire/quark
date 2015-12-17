@@ -10,6 +10,5 @@ public class HelloRPCServer {
         HelloImpl impl = new HelloImpl();
         HelloServer server = new HelloServer(runtime, impl);
         runtime.serveHTTP("http://127.0.0.1:8910/hello", server);
-        runtime.launch();                    // XXX: do we want to promote this
     }
 }
