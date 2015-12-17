@@ -22,11 +22,14 @@ class Response implements HTTPResponse {
     private String body;
     private HttpHeaders headers;
     private IncomingRequest request;
+    private final QuarkNettyRuntime runtime;
 
-    public Response(ChannelHandlerContext ctx, IncomingRequest request) {
+    public Response(ChannelHandlerContext ctx, IncomingRequest request, QuarkNettyRuntime runtime) {
         this.ctx = ctx;
         this.request = request;
         this.headers = new DefaultHttpHeaders();
+        this.runtime = runtime;
+        this.runtime.busy();
     }
 
     @Override
@@ -92,5 +95,6 @@ class Response implements HTTPResponse {
 
     public void finish() {
         request.release();
+        runtime.idle();
     }
 }

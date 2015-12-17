@@ -132,7 +132,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
         void resolve(Route route);
     }
 
-    private final Runtime runtime;
+    private final QuarkNettyRuntime runtime;
     private final Object lock = new Object();
     private Map<String, Route> servlets; // locked by lock
     private List<Route> pending;         // locked by lock
@@ -140,7 +140,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
     private RouteResolver resolver;      // locked by lock
 
     public DatawireNettyHttpContainer(
-            io.datawire.quark.runtime.Runtime runtime) {
+            QuarkNettyRuntime runtime) {
         this.runtime = runtime;
         servlets = new HashMap<>();
         pending = new ArrayList<>();
@@ -165,7 +165,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                 // XXX: add RCU for servlets
                 route = servlets.get(path);
             }
-            Response rs = new Response(ctx, rq);
+            Response rs = new Response(ctx, rq, runtime);
             if (route != null) {
                 route.invoke(ctx, rq, rs);
             } else {

@@ -13,11 +13,14 @@ public abstract class AbstractDatawireRuntime {
 
     public abstract boolean isAllowSync();
 
+    protected abstract void busy();
+    protected abstract void idle();
+
     protected WSHandler wrap(final WSHandler handler) {
+        if (handler == null)
+            return null;
         initialize();
-        if (!isAllowSync() || handler == null) {
-            return handler;
-        }
+        busy();
         return new WSHandler() {
             @Override
             public void onWSBinary(WebSocket socket, Buffer message) {
@@ -50,6 +53,7 @@ public abstract class AbstractDatawireRuntime {
                     handler.onWSFinal(socket);
                 } finally {
                     wakeup();
+                    idle();
                 }
             }
             @Override
@@ -80,10 +84,10 @@ public abstract class AbstractDatawireRuntime {
     }
 
     protected HTTPHandler wrap(final HTTPHandler handler) {
+        if (handler == null)
+            return null;
         initialize();
-        if (!isAllowSync() || handler == null) {
-            return handler;
-        }
+        busy();
         return new HTTPHandler() {
             @Override
             public void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
@@ -107,6 +111,7 @@ public abstract class AbstractDatawireRuntime {
                     handler.onHTTPFinal(request);
                 } finally {
                     wakeup();
+                    idle();
                 }
             }
             @Override
@@ -121,10 +126,10 @@ public abstract class AbstractDatawireRuntime {
     }
 
     protected Task wrap(final Task handler) {
+        if (handler == null)
+            return null;
         initialize();
-        if (!isAllowSync() || handler == null) {
-            return handler;
-        }
+        busy();
         return new Task() {
             @Override
             public void onExecute(Runtime runtime) {
@@ -132,16 +137,17 @@ public abstract class AbstractDatawireRuntime {
                     handler.onExecute(runtime);
                 } finally {
                     wakeup();
+                    idle();
                 }
             }
         };
     }
 
     protected HTTPServlet wrap(final HTTPServlet servlet) {
+        if (servlet == null)
+            return null;
         initialize();
-        if (!isAllowSync() || servlet == null) {
-            return servlet;
-        }
+        busy();
         return new HTTPServlet() {
 
             @Override
@@ -177,16 +183,17 @@ public abstract class AbstractDatawireRuntime {
                     servlet.onServletEnd(url);
                 } finally {
                     wakeup();
+                    idle();
                 }
             }
         };
     }
 
     protected WSServlet wrap(final WSServlet servlet) {
+        if (servlet == null)
+            return null;
         initialize();
-        if (!isAllowSync() || servlet == null) {
-            return servlet;
-        }
+        busy();
         return new WSServlet() {
 
             @Override
@@ -213,13 +220,14 @@ public abstract class AbstractDatawireRuntime {
                     servlet.onServletEnd(url);
                 } finally {
                     wakeup();
+                    idle();
                 }
             }
 
             @Override
             public WSHandler onWSConnect(HTTPRequest upgrade_request) {
                 try {
-                    return servlet.onWSConnect(upgrade_request);
+                    return wrap(servlet.onWSConnect(upgrade_request));
                 } finally {
                     wakeup();
                 }

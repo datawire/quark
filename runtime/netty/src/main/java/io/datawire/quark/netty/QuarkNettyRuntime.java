@@ -54,6 +54,7 @@ import io.netty.util.CharsetUtil;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.Promise;
+import io.netty.util.concurrent.ScheduledFuture;
 
 import java.net.InetSocketAddress;
 import java.net.URI;
@@ -62,11 +63,14 @@ import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.net.ssl.SSLException;
 
 public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtime {
-
+    private final static Logger log = Logger.getLogger(QuarkNettyRuntime.class.getName());
     private final Object lock = new Object();
     private boolean locked = false;
     private final NioEventLoopGroup group = new NioEventLoopGroup();
@@ -137,6 +141,28 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             }
         }
     };
+    private Idler idler = new Idler();
+    
+    class Idler implements Runnable {
+        private ScheduledFuture<?> task;
+        @Override
+        public void run() {
+            if (busy.get() == 0) {
+                if (!group.isShuttingDown()) {
+                    log.info("Quark runtime shutting down");
+                    task.cancel(false);
+                    group.shutdownGracefully();
+                }
+            } else {
+                if (log.isLoggable(Level.FINEST)) {
+                    log.finest("Quark runtime busy count: " + busy.get());
+                }
+            }
+        }
+        void start(NioEventLoopGroup group) {
+            task = group.scheduleAtFixedRate(idler , 2, 1, TimeUnit.SECONDS);
+        }
+    };
 
     @Override
     protected void wakeup() {
@@ -146,6 +172,9 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     protected void initialize() {
         synchronized (lock) {
+            if (!initialized) {
+                idler.start(group);
+            }
             initialized = true;
         }
     }
@@ -529,7 +558,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 response.fail(500, "Unmatched request and response");
             }
         } else {
-            // XXX what to do with a response from a different runtime?
+            throw new IllegalArgumentException("Response does not belong to this integration");
         }
     }
 
@@ -584,6 +613,17 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         final DatawireNettyHttpContainer datawireNettyHttpContainer;
         datawireNettyHttpContainer = makeContainer(scheme, host, port, sslCtx);
         datawireNettyHttpContainer.addRoute(scheme, path, servlet_w);
+    }
+
+    private java.util.concurrent.atomic.AtomicLong busy = new AtomicLong();
+    @Override
+    protected void busy() {
+        busy.getAndIncrement();
+    }
+
+    @Override
+    protected void idle() {
+        busy.getAndDecrement();
     }
 
 }
