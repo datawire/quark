@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Defining the Service Contract &mdash; Quark 0.2.7 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.2.7 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Tutorial" href="index.html" />
+    <link rel="next" title="Building the RPC Example" href="build.html" />
+    <link rel="prev" title="Requirements and Setup" href="setup.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Quark 0.2.7 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="setup.html" title="Previous document">Requirements and Setup</a>
+        </li>
+        <li>
+          <a href="build.html" title="Next document">Building the RPC Example</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.2.7 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Tutorial</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="defining-the-service-contract">
+<h1>Defining the Service Contract<a class="headerlink" href="#defining-the-service-contract" title="Permalink to this headline">¶</a></h1>
+<p>The first step when working with RPC is to define a contract in Quark. This contract defines the value classes, interfaces, and interaction patterns as well as how they can be used together.</p>
+<p>Note: If you don&#8217;t want step-by-step guidance about how to create the contract and just want to start from a completed contract, there is a <a class="reference internal" href="#fullexamplecontract"><span>link to the full contract file</span></a> at the bottom of this page.</p>
+<div class="section" id="part-1-creating-the-framework">
+<span id="part1framework"></span><h2>Part 1: Creating the framework<a class="headerlink" href="#part-1-creating-the-framework" title="Permalink to this headline">¶</a></h2>
+<p>This section helps you define the necessary structure for your service contract.</p>
+<p>Step 1: Create a text file in your favorite editor called hello.q</p>
+<p>Step 2: Add <code class="docutils literal"><span class="pre">&#64;version(0.1.0)</span></code> as the first line of the file. This sets the version number of the contract to 0.1.0</p>
+<p>Step 3: Add a package called hello directly underneath the version. This package will contain the contract details.</p>
+<p>See <a class="reference internal" href="appendixAcontract.html#part1contractfinished"><span>this page</span></a> for the file state at the end of Part 1.</p>
+</div>
+<div class="section" id="part-2-adding-value-classes">
+<span id="part2classes"></span><h2>Part 2: Adding value classes<a class="headerlink" href="#part-2-adding-value-classes" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the value classes needed by the Hello World RPC service. These classes hold the data that will be passed between the client and the server.</p>
+<p>Step 1: Add a Request value class</p>
+<p>Do the following:</p>
+<ol class="loweralpha simple">
+<li>Define a class called Request inside the hello package</li>
+<li>Add a String property called text to the class. This will hold the contents of the request body.</li>
+</ol>
+<p>Step 2: Add a Response value class</p>
+<p>Do the following:</p>
+<ol class="loweralpha simple">
+<li>Define a class called Response inside the hello package</li>
+<li>Add a String property called result to the class. This will hold the contents of the response body.</li>
+</ol>
+<p>See <a class="reference internal" href="appendixAcontract.html#part2contractfinished"><span>this page</span></a> for the file state at the end of Part 2.</p>
+</div>
+<div class="section" id="part-3-interface">
+<span id="part3interface"></span><h2>Part 3: Interface<a class="headerlink" href="#part-3-interface" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the interface needed by the Hello World RPC service. The interface contains the details of the interaction pattern being used, in this case a single request that generates a single response.</p>
+<p>Step 1: Define an interface called Hello</p>
+<ol class="loweralpha simple">
+<li>Hello should extend the Service interface supplied by Quark. This interface uses Quark integration types to define the actual communication mechanism between the client and the server.</li>
+<li>Hello should specify use of the rpc interaction pattern by including <code class="docutils literal"><span class="pre">&#64;delegate(self.rpc)</span></code>. Note that this is a workaround; the preferred method for specifying the simple rpc interaction pattern is <code class="docutils literal"><span class="pre">&#64;delegate(rpc)</span></code> but it is not currently working.</li>
+<li>Hello should define a method named hello() that expects a request as an input parameter and returns a response object. This is the method that glues together the request and response.</li>
+</ol>
+<p>[[JMK not quite following the magic that makes this method work - I&#8217;d like to say a bit more here. I need to actually compile the .q file and run the example which I haven&#8217;t managed yet]]</p>
+<p>See <a class="reference internal" href="appendixAcontract.html#part3contractfinished"><span>this page</span></a> for the file state at the end of Part 3.</p>
+</div>
+<div class="section" id="part-4-client">
+<span id="part4client"></span><h2>Part 4: Client<a class="headerlink" href="#part-4-client" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the example client in Quark. This definition will be used to generate client code in each supported target language.</p>
+<p>Step 1: Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined.</p>
+<p>See <a class="reference internal" href="appendixAcontract.html#part4contractfinished"><span>this page</span></a> for the file state at the end of Part 4.</p>
+</div>
+<div class="section" id="part-5-server-stubs">
+<span id="part5server"></span><h2>Part 5: Server Stubs<a class="headerlink" href="#part-5-server-stubs" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the example server APIs in Quark. This definition will be used to generate server stubs in each supported target language.</p>
+<p>Step 1: Define an empty class named HelloServer that extends the Quark Server integration type.</p>
+<p>That&#8217;s it! The contract is fully defined now. You can follow the link below to a copy of the full contract in the Quark Examples repository.</p>
+</div>
+<div class="section" id="full-contract">
+<span id="fullexamplecontract"></span><h2>Full Contract<a class="headerlink" href="#full-contract" title="Permalink to this headline">¶</a></h2>
+<p>A full copy of the RPC contract for this example can be found <a class="reference external" href="https://github.com/datawire/quark/blob/master/examples/helloRPC/helloRPC.q">here</a> - the file you constructed following the instructions on this page should match it exactly.</p>
+<p>[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Defining the Service Contract</a><ul>
+<li><a class="reference internal" href="#part-1-creating-the-framework">Part 1: Creating the framework</a></li>
+<li><a class="reference internal" href="#part-2-adding-value-classes">Part 2: Adding value classes</a></li>
+<li><a class="reference internal" href="#part-3-interface">Part 3: Interface</a></li>
+<li><a class="reference internal" href="#part-4-client">Part 4: Client</a></li>
+<li><a class="reference internal" href="#part-5-server-stubs">Part 5: Server Stubs</a></li>
+<li><a class="reference internal" href="#full-contract">Full Contract</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="setup.html"
+                        title="previous chapter">Requirements and Setup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="build.html"
+                        title="next chapter">Building the RPC Example</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/contract.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="setup.html" title="Previous document">Requirements and Setup</a>
+        </li>
+        <li>
+          <a href="build.html" title="Next document">Building the RPC Example</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.2.7 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Tutorial</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

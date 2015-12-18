@@ -1,0 +1,155 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Requirements and Setup &mdash; Quark 0.2.7 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.2.7',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.2.7 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Tutorial" href="index.html" />
+    <link rel="next" title="Defining the Service Contract" href="contract.html" />
+    <link rel="prev" title="Introduction to RPC" href="intro.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Quark 0.2.7 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="intro.html" title="Previous document">Introduction to RPC</a>
+        </li>
+        <li>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.2.7 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Tutorial</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="requirements-and-setup">
+<h1>Requirements and Setup<a class="headerlink" href="#requirements-and-setup" title="Permalink to this headline">¶</a></h1>
+<p>Quark currently supports one interaction pattern with the most basic request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, generate clients in each supported language, and generate server stubs in each supported language. It will also walk you through writing the actual server code for one language then how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.</p>
+<p>In order to use RPC with Quark you must have Quark installed, the Quark core runtime for the desired language or languages, and the Quark integration module installed matching the development environment you&#8217;re using to write your code.</p>
+<p>This tutorial will use clients in Java, Javascript, and Python and a server in XXX. We expect you to have the following tools installed as prerequisites:</p>
+<ul class="simple">
+<li></li>
+</ul>
+<p>If you haven&#8217;t already done so, run the following commands to install Quark, the Quark core runtime component for each language, and integrations needed to follow along with this tutorial:</p>
+<p>1. pip install datawire-quark
+2.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="intro.html"
+                        title="previous chapter">Introduction to RPC</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="contract.html"
+                        title="next chapter">Defining the Service Contract</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/setup.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="intro.html" title="Previous document">Introduction to RPC</a>
+        </li>
+        <li>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.2.7 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Tutorial</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
