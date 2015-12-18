@@ -1,23 +1,22 @@
 # Hello RPC Example
 
-HelloRPC demonstrates how Quark can implement cross-language RPC.
+This example demonstrates how Quark can implement cross-language RPC.
 
 ## Hello Service Contract
 
-The Hello Service contract is expressed in hello.q. There are two
-value classes (Request and Response) and a service interface
-(Hello). The Quark file also defines the names of the client class
-(HelloClient) and the server stub class (HelloServer).
+The Hello service contract is expressed in hello.q. The service
+contract includes the service interface (hello.Hello) along with the
+value classes (hello.Request and hello.Response) used to interact with
+the service. The hello.q file also defines the names of the client and
+server stubs (hello.HelloClient, and hello.HelloServer).
 
 ### Writing a client
 
-The client code files (pyclient.py, HelloRPCClient.java) follow the
-same basic pattern. A client instance can be constructed by passing in
-to the client constructor the runtime integration and the URL of the
-server. The only defined function (hello) requires an argument, an
-instance of Request, and returns an instance of Response. The code
-`response = client.hello(request)` is what causes the remote procedure
-call to take place.
+The example provides two clients written to use the service
+(pyclient.py, HelloRPCClient.java). Both these clients follow the same
+basic pattern. A client instance can be constructed by passing in to
+the client constructor the runtime integration and the URL of the
+server.
 
 ### Writing a server
 
@@ -33,7 +32,8 @@ The clients expect to find the service on http://127.0.0.1:8910/hello
 and each server runs there. Thus you may run a single server at a
 time, as well as any number of clients.
 
-To get started, download the example by cloning its git repository as follows:
+To get started, download the example by cloning its git repository as
+follows:
 
         git clone https://github.com/datawire/quark.git
 
