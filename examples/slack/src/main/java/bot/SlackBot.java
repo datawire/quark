@@ -31,7 +31,6 @@ public class SlackBot implements SlackHandler {
         QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
         SlackClient client = new SlackClient(runtime, getToken());
         client.subscribe(new SlackBot());
-        runtime.launch();
 
     }
     private static String  getToken() throws Exception {
