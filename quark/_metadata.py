@@ -23,10 +23,10 @@ __title__ = "datawire-quark"
 __summary__ = "Quark: an IDL for high level (micro)service interfaces"
 __uri__ = "http://datawire.github.io/quark/"
 
-__version__ = '0.2.5'
-__java_runtime_version__ = '0.2.5'
-__py_runtime_version__ = '0.2.5'
-__js_runtime_version__ = '0.2.5'
+__version__ = '0.2.6'
+__java_runtime_version__ = '0.2.6'
+__py_runtime_version__ = '0.2.6'
+__js_runtime_version__ = '0.2.6'
 
 __author__ = "datawire.io"
 __email__ = "hello@datawire.io"
