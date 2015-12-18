@@ -312,6 +312,8 @@ class Buffer(object):
     def __init__(self, _data=None):
         if _data is None:
             _data = bytearray()
+        elif not isinstance(_data, bytearray):
+            _data = bytearray(data)
         self.data = _data
         self._order(self.BE)
 

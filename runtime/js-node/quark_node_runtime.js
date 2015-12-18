@@ -47,7 +47,7 @@
         }
         this.socket.on("message", function (message, flags) {
             if (flags.binary) {
-                handler.onWSBinary(self, new runtime._Buffer(message));
+                handler.onWSBinary(self, new runtime.Buffer(message));
             } else {
                 handler.onWSMessage(self, message);
             }

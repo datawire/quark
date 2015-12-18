@@ -5,7 +5,7 @@ __version__ = '0.2.6'
 from StringIO import StringIO
 import urlparse, traceback
 
-from quark_runtime import Buffer
+from quark_runtime import Buffer, _default_codec
 from autobahn.twisted.websocket import WebSocketClientProtocol, WebSocketClientFactory, connectWS
 from autobahn.twisted.websocket import WebSocketServerFactory, WebSocketServerProtocol
 from autobahn.twisted.resource import WebSocketResource
@@ -305,6 +305,7 @@ class TwistedRuntime(object):
     def __init__(self, reactor):
         self.locked = False
         self.reactor = reactor
+        self._codec = _default_codec()
         self.sites = {}
 
     def acquire(self):
@@ -398,6 +399,8 @@ class TwistedRuntime(object):
     def finish(self):
         self.reactor.callLater(0, self.reactor.stop)
 
+    def codec(self):
+        return self._codec
 
 _twisted_runtime = None
 
