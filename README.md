@@ -1,19 +1,19 @@
 # Quark
 
-Quark lets you define and implement rich (micro)service APIs that work
-with your existing application frameworks and protocols. Quark lets
-you:
+Quark lets you define and implement rich (micro)service APIs that work with your existing application frameworks and protocols. Quark lets you:
 
 * Easily define RPC or event based APIs on top of existing REST or
   websocket protocols
 * Build service APIs with rich protocol semantics
 * Support multiple programming languages and application frameworks
 
-### Example
+### Getting Started
 
-The Slack service includes both a JSON RPC over HTTP (https://api.slack.com) and a real-time API for processing events (https://api.slack.com/rtm). Quark lets a service author easily create and maintain rich clients for both these APIs. By describing the API using Quark, the service author can quickly produce clients in multiple languages that interface directly with this API.
+To get started, install quark and check out the examples in the [Quark Examples repository](https://github.com/datawire/quark/tree/0.2.x/examples):
 
-Examples of this and more can be found in the [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples/slack).
+        pip install datawire-quark
+        git clone git@github.com:datawire/quark.git
+        cd quark/examples
 
 ## Installation and Configuration
 
