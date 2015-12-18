@@ -341,6 +341,7 @@ def push(args):
 
 def docs(args):
     version = metadata["__version__"]
+    short = ".".join(version.split(".")[:2])
     docver = metadata["__doc_version__"]
     print "You are about to push the documentation live:"
     print
@@ -353,9 +354,9 @@ def docs(args):
         run("git", "clone", call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
             dest)
         run("git", "checkout", "gh-pages", cwd=dest)
-        # XXX: this seems to break things
-#        run("git", "rm", "-r", ".", cwd=dest)
-        run("sphinx-build", "-q", "docs", dest, cwd=base())
+        run("touch", ".nojekyll", cwd=dest)
+        run("git", "rm", "-r", "--ignore-unmatch", short, cwd=dest)
+        run("sphinx-build", "-q", "docs", os.path.join(dest, short), cwd=base())
         run("git", "add", ".", cwd=dest)
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
         run("git", "push", cwd=dest)
