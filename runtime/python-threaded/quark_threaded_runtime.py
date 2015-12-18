@@ -2,7 +2,9 @@
 
 __version__ = '0.2.5'
 
-import signal
+import atexit
+import os
+import sys
 import threading
 import time
 import traceback
@@ -16,6 +18,18 @@ from ws4py.client.threadedclient import WebSocketClient
 from quark_runtime import _HTTPRequest, _HTTPResponse
 
 
+class _Terminator(object):
+
+    def remove(self, other):
+        return
+
+    def add(self, other):
+        return
+
+    def __nonzero__(self):
+        return False
+
+
 class _EventProcessor(threading.Thread):
 
     QUIT = ("QUIT",)
@@ -23,24 +37,37 @@ class _EventProcessor(threading.Thread):
     def __init__(self, runtime):
         super(_EventProcessor, self).__init__()
         self.runtime = runtime
+        self.live = set()
+        self.die_now = False
 
     def run(self):
-        while True:  # FIXME: Notice when there are no more event sources and quit automatically
-            event = self.runtime.events.get(block=True)
+        startup = True
+        while startup or self.live:
+            if self.die_now:
+                self.live = _Terminator()
+            try:
+                event = self.runtime.events.get(block=True, timeout=1)
+            except Empty:
+                continue
+
             self.runtime.acquire()
             try:
-                while True:
+                while self.live:
                     if event == self.QUIT:
                         return
                     function, args, kwargs = event
-                    function(*args, **kwargs)
-
+                    try:
+                        function(*args, **kwargs)
+                    except Exception as exc:
+                        print "Event handler %s failed (%s)." % (function, exc)
+                        print traceback.format_exc()
                     event = self.runtime.events.get(block=False)  # Raises Empty to break out of loop
             except Empty:
                 pass
             finally:
                 self.runtime._notify()
                 self.runtime.release()
+            startup = False
 
 
 # http://stackoverflow.com/questions/4511598/how-to-make-http-delete-method-using-urllib2
@@ -56,11 +83,12 @@ class _RequestWithMethod(urllib2.Request):
 
 class _QuarkRequest(threading.Thread):
 
-    def __init__(self, runtime, request, handler):
+    def __init__(self, runtime, request, handler, token):
         super(_QuarkRequest, self).__init__()
         self.runtime = runtime
         self.request = request
         self.handler = handler
+        self.token = token
         self.response = None
         headers = {key.encode("utf-8"): str(value).encode("utf-8") for key, value in request.headers.items()}
         if self.request.body:
@@ -95,14 +123,16 @@ class _QuarkRequest(threading.Thread):
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
         self.runtime.events.put((self.handler.onHTTPFinal, (self.request,), {}))
+        self.runtime._remove_event_source(self.token)
 
 
 class _QuarkWS(WebSocketClient):
-    def __init__(self, runtime, url, handler):
+    def __init__(self, runtime, url, handler, token):
         super(_QuarkWS, self).__init__(url)
         self.runtime = runtime
         self.url = url
         self.handler = handler
+        self.token = token
 
     def opened(self):
         self.runtime.events.put((self.handler.onWSInit, (self,), {}))
@@ -120,6 +150,7 @@ class _QuarkWS(WebSocketClient):
         else:
             self.runtime.events.put((self.handler.onWSError, (self,), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self,), {}))
+        self.runtime._remove_event_source(self.token)
 
     def __str__(self):
         return "WS: %s" % self.url
@@ -139,7 +170,7 @@ class _QuarkWSGIApp(object):
             servlet.onHTTPRequest(request, response)
         except Exception as exc:
             response.setCode(500)
-            response.setBody("500 Internal Server Error (%s)" % exc)
+            response.setBody("500 Internal Server Error (%s)\n" % exc)
             response.setHeader("Content-Type", "text/plain")
             response._responded = True
             print "Servlet call for %s failed." % request.getUrl()
@@ -195,8 +226,10 @@ class ThreadedRuntime(object):
     def __init__(self):
         self.lock = threading.Condition()
         self.events = Queue()
+        self.token_counter = 0
         self.sites = {}  # host, port -> site
         self.event_thread = _EventProcessor(self)
+        self.event_thread.daemon = True
         self.event_thread.start()
 
     def acquire(self):
@@ -209,33 +242,57 @@ class ThreadedRuntime(object):
         self.lock.notify_all()
 
     def wait(self, timeoutInSeconds):
-        self.lock.wait()
+        self.lock.wait(timeoutInSeconds)
+
+    def _add_event_source(self):
+        token = (self.token_counter, self)
+        self.token_counter += 1
+        self.event_thread.live.add(token)
+        return token
+
+    def _remove_event_source(self, token):
+        self.events.put((self.event_thread.live.remove, (token,), {}))
 
     def open(self, url, handler):
-        def pump_websocket(runtime, url, handler):
-            ws = _QuarkWS(runtime, url, handler)
+        def pump_websocket(runtime, url, handler, token):
+            ws = _QuarkWS(runtime, url, handler, token)
             try:
                 ws.connect()
                 ws.run_forever()
             except Exception:
                 runtime.events.put((handler.onWSError, (ws,), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
-        thread = threading.Thread(target=pump_websocket, args=(self, url, handler))
-        thread.setDaemon(True)
-        thread.start()
+                runtime._remove_event_source(token)
+        try:
+            self.acquire()
+            thread = threading.Thread(target=pump_websocket, args=(self, url, handler, self._add_event_source()))
+            thread.setDaemon(True)
+            thread.start()
+        finally:
+            self.release()
 
     def request(self, request, handler):
-        thread = _QuarkRequest(self, request, handler)
-        thread.setDaemon(True)
-        thread.start()
+        try:
+            self.acquire()
+            thread = _QuarkRequest(self, request, handler, self._add_event_source())
+            thread.setDaemon(True)
+            thread.start()
+        finally:
+            self.release()
 
     def schedule(self, handler, delayInSeconds):
-        def run_scheduled(runtime, handler, delayInSeconds):
+        def run_scheduled(runtime, handler, delayInSeconds, token):
             time.sleep(delayInSeconds)
             runtime.events.put((handler.onExecute, [runtime], {}))
-        thread = threading.Thread(target=run_scheduled, args=(self, handler, delayInSeconds))
-        thread.setDaemon(True)
-        thread.start()
+            runtime._remove_event_source(token)
+        try:
+            self.acquire()
+            thread = threading.Thread(target=run_scheduled,
+                                      args=(self, handler, delayInSeconds, self._add_event_source()))
+            thread.setDaemon(True)
+            thread.start()
+        finally:
+            self.release()
 
     def _parse_url(self, url):
         uri = urlparse.urlparse(url)
@@ -247,32 +304,38 @@ class ThreadedRuntime(object):
         return uri.scheme, host, port, uri.path
 
     def serveHTTP(self, url, servlet):
-        def launch_web_server(runtime, url, host, port, app, servlet):
+        def launch_web_server(runtime, url, host, port, app, servlet, token):
             try:
                 server = simple_server.make_server(host, port, app)
                 server.serve_forever()
             except Exception as exc:
                 runtime.events.put((servlet.onServletError,
                                     (url, "Failed to bind to %s:%s (%s)" % (host, port, exc)), {}))
+                runtime._remove_event_source(token)
         scheme, host, port, path = self._parse_url(url)
         if scheme in ["https", "wss"]:
             self.events.put((servlet.onServletError, (url, scheme + " is not supported yet"), {}))
             return
-        try:
-            app = self.sites[host, port]
-            if app.scheme != scheme:
-                message = "%s:%s already serving %s, cannot also serve %s" % (host, port, app.scheme, scheme)
-                self.events.put((servlet.onServletError, (url, message), {}))
-                return
-        except KeyError:
-            app = _QuarkWSGIApp(self, scheme, host, port)
-            self.sites[host, port] = app
-            thread = threading.Thread(target=launch_web_server, args=(self, url, host, port, app, servlet))
-            thread.setDaemon(True)
-            thread.start()
 
-        app.servlets[path] = servlet
-        self.events.put((servlet.onServletInit, (url, self), {}))
+        try:
+            self.acquire()
+            try:
+                app = self.sites[host, port]
+                if app.scheme != scheme:
+                    message = "%s:%s already serving %s, cannot also serve %s" % (host, port, app.scheme, scheme)
+                    self.events.put((servlet.onServletError, (url, message), {}))
+                    return
+            except KeyError:
+                app = _QuarkWSGIApp(self, scheme, host, port)
+                self.sites[host, port] = app
+                thread = threading.Thread(target=launch_web_server,
+                                          args=(self, url, host, port, app, servlet, self._add_event_source()))
+                thread.setDaemon(True)
+                thread.start()
+            app.servlets[path] = servlet
+            self.events.put((servlet.onServletInit, (url, self), {}))
+        finally:
+            self.release()
 
     def serveWS(self, url, servlet):
         scheme, host, port, path = self._parse_url(url)
@@ -282,34 +345,36 @@ class ThreadedRuntime(object):
         response._responded = True
 
     def fail(self, message):
-        try:
-            exit(message)                # Comment out this line to see a full traceback via the next line
-            raise RuntimeError(message)
-        finally:
-            self.finish()
-
-    def join(self):
-        try:
-            signal.pause()
-        finally:
-            self.finish()
-
-    def finish(self):
-        self.events.put(_EventProcessor.QUIT)
-        try:
-            self.event_thread.join()
-        except RuntimeError:  # Trying to join current thread, e.g., fail() called from event handler
-            exit(1)
+        self.event_thread.die_now = True
+        if False:  # Set to True to enable traceback printing
+            print "Traceback (most recent call last, up to fail(...)):"
+            traceback.print_stack(sys._getframe(1))
+            # Note: sys._getframe(1) works on CPython, Jython, and PyPy. Need to test on IronPython etc.
+        sys.stderr.write(message + "\n")
+        os._exit(1)
 
 
+_global_lock = threading.Lock()
 _threaded_runtime = None
 
 
 def get_runtime():
     global _threaded_runtime
-    if _threaded_runtime is None:
-        _threaded_runtime = ThreadedRuntime()
+    with _global_lock:
+        if _threaded_runtime is None:
+            _threaded_runtime = ThreadedRuntime()
     return _threaded_runtime
 
 
 getRuntime = get_runtime
+
+
+@atexit.register
+def wait_for_completion():
+    if _threaded_runtime is None:
+        return
+    try:
+        while _threaded_runtime.event_thread.live:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        pass
