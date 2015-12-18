@@ -96,7 +96,7 @@ class QuarkCompile(object):
     @property
     def java_dir(self):
         self.compile()
-        return self.tmpdir / self.outdir / "java" 
+        return self.tmpdir / self.outdir / "java"
 
     def __repr__(self):
         return "%scompiled %s in %s" % (
@@ -122,6 +122,7 @@ class BackgroundProcess(object):
         self.stderr = None
         self.p = None
         self.w = None
+        self.failed = False
 
     def start(self):
         print "background process:  cd ", self.cwd, "&&", " ".join(map(quote,self.cmd))
@@ -132,6 +133,7 @@ class BackgroundProcess(object):
         def comm():
             o, e = self.p.communicate()
             self.stdout, self.stderr = o, e
+            self.failed = (self.p.returncode != 0)
 
         self.w = threading.Thread(target=comm)
         self.w.daemon = True
@@ -564,9 +566,11 @@ class Port(object):
     def __init__(self, port):
         self.port = port
 
-    def wait_server_start(self, timeout=10, interval=0.05):
+    def wait_server_start(self, server, timeout=10, interval=0.05):
         start = time.time()
         for a in range(int(timeout/interval)):
+            if server.failed:
+                break
             with contextlib.closing(socket.socket()) as s:
                 try:
                     s.connect(("127.0.0.1", self.port))
@@ -578,8 +582,12 @@ class Port(object):
                         time.sleep(interval)
                         continue
                     raise
-        pytest.fail("server did not start up on port %s after %.2fs" % (
-            self.port, (time.time() - start)))
+        if server.failed:
+            pytest.fail("server process failed on port %s after %.2fs" %
+                        (self.port, (time.time() - start)))
+        else:
+            pytest.fail("server did not start up on port %s after %.2fs" %
+                        (self.port, (time.time() - start)))
 
     def __str__(self):
         return str(self.port)
@@ -629,7 +637,7 @@ def test_interop(client_integration, server_integration, port):
     client = client_integration.client(port)
     server = server_integration.server(port)
     with server.wait(0.2):
-        port.wait_server_start()
+        port.wait_server_start(server)
         with client.wait(1):
             print "server and client started"
             time.sleep(1)
