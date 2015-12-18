@@ -25,7 +25,5 @@
         d.lookupAsync(service, new ShowAnswer(service));
     });
     console.log("lookupAsync called");
-
-    runtime.launch();
     // And now we wait...
 })();
