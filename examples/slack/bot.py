@@ -35,7 +35,6 @@ def main():
     client = slack.SlackClient(runtime, token)
     client.post("#demo", "testing...")
     client.subscribe(Handler())
-    runtime.join()
 
 
 if __name__ == '__main__':

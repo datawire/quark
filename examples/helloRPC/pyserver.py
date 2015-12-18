@@ -17,7 +17,6 @@ def main():
     implementation = HelloImpl()
     server = hello.HelloServer(runtime, implementation)
     runtime.serveHTTP("http://127.0.0.1:8910/hello", server)
-    runtime.join()
 
 
 if __name__ == '__main__':

@@ -21,8 +21,6 @@ def main(identity):
         else:
             print "Looked up " + service + " and got back " + str(entry)
 
-    runtime.join()
-
 
 if __name__ == '__main__':
     main(sys.argv[1])

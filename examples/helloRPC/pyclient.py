@@ -15,8 +15,6 @@ def main():
     response = client.hello(request)
     print "Response says %r" % response.result
 
-    runtime.join()
-
 
 if __name__ == '__main__':
     main()
