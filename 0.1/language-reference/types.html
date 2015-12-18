@@ -1,0 +1,645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Data Types &mdash; Quark 0.1.15 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.1.15',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.1.15 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="Functions" href="functions.html" />
+    <link rel="prev" title="Operators" href="operators.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../index.html ">
+        Quark 0.1.15 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="operators.html" title="Previous document">Operators</a>
+        </li>
+        <li>
+          <a href="functions.html" title="Next document">Functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Quark 0.1.15 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="data-types">
+<h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
+<p>Quark data types typically have analogues in each target language and Quark uses the equivalent type when generating code in the supported languages.</p>
+<p>Quark defines the following data types:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="bool">
+<span id="id1"></span><h2>bool<a class="headerlink" href="#bool" title="Permalink to this headline">¶</a></h2>
+<p>Quark bool values are booleans and indicate truthfulness.</p>
+<div class="section" id="constraints">
+<h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
+<p>Boolean values are either true or false. Quark represents these states with the keywords true and false.</p>
+<p>[[JMK should I discuss null? It compiles in Quark and evaluates to false in js/python, causes NPEs in Java]]</p>
+</div>
+<div class="section" id="generated-code">
+<h3>Generated Code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
+<p>Booleans are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="34%" />
+<col width="22%" />
+<col width="44%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Boolean</td>
+<td>true|false</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Boolean</td>
+<td>true|false</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>bool</td>
+<td>True|False</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="buffer">
+<span id="id2"></span><h2>Buffer<a class="headerlink" href="#buffer" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="byte">
+<span id="id3"></span><h2>byte<a class="headerlink" href="#byte" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="codec">
+<span id="id4"></span><h2>Codec<a class="headerlink" href="#codec" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="float">
+<span id="id5"></span><h2>float<a class="headerlink" href="#float" title="Permalink to this headline">¶</a></h2>
+<p>Quark float values are floating point numbers.</p>
+<div class="section" id="id6">
+<h3>Constraints<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>Floating point values in Quark are constrained only by the rules of each generated language.</p>
+</div>
+<div class="section" id="id7">
+<h3>Generated Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>Floats are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed Values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="3">Java</td>
+<td rowspan="3">Double</td>
+<td rowspan="3"><p class="first">-(2-2<sup>-52</sup> )·2<sup>1023</sup> to -2<sup>-1074</sup> </p>
+<p>0</p>
+<p class="last">2<sup>-1074</sup> to (2-2<sup>-52</sup>)·2<sup>1023</sup> </p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="3">Javascript</td>
+<td rowspan="3">Number</td>
+<td rowspan="3"><p class="first">-2<sup>53</sup> - 1 to -5*10<sup>-324</sup> </p>
+<p>0</p>
+<p class="last">5*10<sup>-324</sup> to 2<sup>53</sup> - 1</p>
+</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td>Python</td>
+<td>float</td>
+<td>varies; see sys.float.info</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="httphandler">
+<span id="id8"></span><h2>HTTPHandler<a class="headerlink" href="#httphandler" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httprequest">
+<span id="id9"></span><h2>HTTPRequest<a class="headerlink" href="#httprequest" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httpresponse">
+<span id="id10"></span><h2>HTTPResponse<a class="headerlink" href="#httpresponse" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httpservlet">
+<span id="id11"></span><h2>HTTPServlet<a class="headerlink" href="#httpservlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="int">
+<span id="id12"></span><h2>int<a class="headerlink" href="#int" title="Permalink to this headline">¶</a></h2>
+<p>Quark ints are integers.</p>
+<div class="section" id="id13">
+<h3>Constraints<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>Integers in Quark are constrained only by the rules of each generated language.</p>
+</div>
+<div class="section" id="id14">
+<h3>Generated Code<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>Integers are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed Values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Integer</td>
+<td>-2<sup>31</sup> - 1 to 2<sup>31</sup> - 1</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Number</td>
+<td>-2<sup>53</sup> - 1 to 2<sup>53</sup> - 1</td>
+</tr>
+<tr class="row-even"><td rowspan="3">Python</td>
+<td rowspan="3">int</td>
+<td rowspan="3"><p class="first">-2<sup>31</sup> - 1 to 2<sup>31</sup> - 1</p>
+<p>or</p>
+<p class="last">-2<sup>63</sup> - 1 to 2<sup>63</sup> - 1</p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="integral">
+<span id="id15"></span><h2>integral<a class="headerlink" href="#integral" title="Permalink to this headline">¶</a></h2>
+<p>The integral type is a base type for all integers. It should not be used directly within Quark code.</p>
+</div>
+<div class="section" id="jsonobject">
+<span id="id16"></span><h2>JSONObject<a class="headerlink" href="#jsonobject" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="list">
+<span id="id17"></span><h2>List<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h2>
+<p>Quark lists are strongly typed and can contain elements of any other defined data type including other lists and objects.</p>
+<div class="section" id="id18">
+<h3>Constraints<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>Every element in a list must be the same type of data. For example, you cannot mix strings and floats or floats and objects.</p>
+<p>List types are specified as follows when a new List is declared:</p>
+<p><strong>List&lt;</strong> <em>type</em> <strong>&gt;</strong></p>
+<p>where <em>type</em> is the type of the list elements.</p>
+<p>Lists may be further constrained by the rules of each generated language.</p>
+</div>
+<div class="section" id="id19">
+<h3>Generated Code<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<p>Lists are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="20%" />
+<col width="35%" />
+<col width="45%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>java.util.ArrayList</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Array</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>_List</td>
+<td>constrained by definition</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="long">
+<span id="id20"></span><h2>long<a class="headerlink" href="#long" title="Permalink to this headline">¶</a></h2>
+<p>Quark longs are long integers.</p>
+<div class="section" id="id21">
+<h3>Constraints<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>Quark does not permit declaration of long literal values by adding L to the end of an integer.</p>
+<p>Long integers may be further constrained by the rules of each generated language.</p>
+</div>
+<div class="section" id="id22">
+<h3>Generated Code<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<p>Long integers are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="15%" />
+<col width="11%" />
+<col width="74%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed Values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Long</td>
+<td>-2<sup>63</sup> - 1 to 2<sup>63</sup> - 1</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Number</td>
+<td>-2<sup>53</sup> - 1 to 2<sup>53</sup> - 1</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>int</td>
+<td>unlimited</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Currently Quark can only handle up to 48bit values. See <a class="reference external" href="https://github.com/datawire/quark/issues/58">linkIssue58</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="numerical">
+<span id="id23"></span><h2>numerical<a class="headerlink" href="#numerical" title="Permalink to this headline">¶</a></h2>
+<p>The numerical type is a base type for all numbers. It should not be used directly within Quark code.</p>
+</div>
+<div class="section" id="map">
+<span id="id24"></span><h2>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h2>
+<p>Quark Maps are sets of key-value pairs. They do not have an inherent order.</p>
+<div class="section" id="id25">
+<h3>Constraints<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
+<p>Quark Maps are strongly typed. Quark supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, Quark expect the values of keys to be immutable. Quark Maps are also constrained by additional rules in</p>
+<p>Map types are specified as follows when a new Map is declared:</p>
+<p><strong>Map&lt;</strong> <em>keyType</em> <strong>,</strong> <em>valueType</em> <strong>&gt;</strong></p>
+<p>where <em>keyType</em> is the type of the map keys and <em>valueType</em> is the type of the value keys.</p>
+<p>Maps may be further constrained by the rules of each generated language.</p>
+</div>
+<div class="section" id="id26">
+<h3>Generated Code<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
+<p>Maps are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="32%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>java.util.HashMap</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Map</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>_Map</td>
+<td>constrained by definition</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="object">
+<span id="id27"></span><h2>Object<a class="headerlink" href="#object" title="Permalink to this headline">¶</a></h2>
+<p>Quark Objects are objects instantiated from a defined class.</p>
+<div class="section" id="id28">
+<h3>Constraints<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
+<p>Objects in Quark are constrained only by the relevant class definition and by the rules of each generated language.</p>
+</div>
+<div class="section" id="id29">
+<h3>Generated Code<a class="headerlink" href="#id29" title="Permalink to this headline">¶</a></h3>
+<p>Objects are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="21%" />
+<col width="32%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Object</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>Object</td>
+<td>constrained by definition</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>object</td>
+<td>constrained by definition</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="runtime">
+<span id="id30"></span><h2>Runtime<a class="headerlink" href="#runtime" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="servlet">
+<span id="id31"></span><h2>Servlet<a class="headerlink" href="#servlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="short">
+<span id="id32"></span><h2>short<a class="headerlink" href="#short" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="string">
+<span id="id33"></span><h2>String<a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h2>
+<p>Quark Strings are strings of characters.</p>
+<div class="section" id="id34">
+<h3>Constraints<a class="headerlink" href="#id34" title="Permalink to this headline">¶</a></h3>
+<p>Strings in Quark are constrained only by the rules of each generated language. Additional variable-specific constraints such as a set of allowed enumerated values are not supported.</p>
+</div>
+<div class="section" id="id35">
+<h3>Generated Code<a class="headerlink" href="#id35" title="Permalink to this headline">¶</a></h3>
+<p>Strings are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="10%" />
+<col width="76%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed Values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="2">Java</td>
+<td rowspan="2">String</td>
+<td rowspan="2"><p class="first">Can contain up to 2:sup: <cite>31</cite>- 1 characters</p>
+<p class="last">Can contain any character that can be UTF-16 encoded</p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">Javascript</td>
+<td rowspan="2">String</td>
+<td rowspan="2"><p class="first">Can contain an unlimited number of characters</p>
+<p class="last">Can contain any character that can be UTF-16 encoded</p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2">Python</td>
+<td rowspan="2">str</td>
+<td rowspan="2"><p class="first">Can contain an unlimited number of characters</p>
+<p class="last">Can contain any character that can be UTF-8 encoded</p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="task">
+<span id="id36"></span><h2>Task<a class="headerlink" href="#task" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="void">
+<span id="id37"></span><h2>void<a class="headerlink" href="#void" title="Permalink to this headline">¶</a></h2>
+<p>Quark voids are used to indicate functions and methods that do not return a value.</p>
+<div class="section" id="id38">
+<h3>Constraints<a class="headerlink" href="#id38" title="Permalink to this headline">¶</a></h3>
+<p>voids in Quark are constrained only by the rules of each generated language.</p>
+</div>
+<div class="section" id="id39">
+<h3>Generated Code<a class="headerlink" href="#id39" title="Permalink to this headline">¶</a></h3>
+<p>voids are translated in generated code as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="17%" />
+<col width="27%" />
+<col width="56%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Type</th>
+<th class="head">Allowed values</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>void</td>
+<td>any function without a return value</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>N/A</td>
+<td>any function returning undefined</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>N/A</td>
+<td>any function returning None</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="websocket">
+<span id="id40"></span><h2>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="wshandler">
+<span id="id41"></span><h2>WSHandler<a class="headerlink" href="#wshandler" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="wsservlet">
+<span id="id42"></span><h2>WSServlet<a class="headerlink" href="#wsservlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Data Types</a><ul>
+<li><a class="reference internal" href="#bool">bool</a></li>
+<li><a class="reference internal" href="#buffer">Buffer</a></li>
+<li><a class="reference internal" href="#byte">byte</a></li>
+<li><a class="reference internal" href="#codec">Codec</a></li>
+<li><a class="reference internal" href="#float">float</a></li>
+<li><a class="reference internal" href="#httphandler">HTTPHandler</a></li>
+<li><a class="reference internal" href="#httprequest">HTTPRequest</a></li>
+<li><a class="reference internal" href="#httpresponse">HTTPResponse</a></li>
+<li><a class="reference internal" href="#httpservlet">HTTPServlet</a></li>
+<li><a class="reference internal" href="#int">int</a></li>
+<li><a class="reference internal" href="#integral">integral</a></li>
+<li><a class="reference internal" href="#jsonobject">JSONObject</a></li>
+<li><a class="reference internal" href="#list">List</a></li>
+<li><a class="reference internal" href="#long">long</a></li>
+<li><a class="reference internal" href="#numerical">numerical</a></li>
+<li><a class="reference internal" href="#map">Map</a></li>
+<li><a class="reference internal" href="#object">Object</a></li>
+<li><a class="reference internal" href="#runtime">Runtime</a></li>
+<li><a class="reference internal" href="#servlet">Servlet</a></li>
+<li><a class="reference internal" href="#short">short</a></li>
+<li><a class="reference internal" href="#string">String</a></li>
+<li><a class="reference internal" href="#task">Task</a></li>
+<li><a class="reference internal" href="#void">void</a></li>
+<li><a class="reference internal" href="#websocket">WebSocket</a></li>
+<li><a class="reference internal" href="#wshandler">WSHandler</a></li>
+<li><a class="reference internal" href="#wsservlet">WSServlet</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="operators.html"
+                        title="previous chapter">Operators</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="functions.html"
+                        title="next chapter">Functions</a></p>
+<div class="sourcelink">
+  <a href="../_sources/language-reference/types.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="operators.html" title="Previous document">Operators</a>
+        </li>
+        <li>
+          <a href="functions.html" title="Next document">Functions</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Quark 0.1.15 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.2.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
