@@ -1,14 +1,17 @@
 # Slack
 
-The bot connects to Slack as you and monitors every message you
-receive (except from Slack integrations or from itself). If it sees a
-message containing the trigger text, it echoes that message back on
-the same channel.
+The Slack example illustrates access to the slack web and realtime
+APIs from multiple languages using the high level interface defined in
+slack.q.
+
+Each bot uses the API to connect to Slack as you and monitors every
+message you receive (except from Slack integrations or from
+itself). If it sees a message containing the trigger text, it echoes
+that message back on the same channel.
 
 Avoid running multiple bots simultaneously. The Python bot censors
 itself, but the JS and Java bots may trigger one another, causing a
 loop that will lead to your connections getting dropped.
-
 
 ## Prerequisites
 
