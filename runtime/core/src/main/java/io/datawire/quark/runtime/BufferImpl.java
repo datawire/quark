@@ -17,6 +17,7 @@ public class BufferImpl implements Buffer {
 
     public BufferImpl(ByteBuf b) {
         this.b = b;
+        b.writerIndex(b.capacity());
         b.retain();
     }
 
