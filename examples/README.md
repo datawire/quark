@@ -6,7 +6,7 @@ The [helloRPC](https://github.com/datawire/quark/tree/0.2.x/examples/helloRPC)
 directory contains a minimal example of a simple RPC service using
 Quark.
 
-### The Slack Example
+### The slack example
 
 The [slack](https://github.com/datawire/quark/tree/0.2.x/examples/slack)
 directory illustrates how Quark can be used to build high level
