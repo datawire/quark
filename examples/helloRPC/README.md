@@ -37,12 +37,14 @@ To get started, download the example by cloning its git repository as follows:
 
         git clone https://github.com/datawire/quark.git
 
-All of the directions below assume you are starting from *repoBase*/examples/helloRPC where *repoBase* is the location where you cloned the repository above.
+All of the directions below assume you are starting from
+*repoBase*/examples/helloRPC where *repoBase* is the location where
+you cloned the repository above.
 
 ### Python
 
-Make sure the python-threaded integration is installed (`pip
-install -U datawire-quark-threaded`).
+Make sure the python-threaded integration is installed (`pip install
+-U datawire-quark-threaded`).
 
 Compile and install the Service Contract in hello.q:
 
@@ -59,7 +61,9 @@ Run the Python client with
 
 ### Java
 
-Note: This example requires the datawire-quark-netty integration. It will be installed automatically if you do not already have it installed.
+Note: This example requires the datawire-quark-netty integration. It
+will be installed automatically if you do not already have it
+installed.
 
 Compile and install the Service Contract in hello.q:
 
@@ -94,10 +98,3 @@ Run the Javascript server with
         node jsserver.js
 
 JavaScript client support is coming soon!
-
-# FIXME
-
-- Better answer for JS clients.
-- Any answer for failures. Right now client code hangs forever if the
-  server is unavailable.
-- `mvn` stuff does not work for everybody.
