@@ -38,17 +38,17 @@ The Quark compiler can perform four distinct functions: generating code in one o
 
 The simplest command generates code in all supported target languages in default output directories. It is:
 
-``quark compile *files*``
+``quark compile <files>``
 
-where *files* is a space-separated list of the Quark files to compile.
+where <files> is a space-separated list of the Quark files to compile.
 
-This will output code in a subdirectory of your base quark directory (given the name of the first file in the *files* list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.
+This will output code in a subdirectory of your base quark directory (given the name of the first file in the <files> list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.
 
 To generate installable versions of the examples or of your own code in all of the supported languages, use the package command as follows:
 
-``quark package *files*``
+``quark package <files>``
 
-where *files* is a space-separated list of the Quark files to compile.
+where <files> is a space-separated list of the Quark files to compile.
 
 This does everything the compile command does but also builds the code in each language, generates documentation for each language, and creates installable packages. See the `Compilation page <http://datawire.github.io/quark/0.2/install/compile.html>`_ of the Quark Installation and Configuration Guide for specific details on where the output artifacts are placed underneath each language's subdirectory.
 
