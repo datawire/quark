@@ -9,9 +9,14 @@ Quark lets you define and implement rich (micro)service APIs that work with your
 
 ## Getting Started
 
-To get started, install quark and check out the examples in the [Quark Examples repository](https://github.com/datawire/quark/tree/0.2.x/examples):
+To get started, install quark:
 
         pip install datawire-quark
+
+## Examples
+
+Check out the examples in the [Quark Examples repository](https://github.com/datawire/quark/tree/0.2.x/examples):
+
         git clone git@github.com:datawire/quark.git
         cd quark/examples
 
