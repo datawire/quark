@@ -37,3 +37,11 @@ Run the Java server with
 Run the Java client with
 
         mvn exec:java -Dexec.mainClass=binary.ClientMain
+
+### Python
+
+Coming soon!
+
+### Javascript
+
+Coming soon!
