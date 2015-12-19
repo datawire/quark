@@ -7,7 +7,7 @@ This page provides an overview of the basic installation requirements and proces
 Installation and Configuration
 ==============================
 
-This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the [Quark Installation and Configuration Guide](http://datawire.github.io/quark/install/index.html).
+This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the `Quark Installation and Configuration Guide <http://datawire.github.io/quark/0.2/install/index.html>`_.
 
 Prerequisites
 -------------
@@ -42,7 +42,7 @@ The simplest command generates code in all supported target languages in default
 
 where *files* is a space-separated list of the Quark files to compile.
 
-This will output code in a subdirectory of your base quark directory (given the name of the first file in the <files> list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.
+This will output code in a subdirectory of your base quark directory (given the name of the first file in the *files* list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.
 
 To generate installable versions of the examples or of your own code in all of the supported languages, use the package command as follows:
 
@@ -50,7 +50,7 @@ To generate installable versions of the examples or of your own code in all of t
 
 where *files* is a space-separated list of the Quark files to compile.
 
-This does everything the compile command does but also builds the code in each language, generates documentation for each language, and creates installable packages. See the [Compilation page](http://datawire.github.io/quark/install/compile.html) of the Quark Installation and Configuration Guide for specific details on where the output artifacts are placed underneath each language's subdirectory.
+This does everything the compile command does but also builds the code in each language, generates documentation for each language, and creates installable packages. See the `Compilation page <http://datawire.github.io/quark/0.2/install/compile.html>`_ of the Quark Installation and Configuration Guide for specific details on where the output artifacts are placed underneath each language's subdirectory.
 
 Quark Language Basics
 =====================
@@ -61,18 +61,18 @@ Quark uses many of the standard elements of object-oriented programming language
 
 Quark code is stored in text files with a .q file extension.
 
-See the [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) for more specifics about language structure and language elements.
+See the `Quark Language Reference <http://datawire.github.io/quark/0.2/language-reference/index.html>`_ for more specifics about language structure and language elements.
 
 Next Steps
 ==========
 
-The [Quark Examples repository](https://github.com/datawire/quark/tree/0.1.x/examples) (located in the examples subdirectory of the quark github repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
+The `Quark Examples Repository <https://github.com/datawire/quark/tree/0.2.x/examples>`_ (located in the examples subdirectory of the quark github repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
 
-Please read the [Quark Installation and Configuration Guide](http://datawire.github.io/quark/install/index.html) for more detailed information about installation, configuration, compilation, packaging, and documentation generation.
+Please read the `Quark Installation and Configuration Guide <http://datawire.github.io/quark/0.2/install/index.html>`_ for more detailed information about installation, configuration, compilation, packaging, and documentation generation.
 
-The [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
+The `Quark Language Reference <http://datawire.github.io/quark/0.2/language-reference/index.html>`_ provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
 
-The [Quark Issues list](https://github.com/datawire/quark/issues) provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
+The `Quark Issues List <https://github.com/datawire/quark/issues>`_ provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
 
 Document Version
 ================
