@@ -66,10 +66,14 @@ See the [Quark Language Reference](http://datawire.github.io/quark/language-refe
 Next Steps
 ==========
 
+The [Quark Examples repository](https://github.com/datawire/quark/tree/0.1.x/examples) (located in the examples subdirectory of the quark github repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
+
 Please read the [Quark Installation and Configuration Guide](http://datawire.github.io/quark/install/index.html) for more detailed information about installation, configuration, compilation, packaging, and documentation generation.
 
 The [Quark Language Reference](http://datawire.github.io/quark/language-reference/index.html) provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.
 
-The [Quark Examples repository](https://github.com/datawire/quark/tree/0.1.x/examples) (located in the examples subdirectory of the quark github repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.
-
 The [Quark Issues list](https://github.com/datawire/quark/issues) provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.
+
+Document Version
+================
+Quark Quick Start |release|-|doc_version|
