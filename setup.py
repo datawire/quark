@@ -18,7 +18,7 @@ metadata = {}
 with open("quark/_metadata.py") as fp:
     exec(fp.read(), metadata)
 
-setup(name='datawire-quarkdev',
+setup(name='datawire-quark',
       version=metadata["__version__"],
       description=metadata["__summary__"],
       author=metadata["__author__"],

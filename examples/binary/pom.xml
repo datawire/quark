@@ -29,8 +29,8 @@
   <dependencies>
     <dependency>
       <groupId>io.datawire.quark</groupId>
-      <artifactId>quarkdev-netty</artifactId>
-      <version>0.2.7</version>
+      <artifactId>quark-netty</artifactId>
+      <version>0.2.8</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

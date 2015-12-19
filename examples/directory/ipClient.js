@@ -4,7 +4,7 @@
 (function () {
     "use strict";
 
-    var runtime = require("datawire-quarkdev-node");
+    var runtime = require("datawire-quark-node");
     var ipify = require("./ipify");
 
     function Consumer() {}
