@@ -30,6 +30,7 @@ package binary {
 
     class BinaryServer extends BinaryCommon {
         void onWSBinary(WebSocket sock, Buffer message) {
+            // echo back every message
             sock.sendBinary(message);
         }
 
