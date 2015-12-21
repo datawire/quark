@@ -11,8 +11,9 @@ public class HelloRPCClient {
         runtime.setAllowSync(true);
         HelloClient client = new HelloClient(runtime, "http://localhost:8910/hello");
         Request request = new Request();
-        request.text = "hello? world?";
+        request.text = "Hello from Java!";
+        System.out.println("Request says: " + request.text);
         Response response = client.hello(request);
-        System.out.println(response.result);
+        System.out.println("Response says: " + response.result);
     }
 }
