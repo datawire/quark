@@ -5,7 +5,7 @@ Let's start by creating a simple Hello World client using the compiled Hello con
 
 Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, there is a :ref:`link to the full Python client file <fullExampleClient>` at the bottom of this page.
 
-.. _part1Framework:
+.. _part1ClientFramework:
 
 Part 1: Creating the framework
 ------------------------------
@@ -37,6 +37,8 @@ Step 2: Initialize a client instance passing it the runtime variable and the URL
 
 See :ref:`this page <part2ClientFinished>` for the file state at the end of Part 2.
 
+.. _part3Request:
+
 Part 3: Setting Up the Request
 ------------------------------
 
@@ -49,6 +51,8 @@ Step 2: Set the text property of the request to "Hello from Python!" so we know 
 Step 3: Print the request text to standard out so we know what's happening when we run the client.
 
 See :ref:`this page <part3ClientFinished>` for the file state at the end of Part 3.
+
+.. _part4SendRequest:
 
 Part 4: Sending the Request and Processing the Response
 -------------------------------------------------------

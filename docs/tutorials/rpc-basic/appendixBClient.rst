@@ -8,7 +8,7 @@ This file provides cross-checks for users who want to ensure they have properly 
 Part 1 pyclient.py Initial Setup
 --------------------------------
 
-At the end of part 1 of the contract creation, your file should contain the following:
+At the end of part 1 of the client creation, your file should contain the following:
 
 .. code-block:: none
 
@@ -21,7 +21,7 @@ At the end of part 1 of the contract creation, your file should contain the foll
    if __name__ == '__main__':
         main()
 
-:ref:`Return to Part 2 <Part2ClientInitialization>` of the client definition to continue the tutorial.
+:ref:`Return to Part 2 <part2ClientInitialization>` of the client definition to continue the tutorial.
 
 .. _part2ClientFinished:
 
@@ -73,9 +73,9 @@ At the end of part 3 of the client creation, your file should contain the follow
    if __name__ == '__main__':
         main()
 
-:ref:`Return to Part 4 <part4Client>` of the client definition to continue the tutorial.
+:ref:`Return to Part 4 <part4SendRequest>` of the client definition to continue the tutorial.
 
 
-A full copy of the client for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions in parts 1-5 of the client definition page should match it exactly barring differences in the content of the print requests.
+A full copy of the client for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions in parts 1-4 of the client definition page should match it exactly barring differences in the content of the print requests.
 
 [[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
