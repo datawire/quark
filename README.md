@@ -15,7 +15,7 @@ To get started, install quark:
 
 ## Examples
 
-Check out the examples in the [Quark Examples repository](https://github.com/datawire/quark/tree/0.2.x/examples):
+Check out the examples in the [Quark Examples repository](https://github.com/datawire/quark/tree/master/examples):
 
         git clone git@github.com:datawire/quark.git
         cd quark/examples
