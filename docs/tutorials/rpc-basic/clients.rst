@@ -70,6 +70,6 @@ That's it! The Python client is fully defined now. You can follow the link below
 Full Python Client
 ------------------
 
-A full copy of the Python client for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.
+A full copy of the Python client for this example can be found `in GitHub <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.
 
 [[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
