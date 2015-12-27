@@ -1,21 +1,21 @@
 File(
  Class(Name(C),
 
-  Method(Type(Name(void)), Name(f),
+  Method(static=False, Type(Name(void)), Name(f),
    Param(Type(Name(int)), Name(a), $type=0.int),
    Param(Type(Name(int)), Name(b), $type=0.int),
    Param(Type(Name(String)), Name(c), $type=0.String),
    Block()),
 
-  Method(Type(Name(String)), Name(_getClass), Block(
+  Method(static=False, Type(Name(String)), Name(_getClass), Block(
     Return(String("C", $type=0.String)))),
 
-  Method(Type(Name(Object)), Name(_getField),
+  Method(static=False, Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     Return(Null(null, $type=0.Object)))),
 
-  Method(Type(Name(void)), Name(_setField),
+  Method(static=False, Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block()))

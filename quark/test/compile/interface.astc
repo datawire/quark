@@ -1,23 +1,23 @@
 File(
  Interface(Name(Foo),
 
-  Method(Type(Name(void)), Name(m1)),
+  Method(static=False, Type(Name(void)), Name(m1)),
 
-  Method(Type(Name(void)), Name(m2),
+  Method(static=False, Type(Name(void)), Name(m2),
    Param(Type(Name(int)), Name(arg), $type=0.int)),
 
-  Method(Type(Name(void)), Name(m3),
+  Method(static=False, Type(Name(void)), Name(m3),
    Param(Type(Name(List), Type(Name(String))), Name(args),
    $type=0.List<0.String>))),
 
  Interface(Name(Bar), TypeParam(Name(T)),
 
-  Method(Type(Name(void)), Name(m1)),
+  Method(static=False, Type(Name(void)), Name(m1)),
 
-  Method(Type(Name(void)), Name(m2),
+  Method(static=False, Type(Name(void)), Name(m2),
    Param(Type(Name(T)), Name(arg), $type=1.Bar.T)),
 
-  Method(Type(Name(void)), Name(m3),
+  Method(static=False, Type(Name(void)), Name(m3),
    Param(Type(Name(List), Type(Name(T))), Name(args), $type=0.List<1.Bar.T>))),
 
  Interface(Name(BazFoo), Type(Name(Foo))),
