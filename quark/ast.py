@@ -53,6 +53,7 @@ class SetOrigin:
 class AST(object):
 
     indent = []
+    fields = []
 
     def origin(self, node):
         if not hasattr(self, "node"):
@@ -194,6 +195,7 @@ class Callable(Definition):
 
     def __init__(self, type, name, params, body):
         Definition.__init__(self)
+        self.static = False
         self.type = type
         self.name = name
         self.params = params
@@ -218,7 +220,10 @@ class Callable(Definition):
             result = "%s %s" % (result, coder.code(self.body))
         else:
             result = "%s;" % result
-        return "%s%s" % (Definition.code(self, coder), result)
+        result = "%s%s" % (Definition.code(self, coder), result)
+        if self.static:
+            result = "static %s" % result
+        return result
 
     def copy(self):
         return self.__class__(copy(self.type), copy(self.name),
@@ -274,9 +279,11 @@ class Class(Definition):
         return self.__class__(copy(self.name), copy(self.parameters), copy(self.bases), copy(self.definitions))
 
 class Method(Function):
-    pass
+    fields=["static"]
 
 class Constructor(Method):
+
+    fields=[]
 
     def __init__(self, name, params, body):
         Callable.__init__(self, None, name, params, body)
@@ -314,6 +321,7 @@ class Declaration(AST):
         self.type = type
         self.name = name
         self.value = value
+        self.static = False
 
     @property
     def children(self):
@@ -327,6 +335,8 @@ class Declaration(AST):
     def code(self, coder):
         result = "%s%s %s" % (coder.code(self.annotations, "\n", tail="\n", tailoff=0),
                               coder.code(self.type), coder.code(self.name))
+        if self.static:
+            result = "static %s" % result
         if self.value:
             return "%s = %s" % (result, coder.code(self.value))
         else:
@@ -339,6 +349,8 @@ class Param(Declaration):
     pass
 
 class Field(Declaration):
+
+    fields=["static"]
 
     @coder
     def code(self, coder):

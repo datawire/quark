@@ -2,16 +2,16 @@ File(
  Package(Name(test1),
 
   Class(Name(Test),
-   Field(Type(Name(String)), Name(name), $type=0.String),
+   Field(static=False, Type(Name(String)), Name(name), $type=0.String),
 
    Constructor(Name(Test), Block(
      Assign(Attr(Var(Name(self), $type=1.test1.Test), Name(name),
       $type=0.String), String("Hello World!", $type=0.String)))),
 
-   Method(Type(Name(String)), Name(_getClass), Block(
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
      Return(String("test1.Test", $type=0.String)))),
 
-   Method(Type(Name(Object)), Name(_getField),
+   Method(static=False, Type(Name(Object)), Name(_getField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Block(
      If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -21,7 +21,7 @@ File(
         $type=0.String)))),
      Return(Null(null, $type=0.Object)))),
 
-   Method(Type(Name(void)), Name(_setField),
+   Method(static=False, Type(Name(void)), Name(_setField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Param(Type(Name(Object)), Name(value), $type=0.Object),
     Block(
@@ -44,7 +44,7 @@ File(
  Package(Name(test2),
 
   Class(Name(Test),
-   Field(Type(Name(String)), Name(name), $type=0.String),
+   Field(static=False, Type(Name(String)), Name(name), $type=0.String),
 
    Constructor(Name(Test),
     Param(Type(Name(String)), Name(name), $type=0.String),
@@ -52,10 +52,10 @@ File(
      Assign(Attr(Var(Name(self), $type=1.test2.Test), Name(name),
       $type=0.String), Var(Name(name), $type=0.String)))),
 
-   Method(Type(Name(String)), Name(_getClass), Block(
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
      Return(String("test2.Test", $type=0.String)))),
 
-   Method(Type(Name(Object)), Name(_getField),
+   Method(static=False, Type(Name(Object)), Name(_getField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Block(
      If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -65,7 +65,7 @@ File(
         $type=0.String)))),
      Return(Null(null, $type=0.Object)))),
 
-   Method(Type(Name(void)), Name(_setField),
+   Method(static=False, Type(Name(void)), Name(_setField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Param(Type(Name(Object)), Name(value), $type=0.Object),
     Block(
@@ -90,7 +90,7 @@ File(
  Package(Name(test3),
 
   Class(Name(Box), TypeParam(Name(T)),
-   Field(Type(Name(T)), Name(contents), $type=1.test3.Box.T),
+   Field(static=False, Type(Name(T)), Name(contents), $type=1.test3.Box.T),
 
    Constructor(Name(Box),
     Param(Type(Name(T)), Name(contents), $type=1.test3.Box.T),
@@ -99,14 +99,14 @@ File(
        Name(contents), $type=1.test3.Box.T), Var(Name(contents),
       $type=1.test3.Box.T)))),
 
-   Method(Type(Name(T)), Name(get), Block(
+   Method(static=False, Type(Name(T)), Name(get), Block(
      Return(Attr(Var(Name(self), $type=1.test3.Box<1.test3.Box.T>),
        Name(contents), $type=1.test3.Box.T)))),
 
-   Method(Type(Name(String)), Name(_getClass), Block(
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
      Return(String("test3.Box<Object>", $type=0.String)))),
 
-   Method(Type(Name(Object)), Name(_getField),
+   Method(static=False, Type(Name(Object)), Name(_getField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Block(
      If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -116,7 +116,7 @@ File(
          Name(contents), $type=1.test3.Box.T)))),
      Return(Null(null, $type=0.Object)))),
 
-   Method(Type(Name(void)), Name(_setField),
+   Method(static=False, Type(Name(void)), Name(_setField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Param(Type(Name(Object)), Name(value), $type=0.Object),
     Block(

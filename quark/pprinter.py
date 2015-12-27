@@ -73,6 +73,10 @@ class PPrinter(object):
                 self.first = False
         elif hasattr(node, "text"):
             self.append(node.text)
+        for f in node.fields:
+            self.append("%s=%s" % (f, getattr(node, f)))
+            if node.children:
+                self.append(", ")
 
     def refstr(self, node):
         if node is None:
