@@ -7,7 +7,7 @@
   <parent>
     <groupId>io.datawire.quark</groupId>
     <artifactId>quark</artifactId>
-    <version>0.2.7</version>
+    <version>0.3.0</version>
     <relativePath>../..</relativePath>
   </parent>
   <description>Quark compiler generates code against this runtime api</description>
