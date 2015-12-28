@@ -58,7 +58,7 @@ class PPrinter(object):
                 self.append("\n")
         else:
             self.append(",\n")
-            if isinstance(node, (ast.File, ast.Definition)):
+            if isinstance(node, (ast.File, ast.Definition, ast.Use)):
                 self.append("\n")
         if isinstance(node, self.wrap) or isinstance(self.previous, self.wrap):
             self.append("\n")

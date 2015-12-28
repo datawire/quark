@@ -153,6 +153,24 @@ class File(AST):
         result.name = self.name
         return result
 
+class Use(AST):
+
+    fields=["url"]
+
+    def __init__(self, url):
+        self.url = url
+
+    @property
+    def children(self):
+        return []
+
+    @coder
+    def code(self, coder):
+        return "use %s;" % self.url
+
+    def copy(self):
+        return self.__class__(self.url)
+
 ## Definitions
 
 class Definition(AST):

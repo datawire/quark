@@ -23,7 +23,8 @@ class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
                 "return", "macro", "new", "null", "if", "else", "while",
-                "super", "true", "false", "break", "continue", "static"]
+                "super", "true", "false", "break", "continue", "static",
+                "use"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -76,9 +77,21 @@ class Parser:
         "-": "__neg__"
     }
 
-    @g.rule('file = file_definition* ~"$"')
-    def visit_file(self, node, (definitions, eof)):
-        return File(definitions)
+    @g.rule('file = toplevel* ~"$"')
+    def visit_file(self, node, (toplevels, eof)):
+        return File(toplevels)
+
+    @g.rule('toplevel = use / file_definition')
+    def visit_toplevel(self, node, (top,)):
+        return top
+
+    @g.rule('use = USE url_re SEMI')
+    def visit_use(self, node, (u, url, s)):
+        return Use(url)
+
+    @g.rule(r'url_re = ~"[^ \t\r\n;]+"')
+    def visit_url_re(self, node, children):
+        return node.text
 
     @g.rule('file_definition = annotation* (package / class / function / macro)')
     def visit_file_definition(self, node, (annotations, (dfn,))):
