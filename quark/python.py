@@ -171,16 +171,13 @@ def comment(stuff):
 
 ## Class definition
 
-def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fields, constructors, methods):
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
     if base: fields = ["%s._init(self)" % base] + fields
     finit = ["def _init(self):%s" % (indent("\n".join(fields)) or "\n    pass")]
-    body = indent("\n".join(static_fields + finit + constructors + methods))
+    body = indent("\n".join(finit + constructors + methods))
     return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or "\n    pass")
 
-def static_field(doc, clazz, type, name, value):
-    return "%s = %s" % (name, value or "None")
-
-def field(doc, clazz, type, name, value):
+def field(doc, type, name, value):
     return "self.%s = %s" % (name, value or "None")
 
 def field_init():
@@ -196,11 +193,6 @@ def method(doc, clazz, type, name, parameters, body):
     if body is None: body = ":\n    assert False"
     body_with_doc = ":" + doc + body[1:]
     return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
-
-def static_method(doc, clazz, type, name, parameters, body):
-    if body is None: body = ":\n    assert False"
-    body_with_doc = ":" + doc + body[1:]
-    return "\n@staticmethod\ndef %s(%s)%s" % (name, ", ".join(parameters), body_with_doc)
 
 def abstract_method(doc, clazz, type, name, parameters):
     return "\ndef %s(%s):%s\n    assert False" % (name, ", ".join(["self"] + parameters), doc)
@@ -302,12 +294,6 @@ def invoke_method_implicit(method, args):
 
 def invoke_super_method(clazz, base, method, args):
     return "super(%s, self).%s(%s)" % (clazz, method, ", ".join(args))
-
-def invoke_static_method(clazz, method, args):
-    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
-
-def get_static_field(clazz, field):
-    return "%s.%s" % (clazz, field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)

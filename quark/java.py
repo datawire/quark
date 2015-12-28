@@ -133,8 +133,7 @@ def main(fname, common):
 SUBS = {"self": "this",
         "package": "package_",
         "interface": "interface_",
-        "super": "super_",
-        "static": "static_"}
+        "super": "super_"}
 def name(n):
     return SUBS.get(n, n).replace("-", "_")
 
@@ -166,22 +165,16 @@ def comment(stuff):
 
 ## Class definition
 
-def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fields, constructors, methods):
+def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
     kw = "abstract " if abstract else ""
     params = "<%s>" % ", ".join(parameters) if parameters else ""
     extends = " extends %s" % base if base else ""
     interfaces = interfaces + ["io.datawire.quark.runtime.QObject"]
     implements = " implements %s" % ", ".join(interfaces) if interfaces else ""
-    body = "\n".join(static_fields + fields + constructors + methods)
+    body = "\n".join(fields + constructors + methods)
     return "%spublic %sclass %s%s%s%s {%s}" % (doc, kw, clazz, params, extends, implements, indent(body))
 
-def static_field(doc, clazz, type, name, value):
-    if value is None:
-        return "%spublic static %s %s;" % (doc, type, name)
-    else:
-        return "%spublic static %s %s = %s;" % (doc, type, name, value)
-
-def field(doc, clazz, type, name, value):
+def field(doc, type, name, value):
     if value is None:
         return "%spublic %s %s;" % (doc, type, name)
     else:
@@ -198,9 +191,6 @@ def constructor(doc, clazz, parameters, body):
 
 def method(doc, clazz, type, name, parameters, body):
     return "%spublic %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body)
-
-def static_method(doc, clazz, type, name, parameters, body):
-    return "%spublic static %s %s(%s)%s" % (doc, type, name, ", ".join(parameters), body)
 
 def abstract_method(doc, clazz, type, name, parameters):
     return "%spublic abstract %s %s(%s);" % (doc, type, name, ", ".join(parameters))
@@ -300,12 +290,6 @@ def invoke_method_implicit(method, args):
 
 def invoke_super_method(clazz, base, method, args):
     return "super.%s(%s)" % (method, ", ".join(args))
-
-def invoke_static_method(clazz, method, args):
-    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
-
-def get_static_field(clazz, field):
-    return "%s.%s" % (clazz, field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)
