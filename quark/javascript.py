@@ -98,13 +98,15 @@ def comment(stuff):
 
 ## Class definition
 
-def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fields, constructors, methods):
     if base: fields = [base + ".prototype.__init_fields__.call(this);"] + fields
 
     result = "\n// CLASS %s\n" % clazz + doc
     result += "\n".join(constructors)
     if base:
         result += "_qrt.util.inherits(%s, %s);\n" % (clazz, base)
+
+    result += "\n".join(static_fields)
 
     result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
     result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
@@ -113,7 +115,10 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructo
 
     return result
 
-def field(doc, type, name, value):
+def static_field(doc, clazz, type, name, value):
+    return "%s%s.%s = %s;" % (doc, clazz, name, value or "null")
+
+def field(doc, clazz, type, name, value):
     return "%sthis.%s = %s;" % (doc, name, value or "null")
 
 def field_init():
@@ -133,6 +138,12 @@ def method(doc, clazz, type, name, parameters, body):
     trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
+def static_method(doc, clazz, type, name, parameters, body):
+    params = ", ".join(parameters)
+    full_name = "%s_%s" % (clazz, name)
+    trailer = "%s.%s = %s;" % (clazz, name, full_name)
+    return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
+
 def abstract_method(doc, clazz, type, name, parameters):
     params = ", ".join(parameters)
     full_name = "%s_%s" % (clazz, name)
@@ -142,7 +153,7 @@ def abstract_method(doc, clazz, type, name, parameters):
 ## Interface definition
 
 def interface(doc, iface, parameters, bases, methods):
-    return clazz(doc, False, iface, parameters, None, [], [], [default_constructor(iface)], methods)
+    return clazz(doc, False, iface, parameters, None, [], [], [], [default_constructor(iface)], methods)
 
 def interface_method(doc, iface, type, name, parameters, body):
     params = ", ".join(parameters)
@@ -235,6 +246,12 @@ def invoke_method_implicit(method, args):
 
 def invoke_super_method(clazz, base, method, args):
     return "this.constructor.super_.prototype.%s.call(%s)" % (method, ", ".join(["this"] + args))
+
+def invoke_static_method(clazz, method, args):
+    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
+
+def get_static_field(clazz, field):
+    return "%s.%s" % (clazz, field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)
