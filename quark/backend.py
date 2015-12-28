@@ -183,6 +183,7 @@ class Backend(object):
         interfaces = [self.type(t) for t in cls.bases
                       if isinstance(t.resolved.type, (Interface, Primitive))]
 
+        static_fields = []
         fields = []
         methods = []
         constructors = []
@@ -192,18 +193,22 @@ class Backend(object):
             if isinstance(d, Macro): continue
             doc = self.doc(d)
             if isinstance(d, Field):
-                fields.append(self.gen.field(doc,
-                                             self.type(d.type),
-                                             self.name(d.name),
-                                             self.expr(d.value)))
+                fun = self.gen.static_field if d.static else self.gen.field
+                holder = static_fields if d.static else fields
+                holder.append(fun(doc,
+                                  clazz,
+                                  self.type(d.type),
+                                  self.name(d.name),
+                                  self.expr(d.value)))
             elif d.type:
                 if d.body:
-                    methods.append(self.gen.method(doc,
-                                                   clazz,
-                                                   self.type(d.type),
-                                                   self.name(d.name),
-                                                   [self.param(p) for p in d.params],
-                                                   self.block(d.body)))
+                    fun = self.gen.static_method if d.static else self.gen.method
+                    methods.append(fun(doc,
+                                       clazz,
+                                       self.type(d.type),
+                                       self.name(d.name),
+                                       [self.param(p) for p in d.params],
+                                       self.block(d.body)))
                 else:
                     methods.append(self.gen.abstract_method(doc,
                                                             clazz,
@@ -232,7 +237,7 @@ class Backend(object):
             constructors = self.default_constructors(cls)
 
         return self.gen.clazz(self.doc(cls), is_abstract(cls), clazz, parameters, base,
-                              interfaces, fields, constructors, methods)
+                              interfaces, static_fields, fields, constructors, methods)
 
     @overload(Interface)
     def definition(self, iface):
@@ -480,12 +485,19 @@ class Backend(object):
         return self.gen.method_ref(self.name(v.name))
 
     @overload(Field)
-    def var(self, _, v):
-        return self.gen.field_ref(self.name(v.name))
+    def var(self, f, v):
+        if f.static:
+            return self.gen.get_static_field(self.name(f.clazz.name), self.name(v.name))
+        else:
+            return self.gen.field_ref(self.name(v.name))
 
     @overload(Class, Class)
     def get(self, cls, type, expr, attr):
-        return self.gen.get_field(self.expr(expr), self.name(attr))
+        f = get_field(cls, attr)
+        if f.static:
+            return self.gen.get_static_field(self.name(cls.name), self.name(attr))
+        else:
+            return self.gen.get_field(self.expr(expr), self.name(attr))
 
     @overload(Class, TypeParam)
     def get(self, cls, type, expr, attr):
@@ -516,11 +528,17 @@ class Backend(object):
                                                 self.name(method.name),
                                                 args)
         else:
-            return self.gen.invoke_method(self.expr(expr.expr), self.name(method.name), args)
+            if method.static:
+                return self.gen.invoke_static_method(self.name(method.clazz.name), self.name(method.name), args)
+            else:
+                return self.gen.invoke_method(self.expr(expr.expr), self.name(method.name), args)
 
     @overload(Method, Var)
     def invoke(self, method, var, args):
-        return self.gen.invoke_method_implicit(self.name(method.name), args)
+        if method.static:
+            return self.gen.invoke_static_method(self.name(method.clazz.name), self.name(method.name), args)
+        else:
+            return self.gen.invoke_method_implicit(self.name(method.name), args)
 
     @overload(Class)
     def invoke(self, cls, expr, args):
