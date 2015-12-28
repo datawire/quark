@@ -23,7 +23,29 @@ At the end of part 1 of the contract creation, your file should contain the foll
 
 :ref:`Return to Part 2 <Part2ResponseDefinition>` of the server definition to continue the tutorial.
 
+Part 2 Response Definition
+--------------------------
 
+At the end of part 2 of the contract creation, your file should contain the following:
+
+.. code-block:: none
+
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   class HelloImpl(object):
+
+       def hello(self, request):
+           res = hello.Response()
+           res.result = "Responding to [%s] from Python" % request.text
+           return res
+   
+   def main():
+   
+   if __name__ == '__main__':
+        main()
+
+:ref:`Return to Part 3 <part3ProcessRequest>` of the server definition to continue the tutorial.
 
 A full copy of the Python server for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyserver.py>`_ - the file you constructed following the instructions in parts 1-5 of the server definition page should match it exactly excepting comments and @doc annotations.
 
