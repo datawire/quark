@@ -13,10 +13,6 @@ Getting Started with RPC Tutorial
    Writing the Server <server>
    Putting It All Together <try>
    More Information <links>
-
-.. toctree::
-   :hidden:
-
    Appendix A: Interim Example States - Contract <appendixAcontract>
    Appendix B: Interim Example States - Client <appendixBClient>
    Appendix C: Interim Example States - Server <appendixCServer>
