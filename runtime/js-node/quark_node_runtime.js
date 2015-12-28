@@ -450,6 +450,11 @@
         }
     };
 
+    Runtime.prototype.fail = function(message) {
+        console.log(message);
+        process.exit(1);
+    };
+
     module.exports = new Runtime();
 
 })();
