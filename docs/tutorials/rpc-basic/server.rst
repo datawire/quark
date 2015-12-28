@@ -58,6 +58,8 @@ Step 2: Instantiate an implementation object. This is an instance of the HelloIm
 
 Step 3: Instantiate the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract and the constructor defining how the runtime and implementation objects are used to launch the server process and perform the request work of the server is all abstracted away from the user.
 
+Step 4: Bind the server to the defined port and URL for the hello service. This is done by passing the service URI (http://127.0.0.1:8910/hello) and the server instance to the serveHTTP() method of the runtime.
+
 That's it! The Python server is complete. Again, note that we don't actually see the processing of the request; that's handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within Quark. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.
 
 [[JMK is there a better way to discuss this? Not sure that I go into enough detail or use the proper language]]
