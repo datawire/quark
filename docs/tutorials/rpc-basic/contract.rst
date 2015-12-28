@@ -70,7 +70,7 @@ See :ref:`this page <part3ContractFinished>` for the file state at the end of Pa
 Part 4: Client
 --------------
 
-This section defines the example client in Quark. This definition will be used to generate client code in each supported target language.
+This section defines the client processing code in Quark. This definition will be used within the client code in each supported target language to perform the actual communications work of the client.
 
 Step 1: Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined.
 
@@ -78,10 +78,10 @@ See :ref:`this page <part4ContractFinished>` for the file state at the end of Pa
 
 .. _part5Server:
 
-Part 5: Server Stubs
---------------------
+Part 5: Server
+--------------
 
-This section defines the example server APIs in Quark. This definition will be used to generate server stubs in each supported target language.
+This section defines the server in Quark. This definition will be used within the server written in each supported language to access the code within Quark and the installed integrations that accepts the client request and packages up the response to send back to the client.
 
 Step 1: Define an empty class named HelloServer that extends the Quark Server integration type.
 
