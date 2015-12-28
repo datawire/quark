@@ -1,12 +1,12 @@
 File(
  Class(Name(Test),
-  Field(static=False, Type(Name(int)), Name(x), $type=0.int),
-  Field(static=False, Type(Name(String)), Name(y), $type=0.String),
+  Field(Type(Name(int)), Name(x), $type=0.int),
+  Field(Type(Name(String)), Name(y), $type=0.String),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Test", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -19,7 +19,7 @@ File(
       Return(Attr(Var(Name(self), $type=1.Test), Name(y), $type=0.String)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(

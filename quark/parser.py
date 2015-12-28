@@ -23,7 +23,7 @@ class Parser:
 
     keywords = ["package", "class", "interface", "primitive", "extends",
                 "return", "macro", "new", "null", "if", "else", "while",
-                "super", "true", "false", "break", "continue", "static"]
+                "super", "true", "false", "break", "continue"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -138,16 +138,13 @@ class Parser:
         dfn.annotations = annotations
         return dfn
 
-    @g.rule('field = STATIC? type name (EQ expr)? SEMI')
-    def visit_field(self, node, (static, type, name, opt, _)):
+    @g.rule('field = type name (EQ expr)? SEMI')
+    def visit_field(self, node, (type, name, opt, _)):
         if opt:
             expr = opt[0][-1]
         else:
             expr = None
-        result = Field(type, name, expr)
-        if static:
-            result.static = True
-        return result
+        return Field(type, name, expr)
 
     @g.rule('constructor = name LPR parameters RPR block')
     def visit_constructor(self, node, (name, lp, parameters, rp, body)):
@@ -157,11 +154,9 @@ class Parser:
     def visit_constructor_macro(self, node, (m, name, lp, parameters, rp, expr, s)):
         return ConstructorMacro(name, tuple(parameters), expr)
 
-    @g.rule('method = STATIC? type name LPR parameters RPR body')
-    def visit_method(self, node, (static, type, name, lp, parameters, rp, body)):
-        result = Method(type, name, tuple(parameters), body)
-        if static: result.static = True
-        return result
+    @g.rule('method = type name LPR parameters RPR body')
+    def visit_method(self, node, (type, name, lp, parameters, rp, body)):
+        return Method(type, name, tuple(parameters), body)
 
     @g.rule('body = block / SEMI')
     def visit_body(self, node, (child,)):

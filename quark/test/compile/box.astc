@@ -1,21 +1,21 @@
 File(
  Class(Name(Box), TypeParam(Name(T)),
-  Field(static=False, Type(Name(T)), Name(contents), $type=1.Box.T),
+  Field(Type(Name(T)), Name(contents), $type=1.Box.T),
 
-  Method(static=False, Type(Name(void)), Name(set),
+  Method(Type(Name(void)), Name(set),
    Param(Type(Name(T)), Name(contents), $type=1.Box.T),
    Block(
     Assign(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
      $type=1.Box.T), Var(Name(contents), $type=1.Box.T)))),
 
-  Method(static=False, Type(Name(T)), Name(get), Block(
+  Method(Type(Name(T)), Name(get), Block(
     Return(Attr(Var(Name(self), $type=1.Box<1.Box.T>), Name(contents),
      $type=1.Box.T)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Box<Object>", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -25,7 +25,7 @@ File(
        $type=1.Box.T)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -37,27 +37,25 @@ File(
        $type=1.Box.T))))))),
 
  Class(Name(Crate), TypeParam(Name(T)),
-  Field(static=False, Type(Name(Box), Type(Name(T))), Name(box),
-  $type=1.Box<1.Crate.T>),
-  Field(static=False, Type(Name(Box), Type(Name(int))), Name(ibox),
-  $type=1.Box<0.int>),
+  Field(Type(Name(Box), Type(Name(T))), Name(box), $type=1.Box<1.Crate.T>),
+  Field(Type(Name(Box), Type(Name(int))), Name(ibox), $type=1.Box<0.int>),
 
-  Method(static=False, Type(Name(void)), Name(set),
+  Method(Type(Name(void)), Name(set),
    Param(Type(Name(T)), Name(stuff), $type=1.Crate.T),
    Block(
     ExprStmt(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>),
         Name(box), $type=1.Box<1.Crate.T>), Name(set), $type=1.Box.set),
       Var(Name(stuff), $type=1.Crate.T), $type=0.void)))),
 
-  Method(static=False, Type(Name(T)), Name(get), Block(
+  Method(Type(Name(T)), Name(get), Block(
     Return(Call(Attr(Attr(Var(Name(self), $type=1.Crate<1.Crate.T>), Name(box),
        $type=1.Box<1.Crate.T>), Name(get), $type=1.Box.get),
      $type=1.Crate.T)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Crate<Object>", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -72,7 +70,7 @@ File(
        $type=1.Box<0.int>)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -90,13 +88,12 @@ File(
        $type=1.Box<0.int>))))))),
 
  Class(Name(Sack),
-  Field(static=False, Type(Name(Box), Type(Name(int))), Name(ints),
-  $type=1.Box<0.int>),
+  Field(Type(Name(Box), Type(Name(int))), Name(ints), $type=1.Box<0.int>),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Sack", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -106,7 +103,7 @@ File(
        $type=1.Box<0.int>)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(

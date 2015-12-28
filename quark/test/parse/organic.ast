@@ -33,7 +33,7 @@ File(
 
   Class(Name(Foo), Type(Name(Bar)),
 
-   Method(static=False, Type(Name(void)), Name(doFoo), Block(
+   Method(Type(Name(void)), Name(doFoo), Block(
      Assign(Var(Name(x)), Call(Attr(Var(Name(this)), Name(x)), Var(Name(a)),
        Var(Name(b)), Var(Name(c)))),
      Assign(Attr(Var(Name(q)), Name(asdf)), Call(Attr(Var(Name(this)),

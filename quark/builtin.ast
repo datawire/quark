@@ -68,9 +68,9 @@ File(
   Param(Type(Name(List), Type(Name(Object))), Name(args))),
 
  Class(Name(Class),
-  Field(static=False, Type(Name(String)), Name(id)),
-  Field(static=False, Type(Name(String)), Name(name)),
-  Field(static=False, Type(Name(List), Type(Name(Class))), Name(parameters)),
+  Field(Type(Name(String)), Name(id)),
+  Field(Type(Name(String)), Name(name)),
+  Field(Type(Name(List), Type(Name(Class))), Name(parameters)),
 
   Constructor(Name(Class),
    Param(Type(Name(String)), Name(id)),
@@ -78,27 +78,25 @@ File(
     Assign(Attr(Var(Name(self)), Name(id)), Var(Name(id))),
     ExprStmt(Call(Var(Name(_class)), Var(Name(self)))))),
 
-  Method(static=False, Type(Name(String)), Name(getId), Block(
+  Method(Type(Name(String)), Name(getId), Block(
     Return(Var(Name(id))))),
 
-  Method(static=False, Type(Name(String)), Name(getName), Block(
+  Method(Type(Name(String)), Name(getName), Block(
     Return(Var(Name(name))))),
 
-  Method(static=False, Type(Name(List), Type(Name(Class))),
-   Name(getParameters), Block(
+  Method(Type(Name(List), Type(Name(Class))), Name(getParameters), Block(
     Return(Var(Name(parameters))))),
 
-  Method(static=False, Type(Name(Object)), Name(construct),
+  Method(Type(Name(Object)), Name(construct),
    Param(Type(Name(List), Type(Name(Object))), Name(args)),
    Block(
     Return(Call(Var(Name(_construct)), Call(Var(Name(getId))),
       Var(Name(args)))))),
 
-  Method(static=False, Type(Name(List), Type(Name(Field))), Name(getFields),
-   Block(
+  Method(Type(Name(List), Type(Name(Field))), Name(getFields), Block(
     Return(Call(Var(Name(_fields)), Attr(Var(Name(self)), Name(id)))))),
 
-  Method(static=False, Type(Name(Field)), Name(getField),
+  Method(Type(Name(Field)), Name(getField),
    Param(Type(Name(String)), Name(name)),
    Block(
     Local(
@@ -116,7 +114,7 @@ File(
         Number(1))))),
     Return(Null(null)))),
 
-  Method(static=False, Type(Name(Object)), Name(invoke),
+  Method(Type(Name(Object)), Name(invoke),
    Param(Type(Name(Object)), Name(object)),
    Param(Type(Name(String)), Name(method)),
    Param(Type(Name(List), Type(Name(Object))), Name(args)),
@@ -132,8 +130,8 @@ File(
    Call(Attr(Var(Name(self)), Name(toJSON))))),
 
  Class(Name(Field),
-  Field(static=False, Type(Name(Class)), Name(type)),
-  Field(static=False, Type(Name(String)), Name(name)),
+  Field(Type(Name(Class)), Name(type)),
+  Field(Type(Name(String)), Name(name)),
 
   Constructor(Name(Field),
    Param(Type(Name(Class)), Name(type)),
@@ -671,9 +669,9 @@ File(
   MethodMacro(Type(Name(bool)), Name(__to_bool), Call(Attr(Var(Name(self)),
      Name(getBool)))),
 
-  Method(static=False, Type(Name(String)), Name(getType)),
+  Method(Type(Name(String)), Name(getType)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(getObjectItem),
+  Method(Type(Name(JSONObject)), Name(getObjectItem),
    Param(Type(Name(String)), Name(key))),
 
   MethodMacro(Type(Name(JSONObject)), Name(__get__),
@@ -681,51 +679,51 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(').getObjectItem('),
      Var(Name(key)), Fixed(')')))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(getListItem),
+  Method(Type(Name(JSONObject)), Name(getListItem),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Type(Name(int)), Name(size)),
+  Method(Type(Name(int)), Name(size)),
 
-  Method(static=False, Type(Name(String)), Name(getString)),
+  Method(Type(Name(String)), Name(getString)),
 
-  Method(static=False, Type(Name(bool)), Name(isString)),
+  Method(Type(Name(bool)), Name(isString)),
 
-  Method(static=False, Type(Name(float)), Name(getNumber)),
+  Method(Type(Name(float)), Name(getNumber)),
 
-  Method(static=False, Type(Name(bool)), Name(isNumber)),
+  Method(Type(Name(bool)), Name(isNumber)),
 
-  Method(static=False, Type(Name(bool)), Name(getBool)),
+  Method(Type(Name(bool)), Name(getBool)),
 
-  Method(static=False, Type(Name(bool)), Name(isNull)),
+  Method(Type(Name(bool)), Name(isNull)),
 
-  Method(static=False, Type(Name(bool)), Name(isDefined)),
+  Method(Type(Name(bool)), Name(isDefined)),
 
-  Method(static=False, Type(Name(bool)), Name(isUndefined)),
+  Method(Type(Name(bool)), Name(isUndefined)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(undefined)),
+  Method(Type(Name(JSONObject)), Name(undefined)),
 
-  Method(static=False, Type(Name(String)), Name(toString)),
+  Method(Type(Name(String)), Name(toString)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setString),
+  Method(Type(Name(JSONObject)), Name(setString),
    Param(Type(Name(String)), Name(value))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setNumber),
+  Method(Type(Name(JSONObject)), Name(setNumber),
    Param(Type(Name(Object)), Name(value))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setBool),
+  Method(Type(Name(JSONObject)), Name(setBool),
    Param(Type(Name(bool)), Name(value))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setNull)),
+  Method(Type(Name(JSONObject)), Name(setNull)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setObject)),
+  Method(Type(Name(JSONObject)), Name(setObject)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setList)),
+  Method(Type(Name(JSONObject)), Name(setList)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setObjectItem),
+  Method(Type(Name(JSONObject)), Name(setObjectItem),
    Param(Type(Name(String)), Name(key)),
    Param(Type(Name(JSONObject)), Name(value))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setListItem),
+  Method(Type(Name(JSONObject)), Name(setListItem),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(JSONObject)), Name(value))),
 
@@ -777,65 +775,65 @@ File(
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
 
-  Method(static=False, Type(Name(void)), Name(onWSInit),
+  Method(Type(Name(void)), Name(onWSInit),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSConnected),
+  Method(Type(Name(void)), Name(onWSConnected),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSMessage),
+  Method(Type(Name(void)), Name(onWSMessage),
    Param(Type(Name(WebSocket)), Name(socket)),
    Param(Type(Name(String)), Name(message)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSBinary),
+  Method(Type(Name(void)), Name(onWSBinary),
    Param(Type(Name(WebSocket)), Name(socket)),
    Param(Type(Name(Buffer)), Name(message)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSClosed),
+  Method(Type(Name(void)), Name(onWSClosed),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSError),
+  Method(Type(Name(void)), Name(onWSError),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSFinal),
+  Method(Type(Name(void)), Name(onWSFinal),
    Param(Type(Name(WebSocket)), Name(socket)),
    Block())),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
-  Method(static=False, Type(Name(bool)), Name(send),
+  Method(Type(Name(bool)), Name(send),
    Param(Type(Name(String)), Name(message))),
 
-  Method(static=False, Type(Name(bool)), Name(sendBinary),
+  Method(Type(Name(bool)), Name(sendBinary),
    Param(Type(Name(Buffer)), Name(bytes))),
 
-  Method(static=False, Type(Name(bool)), Name(close))),
+  Method(Type(Name(bool)), Name(close))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPInit),
+  Method(Type(Name(void)), Name(onHTTPInit),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(String)), Name(message)),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPFinal),
+  Method(Type(Name(void)), Name(onHTTPFinal),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Block())),
 
@@ -850,94 +848,92 @@ File(
      Fixed(')')), NativeCase(js, Fixed('new _qrt.HTTPRequest('),
      Var(Name(url)), Fixed(')')))),
 
-  Method(static=False, Type(Name(String)), Name(getUrl)),
+  Method(Type(Name(String)), Name(getUrl)),
 
-  Method(static=False, Type(Name(void)), Name(setMethod),
+  Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method))),
 
-  Method(static=False, Type(Name(String)), Name(getMethod)),
+  Method(Type(Name(String)), Name(getMethod)),
 
-  Method(static=False, Type(Name(void)), Name(setBody),
+  Method(Type(Name(void)), Name(setBody),
    Param(Type(Name(String)), Name(data))),
 
-  Method(static=False, Type(Name(String)), Name(getBody)),
+  Method(Type(Name(String)), Name(getBody)),
 
-  Method(static=False, Type(Name(void)), Name(setHeader),
+  Method(Type(Name(void)), Name(setHeader),
    Param(Type(Name(String)), Name(key)),
    Param(Type(Name(String)), Name(value))),
 
-  Method(static=False, Type(Name(String)), Name(getHeader),
+  Method(Type(Name(String)), Name(getHeader),
    Param(Type(Name(String)), Name(key))),
 
-  Method(static=False, Type(Name(List), Type(Name(String))),
-   Name(getHeaders))),
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPResponse')))), Name(HTTPResponse),
 
-  Method(static=False, Type(Name(int)), Name(getCode)),
+  Method(Type(Name(int)), Name(getCode)),
 
-  Method(static=False, Type(Name(void)), Name(setCode),
+  Method(Type(Name(void)), Name(setCode),
    Param(Type(Name(int)), Name(code))),
 
-  Method(static=False, Type(Name(String)), Name(getBody)),
+  Method(Type(Name(String)), Name(getBody)),
 
-  Method(static=False, Type(Name(void)), Name(setBody),
+  Method(Type(Name(void)), Name(setBody),
    Param(Type(Name(String)), Name(body))),
 
-  Method(static=False, Type(Name(void)), Name(setHeader),
+  Method(Type(Name(void)), Name(setHeader),
    Param(Type(Name(String)), Name(key)),
    Param(Type(Name(String)), Name(value))),
 
-  Method(static=False, Type(Name(String)), Name(getHeader),
+  Method(Type(Name(String)), Name(getHeader),
    Param(Type(Name(String)), Name(key))),
 
-  Method(static=False, Type(Name(List), Type(Name(String))),
-   Name(getHeaders))),
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Task')))), Name(Task),
 
-  Method(static=False, Type(Name(void)), Name(onExecute),
+  Method(Type(Name(void)), Name(onExecute),
    Param(Type(Name(Runtime)), Name(runtime)))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Runtime')))), Name(Runtime),
 
-  Method(static=False, Type(Name(void)), Name(acquire)),
+  Method(Type(Name(void)), Name(acquire)),
 
-  Method(static=False, Type(Name(void)), Name(release)),
+  Method(Type(Name(void)), Name(release)),
 
-  Method(static=False, Type(Name(void)), Name(wait),
+  Method(Type(Name(void)), Name(wait),
    Param(Type(Name(float)), Name(timeoutInSeconds))),
 
-  Method(static=False, Type(Name(void)), Name(open),
+  Method(Type(Name(void)), Name(open),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(WSHandler)), Name(handler))),
 
-  Method(static=False, Type(Name(void)), Name(request),
+  Method(Type(Name(void)), Name(request),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPHandler)), Name(handler))),
 
-  Method(static=False, Type(Name(void)), Name(schedule),
+  Method(Type(Name(void)), Name(schedule),
    Param(Type(Name(Task)), Name(handler)),
    Param(Type(Name(float)), Name(delayInSeconds))),
 
-  Method(static=False, Type(Name(Codec)), Name(codec)),
+  Method(Type(Name(Codec)), Name(codec)),
 
-  Method(static=False, Type(Name(void)), Name(serveHTTP),
+  Method(Type(Name(void)), Name(serveHTTP),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(HTTPServlet)), Name(servlet))),
 
-  Method(static=False, Type(Name(void)), Name(serveWS),
+  Method(Type(Name(void)), Name(serveWS),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(WSServlet)), Name(servlet))),
 
-  Method(static=False, Type(Name(void)), Name(respond),
+  Method(Type(Name(void)), Name(respond),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Display the explanatory message and then terminate the program")),
    Type(Name(void)), Name(fail),
    Param(Type(Name(String)), Name(message)))),
@@ -947,82 +943,72 @@ File(
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Buffer')))), Name(Buffer),
 
-  Method(static=False, Annotation(Name(doc), String("capacity of the buffer")),
+  Method(Annotation(Name(doc), String("capacity of the buffer")),
    Type(Name(int)), Name(capacity)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a byte at the specified index")), Type(Name(byte)),
-   Name(getByte),
+  Method(Annotation(Name(doc), String("read a byte at the specified index")),
+   Type(Name(byte)), Name(getByte),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a byte at the specified index")), Type(Name(void)),
-   Name(putByte),
+  Method(Annotation(Name(doc), String("write a byte at the specified index")),
+   Type(Name(void)), Name(putByte),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(byte)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a short at the specified index")), Type(Name(short)),
-   Name(getShort),
+  Method(Annotation(Name(doc), String("read a short at the specified index")),
+   Type(Name(short)), Name(getShort),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a short at the specified index")), Type(Name(void)),
-   Name(putShort),
+  Method(Annotation(Name(doc), String("write a short at the specified index")),
+   Type(Name(void)), Name(putShort),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(short)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read an int at the specified index")), Type(Name(int)),
-   Name(getInt),
+  Method(Annotation(Name(doc), String("read an int at the specified index")),
+   Type(Name(int)), Name(getInt),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write an int at the specified index")), Type(Name(void)),
-   Name(putInt),
+  Method(Annotation(Name(doc), String("write an int at the specified index")),
+   Type(Name(void)), Name(putInt),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(int)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a long at the specified index")), Type(Name(long)),
-   Name(getLong),
+  Method(Annotation(Name(doc), String("read a long at the specified index")),
+   Type(Name(long)), Name(getLong),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a long at the specified index")), Type(Name(void)),
-   Name(putLong),
+  Method(Annotation(Name(doc), String("write a long at the specified index")),
+   Type(Name(void)), Name(putLong),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(long)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a float at the specified index")), Type(Name(float)),
-   Name(getFloat),
+  Method(Annotation(Name(doc), String("read a float at the specified index")),
+   Type(Name(float)), Name(getFloat),
    Param(Type(Name(int)), Name(index))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a float at the specified index")), Type(Name(void)),
-   Name(putFloat),
+  Method(Annotation(Name(doc), String("write a float at the specified index")),
+   Type(Name(void)), Name(putFloat),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(float)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("decode length bytes as a UTF8 string at the specified index")),
    Type(Name(String)), Name(getStringUTF8),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(int)), Name(length))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("write a string encoded in UTF8 at the specified index and return encoded length")),
    Type(Name(int)), Name(putStringUTF8),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(String)), Name(value))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("get a view of the range")), Type(Name(Buffer)), Name(getSlice),
+  Method(Annotation(Name(doc), String("get a view of the range")),
+   Type(Name(Buffer)), Name(getSlice),
    Param(Type(Name(int)), Name(index)),
    Param(Type(Name(int)), Name(length))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("copy length bytes from the source buffer starting at offset to the specified index")),
    Type(Name(void)), Name(putSlice),
    Param(Type(Name(int)), Name(index)),
@@ -1030,11 +1016,11 @@ File(
    Param(Type(Name(int)), Name(offset)),
    Param(Type(Name(int)), Name(length))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("get a littleEndian view of the same buffer")), Type(Name(Buffer)),
    Name(littleEndian)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("true if the buffer decodes in network byte order")),
    Type(Name(bool)), Name(isNetworkByteOrder))),
 
@@ -1043,12 +1029,12 @@ File(
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Codec')))), Name(Codec),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Create an empty buffer with the specified capacity")),
    Type(Name(Buffer)), Name(buffer),
    Param(Type(Name(int)), Name(capacity))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")),
    Type(Name(String)), Name(toHexdump),
    Param(Type(Name(Buffer)), Name(buffer)),
@@ -1056,44 +1042,42 @@ File(
    Param(Type(Name(int)), Name(length)),
    Param(Type(Name(int)), Name(spaceScale))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("decode the hexdump ignoring leading 0x and any intervening spaces")),
    Type(Name(Buffer)), Name(fromHexdump),
    Param(Type(Name(String)), Name(hex))),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Encode the specified slice of the buffer as Base64")),
    Type(Name(String)), Name(toBase64),
    Param(Type(Name(Buffer)), Name(buffer)),
    Param(Type(Name(int)), Name(offset)),
    Param(Type(Name(int)), Name(length))),
 
-  Method(static=False, Annotation(Name(doc),
-    String("decode the Base64 enccoded string")), Type(Name(Buffer)),
-   Name(fromBase64),
+  Method(Annotation(Name(doc), String("decode the Base64 enccoded string")),
+   Type(Name(Buffer)), Name(fromBase64),
    Param(Type(Name(String)), Name(base64)))),
 
  Primitive(Annotation(Name(doc), String("A service addresable with an url")),
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Servlet')))), Name(Servlet),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")),
    Type(Name(void)), Name(onServletInit),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(Runtime)), Name(runtime)),
    Block()),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called if the servlet could not be installed")), Type(Name(void)),
    Name(onServletError),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(String)), Name(error)),
    Block()),
 
-  Method(static=False, Annotation(Name(doc),
-    String("called when the servlet is removed")), Type(Name(void)),
-   Name(onServletEnd),
+  Method(Annotation(Name(doc), String("called when the servlet is removed")),
+   Type(Name(void)), Name(onServletEnd),
    Param(Type(Name(String)), Name(url)),
    Block())),
 
@@ -1102,7 +1086,7 @@ File(
      Fixed('io.datawire.quark.runtime.HTTPServlet')))), Name(HTTPServlet),
   Type(Name(Servlet)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")),
    Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request)),
@@ -1114,7 +1098,7 @@ File(
      Fixed('io.datawire.quark.runtime.WSServlet')))), Name(WSServlet),
   Type(Name(Servlet)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called for each new incoming WebSocket connection")),
    Type(Name(WSHandler)), Name(onWSConnect),
    Param(Type(Name(HTTPRequest)), Name(upgrade_request)),
@@ -1122,16 +1106,16 @@ File(
     Return(Null(null))))),
 
  Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
-  Field(static=False, Type(Name(HTTPResponse)), Name(response)),
-  Field(static=False, Type(Name(String)), Name(failure), Null(null)),
+  Field(Type(Name(HTTPResponse)), Name(response)),
+  Field(Type(Name(String)), Name(failure), Null(null)),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block(
     Assign(Attr(Var(Name(self)), Name(response)), Var(Name(response))))),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(String)), Name(message)),
    Block(
@@ -1139,11 +1123,11 @@ File(
 
  Interface(Name(Service),
 
-  Method(static=False, Type(Name(String)), Name(getURL)),
+  Method(Type(Name(String)), Name(getURL)),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime)),
+  Method(Type(Name(Runtime)), Name(getRuntime)),
 
-  Method(static=False, Type(Name(Object)), Name(rpc),
+  Method(Type(Name(Object)), Name(rpc),
    Param(Type(Name(String)), Name(name)),
    Param(Type(Name(Object)), Name(message)),
    Block(
@@ -1216,8 +1200,8 @@ File(
          Var(Name(classname))), Var(Name(obj))))))))),
 
  Class(Name(Client),
-  Field(static=False, Type(Name(Runtime)), Name(runtime)),
-  Field(static=False, Type(Name(String)), Name(url)),
+  Field(Type(Name(Runtime)), Name(runtime)),
+  Field(Type(Name(String)), Name(url)),
 
   Constructor(Name(Client),
    Param(Type(Name(Runtime)), Name(runtime)),
@@ -1226,15 +1210,15 @@ File(
     Assign(Attr(Var(Name(self)), Name(runtime)), Var(Name(runtime))),
     Assign(Attr(Var(Name(self)), Name(url)), Var(Name(url))))),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime), Block(
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self)), Name(runtime))))),
 
-  Method(static=False, Type(Name(String)), Name(getURL), Block(
+  Method(Type(Name(String)), Name(getURL), Block(
     Return(Attr(Var(Name(self)), Name(url)))))),
 
  Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
-  Field(static=False, Type(Name(Runtime)), Name(runtime)),
-  Field(static=False, Type(Name(T)), Name(impl)),
+  Field(Type(Name(Runtime)), Name(runtime)),
+  Field(Type(Name(T)), Name(impl)),
 
   Constructor(Name(Server),
    Param(Type(Name(Runtime)), Name(runtime)),
@@ -1243,10 +1227,10 @@ File(
     Assign(Attr(Var(Name(self)), Name(runtime)), Var(Name(runtime))),
     Assign(Attr(Var(Name(self)), Name(impl)), Var(Name(impl))))),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime), Block(
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self)), Name(runtime))))),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPRequest),
+  Method(Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request)),
    Param(Type(Name(HTTPResponse)), Name(response)),
    Block(
@@ -1294,7 +1278,7 @@ File(
     ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(respond)),
       Var(Name(request)), Var(Name(response)))))),
 
-  Method(static=False, Type(Name(void)), Name(onServletError),
+  Method(Type(Name(void)), Name(onServletError),
    Param(Type(Name(String)), Name(url)),
    Param(Type(Name(String)), Name(message)),
    Block(

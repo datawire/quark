@@ -3,36 +3,33 @@ File(
 
   Class(Annotation(Name(doc), String("Essential information about a pet.")),
    Name(Pet),
-   Field(static=False, Annotation(Name(doc), String("The id of the pet.")),
-    Type(Name(int)), Name(id)),
-   Field(static=False, Annotation(Name(doc), String("The name of the pet.")),
+   Field(Annotation(Name(doc), String("The id of the pet.")), Type(Name(int)),
+    Name(id)),
+   Field(Annotation(Name(doc), String("The name of the pet.")),
     Type(Name(String)), Name(name)),
-   Field(static=False, Annotation(Name(doc),
-     String("The tag associated with the pet.")), Type(Name(String)),
-    Name(tag))),
+   Field(Annotation(Name(doc), String("The tag associated with the pet.")),
+    Type(Name(String)), Name(tag))),
 
   Interface(Annotation(Name(service), String("http://example.org/petstore")),
    Annotation(Name(doc), String("The PetStore service interface.")),
    Name(PetStore),
 
-   Method(static=False, Annotation(Name(doc),
-     String("Find a pet based upon its id.")), Annotation(Name(query)),
-    Type(Name(Pet)), Name(findPet),
+   Method(Annotation(Name(doc), String("Find a pet based upon its id.")),
+    Annotation(Name(query)), Type(Name(Pet)), Name(findPet),
     Param(Type(Name(int)), Name(id))),
 
-   Method(static=False, Annotation(Name(doc),
+   Method(Annotation(Name(doc),
      String("Get an optionally limited set of pets based on a list of tags.")),
     Annotation(Name(query)), Type(Name(List), Type(Name(Pet))), Name(findPets),
     Param(Type(Name(List), Type(Name(String))), Name(tags), Null(null)),
     Param(Type(Name(int)), Name(limit), Null(null))),
 
-   Method(static=False, Annotation(Name(doc), String("Create a new pet.")),
+   Method(Annotation(Name(doc), String("Create a new pet.")),
     Annotation(Name(operation)), Type(Name(Pet)), Name(createPet),
     Param(Type(Name(String)), Name(name)),
     Param(Type(Name(String)), Name(tag), Null(null))),
 
-   Method(static=False, Annotation(Name(doc),
-     String("Delete a pet based on its id.")), Annotation(Name(operation)),
-    Type(Name(void)), Name(deletePet),
+   Method(Annotation(Name(doc), String("Delete a pet based on its id.")),
+    Annotation(Name(operation)), Type(Name(void)), Name(deletePet),
     Param(Type(Name(int)), Name(id)))))
 )

@@ -77,9 +77,9 @@ File(
   $type=0.List<0.Object>)),
 
  Class(Name(Class),
-  Field(static=False, Type(Name(String)), Name(id), $type=0.String),
-  Field(static=False, Type(Name(String)), Name(name), $type=0.String),
-  Field(static=False, Type(Name(List), Type(Name(Class))), Name(parameters),
+  Field(Type(Name(String)), Name(id), $type=0.String),
+  Field(Type(Name(String)), Name(name), $type=0.String),
+  Field(Type(Name(List), Type(Name(Class))), Name(parameters),
   $type=0.List<0.Class>),
 
   Constructor(Name(Class),
@@ -90,17 +90,16 @@ File(
     ExprStmt(Call(Var(Name(_class), $type=0._class), Var(Name(self),
       $type=0.Class), $type=0.void)))),
 
-  Method(static=False, Type(Name(String)), Name(getId), Block(
+  Method(Type(Name(String)), Name(getId), Block(
     Return(Var(Name(id), $type=0.String)))),
 
-  Method(static=False, Type(Name(String)), Name(getName), Block(
+  Method(Type(Name(String)), Name(getName), Block(
     Return(Var(Name(name), $type=0.String)))),
 
-  Method(static=False, Type(Name(List), Type(Name(Class))),
-   Name(getParameters), Block(
+  Method(Type(Name(List), Type(Name(Class))), Name(getParameters), Block(
     Return(Var(Name(parameters), $type=0.List<0.Class>)))),
 
-  Method(static=False, Type(Name(Object)), Name(construct),
+  Method(Type(Name(Object)), Name(construct),
    Param(Type(Name(List), Type(Name(Object))), Name(args),
    $type=0.List<0.Object>),
    Block(
@@ -108,12 +107,11 @@ File(
       Call(Var(Name(getId), $type=0.Class.getId), $type=0.String),
       Var(Name(args), $type=0.List<0.Object>), $type=0.Object)))),
 
-  Method(static=False, Type(Name(List), Type(Name(Field))), Name(getFields),
-   Block(
+  Method(Type(Name(List), Type(Name(Field))), Name(getFields), Block(
     Return(Call(Var(Name(_fields), $type=0._fields), Attr(Var(Name(self),
        $type=0.Class), Name(id), $type=0.String), $type=0.List<0.Field>)))),
 
-  Method(static=False, Type(Name(Field)), Name(getField),
+  Method(Type(Name(Field)), Name(getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     Local(
@@ -140,7 +138,7 @@ File(
         $type=0.int), $type=0.int)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(Object)), Name(invoke),
+  Method(Type(Name(Object)), Name(invoke),
    Param(Type(Name(Object)), Name(object), $type=0.Object),
    Param(Type(Name(String)), Name(method), $type=0.String),
    Param(Type(Name(List), Type(Name(Object))), Name(args),
@@ -160,10 +158,10 @@ File(
    Call(Attr(Var(Name(self), $type=0.Class), Name(toJSON),
     $type=0.Class.toJSON), $type=0.JSONObject)),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Class", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -182,7 +180,7 @@ File(
        $type=0.List<0.Class>)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -204,8 +202,8 @@ File(
        $type=0.List<0.Class>))))))),
 
  Class(Name(Field),
-  Field(static=False, Type(Name(Class)), Name(type), $type=0.Class),
-  Field(static=False, Type(Name(String)), Name(name), $type=0.String),
+  Field(Type(Name(Class)), Name(type), $type=0.Class),
+  Field(Type(Name(String)), Name(name), $type=0.String),
 
   Constructor(Name(Field),
    Param(Type(Name(Class)), Name(type), $type=0.Class),
@@ -216,10 +214,10 @@ File(
     Assign(Attr(Var(Name(self), $type=0.Field), Name(name), $type=0.String),
      Var(Name(name), $type=0.String)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Field", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -234,7 +232,7 @@ File(
        $type=0.String)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -941,9 +939,9 @@ File(
      $type=0.JSONObject), Name(getBool), $type=0.JSONObject.getBool),
    $type=0.bool)),
 
-  Method(static=False, Type(Name(String)), Name(getType)),
+  Method(Type(Name(String)), Name(getType)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(getObjectItem),
+  Method(Type(Name(JSONObject)), Name(getObjectItem),
    Param(Type(Name(String)), Name(key), $type=0.String)),
 
   MethodMacro(Type(Name(JSONObject)), Name(__get__),
@@ -951,51 +949,51 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.JSONObject),
      Fixed(').getObjectItem('), Var(Name(key), $type=0.String), Fixed(')')))),
 
-  Method(static=False, Type(Name(JSONObject)), Name(getListItem),
+  Method(Type(Name(JSONObject)), Name(getListItem),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Type(Name(int)), Name(size)),
+  Method(Type(Name(int)), Name(size)),
 
-  Method(static=False, Type(Name(String)), Name(getString)),
+  Method(Type(Name(String)), Name(getString)),
 
-  Method(static=False, Type(Name(bool)), Name(isString)),
+  Method(Type(Name(bool)), Name(isString)),
 
-  Method(static=False, Type(Name(float)), Name(getNumber)),
+  Method(Type(Name(float)), Name(getNumber)),
 
-  Method(static=False, Type(Name(bool)), Name(isNumber)),
+  Method(Type(Name(bool)), Name(isNumber)),
 
-  Method(static=False, Type(Name(bool)), Name(getBool)),
+  Method(Type(Name(bool)), Name(getBool)),
 
-  Method(static=False, Type(Name(bool)), Name(isNull)),
+  Method(Type(Name(bool)), Name(isNull)),
 
-  Method(static=False, Type(Name(bool)), Name(isDefined)),
+  Method(Type(Name(bool)), Name(isDefined)),
 
-  Method(static=False, Type(Name(bool)), Name(isUndefined)),
+  Method(Type(Name(bool)), Name(isUndefined)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(undefined)),
+  Method(Type(Name(JSONObject)), Name(undefined)),
 
-  Method(static=False, Type(Name(String)), Name(toString)),
+  Method(Type(Name(String)), Name(toString)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setString),
+  Method(Type(Name(JSONObject)), Name(setString),
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setNumber),
+  Method(Type(Name(JSONObject)), Name(setNumber),
    Param(Type(Name(Object)), Name(value), $type=0.Object)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setBool),
+  Method(Type(Name(JSONObject)), Name(setBool),
    Param(Type(Name(bool)), Name(value), $type=0.bool)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setNull)),
+  Method(Type(Name(JSONObject)), Name(setNull)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setObject)),
+  Method(Type(Name(JSONObject)), Name(setObject)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setList)),
+  Method(Type(Name(JSONObject)), Name(setList)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setObjectItem),
+  Method(Type(Name(JSONObject)), Name(setObjectItem),
    Param(Type(Name(String)), Name(key), $type=0.String),
    Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject)),
 
-  Method(static=False, Type(Name(JSONObject)), Name(setListItem),
+  Method(Type(Name(JSONObject)), Name(setListItem),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(JSONObject)), Name(value), $type=0.JSONObject)),
 
@@ -1050,65 +1048,65 @@ File(
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
 
-  Method(static=False, Type(Name(void)), Name(onWSInit),
+  Method(Type(Name(void)), Name(onWSInit),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSConnected),
+  Method(Type(Name(void)), Name(onWSConnected),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSMessage),
+  Method(Type(Name(void)), Name(onWSMessage),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Param(Type(Name(String)), Name(message), $type=0.String),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSBinary),
+  Method(Type(Name(void)), Name(onWSBinary),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Param(Type(Name(Buffer)), Name(message), $type=0.Buffer),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSClosed),
+  Method(Type(Name(void)), Name(onWSClosed),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSError),
+  Method(Type(Name(void)), Name(onWSError),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onWSFinal),
+  Method(Type(Name(void)), Name(onWSFinal),
    Param(Type(Name(WebSocket)), Name(socket), $type=0.WebSocket),
    Block())),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
 
-  Method(static=False, Type(Name(bool)), Name(send),
+  Method(Type(Name(bool)), Name(send),
    Param(Type(Name(String)), Name(message), $type=0.String)),
 
-  Method(static=False, Type(Name(bool)), Name(sendBinary),
+  Method(Type(Name(bool)), Name(sendBinary),
    Param(Type(Name(Buffer)), Name(bytes), $type=0.Buffer)),
 
-  Method(static=False, Type(Name(bool)), Name(close))),
+  Method(Type(Name(bool)), Name(close))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPHandler')))), Name(HTTPHandler),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPInit),
+  Method(Type(Name(void)), Name(onHTTPInit),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(String)), Name(message), $type=0.String),
    Block()),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPFinal),
+  Method(Type(Name(void)), Name(onHTTPFinal),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Block())),
 
@@ -1124,94 +1122,92 @@ File(
      Fixed('new _qrt.HTTPRequest('), Var(Name(url), $type=0.String),
      Fixed(')')))),
 
-  Method(static=False, Type(Name(String)), Name(getUrl)),
+  Method(Type(Name(String)), Name(getUrl)),
 
-  Method(static=False, Type(Name(void)), Name(setMethod),
+  Method(Type(Name(void)), Name(setMethod),
    Param(Type(Name(String)), Name(method), $type=0.String)),
 
-  Method(static=False, Type(Name(String)), Name(getMethod)),
+  Method(Type(Name(String)), Name(getMethod)),
 
-  Method(static=False, Type(Name(void)), Name(setBody),
+  Method(Type(Name(void)), Name(setBody),
    Param(Type(Name(String)), Name(data), $type=0.String)),
 
-  Method(static=False, Type(Name(String)), Name(getBody)),
+  Method(Type(Name(String)), Name(getBody)),
 
-  Method(static=False, Type(Name(void)), Name(setHeader),
+  Method(Type(Name(void)), Name(setHeader),
    Param(Type(Name(String)), Name(key), $type=0.String),
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
-  Method(static=False, Type(Name(String)), Name(getHeader),
+  Method(Type(Name(String)), Name(getHeader),
    Param(Type(Name(String)), Name(key), $type=0.String)),
 
-  Method(static=False, Type(Name(List), Type(Name(String))),
-   Name(getHeaders))),
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.HTTPResponse')))), Name(HTTPResponse),
 
-  Method(static=False, Type(Name(int)), Name(getCode)),
+  Method(Type(Name(int)), Name(getCode)),
 
-  Method(static=False, Type(Name(void)), Name(setCode),
+  Method(Type(Name(void)), Name(setCode),
    Param(Type(Name(int)), Name(code), $type=0.int)),
 
-  Method(static=False, Type(Name(String)), Name(getBody)),
+  Method(Type(Name(String)), Name(getBody)),
 
-  Method(static=False, Type(Name(void)), Name(setBody),
+  Method(Type(Name(void)), Name(setBody),
    Param(Type(Name(String)), Name(body), $type=0.String)),
 
-  Method(static=False, Type(Name(void)), Name(setHeader),
+  Method(Type(Name(void)), Name(setHeader),
    Param(Type(Name(String)), Name(key), $type=0.String),
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
-  Method(static=False, Type(Name(String)), Name(getHeader),
+  Method(Type(Name(String)), Name(getHeader),
    Param(Type(Name(String)), Name(key), $type=0.String)),
 
-  Method(static=False, Type(Name(List), Type(Name(String))),
-   Name(getHeaders))),
+  Method(Type(Name(List), Type(Name(String))), Name(getHeaders))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Task')))), Name(Task),
 
-  Method(static=False, Type(Name(void)), Name(onExecute),
+  Method(Type(Name(void)), Name(onExecute),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Runtime')))), Name(Runtime),
 
-  Method(static=False, Type(Name(void)), Name(acquire)),
+  Method(Type(Name(void)), Name(acquire)),
 
-  Method(static=False, Type(Name(void)), Name(release)),
+  Method(Type(Name(void)), Name(release)),
 
-  Method(static=False, Type(Name(void)), Name(wait),
+  Method(Type(Name(void)), Name(wait),
    Param(Type(Name(float)), Name(timeoutInSeconds), $type=0.float)),
 
-  Method(static=False, Type(Name(void)), Name(open),
+  Method(Type(Name(void)), Name(open),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(WSHandler)), Name(handler), $type=0.WSHandler)),
 
-  Method(static=False, Type(Name(void)), Name(request),
+  Method(Type(Name(void)), Name(request),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPHandler)), Name(handler), $type=0.HTTPHandler)),
 
-  Method(static=False, Type(Name(void)), Name(schedule),
+  Method(Type(Name(void)), Name(schedule),
    Param(Type(Name(Task)), Name(handler), $type=0.Task),
    Param(Type(Name(float)), Name(delayInSeconds), $type=0.float)),
 
-  Method(static=False, Type(Name(Codec)), Name(codec)),
+  Method(Type(Name(Codec)), Name(codec)),
 
-  Method(static=False, Type(Name(void)), Name(serveHTTP),
+  Method(Type(Name(void)), Name(serveHTTP),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(HTTPServlet)), Name(servlet), $type=0.HTTPServlet)),
 
-  Method(static=False, Type(Name(void)), Name(serveWS),
+  Method(Type(Name(void)), Name(serveWS),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(WSServlet)), Name(servlet), $type=0.WSServlet)),
 
-  Method(static=False, Type(Name(void)), Name(respond),
+  Method(Type(Name(void)), Name(respond),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Display the explanatory message and then terminate the program",
     $type=0.String)), Type(Name(void)), Name(fail),
    Param(Type(Name(String)), Name(message), $type=0.String))),
@@ -1221,82 +1217,72 @@ File(
    $type=0.String)), Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Buffer')))), Name(Buffer),
 
-  Method(static=False, Annotation(Name(doc), String("capacity of the buffer",
+  Method(Annotation(Name(doc), String("capacity of the buffer",
     $type=0.String)), Type(Name(int)), Name(capacity)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a byte at the specified index", $type=0.String)),
-   Type(Name(byte)), Name(getByte),
+  Method(Annotation(Name(doc), String("read a byte at the specified index",
+    $type=0.String)), Type(Name(byte)), Name(getByte),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a byte at the specified index", $type=0.String)),
-   Type(Name(void)), Name(putByte),
+  Method(Annotation(Name(doc), String("write a byte at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putByte),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(byte)), Name(value), $type=0.byte)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a short at the specified index", $type=0.String)),
-   Type(Name(short)), Name(getShort),
+  Method(Annotation(Name(doc), String("read a short at the specified index",
+    $type=0.String)), Type(Name(short)), Name(getShort),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a short at the specified index", $type=0.String)),
-   Type(Name(void)), Name(putShort),
+  Method(Annotation(Name(doc), String("write a short at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putShort),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(short)), Name(value), $type=0.short)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read an int at the specified index", $type=0.String)),
-   Type(Name(int)), Name(getInt),
+  Method(Annotation(Name(doc), String("read an int at the specified index",
+    $type=0.String)), Type(Name(int)), Name(getInt),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write an int at the specified index", $type=0.String)),
-   Type(Name(void)), Name(putInt),
+  Method(Annotation(Name(doc), String("write an int at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putInt),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(int)), Name(value), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a long at the specified index", $type=0.String)),
-   Type(Name(long)), Name(getLong),
+  Method(Annotation(Name(doc), String("read a long at the specified index",
+    $type=0.String)), Type(Name(long)), Name(getLong),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a long at the specified index", $type=0.String)),
-   Type(Name(void)), Name(putLong),
+  Method(Annotation(Name(doc), String("write a long at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putLong),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(long)), Name(value), $type=0.long)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("read a float at the specified index", $type=0.String)),
-   Type(Name(float)), Name(getFloat),
+  Method(Annotation(Name(doc), String("read a float at the specified index",
+    $type=0.String)), Type(Name(float)), Name(getFloat),
    Param(Type(Name(int)), Name(index), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("write a float at the specified index", $type=0.String)),
-   Type(Name(void)), Name(putFloat),
+  Method(Annotation(Name(doc), String("write a float at the specified index",
+    $type=0.String)), Type(Name(void)), Name(putFloat),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(float)), Name(value), $type=0.float)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("decode length bytes as a UTF8 string at the specified index",
     $type=0.String)), Type(Name(String)), Name(getStringUTF8),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(int)), Name(length), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("write a string encoded in UTF8 at the specified index and return encoded length",
     $type=0.String)), Type(Name(int)), Name(putStringUTF8),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(String)), Name(value), $type=0.String)),
 
-  Method(static=False, Annotation(Name(doc), String("get a view of the range",
+  Method(Annotation(Name(doc), String("get a view of the range",
     $type=0.String)), Type(Name(Buffer)), Name(getSlice),
    Param(Type(Name(int)), Name(index), $type=0.int),
    Param(Type(Name(int)), Name(length), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("copy length bytes from the source buffer starting at offset to the specified index",
     $type=0.String)), Type(Name(void)), Name(putSlice),
    Param(Type(Name(int)), Name(index), $type=0.int),
@@ -1304,11 +1290,11 @@ File(
    Param(Type(Name(int)), Name(offset), $type=0.int),
    Param(Type(Name(int)), Name(length), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("get a littleEndian view of the same buffer", $type=0.String)),
    Type(Name(Buffer)), Name(littleEndian)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("true if the buffer decodes in network byte order",
     $type=0.String)), Type(Name(bool)), Name(isNetworkByteOrder))),
 
@@ -1317,12 +1303,12 @@ File(
   Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Codec')))), Name(Codec),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Create an empty buffer with the specified capacity",
     $type=0.String)), Type(Name(Buffer)), Name(buffer),
    Param(Type(Name(int)), Name(capacity), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes",
     $type=0.String)), Type(Name(String)), Name(toHexdump),
    Param(Type(Name(Buffer)), Name(buffer), $type=0.Buffer),
@@ -1330,44 +1316,42 @@ File(
    Param(Type(Name(int)), Name(length), $type=0.int),
    Param(Type(Name(int)), Name(spaceScale), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("decode the hexdump ignoring leading 0x and any intervening spaces",
     $type=0.String)), Type(Name(Buffer)), Name(fromHexdump),
    Param(Type(Name(String)), Name(hex), $type=0.String)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("Encode the specified slice of the buffer as Base64",
     $type=0.String)), Type(Name(String)), Name(toBase64),
    Param(Type(Name(Buffer)), Name(buffer), $type=0.Buffer),
    Param(Type(Name(int)), Name(offset), $type=0.int),
    Param(Type(Name(int)), Name(length), $type=0.int)),
 
-  Method(static=False, Annotation(Name(doc),
-    String("decode the Base64 enccoded string", $type=0.String)),
-   Type(Name(Buffer)), Name(fromBase64),
+  Method(Annotation(Name(doc), String("decode the Base64 enccoded string",
+    $type=0.String)), Type(Name(Buffer)), Name(fromBase64),
    Param(Type(Name(String)), Name(base64), $type=0.String))),
 
  Primitive(Annotation(Name(doc), String("A service addresable with an url",
    $type=0.String)), Annotation(Name(mapping), Native(NativeCase(java,
      Fixed('io.datawire.quark.runtime.Servlet')))), Name(Servlet),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested",
     $type=0.String)), Type(Name(void)), Name(onServletInit),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
    Block()),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called if the servlet could not be installed", $type=0.String)),
    Type(Name(void)), Name(onServletError),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(String)), Name(error), $type=0.String),
    Block()),
 
-  Method(static=False, Annotation(Name(doc),
-    String("called when the servlet is removed", $type=0.String)),
-   Type(Name(void)), Name(onServletEnd),
+  Method(Annotation(Name(doc), String("called when the servlet is removed",
+    $type=0.String)), Type(Name(void)), Name(onServletEnd),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Block())),
 
@@ -1376,7 +1360,7 @@ File(
      Fixed('io.datawire.quark.runtime.HTTPServlet')))), Name(HTTPServlet),
   Type(Name(Servlet)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime",
     $type=0.String)), Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
@@ -1388,7 +1372,7 @@ File(
      Fixed('io.datawire.quark.runtime.WSServlet')))), Name(WSServlet),
   Type(Name(Servlet)),
 
-  Method(static=False, Annotation(Name(doc),
+  Method(Annotation(Name(doc),
     String("called for each new incoming WebSocket connection",
     $type=0.String)), Type(Name(WSHandler)), Name(onWSConnect),
    Param(Type(Name(HTTPRequest)), Name(upgrade_request), $type=0.HTTPRequest),
@@ -1396,29 +1380,28 @@ File(
     Return(Null(null, $type=0.Object))))),
 
  Class(Name(ResponseHolder), Type(Name(HTTPHandler)),
-  Field(static=False, Type(Name(HTTPResponse)), Name(response),
-  $type=0.HTTPResponse),
-  Field(static=False, Type(Name(String)), Name(failure), Null(null,
-   $type=0.Object), $type=0.String),
+  Field(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
+  Field(Type(Name(String)), Name(failure), Null(null, $type=0.Object),
+  $type=0.String),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPResponse),
+  Method(Type(Name(void)), Name(onHTTPResponse),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
    Block(
     Assign(Attr(Var(Name(self), $type=0.ResponseHolder), Name(response),
      $type=0.HTTPResponse), Var(Name(response), $type=0.HTTPResponse)))),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPError),
+  Method(Type(Name(void)), Name(onHTTPError),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(String)), Name(message), $type=0.String),
    Block(
     Assign(Var(Name(failure), $type=0.String), Var(Name(message),
      $type=0.String)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("ResponseHolder", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -1433,7 +1416,7 @@ File(
        $type=0.String)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -1452,11 +1435,11 @@ File(
 
  Interface(Name(Service),
 
-  Method(static=False, Type(Name(String)), Name(getURL)),
+  Method(Type(Name(String)), Name(getURL)),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime)),
+  Method(Type(Name(Runtime)), Name(getRuntime)),
 
-  Method(static=False, Type(Name(Object)), Name(rpc),
+  Method(Type(Name(Object)), Name(rpc),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(message), $type=0.Object),
    Block(
@@ -1568,8 +1551,8 @@ File(
         Var(Name(obj), $type=0.JSONObject), $type=0.Object))))))),
 
  Class(Name(Client),
-  Field(static=False, Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
-  Field(static=False, Type(Name(String)), Name(url), $type=0.String),
+  Field(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+  Field(Type(Name(String)), Name(url), $type=0.String),
 
   Constructor(Name(Client),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
@@ -1580,17 +1563,17 @@ File(
     Assign(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String),
      Var(Name(url), $type=0.String)))),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime), Block(
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self), $type=0.Client), Name(runtime),
      $type=0.Runtime)))),
 
-  Method(static=False, Type(Name(String)), Name(getURL), Block(
+  Method(Type(Name(String)), Name(getURL), Block(
     Return(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Client", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -1605,7 +1588,7 @@ File(
        $type=0.String)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
@@ -1622,8 +1605,8 @@ File(
        Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
 
  Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
-  Field(static=False, Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
-  Field(static=False, Type(Name(T)), Name(impl), $type=0.Server.T),
+  Field(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
+  Field(Type(Name(T)), Name(impl), $type=0.Server.T),
 
   Constructor(Name(Server),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
@@ -1634,11 +1617,11 @@ File(
     Assign(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(impl),
      $type=0.Server.T), Var(Name(impl), $type=0.Server.T)))),
 
-  Method(static=False, Type(Name(Runtime)), Name(getRuntime), Block(
+  Method(Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self), $type=0.Server<0.Server.T>), Name(runtime),
      $type=0.Runtime)))),
 
-  Method(static=False, Type(Name(void)), Name(onHTTPRequest),
+  Method(Type(Name(void)), Name(onHTTPRequest),
    Param(Type(Name(HTTPRequest)), Name(request), $type=0.HTTPRequest),
    Param(Type(Name(HTTPResponse)), Name(response), $type=0.HTTPResponse),
    Block(
@@ -1724,7 +1707,7 @@ File(
       Var(Name(request), $type=0.HTTPRequest), Var(Name(response),
       $type=0.HTTPResponse), $type=0.void)))),
 
-  Method(static=False, Type(Name(void)), Name(onServletError),
+  Method(Type(Name(void)), Name(onServletError),
    Param(Type(Name(String)), Name(url), $type=0.String),
    Param(Type(Name(String)), Name(message), $type=0.String),
    Block(
@@ -1737,10 +1720,10 @@ File(
         $type=0.String), Name(__add__), $type=0.String.__add__),
        Var(Name(message), $type=0.String), $type=0.String), $type=0.void)))),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
+  Method(Type(Name(String)), Name(_getClass), Block(
     Return(String("Server<Object>", $type=0.String)))),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
+  Method(Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Block(
     If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
@@ -1755,7 +1738,7 @@ File(
        $type=0.Server.T)))),
     Return(Null(null, $type=0.Object)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
+  Method(Type(Name(void)), Name(_setField),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(value), $type=0.Object),
    Block(
