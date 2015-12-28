@@ -19,7 +19,10 @@ This tutorial will build clients in Java and Python and a server in Javascript a
 
 If you haven't already done so, run the following commands to install Quark and the integrations needed to follow along with this tutorial:
 
-1. pip install datawire-quark
-2. pip install datawire-quark-threaded
-3. npm install datawire-quark-node
+1. ``pip install datawire-quark``
+2. ``pip install datawire-quark-threaded``
+3. ``npm install datawire-quark-node``
 
+You will also need to clone a local copy of the Quark examples repository. This tutorial will generally point to the remote GitHub repository when providing links to example files stored there, but you will need local copies to run the final stages of the tutorial. You can clone the repository using the following command:
+
+``git clone https://github.com/datawire/quark.git``
