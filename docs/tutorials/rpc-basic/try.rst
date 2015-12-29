@@ -6,6 +6,7 @@ We now have all of the pieces needed for a simple working RPC example. The instr
 Let's start by using the Python client we wrote to talk to the Python server we wrote. 
 
 Part 1: Python Client and Python Server
+---------------------------------------
 
 To run the HelloRPC example with a Python client and Python Server do the following:
 
@@ -50,6 +51,7 @@ The value of response.result is set in the server inside the implementation defi
 [[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]
 
 Part 2: Running Two Servers
+---------------------------
 
 The Hello RPC service is hard coded to run at http://127.0.0.1:8910/hello. All of the servers and clients assume the service is there. Because all three servers use the same URI, only one server can be running at any given time. Try to launch a second server in Javascript while the Python server is still running as follows:
 
@@ -71,6 +73,7 @@ Note: There is no line break in the real error
 You will get a similar error if you try to start a second Python server or a Java server.
 
 Part 3: Mixing Client and Server Languages
+------------------------------------------
 
 You can run either client (Java or Python) against any of the three servers (Java, Javascript, or Python). The only rule is that only one server can be running at a time (as illustrated in Part 2).
 
