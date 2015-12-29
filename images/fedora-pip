@@ -1,3 +1,3 @@
 FROM fedora:latest
-RUN dnf -y update && dnf -y install python-pip tar gcc make python-devel libffi-devel openssl-devel redhat-rpm-config
+RUN dnf -y update && dnf -y install python-pip tar gcc make git python-devel libffi-devel openssl-devel redhat-rpm-config
 CMD /bin/bash
