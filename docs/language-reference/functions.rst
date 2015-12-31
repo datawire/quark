@@ -262,7 +262,7 @@ Documentation Coming Soon
 .. _floatGetField:
 
 float::getField()
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -344,7 +344,7 @@ Documentation Coming Soon
 .. _floatSetField:
 
 float::setField()
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -446,7 +446,7 @@ Documentation Coming Soon
 .. _intGetField:
 
 int::getField()
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -536,7 +536,7 @@ Documentation Coming Soon
 .. _intSetField:
 
 int::setField()
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -650,7 +650,7 @@ Documentation Coming Soon
 .. _listGetField:
 
 List::getField()
-~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -673,7 +673,7 @@ This function is used under the covers by list [] notation; *A* **[** *B* **] =*
 .. _listSetField:
 
 List::setField()
-~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -908,9 +908,9 @@ Map::set()
 
 Documentation Coming Soon
 
-.. _mapGetField:
+.. _mapSetField:
 
-Map::getField()
+Map::setField()
 ~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
@@ -950,10 +950,10 @@ Object::__ne__()
 
 Documentation Coming Soon
 
-.. _objectGetField:
+.. _objectSetField:
 
 Object::setField()
-~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~
 
 Documentation Coming Soon
 
@@ -1204,7 +1204,7 @@ string::replace()
 
 Documentation Coming Soon
 
-.. _stringGetField:
+.. _stringSetField:
 
 string::setField()
 ~~~~~~~~~~~~~~~~~~
