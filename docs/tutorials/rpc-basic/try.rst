@@ -83,7 +83,7 @@ Step 1: Open a new terminal window
 
 Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``.
 
-Step 3: Run the following command to build the server: ``mvn compile``
+Step 3: Run the following command to build the client: ``mvn compile``
 
 Step 4: Run the following command to start the Java client: ``mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCClient``
 
