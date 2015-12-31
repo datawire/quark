@@ -280,6 +280,13 @@ The self keyword syntax is:
 
 where *propertyName* is the name of a property defined in the current class and the entire expression evaluates to the value stored in the current object's *propertyName* property.
 
+.. _staticKeyword:
+
+static
+~~~~~~
+
+Documentation Coming Soon
+
 .. _superKeyword:
 
 super
@@ -318,6 +325,13 @@ Syntax
 ++++++
 
 The true keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.
+
+.. _useKeyword:
+
+use
+~~~
+
+Documentation Coming Soon
 
 .. _whileKeyword:
 
