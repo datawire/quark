@@ -78,12 +78,21 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
       <version>%(runtime_version)s</version>
       <scope>compile</scope>
     </dependency>
+%(dependencies)s
   </dependencies>
   %(repository)s
 </project>
 """
 
-def package(name, version, packages, srcs):
+def format_deps(deps):
+    for name, ver in deps:
+        yield """    <dependency>
+      <groupId>%s</groupId>
+      <artifactId>%s</artifactId>
+      <version>%s</version>
+    </dependency>""" % (name, name, ver)
+
+def package(name, version, packages, srcs, deps):
     files = OrderedDict()
     for fname, content in srcs.items():
         files[os.path.join("src/main/java", fname)] = content
@@ -92,7 +101,8 @@ def package(name, version, packages, srcs):
                 "version": version,
                 "pkg_list": repr([".".join(p) for p in packages]),
                 "runtime_version": __java_runtime_version__,
-                "repository": repository}
+                "repository": repository,
+                "dependencies": "\n".join(format_deps(deps))}
     files["pom.xml"] = pom_xml % fmt_dict
     return files
 
@@ -145,7 +155,7 @@ def type(path, name, parameters):
     else:
         return base
 
-def import_(path, origin):
+def import_(path, origin, dep):
     return None
 
 def qualify(package, origin):

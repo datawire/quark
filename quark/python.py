@@ -27,7 +27,7 @@ from setuptools import setup
 
 setup(name="%(name)s",
       version="%(version)s",
-      install_requires=["datawire-quark-core==%(runtime_version)s"],
+      install_requires=[%(dependencies)s],
       packages=%(pkg_list)s)
 """
 
@@ -92,12 +92,13 @@ Indices and tables
 * :ref:`search`
 """
 
-def package(name, version, packages, srcs):
+def package(name, version, packages, srcs, deps):
     fmt_dict = {"name": name,
                 "version": version,
-                "runtime_version": __py_runtime_version__,
                 "underline" : "=" * len(name + version),
-                "pkg_list": repr([".".join(p) for p in packages])}
+                "pkg_list": repr([".".join(p) for p in packages]),
+                "dependencies": ", ".join(['"datawire-quark-core==%s"' % __py_runtime_version__] +
+                                          ['"%s==%s"' % d for d in deps])}
     files = OrderedDict()
     files.update(srcs)
     files["setup.py"] = setup_py % fmt_dict
@@ -142,7 +143,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin):
+def import_(path, origin, dep):
     return "import %s" % ".".join(qualify(path, origin))
 
 def qualify(package, origin):

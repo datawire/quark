@@ -19,9 +19,13 @@ from ._metadata import __js_runtime_version__
 
 ## Packaging
 
-def package(name, version, packages, srcs):
+def package(name, version, packages, srcs, deps):
     files = OrderedDict()
     files.update(srcs)
+
+    dependencies = ",\n        ".join(['"datawire-quark-core": "%s"' % __js_runtime_version__] +
+                                      ['"%s": "%s"' % d for d in deps])
+
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
         files["%s/package.json" % "/".join(path)] = """
@@ -29,10 +33,10 @@ def package(name, version, packages, srcs):
     "name":"%s",
     "version":"%s",
     "dependencies": {
-        "datawire-quark-core": "%s"
+        %s
     }
 }
-        """ % (name, version, __js_runtime_version__)
+        """ % (name, version, dependencies)
     return files
 
 def class_file(path, name, fname):
@@ -68,13 +72,17 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin):
+def import_(path, origin, dep):
     qual = qualify(path, origin)
-    if tuple(origin) + tuple(qual) == tuple(path):
-        prefix = "./"
+    if dep:
+        req = dep
     else:
-        prefix = "../"*len(origin)
-    return "var %s = require('%s%s');\nexports.%s = %s;" % (qual[0], prefix, qual[0], qual[0], qual[0])
+        if tuple(origin) + tuple(qual) == tuple(path):
+            prefix = "./"
+        else:
+            prefix = "../"*len(origin)
+        req = prefix + qual[0]
+    return "var %s = require('%s');\nexports.%s = %s;" % (qual[0], req, qual[0], qual[0])
 
 def qualify(package, origin):
     if package == origin: return []

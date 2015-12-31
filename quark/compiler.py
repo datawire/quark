@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, inspect
+import os, inspect, urllib
 from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
@@ -91,9 +91,16 @@ class Crosswire:
     def leave_AST(self, ast):
         self.parent = ast.parent
 
+    def visit_Use(self, use):
+        self.visit_AST(use)
+        use.file.uses[use.url] = use
+        use.target = None
+
     def visit_File(self, f):
         self.file = f
         self.visit_AST(f)
+        f.uses = OrderedDict()
+        f.depth = 0
 
     def leave_File(self, f):
         self.leave_AST(f)
@@ -759,6 +766,7 @@ class Compiler:
             self.parse(BUILTIN, fd.read())
         self.generated = OrderedDict()
         self.annotator("delegate", delegate)
+        self.parsed = set()
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -784,6 +792,20 @@ class Compiler:
             else:
                 break
         self.root.add(file)
+        return file
+
+    def urlparse(self, url, depth=0):
+        fd = urllib.urlopen(url)
+        try:
+            file = self.parse(url, fd.read())
+            file.depth = depth
+        finally:
+            fd.close()
+        for u in file.uses.values():
+            if u.url not in self.parsed:
+                self.parsed.add(u.url)
+                u.target = self.urlparse(u.url, depth=depth + 1)
+        return file
 
     def icompile(self, ast):
         def_ = Def()
@@ -834,7 +856,6 @@ class Compiler:
     def emit(self, backend):
         self.root.traverse(backend)
 
-import os, urllib
 from backend import Java, Python, JavaScript
 
 
@@ -847,12 +868,8 @@ def main(srcs, java=None, python=None, javascript=None):
 
     try:
         for src in srcs:
-            fd = urllib.urlopen(src)
-            try:
-                c.parse(src, fd.read())
-            finally:
-                fd.close()
-            c.compile()
+            c.urlparse(src)
+        c.compile()
     except IOError, e:
         return e
     except ParseError, e:

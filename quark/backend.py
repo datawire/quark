@@ -33,20 +33,32 @@ class Backend(object):
         self.names = []
         self.bindings = None
         self.rootname = None
+        self.entry = None
+        self.dependencies = OrderedDict()
+
+    def visit_Use(self, use):
+        name, ver = namever(use.target)
+        self.dependencies[name] = use.target
+
+    def visit_File(self, file):
+        if file.depth == 0 and file.name != "reflector":
+            self.entry = file
 
     def visit_Class(self, cls):
-        self.definitions.append(cls)
+        if cls.file.depth == 0:
+            self.definitions.append(cls)
 
     def visit_Primitive(self, p):
         pass
 
     def visit_Function(self, f):
-        if not isinstance(f, Method):
+        if f.file.depth == 0 and not isinstance(f, Method):
             self.definitions.append(f)
 
     def visit_Package(self, p):
-        self.packages.append(p)
-        self.definitions.append(p)
+        if p.file.depth == 0:
+            self.packages.append(p)
+            self.definitions.append(p)
 
     def leave_Root(self, r):
         roots = [p.name.text for p in self.packages if p.package is None]
@@ -85,8 +97,8 @@ class Backend(object):
 
         for name in self.files:
             code = self.files[name]
-            imports = [self.gen.import_(pkg, org)
-                       for (pkg, org) in self._imports[name].keys()]
+            imports = [self.gen.import_(pkg, org, dep)
+                       for (pkg, org, dep) in self._imports[name].keys()]
             code.head += "\n".join(filter(lambda x: x is not None, imports))
             if imports: code.head += "\n\n"
             content = str(code)
@@ -101,7 +113,11 @@ class Backend(object):
         else:
             org = (self.rootname,)
         if pkg != org:
-            imports[(pkg, org)] = True
+            if obj.file.depth > 0:
+                dep, ver = namever(obj.file)
+            else:
+                dep = None
+            imports[(pkg, org, dep)] = True
         return list(self.qualify(pkg, org))
 
     @overload(Class)
@@ -134,14 +150,16 @@ class Backend(object):
     def write(self, target):
         if not os.path.exists(target):
             os.makedirs(target)
-        name, version = namever(self.packages)
+        name, version = namever(self.entry)
         packages = OrderedDict()
         for pkg in self.packages:
             lines = []
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
         packages[(self.rootname,)] = ""
-        files = self.gen.package(name, version, packages, self.files)
+
+        deps = [namever(d) for d in self.dependencies.values()]
+        files = self.gen.package(name, version, packages, self.files, deps)
         for name, content in files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)

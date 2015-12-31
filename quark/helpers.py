@@ -12,6 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
 from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
@@ -132,13 +134,13 @@ def get_package_version(pkg):
             return literal_to_str(ann.arguments[0])
     return "0.0.1"
 
-def namever(packages):
+def namever(file):
+    name = os.path.splitext(os.path.basename(file.name))[0]
+    packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
         firstPackage = packages[0]
-        name = firstPackage.name.text
         version = get_package_version(firstPackage)
     else:
-        name = "TBD"
         version = "0.0.1"
     return name, version
 
