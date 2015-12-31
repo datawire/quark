@@ -1,6 +1,6 @@
 # Quark's Twisted Runtime and associated
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 import atexit
 import os

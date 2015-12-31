@@ -9,7 +9,7 @@
   <parent>
     <groupId>io.datawire.quark</groupId>
     <artifactId>quark</artifactId>
-    <version>0.3.0</version>
+    <version>0.3.1</version>
     <relativePath>../..</relativePath>
   </parent>
 
