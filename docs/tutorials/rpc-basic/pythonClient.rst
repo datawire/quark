@@ -1,11 +1,11 @@
-Creating the Clients
-====================
+Creating the Python Client
+==========================
 
 Let's start by creating a simple Hello World client using the compiled Hello contract in Python.
 
-Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, there is a :ref:`link to the full Python client file <fullExampleClient>` at the bottom of this page.
+Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, there is a :ref:`link to the full Python client file <fullExamplePythonClient>` at the bottom of this page.
 
-.. _part1ClientFramework:
+.. _part1PythonClientFramework:
 
 Part 1: Creating the framework
 ------------------------------
@@ -22,9 +22,9 @@ Step 4: Define an empty main function
 
 Step 5: Run the main function. If you are new to Python, information about how to do this can be found `here <https://docs.python.org/2/library/__main__.html>`_.
 
-See :ref:`this page <part1ClientFinished>` for the file state at the end of Part 1.
+See :ref:`this page <part1PythonClientFinished>` for the file state at the end of Part 1.
 
-.. _part2ClientInitialization:
+.. _part2PythonClientInitialization:
 
 Part 2: Initializing the Client
 -------------------------------
@@ -35,9 +35,9 @@ Step 1: Initialize the runtime variable using get_runtime()
 
 Step 2: Initialize a client instance passing it the runtime variable and the URL of the server (http://127.0.0.1:8910/hello)
 
-See :ref:`this page <part2ClientFinished>` for the file state at the end of Part 2.
+See :ref:`this page <part2PythonClientFinished>` for the file state at the end of Part 2.
 
-.. _part3Request:
+.. _part3PythonRequest:
 
 Part 3: Setting Up the Request
 ------------------------------
@@ -50,9 +50,9 @@ Step 2: Set the text property of the request to "Hello from Python!" so we know 
 
 Step 3: Print the request text to standard out so we know what's happening when we run the client.
 
-See :ref:`this page <part3ClientFinished>` for the file state at the end of Part 3.
+See :ref:`this page <part3PythonClientFinished>` for the file state at the end of Part 3.
 
-.. _part4SendRequest:
+.. _part4PythonSendRequest:
 
 Part 4: Sending the Request and Processing the Response
 -------------------------------------------------------
@@ -65,7 +65,7 @@ Step 2: Print the value of the result property of the response object so we can 
 
 That's it! The Python client is fully defined now. You can follow the link below to a copy of the full client in the Quark Examples repository.
 
-.. _fullExampleClient:
+.. _fullExamplePythonClient:
 
 Full Python Client
 ------------------
