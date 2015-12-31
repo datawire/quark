@@ -193,7 +193,7 @@ public class Functions {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")}));
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")}));
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")}));
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")}));
@@ -366,57 +366,70 @@ public class Functions {
                 Service tmp_10 = (Service) (object);
                 return (tmp_10).getRuntime();
             }
-            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
                 Service tmp_11 = (Service) (object);
-                return (tmp_11).rpc((String) ((args).get(0)), (args).get(1));
+                return (tmp_11).getTimeout();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_12 = (Service) (object);
+                return (tmp_12).rpc((String) ((args).get(0)), (args).get(1), (java.util.ArrayList<Object>) ((args).get(2)));
             }
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Client tmp_12 = (Client) (object);
-                return (tmp_12).getRuntime();
+                Client tmp_13 = (Client) (object);
+                return (tmp_13).getRuntime();
             }
             if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
-                Client tmp_13 = (Client) (object);
-                return (tmp_13).getURL();
+                Client tmp_14 = (Client) (object);
+                return (tmp_14).getURL();
+            }
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
+                Client tmp_15 = (Client) (object);
+                return (tmp_15).getTimeout();
+            }
+            if ((method)==("setTimeout") || ((method) != null && (method).equals("setTimeout"))) {
+                Client tmp_16 = (Client) (object);
+                (tmp_16).setTimeout((Long) ((args).get(0)));
+                return null;
             }
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Server<Object> tmp_14 = (Server<Object>) (object);
-                return (tmp_14).getRuntime();
+                Server<Object> tmp_17 = (Server<Object>) (object);
+                return (tmp_17).getRuntime();
             }
             if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
-                Server<Object> tmp_15 = (Server<Object>) (object);
-                (tmp_15).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                Server<Object> tmp_18 = (Server<Object>) (object);
+                (tmp_18).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
                 return null;
             }
             if ((method)==("onServletError") || ((method) != null && (method).equals("onServletError"))) {
-                Server<Object> tmp_16 = (Server<Object>) (object);
-                (tmp_16).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
+                Server<Object> tmp_19 = (Server<Object>) (object);
+                (tmp_19).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
                 return null;
             }
         }
         if ((className)==("A") || ((className) != null && (className).equals("A"))) {}
         if ((className)==("B") || ((className) != null && (className).equals("B"))) {
             if ((method)==("greet") || ((method) != null && (method).equals("greet"))) {
-                B tmp_17 = (B) (object);
-                (tmp_17).greet();
+                B tmp_20 = (B) (object);
+                (tmp_20).greet();
                 return null;
             }
         }
         if ((className)==("C") || ((className) != null && (className).equals("C"))) {
             if ((method)==("greet") || ((method) != null && (method).equals("greet"))) {
-                C tmp_18 = (C) (object);
-                (tmp_18).greet();
+                C tmp_21 = (C) (object);
+                (tmp_21).greet();
                 return null;
             }
         }
         if ((className)==("X") || ((className) != null && (className).equals("X"))) {}
         if ((className)==("Y") || ((className) != null && (className).equals("Y"))) {
             if ((method)==("test") || ((method) != null && (method).equals("test"))) {
-                Y tmp_19 = (Y) (object);
-                (tmp_19).test();
+                Y tmp_22 = (Y) (object);
+                (tmp_22).test();
                 return null;
             }
         }

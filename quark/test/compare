@@ -50,21 +50,29 @@ def find_cmp_files():
 
 def main():
     names = sys.argv[1:]
+    if names and names[0] == "-f":
+        force = True
+        names.pop()
+    else:
+        force = False
     if not names:
         names = find_cmp_files()
     for f in names:
         name, ext = os.path.splitext(f)
-        print ansi(CLS, ""), name, ansi(PURPLE, (78 - len(name)) * "=")
-        if os.path.exists(name):
-            os.system("git diff --no-index %s %s" % (name, f))
-        else:
-            os.system("less %s" % f)
-        st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
-        if st.startswith("Y"):
+        if force:
             os.system("mv %s %s" % (f, name))
-        elif st.startswith("Q"):
-            return
-        print
+        else:
+            print ansi(CLS, ""), name, ansi(PURPLE, (78 - len(name)) * "=")
+            if os.path.exists(name):
+                os.system("git diff --no-index %s %s" % (name, f))
+            else:
+                os.system("less %s" % f)
+            st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
+            if st.startswith("Y"):
+                os.system("mv %s %s" % (f, name))
+            elif st.startswith("Q"):
+                return
+            print
 
 
 if __name__ == '__main__':

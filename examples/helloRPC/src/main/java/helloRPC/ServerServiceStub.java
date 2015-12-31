@@ -19,9 +19,16 @@ public class ServerServiceStub implements Service {
     }
 
     @Override
-    public Object rpc(String name, Object message) {
+    public Long getTimeout() {
         // TODO Auto-generated method stub
         return null;
     }
+
+    @Override
+    public Object rpc(String name, Object message, java.util.ArrayList<Object> options) {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 
 }

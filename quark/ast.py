@@ -639,6 +639,9 @@ class Map(CompoundLiteral):
     def code(self, coder):
         return "{%s}" % coder.code(self.entries, ", ")
 
+    def copy(self):
+        return Map(copy(self.entries))
+
 class Entry(AST):
 
     def __init__(self, key, value):
@@ -653,6 +656,9 @@ class Entry(AST):
     @coder
     def code(self, coder):
         return "%s: %s" % (self.key.code(coder), self.value.code(coder))
+
+    def copy(self):
+        return Entry(copy(self.key), copy(self.value))
 
 class Native(Expression):
 

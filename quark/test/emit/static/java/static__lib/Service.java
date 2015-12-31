@@ -5,6 +5,7 @@ package static__lib;
 public interface Service {
      String getURL();
      io.datawire.quark.runtime.Runtime getRuntime();
-     Object rpc(String name, Object message);
+     Long getTimeout();
+     Object rpc(String name, Object message, java.util.ArrayList<Object> options);
 }
 /* END_BUILTIN */

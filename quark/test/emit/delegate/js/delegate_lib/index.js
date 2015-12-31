@@ -315,7 +315,10 @@ Service.prototype.getURL = Service_getURL;
 function Service_getRuntime() { /* interface */ }
 Service.prototype.getRuntime = Service_getRuntime;
 
-function Service_rpc(name, message) {
+function Service_getTimeout() { /* interface */ }
+Service.prototype.getTimeout = Service_getTimeout;
+
+function Service_rpc(name, message, options) {
     var request = new _qrt.HTTPRequest(this.getURL());
     var json = toJSON(message);
     var envelope = new _qrt.JSONObject();
@@ -324,15 +327,41 @@ function Service_rpc(name, message) {
     (request).setBody((envelope).toString());
     (request).setMethod("POST");
     var rt = (this).getRuntime();
+    var timeout = this.getTimeout();
+    if (((options).length) > (0)) {
+        var map = (options)[0];
+        var override = _qrt.map_get((map), ("timeout"));
+        if ((override) !== (null)) {
+            timeout = (override);
+        }
+    }
     var rh = new ResponseHolder();
     (rt).acquire();
+    var start = Date.now();
+    var deadline = (start) + (timeout);
     (rt).request(request, rh);
-    while ((((rh).response) === (null)) && (((rh).failure) === (null))) {
-        (rt).wait(3.14);
+    while (true) {
+        var remaining = (deadline) - (Date.now());
+        if ((((rh).response) === (null)) && (((rh).failure) === (null))) {
+            if (((timeout) !== (0)) && ((remaining) <= ((0)))) {
+                break;
+            }
+        } else {
+            break;
+        }
+        if ((timeout) === (0)) {
+            (rt).wait(3.14);
+        } else {
+            var r = (remaining);
+            (rt).wait((r) / (1000.0));
+        }
     }
     (rt).release();
     if (((rh).failure) !== (null)) {
         (rt).fail(((("RPC ") + (name)) + ("(...) failed: ")) + ((rh).failure));
+        return null;
+    }
+    if (((rh).response) === (null)) {
         return null;
     }
     var response = (rh).response;
@@ -362,12 +391,14 @@ function Client(runtime, url) {
     this.__init_fields__();
     (this).runtime = runtime;
     (this).url = url;
+    (this).timeout = (0);
 }
 exports.Client = Client;
 
 function Client__init_fields__() {
     this.runtime = null;
     this.url = null;
+    this.timeout = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 
@@ -381,6 +412,16 @@ function Client_getURL() {
 }
 Client.prototype.getURL = Client_getURL;
 
+function Client_getTimeout() {
+    return (this).timeout;
+}
+Client.prototype.getTimeout = Client_getTimeout;
+
+function Client_setTimeout(timeout) {
+    (this).timeout = timeout;
+}
+Client.prototype.setTimeout = Client_setTimeout;
+
 function Client__getClass() {
     return "Client";
 }
@@ -393,6 +434,9 @@ function Client__getField(name) {
     if ((name) === ("url")) {
         return (this).url;
     }
+    if ((name) === ("timeout")) {
+        return (this).timeout;
+    }
     return null;
 }
 Client.prototype._getField = Client__getField;
@@ -403,6 +447,9 @@ function Client__setField(name, value) {
     }
     if ((name) === ("url")) {
         (this).url = value;
+    }
+    if ((name) === ("timeout")) {
+        (this).timeout = value;
     }
 }
 Client.prototype._setField = Client__setField;
@@ -587,18 +634,18 @@ exports.Test = Test;
 function Test__init_fields__() {}
 Test.prototype.__init_fields__ = Test__init_fields__;
 
-function Test_bar(name, args) {
+function Test_bar(name, args, options) {
     _qrt.print(args);
     return null;
 }
 Test.prototype.bar = Test_bar;
 
 function Test_foo(foo, bar, baz) {
-    (this).bar("foo", [foo, bar, baz]);
+    (this).bar("foo", [foo, bar, baz], []);
 }
 Test.prototype.foo = Test_foo;
 
-function Test_rpc(name, msg) {
+function Test_rpc(name, msg, options) {
     _qrt.print((msg).encode());
     if ((name) === ("hello")) {
         return new Pong();
@@ -609,7 +656,7 @@ function Test_rpc(name, msg) {
 Test.prototype.rpc = Test_rpc;
 
 function Test_hello(ping) {
-    return this.rpc("hello", ping);
+    return this.rpc("hello", ping, []);
 }
 Test.prototype.hello = Test_hello;
 
@@ -712,7 +759,7 @@ function _fields(className) {
         return [new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")];
     }
     if ((className) === ("Client")) {
-        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")];
+        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")];
     }
     if ((className) === ("Server<Object>")) {
         return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")];
@@ -877,76 +924,89 @@ function _invoke(className, object, method, args) {
             var tmp_10 = object;
             return (tmp_10).getRuntime();
         }
-        if ((method) === ("rpc")) {
+        if ((method) === ("getTimeout")) {
             var tmp_11 = object;
-            return (tmp_11).rpc((args)[0], (args)[1]);
+            return (tmp_11).getTimeout();
+        }
+        if ((method) === ("rpc")) {
+            var tmp_12 = object;
+            return (tmp_12).rpc((args)[0], (args)[1], (args)[2]);
         }
     }
     if ((className) === ("Client")) {
         if ((method) === ("getRuntime")) {
-            var tmp_12 = object;
-            return (tmp_12).getRuntime();
+            var tmp_13 = object;
+            return (tmp_13).getRuntime();
         }
         if ((method) === ("getURL")) {
-            var tmp_13 = object;
-            return (tmp_13).getURL();
+            var tmp_14 = object;
+            return (tmp_14).getURL();
+        }
+        if ((method) === ("getTimeout")) {
+            var tmp_15 = object;
+            return (tmp_15).getTimeout();
+        }
+        if ((method) === ("setTimeout")) {
+            var tmp_16 = object;
+            (tmp_16).setTimeout((args)[0]);
+            return null;
         }
     }
     if ((className) === ("Server<Object>")) {
         if ((method) === ("getRuntime")) {
-            var tmp_14 = object;
-            return (tmp_14).getRuntime();
+            var tmp_17 = object;
+            return (tmp_17).getRuntime();
         }
         if ((method) === ("onHTTPRequest")) {
-            var tmp_15 = object;
-            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            var tmp_18 = object;
+            (tmp_18).onHTTPRequest((args)[0], (args)[1]);
             return null;
         }
         if ((method) === ("onServletError")) {
-            var tmp_16 = object;
-            (tmp_16).onServletError((args)[0], (args)[1]);
+            var tmp_19 = object;
+            (tmp_19).onServletError((args)[0], (args)[1]);
             return null;
         }
     }
     if ((className) === ("Message")) {
         if ((method) === ("encode")) {
-            var tmp_17 = object;
-            return (tmp_17).encode();
-        }
-    }
-    if ((className) === ("Ping")) {
-        if ((method) === ("encode")) {
-            var tmp_18 = object;
-            return (tmp_18).encode();
-        }
-    }
-    if ((className) === ("Pong")) {
-        if ((method) === ("toString")) {
-            var tmp_19 = object;
-            return (tmp_19).toString();
-        }
-        if ((method) === ("encode")) {
             var tmp_20 = object;
             return (tmp_20).encode();
         }
     }
+    if ((className) === ("Ping")) {
+        if ((method) === ("encode")) {
+            var tmp_21 = object;
+            return (tmp_21).encode();
+        }
+    }
+    if ((className) === ("Pong")) {
+        if ((method) === ("toString")) {
+            var tmp_22 = object;
+            return (tmp_22).toString();
+        }
+        if ((method) === ("encode")) {
+            var tmp_23 = object;
+            return (tmp_23).encode();
+        }
+    }
     if ((className) === ("Test")) {
         if ((method) === ("bar")) {
-            var tmp_21 = object;
-            return (tmp_21).bar((args)[0], (args)[1]);
+            var tmp_24 = object;
+            return (tmp_24).bar((args)[0], (args)[1], (args)[2]);
         }
         if ((method) === ("foo")) {
-            var tmp_22 = object;
-            (tmp_22).foo((args)[0], (args)[1], (args)[2]);
+            var tmp_25 = object;
+            (tmp_25).foo((args)[0], (args)[1], (args)[2]);
             return null;
         }
         if ((method) === ("rpc")) {
-            var tmp_23 = object;
-            return (tmp_23).rpc((args)[0], (args)[1]);
+            var tmp_26 = object;
+            return (tmp_26).rpc((args)[0], (args)[1], (args)[2]);
         }
         if ((method) === ("hello")) {
-            var tmp_24 = object;
-            return (tmp_24).hello((args)[0]);
+            var tmp_27 = object;
+            return (tmp_27).hello((args)[0]);
         }
     }
     return null;

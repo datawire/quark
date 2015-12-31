@@ -326,10 +326,20 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
      Fixed(') < ('), Var(Name(other), $type=0.numeric.T), Fixed(')')))),
 
+  MethodMacro(Type(Name(bool)), Name(__le__),
+   Param(Type(Name(T)), Name(other), $type=0.numeric.T),
+   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
+     Fixed(') <= ('), Var(Name(other), $type=0.numeric.T), Fixed(')')))),
+
   MethodMacro(Type(Name(bool)), Name(__gt__),
    Param(Type(Name(T)), Name(other), $type=0.numeric.T),
    Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
-     Fixed(') > ('), Var(Name(other), $type=0.numeric.T), Fixed(')'))))),
+     Fixed(') > ('), Var(Name(other), $type=0.numeric.T), Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__ge__),
+   Param(Type(Name(T)), Name(other), $type=0.numeric.T),
+   Native(NativeCase(Fixed('('), Var(Name(self), $type=0.numeric<0.numeric.T>),
+     Fixed(') >= ('), Var(Name(other), $type=0.numeric.T), Fixed(')'))))),
 
  Primitive(Name(integral), TypeParam(Name(T)), Type(Name(numeric),
    Type(Name(T))),
@@ -406,8 +416,10 @@ File(
   MethodMacro(Type(Name(short)), Name(__to_short), Var(Name(self),
    $type=0.int)),
 
-  MethodMacro(Type(Name(long)), Name(__to_long), Var(Name(self),
-   $type=0.int))),
+  MethodMacro(Type(Name(long)), Name(__to_long), Native(NativeCase(java,
+     Fixed('new Long('), Var(Name(self), $type=0.int), Fixed(')')),
+    NativeCase(py, Fixed('('), Var(Name(self), $type=0.int), Fixed(')')),
+    NativeCase(js, Fixed('('), Var(Name(self), $type=0.int), Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
@@ -1456,9 +1468,13 @@ File(
 
   Method(static=False, Type(Name(Runtime)), Name(getRuntime)),
 
+  Method(static=False, Type(Name(long)), Name(getTimeout)),
+
   Method(static=False, Type(Name(Object)), Name(rpc),
    Param(Type(Name(String)), Name(name), $type=0.String),
    Param(Type(Name(Object)), Name(message), $type=0.Object),
+   Param(Type(Name(List), Type(Name(Object))), Name(options),
+   $type=0.List<0.Object>),
    Block(
     Local(
      Declaration(Type(Name(HTTPRequest)), Name(request),
@@ -1490,23 +1506,76 @@ File(
         $type=0.Service), Name(getRuntime), $type=0.Service.getRuntime),
       $type=0.Runtime), $type=0.Runtime)),
     Local(
+     Declaration(Type(Name(long)), Name(timeout), Call(Var(Name(getTimeout),
+       $type=0.Service.getTimeout), $type=0.long), $type=0.long)),
+    If(Call(Attr(Call(Attr(Var(Name(options), $type=0.List<0.Object>),
+         Name(size), $type=0.List.size), $type=0.int), Name(__gt__),
+      $type=0.numeric.__gt__), Number(0, $type=0.int), $type=0.bool), Block(
+      Local(
+       Declaration(Type(Name(Map), Type(Name(String)), Type(Name(Object))),
+        Name(map), Cast(Call(Attr(Var(Name(options), $type=0.List<0.Object>),
+           Name(__get__), $type=0.List.__get__), Number(0, $type=0.int),
+         $type=0.Object), $type=0.Map<0.String,0.Object>),
+       $type=0.Map<0.String,0.Object>)),
+      Local(
+       Declaration(Type(Name(int)), Name(override),
+        Cast(Call(Attr(Var(Name(map), $type=0.Map<0.String,0.Object>),
+           Name(__get__), $type=0.Map.__get__), String("timeout",
+          $type=0.String), $type=0.Object), $type=0.int), $type=0.int)),
+      If(Call(Attr(Var(Name(override), $type=0.int), Name(__ne__),
+        $type=0.Object.__ne__), Null(null, $type=0.Object), $type=0.bool),
+       Block(
+        Assign(Var(Name(timeout), $type=0.long), Var(Name(override),
+         $type=0.int)))))),
+    Local(
      Declaration(Type(Name(ResponseHolder)), Name(rh),
       Call(Type(Name(ResponseHolder)), $type=0.ResponseHolder),
      $type=0.ResponseHolder)),
     ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(acquire),
       $type=0.Runtime.acquire), $type=0.void)),
+    Local(
+     Declaration(Type(Name(long)), Name(start), Call(Var(Name(now),
+       $type=0.now), $type=0.long), $type=0.long)),
+    Local(
+     Declaration(Type(Name(long)), Name(deadline), Call(Attr(Var(Name(start),
+        $type=0.long), Name(__add__), $type=0.numeric.__add__),
+       Var(Name(timeout), $type=0.long), $type=0.long), $type=0.long)),
     ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(request),
       $type=0.Runtime.request), Var(Name(request), $type=0.HTTPRequest),
       Var(Name(rh), $type=0.ResponseHolder), $type=0.void)),
-    While(Call(Attr(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder),
-          Name(response), $type=0.HTTPResponse), Name(__eq__),
-        $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
-       Name(__and__), $type=0.bool.__and__), Call(Attr(Attr(Var(Name(rh),
-         $type=0.ResponseHolder), Name(failure), $type=0.String), Name(__eq__),
-       $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
-     $type=0.bool), Block(
-      ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(wait),
-        $type=0.Runtime.wait), Number(3.14, $type=0.float), $type=0.void)))),
+    While(Bool(true, $type=0.bool), Block(
+      Local(
+       Declaration(Type(Name(long)), Name(remaining),
+        Call(Attr(Var(Name(deadline), $type=0.long), Name(__sub__),
+         $type=0.numeric.__sub__), Call(Var(Name(now), $type=0.now),
+         $type=0.long), $type=0.long), $type=0.long)),
+      If(Call(Attr(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder),
+            Name(response), $type=0.HTTPResponse), Name(__eq__),
+          $type=0.Object.__eq__), Null(null, $type=0.Object), $type=0.bool),
+         Name(__and__), $type=0.bool.__and__), Call(Attr(Attr(Var(Name(rh),
+           $type=0.ResponseHolder), Name(failure), $type=0.String),
+          Name(__eq__), $type=0.Object.__eq__), Null(null, $type=0.Object),
+        $type=0.bool), $type=0.bool), Block(
+        If(Call(Attr(Call(Attr(Var(Name(timeout), $type=0.long), Name(__ne__),
+            $type=0.Object.__ne__), Number(0, $type=0.int), $type=0.bool),
+           Name(__and__), $type=0.bool.__and__), Call(Attr(Var(Name(remaining),
+            $type=0.long), Name(__le__), $type=0.numeric.__le__), Number(0,
+           $type=0.int), $type=0.bool), $type=0.bool), Block(
+          Break()))), Block(
+        Break())),
+      If(Call(Attr(Var(Name(timeout), $type=0.long), Name(__eq__),
+        $type=0.Object.__eq__), Number(0, $type=0.int), $type=0.bool), Block(
+        ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(wait),
+          $type=0.Runtime.wait), Number(3.14, $type=0.float), $type=0.void))),
+       Block(
+        Local(
+         Declaration(Type(Name(float)), Name(r), Call(Attr(Var(Name(remaining),
+            $type=0.long), Name(toFloat), $type=0.integral.toFloat),
+          $type=0.float), $type=0.float)),
+        ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(wait),
+          $type=0.Runtime.wait), Call(Attr(Var(Name(r), $type=0.float),
+            Name(__div__), $type=0.float.__div__), Number(1000.0,
+           $type=0.float), $type=0.float), $type=0.void)))))),
     ExprStmt(Call(Attr(Var(Name(rt), $type=0.Runtime), Name(release),
       $type=0.Runtime.release), $type=0.void)),
     If(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder), Name(failure),
@@ -1520,6 +1589,10 @@ File(
           $type=0.String), Name(__add__), $type=0.String.__add__),
          Attr(Var(Name(rh), $type=0.ResponseHolder), Name(failure),
          $type=0.String), $type=0.String), $type=0.void)),
+      Return(Null(null, $type=0.Object)))),
+    If(Call(Attr(Attr(Var(Name(rh), $type=0.ResponseHolder), Name(response),
+       $type=0.HTTPResponse), Name(__eq__), $type=0.Object.__eq__), Null(null,
+      $type=0.Object), $type=0.bool), Block(
       Return(Null(null, $type=0.Object)))),
     Local(
      Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh),
@@ -1570,6 +1643,7 @@ File(
  Class(Name(Client),
   Field(static=False, Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
   Field(static=False, Type(Name(String)), Name(url), $type=0.String),
+  Field(static=False, Type(Name(long)), Name(timeout), $type=0.long),
 
   Constructor(Name(Client),
    Param(Type(Name(Runtime)), Name(runtime), $type=0.Runtime),
@@ -1578,7 +1652,9 @@ File(
     Assign(Attr(Var(Name(self), $type=0.Client), Name(runtime),
      $type=0.Runtime), Var(Name(runtime), $type=0.Runtime)),
     Assign(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String),
-     Var(Name(url), $type=0.String)))),
+     Var(Name(url), $type=0.String)),
+    Assign(Attr(Var(Name(self), $type=0.Client), Name(timeout), $type=0.long),
+     Number(0, $type=0.int)))),
 
   Method(static=False, Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self), $type=0.Client), Name(runtime),
@@ -1586,6 +1662,16 @@ File(
 
   Method(static=False, Type(Name(String)), Name(getURL), Block(
     Return(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String)))),
+
+  Method(static=False, Type(Name(long)), Name(getTimeout), Block(
+    Return(Attr(Var(Name(self), $type=0.Client), Name(timeout),
+     $type=0.long)))),
+
+  Method(static=False, Type(Name(void)), Name(setTimeout),
+   Param(Type(Name(long)), Name(timeout), $type=0.long),
+   Block(
+    Assign(Attr(Var(Name(self), $type=0.Client), Name(timeout), $type=0.long),
+     Var(Name(timeout), $type=0.long)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
     Return(String("Client", $type=0.String)))),
@@ -1603,6 +1689,11 @@ File(
      Block(
       Return(Attr(Var(Name(self), $type=0.Client), Name(url),
        $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("timeout", $type=0.String), $type=0.bool),
+     Block(
+      Return(Attr(Var(Name(self), $type=0.Client), Name(timeout),
+       $type=0.long)))),
     Return(Null(null, $type=0.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
@@ -1619,7 +1710,13 @@ File(
       $type=0.Object.__eq__), String("url", $type=0.String), $type=0.bool),
      Block(
       Assign(Attr(Var(Name(self), $type=0.Client), Name(url), $type=0.String),
-       Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
+       Cast(Var(Name(value), $type=0.Object), $type=0.String)))),
+    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
+      $type=0.Object.__eq__), String("timeout", $type=0.String), $type=0.bool),
+     Block(
+      Assign(Attr(Var(Name(self), $type=0.Client), Name(timeout),
+       $type=0.long), Cast(Var(Name(value), $type=0.Object),
+       $type=0.long))))))),
 
  Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
   Field(static=False, Type(Name(Runtime)), Name(runtime), $type=0.Runtime),

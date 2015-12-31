@@ -108,7 +108,9 @@ primitive numeric<T> {
     macro T __mul__(T other) ${($self) * ($other)};
     macro T __div__(T other) ${($self) / ($other)};
     macro bool __lt__(T other) ${($self) < ($other)};
+    macro bool __le__(T other) ${($self) <= ($other)};
     macro bool __gt__(T other) ${($self) > ($other)};
+    macro bool __ge__(T other) ${($self) >= ($other)};
 }
 
 primitive integral<T> extends numeric<T> {
@@ -146,7 +148,9 @@ primitive int extends integral<int> {
                             $js{_qrt.toString($self)};
     macro byte __to_byte() self;
     macro short __to_short() self;
-    macro long __to_long() self;
+    macro long __to_long() $java{new Long($self)}
+                           $py{($self)}
+                           $js{($self)};
 }
 
 @mapping($java{Long} $py{long} $js{Number})
@@ -604,8 +608,9 @@ interface Service {
 
     String getURL();
     Runtime getRuntime();
+    long getTimeout();
 
-    Object rpc(String name, Object message) {
+    Object rpc(String name, Object message, List<Object> options) {
         HTTPRequest request = new HTTPRequest(getURL());
         JSONObject json = toJSON(message);
         JSONObject envelope = new JSONObject();
@@ -614,18 +619,45 @@ interface Service {
         request.setBody(envelope.toString());
         request.setMethod("POST");
         Runtime rt = self.getRuntime();
+        long timeout = getTimeout();
+        if (options.size() > 0) {
+            Map<String,Object> map = ?options[0];
+            int override = ?map["timeout"];
+            if (override != null) {
+                timeout = override;
+            }
+        }
 
         ResponseHolder rh = new ResponseHolder();
         rt.acquire();
+        long start = now();
+        long deadline = start + timeout;
         rt.request(request, rh);
-        while (rh.response == null && rh.failure == null) {
-            rt.wait(3.14);
+        while (true) {
+            long remaining = deadline - now();
+            if (rh.response == null && rh.failure == null) {
+                if (timeout != 0 && remaining <= 0) {
+                    break;
+                }
+            } else {
+                break;
+            }
+            if (timeout == 0) {
+                rt.wait(3.14);
+            } else {
+                float r = remaining.toFloat();
+                rt.wait(r/1000.0);
+            }
         }
         rt.release();
 
         if (rh.failure != null) {
             rt.fail("RPC " + name + "(...) failed: " + rh.failure);
             return null;  // Not reached
+        }
+
+        if (rh.response == null) {
+            return null;
         }
 
         HTTPResponse response = rh.response;
@@ -652,13 +684,20 @@ class Client {
 
     Runtime runtime;
     String url;
+    long timeout;
+
     Client(Runtime runtime, String url) {
         self.runtime = runtime;
         self.url = url;
+        self.timeout = 0;
     }
 
     Runtime getRuntime() { return self.runtime; }
     String getURL() { return self.url; }
+    long getTimeout() { return self.timeout; }
+    void setTimeout(long timeout) {
+        self.timeout = timeout;
+    }
 
 }
 

@@ -5,6 +5,7 @@ package test1_test2_test3_common;
 public interface Service {
      String getURL();
      io.datawire.quark.runtime.Runtime getRuntime();
-     Object rpc(String name, Object message);
+     Long getTimeout();
+     Object rpc(String name, Object message, java.util.ArrayList<Object> options);
 }
 /* END_BUILTIN */

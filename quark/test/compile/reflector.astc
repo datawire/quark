@@ -141,8 +141,10 @@ File(
         String("runtime", $type=0.String), $type=0.Field),
        Call(Var(Name(Field), $type=0.Field), Call(Var(Name(Class),
          $type=0.Class), String("String", $type=0.String), $type=0.Class),
-        String("url", $type=0.String), $type=0.Field),
-      $type=0.List<0.Field>)))),
+        String("url", $type=0.String), $type=0.Field), Call(Var(Name(Field),
+        $type=0.Field), Call(Var(Name(Class), $type=0.Class), String("long",
+         $type=0.String), $type=0.Class), String("timeout", $type=0.String),
+       $type=0.Field), $type=0.List<0.Field>)))),
    If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
      $type=0.Object.__eq__), String("Server<Object>", $type=0.String),
     $type=0.bool), Block(
@@ -429,18 +431,29 @@ File(
        Return(Call(Attr(Var(Name(tmp_10), $type=0.Service), Name(getRuntime),
          $type=0.Service.getRuntime), $type=0.Runtime)))),
      If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
-       $type=0.Object.__eq__), String("rpc", $type=0.String), $type=0.bool),
-      Block(
+       $type=0.Object.__eq__), String("getTimeout", $type=0.String),
+      $type=0.bool), Block(
        Local(
         Declaration(Type(Name(Service)), Name(tmp_11), Cast(Var(Name(object),
           $type=0.Object), $type=0.Service), $type=0.Service)),
-       Return(Call(Attr(Var(Name(tmp_11), $type=0.Service), Name(rpc),
+       Return(Call(Attr(Var(Name(tmp_11), $type=0.Service), Name(getTimeout),
+         $type=0.Service.getTimeout), $type=0.long)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("rpc", $type=0.String), $type=0.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(Service)), Name(tmp_12), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Service), $type=0.Service)),
+       Return(Call(Attr(Var(Name(tmp_12), $type=0.Service), Name(rpc),
          $type=0.Service.rpc), Cast(Call(Attr(Var(Name(args),
             $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
            Number(0, $type=0.int), $type=0.Object), $type=0.String),
          Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
            $type=0.List.__get__), Number(1, $type=0.int), $type=0.Object),
-         $type=0.Object), $type=0.Object)))))),
+         $type=0.Object), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(2, $type=0.int), $type=0.Object), $type=0.List<0.Object>),
+        $type=0.Object)))))),
    If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
      $type=0.Object.__eq__), String("Client", $type=0.String), $type=0.bool),
     Block(
@@ -448,18 +461,38 @@ File(
        $type=0.Object.__eq__), String("getRuntime", $type=0.String),
       $type=0.bool), Block(
        Local(
-        Declaration(Type(Name(Client)), Name(tmp_12), Cast(Var(Name(object),
+        Declaration(Type(Name(Client)), Name(tmp_13), Cast(Var(Name(object),
           $type=0.Object), $type=0.Client), $type=0.Client)),
-       Return(Call(Attr(Var(Name(tmp_12), $type=0.Client), Name(getRuntime),
+       Return(Call(Attr(Var(Name(tmp_13), $type=0.Client), Name(getRuntime),
          $type=0.Client.getRuntime), $type=0.Runtime)))),
      If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
        $type=0.Object.__eq__), String("getURL", $type=0.String), $type=0.bool),
       Block(
        Local(
-        Declaration(Type(Name(Client)), Name(tmp_13), Cast(Var(Name(object),
+        Declaration(Type(Name(Client)), Name(tmp_14), Cast(Var(Name(object),
           $type=0.Object), $type=0.Client), $type=0.Client)),
-       Return(Call(Attr(Var(Name(tmp_13), $type=0.Client), Name(getURL),
-         $type=0.Client.getURL), $type=0.String)))))),
+       Return(Call(Attr(Var(Name(tmp_14), $type=0.Client), Name(getURL),
+         $type=0.Client.getURL), $type=0.String)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("getTimeout", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Client)), Name(tmp_15), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Client), $type=0.Client)),
+       Return(Call(Attr(Var(Name(tmp_15), $type=0.Client), Name(getTimeout),
+         $type=0.Client.getTimeout), $type=0.long)))),
+     If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
+       $type=0.Object.__eq__), String("setTimeout", $type=0.String),
+      $type=0.bool), Block(
+       Local(
+        Declaration(Type(Name(Client)), Name(tmp_16), Cast(Var(Name(object),
+          $type=0.Object), $type=0.Client), $type=0.Client)),
+       ExprStmt(Call(Attr(Var(Name(tmp_16), $type=0.Client), Name(setTimeout),
+         $type=0.Client.setTimeout), Cast(Call(Attr(Var(Name(args),
+            $type=0.List<0.Object>), Name(__get__), $type=0.List.__get__),
+           Number(0, $type=0.int), $type=0.Object), $type=0.long),
+        $type=0.void)),
+       Return(Null(null, $type=0.Object)))))),
    If(Call(Attr(Var(Name(className), $type=0.String), Name(__eq__),
      $type=0.Object.__eq__), String("Server<Object>", $type=0.String),
     $type=0.bool), Block(
@@ -467,19 +500,19 @@ File(
        $type=0.Object.__eq__), String("getRuntime", $type=0.String),
       $type=0.bool), Block(
        Local(
-        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_14),
+        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_17),
          Cast(Var(Name(object), $type=0.Object), $type=0.Server<0.Object>),
         $type=0.Server<0.Object>)),
-       Return(Call(Attr(Var(Name(tmp_14), $type=0.Server<0.Object>),
+       Return(Call(Attr(Var(Name(tmp_17), $type=0.Server<0.Object>),
           Name(getRuntime), $type=0.Server.getRuntime), $type=0.Runtime)))),
      If(Call(Attr(Var(Name(method), $type=0.String), Name(__eq__),
        $type=0.Object.__eq__), String("onHTTPRequest", $type=0.String),
       $type=0.bool), Block(
        Local(
-        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_15),
+        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_18),
          Cast(Var(Name(object), $type=0.Object), $type=0.Server<0.Object>),
         $type=0.Server<0.Object>)),
-       ExprStmt(Call(Attr(Var(Name(tmp_15), $type=0.Server<0.Object>),
+       ExprStmt(Call(Attr(Var(Name(tmp_18), $type=0.Server<0.Object>),
           Name(onHTTPRequest), $type=0.Server.onHTTPRequest),
          Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
            $type=0.List.__get__), Number(0, $type=0.int), $type=0.Object),
@@ -492,10 +525,10 @@ File(
        $type=0.Object.__eq__), String("onServletError", $type=0.String),
       $type=0.bool), Block(
        Local(
-        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_16),
+        Declaration(Type(Name(Server), Type(Name(Object))), Name(tmp_19),
          Cast(Var(Name(object), $type=0.Object), $type=0.Server<0.Object>),
         $type=0.Server<0.Object>)),
-       ExprStmt(Call(Attr(Var(Name(tmp_16), $type=0.Server<0.Object>),
+       ExprStmt(Call(Attr(Var(Name(tmp_19), $type=0.Server<0.Object>),
           Name(onServletError), $type=0.Server.onServletError),
          Cast(Call(Attr(Var(Name(args), $type=0.List<0.Object>), Name(__get__),
            $type=0.List.__get__), Number(0, $type=0.int), $type=0.Object),

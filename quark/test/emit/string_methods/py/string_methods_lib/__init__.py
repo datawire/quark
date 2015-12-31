@@ -254,7 +254,9 @@ class Service(object):
 
     def getRuntime(self): assert False
 
-    def rpc(self, name, message):
+    def getTimeout(self): assert False
+
+    def rpc(self, name, message, options):
         request = _HTTPRequest(self.getURL());
         json = toJSON(message);
         envelope = _JSONObject();
@@ -263,15 +265,39 @@ class Service(object):
         (request).setBody((envelope).toString());
         (request).setMethod(u"POST");
         rt = (self).getRuntime();
+        timeout = self.getTimeout();
+        if ((len(options)) > (0)):
+            map = (options)[0];
+            override = (map).get(u"timeout");
+            if ((override) != (None)):
+                timeout = (override)
+
         rh = ResponseHolder();
         (rt).acquire();
+        start = long(time.time()*1000);
+        deadline = (start) + (timeout);
         (rt).request(request, rh);
-        while ((((rh).response) == (None)) and (((rh).failure) == (None))):
-            (rt).wait(3.14);
+        while (True):
+            remaining = (deadline) - (long(time.time()*1000));
+            if ((((rh).response) == (None)) and (((rh).failure) == (None))):
+                if (((timeout) != (0)) and ((remaining) <= ((0)))):
+                    break;
+
+            else:
+                break;
+
+            if ((timeout) == (0)):
+                (rt).wait(3.14);
+            else:
+                r = float(remaining);
+                (rt).wait(float(r) / float(1000.0));
 
         (rt).release();
         if (((rh).failure) != (None)):
             (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: ")) + ((rh).failure));
+            return None
+
+        if (((rh).response) == (None)):
             return None
 
         response = (rh).response;
@@ -298,17 +324,25 @@ class Client(object):
     def _init(self):
         self.runtime = None
         self.url = None
+        self.timeout = None
 
     def __init__(self, runtime, url):
         self._init()
         (self).runtime = runtime
         (self).url = url
+        (self).timeout = (0)
 
     def getRuntime(self):
         return (self).runtime
 
     def getURL(self):
         return (self).url
+
+    def getTimeout(self):
+        return (self).timeout
+
+    def setTimeout(self, timeout):
+        (self).timeout = timeout
 
     def _getClass(self):
         return u"Client"
@@ -320,6 +354,9 @@ class Client(object):
         if ((name) == (u"url")):
             return (self).url
 
+        if ((name) == (u"timeout")):
+            return (self).timeout
+
         return None
 
     def _setField(self, name, value):
@@ -328,6 +365,9 @@ class Client(object):
 
         if ((name) == (u"url")):
             (self).url = value
+
+        if ((name) == (u"timeout")):
+            (self).timeout = value
 
     
 
@@ -882,7 +922,7 @@ def _fields(className):
         return _List([Field(Class(u"HTTPResponse"), u"response"), Field(Class(u"String"), u"failure")])
 
     if ((className) == (u"Client")):
-        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url")])
+        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url"), Field(Class(u"long"), u"timeout")])
 
     if ((className) == (u"Server<Object>")):
         return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"Object"), u"impl")])
@@ -1090,55 +1130,54 @@ def _invoke(className, object, method, args):
             tmp_10 = object;
             return (tmp_10).getRuntime()
 
-        if ((method) == (u"rpc")):
+        if ((method) == (u"getTimeout")):
             tmp_11 = object;
-            return (tmp_11).rpc((args)[0], (args)[1])
+            return (tmp_11).getTimeout()
+
+        if ((method) == (u"rpc")):
+            tmp_12 = object;
+            return (tmp_12).rpc((args)[0], (args)[1], (args)[2])
 
     if ((className) == (u"Client")):
         if ((method) == (u"getRuntime")):
-            tmp_12 = object;
-            return (tmp_12).getRuntime()
+            tmp_13 = object;
+            return (tmp_13).getRuntime()
 
         if ((method) == (u"getURL")):
-            tmp_13 = object;
-            return (tmp_13).getURL()
+            tmp_14 = object;
+            return (tmp_14).getURL()
+
+        if ((method) == (u"getTimeout")):
+            tmp_15 = object;
+            return (tmp_15).getTimeout()
+
+        if ((method) == (u"setTimeout")):
+            tmp_16 = object;
+            (tmp_16).setTimeout((args)[0]);
+            return None
 
     if ((className) == (u"Server<Object>")):
         if ((method) == (u"getRuntime")):
-            tmp_14 = object;
-            return (tmp_14).getRuntime()
+            tmp_17 = object;
+            return (tmp_17).getRuntime()
 
         if ((method) == (u"onHTTPRequest")):
-            tmp_15 = object;
-            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            tmp_18 = object;
+            (tmp_18).onHTTPRequest((args)[0], (args)[1]);
             return None
 
         if ((method) == (u"onServletError")):
-            tmp_16 = object;
-            (tmp_16).onServletError((args)[0], (args)[1]);
+            tmp_19 = object;
+            (tmp_19).onServletError((args)[0], (args)[1]);
             return None
 
     if ((className) == (u"string_test")):
         if ((method) == (u"check")):
-            tmp_17 = object;
-            (tmp_17).check((args)[0], (args)[1], (args)[2], (args)[3]);
+            tmp_20 = object;
+            (tmp_20).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
     if ((className) == (u"test_size")):
-        if ((method) == (u"does")):
-            tmp_18 = object;
-            return (tmp_18).does((args)[0])
-
-        if ((method) == (u"check")):
-            tmp_19 = object;
-            (tmp_19).check((args)[0], (args)[1], (args)[2], (args)[3]);
-            return None
-
-    if ((className) == (u"test_startsWith")):
-        if ((method) == (u"that")):
-            tmp_20 = object;
-            return (tmp_20).that((args)[0])
-
         if ((method) == (u"does")):
             tmp_21 = object;
             return (tmp_21).does((args)[0])
@@ -1148,7 +1187,7 @@ def _invoke(className, object, method, args):
             (tmp_22).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_endsWith")):
+    if ((className) == (u"test_startsWith")):
         if ((method) == (u"that")):
             tmp_23 = object;
             return (tmp_23).that((args)[0])
@@ -1162,7 +1201,7 @@ def _invoke(className, object, method, args):
             (tmp_25).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_find")):
+    if ((className) == (u"test_endsWith")):
         if ((method) == (u"that")):
             tmp_26 = object;
             return (tmp_26).that((args)[0])
@@ -1176,10 +1215,10 @@ def _invoke(className, object, method, args):
             (tmp_28).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_substring")):
+    if ((className) == (u"test_find")):
         if ((method) == (u"that")):
             tmp_29 = object;
-            return (tmp_29).that((args)[0], (args)[1])
+            return (tmp_29).that((args)[0])
 
         if ((method) == (u"does")):
             tmp_30 = object;
@@ -1190,7 +1229,7 @@ def _invoke(className, object, method, args):
             (tmp_31).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_replace")):
+    if ((className) == (u"test_substring")):
         if ((method) == (u"that")):
             tmp_32 = object;
             return (tmp_32).that((args)[0], (args)[1])
@@ -1204,28 +1243,28 @@ def _invoke(className, object, method, args):
             (tmp_34).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_join")):
+    if ((className) == (u"test_replace")):
         if ((method) == (u"that")):
             tmp_35 = object;
-            return (tmp_35).that()
-
-        if ((method) == (u"a")):
-            tmp_36 = object;
-            return (tmp_36).a((args)[0])
+            return (tmp_35).that((args)[0], (args)[1])
 
         if ((method) == (u"does")):
-            tmp_37 = object;
-            return (tmp_37).does((args)[0])
+            tmp_36 = object;
+            return (tmp_36).does((args)[0])
 
         if ((method) == (u"check")):
-            tmp_38 = object;
-            (tmp_38).check((args)[0], (args)[1], (args)[2], (args)[3]);
+            tmp_37 = object;
+            (tmp_37).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
-    if ((className) == (u"test_split")):
+    if ((className) == (u"test_join")):
         if ((method) == (u"that")):
+            tmp_38 = object;
+            return (tmp_38).that()
+
+        if ((method) == (u"a")):
             tmp_39 = object;
-            return (tmp_39).that((args)[0])
+            return (tmp_39).a((args)[0])
 
         if ((method) == (u"does")):
             tmp_40 = object;
@@ -1234,6 +1273,20 @@ def _invoke(className, object, method, args):
         if ((method) == (u"check")):
             tmp_41 = object;
             (tmp_41).check((args)[0], (args)[1], (args)[2], (args)[3]);
+            return None
+
+    if ((className) == (u"test_split")):
+        if ((method) == (u"that")):
+            tmp_42 = object;
+            return (tmp_42).that((args)[0])
+
+        if ((method) == (u"does")):
+            tmp_43 = object;
+            return (tmp_43).does((args)[0])
+
+        if ((method) == (u"check")):
+            tmp_44 = object;
+            (tmp_44).check((args)[0], (args)[1], (args)[2], (args)[3]);
             return None
 
     return None
