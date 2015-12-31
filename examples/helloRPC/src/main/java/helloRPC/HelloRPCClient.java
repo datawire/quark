@@ -14,6 +14,10 @@ public class HelloRPCClient {
         request.text = "Hello from Java!";
         System.out.println("Request says: " + request.text);
         Response response = client.hello(request);
-        System.out.println("Response says: " + response.result);
+        if (response == null) {
+            System.out.println("No response!");
+        } else {
+            System.out.println("Response says: " + response.result);
+        }
     }
 }

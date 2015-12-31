@@ -76,7 +76,9 @@ primitive numeric<T> {
     macro T __mul__(T other) ${($self) * ($other)};
     macro T __div__(T other) ${($self) / ($other)};
     macro bool __lt__(T other) ${($self) < ($other)};
+    macro bool __le__(T other) ${($self) <= ($other)};
     macro bool __gt__(T other) ${($self) > ($other)};
+    macro bool __ge__(T other) ${($self) >= ($other)};
 }
 primitive integral<T> extends numeric<T> {
     macro T __div__(T other) $java{~((~($self)) / ($other))}$py{($self) / ($other)}$js{Math.floor(($self) / ($other))};
@@ -98,7 +100,7 @@ primitive int extends integral<int> {
     macro String toString() $java{Integer.toString($self)}$py{str($self)}$js{_qrt.toString($self)};
     macro byte __to_byte() self;
     macro short __to_short() self;
-    macro long __to_long() self;
+    macro long __to_long() $java{new Long($self)}$py{($self)}$js{($self)};
 }
 @mapping($java{Long}$py{long}$js{Number})
 primitive long extends integral<long> {
@@ -418,7 +420,8 @@ class ResponseHolder extends HTTPHandler {
 interface Service {
     String getURL();
     Runtime getRuntime();
-    Object rpc(String name, Object message) {
+    long getTimeout();
+    Object rpc(String name, Object message, List<Object> options) {
         HTTPRequest request = new HTTPRequest((getURL)());
         JSONObject json = (toJSON)(message);
         JSONObject envelope = new JSONObject();
@@ -427,15 +430,41 @@ interface Service {
         ((request).setBody)(((envelope).toString)());
         ((request).setMethod)("POST");
         Runtime rt = ((self).getRuntime)();
+        long timeout = (getTimeout)();
+        if (((((options).size)()).__gt__)(0)) {
+            Map<String, Object> map = ?(((options).__get__)(0));
+            int override = ?(((map).__get__)("timeout"));
+            if (((override).__ne__)(null)) {
+                timeout = override;
+            }
+        }
         ResponseHolder rh = new ResponseHolder();
         ((rt).acquire)();
+        long start = (now)();
+        long deadline = ((start).__add__)(timeout);
         ((rt).request)(request, rh);
-        while ((((((rh).response).__eq__)(null)).__and__)((((rh).failure).__eq__)(null))) {
-            ((rt).wait)(3.14);
+        while (true) {
+            long remaining = ((deadline).__sub__)((now)());
+            if ((((((rh).response).__eq__)(null)).__and__)((((rh).failure).__eq__)(null))) {
+                if (((((timeout).__ne__)(0)).__and__)(((remaining).__le__)(0))) {
+                    break;
+                }
+            } else {
+                break;
+            }
+            if (((timeout).__eq__)(0)) {
+                ((rt).wait)(3.14);
+            } else {
+                float r = ((remaining).toFloat)();
+                ((rt).wait)(((r).__div__)(1000.0));
+            }
         }
         ((rt).release)();
         if ((((rh).failure).__ne__)(null)) {
             ((rt).fail)((((((("RPC ").__add__)(name)).__add__)("(...) failed: ")).__add__)((rh).failure));
+            return null;
+        }
+        if ((((rh).response).__eq__)(null)) {
             return null;
         }
         HTTPResponse response = (rh).response;
@@ -457,15 +486,23 @@ interface Service {
 class Client {
     Runtime runtime;
     String url;
+    long timeout;
     Client(Runtime runtime, String url) {
         (self).runtime = runtime;
         (self).url = url;
+        (self).timeout = 0;
     }
     Runtime getRuntime() {
         return (self).runtime;
     }
     String getURL() {
         return (self).url;
+    }
+    long getTimeout() {
+        return (self).timeout;
+    }
+    void setTimeout(long timeout) {
+        (self).timeout = timeout;
     }
 }
 class Server<T> extends HTTPServlet {

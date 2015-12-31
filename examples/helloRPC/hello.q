@@ -16,7 +16,7 @@ package hello {
     interface Hello extends Service {
 
         @doc("Respond to a hello request.")
-        @delegate(self.rpc) // XXX: The "self." in front of rpc is a workaround.
+        @delegate(self.rpc, {"timeout": 3000})
         Response hello(Request request);
 
     }

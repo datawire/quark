@@ -209,9 +209,19 @@ File(
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') < ('),
      Var(Name(other)), Fixed(')')))),
 
+  MethodMacro(Type(Name(bool)), Name(__le__),
+   Param(Type(Name(T)), Name(other)),
+   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') <= ('),
+     Var(Name(other)), Fixed(')')))),
+
   MethodMacro(Type(Name(bool)), Name(__gt__),
    Param(Type(Name(T)), Name(other)),
    Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') > ('),
+     Var(Name(other)), Fixed(')')))),
+
+  MethodMacro(Type(Name(bool)), Name(__ge__),
+   Param(Type(Name(T)), Name(other)),
+   Native(NativeCase(Fixed('('), Var(Name(self)), Fixed(') >= ('),
      Var(Name(other)), Fixed(')'))))),
 
  Primitive(Name(integral), TypeParam(Name(T)), Type(Name(numeric),
@@ -276,7 +286,10 @@ File(
 
   MethodMacro(Type(Name(short)), Name(__to_short), Var(Name(self))),
 
-  MethodMacro(Type(Name(long)), Name(__to_long), Var(Name(self)))),
+  MethodMacro(Type(Name(long)), Name(__to_long), Native(NativeCase(java,
+     Fixed('new Long('), Var(Name(self)), Fixed(')')), NativeCase(py,
+     Fixed('('), Var(Name(self)), Fixed(')')), NativeCase(js, Fixed('('),
+     Var(Name(self)), Fixed(')'))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
     NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')))),
@@ -1127,9 +1140,12 @@ File(
 
   Method(Type(Name(Runtime)), Name(getRuntime)),
 
+  Method(Type(Name(long)), Name(getTimeout)),
+
   Method(Type(Name(Object)), Name(rpc),
    Param(Type(Name(String)), Name(name)),
    Param(Type(Name(Object)), Name(message)),
+   Param(Type(Name(List), Type(Name(Object))), Name(options)),
    Block(
     Local(
      Declaration(Type(Name(HTTPRequest)), Name(request),
@@ -1151,16 +1167,50 @@ File(
      Declaration(Type(Name(Runtime)), Name(rt), Call(Attr(Var(Name(self)),
         Name(getRuntime))))),
     Local(
+     Declaration(Type(Name(long)), Name(timeout),
+      Call(Var(Name(getTimeout))))),
+    If(Call(Attr(Call(Attr(Var(Name(options)), Name(size))), Name(__gt__)),
+      Number(0)), Block(
+      Local(
+       Declaration(Type(Name(Map), Type(Name(String)), Type(Name(Object))),
+        Name(map), Cast(Call(Attr(Var(Name(options)), Name(__get__)),
+          Number(0))))),
+      Local(
+       Declaration(Type(Name(int)), Name(override),
+        Cast(Call(Attr(Var(Name(map)), Name(__get__)), String("timeout"))))),
+      If(Call(Attr(Var(Name(override)), Name(__ne__)), Null(null)), Block(
+        Assign(Var(Name(timeout)), Var(Name(override))))))),
+    Local(
      Declaration(Type(Name(ResponseHolder)), Name(rh),
       Call(Type(Name(ResponseHolder))))),
     ExprStmt(Call(Attr(Var(Name(rt)), Name(acquire)))),
+    Local(
+     Declaration(Type(Name(long)), Name(start), Call(Var(Name(now))))),
+    Local(
+     Declaration(Type(Name(long)), Name(deadline), Call(Attr(Var(Name(start)),
+        Name(__add__)), Var(Name(timeout))))),
     ExprStmt(Call(Attr(Var(Name(rt)), Name(request)), Var(Name(request)),
       Var(Name(rh)))),
-    While(Call(Attr(Call(Attr(Attr(Var(Name(rh)), Name(response)),
-         Name(__eq__)), Null(null)), Name(__and__)),
-      Call(Attr(Attr(Var(Name(rh)), Name(failure)), Name(__eq__)),
-       Null(null))), Block(
-      ExprStmt(Call(Attr(Var(Name(rt)), Name(wait)), Number(3.14))))),
+    While(Bool(true), Block(
+      Local(
+       Declaration(Type(Name(long)), Name(remaining),
+        Call(Attr(Var(Name(deadline)), Name(__sub__)), Call(Var(Name(now)))))),
+      If(Call(Attr(Call(Attr(Attr(Var(Name(rh)), Name(response)),
+           Name(__eq__)), Null(null)), Name(__and__)),
+        Call(Attr(Attr(Var(Name(rh)), Name(failure)), Name(__eq__)),
+         Null(null))), Block(
+        If(Call(Attr(Call(Attr(Var(Name(timeout)), Name(__ne__)), Number(0)),
+           Name(__and__)), Call(Attr(Var(Name(remaining)), Name(__le__)),
+           Number(0))), Block(
+          Break()))), Block(
+        Break())),
+      If(Call(Attr(Var(Name(timeout)), Name(__eq__)), Number(0)), Block(
+        ExprStmt(Call(Attr(Var(Name(rt)), Name(wait)), Number(3.14)))), Block(
+        Local(
+         Declaration(Type(Name(float)), Name(r),
+          Call(Attr(Var(Name(remaining)), Name(toFloat))))),
+        ExprStmt(Call(Attr(Var(Name(rt)), Name(wait)), Call(Attr(Var(Name(r)),
+            Name(__div__)), Number(1000.0)))))))),
     ExprStmt(Call(Attr(Var(Name(rt)), Name(release)))),
     If(Call(Attr(Attr(Var(Name(rh)), Name(failure)), Name(__ne__)),
       Null(null)), Block(
@@ -1168,6 +1218,9 @@ File(
         Call(Attr(Call(Attr(Call(Attr(String("RPC "), Name(__add__)),
              Var(Name(name))), Name(__add__)), String("(...) failed: ")),
           Name(__add__)), Attr(Var(Name(rh)), Name(failure))))),
+      Return(Null(null)))),
+    If(Call(Attr(Attr(Var(Name(rh)), Name(response)), Name(__eq__)),
+      Null(null)), Block(
       Return(Null(null)))),
     Local(
      Declaration(Type(Name(HTTPResponse)), Name(response), Attr(Var(Name(rh)),
@@ -1202,19 +1255,29 @@ File(
  Class(Name(Client),
   Field(Type(Name(Runtime)), Name(runtime)),
   Field(Type(Name(String)), Name(url)),
+  Field(Type(Name(long)), Name(timeout)),
 
   Constructor(Name(Client),
    Param(Type(Name(Runtime)), Name(runtime)),
    Param(Type(Name(String)), Name(url)),
    Block(
     Assign(Attr(Var(Name(self)), Name(runtime)), Var(Name(runtime))),
-    Assign(Attr(Var(Name(self)), Name(url)), Var(Name(url))))),
+    Assign(Attr(Var(Name(self)), Name(url)), Var(Name(url))),
+    Assign(Attr(Var(Name(self)), Name(timeout)), Number(0)))),
 
   Method(Type(Name(Runtime)), Name(getRuntime), Block(
     Return(Attr(Var(Name(self)), Name(runtime))))),
 
   Method(Type(Name(String)), Name(getURL), Block(
-    Return(Attr(Var(Name(self)), Name(url)))))),
+    Return(Attr(Var(Name(self)), Name(url))))),
+
+  Method(Type(Name(long)), Name(getTimeout), Block(
+    Return(Attr(Var(Name(self)), Name(timeout))))),
+
+  Method(Type(Name(void)), Name(setTimeout),
+   Param(Type(Name(long)), Name(timeout)),
+   Block(
+    Assign(Attr(Var(Name(self)), Name(timeout)), Var(Name(timeout)))))),
 
  Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
   Field(Type(Name(Runtime)), Name(runtime)),

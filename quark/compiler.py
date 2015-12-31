@@ -589,12 +589,15 @@ class ApplyAnnotators:
 BUILTIN = os.path.join(os.path.dirname(__file__), "builtin.q")
 
 def delegate(node):
-    delegate = [a for a in node.annotations if a.name.text == "delegate"][0].arguments[0].code()
+    ann = [a for a in node.annotations if a.name.text == "delegate"][0];
+    delegate = ann.arguments[0].code()
+    options = [arg.code() for arg in ann.arguments[1:]]
     args = ["\"%s\"" % node.name]
     if len(node.params) == 1:
         args.append(node.params[0].name.code())
     else:
         args.append("[%s]" % ", ".join([p.name.code() for p in node.params]))
+    args.append("[%s]" % ", ".join(options))
     if node.type and node.type.code() != "void":
         body = "{ return ?(%s(%s)); }" % (delegate, ", ".join(args))
     else:

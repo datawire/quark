@@ -258,7 +258,9 @@ class Service(object):
 
     def getRuntime(self): assert False
 
-    def rpc(self, name, message):
+    def getTimeout(self): assert False
+
+    def rpc(self, name, message, options):
         request = _HTTPRequest(self.getURL());
         json = toJSON(message);
         envelope = _JSONObject();
@@ -267,15 +269,39 @@ class Service(object):
         (request).setBody((envelope).toString());
         (request).setMethod(u"POST");
         rt = (self).getRuntime();
+        timeout = self.getTimeout();
+        if ((len(options)) > (0)):
+            map = (options)[0];
+            override = (map).get(u"timeout");
+            if ((override) != (None)):
+                timeout = (override)
+
         rh = ResponseHolder();
         (rt).acquire();
+        start = long(time.time()*1000);
+        deadline = (start) + (timeout);
         (rt).request(request, rh);
-        while ((((rh).response) == (None)) and (((rh).failure) == (None))):
-            (rt).wait(3.14);
+        while (True):
+            remaining = (deadline) - (long(time.time()*1000));
+            if ((((rh).response) == (None)) and (((rh).failure) == (None))):
+                if (((timeout) != (0)) and ((remaining) <= ((0)))):
+                    break;
+
+            else:
+                break;
+
+            if ((timeout) == (0)):
+                (rt).wait(3.14);
+            else:
+                r = float(remaining);
+                (rt).wait(float(r) / float(1000.0));
 
         (rt).release();
         if (((rh).failure) != (None)):
             (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: ")) + ((rh).failure));
+            return None
+
+        if (((rh).response) == (None)):
             return None
 
         response = (rh).response;
@@ -302,17 +328,25 @@ class Client(object):
     def _init(self):
         self.runtime = None
         self.url = None
+        self.timeout = None
 
     def __init__(self, runtime, url):
         self._init()
         (self).runtime = runtime
         (self).url = url
+        (self).timeout = (0)
 
     def getRuntime(self):
         return (self).runtime
 
     def getURL(self):
         return (self).url
+
+    def getTimeout(self):
+        return (self).timeout
+
+    def setTimeout(self, timeout):
+        (self).timeout = timeout
 
     def _getClass(self):
         return u"Client"
@@ -324,6 +358,9 @@ class Client(object):
         if ((name) == (u"url")):
             return (self).url
 
+        if ((name) == (u"timeout")):
+            return (self).timeout
+
         return None
 
     def _setField(self, name, value):
@@ -332,6 +369,9 @@ class Client(object):
 
         if ((name) == (u"url")):
             (self).url = value
+
+        if ((name) == (u"timeout")):
+            (self).timeout = value
 
     
 
@@ -504,7 +544,7 @@ def _fields(className):
         return _List([Field(Class(u"HTTPResponse"), u"response"), Field(Class(u"String"), u"failure")])
 
     if ((className) == (u"Client")):
-        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url")])
+        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url"), Field(Class(u"long"), u"timeout")])
 
     if ((className) == (u"Server<Object>")):
         return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"Object"), u"impl")])
@@ -717,163 +757,176 @@ def _invoke(className, object, method, args):
             tmp_10 = object;
             return (tmp_10).getRuntime()
 
-        if ((method) == (u"rpc")):
+        if ((method) == (u"getTimeout")):
             tmp_11 = object;
-            return (tmp_11).rpc((args)[0], (args)[1])
+            return (tmp_11).getTimeout()
+
+        if ((method) == (u"rpc")):
+            tmp_12 = object;
+            return (tmp_12).rpc((args)[0], (args)[1], (args)[2])
 
     if ((className) == (u"Client")):
         if ((method) == (u"getRuntime")):
-            tmp_12 = object;
-            return (tmp_12).getRuntime()
+            tmp_13 = object;
+            return (tmp_13).getRuntime()
 
         if ((method) == (u"getURL")):
-            tmp_13 = object;
-            return (tmp_13).getURL()
+            tmp_14 = object;
+            return (tmp_14).getURL()
+
+        if ((method) == (u"getTimeout")):
+            tmp_15 = object;
+            return (tmp_15).getTimeout()
+
+        if ((method) == (u"setTimeout")):
+            tmp_16 = object;
+            (tmp_16).setTimeout((args)[0]);
+            return None
 
     if ((className) == (u"Server<Object>")):
         if ((method) == (u"getRuntime")):
-            tmp_14 = object;
-            return (tmp_14).getRuntime()
+            tmp_17 = object;
+            return (tmp_17).getRuntime()
 
         if ((method) == (u"onHTTPRequest")):
-            tmp_15 = object;
-            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            tmp_18 = object;
+            (tmp_18).onHTTPRequest((args)[0], (args)[1]);
             return None
 
         if ((method) == (u"onServletError")):
-            tmp_16 = object;
-            (tmp_16).onServletError((args)[0], (args)[1]);
+            tmp_19 = object;
+            (tmp_19).onServletError((args)[0], (args)[1]);
             return None
 
     if ((className) == (u"slack.event.SlackEvent")):
         if ((method) == (u"load")):
-            tmp_17 = object;
-            (tmp_17).load((args)[0], (args)[1]);
-            return None
-
-        if ((method) == (u"dispatch")):
-            tmp_18 = object;
-            (tmp_18).dispatch((args)[0]);
-            return None
-
-    if ((className) == (u"slack.event.SlackError")):
-        if ((method) == (u"load")):
-            tmp_19 = object;
-            (tmp_19).load((args)[0], (args)[1]);
-            return None
-
-        if ((method) == (u"dispatch")):
             tmp_20 = object;
-            (tmp_20).dispatch((args)[0]);
+            (tmp_20).load((args)[0], (args)[1]);
             return None
 
-    if ((className) == (u"slack.event.Hello")):
         if ((method) == (u"dispatch")):
             tmp_21 = object;
             (tmp_21).dispatch((args)[0]);
             return None
 
+    if ((className) == (u"slack.event.SlackError")):
         if ((method) == (u"load")):
             tmp_22 = object;
             (tmp_22).load((args)[0], (args)[1]);
             return None
 
-    if ((className) == (u"slack.event.Message")):
-        if ((method) == (u"load")):
+        if ((method) == (u"dispatch")):
             tmp_23 = object;
-            (tmp_23).load((args)[0], (args)[1]);
+            (tmp_23).dispatch((args)[0]);
             return None
 
+    if ((className) == (u"slack.event.Hello")):
         if ((method) == (u"dispatch")):
             tmp_24 = object;
             (tmp_24).dispatch((args)[0]);
+            return None
+
+        if ((method) == (u"load")):
+            tmp_25 = object;
+            (tmp_25).load((args)[0], (args)[1]);
+            return None
+
+    if ((className) == (u"slack.event.Message")):
+        if ((method) == (u"load")):
+            tmp_26 = object;
+            (tmp_26).load((args)[0], (args)[1]);
+            return None
+
+        if ((method) == (u"dispatch")):
+            tmp_27 = object;
+            (tmp_27).dispatch((args)[0]);
             return None
 
     if ((className) == (u"slack.event.Edited")):
         pass
     if ((className) == (u"slack.SlackHandler")):
         if ((method) == (u"onSlackEvent")):
-            tmp_25 = object;
-            (tmp_25).onSlackEvent((args)[0]);
+            tmp_28 = object;
+            (tmp_28).onSlackEvent((args)[0]);
             return None
 
         if ((method) == (u"onHello")):
-            tmp_26 = object;
-            (tmp_26).onHello((args)[0]);
+            tmp_29 = object;
+            (tmp_29).onHello((args)[0]);
             return None
 
         if ((method) == (u"onSlackError")):
-            tmp_27 = object;
-            (tmp_27).onSlackError((args)[0]);
+            tmp_30 = object;
+            (tmp_30).onSlackError((args)[0]);
             return None
 
         if ((method) == (u"onMessage")):
-            tmp_28 = object;
-            (tmp_28).onMessage((args)[0]);
+            tmp_31 = object;
+            (tmp_31).onMessage((args)[0]);
             return None
 
     if ((className) == (u"slack.User")):
         pass
     if ((className) == (u"slack.Channel")):
         if ((method) == (u"send")):
-            tmp_29 = object;
-            (tmp_29).send((args)[0]);
+            tmp_32 = object;
+            (tmp_32).send((args)[0]);
             return None
 
     if ((className) == (u"slack.Client")):
         if ((method) == (u"connect")):
-            tmp_30 = object;
-            (tmp_30).connect();
+            tmp_33 = object;
+            (tmp_33).connect();
             return None
 
         if ((method) == (u"request")):
-            tmp_31 = object;
-            (tmp_31).request((args)[0], (args)[1], (args)[2]);
+            tmp_34 = object;
+            (tmp_34).request((args)[0], (args)[1], (args)[2]);
             return None
 
         if ((method) == (u"ws_connect")):
-            tmp_32 = object;
-            (tmp_32).ws_connect((args)[0]);
+            tmp_35 = object;
+            (tmp_35).ws_connect((args)[0]);
             return None
 
         if ((method) == (u"ws_send")):
-            tmp_33 = object;
-            (tmp_33).ws_send((args)[0]);
+            tmp_36 = object;
+            (tmp_36).ws_send((args)[0]);
             return None
 
         if ((method) == (u"onWSConnected")):
-            tmp_34 = object;
-            (tmp_34).onWSConnected((args)[0]);
+            tmp_37 = object;
+            (tmp_37).onWSConnected((args)[0]);
             return None
 
         if ((method) == (u"onWSClose")):
-            tmp_35 = object;
-            (tmp_35).onWSClose((args)[0]);
+            tmp_38 = object;
+            (tmp_38).onWSClose((args)[0]);
             return None
 
         if ((method) == (u"onWSError")):
-            tmp_36 = object;
-            (tmp_36).onWSError((args)[0]);
+            tmp_39 = object;
+            (tmp_39).onWSError((args)[0]);
             return None
 
         if ((method) == (u"construct")):
-            tmp_37 = object;
-            return (tmp_37).construct((args)[0])
+            tmp_40 = object;
+            return (tmp_40).construct((args)[0])
 
         if ((method) == (u"onWSMessage")):
-            tmp_38 = object;
-            (tmp_38).onWSMessage((args)[0], (args)[1]);
+            tmp_41 = object;
+            (tmp_41).onWSMessage((args)[0], (args)[1]);
             return None
 
         if ((method) == (u"onHTTPResponse")):
-            tmp_39 = object;
-            (tmp_39).onHTTPResponse((args)[0], (args)[1]);
+            tmp_42 = object;
+            (tmp_42).onHTTPResponse((args)[0], (args)[1]);
             return None
 
     if ((className) == (u"pkg.Handler")):
         if ((method) == (u"onSlackEvent")):
-            tmp_40 = object;
-            (tmp_40).onSlackEvent((args)[0]);
+            tmp_43 = object;
+            (tmp_43).onSlackEvent((args)[0]);
             return None
 
     return None

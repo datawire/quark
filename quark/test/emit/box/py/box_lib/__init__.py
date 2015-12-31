@@ -254,7 +254,9 @@ class Service(object):
 
     def getRuntime(self): assert False
 
-    def rpc(self, name, message):
+    def getTimeout(self): assert False
+
+    def rpc(self, name, message, options):
         request = _HTTPRequest(self.getURL());
         json = toJSON(message);
         envelope = _JSONObject();
@@ -263,15 +265,39 @@ class Service(object):
         (request).setBody((envelope).toString());
         (request).setMethod(u"POST");
         rt = (self).getRuntime();
+        timeout = self.getTimeout();
+        if ((len(options)) > (0)):
+            map = (options)[0];
+            override = (map).get(u"timeout");
+            if ((override) != (None)):
+                timeout = (override)
+
         rh = ResponseHolder();
         (rt).acquire();
+        start = long(time.time()*1000);
+        deadline = (start) + (timeout);
         (rt).request(request, rh);
-        while ((((rh).response) == (None)) and (((rh).failure) == (None))):
-            (rt).wait(3.14);
+        while (True):
+            remaining = (deadline) - (long(time.time()*1000));
+            if ((((rh).response) == (None)) and (((rh).failure) == (None))):
+                if (((timeout) != (0)) and ((remaining) <= ((0)))):
+                    break;
+
+            else:
+                break;
+
+            if ((timeout) == (0)):
+                (rt).wait(3.14);
+            else:
+                r = float(remaining);
+                (rt).wait(float(r) / float(1000.0));
 
         (rt).release();
         if (((rh).failure) != (None)):
             (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: ")) + ((rh).failure));
+            return None
+
+        if (((rh).response) == (None)):
             return None
 
         response = (rh).response;
@@ -298,17 +324,25 @@ class Client(object):
     def _init(self):
         self.runtime = None
         self.url = None
+        self.timeout = None
 
     def __init__(self, runtime, url):
         self._init()
         (self).runtime = runtime
         (self).url = url
+        (self).timeout = (0)
 
     def getRuntime(self):
         return (self).runtime
 
     def getURL(self):
         return (self).url
+
+    def getTimeout(self):
+        return (self).timeout
+
+    def setTimeout(self, timeout):
+        (self).timeout = timeout
 
     def _getClass(self):
         return u"Client"
@@ -320,6 +354,9 @@ class Client(object):
         if ((name) == (u"url")):
             return (self).url
 
+        if ((name) == (u"timeout")):
+            return (self).timeout
+
         return None
 
     def _setField(self, name, value):
@@ -328,6 +365,9 @@ class Client(object):
 
         if ((name) == (u"url")):
             (self).url = value
+
+        if ((name) == (u"timeout")):
+            (self).timeout = value
 
     
 
@@ -647,7 +687,7 @@ def _fields(className):
         return _List([Field(Class(u"HTTPResponse"), u"response"), Field(Class(u"String"), u"failure")])
 
     if ((className) == (u"Client")):
-        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url")])
+        return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"String"), u"url"), Field(Class(u"long"), u"timeout")])
 
     if ((className) == (u"Server<Object>")):
         return _List([Field(Class(u"Runtime"), u"runtime"), Field(Class(u"Object"), u"impl")])
@@ -839,93 +879,106 @@ def _invoke(className, object, method, args):
             tmp_10 = object;
             return (tmp_10).getRuntime()
 
-        if ((method) == (u"rpc")):
+        if ((method) == (u"getTimeout")):
             tmp_11 = object;
-            return (tmp_11).rpc((args)[0], (args)[1])
+            return (tmp_11).getTimeout()
+
+        if ((method) == (u"rpc")):
+            tmp_12 = object;
+            return (tmp_12).rpc((args)[0], (args)[1], (args)[2])
 
     if ((className) == (u"Client")):
         if ((method) == (u"getRuntime")):
-            tmp_12 = object;
-            return (tmp_12).getRuntime()
+            tmp_13 = object;
+            return (tmp_13).getRuntime()
 
         if ((method) == (u"getURL")):
-            tmp_13 = object;
-            return (tmp_13).getURL()
+            tmp_14 = object;
+            return (tmp_14).getURL()
+
+        if ((method) == (u"getTimeout")):
+            tmp_15 = object;
+            return (tmp_15).getTimeout()
+
+        if ((method) == (u"setTimeout")):
+            tmp_16 = object;
+            (tmp_16).setTimeout((args)[0]);
+            return None
 
     if ((className) == (u"Server<Object>")):
         if ((method) == (u"getRuntime")):
-            tmp_14 = object;
-            return (tmp_14).getRuntime()
+            tmp_17 = object;
+            return (tmp_17).getRuntime()
 
         if ((method) == (u"onHTTPRequest")):
-            tmp_15 = object;
-            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            tmp_18 = object;
+            (tmp_18).onHTTPRequest((args)[0], (args)[1]);
             return None
 
         if ((method) == (u"onServletError")):
-            tmp_16 = object;
-            (tmp_16).onServletError((args)[0], (args)[1]);
+            tmp_19 = object;
+            (tmp_19).onServletError((args)[0], (args)[1]);
             return None
 
     if ((className) == (u"Box<Object>")):
         if ((method) == (u"set")):
-            tmp_17 = object;
-            (tmp_17).set((args)[0]);
+            tmp_20 = object;
+            (tmp_20).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_18 = object;
-            return (tmp_18).get()
+            tmp_21 = object;
+            return (tmp_21).get()
 
     if ((className) == (u"Box<int>")):
         if ((method) == (u"set")):
-            tmp_19 = object;
-            (tmp_19).set((args)[0]);
+            tmp_22 = object;
+            (tmp_22).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_20 = object;
-            return (tmp_20).get()
+            tmp_23 = object;
+            return (tmp_23).get()
 
     if ((className) == (u"Box<String>")):
         if ((method) == (u"set")):
-            tmp_21 = object;
-            (tmp_21).set((args)[0]);
+            tmp_24 = object;
+            (tmp_24).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_22 = object;
-            return (tmp_22).get()
+            tmp_25 = object;
+            return (tmp_25).get()
 
     if ((className) == (u"Box<Box<int>>")):
         if ((method) == (u"set")):
-            tmp_23 = object;
-            (tmp_23).set((args)[0]);
+            tmp_26 = object;
+            (tmp_26).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_24 = object;
-            return (tmp_24).get()
+            tmp_27 = object;
+            return (tmp_27).get()
 
     if ((className) == (u"Crate<int>")):
         if ((method) == (u"set")):
-            tmp_25 = object;
-            (tmp_25).set((args)[0]);
+            tmp_28 = object;
+            (tmp_28).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_26 = object;
-            return (tmp_26).get()
+            tmp_29 = object;
+            return (tmp_29).get()
 
     if ((className) == (u"Crate<String>")):
         if ((method) == (u"set")):
-            tmp_27 = object;
-            (tmp_27).set((args)[0]);
+            tmp_30 = object;
+            (tmp_30).set((args)[0]);
             return None
 
         if ((method) == (u"get")):
-            tmp_28 = object;
-            return (tmp_28).get()
+            tmp_31 = object;
+            return (tmp_31).get()
 
     if ((className) == (u"Sack")):
         pass

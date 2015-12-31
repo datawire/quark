@@ -206,7 +206,7 @@ public class Functions {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")}));
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")}));
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")}));
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")}));
@@ -394,89 +394,102 @@ public class Functions {
                 Service tmp_10 = (Service) (object);
                 return (tmp_10).getRuntime();
             }
-            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
                 Service tmp_11 = (Service) (object);
-                return (tmp_11).rpc((String) ((args).get(0)), (args).get(1));
+                return (tmp_11).getTimeout();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_12 = (Service) (object);
+                return (tmp_12).rpc((String) ((args).get(0)), (args).get(1), (java.util.ArrayList<Object>) ((args).get(2)));
             }
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Client tmp_12 = (Client) (object);
-                return (tmp_12).getRuntime();
+                Client tmp_13 = (Client) (object);
+                return (tmp_13).getRuntime();
             }
             if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
-                Client tmp_13 = (Client) (object);
-                return (tmp_13).getURL();
+                Client tmp_14 = (Client) (object);
+                return (tmp_14).getURL();
+            }
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
+                Client tmp_15 = (Client) (object);
+                return (tmp_15).getTimeout();
+            }
+            if ((method)==("setTimeout") || ((method) != null && (method).equals("setTimeout"))) {
+                Client tmp_16 = (Client) (object);
+                (tmp_16).setTimeout((Long) ((args).get(0)));
+                return null;
             }
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Server<Object> tmp_14 = (Server<Object>) (object);
-                return (tmp_14).getRuntime();
+                Server<Object> tmp_17 = (Server<Object>) (object);
+                return (tmp_17).getRuntime();
             }
             if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
-                Server<Object> tmp_15 = (Server<Object>) (object);
-                (tmp_15).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                Server<Object> tmp_18 = (Server<Object>) (object);
+                (tmp_18).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
                 return null;
             }
             if ((method)==("onServletError") || ((method) != null && (method).equals("onServletError"))) {
-                Server<Object> tmp_16 = (Server<Object>) (object);
-                (tmp_16).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
+                Server<Object> tmp_19 = (Server<Object>) (object);
+                (tmp_19).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
                 return null;
             }
         }
         if ((className)==("pkg.A") || ((className) != null && (className).equals("pkg.A"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                A tmp_17 = (A) (object);
-                (tmp_17).foo();
+                A tmp_20 = (A) (object);
+                (tmp_20).foo();
                 return null;
             }
             if ((method)==("bar") || ((method) != null && (method).equals("bar"))) {
-                A tmp_18 = (A) (object);
-                (tmp_18).bar();
+                A tmp_21 = (A) (object);
+                (tmp_21).bar();
                 return null;
             }
         }
         if ((className)==("pkg.B") || ((className) != null && (className).equals("pkg.B"))) {
             if ((method)==("bar") || ((method) != null && (method).equals("bar"))) {
-                B tmp_19 = (B) (object);
-                (tmp_19).bar();
+                B tmp_22 = (B) (object);
+                (tmp_22).bar();
                 return null;
             }
         }
         if ((className)==("pkg.C") || ((className) != null && (className).equals("pkg.C"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                C tmp_20 = (C) (object);
-                (tmp_20).foo();
+                C tmp_23 = (C) (object);
+                (tmp_23).foo();
                 return null;
             }
         }
         if ((className)==("pkg.T1") || ((className) != null && (className).equals("pkg.T1"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                T1 tmp_21 = (T1) (object);
-                (tmp_21).foo();
+                T1 tmp_24 = (T1) (object);
+                (tmp_24).foo();
                 return null;
             }
         }
         if ((className)==("pkg.T2") || ((className) != null && (className).equals("pkg.T2"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                T2 tmp_22 = (T2) (object);
-                (tmp_22).foo();
+                T2 tmp_25 = (T2) (object);
+                (tmp_25).foo();
                 return null;
             }
         }
         if ((className)==("pkg.T3") || ((className) != null && (className).equals("pkg.T3"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                T3 tmp_23 = (T3) (object);
-                (tmp_23).foo();
+                T3 tmp_26 = (T3) (object);
+                (tmp_26).foo();
                 return null;
             }
         }
         if ((className)==("pkg.T4") || ((className) != null && (className).equals("pkg.T4"))) {}
         if ((className)==("pkg.T5") || ((className) != null && (className).equals("pkg.T5"))) {
             if ((method)==("foo") || ((method) != null && (method).equals("foo"))) {
-                T5 tmp_24 = (T5) (object);
-                (tmp_24).foo();
+                T5 tmp_27 = (T5) (object);
+                (tmp_27).foo();
                 return null;
             }
         }

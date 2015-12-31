@@ -322,7 +322,10 @@ Service.prototype.getURL = Service_getURL;
 function Service_getRuntime() { /* interface */ }
 Service.prototype.getRuntime = Service_getRuntime;
 
-function Service_rpc(name, message) {
+function Service_getTimeout() { /* interface */ }
+Service.prototype.getTimeout = Service_getTimeout;
+
+function Service_rpc(name, message, options) {
     var request = new _qrt.HTTPRequest(this.getURL());
     var json = toJSON(message);
     var envelope = new _qrt.JSONObject();
@@ -331,15 +334,41 @@ function Service_rpc(name, message) {
     (request).setBody((envelope).toString());
     (request).setMethod("POST");
     var rt = (this).getRuntime();
+    var timeout = this.getTimeout();
+    if (((options).length) > (0)) {
+        var map = (options)[0];
+        var override = _qrt.map_get((map), ("timeout"));
+        if ((override) !== (null)) {
+            timeout = (override);
+        }
+    }
     var rh = new ResponseHolder();
     (rt).acquire();
+    var start = Date.now();
+    var deadline = (start) + (timeout);
     (rt).request(request, rh);
-    while ((((rh).response) === (null)) && (((rh).failure) === (null))) {
-        (rt).wait(3.14);
+    while (true) {
+        var remaining = (deadline) - (Date.now());
+        if ((((rh).response) === (null)) && (((rh).failure) === (null))) {
+            if (((timeout) !== (0)) && ((remaining) <= ((0)))) {
+                break;
+            }
+        } else {
+            break;
+        }
+        if ((timeout) === (0)) {
+            (rt).wait(3.14);
+        } else {
+            var r = (remaining);
+            (rt).wait((r) / (1000.0));
+        }
     }
     (rt).release();
     if (((rh).failure) !== (null)) {
         (rt).fail(((("RPC ") + (name)) + ("(...) failed: ")) + ((rh).failure));
+        return null;
+    }
+    if (((rh).response) === (null)) {
         return null;
     }
     var response = (rh).response;
@@ -369,12 +398,14 @@ function Client(runtime, url) {
     this.__init_fields__();
     (this).runtime = runtime;
     (this).url = url;
+    (this).timeout = (0);
 }
 exports.Client = Client;
 
 function Client__init_fields__() {
     this.runtime = null;
     this.url = null;
+    this.timeout = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 
@@ -388,6 +419,16 @@ function Client_getURL() {
 }
 Client.prototype.getURL = Client_getURL;
 
+function Client_getTimeout() {
+    return (this).timeout;
+}
+Client.prototype.getTimeout = Client_getTimeout;
+
+function Client_setTimeout(timeout) {
+    (this).timeout = timeout;
+}
+Client.prototype.setTimeout = Client_setTimeout;
+
 function Client__getClass() {
     return "Client";
 }
@@ -400,6 +441,9 @@ function Client__getField(name) {
     if ((name) === ("url")) {
         return (this).url;
     }
+    if ((name) === ("timeout")) {
+        return (this).timeout;
+    }
     return null;
 }
 Client.prototype._getField = Client__getField;
@@ -410,6 +454,9 @@ function Client__setField(name, value) {
     }
     if ((name) === ("url")) {
         (this).url = value;
+    }
+    if ((name) === ("timeout")) {
+        (this).timeout = value;
     }
 }
 Client.prototype._setField = Client__setField;
@@ -602,7 +649,7 @@ function _fields(className) {
         return [new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")];
     }
     if ((className) === ("Client")) {
-        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")];
+        return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")];
     }
     if ((className) === ("Server<Object>")) {
         return [new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")];
@@ -812,171 +859,184 @@ function _invoke(className, object, method, args) {
             var tmp_10 = object;
             return (tmp_10).getRuntime();
         }
-        if ((method) === ("rpc")) {
+        if ((method) === ("getTimeout")) {
             var tmp_11 = object;
-            return (tmp_11).rpc((args)[0], (args)[1]);
+            return (tmp_11).getTimeout();
+        }
+        if ((method) === ("rpc")) {
+            var tmp_12 = object;
+            return (tmp_12).rpc((args)[0], (args)[1], (args)[2]);
         }
     }
     if ((className) === ("Client")) {
         if ((method) === ("getRuntime")) {
-            var tmp_12 = object;
-            return (tmp_12).getRuntime();
+            var tmp_13 = object;
+            return (tmp_13).getRuntime();
         }
         if ((method) === ("getURL")) {
-            var tmp_13 = object;
-            return (tmp_13).getURL();
+            var tmp_14 = object;
+            return (tmp_14).getURL();
+        }
+        if ((method) === ("getTimeout")) {
+            var tmp_15 = object;
+            return (tmp_15).getTimeout();
+        }
+        if ((method) === ("setTimeout")) {
+            var tmp_16 = object;
+            (tmp_16).setTimeout((args)[0]);
+            return null;
         }
     }
     if ((className) === ("Server<Object>")) {
         if ((method) === ("getRuntime")) {
-            var tmp_14 = object;
-            return (tmp_14).getRuntime();
+            var tmp_17 = object;
+            return (tmp_17).getRuntime();
         }
         if ((method) === ("onHTTPRequest")) {
-            var tmp_15 = object;
-            (tmp_15).onHTTPRequest((args)[0], (args)[1]);
+            var tmp_18 = object;
+            (tmp_18).onHTTPRequest((args)[0], (args)[1]);
             return null;
         }
         if ((method) === ("onServletError")) {
-            var tmp_16 = object;
-            (tmp_16).onServletError((args)[0], (args)[1]);
+            var tmp_19 = object;
+            (tmp_19).onServletError((args)[0], (args)[1]);
             return null;
         }
     }
     if ((className) === ("slack.event.SlackEvent")) {
         if ((method) === ("load")) {
-            var tmp_17 = object;
-            (tmp_17).load((args)[0], (args)[1]);
-            return null;
-        }
-        if ((method) === ("dispatch")) {
-            var tmp_18 = object;
-            (tmp_18).dispatch((args)[0]);
-            return null;
-        }
-    }
-    if ((className) === ("slack.event.SlackError")) {
-        if ((method) === ("load")) {
-            var tmp_19 = object;
-            (tmp_19).load((args)[0], (args)[1]);
-            return null;
-        }
-        if ((method) === ("dispatch")) {
             var tmp_20 = object;
-            (tmp_20).dispatch((args)[0]);
+            (tmp_20).load((args)[0], (args)[1]);
             return null;
         }
-    }
-    if ((className) === ("slack.event.Hello")) {
         if ((method) === ("dispatch")) {
             var tmp_21 = object;
             (tmp_21).dispatch((args)[0]);
             return null;
         }
+    }
+    if ((className) === ("slack.event.SlackError")) {
         if ((method) === ("load")) {
             var tmp_22 = object;
             (tmp_22).load((args)[0], (args)[1]);
             return null;
         }
-    }
-    if ((className) === ("slack.event.Message")) {
-        if ((method) === ("load")) {
+        if ((method) === ("dispatch")) {
             var tmp_23 = object;
-            (tmp_23).load((args)[0], (args)[1]);
+            (tmp_23).dispatch((args)[0]);
             return null;
         }
+    }
+    if ((className) === ("slack.event.Hello")) {
         if ((method) === ("dispatch")) {
             var tmp_24 = object;
             (tmp_24).dispatch((args)[0]);
+            return null;
+        }
+        if ((method) === ("load")) {
+            var tmp_25 = object;
+            (tmp_25).load((args)[0], (args)[1]);
+            return null;
+        }
+    }
+    if ((className) === ("slack.event.Message")) {
+        if ((method) === ("load")) {
+            var tmp_26 = object;
+            (tmp_26).load((args)[0], (args)[1]);
+            return null;
+        }
+        if ((method) === ("dispatch")) {
+            var tmp_27 = object;
+            (tmp_27).dispatch((args)[0]);
             return null;
         }
     }
     if ((className) === ("slack.event.Edited")) {}
     if ((className) === ("slack.SlackHandler")) {
         if ((method) === ("onSlackEvent")) {
-            var tmp_25 = object;
-            (tmp_25).onSlackEvent((args)[0]);
+            var tmp_28 = object;
+            (tmp_28).onSlackEvent((args)[0]);
             return null;
         }
         if ((method) === ("onHello")) {
-            var tmp_26 = object;
-            (tmp_26).onHello((args)[0]);
+            var tmp_29 = object;
+            (tmp_29).onHello((args)[0]);
             return null;
         }
         if ((method) === ("onSlackError")) {
-            var tmp_27 = object;
-            (tmp_27).onSlackError((args)[0]);
+            var tmp_30 = object;
+            (tmp_30).onSlackError((args)[0]);
             return null;
         }
         if ((method) === ("onMessage")) {
-            var tmp_28 = object;
-            (tmp_28).onMessage((args)[0]);
+            var tmp_31 = object;
+            (tmp_31).onMessage((args)[0]);
             return null;
         }
     }
     if ((className) === ("slack.User")) {}
     if ((className) === ("slack.Channel")) {
         if ((method) === ("send")) {
-            var tmp_29 = object;
-            (tmp_29).send((args)[0]);
+            var tmp_32 = object;
+            (tmp_32).send((args)[0]);
             return null;
         }
     }
     if ((className) === ("slack.Client")) {
         if ((method) === ("connect")) {
-            var tmp_30 = object;
-            (tmp_30).connect();
+            var tmp_33 = object;
+            (tmp_33).connect();
             return null;
         }
         if ((method) === ("request")) {
-            var tmp_31 = object;
-            (tmp_31).request((args)[0], (args)[1], (args)[2]);
+            var tmp_34 = object;
+            (tmp_34).request((args)[0], (args)[1], (args)[2]);
             return null;
         }
         if ((method) === ("ws_connect")) {
-            var tmp_32 = object;
-            (tmp_32).ws_connect((args)[0]);
+            var tmp_35 = object;
+            (tmp_35).ws_connect((args)[0]);
             return null;
         }
         if ((method) === ("ws_send")) {
-            var tmp_33 = object;
-            (tmp_33).ws_send((args)[0]);
+            var tmp_36 = object;
+            (tmp_36).ws_send((args)[0]);
             return null;
         }
         if ((method) === ("onWSConnected")) {
-            var tmp_34 = object;
-            (tmp_34).onWSConnected((args)[0]);
+            var tmp_37 = object;
+            (tmp_37).onWSConnected((args)[0]);
             return null;
         }
         if ((method) === ("onWSClose")) {
-            var tmp_35 = object;
-            (tmp_35).onWSClose((args)[0]);
+            var tmp_38 = object;
+            (tmp_38).onWSClose((args)[0]);
             return null;
         }
         if ((method) === ("onWSError")) {
-            var tmp_36 = object;
-            (tmp_36).onWSError((args)[0]);
+            var tmp_39 = object;
+            (tmp_39).onWSError((args)[0]);
             return null;
         }
         if ((method) === ("construct")) {
-            var tmp_37 = object;
-            return (tmp_37).construct((args)[0]);
+            var tmp_40 = object;
+            return (tmp_40).construct((args)[0]);
         }
         if ((method) === ("onWSMessage")) {
-            var tmp_38 = object;
-            (tmp_38).onWSMessage((args)[0], (args)[1]);
+            var tmp_41 = object;
+            (tmp_41).onWSMessage((args)[0], (args)[1]);
             return null;
         }
         if ((method) === ("onHTTPResponse")) {
-            var tmp_39 = object;
-            (tmp_39).onHTTPResponse((args)[0], (args)[1]);
+            var tmp_42 = object;
+            (tmp_42).onHTTPResponse((args)[0], (args)[1]);
             return null;
         }
     }
     if ((className) === ("pkg.Handler")) {
         if ((method) === ("onSlackEvent")) {
-            var tmp_40 = object;
-            (tmp_40).onSlackEvent((args)[0]);
+            var tmp_43 = object;
+            (tmp_43).onSlackEvent((args)[0]);
             return null;
         }
     }

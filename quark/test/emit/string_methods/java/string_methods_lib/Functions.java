@@ -213,7 +213,7 @@ public class Functions {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")}));
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url")}));
+            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")}));
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")}));
@@ -418,161 +418,174 @@ public class Functions {
                 Service tmp_10 = (Service) (object);
                 return (tmp_10).getRuntime();
             }
-            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
                 Service tmp_11 = (Service) (object);
-                return (tmp_11).rpc((String) ((args).get(0)), (args).get(1));
+                return (tmp_11).getTimeout();
+            }
+            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
+                Service tmp_12 = (Service) (object);
+                return (tmp_12).rpc((String) ((args).get(0)), (args).get(1), (java.util.ArrayList<Object>) ((args).get(2)));
             }
         }
         if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Client tmp_12 = (Client) (object);
-                return (tmp_12).getRuntime();
+                Client tmp_13 = (Client) (object);
+                return (tmp_13).getRuntime();
             }
             if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
-                Client tmp_13 = (Client) (object);
-                return (tmp_13).getURL();
+                Client tmp_14 = (Client) (object);
+                return (tmp_14).getURL();
+            }
+            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
+                Client tmp_15 = (Client) (object);
+                return (tmp_15).getTimeout();
+            }
+            if ((method)==("setTimeout") || ((method) != null && (method).equals("setTimeout"))) {
+                Client tmp_16 = (Client) (object);
+                (tmp_16).setTimeout((Long) ((args).get(0)));
+                return null;
             }
         }
         if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
             if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Server<Object> tmp_14 = (Server<Object>) (object);
-                return (tmp_14).getRuntime();
+                Server<Object> tmp_17 = (Server<Object>) (object);
+                return (tmp_17).getRuntime();
             }
             if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
-                Server<Object> tmp_15 = (Server<Object>) (object);
-                (tmp_15).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+                Server<Object> tmp_18 = (Server<Object>) (object);
+                (tmp_18).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
                 return null;
             }
             if ((method)==("onServletError") || ((method) != null && (method).equals("onServletError"))) {
-                Server<Object> tmp_16 = (Server<Object>) (object);
-                (tmp_16).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
+                Server<Object> tmp_19 = (Server<Object>) (object);
+                (tmp_19).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
                 return null;
             }
         }
         if ((className)==("string_test") || ((className) != null && (className).equals("string_test"))) {
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                string_test tmp_17 = (string_test) (object);
-                (tmp_17).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                string_test tmp_20 = (string_test) (object);
+                (tmp_20).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_size") || ((className) != null && (className).equals("test_size"))) {
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_size tmp_18 = (test_size) (object);
-                return (tmp_18).does((Integer) ((args).get(0)));
+                test_size tmp_21 = (test_size) (object);
+                return (tmp_21).does((Integer) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_size tmp_19 = (test_size) (object);
-                (tmp_19).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_size tmp_22 = (test_size) (object);
+                (tmp_22).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_startsWith") || ((className) != null && (className).equals("test_startsWith"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_startsWith tmp_20 = (test_startsWith) (object);
-                return (tmp_20).that((String) ((args).get(0)));
+                test_startsWith tmp_23 = (test_startsWith) (object);
+                return (tmp_23).that((String) ((args).get(0)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_startsWith tmp_21 = (test_startsWith) (object);
-                return (tmp_21).does((Boolean) ((args).get(0)));
+                test_startsWith tmp_24 = (test_startsWith) (object);
+                return (tmp_24).does((Boolean) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_startsWith tmp_22 = (test_startsWith) (object);
-                (tmp_22).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_startsWith tmp_25 = (test_startsWith) (object);
+                (tmp_25).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_endsWith") || ((className) != null && (className).equals("test_endsWith"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_endsWith tmp_23 = (test_endsWith) (object);
-                return (tmp_23).that((String) ((args).get(0)));
+                test_endsWith tmp_26 = (test_endsWith) (object);
+                return (tmp_26).that((String) ((args).get(0)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_endsWith tmp_24 = (test_endsWith) (object);
-                return (tmp_24).does((Boolean) ((args).get(0)));
+                test_endsWith tmp_27 = (test_endsWith) (object);
+                return (tmp_27).does((Boolean) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_endsWith tmp_25 = (test_endsWith) (object);
-                (tmp_25).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_endsWith tmp_28 = (test_endsWith) (object);
+                (tmp_28).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_find") || ((className) != null && (className).equals("test_find"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_find tmp_26 = (test_find) (object);
-                return (tmp_26).that((String) ((args).get(0)));
+                test_find tmp_29 = (test_find) (object);
+                return (tmp_29).that((String) ((args).get(0)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_find tmp_27 = (test_find) (object);
-                return (tmp_27).does((Integer) ((args).get(0)));
+                test_find tmp_30 = (test_find) (object);
+                return (tmp_30).does((Integer) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_find tmp_28 = (test_find) (object);
-                (tmp_28).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_find tmp_31 = (test_find) (object);
+                (tmp_31).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_substring") || ((className) != null && (className).equals("test_substring"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_substring tmp_29 = (test_substring) (object);
-                return (tmp_29).that((Integer) ((args).get(0)), (Integer) ((args).get(1)));
+                test_substring tmp_32 = (test_substring) (object);
+                return (tmp_32).that((Integer) ((args).get(0)), (Integer) ((args).get(1)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_substring tmp_30 = (test_substring) (object);
-                return (tmp_30).does((String) ((args).get(0)));
+                test_substring tmp_33 = (test_substring) (object);
+                return (tmp_33).does((String) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_substring tmp_31 = (test_substring) (object);
-                (tmp_31).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_substring tmp_34 = (test_substring) (object);
+                (tmp_34).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_replace") || ((className) != null && (className).equals("test_replace"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_replace tmp_32 = (test_replace) (object);
-                return (tmp_32).that((String) ((args).get(0)), (String) ((args).get(1)));
+                test_replace tmp_35 = (test_replace) (object);
+                return (tmp_35).that((String) ((args).get(0)), (String) ((args).get(1)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_replace tmp_33 = (test_replace) (object);
-                return (tmp_33).does((String) ((args).get(0)));
+                test_replace tmp_36 = (test_replace) (object);
+                return (tmp_36).does((String) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_replace tmp_34 = (test_replace) (object);
-                (tmp_34).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_replace tmp_37 = (test_replace) (object);
+                (tmp_37).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_join") || ((className) != null && (className).equals("test_join"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_join tmp_35 = (test_join) (object);
-                return (tmp_35).that();
+                test_join tmp_38 = (test_join) (object);
+                return (tmp_38).that();
             }
             if ((method)==("a") || ((method) != null && (method).equals("a"))) {
-                test_join tmp_36 = (test_join) (object);
-                return (tmp_36).a((String) ((args).get(0)));
+                test_join tmp_39 = (test_join) (object);
+                return (tmp_39).a((String) ((args).get(0)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_join tmp_37 = (test_join) (object);
-                return (tmp_37).does((String) ((args).get(0)));
+                test_join tmp_40 = (test_join) (object);
+                return (tmp_40).does((String) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_join tmp_38 = (test_join) (object);
-                (tmp_38).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_join tmp_41 = (test_join) (object);
+                (tmp_41).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }
         if ((className)==("test_split") || ((className) != null && (className).equals("test_split"))) {
             if ((method)==("that") || ((method) != null && (method).equals("that"))) {
-                test_split tmp_39 = (test_split) (object);
-                return (tmp_39).that((String) ((args).get(0)));
+                test_split tmp_42 = (test_split) (object);
+                return (tmp_42).that((String) ((args).get(0)));
             }
             if ((method)==("does") || ((method) != null && (method).equals("does"))) {
-                test_split tmp_40 = (test_split) (object);
-                return (tmp_40).does((String) ((args).get(0)));
+                test_split tmp_43 = (test_split) (object);
+                return (tmp_43).does((String) ((args).get(0)));
             }
             if ((method)==("check") || ((method) != null && (method).equals("check"))) {
-                test_split tmp_41 = (test_split) (object);
-                (tmp_41).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
+                test_split tmp_44 = (test_split) (object);
+                (tmp_44).check((String) ((args).get(0)), (String) ((args).get(1)), (String) ((args).get(2)), (String) ((args).get(3)));
                 return null;
             }
         }

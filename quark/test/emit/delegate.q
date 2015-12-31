@@ -13,7 +13,7 @@ class Pong extends Message {
 
 class Test {
 
-    Object bar(String name, List<Object> args) {
+    Object bar(String name, List<Object> args, List<Object> options) {
         print(args);
         return null;
     }
@@ -21,7 +21,7 @@ class Test {
     @delegate(self.bar)
     void foo(String foo, String bar, int baz);
 
-    Message rpc(String name, Message msg) {
+    Message rpc(String name, Message msg, List<Object> options) {
         print(msg.encode());
         if (name == "hello") {
             return new Pong();

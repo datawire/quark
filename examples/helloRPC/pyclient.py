@@ -13,7 +13,10 @@ def main():
     print "Request says %r" % request.text
 
     response = client.hello(request)
-    print "Response says %r" % response.result
+    if response is None:
+        print "No response!"
+    else:
+        print "Response says %r" % response.result
 
 
 if __name__ == '__main__':
