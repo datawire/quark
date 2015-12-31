@@ -1,11 +1,11 @@
-Writing a Server
-================
+Writing a Python Server
+=======================
 
 Let's start by creating a simple Hello World server using the compiled Hello contract in Python.
 
-Note: If you don't want step-by-step guidance about how to create the server and just want to start from a completed server, there is a :ref:`link to the full Python server file <fullExampleServer>` at the bottom of this page.
+Note: If you don't want step-by-step guidance about how to create the server and just want to start from a completed server, there is a :ref:`link to the full Python server file <fullExamplePythonServer>` at the bottom of this page.
 
-.. _part1ServerFramework:
+.. _part1PythonServerFramework:
 
 Part 1: Creating the framework
 ------------------------------
@@ -22,9 +22,9 @@ Step 4: Define an empty main function
 
 Step 5: Run the main function. If you are new to Python, information about how to do this can be found `here <https://docs.python.org/2/library/__main__.html>`_.
 
-See :ref:`this page <part1ServerFinished>` for the file state at the end of Part 1.
+See :ref:`this page <part1PythonServerFinished>` for the file state at the end of Part 1.
 
-.. _part2ResponseDefinition:
+.. _part2PythonResponseDefinition:
 
 Part 2: Defining the Response
 -----------------------------
@@ -43,9 +43,9 @@ Step 5: Set the Response object as the method response
 
 [[JMK This could use some more explanation. I mostly follow the flow in the Server/Service stuff in builtins but not quite well enough to explain the exact flow/why HelloImpl needs the parameters/etc]]
 
-See :ref:`this page <part2ClientFinished>` for the file state at the end of Part 2.
+See :ref:`this page <part2PythonServerFinished>` for the file state at the end of Part 2.
 
-.. _part3ProcessRequest:
+.. _part3PythonProcessRequest:
 
 Part 3: Processing the Request
 ------------------------------
@@ -64,7 +64,7 @@ That's it! The Python server is complete. Again, note that we don't actually see
 
 [[JMK is there a better way to discuss this? Not sure that I go into enough detail or use the proper language]]
 
-.. _fullExampleServer:
+.. _fullExamplePythonServer:
 
 Full Python Server
 ------------------

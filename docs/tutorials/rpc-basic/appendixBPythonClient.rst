@@ -1,9 +1,9 @@
-Appendix B: Interim Example States - Client
-===========================================
+Appendix B: Interim Example States - Python Client
+==================================================
 
 This file provides cross-checks for users who want to ensure they have properly followed the instructions for a particular stage of the tutorial. The sections below show the proper file state at the end of each part of the instructions. If needed, the contents below can be copied into a client code file as a starting point before trying the next section's instructions.
 
-.. _part1ClientFinished:
+.. _part1PythonClientFinished:
 
 Part 1 pyclient.py Initial Setup
 --------------------------------
@@ -21,9 +21,9 @@ At the end of part 1 of the client creation, your file should contain the follow
    if __name__ == '__main__':
         main()
 
-:ref:`Return to Part 2 <part2ClientInitialization>` of the client definition to continue the tutorial.
+:ref:`Return to Part 2 <part2PythonClientInitialization>` of the client definition to continue the tutorial.
 
-.. _part2ClientFinished:
+.. _part2PythonClientFinished:
 
 Part 2 Client Initialization
 ----------------------------
@@ -46,9 +46,9 @@ At the end of part 2 of the client creation, your file should contain the follow
         main()
 
 
-:ref:`Return to Part 3 <part3Request>` of the client definition to continue the tutorial.
+:ref:`Return to Part 3 <part3PythonRequest>` of the client definition to continue the tutorial.
 
-.. _part3ClientFinished:
+.. _part3PythonClientFinished:
 
 Part 3 Setting Up the Request
 -----------------------------
@@ -73,7 +73,7 @@ At the end of part 3 of the client creation, your file should contain the follow
    if __name__ == '__main__':
         main()
 
-:ref:`Return to Part 4 <part4SendRequest>` of the client definition to continue the tutorial.
+:ref:`Return to Part 4 <part4PythonSendRequest>` of the client definition to continue the tutorial.
 
 
 A full copy of the client for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions in parts 1-4 of the client definition page should match it exactly barring differences in the content of the print requests.
