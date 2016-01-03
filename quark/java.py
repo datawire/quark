@@ -311,11 +311,11 @@ def invoke_method_implicit(method, args):
 def invoke_super_method(clazz, base, method, args):
     return "super.%s(%s)" % (method, ", ".join(args))
 
-def invoke_static_method(clazz, method, args):
-    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
+def invoke_static_method(path, clazz, method, args):
+    return "%s.%s(%s)" % (".".join(path + [clazz]), method, ", ".join(args))
 
-def get_static_field(clazz, field):
-    return "%s.%s" % (clazz, field)
+def get_static_field(path, clazz, field):
+    return "%s.%s" % (".".join(path + [clazz]), field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)

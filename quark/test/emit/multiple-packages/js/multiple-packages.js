@@ -1,3 +1,3 @@
-var common = require('./p1_p1_common');
+var common = require('./p1');
 
 common.main();

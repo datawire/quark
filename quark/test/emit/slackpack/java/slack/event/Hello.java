@@ -1,11 +1,10 @@
 package slack.event;
 
-
-
 /**
  * The client successfully connected to the server.
  */
 public class Hello extends SlackEvent implements io.datawire.quark.runtime.QObject {
+    public static reflect.Class slack_event_Hello_ref = slackpack_md.Root.slack_event_Hello_md;
     public Hello() {
         super();
     }

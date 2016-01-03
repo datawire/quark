@@ -1,11 +1,10 @@
 package slack;
 
-
-
 /**
  * Represents a persistent connection to the slack service.
  */
 public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.quark.runtime.HTTPHandler, io.datawire.quark.runtime.QObject {
+    public static reflect.Class slack_Client_ref = slackpack_md.Root.slack_Client_md;
     public io.datawire.quark.runtime.Runtime runtime;
     public String token;
     public SlackHandler handler;

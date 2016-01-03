@@ -1,5 +1,8 @@
 from quark_runtime import *
 
+import reflect
+import package_md
+
 
 
 def go():
@@ -28,3 +31,4 @@ class Test(object):
             (self).size = value
 
     
+Test.test_test_Test_ref = package_md.Root.test_test_Test_md

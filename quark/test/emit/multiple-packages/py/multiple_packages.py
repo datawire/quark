@@ -1,4 +1,4 @@
-from p1_p1_common import main
+from p1 import main
 
 if __name__ == "__main__":
     main()

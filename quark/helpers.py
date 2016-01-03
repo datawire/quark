@@ -135,7 +135,7 @@ def get_package_version(pkg):
     return "0.0.1"
 
 def namever(file):
-    name = os.path.splitext(os.path.basename(file.name))[0]
+    name = os.path.splitext(os.path.basename(file.name))[0].replace('-', '_')
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
         firstPackage = packages[0]

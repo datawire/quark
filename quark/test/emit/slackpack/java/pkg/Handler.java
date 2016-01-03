@@ -1,8 +1,7 @@
 package pkg;
 
-
-
 public class Handler implements slack.SlackHandler, io.datawire.quark.runtime.QObject {
+    public static reflect.Class pkg_Handler_ref = slackpack_md.Root.pkg_Handler_md;
     public Handler() {}
     public void onSlackEvent(slack.event.SlackEvent event) {
         do{System.out.println((event).type);System.out.flush();}while(false);

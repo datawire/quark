@@ -175,11 +175,13 @@ def comment(stuff):
 def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fields, constructors, methods):
     if base: fields = ["%s._init(self)" % base] + fields
     finit = ["def _init(self):%s" % (indent("\n".join(fields)) or "\n    pass")]
-    body = indent("\n".join(static_fields + finit + constructors + methods))
-    return "class %s(%s):%s%s" % (clazz, base or "object", doc, body or "\n    pass")
+    body = indent("\n".join(finit + constructors + methods))
+    result = "class %s(%s):%s%s" % (clazz, base or "object", doc, body or "\n    pass")
+    result += "\n".join(static_fields)
+    return result
 
 def static_field(doc, clazz, type, name, value):
-    return "%s = %s" % (name, value or "None")
+    return "%s.%s = %s" % (clazz, name, value or "None")
 
 def field(doc, clazz, type, name, value):
     return "self.%s = %s" % (name, value or "None")
@@ -304,11 +306,11 @@ def invoke_method_implicit(method, args):
 def invoke_super_method(clazz, base, method, args):
     return "super(%s, self).%s(%s)" % (clazz, method, ", ".join(args))
 
-def invoke_static_method(clazz, method, args):
-    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
+def invoke_static_method(path, clazz, method, args):
+    return "%s.%s(%s)" % (".".join(path + [clazz]), method, ", ".join(args))
 
-def get_static_field(clazz, field):
-    return "%s.%s" % (clazz, field)
+def get_static_field(path, clazz, field):
+    return "%s.%s" % (".".join(path + [clazz]), field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)

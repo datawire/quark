@@ -28,15 +28,17 @@ def package(name, version, packages, srcs, deps):
 
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
-        files["%s/package.json" % "/".join(path)] = """
+
+    files["package.json"] = """
 {
-    "name":"%s",
-    "version":"%s",
+    "name": "%s",
+    "version": "%s",
+    "main": "%s/index.js",
     "dependencies": {
         %s
     }
 }
-        """ % (name, version, dependencies)
+        """ % (name, version, name, dependencies)
     return files
 
 def class_file(path, name, fname):
@@ -114,10 +116,10 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fie
     if base:
         result += "_qrt.util.inherits(%s, %s);\n" % (clazz, base)
 
-    result += "\n".join(static_fields)
-
     result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
     result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
+
+    result += "\n".join(static_fields)
 
     result += "\n".join(methods)
 
@@ -255,11 +257,11 @@ def invoke_method_implicit(method, args):
 def invoke_super_method(clazz, base, method, args):
     return "this.constructor.super_.prototype.%s.call(%s)" % (method, ", ".join(["this"] + args))
 
-def invoke_static_method(clazz, method, args):
-    return "%s.%s(%s)" % (clazz, method, ", ".join(args))
+def invoke_static_method(path, clazz, method, args):
+    return "%s.%s(%s)" % (".".join(path + [clazz]), method, ", ".join(args))
 
-def get_static_field(clazz, field):
-    return "%s.%s" % (clazz, field)
+def get_static_field(path, clazz, field):
+    return "%s.%s" % (".".join(path + [clazz]), field)
 
 def get_field(expr, field):
     return "(%s).%s" % (expr, field)

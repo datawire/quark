@@ -1,6 +1,10 @@
 var _qrt = require("datawire-quark-core");
+var reflect = require('../reflect');
+exports.reflect = reflect;
 var event = require('./event');
 exports.event = event;
+var slackpack_md = require('../slackpack_md');
+exports.slackpack_md = slackpack_md;
 
 
 
@@ -52,7 +56,7 @@ function User__init_fields__() {
     this.user = null;
 }
 User.prototype.__init_fields__ = User__init_fields__;
-
+User.slack_User_ref = slackpack_md.Root.slack_User_md;
 function User__getClass() {
     return "slack.User";
 }
@@ -96,7 +100,7 @@ function Channel__init_fields__() {
     this.channel = null;
 }
 Channel.prototype.__init_fields__ = Channel__init_fields__;
-
+Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md;
 function Channel_send(message) {
     var id = (this.client).event_id;
     (this.client).event_id = ((this.client).event_id) + (1);
@@ -156,7 +160,7 @@ function Client__init_fields__() {
     this.socket = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
-
+Client.slack_Client_ref = slackpack_md.Root.slack_Client_md;
 /**
  * Connect the client to the slack service.
  */

@@ -1,11 +1,10 @@
 package slack.event;
 
-
-
 /**
  * The server has indicated an error has occurred.
  */
 public class SlackError extends SlackEvent implements io.datawire.quark.runtime.QObject {
+    public static reflect.Class slack_event_SlackError_ref = slackpack_md.Root.slack_event_SlackError_md;
     /**
      * The numeric code associated with the error condition.
      */

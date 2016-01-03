@@ -1,6 +1,7 @@
 package pkg;
 
 public class StringFoo implements Foo<String>, io.datawire.quark.runtime.QObject {
+    public static reflect.Class pkg_StringFoo_ref = parameterized_defaults_md.Root.pkg_StringFoo_md;
     public StringFoo() {}
     public String get() {
         return "fdsa";

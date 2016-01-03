@@ -1,8 +1,12 @@
 var _qrt = require("datawire-quark-core");
+var reflect = require('../reflect');
+exports.reflect = reflect;
 var slack = require('../slack');
 exports.slack = slack;
 var slack = require('../slack');
 exports.slack = slack;
+var slackpack_md = require('../slackpack_md');
+exports.slackpack_md = slackpack_md;
 
 
 
@@ -14,7 +18,7 @@ exports.Handler = Handler;
 
 function Handler__init_fields__() {}
 Handler.prototype.__init_fields__ = Handler__init_fields__;
-
+Handler.pkg_Handler_ref = slackpack_md.Root.pkg_Handler_md;
 function Handler_onSlackEvent(event) {
     _qrt.print((event).type);
     if (((event).user) !== (null)) {

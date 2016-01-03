@@ -1,10 +1,6 @@
 package box_lib;
 
-public class Functions {
-
-
-
-/* BEGIN_BUILTIN */
+public class Functions {/* BEGIN_BUILTIN */
 
 
     public static io.datawire.quark.runtime.JSONObject toJSON(Object obj) {
@@ -13,7 +9,7 @@ public class Functions {
             (result).setNull();
             return result;
         }
-        Class cls = new Class(io.datawire.quark.runtime.Builtins._getClass(obj));
+        reflect.Class cls = reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
         Integer idx = 0;
         if (((cls).name)==("String") || (((cls).name) != null && ((cls).name).equals("String"))) {
             (result).setString((String) (obj));
@@ -38,7 +34,7 @@ public class Functions {
             return result;
         }
         (result).setObjectItem(("$class"), ((new io.datawire.quark.runtime.JSONObject()).setString((cls).id)));
-        java.util.ArrayList<Field> fields = (cls).getFields();
+        java.util.ArrayList<reflect.Field> fields = (cls).getFields();
         while ((idx) < ((fields).size())) {
             (result).setObjectItem((((fields).get(idx)).name), (Functions.toJSON(((io.datawire.quark.runtime.QObject) (obj))._getField(((fields).get(idx)).name))));
             idx = (idx) + (1);
@@ -51,7 +47,7 @@ public class Functions {
 /* BEGIN_BUILTIN */
 
 
-    public static Object fromJSON(Class cls, io.datawire.quark.runtime.JSONObject json) {
+    public static Object fromJSON(reflect.Class cls, io.datawire.quark.runtime.JSONObject json) {
         if (((json)==(null) || ((json) != null && (json).equals(null))) || ((json).isNull())) {
             return null;
         }
@@ -64,36 +60,36 @@ public class Functions {
             }
             return list;
         }
-        java.util.ArrayList<Field> fields = (cls).getFields();
+        java.util.ArrayList<reflect.Field> fields = (cls).getFields();
         Object result = (cls).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
         while ((idx) < ((fields).size())) {
-            Field f = (fields).get(idx);
+            reflect.Field f = (fields).get(idx);
             idx = (idx) + (1);
-            if ((((f).type).name)==("String") || ((((f).type).name) != null && (((f).type).name).equals("String"))) {
+            if ((((f).getType()).name)==("String") || ((((f).getType()).name) != null && (((f).getType()).name).equals("String"))) {
                 String s = ((json).getObjectItem((f).name)).getString();
                 ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, s);
                 continue;
             }
-            if ((((f).type).name)==("float") || ((((f).type).name) != null && (((f).type).name).equals("float"))) {
+            if ((((f).getType()).name)==("float") || ((((f).getType()).name) != null && (((f).getType()).name).equals("float"))) {
                 Double flt = ((json).getObjectItem((f).name)).getNumber();
                 ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, flt);
                 continue;
             }
-            if ((((f).type).name)==("int") || ((((f).type).name) != null && (((f).type).name).equals("int"))) {
+            if ((((f).getType()).name)==("int") || ((((f).getType()).name) != null && (((f).getType()).name).equals("int"))) {
                 if (!(((json).getObjectItem((f).name)).isNull())) {
                     Integer i = ((int) Math.round(((json).getObjectItem((f).name)).getNumber()));
                     ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, i);
                 }
                 continue;
             }
-            if ((((f).type).name)==("bool") || ((((f).type).name) != null && (((f).type).name).equals("bool"))) {
+            if ((((f).getType()).name)==("bool") || ((((f).getType()).name) != null && (((f).getType()).name).equals("bool"))) {
                 if (!(((json).getObjectItem((f).name)).isNull())) {
                     Boolean b = ((json).getObjectItem((f).name)).getBool();
                     ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, b);
                 }
                 continue;
             }
-            ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON((f).type, (json).getObjectItem((f).name)));
+            ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON((f).getType(), (json).getObjectItem((f).name)));
         }
         return result;
     }
@@ -182,397 +178,5 @@ public class Functions {
         do{System.out.println("");System.out.flush();}while(false);
         do{System.out.println("test6:\n--");System.out.flush();}while(false);
         Functions.test6();
-    }
-
-
-    public static Object _construct(String className, java.util.ArrayList<Object> args) {
-        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
-            return new Class((String) ((args).get(0)));
-        }
-        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {
-            return new Field((Class) ((args).get(0)), (String) ((args).get(1)));
-        }
-        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {
-            return new java.util.ArrayList<Object>();
-        }
-        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {
-            return new java.util.ArrayList<Field>();
-        }
-        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {
-            return new java.util.ArrayList<Class>();
-        }
-        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {
-            return new java.util.ArrayList<String>();
-        }
-        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {
-            return new java.util.HashMap<Object,Object>();
-        }
-        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {
-            return new java.util.HashMap<String,Object>();
-        }
-        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
-            return new ResponseHolder();
-        }
-        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            return new Client((io.datawire.quark.runtime.Runtime) ((args).get(0)), (String) ((args).get(1)));
-        }
-        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
-            return new Server<Object>((io.datawire.quark.runtime.Runtime) ((args).get(0)), (args).get(1));
-        }
-        if ((className)==("Box<Object>") || ((className) != null && (className).equals("Box<Object>"))) {
-            return new Box<Object>();
-        }
-        if ((className)==("Box<int>") || ((className) != null && (className).equals("Box<int>"))) {
-            return new Box<Integer>();
-        }
-        if ((className)==("Box<String>") || ((className) != null && (className).equals("Box<String>"))) {
-            return new Box<String>();
-        }
-        if ((className)==("Box<Box<int>>") || ((className) != null && (className).equals("Box<Box<int>>"))) {
-            return new Box<Box<Integer>>();
-        }
-        if ((className)==("Crate<int>") || ((className) != null && (className).equals("Crate<int>"))) {
-            return new Crate<Integer>();
-        }
-        if ((className)==("Crate<String>") || ((className) != null && (className).equals("Crate<String>"))) {
-            return new Crate<String>();
-        }
-        if ((className)==("Sack") || ((className) != null && (className).equals("Sack"))) {
-            return new Sack();
-        }
-        return null;
-    }
-
-
-    public static java.util.ArrayList<Field> _fields(String className) {
-        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("String"), "id"), new Field(new Class("String"), "name"), new Field(new Class("List<Class>"), "parameters")}));
-        }
-        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Class"), "type"), new Field(new Class("String"), "name")}));
-        }
-        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        }
-        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("HTTPResponse"), "response"), new Field(new Class("String"), "failure")}));
-        }
-        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("String"), "url"), new Field(new Class("long"), "timeout")}));
-        }
-        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Runtime"), "runtime"), new Field(new Class("Object"), "impl")}));
-        }
-        if ((className)==("Box<Object>") || ((className) != null && (className).equals("Box<Object>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Object"), "contents")}));
-        }
-        if ((className)==("Box<int>") || ((className) != null && (className).equals("Box<int>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Object"), "contents")}));
-        }
-        if ((className)==("Box<String>") || ((className) != null && (className).equals("Box<String>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Object"), "contents")}));
-        }
-        if ((className)==("Box<Box<int>>") || ((className) != null && (className).equals("Box<Box<int>>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Object"), "contents")}));
-        }
-        if ((className)==("Crate<int>") || ((className) != null && (className).equals("Crate<int>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Box<Object>"), "box"), new Field(new Class("Box<int>"), "ibox")}));
-        }
-        if ((className)==("Crate<String>") || ((className) != null && (className).equals("Crate<String>"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Box<Object>"), "box"), new Field(new Class("Box<int>"), "ibox")}));
-        }
-        if ((className)==("Sack") || ((className) != null && (className).equals("Sack"))) {
-            return new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Field(new Class("Box<int>"), "ints")}));
-        }
-        return (java.util.ArrayList<Field>) (null);
-    }
-
-
-    public static void _class(Class cls) {
-        if (((cls).id)==("Class") || (((cls).id) != null && ((cls).id).equals("Class"))) {
-            (cls).name = "Class";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        if (((cls).id)==("Field") || (((cls).id) != null && ((cls).id).equals("Field"))) {
-            (cls).name = "Field";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        if (((cls).id)==("List<Object>") || (((cls).id) != null && ((cls).id).equals("List<Object>"))) {
-            (cls).name = "List";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
-            return;
-        }
-        if (((cls).id)==("List<Field>") || (((cls).id) != null && ((cls).id).equals("List<Field>"))) {
-            (cls).name = "List";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Field")}));
-            return;
-        }
-        if (((cls).id)==("List<Class>") || (((cls).id) != null && ((cls).id).equals("List<Class>"))) {
-            (cls).name = "List";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Class")}));
-            return;
-        }
-        if (((cls).id)==("List<String>") || (((cls).id) != null && ((cls).id).equals("List<String>"))) {
-            (cls).name = "List";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("String")}));
-            return;
-        }
-        if (((cls).id)==("Map<Object,Object>") || (((cls).id) != null && ((cls).id).equals("Map<Object,Object>"))) {
-            (cls).name = "Map";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object"), new Class("Object")}));
-            return;
-        }
-        if (((cls).id)==("Map<String,Object>") || (((cls).id) != null && ((cls).id).equals("Map<String,Object>"))) {
-            (cls).name = "Map";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("String"), new Class("Object")}));
-            return;
-        }
-        if (((cls).id)==("ResponseHolder") || (((cls).id) != null && ((cls).id).equals("ResponseHolder"))) {
-            (cls).name = "ResponseHolder";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        if (((cls).id)==("Service") || (((cls).id) != null && ((cls).id).equals("Service"))) {
-            (cls).name = "Service";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        if (((cls).id)==("Client") || (((cls).id) != null && ((cls).id).equals("Client"))) {
-            (cls).name = "Client";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        if (((cls).id)==("Server<Object>") || (((cls).id) != null && ((cls).id).equals("Server<Object>"))) {
-            (cls).name = "Server";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
-            return;
-        }
-        if (((cls).id)==("Box<Object>") || (((cls).id) != null && ((cls).id).equals("Box<Object>"))) {
-            (cls).name = "Box";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Object")}));
-            return;
-        }
-        if (((cls).id)==("Box<int>") || (((cls).id) != null && ((cls).id).equals("Box<int>"))) {
-            (cls).name = "Box";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("int")}));
-            return;
-        }
-        if (((cls).id)==("Box<String>") || (((cls).id) != null && ((cls).id).equals("Box<String>"))) {
-            (cls).name = "Box";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("String")}));
-            return;
-        }
-        if (((cls).id)==("Box<Box<int>>") || (((cls).id) != null && ((cls).id).equals("Box<Box<int>>"))) {
-            (cls).name = "Box";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("Box<int>")}));
-            return;
-        }
-        if (((cls).id)==("Crate<int>") || (((cls).id) != null && ((cls).id).equals("Crate<int>"))) {
-            (cls).name = "Crate";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("int")}));
-            return;
-        }
-        if (((cls).id)==("Crate<String>") || (((cls).id) != null && ((cls).id).equals("Crate<String>"))) {
-            (cls).name = "Crate";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new Class("String")}));
-            return;
-        }
-        if (((cls).id)==("Sack") || (((cls).id) != null && ((cls).id).equals("Sack"))) {
-            (cls).name = "Sack";
-            (cls).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-            return;
-        }
-        (cls).name = (cls).id;
-    }
-
-
-    public static Object _invoke(String className, Object object, String method, java.util.ArrayList<Object> args) {
-        if ((className)==("Class") || ((className) != null && (className).equals("Class"))) {
-            if ((method)==("getId") || ((method) != null && (method).equals("getId"))) {
-                Class tmp_0 = (Class) (object);
-                return (tmp_0).getId();
-            }
-            if ((method)==("getName") || ((method) != null && (method).equals("getName"))) {
-                Class tmp_1 = (Class) (object);
-                return (tmp_1).getName();
-            }
-            if ((method)==("getParameters") || ((method) != null && (method).equals("getParameters"))) {
-                Class tmp_2 = (Class) (object);
-                return (tmp_2).getParameters();
-            }
-            if ((method)==("construct") || ((method) != null && (method).equals("construct"))) {
-                Class tmp_3 = (Class) (object);
-                return (tmp_3).construct((java.util.ArrayList<Object>) ((args).get(0)));
-            }
-            if ((method)==("getFields") || ((method) != null && (method).equals("getFields"))) {
-                Class tmp_4 = (Class) (object);
-                return (tmp_4).getFields();
-            }
-            if ((method)==("getField") || ((method) != null && (method).equals("getField"))) {
-                Class tmp_5 = (Class) (object);
-                return (tmp_5).getField((String) ((args).get(0)));
-            }
-            if ((method)==("invoke") || ((method) != null && (method).equals("invoke"))) {
-                Class tmp_6 = (Class) (object);
-                return (tmp_6).invoke((args).get(0), (String) ((args).get(1)), (java.util.ArrayList<Object>) ((args).get(2)));
-            }
-        }
-        if ((className)==("Field") || ((className) != null && (className).equals("Field"))) {}
-        if ((className)==("List<Object>") || ((className) != null && (className).equals("List<Object>"))) {}
-        if ((className)==("List<Field>") || ((className) != null && (className).equals("List<Field>"))) {}
-        if ((className)==("List<Class>") || ((className) != null && (className).equals("List<Class>"))) {}
-        if ((className)==("List<String>") || ((className) != null && (className).equals("List<String>"))) {}
-        if ((className)==("Map<Object,Object>") || ((className) != null && (className).equals("Map<Object,Object>"))) {}
-        if ((className)==("Map<String,Object>") || ((className) != null && (className).equals("Map<String,Object>"))) {}
-        if ((className)==("ResponseHolder") || ((className) != null && (className).equals("ResponseHolder"))) {
-            if ((method)==("onHTTPResponse") || ((method) != null && (method).equals("onHTTPResponse"))) {
-                ResponseHolder tmp_7 = (ResponseHolder) (object);
-                (tmp_7).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
-                return null;
-            }
-            if ((method)==("onHTTPError") || ((method) != null && (method).equals("onHTTPError"))) {
-                ResponseHolder tmp_8 = (ResponseHolder) (object);
-                (tmp_8).onHTTPError((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (String) ((args).get(1)));
-                return null;
-            }
-        }
-        if ((className)==("Service") || ((className) != null && (className).equals("Service"))) {
-            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
-                Service tmp_9 = (Service) (object);
-                return (tmp_9).getURL();
-            }
-            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Service tmp_10 = (Service) (object);
-                return (tmp_10).getRuntime();
-            }
-            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
-                Service tmp_11 = (Service) (object);
-                return (tmp_11).getTimeout();
-            }
-            if ((method)==("rpc") || ((method) != null && (method).equals("rpc"))) {
-                Service tmp_12 = (Service) (object);
-                return (tmp_12).rpc((String) ((args).get(0)), (args).get(1), (java.util.ArrayList<Object>) ((args).get(2)));
-            }
-        }
-        if ((className)==("Client") || ((className) != null && (className).equals("Client"))) {
-            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Client tmp_13 = (Client) (object);
-                return (tmp_13).getRuntime();
-            }
-            if ((method)==("getURL") || ((method) != null && (method).equals("getURL"))) {
-                Client tmp_14 = (Client) (object);
-                return (tmp_14).getURL();
-            }
-            if ((method)==("getTimeout") || ((method) != null && (method).equals("getTimeout"))) {
-                Client tmp_15 = (Client) (object);
-                return (tmp_15).getTimeout();
-            }
-            if ((method)==("setTimeout") || ((method) != null && (method).equals("setTimeout"))) {
-                Client tmp_16 = (Client) (object);
-                (tmp_16).setTimeout((Long) ((args).get(0)));
-                return null;
-            }
-        }
-        if ((className)==("Server<Object>") || ((className) != null && (className).equals("Server<Object>"))) {
-            if ((method)==("getRuntime") || ((method) != null && (method).equals("getRuntime"))) {
-                Server<Object> tmp_17 = (Server<Object>) (object);
-                return (tmp_17).getRuntime();
-            }
-            if ((method)==("onHTTPRequest") || ((method) != null && (method).equals("onHTTPRequest"))) {
-                Server<Object> tmp_18 = (Server<Object>) (object);
-                (tmp_18).onHTTPRequest((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
-                return null;
-            }
-            if ((method)==("onServletError") || ((method) != null && (method).equals("onServletError"))) {
-                Server<Object> tmp_19 = (Server<Object>) (object);
-                (tmp_19).onServletError((String) ((args).get(0)), (String) ((args).get(1)));
-                return null;
-            }
-        }
-        if ((className)==("Box<Object>") || ((className) != null && (className).equals("Box<Object>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Box<Object> tmp_20 = (Box<Object>) (object);
-                (tmp_20).set((args).get(0));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Box<Object> tmp_21 = (Box<Object>) (object);
-                return (tmp_21).get();
-            }
-        }
-        if ((className)==("Box<int>") || ((className) != null && (className).equals("Box<int>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Box<Integer> tmp_22 = (Box<Integer>) (object);
-                (tmp_22).set((Integer) ((args).get(0)));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Box<Integer> tmp_23 = (Box<Integer>) (object);
-                return (tmp_23).get();
-            }
-        }
-        if ((className)==("Box<String>") || ((className) != null && (className).equals("Box<String>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Box<String> tmp_24 = (Box<String>) (object);
-                (tmp_24).set((String) ((args).get(0)));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Box<String> tmp_25 = (Box<String>) (object);
-                return (tmp_25).get();
-            }
-        }
-        if ((className)==("Box<Box<int>>") || ((className) != null && (className).equals("Box<Box<int>>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Box<Box<Integer>> tmp_26 = (Box<Box<Integer>>) (object);
-                (tmp_26).set((Box<Integer>) ((args).get(0)));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Box<Box<Integer>> tmp_27 = (Box<Box<Integer>>) (object);
-                return (tmp_27).get();
-            }
-        }
-        if ((className)==("Crate<int>") || ((className) != null && (className).equals("Crate<int>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Crate<Integer> tmp_28 = (Crate<Integer>) (object);
-                (tmp_28).set((Integer) ((args).get(0)));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Crate<Integer> tmp_29 = (Crate<Integer>) (object);
-                return (tmp_29).get();
-            }
-        }
-        if ((className)==("Crate<String>") || ((className) != null && (className).equals("Crate<String>"))) {
-            if ((method)==("set") || ((method) != null && (method).equals("set"))) {
-                Crate<String> tmp_30 = (Crate<String>) (object);
-                (tmp_30).set((String) ((args).get(0)));
-                return null;
-            }
-            if ((method)==("get") || ((method) != null && (method).equals("get"))) {
-                Crate<String> tmp_31 = (Crate<String>) (object);
-                return (tmp_31).get();
-            }
-        }
-        if ((className)==("Sack") || ((className) != null && (className).equals("Sack"))) {}
-        return null;
     }
 }

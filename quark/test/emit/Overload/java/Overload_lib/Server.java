@@ -21,8 +21,8 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         } else {
             String method = ((envelope).getObjectItem("$method")).getString();
             io.datawire.quark.runtime.JSONObject json = (envelope).getObjectItem("rpc");
-            Object argument = Functions.fromJSON(new Class(((json).getObjectItem("$class")).getString()), json);
-            Object result = (((new Class(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).type).invoke(this.impl, method, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
+            Object argument = Functions.fromJSON(reflect.Class.get(((json).getObjectItem("$class")).getString()), json);
+            Object result = ((((reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(this))).getField("impl")).getType()).getMethod(method)).invoke(this.impl, new java.util.ArrayList(java.util.Arrays.asList(new Object[]{argument})));
             (response).setBody((Functions.toJSON(result)).toString());
             (response).setCode(200);
         }

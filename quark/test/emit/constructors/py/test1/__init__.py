@@ -1,5 +1,8 @@
 from quark_runtime import *
 
+import reflect
+import constructors_md
+
 
 class Test(object):
     def _init(self):
@@ -23,7 +26,7 @@ class Test(object):
             (self).name = value
 
     
-
+Test.test1_Test_ref = constructors_md.Root.test1_Test_md
 
 def go():
     t = Test();

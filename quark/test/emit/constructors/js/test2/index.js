@@ -1,4 +1,9 @@
 var _qrt = require("datawire-quark-core");
+var reflect = require('../reflect');
+exports.reflect = reflect;
+var constructors_md = require('../constructors_md');
+exports.constructors_md = constructors_md;
+
 
 
 // CLASS Test
@@ -13,7 +18,7 @@ function Test__init_fields__() {
     this.name = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-
+Test.test2_Test_ref = constructors_md.Root.test2_Test_md;
 function Test__getClass() {
     return "test2.Test";
 }

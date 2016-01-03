@@ -1,11 +1,10 @@
 package slack.event;
 
-
-
 /**
  * Metadata about an edit to a message.
  */
 public class Edited implements io.datawire.quark.runtime.QObject {
+    public static reflect.Class slack_event_Edited_ref = slackpack_md.Root.slack_event_Edited_md;
     public slack.User user;
     public String timestamp;
     public Edited() {}

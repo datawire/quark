@@ -1,7 +1,9 @@
 from quark_runtime import *
 
+import reflect
 import slack
 import slack.event
+import slackpack_md
 
 
 class Handler(object):
@@ -35,3 +37,4 @@ class Handler(object):
     def onMessage(self, message):
         (self).onSlackEvent(message);
 
+Handler.pkg_Handler_ref = slackpack_md.Root.pkg_Handler_md

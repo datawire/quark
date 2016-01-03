@@ -23,7 +23,8 @@ File(
      Var(Name(other)), Fixed(')')), NativeCase(js, Fixed('('), Var(Name(self)),
      Fixed(') !== ('), Var(Name(other)), Fixed(')')))),
 
-  MethodMacro(Type(Name(Class)), Name(getClass), Call(Var(Name(Class)),
+  MethodMacro(Type(Name(reflect), Name(Class)), Name(getClass),
+   Call(Attr(Attr(Var(Name(reflect)), Name(Class)), Name(get)),
     Native(NativeCase(java,
       Fixed('io.datawire.quark.runtime.Builtins._getClass('), Var(Name(self)),
       Fixed(')')), NativeCase(py, Fixed('_getClass('), Var(Name(self)),
@@ -50,97 +51,6 @@ File(
      Fixed('))')), NativeCase(js, Fixed('('), Var(Name(self)),
      Fixed(')._setField(('), Var(Name(name)), Fixed('), ('), Var(Name(value)),
      Fixed('))'))))),
-
- Function(Type(Name(void)), Name(_class),
-  Param(Type(Name(Class)), Name(cls))),
-
- Function(Type(Name(Object)), Name(_construct),
-  Param(Type(Name(String)), Name(className)),
-  Param(Type(Name(List), Type(Name(Object))), Name(args))),
-
- Function(Type(Name(List), Type(Name(Field))), Name(_fields),
-  Param(Type(Name(String)), Name(className))),
-
- Function(Type(Name(Object)), Name(_invoke),
-  Param(Type(Name(String)), Name(className)),
-  Param(Type(Name(Object)), Name(object)),
-  Param(Type(Name(String)), Name(name)),
-  Param(Type(Name(List), Type(Name(Object))), Name(args))),
-
- Class(Name(Class),
-  Field(static=False, Type(Name(String)), Name(id)),
-  Field(static=False, Type(Name(String)), Name(name)),
-  Field(static=False, Type(Name(List), Type(Name(Class))), Name(parameters)),
-
-  Constructor(Name(Class),
-   Param(Type(Name(String)), Name(id)),
-   Block(
-    Assign(Attr(Var(Name(self)), Name(id)), Var(Name(id))),
-    ExprStmt(Call(Var(Name(_class)), Var(Name(self)))))),
-
-  Method(static=False, Type(Name(String)), Name(getId), Block(
-    Return(Var(Name(id))))),
-
-  Method(static=False, Type(Name(String)), Name(getName), Block(
-    Return(Var(Name(name))))),
-
-  Method(static=False, Type(Name(List), Type(Name(Class))),
-   Name(getParameters), Block(
-    Return(Var(Name(parameters))))),
-
-  Method(static=False, Type(Name(Object)), Name(construct),
-   Param(Type(Name(List), Type(Name(Object))), Name(args)),
-   Block(
-    Return(Call(Var(Name(_construct)), Call(Var(Name(getId))),
-      Var(Name(args)))))),
-
-  Method(static=False, Type(Name(List), Type(Name(Field))), Name(getFields),
-   Block(
-    Return(Call(Var(Name(_fields)), Attr(Var(Name(self)), Name(id)))))),
-
-  Method(static=False, Type(Name(Field)), Name(getField),
-   Param(Type(Name(String)), Name(name)),
-   Block(
-    Local(
-     Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
-      Call(Var(Name(getFields))))),
-    Local(
-     Declaration(Type(Name(int)), Name(idx), Number(0))),
-    While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
-        Name(size)))), Block(
-      If(Call(Attr(Attr(Call(Attr(Var(Name(fields)), Name(__get__)),
-           Var(Name(idx))), Name(name)), Name(__eq__)), Var(Name(name))),
-       Block(
-        Return(Call(Attr(Var(Name(fields)), Name(__get__)), Var(Name(idx)))))),
-      Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
-        Number(1))))),
-    Return(Null(null)))),
-
-  Method(static=False, Type(Name(Object)), Name(invoke),
-   Param(Type(Name(Object)), Name(object)),
-   Param(Type(Name(String)), Name(method)),
-   Param(Type(Name(List), Type(Name(Object))), Name(args)),
-   Block(
-    Return(Call(Var(Name(_invoke)), Attr(Var(Name(self)), Name(id)),
-      Var(Name(object)), Var(Name(method)), Var(Name(args)))))),
-
-  MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-   Call(Attr(Call(Type(Name(JSONObject))), Name(setString)),
-    Attr(Var(Name(self)), Name(id)))),
-
-  MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
-   Call(Attr(Var(Name(self)), Name(toJSON))))),
-
- Class(Name(Field),
-  Field(static=False, Type(Name(Class)), Name(type)),
-  Field(static=False, Type(Name(String)), Name(name)),
-
-  Constructor(Name(Field),
-   Param(Type(Name(Class)), Name(type)),
-   Param(Type(Name(String)), Name(name)),
-   Block(
-    Assign(Attr(Var(Name(self)), Name(type)), Var(Name(type))),
-    Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name)))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('void')))),
   Name(void)),
@@ -521,8 +431,8 @@ File(
      ExprStmt(Call(Attr(Var(Name(result)), Name(setNull)))),
      Return(Var(Name(result))))),
    Local(
-    Declaration(Type(Name(Class)), Name(cls), Call(Attr(Var(Name(obj)),
-       Name(getClass))))),
+    Declaration(Type(Name(reflect), Name(Class)), Name(cls),
+     Call(Attr(Var(Name(obj)), Name(getClass))))),
    Local(
     Declaration(Type(Name(int)), Name(idx), Number(0))),
    If(Call(Attr(Attr(Var(Name(cls)), Name(name)), Name(__eq__)),
@@ -564,8 +474,8 @@ File(
    ExprStmt(Call(Attr(Var(Name(result)), Name(__set__)), String("$class"),
      Var(Name(cls)))),
    Local(
-    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
-     Call(Attr(Var(Name(cls)), Name(getFields))))),
+    Declaration(Type(Name(List), Type(Name(reflect), Name(Field))),
+     Name(fields), Call(Attr(Var(Name(cls)), Name(getFields))))),
    While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
        Name(size)))), Block(
      ExprStmt(Call(Attr(Var(Name(result)), Name(__set__)),
@@ -578,7 +488,7 @@ File(
    Return(Var(Name(result))))),
 
  Function(Type(Name(Object)), Name(fromJSON),
-  Param(Type(Name(Class)), Name(cls)),
+  Param(Type(Name(reflect), Name(Class)), Name(cls)),
   Param(Type(Name(JSONObject)), Name(json)),
   Block(
    If(Call(Attr(Call(Attr(Var(Name(json)), Name(__eq__)), Null(null)),
@@ -601,19 +511,19 @@ File(
          Number(1))))),
      Return(Var(Name(list))))),
    Local(
-    Declaration(Type(Name(List), Type(Name(Field))), Name(fields),
-     Call(Attr(Var(Name(cls)), Name(getFields))))),
+    Declaration(Type(Name(List), Type(Name(reflect), Name(Field))),
+     Name(fields), Call(Attr(Var(Name(cls)), Name(getFields))))),
    Local(
     Declaration(Type(Name(Object)), Name(result), Call(Attr(Var(Name(cls)),
        Name(construct)), List()))),
    While(Call(Attr(Var(Name(idx)), Name(__lt__)), Call(Attr(Var(Name(fields)),
        Name(size)))), Block(
      Local(
-      Declaration(Type(Name(Field)), Name(f), Call(Attr(Var(Name(fields)),
-         Name(__get__)), Var(Name(idx))))),
+      Declaration(Type(Name(reflect), Name(Field)), Name(f),
+       Call(Attr(Var(Name(fields)), Name(__get__)), Var(Name(idx))))),
      Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
        Number(1))),
-     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+     If(Call(Attr(Attr(Call(Attr(Var(Name(f)), Name(getType))), Name(name)),
         Name(__eq__)), String("String")), Block(
        Local(
         Declaration(Type(Name(String)), Name(s), Call(Attr(Var(Name(json)),
@@ -621,7 +531,7 @@ File(
        ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
          Attr(Var(Name(f)), Name(name)), Var(Name(s)))),
        Continue())),
-     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+     If(Call(Attr(Attr(Call(Attr(Var(Name(f)), Name(getType))), Name(name)),
         Name(__eq__)), String("float")), Block(
        Local(
         Declaration(Type(Name(float)), Name(flt), Call(Attr(Var(Name(json)),
@@ -629,7 +539,7 @@ File(
        ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
          Attr(Var(Name(f)), Name(name)), Var(Name(flt)))),
        Continue())),
-     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+     If(Call(Attr(Attr(Call(Attr(Var(Name(f)), Name(getType))), Name(name)),
         Name(__eq__)), String("int")), Block(
        If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json)), Name(__get__)),
              Attr(Var(Name(f)), Name(name))), Name(isNull))), Name(__not__))),
@@ -640,7 +550,7 @@ File(
          ExprStmt(Call(Attr(Var(Name(result)), Name(setField)),
            Attr(Var(Name(f)), Name(name)), Var(Name(i)))))),
        Continue())),
-     If(Call(Attr(Attr(Attr(Var(Name(f)), Name(type)), Name(name)),
+     If(Call(Attr(Attr(Call(Attr(Var(Name(f)), Name(getType))), Name(name)),
         Name(__eq__)), String("bool")), Block(
        If(Call(Attr(Call(Attr(Call(Attr(Var(Name(json)), Name(__get__)),
              Attr(Var(Name(f)), Name(name))), Name(isNull))), Name(__not__))),
@@ -652,9 +562,9 @@ File(
            Attr(Var(Name(f)), Name(name)), Var(Name(b)))))),
        Continue())),
      ExprStmt(Call(Attr(Var(Name(result)), Name(setField)), Attr(Var(Name(f)),
-        Name(name)), Call(Var(Name(fromJSON)), Attr(Var(Name(f)), Name(type)),
-        Call(Attr(Var(Name(json)), Name(__get__)), Attr(Var(Name(f)),
-          Name(name)))))))),
+        Name(name)), Call(Var(Name(fromJSON)), Call(Attr(Var(Name(f)),
+          Name(getType))), Call(Attr(Var(Name(json)), Name(__get__)),
+         Attr(Var(Name(f)), Name(name)))))))),
    Return(Var(Name(result))))),
 
  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
@@ -1265,8 +1175,9 @@ File(
           Name(__add__)),
          String("(...) failed: Server returned unrecognizable content")))),
       Return(Null(null))), Block(
-      Return(Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
-         Var(Name(classname))), Var(Name(obj))))))))),
+      Return(Call(Var(Name(fromJSON)), Call(Attr(Attr(Var(Name(reflect)),
+           Name(Class)), Name(get)), Var(Name(classname))),
+        Var(Name(obj))))))))),
 
  Class(Name(Client),
   Field(static=False, Type(Name(Runtime)), Name(runtime)),
@@ -1342,14 +1253,15 @@ File(
         Call(Attr(Var(Name(envelope)), Name(__get__)), String("rpc")))),
       Local(
        Declaration(Type(Name(Object)), Name(argument),
-        Call(Var(Name(fromJSON)), Call(Var(Name(Class)),
-          Call(Attr(Var(Name(json)), Name(__get__)), String("$class"))),
-         Var(Name(json))))),
+        Call(Var(Name(fromJSON)), Call(Attr(Attr(Var(Name(reflect)),
+            Name(Class)), Name(get)), Call(Attr(Var(Name(json)),
+            Name(__get__)), String("$class"))), Var(Name(json))))),
       Local(
        Declaration(Type(Name(Object)), Name(result),
-        Call(Attr(Attr(Call(Attr(Call(Attr(Var(Name(self)), Name(getClass))),
-             Name(getField)), String("impl")), Name(type)), Name(invoke)),
-         Var(Name(impl)), Var(Name(method)), List(Var(Name(argument)))))),
+        Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(Name(self)),
+                  Name(getClass))), Name(getField)), String("impl")),
+              Name(getType))), Name(getMethod)), Var(Name(method))),
+          Name(invoke)), Var(Name(impl)), List(Var(Name(argument)))))),
       ExprStmt(Call(Attr(Var(Name(response)), Name(setBody)),
         Call(Attr(Call(Var(Name(toJSON)), Var(Name(result))),
           Name(toString))))),
@@ -1364,5 +1276,160 @@ File(
     ExprStmt(Call(Attr(Call(Var(Name(getRuntime))), Name(fail)),
       Call(Attr(Call(Attr(Call(Attr(String("RPC Server failed to register "),
             Name(__add__)), Var(Name(url))), Name(__add__)),
-         String(" due to: ")), Name(__add__)), Var(Name(message))))))))
+         String(" due to: ")), Name(__add__)), Var(Name(message)))))))),
+
+ Package(Name(reflect),
+
+  Class(Name(Class),
+   Field(static=True, Type(Name(Map), Type(Name(String)), Type(Name(Class))),
+    Name(classes), Map()),
+   Field(static=True, Type(Name(Class)), Name(VOID), Call(Type(Name(Class)),
+     String("void"))),
+   Field(static=True, Type(Name(Class)), Name(BOOL), Call(Type(Name(Class)),
+     String("bool"))),
+   Field(static=True, Type(Name(Class)), Name(INT), Call(Type(Name(Class)),
+     String("int"))),
+   Field(static=True, Type(Name(Class)), Name(LONG), Call(Type(Name(Class)),
+     String("long"))),
+   Field(static=True, Type(Name(Class)), Name(STRING), Call(Type(Name(Class)),
+     String("String"))),
+
+   Method(static=True, Type(Name(Class)), Name(get),
+    Param(Type(Name(String)), Name(id)),
+    Block(
+     Return(Call(Attr(Var(Name(classes)), Name(__get__)), Var(Name(id)))))),
+   Field(static=False, Type(Name(String)), Name(id)),
+   Field(static=False, Type(Name(String)), Name(name)),
+   Field(static=False, Type(Name(List), Type(Name(Class))), Name(parameters),
+    List()),
+   Field(static=False, Type(Name(List), Type(Name(Field))), Name(fields),
+    List()),
+   Field(static=False, Type(Name(List), Type(Name(Method))), Name(methods),
+    List()),
+
+   Constructor(Name(Class),
+    Param(Type(Name(String)), Name(id)),
+    Block(
+     Assign(Attr(Var(Name(self)), Name(id)), Var(Name(id))),
+     ExprStmt(Call(Attr(Var(Name(classes)), Name(__set__)), Var(Name(id)),
+       Var(Name(self)))),
+     Assign(Attr(Var(Name(self)), Name(name)), Var(Name(id))))),
+
+   Method(static=False, Type(Name(String)), Name(getId), Block(
+     Return(Var(Name(id))))),
+
+   Method(static=False, Type(Name(String)), Name(getName), Block(
+     Return(Var(Name(name))))),
+
+   Method(static=False, Type(Name(List), Type(Name(Class))),
+    Name(getParameters), Block(
+     Return(Var(Name(parameters))))),
+
+   Method(static=False, Type(Name(Object)), Name(construct),
+    Param(Type(Name(List), Type(Name(Object))), Name(args)),
+    Block(
+     Return(Null(null)))),
+
+   Method(static=False, Type(Name(List), Type(Name(Field))), Name(getFields),
+    Block(
+     Return(Var(Name(fields))))),
+
+   Method(static=False, Type(Name(Field)), Name(getField),
+    Param(Type(Name(String)), Name(name)),
+    Block(
+     Local(
+      Declaration(Type(Name(int)), Name(idx), Number(0))),
+     While(Call(Attr(Var(Name(idx)), Name(__lt__)),
+       Call(Attr(Var(Name(fields)), Name(size)))), Block(
+       If(Call(Attr(Attr(Call(Attr(Var(Name(fields)), Name(__get__)),
+            Var(Name(idx))), Name(name)), Name(__eq__)), Var(Name(name))),
+        Block(
+         Return(Call(Attr(Var(Name(fields)), Name(__get__)),
+           Var(Name(idx)))))),
+       Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+         Number(1))))),
+     Return(Null(null)))),
+
+   Method(static=False, Type(Name(List), Type(Name(Method))), Name(getMethods),
+    Block(
+     Return(Var(Name(methods))))),
+
+   Method(static=False, Type(Name(Method)), Name(getMethod),
+    Param(Type(Name(String)), Name(name)),
+    Block(
+     Local(
+      Declaration(Type(Name(int)), Name(idx), Number(0))),
+     While(Call(Attr(Var(Name(idx)), Name(__lt__)),
+       Call(Attr(Var(Name(methods)), Name(size)))), Block(
+       If(Call(Attr(Attr(Call(Attr(Var(Name(methods)), Name(__get__)),
+            Var(Name(idx))), Name(name)), Name(__eq__)), Var(Name(name))),
+        Block(
+         Return(Call(Attr(Var(Name(methods)), Name(__get__)),
+           Var(Name(idx)))))),
+       Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+         Number(1))))),
+     Return(Null(null)))),
+
+   MethodMacro(Type(Name(JSONObject)), Name(toJSON),
+    Call(Attr(Call(Type(Name(JSONObject))), Name(setString)),
+     Attr(Var(Name(self)), Name(id)))),
+
+   MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
+    Call(Attr(Var(Name(self)), Name(toJSON))))),
+
+  Class(Name(Field),
+   Field(static=False, Type(Name(String)), Name(type)),
+   Field(static=False, Type(Name(String)), Name(name)),
+
+   Constructor(Name(Field),
+    Param(Type(Name(String)), Name(type)),
+    Param(Type(Name(String)), Name(name)),
+    Block(
+     Assign(Attr(Var(Name(self)), Name(type)), Var(Name(type))),
+     Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name))))),
+
+   Method(static=False, Type(Name(Class)), Name(getType), Block(
+     Return(Call(Attr(Var(Name(Class)), Name(get)), Var(Name(type)))))),
+
+   Method(static=False, Type(Name(String)), Name(getName), Block(
+     Return(Var(Name(name)))))),
+
+  Class(Name(Method),
+   Field(static=False, Type(Name(String)), Name(type)),
+   Field(static=False, Type(Name(String)), Name(name)),
+   Field(static=False, Type(Name(List), Type(Name(String))), Name(parameters)),
+
+   Constructor(Name(Method),
+    Param(Type(Name(String)), Name(type)),
+    Param(Type(Name(String)), Name(name)),
+    Param(Type(Name(List), Type(Name(String))), Name(parameters)),
+    Block(
+     Assign(Attr(Var(Name(self)), Name(type)), Var(Name(type))),
+     Assign(Attr(Var(Name(self)), Name(name)), Var(Name(name))),
+     Assign(Attr(Var(Name(self)), Name(parameters)), Var(Name(parameters))))),
+
+   Method(static=False, Type(Name(Class)), Name(getType), Block(
+     Return(Call(Attr(Var(Name(Class)), Name(get)), Var(Name(type)))))),
+
+   Method(static=False, Type(Name(String)), Name(getName), Block(
+     Return(Var(Name(name))))),
+
+   Method(static=False, Type(Name(List), Type(Name(Class))),
+    Name(getParameters), Block(
+     Local(
+      Declaration(Type(Name(List), Type(Name(Class))), Name(result), List())),
+     Local(
+      Declaration(Type(Name(int)), Name(idx), Number(0))),
+     While(Call(Attr(Var(Name(idx)), Name(__lt__)),
+       Call(Attr(Var(Name(parameters)), Name(size)))), Block(
+       ExprStmt(Call(Attr(Var(Name(result)), Name(add)),
+         Call(Attr(Var(Name(Class)), Name(get)),
+          Call(Attr(Var(Name(parameters)), Name(__get__)), Var(Name(idx)))))),
+       Assign(Var(Name(idx)), Call(Attr(Var(Name(idx)), Name(__add__)),
+         Number(1))))),
+     Return(Var(Name(result))))),
+
+   Method(static=False, Type(Name(Object)), Name(invoke),
+    Param(Type(Name(Object)), Name(object)),
+    Param(Type(Name(List), Type(Name(Object))), Name(args)))))
 )

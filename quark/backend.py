@@ -61,7 +61,9 @@ class Backend(object):
             self.definitions.append(p)
 
     def leave_Root(self, r):
-        roots = [p.name.text for p in self.packages if p.package is None]
+        roots = []
+        for rpkg in [p.name.text for p in self.packages if p.package is None]:
+            if rpkg != "reflect" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg)
         if len(roots) > 1:
             roots.sort()
             roots += ["common"]
@@ -97,13 +99,32 @@ class Backend(object):
 
         for name in self.files:
             code = self.files[name]
-            imports = [self.gen.import_(pkg, org, dep)
-                       for (pkg, org, dep) in self._imports[name].keys()]
-            code.head += "\n".join(filter(lambda x: x is not None, imports))
-            if imports: code.head += "\n\n"
+            # XXX: this is a hack to avoid circularly dependent
+            # imports for generated metadata. To fix this properly, we
+            # really need to change the import model for python and js
+            # to import classes on demand at the point of use rather
+            # than into the module/package level scope.
+            raw_imports = self._imports[name].keys()
+            refimps = filter(lambda x: x[0][0] == "reflect", raw_imports)
+            imports = filter(lambda x: x[0][0] != "reflect", raw_imports)
+
+            if name.split("/")[0].endswith("_md"):
+                headimps = self.genimps(refimps)
+                tailimps = self.genimps(imports)
+            else:
+                headimps = self.genimps(refimps + imports)
+                tailimps = self.genimps([])
+
+            if headimps: code.head += headimps + "\n\n"
+            if tailimps: code.tail += "\n\n" + tailimps
+
             content = str(code)
             if content[-1:] != "\n": content += "\n"
             self.files[name] = content
+
+    def genimps(self, imps):
+        imps = [self.gen.import_(pkg, org, dep) for (pkg, org, dep) in imps]
+        return "\n".join(filter(lambda x: x is not None, imps))
 
     def add_import(self, obj):
         imports = self._imports[self.current_file]
@@ -505,7 +526,8 @@ class Backend(object):
     @overload(Field)
     def var(self, f, v):
         if f.static:
-            return self.gen.get_static_field(self.name(f.clazz.name), self.name(v.name))
+            path = self.add_import(f.clazz)
+            return self.gen.get_static_field(path, self.name(f.clazz.name), self.name(v.name))
         else:
             return self.gen.field_ref(self.name(v.name))
 
@@ -513,7 +535,8 @@ class Backend(object):
     def get(self, cls, type, expr, attr):
         f = get_field(cls, attr)
         if f.static:
-            return self.gen.get_static_field(self.name(cls.name), self.name(attr))
+            path = self.add_import(f.clazz)
+            return self.gen.get_static_field(path, self.name(cls.name), self.name(attr))
         else:
             return self.gen.get_field(self.expr(expr), self.name(attr))
 
@@ -547,14 +570,16 @@ class Backend(object):
                                                 args)
         else:
             if method.static:
-                return self.gen.invoke_static_method(self.name(method.clazz.name), self.name(method.name), args)
+                path = self.add_import(method.clazz)
+                return self.gen.invoke_static_method(path, self.name(method.clazz.name), self.name(method.name), args)
             else:
                 return self.gen.invoke_method(self.expr(expr.expr), self.name(method.name), args)
 
     @overload(Method, Var)
     def invoke(self, method, var, args):
         if method.static:
-            return self.gen.invoke_static_method(self.name(method.clazz.name), self.name(method.name), args)
+            path = self.add_import(method.clazz)
+            return self.gen.invoke_static_method(path, self.name(method.clazz.name), self.name(method.name), args)
         else:
             return self.gen.invoke_method_implicit(self.name(method.name), args)
 

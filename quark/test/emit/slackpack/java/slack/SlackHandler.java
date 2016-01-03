@@ -1,7 +1,5 @@
 package slack;
 
-
-
 /**
  * Event handler for slack events. All unhandled events
  * are delegated to onSlackEvent by default.

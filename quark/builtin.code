@@ -2,61 +2,9 @@
 primitive Object {
     macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}$py{($self) == ($other)}$js{($self) === ($other)};
     macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}$py{($self) != ($other)}$js{($self) !== ($other)};
-    macro Class getClass() (Class)($java{io.datawire.quark.runtime.Builtins._getClass($self)}$py{_getClass($self)}$js{_qrt._getClass($self)});
+    macro reflect.Class getClass() (((reflect).Class).get)($java{io.datawire.quark.runtime.Builtins._getClass($self)}$py{_getClass($self)}$js{_qrt._getClass($self)});
     macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}$py{($self)._getField($name)}$js{($self)._getField($name)};
     macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}$py{($self)._setField(($name), ($value))}$js{($self)._setField(($name), ($value))};
-}
-void _class(Class cls);
-Object _construct(String className, List<Object> args);
-List<Field> _fields(String className);
-Object _invoke(String className, Object object, String name, List<Object> args);
-class Class {
-    String id;
-    String name;
-    List<Class> parameters;
-    Class(String id) {
-        (self).id = id;
-        (_class)(self);
-    }
-    String getId() {
-        return id;
-    }
-    String getName() {
-        return name;
-    }
-    List<Class> getParameters() {
-        return parameters;
-    }
-    Object construct(List<Object> args) {
-        return (_construct)((getId)(), args);
-    }
-    List<Field> getFields() {
-        return (_fields)((self).id);
-    }
-    Field getField(String name) {
-        List<Field> fields = (getFields)();
-        int idx = 0;
-        while (((idx).__lt__)(((fields).size)())) {
-            if ((((((fields).__get__)(idx)).name).__eq__)(name)) {
-                return ((fields).__get__)(idx);
-            }
-            idx = ((idx).__add__)(1);
-        }
-        return null;
-    }
-    Object invoke(Object object, String method, List<Object> args) {
-        return (_invoke)((self).id, object, method, args);
-    }
-    macro JSONObject toJSON() ((new JSONObject()).setString)((self).id);
-    macro JSONObject __to_JSONObject() ((self).toJSON)();
-}
-class Field {
-    Class type;
-    String name;
-    Field(Class type, String name) {
-        (self).type = type;
-        (self).name = name;
-    }
 }
 @mapping($java{void})
 primitive void {}
@@ -150,7 +98,7 @@ JSONObject toJSON(Object obj) {
         ((result).setNull)();
         return result;
     }
-    Class cls = ((obj).getClass)();
+    reflect.Class cls = ((obj).getClass)();
     int idx = 0;
     if ((((cls).name).__eq__)("String")) {
         ((result).setString)(?(obj));
@@ -175,14 +123,14 @@ JSONObject toJSON(Object obj) {
         return result;
     }
     ((result).__set__)("$class", cls);
-    List<Field> fields = ((cls).getFields)();
+    List<reflect.Field> fields = ((cls).getFields)();
     while (((idx).__lt__)(((fields).size)())) {
         ((result).__set__)((((fields).__get__)(idx)).name, (toJSON)(((obj).getField)((((fields).__get__)(idx)).name)));
         idx = ((idx).__add__)(1);
     }
     return result;
 }
-Object fromJSON(Class cls, JSONObject json) {
+Object fromJSON(reflect.Class cls, JSONObject json) {
     if (((((json).__eq__)(null)).__or__)(((json).isNull)())) {
         return null;
     }
@@ -195,36 +143,36 @@ Object fromJSON(Class cls, JSONObject json) {
         }
         return list;
     }
-    List<Field> fields = ((cls).getFields)();
+    List<reflect.Field> fields = ((cls).getFields)();
     Object result = ((cls).construct)([]);
     while (((idx).__lt__)(((fields).size)())) {
-        Field f = ((fields).__get__)(idx);
+        reflect.Field f = ((fields).__get__)(idx);
         idx = ((idx).__add__)(1);
-        if (((((f).type).name).__eq__)("String")) {
+        if ((((((f).getType)()).name).__eq__)("String")) {
             String s = ((json).__get__)((f).name);
             ((result).setField)((f).name, s);
             continue;
         }
-        if (((((f).type).name).__eq__)("float")) {
+        if ((((((f).getType)()).name).__eq__)("float")) {
             float flt = ((json).__get__)((f).name);
             ((result).setField)((f).name, flt);
             continue;
         }
-        if (((((f).type).name).__eq__)("int")) {
+        if ((((((f).getType)()).name).__eq__)("int")) {
             if (((((((json).__get__)((f).name)).isNull)()).__not__)()) {
                 int i = ((json).__get__)((f).name);
                 ((result).setField)((f).name, i);
             }
             continue;
         }
-        if (((((f).type).name).__eq__)("bool")) {
+        if ((((((f).getType)()).name).__eq__)("bool")) {
             if (((((((json).__get__)((f).name)).isNull)()).__not__)()) {
                 bool b = ((json).__get__)((f).name);
                 ((result).setField)((f).name, b);
             }
             continue;
         }
-        ((result).setField)((f).name, (fromJSON)((f).type, ((json).__get__)((f).name)));
+        ((result).setField)((f).name, (fromJSON)(((f).getType)(), ((json).__get__)((f).name)));
     }
     return result;
 }
@@ -479,7 +427,7 @@ interface Service {
             ((rt).fail)((((("RPC ").__add__)(name)).__add__)("(...) failed: Server returned unrecognizable content"));
             return null;
         } else {
-            return (fromJSON)((Class)(classname), obj);
+            return (fromJSON)((((reflect).Class).get)(classname), obj);
         }
     }
 }
@@ -524,8 +472,8 @@ class Server<T> extends HTTPServlet {
         } else {
             String method = ((envelope).__get__)("$method");
             JSONObject json = ((envelope).__get__)("rpc");
-            Object argument = (fromJSON)((Class)(((json).__get__)("$class")), json);
-            Object result = (((((((self).getClass)()).getField)("impl")).type).invoke)(impl, method, [argument]);
+            Object argument = (fromJSON)((((reflect).Class).get)(((json).__get__)("$class")), json);
+            Object result = ((((((((((self).getClass)()).getField)("impl")).getType)()).getMethod)(method)).invoke)(impl, [argument]);
             ((response).setBody)((((toJSON)(result)).toString)());
             ((response).setCode)(200);
         }
@@ -533,5 +481,108 @@ class Server<T> extends HTTPServlet {
     }
     void onServletError(String url, String message) {
         (((getRuntime)()).fail)((((((("RPC Server failed to register ").__add__)(url)).__add__)(" due to: ")).__add__)(message));
+    }
+}
+package reflect {
+    class Class {
+        static Map<String, Class> classes = {};
+        static Class VOID = new Class("void");
+        static Class BOOL = new Class("bool");
+        static Class INT = new Class("int");
+        static Class LONG = new Class("long");
+        static Class STRING = new Class("String");
+        static Class get(String id) {
+            return ((classes).__get__)(id);
+        }
+        String id;
+        String name;
+        List<Class> parameters = [];
+        List<Field> fields = [];
+        List<Method> methods = [];
+        Class(String id) {
+            (self).id = id;
+            ((classes).__set__)(id, self);
+            (self).name = id;
+        }
+        String getId() {
+            return id;
+        }
+        String getName() {
+            return name;
+        }
+        List<Class> getParameters() {
+            return parameters;
+        }
+        Object construct(List<Object> args) {
+            return null;
+        }
+        List<Field> getFields() {
+            return fields;
+        }
+        Field getField(String name) {
+            int idx = 0;
+            while (((idx).__lt__)(((fields).size)())) {
+                if ((((((fields).__get__)(idx)).name).__eq__)(name)) {
+                    return ((fields).__get__)(idx);
+                }
+                idx = ((idx).__add__)(1);
+            }
+            return null;
+        }
+        List<Method> getMethods() {
+            return methods;
+        }
+        Method getMethod(String name) {
+            int idx = 0;
+            while (((idx).__lt__)(((methods).size)())) {
+                if ((((((methods).__get__)(idx)).name).__eq__)(name)) {
+                    return ((methods).__get__)(idx);
+                }
+                idx = ((idx).__add__)(1);
+            }
+            return null;
+        }
+        macro JSONObject toJSON() ((new JSONObject()).setString)((self).id);
+        macro JSONObject __to_JSONObject() ((self).toJSON)();
+    }
+    class Field {
+        String type;
+        String name;
+        Field(String type, String name) {
+            (self).type = type;
+            (self).name = name;
+        }
+        Class getType() {
+            return ((Class).get)(type);
+        }
+        String getName() {
+            return name;
+        }
+    }
+    class Method {
+        String type;
+        String name;
+        List<String> parameters;
+        Method(String type, String name, List<String> parameters) {
+            (self).type = type;
+            (self).name = name;
+            (self).parameters = parameters;
+        }
+        Class getType() {
+            return ((Class).get)(type);
+        }
+        String getName() {
+            return name;
+        }
+        List<Class> getParameters() {
+            List<Class> result = [];
+            int idx = 0;
+            while (((idx).__lt__)(((parameters).size)())) {
+                ((result).add)(((Class).get)(((parameters).__get__)(idx)));
+                idx = ((idx).__add__)(1);
+            }
+            return result;
+        }
+        Object invoke(Object object, List<Object> args);
     }
 }

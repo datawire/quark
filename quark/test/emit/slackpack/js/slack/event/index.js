@@ -1,6 +1,10 @@
 var _qrt = require("datawire-quark-core");
+var reflect = require('../../reflect');
+exports.reflect = reflect;
 var slack = require('../../slack');
 exports.slack = slack;
+var slackpack_md = require('../../slackpack_md');
+exports.slackpack_md = slackpack_md;
 
 
 
@@ -32,7 +36,7 @@ function SlackEvent__init_fields__() {
     this.timestamp = null;
 }
 SlackEvent.prototype.__init_fields__ = SlackEvent__init_fields__;
-
+SlackEvent.slack_event_SlackEvent_ref = slackpack_md.Root.slack_event_SlackEvent_md;
 function SlackEvent_load(client, obj) {
     (this).type = ((obj).getObjectItem("type")).getString();
     var uid = ((obj).getObjectItem("user")).getString();
@@ -113,7 +117,7 @@ function SlackError__init_fields__() {
     this.text = null;
 }
 SlackError.prototype.__init_fields__ = SlackError__init_fields__;
-
+SlackError.slack_event_SlackError_ref = slackpack_md.Root.slack_event_SlackError_md;
 function SlackError_load(client, obj) {
     this.constructor.super_.prototype.load.call(this, client, obj);
     (this).code = Math.round(((obj).getObjectItem("code")).getNumber());
@@ -191,7 +195,7 @@ function Hello__init_fields__() {
     SlackEvent.prototype.__init_fields__.call(this);
 }
 Hello.prototype.__init_fields__ = Hello__init_fields__;
-
+Hello.slack_event_Hello_ref = slackpack_md.Root.slack_event_Hello_md;
 function Hello_dispatch(handler) {
     (handler).onHello(this);
 }
@@ -257,7 +261,7 @@ function Message__init_fields__() {
     this.edited = null;
 }
 Message.prototype.__init_fields__ = Message__init_fields__;
-
+Message.slack_event_Message_ref = slackpack_md.Root.slack_event_Message_md;
 function Message_load(client, obj) {
     this.constructor.super_.prototype.load.call(this, client, obj);
     (this).subtype = ((obj).getObjectItem("subtype")).getString();
@@ -353,7 +357,7 @@ function Edited__init_fields__() {
     this.timestamp = null;
 }
 Edited.prototype.__init_fields__ = Edited__init_fields__;
-
+Edited.slack_event_Edited_ref = slackpack_md.Root.slack_event_Edited_md;
 function Edited__getClass() {
     return "slack.event.Edited";
 }

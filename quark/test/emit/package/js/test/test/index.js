@@ -1,4 +1,9 @@
 var _qrt = require("datawire-quark-core");
+var reflect = require('../../reflect');
+exports.reflect = reflect;
+var package_md = require('../../package_md');
+exports.package_md = package_md;
+
 
 
 function go() {
@@ -16,7 +21,7 @@ function Test__init_fields__() {
     this.size = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-
+Test.test_test_Test_ref = package_md.Root.test_test_Test_md;
 function Test_go() {
     _qrt.print("TTGO!!");
 }

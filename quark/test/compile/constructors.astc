@@ -30,7 +30,11 @@ File(
       Block(
        Assign(Attr(Var(Name(self), $type=1.test1.Test), Name(name),
         $type=0.String), Cast(Var(Name(value), $type=0.Object),
-        $type=0.String))))))),
+        $type=0.String)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(test1_Test_ref),
+    Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
+     $type=2.constructors_md.Root), Name(test1_Test_md),
+    $type=0.reflect.Class), $type=0.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(
@@ -74,7 +78,11 @@ File(
       Block(
        Assign(Attr(Var(Name(self), $type=1.test2.Test), Name(name),
         $type=0.String), Cast(Var(Name(value), $type=0.Object),
-        $type=0.String))))))),
+        $type=0.String)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(test2_Test_ref),
+    Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
+     $type=2.constructors_md.Root), Name(test2_Test_md),
+    $type=0.reflect.Class), $type=0.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(

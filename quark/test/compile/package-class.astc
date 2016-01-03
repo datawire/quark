@@ -20,5 +20,9 @@ File(
    Method(static=False, Type(Name(void)), Name(_setField),
     Param(Type(Name(String)), Name(name), $type=0.String),
     Param(Type(Name(Object)), Name(value), $type=0.Object),
-    Block())))
+    Block()),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(p_C_ref),
+    Attr(Attr(Var(Name(package_class_md), $type=2.package_class_md),
+      Name(Root), $type=2.package_class_md.Root), Name(p_C_md),
+    $type=0.reflect.Class), $type=0.reflect.Class)))
 )

@@ -56,8 +56,14 @@ class Crosswire:
         self.parent = parent
         self.file = parent.file
         self.package = parent.package
-        self.clazz = parent.clazz
-        self.callable = parent.callable
+        if isinstance(parent, Class):
+            self.clazz = parent
+        else:
+            self.clazz = parent.clazz
+        if isinstance(parent, Callable):
+            self.callable = parent
+        else:
+            self.callable = parent.callable
 
     def name(self, ast):
         if isinstance(ast, (Definition, Param, TypeParam)):
@@ -618,7 +624,13 @@ class Reflector:
     def __init__(self):
         self.methods = OrderedDict()
         self.classes = []
-        self.parameters = OrderedDict()
+        self.class_uses = OrderedDict()
+        self.metadata = OrderedDict()
+        self.entry = None
+
+    def visit_File(self, f):
+        if f.depth == 0 and f.name != "reflector":
+            self.entry = f
 
     def package(self, pkg):
         if pkg is None:
@@ -640,12 +652,12 @@ class Reflector:
 
     def qparams(self, texp):
         if isinstance(texp.type, Class) and texp.type.parameters:
-            return "[%s]" % ", ".join([self.qexpr(texp.bindings[p]) for p in texp.type.parameters])
+            return "[%s]" % ", ".join([self.qexpr(texp.bindings.get(p, TypeExpr(p, {}))) for p in texp.type.parameters])
         else:
             return "[]"
 
     def qexpr(self, texp):
-        return 'Class("%s")' % self.qtype(texp)
+        return '"%s"' % self.qtype(texp)
 
     def visit_Type(self, type):
         cls = type.resolved.type
@@ -653,18 +665,59 @@ class Reflector:
             if cls.name.text not in ("List", "Map"):
                 return
         if cls.parameters:
-            if cls not in self.parameters:
-                self.parameters[cls] = OrderedDict()
-            use = self.qtype(type.resolved)
-            if use not in self.parameters[cls]:
-                self.parameters[cls][use] = self.qparams(type.resolved)
+            if cls not in self.class_uses:
+                self.class_uses[cls] = OrderedDict()
+            qual = self.qtype(type.resolved)
+            clazz = type.clazz
+            package = tuple(self.package(type.package))
+            if qual not in self.class_uses[cls]:
+                self.class_uses[cls][qual] = (type.resolved, clazz, package)
 
-    def fields(self, cls):
+    def fields(self, cls, use_bindings):
         fields = []
         bindings = base_bindings(cls)
+        bindings.update(use_bindings)
         for f in get_fields(cls):
             fields.append((self.qtype(texpr(f.resolved.type, bindings, f.resolved.bindings)), f.name.text))
         return fields
+
+    def meths(self, cls, cid, use_bindings):
+        if cls.package is None or cls.package.name.text == "reflect": return []
+        methods = []
+        bindings = base_bindings(cls)
+        bindings.update(use_bindings)
+        for m in get_methods(cls).values():
+            mid = "%s_%s_Method" % (self.mdname(cid), m.name.text)
+            mtype = self.qtype(texpr(m.type.resolved.type, bindings, m.type.resolved.bindings))
+            margs = [self.qtype(texpr(p.resolved.type, bindings, p.resolved.bindings))
+                     for p in m.params]
+            methods.append((mid, self.meth(mid, cid, mtype, m.name.text, margs)))
+        return methods
+
+    def meth(self, mid, cid, type, name, params):
+        args = ", ".join(['?args[%s]' % i for i in range(len(params))])
+        if type == "void":
+            invoke = "        obj.%s(%s);\n        return null;" % (name, args)
+        else:
+            invoke = "        return obj.%s(%s);" % (name, args)
+        return """    class %(mid)s extends reflect.Method {
+        %(mid)s() {
+            super("%(type)s", "%(name)s", [%(params)s]);
+        }
+        Object invoke(Object object, List<Object> args) {
+            %(cid)s obj = ?object;
+%(invoke)s
+        }
+        String _getClass() { return null; }
+        Object _getField(String name) { return null; }
+        void _setField(String name, Object value) {}
+    }
+""" % {"mid": mid,
+       "cid": cid,
+       "type": type,
+       "name": name,
+       "params": ", ".join('"%s"' % p for p in params),
+       "invoke": invoke}
 
     def qual(self, cls):
         return ".".join(self.package(cls.package) + [cls.name.text])
@@ -681,7 +734,7 @@ class Reflector:
         getter = "Object _getField(String name) {\n"
         setter = "void _setField(String name, Object value) {\n"
 
-        for ftype, fname in self.fields(cls):
+        for ftype, fname in self.fields(cls, {}):
             getter += '    if (name == "%s") { return self.%s; }\n' % (fname, fname)
             setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
 
@@ -692,71 +745,96 @@ class Reflector:
         self.methods[cls] = (getclass, getter, setter)
         self.classes.append(cls)
 
+    def mdname(self, id):
+        for c in ".<,>":
+            id = id.replace(c, "_")
+        return id
+
+    def clazz(self, cls, id, name, params, nparams, texp):
+        mdefs = []
+        mids = []
+        for mid, mdef in self.meths(cls, id, texp.bindings):
+            mdefs.append(mdef)
+            mids.append('new %s()' % mid)
+
+        if isinstance(cls, Interface):
+            construct = "null"
+        else:
+            construct = "new %s(%s)" % (id, ", ".join(['?args[%s]' % i for i in range(nparams)]))
+
+        return """%(mdefs)s
+    class %(mdname)s extends reflect.Class {
+
+        static reflect.Class singleton = new %(mdname)s();
+
+        %(mdname)s() {
+            super("%(id)s");
+            self.name = "%(name)s";
+            self.parameters = %(parameters)s;
+            self.fields = [%(fields)s];
+            self.methods = [%(methods)s];
+        }
+
+        Object construct(List<Object> args) {
+            return %(construct)s;
+        }
+
+        String _getClass() { return null; }
+        Object _getField(String name) { return null; }
+        void _setField(String name, Object value) {}
+    }""" % {"id": id,
+            "mdname": self.mdname(id),
+            "name": cls.name,
+            "parameters": params,
+            "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
+            "mdefs": "\n".join(mdefs),
+            "methods": ", ".join(mids),
+            "construct": construct}
+
     def leave_Root(self, root):
-        construct = "Object _construct(String className, List<Object> args) {\n"
-        fieldcode = "List<Field> _fields(String className) {\n"
-        init = "void _class(Class cls) {\n"
-        invoke = "Object _invoke(String className, Object object, String method, List<Object> args) {\n"
-
-        tmpcount = 0
-
+        self.code = ""
+        mdclasses = []
         for cls in self.classes:
-            fields = self.fields(cls)
             qual = self.qual(cls)
             if cls.parameters:
                 clsid = qual + "<%s>" % ",".join(["Object"*len(cls.parameters)])
-                params = "[%s]" % ",".join(['Class("Object")']*len(cls.parameters))
+                params = "[%s]" % ",".join(['"Object"']*len(cls.parameters))
             else:
                 clsid = qual
                 params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
 
-            uses = self.parameters.get(cls, OrderedDict([(clsid, params)]))
+            uses = self.class_uses.get(cls, OrderedDict([(clsid,
+                                                          (cls.resolved, cls, tuple(self.package(cls.package))))]))
 
+            mdpkg, _ = namever(self.entry)
+            mdpkg += "_md"
 
-            for qn in uses:
-                init += '    if (cls.id == "%s") {\n' % qn
-                init += '        cls.name = "%s";\n' % qual
-                init += '        cls.parameters = %s;\n' % uses[qn]
-                init += '        return;\n'
-                init += '    }\n'
+            for clsid, (texp, ucls, pkg) in uses.items():
+                if pkg:
+                    self.code += "package %s {\n%s\n}\n\n" % (mdpkg,
+                                                              self.clazz(cls, clsid, qual, self.qparams(texp),
+                                                                         nparams, texp))
+                    if not ucls: continue
+                    if ucls.package and ucls.package.name.text == "reflect":
+                        continue
+                    if ucls not in self.metadata:
+                        self.metadata[ucls] = OrderedDict()
+                    mdcls = "%s.Root.%s_md" % (mdpkg, self.mdname(clsid))
+                    mdclasses.append(self.mdname(clsid))
+                    self.metadata[ucls][self.mdname(clsid)] = mdcls
 
-                invoke += '    if (className == "%s") {\n' % qn
-                for meth in get_methods(cls).values():
-                    if isinstance(meth, Macro): continue
-                    invoke += '        if (method == "%s") {\n' % meth.name
-                    tmp = "tmp_%s" % tmpcount
-                    tmpcount += 1
-                    invoke += '            %s %s = ?object;\n' % (qn, tmp)
-                    args = ["?args[%s]" % i for i in range(len(meth.params))]
-                    if meth.type.resolved.type.name.text == "void":
-                        invoke += '            %s.%s(%s);\n' % (tmp, meth.name, ", ".join(args))
-                        invoke += '            return null;\n'
-                    else:
-                        invoke += '            return %s.%s(%s);\n' % (tmp, meth.name, ", ".join(args))
-                    invoke += '        }\n'
-                invoke += '    }\n'
+        self.code += """package %s {
+    class Root {
 
-                if not isinstance(cls, Interface):
-                    construct += '    if (className == "%s") {\n' % qn
-                    construct += '        return new %s(%s);\n' % (qn,
-                                                                   ", ".join(['?args[%s]' % i for i in range(nparams)]))
-                    construct += '    }\n'
-                    fieldcode += '    if (className == "%s") { return [%s]; }\n' % \
-                                 (qn, ", ".join(['Field(Class("%s"), "%s")' % (ftype, fname)
-                                                 for ftype, fname in fields]))
-
-        init += "    cls.name = cls.id;\n"
-        init += "}\n"
-        construct += '    return null;\n'
-        construct += "}\n"
-        fieldcode += '    return null;\n'
-        fieldcode += "}\n"
-        invoke += "    return null;\n"
-        invoke += "}\n"
-
-        self.code = construct + fieldcode + init + invoke
+        String _getClass() { return null; }
+        Object _getField(String name) { return null; }
+        void _setField(String name, Object value) {}
+""" % mdpkg
+        for cls in mdclasses:
+            self.code += "        static reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
+        self.code += "    }\n}"
 
 class Compiler:
 
@@ -839,6 +917,8 @@ class Compiler:
     def reflect(self):
         ref = Reflector()
         self.root.traverse(ref)
+#        with open("/tmp/reflector.q", "w") as fd:
+#            fd.write(ref.code)
         self.parse("reflector", ref.code)
         self.icompile(self.root.files[-1])
         for cls, methods in ref.methods.items():
@@ -847,6 +927,12 @@ class Compiler:
                 cls.definitions.append(method)
                 method.traverse(Crosswire(cls))
                 self.icompile(method)
+        for cls, deps in ref.metadata.items():
+            for dep in deps:
+                field = Parser().rule("field", "static reflect.Class %s_ref = %s;" % (dep, deps[dep]))
+                cls.definitions.append(field)
+                field.traverse(Crosswire(cls))
+                self.icompile(field)
 
     def compile(self):
         self.icompile(self.root)

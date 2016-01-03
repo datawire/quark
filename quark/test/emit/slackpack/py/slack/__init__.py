@@ -1,6 +1,8 @@
 from quark_runtime import *
 
+import reflect
 import event
+import slackpack_md
 
 
 class SlackHandler(object):
@@ -55,7 +57,7 @@ class User(object):
             (self).user = value
 
     
-
+User.slack_User_ref = slackpack_md.Root.slack_User_md
 class Channel(object):
     """
     A reference to a channel.
@@ -99,7 +101,7 @@ class Channel(object):
             (self).channel = value
 
     
-
+Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md
 class Client(object):
     """
     Represents a persistent connection to the slack service.
@@ -241,3 +243,4 @@ class Client(object):
 
     def onHTTPFinal(self, request):
         pass
+Client.slack_Client_ref = slackpack_md.Root.slack_Client_md

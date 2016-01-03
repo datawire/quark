@@ -48,10 +48,12 @@ Target language options:
 """
 
 from glob import glob
+import json
 import os
 import shutil
 import subprocess
 import sys
+import tempfile
 
 from docopt import docopt
 
@@ -161,9 +163,15 @@ def main(args):
             if python:
                 call_and_show("package", py_dir, ["python", "setup.py", "-q", "bdist_wheel"])
             if javascript:
-                for pkg_file_path in glob(os.path.join(js_dir, "*/index.js")):
-                    pkg_dir_path = os.path.dirname(pkg_file_path)
-                    call_and_show("package", ".", ["tar", "czf", pkg_dir_path + ".tgz", "-C", pkg_dir_path, "."])
+                pkg = os.path.join(js_dir, "package.json")
+                with open(pkg, "read") as fd:
+                    pkg_info = json.load(fd)
+                name = "%s.tgz" % pkg_info["name"]
+                tmpd = tempfile.mkdtemp()
+                intermediary = os.path.join(tmpd, name)
+                target = os.path.join(js_dir, name)
+                call_and_show("package", ".", ["tar", "czf", intermediary, "--exclude", name, "-C", js_dir, "."])
+                call_and_show("package", ".", ["mv", intermediary, target])
     except Exception as exc:
         return exc
 
