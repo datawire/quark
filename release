@@ -27,7 +27,7 @@ Usage:
     --doc <version>        Documentation version.
 """
 
-import json, os, random, re, subprocess, tempfile
+import json, os, random, re, subprocess, tempfile, urllib2
 from docopt import docopt
 from collections import OrderedDict
 
@@ -316,6 +316,38 @@ def challenge():
     chal = randstr()
     text = raw_input('Please type "%s" to confirm: ' % chal)
     return text == chal
+
+release_document_template = """Quark %(tag)s
+
+Documentation is available at http://datawire.github.io/quark/%(short)s/index.html
+
+We would appreciate your feedback! Please file issues here on Github.
+
+For more information get in touch by email at hello@datawire.io or by Twitter at @datawireio.
+"""
+
+def make_github_release(tag, commitish=""):
+    # Assumes that the tag already exists or the commit-ish is provided.
+    major, minor, _ = tag.split(".", 2)
+    short = major + "." + minor
+    name = "Release %s" % tag
+    body = release_document_template.strip() % locals()
+    post_data = dict(tag_name=tag, target_commitish=commitish, draft=False, prerelease=False, name=name, body=body)
+
+    token_path = "~/.github_public_repo_token"
+    try:
+        token = open(os.path.expanduser(token_path)).read().strip()
+    except IOError as exc:
+        print "Github release failed: Could not find Github auth token in %s: %s" % (token_path, exc)
+        return False
+
+    url = "https://api.github.com/repos/datawire/quark/releases?access_token=%(token)s" % locals()
+    try:
+        response = urllib2.urlopen(url, json.dumps(post_data))
+    except Exception as exc:
+        print "Github release failed: %s" % exc
+
+    return False
 
 def push(args):
     runtime_only = args["--runtime-only"]
