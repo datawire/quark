@@ -12,6 +12,7 @@ Getting Started with RPC Tutorial
    Python: Requirements and Setup <pythonSetup>
    Python: Building the Example <pythonBuild>
    Python: Writing the Client <pythonClient>
+   Python: Writing the Client Mode 2 <pythonClient2>
    Python: Writing the Server <pythonServer>
    Python: Running the Example <pythonRun>
    Java: Requirements and Setup <javaSetup>
