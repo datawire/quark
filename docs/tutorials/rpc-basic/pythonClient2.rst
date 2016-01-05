@@ -54,7 +54,7 @@ Relevant code:
       request = hello.Request()
 
 
-The line ``runtime=get_runtime()`` instantiates an instance of the quark runtime integration imported in the earlier step and allows access to the integration types defined within such as the Server and Client classes and the Service interface.
+The line ``runtime=get_runtime()`` instantiates an instance of the quark runtime integration imported in the earlier step.
 
 
 The line ``client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")`` instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at ``http://127.0.0.1:8910/hello``.
