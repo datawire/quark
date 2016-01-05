@@ -15,12 +15,12 @@ Available documentation:
    Quark Installation and Configuration Guide <install/index>
    Quark Language Reference <language-reference/index>
 
-Available tutorials:
+Available tutorials and walkthroughs:
 
 .. toctree::
    :maxdepth: 1
 
-   Getting Started with RPC Tutorial <tutorials/rpc-basic/index.rst>
+   Getting Started with RPC Walkthrough <tutorials/rpc-basic/index.rst>
 
 
 

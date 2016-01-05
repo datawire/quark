@@ -1,5 +1,5 @@
-Compiling and Installing the Library
-====================================
+Compiling and Installing the Library in Javascript
+==================================================
 
 The next step is compiling the service contract and installing the resulting library in Javascript:
 

@@ -1,6 +1,6 @@
-=================================
-Getting Started with RPC Tutorial
-=================================
+====================================
+Getting Started with RPC Walkthrough
+====================================
 
 .. toctree::
    :maxdepth: 3
@@ -37,4 +37,4 @@ Getting Started with RPC Tutorial
 
 Document Version
 ================
-Getting Started with RPC Tutorial |release|-|doc_version|
+Getting Started with RPC Walkthrough |release|-|doc_version|
