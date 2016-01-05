@@ -1,5 +1,5 @@
-Writing a Server
-================
+Writing a Java Server
+=====================
 
 Let's start by creating a simple Hello World server using the compiled Hello contract in Java.
 

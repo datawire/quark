@@ -1,5 +1,5 @@
-Compiling and Installing the Library
-====================================
+Compiling and Installing the Library in Java
+============================================
 
 The next step is compiling the service contract and installing the resulting library in Java:
 

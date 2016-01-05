@@ -1,5 +1,5 @@
-Writing a Server
-================
+Writing a Javascript Server
+===========================
 
 Let's start by creating a simple Hello World server using the compiled Hello contract in Javascript.
 

@@ -1,5 +1,5 @@
-Creating the Clients
-====================
+Writing the Java Client
+=======================
 
 Let's start by creating a simple Hello World client using the compiled Hello contract in Java.
 

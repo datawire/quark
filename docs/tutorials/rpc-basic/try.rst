@@ -3,6 +3,10 @@ Putting It All Together
 
 We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python, Java, and Javascript as outlined earlier in the tutorial (separately for each language). If you have not done this, please do so now before trying the steps below.
 
+* :doc:`Building and installing in Python<pythonBuild>`
+* :doc:`Building and installing in Java<javaBuild>`
+* :doc:`Building and installing in Javascript<javascriptBuild>`
+
 Let's start by using the Python client we wrote to talk to the Python server we wrote. 
 
 Part 1: Python Client and Python Server
