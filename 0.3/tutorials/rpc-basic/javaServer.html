@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing a Java Server &mdash; Quark 0.3.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Running the Java Client and Server" href="javaRun.html" />
+    <link rel="prev" title="Writing the Java Client" href="javaClient.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Quark 0.3.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javaClient.html" title="Previous document">Writing the Java Client</a>
+        </li>
+        <li>
+          <a href="javaRun.html" title="Next document">Running the Java Client and Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="writing-a-java-server">
+<h1>Writing a Java Server<a class="headerlink" href="#writing-a-java-server" title="Permalink to this headline">¶</a></h1>
+<p>Let&#8217;s start by creating a simple Hello World server using the compiled Hello contract in Java.</p>
+<p>Note: If you don&#8217;t want step-by-step guidance about how to create the server and just want to start from a completed server, there is a <a class="reference internal" href="#fullexamplejavaserver"><span>link to the full Java server file</span></a> at the bottom of this page.</p>
+<div class="section" id="part-1-creating-the-framework">
+<span id="part1javaserverframework"></span><h2>Part 1: Creating the framework<a class="headerlink" href="#part-1-creating-the-framework" title="Permalink to this headline">¶</a></h2>
+<p>This section helps you define the necessary structure for your Java server.</p>
+<p>See <a class="reference internal" href="appendixEJavaServer.html#part1javaserverfinished"><span>this page</span></a> for the file state at the end of Part 1.</p>
+</div>
+<div class="section" id="part-2-defining-the-response">
+<span id="part2javaresponsedefinition"></span><h2>Part 2: Defining the Response<a class="headerlink" href="#part-2-defining-the-response" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the response using the Response value class defined in the service contract.</p>
+<p>See <a class="reference internal" href="appendixEJavaServer.html#part2javaserverfinished"><span>this page</span></a> for the file state at the end of Part 2.</p>
+</div>
+<div class="section" id="part-3-processing-the-request">
+<span id="part3javaprocessrequest"></span><h2>Part 3: Processing the Request<a class="headerlink" href="#part-3-processing-the-request" title="Permalink to this headline">¶</a></h2>
+<p>This section defines main module of the server, the code that calls the RPC processing defined within Quark and actually generates the response based on the request and returns it to the client application.</p>
+<p>That&#8217;s it! The Java server is complete. Again, note that we don&#8217;t actually see the processing of the request; that&#8217;s handled under the covers by the code inside the Netty integration according to RPC handling directives defined within Quark. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.</p>
+</div>
+<div class="section" id="full-java-server">
+<span id="fullexamplejavaserver"></span><h2>Full Java Server<a class="headerlink" href="#full-java-server" title="Permalink to this headline">¶</a></h2>
+<p>A full copy of the Java server for this example can be found <a class="reference external" href="https://github.com/datawire/quark/blob/master/examples/helloRPC/src/main/java/helloRPC/HelloRPCServer.java">in GitHub</a> - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.</p>
+<p>[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Writing a Java Server</a><ul>
+<li><a class="reference internal" href="#part-1-creating-the-framework">Part 1: Creating the framework</a></li>
+<li><a class="reference internal" href="#part-2-defining-the-response">Part 2: Defining the Response</a></li>
+<li><a class="reference internal" href="#part-3-processing-the-request">Part 3: Processing the Request</a></li>
+<li><a class="reference internal" href="#full-java-server">Full Java Server</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="javaClient.html"
+                        title="previous chapter">Writing the Java Client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="javaRun.html"
+                        title="next chapter">Running the Java Client and Server</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/javaServer.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javaClient.html" title="Previous document">Writing the Java Client</a>
+        </li>
+        <li>
+          <a href="javaRun.html" title="Next document">Running the Java Client and Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

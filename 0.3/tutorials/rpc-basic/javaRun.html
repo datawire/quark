@@ -1,0 +1,162 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Running the Java Client and Server &mdash; Quark 0.3.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.3.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Javascript Requirements and Setup" href="javascriptSetup.html" />
+    <link rel="prev" title="Writing a Java Server" href="javaServer.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Quark 0.3.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javaServer.html" title="Previous document">Writing a Java Server</a>
+        </li>
+        <li>
+          <a href="javascriptSetup.html" title="Next document">Javascript Requirements and Setup</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="running-the-java-client-and-server">
+<h1>Running the Java Client and Server<a class="headerlink" href="#running-the-java-client-and-server" title="Permalink to this headline">¶</a></h1>
+<p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Java as outlined on the <a class="reference internal" href="javaBuild.html"><em>Compiling and Installing the Library page</em></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
+<p>To run the HelloRPC example with a Java client and Java Server do the following:</p>
+<p>Step 1: Open a new terminal window</p>
+<p>Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 3: Run the following command to build the client and the server: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">compile</span></code></p>
+<p>Step 4: Run the following command to start the Java server: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">exec:java</span> <span class="pre">-Dexec.mainClass=helloRPC.HelloRPCServer</span></code></p>
+<p>Step 5: Open a new terminal window</p>
+<p>Step 6: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 7: Run the following command to start the Java client: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">exec:java</span> <span class="pre">-Dexec.mainClass=helloRPC.HelloRPCClient</span></code></p>
+<p>After some log lines outlining the processing, you should see the following in the terminal window (stdout):</p>
+<div class="highlight-none"><div class="highlight"><pre>Request says: Hello from Java!
+Response says: Responding to [Hello from Java!] from Java
+</pre></div>
+</div>
+<p>The content of the second line is the server regurgitating what the client sent it then identifying its own language. In this case, the Java client sent &#8220;Hello from Java!&#8221; to the Java server so both language identifiers are Java.</p>
+<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in Java. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Java!</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="javaServer.html"
+                        title="previous chapter">Writing a Java Server</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="javascriptSetup.html"
+                        title="next chapter">Javascript Requirements and Setup</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/javaRun.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javaServer.html" title="Previous document">Writing a Java Server</a>
+        </li>
+        <li>
+          <a href="javascriptSetup.html" title="Next document">Javascript Requirements and Setup</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
