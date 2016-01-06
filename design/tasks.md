@@ -5,7 +5,8 @@
   + event sources
   + contexts
   + locks
-- Build out backend support for new [concurrency model](concurrency.md):
+  + thread locals
+- Build out backend support for [concurrency model](concurrency.md):
   + java
   + python
   + node
