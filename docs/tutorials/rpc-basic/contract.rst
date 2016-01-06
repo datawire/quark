@@ -12,13 +12,17 @@ Part 1: Creating the framework
 
 This section helps you define the necessary structure for your service contract.
 
-Step 1: Create a text file in your favorite editor called hello.q
+Relevant code:
 
-Step 2: Add ``@version(0.1.0)`` as the first line of the file. This sets the version number of the contract to 0.1.0
+.. code-block:: none
+   :emphasize-lines: 2,3
 
-Step 3: Add a package called hello directly underneath the version. This package will contain the contract details.
+   @version("0.1.0")
+   package hello {
+   
+   }
 
-See :ref:`this page <part1ContractFinished>` for the file state at the end of Part 1.
+This creates a versioned Quark library in a package named hello.
 
 .. _part2Classes:
 
@@ -27,23 +31,21 @@ Part 2: Adding value classes
 
 This section defines the value classes needed by the Hello World RPC service. These classes hold the data that will be passed between the client and the server.
 
-Step 1: Add a Request value class
+.. code-block:: none
+   :emphasize-lines: 5,6,8,9
 
-Do the following:
-
-a. Define a class called Request inside the hello package
-
-b. Add a String property called text to the class. This will hold the contents of the request body.
-
-Step 2: Add a Response value class
-
-Do the following:
-
-a. Define a class called Response inside the hello package
-
-b. Add a String property called result to the class. This will hold the contents of the response body.
-
-See :ref:`this page <part2ContractFinished>` for the file state at the end of Part 2.
+   @version("0.1.0")
+   package hello {
+   
+      class Request {
+         String text;
+      }
+   
+      class Response {
+         String result;
+      }
+   
+  }
 
 .. _part3Interface:
 
@@ -52,18 +54,33 @@ Part 3: Interface
 
 This section defines the interface needed by the Hello World RPC service. The interface contains the details of the interaction pattern being used, in this case a single request that generates a single response.
 
-Step 1: Define an interface called Hello
+.. code-block:: none
+   :emphasize-lines: 12,14,15
 
-a. Hello should extend the Service interface supplied by Quark. This interface uses Quark integration types to define the actual communication mechanism between the client and the server.
+   @version("0.1.0")
+   package hello {
+   
+      class Request {
+         String text;
+      }
+   
+      class Response {
+         String result;
+      }
+  
+      interface Hello extends Service {
+   
+         @delegate(self.rpc)
+         Response hello(Request request);
+      }
+        
+  }
 
-b. Hello should specify use of the rpc interaction pattern by including ``@delegate(self.rpc)``. Note that this is a workaround; the preferred method for specifying the simple rpc interaction pattern is ``@delegate(rpc)`` but it is not currently working.
+The Hello interface extends the Service interface supplied by Quark. This interface defines the actual communication mechanism between the client and the server.
 
-c. Hello should define a method named hello() that expects a request as an input parameter and returns a response object. This is the method that glues together the request and response.
+The Hello interface specifies the use of the rpc interaction pattern by including ``@delegate(self.rpc)``. Note that this is a workaround; the preferred method for specifying the simple rpc interaction pattern is ``@delegate(rpc)`` but it is not currently working.
 
-[[JMK not quite following the magic that makes this method work - I'd like to say a bit more here. I need to actually compile the .q file and run the example which I haven't managed yet]]
-
-See :ref:`this page <part3ContractFinished>` for the file state at the end of Part 3.
-
+The Hello interface define a method named hello() that expects a request as an input parameter and returns a response object. This is the method that glues together the request and response; It is used in both the client and the server implementations. In the client it is used to send a request to the server and in the server it determines the proper response to that request.
 
 .. _part4Client:
 
@@ -72,9 +89,33 @@ Part 4: Client
 
 This section defines the client processing code in Quark. This definition will be used within the client code in each supported target language to perform the actual communications work of the client.
 
-Step 1: Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined.
+Relevant code:
 
-See :ref:`this page <part4ContractFinished>` for the file state at the end of Part 4.
+.. code-block:: none
+   :emphasize-lines: 18
+
+   @version("0.1.0")
+   package hello {
+   
+      class Request {
+         String text;
+      }
+   
+      class Response {
+         String result;
+      }
+  
+      interface Hello extends Service {
+   
+         @delegate(self.rpc)
+         Response hello(Request request);
+      }
+      
+      class HelloClient extends Client, Hello {}     
+  }
+
+
+Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined. This class will be instantiated in the client code and used to send requests to the server. Most of the work of this class is abstracted away inside the Quark Client class.
 
 .. _part5Server:
 
@@ -83,15 +124,36 @@ Part 5: Server
 
 This section defines the server in Quark. This definition will be used within the server written in each supported language to access the code within Quark and the installed integrations that accepts the client request and packages up the response to send back to the client.
 
-Step 1: Define an empty class named HelloServer that extends the Quark Server integration type.
-
-That's it! The contract is fully defined now. You can follow the link below to a copy of the full contract in the Quark Examples repository.
-
 .. _fullExampleContract:
 
-Full Contract
--------------
+Relevant code:
 
-A full copy of the RPC contract for this example can be found `here <https://github.com/datawire/quark/blob/master/examples/helloRPC/helloRPC.q>`_ - the file you constructed following the instructions on this page should match it exactly.
+.. code-block:: none
+   :emphasize-lines: 20
 
-[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
+   @version("0.1.0")
+   package hello {
+   
+      class Request {
+         String text;
+      }
+   
+      class Response {
+         String result;
+      }
+  
+      interface Hello extends Service {
+   
+         @delegate(self.rpc)
+         Response hello(Request request);
+      }
+      
+      class HelloClient extends Client, Hello {}
+      
+      class HelloServer extends Server<Hello> {}
+  }
+
+
+Define an empty class named HelloServer that extends the Quark Server implementation type. This type expects an implementation type, in this case the Hello interface defined above. This class will be instantiated in the server code and used to accept requests from the client and return responses to it based on those requests. Most of the work of this class is abstracted away inside the Quark Server class.
+
+That's it! The contract is fully defined now and ready to be turned into a library for your Hello clients and servers to use.
