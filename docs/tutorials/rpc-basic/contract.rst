@@ -15,7 +15,7 @@ This section helps you define the necessary structure for your service contract.
 Relevant code:
 
 .. code-block:: none
-   :emphasize-lines: 2,3
+   :emphasize-lines: 2,4
 
    @version("0.1.0")
    package hello {
@@ -32,8 +32,8 @@ Part 2: Adding value classes
 This section defines the value classes needed by the Hello World RPC service. These classes hold the data that will be passed between the client and the server.
 
 .. code-block:: none
-   :emphasize-lines: 5,6,8,9
-
+   :emphasize-lines: 4,5,6,7,8,9
+   
    @version("0.1.0")
    package hello {
    
@@ -45,7 +45,7 @@ This section defines the value classes needed by the Hello World RPC service. Th
          String result;
       }
    
-  }
+   }
 
 .. _part3Interface:
 
@@ -55,8 +55,8 @@ Part 3: Interface
 This section defines the interface needed by the Hello World RPC service. The interface contains the details of the interaction pattern being used, in this case a single request that generates a single response.
 
 .. code-block:: none
-   :emphasize-lines: 12,14,15
-
+   :emphasize-lines: 12,14,15,16
+   
    @version("0.1.0")
    package hello {
    
@@ -67,14 +67,14 @@ This section defines the interface needed by the Hello World RPC service. The in
       class Response {
          String result;
       }
-  
+   
       interface Hello extends Service {
    
          @delegate(self.rpc)
          Response hello(Request request);
       }
         
-  }
+   }
 
 The Hello interface extends the Service interface supplied by Quark. This interface defines the actual communication mechanism between the client and the server.
 
@@ -93,7 +93,7 @@ Relevant code:
 
 .. code-block:: none
    :emphasize-lines: 18
-
+   
    @version("0.1.0")
    package hello {
    
@@ -104,7 +104,7 @@ Relevant code:
       class Response {
          String result;
       }
-  
+   
       interface Hello extends Service {
    
          @delegate(self.rpc)
@@ -112,7 +112,7 @@ Relevant code:
       }
       
       class HelloClient extends Client, Hello {}     
-  }
+   }
 
 
 Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined. This class will be instantiated in the client code and used to send requests to the server. Most of the work of this class is abstracted away inside the Quark Client class.
@@ -130,7 +130,7 @@ Relevant code:
 
 .. code-block:: none
    :emphasize-lines: 20
-
+   
    @version("0.1.0")
    package hello {
    
@@ -141,7 +141,7 @@ Relevant code:
       class Response {
          String result;
       }
-  
+   
       interface Hello extends Service {
    
          @delegate(self.rpc)
@@ -151,7 +151,7 @@ Relevant code:
       class HelloClient extends Client, Hello {}
       
       class HelloServer extends Server<Hello> {}
-  }
+   }
 
 
 Define an empty class named HelloServer that extends the Quark Server implementation type. This type expects an implementation type, in this case the Hello interface defined above. This class will be instantiated in the server code and used to accept requests from the client and return responses to it based on those requests. Most of the work of this class is abstracted away inside the Quark Server class.

@@ -5,71 +5,130 @@ Let's start by creating a simple Hello World client using the compiled Hello con
 
 Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, there is a :ref:`link to the full Python client file <fullExamplePythonClient>` at the bottom of this page.
 
-.. _part1PythonClientFramework:
+.. _part1PythonImport:
 
-Part 1: Creating the framework
-------------------------------
+Part 1: Importing the Quark Pieces
+----------------------------------
 
-This section helps you define the necessary structure for your Python client.
+This section shows you how to import the Quark integration and the HelloRPC contract into your Python client.
 
-Step 1: Create a text file in your favorite editor called pyclient.py
+Relevant code:
 
-Step 2: Import the portion of the integration needed to run your client, namely get_runtime in quark_threaded_runtime.
+.. code-block:: none
+   :emphasize-lines: 3,4
 
-Step 3: Import the contract library (hello)
+   # Python Hello Client example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   def main():
 
-Step 4: Define an empty main function
+The line ``from quark_threaded_runtime import get_runtime`` imports the user-visible portions of the datawire_quark_threaded runtime integration into your client. Note that although the integration is called datawire_quark_threaded, the module name is quark_threaded_runtime
 
-Step 5: Run the main function. If you are new to Python, information about how to do this can be found `here <https://docs.python.org/2/library/__main__.html>`_.
+The line ``import hello`` imports the service contract library created and built in previous steps of the tutorial.
 
-See :ref:`this page <part1PythonClientFinished>` for the file state at the end of Part 1.
-
-.. _part2PythonClientInitialization:
+.. _part2PythonClientInstantiation:
 
 Part 2: Initializing the Client
 -------------------------------
 
 This section initializes the client so the client knows how to set up and send requests to the server.
 
-Step 1: Initialize the runtime variable using get_runtime()
+Relevant code:
 
-Step 2: Initialize a client instance passing it the runtime variable and the URL of the server (http://127.0.0.1:8910/hello)
+.. code-block:: none
+   :emphasize-lines: 8,10
 
-See :ref:`this page <part2PythonClientFinished>` for the file state at the end of Part 2.
+   # Python Hello Client example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   def main():
+      runtime = get_runtime()
+      
+      client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")
+      request = hello.Request()
+
+
+The line ``runtime=get_runtime()`` instantiates an instance of the quark runtime integration imported in the earlier step.
+
+
+The line ``client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")`` instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at ``http://127.0.0.1:8910/hello``.
+
 
 .. _part3PythonRequest:
 
 Part 3: Setting Up the Request
 ------------------------------
 
-This sets up the request to the server.
+This section sets up the request to the server.
 
-Step 1: Create a Request object associated with the client using the Request value class we defined in the service contract in the previous section of the tutorial.
+Relevant code:
 
-Step 2: Set the text property of the request to "Hello from Python!" so we know the request came from the Python client. This will help illustrate the interoperability of languages later.
+.. code-block:: none
+   :emphasize-lines: 11,12
 
-Step 3: Print the request text to standard out so we know what's happening when we run the client.
+   # Python Hello Client example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   def main():
+      runtime = get_runtime()
+      
+      client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")
+      request = hello.Request()
+      request.text = "Hello from Python!"
+      print "Request says %r" % request.text
 
-See :ref:`this page <part3PythonClientFinished>` for the file state at the end of Part 3.
+The line ``request=hello.Request()`` instantiates a Request object (as defined in the service contract).
+
+The line ``request.text = "Hello from Python!"`` sets the message to be sent to the server in the request.
+
+The print statement provides visual feedback within the client that the request was set. It is not essential to the interaction but helps illustrate the communications in the example.
 
 .. _part4PythonSendRequest:
 
 Part 4: Sending the Request and Processing the Response
 -------------------------------------------------------
 
-This actually sends the request to the server, receives the response, and displays it from the client.
-
-Step 1: Send the request using the hello method of the Client (defined within the Hello interface in the service contract). This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).
-
-Step 2: Print the value of the result property of the response object so we can see that the server operated on the request and returned the requested information.
-
-That's it! The Python client is fully defined now. You can follow the link below to a copy of the full client in the Quark Examples repository.
+This section sends the request to the server, receives the response, and displays it from the client.
 
 .. _fullExamplePythonClient:
 
-Full Python Client
-------------------
+Relevant code:
 
-A full copy of the Python client for this example can be found `in GitHub <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py>`_ - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.
+.. code-block:: none
+   :emphasize-lines: 15
 
-[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
+   # Python Hello Client example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   def main():
+      runtime = get_runtime()
+      
+      client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")
+      request = hello.Request()
+      request.text = "Hello from Python!"
+      print "Request says %r" % request.text
+      
+      response = client.hello(request)
+      print "Response says %r" % response.result
+      
+      
+   if __name__ == '__main__':
+      main()
+
+The line ``response = client.hello(request)`` uses the hello method of the Client object (as defined within the Hello interface in the service contract) to send the actual request. This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).
+
+The print statement below it provides visual feedback within the client that the request was sent to the server and a response was received. It is not essential to the interaction but helps illustrate the communications in the example. 
+
+That's it! The Python client is fully defined now - the code above is all that's needed to run the client and visually see the results sent back from the server piece defined in the next stage of this walkthrough.
