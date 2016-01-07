@@ -39,7 +39,7 @@ This section defines the response using the Response value class defined in the 
 Relevant code:
 
 .. code-block:: none
-   :emphasize-lines: 7,12
+   :emphasize-lines: 7,8,9,10,11,12
 
    # Python Hello Server example
    
@@ -73,7 +73,7 @@ This section defines main module of the server, the code that calls the RPC proc
 Relevant code:
 
 .. code-block:: none
-   :emphasize-lines: 16,20
+   :emphasize-lines: 15,16,17,18,19
 
    # Python Hello Server example
    

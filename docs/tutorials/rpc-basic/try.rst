@@ -109,6 +109,6 @@ You can get similar results from any of the six language combinations. Using the
 
 Note that there are subtle differences in the output from different combinations above - the Python client places a single quote around request.text and response.result when printing them while the Java client doesn't use the quotation marks. Conversely, the Java client uses a colon before the stored text while the Python client does not. Also, Java doesn't indicate that the response is in Unicode by prepending a u to the output from the server. The client does all of the actual printing, so the format only depends on which client is being used and not which server is running at the time.
 
-[[JMK I'm not sure if I should keep or kill the above observation - it's interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients.]]
+[[JMK I'm not sure if I should keep or kill the above observation - it's interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients so this is not a distraction.]]
 
 That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!
