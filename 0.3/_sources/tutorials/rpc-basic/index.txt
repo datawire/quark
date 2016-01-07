@@ -12,7 +12,6 @@ Getting Started with RPC Walkthrough
    Python: Requirements and Setup <pythonSetup>
    Python: Building the Example <pythonBuild>
    Python: Writing the Client <pythonClient>
-   Python: Writing the Client Mode 2 <pythonClient2>
    Python: Writing the Server <pythonServer>
    Python: Running the Example <pythonRun>
    Java: Requirements and Setup <javaSetup>
@@ -27,13 +26,6 @@ Getting Started with RPC Walkthrough
    Javascript: Running the Example <javascriptRun>
    Putting It All Together <try>
    More Information <links>
-   Appendix A: Interim Example States - Contract <appendixAContract>
-   Appendix B: Interim Example States - Python Client <appendixBPythonClient>
-   Appendix C: Interim Example States - Python Server <appendixCPythonServer>
-   Appendix D: Interim Example States - Java Client <appendixDJavaClient>
-   Appendix E: Interim Example States - Java Server <appendixEJavaServer>
-   Appendix F: Interim Example States - Javascript Client <appendixFJavascriptClient>
-   Appendix G: Interim Example States - Javascript Server <appendixGJavascriptServer>
 
 Document Version
 ================

@@ -133,7 +133,7 @@ Response says u&#39;Responding to [Hello from Python!] from JS&#39;
 </pre></div>
 </div>
 <p>Note that there are subtle differences in the output from different combinations above - the Python client places a single quote around request.text and response.result when printing them while the Java client doesn&#8217;t use the quotation marks. Conversely, the Java client uses a colon before the stored text while the Python client does not. Also, Java doesn&#8217;t indicate that the response is in Unicode by prepending a u to the output from the server. The client does all of the actual printing, so the format only depends on which client is being used and not which server is running at the time.</p>
-<p>[[JMK I&#8217;m not sure if I should keep or kill the above observation - it&#8217;s interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients.]]</p>
+<p>[[JMK I&#8217;m not sure if I should keep or kill the above observation - it&#8217;s interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients so this is not a distraction.]]</p>
 <p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!</p>
 </div>
 </div>

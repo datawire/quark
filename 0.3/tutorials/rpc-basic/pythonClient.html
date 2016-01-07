@@ -25,7 +25,7 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
-    <link rel="next" title="Creating the Python Client" href="pythonClient2.html" />
+    <link rel="next" title="Writing a Python Server" href="pythonServer.html" />
     <link rel="prev" title="Compiling and Installing the Library in Python" href="pythonBuild.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
@@ -41,7 +41,7 @@
           <a href="pythonBuild.html" title="Previous document">Compiling and Installing the Library in Python</a>
         </li>
         <li>
-          <a href="pythonClient2.html" title="Next document">Creating the Python Client</a>
+          <a href="pythonServer.html" title="Next document">Writing a Python Server</a>
           &rarr;
         </li>
     </ul>
@@ -65,42 +65,94 @@
 <h1>Creating the Python Client<a class="headerlink" href="#creating-the-python-client" title="Permalink to this headline">¶</a></h1>
 <p>Let&#8217;s start by creating a simple Hello World client using the compiled Hello contract in Python.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the client and just want to start from a completed client, there is a <a class="reference internal" href="#fullexamplepythonclient"><span>link to the full Python client file</span></a> at the bottom of this page.</p>
-<div class="section" id="part-1-creating-the-framework">
-<span id="part1pythonclientframework"></span><h2>Part 1: Creating the framework<a class="headerlink" href="#part-1-creating-the-framework" title="Permalink to this headline">¶</a></h2>
-<p>This section helps you define the necessary structure for your Python client.</p>
-<p>Step 1: Create a text file in your favorite editor called pyclient.py</p>
-<p>Step 2: Import the portion of the integration needed to run your client, namely get_runtime in quark_threaded_runtime.</p>
-<p>Step 3: Import the contract library (hello)</p>
-<p>Step 4: Define an empty main function</p>
-<p>Step 5: Run the main function. If you are new to Python, information about how to do this can be found <a class="reference external" href="https://docs.python.org/2/library/__main__.html">here</a>.</p>
-<p>See <a class="reference internal" href="appendixBPythonClient.html#part1pythonclientfinished"><span>this page</span></a> for the file state at the end of Part 1.</p>
+<div class="section" id="part-1-importing-the-quark-pieces">
+<span id="part1pythonimport"></span><h2>Part 1: Importing the Quark Pieces<a class="headerlink" href="#part-1-importing-the-quark-pieces" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to import the Quark integration and the HelloRPC contract into your Python client.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Client example
+
+<span class="hll">from quark_threaded_runtime import get_runtime
+</span><span class="hll">import hello
+</span>
+
+def main():
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">from</span> <span class="pre">quark_threaded_runtime</span> <span class="pre">import</span> <span class="pre">get_runtime</span></code> imports the user-visible portions of the datawire_quark_threaded runtime integration into your client. Note that although the integration is called datawire_quark_threaded, the module name is quark_threaded_runtime</p>
+<p>The line <code class="docutils literal"><span class="pre">import</span> <span class="pre">hello</span></code> imports the service contract library created and built in previous steps of the tutorial.</p>
 </div>
 <div class="section" id="part-2-initializing-the-client">
-<span id="part2pythonclientinitialization"></span><h2>Part 2: Initializing the Client<a class="headerlink" href="#part-2-initializing-the-client" title="Permalink to this headline">¶</a></h2>
+<span id="part2pythonclientinstantiation"></span><h2>Part 2: Initializing the Client<a class="headerlink" href="#part-2-initializing-the-client" title="Permalink to this headline">¶</a></h2>
 <p>This section initializes the client so the client knows how to set up and send requests to the server.</p>
-<p>Step 1: Initialize the runtime variable using get_runtime()</p>
-<p>Step 2: Initialize a client instance passing it the runtime variable and the URL of the server (<a class="reference external" href="http://127.0.0.1:8910/hello">http://127.0.0.1:8910/hello</a>)</p>
-<p>See <a class="reference internal" href="appendixBPythonClient.html#part2pythonclientfinished"><span>this page</span></a> for the file state at the end of Part 2.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Client example
+
+from quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+<span class="hll">   runtime = get_runtime()
+</span>
+<span class="hll">   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+</span>   request = hello.Request()
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">runtime=get_runtime()</span></code> instantiates an instance of the quark runtime integration imported in the earlier step.</p>
+<p>The line <code class="docutils literal"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">hello.HelloClient(runtime,</span> <span class="pre">&quot;http://127.0.0.1:8910/hello&quot;)</span></code> instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>.</p>
 </div>
 <div class="section" id="part-3-setting-up-the-request">
 <span id="part3pythonrequest"></span><h2>Part 3: Setting Up the Request<a class="headerlink" href="#part-3-setting-up-the-request" title="Permalink to this headline">¶</a></h2>
-<p>This sets up the request to the server.</p>
-<p>Step 1: Create a Request object associated with the client using the Request value class we defined in the service contract in the previous section of the tutorial.</p>
-<p>Step 2: Set the text property of the request to &#8220;Hello from Python!&#8221; so we know the request came from the Python client. This will help illustrate the interoperability of languages later.</p>
-<p>Step 3: Print the request text to standard out so we know what&#8217;s happening when we run the client.</p>
-<p>See <a class="reference internal" href="appendixBPythonClient.html#part3pythonclientfinished"><span>this page</span></a> for the file state at the end of Part 3.</p>
+<p>This section sets up the request to the server.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Client example
+
+from quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+   runtime = get_runtime()
+
+   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+<span class="hll">   request = hello.Request()
+</span><span class="hll">   request.text = &quot;Hello from Python!&quot;
+</span>   print &quot;Request says %r&quot; % request.text
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">request=hello.Request()</span></code> instantiates a Request object (as defined in the service contract).</p>
+<p>The line <code class="docutils literal"><span class="pre">request.text</span> <span class="pre">=</span> <span class="pre">&quot;Hello</span> <span class="pre">from</span> <span class="pre">Python!&quot;</span></code> sets the message to be sent to the server in the request.</p>
+<p>The print statement provides visual feedback within the client that the request was set. It is not essential to the interaction but helps illustrate the communications in the example.</p>
 </div>
 <div class="section" id="part-4-sending-the-request-and-processing-the-response">
 <span id="part4pythonsendrequest"></span><h2>Part 4: Sending the Request and Processing the Response<a class="headerlink" href="#part-4-sending-the-request-and-processing-the-response" title="Permalink to this headline">¶</a></h2>
-<p>This actually sends the request to the server, receives the response, and displays it from the client.</p>
-<p>Step 1: Send the request using the hello method of the Client (defined within the Hello interface in the service contract). This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).</p>
-<p>Step 2: Print the value of the result property of the response object so we can see that the server operated on the request and returned the requested information.</p>
-<p>That&#8217;s it! The Python client is fully defined now. You can follow the link below to a copy of the full client in the Quark Examples repository.</p>
+<p>This section sends the request to the server, receives the response, and displays it from the client.</p>
+<p id="fullexamplepythonclient">Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Client example
+
+from quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+   runtime = get_runtime()
+
+   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+   request = hello.Request()
+   request.text = &quot;Hello from Python!&quot;
+   print &quot;Request says %r&quot; % request.text
+
+<span class="hll">   response = client.hello(request)
+</span>   print &quot;Response says %r&quot; % response.result
+
+
+if __name__ == &#39;__main__&#39;:
+   main()
+</pre></div>
 </div>
-<div class="section" id="full-python-client">
-<span id="fullexamplepythonclient"></span><h2>Full Python Client<a class="headerlink" href="#full-python-client" title="Permalink to this headline">¶</a></h2>
-<p>A full copy of the Python client for this example can be found <a class="reference external" href="https://github.com/datawire/quark/blob/master/examples/helloRPC/pyclient.py">in GitHub</a> - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.</p>
-<p>[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]</p>
+<p>The line <code class="docutils literal"><span class="pre">response</span> <span class="pre">=</span> <span class="pre">client.hello(request)</span></code> uses the hello method of the Client object (as defined within the Hello interface in the service contract) to send the actual request. This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).</p>
+<p>The print statement below it provides visual feedback within the client that the request was sent to the server and a response was received. It is not essential to the interaction but helps illustrate the communications in the example.</p>
+<p>That&#8217;s it! The Python client is fully defined now - the code above is all that&#8217;s needed to run the client and visually see the results sent back from the server piece defined in the next stage of this walkthrough.</p>
 </div>
 </div>
 
@@ -113,11 +165,10 @@
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Creating the Python Client</a><ul>
-<li><a class="reference internal" href="#part-1-creating-the-framework">Part 1: Creating the framework</a></li>
+<li><a class="reference internal" href="#part-1-importing-the-quark-pieces">Part 1: Importing the Quark Pieces</a></li>
 <li><a class="reference internal" href="#part-2-initializing-the-client">Part 2: Initializing the Client</a></li>
 <li><a class="reference internal" href="#part-3-setting-up-the-request">Part 3: Setting Up the Request</a></li>
 <li><a class="reference internal" href="#part-4-sending-the-request-and-processing-the-response">Part 4: Sending the Request and Processing the Response</a></li>
-<li><a class="reference internal" href="#full-python-client">Full Python Client</a></li>
 </ul>
 </li>
 </ul>
@@ -126,8 +177,8 @@
   <p class="topless"><a href="pythonBuild.html"
                         title="previous chapter">Compiling and Installing the Library in Python</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="pythonClient2.html"
-                        title="next chapter">Creating the Python Client</a></p>
+  <p class="topless"><a href="pythonServer.html"
+                        title="next chapter">Writing a Python Server</a></p>
 <div class="sourcelink">
   <a href="../../_sources/tutorials/rpc-basic/pythonClient.txt" rel="nofollow">
     Show page source
@@ -159,7 +210,7 @@
           <a href="pythonBuild.html" title="Previous document">Compiling and Installing the Library in Python</a>
         </li>
         <li>
-          <a href="pythonClient2.html" title="Next document">Creating the Python Client</a>
+          <a href="pythonServer.html" title="Next document">Writing a Python Server</a>
           &rarr;
         </li>
     </ul>

@@ -1,28 +1,33 @@
 Writing a Python Server
 =======================
 
-Let's start by creating a simple Hello World server using the compiled Hello contract in Python.
+Let's start by creating a simple Hello World server using the compiled Hello service contract in Python.
 
 Note: If you don't want step-by-step guidance about how to create the server and just want to start from a completed server, there is a :ref:`link to the full Python server file <fullExamplePythonServer>` at the bottom of this page.
 
-.. _part1PythonServerFramework:
+.. _part1PythonServerImport:
 
-Part 1: Creating the framework
-------------------------------
+Part 1: Importing the Quark Pieces
+----------------------------------
 
-This section helps you define the necessary structure for your Python server.
+This section shows you how to import the Quark integration and the HelloRPC contract into your Python server.
 
-Step 1: Create a text file in your favorite editor called pyserver.py
+Relevant code:
 
-Step 2: Import the portion of the integration needed to run your server, namely get_runtime in quark_threaded_runtime.
+.. code-block:: none
+   :emphasize-lines: 3,4
 
-Step 3: Import the contract library (hello)
+   # Python Hello Server example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   def main():
 
-Step 4: Define an empty main function
+The line ``from quark_threaded_runtime import get_runtime`` imports the user-visible portions of the datawire_quark_threaded runtime integration into your client. Note that although the integration is called datawire_quark_threaded, the module name is quark_threaded_runtime
 
-Step 5: Run the main function. If you are new to Python, information about how to do this can be found `here <https://docs.python.org/2/library/__main__.html>`_.
-
-See :ref:`this page <part1PythonServerFinished>` for the file state at the end of Part 1.
+The line ``import hello`` imports the service contract library created and built in previous steps of the tutorial.
 
 .. _part2PythonResponseDefinition:
 
@@ -31,19 +36,30 @@ Part 2: Defining the Response
 
 This section defines the response using the Response value class defined in the service contract.
 
-Step 1: Define a HelloImpl class that inherits from the object class
+Relevant code:
 
-Step 2: Define a hello method of the HelloImpl class with two input parameters: self and request
+.. code-block:: none
+   :emphasize-lines: 7,8,9,10,11,12
 
-Step 3: Instantiate a Response object (as defined in the service contract)
+   # Python Hello Server example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   class HelloImpl(object):
+   
+      def hello(self, request):
+           res = hello.Response()
+           res.result = "Responding to [%s] from Python" % request.text
+           return res
+   
+   
+   def main():
 
-Step 4: Set the result property to indicate that the Python server is reponding to the text sent in the request
+The HelloImpl class essentially defines a hello() method that defines the response to be sent back to the client given the request received. It instantiates a Response object (as defined in the service contract), populates its result property with the response text, and returns the object for further processing.
 
-Step 5: Set the Response object as the method response
-
-[[JMK This could use some more explanation. I mostly follow the flow in the Server/Service stuff in builtins but not quite well enough to explain the exact flow/why HelloImpl needs the parameters/etc]]
-
-See :ref:`this page <part2PythonServerFinished>` for the file state at the end of Part 2.
+[[JMK It looks like using self as the first input parameter is a general python thing so I don't have to explain it. It seems weird to me. Adding this comment to remind myself I don't need to figure out why it's there.]]
 
 .. _part3PythonProcessRequest:
 
@@ -52,23 +68,45 @@ Part 3: Processing the Request
 
 This section defines main module of the server, the code that calls the RPC processing defined within Quark and actually generates the response based on the request and returns it to the client application.
 
-Step 1: Instantiate a runtime object using the get_runtime() constructor. The related class is defined in the code imported from the integration.
-
-Step 2: Instantiate an implementation object. This is an instance of the HelloImpl class defined in Part 2 above.
-
-Step 3: Instantiate the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract and the constructor defining how the runtime and implementation objects are used to launch the server process and perform the request work of the server is all abstracted away from the user.
-
-Step 4: Bind the server to the defined port and URL for the hello service. This is done by passing the service URI (http://127.0.0.1:8910/hello) and the server instance to the serveHTTP() method of the runtime.
-
-That's it! The Python server is complete. Again, note that we don't actually see the processing of the request; that's handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within Quark. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.
-
-[[JMK is there a better way to discuss this? Not sure that I go into enough detail or use the proper language]]
-
 .. _fullExamplePythonServer:
 
-Full Python Server
-------------------
+Relevant code:
 
-A full copy of the Python server for this example can be found `in GitHub <https://github.com/datawire/quark/blob/master/examples/helloRPC/pyserver.py>`_ - the file you constructed following the instructions on this page should match it exactly barring differences in the content of the print requests.
+.. code-block:: none
+   :emphasize-lines: 15,16,17,18,19
 
-[[JMK The url above should be branch-specific; once the branch variable is in place and working this can be handled automagically as part of the build.]]
+   # Python Hello Server example
+   
+   from quark_threaded_runtime import get_runtime
+   import hello
+   
+   
+   class HelloImpl(object):
+   
+      def hello(self, request):
+           res = hello.Response()
+           res.result = "Responding to [%s] from Python" % request.text
+           return res
+   
+   
+   def main():
+      runtime = get_runtime()
+      implementation = HelloImpl()
+      server = hello.HelloServer(runtime, implementation)
+      runtime.serveHTTP("http://127.0.0.1:8910/hello", server)
+   
+   
+   if __name__ == '__main__':
+      main()
+
+
+The line ``runtime = get_runtime()`` instantiates an instance of the quark runtime integration imported in the earlier step.
+
+The line ``implementation = HelloImpl()`` instatiates an implementation object, in this case an instance of the HelloImpl class defined above.
+
+
+The line ``server = hello.HelloServer(runtime, implementation)`` instantiates the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract expanding upon a default Quark server definition. The constructor defines how the runtime and implementation objects are used to launch the server process and perform the requested work of the server - this is all abstracted away from the user.
+
+The line ``runtime.serveHTTP("http://127.0.0.1:8910/hello", server)`` binds the server to the defined port and URL for the hello service. This is done by passing the service URI (``http://127.0.0.1:8910/hello``) and the server instance to the serveHTTP() method of the runtime object instantiated above. The work of listening on that port, recognizing incoming requests to be processed by the server, and sending the actual reponses to those requests is all abstracted away from the user.
+
+That's it! The Python server is complete. Again, note that we don't actually see the processing of the request; that's handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within Quark. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.
