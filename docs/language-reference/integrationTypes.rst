@@ -1,7 +1,9 @@
 Integration Types
 -----------------
 
-Integration types are Quark data types that depend on using an integration to execute. Typically these types are defines with method signatures rather than code because the code needed to execute the desired functionality is specific to a particular integration and is defined within that integration. However, some integration types may include method definitions that use other integration types - these look like normal Quark data types but can't be executed without an integration because of their dependencies. Essentially normal Quark data types can be used in code without installing an integration but integration types cannot. More information about the available integrations and how to install them can be found :doc:`here <../install/integration>`.
+Integration types are Quark data types that depend on a runtime integration. These types are typically defined with method signatures rather than with full method code because the desired functionality cannot be consistently defined by Quark code. However, not all integration types use method signatures - some integration types may include method definitions that use other integration types. These integration types look like normal Quark data types but can't be executed without a runtime integration installed because of their dependencies. 
+
+More information about the available integrations and how to install them can be found :doc:`here <../install/integration>`.
 
 Quark defines the following integration types:
 
