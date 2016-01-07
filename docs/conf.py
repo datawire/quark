@@ -61,7 +61,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Quark'
-copyright = u'2015,2016 Datawire'
+copyright = u'2015, 2016 Datawire'
 author = u'Datawire'
 
 # The version info for the project you're documenting, acts as replacement for
