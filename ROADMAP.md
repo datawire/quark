@@ -29,6 +29,8 @@ The following is a roughly ordered set of priorities for Quark.
  - Exceptions
  - Asynchronous RPC
  - Shared request context
+ - Performance and scalability testing
+ - High performance RPC example
 
 ### Phase 5 and beyond
 
