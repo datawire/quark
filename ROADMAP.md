@@ -12,12 +12,16 @@ The following is a roughly ordered set of priorities for Quark.
 
 ### Phase 2 (done)
 
+ - Python Threaded integration
  - RPC support
  - HelloRPC example
 
 ### Phase 3 (in progress)
 
- - Resiliency patterns (timeouts, circuit breakers, load balancing)
+ - Resiliency patterns
+   + timeouts
+   + circuit breakers
+   + load balancing
  - Ruby support
 
 ### Phase 4 (planning)
