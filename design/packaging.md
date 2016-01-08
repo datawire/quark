@@ -11,6 +11,10 @@
    produced by the compiler is specific to a given distro/compilation
    unit.
 
+ - The quark "standard library" needs to be able to grow beyond what
+   is manually included in builtin.q, e.g. for ardana we need to pull
+   in functionality from hub.q.
+
 ### Solutions:
 
  - We need to precisely define what constitutes a distributable unit
@@ -21,6 +25,77 @@
    references other quark files by URL, we have allowed for a single
    top level quark file to define a distribution unit that can be
    mapped into backend artifacts with proper dependencies.
+
+
+### Packaging Model:
+
+package foo 1.2.3; <--- package statement, marks a quark file as an entrypoint and a distribution/compilation unit
+
+use bar;  <--- use statement, declares a dependency on another distribution/compilation unit
+
+namespace blah; <--- sets the default namespace for a file, if absent the namespace defaults to the package name
+
+namespace bleh {} <--- sets the namespace for constructs within the braces, this is a top level namespace
+
+namespace .blah {} <--- sets the namespace for the constructs within, but relative to the file's namespace
+
+namespace foo.bar.baz {} <--- shorthand for nested namespace
+
+namespace foo { <--- longhand for nested namespace
+   namespace bar {
+       namespace baz {
+          ...;
+       }
+   }
+}
+
+include url-or-path; <--- lexical inclusion
+
+include url-or-path.java; <--- include for java backend
+include url-or-path.py; <--- include for py backend
+
+import foo.*; <--- import all names from given namespace
+import foo as bar; <--- alias a namespace
+import foo.Bar as Baz; <--- alias a name
+
+$java {
+  java statement
+}
+
+$py {
+  python statement
+}
+
+$ruby {
+  ruby statement
+}
+
+$java(java expression)
+
+$py(python expression)
+
+
+Distribution Unit == Compilation Unit == file/url-that-is-passed-to-compiler == later maybe replaced with construct in entry-point file that includes name, version, and possibly allows for customization of how name is mapped to backend package.
+
+Namespace is independent of distribution unit.
+
+A single distribution unit unit may bring with it many namespaces.
+
+
+use statement specifies dependencies between distribution units
+
+include statement operates as textual include
+
+Import/alias statement operates on namespaces.
+
+include mechanism also operates on native files
+
+how do included files get pulled into namespace? -- maybe not at all, include foo.py and then native statement to import foo
+need native statement construct
+
+
+
+
 
 ```
 entry.q:
