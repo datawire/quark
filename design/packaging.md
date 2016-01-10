@@ -15,6 +15,9 @@
    is manually included in builtin.q, e.g. for ardana we need to pull
    in functionality from hub.q.
 
+ - Distributing quark packages is complex, because every quark library
+   needs to be pushed via each backend package management system.
+
 ### Solutions:
 
  - We need to precisely define what constitutes a distributable unit
@@ -26,6 +29,14 @@
    top level quark file to define a distribution unit that can be
    mapped into backend artifacts with proper dependencies.
 
+ - By using URLs, we need no special package management
+   infrastructure. Github and static web servers can function in the
+   same role that pypi, maven central, etc does for other languages.
+
+ - By building backend packages at the target rather than at the
+   source, we can significantly simplify distribution since all we
+   need to distribute is the url for the quary entrypoint itself.
+
 
 ### Packaging Model:
 
@@ -33,7 +44,7 @@ The quark distribution unit and compilation unit are one and the same.
 
 package foo 1.2.3; <--- package statement, marks a quark file as an entrypoint and a distribution/compilation unit
 
-use bar;  <--- use statement, declares a dependency on another distribution/compilation unit
+use url-or-relative-path;  <--- use statement, declares a dependency on another distribution/compilation unit
 
 namespace blah; <--- sets the default namespace for a file, if absent the namespace defaults to the package name
 
@@ -51,10 +62,10 @@ namespace foo { <--- longhand for nested namespace
    }
 }
 
-include url-or-path; <--- lexical inclusion
+include url-or-relative-path; <--- lexical inclusion
 
-include url-or-path.java; <--- include for java backend
-include url-or-path.py; <--- include for py backend
+include url-or-relative-path.java; <--- include for java backend
+include url-or-relative-path.py; <--- include for py backend
 
 import foo; <--- import all names from a given namespace
 import foo.Bar; <--- import a single name
