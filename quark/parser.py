@@ -21,10 +21,10 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "class", "interface", "primitive", "extends",
-                "return", "macro", "new", "null", "if", "else", "while",
-                "super", "true", "false", "break", "continue", "static",
-                "use"]
+    keywords = ["package", "namespace", "import", "class", "interface",
+                "primitive", "extends", "return", "macro", "new", "null",
+                "if", "else", "while", "super", "true", "false", "break",
+                "continue", "static", "use", "as"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -81,7 +81,7 @@ class Parser:
     def visit_file(self, node, (toplevels, eof)):
         return File(toplevels)
 
-    @g.rule('toplevel = use / file_definition')
+    @g.rule('toplevel = use / import / file_definition')
     def visit_toplevel(self, node, (top,)):
         return top
 
@@ -110,7 +110,7 @@ class Parser:
     def visit_ann_name(self, node, (a, name, _)):
         return Name(name)
 
-    @g.rule('package = PACKAGE name LBR pkg_definition* RBR')
+    @g.rule('package = ( PACKAGE / NAMESPACE ) name LBR pkg_definition* RBR')
     def visit_package(self, node, children):
         _, name, _, definitions, _ = children
         return Package(name, definitions)
@@ -241,9 +241,14 @@ class Parser:
     #   Box<int> x; looks like a declaration
     #      vs
     #    a < b > c; looks like a comparison
-    @g.rule('statement = return / break / continue / assign / local / if / while / exprstmt')
+    @g.rule('statement = import / return / break / continue / assign / local / if / while / exprstmt')
     def visit_statement(self, node, (stmt,)):
         return stmt
+
+    @g.rule('import = IMPORT dotted_name (AS name)? SEMI')
+    def visit_import(self, node, (kw, path, opt, s)):
+        alias = opt[-1][-1] if opt else None
+        return Import(path, alias)
 
     @g.rule('return = RETURN expr? SEMI')
     def visit_return(self, node, (r, opt, s)):

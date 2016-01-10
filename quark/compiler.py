@@ -34,6 +34,7 @@ class Root(AST):
         self.index = 0
         self.count = 0
         self.env = {}
+        self.imports = []
 
     def add(self, file):
         self.files.append(file)
@@ -81,6 +82,7 @@ class Crosswire:
         ast.resolved = None
         ast.coersion = None
         ast.count = 0
+        ast.imports = []
 
         if ast.parent:
             ast.index = ast.parent.count
@@ -126,6 +128,10 @@ class Crosswire:
     def leave_Package(self, p):
         self.leave_AST(p)
         self.package = p.package
+
+    def visit_Import(self, i):
+        self.visit_AST(i)
+        i.parent.imports.append(i)
 
     def visit_Class(self, c):
         self.visit_AST(c)
@@ -190,7 +196,6 @@ class Def:
 
     def visit_Declaration(self, d):
         self.define(d.env, d, leaf=False)
-
 
 class TypeExpr(object):
 
@@ -359,11 +364,27 @@ class Use(object):
         self.unresolved = []
 
     @overload(AST, str)
-    def lookup(self, node, name):
+    def lookup(self, node, name, imported=None):
+        if imported is None:
+            imported = set()
         while node:
+            for imp in node.imports:
+                if imp.alias and imp.alias.text == name:
+                    return self.lookup(imp)
+
             if name in node.env:
                 return node.env[name]
             else:
+                for imp in node.imports:
+                    key = imp.code()
+                    if key in imported: continue
+                    imported.add(key)
+                    imp_node = self.lookup(imp)
+
+                    if isinstance(imp_node, Package):
+                        nd = self.lookup(imp_node, name, imported)
+                        if nd: return nd
+
                 node = node.parent
         return None
 
@@ -374,14 +395,22 @@ class Use(object):
     @overload(Type)
     def lookup(self, t):
         type = self.lookup(t.clazz or t.package or t.root, t.path[0].text)
-        if type:
-            for n in t.path[1:]:
-                if n.text in type.env:
-                    type = type.env[n.text]
+        return self.lookup_path(type, t.path[1:])
+
+    @overload(Import)
+    def lookup(self, imp):
+        node = self.lookup(imp.root, imp.path[0].text)
+        return self.lookup_path(node, imp.path[1:])
+
+    def lookup_path(self, node, path):
+        if node:
+            for n in path:
+                if n.text in node.env:
+                    node = node.env[n.text]
                 else:
-                    type = None
-                    break;
-        return type
+                    node = None
+                    break
+        return node
 
     def leave_Type(self, t):
         type = self.lookup(t)
@@ -431,6 +460,12 @@ class Use(object):
 
     def visit_Bool(self, n):
         self.leaf(n, "bool")
+
+    def visit_Import(self, imp):
+        imp_node = self.lookup(imp)
+        if imp_node is None:
+            self.unresolved.append((imp, imp.path[-1].text))
+
 
 def castify(type, expr):
     if isinstance(expr, Cast):

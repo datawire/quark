@@ -406,6 +406,10 @@ class Backend(object):
         else:
             return self.gen.block((header or []) + [self.statement(s) for s in b.statements])
 
+    @overload(Import)
+    def statement(self, imp):
+        return self.gen.comment(imp.code())
+
     @overload(Local)
     def statement(self, s):
         return self.gen.local(self.type(s.declaration.type),

@@ -171,6 +171,28 @@ class Use(AST):
     def copy(self):
         return self.__class__(self.url)
 
+class Import(AST):
+
+    def __init__(self, path, alias=None):
+        self.path = path
+        self.alias = alias
+
+    @property
+    def children(self):
+        for p in self.path:
+            yield p
+        yield self.alias
+
+    @coder
+    def code(self, coder):
+        result = "import %s" % coder.code(self.path, ".")
+        if self.alias:
+            result += " as %s" % coder.code(self.alias)
+        return result
+
+    def copy(self):
+        return self.__class__(copy(self.path), copy(self.alias))
+
 ## Definitions
 
 class Definition(AST):
