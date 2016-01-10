@@ -29,6 +29,8 @@
 
 ### Packaging Model:
 
+The quark distribution unit and compilation unit are one and the same.
+
 package foo 1.2.3; <--- package statement, marks a quark file as an entrypoint and a distribution/compilation unit
 
 use bar;  <--- use statement, declares a dependency on another distribution/compilation unit
@@ -54,7 +56,8 @@ include url-or-path; <--- lexical inclusion
 include url-or-path.java; <--- include for java backend
 include url-or-path.py; <--- include for py backend
 
-import foo.*; <--- import all names from given namespace
+import foo; <--- import all names from a given namespace
+import foo.Bar; <--- import a single name
 import foo as bar; <--- alias a namespace
 import foo.Bar as Baz; <--- alias a name
 
@@ -73,6 +76,8 @@ $ruby {
 $java(java expression)
 
 $py(python expression)
+
+dep <group> <name> <version>; <--- does this work for non maven/gradle stuff?
 
 
 Distribution Unit == Compilation Unit == file/url-that-is-passed-to-compiler == later maybe replaced with construct in entry-point file that includes name, version, and possibly allows for customization of how name is mapped to backend package.
