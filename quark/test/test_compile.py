@@ -38,7 +38,7 @@ def compile(path, file_filter):
     base = os.path.splitext(path)[0]
     c = Compiler()
     try:
-        c.parse(os.path.basename(path), text)
+        c.urlparse(path)
         c.compile()
         for ast in c.root.files:
             if file_filter(ast.filename): continue

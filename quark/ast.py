@@ -171,6 +171,22 @@ class Use(AST):
     def copy(self):
         return self.__class__(self.url)
 
+class Include(AST):
+
+    def __init__(self, url):
+        self.url = url
+
+    @property
+    def children(self):
+        return []
+
+    @coder
+    def code(self, coder):
+        return "include %s;" % self.url
+
+    def copy(self):
+        return self.__class__(self.url)
+
 class Import(AST):
 
     def __init__(self, path, alias=None):

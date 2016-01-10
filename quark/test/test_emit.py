@@ -58,7 +58,7 @@ def test_emit(path, Backend, java_deps):
     maybe_xfail(text, backend.ext)
     base = os.path.splitext(path)[0]
     comp = Compiler()
-    comp.parse(os.path.basename(path), text)
+    comp.urlparse(path)
     comp.compile()
 
     comp.emit(backend)

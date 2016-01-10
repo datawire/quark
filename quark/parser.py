@@ -21,10 +21,10 @@ g = grammar.Grammar()
 @g.parser
 class Parser:
 
-    keywords = ["package", "namespace", "import", "class", "interface",
-                "primitive", "extends", "return", "macro", "new", "null",
-                "if", "else", "while", "super", "true", "false", "break",
-                "continue", "static", "use", "as"]
+    keywords = ["package", "use", "include", "import", "as", "namespace",
+                "class", "interface", "primitive", "extends", "return",
+                "macro", "new", "null", "if", "else", "while", "super",
+                "true", "false", "break", "continue", "static"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -81,13 +81,17 @@ class Parser:
     def visit_file(self, node, (toplevels, eof)):
         return File(toplevels)
 
-    @g.rule('toplevel = use / import / file_definition')
+    @g.rule('toplevel = use / include / import / file_definition')
     def visit_toplevel(self, node, (top,)):
         return top
 
     @g.rule('use = USE url_re SEMI')
     def visit_use(self, node, (u, url, s)):
         return Use(url)
+
+    @g.rule('include = INCLUDE url_re SEMI')
+    def visit_include(self, node, (i, url, s)):
+        return Include(url)
 
     @g.rule(r'url_re = ~"[^ \t\r\n;]+"')
     def visit_url_re(self, node, children):

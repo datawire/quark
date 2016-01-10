@@ -104,10 +104,15 @@ class Crosswire:
         use.file.uses[use.url] = use
         use.target = None
 
+    def visit_Include(self, inc):
+        self.visit_AST(inc)
+        inc.file.includes[inc.url] = inc
+
     def visit_File(self, f):
         self.file = f
         self.visit_AST(f)
         f.uses = OrderedDict()
+        f.includes = OrderedDict()
         f.depth = 0
 
     def leave_File(self, f):
@@ -883,6 +888,7 @@ class Compiler:
         self.generated = OrderedDict()
         self.annotator("delegate", delegate)
         self.parsed = set()
+        self.included = OrderedDict()
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -910,18 +916,45 @@ class Compiler:
         self.root.add(file)
         return file
 
-    def urlparse(self, url, depth=0):
+    def urlparse(self, url, depth=0, top=True):
+        try:
+            file = self.parse(os.path.basename(url), self.read(url))
+            file.depth = depth
+        except IOError, e:
+            if top:
+                raise CompileError(e)
+            else:
+                raise
+        for u in file.uses.values():
+            qurl = self.join(url, u.url)
+            if qurl not in self.parsed:
+                self.parsed.add(qurl)
+                try:
+                    u.target = self.urlparse(qurl, depth=depth + 1, top=False)
+                except IOError, e:
+                    raise CompileError("%s: error reading file: %s" % (lineinfo(u), u.url))
+        for inc in file.includes.values():
+            qurl = self.join(url, inc.url)
+            if qurl.endswith(".q"):
+                if qurl not in self.parsed:
+                    self.parsed.add(qurl)
+                    try:
+                        self.urlparse(qurl, depth=depth, top=False)
+                    except IOError, e:
+                        raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))
+            elif qurl not in self.included:
+                self.included[qurl] = self.read(qurl)
+        return file
+
+    def join(self, base, rel):
+        return urllib.basejoin(base, rel)
+
+    def read(self, url):
         fd = urllib.urlopen(url)
         try:
-            file = self.parse(url, fd.read())
-            file.depth = depth
+            return fd.read()
         finally:
             fd.close()
-        for u in file.uses.values():
-            if u.url not in self.parsed:
-                self.parsed.add(u.url)
-                u.target = self.urlparse(u.url, depth=depth + 1)
-        return file
 
     def icompile(self, ast):
         def_ = Def()
