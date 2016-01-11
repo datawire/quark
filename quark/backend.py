@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript
+import os, types, java, python, javascript, tempfile
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr
@@ -35,6 +35,11 @@ class Backend(object):
         self.rootname = None
         self.entry = None
         self.dependencies = OrderedDict()
+
+    def install(self):
+        dir = tempfile.mkdtemp()
+        self.write(dir)
+        self.install_command(dir)
 
     def visit_Use(self, use):
         name, ver = namever(use.target)
@@ -642,17 +647,43 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
+import command
+
 class Java(Backend):
+
+    @staticmethod
+    def is_installed(url):
+        return False
 
     def __init__(self):
         Backend.__init__(self, "java", java)
 
+    def install_command(self, dir):
+        command.call_and_show("install", dir, ["mvn", "install"])
+
 class Python(Backend):
+
+    @staticmethod
+    def is_installed(url):
+        return False
 
     def __init__(self):
         Backend.__init__(self, "py", python)
 
+    def install_command(self, dir):
+        command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
+        wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
+        for wheel in wheels:
+            command.call_and_show("install", dir, ["pip", "install", "--user", "--upgrade", "dist/%s" % wheel])
+
 class JavaScript(Backend):
+
+    @staticmethod
+    def is_installed(url):
+        return False
 
     def __init__(self):
         Backend.__init__(self, "js", javascript)
+
+    def install_command(self, dir):
+        command.call_and_show("install", ".", ["npm", "install", dir])

@@ -59,6 +59,7 @@ from docopt import docopt
 
 import _metadata
 import compiler
+import backend
 
 PREREQS = {
     "mvn": (["mvn", "-v"], "please install maven in order to build java packages")
@@ -87,7 +88,7 @@ def main(args):
         return
 
     command = args["<command>"].lower()
-    if command not in "compile build doc package".split():
+    if command not in "compile build doc package install".split():
         exit("quark: %r is not a quark command. Try quark --help" % command)
 
     skip_doc = args["--skip-doc"]
@@ -128,7 +129,8 @@ def main(args):
         py_dir = os.path.join(output, args["--python-out"])
         js_dir = os.path.join(output, args["--javascript-out"])
 
-    assert "compile" in commands, (commands, args)
+    if command != "install":
+        assert "compile" in commands, (commands, args)
 
     if "compile" in commands:
         compiler_args = {}
@@ -172,6 +174,15 @@ def main(args):
                 target = os.path.join(js_dir, name)
                 call_and_show("package", ".", ["tar", "czf", intermediary, "--exclude", name, "-C", js_dir, "."])
                 call_and_show("package", ".", ["mv", intermediary, target])
+
+        if "install" in commands:
+            for url in filenames:
+                if java:
+                    compiler.install(url, backend.Java)
+                if python:
+                    compiler.install(url, backend.Python)
+                if javascript:
+                    compiler.install(url, backend.JavaScript)
     except Exception as exc:
         return exc
 

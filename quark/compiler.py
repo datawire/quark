@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, inspect, urllib
+import os, inspect, urllib, tempfile
 from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
@@ -889,6 +889,7 @@ class Compiler:
         self.annotator("delegate", delegate)
         self.parsed = set()
         self.included = OrderedDict()
+        self.dependencies = []
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -929,6 +930,7 @@ class Compiler:
             qurl = self.join(url, u.url)
             if qurl not in self.parsed:
                 self.parsed.add(qurl)
+                self.dependencies.append(qurl)
                 try:
                     u.target = self.urlparse(qurl, depth=depth + 1, top=False)
                 except IOError, e:
@@ -1012,6 +1014,17 @@ class Compiler:
 
     def emit(self, backend):
         self.root.traverse(backend)
+
+def install(url, backend):
+    c = Compiler()
+    c.urlparse(url)
+    c.compile()
+    for dep in c.dependencies:
+        if not backend.is_installed(dep):
+            install(dep, backend)
+    b = backend()
+    c.emit(b)
+    b.install()
 
 from backend import Java, Python, JavaScript
 
