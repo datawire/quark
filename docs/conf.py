@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Quark documentation build configuration file, created by
+# Datawire Connect documentation build configuration file, created by
 # sphinx-quickstart on Mon Oct 26 15:51:49 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -60,7 +60,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Quark'
+project = u'Datawire Connect'
 copyright = u'2015, 2016 Datawire'
 author = u'Datawire'
 
@@ -221,7 +221,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'Quarkdoc'
+htmlhelp_basename = 'dcondoc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -243,7 +243,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'Quark.tex', u'Quark Documentation',
+  (master_doc, 'dcon.tex', u'Datawire Connect Documentation',
    u'Datawire', 'manual'),
 ]
 
@@ -273,7 +273,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'quark', u'Quark Documentation',
+    (master_doc, 'Datawire Connect', u'Datawire Connect Documentation',
      [author], 1)
 ]
 
@@ -287,8 +287,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'Quark', u'Quark Documentation',
-   author, 'Quark', 'One line description of project.',
+  (master_doc, 'Datawire Connect', u'Datawire Connect Documentation',
+   Datawire, 'Datawire Connect', 'Datawire Connect Documentation',
    'Miscellaneous'),
 ]
 
