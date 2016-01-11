@@ -220,6 +220,20 @@ class Definition(AST):
     def code(self, coder):
         return coder.code(self.annotations, "\n", tail="\n", tailoff=0)
 
+class DistUnit(Definition):
+
+    def __init__(self, name, version):
+        self.name = name
+        self.version = version
+
+    @property
+    def children(self):
+        yield self.name
+
+    @coder
+    def code(self, coder):
+        return "package %s %s;" % (self.name.code(), self.version)
+
 class Package(Definition):
 
     indent = ["definitions"]

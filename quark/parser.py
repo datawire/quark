@@ -81,9 +81,17 @@ class Parser:
     def visit_file(self, node, (toplevels, eof)):
         return File(toplevels)
 
-    @g.rule('toplevel = use / include / import / file_definition')
+    @g.rule('toplevel = dist_unit / use / include / import / file_definition')
     def visit_toplevel(self, node, (top,)):
         return top
+
+    @g.rule('dist_unit = PACKAGE name version SEMI')
+    def visit_dist_unit(self, node, (p, name, version, s)):
+        return DistUnit(name, version)
+
+    @g.rule(r'version = ~"[0-9a-zA-Z]+(\.[0-9a-zA-Z])+"')
+    def visit_version(self, node, children):
+        return node.text
 
     @g.rule('use = USE url_re SEMI')
     def visit_use(self, node, (u, url, s)):

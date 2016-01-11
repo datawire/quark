@@ -34,12 +34,16 @@ class Backend(object):
         self.bindings = None
         self.rootname = None
         self.entry = None
+        self.dist = None
         self.dependencies = OrderedDict()
 
     def install(self):
         dir = tempfile.mkdtemp()
         self.write(dir)
         self.install_command(dir)
+
+    def visit_DistUnit(self, du):
+        self.dist = du
 
     def visit_Use(self, use):
         name, ver = namever(use.target)
@@ -66,6 +70,9 @@ class Backend(object):
             self.definitions.append(p)
 
     def leave_Root(self, r):
+        if self.dist:
+            self.entry = self.dist.file
+
         roots = []
         for rpkg in [p.name.text for p in self.packages if p.package is None]:
             if rpkg != "reflect" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg)
