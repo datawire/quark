@@ -54,6 +54,7 @@ primitive integral<T> extends numeric<T> {
     macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
                              $py{($self) % ($other)}
                              $js{_qrt.modulo(($self), ($other))};
+    macro float __to_float() self;
     macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
     macro JSONObject toJSON() new JSONObject().setNumber(self);
     macro JSONObject __to_JSONObject() self.toJSON();
@@ -228,6 +229,8 @@ JSONObject toJSON(Object obj) {
     return result;
 }
 
+// TODO: convert to pull model, cls implied by passed-in object
+// void fromJSON(Object obj, JSONObject json)
 Object fromJSON(reflect.Class cls, JSONObject json) {
     if (json == null || json.isNull()) { return null; }
     int idx = 0;
@@ -544,75 +547,13 @@ interface Service {
     Runtime getRuntime();
     long getTimeout();
 
-    Object rpc(String name, Object message, List<Object> options) {
-        HTTPRequest request = new HTTPRequest(getURL());
-        JSONObject json = toJSON(message);
-        JSONObject envelope = new JSONObject();
-        envelope["$method"] = name;
-        envelope["rpc"] = json;
-        request.setBody(envelope.toString());
-        request.setMethod("POST");
-        Runtime rt = self.getRuntime();
-        long timeout = getTimeout();
-        if (options.size() > 0) {
-            Map<String,Object> map = ?options[0];
-            int override = ?map["timeout"];
-            if (override != null) {
-                timeout = override;
-            }
-        }
-
-        ResponseHolder rh = new ResponseHolder();
-        rt.acquire();
-        long start = now();
-        long deadline = start + timeout;
-        rt.request(request, rh);
-        while (true) {
-            long remaining = deadline - now();
-            if (rh.response == null && rh.failure == null) {
-                if (timeout != 0 && remaining <= 0) {
-                    break;
-                }
-            } else {
-                break;
-            }
-            if (timeout == 0) {
-                rt.wait(3.14);
-            } else {
-                float r = remaining.toFloat();
-                rt.wait(r/1000.0);
-            }
-        }
-        rt.release();
-
-        if (rh.failure != null) {
-            rt.fail("RPC " + name + "(...) failed: " + rh.failure);
-            return null;  // Not reached
-        }
-
-        if (rh.response == null) {
-            return null;
-        }
-
-        HTTPResponse response = rh.response;
-
-        if (response.getCode() != 200) {
-            rt.fail("RPC " + name + "(...) failed: Server returned error " + response.getCode().toString());
-            return null;  // Not reached
-        }
-
-        String body = response.getBody();
-        JSONObject obj = body.parseJSON();
-        String classname = obj["$class"];
-        if (classname == null) {
-            rt.fail("RPC " + name + "(...) failed: Server returned unrecognizable content");
-            return null; // Not reached
-        } else {
-            return fromJSON(reflect.Class.get(classname), obj);
-        }
+    concurrent.Future rpc(String name, Object message, List<Object> options) {
+        behaviors.RPC rpc = new behaviors.RPC(self, name, options); // this could be allocated once per delegate instantiation
+        return rpc.call(message);
     }
-
 }
+
+
 
 class Client {
 
@@ -796,4 +737,308 @@ package reflect {
         Object invoke(Object object, List<Object> args);
     }
 
+}
+
+package behaviors {
+
+    class RPC {
+        Service service;
+        reflect.Class returned;
+        long timeout;
+        String name;
+
+        RPC(Service service, String name, List<Object> options) {
+            Runtime rt = service.getRuntime();
+            long timeout = service.getTimeout();
+            if (options.size() > 0) {
+                Map<String,Object> map = ?options[0];
+                int override = ?map["timeout"];
+                if (override != null) {
+                    timeout = override;
+                }
+            }
+            self.returned = service.getClass().getMethod(name).getType();
+            self.timeout = timeout;
+            self.name = name;
+        }
+
+        concurrent.Future call(Object message) {
+            HTTPRequest request = new HTTPRequest(self.service.getURL());
+            // XXX: assume message is not a Future, or at least not a pending one
+            JSONObject json = toJSON(message);
+            JSONObject envelope = new JSONObject();
+            envelope["$method"] = self.name;
+            envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
+            envelope["rpc"] = json;
+            request.setBody(envelope.toString());
+            request.setMethod("POST");
+
+
+            RPCRequest rpc = new RPCRequest(message, self);
+
+            return rpc.call(request, self.timeout);
+        }
+
+    }
+
+    class RPCRequest extends HTTPHandler,  concurrent.TimeoutListener {
+        RPC rpc;
+        concurrent.Future retval;
+        Object message;
+        concurrent.Timeout timeout;
+        RPCRequest(Object message, RPC rpc) {
+            self.retval = ?rpc.returned.construct([]); // capture current context;
+            self.message = message;
+            self.timeout = new concurrent.Timeout(rpc.timeout);
+            self.rpc = rpc;
+        }
+
+        concurrent.Future call(HTTPRequest request) {
+            self.timeout.start(self);
+            concurrent.Context.current().runtime.request(request, self);
+            return self.retval;
+
+        }
+
+        void onHTTPResponse(HTTPRequest rq, HTTPResponse response) {
+            if (response.getCode() != 200) {
+                self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned error " + response.getCode().toString());
+                return;
+            }
+
+            
+            String body = response.getBody();
+            JSONObject obj = body.parseJSON();
+            String classname = obj["$class"];
+            if (classname == null) {
+                self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned unrecognizable content");
+                return;
+            } else {
+                fromJSON(self.retval, obj);
+                self.retval.finish(null);
+            }
+        }
+
+        void onTimeout(concurrent.Timeout timeout) {
+            self.retval.finish("request timed out");
+        }
+    }
+
+}
+
+package concurrent {
+
+    @doc("internal representation of an event")
+    interface Event {
+        EventContext getContext();
+        void fireEvent();
+    }
+
+    @doc("event handler for a future completion")
+    interface FutureListener {
+        void onFuture(Future future) {}
+    }
+
+    @doc("internal class that binds a listener to a future")
+    class FutureCompletion extends Event {
+        Future future;
+        FutureListener listener;
+        FutureCompletion(Future future, FutureListener listener) {
+            self.future = future;
+            self.listener = listener;
+        }
+        EventContext getContext() {
+            return self.future;
+        }
+        void fireEvent() {
+            self.listener.onFuture(self.future);
+        }
+    }
+
+    @doc("Captures the current context")
+    class EventContext {
+        Context context;
+        EventContext() {
+            self.context = Context.current();
+        }
+        Context getContext() { return self.context; }
+    }
+
+    @doc("a")
+    class Future extends EventContext {
+        bool _finished;
+        String error;
+        List<FutureCompletion> _callbacks;
+        Mutex lock;
+        Future() {
+            self._finished = false;
+            self._callbacks = null;
+            self.lock = new Mutex();
+        }
+        void onFinished(FutureListener callback) {
+            self.lock.lock(); // XXX: block-scoped locks, pleeze
+            if (self._finished) {
+                self.context.collector.put(new FutureCompletion(self, callback));
+            } else {
+                if (self._callbacks == null) {
+                    self._callbacks = [];
+                }
+                self._callbacks.add(new FutureCompletion(self, callback));
+            }
+            self.lock.unlock();
+        }
+        void finish(String error) {
+            List<FutureCompletion> callbacks = null;
+            self.lock.lock();
+            if (!self._finished) {
+                self._finished = true;
+                self.error = error;
+                callbacks = self._callbacks; // transfer to local
+                self._callbacks = null;
+            }
+            self.lock.unlock();
+            if (callbacks != null) {
+                int i = 0;
+                while (i < callbacks.size()) {
+                    self.context.collector.put(callbacks[i]);
+                    i = i + 1;
+                }
+            }
+        }
+        bool isFinished() {
+            self.lock.lock();
+            bool finished = self._finished;
+            self.lock.unlock();
+            return finished;
+        }
+
+        String getError() {
+            self.lock.lock();
+            String error = self.error;
+            self.lock.unlock();
+            return error;
+        }
+    }
+
+    @doc("Synchronization point for a future. TODO: make sure not to call from a runtime thread (implies anywhere in Node)")
+    class FutureWait extends FutureListener {
+        Mutex lock;
+        Future future;
+        FutureWait(Future future) {
+            if (!future.isFinished()) {
+                future.onFinished(self);
+            }
+        }
+        void wait(long timeout) {
+            long deadline = now() + timeout;
+            while(!self.future.isFinished()) {
+                long remaining = deadline - now();
+                if (timeout != 0) {
+                    if (remaining <= 0) {
+                        break;
+                    }
+                } else {
+                    remaining = 3141;
+                }
+                self.lock.lock();
+                self.lock.wait(remaining);
+                self.lock.unlock();
+            }
+        }
+    }
+
+
+    // collector cannot be expressed in quark as it'simplementation varies wildly by backend language
+    primitive Collector {
+        void put(Event event);
+    }
+
+    interface TimeoutListener {
+        void onTimeout(Timeout timeout);
+    }
+
+   class TimeoutExpiry extends Event {
+       Timeout timeout;
+       TimeoutListener listener;
+       TimeoutExpiry(Timeout timeout, TimeoutListener listener) {
+           self.timeout = timeout;
+           self.listener = listener;
+       }
+       void fireEvent() {
+           self.listener.onTimeout(self.timeout);
+       }
+   }
+
+  class Timeout extends EventContext, Task {
+        long timeout;
+        Mutex lock;
+        TimeoutListener listener;
+        Timeout(long timeout) {
+            self.timeout = timeout;
+            self.listener = null;
+        }
+        void start(TimeoutListener listener) {
+            self.listener = listener;
+            float delay = 0.001 * self.timeout;
+            Context.current().runtime.schedule(self, delay);
+        }
+        void cancel() {
+            self.lock.lock();
+            self.listener = null;
+            self.lock.unlock();
+        }
+
+        void onExecute() {
+            self.lock.lock();
+            if (self.listener != null) {
+                self.context.collector.put(new TimeoutExpiry(self, self.listener));
+                self.listener = null;
+            }
+            self.lock.unlock();
+        }
+    }
+
+    class TLSContextInitializer extends TLSInitializer<Context> {
+        Context getValue() {
+            return new Context(Context.global());
+        }
+    }
+
+    class Context {
+        static Context _global = new Context(null);
+        static TLS<Context> _current = new TLS<Context>(new TLSContextInitializer());
+        static Context current() {
+            return _current.getValue();
+        }
+        static Context global() {
+            return _global;
+        }
+
+        Context(Context parent) {
+            self.parent = parent;
+            self.runtime = null;
+            self.collector = null;
+        }
+
+        Context parent;
+        Runtime runtime;
+        Collector collector;
+        
+    }
+
+    interface TLSInitializer<T> {
+        T getValue();
+    }
+
+    primitive TLS<T> {
+        TLS(TLSInitializer<T> initializer) {}
+        T getValue();
+    }
+
+    class Mutex {
+        void lock();
+        void unlock();
+        void wait(long timeout);
+        void notify();
+    }
 }
