@@ -1,19 +1,19 @@
-.. Quark documentation master file, created by
+.. Datawire Connect documentation master file, created by
    sphinx-quickstart on Mon Oct 26 15:51:49 2015.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to the Quark Documentation!
-===================================
+Welcome to the Datawire Connect Documentation!
+==============================================
 
 Available documentation:
 
 .. toctree::
    :maxdepth: 1
 
-   Quark Quick Start <quick-start/index>
-   Quark Installation and Configuration Guide <install/index>
-   Quark Language Reference <language-reference/index>
+   Datawire Connect Quick Start <quick-start/index>
+   Datawire Connect Installation and Configuration Guide <install/index>
+   Datawire Connect Language Reference <language-reference/index>
 
 Available tutorials and walkthroughs:
 
@@ -33,4 +33,4 @@ Indices and tables
 
 Document Version
 ================
-Quark Documentation Set |release|-|doc_version|
+Datawire Connect Documentation Set |release|-|doc_version|
