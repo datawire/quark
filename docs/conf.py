@@ -25,46 +25,8 @@ except ImportError:
 
 __version__ = '0.3.1'
 __doc_version__ = '2'
-__branch__ = '0.3.x'
-__doc_product_version__ = '0.3'
-__product__ = 'Datawire Connect'
-__language__ = 'Datawire Connect'
-__command__ = 'dcon'
-__file_extension__ = '.dcon'
-__doc_directory__ = 'datawire-connect/' + __doc_product_version__
-__github_directory__ = 'datawire-connect/'
-__main_module__ = 'datawire-connect'
-__core_integration__ = 'datawire-connect-core'
-__netty_integration__ = 'datawire-connect-netty'
-__node_integration__ = 'datawire-connect-node'
-__threaded_integration__ = 'datawire-connect-threaded'
-__twisted_integration__ = 'datawire-connect-twisted'
 
 rst_epilog = "\n.. |doc_version| replace:: %s" % __doc_version__
-
-rst_epilog = rst_epilog + "\n.. |product| replace:: %s" % __product__
-
-rst_epilog = rst_epilog + "\n.. |language| replace:: %s" % __language__
-
-rst_epilog = rst_epilog + "\n.. |command| replace:: %s" % __command__
-
-rst_epilog = rst_epilog + "\n.. |file_extension| replace:: %s" % __file_extension__
-
-rst_epilog = rst_epilog + "\n.. |doc_directory| replace:: %s" % __doc_directory__
-
-rst_epilog = rst_epilog + "\n.. |github_directory| replace:: %s" % __github_directory__
-
-rst_epilog = rst_epilog + "\n.. |main_module| replace:: %s" % __main_module__
-
-rst_epilog = rst_epilog + "\n.. |core_integration| replace:: %s" % __core_integration__
-
-rst_epilog = rst_epilog + "\n.. |netty_integration| replace:: %s" % __netty_integration__
-
-rst_epilog = rst_epilog + "\n.. |node_integration| replace:: %s" % __node_integration__
-
-rst_epilog = rst_epilog + "\n.. |threaded_integration| replace:: %s" % __threaded_integration__
-
-rst_epilog = rst_epilog + "\n.. |twisted_integration| replace:: %s" % __twisted_integration__
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
