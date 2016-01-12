@@ -456,6 +456,9 @@ class Break(Statement):
     def code(self, coder):
         return "break;"
 
+    def copy(self):
+        return Break()
+
 class Continue(Statement):
 
     @property
@@ -464,6 +467,9 @@ class Continue(Statement):
     @coder
     def code(self, coder):
         return "continue;"
+
+    def copy(self):
+        return Continue()
 
 class Assign(Statement):
 
@@ -520,6 +526,9 @@ class While(Statement):
     @coder
     def code(self, coder):
         return "while (%s) %s" % (self.condition.code(coder), self.body.code(coder))
+
+    def copy(self):
+        return While(copy(self.condition), copy(self.body))
 
 class ExprStmt(Statement):
 
