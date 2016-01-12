@@ -142,7 +142,7 @@ def main(args):
             compiler_args["javascript"] = js_dir
         res = compiler.main(filenames, **compiler_args)
         if res is not None:
-            return "quark (compile): %s" % res
+            return "\n".join("quark (compile): %s" % line for line in str(res).split("\n"))
 
     try:
         if "build" in commands:
