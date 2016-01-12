@@ -41,8 +41,8 @@ class _EventProcessor(threading.Thread):
         self.die_now = False
 
     def run(self):
-        startup = True
-        while startup or self.live:
+        main_thread_running = True
+        while main_thread_running or self.live:
             if self.die_now:
                 self.live = _Terminator()
             try:
@@ -67,7 +67,6 @@ class _EventProcessor(threading.Thread):
             finally:
                 self.runtime._notify()
                 self.runtime.release()
-            startup = False
 
 
 # http://stackoverflow.com/questions/4511598/how-to-make-http-delete-method-using-urllib2
@@ -373,6 +372,7 @@ getRuntime = get_runtime
 def wait_for_completion():
     if _threaded_runtime is None:
         return
+    _threaded_runtime.event_thread.main_thread_running = False
     try:
         while _threaded_runtime.event_thread.live:
             time.sleep(1)
