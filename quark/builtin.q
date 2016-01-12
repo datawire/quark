@@ -229,22 +229,20 @@ JSONObject toJSON(Object obj) {
     return result;
 }
 
-// TODO: convert to pull model, cls implied by passed-in object
-// void fromJSON(Object obj, JSONObject json)
-Object fromJSON(reflect.Class cls, JSONObject json) {
+Object fromJSON(Object result, JSONObject json) {
     if (json == null || json.isNull()) { return null; }
     int idx = 0;
+    reflect.Class cls = result.getClass();
     if (cls.name == "List") {
-        List<Object> list = ?cls.construct([]);
+        List<Object> list = ?result;
         while (idx < json.size()) {
-            list.add(fromJSON(cls.parameters[0], json.getListItem(idx)));
+            list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
             idx = idx + 1;
         }
         return list;
     }
 
     List<reflect.Field> fields = cls.getFields();
-    Object result = cls.construct([]);
     while (idx < fields.size()) {
         reflect.Field f = fields[idx];
         idx = idx + 1;
@@ -272,7 +270,7 @@ Object fromJSON(reflect.Class cls, JSONObject json) {
             }
             continue;
         }
-        result.setField(f.name, fromJSON(f.getType(), json[f.name]));
+        result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
     }
     return result;
 }
@@ -597,10 +595,11 @@ class Server<T> extends HTTPServlet {
             response.setBody("Failed to understand request.\n\n" + body + "\n");
             response.setCode(400);
         } else {
-            String method = envelope["$method"];
+            String methodName = envelope["$method"];
             JSONObject json = envelope["rpc"];
-            Object argument = fromJSON(reflect.Class.get(json["$class"]), json);
-            Object result = self.getClass().getField("impl").getType().getMethod(method).invoke(impl,[argument]);
+            reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
+            Object argument = fromJSON(method.getType().construct([]), json);
+            Object result = method.invoke(impl,[argument]);
             response.setBody(toJSON(result).toString());
             response.setCode(200);
         }
@@ -776,7 +775,7 @@ package behaviors {
 
             RPCRequest rpc = new RPCRequest(message, self);
 
-            return rpc.call(request, self.timeout);
+            return rpc.call(request);
         }
 
     }
