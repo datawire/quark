@@ -296,8 +296,10 @@ class Callable(Definition):
         return result
 
     def copy(self):
-        return self.__class__(copy(self.type), copy(self.name),
-                              copy(self.params), copy(self.body))
+        result = self.__class__(copy(self.type), copy(self.name),
+                                copy(self.params), copy(self.body))
+        result.static = self.static
+        return result
 
 class Function(Callable):
     pass
@@ -413,7 +415,9 @@ class Declaration(AST):
             return result
 
     def copy(self):
-        return self.__class__(copy(self.type), copy(self.name), copy(self.value))
+        result = self.__class__(copy(self.type), copy(self.name), copy(self.value))
+        result.static = self.static
+        return result
 
 class Param(Declaration):
     pass
