@@ -3,9 +3,9 @@
 Data Types
 ----------
 
-Quark data types typically have analogues in each target language and Quark uses the equivalent type when generating code in the supported languages.
+{{{language}}} data types typically have analogues in each target language and {{{language}}} uses the equivalent type when generating code in the supported languages.
 
-Quark defines the following data types:
+{{{language}}} defines the following data types:
 
 .. toctree::
    :maxdepth: 1
@@ -15,14 +15,14 @@ Quark defines the following data types:
 bool
 ~~~~
 
-Quark bool values are booleans and indicate truthfulness.
+{{{language}}} bool values are booleans and indicate truthfulness.
 
 Constraints
 +++++++++++
 
-Boolean values are either true or false. Quark represents these states with the keywords true and false.
+Boolean values are either true or false. {{{language}}} represents these states with the keywords true and false.
 
-[[JMK should I discuss null? It compiles in Quark and evaluates to false in js/python, causes NPEs in Java]]
+[[JMK should I discuss null? It compiles in {{{language}}} and evaluates to false in js/python, causes NPEs in Java]]
 
 Generated Code
 ++++++++++++++
@@ -64,12 +64,12 @@ Documentation coming soon.
 float
 ~~~~~
 
-Quark float values are floating point numbers.
+{{{language}}} float values are floating point numbers.
 
 Constraints
 +++++++++++
 
-Floating point values in Quark are constrained only by the rules of each generated language.
+Floating point values in {{{language}}} are constrained only by the rules of each generated language.
 
 Generated Code
 ++++++++++++++
@@ -99,12 +99,12 @@ Floats are translated in generated code as follows:
 int
 ~~~
 
-Quark ints are integers.
+{{{language}}} ints are integers.
 
 Constraints
 +++++++++++
 
-Integers in Quark are constrained only by the rules of each generated language.
+Integers in {{{language}}} are constrained only by the rules of each generated language.
 
 Generated Code
 ++++++++++++++
@@ -130,14 +130,14 @@ Integers are translated in generated code as follows:
 integral
 ~~~~~~~~
 
-The integral type is a base type for all integers. It should not be used directly within Quark code.
+The integral type is a base type for all integers. It should not be used directly within {{{language}}} code.
 
 .. _list:
 
 List
 ~~~~
 
-Quark lists are strongly typed and can contain elements of any other defined data type including other lists and objects.
+{{{language}}} lists are strongly typed and can contain elements of any other defined data type including other lists and objects.
 
 Constraints
 +++++++++++
@@ -170,12 +170,12 @@ Python       _List               constrained by definition
 long
 ~~~~
 
-Quark longs are long integers.
+{{{language}}} longs are long integers.
 
 Constraints
 +++++++++++
 
-Quark does not permit declaration of long literal values by adding L to the end of an integer.
+{{{language}}} does not permit declaration of long literal values by adding L to the end of an integer.
 
 Long integers may be further constrained by the rules of each generated language.
 
@@ -194,27 +194,28 @@ Long integers are translated in generated code as follows:
 | Python     | int     | unlimited                                                   |
 +------------+---------+-------------------------------------------------------------+
 
-Note: Currently Quark can only handle up to 48bit values. See `linkIssue58`_ for more information.
+Note: Currently {{{language}}} can only handle up to 48bit values. See `linkIssue58`_ for more information.
 
-.. _linkIssue58: https://github.com/datawire/quark/issues/58
+.. _linkIssue58: https://github.com/datawire/{{{github_directory}}}/issues/58
 
 .. _numerical:
 
 numerical
 ~~~~~~~~~
-The numerical type is a base type for all numbers. It should not be used directly within Quark code.
+
+The numerical type is a base type for all numbers. It should not be used directly within {{{language}}} code.
 
 .. _map:
 
 Map
 ~~~
 
-Quark Maps are sets of key-value pairs. They do not have an inherent order.
+{{{language}}} Maps are sets of key-value pairs. They do not have an inherent order.
 
 Constraints
 +++++++++++
 
-Quark Maps are strongly typed. Quark supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, Quark expect the values of keys to be immutable. Quark Maps are also constrained by additional rules in
+{{{language}}} Maps are strongly typed. {{{language}}} supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, {{{language}}} expect the values of keys to be immutable. {{{language}}} Maps are also constrained by additional rules in each supported language.
 
 Map types are specified as follows when a new Map is declared:
 
@@ -242,12 +243,12 @@ Python       _Map              constrained by definition
 Object
 ~~~~~~
 
-Quark Objects are objects instantiated from a defined class.
+{{{language}}} Objects are objects instantiated from a defined class. Every other type in {{{language}}} automatically inherits from Object.
 
 Constraints
 +++++++++++
 
-Objects in Quark are constrained only by the relevant class definition and by the rules of each generated language.
+Objects in {{{language}}} are constrained only by the relevant class definition and by the rules of each generated language.
 
 Generated Code
 ++++++++++++++
@@ -273,12 +274,13 @@ Documentation coming soon
 
 String
 ~~~~~~
-Quark Strings are strings of characters.
+
+{{{language}}} Strings are strings of characters.
 
 Constraints
 +++++++++++
 
-Strings in Quark are constrained only by the rules of each generated language. Additional variable-specific constraints such as a set of allowed enumerated values are not supported.
+Strings in {{{language}}} are constrained only by the rules of each generated language. Additional variable-specific constraints such as a set of allowed enumerated values are not supported.
 
 Generated Code
 ++++++++++++++
@@ -306,12 +308,12 @@ Strings are translated in generated code as follows:
 void
 ~~~~
 
-Quark voids are used to indicate functions and methods that do not return a value.
+{{{language}}} voids are used to indicate functions and methods that do not return a value.
 
 Constraints
 +++++++++++
 
-voids in Quark are constrained only by the rules of each generated language.
+voids in {{{language}}} are constrained only by the rules of each generated language.
 
 Generated Code
 ++++++++++++++

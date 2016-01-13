@@ -5,13 +5,13 @@ We now have all of the pieces needed for a simple working RPC example. The instr
 
 To run the HelloRPC example with a Python client and Python Server do the following:
 
-Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``
+Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
 Step 2: Run the server by executing the following command: ``python pyserver.py``. This will result in a blocking wait state - there is no direct output to stdout from the Python server.
 
 Step 3: Open a second terminal window
 
-Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``
+Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
 Step 4: Run the client by executing the following command: ``python pyclient.py``
 
@@ -45,4 +45,4 @@ The value of response.result is set in the server inside the implementation defi
 
 [[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]
 
-That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in Python. You can see the clients and servers running in multiple languages :doc:`here <try>`. or just experiment some more on your own with Python!
+That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in {{{product}}} and have seen those clients and servers in action in Python. You can see the clients and servers running in multiple languages :doc:`here <try>`. or just experiment some more on your own with Python!

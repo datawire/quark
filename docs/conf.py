@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Datawire Connect documentation build configuration file, created by
+# {{{product}}} documentation build configuration file, created by
 # sphinx-quickstart on Mon Oct 26 15:51:49 2015.
 #
 # This file is execfile()d with the current directory set to its
@@ -25,8 +25,46 @@ except ImportError:
 
 __version__ = '0.3.1'
 __doc_version__ = '2'
+#__branch__ = '0.3.x'
+#__doc_product_version__ = '0.3'
+#__product__ = 'Datawire Connect'
+#__language__ = 'Datawire Connect'
+#__command__ = 'dcon'
+#__file_extension__ = '.dcon'
+#__github_directory__ = 'datawire-connect/'
+#__doc_directory__ = __github_directory__ + '/' + __doc_product_version__
+#__main_module__ = 'datawire-connect'
+#__core_integration__ = 'datawire-connect-core'
+#__netty_integration__ = 'datawire-connect-netty'
+#__node_integration__ = 'datawire-connect-node'
+#__threaded_integration__ = 'datawire-connect-threaded'
+#__twisted_integration__ = 'datawire-connect-twisted'
 
 rst_epilog = "\n.. |doc_version| replace:: %s" % __doc_version__
+
+#rst_epilog = rst_epilog + "\n.. |product| replace:: %s" % __product__
+
+#rst_epilog = rst_epilog + "\n.. |language| replace:: %s" % __language__
+
+#rst_epilog = rst_epilog + "\n.. |command| replace:: %s" % __command__
+
+#rst_epilog = rst_epilog + "\n.. |file_extension| replace:: %s" % __file_extension__
+
+#rst_epilog = rst_epilog + "\n.. |doc_directory| replace:: %s" % __doc_directory__
+
+#rst_epilog = rst_epilog + "\n.. |github_directory| replace:: %s" % __github_directory__
+
+#rst_epilog = rst_epilog + "\n.. |main_module| replace:: %s" % __main_module__
+
+#rst_epilog = rst_epilog + "\n.. |core_integration| replace:: %s" % __core_integration__
+
+#rst_epilog = rst_epilog + "\n.. |netty_integration| replace:: %s" % __netty_integration__
+
+#rst_epilog = rst_epilog + "\n.. |node_integration| replace:: %s" % __node_integration__
+
+#rst_epilog = rst_epilog + "\n.. |threaded_integration| replace:: %s" % __threaded_integration__
+
+#rst_epilog = rst_epilog + "\n.. |twisted_integration| replace:: %s" % __twisted_integration__
 
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -61,7 +99,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Datawire Connect'
+project = u'{{{product}}}'
 copyright = u'2015, 2016 Datawire'
 author = u'Datawire'
 
@@ -244,7 +282,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  (master_doc, 'dcon.tex', u'Datawire Connect Documentation',
+  (master_doc, '{{{product}}}.tex', u'{{{product}}} Documentation',
    u'Datawire', 'manual'),
 ]
 
@@ -274,7 +312,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'Datawire Connect', u'Datawire Connect Documentation',
+    (master_doc, '{{{product}}}', u'{{{product}}} Documentation',
      [author], 1)
 ]
 
@@ -288,8 +326,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  (master_doc, 'Datawire Connect', u'Datawire Connect Documentation',
-   author, 'Datawire Connect', 'One line description of project.',
+  (master_doc, '{{{product}}}', u'{{{product}}} Documentation',
+   author, '{{{product}}}', 'One line description of project.',
    'Miscellaneous'),
 ]
 

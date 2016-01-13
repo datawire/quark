@@ -1,6 +1,6 @@
-========================
-Quark Language Reference
-========================
+=================================
+{{{language}}} Language Reference
+=================================
 
 .. toctree::
    :maxdepth: 3
@@ -12,4 +12,4 @@ Quark Language Reference
 
 Document Version
 ================
-Quark Language Reference |release|-|doc_version|
+{{{language}}} Language Reference |release|-|doc_version|
