@@ -3,7 +3,7 @@
 Functions
 ---------
 
-Quark defines the following functions:
+{{{language}}} defines the following functions:
 
 .. toctree::
    :maxdepth: 1

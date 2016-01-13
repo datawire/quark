@@ -7,10 +7,10 @@ Note: If you don't want step-by-step guidance about how to create the client and
 
 .. _part1PythonImport:
 
-Part 1: Importing the Quark Pieces
-----------------------------------
+Part 1: Importing the {{{product}}} Pieces
+------------------------------------------
 
-This section shows you how to import the Quark integration and the HelloRPC contract into your Python client.
+This section shows you how to import the {{{product}}} integration and the HelloRPC contract into your Python client.
 
 Relevant code:
 
@@ -19,13 +19,13 @@ Relevant code:
 
    # Python Hello Client example
    
-   from quark_threaded_runtime import get_runtime
+   from {{{threaded_import}}} import get_runtime
    import hello
    
    
    def main():
 
-The line ``from quark_threaded_runtime import get_runtime`` imports the user-visible portions of the datawire_quark_threaded runtime integration into your client. Note that although the integration is called datawire_quark_threaded, the module name is quark_threaded_runtime
+The line ``from {{{threaded_import}}} import get_runtime`` imports the user-visible portions of the {{{threaded_integration}}} runtime integration into your client. Note that although the integration is called {{{threaded_integration}}}, the module name is {{{threaded_import}}}.
 
 The line ``import hello`` imports the service contract library created and built in previous steps of the tutorial.
 
@@ -43,7 +43,7 @@ Relevant code:
 
    # Python Hello Client example
    
-   from quark_threaded_runtime import get_runtime
+   from {{{threaded_import}}} import get_runtime
    import hello
    
    
@@ -54,7 +54,7 @@ Relevant code:
       request = hello.Request()
 
 
-The line ``runtime=get_runtime()`` instantiates an instance of the quark runtime integration imported in the earlier step.
+The line ``runtime=get_runtime()`` instantiates an instance of the {{{product}}} runtime integration imported in the earlier step.
 
 
 The line ``client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")`` instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at ``http://127.0.0.1:8910/hello``.
@@ -74,7 +74,7 @@ Relevant code:
 
    # Python Hello Client example
    
-   from quark_threaded_runtime import get_runtime
+   from {{{threaded_import}}} import get_runtime
    import hello
    
    
@@ -108,7 +108,7 @@ Relevant code:
 
    # Python Hello Client example
    
-   from quark_threaded_runtime import get_runtime
+   from {{{threaded_import}}} import get_runtime
    import hello
    
    

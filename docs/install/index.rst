@@ -1,6 +1,6 @@
-==========================================
-Quark Installation and Configuration Guide
-==========================================
+==================================================
+{{{product}}} Installation and Configuration Guide
+==================================================
 
 .. toctree::
    :maxdepth: 3
@@ -12,4 +12,4 @@ Quark Installation and Configuration Guide
 
 Document Version
 ================
-Quark Installation and Configuration Guide |release|-|doc_version|
+{{{product}}} Installation and Configuration Guide |release|-|doc_version|

@@ -1,11 +1,11 @@
 Integration Types
 -----------------
 
-Integration types are Quark data types that depend on a runtime integration. These types are typically defined with method signatures rather than with full method code because the desired functionality cannot be consistently defined by Quark code. However, not all integration types use method signatures - some integration types may include method definitions that use other integration types. These integration types look like normal Quark data types but can't be executed without a runtime integration installed because of their dependencies. 
+Integration types are {{{language}}} data types that depend on a runtime integration. These types are typically defined with method signatures rather than with full method code because the desired functionality cannot be consistently defined by {{{language}}} code. However, not all integration types use method signatures - some integration types may include method definitions that use other integration types. These integration types look like normal {{{language}}} data types but can't be executed without a runtime integration installed because of their dependencies. 
 
 More information about the available integrations and how to install them can be found :doc:`here <../install/integration>`.
 
-Quark defines the following integration types:
+{{{language}}} defines the following integration types:
 
 .. toctree::
    :maxdepth: 1

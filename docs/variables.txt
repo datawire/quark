@@ -1,0 +1,22 @@
+// List of variables used in documentation
+// To be substituted by script after doc is generated
+// Assumes that variables can be used inside other definitions; this can be changed
+// (Only uses variables inside definitions if relationship is required)
+// It may make sense to set branch and version info from within release script
+
+
+{{{branch}}}= '0.3.x'
+{{{doc_product_version}}} = '0.3'
+{{{product}}} = 'Datawire Connect'
+{{{language}}} = 'Datawire Connect'
+{{{compiler_command}}}= 'dcon'
+{{{file_extension}}} = '.dcon'
+{{{github_directory}}} = 'datawire-connect/'
+{{{doc_directory}}} = {{{github_directory}}} + '/' + {{{doc_product_version}}}
+{{{main_module}}} = 'datawire-connect'
+{{{core_integration}}} = 'datawire-connect-core'
+{{{netty_integration}}} = 'datawire-connect-netty'
+{{{node_integration}}} = 'datawire-connect-node'
+{{{threaded_integration}}} = 'datawire-connect-threaded'
+{{{twisted_integration}}} = 'datawire-connect-twisted'
+{{{threaded_import}}} = 'datawire_connect_threaded_runtime'

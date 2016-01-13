@@ -3,9 +3,9 @@
 Keywords
 --------
 
-Keywords are reserved words that have a specific meaning within Quark. They cannot be used as names of user-generated content (packages, classes, functions, etc).
+Keywords are reserved words that have a specific meaning within {{{language}}}. They cannot be used as names of user-generated content (packages, classes, functions, etc).
 
-Quark defines the following keywords:
+{{{language}}} defines the following keywords:
 
 .. toctree::
    :maxdepth: 1
@@ -33,7 +33,7 @@ The class keyword syntax is:
 *definition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined) and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined) and *definition* is the list of properties and methods within the class and their definitions.
 
 .. _continueKeyword:
 
@@ -91,7 +91,7 @@ The extends keyword syntax is:
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -99,7 +99,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -107,7 +107,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 .. _falseKeyword:
 
@@ -166,7 +166,7 @@ where *interfaceName* is the name of the interface, used to include it in class 
 macro
 ~~~~~
 
-The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by Quark.
+The macro keyword is used to define a top-level function available to use within any {{{language}}} program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by {{{language}}}.
 
 Syntax
 ++++++
@@ -183,7 +183,7 @@ where *type* is the expected type of the macro results, *parameters* is a comma-
 
 The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See `linkIssue27`_ for more information.
 
-.. _linkIssue27: https://github.com/datawire/quark/issues/27
+.. _linkIssue27: https://github.com/datawire/{{{github_directory}}}/issues/27
 
 .. _newKeyword:
 
@@ -221,7 +221,7 @@ where *variable* is the handle to the value you want to set to null.
 package
 ~~~~~~~
 
-The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any Quark files compiled at the same time as the file or files with the package definition.
+The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any {{{language}}} files compiled at the same time as the file or files with the package definition.
 
 Syntax
 ++++++
@@ -233,16 +233,16 @@ The package keyword syntax is:
 
 **}**
 
-where *definition* is the content of the package and *packageName* is the name of the package. Package names are treated as unique within the scope of the Quark files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. Quark packages cannot be the same as the name of the file they are defined within. See `linkIssue6`_ for more information.
+where *definition* is the content of the package and *packageName* is the name of the package. Package names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. {{{language}}} packages cannot be the same as the name of the file they are defined within. See `linkIssue6`_ for more information.
 
-.. _linkIssue6: https://github.com/datawire/quark/issues/6
+.. _linkIssue6: https://github.com/datawire/{{{github_directory}}}/issues/6
 
 
 .. _primitiveKeyword:
 
 primitive
 ~~~~~~~~~
-The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.
+The primitive keyword is used to define basic data types in {{{language}}}. At the current time it is reserved for use by the system.
 
 .. _returnKeyword:
 
