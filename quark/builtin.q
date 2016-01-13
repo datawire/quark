@@ -940,16 +940,107 @@ package concurrent {
                     remaining = 3141;
                 }
                 self.lock.lock();
-                self.lock.wait(remaining);
+                self.lock.waitWakeup(remaining);
                 self.lock.unlock();
             }
         }
+        void onFuture(Future future) {
+            self.lock.lock();
+            self.lock.wakeup();
+            self.lock.unlock();
+        }
     }
 
+    class EventQueue {
+        List<Event> events;
+        int head;
+        int tail;
+        EventQueue() {
+            self.events = new List<Event>();
+            self.head = 0;
+            self.tail = 0;
+        }
+        void put(Event event) {
+            if (self.tail < self.events.size()) {
+                self.events[self.tail] = event;
+            } else {
+                self.events.add(event);
+            }
+            self.tail = self.tail + 1;
+        }
 
-    // collector cannot be expressed in quark as it'simplementation varies wildly by backend language
-    primitive Collector {
-        void put(Event event);
+        Event get() {
+            Event ret = null;
+            if (self.head < self.tail) {
+                ret = self.events[self.head];
+                self.head = self.head + 1;
+            } else {
+                if (self.head > 0) {
+                    self.head = 0;
+                    self.tail = 0;
+                }
+            }
+            return ret;
+        }
+        int size() {
+            return self.tail - self.head;
+        }
+    }
+
+    class CollectorExecutor extends Task {
+        EventQueue events;
+        Collector collector;
+        CollectorExecutor(Collector collector) {
+            self.events = new EventQueue();
+            self.collector = collector;
+        }
+        void start() {
+            self.events = self.collector._swap(self.events);
+            if (self.events.size() > 0) {
+                Context.current().runtime.schedule(self, 0.0);
+            }
+        }
+        void onExecute(Runtime runtime) {
+            Event next = self.events.get();
+            while(next != null) {
+                next.fireEvent();
+                next = self.events.get();
+            }
+            self.collector._poll();
+        }
+    }
+
+    class Collector {
+        Mutex lock;
+        EventQueue pending;
+        CollectorExecutor executor;
+        bool draining;
+        Collector() {
+            self.lock = new Mutex();
+            self.pending = new EventQueue();
+            self.executor = new CollectorExecutor(self);
+            self.draining = false;
+        }
+        void put(Event event) {
+            self.lock.lock();
+            self.pending.put(event);
+            if (!self.draining) {
+                self.executor.start();
+            }
+            self.lock.unlock();
+        }
+        EventQueue _swap(EventQueue drained) {
+            // internal method always called under a lock
+            EventQueue pending = self.pending;
+            self.draining = pending.size() > 0;
+            self.pending = drained;
+            return pending;
+        }
+        void _poll() {
+            self.lock.lock();
+            self.executor.start();
+            self.lock.unlock();
+        }
     }
 
     interface TimeoutListener {
@@ -962,6 +1053,9 @@ package concurrent {
        TimeoutExpiry(Timeout timeout, TimeoutListener listener) {
            self.timeout = timeout;
            self.listener = listener;
+       }
+       EventContext getContext() {
+           return self.timeout;
        }
        void fireEvent() {
            self.listener.onTimeout(self.timeout);
@@ -987,7 +1081,7 @@ package concurrent {
             self.lock.unlock();
         }
 
-        void onExecute() {
+        void onExecute(Runtime runtime) {
             self.lock.lock();
             if (self.listener != null) {
                 self.context.collector.put(new TimeoutExpiry(self, self.listener));
@@ -1029,15 +1123,20 @@ package concurrent {
         T getValue();
     }
 
-    primitive TLS<T> {
-        TLS(TLSInitializer<T> initializer) {}
-        T getValue();
+    class TLS<T> {
+        T _value;
+        TLS(TLSInitializer<T> initializer) {
+            self._value = initializer.getValue();
+        }
+        T getValue() {
+            return self._value;
+        }
     }
 
     class Mutex {
-        void lock();
-        void unlock();
-        void wait(long timeout);
-        void notify();
+        void lock() {}
+        void unlock() {}
+        void waitWakeup(long timeout) {}
+        void wakeup() {}
     }
 }
