@@ -1125,11 +1125,11 @@ package concurrent {
     }
 
     @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS})
-    primitive TLS<T> {
-        macro TLS(TLSInitializer<T> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
+    primitive TLS<Context> { // FIXME: work around the compiler bug by renaming the template parameter to the only user
+        macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
                                                        $py{_TLSInitializer($initializer)}
                                                        $js{new _qrt.TLSInitializer($initializer)};
-        T getValue();
+        Context getValue();
     }
 
     @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex})
