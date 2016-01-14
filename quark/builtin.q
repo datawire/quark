@@ -868,14 +868,14 @@ package concurrent {
         bool _finished;
         String error;
         List<FutureCompletion> _callbacks;
-        Mutex lock;
+        Lock lock;
         Future() {
             self._finished = false;
             self._callbacks = null;
-            self.lock = new Mutex();
+            self.lock = new Lock();
         }
         void onFinished(FutureListener callback) {
-            self.lock.lock(); // XXX: block-scoped locks, pleeze
+            self.lock.acquire(); // XXX: block-scoped locks, pleeze
             if (self._finished) {
                 self.context.collector.put(new FutureCompletion(self, callback));
             } else {
@@ -884,18 +884,18 @@ package concurrent {
                 }
                 self._callbacks.add(new FutureCompletion(self, callback));
             }
-            self.lock.unlock();
+            self.lock.release();
         }
         void finish(String error) {
             List<FutureCompletion> callbacks = null;
-            self.lock.lock();
+            self.lock.acquire();
             if (!self._finished) {
                 self._finished = true;
                 self.error = error;
                 callbacks = self._callbacks; // transfer to local
                 self._callbacks = null;
             }
-            self.lock.unlock();
+            self.lock.release();
             if (callbacks != null) {
                 int i = 0;
                 while (i < callbacks.size()) {
@@ -905,23 +905,23 @@ package concurrent {
             }
         }
         bool isFinished() {
-            self.lock.lock();
+            self.lock.acquire();
             bool finished = self._finished;
-            self.lock.unlock();
+            self.lock.release();
             return finished;
         }
 
         String getError() {
-            self.lock.lock();
+            self.lock.acquire();
             String error = self.error;
-            self.lock.unlock();
+            self.lock.release();
             return error;
         }
     }
 
     @doc("Synchronization point for a future. TODO: make sure not to call from a runtime thread (implies anywhere in Node)")
     class FutureWait extends FutureListener {
-        Mutex lock;
+        Condition lock;
         Future future;
         FutureWait(Future future) {
             if (!future.isFinished()) {
@@ -939,15 +939,15 @@ package concurrent {
                 } else {
                     remaining = 3141;
                 }
-                self.lock.lock();
+                self.lock.acquire();
                 self.lock.waitWakeup(remaining);
-                self.lock.unlock();
+                self.lock.release();
             }
         }
         void onFuture(Future future) {
-            self.lock.lock();
+            self.lock.acquire();
             self.lock.wakeup();
-            self.lock.unlock();
+            self.lock.release();
         }
     }
 
@@ -1011,23 +1011,23 @@ package concurrent {
     }
 
     class Collector {
-        Mutex lock;
+        Lock lock;
         EventQueue pending;
         CollectorExecutor executor;
         bool draining;
         Collector() {
-            self.lock = new Mutex();
+            self.lock = new Lock();
             self.pending = new EventQueue();
             self.executor = new CollectorExecutor(self);
             self.draining = false;
         }
         void put(Event event) {
-            self.lock.lock();
+            self.lock.acquire();
             self.pending.put(event);
             if (!self.draining) {
                 self.executor.start();
             }
-            self.lock.unlock();
+            self.lock.release();
         }
         EventQueue _swap(EventQueue drained) {
             // internal method always called under a lock
@@ -1037,9 +1037,9 @@ package concurrent {
             return pending;
         }
         void _poll() {
-            self.lock.lock();
+            self.lock.acquire();
             self.executor.start();
-            self.lock.unlock();
+            self.lock.release();
         }
     }
 
@@ -1064,7 +1064,7 @@ package concurrent {
 
   class Timeout extends EventContext, Task {
         long timeout;
-        Mutex lock;
+        Lock lock;
         TimeoutListener listener;
         Timeout(long timeout) {
             self.timeout = timeout;
@@ -1076,18 +1076,18 @@ package concurrent {
             Context.current().runtime.schedule(self, delay);
         }
         void cancel() {
-            self.lock.lock();
+            self.lock.acquire();
             self.listener = null;
-            self.lock.unlock();
+            self.lock.release();
         }
 
         void onExecute(Runtime runtime) {
-            self.lock.lock();
+            self.lock.acquire();
             if (self.listener != null) {
                 self.context.collector.put(new TimeoutExpiry(self, self.listener));
                 self.listener = null;
             }
-            self.lock.unlock();
+            self.lock.release();
         }
     }
 
@@ -1119,23 +1119,31 @@ package concurrent {
         
     }
 
-    interface TLSInitializer<T> {
+    @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer})
+    primitive TLSInitializer<T> {
         T getValue();
     }
 
-    class TLS<T> {
-        T _value;
-        TLS(TLSInitializer<T> initializer) {
-            self._value = initializer.getValue();
-        }
-        T getValue() {
-            return self._value;
-        }
+    @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS})
+    primitive TLS<T> {
+        macro TLS(TLSInitializer<T> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
+                                                       $py{_TLSInitializer($initializer)}
+                                                       $js{new _qrt.TLSInitializer($initializer)};
+        T getValue();
     }
 
-    class Mutex {
-        void lock() {}
-        void unlock() {}
+    @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex})
+    primitive Mutex {
+        void acquire();
+        void release();
+    }
+
+    @mapping($java{io.datawire.quark.runtime.Lock} $py{_Lock} $js{_qrt.Lock})
+    primitive Lock extends Mutex {
+    }
+
+    @mapping($java{io.datawire.quark.runtime.Condition} $py{_Condition} $js{_qrt.Condition})
+    primitive Condition extends Mutex {
         void waitWakeup(long timeout) {}
         void wakeup() {}
     }
