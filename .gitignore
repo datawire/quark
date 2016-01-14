@@ -63,3 +63,6 @@ target/
 
 # node modules
 **/node_modules/
+
+# Doc script testing
+docs/replace-test-copy.html
