@@ -14,12 +14,6 @@ public class ServerServiceStub implements Service {
     }
 
     @Override
-    public Runtime getRuntime() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public Long getTimeout() {
         // TODO Auto-generated method stub
         return null;

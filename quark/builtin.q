@@ -316,14 +316,18 @@ primitive HTTPResponse {
 
 @mapping($java{io.datawire.quark.runtime.Task})
 primitive Task {
-    void onExecute(Runtime runtime);
+    void onExecute(Runtime runtime); // XXX: right now, context is not
+                                     // restored for these. We should
+                                     // offer a context-aware
+                                     // scheduling API on top and have
+                                     // this as internal thing
 }
 
 @mapping($java{io.datawire.quark.runtime.Runtime})
 primitive Runtime {
-    void acquire();
-    void release();
-    void wait(float timeoutInSeconds);
+    macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
+                    $py{_RuntimeFactory()}
+                    $js{_qrt.RuntimeFactory()};
     void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
@@ -545,7 +549,6 @@ class ResponseHolder extends HTTPHandler {
 interface Service {
 
     String getURL();
-    Runtime getRuntime();
     long getTimeout();
 
     concurrent.Future rpc(String name, Object message, List<Object> options) {
@@ -558,17 +561,14 @@ interface Service {
 
 class Client {
 
-    Runtime runtime;
     String url;
     long timeout;
 
-    Client(Runtime runtime, String url) {
-        self.runtime = runtime;
+    Client(String url) {
         self.url = url;
         self.timeout = 0;
     }
 
-    Runtime getRuntime() { return self.runtime; }
     String getURL() { return self.url; }
     long getTimeout() { return self.timeout; }
     void setTimeout(long timeout) {
@@ -593,21 +593,17 @@ class ServerResponder extends concurrent.FutureListener {
             self.response.setBody(toJSON(result).toString());
             self.response.setCode(200);
         }
-        concurrent.Context.current().runtime.respond(request, response);
+        concurrent.Context.runtime().respond(request, response);
     }
 }
 
 class Server<T> extends HTTPServlet {
 
-    Runtime runtime;
     T impl;
 
-    Server(Runtime runtime, T impl) {
-        self.runtime = runtime;
+    Server(T impl) {
         self.impl = impl;
     }
-
-    Runtime getRuntime() { return self.runtime; }
 
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
         String body = request.getBody();
@@ -617,7 +613,7 @@ class Server<T> extends HTTPServlet {
             envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
             response.setBody("Failed to understand request.\n\n" + body + "\n");
             response.setCode(400);
-            getRuntime().respond(request, response);
+            concurrent.Context.runtime().respond(request, response);
         } else {
             String methodName = envelope["$method"];
             JSONObject json = envelope["rpc"];
@@ -631,7 +627,11 @@ class Server<T> extends HTTPServlet {
     }
 
     void onServletError(String url, String message) {
-        getRuntime().fail("RPC Server failed to register " + url + " due to: " + message);
+        concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + message);
+    }
+
+    void serve(String url) {
+        concurrent.Context.runtime().serveHTTP(url, self);
     }
 
 }
@@ -772,7 +772,6 @@ package behaviors {
         String name;
 
         RPC(Service service, String name, List<Object> options) {
-            Runtime rt = service.getRuntime();
             long timeout = service.getTimeout();
             if (options.size() > 0) {
                 Map<String,Object> map = ?options[0];
@@ -784,6 +783,7 @@ package behaviors {
             self.returned = service.getClass().getMethod(name).getType();
             self.timeout = timeout;
             self.name = name;
+            self.service = service;
         }
 
         concurrent.Future call(Object message) {
@@ -822,7 +822,7 @@ package behaviors {
 
         concurrent.Future call(HTTPRequest request) {
             self.timeout.start(self);
-            concurrent.Context.current().runtime.request(request, self);
+            concurrent.Context.runtime().request(request, self);
             return self.retval;
 
         }
@@ -1051,7 +1051,7 @@ package concurrent {
             // internal method, always called under a collector lock
             self.events = self.collector._swap(self.events);
             if (self.events.size() > 0) {
-                Context.current().runtime.schedule(self, 0.0);
+                concurrent.Context.runtime().schedule(self, 0.0);
             }
         }
         void onExecute(Runtime runtime) {
@@ -1135,7 +1135,7 @@ package concurrent {
         void start(TimeoutListener listener) {
             self.listener = listener;
             float delay = 0.001 * self.timeout;
-            Context.current().runtime.schedule(self, delay);
+            concurrent.Context.runtime().schedule(self, delay);
         }
         void cancel() {
             self.lock.acquire();
@@ -1171,6 +1171,10 @@ package concurrent {
             return _global;
         }
 
+        static Runtime runtime() {
+            return current()._runtime;
+        }
+
         static void swap(Context c) {
             _current.setValue(c);
         }
@@ -1190,22 +1194,21 @@ package concurrent {
         //  - magically mapped to static-like properties? "<magic> String foo;" carries enough information
 
         Context(Context parent) {
-            self.parent = parent;
+            self._parent = parent;
             if (parent == null) {
                 // global context
-                self.runtime = null; // XXX: instantiate the runtime somewhere here
+                self._runtime = new Runtime();
                 self.collector = new Collector();
             } else {
-                self.runtime = parent.runtime;
+                self._runtime = parent._runtime;
                 self.collector = parent.collector;
             }
         }
 
         // XXX: should these be also stored using the same mechanism as user data?
-        Context parent;
-        Runtime runtime;
+        Context _parent;
+        Runtime _runtime;
         Collector collector;
-        
     }
 
     @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer})
