@@ -623,6 +623,7 @@ class Server<T> extends HTTPServlet {
             Object argument = fromJSON(method.getType().construct([]), json);
             concurrent.Future result = ?method.invoke(impl,[argument]);
             result.onFinished(new ServerResponder(request, response));
+            // XXX: we should also start a timeout here if the impl does not .finish() the result
         }
     }
 
