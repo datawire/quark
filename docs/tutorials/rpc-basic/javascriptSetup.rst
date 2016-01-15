@@ -8,4 +8,4 @@ We expect you to have the following tools installed as prerequisites:
 
 If you haven't already done so, run the following command to install the {{{product}}} Node integration:
 
-``npm install {{{node_integration}}}
+``npm install {{{node_integration}}}``
