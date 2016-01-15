@@ -13,4 +13,5 @@ public class TLS<T> {
     }
 
     public T getValue() { return value.get(); }
+    public void setValue(T t) { value.set(t); }
 }

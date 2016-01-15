@@ -1046,10 +1046,13 @@ package concurrent {
         }
         void onExecute(Runtime runtime) {
             Event next = self.events.get();
+            Context old = Context.current();
             while(next != null) {
+                Context.swap(next.getContext().getContext());
                 next.fireEvent();
                 next = self.events.get();
             }
+            Context.swap(old);
             self.collector._poll();
         }
     }
@@ -1151,6 +1154,9 @@ package concurrent {
             return _global;
         }
 
+        static void swap(Context c) {
+            _current.setValue(c);
+        }
         Context(Context parent) {
             self.parent = parent;
             self.runtime = null;
@@ -1174,6 +1180,7 @@ package concurrent {
                                                        $py{_TLSInitializer($initializer)}
                                                        $js{new _qrt.TLSInitializer($initializer)};
         Context getValue();
+        void setValue(Context c);
     }
 
     @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex})
