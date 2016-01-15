@@ -795,7 +795,10 @@ package behaviors {
 
             RPCRequest rpc = new RPCRequest(message, self);
 
-            return rpc.call(request);
+            concurrent.Future result = rpc.call(request);
+            concurrent.FutureWait.waitFor(result, 1000);
+            // XXX: sync users still need to check result.getError()...
+            return result;
         }
 
     }
@@ -939,16 +942,21 @@ package concurrent {
         }
     }
 
-    @doc("Synchronization point for a future. TODO: make sure not to call from a runtime thread (implies anywhere in Node)")
+    @doc("Synchronization point for a Future.)")
     class FutureWait extends FutureListener {
         Condition lock;
         Future future;
-        FutureWait(Future future) {
-            if (!future.isFinished()) {
-                future.onFinished(self);
-            }
+        FutureWait() {
+            self.lock = new Condition();
         }
-        void wait(long timeout) {
+        // TODO: make sure not to call from a runtime thread (implies
+        // anywhere in Node
+        void wait(Future future, long timeout) {
+            if (future.isFinished()) {
+                return;
+            }
+            self.future = future;
+            future.onFinished(self);
             long deadline = now() + timeout;
             while(!self.future.isFinished()) {
                 long remaining = deadline - now();
@@ -968,6 +976,22 @@ package concurrent {
             self.lock.acquire();
             self.lock.wakeup();
             self.lock.release();
+        }
+
+        static Future waitFor(Future future, long timeout) {
+            // XXX: probably check if current thread is allowed to
+            // wait -- which should never be true for quark threads
+            // and configurable for user threads, probably through a
+            // context, or through a dedicated TLS
+            if (false) { 
+                // TODO: it should be possible to reuse a FutureWait and have one per thread
+                FutureWait w = new FutureWait();
+                w.wait(future, timeout);
+                if (!future.isFinished()) {
+                    // XXX: sync contract is broken if there was timeout. fail the future?
+                }
+            }
+            return future;
         }
     }
 
