@@ -1,7 +1,7 @@
 Pick a Language
 ===============
 
-Quark supports Python, Java, and Javascript. This tutorial illustrates how to create a simple RPC client and server in each language. Pick your language for the example below:
+{{{product}}} supports Python, Java, and Javascript. This walkthrough illustrates how to create a simple RPC client and server in each language. Pick your language for the example below:
 
 * :doc:`Python <pythonSetup>`
 * :doc:`Java <javaSetup>` (Coming Soon)

@@ -14,13 +14,13 @@ Part 1: Python Client and Python Server
 
 To run the HelloRPC example with a Python client and Python Server do the following:
 
-Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``
+Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
 Step 2: Run the server by executing the following command: ``python pyserver.py``. This will result in a blocking wait state - there is no direct output to stdout from the Python server.
 
 Step 3: Open a second terminal window
 
-Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``
+Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local product git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
 Step 4: Run the client by executing the following command: ``python pyclient.py``
 
@@ -61,7 +61,7 @@ The Hello RPC service is hard coded to run at http://127.0.0.1:8910/hello. All o
 
 Step 1: Open a new terminal window
 
-Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``.
+Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``.
 
 Step 3: Run the Javascript server by executing the following command: ``node jsserver.js``.
 
@@ -85,7 +85,7 @@ You should already have the Python server running. Let's use the Java client to 
 
 Step 1: Open a new terminal window
 
-Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``.
+Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``.
 
 Step 3: Run the following command to build the client: ``mvn compile``
 
@@ -111,4 +111,4 @@ Note that there are subtle differences in the output from different combinations
 
 [[JMK I'm not sure if I should keep or kill the above observation - it's interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients so this is not a distraction.]]
 
-That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!
+That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in {{{product}}} and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!

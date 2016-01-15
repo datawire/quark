@@ -1,11 +1,11 @@
 Integration Interfaces
 ----------------------
 
-Integration interfaces are Quark interfaces that use integration types within their definition and thus require a runtime integration when used. You must install the runtime integration matching your development environment to use any of these interfaces.
+Integration interfaces are {{{language}}} interfaces that use integration types within their definition and thus require a runtime integration when used. You must install the runtime integration matching your development environment to use any of these interfaces.
 
 More information about the available integrations and how to install them can be found :doc:`here <../install/integration>`.
 
-Quark defines the following integration interfaces:
+{{{language}}} defines the following integration interfaces:
 
 .. toctree::
    :maxdepth: 1

@@ -6,7 +6,7 @@ Getting Started with RPC Walkthrough
    :maxdepth: 3
 
    Introduction to RPC <intro>
-   Quark RPC Support <setup>
+   {{{product}}} RPC Support <setup>
    Defining the Service Contract <contract>
    Supported Languages <language>
    Python: Requirements and Setup <pythonSetup>

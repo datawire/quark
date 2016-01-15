@@ -1,7 +1,7 @@
 Language Elements
 =================
 
-Quark supports the following language elements:
+{{{language}}} supports the following language elements:
 
 .. toctree::
    :maxdepth: 2

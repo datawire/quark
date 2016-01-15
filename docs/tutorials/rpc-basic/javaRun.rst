@@ -7,7 +7,7 @@ To run the HelloRPC example with a Java client and Java Server do the following:
 
 Step 1: Open a new terminal window
 
-Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``.
+Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``.
 
 Step 3: Run the following command to build the client and the server: ``mvn compile``
 
@@ -15,7 +15,7 @@ Step 4: Run the following command to start the Java server: ``mvn exec:java -Dex
 
 Step 5: Open a new terminal window
 
-Step 6: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: ``cd ~/quark/examples/helloRPC``.
+Step 6: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``.
 
 Step 7: Run the following command to start the Java client: ``mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCClient``
 
@@ -28,4 +28,4 @@ After some log lines outlining the processing, you should see the following in t
 
 The content of the second line is the server regurgitating what the client sent it then identifying its own language. In this case, the Java client sent "Hello from Java!" to the Java server so both language identifiers are Java.
 
-That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in Java. You can see the clients and servers running in multiple languages :doc:`here <try>`. or just experiment some more on your own with Java!
+That's it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in {{{product}}} and have seen those clients and servers in action in Java. You can see the clients and servers running in multiple languages :doc:`here <try>`. or just experiment some more on your own with Java!
