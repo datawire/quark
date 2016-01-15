@@ -1,5 +1,4 @@
 #!/bin/bash
-# set -o verbose
 
 # This script uses the directives in variables.txt to process all the HTML files
 # within the docs directory, replacing any strings of the form {{{term}}} with
@@ -15,4 +14,4 @@ while read p; do
   echo Replacing $tofind with $torepl
   eval $cmd
 done<variables.txt
-echo Done.
+echo Substitutions done.
