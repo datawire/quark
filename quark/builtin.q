@@ -574,6 +574,26 @@ class Client {
 
 }
 
+class ServerResponder extends concurrent.FutureListener {
+    HTTPRequest request;
+    HTTPResponse response;
+    ServerResponder(HTTPRequest request, HTTPResponse response) {
+        self.request = request;
+        self.response = response;
+    }
+
+    void onFuture(concurrent.Future result) {
+        String error = result.getError();
+        if (error != null) {
+            response.setCode(404);
+        } else {
+            self.response.setBody(toJSON(result).toString());
+            self.response.setCode(200);
+        }
+        concurrent.Context.current().runtime.respond(request, response);
+    }
+}
+
 class Server<T> extends HTTPServlet {
 
     Runtime runtime;
@@ -594,16 +614,16 @@ class Server<T> extends HTTPServlet {
             envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
             response.setBody("Failed to understand request.\n\n" + body + "\n");
             response.setCode(400);
+            getRuntime().respond(request, response);
         } else {
             String methodName = envelope["$method"];
             JSONObject json = envelope["rpc"];
+            // XXX: contexty stuff
             reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
             Object argument = fromJSON(method.getType().construct([]), json);
-            Object result = method.invoke(impl,[argument]);
-            response.setBody(toJSON(result).toString());
-            response.setCode(200);
+            concurrent.Future result = ?method.invoke(impl,[argument]);
+            result.onFinished(new ServerResponder(request, response));
         }
-        getRuntime().respond(request, response);
     }
 
     void onServletError(String url, String message) {
