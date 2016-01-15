@@ -1,15 +1,15 @@
 {{{branch}}};0.3.x
 {{{doc_product_version}}};0.3
-{{{product}}};Datawire Connect
-{{{language}}};Datawire Connect
-{{{compiler_command}}};dcon
-{{{file_extension}}};.dcon
-{{{github_directory}}};datawire-connect
-{{{doc_directory}}};datawire-connect/0.3
-{{{main_module}}};datawire-connect
-{{{core_integration}}};datawire-connect-core
-{{{netty_integration}}};datawire-connect-netty
-{{{node_integration}}};datawire-connect-node
-{{{threaded_integration}}};datawire-connect-threaded
-{{{twisted_integration}}};datawire-connect-twisted
-{{{threaded_import}}};datawire_connect_threaded_runtime
+{{{product}}};Quark
+{{{language}}};Quark
+{{{compiler_command}}};quark
+{{{file_extension}}};.q
+{{{github_directory}}};quark
+{{{doc_directory}}};quark/0.3
+{{{main_module}}};datawire-quark
+{{{core_integration}}};datawire-quark-core
+{{{netty_integration}}};datawire-quark-netty
+{{{node_integration}}};datawire-quark-node
+{{{threaded_integration}}};datawire-quark-threaded
+{{{twisted_integration}}};datawire-quark-twisted
+{{{threaded_import}}};datawire_quark_threaded_runtime
