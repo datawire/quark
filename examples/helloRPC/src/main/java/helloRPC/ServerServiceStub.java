@@ -1,7 +1,8 @@
 package helloRPC;
 
 import io.datawire.quark.runtime.Runtime;
-import hello.Service; // XXX: this should come from quark runtime package
+import quark.Service; // XXX: this should come from quark runtime package
+import quark.concurrent.Future;
 
 // XXX: server really doesn't need those, they are for client...
 public class ServerServiceStub implements Service {
@@ -25,7 +26,7 @@ public class ServerServiceStub implements Service {
     }
 
     @Override
-    public Object rpc(String name, Object message, java.util.ArrayList<Object> options) {
+    public Future rpc(String name, Object message, java.util.ArrayList<Object> options) {
         // TODO Auto-generated method stub
         return null;
     }

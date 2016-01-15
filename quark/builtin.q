@@ -7,7 +7,7 @@ primitive Object {
                                     $py{($self) != ($other)}
                                     $js{($self) !== ($other)};
 
-    macro reflect.Class getClass() reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
+    macro quark.reflect.Class getClass() quark.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
                                                      $py{_getClass($self)}
                                                      $js{_qrt._getClass($self)});
     macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
@@ -177,102 +177,6 @@ primitive Map<K,V> {
     macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                              $py{_urlencode($self)}
                              $js{_qrt.urlencode($self)};
-}
-
-JSONObject toJSON(Object obj) {
-    JSONObject result = new JSONObject();
-    if (obj == null) {
-        result.setNull();
-        return result;
-    }
-
-    reflect.Class cls = obj.getClass();
-    int idx = 0;
-
-    if (cls.name == "String") {
-        result.setString(?obj);
-        return result;
-    }
-
-    if (cls.name == "byte" ||
-        cls.name == "short" ||
-        cls.name == "int" ||
-        cls.name == "long" ||
-        cls.name == "float") {
-        result.setNumber(obj);
-        return result;
-    }
-
-    if (cls.name == "List") {
-        result.setList();
-        List<Object> list = ?obj;
-        while (idx < list.size()) {
-            result.setListItem(idx, toJSON(list[idx]));
-            idx = idx + 1;
-        }
-        return result;
-    }
-
-    if (cls.name == "Map") {
-        result.setObject();
-        Map<String,Object> map = ?obj;
-        // XXX: need more JSON APIs to actually finish this
-        return result;
-    }
-
-    result["$class"] = cls;
-    List<reflect.Field> fields = cls.getFields();
-    while (idx < fields.size()) {
-        result[fields[idx].name] = toJSON(obj.getField(fields[idx].name));
-        idx = idx + 1;
-    }
-    return result;
-}
-
-Object fromJSON(Object result, JSONObject json) {
-    if (json == null || json.isNull()) { return null; }
-    int idx = 0;
-    reflect.Class cls = result.getClass();
-    if (cls.name == "List") {
-        List<Object> list = ?result;
-        while (idx < json.size()) {
-            list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
-            idx = idx + 1;
-        }
-        return list;
-    }
-
-    List<reflect.Field> fields = cls.getFields();
-    while (idx < fields.size()) {
-        reflect.Field f = fields[idx];
-        idx = idx + 1;
-        if (f.getType().name == "String") {
-            String s = json[f.name];
-            result.setField(f.name, s);
-            continue;
-        }
-        if (f.getType().name == "float") {
-            float flt = json[f.name];
-            result.setField(f.name, flt);
-            continue;
-        }
-        if (f.getType().name == "int") {
-            if (!json[f.name].isNull()) {
-                int i = json[f.name];
-                result.setField(f.name, i);
-            }
-            continue;
-        }
-        if (f.getType().name == "bool") {
-            if (!json[f.name].isNull()) {
-                bool b = json[f.name];
-                result.setField(f.name, b);
-            }
-            continue;
-        }
-        result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
-    }
-    return result;
 }
 
 @mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
@@ -523,6 +427,105 @@ primitive HTTPServlet extends Servlet {
 primitive WSServlet extends Servlet {
     @doc("called for each new incoming WebSocket connection")
     WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
+}
+
+package quark {
+
+
+JSONObject toJSON(Object obj) {
+    JSONObject result = new JSONObject();
+    if (obj == null) {
+        result.setNull();
+        return result;
+    }
+
+    quark.reflect.Class cls = obj.getClass();
+    int idx = 0;
+
+    if (cls.name == "String") {
+        result.setString(?obj);
+        return result;
+    }
+
+    if (cls.name == "byte" ||
+        cls.name == "short" ||
+        cls.name == "int" ||
+        cls.name == "long" ||
+        cls.name == "float") {
+        result.setNumber(obj);
+        return result;
+    }
+
+    if (cls.name == "List") {
+        result.setList();
+        List<Object> list = ?obj;
+        while (idx < list.size()) {
+            result.setListItem(idx, toJSON(list[idx]));
+            idx = idx + 1;
+        }
+        return result;
+    }
+
+    if (cls.name == "Map") {
+        result.setObject();
+        Map<String,Object> map = ?obj;
+        // XXX: need more JSON APIs to actually finish this
+        return result;
+    }
+
+    result["$class"] = cls;
+    List<quark.reflect.Field> fields = cls.getFields();
+    while (idx < fields.size()) {
+        result[fields[idx].name] = toJSON(obj.getField(fields[idx].name));
+        idx = idx + 1;
+    }
+    return result;
+}
+
+Object fromJSON(Object result, JSONObject json) {
+    if (json == null || json.isNull()) { return null; }
+    int idx = 0;
+    quark.reflect.Class cls = result.getClass();
+    if (cls.name == "List") {
+        List<Object> list = ?result;
+        while (idx < json.size()) {
+            list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
+            idx = idx + 1;
+        }
+        return list;
+    }
+
+    List<quark.reflect.Field> fields = cls.getFields();
+    while (idx < fields.size()) {
+        quark.reflect.Field f = fields[idx];
+        idx = idx + 1;
+        if (f.getType().name == "String") {
+            String s = json[f.name];
+            result.setField(f.name, s);
+            continue;
+        }
+        if (f.getType().name == "float") {
+            float flt = json[f.name];
+            result.setField(f.name, flt);
+            continue;
+        }
+        if (f.getType().name == "int") {
+            if (!json[f.name].isNull()) {
+                int i = json[f.name];
+                result.setField(f.name, i);
+            }
+            continue;
+        }
+        if (f.getType().name == "bool") {
+            if (!json[f.name].isNull()) {
+                bool b = json[f.name];
+                result.setField(f.name, b);
+            }
+            continue;
+        }
+        result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
+    }
+    return result;
 }
 
 class ResponseHolder extends HTTPHandler {
@@ -1235,4 +1238,5 @@ package concurrent {
         void waitWakeup(long timeout) {}
         void wakeup() {}
     }
+}
 }
