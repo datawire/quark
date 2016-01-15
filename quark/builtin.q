@@ -760,6 +760,7 @@ package reflect {
 
 package behaviors {
 
+    // an instance of this could be the target of the @delegate annotation.
     class RPC {
         Service service;
         reflect.Class returned;
@@ -823,12 +824,13 @@ package behaviors {
         }
 
         void onHTTPResponse(HTTPRequest rq, HTTPResponse response) {
+            self.timeout.cancel(); // technically not strictly necessary as future fires only once
+
             if (response.getCode() != 200) {
                 self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned error " + response.getCode().toString());
                 return;
             }
 
-            
             String body = response.getBody();
             JSONObject obj = body.parseJSON();
             String classname = obj["$class"];
@@ -850,7 +852,7 @@ package behaviors {
 
 package concurrent {
 
-    @doc("internal representation of an event")
+    @doc("The contract between event implementations and Collector")
     interface Event {
         EventContext getContext();
         void fireEvent();
@@ -877,7 +879,7 @@ package concurrent {
         }
     }
 
-    @doc("Captures the current context")
+    @doc("Captures the current context, base class for all event source implementations")
     class EventContext {
         Context context;
         EventContext() {
@@ -886,8 +888,9 @@ package concurrent {
         Context getContext() { return self.context; }
     }
 
-    @doc("a")
+    @doc("The base class for value objects")
     class Future extends EventContext {
+        // XXX: Future members will mess with with toJSON/fromJSON
         bool _finished;
         String error;
         List<FutureCompletion> _callbacks;
@@ -1031,6 +1034,7 @@ package concurrent {
         }
     }
 
+    @doc("Fire events one by one with no locks held")
     class CollectorExecutor extends Task {
         EventQueue events;
         Collector collector;
@@ -1038,7 +1042,8 @@ package concurrent {
             self.events = new EventQueue();
             self.collector = collector;
         }
-        void start() {
+        void _start() {
+            // internal method, always called under a collector lock
             self.events = self.collector._swap(self.events);
             if (self.events.size() > 0) {
                 Context.current().runtime.schedule(self, 0.0);
@@ -1053,10 +1058,11 @@ package concurrent {
                 next = self.events.get();
             }
             Context.swap(old);
-            self.collector._poll();
+            self.collector._poll(); // rearm for events that accumulated in the meantime
         }
     }
 
+    @doc("An active queue of events. Each event will fire sequentially, one by one. Multiple instances of Collector are not serialized with eachother and may run in parallel.")
     class Collector {
         Lock lock;
         EventQueue pending;
@@ -1072,29 +1078,32 @@ package concurrent {
             self.lock.acquire();
             self.pending.put(event);
             if (self.idle) {
-                self.executor.start();
+                self.executor._start();
             }
             self.lock.release();
         }
         EventQueue _swap(EventQueue drained) {
-            // internal method always called under a lock
+            // internal method, always called under a lock
             EventQueue pending = self.pending;
             self.idle = pending.size() == 0;
             self.pending = drained;
             return pending;
         }
         void _poll() {
+            // internal method
             self.lock.acquire();
-            self.executor.start();
+            self.executor._start();
             self.lock.release();
         }
     }
 
+    @doc("Timeout expiry handler")
     interface TimeoutListener {
         void onTimeout(Timeout timeout);
     }
 
-   class TimeoutExpiry extends Event {
+    @doc("Timeout expiry event")
+    class TimeoutExpiry extends Event {
        Timeout timeout;
        TimeoutListener listener;
        TimeoutExpiry(Timeout timeout, TimeoutListener listener) {
@@ -1107,9 +1116,10 @@ package concurrent {
        void fireEvent() {
            self.listener.onTimeout(self.timeout);
        }
-   }
+    }
 
-  class Timeout extends EventContext, Task {
+    @doc("Timeout")
+    class Timeout extends EventContext, Task {
         long timeout;
         Lock lock;
         TimeoutListener listener;
@@ -1138,12 +1148,14 @@ package concurrent {
         }
     }
 
+    @doc("internal")
     class TLSContextInitializer extends TLSInitializer<Context> {
         Context getValue() {
             return new Context(Context.global());
         }
     }
 
+    @doc("The logical stack for async stuff.")
     class Context {
         static Context _global = new Context(null);
         static TLS<Context> _current = new TLS<Context>(new TLSContextInitializer());
@@ -1157,12 +1169,34 @@ package concurrent {
         static void swap(Context c) {
             _current.setValue(c);
         }
+
+        // XXX: push / pop ?  seems like it would be best if
+        // push/pop were balanced automatically -- they only need to
+        // be balanced at the point of push, async method will be
+        // switch-to the right leaf by the collector
+
+        // nested Context leave cleanup to GC -- we do not track events associated with a context
+
+        // XXX: user data storage: a map?
+        //  - keyed by Object?
+        //  - by string?
+        //  - by class?
+        //  - hidden by flyweight accessor / annotations (key object offering typesafe get/set methods)
+        //  - magically mapped to static-like properties? "<magic> String foo;" carries enough information
+
         Context(Context parent) {
             self.parent = parent;
-            self.runtime = null;
-            self.collector = null;
+            if (parent == null) {
+                // global context
+                self.runtime = null; // XXX: instantiate the runtime somewhere here
+                self.collector = new Collector();
+            } else {
+                self.runtime = parent.runtime;
+                self.collector = parent.collector;
+            }
         }
 
+        // XXX: should these be also stored using the same mechanism as user data?
         Context parent;
         Runtime runtime;
         Collector collector;
@@ -1175,7 +1209,8 @@ package concurrent {
     }
 
     @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS})
-    primitive TLS<Context> { // FIXME: work around the compiler bug by renaming the template parameter to the only user
+    primitive TLS<Context> {
+        // FIXME: work around the compiler bug by renaming the template parameter to the only user
         macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
                                                        $py{_TLSInitializer($initializer)}
                                                        $js{new _qrt.TLSInitializer($initializer)};
