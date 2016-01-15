@@ -1061,17 +1061,17 @@ package concurrent {
         Lock lock;
         EventQueue pending;
         CollectorExecutor executor;
-        bool draining;
+        bool idle;
         Collector() {
             self.lock = new Lock();
             self.pending = new EventQueue();
             self.executor = new CollectorExecutor(self);
-            self.draining = false;
+            self.idle = true;
         }
         void put(Event event) {
             self.lock.acquire();
             self.pending.put(event);
-            if (!self.draining) {
+            if (self.idle) {
                 self.executor.start();
             }
             self.lock.release();
@@ -1079,7 +1079,7 @@ package concurrent {
         EventQueue _swap(EventQueue drained) {
             // internal method always called under a lock
             EventQueue pending = self.pending;
-            self.draining = pending.size() > 0;
+            self.idle = pending.size() == 0;
             self.pending = drained;
             return pending;
         }
