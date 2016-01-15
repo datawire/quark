@@ -998,28 +998,29 @@ package concurrent {
         }
     }
 
-    class EventQueue {
-        List<Event> events;
+    @doc("A simple FIFO")
+    class Queue<T> {
+        List<T> items;
         int head;
         int tail;
-        EventQueue() {
-            self.events = new List<Event>();
+        Queue() {
+            self.items = new List<T>();
             self.head = 0;
             self.tail = 0;
         }
-        void put(Event event) {
-            if (self.tail < self.events.size()) {
-                self.events[self.tail] = event;
+        void put(T item) {
+            if (self.tail < self.items.size()) {
+                self.items[self.tail] = item;
             } else {
-                self.events.add(event);
+                self.items.add(item);
             }
             self.tail = self.tail + 1;
         }
 
-        Event get() {
-            Event ret = null;
+        T get() {
+            T item = null;
             if (self.head < self.tail) {
-                ret = self.events[self.head];
+                item = self.items[self.head];
                 self.head = self.head + 1;
             } else {
                 if (self.head > 0) {
@@ -1027,7 +1028,7 @@ package concurrent {
                     self.tail = 0;
                 }
             }
-            return ret;
+            return item;
         }
         int size() {
             return self.tail - self.head;
@@ -1036,10 +1037,10 @@ package concurrent {
 
     @doc("Fire events one by one with no locks held")
     class CollectorExecutor extends Task {
-        EventQueue events;
+        Queue<Event> events;
         Collector collector;
         CollectorExecutor(Collector collector) {
-            self.events = new EventQueue();
+            self.events = new Queue<Event>();
             self.collector = collector;
         }
         void _start() {
@@ -1065,12 +1066,12 @@ package concurrent {
     @doc("An active queue of events. Each event will fire sequentially, one by one. Multiple instances of Collector are not serialized with eachother and may run in parallel.")
     class Collector {
         Lock lock;
-        EventQueue pending;
+        Queue<Event> pending;
         CollectorExecutor executor;
         bool idle;
         Collector() {
             self.lock = new Lock();
-            self.pending = new EventQueue();
+            self.pending = new Queue<Event>();
             self.executor = new CollectorExecutor(self);
             self.idle = true;
         }
@@ -1082,9 +1083,9 @@ package concurrent {
             }
             self.lock.release();
         }
-        EventQueue _swap(EventQueue drained) {
+        Queue<Event> _swap(Queue<Event> drained) {
             // internal method, always called under a lock
-            EventQueue pending = self.pending;
+            Queue<Event> pending = self.pending;
             self.idle = pending.size() == 0;
             self.pending = drained;
             return pending;
