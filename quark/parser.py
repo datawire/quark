@@ -127,7 +127,7 @@ class Parser:
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('pkg_definition = annotation* (package / class / function)')
+    @g.rule('pkg_definition = annotation* (package / class / function / macro)')
     def visit_pkg_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn
