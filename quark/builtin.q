@@ -1131,6 +1131,7 @@ package concurrent {
         Timeout(long timeout) {
             self.timeout = timeout;
             self.listener = null;
+            self.lock = new Lock();
         }
         void start(TimeoutListener listener) {
             self.listener = listener;
