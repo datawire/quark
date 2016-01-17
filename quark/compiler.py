@@ -726,7 +726,7 @@ class Reflector:
         methods = []
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
-        for m in get_methods(cls).values():
+        for m in get_methods(cls, False).values():
             mid = "%s_%s_Method" % (self.mdname(cid), m.name.text)
             mtype = self.qtype(texpr(m.type.resolved.type, bindings, m.type.resolved.bindings))
             margs = [self.qtype(texpr(p.resolved.type, bindings, p.resolved.bindings))
