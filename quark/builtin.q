@@ -435,7 +435,7 @@ primitive WSServlet extends Servlet {
 
 package quark {
 
-
+@doc("Serializes object tree into JSON. skips over fields starting with underscore")
 JSONObject toJSON(Object obj) {
     JSONObject result = new JSONObject();
     if (obj == null) {
@@ -480,12 +480,16 @@ JSONObject toJSON(Object obj) {
     result["$class"] = cls;
     List<quark.reflect.Field> fields = cls.getFields();
     while (idx < fields.size()) {
-        result[fields[idx].name] = toJSON(obj.getField(fields[idx].name));
+        String fieldName = fields[idx].name;
+        if (!fieldName.startsWith("_")) {
+            result[fieldName] = toJSON(obj.getField(fieldName));
+        }
         idx = idx + 1;
     }
     return result;
 }
 
+@doc("deserialize json into provided result object. Skip over fields starting with underscore")
 Object fromJSON(Object result, JSONObject json) {
     if (json == null || json.isNull()) { return null; }
     int idx = 0;
@@ -503,6 +507,9 @@ Object fromJSON(Object result, JSONObject json) {
     while (idx < fields.size()) {
         quark.reflect.Field f = fields[idx];
         idx = idx + 1;
+        if (f.name.startsWith("_")) {
+            continue;
+        }
         if (f.getType().name == "String") {
             String s = json[f.name];
             result.setField(f.name, s);
@@ -619,7 +626,9 @@ class Server<T> extends HTTPServlet {
             JSONObject json = envelope["rpc"];
             // XXX: contexty stuff
             reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
-            Object argument = fromJSON(method.getType().construct([]), json);
+            reflect.Class argType = reflect.Class.get(method.parameters[0]);
+            Object arg = argType.construct([]);
+            Object argument = fromJSON(arg, json);
             concurrent.Future result = ?method.invoke(impl,[argument]);
             result.onFinished(new ServerResponder(request, response));
             // XXX: we should also start a timeout here if the impl does not .finish() the result
@@ -885,76 +894,76 @@ package concurrent {
 
     @doc("Captures the current context, base class for all event source implementations")
     class EventContext {
-        Context context;
+        Context _context;
         EventContext() {
-            self.context = Context.current();
+            self._context = Context.current();
         }
-        Context getContext() { return self.context; }
+        Context getContext() { return self._context; }
     }
 
     @doc("The base class for value objects")
     class Future extends EventContext {
-        // XXX: Future members will mess with with toJSON/fromJSON
         bool _finished;
-        String error;
+        String _error;
         List<FutureCompletion> _callbacks;
-        Lock lock;
+        Lock _lock;
         Future() {
             self._finished = false;
             self._callbacks = null;
-            self.lock = new Lock();
+            self._lock = new Lock();
         }
         void onFinished(FutureListener callback) {
-            self.lock.acquire(); // XXX: block-scoped locks, pleeze
+            self._lock.acquire(); // XXX: block-scoped locks, pleeze
             if (self._finished) {
-                self.context.collector.put(new FutureCompletion(self, callback));
+                self._context.collector.put(new FutureCompletion(self, callback));
             } else {
                 if (self._callbacks == null) {
                     self._callbacks = [];
                 }
                 self._callbacks.add(new FutureCompletion(self, callback));
             }
-            self.lock.release();
+            self._lock.release();
         }
         void finish(String error) {
             List<FutureCompletion> callbacks = null;
-            self.lock.acquire();
+            self._lock.acquire();
             if (!self._finished) {
                 self._finished = true;
-                self.error = error;
+                self._error = error;
                 callbacks = self._callbacks; // transfer to local
                 self._callbacks = null;
             }
-            self.lock.release();
+            self._lock.release();
             if (callbacks != null) {
                 int i = 0;
                 while (i < callbacks.size()) {
-                    self.context.collector.put(callbacks[i]);
+                    self._context.collector.put(callbacks[i]);
                     i = i + 1;
                 }
             }
         }
         bool isFinished() {
-            self.lock.acquire();
+            self._lock.acquire();
             bool finished = self._finished;
-            self.lock.release();
+            self._lock.release();
             return finished;
         }
 
         String getError() {
-            self.lock.acquire();
-            String error = self.error;
-            self.lock.release();
+            self._lock.acquire();
+            String error = self._error;
+            self._lock.release();
             return error;
         }
     }
 
     @doc("Synchronization point for a Future.)")
     class FutureWait extends FutureListener {
-        Condition lock;
-        Future future;
+        Condition _lock;
+        Future _future;
         FutureWait() {
-            self.lock = new Condition();
+            self._lock = new Condition();
+            self._future = null;
         }
         // TODO: make sure not to call from a runtime thread (implies
         // anywhere in Node
@@ -962,10 +971,10 @@ package concurrent {
             if (future.isFinished()) {
                 return;
             }
-            self.future = future;
-            future.onFinished(self);
+            self._future = future;
+            self._future.onFinished(self);
             long deadline = now() + timeout;
-            while(!self.future.isFinished()) {
+            while(!self._future.isFinished()) {
                 long remaining = deadline - now();
                 if (timeout != 0) {
                     if (remaining <= 0) {
@@ -974,15 +983,16 @@ package concurrent {
                 } else {
                     remaining = 3141;
                 }
-                self.lock.acquire();
-                self.lock.waitWakeup(remaining);
-                self.lock.release();
+                self._lock.acquire();
+                self._lock.waitWakeup(remaining);
+                self._lock.release();
             }
+            self._future = null;
         }
         void onFuture(Future future) {
-            self.lock.acquire();
-            self.lock.wakeup();
-            self.lock.release();
+            self._lock.acquire();
+            self._lock.wakeup();
+            self._lock.release();
         }
 
         static Future waitFor(Future future, long timeout) {
@@ -1147,7 +1157,7 @@ package concurrent {
         void onExecute(Runtime runtime) {
             self.lock.acquire();
             if (self.listener != null) {
-                self.context.collector.put(new TimeoutExpiry(self, self.listener));
+                self._context.collector.put(new TimeoutExpiry(self, self.listener));
                 self.listener = null;
             }
             self.lock.release();
