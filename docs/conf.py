@@ -16,13 +16,6 @@ import sys
 import os
 import shlex
 
-try:
-    from better import better_theme_path
-    better_theme = True
-except ImportError:
-    sys.stderr.write("Could not import bootstrap theme. Is it installed?%s" % os.linesep)
-    better_theme = False
-
 __version__ = '0.3.1'
 __doc_version__ = '2'
 
@@ -122,14 +115,9 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if better_theme:
-    html_theme_path = [better_theme_path]
-    html_theme = 'better'
-    html_theme_options = {
-        'linktotheme': False,
-    }
-else:
-    html_theme = 'haiku'
+html_theme = 'theme'
+html_theme_path = ['.']
+html_theme_options = {}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
