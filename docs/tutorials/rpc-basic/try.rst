@@ -7,22 +7,22 @@ We now have all of the pieces needed for a simple working RPC example. The instr
 * :doc:`Building and installing in Java<javaBuild>`
 * :doc:`Building and installing in Javascript<javascriptBuild>`
 
-Let's start by using the Python client we wrote to talk to the Python server we wrote. 
+If you completed the previous portions of the RPC walkthrough in your language of choice, you've already seen one example of a helloRPC client talking to a local helloRPC server in the same language. If you skipped that step, would like to review it, or if you chose a different language to work in and would like to see the Python example running, Part 1 reviews how to use a Python client to talk to a local Python server (using the examples supplied in the {{{product}}} GitHub repository). Otherwise, feel free to skip to :ref:`Part 2<part2TryRPC>` and the additional examples that follow. 
 
 Part 1: Python Client and Python Server
 ---------------------------------------
 
 To run the HelloRPC example with a Python client and Python Server do the following:
 
-Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
+Step 1: Move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
 Step 2: Run the server by executing the following command: ``python pyserver.py``. This will result in a blocking wait state - there is no direct output to stdout from the Python server.
 
 Step 3: Open a second terminal window
 
-Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local product git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
+Step 4: Move to the HelloRPC directory within your local product git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
-Note: If you use the prebuilt client file from the GitHub repository, you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from ``http://hello.datawire.io`` to ``http://127.0.0.1:8910/hello``. For more information, refer to the :ref:`client instantiation section of the walkthrough<part2PythonClientInstantiation>`.
+Note: You must edit the supplied client file (pyclient.py) to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from ``http://hello.datawire.io`` to ``http://127.0.0.1:8910/hello``. For more information, refer to the :ref:`client instantiation section of the walkthrough<part2PythonClientInstantiation>`.
 
 Step 4: Run the client by executing the following command: ``python pyclient.py``
 
