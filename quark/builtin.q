@@ -7,7 +7,7 @@ primitive Object {
                                     $py{($self) != ($other)}
                                     $js{($self) !== ($other)};
 
-    macro quark.reflect.Class getClass() quark.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
+    macro quarkrt.reflect.Class getClass() quarkrt.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
                                                      $py{_getClass($self)}
                                                      $js{_qrt._getClass($self)});
     macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
@@ -433,7 +433,7 @@ primitive WSServlet extends Servlet {
     WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
 }
 
-package quark {
+package quarkrt {
 
 @doc("Serializes object tree into JSON. skips over fields starting with underscore")
 JSONObject toJSON(Object obj) {
@@ -443,7 +443,7 @@ JSONObject toJSON(Object obj) {
         return result;
     }
 
-    quark.reflect.Class cls = obj.getClass();
+    quarkrt.reflect.Class cls = obj.getClass();
     int idx = 0;
 
     if (cls.name == "String") {
@@ -478,7 +478,7 @@ JSONObject toJSON(Object obj) {
     }
 
     result["$class"] = cls;
-    List<quark.reflect.Field> fields = cls.getFields();
+    List<quarkrt.reflect.Field> fields = cls.getFields();
     while (idx < fields.size()) {
         String fieldName = fields[idx].name;
         if (!fieldName.startsWith("_")) {
@@ -493,7 +493,7 @@ JSONObject toJSON(Object obj) {
 Object fromJSON(Object result, JSONObject json) {
     if (json == null || json.isNull()) { return null; }
     int idx = 0;
-    quark.reflect.Class cls = result.getClass();
+    quarkrt.reflect.Class cls = result.getClass();
     if (cls.name == "List") {
         List<Object> list = ?result;
         while (idx < json.size()) {
@@ -503,9 +503,9 @@ Object fromJSON(Object result, JSONObject json) {
         return list;
     }
 
-    List<quark.reflect.Field> fields = cls.getFields();
+    List<quarkrt.reflect.Field> fields = cls.getFields();
     while (idx < fields.size()) {
-        quark.reflect.Field f = fields[idx];
+        quarkrt.reflect.Field f = fields[idx];
         idx = idx + 1;
         if (f.name.startsWith("_")) {
             continue;

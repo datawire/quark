@@ -740,7 +740,7 @@ class Reflector:
             invoke = "        obj.%s(%s);\n        return null;" % (name, args)
         else:
             invoke = "        return obj.%s(%s);" % (name, args)
-        return """    class %(mid)s extends quark.reflect.Method {
+        return """    class %(mid)s extends quarkrt.reflect.Method {
         %(mid)s() {
             super("%(type)s", "%(name)s", [%(params)s]);
         }
@@ -803,9 +803,9 @@ class Reflector:
             construct = "new %s(%s)" % (id, ", ".join(['?args[%s]' % i for i in range(nparams)]))
 
         return """%(mdefs)s
-    class %(mdname)s extends quark.reflect.Class {
+    class %(mdname)s extends quarkrt.reflect.Class {
 
-        static quark.reflect.Class singleton = new %(mdname)s();
+        static quarkrt.reflect.Class singleton = new %(mdname)s();
 
         %(mdname)s() {
             super("%(id)s");
@@ -826,7 +826,7 @@ class Reflector:
             "mdname": self.mdname(id),
             "name": cls.name,
             "parameters": params,
-            "fields": ", ".join(['new quark.reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
+            "fields": ", ".join(['new quarkrt.reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
             "construct": construct}
@@ -873,7 +873,7 @@ class Reflector:
         void _setField(String name, Object value) {}
 """ % mdpkg
         for cls in mdclasses:
-            self.code += "        static quark.reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
+            self.code += "        static quarkrt.reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
         self.code += "    }\n}"
 
 class Compiler:
@@ -1004,7 +1004,7 @@ class Compiler:
                 self.icompile(method)
         for cls, deps in ref.metadata.items():
             for dep in deps:
-                field = Parser().rule("field", "static quark.reflect.Class %s_ref = %s;" % (dep, deps[dep]))
+                field = Parser().rule("field", "static quarkrt.reflect.Class %s_ref = %s;" % (dep, deps[dep]))
                 cls.definitions.append(field)
                 field.traverse(Crosswire(cls))
                 self.icompile(field)
