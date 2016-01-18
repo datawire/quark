@@ -7,6 +7,7 @@ Getting Started with RPC Walkthrough
 
    Introduction to RPC <intro>
    {{{product}}} RPC Support <setup>
+   Quickly Trying RPC <quicktry>
    Defining the Service Contract <contract>
    Supported Languages <language>
    Python: Requirements and Setup <pythonSetup>
