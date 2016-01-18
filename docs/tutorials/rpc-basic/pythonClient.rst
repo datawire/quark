@@ -3,6 +3,8 @@ Creating the Python Client
 
 Let's start by creating a simple Hello World client using the compiled Hello contract in Python.
 
+This walkthrough assumes that your client file is named ``pyclient.py`` but there is no requirement that you do so. Please substitute your file name for pyclient.py everywhere if you choose a different name.
+
 Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, go directly to the :ref:`full client code <fullExamplePythonClientLocal>` displayed in the last step on this page (this client points to a local server) or to this :ref:`link to the full Python client pointing to the cloud server<fullExamplePythonClientCloud>`.
 
 .. _part1PythonImport:
