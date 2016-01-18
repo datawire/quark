@@ -22,6 +22,8 @@ Step 3: Open a second terminal window
 
 Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local product git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
+Note: If you use the prebuilt client file from the GitHub repository, you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from ``http://hello.datawire.io`` to ``http://127.0.0.1:8910/hello``. For more information, refer to the :ref:`client instantiation section of the walkthrough<part2PythonClientInstantiation>`.
+
 Step 4: Run the client by executing the following command: ``python pyclient.py``
 
 You should see the following in your terminal window (stdout):
@@ -54,10 +56,10 @@ The value of response.result is set in the server inside the implementation defi
 
 [[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]
 
-Part 2: Running Two Servers
----------------------------
+Part 2: Running Two Local Servers
+---------------------------------
 
-The Hello RPC service is hard coded to run at http://127.0.0.1:8910/hello. All of the servers and clients assume the service is there. Because all three servers use the same URI, only one server can be running at any given time. Try to launch a second server in Javascript while the Python server is still running as follows:
+The local Hello RPC service is hard coded to run at http://127.0.0.1:8910/hello. All of the servers and clients assume the service is there. Because all three servers use the same URI, only one server can be running at any given time. Try to launch a second server in Javascript while the Python server is still running as follows:
 
 Step 1: Open a new terminal window
 
@@ -79,13 +81,21 @@ You will get a similar error if you try to start a second Python server or a Jav
 Part 3: Mixing Client and Server Languages
 ------------------------------------------
 
-You can run either client (Java or Python) against any of the three servers (Java, Javascript, or Python). The only rule is that only one server can be running at a time (as illustrated in Part 2).
+You can run either client (Java or Python) against any of the three servers (Java, Javascript, or Python). The only rule is that only one local server can be running at a time (as illustrated in Part 2).
 
-You should already have the Python server running. Let's use the Java client to connect to that server as follows:
+You should already have the local Python server running if you completed Part 1 of this page. Let's use the Java client to connect to that server as follows:
 
 Step 1: Open a new terminal window
 
 Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``.
+
+Note: You must edit the prebuilt client file to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, do the following after Step 2:
+
+Step 2.1: Move to the Java source directory (``cd src/main/java/helloRPC``)
+
+Step 2.2: Open HelloRPCClient.java in the text editor of your choice
+
+Step 2.3: Change the URL passed when instantiating the client object from ``http://hello.datawire.io`` to ``http://127.0.0.1:8910/hello``.
 
 Step 3: Run the following command to build the client: ``mvn compile``
 
