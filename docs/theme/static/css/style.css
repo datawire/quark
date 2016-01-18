@@ -1,30 +1,3 @@
 @import url("../alabaster.css");
-
-@font-face {
-  font-family: "Centuma";
-  src: url("../fonts/Centuma-Regular.otf") format("opentype");
-}
-
-@font-face {
-  font-family: "Centuma Light";
-  src: url("../fonts/Centuma-Light.otf") format("opentype");
-}
-
-body {
-  font-family: "Centuma Light", "Arial", sans-serif;
-  font-size: 0.89rem;
-  letter-spacing: 0.01rem;
-}
-
-div.body h1,
-div.body h2,
-div.body h3,
-div.body h4,
-div.body h5,
-div.body h6 {
-  font-family: "Centuma", "Arial", sans-serif;
-}
-
-header {
-  background-color: #e94c38;
-}
+@import url("type.css");
+@import url("layout.css");
