@@ -1,12 +1,7 @@
 {%- extends "basic/layout.html" %}
 
 {%- block header %}
-<header role="banner">
-  <div class="logo">Datawire</div>
-  <div class="search">
-    <input type="text" placeholder="Search">
-  </div>
-</header>
+    {%- include "header.html" %}
 {% endblock %}
 
 {%- block extrahead %}
@@ -59,4 +54,7 @@
 
     </script>
     {% endif %}
+
+    <script src="{{ pathto('_static/js/main.js', 1) }}" />
+
 {%- endblock %}
