@@ -1,24 +1,27 @@
 package io.datawire.quark.runtime;
 
-public class Condition implements Mutex {
+import java.util.concurrent.TimeUnit;
 
-    @Override
-    public void acquire() {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void release() {
-        // TODO Auto-generated method stub
-
-    }
-
+public class Condition extends Lock implements Mutex {
+    java.util.concurrent.locks.Condition condition = lock.newCondition();
 
     public void waitWakeup(long timeout) {
-
+        if (!lock.isHeldByCurrentThread()) {
+            String msg = "Illegal waitWakeup of a not-acquired quark Lock.";
+            fail(msg);
+        }
+        try {
+            condition.await(timeout, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            // ignore
+        }
     }
 
     public void wakeup() {
+        if (!lock.isHeldByCurrentThread()) {
+            String msg = "Illegal wakeup of a not-acquired quark Lock.";
+            fail(msg);
+        }
+        condition.signal();
     }
 }
