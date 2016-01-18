@@ -47,5 +47,5 @@ def compile(path, file_filter):
             assert_file(astpath, ast.pprint())
     except (CompileError, ParseError), e:
         expected = base + ".err"
-        computed = str(e)
+        computed = str(e).replace(os.path.dirname(path) + "/", "")
         assert_file(expected, computed)

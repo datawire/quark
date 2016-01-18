@@ -883,13 +883,12 @@ class Compiler:
         self.parser = Parser()
         self.annotators = OrderedDict()
         self.emitters = []
-        with open(BUILTIN, "rb") as fd:
-            self.parse(BUILTIN, fd.read())
         self.generated = OrderedDict()
         self.annotator("delegate", delegate)
         self.parsed = set()
         self.included = OrderedDict()
         self.dependencies = []
+        self.perform_quark_include(BUILTIN, None, 0)  # XXX None here will cause a worse crash on IOError
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -919,7 +918,7 @@ class Compiler:
 
     def urlparse(self, url, depth=0, top=True):
         try:
-            file = self.parse(os.path.basename(url), self.read(url))
+            file = self.parse(url, self.read(url))
             file.depth = depth
         except IOError, e:
             if top:
@@ -928,25 +927,31 @@ class Compiler:
                 raise
         for u in file.uses.values():
             qurl = self.join(url, u.url)
-            if qurl not in self.parsed:
-                self.parsed.add(qurl)
-                self.dependencies.append(qurl)
-                try:
-                    u.target = self.urlparse(qurl, depth=depth + 1, top=False)
-                except IOError, e:
-                    raise CompileError("%s: error reading file: %s" % (lineinfo(u), u.url))
+            self.perform_use(qurl, u, depth)
         for inc in file.includes.values():
             qurl = self.join(url, inc.url)
             if qurl.endswith(".q"):
-                if qurl not in self.parsed:
-                    self.parsed.add(qurl)
-                    try:
-                        self.urlparse(qurl, depth=depth, top=False)
-                    except IOError, e:
-                        raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))
+                self.perform_quark_include(qurl, inc, depth)
             elif qurl not in self.included:
                 self.included[qurl] = self.read(qurl)
         return file
+
+    def perform_use(self, qurl, use, depth):
+        if qurl not in self.parsed:
+            self.parsed.add(qurl)
+            self.dependencies.append(qurl)
+            try:
+                use.target = self.urlparse(qurl, depth=depth + 1, top=False)
+            except IOError:
+                raise CompileError("%s: error reading file: %s" % (lineinfo(use), use.url))  # XXX qurl instead?
+
+    def perform_quark_include(self, qurl, inc, depth):
+        if qurl not in self.parsed:
+            self.parsed.add(qurl)
+            try:
+                self.urlparse(qurl, depth=depth, top=False)
+            except IOError:
+                raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
     def join(self, base, rel):
         return urllib.basejoin(base, rel)
