@@ -75,7 +75,7 @@ class Backend(object):
 
         roots = []
         for rpkg in [p.name.text for p in self.packages if p.package is None]:
-            if rpkg != "reflect" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg)
+            if rpkg != "quark" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg)
         if len(roots) > 1:
             roots.sort()
             roots += ["common"]
@@ -117,8 +117,8 @@ class Backend(object):
             # to import classes on demand at the point of use rather
             # than into the module/package level scope.
             raw_imports = self._imports[name].keys()
-            refimps = filter(lambda x: x[0][0] == "reflect", raw_imports)
-            imports = filter(lambda x: x[0][0] != "reflect", raw_imports)
+            refimps = filter(lambda x: x[0][0] == "quark", raw_imports)
+            imports = filter(lambda x: x[0][0] != "quark", raw_imports)
 
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)
