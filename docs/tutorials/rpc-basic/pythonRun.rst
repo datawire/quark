@@ -3,7 +3,7 @@ Running the Python Client and Server
 
 We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python as outlined on the :doc:`Compiling and Installing the Library page <pythonBuild>` earlier in the tutorial. If you have not done this, please do so now before trying the steps below.
 
-To run the HelloRPC example with a Python client and Python Server do the following:
+To run the HelloRPC example with a Python client against a local Python Server do the following:
 
 Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
@@ -13,7 +13,9 @@ Step 3: Open a second terminal window
 
 Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: ``cd ~/{{{github_directory}}}/examples/helloRPC``
 
-Step 4: Run the client by executing the following command: ``python pyclient.py``
+Note: If you use the prebuilt client file from the GitHub repository, you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from ``http://hello.datawire.io`` to ``http://127.0.0.1:8910/hello``. For more information, refer to the :ref:`client instantiation section of the walkthrough<part2PythonClientInstantiation>`.
+
+Step 5: Run the client by executing the following command: ``python pyclient.py``
 
 You should see the following in your terminal window (stdout):
 
