@@ -1,3 +1,5 @@
 @import url("alabaster.css");
 
-body { color: red }
+header {
+  background-color: #e94c38;
+}
