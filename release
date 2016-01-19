@@ -357,7 +357,7 @@ def docs(args):
         run("touch", ".nojekyll", cwd=dest)
         run("git", "rm", "-r", "--ignore-unmatch", short, cwd=dest)
         run("sphinx-build", "-q", "docs", os.path.join(dest, short), cwd=base())
-        run(base("docs/substitute.sh"))
+        run(base("docs/substitute.sh"), dest))
         run("git", "add", ".", cwd=dest)
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
         run("git", "push", cwd=dest)
