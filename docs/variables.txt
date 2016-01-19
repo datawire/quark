@@ -1,6 +1,6 @@
 {{{branch}}};0.3.x
 {{{doc_product_version}}};0.3
-{{{product}}};Quark
+{{{product}}};Datawire Connect
 {{{language}}};Quark
 {{{compiler_command}}};quark
 {{{file_extension}}};.q
