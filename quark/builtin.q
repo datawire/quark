@@ -326,8 +326,8 @@ primitive Task {
 @mapping($java{io.datawire.quark.runtime.Runtime})
 primitive Runtime {
     macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
-                    $py{_RuntimeFactory()}
-                    $js{_qrt.RuntimeFactory()};
+                    $py{_RuntimeFactory.create()}
+                    $js{_qrt.RuntimeFactory.create()};
     void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);
@@ -1231,8 +1231,8 @@ package concurrent {
     primitive TLS<Context> {
         // FIXME: work around the compiler bug by renaming the template parameter to the only user
         macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
-                                                       $py{_TLSInitializer($initializer)}
-                                                       $js{new _qrt.TLSInitializer($initializer)};
+                                                       $py{_TLS($initializer)}
+                                                       $js{new _qrt.TLS($initializer)};
         Context getValue();
         void setValue(Context c);
     }
