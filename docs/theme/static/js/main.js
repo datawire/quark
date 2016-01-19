@@ -3,7 +3,7 @@
     $(document).ready(function () {
         var $search = $('.dw-search');
         var $searchInput = $search.find('[type=text]');
-        var focusClass = 'focus';
+        var focusClass = 'active';
         var addFocusLabel = $search.addClass.bind($search, focusClass);
         var requestFocusLabelRemoval = function requestFocusLabelRemoval () {
             if (this.value === '') {

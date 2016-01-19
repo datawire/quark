@@ -1,27 +1,29 @@
 @font-face {
-  font-family: "Centuma";
-  src: url("../fonts/Centuma-Regular.otf") format("opentype");
+    font-family: "Centuma";
+    src: url("../fonts/Centuma-Regular.otf") format("opentype");
 }
 
 @font-face {
-  font-family: "Centuma Light";
-  src: url("../fonts/Centuma-Light.otf") format("opentype");
+    font-family: "Centuma Light";
+    src: url("../fonts/Centuma-Light.otf") format("opentype");
 }
 
 body {
-  font-family: "Centuma Light", "Arial", sans-serif;
-  font-size: 0.89rem;
-  letter-spacing: 0.01rem;
+    font-family: "Centuma", "Arial", sans-serif;
+    font-size: 0.89rem;
+    letter-spacing: 0.01rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 div.body {
-  color: #959798;
+    color: #959798;
 }
 
 div.body p,
 div.body dd,
 div.body li {
-  line-height: 1.5rem;
+    line-height: 1.5rem;
 }
 
 div.body h1,
@@ -30,16 +32,16 @@ div.body h3,
 div.body h4,
 div.body h5,
 div.body h6 {
-  font-family: "Centuma", "Arial", sans-serif;
-  color: #0b3b4c;
+    font-family: "Centuma", "Arial", sans-serif;
+    color: #0b3b4c;
 }
 
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
-  font-family: "Centuma", "Arial", sans-serif;
-  color: #0b3b4c;
+    font-family: "Centuma", "Arial", sans-serif;
+    color: #0b3b4c;
 }
 
 input {
-  font-family: "Centuma Light", "Arial", sans-serif;
+    font-family: "Centuma Light", "Arial", sans-serif;
 }
