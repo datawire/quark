@@ -381,6 +381,12 @@ class Backend(object):
 
     @overload(If)
     def statement(self, iff):
+        # print (iff.predicate)
+        # print repr(iff.predicate)
+        # print repr(iff.predicate.__class__)
+        # print self.expr(iff.predicate)
+        # print repr(self.expr(iff.predicate))
+        assert self.expr(iff.predicate),      self.expr(iff.predicate)
         return self.gen.if_(self.expr(iff.predicate),
                             self.block(iff.consequence),
                             self.block(iff.alternative))
@@ -404,7 +410,10 @@ class Backend(object):
     @overload(Call)
     def expr(self, c):
         type = c.expr.resolved.type
-        return self.invoke(type, c.expr, [self.coerce(a) for a in c.args])
+        r = self.invoke(type, c.expr, [self.coerce(a) for a in c.args])
+        # print type, repr(r)
+        # assert r
+        return r
 
     @overload(String)
     def expr(self, s):

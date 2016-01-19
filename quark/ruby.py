@@ -27,6 +27,8 @@ def {name}({parameters})
 end
 """.format
 
+    method_call = '{receiver}.{method}({args})'.format
+
     gemspec = """\
 Gem::Specification.new do |spec|
   spec.name        = '{name}'
@@ -50,33 +52,32 @@ class {name} < {base}
 end
 """.format
 
-
 ## Packaging
 
 def package(name, version, packages, srcs):
     files = OrderedDict()
     files.update(srcs)
     for path, readme in packages.items():
-        files["%s/README.md" % "/".join(path)] = readme
+        files['%s/README.md' % '/'.join(path)] = readme
         gemspec = Templates.gemspec(
             name=name,
             version=version,
             runtime_version='TODO',
         )
-        files["%s/%s.gemspec" % ("/".join(path), name)] = gemspec
+        files['%s/%s.gemspec' % ('/'.join(path), name)] = gemspec
     return files
 
 def class_file(path, name, fname):
     if path:
-        return "/".join(path + ["index.rb"])
+        return '/'.join(path + ['index.rb'])
     else:
-        return "%s.rb" % fname
+        return '%s.rb' % fname
 
 def function_file(path, name, fname):
     return class_file(path, name, fname)
 
 def package_file(path, name, fname):
-    return "/".join(path + [name, "index.rb"])
+    return '/'.join(path + [name, 'index.rb'])
 
 def make_class_file(path, name):
     return Code(head='require "datawire-quark-core"\n')
@@ -88,11 +89,11 @@ def make_package_file(path, name):
     return make_class_file(path, name)
 
 def main(fname, common):
-    return Code("require './%s' \n\nCommon::main\n" % common)
+    return Code('require "./%s" \n\nCommon::main\n' % common)
 
 ## Naming and imports
 
-SUBS = {}
+SUBS = {'Class': 'QuarkClass'}
 def name(n):
     return SUBS.get(n, n)
 
@@ -102,10 +103,10 @@ def type(path, name, parameters):
 def import_(path, origin):
     qual = qualify(path, origin)
     if tuple(origin) + tuple(qual) == tuple(path):
-        prefix = "./"
+        prefix = './'
     else:
-        prefix = "../"*len(origin)
-    return "require '%s%s'" % (qual[0], prefix)
+        prefix = '../' * len(origin)
+    return 'require "%s%s"' % (prefix, qual[0])
 
 def qualify(package, origin):
     if package == origin: return []
@@ -120,39 +121,39 @@ def qualify(package, origin):
 ## Documentation
 
 def doc(lines):
-    return doc_helper(lines, "#  ", "#  ", "#  ")
+    return doc_helper(lines, '#  ', '#  ', '#  ')
 
 ## Comments
 
 def comment(stuff):
-    return "# %s\n" % stuff
+    return '# %s\n' % stuff
 
 ## Class definition
 
 def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
     return Templates.class_(
         name=clazz,
-        base=base or "Object",
+        base=base or 'Object',
         constructors=indent('\n'.join(constructors)),
         methods=indent('\n'.join(methods)),
     )
 
 def field(doc, type, name, value):
-    return "self.%s = %s" % (name, value or "nil")
+    return 'self.{} = {}'.format(name, value or null())
 
 def field_init():
-    return "self.__init_fields__"
+    return 'self.__init_fields__'
 
 def default_constructor(clazz):
     return Templates.method(
         name='initialize',
-        body='self.__init_fields__',
         parameters='',
+        body=field_init(),
     )
 
 def constructor(doc, name, parameters, body):
     return Templates.method(
-        name='self.' + name,
+        name='initialize',
         parameters=', '.join(parameters),
         body=body,
     )
@@ -186,103 +187,121 @@ def interface_method(doc, iface, type, name, parameters, body):
 ## Function definition
 
 def function(doc, type, name, parameters, body):
-    template = "def {name}({parameters})\n {body} end".format
-    parameters = ", ".join(parameters)
-    return template(name=name, parameters=parameters, body=body)
+    return Templates.class_(
+        name='Functions',
+        base='Object',
+        constructors='',
+        methods=indent(Templates.method(
+            name='self.' + name,
+            parameters=', '.join(parameters),
+            body=body,
+        )),
+    )
 
 ## Parameters for methods and functions
 
 def param(type, name, value):
     if value is None:
-        return "%s" % name
+        return name
     else:
-        return "%s=%s" % (name, value)
+        return '{}={}'.format(name, value)
 
 ## Blocks
 
 def block(statements):
-    return indent("\n".join(statements))
+    return indent('\n'.join(statements) or null())
 
 ## Statements
 
 def local(type, name, value):
-    return "%s = %s" % (name, value or "nil")
+    return '{} = {}'.format(name, value or null())
 
 def expr_stmt(e):
-    return "%s" % e
+    assert e
+    return e
 
 def assign(lhs, rhs):
-    return "%s = %s" % (lhs, rhs)
+    return '{} = {}'.format(lhs, rhs)
 
 def if_(pred, cons, alt):
+    assert pred, pred
     if alt:
-        return "if (%s)\n %s else %s end" % (pred, cons, alt)
+        return 'if ({}){}else{}end'.format(pred, cons, alt)
     else:
-        return "if (%s)\n %s end" % (pred, cons)
+        return 'if ({}){}end'.format(pred, cons)
 
 def while_(cond, body):
-    return "while %s do %s end" % (cond, body)
+    return 'while ({}) do{}end'.format(cond, body)
 
 def break_():
-    return "break"
+    return 'break'
 
 def continue_():
-    return "continue"
+    return 'next'
 
 def return_(expr):
-    if expr:
-        return "return %s" % expr
-    else:
-        return "return"
+    return ('return ' + (expr or '')).strip()
 
 ## Expressions
 
 def class_ref(v):
     return v
 
-def method_ref(v):
-    return "self.%s" % v
+def method_ref(name):
+    return 'self.' + name
 
-def field_ref(v):
-    return "@%s" % v
+def field_ref(name):
+    return "@" + name
 
 def local_ref(v):
+    assert v
     return v
 
 def invoke_function(path, name, args):
-    return "%s.call(%s)" % (".".join(path + [name]), ", ".join(args))
+    return Templates.method_call(receiver='Functions',
+                                 method='__'.join(path + [name]),
+                                 args=', '.join(args))
 
-def construct(clazz, args):
-    return "%s.new(%s)" % (clazz, ", ".join(args))
+def construct(class_, args):
+    return Templates.method_call(receiver=class_,
+                                 method='new',
+                                 args=', '.join(args))
 
 def invoke_super(clazz, base, args):
-    return "super %s" % (", ".join(args))
+    return 'super {args}'.format(args=', '.join(args))
 
 def invoke_method(expr, method, args):
-    return "(%s).%s(%s)" % (expr, method, ", ".join(args))
+    return Templates.method_call(receiver=expr,
+                                 method=method,
+                                 args=', '.join(args))
 
 def invoke_method_implicit(method, args):
-    return "self.%s(%s)" % (method, ", ".join(args))
+    return Templates.method_call(receiver='self',
+                                 method=method,
+                                 args=', '.join(args))
 
 def invoke_super_method(clazz, base, method, args):
-    template = "method(:{method}).super_method.call {args}".format
+    template = "method(:{method}).super_method.call({args})".format
     return template(method=method, args=', '.join(args))
 
 def get_field(expr, field):
-    return "(%s).%s" % (expr, field)
+    return "({receiver}).{name}".format(receiver=expr, name=field)
 
 def cast(type, expr):
+    assert expr
     return expr
 
 ## Literals
 
 def null():
-    return "nil"
+    return 'nil'
 
 def bool_(b):
+    assert b.text in ('true', 'false')
     return b.text
 
 def number(n):
+    assert n.text
     return n.text
 
 def string(s):
@@ -298,10 +317,12 @@ def string(s):
             result += c
         idx += 1
     result += s.text[-1]
+    assert result
     return result
 
 def list(elements):
-    return "[%s]" % ", ".join(elements)
+    return '[%s]' % ', '.join(elements)
 
 def map(entries):
-    return "{ %s }" % (", ".join("%s => %s" % e for e in entries))
+    pair = '{} => {}'.format
+    return '{%s}' % (', '.join(pair(key, value) for key, value in entries))
