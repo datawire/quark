@@ -1,4 +1,4 @@
-package Test_md;
+package stuff_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
     public Root() {}

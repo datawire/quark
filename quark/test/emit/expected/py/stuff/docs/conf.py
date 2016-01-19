@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Test documentation build configuration file, created by Quark
+# stuff documentation build configuration file, created by Quark
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.napoleon'
@@ -8,9 +8,9 @@ extensions = [
 templates_path = ['_templates']
 source_suffix = '.rst'
 master_doc = 'index'
-project = u'Test'
-copyright = u'2015, Test authors'
-author = u'Test authors'
+project = u'stuff'
+copyright = u'2015, stuff authors'
+author = u'stuff authors'
 version = '0.0.1'
 release = '0.0.1'
 language = None
@@ -19,18 +19,18 @@ pygments_style = 'sphinx'
 todo_include_todos = False
 html_theme = 'alabaster'
 html_static_path = ['_static']
-htmlhelp_basename = 'Testdoc'
+htmlhelp_basename = 'stuffdoc'
 latex_elements = {}
 latex_documents = [
-    (master_doc, 'Test.tex', u'Test Documentation',
-     u'Test authors', 'manual'),
+    (master_doc, 'stuff.tex', u'stuff Documentation',
+     u'stuff authors', 'manual'),
 ]
 man_pages = [
-    (master_doc, 'Test', u'Test Documentation',
+    (master_doc, 'stuff', u'stuff Documentation',
      [author], 1)
 ]
 texinfo_documents = [
-    (master_doc, 'Test', u'Test Documentation',
-     author, 'Test', 'One line description of Test.',
+    (master_doc, 'stuff', u'stuff Documentation',
+     author, 'stuff', 'One line description of stuff.',
      'Miscellaneous'),
 ]

@@ -1,8 +1,8 @@
 
 {
-    "name": "Test",
+    "name": "stuff",
     "version": "0.0.1",
-    "main": "Test/index.js",
+    "main": "stuff/index.js",
     "dependencies": {
         "datawire-quark-core": "0.3.1"
     }

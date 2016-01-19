@@ -1,4 +1,4 @@
-package Test_lib;
+package stuff_lib;
 
 public class Test implements io.datawire.quark.runtime.QObject {
     public Test() {}

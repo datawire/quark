@@ -1,4 +1,4 @@
-package Test_md;
+package stuff_md;
 
 public class List_reflect_Class_ extends reflect.Class implements io.datawire.quark.runtime.QObject {
     public static reflect.Class singleton = new List_reflect_Class_();

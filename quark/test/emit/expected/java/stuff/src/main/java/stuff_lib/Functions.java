@@ -1,4 +1,4 @@
-package Test_lib;
+package stuff_lib;
 
 public class Functions {/* BEGIN_BUILTIN */
 

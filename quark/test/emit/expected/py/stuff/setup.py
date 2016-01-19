@@ -1,8 +1,8 @@
-# Setup file for package Test
+# Setup file for package stuff
 
 from setuptools import setup
 
-setup(name="Test",
+setup(name="stuff",
       version="0.0.1",
       install_requires=["datawire-quark-core==0.3.1"],
-      packages=['reflect', 'Test_md', 'Test_lib'])
+      packages=['reflect', 'stuff_md', 'stuff_lib'])

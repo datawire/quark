@@ -1,4 +1,4 @@
-package Test_md;
+package stuff_md;
 
 public class reflect_Field extends reflect.Class implements io.datawire.quark.runtime.QObject {
     public static reflect.Class singleton = new reflect_Field();

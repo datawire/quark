@@ -1,4 +1,4 @@
-package Test_lib;
+package stuff_lib;
 
 /* BEGIN_BUILTIN */
 

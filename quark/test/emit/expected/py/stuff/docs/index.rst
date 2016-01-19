@@ -1,15 +1,15 @@
 
-.. Test documentation master file, created by Quark
+.. stuff documentation master file, created by Quark
 
-Test 0.0.1
-==========
+stuff 0.0.1
+===========
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: Test
+.. automodule:: stuff
    :members:
 
 
