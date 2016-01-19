@@ -3,7 +3,7 @@
 Operators
 ---------
 
-Quark defines the following operators:
+{{{language}}} defines the following operators:
 
 .. toctree::
    :maxdepth: 1
@@ -64,7 +64,7 @@ where *A* is the value to switch.
 
 The Bitwise Complement operator is only partially supported at the moment. See `linkIssue34`_ for more information.
 
-.. _linkIssue34: https://github.com/datawire/quark/issues/34
+.. _linkIssue34: https://github.com/datawire/{{{github_directory}}}/issues/34
 
 .. _CastOperator:
 

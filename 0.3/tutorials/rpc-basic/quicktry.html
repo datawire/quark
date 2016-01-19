@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Javascript Requirements and Setup &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Quickly Trying RPC &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
-    <link rel="next" title="Compiling and Installing the Library in Javascript" href="javascriptBuild.html" />
-    <link rel="prev" title="Running the Java Client and Server" href="javaRun.html" />
+    <link rel="next" title="Defining the Service Contract" href="contract.html" />
+    <link rel="prev" title="{{{product}}} RPC Support" href="setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
@@ -38,10 +38,10 @@
     <ul>
         <li>
           &larr;
-          <a href="javaRun.html" title="Previous document">Running the Java Client and Server</a>
+          <a href="setup.html" title="Previous document">{{{product}}} RPC Support</a>
         </li>
         <li>
-          <a href="javascriptBuild.html" title="Next document">Compiling and Installing the Library in Javascript</a>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
           &rarr;
         </li>
     </ul>
@@ -61,15 +61,20 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="javascript-requirements-and-setup">
-<h1>Javascript Requirements and Setup<a class="headerlink" href="#javascript-requirements-and-setup" title="Permalink to this headline">¶</a></h1>
-<p>We expect you to have the following tools installed as prerequisites:</p>
-<ul class="simple">
-<li>Node.js (at least version 4.x)</li>
-<li>npm</li>
-</ul>
-<p>If you haven&#8217;t already done so, run the following command to install the {{{product}}} Node integration:</p>
-<p><code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">{{{node_integration}}}</span></code></p>
+  <div class="section" id="quickly-trying-rpc">
+<h1>Quickly Trying RPC<a class="headerlink" href="#quickly-trying-rpc" title="Permalink to this headline">¶</a></h1>
+<p>Before building your own RPC client and servers, you can see RPC with {{{product}}} in action using a provided client and an RPC server in the Datawire cloud.</p>
+<p>Step 1: Run the following command to install the {{{product}}} Python threaded integration:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">{{{threaded_integration}}}</span></code></p>
+<p>Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code></p>
+<p>Step 3: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
+<p>You should see the following in your terminal window (stdout):</p>
+<div class="highlight-none"><div class="highlight"><pre>Request says &#39;Hello from Python!&#39;
+Response says &#39;Responding to [Hello from Python!] from Datawire Cloud’
+</pre></div>
+</div>
+<p>[[JMK insert exact response once the client is finalized]]</p>
+<p>You just used the provided Python helloRPC client to communicate with the helloRPC server in the Datawire cloud. Now, let’s see how to write a client that performs the same functionality as well as a local server that sends similar responses to that client via RPC. You’ll be able to switch your client back and forth so it communicates with either the local server or the server in the cloud.</p>
 </div>
 
 
@@ -79,13 +84,13 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="javaRun.html"
-                        title="previous chapter">Running the Java Client and Server</a></p>
+  <p class="topless"><a href="setup.html"
+                        title="previous chapter">{{{product}}} RPC Support</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="javascriptBuild.html"
-                        title="next chapter">Compiling and Installing the Library in Javascript</a></p>
+  <p class="topless"><a href="contract.html"
+                        title="next chapter">Defining the Service Contract</a></p>
 <div class="sourcelink">
-  <a href="../../_sources/tutorials/rpc-basic/javascriptSetup.txt" rel="nofollow">
+  <a href="../../_sources/tutorials/rpc-basic/quicktry.txt" rel="nofollow">
     Show page source
   </a>
 </div>
@@ -112,10 +117,10 @@
     <ul>
         <li>
           &larr;
-          <a href="javaRun.html" title="Previous document">Running the Java Client and Server</a>
+          <a href="setup.html" title="Previous document">{{{product}}} RPC Support</a>
         </li>
         <li>
-          <a href="javascriptBuild.html" title="Next document">Compiling and Installing the Library in Javascript</a>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
           &rarr;
         </li>
     </ul>

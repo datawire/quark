@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Integration Interfaces &mdash; Quark 0.3.1 documentation</title>
+    <title>Integration Interfaces &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="Functions" href="functions.html" />
     <link rel="prev" title="Integration Types" href="integrationTypes.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -66,8 +66,9 @@
             
   <div class="section" id="integration-interfaces">
 <h1>Integration Interfaces<a class="headerlink" href="#integration-interfaces" title="Permalink to this headline">¶</a></h1>
-<p>Integration interfaces are Quark interfaces that use integration types within their definition and thus require code defined within each specific integration module. You must be using an integration module to use any of these interfaces.</p>
-<p>Quark defines the following integration interfaces:</p>
+<p>Integration interfaces are {{{language}}} interfaces that use integration types within their definition and thus require a runtime integration when used. You must install the runtime integration matching your development environment to use any of these interfaces.</p>
+<p>More information about the available integrations and how to install them can be found <a class="reference internal" href="../install/integration.html"><em>here</em></a>.</p>
+<p>{{{language}}} defines the following integration interfaces:</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -75,7 +76,6 @@
 <div class="section" id="service">
 <span id="serviceinterface"></span><h2>Service<a class="headerlink" href="#service" title="Permalink to this headline">¶</a></h2>
 <p>The Service interface is used to define a set of methods required by services using RPC for communications between their clients and their server. These methods typically won&#8217;t be called directly from any class; this interface should be extended within RPC contracts to select and configure the desired interaction patterns then used by the client and server definitions inside the contract to glue everything together.</p>
-<p>[[JMK This description needs some work]]</p>
 </div>
 </div>
 
@@ -137,9 +137,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -148,7 +148,7 @@
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

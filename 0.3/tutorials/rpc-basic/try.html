@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Putting It All Together &mdash; Quark 0.3.1 documentation</title>
+    <title>Putting It All Together &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="More Information" href="links.html" />
     <link rel="prev" title="Running the Javascript Client and Server" href="javascriptRun.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -69,14 +69,15 @@
 <li><a class="reference internal" href="javaBuild.html"><em>Building and installing in Java</em></a></li>
 <li><a class="reference internal" href="javascriptBuild.html"><em>Building and installing in Javascript</em></a></li>
 </ul>
-<p>Let&#8217;s start by using the Python client we wrote to talk to the Python server we wrote.</p>
+<p>If you completed the previous portions of the RPC walkthrough in your language of choice, you&#8217;ve already seen one example of a helloRPC client talking to a local helloRPC server in the same language. If you skipped that step, would like to review it, or if you chose a different language to work in and would like to see the Python example running, Part 1 reviews how to use a Python client to talk to a local Python server (using the examples supplied in the {{{product}}} GitHub repository). Otherwise, feel free to skip to <a class="reference internal" href="#part2tryrpc"><span>Part 2</span></a> and the additional examples that follow.</p>
 <div class="section" id="part-1-python-client-and-python-server">
 <h2>Part 1: Python Client and Python Server<a class="headerlink" href="#part-1-python-client-and-python-server" title="Permalink to this headline">¶</a></h2>
 <p>To run the HelloRPC example with a Python client and Python Server do the following:</p>
-<p>Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
+<p>Step 1: Move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code></p>
 <p>Step 2: Run the server by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyserver.py</span></code>. This will result in a blocking wait state - there is no direct output to stdout from the Python server.</p>
 <p>Step 3: Open a second terminal window</p>
-<p>Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
+<p>Step 4: Move to the HelloRPC directory within your local product git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code></p>
+<p>Note: You must edit the supplied client file (pyclient.py) to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> to <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>. For more information, refer to the <a class="reference internal" href="pythonClient.html#part2pythonclientinstantiation"><span>client instantiation section of the walkthrough</span></a>.</p>
 <p>Step 4: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
 <p>You should see the following in your terminal window (stdout):</p>
 <div class="highlight-none"><div class="highlight"><pre>Request says &#39;Hello from Python!&#39;
@@ -99,11 +100,11 @@ print &quot;Request says %r&quot; % request.text
 </div>
 <p>[[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]</p>
 </div>
-<div class="section" id="part-2-running-two-servers">
-<h2>Part 2: Running Two Servers<a class="headerlink" href="#part-2-running-two-servers" title="Permalink to this headline">¶</a></h2>
-<p>The Hello RPC service is hard coded to run at <a class="reference external" href="http://127.0.0.1:8910/hello">http://127.0.0.1:8910/hello</a>. All of the servers and clients assume the service is there. Because all three servers use the same URI, only one server can be running at any given time. Try to launch a second server in Javascript while the Python server is still running as follows:</p>
+<div class="section" id="part-2-running-two-local-servers">
+<span id="part2tryrpc"></span><h2>Part 2: Running Two Local Servers<a class="headerlink" href="#part-2-running-two-local-servers" title="Permalink to this headline">¶</a></h2>
+<p>The local Hello RPC service is hard coded to run at <a class="reference external" href="http://127.0.0.1:8910/hello">http://127.0.0.1:8910/hello</a>. All of the servers and clients assume the service is there. Because all three servers use the same URI, only one server can be running at any given time. Try to launch a second server in Javascript while the Python server is still running as follows:</p>
 <p>Step 1: Open a new terminal window</p>
-<p>Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code>.</p>
 <p>Step 3: Run the Javascript server by executing the following command: <code class="docutils literal"><span class="pre">node</span> <span class="pre">jsserver.js</span></code>.</p>
 <p>You should get the following error indicating that the service URI is already in use and the server cannot be started:</p>
 <div class="highlight-none"><div class="highlight"><pre>RPC Server failed to register http://127.0.0.1:8910/hello due to:
@@ -115,10 +116,14 @@ listen EADDRINUSE 127.0.0.1:8910
 </div>
 <div class="section" id="part-3-mixing-client-and-server-languages">
 <h2>Part 3: Mixing Client and Server Languages<a class="headerlink" href="#part-3-mixing-client-and-server-languages" title="Permalink to this headline">¶</a></h2>
-<p>You can run either client (Java or Python) against any of the three servers (Java, Javascript, or Python). The only rule is that only one server can be running at a time (as illustrated in Part 2).</p>
-<p>You should already have the Python server running. Let&#8217;s use the Java client to connect to that server as follows:</p>
+<p>You can run either client (Java or Python) against any of the three servers (Java, Javascript, or Python). The only rule is that only one local server can be running at a time (as illustrated in Part 2).</p>
+<p>You should already have the local Python server running if you completed Part 1 of this page. Let&#8217;s use the Java client to connect to that server as follows:</p>
 <p>Step 1: Open a new terminal window</p>
-<p>Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 2: Move to the HelloRPC directory within your local {{{product}}} git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code>.</p>
+<p>Note: You must edit the prebuilt client file to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, do the following after Step 2:</p>
+<p>Step 2.1: Move to the Java source directory (<code class="docutils literal"><span class="pre">cd</span> <span class="pre">src/main/java/helloRPC</span></code>)</p>
+<p>Step 2.2: Open HelloRPCClient.java in the text editor of your choice</p>
+<p>Step 2.3: Change the URL passed when instantiating the client object from <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> to <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>.</p>
 <p>Step 3: Run the following command to build the client: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">compile</span></code></p>
 <p>Step 4: Run the following command to start the Java client: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">exec:java</span> <span class="pre">-Dexec.mainClass=helloRPC.HelloRPCClient</span></code></p>
 <p>After some log lines outlining the processing, you should see the following in the terminal window (stdout):</p>
@@ -134,7 +139,7 @@ Response says u&#39;Responding to [Hello from Python!] from JS&#39;
 </div>
 <p>Note that there are subtle differences in the output from different combinations above - the Python client places a single quote around request.text and response.result when printing them while the Java client doesn&#8217;t use the quotation marks. Conversely, the Java client uses a colon before the stored text while the Python client does not. Also, Java doesn&#8217;t indicate that the response is in Unicode by prepending a u to the output from the server. The client does all of the actual printing, so the format only depends on which client is being used and not which server is running at the time.</p>
 <p>[[JMK I&#8217;m not sure if I should keep or kill the above observation - it&#8217;s interesting but possibly overkill. Also, we should probably clean up the inconsistency and use the same text/formatting from all of the clients so this is not a distraction.]]</p>
-<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!</p>
+<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in {{{product}}} and have seen those clients and servers in action in multiple languages. Time to experiment some more on your own!</p>
 </div>
 </div>
 
@@ -148,7 +153,7 @@ Response says u&#39;Responding to [Hello from Python!] from JS&#39;
   <ul>
 <li><a class="reference internal" href="#">Putting It All Together</a><ul>
 <li><a class="reference internal" href="#part-1-python-client-and-python-server">Part 1: Python Client and Python Server</a></li>
-<li><a class="reference internal" href="#part-2-running-two-servers">Part 2: Running Two Servers</a></li>
+<li><a class="reference internal" href="#part-2-running-two-local-servers">Part 2: Running Two Local Servers</a></li>
 <li><a class="reference internal" href="#part-3-mixing-client-and-server-languages">Part 3: Mixing Client and Server Languages</a></li>
 </ul>
 </li>
@@ -198,7 +203,7 @@ Response says u&#39;Responding to [Hello from Python!] from JS&#39;
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -206,7 +211,7 @@ Response says u&#39;Responding to [Hello from Python!] from JS&#39;
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

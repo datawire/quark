@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Data Types &mdash; Quark 0.3.1 documentation</title>
+    <title>Data Types &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="Integration Types" href="integrationTypes.html" />
     <link rel="prev" title="Operators" href="operators.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -66,19 +66,19 @@
             
   <div class="section" id="data-types">
 <h1>Data Types<a class="headerlink" href="#data-types" title="Permalink to this headline">¶</a></h1>
-<p>Quark data types typically have analogues in each target language and Quark uses the equivalent type when generating code in the supported languages.</p>
-<p>Quark defines the following data types:</p>
+<p>{{{language}}} data types typically have analogues in each target language and {{{language}}} uses the equivalent type when generating code in the supported languages.</p>
+<p>{{{language}}} defines the following data types:</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
 </div>
 <div class="section" id="bool">
 <span id="id1"></span><h2>bool<a class="headerlink" href="#bool" title="Permalink to this headline">¶</a></h2>
-<p>Quark bool values are booleans and indicate truthfulness.</p>
+<p>{{{language}}} bool values are booleans and indicate truthfulness.</p>
 <div class="section" id="constraints">
 <h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
-<p>Boolean values are either true or false. Quark represents these states with the keywords true and false.</p>
-<p>[[JMK should I discuss null? It compiles in Quark and evaluates to false in js/python, causes NPEs in Java]]</p>
+<p>Boolean values are either true or false. {{{language}}} represents these states with the keywords true and false.</p>
+<p>[[JMK should I discuss null? It compiles in {{{language}}} and evaluates to false in js/python, causes NPEs in Java]]</p>
 </div>
 <div class="section" id="generated-code">
 <h3>Generated Code<a class="headerlink" href="#generated-code" title="Permalink to this headline">¶</a></h3>
@@ -126,10 +126,10 @@
 </div>
 <div class="section" id="float">
 <span id="id5"></span><h2>float<a class="headerlink" href="#float" title="Permalink to this headline">¶</a></h2>
-<p>Quark float values are floating point numbers.</p>
+<p>{{{language}}} float values are floating point numbers.</p>
 <div class="section" id="id6">
 <h3>Constraints<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
-<p>Floating point values in Quark are constrained only by the rules of each generated language.</p>
+<p>Floating point values in {{{language}}} are constrained only by the rules of each generated language.</p>
 </div>
 <div class="section" id="id7">
 <h3>Generated Code<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
@@ -175,10 +175,10 @@
 </div>
 <div class="section" id="int">
 <span id="id8"></span><h2>int<a class="headerlink" href="#int" title="Permalink to this headline">¶</a></h2>
-<p>Quark ints are integers.</p>
+<p>{{{language}}} ints are integers.</p>
 <div class="section" id="id9">
 <h3>Constraints<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
-<p>Integers in Quark are constrained only by the rules of each generated language.</p>
+<p>Integers in {{{language}}} are constrained only by the rules of each generated language.</p>
 </div>
 <div class="section" id="id10">
 <h3>Generated Code<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
@@ -219,11 +219,11 @@
 </div>
 <div class="section" id="integral">
 <span id="id11"></span><h2>integral<a class="headerlink" href="#integral" title="Permalink to this headline">¶</a></h2>
-<p>The integral type is a base type for all integers. It should not be used directly within Quark code.</p>
+<p>The integral type is a base type for all integers. It should not be used directly within {{{language}}} code.</p>
 </div>
 <div class="section" id="list">
 <span id="id12"></span><h2>List<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h2>
-<p>Quark lists are strongly typed and can contain elements of any other defined data type including other lists and objects.</p>
+<p>{{{language}}} lists are strongly typed and can contain elements of any other defined data type including other lists and objects.</p>
 <div class="section" id="id13">
 <h3>Constraints<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <p>Every element in a list must be the same type of data. For example, you cannot mix strings and floats or floats and objects.</p>
@@ -266,10 +266,10 @@
 </div>
 <div class="section" id="long">
 <span id="id15"></span><h2>long<a class="headerlink" href="#long" title="Permalink to this headline">¶</a></h2>
-<p>Quark longs are long integers.</p>
+<p>{{{language}}} longs are long integers.</p>
 <div class="section" id="id16">
 <h3>Constraints<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
-<p>Quark does not permit declaration of long literal values by adding L to the end of an integer.</p>
+<p>{{{language}}} does not permit declaration of long literal values by adding L to the end of an integer.</p>
 <p>Long integers may be further constrained by the rules of each generated language.</p>
 </div>
 <div class="section" id="id17">
@@ -302,19 +302,19 @@
 </tr>
 </tbody>
 </table>
-<p>Note: Currently Quark can only handle up to 48bit values. See <a class="reference external" href="https://github.com/datawire/quark/issues/58">linkIssue58</a> for more information.</p>
+<p>Note: Currently {{{language}}} can only handle up to 48bit values. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/58">linkIssue58</a> for more information.</p>
 </div>
 </div>
 <div class="section" id="numerical">
 <span id="id18"></span><h2>numerical<a class="headerlink" href="#numerical" title="Permalink to this headline">¶</a></h2>
-<p>The numerical type is a base type for all numbers. It should not be used directly within Quark code.</p>
+<p>The numerical type is a base type for all numbers. It should not be used directly within {{{language}}} code.</p>
 </div>
 <div class="section" id="map">
 <span id="id19"></span><h2>Map<a class="headerlink" href="#map" title="Permalink to this headline">¶</a></h2>
-<p>Quark Maps are sets of key-value pairs. They do not have an inherent order.</p>
+<p>{{{language}}} Maps are sets of key-value pairs. They do not have an inherent order.</p>
 <div class="section" id="id20">
 <h3>Constraints<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
-<p>Quark Maps are strongly typed. Quark supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, Quark expect the values of keys to be immutable. Quark Maps are also constrained by additional rules in</p>
+<p>{{{language}}} Maps are strongly typed. {{{language}}} supports using any defined type of data in Maps. However, every key in a specific map must be the same type and every value in a specific Map must also be the same type (the keys and values may be different types). Also, {{{language}}} expect the values of keys to be immutable. {{{language}}} Maps are also constrained by additional rules in each supported language.</p>
 <p>Map types are specified as follows when a new Map is declared:</p>
 <p><strong>Map&lt;</strong> <em>keyType</em> <strong>,</strong> <em>valueType</em> <strong>&gt;</strong></p>
 <p>where <em>keyType</em> is the type of the map keys and <em>valueType</em> is the type of the value keys.</p>
@@ -354,10 +354,10 @@
 </div>
 <div class="section" id="object">
 <span id="id22"></span><h2>Object<a class="headerlink" href="#object" title="Permalink to this headline">¶</a></h2>
-<p>Quark Objects are objects instantiated from a defined class.</p>
+<p>{{{language}}} Objects are objects instantiated from a defined class. Every other type in {{{language}}} automatically inherits from Object.</p>
 <div class="section" id="id23">
 <h3>Constraints<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
-<p>Objects in Quark are constrained only by the relevant class definition and by the rules of each generated language.</p>
+<p>Objects in {{{language}}} are constrained only by the relevant class definition and by the rules of each generated language.</p>
 </div>
 <div class="section" id="id24">
 <h3>Generated Code<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
@@ -397,10 +397,10 @@
 </div>
 <div class="section" id="string">
 <span id="id26"></span><h2>String<a class="headerlink" href="#string" title="Permalink to this headline">¶</a></h2>
-<p>Quark Strings are strings of characters.</p>
+<p>{{{language}}} Strings are strings of characters.</p>
 <div class="section" id="id27">
 <h3>Constraints<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
-<p>Strings in Quark are constrained only by the rules of each generated language. Additional variable-specific constraints such as a set of allowed enumerated values are not supported.</p>
+<p>Strings in {{{language}}} are constrained only by the rules of each generated language. Additional variable-specific constraints such as a set of allowed enumerated values are not supported.</p>
 </div>
 <div class="section" id="id28">
 <h3>Generated Code<a class="headerlink" href="#id28" title="Permalink to this headline">¶</a></h3>
@@ -445,10 +445,10 @@
 </div>
 <div class="section" id="void">
 <span id="id29"></span><h2>void<a class="headerlink" href="#void" title="Permalink to this headline">¶</a></h2>
-<p>Quark voids are used to indicate functions and methods that do not return a value.</p>
+<p>{{{language}}} voids are used to indicate functions and methods that do not return a value.</p>
 <div class="section" id="id30">
 <h3>Constraints<a class="headerlink" href="#id30" title="Permalink to this headline">¶</a></h3>
-<p>voids in Quark are constrained only by the rules of each generated language.</p>
+<p>voids in {{{language}}} are constrained only by the rules of each generated language.</p>
 </div>
 <div class="section" id="id31">
 <h3>Generated Code<a class="headerlink" href="#id31" title="Permalink to this headline">¶</a></h3>
@@ -556,9 +556,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -567,7 +567,7 @@
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

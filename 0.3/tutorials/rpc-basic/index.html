@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Getting Started with RPC Walkthrough &mdash; Quark 0.3.1 documentation</title>
+    <title>Getting Started with RPC Walkthrough &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,14 +23,14 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
     <link rel="next" title="Introduction to RPC" href="intro.html" />
     <link rel="prev" title="More Information" href="../../language-reference/links.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -47,7 +47,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li> 
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li> 
     </ul>
   </nav>
   </div>  
@@ -65,7 +65,8 @@
 <li class="toctree-l2"><a class="reference internal" href="intro.html#interaction-patterns">Interaction Patterns</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="setup.html">Quark RPC Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="setup.html">{{{product}}} RPC Support</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quicktry.html">Quickly Trying RPC</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contract.html">Defining the Service Contract</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="contract.html#part-1-creating-the-framework">Part 1: Creating the framework</a></li>
 <li class="toctree-l2"><a class="reference internal" href="contract.html#part-2-adding-value-classes">Part 2: Adding value classes</a></li>
@@ -78,24 +79,34 @@
 <li class="toctree-l1"><a class="reference internal" href="pythonSetup.html">Python: Requirements and Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pythonBuild.html">Python: Building the Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="pythonClient.html">Python: Writing the Client</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pythonClient.html#part-1-importing-the-quark-pieces">Part 1: Importing the Quark Pieces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonClient.html#part-1-importing-the-product-pieces">Part 1: Importing the {{{product}}} Pieces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonClient.html#part-2-initializing-the-client">Part 2: Initializing the Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonClient.html#part-3-setting-up-the-request">Part 3: Setting Up the Request</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonClient.html#part-4-sending-the-request-and-processing-the-response">Part 4: Sending the Request and Processing the Response</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="pythonServer.html">Python: Writing the Server</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="pythonServer.html#part-1-importing-the-quark-pieces">Part 1: Importing the Quark Pieces</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonServer.html#part-1-importing-the-product-pieces">Part 1: Importing the {{{product}}} Pieces</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonServer.html#part-2-defining-the-response">Part 2: Defining the Response</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonServer.html#part-3-processing-the-request">Part 3: Processing the Request</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="pythonRun.html">Python: Running the Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pythonRun.html">Python: Running the Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="pythonRun.html#python-client-and-local-python-server">Python Client and Local Python Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonRun.html#using-the-python-client-against-the-cloud">Using the Python Client Against the Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonRun.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="javaSetup.html">Java: Requirements and Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaBuild.html">Java: Building the Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaClient.html">Java: Writing the Client</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javaServer.html">Java: Writing the Server</a></li>
-<li class="toctree-l1"><a class="reference internal" href="javaRun.html">Java: Running the Example</a></li>
+<li class="toctree-l1"><a class="reference internal" href="javaRun.html">Java: Running the Example</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="javaRun.html#java-client-and-local-java-server">Java Client and Local Java Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaRun.html#using-the-java-client-against-the-cloud">Using the Java Client Against the Cloud</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaRun.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="javascriptSetup.html">Javascript: Requirements and Setup</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javascriptBuild.html">Javascript: Building the Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="javascriptClient.html">Javascript: Writing the Client</a></li>
@@ -103,7 +114,7 @@
 <li class="toctree-l1"><a class="reference internal" href="javascriptRun.html">Javascript: Running the Example</a></li>
 <li class="toctree-l1"><a class="reference internal" href="try.html">Putting It All Together</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="try.html#part-1-python-client-and-python-server">Part 1: Python Client and Python Server</a></li>
-<li class="toctree-l2"><a class="reference internal" href="try.html#part-2-running-two-servers">Part 2: Running Two Servers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="try.html#part-2-running-two-local-servers">Part 2: Running Two Local Servers</a></li>
 <li class="toctree-l2"><a class="reference internal" href="try.html#part-3-mixing-client-and-server-languages">Part 3: Mixing Client and Server Languages</a></li>
 </ul>
 </li>
@@ -112,7 +123,7 @@
 </div>
 <div class="section" id="document-version">
 <h2>Document Version<a class="headerlink" href="#document-version" title="Permalink to this headline">¶</a></h2>
-<p>Getting Started with RPC Walkthrough 0.3.1-2</p>
+<p>Getting Started with RPC Walkthrough 0.3.1-3</p>
 </div>
 </div>
 
@@ -174,12 +185,12 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li> 
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li> 
     </ul>
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

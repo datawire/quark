@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Integration Types &mdash; Quark 0.3.1 documentation</title>
+    <title>Integration Types &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="Integration Interfaces" href="integrationInterfaces.html" />
     <link rel="prev" title="Data Types" href="types.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -66,8 +66,9 @@
             
   <div class="section" id="integration-types">
 <h1>Integration Types<a class="headerlink" href="#integration-types" title="Permalink to this headline">¶</a></h1>
-<p>Integration types are Quark data types that depend on using an integration to execute. Typically these types are defines with method signatures rather than code because the code needed to execute the desired functionality is specific to a particular integration and is defined within that integration. However, some integration types may include method definitions that use other integration types - these look like normal Quark data types but can&#8217;t be executed without an integration because of their dependencies. Essentially normal Quark data types can be used in code without installing an integration but integration types cannot. More information about the available integrations and how to install them can be found <a class="reference internal" href="../install/integration.html"><em>here</em></a>.</p>
-<p>Quark defines the following integration types:</p>
+<p>Integration types are {{{language}}} data types that depend on a runtime integration. These types are typically defined with method signatures rather than with full method code because the desired functionality cannot be consistently defined by {{{language}}} code. However, not all integration types use method signatures - some integration types may include method definitions that use other integration types. These integration types look like normal {{{language}}} data types but can&#8217;t be executed without a runtime integration installed because of their dependencies.</p>
+<p>More information about the available integrations and how to install them can be found <a class="reference internal" href="../install/integration.html"><em>here</em></a>.</p>
+<p>{{{language}}} defines the following integration types:</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -211,9 +212,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -222,7 +223,7 @@
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

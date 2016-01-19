@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Writing a Python Server &mdash; Quark 0.3.1 documentation</title>
+    <title>Writing a Python Server &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Running the Python Client and Server" href="pythonRun.html" />
     <link rel="prev" title="Creating the Python Client" href="pythonClient.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -63,22 +63,22 @@
             
   <div class="section" id="writing-a-python-server">
 <h1>Writing a Python Server<a class="headerlink" href="#writing-a-python-server" title="Permalink to this headline">¶</a></h1>
-<p>Let&#8217;s start by creating a simple Hello World server using the compiled Hello service contract in Python.</p>
+<p>Let&#8217;s start by creating a simple Hello World server using the compiled Hello service contract in Python. This server will be functionally equivalent to the cloud server you used at the beginning of this walkthrough.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the server and just want to start from a completed server, there is a <a class="reference internal" href="#fullexamplepythonserver"><span>link to the full Python server file</span></a> at the bottom of this page.</p>
-<div class="section" id="part-1-importing-the-quark-pieces">
-<span id="part1pythonserverimport"></span><h2>Part 1: Importing the Quark Pieces<a class="headerlink" href="#part-1-importing-the-quark-pieces" title="Permalink to this headline">¶</a></h2>
-<p>This section shows you how to import the Quark integration and the HelloRPC contract into your Python server.</p>
+<div class="section" id="part-1-importing-the-product-pieces">
+<span id="part1pythonserverimport"></span><h2>Part 1: Importing the {{{product}}} Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to import the {{{product}}} integration and the HelloRPC contract into your Python server.</p>
 <p>Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
 
-<span class="hll">from quark_threaded_runtime import get_runtime
+<span class="hll">from {{{threaded_import}}} import get_runtime
 </span><span class="hll">import hello
 </span>
 
 def main():
 </pre></div>
 </div>
-<p>The line <code class="docutils literal"><span class="pre">from</span> <span class="pre">quark_threaded_runtime</span> <span class="pre">import</span> <span class="pre">get_runtime</span></code> imports the user-visible portions of the datawire_quark_threaded runtime integration into your client. Note that although the integration is called datawire_quark_threaded, the module name is quark_threaded_runtime</p>
+<p>The line <code class="docutils literal"><span class="pre">from</span> <span class="pre">{{{threaded_import}}}</span> <span class="pre">import</span> <span class="pre">get_runtime</span></code> imports the user-visible portions of the {{{threaded_integration}}} runtime integration into your client. Note that although the integration is called {{{threaded_integration}}}, the module name is {{{threaded_import}}}.</p>
 <p>The line <code class="docutils literal"><span class="pre">import</span> <span class="pre">hello</span></code> imports the service contract library created and built in previous steps of the tutorial.</p>
 </div>
 <div class="section" id="part-2-defining-the-response">
@@ -87,7 +87,7 @@ def main():
 <p>Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
 
-from quark_threaded_runtime import get_runtime
+from {{{threaded_import}}} import get_runtime
 import hello
 
 
@@ -107,11 +107,11 @@ def main():
 </div>
 <div class="section" id="part-3-processing-the-request">
 <span id="part3pythonprocessrequest"></span><h2>Part 3: Processing the Request<a class="headerlink" href="#part-3-processing-the-request" title="Permalink to this headline">¶</a></h2>
-<p>This section defines main module of the server, the code that calls the RPC processing defined within Quark and actually generates the response based on the request and returns it to the client application.</p>
+<p>This section defines main module of the server, the code that calls the RPC processing defined within {{{product}}} and actually generates the response based on the request and returns it to the client application.</p>
 <p id="fullexamplepythonserver">Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
 
-from quark_threaded_runtime import get_runtime
+from {{{threaded_import}}} import get_runtime
 import hello
 
 
@@ -134,11 +134,11 @@ if __name__ == &#39;__main__&#39;:
    main()
 </pre></div>
 </div>
-<p>The line <code class="docutils literal"><span class="pre">runtime</span> <span class="pre">=</span> <span class="pre">get_runtime()</span></code> instantiates an instance of the quark runtime integration imported in the earlier step.</p>
+<p>The line <code class="docutils literal"><span class="pre">runtime</span> <span class="pre">=</span> <span class="pre">get_runtime()</span></code> instantiates an instance of the {{{product}}} runtime integration imported in the earlier step.</p>
 <p>The line <code class="docutils literal"><span class="pre">implementation</span> <span class="pre">=</span> <span class="pre">HelloImpl()</span></code> instatiates an implementation object, in this case an instance of the HelloImpl class defined above.</p>
-<p>The line <code class="docutils literal"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">hello.HelloServer(runtime,</span> <span class="pre">implementation)</span></code> instantiates the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract expanding upon a default Quark server definition. The constructor defines how the runtime and implementation objects are used to launch the server process and perform the requested work of the server - this is all abstracted away from the user.</p>
-<p>The line <code class="docutils literal"><span class="pre">runtime.serveHTTP(&quot;http://127.0.0.1:8910/hello&quot;,</span> <span class="pre">server)</span></code> binds the server to the defined port and URL for the hello service. This is done by passing the service URI (<code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>) and the server instance to the serveHTTP() method of the runtime object instantiated above. The work of listening on that port, recognizing incoming requests to be processed by the server, and sending the actual reponses to those requests is all abstracted away from the user.</p>
-<p>That&#8217;s it! The Python server is complete. Again, note that we don&#8217;t actually see the processing of the request; that&#8217;s handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within Quark. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.</p>
+<p>The line <code class="docutils literal"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">hello.HelloServer(runtime,</span> <span class="pre">implementation)</span></code> instantiates the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract expanding upon a default {{{language}}} server definition. The constructor defines how the runtime and implementation objects are used to launch the server process and perform the requested work of the server - this is all abstracted away from the user.</p>
+<p>The line <code class="docutils literal"><span class="pre">runtime.serveHTTP(&quot;http://127.0.0.1:8910/hello&quot;,</span> <span class="pre">server)</span></code> binds the server to the defined port and URL for the hello service. This is done by passing the service URI (<code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>) and the server instance to the serveHTTP() method of the runtime object instantiated above. The work of listening on that port, recognizing incoming requests to be processed by the server, and sending the actual responses to those requests is all abstracted away from the user.</p>
+<p>That&#8217;s it! The Python server is complete. Again, note that we don&#8217;t actually see the processing of the request; that&#8217;s handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within {{{product}}}. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.</p>
 </div>
 </div>
 
@@ -151,7 +151,7 @@ if __name__ == &#39;__main__&#39;:
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Writing a Python Server</a><ul>
-<li><a class="reference internal" href="#part-1-importing-the-quark-pieces">Part 1: Importing the Quark Pieces</a></li>
+<li><a class="reference internal" href="#part-1-importing-the-product-pieces">Part 1: Importing the {{{product}}} Pieces</a></li>
 <li><a class="reference internal" href="#part-2-defining-the-response">Part 2: Defining the Response</a></li>
 <li><a class="reference internal" href="#part-3-processing-the-request">Part 3: Processing the Request</a></li>
 </ul>
@@ -202,7 +202,7 @@ if __name__ == &#39;__main__&#39;:
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -210,7 +210,7 @@ if __name__ == &#39;__main__&#39;:
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

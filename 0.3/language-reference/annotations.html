@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Annotations &mdash; Quark 0.3.1 documentation</title>
+    <title>Annotations &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="More Information" href="links.html" />
     <link rel="prev" title="Functions" href="functions.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -67,64 +67,64 @@
   <div class="section" id="annotations">
 <h1>Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h1>
 <p>Annotations are compiler directives used to add additional functionality or perform a specific task during code generation.</p>
-<p>Unlike most Quark code, annotations do not use the standard end of line character and should not be followed by a semi-colon (;).</p>
-<p>Quark defines the following annotations:</p>
+<p>Unlike most {{{language}}} code, annotations do not use the standard end of line character and should not be followed by a semi-colon (;).</p>
+<p>{{{language}}} defines the following annotations:</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
 </div>
+<div class="section" id="delegate">
+<span id="delegateannotation"></span><h2>&#64;delegate<a class="headerlink" href="#delegate" title="Permalink to this headline">¶</a></h2>
+<p>&#64;delegate allows users to specify an interaction pattern for communications between a client and a server.</p>
+<div class="section" id="syntax">
+<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p><strong>&#64;delegate(</strong> <em>interactionPattern</em> <strong>)</strong></p>
+<p>where <em>interactionPattern</em> is the name of a defined interaction pattern supported by {{{github_directory}}}. Note that there is no semi-colon (;) at the end of the line.</p>
+</div>
+<div class="section" id="constraints">
+<h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
+<p>{{{language}}} currently supports only one interaction pattern, rpc, that expects a single request from the client and returns a single response from the server.</p>
+<p>At the current time, the preferred syntax outlined above is not working. For now, use &#64;delegate(self.rpc) instead. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/79">linkIssue79</a> for more information.</p>
+</div>
+</div>
 <div class="section" id="doc">
 <span id="docannotation"></span><h2>&#64;doc<a class="headerlink" href="#doc" title="Permalink to this headline">¶</a></h2>
 <p>&#64;doc allows users to specify a description or public comment for packages, classes, properties, methods, and interfaces. The content inside &#64;docs attributions will automatically be included in Javadoc comments for generated Java code, Sphinx source for generated Python code, and a README.md file for generated Javascript code.</p>
-<div class="section" id="syntax">
-<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <p><strong>&#64;doc(</strong> <em>content</em> <strong>)</strong></p>
 <p><em>element</em></p>
 <p>where <em>versionNumber</em> is a string representing the version number and <em>element</em> is the language element being described. Note that there is no semi-colon (;) at the end of the line.</p>
 </div>
-<div class="section" id="constraints">
-<h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
-<p>Support for automatic documentation generation in Quark is still in its early stages and will be improved in the future. Some currently known issues include:</p>
+<div class="section" id="id2">
+<h3>Constraints<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Support for automatic documentation generation in {{{language}}} is still in its early stages and will be improved in the future. Some currently known issues include:</p>
 <ul class="simple">
-<li>Generated Sphinx source does not include a make file. See <a class="reference external" href="https://github.com/datawire/quark/issues/48">linkIssue48</a> for more information.</li>
+<li>Generated Sphinx source does not include a make file. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/48">linkIssue48</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>Javadoc does not include content of &#64;doc annotations for methods. See <a class="reference external" href="https://github.com/datawire/quark/issues/46">linkIssue46</a> for more information.</li>
+<li>Javadoc does not include content of &#64;doc annotations for methods. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/46">linkIssue46</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See <a class="reference external" href="https://github.com/datawire/quark/issues/45">linkIssue45</a> for more information.</li>
+<li>If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/45">linkIssue45</a> for more information.</li>
 </ul>
 <ul class="simple">
-<li>Javascript documentation is very basic and omits many &#64;doc annotations. See <a class="reference external" href="https://github.com/datawire/quark/issues/47">linkIssue47</a> for more information.</li>
+<li>Javascript documentation is very basic and omits many &#64;doc annotations. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/47">linkIssue47</a> for more information.</li>
 </ul>
-<p>[[JMK I have not seen actual generated Sphinx doc; I see a compiler directive to automatically pull content from the source directory but have not written a make file to generate actual doc to see what gets included so there may also be missing content]]</p>
+<p>[[JMK there are a slew more issues found when I went back to check on the Python/Sphinx behavior including new issues with all of the languages. I am not planning to add them here as I do indicate this is a partial list]]</p>
 </div>
 </div>
 <div class="section" id="version">
 <span id="versionannotation"></span><h2>&#64;version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
-<p>&#64;version allows users to specify a version for a package or group of packages. If no version is specified, the version is set to the default &#8220;0.0&#8221;. Versions will be set in a global pom.xml for all generated Java, a global setup.py for all generated Python, and package.json inside each Javascript package.</p>
-<div class="section" id="id1">
-<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>&#64;version allows users to specify a version for a package or group of packages. If no version is specified, the version is set to the default &#8220;0.0.1&#8221;. Versions will be set in a global pom.xml for all generated Java, a global setup.py for all generated Python, and package.json inside each Javascript package.</p>
+<div class="section" id="id3">
+<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
 <p><strong>&#64;version(</strong> <em>versionNumber</em> <strong>)</strong></p>
 <p>where <em>versionNumber</em> is a string representing the version number. Note that there is no semi-colon (;) at the end of the line.</p>
 </div>
-<div class="section" id="id2">
-<h3>Constraints<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
-<p>&#64;version must be defined at the top level of a Quark file. It should be used directly above a package declaration. By default it applies to all packages defined underneath it in a file. If more than one &#64;version annotation is included in a Quark file, each annotation applies only to the package it directly proceeds; any package without its own &#64;version annotation will default to version &#8220;0.0&#8221;.</p>
-</div>
-</div>
-<div class="section" id="delegate">
-<span id="delegateannotation"></span><h2>&#64;delegate<a class="headerlink" href="#delegate" title="Permalink to this headline">¶</a></h2>
-<p>&#64;delegate allows users to specify an interaction pattern for communications between a client and a server.</p>
-<div class="section" id="id3">
-<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
-<p><strong>&#64;delegate(</strong> <em>interactionPattern</em> <strong>)</strong></p>
-<p>where <em>interactionPattern</em> is the name of a defined interaction pattern supported by Quark. Note that there is no semi-colon (;) at the end of the line.</p>
-</div>
 <div class="section" id="id4">
 <h3>Constraints<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p>Quark currently supports only one interaction pattern, rpc, that expects a single request from the client and returns a single response from the server.</p>
-<p>At the current time, the preferred syntax outlined above is not working. For now, use &#64;delegate(self.rpc) instead. See <a class="reference external" href="https://github.com/datawire/quark/issues/79">linkIssue79</a> for more information.</p>
+<p>&#64;version must be defined at the top level of a {{{github_directory}}} file. It should be used directly above a package declaration. By default it applies to all packages defined underneath it in a file. If more than one &#64;version annotation is included in a {{{language}}} file, each annotation applies only to the package it directly proceeds; any package without its own &#64;version annotation will default to version &#8220;0.0.1&#8221;.</p>
 </div>
 </div>
 </div>
@@ -138,9 +138,9 @@
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Annotations</a><ul>
+<li><a class="reference internal" href="#delegate">&#64;delegate</a></li>
 <li><a class="reference internal" href="#doc">&#64;doc</a></li>
 <li><a class="reference internal" href="#version">&#64;version</a></li>
-<li><a class="reference internal" href="#delegate">&#64;delegate</a></li>
 </ul>
 </li>
 </ul>
@@ -189,9 +189,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Language Reference</a>
+        <a href="index.html">{{{language}}} Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -200,7 +200,7 @@
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Integrations &mdash; Quark 0.3.1 documentation</title>
+    <title>Runtime Integrations &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,15 +23,15 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
-    <link rel="up" title="Quark Installation and Configuration Guide" href="index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
+    <link rel="up" title="{{{product}}} Installation and Configuration Guide" href="index.html" />
     <link rel="next" title="Compilation" href="compile.html" />
     <link rel="prev" title="Installation" href="install.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Installation and Configuration Guide</a>
+        <a href="index.html">{{{product}}} Installation and Configuration Guide</a>
       </li> 
     </ul>
   </nav>
@@ -61,24 +61,24 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="integrations">
-<h1>Integrations<a class="headerlink" href="#integrations" title="Permalink to this headline">¶</a></h1>
-<p>Quark defines a variety of <a class="reference internal" href="../language-reference/integrationTypes.html"><em>integration types</em></a> that use communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures; you must use a specific runtime integration matching your development environment to get a working method; these integrations contain code specific to each environment and how it manages communications.</p>
+  <div class="section" id="runtime-integrations">
+<h1>Runtime Integrations<a class="headerlink" href="#runtime-integrations" title="Permalink to this headline">¶</a></h1>
+<p>{{{product}}} defines a variety of <a class="reference internal" href="../language-reference/integrationTypes.html"><em>integration types</em></a> that use communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures. You must use a specific runtime integration matching your development environment to get a working method - these integrations contain code specific to each environment and how it manages communications.</p>
 <p>You do not need to install a runtime integration if you are not using any integration types in your code.</p>
-<p>Quark supports four runtime integrations:</p>
+<p>{{{product}}} supports four runtime integrations:</p>
 <ul class="simple">
-<li>datawire-quark-netty for Java and Netty</li>
-<li>datawire-quark-twisted for Python and Twisted</li>
-<li>datawire-quark-threaded for Python</li>
-<li>datawire-quark-node for Javascript and Node.js</li>
+<li>{{{netty_integration}}} for Java and Netty</li>
+<li>{{{twisted_integration}}} for Python and Twisted</li>
+<li>{{{threaded_integration}}} for Python</li>
+<li>{{{node_integration}}} for Javascript and Node.js</li>
 </ul>
 <p>These runtime integrations are installable through the normal install mechanism for your language of choice - pip for Python, npm for Javascript, and maven for Java (The Java integrations are pulled from Maven Central automatically as needed by the code you generate and compile and do not require manual installation). Any dependencies are automatically installed when you install the runtime integration so there is no need to worry about prerequisites beyond those needed for download. Once you&#8217;ve installed the appropriate runtime integration or integrations for your development environment, the integration types should be fully functional and work just like any other data types in Quark.</p>
-<p>To install the datawire-quark-twisted runtime integration run the following command:</p>
-<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark-twisted</span></code></p>
-<p>To install the datawire-quark-threaded runtime integration run the following command:</p>
-<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark-threaded</span></code></p>
-<p>To install the datawire-quark-node runtime integration run the following command:</p>
-<p><code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">datawire-quark-node</span></code></p>
+<p>To install the {{{twisted_integration}}} runtime integration run the following command:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">{{{twisted_integration}}}</span></code></p>
+<p>To install the {{{threaded_integration}}} runtime integration run the following command:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">{{{threaded_integration}}}</span></code></p>
+<p>To install the {{{node_integration}}} runtime integration run the following command:</p>
+<p><code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">{{{node_integration}}}</span></code></p>
 </div>
 
 
@@ -131,15 +131,15 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Installation and Configuration Guide</a>
+        <a href="index.html">{{{product}}} Installation and Configuration Guide</a>
       </li> 
     </ul>
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Compilation &mdash; Quark 0.3.1 documentation</title>
+    <title>Compilation &mdash; {{{product}}} 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,22 +23,22 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
-    <link rel="up" title="Quark Installation and Configuration Guide" href="index.html" />
+    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
+    <link rel="up" title="{{{product}}} Installation and Configuration Guide" href="index.html" />
     <link rel="next" title="More Information" href="links.html" />
-    <link rel="prev" title="Integrations" href="integration.html" />
+    <link rel="prev" title="Runtime Integrations" href="integration.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Quark 0.3.1 documentation
+        {{{product}}} 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
     <ul>
         <li>
           &larr;
-          <a href="integration.html" title="Previous document">Integrations</a>
+          <a href="integration.html" title="Previous document">Runtime Integrations</a>
         </li>
         <li>
           <a href="links.html" title="Next document">More Information</a>
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Installation and Configuration Guide</a>
+        <a href="index.html">{{{product}}} Installation and Configuration Guide</a>
       </li> 
     </ul>
   </nav>
@@ -63,17 +63,17 @@
             
   <div class="section" id="compilation">
 <h1>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h1>
-<p>The Quark compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages. These are ordered tasks; each requires that the previous task was performed as a prerequisite. To make this easier to manage, the command to run each task automatically runs the previous tasks in the chain before running the requested task.</p>
+<p>The {{{language}}} compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages. These are ordered tasks; each requires that the previous task was performed as a prerequisite. To make this easier to manage, the command to run each task automatically runs the previous tasks in the chain before running the requested task.</p>
 <div class="section" id="syntax">
 <h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
-<p>The general syntax for the Quark compiler is:</p>
-<p><strong>quark</strong> <em>command</em> <em>options</em> <em>files</em></p>
-<p>where <em>command</em> indicates which of the supported actions Quark should run, <em>options</em> is a space-separated list of options (which may be omitted if the default options are acceptable), and <em>files</em> is a space-separated list of files to perform the specified action on.</p>
+<p>The general syntax for the {{{language}}} compiler is:</p>
+<p><strong>{{{compiler_command}}}</strong> <em>command</em> <em>options</em> <em>files</em></p>
+<p>where <em>command</em> indicates which of the supported actions {{{compiler_command}}} should run, <em>options</em> is a space-separated list of options (which may be omitted if the default options are acceptable), and <em>files</em> is a space-separated list of files to perform the specified action on.</p>
 <p>Note: The command and the options may appear in any order (the command may even be supplied between different options) but the files must be listed at the end after both the command and all of the options.</p>
 </div>
 <div class="section" id="commands">
 <h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
-<p>Quark supports four commands, each corresponding to one of the supported actions. They are:</p>
+<p>{{{compiler_command}}} supports four commands, each corresponding to one of the supported actions. They are:</p>
 <ul class="simple">
 <li>compile</li>
 <li>build</li>
@@ -82,16 +82,16 @@
 </ul>
 <div class="section" id="compile">
 <h3>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
-<p>The Quark compile command is used to generate code in one or more target languages. In addition to code, it also creates some supporting files including a Quark runtime file, documentation source files (if needed for the target languages), and package definition files (if needed for the target languages).</p>
-<p>Quark supports two compilation modes: generating code for all target languages (used by default) or generating code for one or more specific target languages.</p>
+<p>The compile command is used to generate code in one or more target languages. In addition to code, it also creates some supporting files including documentation source files (if needed for the target languages) and package definition files (if needed for the target languages).</p>
+<p>{{{compiler_command}}} supports two compilation modes: generating code for all target languages (used by default) or generating code for one or more specific target languages.</p>
 </div>
 <div class="section" id="build">
 <h3>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h3>
-<p>The Quark build command generates code in one or more target languages (runs the compile command) then compiles and runs that code.</p>
+<p>The build command generates code in one or more target languages (runs the compile command) then compiles and runs that code.</p>
 </div>
 <div class="section" id="doc">
 <h3>Doc<a class="headerlink" href="#doc" title="Permalink to this headline">¶</a></h3>
-<p>The Quark doc command generates code in one or more target languages, compiles and runs that code (runs the build command), then generates HTML versions of the documentation based on the source files and comments generated during the compilation process.</p>
+<p>The doc command generates code in one or more target languages, compiles and runs that code (runs the build command), then generates HTML versions of the documentation based on the source files and comments generated during the compilation process.</p>
 <p>Separate documentation is generated for each target language as follows:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -125,7 +125,7 @@
 </div>
 <div class="section" id="package">
 <h3>Package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h3>
-<p>The Quark package command generates code in one or more target languages, compiles and runs that code, generates HTML versions of the documentation (runs the doc command), then creates language-specific packages that can be distributed to client developers.</p>
+<p>The package command generates code in one or more target languages, compiles and runs that code, generates HTML versions of the documentation (runs the doc command), then creates language-specific packages that can be distributed to client developers.</p>
 <p>Separate packages are generated for each target language as follows:</p>
 <table border="1" class="docutils">
 <colgroup>
@@ -154,13 +154,13 @@
 </tr>
 </tbody>
 </table>
-<p>where <em>base</em> is the code output directory for the relevant target language, <em>package</em> is the name of the first package encountered within the supplied Quark code starting from the start of the first file in the list of files, and <em>version</em> is the value of the first &#64;version annotation encountered within the supplied Quark code starting from the start of the first file in the list of files. If no &#64;version annotation is encountered, the default 0.0.1 version number is used.</p>
+<p>where <em>base</em> is the code output directory for the relevant target language, <em>package</em> is the name of the first package encountered within the supplied {{{language}}} code starting from the start of the first file in the list of files, and <em>version</em> is the value of the first &#64;version annotation encountered within the supplied {{language}} code starting from the start of the first file in the list of files. If no &#64;version annotation is encountered, the default 0.0.1 version number is used.</p>
 </div>
 </div>
 <div class="section" id="command-options">
 <h2>Command Options<a class="headerlink" href="#command-options" title="Permalink to this headline">¶</a></h2>
-<p>Quark supports a variety of options that provide additional instructions to the compiler while it runs commands. These options all act upon the compile step to control how target code is generated. However, because the execution of all of the commands starts with compilation, the options are valid with any Quark command.</p>
-<p>Quark includes a minimal set of defaults that will generate and output code in a subdirectory of your base quark directory (given the name of the first file in the list of files) and put generated Java, Javascript, and Python code in java, js, and py subdirectories. If this is the desired behavior, no options are needed.</p>
+<p>{{{compiler_command}}} supports a variety of options that provide additional instructions to the compiler while it runs commands. These options all act upon the compile step to control how target code is generated. However, because the execution of all of the commands starts with compilation, the options are valid with any command.</p>
+<p>{{{product}}} includes a minimal set of defaults that will generate and output code in a subdirectory of your base {{{github_directory}}} directory (given the name of the first file in the list of files) and put generated Java, Javascript, and Python code in java, js, and py subdirectories. If this is the desired behavior, no options are needed.</p>
 <p>The available options come in sets that either act upon all languages or act upon compilation in a specific language. You may mix and match these options; it is perfectly valid to direct the compiler to generate all languages and use the defaults for some languages and explicit options for others.</p>
 <div class="section" id="options-applying-to-all-languages">
 <h3>Options Applying to All Languages<a class="headerlink" href="#options-applying-to-all-languages" title="Permalink to this headline">¶</a></h3>
@@ -196,7 +196,7 @@
 </tr>
 </tbody>
 </table>
-<p>Note: Directory names based on file names do not include .q</p>
+<p>Note: Directory names based on file names do not include {{{file_extension}}}</p>
 </div>
 <div class="section" id="java-options">
 <h3>Java Options<a class="headerlink" href="#java-options" title="Permalink to this headline">¶</a></h3>
@@ -224,7 +224,7 @@
 </tr>
 </tbody>
 </table>
-<p>Note: Directory names based on file names do not include .q</p>
+<p>Note: Directory names based on file names do not include {{{file_extension}}}</p>
 </div>
 <div class="section" id="javascript-options">
 <h3>Javascript Options<a class="headerlink" href="#javascript-options" title="Permalink to this headline">¶</a></h3>
@@ -252,7 +252,7 @@
 </tr>
 </tbody>
 </table>
-<p>Note: Directory names based on file names do not include .q</p>
+<p>Note: Directory names based on file names do not include {{{file_extension}}}</p>
 </div>
 <div class="section" id="python-options">
 <h3>Python Options<a class="headerlink" href="#python-options" title="Permalink to this headline">¶</a></h3>
@@ -280,30 +280,30 @@
 </tr>
 </tbody>
 </table>
-<p>Note: Directory names based on file names do not include .q</p>
+<p>Note: Directory names based on file names do not include {{{file_extension}}}</p>
 </div>
 </div>
 <div class="section" id="other-options">
 <h2>Other Options<a class="headerlink" href="#other-options" title="Permalink to this headline">¶</a></h2>
-<p>Quark supports two top-level options that are independent of compiler commands: help and version</p>
+<p>{{{compiler_command}}} supports two top-level options that are independent of compiler commands: help and version</p>
 <div class="section" id="help">
 <h3>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h3>
 <p>The help option prints a compiler options cheat sheet to stdout.</p>
 <div class="section" id="id1">
 <h4>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
-<p><strong>quark &#8211;help</strong></p>
+<p><strong>{{{compiler_command}}} &#8211;help</strong></p>
 <p>or</p>
-<p><strong>quark -H</strong></p>
+<p><strong>{{{compiler_command}}} -H</strong></p>
 <p>or</p>
-<p><strong>quark -h</strong></p>
+<p><strong>{{{compiler_command}}} -h</strong></p>
 </div>
 </div>
 <div class="section" id="version">
 <h3>Version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h3>
-<p>The version option prints the current version of Quark to stdout.</p>
+<p>The version option prints the current version of {{{product}}} to stdout.</p>
 <div class="section" id="id2">
 <h4>Syntax<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p><strong>quark &#8211;version</strong></p>
+<p><strong>{{{compiler_command}}} &#8211;version</strong></p>
 </div>
 </div>
 </div>
@@ -350,7 +350,7 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="integration.html"
-                        title="previous chapter">Integrations</a></p>
+                        title="previous chapter">Runtime Integrations</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="links.html"
                         title="next chapter">More Information</a></p>
@@ -382,7 +382,7 @@
     <ul>
         <li>
           &larr;
-          <a href="integration.html" title="Previous document">Integrations</a>
+          <a href="integration.html" title="Previous document">Runtime Integrations</a>
         </li>
         <li>
           <a href="links.html" title="Next document">More Information</a>
@@ -392,15 +392,15 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">Quark Installation and Configuration Guide</a>
+        <a href="index.html">{{{product}}} Installation and Configuration Guide</a>
       </li> 
     </ul>
   </nav>
   </div>
 
-  <footer id="pagefooter">&copy; 2015, Datawire.
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
       1.3.3.
 
