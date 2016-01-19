@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating the Python Client &mdash; Quark 0.3.1 documentation</title>
+    <title>Creating the Python Client &mdash; Datawire Connect 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Writing a Python Server" href="pythonServer.html" />
     <link rel="prev" title="Compiling and Installing the Library in Python" href="pythonBuild.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Quark 0.3.1 documentation
+        Datawire Connect 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -66,8 +66,8 @@
 <p>Let&#8217;s start by creating a simple Hello World client using the compiled Hello contract in Python.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the client and just want to start from a completed client, there is a <a class="reference internal" href="#fullexamplepythonclient"><span>link to the full Python client file</span></a> at the bottom of this page.</p>
 <div class="section" id="part-1-importing-the-product-pieces">
-<span id="part1pythonimport"></span><h2>Part 1: Importing the Quark Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
-<p>This section shows you how to import the Quark integration and the HelloRPC contract into your Python client.</p>
+<span id="part1pythonimport"></span><h2>Part 1: Importing the Datawire Connect Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to import the Datawire Connect integration and the HelloRPC contract into your Python client.</p>
 <p>Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre># Python Hello Client example
 
@@ -98,7 +98,7 @@ def main():
 </span>   request = hello.Request()
 </pre></div>
 </div>
-<p>The line <code class="docutils literal"><span class="pre">runtime=get_runtime()</span></code> instantiates an instance of the Quark runtime integration imported in the earlier step.</p>
+<p>The line <code class="docutils literal"><span class="pre">runtime=get_runtime()</span></code> instantiates an instance of the Datawire Connect runtime integration imported in the earlier step.</p>
 <p>The line <code class="docutils literal"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">hello.HelloClient(runtime,</span> <span class="pre">&quot;http://127.0.0.1:8910/hello&quot;)</span></code> instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>.</p>
 </div>
 <div class="section" id="part-3-setting-up-the-request">
@@ -165,7 +165,7 @@ if __name__ == &#39;__main__&#39;:
   <h3><a href="../../index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Creating the Python Client</a><ul>
-<li><a class="reference internal" href="#part-1-importing-the-product-pieces">Part 1: Importing the Quark Pieces</a></li>
+<li><a class="reference internal" href="#part-1-importing-the-product-pieces">Part 1: Importing the Datawire Connect Pieces</a></li>
 <li><a class="reference internal" href="#part-2-initializing-the-client">Part 2: Initializing the Client</a></li>
 <li><a class="reference internal" href="#part-3-setting-up-the-request">Part 3: Setting Up the Request</a></li>
 <li><a class="reference internal" href="#part-4-sending-the-request-and-processing-the-response">Part 4: Sending the Request and Processing the Response</a></li>
@@ -217,7 +217,7 @@ if __name__ == &#39;__main__&#39;:
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 

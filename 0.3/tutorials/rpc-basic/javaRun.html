@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Running the Java Client and Server &mdash; Quark 0.3.1 documentation</title>
+    <title>Running the Java Client and Server &mdash; Datawire Connect 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Javascript Requirements and Setup" href="javascriptSetup.html" />
     <link rel="prev" title="Writing a Java Server" href="javaServer.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Quark 0.3.1 documentation
+        Datawire Connect 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -66,11 +66,11 @@
 <p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Java as outlined on the <a class="reference internal" href="javaBuild.html"><em>Compiling and Installing the Library page</em></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
 <p>To run the HelloRPC example with a Java client and Java Server do the following:</p>
 <p>Step 1: Open a new terminal window</p>
-<p>Step 2: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 2: Move to the HelloRPC directory within your local Datawire Connect git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
 <p>Step 3: Run the following command to build the client and the server: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">compile</span></code></p>
 <p>Step 4: Run the following command to start the Java server: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">exec:java</span> <span class="pre">-Dexec.mainClass=helloRPC.HelloRPCServer</span></code></p>
 <p>Step 5: Open a new terminal window</p>
-<p>Step 6: Move to the HelloRPC directory within your local Quark git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
+<p>Step 6: Move to the HelloRPC directory within your local Datawire Connect git repository if you are not already there. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code>.</p>
 <p>Step 7: Run the following command to start the Java client: <code class="docutils literal"><span class="pre">mvn</span> <span class="pre">exec:java</span> <span class="pre">-Dexec.mainClass=helloRPC.HelloRPCClient</span></code></p>
 <p>After some log lines outlining the processing, you should see the following in the terminal window (stdout):</p>
 <div class="highlight-none"><div class="highlight"><pre>Request says: Hello from Java!
@@ -78,7 +78,7 @@ Response says: Responding to [Hello from Java!] from Java
 </pre></div>
 </div>
 <p>The content of the second line is the server regurgitating what the client sent it then identifying its own language. In this case, the Java client sent &#8220;Hello from Java!&#8221; to the Java server so both language identifiers are Java.</p>
-<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in Java. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Java!</p>
+<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Datawire Connect and have seen those clients and servers in action in Java. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Java!</p>
 </div>
 
 
@@ -131,7 +131,7 @@ Response says: Responding to [Hello from Java!] from Java
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
