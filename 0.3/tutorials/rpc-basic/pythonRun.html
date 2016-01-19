@@ -64,12 +64,15 @@
   <div class="section" id="running-the-python-client-and-server">
 <h1>Running the Python Client and Server<a class="headerlink" href="#running-the-python-client-and-server" title="Permalink to this headline">¶</a></h1>
 <p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python as outlined on the <a class="reference internal" href="pythonBuild.html"><em>Compiling and Installing the Library page</em></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
-<p>To run the HelloRPC example with a Python client and Python Server do the following:</p>
+<div class="section" id="python-client-and-local-python-server">
+<h2>Python Client and Local Python Server<a class="headerlink" href="#python-client-and-local-python-server" title="Permalink to this headline">¶</a></h2>
+<p>To run the HelloRPC example with a Python client against a local Python Server do the following:</p>
 <p>Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Datawire Connect git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
 <p>Step 2: Run the server by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyserver.py</span></code>. This will result in a blocking wait state - there is no direct output to stdout from the Python server.</p>
 <p>Step 3: Open a second terminal window</p>
 <p>Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Datawire Connect git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
-<p>Step 4: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
+<p>Note: If you use the supplied client file from the GitHub repository (pyclient.py), you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> to <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>. For more information, refer to the <a class="reference internal" href="pythonClient.html#part2pythonclientinstantiation"><span>client instantiation section of the walkthrough</span></a>.</p>
+<p>Step 5: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
 <p>You should see the following in your terminal window (stdout):</p>
 <div class="highlight-none"><div class="highlight"><pre>Request says &#39;Hello from Python!&#39;
 Response says u&#39;Responding to [Hello from Python!] from Python&#39;
@@ -90,7 +93,16 @@ print &quot;Request says %r&quot; % request.text
 </pre></div>
 </div>
 <p>[[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]</p>
-<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Datawire Connect and have seen those clients and servers in action in Python. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Python!</p>
+<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Datawire Connect and have seen those clients and servers in action in Python.</p>
+</div>
+<div class="section" id="using-the-python-client-against-the-cloud">
+<h2>Using the Python Client Against the Cloud<a class="headerlink" href="#using-the-python-client-against-the-cloud" title="Permalink to this headline">¶</a></h2>
+<p>One of the first things we did in this walkthrough was use the example Python client file against the Datawire cloud and see it respond to the client requests. You can do exactly the same thing with the Python client you wrote by changing the server URL supplied when instantiating the client object. Just swap out <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> for <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code> and run the client again. This time it should tell you that the response is coming from the Datawire cloud.</p>
+</div>
+<div class="section" id="next-steps">
+<h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>Now that you understand the basics, you can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a> - you may want to revert any edits you made to run your client against the server in the Datawire cloud first - or just experiment some more on your own with Python!</p>
+</div>
 </div>
 
 
@@ -99,6 +111,16 @@ print &quot;Request says %r&quot; % request.text
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Running the Python Client and Server</a><ul>
+<li><a class="reference internal" href="#python-client-and-local-python-server">Python Client and Local Python Server</a></li>
+<li><a class="reference internal" href="#using-the-python-client-against-the-cloud">Using the Python Client Against the Cloud</a></li>
+<li><a class="reference internal" href="#next-steps">Next Steps</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="pythonServer.html"
                         title="previous chapter">Writing a Python Server</a></p>

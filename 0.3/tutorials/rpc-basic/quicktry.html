@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Datawire Connect RPC Support &mdash; Datawire Connect 0.3.1 documentation</title>
+    <title>Quickly Trying RPC &mdash; Datawire Connect 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -25,8 +25,8 @@
     <script type="text/javascript" src="../../_static/doctools.js"></script>
     <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
-    <link rel="next" title="Quickly Trying RPC" href="quicktry.html" />
-    <link rel="prev" title="Introduction to RPC" href="intro.html" />
+    <link rel="next" title="Defining the Service Contract" href="contract.html" />
+    <link rel="prev" title="Datawire Connect RPC Support" href="setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
@@ -38,10 +38,10 @@
     <ul>
         <li>
           &larr;
-          <a href="intro.html" title="Previous document">Introduction to RPC</a>
+          <a href="setup.html" title="Previous document">Datawire Connect RPC Support</a>
         </li>
         <li>
-          <a href="quicktry.html" title="Next document">Quickly Trying RPC</a>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
           &rarr;
         </li>
     </ul>
@@ -61,22 +61,19 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="product-rpc-support">
-<h1>Datawire Connect RPC Support<a class="headerlink" href="#product-rpc-support" title="Permalink to this headline">¶</a></h1>
-<p>Datawire Connect currently supports one interaction pattern with the most basic request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, write clients in each supported language using the library created from that contract, and generate servers in each supported language using the same library. It will also walk you through how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.</p>
-<p>In order to use RPC with Datawire Connect you must have Datawire Connect installed and the Datawire Connect integration matching the development environment you&#8217;re using to write your code (the Netty integration will be installed automatically as needed). The Datawire Connect core runtime is also needed but will be installed automatically by the integrations as a dependency.</p>
-<p>We expect you to have the following tools installed as prerequisites:</p>
-<ul class="simple">
-<li>Python (tested with version 2.7)</li>
-<li>pip</li>
-<li>git</li>
-<li>tar</li>
-</ul>
-<p>If you haven&#8217;t already done so, run the following command to install Datawire Connect:</p>
-<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark</span></code></p>
-<p>You will also need to clone a local copy of the Datawire Connect examples repository. This tutorial will generally point to the remote GitHub repository when providing links to example files stored there, but you will need local copies to run the final stages of the tutorial. You can clone the repository using the following command:</p>
-<p><code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/datawire/quark.git</span></code></p>
-<p>Additional requirements for specific languages will be outlined within the sections for those languages.</p>
+  <div class="section" id="quickly-trying-rpc">
+<h1>Quickly Trying RPC<a class="headerlink" href="#quickly-trying-rpc" title="Permalink to this headline">¶</a></h1>
+<p>Before building your own RPC client and servers, you can see RPC with Datawire Connect in action using a provided client and an RPC server in the Datawire cloud.</p>
+<p>Step 1: Run the following command to install the Datawire Connect Python threaded integration:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark-threaded</span></code></p>
+<p>Step 2: Move to the HelloRPC directory within your local Datawire Connect git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
+<p>Step 3: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
+<p>You should see the following in your terminal window (stdout):</p>
+<div class="highlight-none"><div class="highlight"><pre>Request says &#39;Hello from Python!&#39;
+Response says u&quot;Responding to &#39;Hello from Python!&#39; from Datawire Cloud!&quot;
+</pre></div>
+</div>
+<p>You just used the provided Python helloRPC client to communicate with the helloRPC server in the Datawire cloud. Now, let’s see how to write a client that performs the same functionality as well as a local server that sends similar responses to that client via RPC. You’ll be able to switch your client back and forth so it communicates with either the local server or the server in the cloud.</p>
 </div>
 
 
@@ -86,13 +83,13 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
-  <p class="topless"><a href="intro.html"
-                        title="previous chapter">Introduction to RPC</a></p>
+  <p class="topless"><a href="setup.html"
+                        title="previous chapter">Datawire Connect RPC Support</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="quicktry.html"
-                        title="next chapter">Quickly Trying RPC</a></p>
+  <p class="topless"><a href="contract.html"
+                        title="next chapter">Defining the Service Contract</a></p>
 <div class="sourcelink">
-  <a href="../../_sources/tutorials/rpc-basic/setup.txt" rel="nofollow">
+  <a href="../../_sources/tutorials/rpc-basic/quicktry.txt" rel="nofollow">
     Show page source
   </a>
 </div>
@@ -119,10 +116,10 @@
     <ul>
         <li>
           &larr;
-          <a href="intro.html" title="Previous document">Introduction to RPC</a>
+          <a href="setup.html" title="Previous document">Datawire Connect RPC Support</a>
         </li>
         <li>
-          <a href="quicktry.html" title="Next document">Quickly Trying RPC</a>
+          <a href="contract.html" title="Next document">Defining the Service Contract</a>
           &rarr;
         </li>
     </ul>

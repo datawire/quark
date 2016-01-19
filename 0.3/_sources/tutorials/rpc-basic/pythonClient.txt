@@ -3,7 +3,9 @@ Creating the Python Client
 
 Let's start by creating a simple Hello World client using the compiled Hello contract in Python.
 
-Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, there is a :ref:`link to the full Python client file <fullExamplePythonClient>` at the bottom of this page.
+This walkthrough assumes that your client file is named ``pyclient.py`` but there is no requirement that you do so. Please substitute your file name for pyclient.py everywhere if you choose a different name.
+
+Note: If you don't want step-by-step guidance about how to create the client and just want to start from a completed client, go directly to the :ref:`full client code <fullExamplePythonClientLocal>` displayed in the last step on this page (this client points to a local server) or to this :ref:`link to the full Python client pointing to the cloud server<fullExamplePythonClientCloud>`.
 
 .. _part1PythonImport:
 
@@ -57,7 +59,9 @@ Relevant code:
 The line ``runtime=get_runtime()`` instantiates an instance of the {{{product}}} runtime integration imported in the earlier step.
 
 
-The line ``client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")`` instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at ``http://127.0.0.1:8910/hello``.
+The line ``client = hello.HelloClient(runtime, "http://127.0.0.1:8910/hello")`` instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at ``http://127.0.0.1:8910/hello``. 
+
+If you want to point your client to the cloud server instead, just use ``http://hello.datawire.io`` instead of the local URL above. For this walkthrough, though, you should use the local server (examined on the next page).
 
 
 .. _part3PythonRequest:
@@ -99,7 +103,7 @@ Part 4: Sending the Request and Processing the Response
 
 This section sends the request to the server, receives the response, and displays it from the client.
 
-.. _fullExamplePythonClient:
+.. _fullExamplePythonClientLocal:
 
 Relevant code:
 
@@ -131,4 +135,6 @@ The line ``response = client.hello(request)`` uses the hello method of the Clien
 
 The print statement below it provides visual feedback within the client that the request was sent to the server and a response was received. It is not essential to the interaction but helps illustrate the communications in the example. 
 
-That's it! The Python client is fully defined now - the code above is all that's needed to run the client and visually see the results sent back from the server piece defined in the next stage of this walkthrough.
+.. _fullExamplePythonClientCloud:
+
+That's it! The Python client is fully defined now - the code above is all that's needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the {{{product}}} GitHub repository `here <https://github.com/datawire/{{{github_directory}}}/blob/{{{branch}}}/examples/helloRPC/pyclient.py>`.
