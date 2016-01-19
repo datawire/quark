@@ -112,7 +112,8 @@ def test_run_python(output):
     base = os.path.join(output, py.ext)
     dirs = [name for name in os.listdir(base)]
     pypath = ":".join([os.path.join(base, name) for name in dirs])
-    env = {"PYTHONPATH": pypath}.update(os.environ)
+    env = {"PYTHONPATH": pypath}
+    env.update(os.environ)
 
     import quark.python
     run_tests(base, dirs, lambda name: ["python", quark.python.name(name) + ".py"], env=env)
@@ -122,6 +123,7 @@ def test_run_javascript(output):
     base = os.path.join(output, js.ext)
     dirs = [name for name in os.listdir(base)]
     node_path = ":".join([os.path.join(base, name) for name in dirs])
-    env = {"NODE_PATH": node_path}.update(os.environ)
+    env = {"NODE_PATH": base}
+    env.update(os.environ)
 
     run_tests(base, dirs, lambda name: ["node", name + ".js"], env=env)
