@@ -1,0 +1,10 @@
+
+{
+    "name": "Pie",
+    "version": "0.0.1",
+    "main": "Pie/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

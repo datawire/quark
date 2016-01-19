@@ -1,0 +1,10 @@
+
+{
+    "name": "json_assembling",
+    "version": "0.0.1",
+    "main": "json_assembling/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

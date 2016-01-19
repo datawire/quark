@@ -1020,16 +1020,39 @@ class Compiler:
     def emit(self, backend):
         self.root.traverse(backend)
 
-def install(url, backend):
+def traverse(url, func, *args, **kwargs):
     c = Compiler()
     c.urlparse(url)
     c.compile()
     for dep in c.dependencies:
-        if not backend.is_installed(dep):
-            install(dep, backend)
-    b = backend()
-    c.emit(b)
-    b.install()
+        traverse(dep, func, *args, **kwargs)
+    func(url, c, *args, **kwargs)
+
+def do_install(url, comp, backends):
+    for backend in backends:
+        b = backend()
+        if not b.is_installed(url):
+            comp.emit(b)
+            b.install()
+
+def install(url, *backends):
+    traverse(url, do_install, backends)
+
+def do_compile(url, comp, target, backends, dirs):
+    dir = os.path.splitext(os.path.basename(url))[0]
+    if dir not in dirs:
+        dirs.append(dir)
+    for backend in backends:
+        b = backend()
+        comp.emit(b)
+        out = os.path.join(os.path.join(target, b.ext), dir)
+        b.write(out)
+
+def compile(url, target, *backends):
+    mods = []
+    traverse(url, do_compile, target, backends, mods)
+    return mods
+
 
 from backend import Java, Python, JavaScript
 

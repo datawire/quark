@@ -1,0 +1,10 @@
+
+{
+    "name": "use_package_before_def",
+    "version": "0.0.1",
+    "main": "use_package_before_def/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

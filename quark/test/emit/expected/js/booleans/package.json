@@ -1,0 +1,10 @@
+
+{
+    "name": "booleans",
+    "version": "0.0.1",
+    "main": "booleans/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

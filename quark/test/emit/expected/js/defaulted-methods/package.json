@@ -1,0 +1,10 @@
+
+{
+    "name": "defaulted_methods",
+    "version": "0.0.1",
+    "main": "defaulted_methods/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

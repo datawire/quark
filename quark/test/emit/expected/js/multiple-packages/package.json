@@ -1,0 +1,10 @@
+
+{
+    "name": "multiple_packages",
+    "version": "0.0.1",
+    "main": "multiple_packages/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

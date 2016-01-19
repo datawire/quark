@@ -1,0 +1,10 @@
+
+{
+    "name": "no_spurious_cast",
+    "version": "0.0.1",
+    "main": "no_spurious_cast/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

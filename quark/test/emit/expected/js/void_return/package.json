@@ -1,0 +1,10 @@
+
+{
+    "name": "void_return",
+    "version": "0.0.1",
+    "main": "void_return/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        

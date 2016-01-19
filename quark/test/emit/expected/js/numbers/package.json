@@ -1,0 +1,10 @@
+
+{
+    "name": "numbers",
+    "version": "0.0.1",
+    "main": "numbers/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        
