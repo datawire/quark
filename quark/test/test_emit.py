@@ -120,13 +120,8 @@ def test_run_python(output):
 def test_run_javascript(output):
     js = JavaScript()
     base = os.path.join(output, js.ext)
-    modules = os.path.join(base, "node_modules")
-    dirs = [name for name in os.listdir(base) if name != "node_modules"]
+    dirs = [name for name in os.listdir(base)]
+    node_path = ":".join([os.path.join(base, name) for name in dirs])
+    env = {"NODE_PATH": node_path}.update(os.environ)
 
-    if os.path.exists(modules):
-        shutil.rmtree(modules)
-    os.mkdir(modules)
-
-    subprocess.check_call(["npm", "install"] + dirs, cwd=base)
-
-    run_tests(base, dirs, lambda name: ["node", name + ".js"])
+    run_tests(base, dirs, lambda name: ["node", name + ".js"], env=env)
