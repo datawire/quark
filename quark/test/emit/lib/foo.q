@@ -1,0 +1,3 @@
+String qux() {
+    return "moo";
+}
