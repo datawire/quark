@@ -1,7 +1,7 @@
 Writing a Python Server
 =======================
 
-Let's start by creating a simple Hello World server using the compiled Hello service contract in Python. This server will be functionally equivalent to the cloud server you used at the beginning of this walkthrough.
+Let's start by creating a simple Hello World server using the compiled Hello service contract in Python.
 
 Note: If you don't want step-by-step guidance about how to create the server and just want to start from a completed server, there is a :ref:`link to the full Python server file <fullExamplePythonServer>` at the bottom of this page.
 
