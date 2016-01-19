@@ -71,6 +71,12 @@
 .dw-header .dw-searchform ::-ms-input-placeholder { color: {{theme_search_plchldr_color}}; }
 .dw-header .dw-searchform :placeholder-shown { color: {{theme_search_plchldr_color}}; }
 
+/* BODY */
+
+div.body ul {margin-top:0}
+
+/* DESKTOP BREAKPOINT */
+
 @media screen and (min-width: 875px) {
 
     .dw-header {
@@ -142,7 +148,6 @@
 
     div.sphinxsidebar li.current a.current {
         border-right: 2px solid #56c9ea;
-        color: #56c9ea;
     }
 
     /* SEARCH */

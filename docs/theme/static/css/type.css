@@ -20,6 +20,13 @@ div.body {
     color: #959798;
 }
 
+div.body a.reference {
+    border: none;
+    color: #56c9ea;
+}
+div.body a.reference:hover { }
+
+
 div.body p,
 div.body dd,
 div.body li {
@@ -36,18 +43,43 @@ div.body h6 {
     color: #0b3b4c;
 }
 
+div.body h2,
+div.body h3 {
+    font-size: 1.1rem;
+}
+
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
     font-family: "Centuma", "Arial", sans-serif;
     font-size: 1.1rem;
-    color: #0b3b4c;
+    color: #fff;
+}
+
+div.sphinxsidebar h3,
+div.sphinxsidebar h3 a {
+    color: #fff;
 }
 
 input {
     font-family: "Centuma Light", "Arial", sans-serif;
 }
 
-div.sphinxsidebar h3,
-div.sphinxsidebar h3 a {
-    color: #0b3b4c;
+
+div.sphinxsidebar li.current a.current {
+    color: #56c9ea;
+}
+
+/* DESKTOP BREAKPOINT */
+@media screen and (min-width: 875px) {
+
+    div.sphinxsidebar h3,
+    div.sphinxsidebar h4 {
+        color: #0b3b4c;
+    }
+
+    div.sphinxsidebar h3,
+    div.sphinxsidebar h3 a {
+        color: #0b3b4c;
+    }
+
 }
