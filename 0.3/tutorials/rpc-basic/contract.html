@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Defining the Service Contract &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Defining the Service Contract &mdash; Quark 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,22 +23,22 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Pick a Language" href="language.html" />
-    <link rel="prev" title="{{{product}}} RPC Support" href="setup.html" />
+    <link rel="prev" title="Quark RPC Support" href="setup.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        {{{product}}} 0.3.1 documentation
+        Quark 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
     <ul>
         <li>
           &larr;
-          <a href="setup.html" title="Previous document">{{{product}}} RPC Support</a>
+          <a href="setup.html" title="Previous document">Quark RPC Support</a>
         </li>
         <li>
           <a href="language.html" title="Next document">Pick a Language</a>
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -63,7 +63,7 @@
             
   <div class="section" id="defining-the-service-contract">
 <h1>Defining the Service Contract<a class="headerlink" href="#defining-the-service-contract" title="Permalink to this headline">¶</a></h1>
-<p>The first step when working with RPC is to define a contract in {{{language}}}. This contract defines the value classes, interfaces, and interaction patterns as well as how they can be used together.</p>
+<p>The first step when working with RPC is to define a contract in Quark. This contract defines the value classes, interfaces, and interaction patterns as well as how they can be used together.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the contract and just want to start from a completed contract, there is a <a class="reference internal" href="#fullexamplecontract"><span>link to the full contract file</span></a> at the bottom of this page.</p>
 <div class="section" id="part-1-creating-the-framework">
 <span id="part1framework"></span><h2>Part 1: Creating the framework<a class="headerlink" href="#part-1-creating-the-framework" title="Permalink to this headline">¶</a></h2>
@@ -75,7 +75,7 @@
 <span class="hll">}
 </span></pre></div>
 </div>
-<p>This creates a versioned {{{language}}} library in a package named hello.</p>
+<p>This creates a versioned Quark library in a package named hello.</p>
 </div>
 <div class="section" id="part-2-adding-value-classes">
 <span id="part2classes"></span><h2>Part 2: Adding value classes<a class="headerlink" href="#part-2-adding-value-classes" title="Permalink to this headline">¶</a></h2>
@@ -118,13 +118,13 @@ package hello {
 }
 </pre></div>
 </div>
-<p>The Hello interface extends the Service interface supplied by {{{language}}}. This interface defines the actual communication mechanism between the client and the server.</p>
+<p>The Hello interface extends the Service interface supplied by Quark. This interface defines the actual communication mechanism between the client and the server.</p>
 <p>The Hello interface specifies the use of the rpc interaction pattern by including <code class="docutils literal"><span class="pre">&#64;delegate(self.rpc)</span></code>. Note that this is a workaround; the preferred method for specifying the simple rpc interaction pattern is <code class="docutils literal"><span class="pre">&#64;delegate(rpc)</span></code> but it is not currently working.</p>
 <p>The Hello interface define a method named hello() that expects a request as an input parameter and returns a response object. This is the method that glues together the request and response; It is used in both the client and the server implementations. In the client it is used to send a request to the server and in the server it determines the proper response to that request.</p>
 </div>
 <div class="section" id="part-4-client">
 <span id="part4client"></span><h2>Part 4: Client<a class="headerlink" href="#part-4-client" title="Permalink to this headline">¶</a></h2>
-<p>This section defines the client processing code in {{{language}}}. This definition will be used within the client code in each supported target language to perform the actual communications work of the client.</p>
+<p>This section defines the client processing code in Quark. This definition will be used within the client code in each supported target language to perform the actual communications work of the client.</p>
 <p>Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
 package hello {
@@ -147,11 +147,11 @@ package hello {
 </span>}
 </pre></div>
 </div>
-<p>Define an empty class named HelloClient that extends the {{{language}}} Client integration type and uses the Hello interface we just defined. This class will be instantiated in the client code and used to send requests to the server. Most of the work of this class is abstracted away inside the {{{language}}} Client class.</p>
+<p>Define an empty class named HelloClient that extends the Quark Client integration type and uses the Hello interface we just defined. This class will be instantiated in the client code and used to send requests to the server. Most of the work of this class is abstracted away inside the Quark Client class.</p>
 </div>
 <div class="section" id="part-5-server">
 <span id="part5server"></span><h2>Part 5: Server<a class="headerlink" href="#part-5-server" title="Permalink to this headline">¶</a></h2>
-<p>This section defines the server in {{{language}}}. This definition will be used within the server written in each supported language to access the code within {{{language}}} and the installed integration that accepts the client request and packages up the response to send back to the client.</p>
+<p>This section defines the server in Quark. This definition will be used within the server written in each supported language to access the code within Quark and the installed integration that accepts the client request and packages up the response to send back to the client.</p>
 <p id="fullexamplecontract">Relevant code:</p>
 <div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
 package hello {
@@ -176,7 +176,7 @@ package hello {
 </span>}
 </pre></div>
 </div>
-<p>Define an empty class named HelloServer that extends the {{{language}}} Server implementation type. This type expects an implementation type, in this case the Hello interface defined above. This class will be instantiated in the server code and used to accept requests from the client and return responses to it based on those requests. Most of the work of this class is abstracted away inside the {{{language}}} Server class.</p>
+<p>Define an empty class named HelloServer that extends the Quark Server implementation type. This type expects an implementation type, in this case the Hello interface defined above. This class will be instantiated in the server code and used to accept requests from the client and return responses to it based on those requests. Most of the work of this class is abstracted away inside the Quark Server class.</p>
 <p>That&#8217;s it! The contract is fully defined now and ready to be turned into a library for your Hello clients and servers to use.</p>
 </div>
 </div>
@@ -201,7 +201,7 @@ package hello {
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="setup.html"
-                        title="previous chapter">{{{product}}} RPC Support</a></p>
+                        title="previous chapter">Quark RPC Support</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="language.html"
                         title="next chapter">Pick a Language</a></p>
@@ -233,7 +233,7 @@ package hello {
     <ul>
         <li>
           &larr;
-          <a href="setup.html" title="Previous document">{{{product}}} RPC Support</a>
+          <a href="setup.html" title="Previous document">Quark RPC Support</a>
         </li>
         <li>
           <a href="language.html" title="Next document">Pick a Language</a>
@@ -243,7 +243,7 @@ package hello {
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 

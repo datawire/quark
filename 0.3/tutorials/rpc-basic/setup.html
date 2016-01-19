@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>{{{product}}} RPC Support &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Quark RPC Support &mdash; Quark 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Defining the Service Contract" href="contract.html" />
     <link rel="prev" title="Introduction to RPC" href="intro.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        {{{product}}} 0.3.1 documentation
+        Quark 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -62,9 +62,9 @@
           <div class="body" role="main">
             
   <div class="section" id="product-rpc-support">
-<h1>{{{product}}} RPC Support<a class="headerlink" href="#product-rpc-support" title="Permalink to this headline">¶</a></h1>
-<p>{{{product}}} currently supports one interaction pattern with the most basic request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, write clients in each supported language using the library created from that contract, and generate servers in each supported language using the same library. It will also walk you through how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.</p>
-<p>In order to use RPC with {{{product}}} you must have {{{product}}} installed and the {{{product}}} integration matching the development environment you&#8217;re using to write your code (the Netty integration will be installed automatically as needed). The {{{product}}} core runtime is also needed but will be installed automatically by the integrations as a dependency.</p>
+<h1>Quark RPC Support<a class="headerlink" href="#product-rpc-support" title="Permalink to this headline">¶</a></h1>
+<p>Quark currently supports one interaction pattern with the most basic request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, write clients in each supported language using the library created from that contract, and generate servers in each supported language using the same library. It will also walk you through how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.</p>
+<p>In order to use RPC with Quark you must have Quark installed and the Quark integration matching the development environment you&#8217;re using to write your code (the Netty integration will be installed automatically as needed). The Quark core runtime is also needed but will be installed automatically by the integrations as a dependency.</p>
 <p>We expect you to have the following tools installed as prerequisites:</p>
 <ul class="simple">
 <li>Python (tested with version 2.7)</li>
@@ -72,10 +72,10 @@
 <li>git</li>
 <li>tar</li>
 </ul>
-<p>If you haven&#8217;t already done so, run the following command to install {{{product}}}:</p>
-<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">{{{main_module}}}</span></code></p>
-<p>You will also need to clone a local copy of the {{{product}}} examples repository. This tutorial will generally point to the remote GitHub repository when providing links to example files stored there, but you will need local copies to run the final stages of the tutorial. You can clone the repository using the following command:</p>
-<p><code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/datawire/{{{github_directory}}}.git</span></code></p>
+<p>If you haven&#8217;t already done so, run the following command to install Quark:</p>
+<p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark</span></code></p>
+<p>You will also need to clone a local copy of the Quark examples repository. This tutorial will generally point to the remote GitHub repository when providing links to example files stored there, but you will need local copies to run the final stages of the tutorial. You can clone the repository using the following command:</p>
+<p><code class="docutils literal"><span class="pre">git</span> <span class="pre">clone</span> <span class="pre">https://github.com/datawire/quark.git</span></code></p>
 <p>Additional requirements for specific languages will be outlined within the sections for those languages.</p>
 </div>
 
@@ -129,7 +129,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 

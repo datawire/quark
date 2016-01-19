@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Keywords &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Keywords &mdash; Quark 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="Operators" href="operators.html" />
     <link rel="prev" title="Language Elements" href="language.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        {{{product}}} 0.3.1 documentation
+        Quark 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,9 +48,9 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">{{{language}}} Language Reference</a>
+        <a href="index.html">Quark Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>
@@ -66,8 +66,8 @@
             
   <div class="section" id="keywords">
 <h1>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h1>
-<p>Keywords are reserved words that have a specific meaning within {{{language}}}. They cannot be used as names of user-generated content (packages, classes, functions, etc).</p>
-<p>{{{language}}} defines the following keywords:</p>
+<p>Keywords are reserved words that have a specific meaning within Quark. They cannot be used as names of user-generated content (packages, classes, functions, etc).</p>
+<p>Quark defines the following keywords:</p>
 <div class="toctree-wrapper compound">
 <ul class="simple">
 </ul>
@@ -85,7 +85,7 @@
 <p><strong>class</strong> <em>className</em> <strong>{</strong>
 <em>definition</em>
 <strong>}</strong></p>
-<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined) and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined) and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
 </div>
 </div>
 <div class="section" id="continue">
@@ -122,17 +122,17 @@ else {</strong>
 <p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>superClassName</em> <strong>{</strong>
 <em>additionalClassDefinition</em>
 <strong>}</strong></p>
-<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), <em>superClassName</em> is the unique name of the chosen superclass, and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), <em>superClassName</em> is the unique name of the chosen superclass, and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
 <p>or</p>
 <p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>interfaces</em> <strong>{</strong>
 <em>additionalClassDefinition</em>
 <strong>}</strong></p>
-<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
 <p>or</p>
 <p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>superClassName</em> <strong>,</strong> <em>interfaces</em> <strong>{</strong>
 <em>additionalClassDefinition</em>
 <strong>}</strong></p>
-<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), <em>superClassName</em> is the unique name of the chosen superclass, <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>where <em>className</em> is a unique name within the scope of the package (if one is defined) or the set of Quark files being compiled together (if no package is defined), <em>superClassName</em> is the unique name of the chosen superclass, <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
 </div>
 </div>
 <div class="section" id="false">
@@ -170,7 +170,7 @@ else {</strong>
 </div>
 <div class="section" id="macro">
 <span id="macrokeyword"></span><h2>macro<a class="headerlink" href="#macro" title="Permalink to this headline">¶</a></h2>
-<p>The macro keyword is used to define a top-level function available to use within any {{{language}}} program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by {{{language}}}.</p>
+<p>The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by Quark.</p>
 <div class="section" id="id6">
 <h3>Syntax<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>The macro keyword syntax is:</p>
@@ -181,7 +181,7 @@ else {</strong>
 <dd><strong>$js{</strong> <em>javascriptMacroDefinition</em> <strong>}</strong>
 <strong>$py{</strong> <em>pythonMacroDefinition</em> <strong>}</strong></dd>
 </dl>
-<p>The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/27">linkIssue27</a> for more information.</p>
+<p>The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See <a class="reference external" href="https://github.com/datawire/quark/issues/27">linkIssue27</a> for more information.</p>
 </div>
 </div>
 <div class="section" id="new">
@@ -206,7 +206,7 @@ else {</strong>
 </div>
 <div class="section" id="package">
 <span id="packagekeyword"></span><h2>package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h2>
-<p>The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any {{{language}}} files compiled at the same time as the file or files with the package definition.</p>
+<p>The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any Quark files compiled at the same time as the file or files with the package definition.</p>
 <div class="section" id="id9">
 <h3>Syntax<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <p>The package keyword syntax is:</p>
@@ -215,12 +215,12 @@ else {</strong>
 <dd><em>definition</em></dd>
 </dl>
 <p><strong>}</strong></p>
-<p>where <em>definition</em> is the content of the package and <em>packageName</em> is the name of the package. Package names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. {{{language}}} packages cannot be the same as the name of the file they are defined within. See <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues/6">linkIssue6</a> for more information.</p>
+<p>where <em>definition</em> is the content of the package and <em>packageName</em> is the name of the package. Package names are treated as unique within the scope of the Quark files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. Quark packages cannot be the same as the name of the file they are defined within. See <a class="reference external" href="https://github.com/datawire/quark/issues/6">linkIssue6</a> for more information.</p>
 </div>
 </div>
 <div class="section" id="primitive">
 <span id="primitivekeyword"></span><h2>primitive<a class="headerlink" href="#primitive" title="Permalink to this headline">¶</a></h2>
-<p>The primitive keyword is used to define basic data types in {{{language}}}. At the current time it is reserved for use by the system.</p>
+<p>The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.</p>
 </div>
 <div class="section" id="return">
 <span id="returnkeyword"></span><h2>return<a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h2>
@@ -369,9 +369,9 @@ else {</strong>
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../index.html">Quark 0.3.1 documentation</a></li>
       <li>
-        <a href="index.html">{{{language}}} Language Reference</a>
+        <a href="index.html">Quark Language Reference</a>
       </li>
       <li>
         <a href="language.html">Language Elements</a>

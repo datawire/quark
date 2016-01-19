@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>{{{product}}} Quick Start &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Quark Quick Start &mdash; Quark 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -23,31 +23,31 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../index.html" />
-    <link rel="next" title="{{{product}}} Installation and Configuration Guide" href="../install/index.html" />
-    <link rel="prev" title="Welcome to the {{{product}}} Documentation!" href="../index.html" />
+    <link rel="top" title="Quark 0.3.1 documentation" href="../index.html" />
+    <link rel="next" title="Quark Installation and Configuration Guide" href="../install/index.html" />
+    <link rel="prev" title="Welcome to the Quark Documentation!" href="../index.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        {{{product}}} 0.3.1 documentation
+        Quark 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
     <ul>
         <li>
           &larr;
-          <a href="../index.html" title="Previous document">Welcome to the {{{product}}} Documentation!</a>
+          <a href="../index.html" title="Previous document">Welcome to the Quark Documentation!</a>
         </li>
         <li>
-          <a href="../install/index.html" title="Next document">{{{product}}} Installation and Configuration Guide</a>
+          <a href="../install/index.html" title="Next document">Quark Installation and Configuration Guide</a>
           &rarr;
         </li>
     </ul>
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li> 
+      <li><a href="../index.html">Quark 0.3.1 documentation</a></li> 
     </ul>
   </nav>
   </div>  
@@ -58,21 +58,21 @@
           <div class="body" role="main">
             
   <div class="section" id="product-quick-start">
-<h1>{{{product}}} Quick Start<a class="headerlink" href="#product-quick-start" title="Permalink to this headline">¶</a></h1>
-<p>This page provides an overview of the basic installation requirements and process, basic compile commands, and the {{{language}}} programming language. If you have successfully run and understood any of the examples, you can probably skip this Quick Start.</p>
+<h1>Quark Quick Start<a class="headerlink" href="#product-quick-start" title="Permalink to this headline">¶</a></h1>
+<p>This page provides an overview of the basic installation requirements and process, basic compile commands, and the Quark programming language. If you have successfully run and understood any of the examples, you can probably skip this Quick Start.</p>
 <div class="section" id="installation-and-configuration">
 <h2>Installation and Configuration<a class="headerlink" href="#installation-and-configuration" title="Permalink to this headline">¶</a></h2>
-<p>This section provides an overview of the prerequisites, installation, and compilation process for {{{product}}} meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the <a class="reference external" href="http://datawire.github.io/{{{doc-directory}}}/install/index.html">{{{product}}} Installation and Configuration Guide</a>.</p>
+<p>This section provides an overview of the prerequisites, installation, and compilation process for Quark meant to get you started. Some features and target output languages have additional requirements. For full installation and documentation instructions, see the <a class="reference external" href="http://datawire.github.io/{{{doc-directory}}}/install/index.html">Quark Installation and Configuration Guide</a>.</p>
 <div class="section" id="prerequisites">
 <h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this headline">¶</a></h3>
-<p>{{{product}}} requires a modern Linux distribution or Mac OS X. It has been successfully tested on the following:</p>
+<p>Quark requires a modern Linux distribution or Mac OS X. It has been successfully tested on the following:</p>
 <ul class="simple">
 <li>Mac OS 10.10 (Yosemite)</li>
 <li>Mac OS 10.11 (El Capitan)</li>
 <li>Ubuntu 14.04 (Trusty)</li>
 <li>Fedora 22</li>
 </ul>
-<p>{{{product}}} also requires the following:</p>
+<p>Quark also requires the following:</p>
 <ul class="simple">
 <li>Python 2.7+</li>
 <li>pip</li>
@@ -80,40 +80,40 @@
 </div>
 <div class="section" id="installation">
 <h3>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h3>
-<p>To install {{{product}}}, run the following command:</p>
+<p>To install Quark, run the following command:</p>
 <blockquote>
-<div>pip install {{{main_module}}}</div></blockquote>
+<div>pip install datawire-quark</div></blockquote>
 </div>
 <div class="section" id="compiling-language-files">
-<h3>Compiling {{{language}}} Files<a class="headerlink" href="#compiling-language-files" title="Permalink to this headline">¶</a></h3>
-<p>The {{{language}}} compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages.</p>
+<h3>Compiling Quark Files<a class="headerlink" href="#compiling-language-files" title="Permalink to this headline">¶</a></h3>
+<p>The Quark compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages.</p>
 <p>The simplest command generates code in all supported target languages in default output directories. It is:</p>
-<p><code class="docutils literal"><span class="pre">{{{compiler_command}}}</span> <span class="pre">compile</span> <span class="pre">&lt;files&gt;</span></code></p>
+<p><code class="docutils literal"><span class="pre">quark</span> <span class="pre">compile</span> <span class="pre">&lt;files&gt;</span></code></p>
 <p>where &lt;files&gt; is a space-separated list of the Datawire Connect files to compile.</p>
-<p>This will output code in a subdirectory of your base {{{product}}} directory (given the name of the first file in the &lt;files&gt; list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.</p>
+<p>This will output code in a subdirectory of your base Quark directory (given the name of the first file in the &lt;files&gt; list) and put generated Java, Javascript, and Python code in java, js, and py subdirectories.</p>
 <p>To generate installable versions of the examples or of your own code in all of the supported languages, use the package command as follows:</p>
-<p><code class="docutils literal"><span class="pre">{{{compiler_command}}}</span> <span class="pre">package</span> <span class="pre">&lt;files&gt;</span></code></p>
-<p>where &lt;files&gt; is a space-separated list of the {{{language}}} files to compile.</p>
-<p>This does everything the compile command does but also builds the code in each language, generates documentation for each language, and creates installable packages. See the <a class="reference external" href="http://datawire.github.io/{{{doc-directory}}}/install/compile.html">Compilation page</a> of the {{{product}}} Installation and Configuration Guide for specific details on where the output artifacts are placed underneath each language&#8217;s subdirectory.</p>
+<p><code class="docutils literal"><span class="pre">quark</span> <span class="pre">package</span> <span class="pre">&lt;files&gt;</span></code></p>
+<p>where &lt;files&gt; is a space-separated list of the Quark files to compile.</p>
+<p>This does everything the compile command does but also builds the code in each language, generates documentation for each language, and creates installable packages. See the <a class="reference external" href="http://datawire.github.io/{{{doc-directory}}}/install/compile.html">Compilation page</a> of the Quark Installation and Configuration Guide for specific details on where the output artifacts are placed underneath each language&#8217;s subdirectory.</p>
 </div>
 </div>
 <div class="section" id="language-language-basics">
-<h2>{{{language}}} Language Basics<a class="headerlink" href="#language-language-basics" title="Permalink to this headline">¶</a></h2>
-<p>{{{language}}} is a language designed primarily for facilitating microservice communication pathways.</p>
-<p>{{{language}}} uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.</p>
-<p>{{{language}}} code is stored in text files with a {{{file_extension}}} file extension.</p>
-<p>See the <a class="reference external" href="http://datawire.github.io/{{{doc_directory}}}/language-reference/index.html">{{{language}}} Language Reference</a> for more specifics about language structure and language elements.</p>
+<h2>Quark Language Basics<a class="headerlink" href="#language-language-basics" title="Permalink to this headline">¶</a></h2>
+<p>Quark is a language designed primarily for facilitating microservice communication pathways.</p>
+<p>Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.</p>
+<p>Quark code is stored in text files with a .q file extension.</p>
+<p>See the <a class="reference external" href="http://datawire.github.io/quark/0.3/language-reference/index.html">Quark Language Reference</a> for more specifics about language structure and language elements.</p>
 </div>
 <div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/tree/{{{branch}}}/examples">{{{product}}} Examples Repository</a> (located in the examples subdirectory of the {{{github_directory}}} GitHub repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.</p>
-<p>Please read the <a class="reference external" href="http://datawire.github.io/{{{doc_directory}}}/install/index.html">{{{product}}} Installation and Configuration Guide</a> for more detailed information about installation, configuration, compilation, packaging, and documentation generation.</p>
-<p>The <a class="reference external" href="http://datawire.github.io/{{{doc_directory}}}/language-reference/index.html">{{{language}}} Language Reference</a> provides information about how to code in {{{language}}} and specifics about individual language elements including keywords, operators, functions, data types, and annotations.</p>
-<p>The <a class="reference external" href="https://github.com/datawire/{{{github_directory}}}/issues">{{{product}}} Issues List</a> provides a list of known issues - please feel free to add new issues or feature requests as you start to use {{{product}}}.</p>
+<p>The <a class="reference external" href="https://github.com/datawire/quark/tree/0.3.x/examples">Quark Examples Repository</a> (located in the examples subdirectory of the quark GitHub repository) includes a wide variety of examples illustrating both simple language features and full end-to-end service implementations.</p>
+<p>Please read the <a class="reference external" href="http://datawire.github.io/quark/0.3/install/index.html">Quark Installation and Configuration Guide</a> for more detailed information about installation, configuration, compilation, packaging, and documentation generation.</p>
+<p>The <a class="reference external" href="http://datawire.github.io/quark/0.3/language-reference/index.html">Quark Language Reference</a> provides information about how to code in Quark and specifics about individual language elements including keywords, operators, functions, data types, and annotations.</p>
+<p>The <a class="reference external" href="https://github.com/datawire/quark/issues">Quark Issues List</a> provides a list of known issues - please feel free to add new issues or feature requests as you start to use Quark.</p>
 </div>
 <div class="section" id="document-version">
 <h2>Document Version<a class="headerlink" href="#document-version" title="Permalink to this headline">¶</a></h2>
-<p>{{{product}}} Quick Start 0.3.1-4</p>
+<p>Quark Quick Start 0.3.1-5</p>
 </div>
 </div>
 
@@ -125,14 +125,14 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="../index.html">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">{{{product}}} Quick Start</a><ul>
+<li><a class="reference internal" href="#">Quark Quick Start</a><ul>
 <li><a class="reference internal" href="#installation-and-configuration">Installation and Configuration</a><ul>
 <li><a class="reference internal" href="#prerequisites">Prerequisites</a></li>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#compiling-language-files">Compiling {{{language}}} Files</a></li>
+<li><a class="reference internal" href="#compiling-language-files">Compiling Quark Files</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#language-language-basics">{{{language}}} Language Basics</a></li>
+<li><a class="reference internal" href="#language-language-basics">Quark Language Basics</a></li>
 <li><a class="reference internal" href="#next-steps">Next Steps</a></li>
 <li><a class="reference internal" href="#document-version">Document Version</a></li>
 </ul>
@@ -141,10 +141,10 @@
 
   <h4>Previous topic</h4>
   <p class="topless"><a href="../index.html"
-                        title="previous chapter">Welcome to the {{{product}}} Documentation!</a></p>
+                        title="previous chapter">Welcome to the Quark Documentation!</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="../install/index.html"
-                        title="next chapter">{{{product}}} Installation and Configuration Guide</a></p>
+                        title="next chapter">Quark Installation and Configuration Guide</a></p>
 <div class="sourcelink">
   <a href="../_sources/quick-start/index.txt" rel="nofollow">
     Show page source
@@ -173,17 +173,17 @@
     <ul>
         <li>
           &larr;
-          <a href="../index.html" title="Previous document">Welcome to the {{{product}}} Documentation!</a>
+          <a href="../index.html" title="Previous document">Welcome to the Quark Documentation!</a>
         </li>
         <li>
-          <a href="../install/index.html" title="Next document">{{{product}}} Installation and Configuration Guide</a>
+          <a href="../install/index.html" title="Next document">Quark Installation and Configuration Guide</a>
           &rarr;
         </li>
     </ul>
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">{{{product}}} 0.3.1 documentation</a></li> 
+      <li><a href="../index.html">Quark 0.3.1 documentation</a></li> 
     </ul>
   </nav>
   </div>

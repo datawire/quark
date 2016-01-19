@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Running the Python Client and Server &mdash; {{{product}}} 0.3.1 documentation</title>
+    <title>Running the Python Client and Server &mdash; Quark 0.3.1 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="{{{product}}} 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Quark 0.3.1 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Java Requirements and Setup" href="javaSetup.html" />
     <link rel="prev" title="Writing a Python Server" href="pythonServer.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        {{{product}}} 0.3.1 documentation
+        Quark 0.3.1 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -65,10 +65,10 @@
 <h1>Running the Python Client and Server<a class="headerlink" href="#running-the-python-client-and-server" title="Permalink to this headline">¶</a></h1>
 <p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python as outlined on the <a class="reference internal" href="pythonBuild.html"><em>Compiling and Installing the Library page</em></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
 <p>To run the HelloRPC example with a Python client and Python Server do the following:</p>
-<p>Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code></p>
+<p>Step 1: Move to the location where you saved the Python server you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
 <p>Step 2: Run the server by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyserver.py</span></code>. This will result in a blocking wait state - there is no direct output to stdout from the Python server.</p>
 <p>Step 3: Open a second terminal window</p>
-<p>Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local {{{product}}} git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/{{{github_directory}}}/examples/helloRPC</span></code></p>
+<p>Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Quark git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
 <p>Step 4: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
 <p>You should see the following in your terminal window (stdout):</p>
 <div class="highlight-none"><div class="highlight"><pre>Request says &#39;Hello from Python!&#39;
@@ -90,7 +90,7 @@ print &quot;Request says %r&quot; % request.text
 </pre></div>
 </div>
 <p>[[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]</p>
-<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in {{{product}}} and have seen those clients and servers in action in Python. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Python!</p>
+<p>That&#8217;s it! You should now understand how to define clients and servers to use the basic RPC interaction pattern defined in Quark and have seen those clients and servers in action in Python. You can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a>. or just experiment some more on your own with Python!</p>
 </div>
 
 
@@ -143,7 +143,7 @@ print &quot;Request says %r&quot; % request.text
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">{{{product}}} 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Quark 0.3.1 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
