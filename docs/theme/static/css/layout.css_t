@@ -1,5 +1,5 @@
 
-{% set theme_search_plchldr_color = "rgba(255, 255, 255, 0.7)" %}
+{% set theme_search_plchldr_color = "rgba(255, 255, 255, 0.8)" %}
 
 .dw-header {
     margin: -20px -30px 30px -30px;
