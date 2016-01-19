@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import sys, os
+import sys
+import os
+import subprocess
+import filecmp
 
 
 # Copy-pasta from datawire-common/dw
@@ -39,13 +42,55 @@ def ansi(mode, st):
     return "%s%s%s" % (mode, st, RESET)
 
 
+def relpath(path):
+    if path.startswith("./"):
+        path = path[2:]
+    return path.replace(os.path.abspath(".") + "/", "")
+
+
 def find_cmp_files():
     res = []
     for dirpath, dirnames, filenames in os.walk("."):
         for filename in filenames:
             if filename.endswith(".cmp"):
-                res.append(os.path.join(dirpath, filename))
+                path = relpath(os.path.join(dirpath, filename))
+                res.append((path[:-4], path))  # expected, output
     return res
+
+
+def collect_comparisons(dcmp, result):
+    # left is expected, right is output
+    for filename in dcmp.diff_files:
+        result.append((relpath(os.path.join(dcmp.left, filename)),
+                       relpath(os.path.join(dcmp.right, filename))))
+    for filename in dcmp.left_only:
+        fullname = relpath(os.path.join(dcmp.left, filename))
+        if os.path.isfile(fullname):
+            result.append((fullname, None))
+    for filename in dcmp.right_only:
+        fullname = relpath(os.path.join(dcmp.right, filename))
+        if os.path.isfile(fullname):
+            result.append((None, fullname))
+    for common_sub_dcmp in dcmp.subdirs.values():
+        collect_comparisons(common_sub_dcmp, result)
+
+
+def find_different_files():
+    git_top = subprocess.check_output("git rev-parse --show-toplevel".split()).strip()
+    emit = os.path.join(git_top, "quark/test/emit")
+    output = os.path.join(emit, "output")
+    expected = os.path.join(emit, "expected")
+    result = []  # (expected file path, output file path), ...
+
+    backends = os.listdir(output)
+    for backend in backends:
+        tests = os.listdir(os.path.join(output, backend))
+        for test in tests:
+            obt = os.path.join(output, backend, test)
+            ebt = os.path.join(expected, backend, test)
+            dcmp = filecmp.dircmp(ebt, obt, ["target"])  # XXX: should only filter out target for java
+            collect_comparisons(dcmp, result)
+    return result
 
 
 def main():
@@ -55,21 +100,40 @@ def main():
         names.pop()
     else:
         force = False
-    if not names:
-        names = find_cmp_files()
-    for f in names:
-        name, ext = os.path.splitext(f)
+
+    if names:
+        to_compare = [(path[:-4], path) for path in names]
+    else:
+        to_compare = find_cmp_files() + find_different_files()
+
+    for expected, output in to_compare:
         if force:
-            os.system("mv %s %s" % (f, name))
+            os.system("mv %s %s" % (output, expected))
         else:
-            print ansi(CLS, ""), name, ansi(PURPLE, (78 - len(name)) * "=")
-            if os.path.exists(name):
-                os.system("git diff --no-index %s %s" % (name, f))
+
+            if expected is not None and output is not None:
+                name = output
+                command = "git diff --no-index %s %s" % (expected, output)
+            elif expected is None:
+                name = output + " (new file)"
+                command = "less %s" % output
             else:
-                os.system("less %s" % f)
-            st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
+                name = expected + " (missing file)"
+                command = "less %s" % expected
+
+            print ansi(CLS, "") + name, ansi(PURPLE, (78 - len(name)) * "=")
+            os.system(command)
+
+            if output is not None:
+                st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
+            else:
+                st = raw_input("Erase this file? y/N/q: ").strip().upper()
+
             if st.startswith("Y"):
-                os.system("mv %s %s" % (f, name))
+                if output is not None:
+                    os.system("mv %s %s" % (output, expected))
+                else:
+                    os.system("rm %s" % expected)
             elif st.startswith("Q"):
                 return
             print
