@@ -7,7 +7,7 @@ public class Condition extends Lock implements Mutex {
 
     public void waitWakeup(long timeout) {
         if (!lock.isHeldByCurrentThread()) {
-            String msg = "Illegal waitWakeup of a not-acquired quark Lock.";
+            String msg = "Illegal waitWakeup of a not-acquired quark Condition.";
             fail(msg);
         }
         try {
@@ -19,7 +19,7 @@ public class Condition extends Lock implements Mutex {
 
     public void wakeup() {
         if (!lock.isHeldByCurrentThread()) {
-            String msg = "Illegal wakeup of a not-acquired quark Lock.";
+            String msg = "Illegal wakeup of a not-acquired quark Condition.";
             fail(msg);
         }
         condition.signal();
