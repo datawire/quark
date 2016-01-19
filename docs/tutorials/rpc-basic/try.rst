@@ -56,6 +56,8 @@ The value of response.result is set in the server inside the implementation defi
 
 [[JMK note that the %r in the client print lines should likely be %s and the %s in the server code should likely be %s. See issue #85]]
 
+.. _part2TryRPC:
+
 Part 2: Running Two Local Servers
 ---------------------------------
 
