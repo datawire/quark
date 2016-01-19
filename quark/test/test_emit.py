@@ -69,7 +69,7 @@ def get_expected(name):
 def has_main(name):
     code = os.path.join(directory, name + ".q")
     return os.path.exists(code) and "main" in open(code).read()
-    
+
 def run_tests(base, dirs, command, env=None):
     for name in dirs:
         if has_main(name):
@@ -112,9 +112,10 @@ def test_run_python(output):
     base = os.path.join(output, py.ext)
     dirs = [name for name in os.listdir(base)]
     pypath = ":".join([os.path.join(base, name) for name in dirs])
+    env = {"PYTHONPATH": pypath}.update(os.environ)
 
     import quark.python
-    run_tests(base, dirs, lambda name: ["python", quark.python.name(name) + ".py"], env={"PYTHONPATH": pypath})
+    run_tests(base, dirs, lambda name: ["python", quark.python.name(name) + ".py"], env=env)
 
 def test_run_javascript(output):
     js = JavaScript()
