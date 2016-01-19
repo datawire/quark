@@ -117,12 +117,13 @@ todo_include_todos = True
 # a list of builtin themes.
 html_theme = 'theme'
 html_theme_path = ['.']
-html_theme_options = {}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+    'analytics_id': 'UA-57322503-4'
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -165,7 +166,6 @@ html_static_path = ['_static']
 html_sidebars = {
   '**': [
     'globaltoc.html',
-    'localtoc.html',
     'relations.html',
     'customsidebar.html',
   ]

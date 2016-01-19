@@ -1,0 +1,13 @@
+{%  if pagename == master_doc %}
+    {% set is_home = true %}
+{% else %}
+    {% set is_home = false %}
+{% endif %}
+
+<h3><a href="{{ pathto(master_doc) }}">{{ _('Table Of Contents') }}</a></h3>
+<ul>
+    <li {% if is_home %}class="current"{% endif %}>
+        <a href="{{ pathto('index') }}" {% if is_home %}class="current"{% endif %}>Welcome</a>
+    </li>
+</ul>
+{{ toctree(maxdepth=4, collapse=true, includehidden=true, titles_only=true) }}
