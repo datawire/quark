@@ -3,6 +3,8 @@ Writing a Python Server
 
 Let's start by creating a simple Hello World server using the compiled Hello service contract in Python. This server will be functionally equivalent to the cloud server you used at the beginning of this walkthrough.
 
+This walkthrough assumes that your server file is named pyserver.py but there is no requirement that you do so. Please substitute your file name for pyserver.py everywhere if you choose a different name.
+
 Note: If you don't want step-by-step guidance about how to create the server and just want to start from a completed server, there is a :ref:`link to the full Python server file <fullExamplePythonServer>` at the bottom of this page.
 
 .. _part1PythonServerImport:
@@ -59,7 +61,10 @@ Relevant code:
 
 The HelloImpl class essentially defines a hello() method that defines the response to be sent back to the client given the request received. It instantiates a Response object (as defined in the service contract), populates its result property with the response text, and returns the object for further processing.
 
-[[JMK It looks like using self as the first input parameter is a general python thing so I don't have to explain it. It seems weird to me. Adding this comment to remind myself I don't need to figure out why it's there.]]
+.. 
+   JMK It looks like using self as the first input parameter is a general python thing so  
+   I don't have to explain it. It seems weird to me. Adding this comment to remind myself
+   I don't need to figure out why it's there.
 
 .. _part3PythonProcessRequest:
 
