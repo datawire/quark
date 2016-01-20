@@ -137,4 +137,4 @@ The print statement below it provides visual feedback within the client that the
 
 .. _fullExamplePythonClientCloud:
 
-That's it! The Python client is fully defined now - the code above is all that's needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the {{{product}}} GitHub repository `here<https://github.com/datawire/{{{github_directory}}}/blob/{{{branch}}}/examples/helloRPC/pyclient.py>`.
+That's it! The Python client is fully defined now - the code above is all that's needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the {{{product}}} GitHub repository `here <https://github.com/datawire/{{{github_directory}}}/blob/{{{branch}}}/examples/helloRPC/pyclient.py>`_.
