@@ -1,0 +1,223 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Annotations &mdash; Datawire Connect 0.4.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.4.1 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="More Information" href="links.html" />
+    <link rel="prev" title="Functions" href="functions.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../index.html ">
+        Datawire Connect 0.4.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="functions.html" title="Previous document">Functions</a>
+        </li>
+        <li>
+          <a href="links.html" title="Next document">More Information</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="annotations">
+<h1>Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h1>
+<p>Annotations are compiler directives used to add additional functionality or perform a specific task during code generation.</p>
+<p>Unlike most Quark code, annotations do not use the standard end of line character and should not be followed by a semi-colon (;).</p>
+<p>Quark defines the following annotations:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="delegate">
+<span id="delegateannotation"></span><h2>&#64;delegate<a class="headerlink" href="#delegate" title="Permalink to this headline">¶</a></h2>
+<p>&#64;delegate allows users to specify an interaction pattern for communications between a client and a server.</p>
+<div class="section" id="syntax">
+<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p><strong>&#64;delegate(</strong> <em>interactionPattern</em> <strong>)</strong></p>
+<p>where <em>interactionPattern</em> is the name of a defined interaction pattern supported by quark. Note that there is no semi-colon (;) at the end of the line.</p>
+</div>
+<div class="section" id="constraints">
+<h3>Constraints<a class="headerlink" href="#constraints" title="Permalink to this headline">¶</a></h3>
+<p>Quark currently supports only one interaction pattern, rpc, that expects a single request from the client and returns a single response from the server.</p>
+<p>At the current time, the preferred syntax outlined above is not working. For now, use &#64;delegate(self.rpc) instead. See <a class="reference external" href="https://github.com/datawire/quark/issues/79">linkIssue79</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="doc">
+<span id="docannotation"></span><h2>&#64;doc<a class="headerlink" href="#doc" title="Permalink to this headline">¶</a></h2>
+<p>&#64;doc allows users to specify a description or public comment for packages, classes, properties, methods, and interfaces. The content inside &#64;docs attributions will automatically be included in Javadoc comments for generated Java code, Sphinx source for generated Python code, and a README.md file for generated Javascript code.</p>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p><strong>&#64;doc(</strong> <em>content</em> <strong>)</strong></p>
+<p><em>element</em></p>
+<p>where <em>versionNumber</em> is a string representing the version number and <em>element</em> is the language element being described. Note that there is no semi-colon (;) at the end of the line.</p>
+</div>
+<div class="section" id="id2">
+<h3>Constraints<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>Support for automatic documentation generation in Quark is still in its early stages and will be improved in the future. Some currently known issues include:</p>
+<ul class="simple">
+<li>Generated Sphinx source does not include a make file. See <a class="reference external" href="https://github.com/datawire/quark/issues/48">linkIssue48</a> for more information.</li>
+</ul>
+<ul class="simple">
+<li>Javadoc does not include content of &#64;doc annotations for methods. See <a class="reference external" href="https://github.com/datawire/quark/issues/46">linkIssue46</a> for more information.</li>
+</ul>
+<ul class="simple">
+<li>If not starting from a clean output directory prior to code generation Javadoc may pick up extraneous outdated content. See <a class="reference external" href="https://github.com/datawire/quark/issues/45">linkIssue45</a> for more information.</li>
+</ul>
+<ul class="simple">
+<li>Javascript documentation is very basic and omits many &#64;doc annotations. See <a class="reference external" href="https://github.com/datawire/quark/issues/47">linkIssue47</a> for more information.</li>
+</ul>
+<p>[[JMK there are a slew more issues found when I went back to check on the Python/Sphinx behavior including new issues with all of the languages. I am not planning to add them here as I do indicate this is a partial list]]</p>
+</div>
+</div>
+<div class="section" id="version">
+<span id="versionannotation"></span><h2>&#64;version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h2>
+<p>&#64;version allows users to specify a version for a package or group of packages. If no version is specified, the version is set to the default &#8220;0.0.1&#8221;. Versions will be set in a global pom.xml for all generated Java, a global setup.py for all generated Python, and package.json inside each Javascript package.</p>
+<div class="section" id="id3">
+<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p><strong>&#64;version(</strong> <em>versionNumber</em> <strong>)</strong></p>
+<p>where <em>versionNumber</em> is a string representing the version number. Note that there is no semi-colon (;) at the end of the line.</p>
+</div>
+<div class="section" id="id4">
+<h3>Constraints<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>&#64;version must be defined at the top level of a quark file. It should be used directly above a package declaration. By default it applies to all packages defined underneath it in a file. If more than one &#64;version annotation is included in a Quark file, each annotation applies only to the package it directly proceeds; any package without its own &#64;version annotation will default to version &#8220;0.0.1&#8221;.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Annotations</a><ul>
+<li><a class="reference internal" href="#delegate">&#64;delegate</a></li>
+<li><a class="reference internal" href="#doc">&#64;doc</a></li>
+<li><a class="reference internal" href="#version">&#64;version</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="functions.html"
+                        title="previous chapter">Functions</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="links.html"
+                        title="next chapter">More Information</a></p>
+<div class="sourcelink">
+  <a href="../_sources/language-reference/annotations.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="functions.html" title="Previous document">Functions</a>
+        </li>
+        <li>
+          <a href="links.html" title="Next document">More Information</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Quark Language Reference</a>
+      </li>
+      <li>
+        <a href="language.html">Language Elements</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

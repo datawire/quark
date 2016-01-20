@@ -1,0 +1,423 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Compilation &mdash; Datawire Connect 0.4.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.4.1 documentation" href="../index.html" />
+    <link rel="up" title="Datawire Connect Installation and Configuration Guide" href="index.html" />
+    <link rel="next" title="More Information" href="links.html" />
+    <link rel="prev" title="Runtime Integrations" href="integration.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../index.html ">
+        Datawire Connect 0.4.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="integration.html" title="Previous document">Runtime Integrations</a>
+        </li>
+        <li>
+          <a href="links.html" title="Next document">More Information</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Datawire Connect Installation and Configuration Guide</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="compilation">
+<h1>Compilation<a class="headerlink" href="#compilation" title="Permalink to this headline">¶</a></h1>
+<p>The Quark compiler can perform four distinct functions: generating code in one or more target languages, compiling and running the generated code, generating HTML documentation based on annotations in the code, and generating distribution packages for one or more target languages. These are ordered tasks; each requires that the previous task was performed as a prerequisite. To make this easier to manage, the command to run each task automatically runs the previous tasks in the chain before running the requested task.</p>
+<div class="section" id="syntax">
+<h2>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h2>
+<p>The general syntax for the Quark compiler is:</p>
+<p><strong>quark</strong> <em>command</em> <em>options</em> <em>files</em></p>
+<p>where <em>command</em> indicates which of the supported actions quark should run, <em>options</em> is a space-separated list of options (which may be omitted if the default options are acceptable), and <em>files</em> is a space-separated list of files to perform the specified action on.</p>
+<p>Note: The command and the options may appear in any order (the command may even be supplied between different options) but the files must be listed at the end after both the command and all of the options.</p>
+</div>
+<div class="section" id="commands">
+<h2>Commands<a class="headerlink" href="#commands" title="Permalink to this headline">¶</a></h2>
+<p>quark supports four commands, each corresponding to one of the supported actions. They are:</p>
+<ul class="simple">
+<li>compile</li>
+<li>build</li>
+<li>doc</li>
+<li>package</li>
+</ul>
+<div class="section" id="compile">
+<h3>Compile<a class="headerlink" href="#compile" title="Permalink to this headline">¶</a></h3>
+<p>The compile command is used to generate code in one or more target languages. In addition to code, it also creates some supporting files including documentation source files (if needed for the target languages) and package definition files (if needed for the target languages).</p>
+<p>quark supports two compilation modes: generating code for all target languages (used by default) or generating code for one or more specific target languages.</p>
+</div>
+<div class="section" id="build">
+<h3>Build<a class="headerlink" href="#build" title="Permalink to this headline">¶</a></h3>
+<p>The build command generates code in one or more target languages (runs the compile command) then compiles and runs that code.</p>
+</div>
+<div class="section" id="doc">
+<h3>Doc<a class="headerlink" href="#doc" title="Permalink to this headline">¶</a></h3>
+<p>The doc command generates code in one or more target languages, compiles and runs that code (runs the build command), then generates HTML versions of the documentation based on the source files and comments generated during the compilation process.</p>
+<p>Separate documentation is generated for each target language as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="14%" />
+<col width="33%" />
+<col width="53%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Source Format</th>
+<th class="head">Output Location</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Javadoc</td>
+<td><em>base</em>/target/site/apidocs/index.html</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>README.md</td>
+<td><em>base</em>/README.html</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>restructured text (rST)</td>
+<td><em>base</em>/build/sphinx/html/index.html</td>
+</tr>
+</tbody>
+</table>
+<p>where <em>base</em> is the code output directory for the relevant target language.</p>
+<p>Note: The documentation generation process also copies README.md to the Javascript documentation output directory.</p>
+</div>
+<div class="section" id="package">
+<h3>Package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h3>
+<p>The package command generates code in one or more target languages, compiles and runs that code, generates HTML versions of the documentation (runs the doc command), then creates language-specific packages that can be distributed to client developers.</p>
+<p>Separate packages are generated for each target language as follows:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="28%" />
+<col width="59%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Package Format</th>
+<th class="head">Output Location</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Java</td>
+<td>Jar</td>
+<td><em>base</em>/target/test-<em>version</em>.jar</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>npm</td>
+<td><em>base</em>/<em>package</em>.tgz</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>pip</td>
+<td><em>base</em>/dist/<em>package</em>-<em>version</em>-py2-none-any.whl</td>
+</tr>
+</tbody>
+</table>
+<p>where <em>base</em> is the code output directory for the relevant target language, <em>package</em> is the name of the first package encountered within the supplied Quark code starting from the start of the first file in the list of files, and <em>version</em> is the value of the first &#64;version annotation encountered within the supplied {{language}} code starting from the start of the first file in the list of files. If no &#64;version annotation is encountered, the default 0.0.1 version number is used.</p>
+</div>
+</div>
+<div class="section" id="command-options">
+<h2>Command Options<a class="headerlink" href="#command-options" title="Permalink to this headline">¶</a></h2>
+<p>quark supports a variety of options that provide additional instructions to the compiler while it runs commands. These options all act upon the compile step to control how target code is generated. However, because the execution of all of the commands starts with compilation, the options are valid with any command.</p>
+<p>Datawire Connect includes a minimal set of defaults that will generate and output code in a subdirectory of your base quark directory (given the name of the first file in the list of files) and put generated Java, Javascript, and Python code in java, js, and py subdirectories. If this is the desired behavior, no options are needed.</p>
+<p>The available options come in sets that either act upon all languages or act upon compilation in a specific language. You may mix and match these options; it is perfectly valid to direct the compiler to generate all languages and use the defaults for some languages and explicit options for others.</p>
+<div class="section" id="options-applying-to-all-languages">
+<h3>Options Applying to All Languages<a class="headerlink" href="#options-applying-to-all-languages" title="Permalink to this headline">¶</a></h3>
+<p>The following options control generating code for all languages:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="40%" />
+<col width="47%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+<th class="head">Default Behavior</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8211;all</td>
+<td>Indicates code should be generated in all supported languages</td>
+<td>Used if no language-specific options are supplied</td>
+</tr>
+<tr class="row-odd"><td>-o <em>directory</em></td>
+<td>Indicates the base directory for generated files</td>
+<td>Name of the first file in the list of files</td>
+</tr>
+<tr class="row-even"><td>&#8211;output <em>directory</em></td>
+<td>Indicates the base directory for generated files</td>
+<td>Name of the first file in the list of files</td>
+</tr>
+<tr class="row-odd"><td>&#8211;in-place</td>
+<td>Outputs everything to the current directory</td>
+<td>Use the current directory for all output. Overrides all other settings.</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Directory names based on file names do not include .q</p>
+</div>
+<div class="section" id="java-options">
+<h3>Java Options<a class="headerlink" href="#java-options" title="Permalink to this headline">¶</a></h3>
+<p>The following options control generating code in Java:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="8%" />
+<col width="28%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+<th class="head">Default Behavior</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8211;java</td>
+<td>generate Java code and related files</td>
+<td>Java code is generated</td>
+</tr>
+<tr class="row-odd"><td>&#8211;java-out</td>
+<td>location for generated code.</td>
+<td>java subdirectory under directory with name of the first file in the list of files</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Directory names based on file names do not include .q</p>
+</div>
+<div class="section" id="javascript-options">
+<h3>Javascript Options<a class="headerlink" href="#javascript-options" title="Permalink to this headline">¶</a></h3>
+<p>The following options control generating code in Javascript:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="30%" />
+<col width="58%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+<th class="head">Default Behavior</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8211;javascript</td>
+<td>generate Javascript code and related files</td>
+<td>Javascript code is generated</td>
+</tr>
+<tr class="row-odd"><td>&#8211;javascript-out</td>
+<td>location for generated code.</td>
+<td>js subdirectory under directory with name of the first file in the list of files</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Directory names based on file names do not include .q</p>
+</div>
+<div class="section" id="python-options">
+<h3>Python Options<a class="headerlink" href="#python-options" title="Permalink to this headline">¶</a></h3>
+<p>The following options control generating code in Python:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="12%" />
+<col width="28%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Command</th>
+<th class="head">Description</th>
+<th class="head">Default Behavior</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>&#8211;python</td>
+<td>generate Python code and related files</td>
+<td>Python code is generated</td>
+</tr>
+<tr class="row-odd"><td>&#8211;python-out</td>
+<td>location for generated code.</td>
+<td>py subdirectory under directory with name of the first file in the list of files</td>
+</tr>
+</tbody>
+</table>
+<p>Note: Directory names based on file names do not include .q</p>
+</div>
+</div>
+<div class="section" id="other-options">
+<h2>Other Options<a class="headerlink" href="#other-options" title="Permalink to this headline">¶</a></h2>
+<p>quark supports two top-level options that are independent of compiler commands: help and version</p>
+<div class="section" id="help">
+<h3>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h3>
+<p>The help option prints a compiler options cheat sheet to stdout.</p>
+<div class="section" id="id1">
+<h4>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p><strong>quark &#8211;help</strong></p>
+<p>or</p>
+<p><strong>quark -H</strong></p>
+<p>or</p>
+<p><strong>quark -h</strong></p>
+</div>
+</div>
+<div class="section" id="version">
+<h3>Version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h3>
+<p>The version option prints the current version of Datawire Connect to stdout.</p>
+<div class="section" id="id2">
+<h4>Syntax<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p><strong>quark &#8211;version</strong></p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Compilation</a><ul>
+<li><a class="reference internal" href="#syntax">Syntax</a></li>
+<li><a class="reference internal" href="#commands">Commands</a><ul>
+<li><a class="reference internal" href="#compile">Compile</a></li>
+<li><a class="reference internal" href="#build">Build</a></li>
+<li><a class="reference internal" href="#doc">Doc</a></li>
+<li><a class="reference internal" href="#package">Package</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#command-options">Command Options</a><ul>
+<li><a class="reference internal" href="#options-applying-to-all-languages">Options Applying to All Languages</a></li>
+<li><a class="reference internal" href="#java-options">Java Options</a></li>
+<li><a class="reference internal" href="#javascript-options">Javascript Options</a></li>
+<li><a class="reference internal" href="#python-options">Python Options</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-options">Other Options</a><ul>
+<li><a class="reference internal" href="#help">Help</a><ul>
+<li><a class="reference internal" href="#id1">Syntax</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#version">Version</a><ul>
+<li><a class="reference internal" href="#id2">Syntax</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="integration.html"
+                        title="previous chapter">Runtime Integrations</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="links.html"
+                        title="next chapter">More Information</a></p>
+<div class="sourcelink">
+  <a href="../_sources/install/compile.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="integration.html" title="Previous document">Runtime Integrations</a>
+        </li>
+        <li>
+          <a href="links.html" title="Next document">More Information</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Datawire Connect Installation and Configuration Guide</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Introduction to RPC &mdash; Datawire Connect 0.4.1 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.4.1 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Datawire Connect RPC Support" href="setup.html" />
+    <link rel="prev" title="Getting Started with RPC Walkthrough" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Datawire Connect 0.4.1 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">Getting Started with RPC Walkthrough</a>
+        </li>
+        <li>
+          <a href="setup.html" title="Next document">Datawire Connect RPC Support</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction-to-rpc">
+<h1>Introduction to RPC<a class="headerlink" href="#introduction-to-rpc" title="Permalink to this headline">¶</a></h1>
+<p>Note: feel free to skip this if you are already familiar with RPC.</p>
+<p>There are three main elements controlling an RPC interaction:</p>
+<ol class="arabic simple">
+<li>A value class: This is a class containing properties representing the information being requested or the information being sent during an interaction</li>
+<li>An interface: The interface consists solely of method signatures defining the action part of the interaction - what can actually be done as the client and server communicate.</li>
+<li>An interaction pattern: The directives indicating how to process the interaction defined in the specified interface.</li>
+</ol>
+<div class="section" id="interaction-patterns">
+<h2>Interaction Patterns<a class="headerlink" href="#interaction-patterns" title="Permalink to this headline">¶</a></h2>
+<p>There are a lot of possible interaction patterns. The most basic is a simple request/response pattern that sends one request and expects a single response in return. Variations on this pattern include a single request that expects a series of responses, multiple requests that expect a single response, and multiple requests expecting multiple responses.</p>
+<p>You can also have requests that do not expect any response at all or requests with streamed responses. Subscription models that request later push notice when a particular criteria is met are also common patterns.</p>
+<p>Other interaction patterns can add things like caching, timeouts, retry directives, and default values to any of the variations on request-response.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Introduction to RPC</a><ul>
+<li><a class="reference internal" href="#interaction-patterns">Interaction Patterns</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">Getting Started with RPC Walkthrough</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="setup.html"
+                        title="next chapter">Datawire Connect RPC Support</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/intro.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="index.html" title="Previous document">Getting Started with RPC Walkthrough</a>
+        </li>
+        <li>
+          <a href="setup.html" title="Next document">Datawire Connect RPC Support</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.1 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.3.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
