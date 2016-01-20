@@ -21,9 +21,6 @@
     width: 190px;
 }
 
-/* SIDEBAR */
-
-
 /* SEARCH */
 
 .dw-header .dw-search {
@@ -73,7 +70,9 @@
 
 /* BODY */
 
-div.body ul {margin-top:0}
+div.body ul { margin-top:0 }
+
+ul { margin-left: 30px; }
 
 /* DESKTOP BREAKPOINT */
 
