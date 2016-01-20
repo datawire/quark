@@ -1,0 +1,10 @@
+
+{
+    "name": "operator_overload",
+    "version": "0.0.1",
+    "main": "operator_overload/index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.3.1"
+    }
+}
+        
