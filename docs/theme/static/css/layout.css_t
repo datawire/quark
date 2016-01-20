@@ -64,7 +64,9 @@ div.sphinxsidebar ul li {
     margin-bottom: 0.4rem;
 }
 
-div.sphinxsidebar ul li.toctree-l1 > a {
+div.sphinxsidebar ul li.toctree-l1 > a,
+div.sphinxsidebar ul li.toctree-l2 > a,
+div.sphinxsidebar ul li.toctree-l3 > a {
     font-size: inherit;
 }
 
