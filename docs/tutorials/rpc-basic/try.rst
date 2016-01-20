@@ -35,20 +35,20 @@ You should see the following in your terminal window (stdout):
 
 The u in the response text indicates that the response is in Unicode. The first line is defined and printed by these two lines in the Python client we wrote:
 
-.. code-block:: none
+.. code-block:: python
 
    request.text = "Hello from Python!"
    print "Request says %r" % request.text
 
 The second line is printed by this line in the Python client we wrote:
 
-.. code-block:: none
+.. code-block:: python
 
    print "Response says %r" % response.result
 
 The value of response.result is set in the server inside the implementation definition (HelloImpl class) using this line:
 
-.. code-block:: none
+.. code-block:: python
 
    res.result = "Responding to [%s] from Python" % request.text
 
