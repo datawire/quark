@@ -1,16 +1,7 @@
-@font-face {
-    font-family: "Centuma";
-    src: url("../fonts/Centuma-Regular.otf") format("opentype");
-}
-
-@font-face {
-    font-family: "Centuma Light";
-    src: url("../fonts/Centuma-Light.otf") format("opentype");
-}
-
 body {
-    font-family: "Centuma", "Arial", sans-serif;
-    font-size: 0.89rem;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
     letter-spacing: 0.01rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -39,7 +30,8 @@ div.body h3,
 div.body h4,
 div.body h5,
 div.body h6 {
-    font-family: "Centuma", "Arial", sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
     color: #0b3b4c;
 }
 
@@ -48,9 +40,15 @@ div.body h3 {
     font-size: 1.1rem;
 }
 
+div.sphinxsidebar {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
 div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
-    font-family: "Centuma", "Arial", sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
     font-size: 1.1rem;
     color: #fff;
 }
@@ -61,9 +59,9 @@ div.sphinxsidebar h3 a {
 }
 
 input {
-    font-family: "Centuma Light", "Arial", sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
 }
-
 
 div.sphinxsidebar li.current a.current {
     color: #56c9ea;
@@ -82,4 +80,13 @@ div.sphinxsidebar li.current a.current {
         color: #0b3b4c;
     }
 
+}
+
+.dw-header .dw-search input[type=text] {
+    font-size: 1.4rem;
+}
+@media screen and (min-width: 875px) {
+    .dw-header .dw-search input[type=text] {
+        font-size: 2.1rem;
+    }
 }
