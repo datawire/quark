@@ -1,6 +1,10 @@
 
 {% set theme_search_plchldr_color = "rgba(255, 255, 255, 0.8)" %}
 
+body {
+    padding-bottom: 0;
+}
+
 .dw-header {
     margin: -20px -30px 30px -30px;
     background-color: #e94c38;
@@ -30,7 +34,33 @@
 /* SIDEBAR */
 
 div.sphinxsidebar {
+    width: 108%;
     background-color: #003d4c;
+    margin: 0 -30px 0 -30px;
+}
+div.sphinxsidebar a {
+    border: none;
+}
+
+div.sphinxsidebar a:hover {
+    border: none;
+}
+
+div.sphinxsidebar ul {
+    margin: 10px 0 0 30px;
+}
+
+div.sphinxsidebar ul ul {
+    list-style: none;
+    margin-top: 0.4rem;
+}
+
+div.sphinxsidebar ul li {
+    margin-bottom: 0.4rem;
+}
+
+div.sphinxsidebar ul li.toctree-l1 > a {
+    font-size: inherit;
 }
 
 /* SEARCH */
@@ -141,33 +171,17 @@ ul { margin-left: 30px; }
 
     div.sphinxsidebar {
         background-color: transparent;
+        width: {{ theme_sidebar_width }};
+        margin: 0 0 0 -100%;
     }
 
-    div.sphinxsidebar ul {
-        margin: 10px 0 0 30px;
-    }
-
-    div.sphinxsidebar ul ul {
-        list-style: none;
-        margin-top: 0.5rem;
-    }
-
-    div.sphinxsidebar ul li {
-        margin-bottom: 0.5rem;
-    }
-
-    div.sphinxsidebar ul li.toctree-l1 > a {
-        font-size: inherit;
-    }
 
     div.sphinxsidebar a {
         color: #959798;
-        border: none;
     }
 
     div.sphinxsidebar a:hover {
         color: #56c9ea;
-        border: none;
     }
 
     div.sphinxsidebar li a {
