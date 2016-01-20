@@ -15,7 +15,7 @@ class HelloImpl(object):
 def main():
     implementation = HelloImpl()
     server = hello.HelloServer(implementation)
-    server.serve("http://127.0.0.1:8910/hello")
+    server.serveHTTP("http://127.0.0.1:8910/hello")
 
 
 if __name__ == '__main__':

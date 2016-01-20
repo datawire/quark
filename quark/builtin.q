@@ -424,6 +424,8 @@ primitive Servlet {
 primitive HTTPServlet extends Servlet {
     @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
     void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
+
+    void serveHTTP(String url) { quarkrt.concurrent.Context.runtime().serveHTTP(url, self); }
 }
 
 @doc("Websocket servlet")
@@ -431,6 +433,8 @@ primitive HTTPServlet extends Servlet {
 primitive WSServlet extends Servlet {
     @doc("called for each new incoming WebSocket connection")
     WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
+
+    void serveWS(String url) { quarkrt.concurrent.Context.runtime().serveWS(url, self); }
 }
 
 package quarkrt {
@@ -637,10 +641,6 @@ class Server<T> extends HTTPServlet {
 
     void onServletError(String url, String message) {
         concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + message);
-    }
-
-    void serve(String url) {
-        concurrent.Context.runtime().serveHTTP(url, self);
     }
 
 }
