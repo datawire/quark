@@ -4,7 +4,7 @@
     "version": "1.2.3",
     "main": "test/index.js",
     "dependencies": {
-        "datawire-quark-core": "0.3.1"
+        "datawire-quark-core": "0.4.1"
     }
 }
         
