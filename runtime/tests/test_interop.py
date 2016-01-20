@@ -74,8 +74,10 @@ class QuarkCompile(object):
                     yield "//end included %s\n" % include_path
                 else:
                     yield row
-        self.processed = self.path.new(dirname=self.tmpdir)
-        self.processed.write("".join(include_expander(self.path, "processing")))
+        processed = self.path.new(dirname=self.tmpdir)
+        processed.write("".join(include_expander(self.path, "processing")))
+        self.processed = processed.new(basename="interop.q")
+        self.processed.mksymlinkto(processed)
 
     @property
     def py_package(self):
@@ -108,6 +110,9 @@ class IntegrationMeta(type):
         if not hasattr(cls, 'registry'):
             cls.registry = []
         elif name.startswith("Abstract"):
+            pass
+        elif getattr(cls, 'DISABLED', False):
+            print "Integration", name, "is disabled."
             pass
         else:
             cls.registry.append(cls)
@@ -231,21 +236,17 @@ class Node(Integration):
             )
         self.rundir.join("run-client.js").write(textwrap.dedent("""\
             "use strict";
-            var runtime = require("%(datawire_quark_node)s");
-            var runtime_core = require("datawire-quark-core");
             var interop = require("interop");
             var process = require("process");
             console.log("Node client harness is started")
-            new interop.Entrypoint().client(runtime, process.argv[2]);
+            new interop.Entrypoint().client(process.argv[2]);
         """ % context))
         self.rundir.join("run-server.js").write(textwrap.dedent("""\
             "use strict";
-            var runtime = require("%(datawire_quark_node)s");
-            var runtime_core = require("datawire-quark-core");
             var interop = require("interop");
             var process = require("process");
             console.log("Node server harness is started")
-            new interop.Entrypoint().server(runtime, process.argv[2]);
+            new interop.Entrypoint().server(process.argv[2]);
         """ % context))
 
     def npm_install(self, package):
@@ -303,6 +304,7 @@ class AbstractPython(Integration):
         return [self.python.strpath, "run-client.py", str(port)]
 
 class TwistedPython(AbstractPython):
+    DISABLED = True
     def __init__(self, **kwargs):
         super(TwistedPython, self).__init__(**kwargs)
 
@@ -311,23 +313,19 @@ class TwistedPython(AbstractPython):
         self.pip_install(self.py_twisted_package)
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
             import interop
-            import quark_twisted_runtime
-            import quark_runtime
             import sys
+            import twisted
             print "Twisted client harness is started"
-            runtime = quark_twisted_runtime.get_runtime()
-            interop.Entrypoint().client(runtime, int(sys.argv[1]))
-            runtime.reactor.run()
+            interop.Entrypoint().client(int(sys.argv[1]))
+            twisted.reactor.run()
         """))
         self.rundir.join("run-server.py").write(textwrap.dedent("""\
             import interop
-            import quark_twisted_runtime
-            import quark_runtime
             import sys
+            import twisted
             print "Twisted server harness is started"
-            runtime = quark_twisted_runtime.get_runtime()
-            interop.Entrypoint().server(runtime, int(sys.argv[1]))
-            runtime.reactor.run()
+            interop.Entrypoint().server(int(sys.argv[1]))
+            twisted.reactor.run()
         """))
 
     @property
@@ -343,21 +341,15 @@ class ThreadedPython(AbstractPython):
         self.pip_install(self.py_threaded_package)
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
             import interop
-            import quark_threaded_runtime
-            import quark_runtime
             import sys
             print "Threaded client harness is started"
-            runtime = quark_threaded_runtime.get_runtime()
-            interop.Entrypoint().client(runtime, int(sys.argv[1]))
+            interop.Entrypoint().client(int(sys.argv[1]))
         """))
         self.rundir.join("run-server.py").write(textwrap.dedent("""\
             import interop
-            import quark_threaded_runtime
-            import quark_runtime
             import sys
             print "Threaded server harness is started"
-            runtime = quark_threaded_runtime.get_runtime()
-            interop.Entrypoint().server(runtime, int(sys.argv[1]))
+            interop.Entrypoint().server(int(sys.argv[1]))
         """))
 
     @property
@@ -440,35 +432,29 @@ class Netty(Integration):
         harness.ensure(dir=1)
         harness.join("Client.java").write(textwrap.dedent("""\
             package interop.harness;
-            import io.datawire.quark.netty.QuarkNettyRuntime;
             public class Client {
                 public static void main(String[] args) {
                     System.out.println("Netty client harness is started");
-                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
-                    new interop.Entrypoint().client(runtime, Integer.parseInt(args[0]));
+                    new interop.Entrypoint().client(Integer.parseInt(args[0]));
                 }
             }
         """)
         )
         harness.join("Server.java").write(textwrap.dedent("""\
             package interop.harness;
-            import io.datawire.quark.netty.QuarkNettyRuntime;
             public class Server {
                 public static void main(String[] args) {
                     System.out.println("Netty server harness is started");
-                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
-                    new interop.Entrypoint().server(runtime, Integer.parseInt(args[0]));
+                    new interop.Entrypoint().server(Integer.parseInt(args[0]));
                 }
             }
         """)
         )
         harness.join("Warmup.java").write(textwrap.dedent("""\
             package interop.harness;
-            import io.datawire.quark.netty.QuarkNettyRuntime;
             public class Warmup {
                 public static void main(String[] args) {
                     System.out.println("Netty warmup");
-                    QuarkNettyRuntime runtime = QuarkNettyRuntime.getRuntime();
                     System.exit(0);
                 }
             }

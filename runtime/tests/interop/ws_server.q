@@ -1,12 +1,12 @@
 @version("1.2.3") // version is mandatory
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
-        void server(Runtime runtime, int port) { // runtime and port are mandatory constructor parameters
+        void server(int port) { // port is mandatory constructor parameter
             InteropWSServlet servlet = new InteropWSServlet();
-            runtime.serveWS("ws://127.0.0.1:" + port.toString() + "/ws_server", servlet);
+            servlet.serveWS("ws://127.0.0.1:" + port.toString() + "/ws_server");
         }
-        void client(Runtime runtime, int port) {
-            runtime.open("ws://127.0.0.1:" + port.toString() + "/ws_server", new InteropWSClient(runtime));
+        void client(int port) {
+            InteropWSClient().open("ws://127.0.0.1:" + port.toString() + "/ws_server");
         }
     }
 
@@ -74,6 +74,10 @@ package interop { // package interop is mandatory
     }
 
     class InteropWSClient extends InteropWSCommon {
+        InteropWSClient() {
+            super(quarkrt.concurrent.Context.runtime());
+        }
+        void open(String url) { quarkrt.concurrent.Context.runtime().open(url, self); }
         void onWSConnected(WebSocket socket) {
             print("onWSConnected");
             socket.send("hello from client");
