@@ -95,6 +95,9 @@ def find_different_files():
     expected = os.path.join(emit, "expected")
     result = []  # (expected file path, output file path), ...
 
+    if not os.path.exists(output):
+        return result
+
     backends = os.listdir(output)
     for backend in backends:
         tests = os.listdir(os.path.join(output, backend))
