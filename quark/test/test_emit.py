@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, subprocess
-from quark.backend import Java, Python, JavaScript
+from quark.backend import Java, Python, JavaScript, Ruby
 from quark.compiler import Compiler, CompileError
 from .util import check_file, maybe_xfail
 
@@ -48,7 +48,8 @@ def java_deps(request):
 def path(request):
     return request.param
 
-@pytest.fixture(params=[Java, Python, JavaScript])
+# XXX @pytest.fixture(params=[Java, Python, JavaScript])
+@pytest.fixture(params=[Python, Ruby])
 def Backend(request):
     return request.param
 
@@ -124,6 +125,20 @@ def build_py(comp, base, srcs):
             open(out + ".cmp", "write").write(actual)
         assert expected == actual
 
+def build_rb(comp, base, srcs):
+    if "main" in comp.root.env:
+        out = os.path.dirname(base) + ".out"
+        import quark.ruby
+        script = quark.ruby.name(os.path.basename(os.path.dirname(base))) + ".rb"
+        try:
+            expected = open(out).read()
+        except IOError:
+            expected = None
+        actual = subprocess.check_output(["ruby", script], cwd=base)
+        if expected != actual:
+            open(out + ".cmp", "write").write(actual)
+        assert expected == actual
+
 class Node:
     NODE_TEST_SCRIPT = "new Map()"
     NODE_VARIANTS = (
@@ -173,5 +188,6 @@ def build_js(comp, base, srcs):
 BUILDERS = {
     "java": build_java,
     "py": build_py,
+    "rb": build_rb,
     "js": build_js
 }

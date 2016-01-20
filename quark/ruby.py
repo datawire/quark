@@ -89,7 +89,7 @@ def make_package_file(path, name):
     return make_class_file(path, name)
 
 def main(fname, common):
-    return Code('require "./%s" \n\nCommon::main\n' % common)
+    return Code('require "./%s" \n\nFunctions.main\n' % common)
 
 ## Naming and imports
 

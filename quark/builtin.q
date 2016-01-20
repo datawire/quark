@@ -275,7 +275,7 @@ primitive Map<K,V> {
                               $js{($self).has($key)};
     macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                       $py{($self).update($other)}
-                                      $py{($self).merge($other)}
+                                      $rb{($self).merge($other)}
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
     macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                              $py{_urlencode($self)}
@@ -473,7 +473,7 @@ macro int parseInt(String st) $java{Integer.parseInt($st)}
 
 macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
                            $py{_default_codec()}
-                           $py{DatawireQuarkCore.default_codec()}
+                           $rb{DatawireQuarkCore.default_codec()}
                            $js{_qrt.defaultCodec()};
 
 @mapping($java{io.datawire.quark.runtime.WSHandler})
