@@ -1,7 +1,7 @@
 Runtime Integrations
 --------------------
 
-{{{language}}} defines a variety of :doc:`integration types <../language-reference/integrationTypes>` and :doc:`integration interfaces <../language-reference/integrationInterfaces>`that use or rely on communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures. You must use a specific {{{product}}} runtime integration matching your development environment to get a working method - these integrations contain code specific to each environment and how it manages communications.
+{{{language}}} defines a variety of :doc:`integration types <../language-reference/integrationTypes>` and :doc:`integration interfaces <../language-reference/integrationInterfaces>` that use or rely on communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures. You must use a specific {{{product}}} runtime integration matching your development environment to get a working method - these integrations contain code specific to each environment and how it manages communications.
 
 You do not need to install a runtime integration if you are not using any integration types or integration interfaces in your {{{language}}} code.
 
