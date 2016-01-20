@@ -1,5 +1,32 @@
 {%- extends "basic/layout.html" %}
 
+{%- macro relbar_custom() %}
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>{{ _('Navigation') }}</h3>
+      <ul>
+        {%- for rellink in rellinks[1:] %}
+        <li class="right" {% if loop.first %}style="margin-right: 10px"{% endif %}>
+          <a
+            href="{{ pathto(rellink[0]) }}"
+            title="{{ rellink[1]|striptags|e }}"
+            {{ accesskey(rellink[2]) }}>
+              {% if rellink[3] == 'previous' %}&larr;{% endif %}
+              {{ rellink[3] }}
+              {% if rellink[3] == 'next' %}&rarr;{% endif %}
+          </a>
+          {%- if not loop.first %}{{ reldelim2 }}{% endif %}</li>
+        {%- endfor %}
+        {%- block rootrellink %}
+        <li class="nav-item nav-item-0"><a href="{{ pathto(master_doc) }}">{{ shorttitle|e }}</a>{{ reldelim1 }}</li>
+        {%- endblock %}
+        {%- for parent in parents %}
+          <li class="nav-item nav-item-{{ loop.index }}"><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a>{{ reldelim1 }}</li>
+        {%- endfor %}
+        {%- block relbaritems %} {% endblock %}
+      </ul>
+    </div>
+{%- endmacro %}
+
 {%- block header %}
     {%- include "header.html" %}
 {% endblock %}
@@ -14,7 +41,8 @@
 {% endblock %}
 
 {# Disable base theme's top+bottom related navs; we have our own in sidebar #}
-{%- block relbar1 %}{% endblock %}
+{#%- block relbar1 %#}{#% endblock %#}
+{%- block relbar1 %}{{ relbar_custom() }}{% endblock %}
 {%- block relbar2 %}{% endblock %}
 
 {%- block footer %}
