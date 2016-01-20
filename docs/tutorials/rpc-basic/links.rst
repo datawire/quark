@@ -9,4 +9,4 @@ For further information about {{{product}}}, see the following:
 
 * The `{{{product}}} Issues List <https://github.com/datawire/{{{github_directory}}}/issues>`_ provides a list of known issues - please feel free to add new issues or feature requests as you start to use {{{product}}}.
 
-If you have not already read it, the `{{{product}}} README <https://github.com/datawire/{{{github_directory}}}/blob/{{{branch}}}/README.md>`_ provides a more general overview of {{{product}}}'s features.
+If you have not already read it, the `{{{language}}} README <https://github.com/datawire/{{{github_directory}}}/blob/{{{branch}}}/README.md>`_ provides a more general overview of {{{language}}} and some of {{{product}}}'s features.

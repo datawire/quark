@@ -32,7 +32,7 @@ Part 2: Adding value classes
 This section defines the value classes needed by the Hello World RPC service. These classes hold the data that will be passed between the client and the server.
 
 .. code-block:: none
-   :emphasize-lines: 4,5,6,7,8,9
+   :emphasize-lines: 4,5,6,7,8,9,10
    
    @version("0.1.0")
    package hello {
