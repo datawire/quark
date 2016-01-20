@@ -18,6 +18,7 @@ import sys
 import os
 import subprocess
 import filecmp
+import tempfile
 
 
 # Copy-pasta from datawire-common/dw
@@ -58,20 +59,32 @@ def find_cmp_files():
     return res
 
 
+def ignorable(filename):
+    return filename == "classpath" or filename.endswith(".pyc")
+
+
 def collect_comparisons(dcmp, result):
     # left is expected, right is output
     for filename in dcmp.diff_files:
+        if ignorable(filename):
+            continue
         result.append((relpath(os.path.join(dcmp.left, filename)),
                        relpath(os.path.join(dcmp.right, filename))))
     for filename in dcmp.left_only:
+        if ignorable(filename):
+            continue
         fullname = relpath(os.path.join(dcmp.left, filename))
         if os.path.isfile(fullname):
             result.append((fullname, None))
     for filename in dcmp.right_only:
+        if ignorable(filename):
+            continue
         fullname = relpath(os.path.join(dcmp.right, filename))
         if os.path.isfile(fullname):
             result.append((None, fullname))
-    for common_sub_dcmp in dcmp.subdirs.values():
+    for common_dirname, common_sub_dcmp in dcmp.subdirs.items():
+        if common_dirname == "target":
+            continue
         collect_comparisons(common_sub_dcmp, result)
 
 
@@ -86,8 +99,12 @@ def find_different_files():
     for backend in backends:
         tests = os.listdir(os.path.join(output, backend))
         for test in tests:
+            if not os.path.isdir(os.path.join(output, backend, test)):
+                continue
             obt = os.path.join(output, backend, test)
             ebt = os.path.join(expected, backend, test)
+            if not os.path.exists(ebt):
+                ebt = tempfile.mkdtemp()
             dcmp = filecmp.dircmp(ebt, obt, ["target"])  # XXX: should only filter out target for java
             collect_comparisons(dcmp, result)
     return result
