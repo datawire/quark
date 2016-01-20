@@ -17,6 +17,14 @@ img {
   vertical-align: middle;
 }
 
+pre {
+  margin-top: 0;
+}
+
+ul {
+  margin-left: 30px;
+}
+
 .is-visible {
   display: block !important;
 }
