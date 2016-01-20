@@ -5,6 +5,10 @@ body {
     padding-bottom: 0;
 }
 
+div.documentwrapper {
+    margin-bottom: 2.3rem;
+}
+
 .dw-header {
     margin: -20px -30px 30px -30px;
     background-color: #e94c38;
@@ -34,10 +38,11 @@ body {
 /* SIDEBAR */
 
 div.sphinxsidebar {
-    width: 108%;
+    width: 118%;
     background-color: #003d4c;
     margin: 0 -30px 0 -30px;
 }
+
 div.sphinxsidebar a {
     border: none;
 }
