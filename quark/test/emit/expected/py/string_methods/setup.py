@@ -4,5 +4,5 @@ from setuptools import setup
 
 setup(name="string_methods",
       version="0.0.1",
-      install_requires=["datawire-quark-core==0.4.1"],
-      packages=['reflect', 'string_methods_md', 'string_methods_lib'])
+      install_requires=["datawire-quark-core==0.4.1", "builtin==0.0.1"],
+      packages=['string_methods_md'])

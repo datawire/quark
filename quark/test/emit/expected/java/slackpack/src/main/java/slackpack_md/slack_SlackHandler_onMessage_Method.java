@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_SlackHandler_onMessage_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_SlackHandler_onMessage_Method() {
-        super("void", "onMessage", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.event.Message"})));
+        super("builtin.void", "onMessage", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.event.Message"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.SlackHandler obj = (slack.SlackHandler) (object);

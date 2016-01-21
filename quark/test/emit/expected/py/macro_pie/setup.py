@@ -4,5 +4,5 @@ from setuptools import setup
 
 setup(name="macro_pie",
       version="0.0.1",
-      install_requires=["datawire-quark-core==0.4.1"],
-      packages=['reflect', 'macro_pie_md', 'macro_pie_lib'])
+      install_requires=["datawire-quark-core==0.4.1", "builtin==0.0.1"],
+      packages=['macro_pie_md'])

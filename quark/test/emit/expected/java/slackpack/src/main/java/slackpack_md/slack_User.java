@@ -6,7 +6,7 @@ public class slack_User extends reflect.Class implements io.datawire.quark.runti
         super("slack.User");
         (this).name = "User";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.Client", "client"), new reflect.Field("String", "user")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "user")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

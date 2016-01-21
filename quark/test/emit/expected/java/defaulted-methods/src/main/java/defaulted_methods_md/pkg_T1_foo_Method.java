@@ -2,7 +2,7 @@ package defaulted_methods_md;
 
 public class pkg_T1_foo_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_T1_foo_Method() {
-        super("void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("builtin.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         pkg.T1 obj = (pkg.T1) (object);

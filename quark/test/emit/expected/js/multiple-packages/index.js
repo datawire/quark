@@ -1,5 +1,3 @@
-var reflect = require('./reflect');
-exports.reflect = reflect;
 var p1 = require('./p1');
 exports.p1 = p1;
 var p1 = require('./p1');

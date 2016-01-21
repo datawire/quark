@@ -6,7 +6,7 @@ public class slack_event_SlackEvent extends reflect.Class implements io.datawire
         super("slack.event.SlackEvent");
         (this).name = "SlackEvent";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("String", "timestamp")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_event_SlackEvent_load_Method(), new slack_event_SlackEvent_dispatch_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

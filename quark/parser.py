@@ -77,8 +77,8 @@ class Parser:
         "-": "__neg__"
     }
 
-    @g.rule('file = toplevel* ~"$"')
-    def visit_file(self, node, (toplevels, eof)):
+    @g.rule('file = toplevel* _ ~"$"')
+    def visit_file(self, node, (toplevels, _, eof)):
         return File(toplevels)
 
     @g.rule('toplevel = dist_unit / use / include / import / file_definition')
@@ -127,7 +127,7 @@ class Parser:
         _, name, _, definitions, _ = children
         return Package(name, definitions)
 
-    @g.rule('pkg_definition = annotation* (package / class / function)')
+    @g.rule('pkg_definition = annotation* (package / class / function / macro)')
     def visit_pkg_definition(self, node, (annotations, (dfn,))):
         dfn.annotations = annotations
         return dfn

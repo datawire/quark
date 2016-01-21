@@ -6,7 +6,7 @@ public class pkg_StringBox extends reflect.Class implements io.datawire.quark.ru
         super("pkg.StringBox");
         (this).name = "StringBox";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("String", "contents")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("builtin.String", "contents")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

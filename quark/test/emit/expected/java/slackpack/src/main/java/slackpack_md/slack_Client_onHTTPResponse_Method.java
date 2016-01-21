@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_Client_onHTTPResponse_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_onHTTPResponse_Method() {
-        super("void", "onHTTPResponse", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"HTTPRequest", "HTTPResponse"})));
+        super("builtin.void", "onHTTPResponse", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.HTTPRequest", "builtin.HTTPResponse"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);

@@ -2,7 +2,7 @@ package package_md;
 
 public class test_Test_go_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public test_Test_go_Method() {
-        super("void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("builtin.void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         test.Test obj = (test.Test) (object);

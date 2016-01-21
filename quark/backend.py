@@ -50,7 +50,7 @@ class Backend(object):
         self.dependencies[name] = use.target
 
     def visit_File(self, file):
-        if file.depth == 0 and file.name != "reflector":
+        if not self.entry and file.depth == 0 and file.name != "reflector":
             self.entry = file
 
     def visit_Class(self, cls):
@@ -189,7 +189,6 @@ class Backend(object):
             lines = []
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
-        packages[(self.rootname,)] = ""
 
         deps = [namever(d) for d in self.dependencies.values()]
         files = self.gen.package(name, version, packages, self.files, deps)

@@ -6,7 +6,7 @@ public class slack_Channel extends reflect.Class implements io.datawire.quark.ru
         super("slack.Channel");
         (this).name = "Channel";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.Client", "client"), new reflect.Field("String", "channel")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "channel")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_Channel_send_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

@@ -1,4 +1,5 @@
-File(
+File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(test), Block(
    ExprStmt(Call(Attr(Var(Name(x)), Name(__set__)), Number(0), Number(0))),
    ExprStmt(Call(Attr(Var(Name(x)), Name(__get__)), Number(0))),

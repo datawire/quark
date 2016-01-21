@@ -1,79 +1,80 @@
-File(
+File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+
  Class(Name(A),
 
   Method(static=False, Type(Name(void)), Name(foo), Block(
-    ExprStmt(Call(Var(Name(print), $type=0.print), String("A", $type=0.String),
-     $type=0.void)))),
+    ExprStmt(Call(Var(Name(print), $type=1.builtin.print), String("A",
+      $type=1.builtin.String), $type=1.builtin.void)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("A", $type=0.String)))),
+    Return(String("A", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
    Block(
-    Return(Null(null, $type=0.Object)))),
+    Return(Null(null, $type=1.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
-   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
    Block())),
 
  Class(Name(B), Type(Name(A)),
 
   Method(static=False, Type(Name(void)), Name(foo), Block(
-    ExprStmt(Call(Var(Name(print), $type=0.print), String("B", $type=0.String),
-     $type=0.void)))),
+    ExprStmt(Call(Var(Name(print), $type=1.builtin.print), String("B",
+      $type=1.builtin.String), $type=1.builtin.void)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("B", $type=0.String)))),
+    Return(String("B", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
    Block(
-    Return(Null(null, $type=0.Object)))),
+    Return(Null(null, $type=1.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
-   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
    Block())),
 
  Class(Name(C), Type(Name(A)),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("C", $type=0.String)))),
+    Return(String("C", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
    Block(
-    Return(Null(null, $type=0.Object)))),
+    Return(Null(null, $type=1.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
-   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
    Block())),
 
  Function(Type(Name(void)), Name(main), Block(
    Local(
-    Declaration(Type(Name(A)), Name(a), Call(Type(Name(A)), $type=1.A),
-    $type=1.A)),
-   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
-    $type=0.void)),
+    Declaration(Type(Name(A)), Name(a), Call(Type(Name(A)), $type=0.A),
+    $type=0.A)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=0.A), Name(foo), $type=0.A.foo),
+    $type=1.builtin.void)),
    Local(
-    Declaration(Type(Name(B)), Name(b), Call(Type(Name(B)), $type=1.B),
-    $type=1.B)),
-   ExprStmt(Call(Attr(Var(Name(b), $type=1.B), Name(foo), $type=1.B.foo),
-    $type=0.void)),
+    Declaration(Type(Name(B)), Name(b), Call(Type(Name(B)), $type=0.B),
+    $type=0.B)),
+   ExprStmt(Call(Attr(Var(Name(b), $type=0.B), Name(foo), $type=0.B.foo),
+    $type=1.builtin.void)),
    Local(
-    Declaration(Type(Name(C)), Name(c), Call(Type(Name(C)), $type=1.C),
-    $type=1.C)),
-   ExprStmt(Call(Attr(Var(Name(c), $type=1.C), Name(foo), $type=1.A.foo),
-    $type=0.void)),
-   ExprStmt(Call(Var(Name(print), $type=0.print), String("--", $type=0.String),
-    $type=0.void)),
-   Assign(Var(Name(a), $type=1.A), Var(Name(b), $type=1.B)),
-   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
-    $type=0.void)),
-   Assign(Var(Name(a), $type=1.A), Var(Name(c), $type=1.C)),
-   ExprStmt(Call(Attr(Var(Name(a), $type=1.A), Name(foo), $type=1.A.foo),
-    $type=0.void))))
+    Declaration(Type(Name(C)), Name(c), Call(Type(Name(C)), $type=0.C),
+    $type=0.C)),
+   ExprStmt(Call(Attr(Var(Name(c), $type=0.C), Name(foo), $type=0.A.foo),
+    $type=1.builtin.void)),
+   ExprStmt(Call(Var(Name(print), $type=1.builtin.print), String("--",
+     $type=1.builtin.String), $type=1.builtin.void)),
+   Assign(Var(Name(a), $type=0.A), Var(Name(b), $type=0.B)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=0.A), Name(foo), $type=0.A.foo),
+    $type=1.builtin.void)),
+   Assign(Var(Name(a), $type=0.A), Var(Name(c), $type=0.C)),
+   ExprStmt(Call(Attr(Var(Name(a), $type=0.A), Name(foo), $type=0.A.foo),
+    $type=1.builtin.void))))
 )

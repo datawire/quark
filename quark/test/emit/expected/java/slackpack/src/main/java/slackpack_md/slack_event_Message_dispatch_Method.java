@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_event_Message_dispatch_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_event_Message_dispatch_Method() {
-        super("void", "dispatch", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.SlackHandler"})));
+        super("builtin.void", "dispatch", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.SlackHandler"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.event.Message obj = (slack.event.Message) (object);

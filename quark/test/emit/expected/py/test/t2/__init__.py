@@ -5,7 +5,7 @@ import testlib
 
 
 def test():
-    # import testlib
+    # import testlib;
 
     f = testlib.foo();
     _println(f);

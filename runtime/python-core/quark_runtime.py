@@ -395,13 +395,13 @@ class Buffer(object):
 def _getClass(obj):
     if obj is None: return None
     if isinstance(obj, basestring):
-        return "String"
+        return "builtin.String"
     if isinstance(obj, int):
-        return "int"
+        return "builtin.int"
     if isinstance(obj, float):
-        return "float"
+        return "builtin.float"
     if isinstance(obj, (list, tuple)):
-        return "List<Object>"
+        return "builtin.List<builtin.Object>"
     if isinstance(obj, dict):
-        return "Map<Object,Object>"
+        return "builtin.Map<builtin.Object,builtin.Object>"
     return obj._getClass()

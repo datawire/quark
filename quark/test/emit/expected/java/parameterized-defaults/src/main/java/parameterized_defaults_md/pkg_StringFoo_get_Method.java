@@ -2,7 +2,7 @@ package parameterized_defaults_md;
 
 public class pkg_StringFoo_get_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_StringFoo_get_Method() {
-        super("String", "get", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("builtin.String", "get", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         pkg.StringFoo obj = (pkg.StringFoo) (object);

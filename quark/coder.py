@@ -46,5 +46,7 @@ class Coder:
                 return "%s%s%s" % (head, joined, tail)
             else:
                 return joined
+        elif getattr(node, "_silent", False):
+            return ""
         else:
             return node.code(self)

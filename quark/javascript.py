@@ -35,12 +35,12 @@ def package(name, version, packages, srcs, deps):
 {
     "name": "%s",
     "version": "%s",
-    "main": "%s/index.js",
+    "main": "index.js",
     "dependencies": {
         %s
     }
 }
-        """ % (name, version, name, dependencies)
+        """ % (name, version, dependencies)
     return files
 
 def class_file(path, name, fname):

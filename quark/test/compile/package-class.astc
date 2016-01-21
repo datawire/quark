@@ -1,28 +1,29 @@
-File(
+File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+
  Package(Name(p),
 
   Class(Name(C),
 
    Method(static=False, Type(Name(void)), Name(f),
-    Param(Type(Name(int)), Name(a), $type=0.int),
-    Param(Type(Name(int)), Name(b), $type=0.int),
-    Param(Type(Name(String)), Name(c), $type=0.String),
+    Param(Type(Name(int)), Name(a), $type=1.builtin.int),
+    Param(Type(Name(int)), Name(b), $type=1.builtin.int),
+    Param(Type(Name(String)), Name(c), $type=1.builtin.String),
     Block()),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("p.C", $type=0.String)))),
+     Return(String("p.C", $type=1.builtin.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.String),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
     Block(
-     Return(Null(null, $type=0.Object)))),
+     Return(Null(null, $type=1.builtin.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.String),
-    Param(Type(Name(Object)), Name(value), $type=0.Object),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(p_C_ref),
     Attr(Attr(Var(Name(package_class_md), $type=2.package_class_md),
       Name(Root), $type=2.package_class_md.Root), Name(p_C_md),
-    $type=0.reflect.Class), $type=0.reflect.Class)))
+    $type=1.reflect.Class), $type=1.reflect.Class)))
 )

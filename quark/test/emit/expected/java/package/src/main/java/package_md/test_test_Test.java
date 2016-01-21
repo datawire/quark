@@ -6,7 +6,7 @@ public class test_test_Test extends reflect.Class implements io.datawire.quark.r
         super("test.test.Test");
         (this).name = "Test";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("int", "size")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("builtin.int", "size")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new test_test_Test_go_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

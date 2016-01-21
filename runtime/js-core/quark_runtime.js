@@ -529,11 +529,11 @@
     exports.defaultCodec = defaultCodec;
 
     function _getClass(obj) {
-        if (typeof obj === "boolean") { return "bool"; }
-        if (typeof obj === "number") { return "float"; }
-        if (typeof obj === "string") { return "String"; }
-        if (obj instanceof Array) { return "List<Object>"; }
-        if (obj instanceof Map) { return "Map<Object,Object>"; }
+        if (typeof obj === "boolean") { return "builtin.bool"; }
+        if (typeof obj === "number") { return "builtin.float"; }
+        if (typeof obj === "string") { return "builtin.String"; }
+        if (obj instanceof Array) { return "builtin.List<builtin.Object>"; }
+        if (obj instanceof Map) { return "builtin.Map<builtin.Object,builtin.Object>"; }
 
         if (obj._getClass) { return obj._getClass(); }
 

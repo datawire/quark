@@ -1,10 +1,6 @@
-var reflect = require('./reflect');
-exports.reflect = reflect;
 var testlib = require('./testlib');
 exports.testlib = testlib;
 var t2 = require('./t2');
 exports.t2 = t2;
 var test_md = require('./test_md');
 exports.test_md = test_md;
-var t2_testlib_common = require('./t2_testlib_common');
-exports.t2_testlib_common = t2_testlib_common;

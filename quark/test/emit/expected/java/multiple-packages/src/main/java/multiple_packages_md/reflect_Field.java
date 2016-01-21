@@ -6,7 +6,7 @@ public class reflect_Field extends reflect.Class implements io.datawire.quark.ru
         super("reflect.Field");
         (this).name = "Field";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("String", "type"), new reflect.Field("String", "name")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("builtin.String", "type"), new reflect.Field("builtin.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

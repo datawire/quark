@@ -2,9 +2,10 @@
 {
     "name": "builtin_codec",
     "version": "0.0.1",
-    "main": "builtin_codec/index.js",
+    "main": "index.js",
     "dependencies": {
-        "datawire-quark-core": "0.4.1"
+        "datawire-quark-core": "0.4.1",
+        "builtin": "0.0.1"
     }
 }
         

@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_Client_onWSError_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_onWSError_Method() {
-        super("void", "onWSError", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"WebSocket"})));
+        super("builtin.void", "onWSError", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.WebSocket"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);

@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_event_SlackError_load_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_event_SlackError_load_Method() {
-        super("void", "load", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.Client", "JSONObject"})));
+        super("builtin.void", "load", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.Client", "builtin.JSONObject"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.event.SlackError obj = (slack.event.SlackError) (object);

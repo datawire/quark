@@ -1,24 +1,26 @@
-File(
+File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+
  Interface(Name(Foo),
 
   Method(static=False, Type(Name(void)), Name(m1)),
 
   Method(static=False, Type(Name(void)), Name(m2),
-   Param(Type(Name(int)), Name(arg), $type=0.int)),
+   Param(Type(Name(int)), Name(arg), $type=1.builtin.int)),
 
   Method(static=False, Type(Name(void)), Name(m3),
    Param(Type(Name(List), Type(Name(String))), Name(args),
-   $type=0.List<0.String>))),
+   $type=1.builtin.List<1.builtin.String>))),
 
  Interface(Name(Bar), TypeParam(Name(T)),
 
   Method(static=False, Type(Name(void)), Name(m1)),
 
   Method(static=False, Type(Name(void)), Name(m2),
-   Param(Type(Name(T)), Name(arg), $type=1.Bar.T)),
+   Param(Type(Name(T)), Name(arg), $type=0.Bar.T)),
 
   Method(static=False, Type(Name(void)), Name(m3),
-   Param(Type(Name(List), Type(Name(T))), Name(args), $type=0.List<1.Bar.T>))),
+   Param(Type(Name(List), Type(Name(T))), Name(args),
+   $type=1.builtin.List<0.Bar.T>))),
 
  Interface(Name(BazFoo), Type(Name(Foo))),
 

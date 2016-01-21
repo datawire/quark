@@ -18,6 +18,7 @@ from .ast import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
+import ast
 
 class Root(AST):
 
@@ -227,14 +228,14 @@ class TypeExpr(object):
                 for sup in base.resolved.supertypes():
                     yield texpr(sup.type, sup.bindings, self.bindings)
         else:
-            sup = cls.root.env["Object"].resolved
+            sup = cls.root.env["builtin"].env["Object"].resolved
             yield texpr(sup.type, sup.bindings, self.bindings)
 
     @overload(TypeParam)
     def supertypes(self, param):
         # should we check in bindings here and try supertypes?
         yield self
-        yield param.root.env["Object"].resolved
+        yield param.root.env["builtin"].env["Object"].resolved
 
     def get(self, attr, errors):
         name = attr.text
@@ -260,7 +261,7 @@ class TypeExpr(object):
                 for e in self.environments(base, bindings):
                     yield e
         else:
-            yield cls.root.env["Object"].env
+            yield cls.root.env["builtin"].env["Object"].env
 
     @overload(Call, list)
     def invoke(self, c, errors):
@@ -399,7 +400,7 @@ class Use(object):
 
     @overload(Type)
     def lookup(self, t):
-        type = self.lookup(t.clazz or t.package or t.root, t.path[0].text)
+        type = self.lookup(t.clazz or t.package or t.file or t.root, t.path[0].text)
         return self.lookup_path(type, t.path[1:])
 
     @overload(Import)
@@ -522,7 +523,7 @@ class Resolver(object):
                                    (lineinfo(r), r.callable.name))
             return
 
-        if not r.callable.type or r.callable.type.code() == "void":
+        if not r.callable.type or r.callable.type.code() == "builtin.void":
             if r.expr:
                 self.errors.append("%s: %s cannot return a value" % (lineinfo(r), r.callable.name))
             return
@@ -669,7 +670,7 @@ class Reflector:
         self.entry = None
 
     def visit_File(self, f):
-        if f.depth == 0 and f.name != "reflector":
+        if not self.entry and f.depth == 0 and f.name != "reflector":
             self.entry = f
 
     def package(self, pkg):
@@ -736,7 +737,7 @@ class Reflector:
 
     def meth(self, mid, cid, type, name, params):
         args = ", ".join(['?args[%s]' % i for i in range(len(params))])
-        if type == "void":
+        if type == "builtin.void":
             invoke = "        obj.%s(%s);\n        return null;" % (name, args)
         else:
             invoke = "        return obj.%s(%s);" % (name, args)
@@ -888,7 +889,6 @@ class Compiler:
         self.parsed = set()
         self.included = OrderedDict()
         self.dependencies = []
-        self.perform_quark_include(BUILTIN, None, 0)  # XXX None here will cause a worse crash on IOError
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -904,6 +904,13 @@ class Compiler:
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
+        imp = Import([Name("builtin")])
+        imp._silent = True
+        file.definitions.insert(0, imp)
+        if not self.root.files and not name.endswith("builtin.q"):  # First file
+            use = ast.Use(BUILTIN)
+            use._silent = True
+            file.definitions.insert(0, use)
         while True:
             file.name = name
             file.traverse(Crosswire(self.root))
@@ -916,15 +923,17 @@ class Compiler:
         self.root.add(file)
         return file
 
-    def urlparse(self, url, depth=0, top=True):
-        try:
-            file = self.parse(url, self.read(url))
-            file.depth = depth
-        except IOError, e:
-            if top:
-                raise CompileError(e)
-            else:
-                raise
+    def urlparse(self, url, depth=0, top=True, text=None):
+        if text is None:
+            try:
+                text = self.read(url)
+            except IOError, e:
+                if top:
+                    raise CompileError(e)
+                else:
+                    raise
+        file = self.parse(url, text)
+        file.depth = depth
         for u in file.uses.values():
             qurl = self.join(url, u.url)
             self.perform_use(qurl, u, depth)
@@ -995,6 +1004,8 @@ class Compiler:
 #        with open("/tmp/reflector.q", "w") as fd:
 #            fd.write(ref.code)
         self.parse("reflector", ref.code)
+        # XXX: this seems to cause problems, should investigate
+        #self.urlparse("reflector", text=ref.code)
         self.icompile(self.root.files[-1])
         for cls, methods in ref.methods.items():
             for m in methods:

@@ -1,5 +1,5 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('../reflect');
+var reflect = require('builtin').reflect;
 exports.reflect = reflect;
 var event = require('./event');
 exports.event = event;

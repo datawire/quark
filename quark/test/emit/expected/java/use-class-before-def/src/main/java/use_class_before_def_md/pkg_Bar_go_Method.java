@@ -2,7 +2,7 @@ package use_class_before_def_md;
 
 public class pkg_Bar_go_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_Bar_go_Method() {
-        super("void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("builtin.void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         pkg.Bar obj = (pkg.Bar) (object);

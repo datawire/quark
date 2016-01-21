@@ -2,7 +2,7 @@ package slackpack_md;
 
 public class slack_Client_ws_send_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_ws_send_Method() {
-        super("void", "ws_send", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"String"})));
+        super("builtin.void", "ws_send", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);

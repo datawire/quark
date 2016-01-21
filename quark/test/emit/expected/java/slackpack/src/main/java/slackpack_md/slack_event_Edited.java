@@ -6,7 +6,7 @@ public class slack_event_Edited extends reflect.Class implements io.datawire.qua
         super("slack.event.Edited");
         (this).name = "Edited";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.User", "user"), new reflect.Field("String", "timestamp")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("slack.User", "user"), new reflect.Field("builtin.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

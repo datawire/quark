@@ -31,7 +31,7 @@ def copy(node):
         result = origin.copy()
         if hasattr(origin, "annotations"):
             result.annotations = copy(origin.annotations)
-        for attr in "node", "line", "column", "_trace":
+        for attr in "node", "line", "column", "_trace", "_silent":
             if hasattr(origin, attr):
                 setattr(result, attr, getattr(origin, attr))
         return result
@@ -201,9 +201,9 @@ class Import(AST):
 
     @coder
     def code(self, coder):
-        result = "import %s" % coder.code(self.path, ".")
+        result = "import %s;" % coder.code(self.path, ".")
         if self.alias:
-            result += " as %s" % coder.code(self.alias)
+            result += " as %s;" % coder.code(self.alias)
         return result
 
     def copy(self):

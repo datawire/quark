@@ -250,6 +250,11 @@ def readme(fun, lines):
     lines.append("## %s(%s)" % (fun.name, fun.params))
     lines.append(doc_helper(doc(fun)))
 
+@dispatch(Macro)
+def readme(fun, lines):
+    lines.append("## %s(%s)" % (fun.name, fun.params))
+    lines.append(doc_helper(doc(fun)))
+
 @dispatch(Method)
 def readme(m, lines):
     lines.append("### %s.%s(%s)" % (m.clazz.name, m.name, m.params))

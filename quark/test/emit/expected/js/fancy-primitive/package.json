@@ -2,9 +2,10 @@
 {
     "name": "fancy_primitive",
     "version": "0.0.1",
-    "main": "fancy_primitive/index.js",
+    "main": "index.js",
     "dependencies": {
-        "datawire-quark-core": "0.4.1"
+        "datawire-quark-core": "0.4.1",
+        "builtin": "0.0.1"
     }
 }
         

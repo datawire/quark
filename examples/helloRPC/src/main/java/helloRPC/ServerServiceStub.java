@@ -1,7 +1,7 @@
 package helloRPC;
 
 import io.datawire.quark.runtime.Runtime;
-import hello.Service; // XXX: this should come from quark runtime package
+import builtin.Service;
 
 // XXX: server really doesn't need those, they are for client...
 public class ServerServiceStub implements Service {

@@ -1,193 +1,13 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('../reflect');
+var reflect = require('builtin').reflect;
 exports.reflect = reflect;
 
-
-
-// CLASS List_reflect_Class_
-
-function List_reflect_Class_() {
-    List_reflect_Class_.super_.call(this, "List<reflect.Class>");
-    (this).name = "List";
-    (this).parameters = ["reflect.Class"];
-    (this).fields = [];
-    (this).methods = [];
-}
-exports.List_reflect_Class_ = List_reflect_Class_;
-_qrt.util.inherits(List_reflect_Class_, reflect.Class);
-
-function List_reflect_Class___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
-}
-List_reflect_Class_.prototype.__init_fields__ = List_reflect_Class___init_fields__;
-List_reflect_Class_.singleton = new List_reflect_Class_();
-function List_reflect_Class__construct(args) {
-    return new Array();
-}
-List_reflect_Class_.prototype.construct = List_reflect_Class__construct;
-
-function List_reflect_Class___getClass() {
-    return null;
-}
-List_reflect_Class_.prototype._getClass = List_reflect_Class___getClass;
-
-function List_reflect_Class___getField(name) {
-    return null;
-}
-List_reflect_Class_.prototype._getField = List_reflect_Class___getField;
-
-function List_reflect_Class___setField(name, value) {}
-List_reflect_Class_.prototype._setField = List_reflect_Class___setField;
-
-
-// CLASS List_reflect_Method_
-
-function List_reflect_Method_() {
-    List_reflect_Method_.super_.call(this, "List<reflect.Method>");
-    (this).name = "List";
-    (this).parameters = ["reflect.Method"];
-    (this).fields = [];
-    (this).methods = [];
-}
-exports.List_reflect_Method_ = List_reflect_Method_;
-_qrt.util.inherits(List_reflect_Method_, reflect.Class);
-
-function List_reflect_Method___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
-}
-List_reflect_Method_.prototype.__init_fields__ = List_reflect_Method___init_fields__;
-List_reflect_Method_.singleton = new List_reflect_Method_();
-function List_reflect_Method__construct(args) {
-    return new Array();
-}
-List_reflect_Method_.prototype.construct = List_reflect_Method__construct;
-
-function List_reflect_Method___getClass() {
-    return null;
-}
-List_reflect_Method_.prototype._getClass = List_reflect_Method___getClass;
-
-function List_reflect_Method___getField(name) {
-    return null;
-}
-List_reflect_Method_.prototype._getField = List_reflect_Method___getField;
-
-function List_reflect_Method___setField(name, value) {}
-List_reflect_Method_.prototype._setField = List_reflect_Method___setField;
-
-
-// CLASS Map_String_reflect_Class_
-
-function Map_String_reflect_Class_() {
-    Map_String_reflect_Class_.super_.call(this, "Map<String,reflect.Class>");
-    (this).name = "Map";
-    (this).parameters = ["String", "reflect.Class"];
-    (this).fields = [];
-    (this).methods = [];
-}
-exports.Map_String_reflect_Class_ = Map_String_reflect_Class_;
-_qrt.util.inherits(Map_String_reflect_Class_, reflect.Class);
-
-function Map_String_reflect_Class___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
-}
-Map_String_reflect_Class_.prototype.__init_fields__ = Map_String_reflect_Class___init_fields__;
-Map_String_reflect_Class_.singleton = new Map_String_reflect_Class_();
-function Map_String_reflect_Class__construct(args) {
-    return new Map();
-}
-Map_String_reflect_Class_.prototype.construct = Map_String_reflect_Class__construct;
-
-function Map_String_reflect_Class___getClass() {
-    return null;
-}
-Map_String_reflect_Class_.prototype._getClass = Map_String_reflect_Class___getClass;
-
-function Map_String_reflect_Class___getField(name) {
-    return null;
-}
-Map_String_reflect_Class_.prototype._getField = Map_String_reflect_Class___getField;
-
-function Map_String_reflect_Class___setField(name, value) {}
-Map_String_reflect_Class_.prototype._setField = Map_String_reflect_Class___setField;
-
-
-// CLASS reflect_Class
-
-function reflect_Class() {
-    reflect_Class.super_.call(this, "reflect.Class");
-    (this).name = "Class";
-    (this).parameters = [];
-    (this).fields = [new reflect.Field("Map<String,reflect.Class>", "classes"), new reflect.Field("reflect.Class", "VOID"), new reflect.Field("reflect.Class", "BOOL"), new reflect.Field("reflect.Class", "INT"), new reflect.Field("reflect.Class", "LONG"), new reflect.Field("reflect.Class", "STRING"), new reflect.Field("String", "id"), new reflect.Field("String", "name"), new reflect.Field("List<reflect.Class>", "parameters"), new reflect.Field("List<reflect.Field>", "fields"), new reflect.Field("List<reflect.Method>", "methods")];
-    (this).methods = [];
-}
-exports.reflect_Class = reflect_Class;
-_qrt.util.inherits(reflect_Class, reflect.Class);
-
-function reflect_Class__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
-}
-reflect_Class.prototype.__init_fields__ = reflect_Class__init_fields__;
-reflect_Class.singleton = new reflect_Class();
-function reflect_Class_construct(args) {
-    return new reflect.Class((args)[0]);
-}
-reflect_Class.prototype.construct = reflect_Class_construct;
-
-function reflect_Class__getClass() {
-    return null;
-}
-reflect_Class.prototype._getClass = reflect_Class__getClass;
-
-function reflect_Class__getField(name) {
-    return null;
-}
-reflect_Class.prototype._getField = reflect_Class__getField;
-
-function reflect_Class__setField(name, value) {}
-reflect_Class.prototype._setField = reflect_Class__setField;
-
-
-// CLASS reflect_Field
-
-function reflect_Field() {
-    reflect_Field.super_.call(this, "reflect.Field");
-    (this).name = "Field";
-    (this).parameters = [];
-    (this).fields = [new reflect.Field("String", "type"), new reflect.Field("String", "name")];
-    (this).methods = [];
-}
-exports.reflect_Field = reflect_Field;
-_qrt.util.inherits(reflect_Field, reflect.Class);
-
-function reflect_Field__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
-}
-reflect_Field.prototype.__init_fields__ = reflect_Field__init_fields__;
-reflect_Field.singleton = new reflect_Field();
-function reflect_Field_construct(args) {
-    return new reflect.Field((args)[0], (args)[1]);
-}
-reflect_Field.prototype.construct = reflect_Field_construct;
-
-function reflect_Field__getClass() {
-    return null;
-}
-reflect_Field.prototype._getClass = reflect_Field__getClass;
-
-function reflect_Field__getField(name) {
-    return null;
-}
-reflect_Field.prototype._getField = reflect_Field__getField;
-
-function reflect_Field__setField(name, value) {}
-reflect_Field.prototype._setField = reflect_Field__setField;
 
 
 // CLASS slack_event_SlackEvent_load_Method
 
 function slack_event_SlackEvent_load_Method() {
-    slack_event_SlackEvent_load_Method.super_.call(this, "void", "load", ["slack.Client", "JSONObject"]);
+    slack_event_SlackEvent_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_SlackEvent_load_Method = slack_event_SlackEvent_load_Method;
 _qrt.util.inherits(slack_event_SlackEvent_load_Method, reflect.Method);
@@ -220,7 +40,7 @@ slack_event_SlackEvent_load_Method.prototype._setField = slack_event_SlackEvent_
 // CLASS slack_event_SlackEvent_dispatch_Method
 
 function slack_event_SlackEvent_dispatch_Method() {
-    slack_event_SlackEvent_dispatch_Method.super_.call(this, "void", "dispatch", ["slack.SlackHandler"]);
+    slack_event_SlackEvent_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_SlackEvent_dispatch_Method = slack_event_SlackEvent_dispatch_Method;
 _qrt.util.inherits(slack_event_SlackEvent_dispatch_Method, reflect.Method);
@@ -256,7 +76,7 @@ function slack_event_SlackEvent() {
     slack_event_SlackEvent.super_.call(this, "slack.event.SlackEvent");
     (this).name = "SlackEvent";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("String", "timestamp")];
+    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp")];
     (this).methods = [new slack_event_SlackEvent_load_Method(), new slack_event_SlackEvent_dispatch_Method()];
 }
 exports.slack_event_SlackEvent = slack_event_SlackEvent;
@@ -289,7 +109,7 @@ slack_event_SlackEvent.prototype._setField = slack_event_SlackEvent__setField;
 // CLASS slack_event_SlackError_load_Method
 
 function slack_event_SlackError_load_Method() {
-    slack_event_SlackError_load_Method.super_.call(this, "void", "load", ["slack.Client", "JSONObject"]);
+    slack_event_SlackError_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_SlackError_load_Method = slack_event_SlackError_load_Method;
 _qrt.util.inherits(slack_event_SlackError_load_Method, reflect.Method);
@@ -322,7 +142,7 @@ slack_event_SlackError_load_Method.prototype._setField = slack_event_SlackError_
 // CLASS slack_event_SlackError_dispatch_Method
 
 function slack_event_SlackError_dispatch_Method() {
-    slack_event_SlackError_dispatch_Method.super_.call(this, "void", "dispatch", ["slack.SlackHandler"]);
+    slack_event_SlackError_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_SlackError_dispatch_Method = slack_event_SlackError_dispatch_Method;
 _qrt.util.inherits(slack_event_SlackError_dispatch_Method, reflect.Method);
@@ -358,7 +178,7 @@ function slack_event_SlackError() {
     slack_event_SlackError.super_.call(this, "slack.event.SlackError");
     (this).name = "SlackError";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("String", "timestamp"), new reflect.Field("int", "code"), new reflect.Field("String", "text")];
+    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp"), new reflect.Field("builtin.int", "code"), new reflect.Field("builtin.String", "text")];
     (this).methods = [new slack_event_SlackError_load_Method(), new slack_event_SlackError_dispatch_Method()];
 }
 exports.slack_event_SlackError = slack_event_SlackError;
@@ -391,7 +211,7 @@ slack_event_SlackError.prototype._setField = slack_event_SlackError__setField;
 // CLASS slack_event_Hello_dispatch_Method
 
 function slack_event_Hello_dispatch_Method() {
-    slack_event_Hello_dispatch_Method.super_.call(this, "void", "dispatch", ["slack.SlackHandler"]);
+    slack_event_Hello_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_Hello_dispatch_Method = slack_event_Hello_dispatch_Method;
 _qrt.util.inherits(slack_event_Hello_dispatch_Method, reflect.Method);
@@ -424,7 +244,7 @@ slack_event_Hello_dispatch_Method.prototype._setField = slack_event_Hello_dispat
 // CLASS slack_event_Hello_load_Method
 
 function slack_event_Hello_load_Method() {
-    slack_event_Hello_load_Method.super_.call(this, "void", "load", ["slack.Client", "JSONObject"]);
+    slack_event_Hello_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_Hello_load_Method = slack_event_Hello_load_Method;
 _qrt.util.inherits(slack_event_Hello_load_Method, reflect.Method);
@@ -460,7 +280,7 @@ function slack_event_Hello() {
     slack_event_Hello.super_.call(this, "slack.event.Hello");
     (this).name = "Hello";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("String", "timestamp")];
+    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp")];
     (this).methods = [new slack_event_Hello_dispatch_Method(), new slack_event_Hello_load_Method()];
 }
 exports.slack_event_Hello = slack_event_Hello;
@@ -493,7 +313,7 @@ slack_event_Hello.prototype._setField = slack_event_Hello__setField;
 // CLASS slack_event_Message_load_Method
 
 function slack_event_Message_load_Method() {
-    slack_event_Message_load_Method.super_.call(this, "void", "load", ["slack.Client", "JSONObject"]);
+    slack_event_Message_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_Message_load_Method = slack_event_Message_load_Method;
 _qrt.util.inherits(slack_event_Message_load_Method, reflect.Method);
@@ -526,7 +346,7 @@ slack_event_Message_load_Method.prototype._setField = slack_event_Message_load_M
 // CLASS slack_event_Message_dispatch_Method
 
 function slack_event_Message_dispatch_Method() {
-    slack_event_Message_dispatch_Method.super_.call(this, "void", "dispatch", ["slack.SlackHandler"]);
+    slack_event_Message_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_Message_dispatch_Method = slack_event_Message_dispatch_Method;
 _qrt.util.inherits(slack_event_Message_dispatch_Method, reflect.Method);
@@ -562,7 +382,7 @@ function slack_event_Message() {
     slack_event_Message.super_.call(this, "slack.event.Message");
     (this).name = "Message";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("String", "timestamp"), new reflect.Field("String", "subtype"), new reflect.Field("bool", "hidden"), new reflect.Field("String", "text"), new reflect.Field("slack.event.Edited", "edited")];
+    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp"), new reflect.Field("builtin.String", "subtype"), new reflect.Field("builtin.bool", "hidden"), new reflect.Field("builtin.String", "text"), new reflect.Field("slack.event.Edited", "edited")];
     (this).methods = [new slack_event_Message_load_Method(), new slack_event_Message_dispatch_Method()];
 }
 exports.slack_event_Message = slack_event_Message;
@@ -598,7 +418,7 @@ function slack_event_Edited() {
     slack_event_Edited.super_.call(this, "slack.event.Edited");
     (this).name = "Edited";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.User", "user"), new reflect.Field("String", "timestamp")];
+    (this).fields = [new reflect.Field("slack.User", "user"), new reflect.Field("builtin.String", "timestamp")];
     (this).methods = [];
 }
 exports.slack_event_Edited = slack_event_Edited;
@@ -631,7 +451,7 @@ slack_event_Edited.prototype._setField = slack_event_Edited__setField;
 // CLASS slack_SlackHandler_onSlackEvent_Method
 
 function slack_SlackHandler_onSlackEvent_Method() {
-    slack_SlackHandler_onSlackEvent_Method.super_.call(this, "void", "onSlackEvent", ["slack.event.SlackEvent"]);
+    slack_SlackHandler_onSlackEvent_Method.super_.call(this, "builtin.void", "onSlackEvent", ["slack.event.SlackEvent"]);
 }
 exports.slack_SlackHandler_onSlackEvent_Method = slack_SlackHandler_onSlackEvent_Method;
 _qrt.util.inherits(slack_SlackHandler_onSlackEvent_Method, reflect.Method);
@@ -664,7 +484,7 @@ slack_SlackHandler_onSlackEvent_Method.prototype._setField = slack_SlackHandler_
 // CLASS slack_SlackHandler_onHello_Method
 
 function slack_SlackHandler_onHello_Method() {
-    slack_SlackHandler_onHello_Method.super_.call(this, "void", "onHello", ["slack.event.Hello"]);
+    slack_SlackHandler_onHello_Method.super_.call(this, "builtin.void", "onHello", ["slack.event.Hello"]);
 }
 exports.slack_SlackHandler_onHello_Method = slack_SlackHandler_onHello_Method;
 _qrt.util.inherits(slack_SlackHandler_onHello_Method, reflect.Method);
@@ -697,7 +517,7 @@ slack_SlackHandler_onHello_Method.prototype._setField = slack_SlackHandler_onHel
 // CLASS slack_SlackHandler_onSlackError_Method
 
 function slack_SlackHandler_onSlackError_Method() {
-    slack_SlackHandler_onSlackError_Method.super_.call(this, "void", "onSlackError", ["slack.event.SlackError"]);
+    slack_SlackHandler_onSlackError_Method.super_.call(this, "builtin.void", "onSlackError", ["slack.event.SlackError"]);
 }
 exports.slack_SlackHandler_onSlackError_Method = slack_SlackHandler_onSlackError_Method;
 _qrt.util.inherits(slack_SlackHandler_onSlackError_Method, reflect.Method);
@@ -730,7 +550,7 @@ slack_SlackHandler_onSlackError_Method.prototype._setField = slack_SlackHandler_
 // CLASS slack_SlackHandler_onMessage_Method
 
 function slack_SlackHandler_onMessage_Method() {
-    slack_SlackHandler_onMessage_Method.super_.call(this, "void", "onMessage", ["slack.event.Message"]);
+    slack_SlackHandler_onMessage_Method.super_.call(this, "builtin.void", "onMessage", ["slack.event.Message"]);
 }
 exports.slack_SlackHandler_onMessage_Method = slack_SlackHandler_onMessage_Method;
 _qrt.util.inherits(slack_SlackHandler_onMessage_Method, reflect.Method);
@@ -802,7 +622,7 @@ function slack_User() {
     slack_User.super_.call(this, "slack.User");
     (this).name = "User";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("String", "user")];
+    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "user")];
     (this).methods = [];
 }
 exports.slack_User = slack_User;
@@ -835,7 +655,7 @@ slack_User.prototype._setField = slack_User__setField;
 // CLASS slack_Channel_send_Method
 
 function slack_Channel_send_Method() {
-    slack_Channel_send_Method.super_.call(this, "void", "send", ["String"]);
+    slack_Channel_send_Method.super_.call(this, "builtin.void", "send", ["builtin.String"]);
 }
 exports.slack_Channel_send_Method = slack_Channel_send_Method;
 _qrt.util.inherits(slack_Channel_send_Method, reflect.Method);
@@ -871,7 +691,7 @@ function slack_Channel() {
     slack_Channel.super_.call(this, "slack.Channel");
     (this).name = "Channel";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("String", "channel")];
+    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "channel")];
     (this).methods = [new slack_Channel_send_Method()];
 }
 exports.slack_Channel = slack_Channel;
@@ -904,7 +724,7 @@ slack_Channel.prototype._setField = slack_Channel__setField;
 // CLASS slack_Client_connect_Method
 
 function slack_Client_connect_Method() {
-    slack_Client_connect_Method.super_.call(this, "void", "connect", []);
+    slack_Client_connect_Method.super_.call(this, "builtin.void", "connect", []);
 }
 exports.slack_Client_connect_Method = slack_Client_connect_Method;
 _qrt.util.inherits(slack_Client_connect_Method, reflect.Method);
@@ -937,7 +757,7 @@ slack_Client_connect_Method.prototype._setField = slack_Client_connect_Method__s
 // CLASS slack_Client_request_Method
 
 function slack_Client_request_Method() {
-    slack_Client_request_Method.super_.call(this, "void", "request", ["String", "Map<String,Object>", "HTTPHandler"]);
+    slack_Client_request_Method.super_.call(this, "builtin.void", "request", ["builtin.String", "builtin.Map<builtin.String,builtin.Object>", "builtin.HTTPHandler"]);
 }
 exports.slack_Client_request_Method = slack_Client_request_Method;
 _qrt.util.inherits(slack_Client_request_Method, reflect.Method);
@@ -970,7 +790,7 @@ slack_Client_request_Method.prototype._setField = slack_Client_request_Method__s
 // CLASS slack_Client_ws_connect_Method
 
 function slack_Client_ws_connect_Method() {
-    slack_Client_ws_connect_Method.super_.call(this, "void", "ws_connect", ["String"]);
+    slack_Client_ws_connect_Method.super_.call(this, "builtin.void", "ws_connect", ["builtin.String"]);
 }
 exports.slack_Client_ws_connect_Method = slack_Client_ws_connect_Method;
 _qrt.util.inherits(slack_Client_ws_connect_Method, reflect.Method);
@@ -1003,7 +823,7 @@ slack_Client_ws_connect_Method.prototype._setField = slack_Client_ws_connect_Met
 // CLASS slack_Client_ws_send_Method
 
 function slack_Client_ws_send_Method() {
-    slack_Client_ws_send_Method.super_.call(this, "void", "ws_send", ["String"]);
+    slack_Client_ws_send_Method.super_.call(this, "builtin.void", "ws_send", ["builtin.String"]);
 }
 exports.slack_Client_ws_send_Method = slack_Client_ws_send_Method;
 _qrt.util.inherits(slack_Client_ws_send_Method, reflect.Method);
@@ -1036,7 +856,7 @@ slack_Client_ws_send_Method.prototype._setField = slack_Client_ws_send_Method__s
 // CLASS slack_Client_onWSConnected_Method
 
 function slack_Client_onWSConnected_Method() {
-    slack_Client_onWSConnected_Method.super_.call(this, "void", "onWSConnected", ["WebSocket"]);
+    slack_Client_onWSConnected_Method.super_.call(this, "builtin.void", "onWSConnected", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSConnected_Method = slack_Client_onWSConnected_Method;
 _qrt.util.inherits(slack_Client_onWSConnected_Method, reflect.Method);
@@ -1069,7 +889,7 @@ slack_Client_onWSConnected_Method.prototype._setField = slack_Client_onWSConnect
 // CLASS slack_Client_onWSClose_Method
 
 function slack_Client_onWSClose_Method() {
-    slack_Client_onWSClose_Method.super_.call(this, "void", "onWSClose", ["WebSocket"]);
+    slack_Client_onWSClose_Method.super_.call(this, "builtin.void", "onWSClose", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSClose_Method = slack_Client_onWSClose_Method;
 _qrt.util.inherits(slack_Client_onWSClose_Method, reflect.Method);
@@ -1102,7 +922,7 @@ slack_Client_onWSClose_Method.prototype._setField = slack_Client_onWSClose_Metho
 // CLASS slack_Client_onWSError_Method
 
 function slack_Client_onWSError_Method() {
-    slack_Client_onWSError_Method.super_.call(this, "void", "onWSError", ["WebSocket"]);
+    slack_Client_onWSError_Method.super_.call(this, "builtin.void", "onWSError", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSError_Method = slack_Client_onWSError_Method;
 _qrt.util.inherits(slack_Client_onWSError_Method, reflect.Method);
@@ -1135,7 +955,7 @@ slack_Client_onWSError_Method.prototype._setField = slack_Client_onWSError_Metho
 // CLASS slack_Client_construct_Method
 
 function slack_Client_construct_Method() {
-    slack_Client_construct_Method.super_.call(this, "slack.event.SlackEvent", "construct", ["String"]);
+    slack_Client_construct_Method.super_.call(this, "slack.event.SlackEvent", "construct", ["builtin.String"]);
 }
 exports.slack_Client_construct_Method = slack_Client_construct_Method;
 _qrt.util.inherits(slack_Client_construct_Method, reflect.Method);
@@ -1167,7 +987,7 @@ slack_Client_construct_Method.prototype._setField = slack_Client_construct_Metho
 // CLASS slack_Client_onWSMessage_Method
 
 function slack_Client_onWSMessage_Method() {
-    slack_Client_onWSMessage_Method.super_.call(this, "void", "onWSMessage", ["WebSocket", "String"]);
+    slack_Client_onWSMessage_Method.super_.call(this, "builtin.void", "onWSMessage", ["builtin.WebSocket", "builtin.String"]);
 }
 exports.slack_Client_onWSMessage_Method = slack_Client_onWSMessage_Method;
 _qrt.util.inherits(slack_Client_onWSMessage_Method, reflect.Method);
@@ -1200,7 +1020,7 @@ slack_Client_onWSMessage_Method.prototype._setField = slack_Client_onWSMessage_M
 // CLASS slack_Client_onHTTPResponse_Method
 
 function slack_Client_onHTTPResponse_Method() {
-    slack_Client_onHTTPResponse_Method.super_.call(this, "void", "onHTTPResponse", ["HTTPRequest", "HTTPResponse"]);
+    slack_Client_onHTTPResponse_Method.super_.call(this, "builtin.void", "onHTTPResponse", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
 }
 exports.slack_Client_onHTTPResponse_Method = slack_Client_onHTTPResponse_Method;
 _qrt.util.inherits(slack_Client_onHTTPResponse_Method, reflect.Method);
@@ -1236,7 +1056,7 @@ function slack_Client() {
     slack_Client.super_.call(this, "slack.Client");
     (this).name = "Client";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("Runtime", "runtime"), new reflect.Field("String", "token"), new reflect.Field("slack.SlackHandler", "handler"), new reflect.Field("int", "event_id"), new reflect.Field("WebSocket", "socket")];
+    (this).fields = [new reflect.Field("builtin.Runtime", "runtime"), new reflect.Field("builtin.String", "token"), new reflect.Field("slack.SlackHandler", "handler"), new reflect.Field("builtin.int", "event_id"), new reflect.Field("builtin.WebSocket", "socket")];
     (this).methods = [new slack_Client_connect_Method(), new slack_Client_request_Method(), new slack_Client_ws_connect_Method(), new slack_Client_ws_send_Method(), new slack_Client_onWSConnected_Method(), new slack_Client_onWSClose_Method(), new slack_Client_onWSError_Method(), new slack_Client_construct_Method(), new slack_Client_onWSMessage_Method(), new slack_Client_onHTTPResponse_Method()];
 }
 exports.slack_Client = slack_Client;
@@ -1269,7 +1089,7 @@ slack_Client.prototype._setField = slack_Client__setField;
 // CLASS pkg_Handler_onSlackEvent_Method
 
 function pkg_Handler_onSlackEvent_Method() {
-    pkg_Handler_onSlackEvent_Method.super_.call(this, "void", "onSlackEvent", ["slack.event.SlackEvent"]);
+    pkg_Handler_onSlackEvent_Method.super_.call(this, "builtin.void", "onSlackEvent", ["slack.event.SlackEvent"]);
 }
 exports.pkg_Handler_onSlackEvent_Method = pkg_Handler_onSlackEvent_Method;
 _qrt.util.inherits(pkg_Handler_onSlackEvent_Method, reflect.Method);
@@ -1335,6 +1155,643 @@ function pkg_Handler__setField(name, value) {}
 pkg_Handler.prototype._setField = pkg_Handler__setField;
 
 
+// CLASS builtin_ResponseHolder_onHTTPResponse_Method
+
+function builtin_ResponseHolder_onHTTPResponse_Method() {
+    builtin_ResponseHolder_onHTTPResponse_Method.super_.call(this, "builtin.void", "onHTTPResponse", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
+}
+exports.builtin_ResponseHolder_onHTTPResponse_Method = builtin_ResponseHolder_onHTTPResponse_Method;
+_qrt.util.inherits(builtin_ResponseHolder_onHTTPResponse_Method, reflect.Method);
+
+function builtin_ResponseHolder_onHTTPResponse_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_ResponseHolder_onHTTPResponse_Method.prototype.__init_fields__ = builtin_ResponseHolder_onHTTPResponse_Method__init_fields__;
+
+function builtin_ResponseHolder_onHTTPResponse_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPResponse((args)[0], (args)[1]);
+    return null;
+}
+builtin_ResponseHolder_onHTTPResponse_Method.prototype.invoke = builtin_ResponseHolder_onHTTPResponse_Method_invoke;
+
+function builtin_ResponseHolder_onHTTPResponse_Method__getClass() {
+    return null;
+}
+builtin_ResponseHolder_onHTTPResponse_Method.prototype._getClass = builtin_ResponseHolder_onHTTPResponse_Method__getClass;
+
+function builtin_ResponseHolder_onHTTPResponse_Method__getField(name) {
+    return null;
+}
+builtin_ResponseHolder_onHTTPResponse_Method.prototype._getField = builtin_ResponseHolder_onHTTPResponse_Method__getField;
+
+function builtin_ResponseHolder_onHTTPResponse_Method__setField(name, value) {}
+builtin_ResponseHolder_onHTTPResponse_Method.prototype._setField = builtin_ResponseHolder_onHTTPResponse_Method__setField;
+
+// CLASS builtin_ResponseHolder_onHTTPError_Method
+
+function builtin_ResponseHolder_onHTTPError_Method() {
+    builtin_ResponseHolder_onHTTPError_Method.super_.call(this, "builtin.void", "onHTTPError", ["builtin.HTTPRequest", "builtin.String"]);
+}
+exports.builtin_ResponseHolder_onHTTPError_Method = builtin_ResponseHolder_onHTTPError_Method;
+_qrt.util.inherits(builtin_ResponseHolder_onHTTPError_Method, reflect.Method);
+
+function builtin_ResponseHolder_onHTTPError_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_ResponseHolder_onHTTPError_Method.prototype.__init_fields__ = builtin_ResponseHolder_onHTTPError_Method__init_fields__;
+
+function builtin_ResponseHolder_onHTTPError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPError((args)[0], (args)[1]);
+    return null;
+}
+builtin_ResponseHolder_onHTTPError_Method.prototype.invoke = builtin_ResponseHolder_onHTTPError_Method_invoke;
+
+function builtin_ResponseHolder_onHTTPError_Method__getClass() {
+    return null;
+}
+builtin_ResponseHolder_onHTTPError_Method.prototype._getClass = builtin_ResponseHolder_onHTTPError_Method__getClass;
+
+function builtin_ResponseHolder_onHTTPError_Method__getField(name) {
+    return null;
+}
+builtin_ResponseHolder_onHTTPError_Method.prototype._getField = builtin_ResponseHolder_onHTTPError_Method__getField;
+
+function builtin_ResponseHolder_onHTTPError_Method__setField(name, value) {}
+builtin_ResponseHolder_onHTTPError_Method.prototype._setField = builtin_ResponseHolder_onHTTPError_Method__setField;
+
+// CLASS builtin_ResponseHolder
+
+function builtin_ResponseHolder() {
+    builtin_ResponseHolder.super_.call(this, "builtin.ResponseHolder");
+    (this).name = "ResponseHolder";
+    (this).parameters = [];
+    (this).fields = [new reflect.Field("builtin.HTTPResponse", "response"), new reflect.Field("builtin.String", "failure")];
+    (this).methods = [new builtin_ResponseHolder_onHTTPResponse_Method(), new builtin_ResponseHolder_onHTTPError_Method()];
+}
+exports.builtin_ResponseHolder = builtin_ResponseHolder;
+_qrt.util.inherits(builtin_ResponseHolder, reflect.Class);
+
+function builtin_ResponseHolder__init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_ResponseHolder.prototype.__init_fields__ = builtin_ResponseHolder__init_fields__;
+builtin_ResponseHolder.singleton = new builtin_ResponseHolder();
+function builtin_ResponseHolder_construct(args) {
+    return new builtin.ResponseHolder();
+}
+builtin_ResponseHolder.prototype.construct = builtin_ResponseHolder_construct;
+
+function builtin_ResponseHolder__getClass() {
+    return null;
+}
+builtin_ResponseHolder.prototype._getClass = builtin_ResponseHolder__getClass;
+
+function builtin_ResponseHolder__getField(name) {
+    return null;
+}
+builtin_ResponseHolder.prototype._getField = builtin_ResponseHolder__getField;
+
+function builtin_ResponseHolder__setField(name, value) {}
+builtin_ResponseHolder.prototype._setField = builtin_ResponseHolder__setField;
+
+
+// CLASS builtin_Service_getURL_Method
+
+function builtin_Service_getURL_Method() {
+    builtin_Service_getURL_Method.super_.call(this, "builtin.String", "getURL", []);
+}
+exports.builtin_Service_getURL_Method = builtin_Service_getURL_Method;
+_qrt.util.inherits(builtin_Service_getURL_Method, reflect.Method);
+
+function builtin_Service_getURL_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Service_getURL_Method.prototype.__init_fields__ = builtin_Service_getURL_Method__init_fields__;
+
+function builtin_Service_getURL_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getURL();
+}
+builtin_Service_getURL_Method.prototype.invoke = builtin_Service_getURL_Method_invoke;
+
+function builtin_Service_getURL_Method__getClass() {
+    return null;
+}
+builtin_Service_getURL_Method.prototype._getClass = builtin_Service_getURL_Method__getClass;
+
+function builtin_Service_getURL_Method__getField(name) {
+    return null;
+}
+builtin_Service_getURL_Method.prototype._getField = builtin_Service_getURL_Method__getField;
+
+function builtin_Service_getURL_Method__setField(name, value) {}
+builtin_Service_getURL_Method.prototype._setField = builtin_Service_getURL_Method__setField;
+
+// CLASS builtin_Service_getRuntime_Method
+
+function builtin_Service_getRuntime_Method() {
+    builtin_Service_getRuntime_Method.super_.call(this, "builtin.Runtime", "getRuntime", []);
+}
+exports.builtin_Service_getRuntime_Method = builtin_Service_getRuntime_Method;
+_qrt.util.inherits(builtin_Service_getRuntime_Method, reflect.Method);
+
+function builtin_Service_getRuntime_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Service_getRuntime_Method.prototype.__init_fields__ = builtin_Service_getRuntime_Method__init_fields__;
+
+function builtin_Service_getRuntime_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getRuntime();
+}
+builtin_Service_getRuntime_Method.prototype.invoke = builtin_Service_getRuntime_Method_invoke;
+
+function builtin_Service_getRuntime_Method__getClass() {
+    return null;
+}
+builtin_Service_getRuntime_Method.prototype._getClass = builtin_Service_getRuntime_Method__getClass;
+
+function builtin_Service_getRuntime_Method__getField(name) {
+    return null;
+}
+builtin_Service_getRuntime_Method.prototype._getField = builtin_Service_getRuntime_Method__getField;
+
+function builtin_Service_getRuntime_Method__setField(name, value) {}
+builtin_Service_getRuntime_Method.prototype._setField = builtin_Service_getRuntime_Method__setField;
+
+// CLASS builtin_Service_getTimeout_Method
+
+function builtin_Service_getTimeout_Method() {
+    builtin_Service_getTimeout_Method.super_.call(this, "builtin.long", "getTimeout", []);
+}
+exports.builtin_Service_getTimeout_Method = builtin_Service_getTimeout_Method;
+_qrt.util.inherits(builtin_Service_getTimeout_Method, reflect.Method);
+
+function builtin_Service_getTimeout_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Service_getTimeout_Method.prototype.__init_fields__ = builtin_Service_getTimeout_Method__init_fields__;
+
+function builtin_Service_getTimeout_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getTimeout();
+}
+builtin_Service_getTimeout_Method.prototype.invoke = builtin_Service_getTimeout_Method_invoke;
+
+function builtin_Service_getTimeout_Method__getClass() {
+    return null;
+}
+builtin_Service_getTimeout_Method.prototype._getClass = builtin_Service_getTimeout_Method__getClass;
+
+function builtin_Service_getTimeout_Method__getField(name) {
+    return null;
+}
+builtin_Service_getTimeout_Method.prototype._getField = builtin_Service_getTimeout_Method__getField;
+
+function builtin_Service_getTimeout_Method__setField(name, value) {}
+builtin_Service_getTimeout_Method.prototype._setField = builtin_Service_getTimeout_Method__setField;
+
+// CLASS builtin_Service_rpc_Method
+
+function builtin_Service_rpc_Method() {
+    builtin_Service_rpc_Method.super_.call(this, "builtin.Object", "rpc", ["builtin.String", "builtin.Object", "builtin.List<builtin.Object>"]);
+}
+exports.builtin_Service_rpc_Method = builtin_Service_rpc_Method;
+_qrt.util.inherits(builtin_Service_rpc_Method, reflect.Method);
+
+function builtin_Service_rpc_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Service_rpc_Method.prototype.__init_fields__ = builtin_Service_rpc_Method__init_fields__;
+
+function builtin_Service_rpc_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).rpc((args)[0], (args)[1], (args)[2]);
+}
+builtin_Service_rpc_Method.prototype.invoke = builtin_Service_rpc_Method_invoke;
+
+function builtin_Service_rpc_Method__getClass() {
+    return null;
+}
+builtin_Service_rpc_Method.prototype._getClass = builtin_Service_rpc_Method__getClass;
+
+function builtin_Service_rpc_Method__getField(name) {
+    return null;
+}
+builtin_Service_rpc_Method.prototype._getField = builtin_Service_rpc_Method__getField;
+
+function builtin_Service_rpc_Method__setField(name, value) {}
+builtin_Service_rpc_Method.prototype._setField = builtin_Service_rpc_Method__setField;
+
+// CLASS builtin_Service
+
+function builtin_Service() {
+    builtin_Service.super_.call(this, "builtin.Service");
+    (this).name = "Service";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [new builtin_Service_getURL_Method(), new builtin_Service_getRuntime_Method(), new builtin_Service_getTimeout_Method(), new builtin_Service_rpc_Method()];
+}
+exports.builtin_Service = builtin_Service;
+_qrt.util.inherits(builtin_Service, reflect.Class);
+
+function builtin_Service__init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Service.prototype.__init_fields__ = builtin_Service__init_fields__;
+builtin_Service.singleton = new builtin_Service();
+function builtin_Service_construct(args) {
+    return null;
+}
+builtin_Service.prototype.construct = builtin_Service_construct;
+
+function builtin_Service__getClass() {
+    return null;
+}
+builtin_Service.prototype._getClass = builtin_Service__getClass;
+
+function builtin_Service__getField(name) {
+    return null;
+}
+builtin_Service.prototype._getField = builtin_Service__getField;
+
+function builtin_Service__setField(name, value) {}
+builtin_Service.prototype._setField = builtin_Service__setField;
+
+
+// CLASS builtin_Client_getRuntime_Method
+
+function builtin_Client_getRuntime_Method() {
+    builtin_Client_getRuntime_Method.super_.call(this, "builtin.Runtime", "getRuntime", []);
+}
+exports.builtin_Client_getRuntime_Method = builtin_Client_getRuntime_Method;
+_qrt.util.inherits(builtin_Client_getRuntime_Method, reflect.Method);
+
+function builtin_Client_getRuntime_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Client_getRuntime_Method.prototype.__init_fields__ = builtin_Client_getRuntime_Method__init_fields__;
+
+function builtin_Client_getRuntime_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getRuntime();
+}
+builtin_Client_getRuntime_Method.prototype.invoke = builtin_Client_getRuntime_Method_invoke;
+
+function builtin_Client_getRuntime_Method__getClass() {
+    return null;
+}
+builtin_Client_getRuntime_Method.prototype._getClass = builtin_Client_getRuntime_Method__getClass;
+
+function builtin_Client_getRuntime_Method__getField(name) {
+    return null;
+}
+builtin_Client_getRuntime_Method.prototype._getField = builtin_Client_getRuntime_Method__getField;
+
+function builtin_Client_getRuntime_Method__setField(name, value) {}
+builtin_Client_getRuntime_Method.prototype._setField = builtin_Client_getRuntime_Method__setField;
+
+// CLASS builtin_Client_getURL_Method
+
+function builtin_Client_getURL_Method() {
+    builtin_Client_getURL_Method.super_.call(this, "builtin.String", "getURL", []);
+}
+exports.builtin_Client_getURL_Method = builtin_Client_getURL_Method;
+_qrt.util.inherits(builtin_Client_getURL_Method, reflect.Method);
+
+function builtin_Client_getURL_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Client_getURL_Method.prototype.__init_fields__ = builtin_Client_getURL_Method__init_fields__;
+
+function builtin_Client_getURL_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getURL();
+}
+builtin_Client_getURL_Method.prototype.invoke = builtin_Client_getURL_Method_invoke;
+
+function builtin_Client_getURL_Method__getClass() {
+    return null;
+}
+builtin_Client_getURL_Method.prototype._getClass = builtin_Client_getURL_Method__getClass;
+
+function builtin_Client_getURL_Method__getField(name) {
+    return null;
+}
+builtin_Client_getURL_Method.prototype._getField = builtin_Client_getURL_Method__getField;
+
+function builtin_Client_getURL_Method__setField(name, value) {}
+builtin_Client_getURL_Method.prototype._setField = builtin_Client_getURL_Method__setField;
+
+// CLASS builtin_Client_getTimeout_Method
+
+function builtin_Client_getTimeout_Method() {
+    builtin_Client_getTimeout_Method.super_.call(this, "builtin.long", "getTimeout", []);
+}
+exports.builtin_Client_getTimeout_Method = builtin_Client_getTimeout_Method;
+_qrt.util.inherits(builtin_Client_getTimeout_Method, reflect.Method);
+
+function builtin_Client_getTimeout_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Client_getTimeout_Method.prototype.__init_fields__ = builtin_Client_getTimeout_Method__init_fields__;
+
+function builtin_Client_getTimeout_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getTimeout();
+}
+builtin_Client_getTimeout_Method.prototype.invoke = builtin_Client_getTimeout_Method_invoke;
+
+function builtin_Client_getTimeout_Method__getClass() {
+    return null;
+}
+builtin_Client_getTimeout_Method.prototype._getClass = builtin_Client_getTimeout_Method__getClass;
+
+function builtin_Client_getTimeout_Method__getField(name) {
+    return null;
+}
+builtin_Client_getTimeout_Method.prototype._getField = builtin_Client_getTimeout_Method__getField;
+
+function builtin_Client_getTimeout_Method__setField(name, value) {}
+builtin_Client_getTimeout_Method.prototype._setField = builtin_Client_getTimeout_Method__setField;
+
+// CLASS builtin_Client_setTimeout_Method
+
+function builtin_Client_setTimeout_Method() {
+    builtin_Client_setTimeout_Method.super_.call(this, "builtin.void", "setTimeout", ["builtin.long"]);
+}
+exports.builtin_Client_setTimeout_Method = builtin_Client_setTimeout_Method;
+_qrt.util.inherits(builtin_Client_setTimeout_Method, reflect.Method);
+
+function builtin_Client_setTimeout_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Client_setTimeout_Method.prototype.__init_fields__ = builtin_Client_setTimeout_Method__init_fields__;
+
+function builtin_Client_setTimeout_Method_invoke(object, args) {
+    var obj = object;
+    (obj).setTimeout((args)[0]);
+    return null;
+}
+builtin_Client_setTimeout_Method.prototype.invoke = builtin_Client_setTimeout_Method_invoke;
+
+function builtin_Client_setTimeout_Method__getClass() {
+    return null;
+}
+builtin_Client_setTimeout_Method.prototype._getClass = builtin_Client_setTimeout_Method__getClass;
+
+function builtin_Client_setTimeout_Method__getField(name) {
+    return null;
+}
+builtin_Client_setTimeout_Method.prototype._getField = builtin_Client_setTimeout_Method__getField;
+
+function builtin_Client_setTimeout_Method__setField(name, value) {}
+builtin_Client_setTimeout_Method.prototype._setField = builtin_Client_setTimeout_Method__setField;
+
+// CLASS builtin_Client
+
+function builtin_Client() {
+    builtin_Client.super_.call(this, "builtin.Client");
+    (this).name = "Client";
+    (this).parameters = [];
+    (this).fields = [new reflect.Field("builtin.Runtime", "runtime"), new reflect.Field("builtin.String", "url"), new reflect.Field("builtin.long", "timeout")];
+    (this).methods = [new builtin_Client_getRuntime_Method(), new builtin_Client_getURL_Method(), new builtin_Client_getTimeout_Method(), new builtin_Client_setTimeout_Method()];
+}
+exports.builtin_Client = builtin_Client;
+_qrt.util.inherits(builtin_Client, reflect.Class);
+
+function builtin_Client__init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Client.prototype.__init_fields__ = builtin_Client__init_fields__;
+builtin_Client.singleton = new builtin_Client();
+function builtin_Client_construct(args) {
+    return new builtin.Client((args)[0], (args)[1]);
+}
+builtin_Client.prototype.construct = builtin_Client_construct;
+
+function builtin_Client__getClass() {
+    return null;
+}
+builtin_Client.prototype._getClass = builtin_Client__getClass;
+
+function builtin_Client__getField(name) {
+    return null;
+}
+builtin_Client.prototype._getField = builtin_Client__getField;
+
+function builtin_Client__setField(name, value) {}
+builtin_Client.prototype._setField = builtin_Client__setField;
+
+
+// CLASS builtin_Server_Object__getRuntime_Method
+
+function builtin_Server_Object__getRuntime_Method() {
+    builtin_Server_Object__getRuntime_Method.super_.call(this, "builtin.Runtime", "getRuntime", []);
+}
+exports.builtin_Server_Object__getRuntime_Method = builtin_Server_Object__getRuntime_Method;
+_qrt.util.inherits(builtin_Server_Object__getRuntime_Method, reflect.Method);
+
+function builtin_Server_Object__getRuntime_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Server_Object__getRuntime_Method.prototype.__init_fields__ = builtin_Server_Object__getRuntime_Method__init_fields__;
+
+function builtin_Server_Object__getRuntime_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getRuntime();
+}
+builtin_Server_Object__getRuntime_Method.prototype.invoke = builtin_Server_Object__getRuntime_Method_invoke;
+
+function builtin_Server_Object__getRuntime_Method__getClass() {
+    return null;
+}
+builtin_Server_Object__getRuntime_Method.prototype._getClass = builtin_Server_Object__getRuntime_Method__getClass;
+
+function builtin_Server_Object__getRuntime_Method__getField(name) {
+    return null;
+}
+builtin_Server_Object__getRuntime_Method.prototype._getField = builtin_Server_Object__getRuntime_Method__getField;
+
+function builtin_Server_Object__getRuntime_Method__setField(name, value) {}
+builtin_Server_Object__getRuntime_Method.prototype._setField = builtin_Server_Object__getRuntime_Method__setField;
+
+// CLASS builtin_Server_Object__onHTTPRequest_Method
+
+function builtin_Server_Object__onHTTPRequest_Method() {
+    builtin_Server_Object__onHTTPRequest_Method.super_.call(this, "builtin.void", "onHTTPRequest", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
+}
+exports.builtin_Server_Object__onHTTPRequest_Method = builtin_Server_Object__onHTTPRequest_Method;
+_qrt.util.inherits(builtin_Server_Object__onHTTPRequest_Method, reflect.Method);
+
+function builtin_Server_Object__onHTTPRequest_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Server_Object__onHTTPRequest_Method.prototype.__init_fields__ = builtin_Server_Object__onHTTPRequest_Method__init_fields__;
+
+function builtin_Server_Object__onHTTPRequest_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPRequest((args)[0], (args)[1]);
+    return null;
+}
+builtin_Server_Object__onHTTPRequest_Method.prototype.invoke = builtin_Server_Object__onHTTPRequest_Method_invoke;
+
+function builtin_Server_Object__onHTTPRequest_Method__getClass() {
+    return null;
+}
+builtin_Server_Object__onHTTPRequest_Method.prototype._getClass = builtin_Server_Object__onHTTPRequest_Method__getClass;
+
+function builtin_Server_Object__onHTTPRequest_Method__getField(name) {
+    return null;
+}
+builtin_Server_Object__onHTTPRequest_Method.prototype._getField = builtin_Server_Object__onHTTPRequest_Method__getField;
+
+function builtin_Server_Object__onHTTPRequest_Method__setField(name, value) {}
+builtin_Server_Object__onHTTPRequest_Method.prototype._setField = builtin_Server_Object__onHTTPRequest_Method__setField;
+
+// CLASS builtin_Server_Object__onServletError_Method
+
+function builtin_Server_Object__onServletError_Method() {
+    builtin_Server_Object__onServletError_Method.super_.call(this, "builtin.void", "onServletError", ["builtin.String", "builtin.String"]);
+}
+exports.builtin_Server_Object__onServletError_Method = builtin_Server_Object__onServletError_Method;
+_qrt.util.inherits(builtin_Server_Object__onServletError_Method, reflect.Method);
+
+function builtin_Server_Object__onServletError_Method__init_fields__() {
+    reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_Server_Object__onServletError_Method.prototype.__init_fields__ = builtin_Server_Object__onServletError_Method__init_fields__;
+
+function builtin_Server_Object__onServletError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletError((args)[0], (args)[1]);
+    return null;
+}
+builtin_Server_Object__onServletError_Method.prototype.invoke = builtin_Server_Object__onServletError_Method_invoke;
+
+function builtin_Server_Object__onServletError_Method__getClass() {
+    return null;
+}
+builtin_Server_Object__onServletError_Method.prototype._getClass = builtin_Server_Object__onServletError_Method__getClass;
+
+function builtin_Server_Object__onServletError_Method__getField(name) {
+    return null;
+}
+builtin_Server_Object__onServletError_Method.prototype._getField = builtin_Server_Object__onServletError_Method__getField;
+
+function builtin_Server_Object__onServletError_Method__setField(name, value) {}
+builtin_Server_Object__onServletError_Method.prototype._setField = builtin_Server_Object__onServletError_Method__setField;
+
+// CLASS builtin_Server_Object_
+
+function builtin_Server_Object_() {
+    builtin_Server_Object_.super_.call(this, "builtin.Server<Object>");
+    (this).name = "Server";
+    (this).parameters = ["Object"];
+    (this).fields = [new reflect.Field("builtin.Runtime", "runtime"), new reflect.Field("Object", "impl")];
+    (this).methods = [new builtin_Server_Object__getRuntime_Method(), new builtin_Server_Object__onHTTPRequest_Method(), new builtin_Server_Object__onServletError_Method()];
+}
+exports.builtin_Server_Object_ = builtin_Server_Object_;
+_qrt.util.inherits(builtin_Server_Object_, reflect.Class);
+
+function builtin_Server_Object___init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Server_Object_.prototype.__init_fields__ = builtin_Server_Object___init_fields__;
+builtin_Server_Object_.singleton = new builtin_Server_Object_();
+function builtin_Server_Object__construct(args) {
+    return new builtin.Server((args)[0], (args)[1]);
+}
+builtin_Server_Object_.prototype.construct = builtin_Server_Object__construct;
+
+function builtin_Server_Object___getClass() {
+    return null;
+}
+builtin_Server_Object_.prototype._getClass = builtin_Server_Object___getClass;
+
+function builtin_Server_Object___getField(name) {
+    return null;
+}
+builtin_Server_Object_.prototype._getField = builtin_Server_Object___getField;
+
+function builtin_Server_Object___setField(name, value) {}
+builtin_Server_Object_.prototype._setField = builtin_Server_Object___setField;
+
+
+// CLASS reflect_Class
+
+function reflect_Class() {
+    reflect_Class.super_.call(this, "reflect.Class");
+    (this).name = "Class";
+    (this).parameters = [];
+    (this).fields = [new reflect.Field("builtin.Map<builtin.String,reflect.Class>", "classes"), new reflect.Field("reflect.Class", "VOID"), new reflect.Field("reflect.Class", "BOOL"), new reflect.Field("reflect.Class", "INT"), new reflect.Field("reflect.Class", "LONG"), new reflect.Field("reflect.Class", "STRING"), new reflect.Field("builtin.String", "id"), new reflect.Field("builtin.String", "name"), new reflect.Field("builtin.List<reflect.Class>", "parameters"), new reflect.Field("builtin.List<reflect.Field>", "fields"), new reflect.Field("builtin.List<reflect.Method>", "methods")];
+    (this).methods = [];
+}
+exports.reflect_Class = reflect_Class;
+_qrt.util.inherits(reflect_Class, reflect.Class);
+
+function reflect_Class__init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+reflect_Class.prototype.__init_fields__ = reflect_Class__init_fields__;
+reflect_Class.singleton = new reflect_Class();
+function reflect_Class_construct(args) {
+    return new reflect.Class((args)[0]);
+}
+reflect_Class.prototype.construct = reflect_Class_construct;
+
+function reflect_Class__getClass() {
+    return null;
+}
+reflect_Class.prototype._getClass = reflect_Class__getClass;
+
+function reflect_Class__getField(name) {
+    return null;
+}
+reflect_Class.prototype._getField = reflect_Class__getField;
+
+function reflect_Class__setField(name, value) {}
+reflect_Class.prototype._setField = reflect_Class__setField;
+
+
+// CLASS reflect_Field
+
+function reflect_Field() {
+    reflect_Field.super_.call(this, "reflect.Field");
+    (this).name = "Field";
+    (this).parameters = [];
+    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("builtin.String", "name")];
+    (this).methods = [];
+}
+exports.reflect_Field = reflect_Field;
+_qrt.util.inherits(reflect_Field, reflect.Class);
+
+function reflect_Field__init_fields__() {
+    reflect.Class.prototype.__init_fields__.call(this);
+}
+reflect_Field.prototype.__init_fields__ = reflect_Field__init_fields__;
+reflect_Field.singleton = new reflect_Field();
+function reflect_Field_construct(args) {
+    return new reflect.Field((args)[0], (args)[1]);
+}
+reflect_Field.prototype.construct = reflect_Field_construct;
+
+function reflect_Field__getClass() {
+    return null;
+}
+reflect_Field.prototype._getClass = reflect_Field__getClass;
+
+function reflect_Field__getField(name) {
+    return null;
+}
+reflect_Field.prototype._getField = reflect_Field__getField;
+
+function reflect_Field__setField(name, value) {}
+reflect_Field.prototype._setField = reflect_Field__setField;
+
+
 // CLASS Root
 function Root() {
     this.__init_fields__();
@@ -1353,6 +1810,10 @@ Root.slack_User_md = slack_User.singleton;
 Root.slack_Channel_md = slack_Channel.singleton;
 Root.slack_Client_md = slack_Client.singleton;
 Root.pkg_Handler_md = pkg_Handler.singleton;
+Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
+Root.builtin_Service_md = builtin_Service.singleton;
+Root.builtin_Client_md = builtin_Client.singleton;
+Root.builtin_Server_Object__md = builtin_Server_Object_.singleton;
 function Root__getClass() {
     return null;
 }
@@ -1372,3 +1833,5 @@ var slack = require('../slack');
 exports.slack = slack;
 var pkg = require('../pkg');
 exports.pkg = pkg;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;

@@ -1,8 +1,10 @@
-File(
+File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(test), Block(
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(parts),
-     Call(Attr(String("foo bar baz", $type=0.String), Name(split),
-      $type=0.String.split), String(" ", $type=0.String),
-     $type=0.List<0.String>), $type=0.List<0.String>))))
+     Call(Attr(String("foo bar baz", $type=1.builtin.String), Name(split),
+      $type=1.builtin.String.split), String(" ", $type=1.builtin.String),
+     $type=1.builtin.List<1.builtin.String>),
+    $type=1.builtin.List<1.builtin.String>))))
 )

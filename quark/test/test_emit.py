@@ -43,6 +43,14 @@ def compiled(output, path):
         maybe_xfail(text, b().ext)
     return path, compile(path, output, *backends)
 
+def check_diff(diff):
+    # left is output, right is expected
+    assert not diff.left_only, diff.left_only
+    assert not diff.right_only, diff.right_only
+    assert not diff.diff_files, diff.diff_files
+    for common_dirname, common_sub_diff in diff.subdirs.items():
+        check_diff(common_sub_diff)
+
 def test_diff(output, compiled):
     path, dirs = compiled
     for b in backends:
@@ -51,9 +59,7 @@ def test_diff(output, compiled):
             diff = filecmp.dircmp(os.path.join(output, ext, name),
                                   os.path.join(expected, ext, name),
                                   ['target']) # XXX: should only filter out target for java
-            assert not diff.left_only, diff.left_only
-            assert not diff.right_only, diff.right_only
-            assert not diff.diff_files, diff.diff_files
+            check_diff(diff)
 
 def get_out(name):
     return os.path.join(directory, name + ".out")

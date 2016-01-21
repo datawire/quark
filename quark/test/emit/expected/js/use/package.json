@@ -2,9 +2,10 @@
 {
     "name": "puse",
     "version": "4.5.6",
-    "main": "puse/index.js",
+    "main": "index.js",
     "dependencies": {
         "datawire-quark-core": "0.4.1",
+        "builtin": "0.0.1",
         "test": "1.2.3"
     }
 }
