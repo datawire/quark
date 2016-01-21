@@ -723,7 +723,7 @@ class Reflector:
         return fields
 
     def meths(self, cls, cid, use_bindings):
-        if cls.package is None or cls.package.name.text in ("reflect", "concurrent", "behaviors", "builtin"): # XXX: is this still correct
+        if cls.package is None or cls.package.name.text in ("reflect", ):
             return []
         methods = []
         bindings = base_bindings(cls)
@@ -859,7 +859,7 @@ class Reflector:
                                                               self.clazz(cls, clsid, qual, self.qparams(texp),
                                                                          nparams, texp))
                     if not ucls: continue
-                    if ucls.package and ucls.package.name.text in ("reflect", "concurrent", "behaviors", "builtin"):
+                    if ucls.package and ucls.package.name.text in ("reflect", ):
                         continue
                     if ucls not in self.metadata:
                         self.metadata[ucls] = OrderedDict()
