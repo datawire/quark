@@ -158,12 +158,15 @@ def main(options):
             name = output + " (new file)"
             show_command = "less %s" % output
             question = "Add this file?"
-            do_command = "mv %s %s" % (output, expected)
+            if output.endswith(".cmp"):
+                do_command = "mv %s %s" % (output, expected)
+            else:
+                do_command = "cp %s %s" % (output, expected)
         elif ex is None and op is dir:            # New directory in output
             name = output + " (new directory)"
             show_command = "ls -l %s" % output
             question = "Add this directory and contents?"
-            do_command = "mv %s %s" % (output, expected)
+            do_command = "cp -a %s %s" % (output, expected)
 
         elif ex is file and op is None:           # Expected file not present
             name = expected + " (missing file)"
@@ -174,7 +177,10 @@ def main(options):
             name = output
             show_command = "git diff --no-index %s %s" % (expected, output)
             question = "Overwrite this file?"
-            do_command = "mv %s %s" % (output, expected)
+            if output.endswith(".cmp"):
+                do_command = "mv %s %s" % (output, expected)
+            else:
+                do_command = "cp %s %s" % (output, expected)
         elif ex is file and op is dir:            # File turned into a directory
             name = output + " (expected file, got directory)"
             show_command = "ls -l %s %s" % (expected, output)
