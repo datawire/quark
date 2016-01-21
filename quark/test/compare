@@ -230,10 +230,13 @@ def main(options):
             print
 
     if summarize:
-        print "Summary"
         for key in sorted(summary):
-            print key
-            for value in summary[key]:
+            print ansi(RED, key), "(%s)" % len(summary[key])
+            for value in sorted(summary[key]):
+                try:
+                    value = value[value.find("/output/") + 8:]
+                except Exception:
+                    pass
                 print "-", value
 
 if __name__ == '__main__':
