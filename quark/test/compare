@@ -17,9 +17,13 @@
 """
 Usage:
   compare [options] [CMPFILE ...]
+  compare clear
   compare -h | --help
 
 CMPFILE are filenames that end with .cmp
+
+Use compare clear to remove the quark/test/emit/output directory and any .cmp
+files on the filesystem below the current directory.
 
 Options:
   -h --help          Show this screen
@@ -34,6 +38,7 @@ import subprocess
 import filecmp
 import fnmatch
 import collections
+import shutil
 
 from docopt import docopt
 
@@ -59,6 +64,9 @@ try:
     rows, columns = map(int, subprocess.check_output("stty size".split()).split())
 except Exception:
     rows, columns = 25, 80
+
+git_top = subprocess.check_output("git rev-parse --show-toplevel".split()).strip()
+emit = os.path.join(git_top, "quark/test/emit")
 
 
 def ansi(mode, st):
@@ -99,8 +107,6 @@ def collect_comparisons(dcmp, result):
 
 
 def find_different_files():
-    git_top = subprocess.check_output("git rev-parse --show-toplevel".split()).strip()
-    emit = os.path.join(git_top, "quark/test/emit")
     output = os.path.join(emit, "output")
     expected = os.path.join(emit, "expected")
     result = []  # (expected file path, output file path), ...
@@ -129,6 +135,17 @@ def main(options):
     pattern = options["--pattern"]
     summarize = options["--summary"]
 
+    if options["clear"] or (len(names) == 1 and names[0] == "clear"):
+        print "Clearing compare files..."
+        for expected, output in find_cmp_files():
+            os.unlink(output)
+        try:
+            shutil.rmtree(os.path.join(emit, "output"))
+        except Exception:
+            pass
+        print "Done."
+        return
+
     key_help = dict(y="Y/n/q: ", n="y/N/q: ")
 
     if options["--yes"]:
@@ -137,7 +154,12 @@ def main(options):
         def_key = "n"
 
     if names:
-        to_compare = [(path[:-4], path) for path in names]
+        to_compare = []
+        for path in names:
+            if path.endswith(".cmp"):
+                to_compare.append((path[:-4], path))
+            else:
+                print "Ignoring non-cmp-file:", path
     else:
         to_compare = find_cmp_files() + find_different_files()
 
@@ -252,7 +274,7 @@ def main(options):
             print ansi(RED, key), "(%s)" % len(summary[key])
             for value in sorted(summary[key]):
                 try:
-                    value = value[value.find("/output/") + 8:]
+                    value = value[value.index("/output/") + 8:]
                 except Exception:
                     pass
                 print "-", value
