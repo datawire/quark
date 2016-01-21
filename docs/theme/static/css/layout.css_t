@@ -204,11 +204,11 @@ div.body .copy-header .copy-btn.zeroclipboard-is-hover{
 
 
     div.sphinxsidebar a {
-        color: #959798;
+        color: #333;
     }
 
     div.sphinxsidebar a:hover {
-        color: #56c9ea;
+        color: #0AA0CA;
     }
 
     div.sphinxsidebar li a {
@@ -220,7 +220,7 @@ div.body .copy-header .copy-btn.zeroclipboard-is-hover{
     }
 
     div.sphinxsidebar li.current a.current {
-        border-right: 2px solid #56c9ea;
+        border-right: 2px solid #0AA0CA;
     }
 
     /* SEARCH */

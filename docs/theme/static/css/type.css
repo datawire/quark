@@ -1,19 +1,19 @@
 body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 1.03rem;
     letter-spacing: 0.01rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
 div.body {
-    color: #959798;
+    color: #333;
 }
 
 div.body a.reference {
     border: none;
-    color: #56c9ea;
+    color: #0AA0CA;
 }
 div.body a.reference:hover { }
 
@@ -35,9 +35,18 @@ div.body h6 {
     color: #0b3b4c;
 }
 
-div.body h2,
+div.body h1 {
+    font-size: 2.6rem;
+}
+
+div.body h2 {
+   font-size: 2rem;
+}
 div.body h3 {
-    font-size: 1.1rem;
+    font-size: 1.55rem;
+}
+div.body h4 {
+    font-size: 1.15rem;
 }
 
 div.sphinxsidebar {
@@ -49,7 +58,7 @@ div.sphinxsidebar h3,
 div.sphinxsidebar h4 {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
-    font-size: 1.1rem;
+    font-size: 1.35rem;
     color: #fff;
 }
 
@@ -64,7 +73,7 @@ input {
 }
 
 div.sphinxsidebar li.current a.current {
-    color: #56c9ea;
+    color: #0AA0CA;
 }
 
 /* DESKTOP BREAKPOINT */
