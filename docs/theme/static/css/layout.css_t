@@ -132,6 +132,7 @@ div.body .copy-header .copy-btn {
     font-size: 0.8rem;
     color: #666;
     padding: 0.2rem 0.2rem 0.3rem;
+    margin-right:0.9rem;
 }
 
 div.body .copy-header .copy-btn.zeroclipboard-is-hover{
