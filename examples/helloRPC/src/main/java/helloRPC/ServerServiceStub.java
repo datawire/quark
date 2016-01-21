@@ -1,7 +1,7 @@
 package helloRPC;
 
-import quarkrt.Service;
-import quarkrt.concurrent.Future;
+import builtin.Service;
+import builtin.concurrent.Future;
 
 // XXX: server really doesn't need those, they are for client...
 public class ServerServiceStub implements Service {

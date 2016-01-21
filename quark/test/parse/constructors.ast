@@ -1,4 +1,5 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Package(Name(test1),
 
   Class(Name(Test),

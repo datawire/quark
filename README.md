@@ -9,7 +9,7 @@ Quark lets you define and implement rich (micro)service APIs that work with your
 
 ## Getting Started
 
-To get started, install quark:
+To get started, install Datawire Connect:
 
         pip install datawire-quark
 

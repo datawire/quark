@@ -1,7 +1,8 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(int)), Name(foo), Block(
-   ExprStmt(Call(Var(Name(bar), $type=1.bar), $type=0.String)))),
+   ExprStmt(Call(Var(Name(bar), $type=0.bar), $type=1.builtin.String)))),
 
  Function(Type(Name(String)), Name(bar), Block(
-   ExprStmt(Call(Var(Name(foo), $type=1.foo), $type=0.int))))
+   ExprStmt(Call(Var(Name(foo), $type=0.foo), $type=1.builtin.int))))
 )

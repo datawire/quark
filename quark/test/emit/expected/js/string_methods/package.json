@@ -1,0 +1,11 @@
+
+{
+    "name": "string_methods",
+    "version": "0.0.1",
+    "main": "index.js",
+    "dependencies": {
+        "datawire-quark-core": "0.4.1",
+        "builtin": "0.0.1"
+    }
+}
+        

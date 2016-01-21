@@ -1,7 +1,8 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(f),
-  Param(Type(Name(int)), Name(a), $type=0.int),
-  Param(Type(Name(int)), Name(b), $type=0.int),
-  Param(Type(Name(int)), Name(c), $type=0.int),
+  Param(Type(Name(int)), Name(a), $type=1.builtin.int),
+  Param(Type(Name(int)), Name(b), $type=1.builtin.int),
+  Param(Type(Name(int)), Name(c), $type=1.builtin.int),
   Block())
 )

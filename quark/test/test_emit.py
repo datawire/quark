@@ -12,166 +12,124 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest, subprocess
+import os, pytest, shutil, subprocess, filecmp
 from quark.backend import Java, Python, JavaScript
-from quark.compiler import Compiler, CompileError
+from quark.compiler import Compiler, CompileError, compile
 from .util import check_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
-
 files = [name for name in os.listdir(directory) if name.endswith(".q")]
 paths = [os.path.join(directory, name) for name in files]
-
-class Walker(object):
-
-    def __init__(self, ext):
-        self.ext = ext
-
-    def __call__(self, result, dir, fnames):
-        for f in fnames:
-            if f.endswith(self.ext):
-                result.append(f)
-
-def walk(dir, ext):
-    result = []
-    os.path.walk(dir, Walker(ext), result)
-    return result
+expected = os.path.join(directory, "expected")
 
 @pytest.fixture(scope="session")
-def java_deps(request):
-    pom = os.path.join(directory, "java-deps", "pom.xml")
-    java = os.path.join(directory, "..", "..", "java.py")
-    if not os.path.exists(pom) or os.path.getmtime(java) > os.path.getmtime(pom):
-        assert False, "Java dependencies potentially out of date, update them with quark/test/emit/update-deps.sh"
+def output(request):
+    result = os.path.join(directory, "output")
+    if os.path.exists(result):
+        shutil.rmtree(result)
+    os.mkdir(result)
+    return result
 
-@pytest.fixture(params=paths)
+@pytest.fixture(scope="session", params=paths)
 def path(request):
     return request.param
 
-@pytest.fixture(params=[Java, Python, JavaScript])
-def Backend(request):
-    return request.param
+backends = (Java, Python, JavaScript)
 
-def test_emit(path, Backend, java_deps):
+@pytest.fixture(scope="session")
+def compiled(output, path):
     text = open(path).read()
-    backend = Backend()
-    maybe_xfail(text, backend.ext)
-    base = os.path.splitext(path)[0]
-    comp = Compiler()
-    comp.urlparse(path)
-    comp.compile()
+    for b in backends:
+        maybe_xfail(text, b().ext)
+    return path, compile(path, output, *backends)
 
-    comp.emit(backend)
-    extbase = os.path.join(base, backend.ext)
-    if not os.path.exists(extbase):
-        os.makedirs(extbase)
+def check_diff(diff):
+    # left is output, right is expected
+    assert not diff.left_only, diff.left_only
+    assert not diff.right_only, diff.right_only
+    assert not diff.diff_files, diff.diff_files
+    for common_dirname, common_sub_diff in diff.subdirs.items():
+        check_diff(common_sub_diff)
 
-    srcs = []
-    assertions = []
-    for name in backend.files:
-        path = os.path.join(extbase, name)
-        srcs.append(path)
-        computed = backend.files[name]
-        expected = check_file(path, computed)
-        assertions.append((expected, computed))
+def test_diff(output, compiled):
+    path, dirs = compiled
+    for b in backends:
+        for name in dirs:
+            ext = b().ext
+            diff = filecmp.dircmp(os.path.join(output, ext, name),
+                                  os.path.join(expected, ext, name),
+                                  ['target']) # XXX: should only filter out target for java
+            check_diff(diff)
 
-    for expected, computed in assertions:
-        assert expected == computed
-    assert len(list(backend.files.keys())) == len(walk(extbase, ".%s" % backend.ext))
+def get_out(name):
+    return os.path.join(directory, name + ".out")
 
-    BUILDERS[backend.ext](comp, extbase, srcs)
+def get_expected(name):
+    out = get_out(name)
+    try:
+        expected = open(out).read()
+    except IOError, e:
+        expected = None
+    return expected
 
-def build_java(comp, base, srcs):
-    build = os.path.join(base, "build")
-    if not os.path.exists(build):
-        os.makedirs(build)
-    depfile = os.path.join(directory, "java-deps", "classpath")
-    cp = open(depfile).read().split(":")
-    if cp:
-        ccp = "-cp " + ":".join(cp);
-    else:
-        ccp = ""
-    jexit = os.system("javac %s -d %s %s" % (ccp, build, " ".join(srcs)))
-    assert jexit == 0
+def has_main(name):
+    code = os.path.join(directory, name + ".q")
+    return os.path.exists(code) and "main" in open(code).read()
 
-    if "main" in comp.root.env:
-        out = os.path.dirname(base) + ".out"
-        try:
-            expected = open(out).read()
-        except IOError, e:
-            expected = None
-        cp.append(build)
-        import quark.java
-        mainclass = quark.java.name(os.path.basename(os.path.dirname(base)))
-        actual = subprocess.check_output(["java", "-cp", ":".join(cp), mainclass])
-        if expected != actual:
-            open(out + ".cmp", "write").write(actual)
-        assert expected == actual
+def run_tests(base, dirs, command, env=None):
+    for name in dirs:
+        if has_main(name):
+            actual = subprocess.check_output(command(name), cwd=os.path.join(base, name), env=env)
+            expected = get_expected(name)
+            if expected != actual:
+                open(get_out(name) + ".cmp", "write").write(actual)
+            assert expected == actual
 
-def build_py(comp, base, srcs):
-    pyout = subprocess.check_output(["python", "-m", "py_compile"] + srcs, cwd=base)
-    assert pyout == ""
-    if "main" in comp.root.env:
-        out = os.path.dirname(base) + ".out"
-        import quark.python
-        script = quark.python.name(os.path.basename(os.path.dirname(base))) + ".py"
-        try:
-            expected = open(out).read()
-        except IOError, e:
-            expected = None
-        actual = subprocess.check_output(["python", script], cwd=base)
-        if expected != actual:
-            open(out + ".cmp", "write").write(actual)
-        assert expected == actual
+def batch_pom(target, dirs):
+    with open(os.path.join(target, "pom.xml"), "write") as fd:
+        fd.write("""<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>batch</groupId>
+  <artifactId>batch</artifactId>
+  <version>1.0.0</version>
+  <packaging>pom</packaging>
+  <modules>
+    %s
+  </modules>
+</project>
+""" % "\n    ".join(["<module>%s</module>" % d for d in dirs]))
 
-class Node:
-    NODE_TEST_SCRIPT = "new Map()"
-    NODE_VARIANTS = (
-                    (("--harmony_collections",), "{}\n"), # older
-                    ((), "Map {}\n"),                   # v4.2.0
-                    )
+def test_run_java(output):
+    j = Java()
+    base = os.path.join(output, j.ext)
+    dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]
+    batch_pom(base, dirs)
+    subprocess.check_call(["mvn", "-q", "install"], cwd=base)
+    subprocess.check_call(["mvn", "-q", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
 
-    def __init__(self):
-        self.attempts = []
-        self.args = None
-        for opt, expected in self.NODE_VARIANTS:
-            args = ("node",) + opt
-            try:
-                output = subprocess.check_output(args + ("-p", self.NODE_TEST_SCRIPT))
-                if output == expected:
-                    self.args = args
-                    break
-                else:
-                    self.attempts.append(output)
-            except subprocess.CalledProcessError, e:
-                self.attempts.append(str(e))
+    import quark.java
+    run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
+                                        ":target/classes",
+                                        quark.java.name(name)])
 
-    def __call__(self, *script):
-        if self.args:
-            return self.args + script
-        assert False, (args, attempts)
+def test_run_python(output):
+    py = Python()
+    base = os.path.join(output, py.ext)
+    dirs = [name for name in os.listdir(base)]
+    pypath = ":".join([os.path.join(base, name) for name in dirs])
+    env = {"PYTHONPATH": pypath}
+    env.update(os.environ)
 
-node_cmd = Node()
+    import quark.python
+    run_tests(base, dirs, lambda name: ["python", quark.python.name(name) + ".py"], env=env)
 
-def build_js(comp, base, srcs):
-    #lint_output = subprocess.check_output(["jshint"] + srcs)
-    #assert lint_output == ""
-    if "main" in comp.root.env:
-        out = os.path.dirname(base) + ".out"
-        try:
-            expected = open(out).read()
-        except IOError:
-            expected = None
-        convoluted_way_to_get_test_name = os.path.basename(os.path.dirname(base))
-        script = convoluted_way_to_get_test_name + ".js"
-        actual = subprocess.check_output(node_cmd(script), cwd=base)
-        if expected != actual:
-            open(out + ".cmp", "write").write(actual)
-        assert expected == actual
+def test_run_javascript(output):
+    js = JavaScript()
+    base = os.path.join(output, js.ext)
+    dirs = [name for name in os.listdir(base)]
+    node_path = ":".join([os.path.join(base, name) for name in dirs])
+    env = {"NODE_PATH": base}
+    env.update(os.environ)
 
-
-BUILDERS = {
-    "java": build_java,
-    "py": build_py,
-    "js": build_js
-}
+    run_tests(base, dirs, lambda name: ["node", name + ".js"], env=env)

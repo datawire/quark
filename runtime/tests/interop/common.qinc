@@ -168,8 +168,8 @@ long slow_round(float v) {
     }
     return ret;
 }
-    class Timeout extends quarkrt.concurrent.TimeoutListener {
-        quarkrt.concurrent.Timeout timeout;
+    class Timeout extends concurrent.TimeoutListener {
+        concurrent.Timeout timeout;
         bool timedOut = false;
         String name;
         Timeout(float timeout, String name) {
@@ -181,7 +181,7 @@ long slow_round(float v) {
                 msl = slow_round(ms);
             }
             print("Timeout for " + name + " is " + msl.toString() + "ms is " + ms.toString() + "ms was " + timeout.toString() + "s");
-            self.timeout = new quarkrt.concurrent.Timeout(msl);
+            self.timeout = new concurrent.Timeout(msl);
             self.name = name;
         }
         void start() {
@@ -191,7 +191,7 @@ long slow_round(float v) {
         void cancel() {
              self.timeout.cancel();
         }
-        void onTimeout(quarkrt.concurrent.Timeout timeout) {
+        void onTimeout(concurrent.Timeout timeout) {
             self.timedOut = true;
             print("FAIL: " + self.name + " timed out");
         }
@@ -240,7 +240,7 @@ long slow_round(float v) {
             self.response = null;
             if (self.request != null) {
                 self.timeout.start();
-                quarkrt.concurrent.Context.runtime().request(self.request, self);
+                concurrent.Context.runtime().request(self.request, self);
             } else {
                 print("FAIL: cannot check without request");
             }

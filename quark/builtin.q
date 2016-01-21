@@ -1,3 +1,4 @@
+namespace builtin {
     @mapping($java{Object} $py{object} $js{Object})
     primitive Object {
         macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
@@ -7,7 +8,7 @@
                                         $py{($self) != ($other)}
                                         $js{($self) !== ($other)};
 
-        macro quarkrt.reflect.Class getClass() quarkrt.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
+        macro reflect.Class getClass() reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
                                                          $py{_getClass($self)}
                                                          $js{_qrt._getClass($self)});
         macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
@@ -54,7 +55,6 @@
         macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
                                  $py{($self) % ($other)}
                                  $js{_qrt.modulo(($self), ($other))};
-        macro float __to_float() self;
         macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();
@@ -425,7 +425,7 @@
         @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
         void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
 
-        void serveHTTP(String url) { quarkrt.concurrent.Context.runtime().serveHTTP(url, self); }
+        void serveHTTP(String url) { concurrent.Context.runtime().serveHTTP(url, self); }
     }
 
     @doc("Websocket servlet")
@@ -434,10 +434,8 @@
         @doc("called for each new incoming WebSocket connection")
         WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
 
-        void serveWS(String url) { quarkrt.concurrent.Context.runtime().serveWS(url, self); }
+        void serveWS(String url) { concurrent.Context.runtime().serveWS(url, self); }
     }
-
-package quarkrt {
 
     @doc("Serializes object tree into JSON. skips over fields starting with underscore")
     JSONObject toJSON(Object obj) {
@@ -447,7 +445,7 @@ package quarkrt {
             return result;
         }
 
-        quarkrt.reflect.Class cls = obj.getClass();
+        reflect.Class cls = obj.getClass();
         int idx = 0;
 
         if (cls.name == "String") {
@@ -482,7 +480,7 @@ package quarkrt {
         }
 
         result["$class"] = cls;
-        List<quarkrt.reflect.Field> fields = cls.getFields();
+        List<reflect.Field> fields = cls.getFields();
         while (idx < fields.size()) {
             String fieldName = fields[idx].name;
             if (!fieldName.startsWith("_")) {
@@ -497,7 +495,7 @@ package quarkrt {
     Object fromJSON(Object result, JSONObject json) {
         if (json == null || json.isNull()) { return null; }
         int idx = 0;
-        quarkrt.reflect.Class cls = result.getClass();
+        reflect.Class cls = result.getClass();
         if (cls.name == "List") {
             List<Object> list = ?result;
             while (idx < json.size()) {
@@ -507,9 +505,9 @@ package quarkrt {
             return list;
         }
 
-        List<quarkrt.reflect.Field> fields = cls.getFields();
+        List<reflect.Field> fields = cls.getFields();
         while (idx < fields.size()) {
-            quarkrt.reflect.Field f = fields[idx];
+            reflect.Field f = fields[idx];
             idx = idx + 1;
             if (f.name.startsWith("_")) {
                 continue;
@@ -1145,7 +1143,7 @@ package concurrent {
         }
         void start(TimeoutListener listener) {
             self.listener = listener;
-            float delay = 0.001 * self.timeout;
+            float delay = 0.001 * self.timeout.toFloat();
             concurrent.Context.runtime().schedule(self, delay);
         }
         void cancel() {

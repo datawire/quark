@@ -16,8 +16,6 @@ You should see the following in your terminal window (stdout):
 .. code-block:: none
 
    Request says 'Hello from Python!'
-   Response says 'Responding to [Hello from Python!] from Datawire Cloud’
-
-[[JMK insert exact response once the client is finalized]]
+   Response says u"Responding to 'Hello from Python!' from Datawire Cloud!"
 
 You just used the provided Python helloRPC client to communicate with the helloRPC server in the Datawire cloud. Now, let’s see how to write a client that performs the same functionality as well as a local server that sends similar responses to that client via RPC. You’ll be able to switch your client back and forth so it communicates with either the local server or the server in the cloud.

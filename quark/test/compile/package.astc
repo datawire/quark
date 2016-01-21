@@ -1,14 +1,15 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Package(Name(p),
 
   Function(Type(Name(void)), Name(f),
-   Param(Type(Name(int)), Name(a), $type=0.int),
-   Param(Type(Name(int)), Name(b), $type=0.int),
-   Param(Type(Name(String)), Name(c), $type=0.String),
+   Param(Type(Name(int)), Name(a), $type=1.builtin.int),
+   Param(Type(Name(int)), Name(b), $type=1.builtin.int),
+   Param(Type(Name(String)), Name(c), $type=1.builtin.String),
    Block())),
 
  Function(Type(Name(void)), Name(main), Block(
-   ExprStmt(Call(Attr(Var(Name(p), $type=1.p), Name(f), $type=1.p.f), Number(1,
-     $type=0.int), Number(2, $type=0.int), String("three", $type=0.String),
-    $type=0.void))))
+   ExprStmt(Call(Attr(Var(Name(p), $type=0.p), Name(f), $type=0.p.f), Number(1,
+     $type=1.builtin.int), Number(2, $type=1.builtin.int), String("three",
+     $type=1.builtin.String), $type=1.builtin.void))))
 )

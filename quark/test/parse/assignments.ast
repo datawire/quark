@@ -1,4 +1,5 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(assignments), Block(
    Assign(Var(Name(a)), Var(Name(x))),
    Assign(Attr(Var(Name(a)), Name(b)), Var(Name(x))),

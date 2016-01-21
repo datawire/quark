@@ -1,0 +1,8 @@
+package builtin;
+
+public interface Service {
+     String getURL();
+     io.datawire.quark.runtime.Runtime getRuntime();
+     Long getTimeout();
+     Object rpc(String name, Object message, java.util.ArrayList<Object> options);
+}

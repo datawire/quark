@@ -1,5 +1,9 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Class(Name(Foo),
+  Field(static=True, Type(Name(reflect), Name(Class)),
+   Name(builtin_ResponseHolder_ref), Attr(Attr(Var(Name(super_md)),
+     Name(Root)), Name(builtin_ResponseHolder_md))),
   Field(static=True, Type(Name(String)), Name(foo), String("foo")),
 
   Method(static=True, Type(Name(String)), Name(getFoo), Block(

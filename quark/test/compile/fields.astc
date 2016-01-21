@@ -1,42 +1,47 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Class(Name(Test),
-  Field(static=False, Type(Name(int)), Name(x), $type=0.int),
-  Field(static=False, Type(Name(String)), Name(y), $type=0.String),
+  Field(static=False, Type(Name(int)), Name(x), $type=1.builtin.int),
+  Field(static=False, Type(Name(String)), Name(y), $type=1.builtin.String),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Test", $type=0.String)))),
+    Return(String("Test", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
    Block(
-    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
-      $type=0.Object.__eq__), String("x", $type=0.String), $type=0.bool),
-     Block(
-      Return(Attr(Var(Name(self), $type=1.Test), Name(x), $type=0.int)))),
-    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
-      $type=0.Object.__eq__), String("y", $type=0.String), $type=0.bool),
-     Block(
-      Return(Attr(Var(Name(self), $type=1.Test), Name(y), $type=0.String)))),
-    Return(Null(null, $type=0.Object)))),
+    If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+      $type=1.builtin.Object.__eq__), String("x", $type=1.builtin.String),
+     $type=1.builtin.bool), Block(
+      Return(Attr(Var(Name(self), $type=0.Test), Name(x),
+       $type=1.builtin.int)))),
+    If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+      $type=1.builtin.Object.__eq__), String("y", $type=1.builtin.String),
+     $type=1.builtin.bool), Block(
+      Return(Attr(Var(Name(self), $type=0.Test), Name(y),
+       $type=1.builtin.String)))),
+    Return(Null(null, $type=1.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=0.String),
-   Param(Type(Name(Object)), Name(value), $type=0.Object),
+   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
    Block(
-    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
-      $type=0.Object.__eq__), String("x", $type=0.String), $type=0.bool),
-     Block(
-      Assign(Attr(Var(Name(self), $type=1.Test), Name(x), $type=0.int),
-       Cast(Var(Name(value), $type=0.Object), $type=0.int)))),
-    If(Call(Attr(Var(Name(name), $type=0.String), Name(__eq__),
-      $type=0.Object.__eq__), String("y", $type=0.String), $type=0.bool),
-     Block(
-      Assign(Attr(Var(Name(self), $type=1.Test), Name(y), $type=0.String),
-       Cast(Var(Name(value), $type=0.Object), $type=0.String))))))),
+    If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+      $type=1.builtin.Object.__eq__), String("x", $type=1.builtin.String),
+     $type=1.builtin.bool), Block(
+      Assign(Attr(Var(Name(self), $type=0.Test), Name(x), $type=1.builtin.int),
+       Cast(Var(Name(value), $type=1.builtin.Object), $type=1.builtin.int)))),
+    If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+      $type=1.builtin.Object.__eq__), String("y", $type=1.builtin.String),
+     $type=1.builtin.bool), Block(
+      Assign(Attr(Var(Name(self), $type=0.Test), Name(y),
+       $type=1.builtin.String), Cast(Var(Name(value), $type=1.builtin.Object),
+       $type=1.builtin.String))))))),
 
  Function(Type(Name(void)), Name(f), Block(
    Local(
-    Declaration(Type(Name(Test)), Name(t), $type=1.Test)),
-   ExprStmt(Attr(Var(Name(t), $type=1.Test), Name(x), $type=0.int)),
-   ExprStmt(Attr(Var(Name(t), $type=1.Test), Name(y), $type=0.String))))
+    Declaration(Type(Name(Test)), Name(t), $type=0.Test)),
+   ExprStmt(Attr(Var(Name(t), $type=0.Test), Name(x), $type=1.builtin.int)),
+   ExprStmt(Attr(Var(Name(t), $type=0.Test), Name(y),
+    $type=1.builtin.String))))
 )

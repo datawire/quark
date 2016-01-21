@@ -18,6 +18,7 @@ from .ast import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
+import ast
 
 class Root(AST):
 
@@ -227,14 +228,14 @@ class TypeExpr(object):
                 for sup in base.resolved.supertypes():
                     yield texpr(sup.type, sup.bindings, self.bindings)
         else:
-            sup = cls.root.env["Object"].resolved
+            sup = cls.root.env["builtin"].env["Object"].resolved
             yield texpr(sup.type, sup.bindings, self.bindings)
 
     @overload(TypeParam)
     def supertypes(self, param):
         # should we check in bindings here and try supertypes?
         yield self
-        yield param.root.env["Object"].resolved
+        yield param.root.env["builtin"].env["Object"].resolved
 
     def get(self, attr, errors):
         name = attr.text
@@ -260,7 +261,7 @@ class TypeExpr(object):
                 for e in self.environments(base, bindings):
                     yield e
         else:
-            yield cls.root.env["Object"].env
+            yield cls.root.env["builtin"].env["Object"].env
 
     @overload(Call, list)
     def invoke(self, c, errors):
@@ -399,7 +400,7 @@ class Use(object):
 
     @overload(Type)
     def lookup(self, t):
-        type = self.lookup(t.clazz or t.package or t.root, t.path[0].text)
+        type = self.lookup(t.clazz or t.package or t.file or t.root, t.path[0].text)
         return self.lookup_path(type, t.path[1:])
 
     @overload(Import)
@@ -522,7 +523,7 @@ class Resolver(object):
                                    (lineinfo(r), r.callable.name))
             return
 
-        if not r.callable.type or r.callable.type.code() == "void":
+        if not r.callable.type or r.callable.type.code() == "builtin.void":
             if r.expr:
                 self.errors.append("%s: %s cannot return a value" % (lineinfo(r), r.callable.name))
             return
@@ -639,7 +640,7 @@ class ApplyAnnotators:
                         self.modified = True
                     done.add(name)
 
-BUILTIN = os.path.join(os.path.dirname(__file__), "builtin.q")
+BUILTIN = "builtin.q"
 
 def delegate(node):
     ann = [a for a in node.annotations if a.name.text == "delegate"][0];
@@ -669,7 +670,7 @@ class Reflector:
         self.entry = None
 
     def visit_File(self, f):
-        if f.depth == 0 and f.name != "reflector":
+        if not self.entry and f.depth == 0 and f.name != "reflector":
             self.entry = f
 
     def package(self, pkg):
@@ -722,7 +723,7 @@ class Reflector:
         return fields
 
     def meths(self, cls, cid, use_bindings):
-        if cls.package is None or cls.package.name.text in ("reflect", "concurrent", "behaviors", "quarkrt"):
+        if cls.package is None or cls.package.name.text in ("reflect", "concurrent", "behaviors", "builtin"): # XXX: is this still correct
             return []
         methods = []
         bindings = base_bindings(cls)
@@ -737,11 +738,11 @@ class Reflector:
 
     def meth(self, mid, cid, type, name, params):
         args = ", ".join(['?args[%s]' % i for i in range(len(params))])
-        if type == "void":
+        if type == "builtin.void":
             invoke = "        obj.%s(%s);\n        return null;" % (name, args)
         else:
             invoke = "        return obj.%s(%s);" % (name, args)
-        return """    class %(mid)s extends quarkrt.reflect.Method {
+        return """    class %(mid)s extends reflect.Method {
         %(mid)s() {
             super("%(type)s", "%(name)s", [%(params)s]);
         }
@@ -804,9 +805,9 @@ class Reflector:
             construct = "new %s(%s)" % (id, ", ".join(['?args[%s]' % i for i in range(nparams)]))
 
         return """%(mdefs)s
-    class %(mdname)s extends quarkrt.reflect.Class {
+    class %(mdname)s extends reflect.Class {
 
-        static quarkrt.reflect.Class singleton = new %(mdname)s();
+        static reflect.Class singleton = new %(mdname)s();
 
         %(mdname)s() {
             super("%(id)s");
@@ -827,7 +828,7 @@ class Reflector:
             "mdname": self.mdname(id),
             "name": cls.name,
             "parameters": params,
-            "fields": ", ".join(['new quarkrt.reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
+            "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
             "construct": construct}
@@ -858,7 +859,7 @@ class Reflector:
                                                               self.clazz(cls, clsid, qual, self.qparams(texp),
                                                                          nparams, texp))
                     if not ucls: continue
-                    if ucls.package and ucls.package.name.text in ("reflect", "concurrent", "behaviors", "quarkrt"):
+                    if ucls.package and ucls.package.name.text in ("reflect", "concurrent", "behaviors", "builtin"):
                         continue
                     if ucls not in self.metadata:
                         self.metadata[ucls] = OrderedDict()
@@ -874,7 +875,7 @@ class Reflector:
         void _setField(String name, Object value) {}
 """ % mdpkg
         for cls in mdclasses:
-            self.code += "        static quarkrt.reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
+            self.code += "        static reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
         self.code += "    }\n}"
 
 class Compiler:
@@ -889,7 +890,6 @@ class Compiler:
         self.parsed = set()
         self.included = OrderedDict()
         self.dependencies = []
-        self.perform_quark_include(BUILTIN, None, 0)  # XXX None here will cause a worse crash on IOError
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -905,6 +905,13 @@ class Compiler:
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
+        imp = Import([Name("builtin")])
+        imp._silent = True
+        file.definitions.insert(0, imp)
+        if not self.root.files and not name.endswith("builtin.q"):  # First file
+            use = ast.Use(BUILTIN)
+            use._silent = True
+            file.definitions.insert(0, use)
         while True:
             file.name = name
             file.traverse(Crosswire(self.root))
@@ -917,15 +924,17 @@ class Compiler:
         self.root.add(file)
         return file
 
-    def urlparse(self, url, depth=0, top=True):
-        try:
-            file = self.parse(url, self.read(url))
-            file.depth = depth
-        except IOError, e:
-            if top:
-                raise CompileError(e)
-            else:
-                raise
+    def urlparse(self, url, depth=0, top=True, text=None):
+        if text is None:
+            try:
+                text = self.read(url)
+            except IOError, e:
+                if top:
+                    raise CompileError(e)
+                else:
+                    raise
+        file = self.parse(url, text)
+        file.depth = depth
         for u in file.uses.values():
             qurl = self.join(url, u.url)
             self.perform_use(qurl, u, depth)
@@ -955,7 +964,10 @@ class Compiler:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
     def join(self, base, rel):
-        return urllib.basejoin(base, rel)
+        if rel == BUILTIN:
+            return os.path.join(os.path.dirname(__file__), BUILTIN)
+        else:
+            return urllib.basejoin(base, rel)
 
     def read(self, url):
         fd = urllib.urlopen(url)
@@ -996,6 +1008,8 @@ class Compiler:
 #        with open("/tmp/reflector.q", "w") as fd:
 #            fd.write(ref.code)
         self.parse("reflector", ref.code)
+        # XXX: this seems to cause problems, should investigate
+        #self.urlparse("reflector", text=ref.code)
         self.icompile(self.root.files[-1])
         for cls, methods in ref.methods.items():
             for m in methods:
@@ -1005,7 +1019,7 @@ class Compiler:
                 self.icompile(method)
         for cls, deps in ref.metadata.items():
             for dep in deps:
-                field = Parser().rule("field", "static quarkrt.reflect.Class %s_ref = %s;" % (dep, deps[dep]))
+                field = Parser().rule("field", "static reflect.Class %s_ref = %s;" % (dep, deps[dep]))
                 cls.definitions.append(field)
                 field.traverse(Crosswire(cls))
                 self.icompile(field)
@@ -1021,16 +1035,39 @@ class Compiler:
     def emit(self, backend):
         self.root.traverse(backend)
 
-def install(url, backend):
+def traverse(url, func, *args, **kwargs):
     c = Compiler()
     c.urlparse(url)
     c.compile()
     for dep in c.dependencies:
-        if not backend.is_installed(dep):
-            install(dep, backend)
-    b = backend()
-    c.emit(b)
-    b.install()
+        traverse(dep, func, *args, **kwargs)
+    func(url, c, *args, **kwargs)
+
+def do_install(url, comp, backends):
+    for backend in backends:
+        b = backend()
+        if not b.is_installed(url):
+            comp.emit(b)
+            b.install()
+
+def install(url, *backends):
+    traverse(url, do_install, backends)
+
+def do_compile(url, comp, target, backends, dirs):
+    dir = os.path.splitext(os.path.basename(url))[0]
+    if dir not in dirs:
+        dirs.append(dir)
+    for backend in backends:
+        b = backend()
+        comp.emit(b)
+        out = os.path.join(os.path.join(target, b.ext), dir)
+        b.write(out)
+
+def compile(url, target, *backends):
+    mods = []
+    traverse(url, do_compile, target, backends, mods)
+    return mods
+
 
 from backend import Java, Python, JavaScript
 

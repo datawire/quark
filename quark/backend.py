@@ -50,7 +50,7 @@ class Backend(object):
         self.dependencies[name] = use.target
 
     def visit_File(self, file):
-        if file.depth == 0 and file.name != "reflector":
+        if not self.entry and file.depth == 0 and file.name != "reflector":
             self.entry = file
 
     def visit_Class(self, cls):
@@ -75,7 +75,7 @@ class Backend(object):
 
         roots = []
         for rpkg in [p.name.text for p in self.packages if p.package is None]:
-            if rpkg != "quarkrt" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg)
+            if rpkg != "builtin" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg) # XXX is this needed still
         if len(roots) > 1:
             roots.sort()
             roots += ["common"]
@@ -117,8 +117,8 @@ class Backend(object):
             # to import classes on demand at the point of use rather
             # than into the module/package level scope.
             raw_imports = self._imports[name].keys()
-            refimps = filter(lambda x: x[0][0] == "quarkrt", raw_imports)
-            imports = filter(lambda x: x[0][0] != "quarkrt", raw_imports)
+            refimps = filter(lambda x: x[0][0] == "builtin", raw_imports)
+            imports = filter(lambda x: x[0][0] != "builtin", raw_imports)
 
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)
@@ -189,7 +189,6 @@ class Backend(object):
             lines = []
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
-        packages[(self.rootname,)] = ""
 
         deps = [namever(d) for d in self.dependencies.values()]
         files = self.gen.package(name, version, packages, self.files, deps)

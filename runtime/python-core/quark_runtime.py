@@ -3,7 +3,7 @@
 # This brings in the stuff mentioned in __all__ below.
 # The wrong way to do this, but minimizes the code change.
 
-__version__ = '0.3.1'
+__version__ = '0.4.1'
 
 import os    # unused?
 import sys
@@ -398,15 +398,15 @@ class Buffer(object):
 def _getClass(obj):
     if obj is None: return None
     if isinstance(obj, basestring):
-        return "String"
+        return "builtin.String"
     if isinstance(obj, int):
-        return "int"
+        return "builtin.int"
     if isinstance(obj, float):
-        return "float"
+        return "builtin.float"
     if isinstance(obj, (list, tuple)):
-        return "List<Object>"
+        return "builtin.List<builtin.Object>"
     if isinstance(obj, dict):
-        return "Map<Object,Object>"
+        return "builtin.Map<builtin.Object,builtin.Object>"
     return obj._getClass()
 
 

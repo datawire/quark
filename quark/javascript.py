@@ -29,16 +29,18 @@ def package(name, version, packages, srcs, deps):
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
 
+    files["index.js"] = "%s\n" % "\n".join([import_(path, (), None) for path in packages])
+
     files["package.json"] = """
 {
     "name": "%s",
     "version": "%s",
-    "main": "%s/index.js",
+    "main": "index.js",
     "dependencies": {
         %s
     }
 }
-        """ % (name, version, name, dependencies)
+        """ % (name, version, dependencies)
     return files
 
 def class_file(path, name, fname):
@@ -76,15 +78,17 @@ def type(path, name, parameters):
 
 def import_(path, origin, dep):
     qual = qualify(path, origin)
+    extra = ""
     if dep:
         req = dep
+        extra = ".%s" % qual[0]
     else:
         if tuple(origin) + tuple(qual) == tuple(path):
             prefix = "./"
         else:
             prefix = "../"*len(origin)
         req = prefix + qual[0]
-    return "var %s = require('%s');\nexports.%s = %s;" % (qual[0], req, qual[0], qual[0])
+    return "var %s = require('%s')%s;\nexports.%s = %s;" % (qual[0], req, extra, qual[0], qual[0])
 
 def qualify(package, origin):
     if package == origin: return []

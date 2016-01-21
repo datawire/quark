@@ -1,4 +1,5 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(int)), Name(factorial),
   Param(Type(Name(int)), Name(n)),
   Block(

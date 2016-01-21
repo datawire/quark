@@ -1,4 +1,5 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Class(Name(A),
   Field(static=False, Type(Name(int)), Name(x))),
 

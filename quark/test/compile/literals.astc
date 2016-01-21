@@ -1,27 +1,34 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(test1), Block(
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(zero), List(,
-     $type=0.List<0.int>), $type=0.List<0.int>)),
+     $type=1.builtin.List<1.builtin.int>),
+    $type=1.builtin.List<1.builtin.int>)),
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(one), List(Number(1,
-      $type=0.int), $type=0.List<0.int>), $type=0.List<0.int>)),
+      $type=1.builtin.int), $type=1.builtin.List<1.builtin.int>),
+    $type=1.builtin.List<1.builtin.int>)),
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(many), List(Number(1,
-      $type=0.int), Number(2, $type=0.int), Number(3, $type=0.int),
-     $type=0.List<0.int>), $type=0.List<0.int>)))),
+      $type=1.builtin.int), Number(2, $type=1.builtin.int), Number(3,
+      $type=1.builtin.int), $type=1.builtin.List<1.builtin.int>),
+    $type=1.builtin.List<1.builtin.int>)))),
 
  Function(Type(Name(void)), Name(test2), Block(
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(zero), List(,
-     $type=0.List<0.String>), $type=0.List<0.String>)),
+     $type=1.builtin.List<1.builtin.String>),
+    $type=1.builtin.List<1.builtin.String>)),
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(one),
-     List(String("one", $type=0.String), $type=0.List<0.String>),
-    $type=0.List<0.String>)),
+     List(String("one", $type=1.builtin.String),
+     $type=1.builtin.List<1.builtin.String>),
+    $type=1.builtin.List<1.builtin.String>)),
    Local(
     Declaration(Type(Name(List), Type(Name(String))), Name(many),
-     List(String("one", $type=0.String), String("two", $type=0.String),
-      String("three", $type=0.String), $type=0.List<0.String>),
-    $type=0.List<0.String>))))
+     List(String("one", $type=1.builtin.String), String("two",
+      $type=1.builtin.String), String("three", $type=1.builtin.String),
+     $type=1.builtin.List<1.builtin.String>),
+    $type=1.builtin.List<1.builtin.String>))))
 )

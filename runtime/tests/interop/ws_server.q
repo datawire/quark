@@ -75,9 +75,9 @@ package interop { // package interop is mandatory
 
     class InteropWSClient extends InteropWSCommon {
         InteropWSClient() {
-            super(quarkrt.concurrent.Context.runtime());
+            super(Context.runtime());
         }
-        void open(String url) { quarkrt.concurrent.Context.runtime().open(url, self); }
+        void open(String url) { concurrent.Context.runtime().open(url, self); }
         void onWSConnected(WebSocket socket) {
             print("onWSConnected");
             socket.send("hello from client");

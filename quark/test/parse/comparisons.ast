@@ -1,4 +1,5 @@
-File(
+File(Use(url=builtin.q), Import(Name(builtin)),
+
  Function(Type(Name(void)), Name(test), Block(
    ExprStmt(Call(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b)))),
    ExprStmt(Call(Attr(Var(Name(a)), Name(__gt__)), Var(Name(b)))),

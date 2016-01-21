@@ -27,7 +27,8 @@ You should see the following in your terminal window (stdout):
    Request says 'Hello from Python!'
    Response says u'Responding to [Hello from Python!] from Python'
 
-[[JMK why is the u only present on the second line? I need to understand this better]]
+.. 
+   JMK why is the u only present on the second line? I need to understand this better
 
 The u in the response text indicates that the response is in Unicode. The first line is defined and printed by these two lines in the Python client we wrote:
 
