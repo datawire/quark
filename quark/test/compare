@@ -24,15 +24,15 @@ CMPFILE are filenames that end with .cmp
 Options:
   -h --help          Show this screen
   -p --pattern PAT   Only present paths matching this glob pattern [default: *]
+  -s --summary       Don't offer actions; just list/summarize the comparisons
   -f --force         Assume "yes" for every comparison
 """
 
-import sys
 import os
 import subprocess
 import filecmp
-import tempfile
 import fnmatch
+import collections
 
 from docopt import docopt
 
@@ -126,6 +126,7 @@ def main(options):
     names = options["CMPFILE"]
     force = options["--force"]
     pattern = options["--pattern"]
+    summarize = options["--summary"]
 
     if names:
         to_compare = [(path[:-4], path) for path in names]
@@ -135,6 +136,7 @@ def main(options):
     # Pre-filter so len(to_compare) can be used for progress indicator
     to_compare = [(expected, output) for expected, output in to_compare if fnmatch.fnmatch(output, pattern)]
 
+    summary = collections.defaultdict(list)  # type -> names
     for idx, (expected, output) in enumerate(to_compare):
         if not os.path.exists(expected):
             ex = None
@@ -162,17 +164,20 @@ def main(options):
                 do_command = "mv %s %s" % (output, expected)
             else:
                 do_command = "cp %s %s" % (output, expected)
+            summary["new file"].append(output)
         elif ex is None and op is dir:            # New directory in output
             name = output + " (new directory)"
             show_command = "ls -l %s" % output
             question = "Add this directory and contents?"
             do_command = "cp -a %s %s" % (output, expected)
+            summary["new directory"].append(output)
 
         elif ex is file and op is None:           # Expected file not present
             name = expected + " (missing file)"
             show_command = "less %s" % expected
             question = "Remove this file?"
             do_command = "rm %s" % expected
+            summary["missing file"].append(output)
         elif ex is file and op is file:           # File has changed
             name = output
             show_command = "git diff --no-index %s %s" % (expected, output)
@@ -181,34 +186,42 @@ def main(options):
                 do_command = "mv %s %s" % (output, expected)
             else:
                 do_command = "cp %s %s" % (output, expected)
+            summary["changed file"].append(output)
         elif ex is file and op is dir:            # File turned into a directory
             name = output + " (expected file, got directory)"
             show_command = "ls -l %s %s" % (expected, output)
             question = "No operation available; y/n are the same."
             do_command = "echo Doing nothing"
+            summary["file to directory"].append(output)
 
         elif ex is dir and op is None:            # Expected dir not present
             name = expected + " (missing dir)"
             show_command = "ls -l %s" % expected
             question = "Remove this directory?"
             do_command = "rm -r %s" % expected
+            summary["missing directory"].append(output)
         elif ex is dir and op is file:            # Directory turned into a file
             name = output + " (expected directory, got file)"
             show_command = "ls -l %s %s" % (expected, output)
             question = "No operation available; y/n are the same."
             do_command = "echo Doing nothing"
+            summary["directory to file"].append(output)
         elif ex is dir and op is dir:             # WTF? Prior code should have recursed!
             assert False, ("both dirs", expected, output)
 
         else:                                     # WTF? I don't even...
             assert False, ("what are", ex, op, expected, output)
 
-        if force and fnmatch.fnmatch(output, pattern):
+        if force:
             os.system(do_command)
+        elif summarize:
+            pass
         else:
             counter = "%s/%s " % (idx + 1, len(to_compare))
             print ansi(CLS, "") + counter + name, ansi(PURPLE, (columns - 2 - len(counter + name)) * "=")
             os.system(show_command)
+            print
+            print "$ %s" % ansi(RED, do_command)
             st = raw_input(question + " y/N/q: ").strip().upper()
             if st.startswith("Y"):
                 os.system(do_command)
@@ -216,6 +229,12 @@ def main(options):
                 return
             print
 
+    if summarize:
+        print "Summary"
+        for key in sorted(summary):
+            print key
+            for value in summary[key]:
+                print "-", value
 
 if __name__ == '__main__':
     main(docopt(__doc__))
