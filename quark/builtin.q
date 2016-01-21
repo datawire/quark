@@ -512,24 +512,24 @@ namespace builtin {
             if (f.name.startsWith("_")) {
                 continue;
             }
-            if (f.getType().name == "String") {
+            if (f.getType().name == "builtin.String") {
                 String s = json[f.name];
                 result.setField(f.name, s);
                 continue;
             }
-            if (f.getType().name == "float") {
+            if (f.getType().name == "builtin.float") {
                 float flt = json[f.name];
                 result.setField(f.name, flt);
                 continue;
             }
-            if (f.getType().name == "int") {
+            if (f.getType().name == "builtin.int") {
                 if (!json[f.name].isNull()) {
                     int i = json[f.name];
                     result.setField(f.name, i);
                 }
                 continue;
             }
-            if (f.getType().name == "bool") {
+            if (f.getType().name == "builtin.bool") {
                 if (!json[f.name].isNull()) {
                     bool b = json[f.name];
                     result.setField(f.name, b);
@@ -649,11 +649,11 @@ package reflect {
 
         static Map<String,Class> classes = {};
 
-        static Class VOID = new Class("void");
-        static Class BOOL = new Class("bool");
-        static Class INT = new Class("int");
-        static Class LONG = new Class("long");
-        static Class STRING = new Class("String");
+        static Class VOID = new Class("builtin.void");
+        static Class BOOL = new Class("builtin.bool");
+        static Class INT = new Class("builtin.int");
+        static Class LONG = new Class("builtin.long");
+        static Class STRING = new Class("builtin.String");
 
         static Class get(String id) {
             return classes[id];
