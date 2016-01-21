@@ -43,10 +43,13 @@ div.body h2 {
    font-size: 2rem;
 }
 div.body h3 {
-    font-size: 1.55rem;
+    font-size: 1.45rem;
 }
 div.body h4 {
     font-size: 1.15rem;
+}
+div.body strong {
+    color: #000;
 }
 
 div.sphinxsidebar {
@@ -99,3 +102,4 @@ div.sphinxsidebar li.current a.current {
         font-size: 2.1rem;
     }
 }
+

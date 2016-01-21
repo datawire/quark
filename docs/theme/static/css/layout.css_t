@@ -121,7 +121,7 @@ div.sphinxsidebar ul li.toctree-l3 > a {
 div.body ul { margin-top:0 }
 
 div.body .copy-header {
-    background-color: #ddd;
+    background-color: #e1e4e5;
     padding: 0;
     text-align: right;
 }
@@ -130,14 +130,12 @@ div.body .copy-header .copy-btn {
     display: inline-block;
     text-align: right;
     font-size: 0.8rem;
-    text-decoration:  none;
-    color: #fff;
+    color: #666;
     padding: 0.2rem 0.2rem 0.3rem;
-    background-color: #A09E9E;
 }
 
 div.body .copy-header .copy-btn.zeroclipboard-is-hover{
-    background-color: #333;
+    color: #000;
     cursor: pointer;
 }
 
