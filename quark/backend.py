@@ -680,7 +680,7 @@ class Python(Backend):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            command.call_and_show("install", dir, ["pip", "install", "--user", "--upgrade", "dist/%s" % wheel])
+            command.call_and_show("install", dir, ["pip", "install", "--upgrade", "dist/%s" % wheel])
 
 class JavaScript(Backend):
 
