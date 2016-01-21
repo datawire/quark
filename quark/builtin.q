@@ -1,649 +1,649 @@
-@mapping($java{Object} $py{object} $js{Object})
-primitive Object {
-    macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
-                                    $py{($self) == ($other)}
-                                    $js{($self) === ($other)};
-    macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}
-                                    $py{($self) != ($other)}
-                                    $js{($self) !== ($other)};
+    @mapping($java{Object} $py{object} $js{Object})
+    primitive Object {
+        macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
+                                        $py{($self) == ($other)}
+                                        $js{($self) === ($other)};
+        macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}
+                                        $py{($self) != ($other)}
+                                        $js{($self) !== ($other)};
 
-    macro quarkrt.reflect.Class getClass() quarkrt.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
-                                                     $py{_getClass($self)}
-                                                     $js{_qrt._getClass($self)});
-    macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
-                                       $py{($self)._getField($name)}
-                                       $js{($self)._getField($name)};
-    macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}
-                                                   $py{($self)._setField(($name), ($value))}
-                                                   $js{($self)._setField(($name), ($value))};
-}
+        macro quarkrt.reflect.Class getClass() quarkrt.reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
+                                                         $py{_getClass($self)}
+                                                         $js{_qrt._getClass($self)});
+        macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
+                                           $py{($self)._getField($name)}
+                                           $js{($self)._getField($name)};
+        macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}
+                                                       $py{($self)._setField(($name), ($value))}
+                                                       $js{($self)._setField(($name), ($value))};
+    }
 
-@mapping($java{void})
-primitive void {}
+    @mapping($java{void})
+    primitive void {}
 
-@mapping($java{Boolean} $py{bool} $js{Boolean})
-primitive bool {
-    macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
-    macro bool __and__(bool other) $java{($self) && ($other)}
-                                   $py{($self) and ($other)}
-                                   $js{($self) && ($other)};
-    macro bool __or__(bool other) $java{($self) || ($other)}
-                                  $py{($self) or ($other)}
-                                  $js{($self) || ($other)};
-    macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
-    macro JSONObject toJSON() new JSONObject().setBool(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
-}
+    @mapping($java{Boolean} $py{bool} $js{Boolean})
+    primitive bool {
+        macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
+        macro bool __and__(bool other) $java{($self) && ($other)}
+                                       $py{($self) and ($other)}
+                                       $js{($self) && ($other)};
+        macro bool __or__(bool other) $java{($self) || ($other)}
+                                      $py{($self) or ($other)}
+                                      $js{($self) || ($other)};
+        macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
+        macro JSONObject toJSON() new JSONObject().setBool(self);
+        macro JSONObject __to_JSONObject() self.toJSON();
+    }
 
-primitive numeric<T> {
-    macro T __neg__() ${-($self)};
-    macro T __add__(T other) ${($self) + ($other)};
-    macro T __sub__(T other) ${($self) - ($other)};
-    macro T __mul__(T other) ${($self) * ($other)};
-    macro T __div__(T other) ${($self) / ($other)};
-    macro bool __lt__(T other) ${($self) < ($other)};
-    macro bool __le__(T other) ${($self) <= ($other)};
-    macro bool __gt__(T other) ${($self) > ($other)};
-    macro bool __ge__(T other) ${($self) >= ($other)};
-}
+    primitive numeric<T> {
+        macro T __neg__() ${-($self)};
+        macro T __add__(T other) ${($self) + ($other)};
+        macro T __sub__(T other) ${($self) - ($other)};
+        macro T __mul__(T other) ${($self) * ($other)};
+        macro T __div__(T other) ${($self) / ($other)};
+        macro bool __lt__(T other) ${($self) < ($other)};
+        macro bool __le__(T other) ${($self) <= ($other)};
+        macro bool __gt__(T other) ${($self) > ($other)};
+        macro bool __ge__(T other) ${($self) >= ($other)};
+    }
 
-primitive integral<T> extends numeric<T> {
-    macro T __div__(T other) $java{~((~($self)) / ($other))}
-                             $py{($self) / ($other)}
-                             $js{Math.floor(($self) / ($other))};
-    macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
-                             $py{($self) % ($other)}
-                             $js{_qrt.modulo(($self), ($other))};
-    macro float __to_float() self;
-    macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
-    macro JSONObject toJSON() new JSONObject().setNumber(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
-}
+    primitive integral<T> extends numeric<T> {
+        macro T __div__(T other) $java{~((~($self)) / ($other))}
+                                 $py{($self) / ($other)}
+                                 $js{Math.floor(($self) / ($other))};
+        macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
+                                 $py{($self) % ($other)}
+                                 $js{_qrt.modulo(($self), ($other))};
+        macro float __to_float() self;
+        macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
+        macro JSONObject toJSON() new JSONObject().setNumber(self);
+        macro JSONObject __to_JSONObject() self.toJSON();
+    }
 
-@mapping($java{Byte} $py{int} $js{Number})
-primitive byte extends integral<byte> {
-    macro String toString() $java{Byte.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
-}
-
-
-@mapping($java{Short} $py{int} $js{Number})
-primitive short extends integral<short> {
-    macro String toString() $java{Short.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
-}
+    @mapping($java{Byte} $py{int} $js{Number})
+    primitive byte extends integral<byte> {
+        macro String toString() $java{Byte.toString($self)}
+                                $py{str($self)}
+                                $js{_qrt.toString($self)};
+    }
 
 
-@mapping($java{Integer} $py{int} $js{Number})
-primitive int extends integral<int> {
-    macro String toString() $java{Integer.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
-    macro byte __to_byte() self;
-    macro short __to_short() self;
-    macro long __to_long() $java{new Long($self)}
-                           $py{($self)}
-                           $js{($self)};
-}
+    @mapping($java{Short} $py{int} $js{Number})
+    primitive short extends integral<short> {
+        macro String toString() $java{Short.toString($self)}
+                                $py{str($self)}
+                                $js{_qrt.toString($self)};
+    }
 
-@mapping($java{Long} $py{long} $js{Number})
-primitive long extends integral<long> {
-    macro String toString() $java{Long.toString($self)}
-                            $py{str($self)}
-                            $js{_qrt.toString($self)};
-}
 
-@mapping($java{Double}$py{float}$js{Number})
-primitive float extends numeric<float> {
-    macro float __div__(float other) $java{($self) / ($other)}
-                                     $py{float($self) / float($other)}
-                                     $js{($self) / ($other)};
-    macro long round() $java{Math.round($self)}
-                       $py{long(round($self))}
-                       $javascript{Math.round($self)};
-    macro String toString() $java{Double.toString($self)}
-                            $py{repr($self)}
-                            $js{_qrt.toString($self)};
-    macro JSONObject toJSON() new JSONObject().setNumber(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
-}
+    @mapping($java{Integer} $py{int} $js{Number})
+    primitive int extends integral<int> {
+        macro String toString() $java{Integer.toString($self)}
+                                $py{str($self)}
+                                $js{_qrt.toString($self)};
+        macro byte __to_byte() self;
+        macro short __to_short() self;
+        macro long __to_long() $java{new Long($self)}
+                               $py{($self)}
+                               $js{($self)};
+    }
 
-@mapping($java{String} $py{str} $js{String})
-primitive String {
-    macro String __add__(String other) ${($self) + ($other)};
-    macro int size()                   $java{($self).length()}
-                                       $py{len($self)}
-                                       $js{($self).length};
-    macro bool startsWith(String other) $java{Boolean.valueOf(($self).startsWith($other))}
-                                       $py{($self).startswith($other)}
-                                       $js{(($self).indexOf($other)===0)};
-    macro bool endsWith(String other)   $java{Boolean.valueOf(($self).endsWith($other))}
-                                       $py{($self).endswith($other)}
-                                       $js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
-    macro int find(String other)       $java{($self).indexOf($other)}
-                                       $py{($self).find($other)}
-                                       $js{($self).indexOf($other)};
-    macro String substring(int start, int end) $java{($self).substring(($start), ($end))}
-                                               $py{($self)[($start):($end)]}
-                                               $js{($self).substring(($start), ($end))};
-    macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}
-                                                 $py{($self).replace(($from), ($to), 1)}
-                                                 $js{($self).replace(($from), ($to))};
-    macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
-                                         $py{($self).split($sep)}
-                                         $js{($self).split($sep)};
-    macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
-                                          $py{($self).join($parts)}
-                                          $js{($parts).join($self)};
-    macro JSONObject toJSON() new JSONObject().setString(self);
-    macro JSONObject __to_JSONObject() self.toJSON();
-    macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
-                                 $py{_JSONObject.parse($self)}
-                                 $js{_qrt.json_from_string($self)};
-}
+    @mapping($java{Long} $py{long} $js{Number})
+    primitive long extends integral<long> {
+        macro String toString() $java{Long.toString($self)}
+                                $py{str($self)}
+                                $js{_qrt.toString($self)};
+    }
 
-@mapping($java{java.util.ArrayList} $py{_List} $js{Array})
-primitive List<T> {
-    macro void add(T element) $java{($self).add($element)}
-                              $py{($self).append($element)}
-                              $js{($self).push($element)};
-    macro T __get__(int index) $java{($self).get($index)}
-                               $py{($self)[$index]}
-                               $js{($self)[$index]};
-    macro void __set__(int index, T value) $java{($self).set(($index), ($value))}
-                                           $py{($self)[$index] = ($value)}
-                                           $js{($self)[$index] = ($value)};
-    macro int size() $java{($self).size()}
-                     $py{len($self)}
-                     $js{($self).length};
-}
+    @mapping($java{Double}$py{float}$js{Number})
+    primitive float extends numeric<float> {
+        macro float __div__(float other) $java{($self) / ($other)}
+                                         $py{float($self) / float($other)}
+                                         $js{($self) / ($other)};
+        macro long round() $java{Math.round($self)}
+                           $py{long(round($self))}
+                           $javascript{Math.round($self)};
+        macro String toString() $java{Double.toString($self)}
+                                $py{repr($self)}
+                                $js{_qrt.toString($self)};
+        macro JSONObject toJSON() new JSONObject().setNumber(self);
+        macro JSONObject __to_JSONObject() self.toJSON();
+    }
 
-@mapping($java{java.util.HashMap} $py{_Map} $js{Map})
-primitive Map<K,V> {
-    macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
-                                       $py{($self)[$key] = ($value)}
-                                       $js{($self).set(($key), ($value))};
-    macro V __get__(K key) $java{($self).get($key)}
-                           $py{($self).get($key)}
-                           $js{_qrt.map_get(($self), ($key))};
-    macro int contains(K key) $java{($self).containsKey($key)}
-                              $py{($key) in ($self)}
-                              $js{($self).has($key)};
-    macro void update(Map<K,V> other) $java{($self).putAll($other)}
-                                      $py{($self).update($other)}
-                                      $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
-    macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
-                             $py{_urlencode($self)}
-                             $js{_qrt.urlencode($self)};
-}
+    @mapping($java{String} $py{str} $js{String})
+    primitive String {
+        macro String __add__(String other) ${($self) + ($other)};
+        macro int size()                   $java{($self).length()}
+                                           $py{len($self)}
+                                           $js{($self).length};
+        macro bool startsWith(String other) $java{Boolean.valueOf(($self).startsWith($other))}
+                                           $py{($self).startswith($other)}
+                                           $js{(($self).indexOf($other)===0)};
+        macro bool endsWith(String other)   $java{Boolean.valueOf(($self).endsWith($other))}
+                                           $py{($self).endswith($other)}
+                                           $js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
+        macro int find(String other)       $java{($self).indexOf($other)}
+                                           $py{($self).find($other)}
+                                           $js{($self).indexOf($other)};
+        macro String substring(int start, int end) $java{($self).substring(($start), ($end))}
+                                                   $py{($self)[($start):($end)]}
+                                                   $js{($self).substring(($start), ($end))};
+        macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}
+                                                     $py{($self).replace(($from), ($to), 1)}
+                                                     $js{($self).replace(($from), ($to))};
+        macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
+                                             $py{($self).split($sep)}
+                                             $js{($self).split($sep)};
+        macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
+                                              $py{($self).join($parts)}
+                                              $js{($parts).join($self)};
+        macro JSONObject toJSON() new JSONObject().setString(self);
+        macro JSONObject __to_JSONObject() self.toJSON();
+        macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
+                                     $py{_JSONObject.parse($self)}
+                                     $js{_qrt.json_from_string($self)};
+    }
 
-@mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
-primitive JSONObject {
+    @mapping($java{java.util.ArrayList} $py{_List} $js{Array})
+    primitive List<T> {
+        macro void add(T element) $java{($self).add($element)}
+                                  $py{($self).append($element)}
+                                  $js{($self).push($element)};
+        macro T __get__(int index) $java{($self).get($index)}
+                                   $py{($self)[$index]}
+                                   $js{($self)[$index]};
+        macro void __set__(int index, T value) $java{($self).set(($index), ($value))}
+                                               $py{($self)[$index] = ($value)}
+                                               $js{($self)[$index] = ($value)};
+        macro int size() $java{($self).size()}
+                         $py{len($self)}
+                         $js{($self).length};
+    }
 
-    macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
-                       $py{_JSONObject()}
-                       $js{new _qrt.JSONObject()};
+    @mapping($java{java.util.HashMap} $py{_Map} $js{Map})
+    primitive Map<K,V> {
+        macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
+                                           $py{($self)[$key] = ($value)}
+                                           $js{($self).set(($key), ($value))};
+        macro V __get__(K key) $java{($self).get($key)}
+                               $py{($self).get($key)}
+                               $js{_qrt.map_get(($self), ($key))};
+        macro int contains(K key) $java{($self).containsKey($key)}
+                                  $py{($key) in ($self)}
+                                  $js{($self).has($key)};
+        macro void update(Map<K,V> other) $java{($self).putAll($other)}
+                                          $py{($self).update($other)}
+                                          $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
+        macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
+                                 $py{_urlencode($self)}
+                                 $js{_qrt.urlencode($self)};
+    }
 
-    macro String __to_String() self.getString();
-    macro float __to_float() self.getNumber();
-    macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
-                         $py{int(round(($self).getNumber()))}
-                         $js{Math.round(($self).getNumber())};
-    macro long __to_long() self.getNumber().round();
-    macro bool __to_bool() self.getBool();
+    @mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
+    primitive JSONObject {
 
-    // accessors
+        macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
+                           $py{_JSONObject()}
+                           $js{new _qrt.JSONObject()};
 
-    String     getType();                  // object/list/string/number/boolean/null
-    JSONObject getObjectItem(String key);  // object accessor, may return undefined()
-    macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
-    JSONObject getListItem(int index);     // list accessor, may return undefined()
-    int        size();
-    String     getString();                // string accessor
-    bool       isString();
-    float      getNumber();                // number accessor
-    bool       isNumber();
-    bool       getBool();                  // true/false accessor
-    bool       isNull();                   // null accessor
-    bool       isDefined();
-    bool       isUndefined();
-    JSONObject undefined();                // undefined object returend by object and list accessors
+        macro String __to_String() self.getString();
+        macro float __to_float() self.getNumber();
+        macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
+                             $py{int(round(($self).getNumber()))}
+                             $js{Math.round(($self).getNumber())};
+        macro long __to_long() self.getNumber().round();
+        macro bool __to_bool() self.getBool();
 
-    // V2:
-    // List<String> keys();                   // object keys or null if type is not 'object'
-    // List<Pair<String,JSONObject>> items(); // object items or null if type is not 'object'
-    // List<JSONObject> values();             // list values or null if type is not 'list'
+        // accessors
 
-    String     toString();              // serialize to json
+        String     getType();                  // object/list/string/number/boolean/null
+        JSONObject getObjectItem(String key);  // object accessor, may return undefined()
+        macro JSONObject __get__(String key)   ${($self).getObjectItem($key)};
+        JSONObject getListItem(int index);     // list accessor, may return undefined()
+        int        size();
+        String     getString();                // string accessor
+        bool       isString();
+        float      getNumber();                // number accessor
+        bool       isNumber();
+        bool       getBool();                  // true/false accessor
+        bool       isNull();                   // null accessor
+        bool       isDefined();
+        bool       isUndefined();
+        JSONObject undefined();                // undefined object returend by object and list accessors
 
-    // returning self
-    JSONObject setString(String value);      // set current object type to 'string' and set it's value
-    JSONObject setNumber(Object value);       // set current object type to 'number' and set it's value
-    JSONObject setBool(bool value);           // set current object type to 'true' or 'false'
-    JSONObject setNull();                    // set current object type to 'null'
+        // V2:
+        // List<String> keys();                   // object keys or null if type is not 'object'
+        // List<Pair<String,JSONObject>> items(); // object items or null if type is not 'object'
+        // List<JSONObject> values();             // list values or null if type is not 'list'
 
-    JSONObject setObject();                  // set current object type to 'object', (for empty objects)
-    JSONObject setList();                    // set current object type to 'list', (for empty lists)
+        String     toString();              // serialize to json
 
-    JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
-    JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
+        // returning self
+        JSONObject setString(String value);      // set current object type to 'string' and set it's value
+        JSONObject setNumber(Object value);       // set current object type to 'number' and set it's value
+        JSONObject setBool(bool value);           // set current object type to 'true' or 'false'
+        JSONObject setNull();                    // set current object type to 'null'
 
-    macro void __set__(String key, JSONObject value) ${($self).setObjectItem(($key), ($value))};
-    // TODO a while bunch of __set__ overloads
+        JSONObject setObject();                  // set current object type to 'object', (for empty objects)
+        JSONObject setList();                    // set current object type to 'list', (for empty lists)
 
-    // V2:
-    // JSONObject mergeMap(Map<String,Object> map); // set current object type to 'object' and merge in all map pairs
-    // JSONObject mergeObject(JSONObject other);    // set current object type to 'object' and merge in all other.items()
-    // JSONObject extendList(List<Object> list);    // set current object type to 'list' and extend with all list values
-    // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
-}
+        JSONObject setObjectItem(String key, JSONObject value); // set current object type to 'object' and set the key to value
+        JSONObject setListItem(int index, JSONObject value);    // set current object type to 'list' and extend the list to index-1 with nulls and add value
 
-macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
-                             $py{_println($msg)}
-                             $js{_qrt.print($msg)};
+        macro void __set__(String key, JSONObject value) ${($self).setObjectItem(($key), ($value))};
+        // TODO a while bunch of __set__ overloads
 
-macro long now() $java{System.currentTimeMillis()}
-                 $py{long(time.time()*1000)}
-                 $js{Date.now()};
+        // V2:
+        // JSONObject mergeMap(Map<String,Object> map); // set current object type to 'object' and merge in all map pairs
+        // JSONObject mergeObject(JSONObject other);    // set current object type to 'object' and merge in all other.items()
+        // JSONObject extendList(List<Object> list);    // set current object type to 'list' and extend with all list values
+        // JSONObject extendObject(JSONObject other);   // set current object type to 'list' and extend with other.values()
+    }
 
-macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
-                                $py{time.sleep($seconds)}
-                                $js{_qrt.sleep($seconds)};
+    macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
+                                 $py{_println($msg)}
+                                 $js{_qrt.print($msg)};
 
-macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
-                                 $py{_url_get($url)}
-                                 $js{_qrt.url_get($url)};
+    macro long now() $java{System.currentTimeMillis()}
+                     $py{long(time.time()*1000)}
+                     $js{Date.now()};
 
-macro int parseInt(String st) $java{Integer.parseInt($st)}
-                              $py{int($st)}
-                              $js{parseInt($st)};
+    macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
+                                    $py{time.sleep($seconds)}
+                                    $js{_qrt.sleep($seconds)};
 
-macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
-                           $py{_default_codec()}
-                           $js{_qrt.defaultCodec()};
+    macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
+                                     $py{_url_get($url)}
+                                     $js{_qrt.url_get($url)};
 
-@mapping($java{io.datawire.quark.runtime.WSHandler})
-primitive WSHandler {
-    void onWSInit(WebSocket socket) {}
-    void onWSConnected(WebSocket socket) {}
-    void onWSMessage(WebSocket socket, String message) {}
-    void onWSBinary(WebSocket socket, Buffer message) {}
-    void onWSClosed(WebSocket socket) {}
-    void onWSError(WebSocket socket) {}
-    void onWSFinal(WebSocket socket) {}
-}
+    macro int parseInt(String st) $java{Integer.parseInt($st)}
+                                  $py{int($st)}
+                                  $js{parseInt($st)};
 
-@mapping($java{io.datawire.quark.runtime.WebSocket})
-primitive WebSocket {
-    bool send(String message);
-    bool sendBinary(Buffer bytes);
-    bool close();
-}
+    macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
+                               $py{_default_codec()}
+                               $js{_qrt.defaultCodec()};
 
-@mapping($java{io.datawire.quark.runtime.HTTPHandler})
-primitive HTTPHandler {
-    void onHTTPInit(HTTPRequest request) {}
-    void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
-    void onHTTPError(HTTPRequest request, String message) {}
-    void onHTTPFinal(HTTPRequest request) {}
-}
+    @mapping($java{io.datawire.quark.runtime.WSHandler})
+    primitive WSHandler {
+        void onWSInit(WebSocket socket) {}
+        void onWSConnected(WebSocket socket) {}
+        void onWSMessage(WebSocket socket, String message) {}
+        void onWSBinary(WebSocket socket, Buffer message) {}
+        void onWSClosed(WebSocket socket) {}
+        void onWSError(WebSocket socket) {}
+        void onWSFinal(WebSocket socket) {}
+    }
 
-@mapping($java{io.datawire.quark.runtime.HTTPRequest})
-primitive HTTPRequest {
-    macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
-    String getUrl();
-    void setMethod(String method);
-    String getMethod();
-    void setBody(String data);
-    String getBody();
-    void setHeader(String key, String value);
-    String getHeader(String key);
-    List<String> getHeaders();
-}
+    @mapping($java{io.datawire.quark.runtime.WebSocket})
+    primitive WebSocket {
+        bool send(String message);
+        bool sendBinary(Buffer bytes);
+        bool close();
+    }
 
-@mapping($java{io.datawire.quark.runtime.HTTPResponse})
-primitive HTTPResponse {
-    int getCode();
-    void setCode(int code);
-    String getBody();
-    void setBody(String body);
-    void setHeader(String key, String value);
-    String getHeader(String key);
-    List<String> getHeaders();
-}
+    @mapping($java{io.datawire.quark.runtime.HTTPHandler})
+    primitive HTTPHandler {
+        void onHTTPInit(HTTPRequest request) {}
+        void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
+        void onHTTPError(HTTPRequest request, String message) {}
+        void onHTTPFinal(HTTPRequest request) {}
+    }
 
-@mapping($java{io.datawire.quark.runtime.Task})
-primitive Task {
-    void onExecute(Runtime runtime); // XXX: right now, context is not
-                                     // restored for these. We should
-                                     // offer a context-aware
-                                     // scheduling API on top and have
-                                     // this as internal thing
-}
+    @mapping($java{io.datawire.quark.runtime.HTTPRequest})
+    primitive HTTPRequest {
+        macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+        String getUrl();
+        void setMethod(String method);
+        String getMethod();
+        void setBody(String data);
+        String getBody();
+        void setHeader(String key, String value);
+        String getHeader(String key);
+        List<String> getHeaders();
+    }
 
-@mapping($java{io.datawire.quark.runtime.Runtime})
-primitive Runtime {
-    macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
-                    $py{_RuntimeFactory.create()}
-                    $js{_qrt.RuntimeFactory.create()};
-    void open(String url, WSHandler handler);
-    void request(HTTPRequest request, HTTPHandler handler);
-    void schedule(Task handler, float delayInSeconds);
-    Codec codec();
-    void serveHTTP(String url, HTTPServlet servlet);
-    void serveWS(String url, WSServlet servlet);
-    void respond(HTTPRequest request, HTTPResponse response);
+    @mapping($java{io.datawire.quark.runtime.HTTPResponse})
+    primitive HTTPResponse {
+        int getCode();
+        void setCode(int code);
+        String getBody();
+        void setBody(String body);
+        void setHeader(String key, String value);
+        String getHeader(String key);
+        List<String> getHeaders();
+    }
 
-    @doc("Display the explanatory message and then terminate the program")
-    void fail(String message);
-}
+    @mapping($java{io.datawire.quark.runtime.Task})
+    primitive Task {
+        void onExecute(Runtime runtime); // XXX: right now, context is not
+                                         // restored for these. We should
+                                         // offer a context-aware
+                                         // scheduling API on top and have
+                                         // this as internal thing
+    }
 
-@doc("A stateless buffer of bytes. Default byte order is network byte order.")
-@mapping($java{io.datawire.quark.runtime.Buffer})
-primitive Buffer {
-    @doc("capacity of the buffer")
-    int capacity();
+    @mapping($java{io.datawire.quark.runtime.Runtime})
+    primitive Runtime {
+        macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
+                        $py{_RuntimeFactory.create()}
+                        $js{_qrt.RuntimeFactory.create()};
+        void open(String url, WSHandler handler);
+        void request(HTTPRequest request, HTTPHandler handler);
+        void schedule(Task handler, float delayInSeconds);
+        Codec codec();
+        void serveHTTP(String url, HTTPServlet servlet);
+        void serveWS(String url, WSServlet servlet);
+        void respond(HTTPRequest request, HTTPResponse response);
 
-    @doc("read a byte at the specified index")
-    byte getByte(int index);
-    @doc("write a byte at the specified index")
-    void putByte(int index, byte value);
+        @doc("Display the explanatory message and then terminate the program")
+        void fail(String message);
+    }
 
-    @doc("read a short at the specified index")
-    short getShort(int index);
-    @doc("write a short at the specified index")
-    void putShort(int index, short value);
+    @doc("A stateless buffer of bytes. Default byte order is network byte order.")
+    @mapping($java{io.datawire.quark.runtime.Buffer})
+    primitive Buffer {
+        @doc("capacity of the buffer")
+        int capacity();
 
-    @doc("read an int at the specified index")
-    int getInt(int index);
-    @doc("write an int at the specified index")
-    void putInt(int index, int value);
+        @doc("read a byte at the specified index")
+        byte getByte(int index);
+        @doc("write a byte at the specified index")
+        void putByte(int index, byte value);
 
-    @doc("read a long at the specified index")
-    long getLong(int index);
-    @doc("write a long at the specified index")
-    void putLong(int index, long value);
+        @doc("read a short at the specified index")
+        short getShort(int index);
+        @doc("write a short at the specified index")
+        void putShort(int index, short value);
 
-    @doc("read a float at the specified index")
-    float getFloat(int index);
-    @doc("write a float at the specified index")
-    void putFloat(int index, float value);
+        @doc("read an int at the specified index")
+        int getInt(int index);
+        @doc("write an int at the specified index")
+        void putInt(int index, int value);
 
-    @doc("decode length bytes as a UTF8 string at the specified index")
-    String getStringUTF8(int index, int length);
-    @doc("write a string encoded in UTF8 at the specified index and return encoded length")
-    int putStringUTF8(int index, String value);
+        @doc("read a long at the specified index")
+        long getLong(int index);
+        @doc("write a long at the specified index")
+        void putLong(int index, long value);
 
-    @doc("get a view of the range")
-    Buffer getSlice(int index, int length);
-    @doc("copy length bytes from the source buffer starting at offset to the specified index")
-    void putSlice(int index, Buffer source, int offset, int length);
+        @doc("read a float at the specified index")
+        float getFloat(int index);
+        @doc("write a float at the specified index")
+        void putFloat(int index, float value);
 
-    @doc("get a littleEndian view of the same buffer")
-    Buffer littleEndian();
+        @doc("decode length bytes as a UTF8 string at the specified index")
+        String getStringUTF8(int index, int length);
+        @doc("write a string encoded in UTF8 at the specified index and return encoded length")
+        int putStringUTF8(int index, String value);
 
-    @doc("true if the buffer decodes in network byte order")
-    bool isNetworkByteOrder();
+        @doc("get a view of the range")
+        Buffer getSlice(int index, int length);
+        @doc("copy length bytes from the source buffer starting at offset to the specified index")
+        void putSlice(int index, Buffer source, int offset, int length);
 
-}
+        @doc("get a littleEndian view of the same buffer")
+        Buffer littleEndian();
 
-@doc("Various String and Buffer conversion routines")
-@mapping($java{io.datawire.quark.runtime.Codec})
-primitive Codec {
-    @doc("Create an empty buffer with the specified capacity")
-    Buffer buffer(int capacity);
+        @doc("true if the buffer decodes in network byte order")
+        bool isNetworkByteOrder();
 
-    @doc("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")
-    String toHexdump(Buffer buffer, int offeset, int length, int spaceScale);
+    }
 
-    @doc("decode the hexdump ignoring leading 0x and any intervening spaces")
-    Buffer fromHexdump(String hex);
+    @doc("Various String and Buffer conversion routines")
+    @mapping($java{io.datawire.quark.runtime.Codec})
+    primitive Codec {
+        @doc("Create an empty buffer with the specified capacity")
+        Buffer buffer(int capacity);
 
-    @doc("Encode the specified slice of the buffer as Base64")
-    String toBase64(Buffer buffer, int offset, int length);
+        @doc("Encode the specified slice of the buffer and insert a space every 2^spaceScale bytes")
+        String toHexdump(Buffer buffer, int offeset, int length, int spaceScale);
 
-    @doc("decode the Base64 enccoded string")
-    Buffer fromBase64(String base64);
-}
+        @doc("decode the hexdump ignoring leading 0x and any intervening spaces")
+        Buffer fromHexdump(String hex);
 
-@doc("A service addresable with an url")
-@mapping($java{io.datawire.quark.runtime.Servlet})
-primitive Servlet {
-    @doc("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")
-    void onServletInit(String url, Runtime runtime) {}
-    @doc("called if the servlet could not be installed")
-    void onServletError(String url, String error) {}
-    @doc("called when the servlet is removed")
-    void onServletEnd(String url) {}
-}
+        @doc("Encode the specified slice of the buffer as Base64")
+        String toBase64(Buffer buffer, int offset, int length);
 
-@doc("Http servlet")
-@mapping($java{io.datawire.quark.runtime.HTTPServlet})
-primitive HTTPServlet extends Servlet {
-    @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
-    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
+        @doc("decode the Base64 enccoded string")
+        Buffer fromBase64(String base64);
+    }
 
-    void serveHTTP(String url) { quarkrt.concurrent.Context.runtime().serveHTTP(url, self); }
-}
+    @doc("A service addresable with an url")
+    @mapping($java{io.datawire.quark.runtime.Servlet})
+    primitive Servlet {
+        @doc("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")
+        void onServletInit(String url, Runtime runtime) {}
+        @doc("called if the servlet could not be installed")
+        void onServletError(String url, String error) {}
+        @doc("called when the servlet is removed")
+        void onServletEnd(String url) {}
+    }
 
-@doc("Websocket servlet")
-@mapping($java{io.datawire.quark.runtime.WSServlet})
-primitive WSServlet extends Servlet {
-    @doc("called for each new incoming WebSocket connection")
-    WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
+    @doc("Http servlet")
+    @mapping($java{io.datawire.quark.runtime.HTTPServlet})
+    primitive HTTPServlet extends Servlet {
+        @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
+        void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
 
-    void serveWS(String url) { quarkrt.concurrent.Context.runtime().serveWS(url, self); }
-}
+        void serveHTTP(String url) { quarkrt.concurrent.Context.runtime().serveHTTP(url, self); }
+    }
+
+    @doc("Websocket servlet")
+    @mapping($java{io.datawire.quark.runtime.WSServlet})
+    primitive WSServlet extends Servlet {
+        @doc("called for each new incoming WebSocket connection")
+        WSHandler onWSConnect(HTTPRequest upgrade_request) { return null; }
+
+        void serveWS(String url) { quarkrt.concurrent.Context.runtime().serveWS(url, self); }
+    }
 
 package quarkrt {
 
-@doc("Serializes object tree into JSON. skips over fields starting with underscore")
-JSONObject toJSON(Object obj) {
-    JSONObject result = new JSONObject();
-    if (obj == null) {
-        result.setNull();
-        return result;
-    }
+    @doc("Serializes object tree into JSON. skips over fields starting with underscore")
+    JSONObject toJSON(Object obj) {
+        JSONObject result = new JSONObject();
+        if (obj == null) {
+            result.setNull();
+            return result;
+        }
 
-    quarkrt.reflect.Class cls = obj.getClass();
-    int idx = 0;
+        quarkrt.reflect.Class cls = obj.getClass();
+        int idx = 0;
 
-    if (cls.name == "String") {
-        result.setString(?obj);
-        return result;
-    }
+        if (cls.name == "String") {
+            result.setString(?obj);
+            return result;
+        }
 
-    if (cls.name == "byte" ||
-        cls.name == "short" ||
-        cls.name == "int" ||
-        cls.name == "long" ||
-        cls.name == "float") {
-        result.setNumber(obj);
-        return result;
-    }
+        if (cls.name == "byte" ||
+            cls.name == "short" ||
+            cls.name == "int" ||
+            cls.name == "long" ||
+            cls.name == "float") {
+            result.setNumber(obj);
+            return result;
+        }
 
-    if (cls.name == "List") {
-        result.setList();
-        List<Object> list = ?obj;
-        while (idx < list.size()) {
-            result.setListItem(idx, toJSON(list[idx]));
+        if (cls.name == "List") {
+            result.setList();
+            List<Object> list = ?obj;
+            while (idx < list.size()) {
+                result.setListItem(idx, toJSON(list[idx]));
+                idx = idx + 1;
+            }
+            return result;
+        }
+
+        if (cls.name == "Map") {
+            result.setObject();
+            Map<String,Object> map = ?obj;
+            // XXX: need more JSON APIs to actually finish this
+            return result;
+        }
+
+        result["$class"] = cls;
+        List<quarkrt.reflect.Field> fields = cls.getFields();
+        while (idx < fields.size()) {
+            String fieldName = fields[idx].name;
+            if (!fieldName.startsWith("_")) {
+                result[fieldName] = toJSON(obj.getField(fieldName));
+            }
             idx = idx + 1;
         }
         return result;
     }
 
-    if (cls.name == "Map") {
-        result.setObject();
-        Map<String,Object> map = ?obj;
-        // XXX: need more JSON APIs to actually finish this
+    @doc("deserialize json into provided result object. Skip over fields starting with underscore")
+    Object fromJSON(Object result, JSONObject json) {
+        if (json == null || json.isNull()) { return null; }
+        int idx = 0;
+        quarkrt.reflect.Class cls = result.getClass();
+        if (cls.name == "List") {
+            List<Object> list = ?result;
+            while (idx < json.size()) {
+                list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
+                idx = idx + 1;
+            }
+            return list;
+        }
+
+        List<quarkrt.reflect.Field> fields = cls.getFields();
+        while (idx < fields.size()) {
+            quarkrt.reflect.Field f = fields[idx];
+            idx = idx + 1;
+            if (f.name.startsWith("_")) {
+                continue;
+            }
+            if (f.getType().name == "String") {
+                String s = json[f.name];
+                result.setField(f.name, s);
+                continue;
+            }
+            if (f.getType().name == "float") {
+                float flt = json[f.name];
+                result.setField(f.name, flt);
+                continue;
+            }
+            if (f.getType().name == "int") {
+                if (!json[f.name].isNull()) {
+                    int i = json[f.name];
+                    result.setField(f.name, i);
+                }
+                continue;
+            }
+            if (f.getType().name == "bool") {
+                if (!json[f.name].isNull()) {
+                    bool b = json[f.name];
+                    result.setField(f.name, b);
+                }
+                continue;
+            }
+            result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
+        }
         return result;
     }
 
-    result["$class"] = cls;
-    List<quarkrt.reflect.Field> fields = cls.getFields();
-    while (idx < fields.size()) {
-        String fieldName = fields[idx].name;
-        if (!fieldName.startsWith("_")) {
-            result[fieldName] = toJSON(obj.getField(fieldName));
-        }
-        idx = idx + 1;
-    }
-    return result;
-}
+    class ResponseHolder extends HTTPHandler {
+        HTTPResponse response;
+        String failure = null;
 
-@doc("deserialize json into provided result object. Skip over fields starting with underscore")
-Object fromJSON(Object result, JSONObject json) {
-    if (json == null || json.isNull()) { return null; }
-    int idx = 0;
-    quarkrt.reflect.Class cls = result.getClass();
-    if (cls.name == "List") {
-        List<Object> list = ?result;
-        while (idx < json.size()) {
-            list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
-            idx = idx + 1;
+        void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+            self.response = response;
         }
-        return list;
+
+        void onHTTPError(HTTPRequest request, String message) {
+            failure = message;
+        }
+
     }
 
-    List<quarkrt.reflect.Field> fields = cls.getFields();
-    while (idx < fields.size()) {
-        quarkrt.reflect.Field f = fields[idx];
-        idx = idx + 1;
-        if (f.name.startsWith("_")) {
-            continue;
+    interface Service {
+
+        String getURL();
+        long getTimeout();
+
+        concurrent.Future rpc(String name, Object message, List<Object> options) {
+            behaviors.RPC rpc = new behaviors.RPC(self, name, options); // this could be allocated once per delegate instantiation
+            return rpc.call(message);
         }
-        if (f.getType().name == "String") {
-            String s = json[f.name];
-            result.setField(f.name, s);
-            continue;
+    }
+
+
+
+    class Client {
+
+        String url;
+        long timeout;
+
+        Client(String url) {
+            self.url = url;
+            self.timeout = 0;
         }
-        if (f.getType().name == "float") {
-            float flt = json[f.name];
-            result.setField(f.name, flt);
-            continue;
+
+        String getURL() { return self.url; }
+        long getTimeout() { return self.timeout; }
+        void setTimeout(long timeout) {
+            self.timeout = timeout;
         }
-        if (f.getType().name == "int") {
-            if (!json[f.name].isNull()) {
-                int i = json[f.name];
-                result.setField(f.name, i);
+
+    }
+
+    class ServerResponder extends concurrent.FutureListener {
+        HTTPRequest request;
+        HTTPResponse response;
+        ServerResponder(HTTPRequest request, HTTPResponse response) {
+            self.request = request;
+            self.response = response;
+        }
+
+        void onFuture(concurrent.Future result) {
+            String error = result.getError();
+            if (error != null) {
+                response.setCode(404);
+            } else {
+                self.response.setBody(toJSON(result).toString());
+                self.response.setCode(200);
             }
-            continue;
-        }
-        if (f.getType().name == "bool") {
-            if (!json[f.name].isNull()) {
-                bool b = json[f.name];
-                result.setField(f.name, b);
-            }
-            continue;
-        }
-        result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
-    }
-    return result;
-}
-
-class ResponseHolder extends HTTPHandler {
-    HTTPResponse response;
-    String failure = null;
-
-    void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
-        self.response = response;
-    }
-
-    void onHTTPError(HTTPRequest request, String message) {
-        failure = message;
-    }
-
-}
-
-interface Service {
-
-    String getURL();
-    long getTimeout();
-
-    concurrent.Future rpc(String name, Object message, List<Object> options) {
-        behaviors.RPC rpc = new behaviors.RPC(self, name, options); // this could be allocated once per delegate instantiation
-        return rpc.call(message);
-    }
-}
-
-
-
-class Client {
-
-    String url;
-    long timeout;
-
-    Client(String url) {
-        self.url = url;
-        self.timeout = 0;
-    }
-
-    String getURL() { return self.url; }
-    long getTimeout() { return self.timeout; }
-    void setTimeout(long timeout) {
-        self.timeout = timeout;
-    }
-
-}
-
-class ServerResponder extends concurrent.FutureListener {
-    HTTPRequest request;
-    HTTPResponse response;
-    ServerResponder(HTTPRequest request, HTTPResponse response) {
-        self.request = request;
-        self.response = response;
-    }
-
-    void onFuture(concurrent.Future result) {
-        String error = result.getError();
-        if (error != null) {
-            response.setCode(404);
-        } else {
-            self.response.setBody(toJSON(result).toString());
-            self.response.setCode(200);
-        }
-        concurrent.Context.runtime().respond(request, response);
-    }
-}
-
-class Server<T> extends HTTPServlet {
-
-    T impl;
-
-    Server(T impl) {
-        self.impl = impl;
-    }
-
-    void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
-        String body = request.getBody();
-        JSONObject envelope = body.parseJSON();
-        if (envelope["$method"] == envelope.undefined() ||
-            envelope["rpc"] == envelope.undefined() ||
-            envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
-            response.setBody("Failed to understand request.\n\n" + body + "\n");
-            response.setCode(400);
             concurrent.Context.runtime().respond(request, response);
-        } else {
-            String methodName = envelope["$method"];
-            JSONObject json = envelope["rpc"];
-            // XXX: contexty stuff
-            reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
-            reflect.Class argType = reflect.Class.get(method.parameters[0]);
-            Object arg = argType.construct([]);
-            Object argument = fromJSON(arg, json);
-            concurrent.Future result = ?method.invoke(impl,[argument]);
-            result.onFinished(new ServerResponder(request, response));
-            // XXX: we should also start a timeout here if the impl does not .finish() the result
         }
     }
 
-    void onServletError(String url, String message) {
-        concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + message);
-    }
+    class Server<T> extends HTTPServlet {
 
-}
+        T impl;
+
+        Server(T impl) {
+            self.impl = impl;
+        }
+
+        void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
+            String body = request.getBody();
+            JSONObject envelope = body.parseJSON();
+            if (envelope["$method"] == envelope.undefined() ||
+                envelope["rpc"] == envelope.undefined() ||
+                envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
+                response.setBody("Failed to understand request.\n\n" + body + "\n");
+                response.setCode(400);
+                concurrent.Context.runtime().respond(request, response);
+            } else {
+                String methodName = envelope["$method"];
+                JSONObject json = envelope["rpc"];
+                // XXX: contexty stuff
+                reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
+                reflect.Class argType = reflect.Class.get(method.parameters[0]);
+                Object arg = argType.construct([]);
+                Object argument = fromJSON(arg, json);
+                concurrent.Future result = ?method.invoke(impl,[argument]);
+                result.onFinished(new ServerResponder(request, response));
+                // XXX: we should also start a timeout here if the impl does not .finish() the result
+            }
+        }
+
+        void onServletError(String url, String message) {
+            concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + message);
+        }
+
+    }
 
 package reflect {
 
