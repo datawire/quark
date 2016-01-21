@@ -40,10 +40,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
 {% endblock %}
 
-{# Disable base theme's top+bottom related navs; we have our own in sidebar #}
-{#%- block relbar1 %#}{#% endblock %#}
 {%- block relbar1 %}{{ relbar_custom() }}{% endblock %}
-{%- block relbar2 %}{% endblock %}
+{%- block relbar2 %}{{ relbar_custom() }}{% endblock %}
 
 {%- block footer %}
     <div class="footer">
