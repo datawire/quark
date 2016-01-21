@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 #
 # Copyright 2015 datawire. All rights reserved.
 #
@@ -14,11 +14,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+"""
+Usage:
+  compare [options] [CMPFILE ...]
+  compare -h | --help
+
+CMPFILE are filenames that end with .cmp
+
+Options:
+  -h --help          Show this screen
+  -p --pattern PAT   Only present paths matching this glob pattern [default: *]
+  -f --force         Assume "yes" for every comparison
+"""
+
 import sys
 import os
 import subprocess
 import filecmp
 import tempfile
+import fnmatch
+
+from docopt import docopt
 
 
 # Copy-pasta from datawire-common/dw
@@ -37,6 +53,11 @@ CLS = csi(2, "J", 1, 1, "H")
 RED = csi(1, 91, "m")
 PURPLE = csi(1, 95, "m")
 RESET = csi(0, "m")
+
+try:
+    rows, columns = map(int, subprocess.check_output("stty size".split()).split())
+except Exception:
+    rows, columns = 25, 80
 
 
 def ansi(mode, st):
@@ -65,23 +86,11 @@ def ignorable(filename):
 
 def collect_comparisons(dcmp, result):
     # left is expected, right is output
-    for filename in dcmp.diff_files:
+    for filename in dcmp.diff_files + dcmp.left_only + dcmp.right_only:
         if ignorable(filename):
             continue
         result.append((relpath(os.path.join(dcmp.left, filename)),
                        relpath(os.path.join(dcmp.right, filename))))
-    for filename in dcmp.left_only:
-        if ignorable(filename):
-            continue
-        fullname = relpath(os.path.join(dcmp.left, filename))
-        if os.path.isfile(fullname):
-            result.append((fullname, None))
-    for filename in dcmp.right_only:
-        if ignorable(filename):
-            continue
-        fullname = relpath(os.path.join(dcmp.right, filename))
-        if os.path.isfile(fullname):
-            result.append((None, fullname))
     for common_dirname, common_sub_dcmp in dcmp.subdirs.items():
         if common_dirname == "target":
             continue
@@ -113,51 +122,94 @@ def find_different_files():
     return result
 
 
-def main():
-    names = sys.argv[1:]
-    if names and names[0] == "-f":
-        force = True
-        names.pop()
-    else:
-        force = False
+def main(options):
+    names = options["CMPFILE"]
+    force = options["--force"]
+    pattern = options["--pattern"]
 
     if names:
         to_compare = [(path[:-4], path) for path in names]
     else:
         to_compare = find_cmp_files() + find_different_files()
 
-    for expected, output in to_compare:
-        if force:
-            os.system("mv %s %s" % (output, expected))
+    # Pre-filter so len(to_compare) can be used for progress indicator
+    to_compare = [(expected, output) for expected, output in to_compare if fnmatch.fnmatch(output, pattern)]
+
+    for idx, (expected, output) in enumerate(to_compare):
+        if not os.path.exists(expected):
+            ex = None
+        elif os.path.isdir(expected):
+            ex = dir
         else:
+            assert os.path.isfile(expected), expected
+            ex = file
 
-            if expected is not None and output is not None:
-                name = output
-                command = "git diff --no-index %s %s" % (expected, output)
-            elif expected is None:
-                name = output + " (new file)"
-                command = "less %s" % output
-            else:
-                name = expected + " (missing file)"
-                command = "less %s" % expected
+        if not os.path.exists(output):
+            op = None
+        elif os.path.isdir(output):
+            op = dir
+        else:
+            assert os.path.isfile(output), output
+            op = file
 
-            print ansi(CLS, "") + name, ansi(PURPLE, (78 - len(name)) * "=")
-            os.system(command)
+        if ex is None and op is None:             # WTF?
+            assert False, ("both missing", expected, output)
+        elif ex is None and op is file:           # New file in output
+            name = output + " (new file)"
+            show_command = "less %s" % output
+            question = "Add this file?"
+            do_command = "mv %s %s" % (output, expected)
+        elif ex is None and op is dir:            # New directory in output
+            name = output + " (new directory)"
+            show_command = "ls -l %s" % output
+            question = "Add this directory and contents?"
+            do_command = "mv %s %s" % (output, expected)
 
-            if output is not None:
-                st = raw_input("Overwrite this file? y/N/q: ").strip().upper()
-            else:
-                st = raw_input("Erase this file? y/N/q: ").strip().upper()
+        elif ex is file and op is None:           # Expected file not present
+            name = expected + " (missing file)"
+            show_command = "less %s" % expected
+            question = "Remove this file?"
+            do_command = "rm %s" % expected
+        elif ex is file and op is file:           # File has changed
+            name = output
+            show_command = "git diff --no-index %s %s" % (expected, output)
+            question = "Overwrite this file?"
+            do_command = "mv %s %s" % (output, expected)
+        elif ex is file and op is dir:            # File turned into a directory
+            name = output + " (expected file, got directory)"
+            show_command = "ls -l %s %s" % (expected, output)
+            question = "No operation available; y/n are the same."
+            do_command = "echo Doing nothing"
 
+        elif ex is dir and op is None:            # Expected dir not present
+            name = expected + " (missing dir)"
+            show_command = "ls -l %s" % expected
+            question = "Remove this directory?"
+            do_command = "rm -r %s" % expected
+        elif ex is dir and op is file:            # Directory turned into a file
+            name = output + " (expected directory, got file)"
+            show_command = "ls -l %s %s" % (expected, output)
+            question = "No operation available; y/n are the same."
+            do_command = "echo Doing nothing"
+        elif ex is dir and op is dir:             # WTF? Prior code should have recursed!
+            assert False, ("both dirs", expected, output)
+
+        else:                                     # WTF? I don't even...
+            assert False, ("what are", ex, op, expected, output)
+
+        if force and fnmatch.fnmatch(output, pattern):
+            os.system(do_command)
+        else:
+            counter = "%s/%s " % (idx + 1, len(to_compare))
+            print ansi(CLS, "") + counter + name, ansi(PURPLE, (columns - 2 - len(counter + name)) * "=")
+            os.system(show_command)
+            st = raw_input(question + " y/N/q: ").strip().upper()
             if st.startswith("Y"):
-                if output is not None:
-                    os.system("mv %s %s" % (output, expected))
-                else:
-                    os.system("rm %s" % expected)
+                os.system(do_command)
             elif st.startswith("Q"):
                 return
             print
 
 
 if __name__ == '__main__':
-    main()
+    main(docopt(__doc__))
