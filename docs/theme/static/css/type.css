@@ -2,7 +2,6 @@ body {
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: 400;
     font-size: 1.03rem;
-    letter-spacing: 0.01rem;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
