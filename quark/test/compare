@@ -116,7 +116,7 @@ def find_different_files():
             obt = os.path.join(output, backend, test)
             ebt = os.path.join(expected, backend, test)
             if not os.path.exists(ebt):
-                ebt = tempfile.mkdtemp()
+                os.makedirs(ebt)
             dcmp = filecmp.dircmp(ebt, obt, ["target"])  # XXX: should only filter out target for java
             collect_comparisons(dcmp, result)
     return result
