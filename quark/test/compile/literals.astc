@@ -1,4 +1,4 @@
-File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+File(Use(url=builtin.q), Import(Name(builtin)),
 
  Function(Type(Name(void)), Name(test1), Block(
    Local(

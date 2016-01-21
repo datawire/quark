@@ -640,7 +640,7 @@ class ApplyAnnotators:
                         self.modified = True
                     done.add(name)
 
-BUILTIN = os.path.join(os.path.dirname(__file__), "builtin.q")
+BUILTIN = "builtin.q"
 
 def delegate(node):
     ann = [a for a in node.annotations if a.name.text == "delegate"][0];
@@ -963,7 +963,10 @@ class Compiler:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
     def join(self, base, rel):
-        return urllib.basejoin(base, rel)
+        if rel == BUILTIN:
+            return os.path.join(os.path.dirname(__file__), BUILTIN)
+        else:
+            return urllib.basejoin(base, rel)
 
     def read(self, url):
         fd = urllib.urlopen(url)

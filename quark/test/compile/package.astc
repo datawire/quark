@@ -1,4 +1,4 @@
-File(Use(url=/home/rhs/datawire/quark/quark/builtin.q), Import(Name(builtin)),
+File(Use(url=builtin.q), Import(Name(builtin)),
 
  Package(Name(p),
 
