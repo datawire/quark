@@ -45,6 +45,9 @@ class Backend(object):
     def visit_DistUnit(self, du):
         self.dist = du
 
+    def visit_Dependency(self, dep):
+        self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
+
     def visit_Use(self, use):
         name, ver = namever(use.target)
         self.dependencies[name] = use.target
@@ -194,7 +197,16 @@ class Backend(object):
         for path, content in self.entry.root.included.items():
             if path.endswith(self.ext):
                 files_to_emit[path] = content
-        deps = [namever(d) for d in self.dependencies.values()]
+        deps = []  # List of (group, artifact, version)
+        for dep in self.dependencies.values():
+            if isinstance(dep, File):
+                dep_name, dep_ver = namever(dep)
+                deps.append((dep_name, dep_name, dep_ver))
+            elif isinstance(dep, Dependency):
+                if dep.lang.text == self.ext:
+                    deps.append((dep.group, dep.artifact, dep.version))
+            else:
+                assert False, (dep, type(dep))
         files = self.gen.package(name, version, packages, files_to_emit, deps)
         for name, content in files.items():
             path = os.path.join(target, name)

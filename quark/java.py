@@ -85,12 +85,12 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
 """
 
 def format_deps(deps):
-    for name, ver in deps:
+    for group, name, ver in deps:
         yield """    <dependency>
       <groupId>%s</groupId>
       <artifactId>%s</artifactId>
       <version>%s</version>
-    </dependency>""" % (name, name, ver)
+    </dependency>""" % (group, name, ver)
 
 def package(name, version, packages, srcs, deps):
     files = OrderedDict()

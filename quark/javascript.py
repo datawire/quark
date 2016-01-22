@@ -24,7 +24,7 @@ def package(name, version, packages, srcs, deps):
     files.update(srcs)
 
     dependencies = ",\n        ".join(['"datawire-quark-core": "%s"' % __js_runtime_version__] +
-                                      ['"%s": "%s"' % d for d in deps])
+                                      ['"%s": "%s"' % d[1:] for d in deps])
 
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
