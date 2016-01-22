@@ -702,6 +702,8 @@ class Reflector:
         return '"%s"' % self.qtype(texp)
 
     def visit_Type(self, type):
+        if type.file.depth != 0: return
+
         cls = type.resolved.type
         if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
             if cls.name.text not in ("List", "Map"):
@@ -765,6 +767,8 @@ class Reflector:
         return ".".join(self.package(cls.package) + [cls.name.text])
 
     def visit_Class(self, cls):
+        if cls.file.depth != 0: return
+
         if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
             if (cls.package is None and cls.name.text in ("List", "Map") or
                 isinstance(cls, Interface)):
@@ -834,8 +838,12 @@ class Reflector:
             "construct": construct}
 
     def leave_Root(self, root):
+        mdpkg, _ = namever(self.entry)
+        mdpkg += "_md"
+
         self.code = ""
         mdclasses = []
+
         for cls in self.classes:
             qual = self.qual(cls)
             if cls.parameters:
@@ -849,9 +857,6 @@ class Reflector:
 
             uses = self.class_uses.get(cls, OrderedDict([(clsid,
                                                           (cls.resolved, cls, tuple(self.package(cls.package))))]))
-
-            mdpkg, _ = namever(self.entry)
-            mdpkg += "_md"
 
             for clsid, (texp, ucls, pkg) in uses.items():
                 if pkg:
