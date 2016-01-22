@@ -186,8 +186,6 @@ class Dependency(AST):
             self.artifact = second
             self.version = third
 
-        print self.lang, self.group, self.artifact, self.version
-
     @property
     def children(self):
         return []
