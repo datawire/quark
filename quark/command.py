@@ -51,6 +51,7 @@ from glob import glob
 import json
 import os
 import shutil
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -73,7 +74,18 @@ def check(cmd, workdir):
         except (subprocess.CalledProcessError, OSError):
             raise Exception("unable to find %s: %s" % (cmd, msg))
 
+COMMAND_DEFAULTS = {
+    "mvn" : "mvn -q",
+    }
+
+def user_override(command):
+    cmd = command[0]
+    override = os.environ.get("QUARK_%s_COMMAND" % cmd.upper(),
+                              COMMAND_DEFAULTS.get(cmd, cmd))
+    return shlex.split(override) + command[1:]
+
 def call_and_show(stage, workdir, command):
+    command = user_override(command)
     check(command[0], workdir)
     print "quark (%s):" % stage, " ".join(command)
     try:
@@ -152,11 +164,11 @@ def main(args):
     try:
         if "build" in commands:
             if java:
-                call_and_show("build", java_dir, ["mvn", "-q", "compile"])
+                call_and_show("build", java_dir, ["mvn", "compile"])
 
         if "doc" in commands:
             if java:
-                call_and_show("doc", java_dir, ["mvn", "-q", "javadoc:javadoc"])
+                call_and_show("doc", java_dir, ["mvn", "javadoc:javadoc"])
             if python:
                 call_and_show("doc", py_dir, ["python", "setup.py", "-q", "build_sphinx"])
             if javascript:
@@ -166,7 +178,7 @@ def main(args):
 
         if "package" in commands:
             if java:
-                call_and_show("package", java_dir, ["mvn", "-q", "package"])
+                call_and_show("package", java_dir, ["mvn", "package"])
             if python:
                 call_and_show("package", py_dir, ["python", "setup.py", "-q", "bdist_wheel"])
             if javascript:
