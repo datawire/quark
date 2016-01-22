@@ -171,7 +171,40 @@ class Use(AST):
     def copy(self):
         return self.__class__(self.url)
 
+class Dependency(AST):
+
+    fields = ["lang", "group", "artifact", "version"]
+
+    def __init__(self, lang, second, third, fourth_opt):
+        self.lang = lang
+        if fourth_opt:
+            self.group = second
+            self.artifact = third
+            self.version = fourth_opt[0]
+        else:
+            self.group = None
+            self.artifact = second
+            self.version = third
+
+        print self.lang, self.group, self.artifact, self.version
+
+    @property
+    def children(self):
+        return []
+
+    @coder
+    def code(self, coder):
+        if self.group:
+            return "use %s %s %s %s;" % (self.lang, self.group, self.artifact, self.version)
+        else:
+            return "use %s %s %s;" % (self.lang, self.artifact, self.version)
+
+    def copy(self):
+        return self.__class__(self.lang, self.group, self.artifact, [self.version])
+
 class Include(AST):
+
+    fields = ["url"]
 
     def __init__(self, url):
         self.url = url

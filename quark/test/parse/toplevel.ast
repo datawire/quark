@@ -1,0 +1,11 @@
+File(Use(url=builtin.q), Import(Name(builtin)), Include(url=foo.q),
+ Include(url=native.js), Include(url=native.py),
+ Include(url=native_ex/Native.java),
+ Use(url=bar.q),
+ Dependency(lang=javagroup=org.apache.commonsartifact=commons-compressversion=1.9),
+ Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
+ Dependency(lang=pygroup=Noneartifact=requestsversion=2.7),
+
+ DistUnit(Name(toplib)),
+ Import(Name(theTop))
+)

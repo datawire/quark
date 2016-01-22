@@ -81,7 +81,7 @@ class Parser:
     def visit_file(self, node, (toplevels, _, eof)):
         return File(toplevels)
 
-    @g.rule('toplevel = dist_unit / use / include / import / file_definition')
+    @g.rule('toplevel = dist_unit / dependency / use / include / import / file_definition')
     def visit_toplevel(self, node, (top,)):
         return top
 
@@ -92,6 +92,13 @@ class Parser:
     @g.rule(r'version = ~"[0-9a-zA-Z]+(\.[0-9a-zA-Z])+"')
     def visit_version(self, node, children):
         return node.text
+
+    # XXX The url_re parser rule is too permissive. We should define a
+    # more narrow parser rule for the group and artifact fields. Then
+    # we could use the version rule for the version field.
+    @g.rule('dependency = USE name url url url? SEMI')
+    def visit_dependency(self, node, (u, lang, group, artifact, version, s)):
+        return Dependency(lang, group, artifact, version)
 
     @g.rule('use = USE url_re SEMI')
     def visit_use(self, node, (u, url, s)):
@@ -104,6 +111,10 @@ class Parser:
     @g.rule(r'url_re = ~"[^ \t\r\n;]+"')
     def visit_url_re(self, node, children):
         return node.text
+
+    @g.rule('url = _ url_re _')
+    def visit_url(self, node, (pre, url, post)):
+        return url
 
     @g.rule('file_definition = annotation* (package / class / function / macro)')
     def visit_file_definition(self, node, (annotations, (dfn,))):
