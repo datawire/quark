@@ -190,8 +190,12 @@ class Backend(object):
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
 
+        files_to_emit = OrderedDict(self.files)
+        for path, content in self.entry.root.included.items():
+            if path.endswith(self.ext):
+                files_to_emit[path] = content
         deps = [namever(d) for d in self.dependencies.values()]
-        files = self.gen.package(name, version, packages, self.files, deps)
+        files = self.gen.package(name, version, packages, files_to_emit, deps)
         for name, content in files.items():
             path = os.path.join(target, name)
             dir = os.path.dirname(path)
@@ -680,7 +684,7 @@ class Python(Backend):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            command.call_and_show("install", dir, ["pip", "install", "--user", "--upgrade", "dist/%s" % wheel])
+            command.call_and_show("install", dir, ["pip", "install", "--upgrade", "dist/%s" % wheel])
 
 class JavaScript(Backend):
 

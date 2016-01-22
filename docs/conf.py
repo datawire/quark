@@ -23,7 +23,7 @@ except ImportError:
     sys.stderr.write("Could not import bootstrap theme. Is it installed?%s" % os.linesep)
     better_theme = False
 
-__version__ = '0.4.1'
+__version__ = '0.4.2'
 __doc_version__ = '2'
 #__branch__ = '0.3.x'
 #__doc_product_version__ = '0.3'

@@ -1,7 +1,7 @@
 {{{product}}} RPC Support
 =========================
 
-{{{product}}} currently supports one interaction pattern with the most basic request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, write clients in each supported language using the library created from that contract, and generate servers in each supported language using the same library. It will also walk you through how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.
+{{{product}}} currently supports one interaction pattern with a simple request-response interaction where the client sends a single request and the server replies with a single response. This tutorial will show you how to define a simple contract for a Hello World server using that pattern, write clients in each supported language using the library created from that contract, and generate servers in each supported language using the same library. It will also walk you through how to package everything together into a working end-to-end example that sends simple requests from clients with direct responses to those requests from a server.
 
 In order to use RPC with {{{product}}} you must have {{{product}}} installed and the {{{product}}} integration matching the development environment you're using to write your code (the Netty integration will be installed automatically as needed). The {{{product}}} core runtime is also needed but will be installed automatically by the integrations as a dependency.
 

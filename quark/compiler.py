@@ -36,6 +36,7 @@ class Root(AST):
         self.count = 0
         self.env = {}
         self.imports = []
+        self.included = OrderedDict()
 
     def add(self, file):
         self.files.append(file)
@@ -701,6 +702,8 @@ class Reflector:
         return '"%s"' % self.qtype(texp)
 
     def visit_Type(self, type):
+        if type.file.depth != 0: return
+
         cls = type.resolved.type
         if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
             if cls.name.text not in ("List", "Map"):
@@ -765,6 +768,8 @@ class Reflector:
         return ".".join(self.package(cls.package) + [cls.name.text])
 
     def visit_Class(self, cls):
+        if cls.file.depth != 0: return
+
         if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
             if (cls.package is None and cls.name.text in ("List", "Map") or
                 isinstance(cls, Interface)):
@@ -834,8 +839,12 @@ class Reflector:
             "construct": construct}
 
     def leave_Root(self, root):
+        mdpkg, _ = namever(self.entry)
+        mdpkg += "_md"
+
         self.code = ""
         mdclasses = []
+
         for cls in self.classes:
             qual = self.qual(cls)
             if cls.parameters:
@@ -849,9 +858,6 @@ class Reflector:
 
             uses = self.class_uses.get(cls, OrderedDict([(clsid,
                                                           (cls.resolved, cls, tuple(self.package(cls.package))))]))
-
-            mdpkg, _ = namever(self.entry)
-            mdpkg += "_md"
 
             for clsid, (texp, ucls, pkg) in uses.items():
                 if pkg:
@@ -888,7 +894,6 @@ class Compiler:
         self.generated = OrderedDict()
         self.annotator("delegate", delegate)
         self.parsed = set()
-        self.included = OrderedDict()
         self.dependencies = []
 
     def annotator(self, name, annotator):
@@ -942,8 +947,8 @@ class Compiler:
             qurl = self.join(url, inc.url)
             if qurl.endswith(".q"):
                 self.perform_quark_include(qurl, inc, depth)
-            elif qurl not in self.included:
-                self.included[qurl] = self.read(qurl)
+            else:
+                self.perform_native_include(qurl, inc, depth)
         return file
 
     def perform_use(self, qurl, use, depth):
@@ -960,6 +965,15 @@ class Compiler:
             self.parsed.add(qurl)
             try:
                 self.urlparse(qurl, depth=depth, top=False)
+            except IOError:
+                raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
+
+    def perform_native_include(self, qurl, inc, depth):
+        if depth != 0:
+            return
+        if qurl not in self.root.included:
+            try:
+                self.root.included[qurl] = self.read(qurl)
             except IOError:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
