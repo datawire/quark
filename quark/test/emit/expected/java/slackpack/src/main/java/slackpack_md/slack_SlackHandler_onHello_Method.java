@@ -1,6 +1,6 @@
 package slackpack_md;
 
-public class slack_SlackHandler_onHello_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class slack_SlackHandler_onHello_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_SlackHandler_onHello_Method() {
         super("builtin.void", "onHello", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"slack.event.Hello"})));
     }

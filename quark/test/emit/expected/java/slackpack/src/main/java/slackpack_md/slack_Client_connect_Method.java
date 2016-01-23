@@ -1,6 +1,6 @@
 package slackpack_md;
 
-public class slack_Client_connect_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class slack_Client_connect_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_connect_Method() {
         super("builtin.void", "connect", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

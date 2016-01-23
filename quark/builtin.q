@@ -448,21 +448,21 @@ namespace builtin {
         reflect.Class cls = obj.getClass();
         int idx = 0;
 
-        if (cls.name == "String") {
+        if (cls.name == "builtin.String") {
             result.setString(?obj);
             return result;
         }
 
-        if (cls.name == "byte" ||
-            cls.name == "short" ||
-            cls.name == "int" ||
-            cls.name == "long" ||
-            cls.name == "float") {
+        if (cls.name == "builtin.byte" ||
+            cls.name == "builtin.short" ||
+            cls.name == "builtin.int" ||
+            cls.name == "builtin.long" ||
+            cls.name == "builtin.float") {
             result.setNumber(obj);
             return result;
         }
 
-        if (cls.name == "List") {
+        if (cls.name == "builtin.List") {
             result.setList();
             List<Object> list = ?obj;
             while (idx < list.size()) {
@@ -472,7 +472,7 @@ namespace builtin {
             return result;
         }
 
-        if (cls.name == "Map") {
+        if (cls.name == "builtin.Map") {
             result.setObject();
             Map<String,Object> map = ?obj;
             // XXX: need more JSON APIs to actually finish this
@@ -496,7 +496,7 @@ namespace builtin {
         if (json == null || json.isNull()) { return null; }
         int idx = 0;
         reflect.Class cls = result.getClass();
-        if (cls.name == "List") {
+        if (cls.name == "builtin.List") {
             List<Object> list = ?result;
             while (idx < json.size()) {
                 list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));

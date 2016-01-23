@@ -1,11 +1,11 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 
 
-class pkg_C_event1_Method(reflect.Method):
+class pkg_C_event1_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_C_event1_Method, self).__init__(u"builtin.void", u"event1", _List([]));
@@ -24,9 +24,9 @@ class pkg_C_event1_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_C(reflect.Class):
+class pkg_C(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_C, self).__init__(u"pkg.C");

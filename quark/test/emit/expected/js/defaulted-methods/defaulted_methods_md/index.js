@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function pkg_A_foo_Method() {
     pkg_A_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_A_foo_Method = pkg_A_foo_Method;
-_qrt.util.inherits(pkg_A_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_A_foo_Method, builtin.reflect.Method);
 
 function pkg_A_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_A_foo_Method.prototype.__init_fields__ = pkg_A_foo_Method__init_fields__;
 
@@ -43,10 +43,10 @@ function pkg_A_bar_Method() {
     pkg_A_bar_Method.super_.call(this, "builtin.void", "bar", []);
 }
 exports.pkg_A_bar_Method = pkg_A_bar_Method;
-_qrt.util.inherits(pkg_A_bar_Method, reflect.Method);
+_qrt.util.inherits(pkg_A_bar_Method, builtin.reflect.Method);
 
 function pkg_A_bar_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_A_bar_Method.prototype.__init_fields__ = pkg_A_bar_Method__init_fields__;
 
@@ -80,10 +80,10 @@ function pkg_A() {
     (this).methods = [new pkg_A_foo_Method(), new pkg_A_bar_Method()];
 }
 exports.pkg_A = pkg_A;
-_qrt.util.inherits(pkg_A, reflect.Class);
+_qrt.util.inherits(pkg_A, builtin.reflect.Class);
 
 function pkg_A__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_A.prototype.__init_fields__ = pkg_A__init_fields__;
 pkg_A.singleton = new pkg_A();
@@ -112,10 +112,10 @@ function pkg_B_bar_Method() {
     pkg_B_bar_Method.super_.call(this, "builtin.void", "bar", []);
 }
 exports.pkg_B_bar_Method = pkg_B_bar_Method;
-_qrt.util.inherits(pkg_B_bar_Method, reflect.Method);
+_qrt.util.inherits(pkg_B_bar_Method, builtin.reflect.Method);
 
 function pkg_B_bar_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_B_bar_Method.prototype.__init_fields__ = pkg_B_bar_Method__init_fields__;
 
@@ -149,10 +149,10 @@ function pkg_B() {
     (this).methods = [new pkg_B_bar_Method()];
 }
 exports.pkg_B = pkg_B;
-_qrt.util.inherits(pkg_B, reflect.Class);
+_qrt.util.inherits(pkg_B, builtin.reflect.Class);
 
 function pkg_B__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_B.prototype.__init_fields__ = pkg_B__init_fields__;
 pkg_B.singleton = new pkg_B();
@@ -181,10 +181,10 @@ function pkg_C_foo_Method() {
     pkg_C_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_C_foo_Method = pkg_C_foo_Method;
-_qrt.util.inherits(pkg_C_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_C_foo_Method, builtin.reflect.Method);
 
 function pkg_C_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_C_foo_Method.prototype.__init_fields__ = pkg_C_foo_Method__init_fields__;
 
@@ -218,10 +218,10 @@ function pkg_C() {
     (this).methods = [new pkg_C_foo_Method()];
 }
 exports.pkg_C = pkg_C;
-_qrt.util.inherits(pkg_C, reflect.Class);
+_qrt.util.inherits(pkg_C, builtin.reflect.Class);
 
 function pkg_C__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_C.prototype.__init_fields__ = pkg_C__init_fields__;
 pkg_C.singleton = new pkg_C();
@@ -250,10 +250,10 @@ function pkg_T1_foo_Method() {
     pkg_T1_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_T1_foo_Method = pkg_T1_foo_Method;
-_qrt.util.inherits(pkg_T1_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_T1_foo_Method, builtin.reflect.Method);
 
 function pkg_T1_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_T1_foo_Method.prototype.__init_fields__ = pkg_T1_foo_Method__init_fields__;
 
@@ -277,6 +277,39 @@ pkg_T1_foo_Method.prototype._getField = pkg_T1_foo_Method__getField;
 function pkg_T1_foo_Method__setField(name, value) {}
 pkg_T1_foo_Method.prototype._setField = pkg_T1_foo_Method__setField;
 
+// CLASS pkg_T1_bar_Method
+
+function pkg_T1_bar_Method() {
+    pkg_T1_bar_Method.super_.call(this, "builtin.void", "bar", []);
+}
+exports.pkg_T1_bar_Method = pkg_T1_bar_Method;
+_qrt.util.inherits(pkg_T1_bar_Method, builtin.reflect.Method);
+
+function pkg_T1_bar_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T1_bar_Method.prototype.__init_fields__ = pkg_T1_bar_Method__init_fields__;
+
+function pkg_T1_bar_Method_invoke(object, args) {
+    var obj = object;
+    (obj).bar();
+    return null;
+}
+pkg_T1_bar_Method.prototype.invoke = pkg_T1_bar_Method_invoke;
+
+function pkg_T1_bar_Method__getClass() {
+    return null;
+}
+pkg_T1_bar_Method.prototype._getClass = pkg_T1_bar_Method__getClass;
+
+function pkg_T1_bar_Method__getField(name) {
+    return null;
+}
+pkg_T1_bar_Method.prototype._getField = pkg_T1_bar_Method__getField;
+
+function pkg_T1_bar_Method__setField(name, value) {}
+pkg_T1_bar_Method.prototype._setField = pkg_T1_bar_Method__setField;
+
 // CLASS pkg_T1
 
 function pkg_T1() {
@@ -284,13 +317,13 @@ function pkg_T1() {
     (this).name = "T1";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_T1_foo_Method()];
+    (this).methods = [new pkg_T1_foo_Method(), new pkg_T1_bar_Method()];
 }
 exports.pkg_T1 = pkg_T1;
-_qrt.util.inherits(pkg_T1, reflect.Class);
+_qrt.util.inherits(pkg_T1, builtin.reflect.Class);
 
 function pkg_T1__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_T1.prototype.__init_fields__ = pkg_T1__init_fields__;
 pkg_T1.singleton = new pkg_T1();
@@ -319,10 +352,10 @@ function pkg_T2_foo_Method() {
     pkg_T2_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_T2_foo_Method = pkg_T2_foo_Method;
-_qrt.util.inherits(pkg_T2_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_T2_foo_Method, builtin.reflect.Method);
 
 function pkg_T2_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_T2_foo_Method.prototype.__init_fields__ = pkg_T2_foo_Method__init_fields__;
 
@@ -346,6 +379,39 @@ pkg_T2_foo_Method.prototype._getField = pkg_T2_foo_Method__getField;
 function pkg_T2_foo_Method__setField(name, value) {}
 pkg_T2_foo_Method.prototype._setField = pkg_T2_foo_Method__setField;
 
+// CLASS pkg_T2_bar_Method
+
+function pkg_T2_bar_Method() {
+    pkg_T2_bar_Method.super_.call(this, "builtin.void", "bar", []);
+}
+exports.pkg_T2_bar_Method = pkg_T2_bar_Method;
+_qrt.util.inherits(pkg_T2_bar_Method, builtin.reflect.Method);
+
+function pkg_T2_bar_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T2_bar_Method.prototype.__init_fields__ = pkg_T2_bar_Method__init_fields__;
+
+function pkg_T2_bar_Method_invoke(object, args) {
+    var obj = object;
+    (obj).bar();
+    return null;
+}
+pkg_T2_bar_Method.prototype.invoke = pkg_T2_bar_Method_invoke;
+
+function pkg_T2_bar_Method__getClass() {
+    return null;
+}
+pkg_T2_bar_Method.prototype._getClass = pkg_T2_bar_Method__getClass;
+
+function pkg_T2_bar_Method__getField(name) {
+    return null;
+}
+pkg_T2_bar_Method.prototype._getField = pkg_T2_bar_Method__getField;
+
+function pkg_T2_bar_Method__setField(name, value) {}
+pkg_T2_bar_Method.prototype._setField = pkg_T2_bar_Method__setField;
+
 // CLASS pkg_T2
 
 function pkg_T2() {
@@ -353,13 +419,13 @@ function pkg_T2() {
     (this).name = "T2";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_T2_foo_Method()];
+    (this).methods = [new pkg_T2_foo_Method(), new pkg_T2_bar_Method()];
 }
 exports.pkg_T2 = pkg_T2;
-_qrt.util.inherits(pkg_T2, reflect.Class);
+_qrt.util.inherits(pkg_T2, builtin.reflect.Class);
 
 function pkg_T2__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_T2.prototype.__init_fields__ = pkg_T2__init_fields__;
 pkg_T2.singleton = new pkg_T2();
@@ -388,10 +454,10 @@ function pkg_T3_foo_Method() {
     pkg_T3_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_T3_foo_Method = pkg_T3_foo_Method;
-_qrt.util.inherits(pkg_T3_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_T3_foo_Method, builtin.reflect.Method);
 
 function pkg_T3_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_T3_foo_Method.prototype.__init_fields__ = pkg_T3_foo_Method__init_fields__;
 
@@ -415,6 +481,39 @@ pkg_T3_foo_Method.prototype._getField = pkg_T3_foo_Method__getField;
 function pkg_T3_foo_Method__setField(name, value) {}
 pkg_T3_foo_Method.prototype._setField = pkg_T3_foo_Method__setField;
 
+// CLASS pkg_T3_bar_Method
+
+function pkg_T3_bar_Method() {
+    pkg_T3_bar_Method.super_.call(this, "builtin.void", "bar", []);
+}
+exports.pkg_T3_bar_Method = pkg_T3_bar_Method;
+_qrt.util.inherits(pkg_T3_bar_Method, builtin.reflect.Method);
+
+function pkg_T3_bar_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T3_bar_Method.prototype.__init_fields__ = pkg_T3_bar_Method__init_fields__;
+
+function pkg_T3_bar_Method_invoke(object, args) {
+    var obj = object;
+    (obj).bar();
+    return null;
+}
+pkg_T3_bar_Method.prototype.invoke = pkg_T3_bar_Method_invoke;
+
+function pkg_T3_bar_Method__getClass() {
+    return null;
+}
+pkg_T3_bar_Method.prototype._getClass = pkg_T3_bar_Method__getClass;
+
+function pkg_T3_bar_Method__getField(name) {
+    return null;
+}
+pkg_T3_bar_Method.prototype._getField = pkg_T3_bar_Method__getField;
+
+function pkg_T3_bar_Method__setField(name, value) {}
+pkg_T3_bar_Method.prototype._setField = pkg_T3_bar_Method__setField;
+
 // CLASS pkg_T3
 
 function pkg_T3() {
@@ -422,13 +521,13 @@ function pkg_T3() {
     (this).name = "T3";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_T3_foo_Method()];
+    (this).methods = [new pkg_T3_foo_Method(), new pkg_T3_bar_Method()];
 }
 exports.pkg_T3 = pkg_T3;
-_qrt.util.inherits(pkg_T3, reflect.Class);
+_qrt.util.inherits(pkg_T3, builtin.reflect.Class);
 
 function pkg_T3__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_T3.prototype.__init_fields__ = pkg_T3__init_fields__;
 pkg_T3.singleton = new pkg_T3();
@@ -451,6 +550,72 @@ function pkg_T3__setField(name, value) {}
 pkg_T3.prototype._setField = pkg_T3__setField;
 
 
+// CLASS pkg_T4_foo_Method
+
+function pkg_T4_foo_Method() {
+    pkg_T4_foo_Method.super_.call(this, "builtin.void", "foo", []);
+}
+exports.pkg_T4_foo_Method = pkg_T4_foo_Method;
+_qrt.util.inherits(pkg_T4_foo_Method, builtin.reflect.Method);
+
+function pkg_T4_foo_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T4_foo_Method.prototype.__init_fields__ = pkg_T4_foo_Method__init_fields__;
+
+function pkg_T4_foo_Method_invoke(object, args) {
+    var obj = object;
+    (obj).foo();
+    return null;
+}
+pkg_T4_foo_Method.prototype.invoke = pkg_T4_foo_Method_invoke;
+
+function pkg_T4_foo_Method__getClass() {
+    return null;
+}
+pkg_T4_foo_Method.prototype._getClass = pkg_T4_foo_Method__getClass;
+
+function pkg_T4_foo_Method__getField(name) {
+    return null;
+}
+pkg_T4_foo_Method.prototype._getField = pkg_T4_foo_Method__getField;
+
+function pkg_T4_foo_Method__setField(name, value) {}
+pkg_T4_foo_Method.prototype._setField = pkg_T4_foo_Method__setField;
+
+// CLASS pkg_T4_bar_Method
+
+function pkg_T4_bar_Method() {
+    pkg_T4_bar_Method.super_.call(this, "builtin.void", "bar", []);
+}
+exports.pkg_T4_bar_Method = pkg_T4_bar_Method;
+_qrt.util.inherits(pkg_T4_bar_Method, builtin.reflect.Method);
+
+function pkg_T4_bar_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T4_bar_Method.prototype.__init_fields__ = pkg_T4_bar_Method__init_fields__;
+
+function pkg_T4_bar_Method_invoke(object, args) {
+    var obj = object;
+    (obj).bar();
+    return null;
+}
+pkg_T4_bar_Method.prototype.invoke = pkg_T4_bar_Method_invoke;
+
+function pkg_T4_bar_Method__getClass() {
+    return null;
+}
+pkg_T4_bar_Method.prototype._getClass = pkg_T4_bar_Method__getClass;
+
+function pkg_T4_bar_Method__getField(name) {
+    return null;
+}
+pkg_T4_bar_Method.prototype._getField = pkg_T4_bar_Method__getField;
+
+function pkg_T4_bar_Method__setField(name, value) {}
+pkg_T4_bar_Method.prototype._setField = pkg_T4_bar_Method__setField;
+
 // CLASS pkg_T4
 
 function pkg_T4() {
@@ -458,13 +623,13 @@ function pkg_T4() {
     (this).name = "T4";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [];
+    (this).methods = [new pkg_T4_foo_Method(), new pkg_T4_bar_Method()];
 }
 exports.pkg_T4 = pkg_T4;
-_qrt.util.inherits(pkg_T4, reflect.Class);
+_qrt.util.inherits(pkg_T4, builtin.reflect.Class);
 
 function pkg_T4__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_T4.prototype.__init_fields__ = pkg_T4__init_fields__;
 pkg_T4.singleton = new pkg_T4();
@@ -493,10 +658,10 @@ function pkg_T5_foo_Method() {
     pkg_T5_foo_Method.super_.call(this, "builtin.void", "foo", []);
 }
 exports.pkg_T5_foo_Method = pkg_T5_foo_Method;
-_qrt.util.inherits(pkg_T5_foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_T5_foo_Method, builtin.reflect.Method);
 
 function pkg_T5_foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_T5_foo_Method.prototype.__init_fields__ = pkg_T5_foo_Method__init_fields__;
 
@@ -520,6 +685,39 @@ pkg_T5_foo_Method.prototype._getField = pkg_T5_foo_Method__getField;
 function pkg_T5_foo_Method__setField(name, value) {}
 pkg_T5_foo_Method.prototype._setField = pkg_T5_foo_Method__setField;
 
+// CLASS pkg_T5_bar_Method
+
+function pkg_T5_bar_Method() {
+    pkg_T5_bar_Method.super_.call(this, "builtin.void", "bar", []);
+}
+exports.pkg_T5_bar_Method = pkg_T5_bar_Method;
+_qrt.util.inherits(pkg_T5_bar_Method, builtin.reflect.Method);
+
+function pkg_T5_bar_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_T5_bar_Method.prototype.__init_fields__ = pkg_T5_bar_Method__init_fields__;
+
+function pkg_T5_bar_Method_invoke(object, args) {
+    var obj = object;
+    (obj).bar();
+    return null;
+}
+pkg_T5_bar_Method.prototype.invoke = pkg_T5_bar_Method_invoke;
+
+function pkg_T5_bar_Method__getClass() {
+    return null;
+}
+pkg_T5_bar_Method.prototype._getClass = pkg_T5_bar_Method__getClass;
+
+function pkg_T5_bar_Method__getField(name) {
+    return null;
+}
+pkg_T5_bar_Method.prototype._getField = pkg_T5_bar_Method__getField;
+
+function pkg_T5_bar_Method__setField(name, value) {}
+pkg_T5_bar_Method.prototype._setField = pkg_T5_bar_Method__setField;
+
 // CLASS pkg_T5
 
 function pkg_T5() {
@@ -527,13 +725,13 @@ function pkg_T5() {
     (this).name = "T5";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_T5_foo_Method()];
+    (this).methods = [new pkg_T5_foo_Method(), new pkg_T5_bar_Method()];
 }
 exports.pkg_T5 = pkg_T5;
-_qrt.util.inherits(pkg_T5, reflect.Class);
+_qrt.util.inherits(pkg_T5, builtin.reflect.Class);
 
 function pkg_T5__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_T5.prototype.__init_fields__ = pkg_T5__init_fields__;
 pkg_T5.singleton = new pkg_T5();

@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function pkg_Foo_Object__foo_Method() {
     pkg_Foo_Object__foo_Method.super_.call(this, "Object", "foo", []);
 }
 exports.pkg_Foo_Object__foo_Method = pkg_Foo_Object__foo_Method;
-_qrt.util.inherits(pkg_Foo_Object__foo_Method, reflect.Method);
+_qrt.util.inherits(pkg_Foo_Object__foo_Method, builtin.reflect.Method);
 
 function pkg_Foo_Object__foo_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_Foo_Object__foo_Method.prototype.__init_fields__ = pkg_Foo_Object__foo_Method__init_fields__;
 
@@ -42,10 +42,10 @@ function pkg_Foo_Object__get_Method() {
     pkg_Foo_Object__get_Method.super_.call(this, "Object", "get", []);
 }
 exports.pkg_Foo_Object__get_Method = pkg_Foo_Object__get_Method;
-_qrt.util.inherits(pkg_Foo_Object__get_Method, reflect.Method);
+_qrt.util.inherits(pkg_Foo_Object__get_Method, builtin.reflect.Method);
 
 function pkg_Foo_Object__get_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_Foo_Object__get_Method.prototype.__init_fields__ = pkg_Foo_Object__get_Method__init_fields__;
 
@@ -78,10 +78,10 @@ function pkg_Foo_Object_() {
     (this).methods = [new pkg_Foo_Object__foo_Method(), new pkg_Foo_Object__get_Method()];
 }
 exports.pkg_Foo_Object_ = pkg_Foo_Object_;
-_qrt.util.inherits(pkg_Foo_Object_, reflect.Class);
+_qrt.util.inherits(pkg_Foo_Object_, builtin.reflect.Class);
 
 function pkg_Foo_Object___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_Foo_Object_.prototype.__init_fields__ = pkg_Foo_Object___init_fields__;
 pkg_Foo_Object_.singleton = new pkg_Foo_Object_();
@@ -110,10 +110,10 @@ function pkg_StringFoo_get_Method() {
     pkg_StringFoo_get_Method.super_.call(this, "builtin.String", "get", []);
 }
 exports.pkg_StringFoo_get_Method = pkg_StringFoo_get_Method;
-_qrt.util.inherits(pkg_StringFoo_get_Method, reflect.Method);
+_qrt.util.inherits(pkg_StringFoo_get_Method, builtin.reflect.Method);
 
 function pkg_StringFoo_get_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_StringFoo_get_Method.prototype.__init_fields__ = pkg_StringFoo_get_Method__init_fields__;
 
@@ -136,6 +136,38 @@ pkg_StringFoo_get_Method.prototype._getField = pkg_StringFoo_get_Method__getFiel
 function pkg_StringFoo_get_Method__setField(name, value) {}
 pkg_StringFoo_get_Method.prototype._setField = pkg_StringFoo_get_Method__setField;
 
+// CLASS pkg_StringFoo_foo_Method
+
+function pkg_StringFoo_foo_Method() {
+    pkg_StringFoo_foo_Method.super_.call(this, "builtin.String", "foo", []);
+}
+exports.pkg_StringFoo_foo_Method = pkg_StringFoo_foo_Method;
+_qrt.util.inherits(pkg_StringFoo_foo_Method, builtin.reflect.Method);
+
+function pkg_StringFoo_foo_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_StringFoo_foo_Method.prototype.__init_fields__ = pkg_StringFoo_foo_Method__init_fields__;
+
+function pkg_StringFoo_foo_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).foo();
+}
+pkg_StringFoo_foo_Method.prototype.invoke = pkg_StringFoo_foo_Method_invoke;
+
+function pkg_StringFoo_foo_Method__getClass() {
+    return null;
+}
+pkg_StringFoo_foo_Method.prototype._getClass = pkg_StringFoo_foo_Method__getClass;
+
+function pkg_StringFoo_foo_Method__getField(name) {
+    return null;
+}
+pkg_StringFoo_foo_Method.prototype._getField = pkg_StringFoo_foo_Method__getField;
+
+function pkg_StringFoo_foo_Method__setField(name, value) {}
+pkg_StringFoo_foo_Method.prototype._setField = pkg_StringFoo_foo_Method__setField;
+
 // CLASS pkg_StringFoo
 
 function pkg_StringFoo() {
@@ -143,13 +175,13 @@ function pkg_StringFoo() {
     (this).name = "StringFoo";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_StringFoo_get_Method()];
+    (this).methods = [new pkg_StringFoo_get_Method(), new pkg_StringFoo_foo_Method()];
 }
 exports.pkg_StringFoo = pkg_StringFoo;
-_qrt.util.inherits(pkg_StringFoo, reflect.Class);
+_qrt.util.inherits(pkg_StringFoo, builtin.reflect.Class);
 
 function pkg_StringFoo__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_StringFoo.prototype.__init_fields__ = pkg_StringFoo__init_fields__;
 pkg_StringFoo.singleton = new pkg_StringFoo();
@@ -178,14 +210,14 @@ function pkg_Box_builtin_String_() {
     pkg_Box_builtin_String_.super_.call(this, "pkg.Box<builtin.String>");
     (this).name = "Box";
     (this).parameters = ["builtin.String"];
-    (this).fields = [new reflect.Field("builtin.String", "contents")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [];
 }
 exports.pkg_Box_builtin_String_ = pkg_Box_builtin_String_;
-_qrt.util.inherits(pkg_Box_builtin_String_, reflect.Class);
+_qrt.util.inherits(pkg_Box_builtin_String_, builtin.reflect.Class);
 
 function pkg_Box_builtin_String___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_Box_builtin_String_.prototype.__init_fields__ = pkg_Box_builtin_String___init_fields__;
 pkg_Box_builtin_String_.singleton = new pkg_Box_builtin_String_();
@@ -214,14 +246,14 @@ function pkg_StringBox() {
     pkg_StringBox.super_.call(this, "pkg.StringBox");
     (this).name = "StringBox";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "contents")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [];
 }
 exports.pkg_StringBox = pkg_StringBox;
-_qrt.util.inherits(pkg_StringBox, reflect.Class);
+_qrt.util.inherits(pkg_StringBox, builtin.reflect.Class);
 
 function pkg_StringBox__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_StringBox.prototype.__init_fields__ = pkg_StringBox__init_fields__;
 pkg_StringBox.singleton = new pkg_StringBox();

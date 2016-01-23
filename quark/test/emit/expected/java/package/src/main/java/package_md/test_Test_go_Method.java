@@ -1,6 +1,6 @@
 package package_md;
 
-public class test_Test_go_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class test_Test_go_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public test_Test_go_Method() {
         super("builtin.void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

@@ -1,11 +1,11 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 
 
-class test_Test_go_Method(reflect.Method):
+class test_Test_go_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(test_Test_go_Method, self).__init__(u"builtin.void", u"go", _List([]));
@@ -24,15 +24,15 @@ class test_Test_go_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class test_Test(reflect.Class):
+class test_Test(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(test_Test, self).__init__(u"test.Test");
         (self).name = u"Test"
         (self).parameters = _List([])
-        (self).fields = _List([reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
         (self).methods = _List([test_Test_go_Method()])
 
     def construct(self, args):
@@ -48,9 +48,9 @@ class test_Test(reflect.Class):
         pass
 test_Test.singleton = test_Test()
 
-class test_test_Test_go_Method(reflect.Method):
+class test_test_Test_go_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(test_test_Test_go_Method, self).__init__(u"builtin.void", u"go", _List([]));
@@ -69,15 +69,15 @@ class test_test_Test_go_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class test_test_Test(reflect.Class):
+class test_test_Test(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(test_test_Test, self).__init__(u"test.test.Test");
         (self).name = u"Test"
         (self).parameters = _List([])
-        (self).fields = _List([reflect.Field(u"builtin.int", u"size")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"size")])
         (self).methods = _List([test_test_Test_go_Method()])
 
     def construct(self, args):

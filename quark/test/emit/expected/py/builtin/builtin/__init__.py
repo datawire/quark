@@ -1,11 +1,16 @@
 from quark_runtime import *
 
 import reflect
+import behaviors
+import concurrent
 import builtin_md
 
 
 
 def toJSON(obj):
+    """
+    Serializes object tree into JSON. skips over fields starting with underscore
+    """
     result = _JSONObject();
     if ((obj) == (None)):
         (result).setNull();
@@ -38,30 +43,39 @@ def toJSON(obj):
     (result).setObjectItem((u"$class"), ((_JSONObject()).setString((cls).id)));
     fields = (cls).getFields();
     while ((idx) < (len(fields))):
-        (result).setObjectItem((((fields)[idx]).name), (toJSON((obj)._getField(((fields)[idx]).name))));
+        fieldName = ((fields)[idx]).name;
+        if (not ((fieldName).startswith(u"_"))):
+            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName))));
+
         idx = (idx) + (1)
 
     return result
 
 
-def fromJSON(cls, json):
+def fromJSON(result, json):
+    """
+    deserialize json into provided result object. Skip over fields starting with underscore
+    """
     if (((json) == (None)) or ((json).isNull())):
         return None
 
     idx = 0;
+    cls = reflect.Class.get(_getClass(result));
     if (((cls).name) == (u"builtin.List")):
-        list = (cls).construct(_List([]));
+        list = result;
         while ((idx) < ((json).size())):
-            (list).append(fromJSON(((cls).parameters)[0], (json).getListItem(idx)));
+            (list).append(fromJSON((((cls).parameters)[0]).construct(_List([])), (json).getListItem(idx)));
             idx = (idx) + (1)
 
         return list
 
     fields = (cls).getFields();
-    result = (cls).construct(_List([]));
     while ((idx) < (len(fields))):
         f = (fields)[idx];
         idx = (idx) + (1)
+        if (((f).name).startswith(u"_")):
+            continue;
+
         if ((((f).getType()).name) == (u"builtin.String")):
             s = ((json).getObjectItem((f).name)).getString();
             (result)._setField(((f).name), (s));
@@ -86,7 +100,7 @@ def fromJSON(cls, json):
 
             continue;
 
-        (result)._setField(((f).name), (fromJSON((f).getType(), (json).getObjectItem((f).name))));
+        (result)._setField(((f).name), (fromJSON(((f).getType()).construct(_List([])), (json).getObjectItem((f).name))));
 
     return result
 
@@ -132,84 +146,22 @@ class Service(object):
 
     def getURL(self): assert False
 
-    def getRuntime(self): assert False
-
     def getTimeout(self): assert False
 
     def rpc(self, name, message, options):
-        request = _HTTPRequest(self.getURL());
-        json = toJSON(message);
-        envelope = _JSONObject();
-        (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString(name)));
-        (envelope).setObjectItem((u"rpc"), (json));
-        (request).setBody((envelope).toString());
-        (request).setMethod(u"POST");
-        rt = (self).getRuntime();
-        timeout = self.getTimeout();
-        if ((len(options)) > (0)):
-            map = (options)[0];
-            override = (map).get(u"timeout");
-            if ((override) != (None)):
-                timeout = (override)
+        rpc = behaviors.RPC(self, name, options);
+        return (rpc).call(message)
 
-        rh = ResponseHolder();
-        (rt).acquire();
-        start = long(time.time()*1000);
-        deadline = (start) + (timeout);
-        (rt).request(request, rh);
-        while (True):
-            remaining = (deadline) - (long(time.time()*1000));
-            if ((((rh).response) == (None)) and (((rh).failure) == (None))):
-                if (((timeout) != (0)) and ((remaining) <= ((0)))):
-                    break;
-
-            else:
-                break;
-
-            if ((timeout) == (0)):
-                (rt).wait(3.14);
-            else:
-                r = float(remaining);
-                (rt).wait(float(r) / float(1000.0));
-
-        (rt).release();
-        if (((rh).failure) != (None)):
-            (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: ")) + ((rh).failure));
-            return None
-
-        if (((rh).response) == (None)):
-            return None
-
-        response = (rh).response;
-        if (((response).getCode()) != (200)):
-            (rt).fail((((u"RPC ") + (name)) + (u"(...) failed: Server returned error ")) + (str((response).getCode())));
-            return None
-
-        body = (response).getBody();
-        obj = _JSONObject.parse(body);
-        classname = ((obj).getObjectItem(u"$class")).getString();
-        if ((classname) == (None)):
-            (rt).fail(((u"RPC ") + (name)) + (u"(...) failed: Server returned unrecognizable content"));
-            return None
-        else:
-            return fromJSON(reflect.Class.get(classname), obj)
-
-    
 
 class Client(object):
     def _init(self):
-        self.runtime = None
         self.url = None
         self.timeout = None
 
-    def __init__(self, runtime, url):
+    def __init__(self, url):
         self._init()
-        (self).runtime = runtime
         (self).url = url
         (self).timeout = (0)
-
-    def getRuntime(self):
-        return (self).runtime
 
     def getURL(self):
         return (self).url
@@ -224,9 +176,6 @@ class Client(object):
         return u"builtin.Client"
 
     def _getField(self, name):
-        if ((name) == (u"runtime")):
-            return (self).runtime
-
         if ((name) == (u"url")):
             return (self).url
 
@@ -236,9 +185,6 @@ class Client(object):
         return None
 
     def _setField(self, name, value):
-        if ((name) == (u"runtime")):
-            (self).runtime = value
-
         if ((name) == (u"url")):
             (self).url = value
 
@@ -247,18 +193,54 @@ class Client(object):
 
     
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md
+class ServerResponder(object):
+    def _init(self):
+        self.request = None
+        self.response = None
+
+    def __init__(self, request, response):
+        self._init()
+        (self).request = request
+        (self).response = response
+
+    def onFuture(self, result):
+        error = (result).getError();
+        if ((error) != (None)):
+            (self.response).setCode(404);
+        else:
+            ((self).response).setBody((toJSON(result)).toString());
+            ((self).response).setCode(200);
+
+        (concurrent.Context.runtime()).respond(self.request, self.response);
+
+    def _getClass(self):
+        return u"builtin.ServerResponder"
+
+    def _getField(self, name):
+        if ((name) == (u"request")):
+            return (self).request
+
+        if ((name) == (u"response")):
+            return (self).response
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"request")):
+            (self).request = value
+
+        if ((name) == (u"response")):
+            (self).response = value
+
+    
+ServerResponder.builtin_ServerResponder_ref = builtin_md.Root.builtin_ServerResponder_md
 class Server(object):
     def _init(self):
-        self.runtime = None
         self.impl = None
 
-    def __init__(self, runtime, impl):
+    def __init__(self, impl):
         self._init()
-        (self).runtime = runtime
         (self).impl = impl
-
-    def getRuntime(self):
-        return (self).runtime
 
     def onHTTPRequest(self, request, response):
         body = (request).getBody();
@@ -266,37 +248,35 @@ class Server(object):
         if (((((envelope).getObjectItem(u"$method")) == ((envelope).undefined())) or (((envelope).getObjectItem(u"rpc")) == ((envelope).undefined()))) or ((((envelope).getObjectItem(u"rpc")).getObjectItem(u"$class")) == (((envelope).getObjectItem(u"rpc")).undefined()))):
             (response).setBody(((u"Failed to understand request.\n\n") + (body)) + (u"\n"));
             (response).setCode(400);
+            (concurrent.Context.runtime()).respond(request, response);
         else:
-            method = ((envelope).getObjectItem(u"$method")).getString();
+            methodName = ((envelope).getObjectItem(u"$method")).getString();
             json = (envelope).getObjectItem(u"rpc");
-            argument = fromJSON(reflect.Class.get(((json).getObjectItem(u"$class")).getString()), json);
-            result = ((((reflect.Class.get(_getClass(self))).getField(u"impl")).getType()).getMethod(method)).invoke(self.impl, _List([argument]));
-            (response).setBody((toJSON(result)).toString());
-            (response).setCode(200);
-
-        (self.getRuntime()).respond(request, response);
+            method = (((reflect.Class.get(_getClass(self))).getField(u"impl")).getType()).getMethod(methodName);
+            argType = reflect.Class.get(((method).parameters)[0]);
+            arg = (argType).construct(_List([]));
+            argument = fromJSON(arg, json);
+            result = (method).invoke(self.impl, _List([argument]));
+            (result).onFinished(ServerResponder(request, response));
 
     def onServletError(self, url, message):
-        (self.getRuntime()).fail((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
+        (concurrent.Context.runtime()).fail((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
 
     def _getClass(self):
         return u"builtin.Server<Object>"
 
     def _getField(self, name):
-        if ((name) == (u"runtime")):
-            return (self).runtime
-
         if ((name) == (u"impl")):
             return (self).impl
 
         return None
 
     def _setField(self, name, value):
-        if ((name) == (u"runtime")):
-            (self).runtime = value
-
         if ((name) == (u"impl")):
             (self).impl = value
+
+    def serveHTTP(self, url):
+        (concurrent.Context.runtime()).serveHTTP(url, self);
 
     def onServletInit(self, url, runtime):
         """

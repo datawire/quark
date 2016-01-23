@@ -1,12 +1,12 @@
 package parameterized_defaults_md;
 
-public class pkg_Box_builtin_String_ extends reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class singleton = new pkg_Box_builtin_String_();
+public class pkg_Box_builtin_String_ extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class singleton = new pkg_Box_builtin_String_();
     public pkg_Box_builtin_String_() {
         super("pkg.Box<builtin.String>");
         (this).name = "Box";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String"}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new reflect.Field("builtin.String", "contents")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "contents")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

@@ -1,6 +1,6 @@
 package pet_md;
 
-public class pets_Cat_greet_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class pets_Cat_greet_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public pets_Cat_greet_Method() {
         super("builtin.void", "greet", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

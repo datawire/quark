@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function test_Test_go_Method() {
     test_Test_go_Method.super_.call(this, "builtin.void", "go", []);
 }
 exports.test_Test_go_Method = test_Test_go_Method;
-_qrt.util.inherits(test_Test_go_Method, reflect.Method);
+_qrt.util.inherits(test_Test_go_Method, builtin.reflect.Method);
 
 function test_Test_go_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 test_Test_go_Method.prototype.__init_fields__ = test_Test_go_Method__init_fields__;
 
@@ -43,14 +43,14 @@ function test_Test() {
     test_Test.super_.call(this, "test.Test");
     (this).name = "Test";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "name")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [new test_Test_go_Method()];
 }
 exports.test_Test = test_Test;
-_qrt.util.inherits(test_Test, reflect.Class);
+_qrt.util.inherits(test_Test, builtin.reflect.Class);
 
 function test_Test__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_Test.prototype.__init_fields__ = test_Test__init_fields__;
 test_Test.singleton = new test_Test();
@@ -79,10 +79,10 @@ function test_test_Test_go_Method() {
     test_test_Test_go_Method.super_.call(this, "builtin.void", "go", []);
 }
 exports.test_test_Test_go_Method = test_test_Test_go_Method;
-_qrt.util.inherits(test_test_Test_go_Method, reflect.Method);
+_qrt.util.inherits(test_test_Test_go_Method, builtin.reflect.Method);
 
 function test_test_Test_go_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 test_test_Test_go_Method.prototype.__init_fields__ = test_test_Test_go_Method__init_fields__;
 
@@ -112,14 +112,14 @@ function test_test_Test() {
     test_test_Test.super_.call(this, "test.test.Test");
     (this).name = "Test";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.int", "size")];
+    (this).fields = [new builtin.reflect.Field("builtin.int", "size")];
     (this).methods = [new test_test_Test_go_Method()];
 }
 exports.test_test_Test = test_test_Test;
-_qrt.util.inherits(test_test_Test, reflect.Class);
+_qrt.util.inherits(test_test_Test, builtin.reflect.Class);
 
 function test_test_Test__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_test_Test.prototype.__init_fields__ = test_test_Test__init_fields__;
 test_test_Test.singleton = new test_test_Test();

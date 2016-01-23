@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 import slack
 import slack.event
 import slackpack_md

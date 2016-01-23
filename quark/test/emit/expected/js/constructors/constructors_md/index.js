@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,14 +10,14 @@ function test1_Test() {
     test1_Test.super_.call(this, "test1.Test");
     (this).name = "Test";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "name")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];
 }
 exports.test1_Test = test1_Test;
-_qrt.util.inherits(test1_Test, reflect.Class);
+_qrt.util.inherits(test1_Test, builtin.reflect.Class);
 
 function test1_Test__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 test1_Test.prototype.__init_fields__ = test1_Test__init_fields__;
 test1_Test.singleton = new test1_Test();
@@ -46,14 +46,14 @@ function test2_Test() {
     test2_Test.super_.call(this, "test2.Test");
     (this).name = "Test";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "name")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];
 }
 exports.test2_Test = test2_Test;
-_qrt.util.inherits(test2_Test, reflect.Class);
+_qrt.util.inherits(test2_Test, builtin.reflect.Class);
 
 function test2_Test__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 test2_Test.prototype.__init_fields__ = test2_Test__init_fields__;
 test2_Test.singleton = new test2_Test();
@@ -82,10 +82,10 @@ function test3_Box_builtin_String__get_Method() {
     test3_Box_builtin_String__get_Method.super_.call(this, "builtin.String", "get", []);
 }
 exports.test3_Box_builtin_String__get_Method = test3_Box_builtin_String__get_Method;
-_qrt.util.inherits(test3_Box_builtin_String__get_Method, reflect.Method);
+_qrt.util.inherits(test3_Box_builtin_String__get_Method, builtin.reflect.Method);
 
 function test3_Box_builtin_String__get_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 test3_Box_builtin_String__get_Method.prototype.__init_fields__ = test3_Box_builtin_String__get_Method__init_fields__;
 
@@ -114,14 +114,14 @@ function test3_Box_builtin_String_() {
     test3_Box_builtin_String_.super_.call(this, "test3.Box<builtin.String>");
     (this).name = "Box";
     (this).parameters = ["builtin.String"];
-    (this).fields = [new reflect.Field("builtin.String", "contents")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [new test3_Box_builtin_String__get_Method()];
 }
 exports.test3_Box_builtin_String_ = test3_Box_builtin_String_;
-_qrt.util.inherits(test3_Box_builtin_String_, reflect.Class);
+_qrt.util.inherits(test3_Box_builtin_String_, builtin.reflect.Class);
 
 function test3_Box_builtin_String___init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 test3_Box_builtin_String_.prototype.__init_fields__ = test3_Box_builtin_String___init_fields__;
 test3_Box_builtin_String_.singleton = new test3_Box_builtin_String_();

@@ -1,7 +1,7 @@
 package extending_primitives_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class pkg_C_md = pkg_C.singleton;
+    public static builtin.reflect.Class pkg_C_md = pkg_C.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

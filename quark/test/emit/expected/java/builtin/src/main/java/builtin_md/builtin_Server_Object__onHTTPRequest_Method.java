@@ -1,6 +1,6 @@
 package builtin_md;
 
-public class builtin_Server_Object__onHTTPRequest_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class builtin_Server_Object__onHTTPRequest_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public builtin_Server_Object__onHTTPRequest_Method() {
         super("builtin.void", "onHTTPRequest", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.HTTPRequest", "builtin.HTTPResponse"})));
     }

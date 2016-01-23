@@ -1,8 +1,8 @@
 package pkg;
 
 public class StringBox extends Box<String> implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md;
-    public static reflect.Class pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md;
+    public static builtin.reflect.Class pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md;
+    public static builtin.reflect.Class pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md;
     public StringBox(String contents) {
         super(contents);
     }

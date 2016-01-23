@@ -25,5 +25,5 @@ File(Use(url=builtin.q), Import(Name(builtin)),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(p_C_ref),
     Attr(Attr(Var(Name(package_class_md), $type=2.package_class_md),
       Name(Root), $type=2.package_class_md.Root), Name(p_C_md),
-    $type=1.reflect.Class), $type=1.reflect.Class)))
+    $type=1.builtin.reflect.Class), $type=1.builtin.reflect.Class)))
 )

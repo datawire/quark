@@ -1,6 +1,6 @@
 package defaulted_methods_md;
 
-public class pkg_A_foo_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class pkg_A_foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_A_foo_Method() {
         super("builtin.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
