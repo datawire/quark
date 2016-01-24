@@ -38,7 +38,8 @@ class Backend(object):
         self.dependencies = OrderedDict()
 
     def install(self):
-        dir = tempfile.mkdtemp()
+        dir = tempfile.mkdtemp(suffix="-%s" % self.__class__.__name__,
+                               prefix="%s-" % self.packages[0].name)
         self.write(dir)
         self.install_command(dir)
 
