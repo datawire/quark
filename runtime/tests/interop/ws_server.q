@@ -75,7 +75,7 @@ package interop { // package interop is mandatory
 
     class InteropWSClient extends InteropWSCommon {
         InteropWSClient() {
-            super(Context.runtime());
+            super(concurrent.Context.runtime());
         }
         void open(String url) { concurrent.Context.runtime().open(url, self); }
         void onWSConnected(WebSocket socket) {
