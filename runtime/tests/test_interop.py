@@ -8,21 +8,34 @@ import textwrap
 import contextlib
 import socket
 import errno
+import itertools
+
 try:  # py3
     from shlex import quote
 except ImportError:  # py2
     from pipes import quote
 
+def report(what, out, ok):
+    print "\n".join("    %s:  %s" % (what, l) for l in out.split("\n"))
 def command(*cmd, **kwargs):
     cwd = kwargs.pop('cwd', py.path.local())
+    env = kwargs.pop('env', {})
     assert not kwargs
-    print "command :   cd", cwd or ".", "&&", " ".join(map(quote,cmd))
+    def str_env():
+            return env and " ".join(
+                ['env'] + ["%s=%s"%(k,quote(v)) for k,v in sorted(env.items())]
+                ) or ""
+    def expand_env():
+        return dict(itertools.chain(os.environ.iteritems(), env.iteritems()))
+    print "command :   cd", cwd or ".", "&&", str_env(), " ".join(map(quote,cmd))
     with cwd.as_cwd():
-        p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        p = subprocess.Popen(cmd, env=expand_env(),
+                             stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout, stderr = p.communicate()
-    if p.wait():
-        print "out", stdout
-        print "err", stderr
+    ok = not p.wait()
+    report("out", stdout, ok)
+    report("err", stderr, ok)
+    if not ok:
         pytest.fail("Command failed %s" % " ".join(cmd))
 
 class QuarkCompile(object):
@@ -37,18 +50,37 @@ class QuarkCompile(object):
               .strip("'")\
               .strip('"')
         self.compiled = False
+        self.integrations = dict((i, i(compile=self)) for i in Integration.registry)
 
     def compile(self):
         if self.compiled:
             return
         self.process_includes()
         print "Need to compile", self.processed
-        command("quark", "package", "--skip-doc",
+        self.quark("install", "--skip-doc",
                 "--output", self.outdir,
-                self.processed.strpath,
-                cwd = self.tmpdir
-                )
+                self.processed.strpath)
         self.compiled = True
+
+    def quark(self, *args):
+        command(*self.quark_command(args),
+                cwd = self.tmpdir,
+                env = self.tool_env
+                )
+
+    def quark_command(self, args):
+        return ["quark"] + list(args)
+
+    @property
+    def tool_env(self):
+        env = dict()
+        for integration in self.integrations.values():
+            for tool, override in integration.get_tool_overrides():
+                if isinstance(override, (list, tuple)):
+                    override = " ".join(override)
+                env["QUARK_%s_COMMAND" % tool.upper()] = override
+        env["TMPDIR"] = self.tmpdir.ensure("quark-tmp", dir=True).strpath
+        return env
 
     def process_includes(self):
         loop = []
@@ -78,27 +110,6 @@ class QuarkCompile(object):
         processed.write("".join(include_expander(self.path, "processing")))
         self.processed = processed.new(basename="interop.q")
         self.processed.mksymlinkto(processed)
-
-    @property
-    def py_package(self):
-        self.compile()
-        return self.tmpdir / self.outdir / "py" / "dist" / (
-            "interop-%s-py2-none-any.whl" % self.version)
-
-    @property
-    def js_package(self):
-        self.compile()
-        return self.tmpdir / self.outdir / "js" / "interop.tgz"
-
-    @property
-    def java_package(self):
-        self.compile()
-        return self.java_dir / "target" / "interop-%s.jar" % self.version
-
-    @property
-    def java_dir(self):
-        self.compile()
-        return self.tmpdir / self.outdir / "java"
 
     def __repr__(self):
         return "%scompiled %s in %s" % (
@@ -174,6 +185,7 @@ class Integration(object):
     def __init__(self, compile):
         self.tmpdir = compile.tmpdir
         self.compile = compile
+        self.isolated = False
         self.built = False
 
     def __str__(self):
@@ -182,10 +194,21 @@ class Integration(object):
     def check_build(self):
         if self.built:
             return
+        self.check_isolate()
+        self.compile.compile()
         print "need to build integration", self
-        self.rundir.ensure(dir=1)
         self.build()
         self.built = True
+
+    def check_isolate(self):
+        if self.isolated:
+            return
+        self.rundir.ensure(dir=1)
+        self.isolate()
+
+    def get_tool_overrides(self):
+        self.check_isolate()
+        return self.tool_overrides
 
     def __repr__(self):
         return "%s %s integration of %s" % ((self.built and "Built" or "Unbuilt"),
@@ -209,6 +232,9 @@ class Integration(object):
     def runtimes(self):
         return py.path.local(__file__).dirpath("..")
 
+    def isolate(self):
+        pytest.fail("Need to implement isolate")
+
     def build(self):
         pytest.fail("Need to implement build")
 
@@ -218,9 +244,18 @@ class Integration(object):
     def invoke_client(self, port):
         pytest.fail("Need to implement invoke_client")
 
+    @property
+    def tool_overrides(self):
+        pytest.fail("Need to implement tool_overrides")
+
 class Node(Integration):
     def __init__(self, **kwargs):
         super(Node, self).__init__(**kwargs)
+
+    def isolate(self):
+        self.npm_prefix.ensure("node_modules", dir=True)
+        self.npm_install(self.js_core_package)
+        self.npm_install(self.js_node_package)
 
     def build(self):
         self.rundir.join("package.json").write(textwrap.dedent("""\
@@ -228,29 +263,30 @@ class Node(Integration):
           "name" : "interop-harness"
         }
         """))
-        self.npm_install(self.js_core_package)
-        self.npm_install(self.compile.js_package)
-        self.npm_install(self.js_node_package)
-        context = dict(
-            datawire_quark_node=self.js_node_package_name,
-            )
         self.rundir.join("run-client.js").write(textwrap.dedent("""\
             "use strict";
-            var interop = require("interop");
+            var interop = require("interop").interop;
             var process = require("process");
             console.log("Node client harness is started")
             new interop.Entrypoint().client(process.argv[2]);
-        """ % context))
+        """))
         self.rundir.join("run-server.js").write(textwrap.dedent("""\
             "use strict";
-            var interop = require("interop");
+            var interop = require("interop").interop;
             var process = require("process");
             console.log("Node server harness is started")
             new interop.Entrypoint().server(process.argv[2]);
-        """ % context))
+        """))
 
     def npm_install(self, package):
-        command("npm", "install", package.strpath, cwd=self.rundir)
+        command(*self.npm_command("install", package.strpath))
+
+    def npm_command(self, *args):
+        return ["npm", "--prefix", self.npm_prefix.strpath] + list(args)
+
+    @property
+    def npm_prefix(self):
+        return self.compile.tmpdir
 
     @property
     def js_core_package(self):
@@ -259,6 +295,10 @@ class Node(Integration):
     @property
     def js_node_package(self):
         return self.runtimes / "js-node"
+
+    @property
+    def tool_overrides(self):
+        return [("npm", self.npm_command())]
 
     @property
     def js_node_package_name(self):
@@ -276,10 +316,9 @@ class AbstractPython(Integration):
     def __init__(self, **kwargs):
         super(AbstractPython, self).__init__(**kwargs)
 
-    def build(self):
+    def isolate(self):
         command("virtualenv", "x", cwd=self.rundir)
         self.pip_install(self.py_core_package)
-        self.pip_install(self.compile.py_package)
 
     @property
     def pip(self):
@@ -288,6 +327,11 @@ class AbstractPython(Integration):
     @property
     def python(self):
         return self.rundir / "x" / "bin" / "python"
+
+    @property
+    def tool_overrides(self):
+        return [("python", self.python.strpath),
+                ("pip", self.pip.strpath)]
 
     def pip_install(self, package):
         assert package.check()
@@ -308,9 +352,11 @@ class TwistedPython(AbstractPython):
     def __init__(self, **kwargs):
         super(TwistedPython, self).__init__(**kwargs)
 
-    def build(self):
-        super(TwistedPython,self).build()
+    def isolate(self):
+        super(TwistedPython,self).isolate()
         self.pip_install(self.py_twisted_package)
+
+    def build(self):
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
             import interop
             import sys
@@ -336,9 +382,11 @@ class ThreadedPython(AbstractPython):
     def __init__(self, **kwargs):
         super(ThreadedPython, self).__init__(**kwargs)
 
-    def build(self):
-        super(ThreadedPython,self).build()
+    def isolate(self):
+        super(ThreadedPython,self).isolate()
         self.pip_install(self.py_threaded_package)
+
+    def build(self):
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
             import interop
             import sys
@@ -360,14 +408,17 @@ class Netty(Integration):
     def __init__(self, **kwargs):
         super(Netty, self).__init__(**kwargs)
 
-    def build(self):
-        self.m2_repo.ensure(dir=1)
-        context = dict(
+    @property
+    def pom_context(self):
+        return dict(
             quark_netty_version = self.quark_netty_version,
             quark_netty_artifact = self.quark_netty_artifact,
             m2_repo = self.m2_repo.strpath,
             compile_version = self.compile.version,
             )
+
+    def isolate(self):
+        self.m2_repo.ensure(dir=1)
         self.settings_xml.write(textwrap.dedent("""
             <settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -386,11 +437,19 @@ class Netty(Integration):
                       <url>file://${user.home}/.m2/repository</url>
                     </repository>
                   </repositories>
+                  <pluginRepositories>
+                    <pluginRepository>
+                      <id>user local repo</id>
+                      <url>file://${user.home}/.m2/repository</url>
+                    </pluginRepository>
+                  </pluginRepositories>
                 </profile>
               </profiles>
             </settings>
-        """ % context)
-        );
+        """ % self.pom_context)
+        )
+
+    def build(self):
         self.rundir.join("pom.xml").write(textwrap.dedent("""\
             <?xml version="1.0" encoding="UTF-8"?>
             <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -426,7 +485,7 @@ class Netty(Integration):
                 </dependency>
               </dependencies>
             </project>
-        """ % context)
+        """ % self.pom_context)
         )
         harness = self.rundir / "src" / "main" / "java" / "interop"/ "harness"
         harness.ensure(dir=1)
@@ -460,7 +519,6 @@ class Netty(Integration):
             }
         """)
         )
-        command(*self.mvn_command("install"), cwd=self.compile.java_dir)
         self.mvn("compile")
         self.mvn("exec:java",
                 "-Dexec.mainClass=interop.harness.Warmup")
@@ -470,6 +528,10 @@ class Netty(Integration):
 
     def mvn_command(self, *args):
         return ["mvn", "--settings", self.settings_xml.strpath] + list(args)
+
+    @property
+    def tool_overrides(self):
+        return [("mvn", self.mvn_command())]
 
     @property
     def settings_xml(self):
@@ -520,14 +582,10 @@ class CompileCache(object):
         return self.compiles[path]
 
 class IntegrationCache(object):
-    def __init__(self):
-        self.integrations = {}
+    def __init__(self): pass
 
     def get(self, cls, compile):
-        key = (cls, compile)
-        if key not in self.integrations:
-            self.integrations[key] = cls(compile=compile)
-        return self.integrations[key]
+        return compile.integrations[cls]
 
 class PortGenerator(object):
     def __init__(self):
@@ -612,12 +670,12 @@ def integration_kwargs(tag):
                 )
 
 @pytest.fixture(**integration_kwargs("c"))
-def client_integration(request, compile, integration_cache):
-    return integration_cache.get(request.param, compile)
+def client_integration(request, compile):
+    return compile.integrations.get(request.param)
 
 @pytest.fixture(**integration_kwargs("s"))
-def server_integration(request, compile, integration_cache):
-    return integration_cache.get(request.param, compile)
+def server_integration(request, compile):
+    return compile.integrations.get(request.param)
 
 def test_interop(client_integration, server_integration, port):
     client = client_integration.client(port)
