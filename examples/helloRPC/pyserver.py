@@ -8,6 +8,11 @@ class HelloImpl(object):
 
     def hello(self, request):
         res = hello.Response()
+
+        # Uncomment the next line to simulate a long request processing
+        # time and force a request timeout to occur for the client.
+        # import time; time.sleep(5)
+
         res.result = "Responding to [%s] from Python" % request.text
         return res
 
