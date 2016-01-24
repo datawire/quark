@@ -3,7 +3,7 @@
 
 "use strict";
 
-var hello = require("hello");
+var hello = require("hello").hello;
 
 function HelloImpl() {
     this.hello = function(request) {

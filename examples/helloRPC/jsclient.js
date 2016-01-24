@@ -3,7 +3,7 @@
 
 "use strict";
 
-var hello = require("hello");
+var hello = require("hello").hello;
 
 var client = new hello.HelloClient("http://127.0.0.1:8910/hello");
 var request = new hello.Request();
