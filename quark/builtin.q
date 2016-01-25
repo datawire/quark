@@ -92,6 +92,7 @@ class Field {
 @mapping($java{void})
 primitive void {}
 
+// XXX Ruby doesn't have a Boolean type, only TrueClass and FalseClass
 @mapping($java{Boolean} $py{bool} $js{Boolean})
 primitive bool {
     macro bool __not__() $java{!($self)}

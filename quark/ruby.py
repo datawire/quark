@@ -68,16 +68,14 @@ def package(name, version, packages, srcs):
     return files
 
 def class_file(path, name, fname):
-    if path:
-        return '/'.join(path + ['index.rb'])
-    else:
-        return '%s.rb' % fname
+    assert path
+    return '/'.join(path) + '.rb'
 
 def function_file(path, name, fname):
     return class_file(path, name, fname)
 
 def package_file(path, name, fname):
-    return '/'.join(path + [name, 'index.rb'])
+    return '/'.join(path + [name + '.rb'])
 
 def make_class_file(path, name):
     return Code(head='require "datawire-quark-core"\n')
@@ -89,7 +87,7 @@ def make_package_file(path, name):
     return make_class_file(path, name)
 
 def main(fname, common):
-    return Code('require "./%s" \n\nFunctions.main\n' % common)
+    return Code('require "./%s.rb" \n\nFunctions.main\n' % common)
 
 ## Naming and imports
 

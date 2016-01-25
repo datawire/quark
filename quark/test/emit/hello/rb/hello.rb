@@ -1,3 +1,3 @@
-require "./hello_lib" 
+require "./hello_lib.rb" 
 
 Functions.main
