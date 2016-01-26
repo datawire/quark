@@ -1,3 +1,4 @@
 FROM ubuntu:latest
+ENV LANG en_US.utf8
 RUN apt-get -y update && apt-get -y install curl python-pip tar gcc make git python-dev libffi-dev libssl-dev
 CMD /bin/bash
