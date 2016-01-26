@@ -2,17 +2,31 @@
 /* jshint node: true */
 
 "use strict";
-
+var process = require("process");
 var hello = require("hello").hello;
 
-var client = new hello.HelloClient("http://127.0.0.1:8910/hello");
+// "http://hello.datawire.io/" is the URL of the simple "Hello" cloud
+// microservice run by Datawire, Inc. to serve as a simple first test.
+//
+//  You can test completely locally, too:
+//  - comment out the http://hello.datawire.io line
+//  - uncomment the http://127.0.0.1:8910/hello line
+//  - fire up the local version of the server by following the instructions
+//  in the README.md.
+//
+var client = new hello.HelloClient("http://hello.datawire.io/");
+// var client = new hello.HelloClient("http://localhost:8910/hello");
 var request = new hello.Request();
-request.text = "Hello from JavaScript!";
+if (process.argv[2]) {
+    request.text = process.argv[2];
+} else {
+    request.test = "Hello from JavaScript!";
+}
 console.log("Request says", request.text);
 
 var response = client.hello(request);
 
-function FutureListener(cb) { 
+function FutureListener(cb) {
     this.onFuture = cb;
 }
 response.onFinished(

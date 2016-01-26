@@ -7,12 +7,28 @@ import hello.Response;
 
 public class HelloRPCClient {
     public static void main(String[] args) {
-        HelloClient client = new HelloClient("http://localhost:8910/hello");
+        // "http://hello.datawire.io/" is the URL of the simple "Hello" cloud
+        // microservice run by Datawire, Inc. to serve as a simple first test.
+        //
+        //  You can test completely locally, too:
+        //  - comment out the http://hello.datawire.io line
+        //  - uncomment the http://127.0.0.1:8910/hello line
+        //  - fire up the local version of the server by following the instructions
+        //  in the README.md.
+        //
+        HelloClient client = new HelloClient("http://hello.datawire.io/");
+        // HelloClient client = new HelloClient("http://localhost:8910/hello");
+
         Request request = new Request();
-        request.text = "Hello from Java!";
+
+        if (args.length > 0) {
+            request.text = args[0];
+        } else {
+            request.text = "Hello from Java!";
+        }
         System.out.println("Request says: " + request.text);
         Response response = client.hello(request);
-        new FutureWait().wait(response, Long.valueOf(1000)); // XXX: this can go away once we figure out synchronous configuration API
+        new FutureWait().wait(response, Long.valueOf(1000)); // XXX: this will go away once we figure out synchronous configuration API
         if (!response.isFinished()) { // XXX: unless we wait indefinitely the response wait can time out so the synchronous caller should still check isFinished()
             System.out.println("No response!");
         } else if (response.getError() != null) {
