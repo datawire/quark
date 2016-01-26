@@ -1,6 +1,6 @@
 package constructors_md;
 
-public class test3_Box_builtin_String__get_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class test3_Box_builtin_String__get_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public test3_Box_builtin_String__get_Method() {
         super("builtin.String", "get", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

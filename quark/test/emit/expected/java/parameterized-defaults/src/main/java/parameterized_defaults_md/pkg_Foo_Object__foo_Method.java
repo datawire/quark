@@ -1,6 +1,6 @@
 package parameterized_defaults_md;
 
-public class pkg_Foo_Object__foo_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class pkg_Foo_Object__foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_Foo_Object__foo_Method() {
         super("Object", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

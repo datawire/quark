@@ -1,13 +1,16 @@
 package builtin;
 
 public class Functions {
+    /**
+     * Serializes object tree into JSON. skips over fields starting with underscore
+     */
     public static io.datawire.quark.runtime.JSONObject toJSON(Object obj) {
         io.datawire.quark.runtime.JSONObject result = new io.datawire.quark.runtime.JSONObject();
         if ((obj)==(null) || ((obj) != null && (obj).equals(null))) {
             (result).setNull();
             return result;
         }
-        reflect.Class cls = reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
+        builtin.reflect.Class cls = builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
         Integer idx = 0;
         if (((cls).name)==("builtin.String") || (((cls).name) != null && ((cls).name).equals("builtin.String"))) {
             (result).setString((String) (obj));
@@ -32,33 +35,42 @@ public class Functions {
             return result;
         }
         (result).setObjectItem(("$class"), ((new io.datawire.quark.runtime.JSONObject()).setString((cls).id)));
-        java.util.ArrayList<reflect.Field> fields = (cls).getFields();
+        java.util.ArrayList<builtin.reflect.Field> fields = (cls).getFields();
         while ((idx) < ((fields).size())) {
-            (result).setObjectItem((((fields).get(idx)).name), (Functions.toJSON(((io.datawire.quark.runtime.QObject) (obj))._getField(((fields).get(idx)).name))));
+            String fieldName = ((fields).get(idx)).name;
+            if (!(Boolean.valueOf((fieldName).startsWith("_")))) {
+                (result).setObjectItem((fieldName), (Functions.toJSON(((io.datawire.quark.runtime.QObject) (obj))._getField(fieldName))));
+            }
             idx = (idx) + (1);
         }
         return result;
     }
 
 
-    public static Object fromJSON(reflect.Class cls, io.datawire.quark.runtime.JSONObject json) {
+    /**
+     * deserialize json into provided result object. Skip over fields starting with underscore
+     */
+    public static Object fromJSON(Object result, io.datawire.quark.runtime.JSONObject json) {
         if (((json)==(null) || ((json) != null && (json).equals(null))) || ((json).isNull())) {
             return null;
         }
         Integer idx = 0;
+        builtin.reflect.Class cls = builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(result));
         if (((cls).name)==("builtin.List") || (((cls).name) != null && ((cls).name).equals("builtin.List"))) {
-            java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) ((cls).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))));
+            java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) (result);
             while ((idx) < ((json).size())) {
-                (list).add(Functions.fromJSON(((cls).parameters).get(0), (json).getListItem(idx)));
+                (list).add(Functions.fromJSON((((cls).parameters).get(0)).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))), (json).getListItem(idx)));
                 idx = (idx) + (1);
             }
             return list;
         }
-        java.util.ArrayList<reflect.Field> fields = (cls).getFields();
-        Object result = (cls).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        java.util.ArrayList<builtin.reflect.Field> fields = (cls).getFields();
         while ((idx) < ((fields).size())) {
-            reflect.Field f = (fields).get(idx);
+            builtin.reflect.Field f = (fields).get(idx);
             idx = (idx) + (1);
+            if (Boolean.valueOf(((f).name).startsWith("_"))) {
+                continue;
+            }
             if ((((f).getType()).name)==("builtin.String") || ((((f).getType()).name) != null && (((f).getType()).name).equals("builtin.String"))) {
                 String s = ((json).getObjectItem((f).name)).getString();
                 ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, s);
@@ -83,7 +95,7 @@ public class Functions {
                 }
                 continue;
             }
-            ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON((f).getType(), (json).getObjectItem((f).name)));
+            ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON(((f).getType()).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))), (json).getObjectItem((f).name)));
         }
         return result;
     }

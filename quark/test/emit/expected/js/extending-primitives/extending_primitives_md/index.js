@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function pkg_C_event1_Method() {
     pkg_C_event1_Method.super_.call(this, "builtin.void", "event1", []);
 }
 exports.pkg_C_event1_Method = pkg_C_event1_Method;
-_qrt.util.inherits(pkg_C_event1_Method, reflect.Method);
+_qrt.util.inherits(pkg_C_event1_Method, builtin.reflect.Method);
 
 function pkg_C_event1_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_C_event1_Method.prototype.__init_fields__ = pkg_C_event1_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function pkg_C() {
     (this).methods = [new pkg_C_event1_Method()];
 }
 exports.pkg_C = pkg_C;
-_qrt.util.inherits(pkg_C, reflect.Class);
+_qrt.util.inherits(pkg_C, builtin.reflect.Class);
 
 function pkg_C__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_C.prototype.__init_fields__ = pkg_C__init_fields__;
 pkg_C.singleton = new pkg_C();

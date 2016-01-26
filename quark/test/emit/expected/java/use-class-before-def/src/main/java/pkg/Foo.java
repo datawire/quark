@@ -1,7 +1,7 @@
 package pkg;
 
 public class Foo implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class pkg_Foo_ref = use_class_before_def_md.Root.pkg_Foo_md;
+    public static builtin.reflect.Class pkg_Foo_ref = use_class_before_def_md.Root.pkg_Foo_md;
     public String name;
     public Foo() {}
     public String _getClass() {

@@ -1,8 +1,8 @@
 package builtin_md;
 
-public class builtin_Service_rpc_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class builtin_Service_rpc_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public builtin_Service_rpc_Method() {
-        super("builtin.Object", "rpc", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String", "builtin.Object", "builtin.List<builtin.Object>"})));
+        super("builtin.concurrent.Future", "rpc", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String", "builtin.Object", "builtin.List<builtin.Object>"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         builtin.Service obj = (builtin.Service) (object);

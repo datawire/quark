@@ -7,7 +7,7 @@ package hello {
     }
 
     @doc("A value class for Response data from the hello service.")
-    class Response {
+    class Response extends concurrent.Future {
         @doc("A greeting from the hello service.")
         String result;
     }

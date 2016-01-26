@@ -1,11 +1,11 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 
 
-class pets_Cat_greet_Method(reflect.Method):
+class pets_Cat_greet_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pets_Cat_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
@@ -24,9 +24,9 @@ class pets_Cat_greet_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pets_Cat(reflect.Class):
+class pets_Cat(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pets_Cat, self).__init__(u"pets.Cat");
@@ -48,9 +48,9 @@ class pets_Cat(reflect.Class):
         pass
 pets_Cat.singleton = pets_Cat()
 
-class pets_Dog_greet_Method(reflect.Method):
+class pets_Dog_greet_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pets_Dog_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
@@ -69,9 +69,9 @@ class pets_Dog_greet_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pets_Dog(reflect.Class):
+class pets_Dog(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pets_Dog, self).__init__(u"pets.Dog");

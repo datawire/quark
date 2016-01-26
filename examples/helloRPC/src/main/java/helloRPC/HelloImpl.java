@@ -10,6 +10,7 @@ public class HelloImpl extends ServerServiceStub implements Hello {
     public Response hello(Request request) {
         Response response = new Response();
         response.result = "Responding to [" + request.text + "] from Java";
+        response.finish(null);
         return response;
     }
 

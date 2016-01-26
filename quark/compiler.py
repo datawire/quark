@@ -726,11 +726,12 @@ class Reflector:
         return fields
 
     def meths(self, cls, cid, use_bindings):
-        if cls.package is None or cls.package.name.text == "reflect": return []
+        if cls.package is None or cls.package.name.text in ("reflect", ):
+            return []
         methods = []
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
-        for m in get_methods(cls).values():
+        for m in get_methods(cls, False).values():
             mid = "%s_%s_Method" % (self.mdname(cid), m.name.text)
             mtype = self.qtype(texpr(m.type.resolved.type, bindings, m.type.resolved.bindings))
             margs = [self.qtype(texpr(p.resolved.type, bindings, p.resolved.bindings))
@@ -864,7 +865,7 @@ class Reflector:
                                                               self.clazz(cls, clsid, qual, self.qparams(texp),
                                                                          nparams, texp))
                     if not ucls: continue
-                    if ucls.package and ucls.package.name.text == "reflect":
+                    if ucls.package and ucls.package.name.text in ("reflect", ):
                         continue
                     if ucls not in self.metadata:
                         self.metadata[ucls] = OrderedDict()

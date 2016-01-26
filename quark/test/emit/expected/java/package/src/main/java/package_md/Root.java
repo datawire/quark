@@ -1,8 +1,8 @@
 package package_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class test_Test_md = test_Test.singleton;
-    public static reflect.Class test_test_Test_md = test_test_Test.singleton;
+    public static builtin.reflect.Class test_Test_md = test_Test.singleton;
+    public static builtin.reflect.Class test_test_Test_md = test_test_Test.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

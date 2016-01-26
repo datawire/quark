@@ -14,9 +14,12 @@ import collections
 from urllib import urlencode as _urlencode
 from collections import namedtuple
 from struct import Struct
+import threading
 import base64
 
-__all__ = "os sys time _Map _List _println _url_get _urlencode _JSONObject _HTTPRequest _HTTPResponse _default_codec _getClass".split()
+__all__ = """os sys time _Map _List _println _url_get _urlencode _JSONObject
+             _HTTPRequest _HTTPResponse _default_codec _getClass
+             _RuntimeFactory _Lock _Condition _TLS _TLSInitializer """.split()
 
 
 _Map = dict
@@ -405,3 +408,62 @@ def _getClass(obj):
     if isinstance(obj, dict):
         return "builtin.Map<builtin.Object,builtin.Object>"
     return obj._getClass()
+
+
+class _RuntimeFactory(object):
+    RUNTIME_MODULE="quark_threaded_runtime"
+
+    @classmethod
+    def create(cls):
+        import importlib
+        rt_module = importlib.import_module(cls.RUNTIME_MODULE)
+        return rt_module.get_runtime()
+
+class _Lock(object):
+    def __init__(self):
+        self._lock = threading.RLock()
+
+    def acquire(self):
+        if self._lock._is_owned():
+            self._fail("Illegal re-acquisition of a quark Lock.")
+        self._lock.acquire()
+
+    def release(self):
+        if not self._lock._is_owned():
+            self._fail("Illegal release of a not-acquired quark Lock.")
+        self._lock.release()
+
+    def _fail(self, msg):
+        import logging
+        log = logging.getLogger(__name__)
+        log.critical("msg",
+            exc_info=(Error, Error(repr(self._lock)),
+                traceback.extract_stack()))
+
+class _Condition(_Lock):
+    def __init__(self):
+        super(_Condition, self).__init__()
+        self._condition = threading.Condition(self._lock)
+
+    def waitWakeup(self, timeout):
+        if not self._lock._is_owned():
+            self._fail("Illegal waitWakeup of a not-acquired quark Condition")
+        self._condition.wait(timeout / 1000.0) # XXX: fix time units
+
+    def wakeup(self):
+        if not self._lock._is_owned():
+            self._fail("Illegal wakeup of a not-acquired quark Condition")
+        self._condition.notify()
+
+class _TLSInitializer(object):
+    def getValue(self): raise TypeError("Method not implemented")
+
+class _TLS(threading.local):
+    def __init__(self, initializer):
+        self._value = initializer.getValue()
+
+    def getValue(self):
+        return self._value
+
+    def setValue(self, value):
+        self._value = value

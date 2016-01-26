@@ -1,13 +1,13 @@
 package defaulted_methods_md;
 
-public class pkg_T2 extends reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class singleton = new pkg_T2();
+public class pkg_T2 extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class singleton = new pkg_T2();
     public pkg_T2() {
         super("pkg.T2");
         (this).name = "T2";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_T2_foo_Method()}));
+        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_T2_foo_Method(), new pkg_T2_bar_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new pkg.T2();

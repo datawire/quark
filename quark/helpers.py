@@ -137,7 +137,7 @@ def get_package_version(pkg):
 def namever(file):
     dist = [d for d in file.definitions if isinstance(d, DistUnit)]
     if dist: return dist[0].name.text, dist[0].version
-    name = os.path.splitext(os.path.basename(file.name))[0].replace('-', '_')
+    name = os.path.splitext(os.path.basename(file.name))[0].replace('-', '_').replace('.', '_')
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
         firstPackage = packages[0]
@@ -151,30 +151,30 @@ def is_extendable(node):
         not isinstance(node.resolved.type, (Primitive, Interface))
 
 @dispatch(Class, dict)
-def get_methods(cls, result, predicate):
+def get_methods(cls, result, predicate, omitInterface):
     for dfn in cls.definitions:
         if isinstance(dfn, Callable) and dfn.type and predicate(dfn):
             name = dfn.name.text
             if name not in result:
                 result[name] = dfn
     for base in cls.bases:
-        if not isinstance(base.resolved.type, (Primitive, Interface)):
-            get_methods(base.resolved.type, result, predicate)
+        if not isinstance(base.resolved.type, (Primitive, Interface)[:omitInterface and 2 or 1]):
+            get_methods(base.resolved.type, result, predicate, omitInterface)
 
 @dispatch(Class)
-def get_methods(cls, predicate):
+def get_methods(cls, predicate, omitInterface):
     result = OrderedDict()
-    get_methods(cls, result, predicate)
+    get_methods(cls, result, predicate, omitInterface)
     return result
 
 @dispatch(Class)
-def get_methods(cls):
-    return get_methods(cls, lambda x: True)
+def get_methods(cls, omitInterface):
+    return get_methods(cls, lambda x: True, omitInterface)
 
 @dispatch(Class, dict, dict, dict)
 def get_defaulted_methods(cls, result, derived, bindings):
     if isinstance(cls, (Interface, Primitive)):
-        get_methods(cls, result, lambda dfn: dfn.body and dfn.name.text not in derived)
+        get_methods(cls, result, lambda dfn: dfn.body and dfn.name.text not in derived, True)
     for base in cls.bases:
         bindings.update(base.resolved.bindings)
         get_defaulted_methods(base.resolved.type, result, derived, bindings)
@@ -182,7 +182,7 @@ def get_defaulted_methods(cls, result, derived, bindings):
 @dispatch(Class)
 def get_defaulted_methods(cls):
     result = OrderedDict()
-    derived = get_methods(cls)
+    derived = get_methods(cls, True)
     bindings = OrderedDict()
     get_defaulted_methods(cls, result, derived, bindings)
     return result, bindings

@@ -154,50 +154,56 @@
 
     class ClientResponseCheckHeader extends CheckResponseHeader, ClientResponseCheck {}
 
-    class Timeout extends Task {
-        float timeout;
-        bool timedOut;
-        bool cancelled;
-        bool pending;
+long slow_round(float v) {
+    long ret = 0;
+    long l = 1024*1024;
+    float f = 1024.0 * 1024.0;
+    while (l > 0) {
+        if ( v > f ) {
+            v = v - f;
+            ret = ret + l;
+        }
+        f = f / 2.0;
+        l = l / 2;
+    }
+    return ret;
+}
+    class Timeout extends concurrent.TimeoutListener {
+        concurrent.Timeout timeout;
+        bool timedOut = false;
         String name;
         Timeout(float timeout, String name) {
-            self.timeout = timeout;
-            self.timedOut = false;
-            self.cancelled = false;
-            self.pending = true;
+            float mss = 1000.0;
+            float ms = (timeout * mss);
+            long msl = ms.round();
+            if (msl == null) {
+                print("AIEEEE!");
+                msl = slow_round(ms);
+            }
+            print("Timeout for " + name + " is " + msl.toString() + "ms is " + ms.toString() + "ms was " + timeout.toString() + "s");
+            self.timeout = new concurrent.Timeout(msl);
             self.name = name;
         }
-        void start(Runtime runtime) {
-            runtime.schedule(self, self.timeout);
+        void start() {
+            print("Timeout for " + self.name + " starting");
+             self.timeout.start(self);
         }
         void cancel() {
-            if (self.timedOut) {
-                return;
-            } else {
-                self.cancelled = true;
-                self.pending = false;
-            }
+             self.timeout.cancel();
         }
-        void onExecute(Runtime runtime) {
-            if (self.cancelled) {
-                return;
-            } else {
-                self.timedOut = true;
-                self.pending = false;
-                print("FAIL: " + self.name + " timed out");
-            }
+        void onTimeout(concurrent.Timeout timeout) {
+            self.timedOut = true;
+            print("FAIL: " + self.name + " timed out");
         }
     }
 
     class TimeoutClient extends HTTPHandler {
         HTTPRequest request;
         HTTPResponse response;
-        Runtime runtime;
         String prefix;
         List<ClientCheck> expectations;
         Timeout timeout;
-        TimeoutClient(Runtime runtime, int port) {
-            self.runtime = runtime;
+        TimeoutClient(int port) {
             self.prefix = "http://127.0.0.1:" + port.toString();
             self.expectations = new List<ClientCheck>();
         }
@@ -233,8 +239,8 @@
             self.timeout = Timeout(timeout, "http request");
             self.response = null;
             if (self.request != null) {
-                self.timeout.start(self.runtime);
-                self.runtime.request(self.request, self);
+                self.timeout.start();
+                concurrent.Context.runtime().request(self.request, self);
             } else {
                 print("FAIL: cannot check without request");
             }
@@ -271,24 +277,18 @@
 
 
     class TimeoutServletRequestCheck {
-        Runtime runtime;
         List<RequestCheck> expectations;
         Timeout timeout;
         TimeoutServletRequestCheck() {
             self.expectations = new List<RequestCheck>();
             self.timeout = null;
         }
-        void init(Runtime runtime) {
-            if (runtime == null) {
-                print("FAIL: called with null runtime");
+        void init() {
+            if (self.timeout == null) {
+                print("FAIL: servlet check without timeout");
             } else {
-                self.runtime = runtime;
-                if (self.timeout == null) {
-                    print("FAIL: servlet check without timeout");
-                } else {
-                    print("starting request check init timeout");
-                    self.timeout.start(self.runtime);
-                }
+                print("starting request check init timeout");
+                self.timeout.start();
             }
         }
         TimeoutServletRequestCheck expectMethod(String method) {

@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function pets_Cat_greet_Method() {
     pets_Cat_greet_Method.super_.call(this, "builtin.void", "greet", []);
 }
 exports.pets_Cat_greet_Method = pets_Cat_greet_Method;
-_qrt.util.inherits(pets_Cat_greet_Method, reflect.Method);
+_qrt.util.inherits(pets_Cat_greet_Method, builtin.reflect.Method);
 
 function pets_Cat_greet_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pets_Cat_greet_Method.prototype.__init_fields__ = pets_Cat_greet_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function pets_Cat() {
     (this).methods = [new pets_Cat_greet_Method()];
 }
 exports.pets_Cat = pets_Cat;
-_qrt.util.inherits(pets_Cat, reflect.Class);
+_qrt.util.inherits(pets_Cat, builtin.reflect.Class);
 
 function pets_Cat__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pets_Cat.prototype.__init_fields__ = pets_Cat__init_fields__;
 pets_Cat.singleton = new pets_Cat();
@@ -79,10 +79,10 @@ function pets_Dog_greet_Method() {
     pets_Dog_greet_Method.super_.call(this, "builtin.void", "greet", []);
 }
 exports.pets_Dog_greet_Method = pets_Dog_greet_Method;
-_qrt.util.inherits(pets_Dog_greet_Method, reflect.Method);
+_qrt.util.inherits(pets_Dog_greet_Method, builtin.reflect.Method);
 
 function pets_Dog_greet_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pets_Dog_greet_Method.prototype.__init_fields__ = pets_Dog_greet_Method__init_fields__;
 
@@ -116,10 +116,10 @@ function pets_Dog() {
     (this).methods = [new pets_Dog_greet_Method()];
 }
 exports.pets_Dog = pets_Dog;
-_qrt.util.inherits(pets_Dog, reflect.Class);
+_qrt.util.inherits(pets_Dog, builtin.reflect.Class);
 
 function pets_Dog__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pets_Dog.prototype.__init_fields__ = pets_Dog__init_fields__;
 pets_Dog.singleton = new pets_Dog();

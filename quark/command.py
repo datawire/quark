@@ -133,13 +133,18 @@ def main(args):
                 output = output[:-2]
             else:
                 exit("quark: First filename must end with .q (or use --output)")
-        if os.path.exists(output):
-            shutil.rmtree(output)
-        os.mkdir(output)
 
         java_dir = os.path.join(output, args["--java-out"])
         py_dir = os.path.join(output, args["--python-out"])
         js_dir = os.path.join(output, args["--javascript-out"])
+
+        if os.path.exists(output):
+            for dir in [os.path.join(java_dir, "src/main/java"),
+                        py_dir, js_dir]:
+                if os.path.exists(dir):
+                    shutil.rmtree(dir)
+        else:
+            os.mkdir(output)
 
     if command != "install":
         assert "compile" in commands, (commands, args)

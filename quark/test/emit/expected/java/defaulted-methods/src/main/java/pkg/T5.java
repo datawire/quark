@@ -1,7 +1,7 @@
 package pkg;
 
 public class T5 implements A, C, io.datawire.quark.runtime.QObject {
-    public static reflect.Class pkg_T5_ref = defaulted_methods_md.Root.pkg_T5_md;
+    public static builtin.reflect.Class pkg_T5_ref = defaulted_methods_md.Root.pkg_T5_md;
     public T5() {}
     public void foo() {
         do{System.out.println("T5 foo");System.out.flush();}while(false);

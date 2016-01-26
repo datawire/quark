@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 import use_class_before_def_md
 
 

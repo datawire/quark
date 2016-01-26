@@ -541,4 +541,88 @@
     }
     exports._getClass = _getClass;
 
+    function _RuntimeFactory() {
+        this.runtimeName = "datawire-quarkdev-node";
+    }
+    _RuntimeFactory.prototype.create = function() {
+        return require(this.runtimeName);
+    }
+
+    exports.RuntimeFactory = new _RuntimeFactory();
+
+    function Lock() {
+        this.locked = false;
+    }
+
+    function Lock_Acquire() {
+        if (this.locked) {
+            this._fail("Illegal re-acquisition of a quark Lock.");
+        }
+        this.locked = true;
+    }
+    Lock.prototype.acquire = Lock_Acquire;
+
+    function Lock_Release() {
+        if (!this.locked) {
+            this._fail("Illegal release of a not-acquired quark Lock.");
+        }
+        this.locked = false;
+    }
+    Lock.prototype.release = Lock_Release;
+
+    Lock.prototype._fail = function(msg) {
+        var obj = {}
+        Error.captureStackTrace(obj)
+        console.error(msg, obj.stack)
+        process.exit(1)
+    }
+
+    exports.Lock = Lock
+
+    function Condition() {
+        Condition.super_.call(this);
+    }
+    exports.util.inherits(Condition, Lock)
+
+    function Condition_waitWakeup(timeout) {
+        this._fail("waiting on quark Condition is not allowed in Javascript");
+    }
+    Condition.prototype.waitWakeup = Condition_waitWakeup;
+
+    function Condition_wakeup(timeout) {
+        this._fail("waking up a quark Condition is not allowed in Javascript");
+    }
+    Condition.prototype.wakeup = Condition_wakeup;
+
+    exports.Condition = Condition;
+    
+    function TLS(initializer) {
+        this._initializer = initializer;
+        this.getValue = function() {
+            this._value = this._initializer.getValue();
+            delete this.getValue;
+            delete this.setValue;
+            return this.getValue();
+        };
+        this.setValue = function(value) {
+            this._value = this._initializer.getValue();
+            delete this.getValue;
+            delete this.setValue;
+            return this.setValue(value);
+        };
+    }
+
+    function TLS_getValue() {
+        return this._value;
+    }
+    TLS.prototype.getValue = TLS_getValue;
+
+    function TLS_setValue(value) {
+        this._value = value;
+    }
+    TLS.prototype.setValue = TLS_setValue;
+
+    exports.TLS = TLS
+
+
 })();

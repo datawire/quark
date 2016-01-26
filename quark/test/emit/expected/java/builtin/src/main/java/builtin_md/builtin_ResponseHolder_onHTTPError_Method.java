@@ -1,6 +1,6 @@
 package builtin_md;
 
-public class builtin_ResponseHolder_onHTTPError_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class builtin_ResponseHolder_onHTTPError_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public builtin_ResponseHolder_onHTTPError_Method() {
         super("builtin.void", "onHTTPError", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.HTTPRequest", "builtin.String"})));
     }

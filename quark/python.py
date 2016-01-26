@@ -136,7 +136,9 @@ def main(fname, common):
 
 ## Naming and imports
 
-SUBS = {"print": "print_"}
+SUBS = {"print": "print_",
+        "global": "global_",
+        }
 def name(n):
     return SUBS.get(n, n).replace("-", "_")
 

@@ -1,7 +1,7 @@
 @version("1.2.3") // version is mandatory
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
-        void server(Runtime runtime, int port) { // runtime and port are mandatory constructor parameters
+        void server(int port) { // port is mandatory constructor parameter
             HelloServlet servlet = HelloServlet();
             servlet.expectRequest()
                 .expectMethod("POST")
@@ -9,11 +9,11 @@ package interop { // package interop is mandatory
                 .expectHeader("X-custom-header", "custom client value")
                 .expectBody("client body")
                 .check(5.0);
-            runtime.serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server", servlet);
+            servlet.serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server");
         }
-        void client(Runtime runtime, int port) {
+        void client(int port) {
 
-            TimeoutClient(runtime, port)
+            TimeoutClient(port)
                 .url("/http_server")
                 .method("POST")
                 .header("X-Custom-Header", "custom client value")

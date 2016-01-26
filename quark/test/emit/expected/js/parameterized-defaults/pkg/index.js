@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 var parameterized_defaults_md = require('../parameterized_defaults_md');
 exports.parameterized_defaults_md = parameterized_defaults_md;
 

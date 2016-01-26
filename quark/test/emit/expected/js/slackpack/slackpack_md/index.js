@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 
 
 
@@ -10,10 +10,10 @@ function slack_event_SlackEvent_load_Method() {
     slack_event_SlackEvent_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_SlackEvent_load_Method = slack_event_SlackEvent_load_Method;
-_qrt.util.inherits(slack_event_SlackEvent_load_Method, reflect.Method);
+_qrt.util.inherits(slack_event_SlackEvent_load_Method, builtin.reflect.Method);
 
 function slack_event_SlackEvent_load_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_SlackEvent_load_Method.prototype.__init_fields__ = slack_event_SlackEvent_load_Method__init_fields__;
 
@@ -43,10 +43,10 @@ function slack_event_SlackEvent_dispatch_Method() {
     slack_event_SlackEvent_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_SlackEvent_dispatch_Method = slack_event_SlackEvent_dispatch_Method;
-_qrt.util.inherits(slack_event_SlackEvent_dispatch_Method, reflect.Method);
+_qrt.util.inherits(slack_event_SlackEvent_dispatch_Method, builtin.reflect.Method);
 
 function slack_event_SlackEvent_dispatch_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_SlackEvent_dispatch_Method.prototype.__init_fields__ = slack_event_SlackEvent_dispatch_Method__init_fields__;
 
@@ -76,14 +76,14 @@ function slack_event_SlackEvent() {
     slack_event_SlackEvent.super_.call(this, "slack.event.SlackEvent");
     (this).name = "SlackEvent";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp")];
     (this).methods = [new slack_event_SlackEvent_load_Method(), new slack_event_SlackEvent_dispatch_Method()];
 }
 exports.slack_event_SlackEvent = slack_event_SlackEvent;
-_qrt.util.inherits(slack_event_SlackEvent, reflect.Class);
+_qrt.util.inherits(slack_event_SlackEvent, builtin.reflect.Class);
 
 function slack_event_SlackEvent__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_SlackEvent.prototype.__init_fields__ = slack_event_SlackEvent__init_fields__;
 slack_event_SlackEvent.singleton = new slack_event_SlackEvent();
@@ -112,10 +112,10 @@ function slack_event_SlackError_load_Method() {
     slack_event_SlackError_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_SlackError_load_Method = slack_event_SlackError_load_Method;
-_qrt.util.inherits(slack_event_SlackError_load_Method, reflect.Method);
+_qrt.util.inherits(slack_event_SlackError_load_Method, builtin.reflect.Method);
 
 function slack_event_SlackError_load_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_SlackError_load_Method.prototype.__init_fields__ = slack_event_SlackError_load_Method__init_fields__;
 
@@ -145,10 +145,10 @@ function slack_event_SlackError_dispatch_Method() {
     slack_event_SlackError_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_SlackError_dispatch_Method = slack_event_SlackError_dispatch_Method;
-_qrt.util.inherits(slack_event_SlackError_dispatch_Method, reflect.Method);
+_qrt.util.inherits(slack_event_SlackError_dispatch_Method, builtin.reflect.Method);
 
 function slack_event_SlackError_dispatch_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_SlackError_dispatch_Method.prototype.__init_fields__ = slack_event_SlackError_dispatch_Method__init_fields__;
 
@@ -178,14 +178,14 @@ function slack_event_SlackError() {
     slack_event_SlackError.super_.call(this, "slack.event.SlackError");
     (this).name = "SlackError";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp"), new reflect.Field("builtin.int", "code"), new reflect.Field("builtin.String", "text")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp"), new builtin.reflect.Field("builtin.int", "code"), new builtin.reflect.Field("builtin.String", "text")];
     (this).methods = [new slack_event_SlackError_load_Method(), new slack_event_SlackError_dispatch_Method()];
 }
 exports.slack_event_SlackError = slack_event_SlackError;
-_qrt.util.inherits(slack_event_SlackError, reflect.Class);
+_qrt.util.inherits(slack_event_SlackError, builtin.reflect.Class);
 
 function slack_event_SlackError__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_SlackError.prototype.__init_fields__ = slack_event_SlackError__init_fields__;
 slack_event_SlackError.singleton = new slack_event_SlackError();
@@ -214,10 +214,10 @@ function slack_event_Hello_dispatch_Method() {
     slack_event_Hello_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_Hello_dispatch_Method = slack_event_Hello_dispatch_Method;
-_qrt.util.inherits(slack_event_Hello_dispatch_Method, reflect.Method);
+_qrt.util.inherits(slack_event_Hello_dispatch_Method, builtin.reflect.Method);
 
 function slack_event_Hello_dispatch_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_Hello_dispatch_Method.prototype.__init_fields__ = slack_event_Hello_dispatch_Method__init_fields__;
 
@@ -247,10 +247,10 @@ function slack_event_Hello_load_Method() {
     slack_event_Hello_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_Hello_load_Method = slack_event_Hello_load_Method;
-_qrt.util.inherits(slack_event_Hello_load_Method, reflect.Method);
+_qrt.util.inherits(slack_event_Hello_load_Method, builtin.reflect.Method);
 
 function slack_event_Hello_load_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_Hello_load_Method.prototype.__init_fields__ = slack_event_Hello_load_Method__init_fields__;
 
@@ -280,14 +280,14 @@ function slack_event_Hello() {
     slack_event_Hello.super_.call(this, "slack.event.Hello");
     (this).name = "Hello";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp")];
     (this).methods = [new slack_event_Hello_dispatch_Method(), new slack_event_Hello_load_Method()];
 }
 exports.slack_event_Hello = slack_event_Hello;
-_qrt.util.inherits(slack_event_Hello, reflect.Class);
+_qrt.util.inherits(slack_event_Hello, builtin.reflect.Class);
 
 function slack_event_Hello__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Hello.prototype.__init_fields__ = slack_event_Hello__init_fields__;
 slack_event_Hello.singleton = new slack_event_Hello();
@@ -316,10 +316,10 @@ function slack_event_Message_load_Method() {
     slack_event_Message_load_Method.super_.call(this, "builtin.void", "load", ["slack.Client", "builtin.JSONObject"]);
 }
 exports.slack_event_Message_load_Method = slack_event_Message_load_Method;
-_qrt.util.inherits(slack_event_Message_load_Method, reflect.Method);
+_qrt.util.inherits(slack_event_Message_load_Method, builtin.reflect.Method);
 
 function slack_event_Message_load_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_Message_load_Method.prototype.__init_fields__ = slack_event_Message_load_Method__init_fields__;
 
@@ -349,10 +349,10 @@ function slack_event_Message_dispatch_Method() {
     slack_event_Message_dispatch_Method.super_.call(this, "builtin.void", "dispatch", ["slack.SlackHandler"]);
 }
 exports.slack_event_Message_dispatch_Method = slack_event_Message_dispatch_Method;
-_qrt.util.inherits(slack_event_Message_dispatch_Method, reflect.Method);
+_qrt.util.inherits(slack_event_Message_dispatch_Method, builtin.reflect.Method);
 
 function slack_event_Message_dispatch_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_event_Message_dispatch_Method.prototype.__init_fields__ = slack_event_Message_dispatch_Method__init_fields__;
 
@@ -382,14 +382,14 @@ function slack_event_Message() {
     slack_event_Message.super_.call(this, "slack.event.Message");
     (this).name = "Message";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.String", "type"), new reflect.Field("slack.User", "user"), new reflect.Field("slack.Channel", "channel"), new reflect.Field("builtin.String", "timestamp"), new reflect.Field("builtin.String", "subtype"), new reflect.Field("builtin.bool", "hidden"), new reflect.Field("builtin.String", "text"), new reflect.Field("slack.event.Edited", "edited")];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp"), new builtin.reflect.Field("builtin.String", "subtype"), new builtin.reflect.Field("builtin.bool", "hidden"), new builtin.reflect.Field("builtin.String", "text"), new builtin.reflect.Field("slack.event.Edited", "edited")];
     (this).methods = [new slack_event_Message_load_Method(), new slack_event_Message_dispatch_Method()];
 }
 exports.slack_event_Message = slack_event_Message;
-_qrt.util.inherits(slack_event_Message, reflect.Class);
+_qrt.util.inherits(slack_event_Message, builtin.reflect.Class);
 
 function slack_event_Message__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Message.prototype.__init_fields__ = slack_event_Message__init_fields__;
 slack_event_Message.singleton = new slack_event_Message();
@@ -418,14 +418,14 @@ function slack_event_Edited() {
     slack_event_Edited.super_.call(this, "slack.event.Edited");
     (this).name = "Edited";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.User", "user"), new reflect.Field("builtin.String", "timestamp")];
+    (this).fields = [new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("builtin.String", "timestamp")];
     (this).methods = [];
 }
 exports.slack_event_Edited = slack_event_Edited;
-_qrt.util.inherits(slack_event_Edited, reflect.Class);
+_qrt.util.inherits(slack_event_Edited, builtin.reflect.Class);
 
 function slack_event_Edited__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Edited.prototype.__init_fields__ = slack_event_Edited__init_fields__;
 slack_event_Edited.singleton = new slack_event_Edited();
@@ -454,10 +454,10 @@ function slack_SlackHandler_onSlackEvent_Method() {
     slack_SlackHandler_onSlackEvent_Method.super_.call(this, "builtin.void", "onSlackEvent", ["slack.event.SlackEvent"]);
 }
 exports.slack_SlackHandler_onSlackEvent_Method = slack_SlackHandler_onSlackEvent_Method;
-_qrt.util.inherits(slack_SlackHandler_onSlackEvent_Method, reflect.Method);
+_qrt.util.inherits(slack_SlackHandler_onSlackEvent_Method, builtin.reflect.Method);
 
 function slack_SlackHandler_onSlackEvent_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler_onSlackEvent_Method.prototype.__init_fields__ = slack_SlackHandler_onSlackEvent_Method__init_fields__;
 
@@ -487,10 +487,10 @@ function slack_SlackHandler_onHello_Method() {
     slack_SlackHandler_onHello_Method.super_.call(this, "builtin.void", "onHello", ["slack.event.Hello"]);
 }
 exports.slack_SlackHandler_onHello_Method = slack_SlackHandler_onHello_Method;
-_qrt.util.inherits(slack_SlackHandler_onHello_Method, reflect.Method);
+_qrt.util.inherits(slack_SlackHandler_onHello_Method, builtin.reflect.Method);
 
 function slack_SlackHandler_onHello_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler_onHello_Method.prototype.__init_fields__ = slack_SlackHandler_onHello_Method__init_fields__;
 
@@ -520,10 +520,10 @@ function slack_SlackHandler_onSlackError_Method() {
     slack_SlackHandler_onSlackError_Method.super_.call(this, "builtin.void", "onSlackError", ["slack.event.SlackError"]);
 }
 exports.slack_SlackHandler_onSlackError_Method = slack_SlackHandler_onSlackError_Method;
-_qrt.util.inherits(slack_SlackHandler_onSlackError_Method, reflect.Method);
+_qrt.util.inherits(slack_SlackHandler_onSlackError_Method, builtin.reflect.Method);
 
 function slack_SlackHandler_onSlackError_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler_onSlackError_Method.prototype.__init_fields__ = slack_SlackHandler_onSlackError_Method__init_fields__;
 
@@ -553,10 +553,10 @@ function slack_SlackHandler_onMessage_Method() {
     slack_SlackHandler_onMessage_Method.super_.call(this, "builtin.void", "onMessage", ["slack.event.Message"]);
 }
 exports.slack_SlackHandler_onMessage_Method = slack_SlackHandler_onMessage_Method;
-_qrt.util.inherits(slack_SlackHandler_onMessage_Method, reflect.Method);
+_qrt.util.inherits(slack_SlackHandler_onMessage_Method, builtin.reflect.Method);
 
 function slack_SlackHandler_onMessage_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler_onMessage_Method.prototype.__init_fields__ = slack_SlackHandler_onMessage_Method__init_fields__;
 
@@ -590,10 +590,10 @@ function slack_SlackHandler() {
     (this).methods = [new slack_SlackHandler_onSlackEvent_Method(), new slack_SlackHandler_onHello_Method(), new slack_SlackHandler_onSlackError_Method(), new slack_SlackHandler_onMessage_Method()];
 }
 exports.slack_SlackHandler = slack_SlackHandler;
-_qrt.util.inherits(slack_SlackHandler, reflect.Class);
+_qrt.util.inherits(slack_SlackHandler, builtin.reflect.Class);
 
 function slack_SlackHandler__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler.prototype.__init_fields__ = slack_SlackHandler__init_fields__;
 slack_SlackHandler.singleton = new slack_SlackHandler();
@@ -622,14 +622,14 @@ function slack_User() {
     slack_User.super_.call(this, "slack.User");
     (this).name = "User";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "user")];
+    (this).fields = [new builtin.reflect.Field("slack.Client", "client"), new builtin.reflect.Field("builtin.String", "user")];
     (this).methods = [];
 }
 exports.slack_User = slack_User;
-_qrt.util.inherits(slack_User, reflect.Class);
+_qrt.util.inherits(slack_User, builtin.reflect.Class);
 
 function slack_User__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_User.prototype.__init_fields__ = slack_User__init_fields__;
 slack_User.singleton = new slack_User();
@@ -658,10 +658,10 @@ function slack_Channel_send_Method() {
     slack_Channel_send_Method.super_.call(this, "builtin.void", "send", ["builtin.String"]);
 }
 exports.slack_Channel_send_Method = slack_Channel_send_Method;
-_qrt.util.inherits(slack_Channel_send_Method, reflect.Method);
+_qrt.util.inherits(slack_Channel_send_Method, builtin.reflect.Method);
 
 function slack_Channel_send_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Channel_send_Method.prototype.__init_fields__ = slack_Channel_send_Method__init_fields__;
 
@@ -691,14 +691,14 @@ function slack_Channel() {
     slack_Channel.super_.call(this, "slack.Channel");
     (this).name = "Channel";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("slack.Client", "client"), new reflect.Field("builtin.String", "channel")];
+    (this).fields = [new builtin.reflect.Field("slack.Client", "client"), new builtin.reflect.Field("builtin.String", "channel")];
     (this).methods = [new slack_Channel_send_Method()];
 }
 exports.slack_Channel = slack_Channel;
-_qrt.util.inherits(slack_Channel, reflect.Class);
+_qrt.util.inherits(slack_Channel, builtin.reflect.Class);
 
 function slack_Channel__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_Channel.prototype.__init_fields__ = slack_Channel__init_fields__;
 slack_Channel.singleton = new slack_Channel();
@@ -727,10 +727,10 @@ function slack_Client_connect_Method() {
     slack_Client_connect_Method.super_.call(this, "builtin.void", "connect", []);
 }
 exports.slack_Client_connect_Method = slack_Client_connect_Method;
-_qrt.util.inherits(slack_Client_connect_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_connect_Method, builtin.reflect.Method);
 
 function slack_Client_connect_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_connect_Method.prototype.__init_fields__ = slack_Client_connect_Method__init_fields__;
 
@@ -760,10 +760,10 @@ function slack_Client_request_Method() {
     slack_Client_request_Method.super_.call(this, "builtin.void", "request", ["builtin.String", "builtin.Map<builtin.String,builtin.Object>", "builtin.HTTPHandler"]);
 }
 exports.slack_Client_request_Method = slack_Client_request_Method;
-_qrt.util.inherits(slack_Client_request_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_request_Method, builtin.reflect.Method);
 
 function slack_Client_request_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_request_Method.prototype.__init_fields__ = slack_Client_request_Method__init_fields__;
 
@@ -793,10 +793,10 @@ function slack_Client_ws_connect_Method() {
     slack_Client_ws_connect_Method.super_.call(this, "builtin.void", "ws_connect", ["builtin.String"]);
 }
 exports.slack_Client_ws_connect_Method = slack_Client_ws_connect_Method;
-_qrt.util.inherits(slack_Client_ws_connect_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_ws_connect_Method, builtin.reflect.Method);
 
 function slack_Client_ws_connect_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_ws_connect_Method.prototype.__init_fields__ = slack_Client_ws_connect_Method__init_fields__;
 
@@ -826,10 +826,10 @@ function slack_Client_ws_send_Method() {
     slack_Client_ws_send_Method.super_.call(this, "builtin.void", "ws_send", ["builtin.String"]);
 }
 exports.slack_Client_ws_send_Method = slack_Client_ws_send_Method;
-_qrt.util.inherits(slack_Client_ws_send_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_ws_send_Method, builtin.reflect.Method);
 
 function slack_Client_ws_send_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_ws_send_Method.prototype.__init_fields__ = slack_Client_ws_send_Method__init_fields__;
 
@@ -859,10 +859,10 @@ function slack_Client_onWSConnected_Method() {
     slack_Client_onWSConnected_Method.super_.call(this, "builtin.void", "onWSConnected", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSConnected_Method = slack_Client_onWSConnected_Method;
-_qrt.util.inherits(slack_Client_onWSConnected_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_onWSConnected_Method, builtin.reflect.Method);
 
 function slack_Client_onWSConnected_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_onWSConnected_Method.prototype.__init_fields__ = slack_Client_onWSConnected_Method__init_fields__;
 
@@ -892,10 +892,10 @@ function slack_Client_onWSClose_Method() {
     slack_Client_onWSClose_Method.super_.call(this, "builtin.void", "onWSClose", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSClose_Method = slack_Client_onWSClose_Method;
-_qrt.util.inherits(slack_Client_onWSClose_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_onWSClose_Method, builtin.reflect.Method);
 
 function slack_Client_onWSClose_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_onWSClose_Method.prototype.__init_fields__ = slack_Client_onWSClose_Method__init_fields__;
 
@@ -925,10 +925,10 @@ function slack_Client_onWSError_Method() {
     slack_Client_onWSError_Method.super_.call(this, "builtin.void", "onWSError", ["builtin.WebSocket"]);
 }
 exports.slack_Client_onWSError_Method = slack_Client_onWSError_Method;
-_qrt.util.inherits(slack_Client_onWSError_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_onWSError_Method, builtin.reflect.Method);
 
 function slack_Client_onWSError_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_onWSError_Method.prototype.__init_fields__ = slack_Client_onWSError_Method__init_fields__;
 
@@ -958,10 +958,10 @@ function slack_Client_construct_Method() {
     slack_Client_construct_Method.super_.call(this, "slack.event.SlackEvent", "construct", ["builtin.String"]);
 }
 exports.slack_Client_construct_Method = slack_Client_construct_Method;
-_qrt.util.inherits(slack_Client_construct_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_construct_Method, builtin.reflect.Method);
 
 function slack_Client_construct_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_construct_Method.prototype.__init_fields__ = slack_Client_construct_Method__init_fields__;
 
@@ -990,10 +990,10 @@ function slack_Client_onWSMessage_Method() {
     slack_Client_onWSMessage_Method.super_.call(this, "builtin.void", "onWSMessage", ["builtin.WebSocket", "builtin.String"]);
 }
 exports.slack_Client_onWSMessage_Method = slack_Client_onWSMessage_Method;
-_qrt.util.inherits(slack_Client_onWSMessage_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_onWSMessage_Method, builtin.reflect.Method);
 
 function slack_Client_onWSMessage_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_onWSMessage_Method.prototype.__init_fields__ = slack_Client_onWSMessage_Method__init_fields__;
 
@@ -1023,10 +1023,10 @@ function slack_Client_onHTTPResponse_Method() {
     slack_Client_onHTTPResponse_Method.super_.call(this, "builtin.void", "onHTTPResponse", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
 }
 exports.slack_Client_onHTTPResponse_Method = slack_Client_onHTTPResponse_Method;
-_qrt.util.inherits(slack_Client_onHTTPResponse_Method, reflect.Method);
+_qrt.util.inherits(slack_Client_onHTTPResponse_Method, builtin.reflect.Method);
 
 function slack_Client_onHTTPResponse_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 slack_Client_onHTTPResponse_Method.prototype.__init_fields__ = slack_Client_onHTTPResponse_Method__init_fields__;
 
@@ -1056,14 +1056,14 @@ function slack_Client() {
     slack_Client.super_.call(this, "slack.Client");
     (this).name = "Client";
     (this).parameters = [];
-    (this).fields = [new reflect.Field("builtin.Runtime", "runtime"), new reflect.Field("builtin.String", "token"), new reflect.Field("slack.SlackHandler", "handler"), new reflect.Field("builtin.int", "event_id"), new reflect.Field("builtin.WebSocket", "socket")];
+    (this).fields = [new builtin.reflect.Field("builtin.Runtime", "runtime"), new builtin.reflect.Field("builtin.String", "token"), new builtin.reflect.Field("slack.SlackHandler", "handler"), new builtin.reflect.Field("builtin.int", "event_id"), new builtin.reflect.Field("builtin.WebSocket", "socket")];
     (this).methods = [new slack_Client_connect_Method(), new slack_Client_request_Method(), new slack_Client_ws_connect_Method(), new slack_Client_ws_send_Method(), new slack_Client_onWSConnected_Method(), new slack_Client_onWSClose_Method(), new slack_Client_onWSError_Method(), new slack_Client_construct_Method(), new slack_Client_onWSMessage_Method(), new slack_Client_onHTTPResponse_Method()];
 }
 exports.slack_Client = slack_Client;
-_qrt.util.inherits(slack_Client, reflect.Class);
+_qrt.util.inherits(slack_Client, builtin.reflect.Class);
 
 function slack_Client__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_Client.prototype.__init_fields__ = slack_Client__init_fields__;
 slack_Client.singleton = new slack_Client();
@@ -1092,10 +1092,10 @@ function pkg_Handler_onSlackEvent_Method() {
     pkg_Handler_onSlackEvent_Method.super_.call(this, "builtin.void", "onSlackEvent", ["slack.event.SlackEvent"]);
 }
 exports.pkg_Handler_onSlackEvent_Method = pkg_Handler_onSlackEvent_Method;
-_qrt.util.inherits(pkg_Handler_onSlackEvent_Method, reflect.Method);
+_qrt.util.inherits(pkg_Handler_onSlackEvent_Method, builtin.reflect.Method);
 
 function pkg_Handler_onSlackEvent_Method__init_fields__() {
-    reflect.Method.prototype.__init_fields__.call(this);
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_Handler_onSlackEvent_Method.prototype.__init_fields__ = pkg_Handler_onSlackEvent_Method__init_fields__;
 
@@ -1119,6 +1119,105 @@ pkg_Handler_onSlackEvent_Method.prototype._getField = pkg_Handler_onSlackEvent_M
 function pkg_Handler_onSlackEvent_Method__setField(name, value) {}
 pkg_Handler_onSlackEvent_Method.prototype._setField = pkg_Handler_onSlackEvent_Method__setField;
 
+// CLASS pkg_Handler_onHello_Method
+
+function pkg_Handler_onHello_Method() {
+    pkg_Handler_onHello_Method.super_.call(this, "builtin.void", "onHello", ["slack.event.Hello"]);
+}
+exports.pkg_Handler_onHello_Method = pkg_Handler_onHello_Method;
+_qrt.util.inherits(pkg_Handler_onHello_Method, builtin.reflect.Method);
+
+function pkg_Handler_onHello_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_Handler_onHello_Method.prototype.__init_fields__ = pkg_Handler_onHello_Method__init_fields__;
+
+function pkg_Handler_onHello_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHello((args)[0]);
+    return null;
+}
+pkg_Handler_onHello_Method.prototype.invoke = pkg_Handler_onHello_Method_invoke;
+
+function pkg_Handler_onHello_Method__getClass() {
+    return null;
+}
+pkg_Handler_onHello_Method.prototype._getClass = pkg_Handler_onHello_Method__getClass;
+
+function pkg_Handler_onHello_Method__getField(name) {
+    return null;
+}
+pkg_Handler_onHello_Method.prototype._getField = pkg_Handler_onHello_Method__getField;
+
+function pkg_Handler_onHello_Method__setField(name, value) {}
+pkg_Handler_onHello_Method.prototype._setField = pkg_Handler_onHello_Method__setField;
+
+// CLASS pkg_Handler_onSlackError_Method
+
+function pkg_Handler_onSlackError_Method() {
+    pkg_Handler_onSlackError_Method.super_.call(this, "builtin.void", "onSlackError", ["slack.event.SlackError"]);
+}
+exports.pkg_Handler_onSlackError_Method = pkg_Handler_onSlackError_Method;
+_qrt.util.inherits(pkg_Handler_onSlackError_Method, builtin.reflect.Method);
+
+function pkg_Handler_onSlackError_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_Handler_onSlackError_Method.prototype.__init_fields__ = pkg_Handler_onSlackError_Method__init_fields__;
+
+function pkg_Handler_onSlackError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onSlackError((args)[0]);
+    return null;
+}
+pkg_Handler_onSlackError_Method.prototype.invoke = pkg_Handler_onSlackError_Method_invoke;
+
+function pkg_Handler_onSlackError_Method__getClass() {
+    return null;
+}
+pkg_Handler_onSlackError_Method.prototype._getClass = pkg_Handler_onSlackError_Method__getClass;
+
+function pkg_Handler_onSlackError_Method__getField(name) {
+    return null;
+}
+pkg_Handler_onSlackError_Method.prototype._getField = pkg_Handler_onSlackError_Method__getField;
+
+function pkg_Handler_onSlackError_Method__setField(name, value) {}
+pkg_Handler_onSlackError_Method.prototype._setField = pkg_Handler_onSlackError_Method__setField;
+
+// CLASS pkg_Handler_onMessage_Method
+
+function pkg_Handler_onMessage_Method() {
+    pkg_Handler_onMessage_Method.super_.call(this, "builtin.void", "onMessage", ["slack.event.Message"]);
+}
+exports.pkg_Handler_onMessage_Method = pkg_Handler_onMessage_Method;
+_qrt.util.inherits(pkg_Handler_onMessage_Method, builtin.reflect.Method);
+
+function pkg_Handler_onMessage_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+pkg_Handler_onMessage_Method.prototype.__init_fields__ = pkg_Handler_onMessage_Method__init_fields__;
+
+function pkg_Handler_onMessage_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onMessage((args)[0]);
+    return null;
+}
+pkg_Handler_onMessage_Method.prototype.invoke = pkg_Handler_onMessage_Method_invoke;
+
+function pkg_Handler_onMessage_Method__getClass() {
+    return null;
+}
+pkg_Handler_onMessage_Method.prototype._getClass = pkg_Handler_onMessage_Method__getClass;
+
+function pkg_Handler_onMessage_Method__getField(name) {
+    return null;
+}
+pkg_Handler_onMessage_Method.prototype._getField = pkg_Handler_onMessage_Method__getField;
+
+function pkg_Handler_onMessage_Method__setField(name, value) {}
+pkg_Handler_onMessage_Method.prototype._setField = pkg_Handler_onMessage_Method__setField;
+
 // CLASS pkg_Handler
 
 function pkg_Handler() {
@@ -1126,13 +1225,13 @@ function pkg_Handler() {
     (this).name = "Handler";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new pkg_Handler_onSlackEvent_Method()];
+    (this).methods = [new pkg_Handler_onSlackEvent_Method(), new pkg_Handler_onHello_Method(), new pkg_Handler_onSlackError_Method(), new pkg_Handler_onMessage_Method()];
 }
 exports.pkg_Handler = pkg_Handler;
-_qrt.util.inherits(pkg_Handler, reflect.Class);
+_qrt.util.inherits(pkg_Handler, builtin.reflect.Class);
 
 function pkg_Handler__init_fields__() {
-    reflect.Class.prototype.__init_fields__.call(this);
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_Handler.prototype.__init_fields__ = pkg_Handler__init_fields__;
 pkg_Handler.singleton = new pkg_Handler();

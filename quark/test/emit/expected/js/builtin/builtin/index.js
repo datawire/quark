@@ -1,11 +1,18 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('../reflect');
+var reflect = require('./reflect');
 exports.reflect = reflect;
+var behaviors = require('./behaviors');
+exports.behaviors = behaviors;
+var concurrent = require('./concurrent');
+exports.concurrent = concurrent;
 var builtin_md = require('../builtin_md');
 exports.builtin_md = builtin_md;
 
 
 
+/**
+ * Serializes object tree into JSON. skips over fields starting with underscore
+ */
 function toJSON(obj) {
     var result = new _qrt.JSONObject();
     if ((obj) === (null)) {
@@ -39,31 +46,40 @@ function toJSON(obj) {
     (result).setObjectItem(("$class"), ((new _qrt.JSONObject()).setString((cls).id)));
     var fields = (cls).getFields();
     while ((idx) < ((fields).length)) {
-        (result).setObjectItem((((fields)[idx]).name), (toJSON((obj)._getField(((fields)[idx]).name))));
+        var fieldName = ((fields)[idx]).name;
+        if (!(((fieldName).indexOf("_")===0))) {
+            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName))));
+        }
         idx = (idx) + (1);
     }
     return result;
 }
 exports.toJSON = toJSON;
 
-function fromJSON(cls, json) {
+/**
+ * deserialize json into provided result object. Skip over fields starting with underscore
+ */
+function fromJSON(result, json) {
     if (((json) === (null)) || ((json).isNull())) {
         return null;
     }
     var idx = 0;
+    var cls = reflect.Class.get(_qrt._getClass(result));
     if (((cls).name) === ("builtin.List")) {
-        var list = (cls).construct([]);
+        var list = result;
         while ((idx) < ((json).size())) {
-            (list).push(fromJSON(((cls).parameters)[0], (json).getListItem(idx)));
+            (list).push(fromJSON((((cls).parameters)[0]).construct([]), (json).getListItem(idx)));
             idx = (idx) + (1);
         }
         return list;
     }
     var fields = (cls).getFields();
-    var result = (cls).construct([]);
     while ((idx) < ((fields).length)) {
         var f = (fields)[idx];
         idx = (idx) + (1);
+        if ((((f).name).indexOf("_")===0)) {
+            continue;
+        }
         if ((((f).getType()).name) === ("builtin.String")) {
             var s = ((json).getObjectItem((f).name)).getString();
             (result)._setField(((f).name), (s));
@@ -88,7 +104,7 @@ function fromJSON(cls, json) {
             }
             continue;
         }
-        (result)._setField(((f).name), (fromJSON((f).getType(), (json).getObjectItem((f).name))));
+        (result)._setField(((f).name), (fromJSON(((f).getType()).construct([]), (json).getObjectItem((f).name))));
     }
     return result;
 }
@@ -160,97 +176,30 @@ Service.prototype.__init_fields__ = Service__init_fields__;
 function Service_getURL() { /* interface */ }
 Service.prototype.getURL = Service_getURL;
 
-function Service_getRuntime() { /* interface */ }
-Service.prototype.getRuntime = Service_getRuntime;
-
 function Service_getTimeout() { /* interface */ }
 Service.prototype.getTimeout = Service_getTimeout;
 
 function Service_rpc(name, message, options) {
-    var request = new _qrt.HTTPRequest(this.getURL());
-    var json = toJSON(message);
-    var envelope = new _qrt.JSONObject();
-    (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString(name)));
-    (envelope).setObjectItem(("rpc"), (json));
-    (request).setBody((envelope).toString());
-    (request).setMethod("POST");
-    var rt = (this).getRuntime();
-    var timeout = this.getTimeout();
-    if (((options).length) > (0)) {
-        var map = (options)[0];
-        var override = _qrt.map_get((map), ("timeout"));
-        if ((override) !== (null)) {
-            timeout = (override);
-        }
-    }
-    var rh = new ResponseHolder();
-    (rt).acquire();
-    var start = Date.now();
-    var deadline = (start) + (timeout);
-    (rt).request(request, rh);
-    while (true) {
-        var remaining = (deadline) - (Date.now());
-        if ((((rh).response) === (null)) && (((rh).failure) === (null))) {
-            if (((timeout) !== (0)) && ((remaining) <= ((0)))) {
-                break;
-            }
-        } else {
-            break;
-        }
-        if ((timeout) === (0)) {
-            (rt).wait(3.14);
-        } else {
-            var r = (remaining);
-            (rt).wait((r) / (1000.0));
-        }
-    }
-    (rt).release();
-    if (((rh).failure) !== (null)) {
-        (rt).fail(((("RPC ") + (name)) + ("(...) failed: ")) + ((rh).failure));
-        return null;
-    }
-    if (((rh).response) === (null)) {
-        return null;
-    }
-    var response = (rh).response;
-    if (((response).getCode()) !== (200)) {
-        (rt).fail(((("RPC ") + (name)) + ("(...) failed: Server returned error ")) + (_qrt.toString((response).getCode())));
-        return null;
-    }
-    var body = (response).getBody();
-    var obj = _qrt.json_from_string(body);
-    var classname = ((obj).getObjectItem("$class")).getString();
-    if ((classname) === (null)) {
-        (rt).fail((("RPC ") + (name)) + ("(...) failed: Server returned unrecognizable content"));
-        return null;
-    } else {
-        return fromJSON(reflect.Class.get(classname), obj);
-    }
+    var rpc = new behaviors.RPC(this, name, options);
+    return (rpc).call(message);
 }
 Service.prototype.rpc = Service_rpc;
 
 // CLASS Client
 
-function Client(runtime, url) {
+function Client(url) {
     this.__init_fields__();
-    (this).runtime = runtime;
     (this).url = url;
     (this).timeout = (0);
 }
 exports.Client = Client;
 
 function Client__init_fields__() {
-    this.runtime = null;
     this.url = null;
     this.timeout = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md;
-function Client_getRuntime() {
-    return (this).runtime;
-}
-Client.prototype.getRuntime = Client_getRuntime;
-
 function Client_getURL() {
     return (this).url;
 }
@@ -272,9 +221,6 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if ((name) === ("runtime")) {
-        return (this).runtime;
-    }
     if ((name) === ("url")) {
         return (this).url;
     }
@@ -286,9 +232,6 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if ((name) === ("runtime")) {
-        (this).runtime = value;
-    }
     if ((name) === ("url")) {
         (this).url = value;
     }
@@ -298,46 +241,94 @@ function Client__setField(name, value) {
 }
 Client.prototype._setField = Client__setField;
 
+// CLASS ServerResponder
+
+function ServerResponder(request, response) {
+    this.__init_fields__();
+    (this).request = request;
+    (this).response = response;
+}
+exports.ServerResponder = ServerResponder;
+
+function ServerResponder__init_fields__() {
+    this.request = null;
+    this.response = null;
+}
+ServerResponder.prototype.__init_fields__ = ServerResponder__init_fields__;
+ServerResponder.builtin_ServerResponder_ref = builtin_md.Root.builtin_ServerResponder_md;
+function ServerResponder_onFuture(result) {
+    var error = (result).getError();
+    if ((error) !== (null)) {
+        (this.response).setCode(404);
+    } else {
+        ((this).response).setBody((toJSON(result)).toString());
+        ((this).response).setCode(200);
+    }
+    (concurrent.Context.runtime()).respond(this.request, this.response);
+}
+ServerResponder.prototype.onFuture = ServerResponder_onFuture;
+
+function ServerResponder__getClass() {
+    return "builtin.ServerResponder";
+}
+ServerResponder.prototype._getClass = ServerResponder__getClass;
+
+function ServerResponder__getField(name) {
+    if ((name) === ("request")) {
+        return (this).request;
+    }
+    if ((name) === ("response")) {
+        return (this).response;
+    }
+    return null;
+}
+ServerResponder.prototype._getField = ServerResponder__getField;
+
+function ServerResponder__setField(name, value) {
+    if ((name) === ("request")) {
+        (this).request = value;
+    }
+    if ((name) === ("response")) {
+        (this).response = value;
+    }
+}
+ServerResponder.prototype._setField = ServerResponder__setField;
+
 // CLASS Server
 
-function Server(runtime, impl) {
+function Server(impl) {
     this.__init_fields__();
-    (this).runtime = runtime;
     (this).impl = impl;
 }
 exports.Server = Server;
 
 function Server__init_fields__() {
-    this.runtime = null;
     this.impl = null;
 }
 Server.prototype.__init_fields__ = Server__init_fields__;
 Server.builtin_Server_Object__ref = builtin_md.Root.builtin_Server_Object__md;
-function Server_getRuntime() {
-    return (this).runtime;
-}
-Server.prototype.getRuntime = Server_getRuntime;
-
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
     var envelope = _qrt.json_from_string(body);
     if (((((envelope).getObjectItem("$method")) === ((envelope).undefined())) || (((envelope).getObjectItem("rpc")) === ((envelope).undefined()))) || ((((envelope).getObjectItem("rpc")).getObjectItem("$class")) === (((envelope).getObjectItem("rpc")).undefined()))) {
         (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
         (response).setCode(400);
+        (concurrent.Context.runtime()).respond(request, response);
     } else {
-        var method = ((envelope).getObjectItem("$method")).getString();
+        var methodName = ((envelope).getObjectItem("$method")).getString();
         var json = (envelope).getObjectItem("rpc");
-        var argument = fromJSON(reflect.Class.get(((json).getObjectItem("$class")).getString()), json);
-        var result = ((((reflect.Class.get(_qrt._getClass(this))).getField("impl")).getType()).getMethod(method)).invoke(this.impl, [argument]);
-        (response).setBody((toJSON(result)).toString());
-        (response).setCode(200);
+        var method = (((reflect.Class.get(_qrt._getClass(this))).getField("impl")).getType()).getMethod(methodName);
+        var argType = reflect.Class.get(((method).parameters)[0]);
+        var arg = (argType).construct([]);
+        var argument = fromJSON(arg, json);
+        var result = (method).invoke(this.impl, [argument]);
+        (result).onFinished(new ServerResponder(request, response));
     }
-    (this.getRuntime()).respond(request, response);
 }
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
 
 function Server_onServletError(url, message) {
-    (this.getRuntime()).fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
+    (concurrent.Context.runtime()).fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message));
 }
 Server.prototype.onServletError = Server_onServletError;
 
@@ -347,9 +338,6 @@ function Server__getClass() {
 Server.prototype._getClass = Server__getClass;
 
 function Server__getField(name) {
-    if ((name) === ("runtime")) {
-        return (this).runtime;
-    }
     if ((name) === ("impl")) {
         return (this).impl;
     }
@@ -358,14 +346,16 @@ function Server__getField(name) {
 Server.prototype._getField = Server__getField;
 
 function Server__setField(name, value) {
-    if ((name) === ("runtime")) {
-        (this).runtime = value;
-    }
     if ((name) === ("impl")) {
         (this).impl = value;
     }
 }
 Server.prototype._setField = Server__setField;
+
+function Server_serveHTTP(url) {
+    (concurrent.Context.runtime()).serveHTTP(url, this);
+}
+Server.prototype.serveHTTP = Server_serveHTTP;
 
 /**
  * called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested

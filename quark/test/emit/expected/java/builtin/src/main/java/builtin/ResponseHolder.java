@@ -1,7 +1,7 @@
 package builtin;
 
 public class ResponseHolder implements io.datawire.quark.runtime.HTTPHandler, io.datawire.quark.runtime.QObject {
-    public static reflect.Class builtin_ResponseHolder_ref = builtin_md.Root.builtin_ResponseHolder_md;
+    public static builtin.reflect.Class builtin_ResponseHolder_ref = builtin_md.Root.builtin_ResponseHolder_md;
     public io.datawire.quark.runtime.HTTPResponse response;
     public String failure = null;
     public ResponseHolder() {}

@@ -1,6 +1,6 @@
 package builtin_md;
 
-public class builtin_Service_getTimeout_Method extends reflect.Method implements io.datawire.quark.runtime.QObject {
+public class builtin_Service_getTimeout_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
     public builtin_Service_getTimeout_Method() {
         super("builtin.long", "getTimeout", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }

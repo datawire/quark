@@ -4,7 +4,7 @@ package slack.event;
  * A message was sent to a channel.
  */
 public class Message extends SlackEvent implements io.datawire.quark.runtime.QObject {
-    public static reflect.Class slack_event_Message_ref = slackpack_md.Root.slack_event_Message_md;
+    public static builtin.reflect.Class slack_event_Message_ref = slackpack_md.Root.slack_event_Message_md;
     /**
      * The subtype field indicates the type of message.
      */

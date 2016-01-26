@@ -36,7 +36,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(test1_Test_ref),
     Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
      $type=2.constructors_md.Root), Name(test1_Test_md),
-    $type=1.reflect.Class), $type=1.reflect.Class)),
+    $type=1.builtin.reflect.Class), $type=1.builtin.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(
@@ -86,7 +86,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(test2_Test_ref),
     Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
      $type=2.constructors_md.Root), Name(test2_Test_md),
-    $type=1.reflect.Class), $type=1.reflect.Class)),
+    $type=1.builtin.reflect.Class), $type=1.builtin.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(

@@ -1,6 +1,6 @@
 var _qrt = require("datawire-quark-core");
-var reflect = require('builtin').reflect;
-exports.reflect = reflect;
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
 var extending_primitives_md = require('../extending_primitives_md');
 exports.extending_primitives_md = extending_primitives_md;
 

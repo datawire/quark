@@ -1,11 +1,11 @@
 from quark_runtime import *
 
-import reflect
+import builtin.reflect
 
 
-class pkg_A_foo_Method(reflect.Method):
+class pkg_A_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_A_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -24,9 +24,9 @@ class pkg_A_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_A_bar_Method(reflect.Method):
+class pkg_A_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_A_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
@@ -45,9 +45,9 @@ class pkg_A_bar_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_A(reflect.Class):
+class pkg_A(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_A, self).__init__(u"pkg.A");
@@ -69,9 +69,9 @@ class pkg_A(reflect.Class):
         pass
 pkg_A.singleton = pkg_A()
 
-class pkg_B_bar_Method(reflect.Method):
+class pkg_B_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_B_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
@@ -90,9 +90,9 @@ class pkg_B_bar_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_B(reflect.Class):
+class pkg_B(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_B, self).__init__(u"pkg.B");
@@ -114,9 +114,9 @@ class pkg_B(reflect.Class):
         pass
 pkg_B.singleton = pkg_B()
 
-class pkg_C_foo_Method(reflect.Method):
+class pkg_C_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_C_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -135,9 +135,9 @@ class pkg_C_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_C(reflect.Class):
+class pkg_C(builtin.reflect.Class):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_C, self).__init__(u"pkg.C");
@@ -159,9 +159,9 @@ class pkg_C(reflect.Class):
         pass
 pkg_C.singleton = pkg_C()
 
-class pkg_T1_foo_Method(reflect.Method):
+class pkg_T1_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_T1_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -180,16 +180,37 @@ class pkg_T1_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_T1(reflect.Class):
+class pkg_T1_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T1_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).bar();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T1(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_T1, self).__init__(u"pkg.T1");
         (self).name = u"T1"
         (self).parameters = _List([])
         (self).fields = _List([])
-        (self).methods = _List([pkg_T1_foo_Method()])
+        (self).methods = _List([pkg_T1_foo_Method(), pkg_T1_bar_Method()])
 
     def construct(self, args):
         return pkg.T1()
@@ -204,9 +225,9 @@ class pkg_T1(reflect.Class):
         pass
 pkg_T1.singleton = pkg_T1()
 
-class pkg_T2_foo_Method(reflect.Method):
+class pkg_T2_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_T2_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -225,16 +246,37 @@ class pkg_T2_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_T2(reflect.Class):
+class pkg_T2_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T2_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).bar();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T2(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_T2, self).__init__(u"pkg.T2");
         (self).name = u"T2"
         (self).parameters = _List([])
         (self).fields = _List([])
-        (self).methods = _List([pkg_T2_foo_Method()])
+        (self).methods = _List([pkg_T2_foo_Method(), pkg_T2_bar_Method()])
 
     def construct(self, args):
         return pkg.T2()
@@ -249,9 +291,9 @@ class pkg_T2(reflect.Class):
         pass
 pkg_T2.singleton = pkg_T2()
 
-class pkg_T3_foo_Method(reflect.Method):
+class pkg_T3_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_T3_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -270,16 +312,37 @@ class pkg_T3_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_T3(reflect.Class):
+class pkg_T3_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T3_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).bar();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T3(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_T3, self).__init__(u"pkg.T3");
         (self).name = u"T3"
         (self).parameters = _List([])
         (self).fields = _List([])
-        (self).methods = _List([pkg_T3_foo_Method()])
+        (self).methods = _List([pkg_T3_foo_Method(), pkg_T3_bar_Method()])
 
     def construct(self, args):
         return pkg.T3()
@@ -294,16 +357,58 @@ class pkg_T3(reflect.Class):
         pass
 pkg_T3.singleton = pkg_T3()
 
-class pkg_T4(reflect.Class):
+class pkg_T4_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T4_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).foo();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T4_bar_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T4_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).bar();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T4(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_T4, self).__init__(u"pkg.T4");
         (self).name = u"T4"
         (self).parameters = _List([])
         (self).fields = _List([])
-        (self).methods = _List([])
+        (self).methods = _List([pkg_T4_foo_Method(), pkg_T4_bar_Method()])
 
     def construct(self, args):
         return pkg.T4()
@@ -318,9 +423,9 @@ class pkg_T4(reflect.Class):
         pass
 pkg_T4.singleton = pkg_T4()
 
-class pkg_T5_foo_Method(reflect.Method):
+class pkg_T5_foo_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Method._init(self)
+        builtin.reflect.Method._init(self)
 
     def __init__(self):
         super(pkg_T5_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
@@ -339,16 +444,37 @@ class pkg_T5_foo_Method(reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_T5(reflect.Class):
+class pkg_T5_bar_Method(builtin.reflect.Method):
     def _init(self):
-        reflect.Class._init(self)
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(pkg_T5_bar_Method, self).__init__(u"builtin.void", u"bar", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).bar();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class pkg_T5(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_T5, self).__init__(u"pkg.T5");
         (self).name = u"T5"
         (self).parameters = _List([])
         (self).fields = _List([])
-        (self).methods = _List([pkg_T5_foo_Method()])
+        (self).methods = _List([pkg_T5_foo_Method(), pkg_T5_bar_Method()])
 
     def construct(self, args):
         return pkg.T5()

@@ -1,13 +1,13 @@
 @version("1.2.3") // version is mandatory
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
-        void server(Runtime runtime, int port) { // runtime and port are mandatory constructor parameters
+        void server(int port) { // port is mandatory constructor parameter
             HelloServlet servlet = CrashingServlet();
-            runtime.serveHTTP("http://localhost:" + port.toString() + "/http_server", servlet);
+            servlet.serveHTTP("http://localhost:" + port.toString() + "/http_server");
         }
-        void client(Runtime runtime, int port) {
+        void client(int port) {
 
-            TimeoutClient(runtime, port)
+            TimeoutClient(port)
                 .url("/http_server")
                 .expectCode(500)
                 .check(2.5);
