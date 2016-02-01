@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Creating the Python Client &mdash; Datawire Connect 0.3.1 documentation</title>
+    <title>Creating the Python Client &mdash; Datawire Connect 0.3.10 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.1',
+        VERSION:     '0.3.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.3.10 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Writing a Python Server" href="pythonServer.html" />
     <link rel="prev" title="Compiling and Installing the Library in Python" href="pythonBuild.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Datawire Connect 0.3.1 documentation
+        Datawire Connect 0.3.10 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -64,7 +64,7 @@
   <div class="section" id="creating-the-python-client">
 <h1>Creating the Python Client<a class="headerlink" href="#creating-the-python-client" title="Permalink to this headline">¶</a></h1>
 <p>Let&#8217;s start by creating a simple Hello World client using the compiled Hello contract in Python.</p>
-<p>This walkthrough assumes that your client file is named <code class="docutils literal"><span class="pre">pyclient.py</span></code> but there is no requirement that you do so. Please substitute your file name for pyclient.py everywhere if you choose a different name.</p>
+<p>This walkthrough assumes that your client file is named pyclient.py but there is no requirement that you do so. Please substitute your file name for pyclient.py everywhere if you choose a different name.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the client and just want to start from a completed client, go directly to the <a class="reference internal" href="#fullexamplepythonclientlocal"><span>full client code</span></a> displayed in the last step on this page (this client points to a local server) or to this <a class="reference internal" href="#fullexamplepythonclientcloud"><span>link to the full Python client pointing to the cloud server</span></a>.</p>
 <div class="section" id="part-1-importing-the-product-pieces">
 <span id="part1pythonimport"></span><h2>Part 1: Importing the Datawire Connect Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
@@ -154,7 +154,7 @@ if __name__ == &#39;__main__&#39;:
 </div>
 <p>The line <code class="docutils literal"><span class="pre">response</span> <span class="pre">=</span> <span class="pre">client.hello(request)</span></code> uses the hello method of the Client object (as defined within the Hello interface in the service contract) to send the actual request. This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).</p>
 <p>The print statement below it provides visual feedback within the client that the request was sent to the server and a response was received. It is not essential to the interaction but helps illustrate the communications in the example.</p>
-<p id="fullexamplepythonclientcloud">That&#8217;s it! The Python client is fully defined now - the code above is all that&#8217;s needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the Datawire Connect GitHub repository <cite>here &lt;https://github.com/datawire/quark/blob/0.3.x/examples/helloRPC/pyclient.py&gt;</cite>.</p>
+<p id="fullexamplepythonclientcloud">That&#8217;s it! The Python client is fully defined now - the code above is all that&#8217;s needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the Datawire Connect GitHub repository <a class="reference external" href="https://github.com/datawire/quark/blob/0.3.x/examples/helloRPC/pyclient.py">here</a>.</p>
 </div>
 </div>
 
@@ -219,7 +219,7 @@ if __name__ == &#39;__main__&#39;:
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -229,7 +229,7 @@ if __name__ == &#39;__main__&#39;:
 
   <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
-      1.3.3.
+      1.3.4.
 
   </footer>
 

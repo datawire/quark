@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Runtime Integrations &mdash; Datawire Connect 0.3.1 documentation</title>
+    <title>Runtime Integrations &mdash; Datawire Connect 0.3.10 documentation</title>
     
     <link rel="stylesheet" href="../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.3.1',
+        VERSION:     '0.3.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../index.html" />
+    <link rel="top" title="Datawire Connect 0.3.10 documentation" href="../index.html" />
     <link rel="up" title="Datawire Connect Installation and Configuration Guide" href="index.html" />
     <link rel="next" title="Compilation" href="compile.html" />
     <link rel="prev" title="Installation" href="install.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../index.html ">
-        Datawire Connect 0.3.1 documentation
+        Datawire Connect 0.3.10 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Datawire Connect Installation and Configuration Guide</a>
       </li> 
@@ -63,8 +63,8 @@
             
   <div class="section" id="runtime-integrations">
 <h1>Runtime Integrations<a class="headerlink" href="#runtime-integrations" title="Permalink to this headline">¶</a></h1>
-<p>Datawire Connect defines a variety of <a class="reference internal" href="../language-reference/integrationTypes.html"><em>integration types</em></a> that use communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures. You must use a specific runtime integration matching your development environment to get a working method - these integrations contain code specific to each environment and how it manages communications.</p>
-<p>You do not need to install a runtime integration if you are not using any integration types in your code.</p>
+<p>Quark defines a variety of <a class="reference internal" href="../language-reference/integrationTypes.html"><em>integration types</em></a> and <a class="reference internal" href="../language-reference/integrationInterfaces.html"><em>integration interfaces</em></a> that use or rely on communication protocols that differ for different languages and frameworks. These types are defined like interfaces with just method signatures. You must use a specific Datawire Connect runtime integration matching your development environment to get a working method - these integrations contain code specific to each environment and how it manages communications.</p>
+<p>You do not need to install a runtime integration if you are not using any integration types or integration interfaces in your Quark code.</p>
 <p>Datawire Connect supports four runtime integrations:</p>
 <ul class="simple">
 <li>datawire-quark-netty for Java and Netty</li>
@@ -72,7 +72,7 @@
 <li>datawire-quark-threaded for Python</li>
 <li>datawire-quark-node for Javascript and Node.js</li>
 </ul>
-<p>These runtime integrations are installable through the normal install mechanism for your language of choice - pip for Python, npm for Javascript, and maven for Java (The Java integrations are pulled from Maven Central automatically as needed by the code you generate and compile and do not require manual installation). Any dependencies are automatically installed when you install the runtime integration so there is no need to worry about prerequisites beyond those needed for download. Once you&#8217;ve installed the appropriate runtime integration or integrations for your development environment, the integration types should be fully functional and work just like any other data types in Quark.</p>
+<p>These runtime integrations are installable through the normal install mechanism for your language of choice - pip for Python, npm for Javascript, and Maven for Java (The Java integrations are pulled from Maven Central automatically as needed by the code you generate and compile and do not require manual installation). Any dependencies are automatically installed when you install the runtime integration so there is no need to worry about prerequisites beyond those needed for download. Once you&#8217;ve installed the appropriate runtime integration or integrations for your development environment, the integration types should be fully functional and work just like any other data types in Quark.</p>
 <p>To install the datawire-quark-twisted runtime integration run the following command:</p>
 <p><code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">datawire-quark-twisted</span></code></p>
 <p>To install the datawire-quark-threaded runtime integration run the following command:</p>
@@ -131,7 +131,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Datawire Connect Installation and Configuration Guide</a>
       </li> 
@@ -141,7 +141,7 @@
 
   <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
-      1.3.3.
+      1.3.4.
 
   </footer>
 

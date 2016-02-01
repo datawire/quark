@@ -1,7 +1,7 @@
 Introduction
 ============
 
-{{{product}}} and its {{{language}}} language lets you define and implement rich (micro)service APIs that work with your existing application frameworks. {{{product}}} lets you:
+{{{product}}} and its {{{language}}} language let you define and implement rich (micro)service APIs that work with your existing application frameworks. {{{product}}} lets you:
 
 * Rapidly prototype and iterate service APIs
 * Build service APIs with rich protocol semantics
@@ -11,4 +11,5 @@ In addition to developing and implementing APIs, {{{language}}} also offers a pa
 
 This document focuses on the language elements of {{{product}}} and provides some context around how the {{{language}}} language is structured as well as reference documentation for specific language elements.
 
-[[[JMK revert changes if we wind up with the same name for the language and the product]]]
+.. 
+   JMK Will need to massage a bit or revert to old version if we end up with the same name for the product and language at any point

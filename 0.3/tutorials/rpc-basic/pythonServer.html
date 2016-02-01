@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Writing a Python Server &mdash; Datawire Connect 0.3.1 documentation</title>
+    <title>Writing a Python Server &mdash; Datawire Connect 0.3.10 documentation</title>
     
     <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.3.1',
+        VERSION:     '0.3.10',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.3.1 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.3.10 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Running the Python Client and Server" href="pythonRun.html" />
     <link rel="prev" title="Creating the Python Client" href="pythonClient.html" />
@@ -31,7 +31,7 @@
   </head>
   <body role="document">
     <header id="pageheader"><h1><a href="../../index.html ">
-        Datawire Connect 0.3.1 documentation
+        Datawire Connect 0.3.10 documentation
     </a></h1></header>
   <div class="related top">
   <nav id="rellinks">
@@ -48,7 +48,7 @@
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -64,6 +64,7 @@
   <div class="section" id="writing-a-python-server">
 <h1>Writing a Python Server<a class="headerlink" href="#writing-a-python-server" title="Permalink to this headline">¶</a></h1>
 <p>Let&#8217;s start by creating a simple Hello World server using the compiled Hello service contract in Python. This server will be functionally equivalent to the cloud server you used at the beginning of this walkthrough.</p>
+<p>This walkthrough assumes that your server file is named pyserver.py but there is no requirement that you do so. Please substitute your file name for pyserver.py everywhere if you choose a different name.</p>
 <p>Note: If you don&#8217;t want step-by-step guidance about how to create the server and just want to start from a completed server, there is a <a class="reference internal" href="#fullexamplepythonserver"><span>link to the full Python server file</span></a> at the bottom of this page.</p>
 <div class="section" id="part-1-importing-the-product-pieces">
 <span id="part1pythonserverimport"></span><h2>Part 1: Importing the Datawire Connect Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
@@ -103,7 +104,6 @@ def main():
 </pre></div>
 </div>
 <p>The HelloImpl class essentially defines a hello() method that defines the response to be sent back to the client given the request received. It instantiates a Response object (as defined in the service contract), populates its result property with the response text, and returns the object for further processing.</p>
-<p>[[JMK It looks like using self as the first input parameter is a general python thing so I don&#8217;t have to explain it. It seems weird to me. Adding this comment to remind myself I don&#8217;t need to figure out why it&#8217;s there.]]</p>
 </div>
 <div class="section" id="part-3-processing-the-request">
 <span id="part3pythonprocessrequest"></span><h2>Part 3: Processing the Request<a class="headerlink" href="#part-3-processing-the-request" title="Permalink to this headline">¶</a></h2>
@@ -202,7 +202,7 @@ if __name__ == &#39;__main__&#39;:
   </nav>
   <nav id="breadcrumbs">
     <ul>
-      <li><a href="../../index.html">Datawire Connect 0.3.1 documentation</a></li>
+      <li><a href="../../index.html">Datawire Connect 0.3.10 documentation</a></li>
       <li>
         <a href="index.html">Getting Started with RPC Walkthrough</a>
       </li> 
@@ -212,7 +212,7 @@ if __name__ == &#39;__main__&#39;:
 
   <footer id="pagefooter">&copy; 2015, 2016 Datawire.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a>
-      1.3.3.
+      1.3.4.
 
   </footer>
 
