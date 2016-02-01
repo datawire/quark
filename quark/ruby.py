@@ -46,6 +46,8 @@ end
 
     class_ = """\
 class {name} < {base}
+    {prologue}
+
     {constructors}
 
     {methods}
@@ -129,15 +131,23 @@ def comment(stuff):
 ## Class definition
 
 def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+    prologue = 'attr_accessor ' + ', '.join(':' + name for name, value in fields)
+    init_fields = Templates.method(
+        name='__init_fields__',
+        parameters='',
+        body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
+    )
     return Templates.class_(
         name=clazz,
         base=base or 'Object',
+        prologue=prologue,
         constructors=indent('\n'.join(constructors)),
-        methods=indent('\n'.join(methods)),
+        methods=indent('\n'.join(methods + [init_fields])),
     )
 
 def field(doc, type, name, value):
-    return 'self.{} = {}'.format(name, value or null())
+    return (name, value or null())
+    # return 'self.{} = {}'.format(name, value or null())
 
 def field_init():
     return 'self.__init_fields__'
@@ -188,6 +198,7 @@ def function(doc, type, name, parameters, body):
     return Templates.class_(
         name='Functions',
         base='Object',
+        prologue='',
         constructors='',
         methods=indent(Templates.method(
             name='self.' + name,
@@ -266,7 +277,7 @@ def construct(class_, args):
                                  args=', '.join(args))
 
 def invoke_super(clazz, base, args):
-    return 'super {args}'.format(args=', '.join(args))
+    return 'super({args})'.format(args=', '.join(args))
 
 def invoke_method(expr, method, args):
     return Templates.method_call(receiver=expr,
@@ -319,7 +330,7 @@ def string(s):
     return result
 
 def list(elements):
-    return '[%s]' % ', '.join(elements)
+    return 'DatawireQuarkCore::List.new([%s])' % ', '.join(elements)
 
 def map(entries):
     pair = '{} => {}'.format

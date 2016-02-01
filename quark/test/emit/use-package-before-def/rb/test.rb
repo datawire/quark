@@ -650,7 +650,24 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        Functions.go()
+
+        nil
+    end
+
+
+end
+
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.go()
+        
+        DatawireQuarkCore.print("GO!")
 
         nil
     end

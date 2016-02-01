@@ -642,6 +642,246 @@ end
 
 # END_BUILTIN
 
+class TestByte < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def run()
+        
+        map = Hash.new()
+        b = 3
+        DatawireQuarkCore.print((b).to_s)
+        DatawireQuarkCore.print((self.func()).to_s)
+
+        nil
+    end
+
+    def func()
+        
+        return Integer.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "TestByte"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class TestShort < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def run()
+        
+        map = Hash.new()
+        b = 3
+        DatawireQuarkCore.print((b).to_s)
+        DatawireQuarkCore.print((self.func()).to_s)
+
+        nil
+    end
+
+    def func()
+        
+        return Integer.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "TestShort"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class TestInt < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def run()
+        
+        map = Hash.new()
+        b = 3
+        DatawireQuarkCore.print((b).to_s)
+        DatawireQuarkCore.print((self.func()).to_s)
+
+        nil
+    end
+
+    def func()
+        
+        return Integer.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "TestInt"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class TestLong < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def run()
+        
+        map = Hash.new()
+        b = 3
+        DatawireQuarkCore.print((b).to_s)
+        DatawireQuarkCore.print((self.func()).to_s)
+
+        nil
+    end
+
+    def func()
+        
+        return Integer.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "TestLong"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +890,10 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        TestByte.new().run()
+        TestShort.new().run()
+        TestInt.new().run()
+        TestLong.new().run()
 
         nil
     end
@@ -690,6 +933,18 @@ class Functions < Object
         if ((className) == ("Map<String,Object>"))
             return Hash.new()
         end
+        if ((className) == ("Map<byte,byte>"))
+            return Hash.new()
+        end
+        if ((className) == ("Map<short,short>"))
+            return Hash.new()
+        end
+        if ((className) == ("Map<int,int>"))
+            return Hash.new()
+        end
+        if ((className) == ("Map<long,long>"))
+            return Hash.new()
+        end
         if ((className) == ("ResponseHolder"))
             return ResponseHolder.new()
         end
@@ -698,6 +953,18 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("TestByte"))
+            return TestByte.new()
+        end
+        if ((className) == ("TestShort"))
+            return TestShort.new()
+        end
+        if ((className) == ("TestInt"))
+            return TestInt.new()
+        end
+        if ((className) == ("TestLong"))
+            return TestLong.new()
         end
         return nil
 
@@ -739,6 +1006,18 @@ class Functions < Object
         if ((className) == ("Map<String,Object>"))
             return DatawireQuarkCore::List.new([])
         end
+        if ((className) == ("Map<byte,byte>"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Map<short,short>"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Map<int,int>"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Map<long,long>"))
+            return DatawireQuarkCore::List.new([])
+        end
         if ((className) == ("ResponseHolder"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("HTTPResponse"), "response")])
         end
@@ -747,6 +1026,18 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("TestByte"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("TestShort"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("TestInt"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("TestLong"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -804,6 +1095,26 @@ class Functions < Object
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("Object")])
             return
         end
+        if (((cls).id) == ("Map<byte,byte>"))
+            (cls).name = "Map"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("byte"), QuarkClass.new("byte")])
+            return
+        end
+        if (((cls).id) == ("Map<short,short>"))
+            (cls).name = "Map"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("short"), QuarkClass.new("short")])
+            return
+        end
+        if (((cls).id) == ("Map<int,int>"))
+            (cls).name = "Map"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int"), QuarkClass.new("int")])
+            return
+        end
+        if (((cls).id) == ("Map<long,long>"))
+            (cls).name = "Map"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("long"), QuarkClass.new("long")])
+            return
+        end
         if (((cls).id) == ("ResponseHolder"))
             (cls).name = "ResponseHolder"
             (cls).parameters = DatawireQuarkCore::List.new([])
@@ -822,6 +1133,26 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("TestByte"))
+            (cls).name = "TestByte"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("TestShort"))
+            (cls).name = "TestShort"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("TestInt"))
+            (cls).name = "TestInt"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("TestLong"))
+            (cls).name = "TestLong"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -891,6 +1222,18 @@ class Functions < Object
         if ((className) == ("Map<String,Object>"))
             nil
         end
+        if ((className) == ("Map<byte,byte>"))
+            nil
+        end
+        if ((className) == ("Map<short,short>"))
+            nil
+        end
+        if ((className) == ("Map<int,int>"))
+            nil
+        end
+        if ((className) == ("Map<long,long>"))
+            nil
+        end
         if ((className) == ("ResponseHolder"))
             if ((method) == ("onHTTPResponse"))
                 tmp_7 = object
@@ -931,6 +1274,50 @@ class Functions < Object
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
                 return nil
+            end
+        end
+        if ((className) == ("TestByte"))
+            if ((method) == ("run"))
+                tmp_15 = object
+                tmp_15.run()
+                return nil
+            end
+            if ((method) == ("func"))
+                tmp_16 = object
+                return tmp_16.func()
+            end
+        end
+        if ((className) == ("TestShort"))
+            if ((method) == ("run"))
+                tmp_17 = object
+                tmp_17.run()
+                return nil
+            end
+            if ((method) == ("func"))
+                tmp_18 = object
+                return tmp_18.func()
+            end
+        end
+        if ((className) == ("TestInt"))
+            if ((method) == ("run"))
+                tmp_19 = object
+                tmp_19.run()
+                return nil
+            end
+            if ((method) == ("func"))
+                tmp_20 = object
+                return tmp_20.func()
+            end
+        end
+        if ((className) == ("TestLong"))
+            if ((method) == ("run"))
+                tmp_21 = object
+                tmp_21.run()
+                return nil
+            end
+            if ((method) == ("func"))
+                tmp_22 = object
+                return tmp_22.func()
             end
         end
         return nil

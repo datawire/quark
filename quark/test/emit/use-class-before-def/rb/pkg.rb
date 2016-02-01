@@ -642,6 +642,109 @@ end
 
 # END_BUILTIN
 
+
+class Bar < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def go()
+        
+        foo = Foo.new()
+        (foo).name = "bob"
+        DatawireQuarkCore.print((foo).name)
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.Bar"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Foo < Object
+    attr_accessor :name
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "pkg.Foo"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("name"))
+            return (self).name
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("name"))
+            (self).name = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.name = nil
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +753,8 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        bar = Bar.new()
+        bar.go()
 
         nil
     end
@@ -698,6 +802,12 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("pkg.Bar"))
+            return Bar.new()
+        end
+        if ((className) == ("pkg.Foo"))
+            return Foo.new()
         end
         return nil
 
@@ -747,6 +857,12 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("pkg.Bar"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.Foo"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("String"), "name")])
         end
         return nil
 
@@ -822,6 +938,16 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("pkg.Bar"))
+            (cls).name = "pkg.Bar"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.Foo"))
+            (cls).name = "pkg.Foo"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -932,6 +1058,16 @@ class Functions < Object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
                 return nil
             end
+        end
+        if ((className) == ("pkg.Bar"))
+            if ((method) == ("go"))
+                tmp_15 = object
+                tmp_15.go()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.Foo"))
+            nil
         end
         return nil
 

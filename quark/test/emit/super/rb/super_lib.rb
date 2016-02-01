@@ -642,6 +642,122 @@ end
 
 # END_BUILTIN
 
+class A < Object
+    attr_accessor :name
+
+    
+    def initialize(name)
+        
+        self.__init_fields__
+        (self).name = name
+
+        nil
+    end
+
+
+
+    
+    def greet()
+        
+        DatawireQuarkCore.print("Hello")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "A"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("name"))
+            return (self).name
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("name"))
+            (self).name = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.name = nil
+
+        nil
+    end
+
+
+end
+
+class B < A
+    attr_accessor 
+
+    
+    def initialize()
+        
+        super("Bob")
+
+        nil
+    end
+
+
+
+    
+    def greet()
+        
+        method(:greet).super_method.call()
+        DatawireQuarkCore.print(("I'm ") + ((self).name))
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "B"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("name"))
+            return (self).name
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("name"))
+            (self).name = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +766,8 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        b = B.new()
+        b.greet()
 
         nil
     end
@@ -698,6 +815,12 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("A"))
+            return A.new((args)[0])
+        end
+        if ((className) == ("B"))
+            return B.new()
         end
         return nil
 
@@ -747,6 +870,12 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("A"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("String"), "name")])
+        end
+        if ((className) == ("B"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("String"), "name")])
         end
         return nil
 
@@ -822,6 +951,16 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("A"))
+            (cls).name = "A"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("B"))
+            (cls).name = "B"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +1069,20 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("A"))
+            if ((method) == ("greet"))
+                tmp_15 = object
+                tmp_15.greet()
+                return nil
+            end
+        end
+        if ((className) == ("B"))
+            if ((method) == ("greet"))
+                tmp_16 = object
+                tmp_16.greet()
                 return nil
             end
         end

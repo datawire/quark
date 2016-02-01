@@ -642,15 +642,56 @@ end
 
 # END_BUILTIN
 
-class Functions < Object
-    
+class Foo < Object
+    attr_accessor 
 
     
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
 
     
-    def self.main()
+    def next()
         
-        DatawireQuarkCore.print("Hello World")
+        nil
+
+        nil
+    end
+
+    def test()
+        
+        self.next()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Foo"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
 
         nil
     end
@@ -698,6 +739,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Foo"))
+            return Foo.new()
         end
         return nil
 
@@ -747,6 +791,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Foo"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +869,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Foo"))
+            (cls).name = "Foo"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +982,18 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Foo"))
+            if ((method) == ("next"))
+                tmp_15 = object
+                tmp_15.next()
+                return nil
+            end
+            if ((method) == ("test"))
+                tmp_16 = object
+                tmp_16.test()
                 return nil
             end
         end

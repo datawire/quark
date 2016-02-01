@@ -642,6 +642,320 @@ end
 
 # END_BUILTIN
 
+class Box < Object
+    attr_accessor :contents
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def set(contents)
+        
+        (self).contents = contents
+
+        nil
+    end
+
+    def get()
+        
+        return (self).contents
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Box<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("contents"))
+            return (self).contents
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("contents"))
+            (self).contents = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.contents = nil
+
+        nil
+    end
+
+
+end
+
+class Crate < Object
+    attr_accessor :box, :ibox
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def set(stuff)
+        
+        (self).box.set(stuff)
+
+        nil
+    end
+
+    def get()
+        
+        return (self).box.get()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Crate<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("box"))
+            return (self).box
+        end
+        if ((name) == ("ibox"))
+            return (self).ibox
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("box"))
+            (self).box = value
+        end
+        if ((name) == ("ibox"))
+            (self).ibox = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.box = Box.new()
+        self.ibox = Box.new()
+
+        nil
+    end
+
+
+end
+
+class Sack < Object
+    attr_accessor :ints
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "Sack"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("ints"))
+            return (self).ints
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("ints"))
+            (self).ints = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.ints = Box.new()
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test1()
+        
+        ibox = Box.new()
+        ibox.set(3)
+        three = ibox.get()
+        DatawireQuarkCore.print(three)
+        (ibox).contents = 4
+        DatawireQuarkCore.print((ibox).contents)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test2()
+        
+        sbox = Box.new()
+        sbox.set("hello")
+        hello = sbox.get()
+        DatawireQuarkCore.print(hello)
+        (sbox).contents = "world"
+        DatawireQuarkCore.print((sbox).contents)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test3()
+        
+        icrate = Crate.new()
+        icrate.set(3)
+        DatawireQuarkCore.print(icrate.get())
+        icrate.set(4)
+        DatawireQuarkCore.print(((icrate).box).contents)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test4()
+        
+        s = Sack.new()
+        DatawireQuarkCore.print((s).ints.get())
+        DatawireQuarkCore.print(((s).ints).contents)
+        (s).ints.set(3)
+        DatawireQuarkCore.print((s).ints.get())
+        DatawireQuarkCore.print(((s).ints).contents)
+        ((s).ints).contents = 4
+        DatawireQuarkCore.print((s).ints.get())
+        DatawireQuarkCore.print(((s).ints).contents)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test5()
+        
+        scrate = Crate.new()
+        DatawireQuarkCore.print(scrate.get())
+        DatawireQuarkCore.print(((scrate).box).contents)
+        scrate.set("hello")
+        DatawireQuarkCore.print(scrate.get())
+        DatawireQuarkCore.print(((scrate).box).contents)
+        ((scrate).ibox).contents = 3
+        DatawireQuarkCore.print(((scrate).ibox).contents)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test6()
+        
+        box = Box.new()
+        box.set(Box.new())
+        box.get().set(3)
+        DatawireQuarkCore.print(box.get().get())
+        DatawireQuarkCore.print(((box).contents).contents)
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +964,23 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        DatawireQuarkCore.print("test1:\n--")
+        Functions.test1()
+        DatawireQuarkCore.print("")
+        DatawireQuarkCore.print("test2:\n--")
+        Functions.test2()
+        DatawireQuarkCore.print("")
+        DatawireQuarkCore.print("test3:\n--")
+        Functions.test3()
+        DatawireQuarkCore.print("")
+        DatawireQuarkCore.print("test4:\n--")
+        Functions.test4()
+        DatawireQuarkCore.print("")
+        DatawireQuarkCore.print("test5:\n--")
+        Functions.test5()
+        DatawireQuarkCore.print("")
+        DatawireQuarkCore.print("test6:\n--")
+        Functions.test6()
 
         nil
     end
@@ -698,6 +1028,27 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Box<Object>"))
+            return Box.new()
+        end
+        if ((className) == ("Box<int>"))
+            return Box.new()
+        end
+        if ((className) == ("Box<String>"))
+            return Box.new()
+        end
+        if ((className) == ("Box<Box<int>>"))
+            return Box.new()
+        end
+        if ((className) == ("Crate<int>"))
+            return Crate.new()
+        end
+        if ((className) == ("Crate<String>"))
+            return Crate.new()
+        end
+        if ((className) == ("Sack"))
+            return Sack.new()
         end
         return nil
 
@@ -747,6 +1098,27 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Box<Object>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
+        end
+        if ((className) == ("Box<int>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
+        end
+        if ((className) == ("Box<String>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
+        end
+        if ((className) == ("Box<Box<int>>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
+        end
+        if ((className) == ("Crate<int>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Box<Object>"), "box"), Field.new(QuarkClass.new("Box<int>"), "ibox")])
+        end
+        if ((className) == ("Crate<String>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Box<Object>"), "box"), Field.new(QuarkClass.new("Box<int>"), "ibox")])
+        end
+        if ((className) == ("Sack"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Box<int>"), "ints")])
         end
         return nil
 
@@ -822,6 +1194,41 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Box<Object>"))
+            (cls).name = "Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Box<int>"))
+            (cls).name = "Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int")])
+            return
+        end
+        if (((cls).id) == ("Box<String>"))
+            (cls).name = "Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String")])
+            return
+        end
+        if (((cls).id) == ("Box<Box<int>>"))
+            (cls).name = "Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Box<int>")])
+            return
+        end
+        if (((cls).id) == ("Crate<int>"))
+            (cls).name = "Crate"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int")])
+            return
+        end
+        if (((cls).id) == ("Crate<String>"))
+            (cls).name = "Crate"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String")])
+            return
+        end
+        if (((cls).id) == ("Sack"))
+            (cls).name = "Sack"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -932,6 +1339,75 @@ class Functions < Object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
                 return nil
             end
+        end
+        if ((className) == ("Box<Object>"))
+            if ((method) == ("set"))
+                tmp_15 = object
+                tmp_15.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_16 = object
+                return tmp_16.get()
+            end
+        end
+        if ((className) == ("Box<int>"))
+            if ((method) == ("set"))
+                tmp_17 = object
+                tmp_17.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_18 = object
+                return tmp_18.get()
+            end
+        end
+        if ((className) == ("Box<String>"))
+            if ((method) == ("set"))
+                tmp_19 = object
+                tmp_19.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_20 = object
+                return tmp_20.get()
+            end
+        end
+        if ((className) == ("Box<Box<int>>"))
+            if ((method) == ("set"))
+                tmp_21 = object
+                tmp_21.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_22 = object
+                return tmp_22.get()
+            end
+        end
+        if ((className) == ("Crate<int>"))
+            if ((method) == ("set"))
+                tmp_23 = object
+                tmp_23.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_24 = object
+                return tmp_24.get()
+            end
+        end
+        if ((className) == ("Crate<String>"))
+            if ((method) == ("set"))
+                tmp_25 = object
+                tmp_25.set((args)[0])
+                return nil
+            end
+            if ((method) == ("get"))
+                tmp_26 = object
+                return tmp_26.get()
+            end
+        end
+        if ((className) == ("Sack"))
+            nil
         end
         return nil
 

@@ -642,6 +642,151 @@ end
 
 # END_BUILTIN
 
+class A < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("A")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "A"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class B < A
+    attr_accessor 
+
+    
+    def initialize()
+        
+        super()
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("B")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "B"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class C < A
+    attr_accessor 
+
+    
+    def initialize()
+        
+        super()
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "C"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +795,17 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        a = A.new()
+        a.foo()
+        b = B.new()
+        b.foo()
+        c = C.new()
+        c.foo()
+        DatawireQuarkCore.print("--")
+        a = b
+        a.foo()
+        a = c
+        a.foo()
 
         nil
     end
@@ -698,6 +853,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("A"))
+            return A.new()
+        end
+        if ((className) == ("B"))
+            return B.new()
+        end
+        if ((className) == ("C"))
+            return C.new()
         end
         return nil
 
@@ -747,6 +911,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("A"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("B"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("C"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +995,21 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("A"))
+            (cls).name = "A"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("B"))
+            (cls).name = "B"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("C"))
+            (cls).name = "C"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +1118,27 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("A"))
+            if ((method) == ("foo"))
+                tmp_15 = object
+                tmp_15.foo()
+                return nil
+            end
+        end
+        if ((className) == ("B"))
+            if ((method) == ("foo"))
+                tmp_16 = object
+                tmp_16.foo()
+                return nil
+            end
+        end
+        if ((className) == ("C"))
+            if ((method) == ("foo"))
+                tmp_17 = object
+                tmp_17.foo()
                 return nil
             end
         end

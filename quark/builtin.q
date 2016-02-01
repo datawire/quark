@@ -240,7 +240,7 @@ primitive String {
                                  $js{_qrt.json_from_string($self)};
 }
 
-@mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{Array})
+@mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{DatawireQuarkCore::List})
 primitive List<T> {
     macro void add(T element) $java{($self).add($element)}
                               $py{($self).append($element)}
@@ -382,14 +382,14 @@ Object fromJSON(Class cls, JSONObject json) {
 
 // TODO ruby
 @mapping($java{io.datawire.quark.runtime.JSONObject}
-         $rb{DatawireQuarkRuntime::JSONObject}
+         $rb{DatawireQuarkCore::JSONObject}
          $py{_JSONObject}
          $js{_qrt.JSONObject})
 primitive JSONObject {
 
     macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
                        $py{_JSONObject()}
-                       $rb{DatawireQuarkRuntime::JSONObject.new}
+                       $rb{DatawireQuarkCore::JSONObject.new}
                        $js{new _qrt.JSONObject()};
 
     macro String __to_String() self.getString();
@@ -449,7 +449,7 @@ primitive JSONObject {
 
 macro void print(Object msg) $java{System.out.println($msg)}
                              $py{_println($msg)}
-                             $rb{puts($msg)}
+                             $rb{DatawireQuarkCore.print($msg)}
                              $js{_qrt.print($msg)};
 
 macro long now() $java{System.currentTimeMillis()}

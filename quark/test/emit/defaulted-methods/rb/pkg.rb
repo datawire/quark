@@ -642,6 +642,390 @@ end
 
 # END_BUILTIN
 
+
+class A < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("A bar")
+        self.foo()
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class B < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def bar()
+        
+        DatawireQuarkCore.print("B bar")
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class C < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("C mixin for foo")
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class T1 < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("T1 foo")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.T1"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("A bar")
+        self.foo()
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class T2 < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("T2 foo")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.T2"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("A bar")
+        self.foo()
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class T3 < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("T3 foo")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.T3"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("B bar")
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class T4 < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "pkg.T4"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("A bar")
+        self.foo()
+
+        nil
+    end
+
+    def foo()
+        
+        DatawireQuarkCore.print("C mixin for foo")
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class T5 < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        DatawireQuarkCore.print("T5 foo")
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.T5"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def bar()
+        
+        DatawireQuarkCore.print("A bar")
+        self.foo()
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +1034,25 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        t1 = T1.new()
+        t1.foo()
+        t1.bar()
+        DatawireQuarkCore.print("===")
+        t2 = T2.new()
+        t2.foo()
+        t2.bar()
+        DatawireQuarkCore.print("===")
+        t3 = T3.new()
+        t3.foo()
+        t3.bar()
+        DatawireQuarkCore.print("===")
+        t4 = T4.new()
+        t4.foo()
+        t4.bar()
+        DatawireQuarkCore.print("===")
+        t5 = T5.new()
+        t5.foo()
+        t5.bar()
 
         nil
     end
@@ -698,6 +1100,21 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("pkg.T1"))
+            return T1.new()
+        end
+        if ((className) == ("pkg.T2"))
+            return T2.new()
+        end
+        if ((className) == ("pkg.T3"))
+            return T3.new()
+        end
+        if ((className) == ("pkg.T4"))
+            return T4.new()
+        end
+        if ((className) == ("pkg.T5"))
+            return T5.new()
         end
         return nil
 
@@ -747,6 +1164,21 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("pkg.T1"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.T2"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.T3"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.T4"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.T5"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +1254,46 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("pkg.A"))
+            (cls).name = "pkg.A"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.B"))
+            (cls).name = "pkg.B"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.C"))
+            (cls).name = "pkg.C"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.T1"))
+            (cls).name = "pkg.T1"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.T2"))
+            (cls).name = "pkg.T2"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.T3"))
+            (cls).name = "pkg.T3"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.T4"))
+            (cls).name = "pkg.T4"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.T5"))
+            (cls).name = "pkg.T5"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +1402,63 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("pkg.A"))
+            if ((method) == ("foo"))
+                tmp_15 = object
+                tmp_15.foo()
+                return nil
+            end
+            if ((method) == ("bar"))
+                tmp_16 = object
+                tmp_16.bar()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.B"))
+            if ((method) == ("bar"))
+                tmp_17 = object
+                tmp_17.bar()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.C"))
+            if ((method) == ("foo"))
+                tmp_18 = object
+                tmp_18.foo()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.T1"))
+            if ((method) == ("foo"))
+                tmp_19 = object
+                tmp_19.foo()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.T2"))
+            if ((method) == ("foo"))
+                tmp_20 = object
+                tmp_20.foo()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.T3"))
+            if ((method) == ("foo"))
+                tmp_21 = object
+                tmp_21.foo()
+                return nil
+            end
+        end
+        if ((className) == ("pkg.T4"))
+            nil
+        end
+        if ((className) == ("pkg.T5"))
+            if ((method) == ("foo"))
+                tmp_22 = object
+                tmp_22.foo()
                 return nil
             end
         end

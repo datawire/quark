@@ -642,6 +642,87 @@ end
 
 # END_BUILTIN
 
+class Overload < Object
+    attr_accessor :name
+
+    
+    def initialize(name)
+        
+        self.__init_fields__
+        (self).name = name
+
+        nil
+    end
+
+
+
+    
+    def __add__(o)
+        
+        return o
+
+        nil
+    end
+
+    def __mul__(o)
+        
+        return self
+
+        nil
+    end
+
+    def test()
+        
+        o1 = Overload.new("one")
+        o2 = Overload.new("two")
+        o3 = o1.__add__(o2)
+        DatawireQuarkCore.print((o3).name)
+        o3 = o1.__mul__(o2)
+        DatawireQuarkCore.print((o3).name)
+        if ((o3) == (o1))
+            DatawireQuarkCore.print("YAY!")
+        end
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Overload"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("name"))
+            return (self).name
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("name"))
+            (self).name = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.name = nil
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +731,8 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        o = Overload.new("test")
+        o.test()
 
         nil
     end
@@ -698,6 +780,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Overload"))
+            return Overload.new((args)[0])
         end
         return nil
 
@@ -747,6 +832,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Overload"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("String"), "name")])
         end
         return nil
 
@@ -822,6 +910,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Overload"))
+            (cls).name = "Overload"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +1023,21 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Overload"))
+            if ((method) == ("__add__"))
+                tmp_15 = object
+                return tmp_15.__add__((args)[0])
+            end
+            if ((method) == ("__mul__"))
+                tmp_16 = object
+                return tmp_16.__mul__((args)[0])
+            end
+            if ((method) == ("test"))
+                tmp_17 = object
+                tmp_17.test()
                 return nil
             end
         end

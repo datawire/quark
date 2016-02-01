@@ -648,9 +648,9 @@ class Functions < Object
     
 
     
-    def self.main()
+    def self.foo()
         
-        DatawireQuarkCore.print("Hello World")
+        return
 
         nil
     end

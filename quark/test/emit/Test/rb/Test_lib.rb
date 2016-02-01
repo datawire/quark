@@ -642,6 +642,75 @@ end
 
 # END_BUILTIN
 
+class Test < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo(t)
+        
+        return Test.new()
+
+        nil
+    end
+
+    def test()
+        
+        x = 2
+        y = 2
+        z = (x) + (y)
+        DatawireQuarkCore.print(z)
+        hello = "hello"
+        DatawireQuarkCore.print(hello)
+        t1 = Test.new()
+        t2 = t1.foo(t1)
+        if ((t2) != (t1))
+            DatawireQuarkCore.print("YAY!")
+        end
+        four = (2) + (2)
+        DatawireQuarkCore.print(four)
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Test"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +719,7 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        Test.new().test()
 
         nil
     end
@@ -698,6 +767,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Test"))
+            return Test.new()
         end
         return nil
 
@@ -747,6 +819,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Test"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +897,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Test"))
+            (cls).name = "Test"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +1010,17 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Test"))
+            if ((method) == ("foo"))
+                tmp_15 = object
+                return tmp_15.foo((args)[0])
+            end
+            if ((method) == ("test"))
+                tmp_16 = object
+                tmp_16.test()
                 return nil
             end
         end

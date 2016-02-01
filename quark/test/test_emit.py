@@ -49,7 +49,7 @@ def path(request):
     return request.param
 
 # XXX @pytest.fixture(params=[Java, Python, JavaScript])
-@pytest.fixture(params=[Python, Ruby])
+@pytest.fixture(params=[Ruby])
 def Backend(request):
     return request.param
 

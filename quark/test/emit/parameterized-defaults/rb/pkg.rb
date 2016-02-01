@@ -642,6 +642,200 @@ end
 
 # END_BUILTIN
 
+
+class Foo < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def foo()
+        
+        return self.get()
+
+        nil
+    end
+
+    def get()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class StringFoo < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def get()
+        
+        return "fdsa"
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "pkg.StringFoo"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def foo()
+        
+        return self.get()
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Box < Object
+    attr_accessor :contents
+
+    
+    def initialize(contents)
+        
+        self.__init_fields__
+        (self).contents = contents
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "pkg.Box<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("contents"))
+            return (self).contents
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("contents"))
+            (self).contents = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.contents = nil
+
+        nil
+    end
+
+
+end
+
+class StringBox < Box
+    attr_accessor 
+
+    
+    def initialize(contents)
+        
+        super(contents)
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "pkg.StringBox"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("contents"))
+            return (self).contents
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("contents"))
+            (self).contents = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +844,10 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        box = StringBox.new("asdf")
+        DatawireQuarkCore.print((box).contents)
+        foo = StringFoo.new()
+        DatawireQuarkCore.print(foo.foo())
 
         nil
     end
@@ -698,6 +895,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("pkg.StringFoo"))
+            return StringFoo.new()
+        end
+        if ((className) == ("pkg.Box<String>"))
+            return Box.new((args)[0])
+        end
+        if ((className) == ("pkg.StringBox"))
+            return StringBox.new((args)[0])
         end
         return nil
 
@@ -747,6 +953,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("pkg.StringFoo"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("pkg.Box<String>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
+        end
+        if ((className) == ("pkg.StringBox"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("String"), "contents")])
         end
         return nil
 
@@ -822,6 +1037,26 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("pkg.Foo<Object>"))
+            (cls).name = "pkg.Foo"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("pkg.StringFoo"))
+            (cls).name = "pkg.StringFoo"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("pkg.Box<String>"))
+            (cls).name = "pkg.Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String")])
+            return
+        end
+        if (((cls).id) == ("pkg.StringBox"))
+            (cls).name = "pkg.StringBox"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -932,6 +1167,28 @@ class Functions < Object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
                 return nil
             end
+        end
+        if ((className) == ("pkg.Foo<Object>"))
+            if ((method) == ("foo"))
+                tmp_15 = object
+                return tmp_15.foo()
+            end
+            if ((method) == ("get"))
+                tmp_16 = object
+                return tmp_16.get()
+            end
+        end
+        if ((className) == ("pkg.StringFoo"))
+            if ((method) == ("get"))
+                tmp_17 = object
+                return tmp_17.get()
+            end
+        end
+        if ((className) == ("pkg.Box<String>"))
+            nil
+        end
+        if ((className) == ("pkg.StringBox"))
+            nil
         end
         return nil
 

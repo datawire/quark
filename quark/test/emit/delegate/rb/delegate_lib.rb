@@ -642,6 +642,228 @@ end
 
 # END_BUILTIN
 
+class Message < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def encode()
+        
+        return "ENCODED"
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Message"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Ping < Message
+    attr_accessor 
+
+    
+    def initialize()
+        
+        super()
+
+        nil
+    end
+
+
+
+    
+    def _getClass()
+        
+        return "Ping"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Pong < Message
+    attr_accessor 
+
+    
+    def initialize()
+        
+        super()
+
+        nil
+    end
+
+
+
+    
+    def toString()
+        
+        return "PONG"
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Pong"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Test < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def bar(name, args)
+        
+        DatawireQuarkCore.print(args)
+        return nil
+
+        nil
+    end
+
+    def foo(foo, bar, baz)
+        
+        self.bar("foo", DatawireQuarkCore::List.new([foo, bar, baz]))
+
+        nil
+    end
+
+    def rpc(name, msg)
+        
+        DatawireQuarkCore.print(msg.encode())
+        if ((name) == ("hello"))
+            return Pong.new()
+        else
+            return nil
+        end
+
+        nil
+    end
+
+    def hello(ping)
+        
+        return self.rpc("hello", ping)
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Test"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +872,9 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        t = Test.new()
+        t.foo("one", "two", 3)
+        DatawireQuarkCore.print(t.hello(Ping.new()).toString())
 
         nil
     end
@@ -698,6 +922,18 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Message"))
+            return Message.new()
+        end
+        if ((className) == ("Ping"))
+            return Ping.new()
+        end
+        if ((className) == ("Pong"))
+            return Pong.new()
+        end
+        if ((className) == ("Test"))
+            return Test.new()
         end
         return nil
 
@@ -747,6 +983,18 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Message"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Ping"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Pong"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("Test"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +1070,26 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Message"))
+            (cls).name = "Message"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("Ping"))
+            (cls).name = "Ping"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("Pong"))
+            (cls).name = "Pong"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("Test"))
+            (cls).name = "Test"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -931,6 +1199,47 @@ class Functions < Object
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
                 return nil
+            end
+        end
+        if ((className) == ("Message"))
+            if ((method) == ("encode"))
+                tmp_15 = object
+                return tmp_15.encode()
+            end
+        end
+        if ((className) == ("Ping"))
+            if ((method) == ("encode"))
+                tmp_16 = object
+                return tmp_16.encode()
+            end
+        end
+        if ((className) == ("Pong"))
+            if ((method) == ("toString"))
+                tmp_17 = object
+                return tmp_17.toString()
+            end
+            if ((method) == ("encode"))
+                tmp_18 = object
+                return tmp_18.encode()
+            end
+        end
+        if ((className) == ("Test"))
+            if ((method) == ("bar"))
+                tmp_19 = object
+                return tmp_19.bar((args)[0], (args)[1])
+            end
+            if ((method) == ("foo"))
+                tmp_20 = object
+                tmp_20.foo((args)[0], (args)[1], (args)[2])
+                return nil
+            end
+            if ((method) == ("rpc"))
+                tmp_21 = object
+                return tmp_21.rpc((args)[0], (args)[1])
+            end
+            if ((method) == ("hello"))
+                tmp_22 = object
+                return tmp_22.hello((args)[0])
             end
         end
         return nil

@@ -650,7 +650,29 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        stuff = DatawireQuarkCore::List.new(["one", "two", "three", "four"])
+        idx = 0
+        while (true) do
+            s = (stuff)[idx]
+            if ((s) == ("three"))
+                DatawireQuarkCore.print("breaking")
+                break
+            end
+            DatawireQuarkCore.print("not breaking")
+            idx = (idx) + (1)
+        end
+        idx = 0
+        loop = true
+        while (loop) do
+            s2 = (stuff)[idx]
+            if ((s2) != ("three"))
+                idx = (idx) + (1)
+                DatawireQuarkCore.print("continuing")
+                next
+            end
+            DatawireQuarkCore.print("not continuing")
+            loop = false
+        end
 
         nil
     end

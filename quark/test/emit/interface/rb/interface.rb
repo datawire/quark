@@ -642,15 +642,315 @@ end
 
 # END_BUILTIN
 
-class Functions < Object
-    
+class Foo < Object
+    attr_accessor 
 
     
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
 
     
-    def self.main()
+    def m1()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def m2(arg)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def m3(args)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
         
-        DatawireQuarkCore.print("Hello World")
+
+        nil
+    end
+
+
+end
+
+class Bar < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def m1()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def m2(arg)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def m3(args)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class Baz < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def m2(arg)
+        
+        nil
+
+        nil
+    end
+
+    def m1()
+        
+        nil
+
+        nil
+    end
+
+    def m3(args)
+        
+        nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Baz"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class RazBar < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class RazFaz < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class BazBar < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def m1()
+        
+        nil
+
+        nil
+    end
+
+    def m2(arg)
+        
+        nil
+
+        nil
+    end
+
+    def m3(args)
+        
+        nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "BazBar"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+
+class BazFaz < Object
+    attr_accessor 
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def m1()
+        
+        nil
+
+        nil
+    end
+
+    def m2(arg)
+        
+        nil
+
+        nil
+    end
+
+    def m3(args)
+        
+        nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "BazFaz<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
 
         nil
     end
@@ -698,6 +998,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Baz"))
+            return Baz.new()
+        end
+        if ((className) == ("BazBar"))
+            return BazBar.new()
+        end
+        if ((className) == ("BazFaz<Object>"))
+            return BazFaz.new()
         end
         return nil
 
@@ -747,6 +1056,15 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Baz"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("BazBar"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("BazFaz<Object>"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -821,6 +1139,41 @@ class Functions < Object
         end
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Foo"))
+            (cls).name = "Foo"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("Bar<Object>"))
+            (cls).name = "Bar"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Baz"))
+            (cls).name = "Baz"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("RazBar"))
+            (cls).name = "RazBar"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("RazFaz<Object>"))
+            (cls).name = "RazFaz"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("BazBar"))
+            (cls).name = "BazBar"
+            (cls).parameters = DatawireQuarkCore::List.new([])
+            return
+        end
+        if (((cls).id) == ("BazFaz<Object>"))
+            (cls).name = "BazFaz"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
             return
         end
@@ -930,6 +1283,97 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Foo"))
+            if ((method) == ("m1"))
+                tmp_15 = object
+                tmp_15.m1()
+                return nil
+            end
+            if ((method) == ("m2"))
+                tmp_16 = object
+                tmp_16.m2((args)[0])
+                return nil
+            end
+            if ((method) == ("m3"))
+                tmp_17 = object
+                tmp_17.m3((args)[0])
+                return nil
+            end
+        end
+        if ((className) == ("Bar<Object>"))
+            if ((method) == ("m1"))
+                tmp_18 = object
+                tmp_18.m1()
+                return nil
+            end
+            if ((method) == ("m2"))
+                tmp_19 = object
+                tmp_19.m2((args)[0])
+                return nil
+            end
+            if ((method) == ("m3"))
+                tmp_20 = object
+                tmp_20.m3((args)[0])
+                return nil
+            end
+        end
+        if ((className) == ("Baz"))
+            if ((method) == ("m2"))
+                tmp_21 = object
+                tmp_21.m2((args)[0])
+                return nil
+            end
+            if ((method) == ("m1"))
+                tmp_22 = object
+                tmp_22.m1()
+                return nil
+            end
+            if ((method) == ("m3"))
+                tmp_23 = object
+                tmp_23.m3((args)[0])
+                return nil
+            end
+        end
+        if ((className) == ("RazBar"))
+            nil
+        end
+        if ((className) == ("RazFaz<Object>"))
+            nil
+        end
+        if ((className) == ("BazBar"))
+            if ((method) == ("m1"))
+                tmp_24 = object
+                tmp_24.m1()
+                return nil
+            end
+            if ((method) == ("m2"))
+                tmp_25 = object
+                tmp_25.m2((args)[0])
+                return nil
+            end
+            if ((method) == ("m3"))
+                tmp_26 = object
+                tmp_26.m3((args)[0])
+                return nil
+            end
+        end
+        if ((className) == ("BazFaz<Object>"))
+            if ((method) == ("m1"))
+                tmp_27 = object
+                tmp_27.m1()
+                return nil
+            end
+            if ((method) == ("m2"))
+                tmp_28 = object
+                tmp_28.m2((args)[0])
+                return nil
+            end
+            if ((method) == ("m3"))
+                tmp_29 = object
+                tmp_29.m3((args)[0])
                 return nil
             end
         end

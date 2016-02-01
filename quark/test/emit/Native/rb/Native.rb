@@ -642,15 +642,52 @@ end
 
 # END_BUILTIN
 
-class Functions < Object
-    
+class Native < Object
+    attr_accessor 
 
     
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
 
     
-    def self.main()
+    def test()
         
-        DatawireQuarkCore.print("Hello World")
+        n1 = Native.new()
+        n2 = Native.new()
+        n1n2 = Native.new()
+        n3 = n1n2
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Native"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
 
         nil
     end
@@ -698,6 +735,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Native"))
+            return Native.new()
         end
         return nil
 
@@ -747,6 +787,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Native"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +865,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Native"))
+            (cls).name = "Native"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +978,13 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Native"))
+            if ((method) == ("test"))
+                tmp_15 = object
+                tmp_15.test()
                 return nil
             end
         end

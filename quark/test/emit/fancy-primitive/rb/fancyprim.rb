@@ -642,6 +642,7 @@ end
 
 # END_BUILTIN
 
+
 class Functions < Object
     
 
@@ -650,7 +651,8 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        s = DatawireQuarkCore::List.new(DatawireQuarkCore::List.new([1, 2, 3]))
+        DatawireQuarkCore.print(s)
 
         nil
     end

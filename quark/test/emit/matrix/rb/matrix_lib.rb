@@ -642,6 +642,95 @@ end
 
 # END_BUILTIN
 
+class Matrix < Object
+    attr_accessor :width, :height, :columns
+
+    
+    def initialize(width, height)
+        
+        self.__init_fields__
+        (self).width = width
+        (self).height = height
+        @columns = DatawireQuarkCore::List.new([])
+        while (((@columns).size) < (width)) do
+            column = DatawireQuarkCore::List.new([])
+            while (((column).size) < (height)) do
+                (column) << (nil)
+            end
+            (@columns) << (column)
+        end
+
+        nil
+    end
+
+
+
+    
+    def __get__(i, j)
+        
+        return ((@columns)[i])[j]
+
+        nil
+    end
+
+    def __set__(i, j, value)
+        
+        ((@columns)[i])[j] = (value)
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Matrix<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("width"))
+            return (self).width
+        end
+        if ((name) == ("height"))
+            return (self).height
+        end
+        if ((name) == ("columns"))
+            return (self).columns
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("width"))
+            (self).width = value
+        end
+        if ((name) == ("height"))
+            (self).height = value
+        end
+        if ((name) == ("columns"))
+            (self).columns = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.width = nil
+        self.height = nil
+        self.columns = nil
+
+        nil
+    end
+
+
+end
+
 class Functions < Object
     
 
@@ -650,7 +739,9 @@ class Functions < Object
     
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        matrix = Matrix.new(3, 3)
+        matrix.__set__(2, 2, 123)
+        DatawireQuarkCore.print(matrix.__get__(2, 2))
 
         nil
     end
@@ -684,6 +775,9 @@ class Functions < Object
         if ((className) == ("List<String>"))
             return DatawireQuarkCore::List.new()
         end
+        if ((className) == ("List<List<Object>>"))
+            return DatawireQuarkCore::List.new()
+        end
         if ((className) == ("Map<Object,Object>"))
             return Hash.new()
         end
@@ -698,6 +792,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Matrix<int>"))
+            return Matrix.new((args)[0], (args)[1])
         end
         return nil
 
@@ -733,6 +830,9 @@ class Functions < Object
         if ((className) == ("List<String>"))
             return DatawireQuarkCore::List.new([])
         end
+        if ((className) == ("List<List<Object>>"))
+            return DatawireQuarkCore::List.new([])
+        end
         if ((className) == ("Map<Object,Object>"))
             return DatawireQuarkCore::List.new([])
         end
@@ -747,6 +847,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Matrix<int>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("int"), "width"), Field.new(QuarkClass.new("int"), "height"), Field.new(QuarkClass.new("List<List<Object>>"), "columns")])
         end
         return nil
 
@@ -794,6 +897,11 @@ class Functions < Object
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String")])
             return
         end
+        if (((cls).id) == ("List<List<Object>>"))
+            (cls).name = "List"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("List<Object>")])
+            return
+        end
         if (((cls).id) == ("Map<Object,Object>"))
             (cls).name = "Map"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object"), QuarkClass.new("Object")])
@@ -822,6 +930,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Matrix<int>"))
+            (cls).name = "Matrix"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int")])
             return
         end
         (cls).name = (cls).id
@@ -885,6 +998,9 @@ class Functions < Object
         if ((className) == ("List<String>"))
             nil
         end
+        if ((className) == ("List<List<Object>>"))
+            nil
+        end
         if ((className) == ("Map<Object,Object>"))
             nil
         end
@@ -930,6 +1046,17 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Matrix<int>"))
+            if ((method) == ("__get__"))
+                tmp_15 = object
+                return tmp_15.__get__((args)[0], (args)[1])
+            end
+            if ((method) == ("__set__"))
+                tmp_16 = object
+                tmp_16.__set__((args)[0], (args)[1], (args)[2])
                 return nil
             end
         end

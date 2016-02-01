@@ -642,15 +642,58 @@ end
 
 # END_BUILTIN
 
-class Functions < Object
-    
+class Macro < Object
+    attr_accessor 
 
     
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
 
     
-    def self.main()
+    def test()
         
-        DatawireQuarkCore.print("Hello World")
+        m1 = Macro.new()
+        m2 = Macro.new()
+        m3 = m1
+        m4 = m1
+        m5 = m2
+        m6 = m2
+        m7 = m1
+        m8 = m1
+        m9 = m2
+        m10 = m2
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Macro"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
 
         nil
     end
@@ -698,6 +741,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Macro"))
+            return Macro.new()
         end
         return nil
 
@@ -747,6 +793,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Macro"))
+            return DatawireQuarkCore::List.new([])
         end
         return nil
 
@@ -822,6 +871,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Macro"))
+            (cls).name = "Macro"
+            (cls).parameters = DatawireQuarkCore::List.new([])
             return
         end
         (cls).name = (cls).id
@@ -930,6 +984,13 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Macro"))
+            if ((method) == ("test"))
+                tmp_15 = object
+                tmp_15.test()
                 return nil
             end
         end

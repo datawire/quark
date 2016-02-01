@@ -648,9 +648,202 @@ class Functions < Object
     
 
     
+    def self.test1()
+        
+        list = DatawireQuarkCore::List.new()
+        (list) << (1)
+        (list) << (2)
+        (list) << (3)
+        DatawireQuarkCore.print((list)[0])
+        DatawireQuarkCore.print((list)[1])
+        DatawireQuarkCore.print((list)[2])
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test2()
+        
+        list = DatawireQuarkCore::List.new()
+        (list) << ("one")
+        (list) << ("two")
+        (list) << ("three")
+        DatawireQuarkCore.print((list)[0])
+        DatawireQuarkCore.print((list)[1])
+        DatawireQuarkCore.print((list)[2])
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test3()
+        
+        list = DatawireQuarkCore::List.new([])
+        DatawireQuarkCore.print(list)
+        list = DatawireQuarkCore::List.new([1])
+        DatawireQuarkCore.print(list)
+        list = DatawireQuarkCore::List.new([1, 2, 3])
+        DatawireQuarkCore.print(list)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test4()
+        
+        list = DatawireQuarkCore::List.new([])
+        DatawireQuarkCore.print(list)
+        list = DatawireQuarkCore::List.new(["one"])
+        DatawireQuarkCore.print(list)
+        list = DatawireQuarkCore::List.new(["one", "two", "three"])
+        DatawireQuarkCore.print(list)
+
+        nil
+    end
+
+
+end
+
+class Box < Object
+    attr_accessor :contents
+
+    
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+    
+    def get()
+        
+        return @contents
+
+        nil
+    end
+
+    def set(contents)
+        
+        (self).contents = contents
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "Box<Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("contents"))
+            return (self).contents
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("contents"))
+            (self).contents = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        self.contents = nil
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test5()
+        
+        boxes = DatawireQuarkCore::List.new([])
+        (boxes) << (Box.new())
+        (boxes)[0].set(3)
+        DatawireQuarkCore.print((boxes)[0].get())
+        boxes = DatawireQuarkCore::List.new([Box.new()])
+        DatawireQuarkCore.print((boxes)[0].get())
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
+    def self.test6()
+        
+        matrix = DatawireQuarkCore::List.new([DatawireQuarkCore::List.new([1, 2, 3]), DatawireQuarkCore::List.new([4, 5, 6]), DatawireQuarkCore::List.new([7, 8, 9])])
+        DatawireQuarkCore.print(matrix)
+
+        nil
+    end
+
+
+end
+
+class Functions < Object
+    
+
+    
+
+    
     def self.main()
         
-        DatawireQuarkCore.print("Hello World")
+        Functions.test1()
+        Functions.test2()
+        Functions.test3()
+        Functions.test4()
+        Functions.test5()
+        Functions.test6()
 
         nil
     end
@@ -684,6 +877,15 @@ class Functions < Object
         if ((className) == ("List<String>"))
             return DatawireQuarkCore::List.new()
         end
+        if ((className) == ("List<int>"))
+            return DatawireQuarkCore::List.new()
+        end
+        if ((className) == ("List<Box<int>>"))
+            return DatawireQuarkCore::List.new()
+        end
+        if ((className) == ("List<List<int>>"))
+            return DatawireQuarkCore::List.new()
+        end
         if ((className) == ("Map<Object,Object>"))
             return Hash.new()
         end
@@ -698,6 +900,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return Server.new((args)[0], (args)[1])
+        end
+        if ((className) == ("Box<int>"))
+            return Box.new()
         end
         return nil
 
@@ -733,6 +938,15 @@ class Functions < Object
         if ((className) == ("List<String>"))
             return DatawireQuarkCore::List.new([])
         end
+        if ((className) == ("List<int>"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("List<Box<int>>"))
+            return DatawireQuarkCore::List.new([])
+        end
+        if ((className) == ("List<List<int>>"))
+            return DatawireQuarkCore::List.new([])
+        end
         if ((className) == ("Map<Object,Object>"))
             return DatawireQuarkCore::List.new([])
         end
@@ -747,6 +961,9 @@ class Functions < Object
         end
         if ((className) == ("Server<Object>"))
             return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Runtime"), "runtime"), Field.new(QuarkClass.new("Object"), "impl")])
+        end
+        if ((className) == ("Box<int>"))
+            return DatawireQuarkCore::List.new([Field.new(QuarkClass.new("Object"), "contents")])
         end
         return nil
 
@@ -794,6 +1011,21 @@ class Functions < Object
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String")])
             return
         end
+        if (((cls).id) == ("List<int>"))
+            (cls).name = "List"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int")])
+            return
+        end
+        if (((cls).id) == ("List<Box<int>>"))
+            (cls).name = "List"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Box<int>")])
+            return
+        end
+        if (((cls).id) == ("List<List<int>>"))
+            (cls).name = "List"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("List<int>")])
+            return
+        end
         if (((cls).id) == ("Map<Object,Object>"))
             (cls).name = "Map"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object"), QuarkClass.new("Object")])
@@ -822,6 +1054,11 @@ class Functions < Object
         if (((cls).id) == ("Server<Object>"))
             (cls).name = "Server"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("Object")])
+            return
+        end
+        if (((cls).id) == ("Box<int>"))
+            (cls).name = "Box"
+            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("int")])
             return
         end
         (cls).name = (cls).id
@@ -885,6 +1122,15 @@ class Functions < Object
         if ((className) == ("List<String>"))
             nil
         end
+        if ((className) == ("List<int>"))
+            nil
+        end
+        if ((className) == ("List<Box<int>>"))
+            nil
+        end
+        if ((className) == ("List<List<int>>"))
+            nil
+        end
         if ((className) == ("Map<Object,Object>"))
             nil
         end
@@ -930,6 +1176,17 @@ class Functions < Object
             if ((method) == ("onHTTPRequest"))
                 tmp_14 = object
                 tmp_14.onHTTPRequest((args)[0], (args)[1])
+                return nil
+            end
+        end
+        if ((className) == ("Box<int>"))
+            if ((method) == ("get"))
+                tmp_15 = object
+                return tmp_15.get()
+            end
+            if ((method) == ("set"))
+                tmp_16 = object
+                tmp_16.set((args)[0])
                 return nil
             end
         end
