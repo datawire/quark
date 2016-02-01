@@ -47,7 +47,8 @@ class Backend(object):
         self.dist = du
 
     def visit_Dependency(self, dep):
-        self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
+        if dep.file.depth == 0:
+            self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
 
     def visit_Use(self, use):
         name, ver = namever(use.target)

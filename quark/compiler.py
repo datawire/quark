@@ -971,9 +971,9 @@ class Compiler:
     def perform_native_include(self, qurl, inc, depth):
         if depth != 0:
             return
-        if qurl not in self.root.included:
+        if inc.url not in self.root.included:
             try:
-                self.root.included[qurl] = self.read(qurl)
+                self.root.included[inc.url] = self.read(qurl)
             except IOError:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
