@@ -20,7 +20,7 @@ var request = new hello.Request();
 if (process.argv[2]) {
     request.text = process.argv[2];
 } else {
-    request.test = "Hello from JavaScript!";
+    request.text = "Hello from JavaScript!";
 }
 console.log("Request says", request.text);
 
@@ -30,7 +30,7 @@ function FutureListener(cb) {
     this.onFuture = cb;
 }
 response.onFinished(
-    new FutureListener( // XXX: if this can become magic then the quark-js API can be idiomatic 
+    new FutureListener( // XXX: if this can become magic then the quark-js API can be idiomatic
         function(response) {
             if (response.getError() != null) {
                 console.log("Response failed with", response.getError());
