@@ -59,6 +59,13 @@ public class Functions {
     }
 
 
+    public static void sorter() {
+        java.util.ArrayList<String> stuff = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"}));
+        java.util.Collections.sort(stuff);
+        do{System.out.println(stuff);System.out.flush();}while(false);
+    }
+
+
     public static void main() {
         Functions.test1();
         Functions.test2();
@@ -66,5 +73,6 @@ public class Functions {
         Functions.test4();
         Functions.test5();
         Functions.test6();
+        Functions.sorter();
     }
 }

@@ -29,7 +29,15 @@ def test_literal():
     _println((map).get(u"e"));
 
 
+def iterables():
+    numbers = {u"zero": 0, u"one": 1, u"two": 2, u"e": 2, u"three": 3, u"pi": 3, u"fun": 69, u"dockingbay": 94};
+    keys = _List((numbers).keys());
+    (keys).sort();
+    _println(keys);
+
+
 def main():
     test1();
     test_update();
     test_literal();
+    iterables();

@@ -356,7 +356,7 @@ function Queue__init_fields__() {
     this.tail = null;
 }
 Queue.prototype.__init_fields__ = Queue__init_fields__;
-Queue.builtin_List_Object__ref = builtin_md.Root.builtin_List_Object__md;
+
 function Queue_put(item) {
     if (((this).tail) < (((this).items).length)) {
         ((this).items)[(this).tail] = (item);

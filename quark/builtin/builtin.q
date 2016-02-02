@@ -203,6 +203,9 @@ namespace builtin {
         macro int size() $java{($self).size()}
                          $py{len($self)}
                          $js{($self).length};
+        macro void sort() $java{java.util.Collections.sort($self)}
+                          $py{($self).sort()}
+                          $js{($self).sort()};
     }
 
     @mapping($java{java.util.HashMap} $py{_Map} $js{Map})
@@ -213,9 +216,12 @@ namespace builtin {
         macro V __get__(K key) $java{($self).get($key)}
                                $py{($self).get($key)}
                                $js{_qrt.map_get(($self), ($key))};
-        macro int contains(K key) $java{($self).containsKey($key)}
-                                  $py{($key) in ($self)}
-                                  $js{($self).has($key)};
+        macro bool contains(K key) $java{($self).containsKey($key)}
+                                   $py{($key) in ($self)}
+                                   $js{($self).has($key)};
+        macro List<K> keys() $java{new java.util.ArrayList(($self).keySet())}
+                             $py{_List(($self).keys())}
+                             $js{Array.from(($self).keys())};
         macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                           $py{($self).update($other)}
                                           $js{($other).forEach(function (v, k) { ($self).set(k, v); })};

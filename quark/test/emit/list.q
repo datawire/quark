@@ -56,6 +56,12 @@ void test6() {
     print(matrix);
 }
 
+void sorter() {
+    List<String> stuff = ["Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"];
+    stuff.sort();
+    print(stuff);
+}
+
 void main() {
     test1();
     test2();
@@ -63,4 +69,5 @@ void main() {
     test4();
     test5();
     test6();
+    sorter();
 }

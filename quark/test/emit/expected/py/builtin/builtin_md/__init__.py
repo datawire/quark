@@ -30,6 +30,30 @@ class builtin_List_builtin_String_(builtin.reflect.Class):
         pass
 builtin_List_builtin_String_.singleton = builtin_List_builtin_String_()
 
+class builtin_List_Object_(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_List_Object_, self).__init__(u"builtin.List<Object>");
+        (self).name = u"builtin.List"
+        (self).parameters = _List([u"Object"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _List()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_List_Object_.singleton = builtin_List_Object_()
+
 class builtin_List_builtin_Object_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -149,30 +173,6 @@ class builtin_List_builtin_concurrent_FutureCompletion_(builtin.reflect.Class):
     def _setField(self, name, value):
         pass
 builtin_List_builtin_concurrent_FutureCompletion_.singleton = builtin_List_builtin_concurrent_FutureCompletion_()
-
-class builtin_List_Object_(builtin.reflect.Class):
-    def _init(self):
-        builtin.reflect.Class._init(self)
-
-    def __init__(self):
-        super(builtin_List_Object_, self).__init__(u"builtin.List<Object>");
-        (self).name = u"builtin.List"
-        (self).parameters = _List([u"Object"])
-        (self).fields = _List([])
-        (self).methods = _List([])
-
-    def construct(self, args):
-        return _List()
-
-    def _getClass(self):
-        return None
-
-    def _getField(self, name):
-        return None
-
-    def _setField(self, name, value):
-        pass
-builtin_List_Object_.singleton = builtin_List_Object_()
 
 class builtin_Map_Object_Object_(builtin.reflect.Class):
     def _init(self):
@@ -1592,8 +1592,8 @@ class Root(object):
     def _setField(self, name, value):
         pass
 Root.builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton
-Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton
 Root.builtin_List_Object__md = builtin_List_Object_.singleton
+Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton
 Root.builtin_Map_Object_Object__md = builtin_Map_Object_Object_.singleton
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton
 Root.builtin_Service_md = builtin_Service.singleton

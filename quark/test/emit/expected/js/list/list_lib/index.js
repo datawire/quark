@@ -99,6 +99,13 @@ function test6() {
 }
 exports.test6 = test6;
 
+function sorter() {
+    var stuff = ["Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"];
+    (stuff).sort();
+    _qrt.print(stuff);
+}
+exports.sorter = sorter;
+
 function main() {
     test1();
     test2();
@@ -106,5 +113,6 @@ function main() {
     test4();
     test5();
     test6();
+    sorter();
 }
 exports.main = main;

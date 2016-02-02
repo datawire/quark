@@ -31,9 +31,18 @@ function test_literal() {
 }
 exports.test_literal = test_literal;
 
+function iterables() {
+    var numbers = new Map([["zero", 0], ["one", 1], ["two", 2], ["e", 2], ["three", 3], ["pi", 3], ["fun", 69], ["dockingbay", 94]]);
+    var keys = Array.from((numbers).keys());
+    (keys).sort();
+    _qrt.print(keys);
+}
+exports.iterables = iterables;
+
 function main() {
     test1();
     test_update();
     test_literal();
+    iterables();
 }
 exports.main = main;

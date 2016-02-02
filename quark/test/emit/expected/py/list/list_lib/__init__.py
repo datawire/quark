@@ -80,6 +80,12 @@ def test6():
     _println(matrix);
 
 
+def sorter():
+    stuff = _List([u"Richard", u"Rafi", u"Abhay", u"Bozzo", u"Phil", u"Austin", u"Janice", u"Flynn", u"Vladimir"]);
+    (stuff).sort();
+    _println(stuff);
+
+
 def main():
     test1();
     test2();
@@ -87,3 +93,4 @@ def main():
     test4();
     test5();
     test6();
+    sorter();

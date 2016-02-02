@@ -324,7 +324,7 @@ class Queue(object):
             (self).tail = value
 
     
-Queue.builtin_List_Object__ref = builtin_md.Root.builtin_List_Object__md
+
 class CollectorExecutor(object):
     """
     Fire events one by one with no locks held

@@ -26,8 +26,25 @@ void test_literal() {
     print(map["e"]);
 }
 
+void iterables() {
+    Map<String, int> numbers = {
+        "zero": 0,
+        "one": 1,
+        "two": 2,
+        "e": 2,
+        "three": 3,
+        "pi": 3,
+        "fun": 69,
+        "dockingbay": 94
+    };
+    List<String> keys = numbers.keys();
+    keys.sort();
+    print(keys);
+}
+
 void main() {
     test1();
     test_update();
     test_literal();
+    iterables();
 }
