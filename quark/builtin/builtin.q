@@ -1,3 +1,48 @@
+use js ws 1.0;
+include quark_runtime.js;
+include quark_node_runtime.js;
+
+use py ws4py 0.3.*;
+include quark_runtime.py;
+include quark_threaded_runtime.py;
+
+use java com.fasterxml.jackson.jr jackson-jr-objects 2.5.3;
+use java io.netty netty-all 4.0.32.Final;
+use java junit junit 4.12;
+include io/datawire/quark/runtime/AbstractDatawireRuntime.java;
+include io/datawire/quark/runtime/AbstractHTTPHandler.java;
+include io/datawire/quark/runtime/AbstractWSHandler.java;
+include io/datawire/quark/runtime/Buffer.java;
+include io/datawire/quark/runtime/BufferImpl.java;
+include io/datawire/quark/runtime/Builtins.java;
+include io/datawire/quark/runtime/ClientHTTPRequest.java;
+include io/datawire/quark/runtime/Codec.java;
+include io/datawire/quark/runtime/Condition.java;
+include io/datawire/quark/runtime/HTTPHandler.java;
+include io/datawire/quark/runtime/HTTPRequest.java;
+include io/datawire/quark/runtime/HTTPResponse.java;
+include io/datawire/quark/runtime/HTTPServlet.java;
+include io/datawire/quark/runtime/JSONObject.java;
+include io/datawire/quark/runtime/Lock.java;
+include io/datawire/quark/runtime/Mutex.java;
+include io/datawire/quark/runtime/QObject.java;
+include io/datawire/quark/runtime/Runtime.java;
+include io/datawire/quark/runtime/Servlet.java;
+include io/datawire/quark/runtime/Task.java;
+include io/datawire/quark/runtime/TLS.java;
+include io/datawire/quark/runtime/TLSInitializer.java;
+include io/datawire/quark/runtime/WebSocket.java;
+include io/datawire/quark/runtime/WSHandler.java;
+include io/datawire/quark/runtime/WSServlet.java;
+include io/datawire/quark/netty/DatawireNettyHttpContainer.java;
+include io/datawire/quark/netty/IncomingRequest.java;
+include io/datawire/quark/netty/QuarkNettyClientWebsocket.java;
+include io/datawire/quark/netty/QuarkNettyHttpHandler.java;
+include io/datawire/quark/netty/QuarkNettyRuntime.java;
+include io/datawire/quark/netty/QuarkNettyServerWebsocket.java;
+include io/datawire/quark/netty/QuarkWebSocket.java;
+include io/datawire/quark/netty/Response.java;
+
 namespace builtin {
     @mapping($java{Object} $py{object} $js{Object})
     primitive Object {
@@ -1001,7 +1046,7 @@ package concurrent {
             // wait -- which should never be true for quark threads
             // and configurable for user threads, probably through a
             // context, or through a dedicated TLS
-            if (false) { 
+            if (false) {
                 // TODO: it should be possible to reuse a FutureWait and have one per thread
                 FutureWait w = new FutureWait();
                 w.wait(future, timeout);

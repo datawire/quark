@@ -22,7 +22,7 @@ from ._metadata import __java_runtime_version__
 
 ## Packaging
 
-if __java_runtime_version__.endswith("-SNAPSHOT"):
+if False and __java_runtime_version__.endswith("-SNAPSHOT"):
     repository = """
   <repositories>
       <repository>
@@ -72,12 +72,6 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
     </plugins>
   </build>
   <dependencies>
-    <dependency>
-      <groupId>io.datawire.quark</groupId>
-      <artifactId>quark-core</artifactId>
-      <version>%(runtime_version)s</version>
-      <scope>compile</scope>
-    </dependency>
 %(dependencies)s
   </dependencies>
   %(repository)s

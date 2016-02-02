@@ -1,4 +1,4 @@
-var _qrt = require("datawire-quark-core");
+var _qrt = require("builtin/quark_runtime.js");
 var slack = require('../slack');
 exports.slack = slack;
 var pkg = require('../pkg');

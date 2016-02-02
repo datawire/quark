@@ -979,7 +979,7 @@ class Compiler:
 
     def join(self, base, rel):
         if rel == BUILTIN:
-            return os.path.join(os.path.dirname(__file__), BUILTIN)
+            return os.path.join(os.path.dirname(__file__), "builtin", BUILTIN)
         else:
             return urllib.basejoin(base, rel)
 

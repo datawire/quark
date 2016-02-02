@@ -1,4 +1,4 @@
-var _qrt = require("datawire-quark-core");
+var _qrt = require("builtin/quark_runtime.js");
 var builtin = require('../builtin');
 exports.builtin = builtin;
 var builtin = require('../builtin');

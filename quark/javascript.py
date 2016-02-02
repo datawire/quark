@@ -23,8 +23,7 @@ def package(name, version, packages, srcs, deps):
     files = OrderedDict()
     files.update(srcs)
 
-    dependencies = ",\n        ".join(['"datawire-quark-core": "%s"' % __js_runtime_version__] +
-                                      ['"%s": "%s"' % d[1:] for d in deps])
+    dependencies = ",\n        ".join(['"%s": "%s"' % d[1:] for d in deps])
 
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
@@ -56,7 +55,7 @@ def package_file(path, name, fname):
     return "/".join(path + [name, "index.js"])
 
 def make_class_file(path, name):
-    return Code(head='var _qrt = require("datawire-quark-core");\n')
+    return Code(head='var _qrt = require("builtin/quark_runtime.js");\n')
 
 def make_function_file(path, name):
     return make_class_file(path, name)

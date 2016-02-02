@@ -542,7 +542,7 @@
     exports._getClass = _getClass;
 
     function _RuntimeFactory() {
-        this.runtimeName = "datawire-quarkdev-node";
+        this.runtimeName = "builtin/quark_node_runtime.js";
     }
     _RuntimeFactory.prototype.create = function() {
         return require(this.runtimeName);
@@ -595,7 +595,7 @@
     Condition.prototype.wakeup = Condition_wakeup;
 
     exports.Condition = Condition;
-    
+
     function TLS(initializer) {
         this._initializer = initializer;
         this.getValue = function() {

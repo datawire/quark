@@ -1,4 +1,4 @@
-var _qrt = require("datawire-quark-core");
+var _qrt = require("builtin/quark_runtime.js");
 
 function test_roundtrip() {
     _qrt.print((_qrt.json_from_string(((new _qrt.JSONObject()).setObject()).toString())).toString());
