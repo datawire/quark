@@ -143,7 +143,7 @@ def main(args):
                         py_dir, js_dir]:
                 if os.path.exists(dir):
                     shutil.rmtree(dir)
-        else:
+        elif command != "install":
             os.mkdir(output)
 
     if command != "install":
