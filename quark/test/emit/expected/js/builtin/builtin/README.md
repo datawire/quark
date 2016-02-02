@@ -77,7 +77,7 @@ Http servlet
 Websocket servlet
 
 
-## toJSON((0.builtin.toJSON.obj,))
+## toJSON((0.builtin.toJSON.obj, 0.builtin.toJSON.cls))
 
 Serializes object tree into JSON. skips over fields starting with underscore
 

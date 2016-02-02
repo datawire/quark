@@ -13,13 +13,15 @@ exports.builtin_md = builtin_md;
 /**
  * Serializes object tree into JSON. skips over fields starting with underscore
  */
-function toJSON(obj) {
+function toJSON(obj, cls) {
     var result = new _qrt.JSONObject();
     if ((obj) === (null)) {
         (result).setNull();
         return result;
     }
-    var cls = reflect.Class.get(_qrt._getClass(obj));
+    if ((cls) === (null)) {
+        cls = reflect.Class.get(_qrt._getClass(obj));
+    }
     var idx = 0;
     if (((cls).name) === ("builtin.String")) {
         (result).setString(obj);
@@ -33,7 +35,7 @@ function toJSON(obj) {
         (result).setList();
         var list = obj;
         while ((idx) < ((list).length)) {
-            (result).setListItem(idx, toJSON((list)[idx]));
+            (result).setListItem(idx, toJSON((list)[idx], null));
             idx = (idx) + (1);
         }
         return result;
@@ -48,7 +50,7 @@ function toJSON(obj) {
     while ((idx) < ((fields).length)) {
         var fieldName = ((fields)[idx]).name;
         if (!(((fieldName).indexOf("_")===0))) {
-            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName))));
+            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName), ((fields)[idx]).getType())));
         }
         idx = (idx) + (1);
     }
@@ -261,7 +263,7 @@ function ServerResponder_onFuture(result) {
     if ((error) !== (null)) {
         (this.response).setCode(404);
     } else {
-        ((this).response).setBody((toJSON(result)).toString());
+        ((this).response).setBody((toJSON(result, null)).toString());
         ((this).response).setCode(200);
     }
     (concurrent.Context.runtime()).respond(this.request, this.response);

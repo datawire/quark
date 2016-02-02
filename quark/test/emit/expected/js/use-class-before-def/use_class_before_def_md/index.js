@@ -41,7 +41,7 @@ pkg_Bar_go_Method.prototype._setField = pkg_Bar_go_Method__setField;
 
 function pkg_Bar() {
     pkg_Bar.super_.call(this, "pkg.Bar");
-    (this).name = "Bar";
+    (this).name = "pkg.Bar";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_Bar_go_Method()];
@@ -77,7 +77,7 @@ pkg_Bar.prototype._setField = pkg_Bar__setField;
 
 function pkg_Foo() {
     pkg_Foo.super_.call(this, "pkg.Foo");
-    (this).name = "Foo";
+    (this).name = "pkg.Foo";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];

@@ -4,6 +4,7 @@ package builtin.concurrent;
  * The base class for value objects
  */
 public class Future extends EventContext implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class builtin_List_builtin_concurrent_FutureCompletion__ref = builtin_md.Root.builtin_List_builtin_concurrent_FutureCompletion__md;
     public static builtin.reflect.Class builtin_concurrent_Future_ref = builtin_md.Root.builtin_concurrent_Future_md;
     public Boolean _finished;
     public String _error;

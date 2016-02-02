@@ -4,7 +4,7 @@ public class builtin_concurrent_EventContext extends builtin.reflect.Class imple
     public static builtin.reflect.Class singleton = new builtin_concurrent_EventContext();
     public builtin_concurrent_EventContext() {
         super("builtin.concurrent.EventContext");
-        (this).name = "EventContext";
+        (this).name = "builtin.concurrent.EventContext";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.concurrent.Context", "_context")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_EventContext_getContext_Method()}));

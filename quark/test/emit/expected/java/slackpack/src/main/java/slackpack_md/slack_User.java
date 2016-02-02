@@ -4,7 +4,7 @@ public class slack_User extends builtin.reflect.Class implements io.datawire.qua
     public static builtin.reflect.Class singleton = new slack_User();
     public slack_User() {
         super("slack.User");
-        (this).name = "User";
+        (this).name = "slack.User";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("slack.Client", "client"), new builtin.reflect.Field("builtin.String", "user")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));

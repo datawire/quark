@@ -187,6 +187,7 @@ class Future(EventContext):
             (self)._lock = value
 
     
+Future.builtin_List_builtin_concurrent_FutureCompletion__ref = builtin_md.Root.builtin_List_builtin_concurrent_FutureCompletion__md
 Future.builtin_concurrent_Future_ref = builtin_md.Root.builtin_concurrent_Future_md
 class FutureWait(object):
     """
@@ -323,7 +324,7 @@ class Queue(object):
             (self).tail = value
 
     
-
+Queue.builtin_List_Object__ref = builtin_md.Root.builtin_List_Object__md
 class CollectorExecutor(object):
     """
     Fire events one by one with no locks held

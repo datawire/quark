@@ -4,7 +4,7 @@ public class pkg_Handler extends builtin.reflect.Class implements io.datawire.qu
     public static builtin.reflect.Class singleton = new pkg_Handler();
     public pkg_Handler() {
         super("pkg.Handler");
-        (this).name = "Handler";
+        (this).name = "pkg.Handler";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_Handler_onSlackEvent_Method(), new pkg_Handler_onHello_Method(), new pkg_Handler_onSlackError_Method(), new pkg_Handler_onMessage_Method()}));

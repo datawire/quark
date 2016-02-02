@@ -4,7 +4,7 @@ public class pkg_Foo extends builtin.reflect.Class implements io.datawire.quark.
     public static builtin.reflect.Class singleton = new pkg_Foo();
     public pkg_Foo() {
         super("pkg.Foo");
-        (this).name = "Foo";
+        (this).name = "pkg.Foo";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));

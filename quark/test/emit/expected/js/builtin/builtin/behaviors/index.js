@@ -39,7 +39,7 @@ RPC.prototype.__init_fields__ = RPC__init_fields__;
 RPC.builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md;
 function RPC_call(message) {
     var request = new _qrt.HTTPRequest(((this).service).getURL());
-    var json = builtin.toJSON(message);
+    var json = builtin.toJSON(message, null);
     var envelope = new _qrt.JSONObject();
     (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString((this).name)));
     (envelope).setObjectItem(("$context"), ((new _qrt.JSONObject()).setString("TBD")));

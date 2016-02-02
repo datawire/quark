@@ -41,7 +41,7 @@ test_Test_go_Method.prototype._setField = test_Test_go_Method__setField;
 
 function test_Test() {
     test_Test.super_.call(this, "test.Test");
-    (this).name = "Test";
+    (this).name = "test.Test";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [new test_Test_go_Method()];
@@ -110,7 +110,7 @@ test_test_Test_go_Method.prototype._setField = test_test_Test_go_Method__setFiel
 
 function test_test_Test() {
     test_test_Test.super_.call(this, "test.test.Test");
-    (this).name = "Test";
+    (this).name = "test.test.Test";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.int", "size")];
     (this).methods = [new test_test_Test_go_Method()];

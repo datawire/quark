@@ -72,7 +72,7 @@ pkg_Foo_Object__get_Method.prototype._setField = pkg_Foo_Object__get_Method__set
 
 function pkg_Foo_Object_() {
     pkg_Foo_Object_.super_.call(this, "pkg.Foo<Object>");
-    (this).name = "Foo";
+    (this).name = "pkg.Foo";
     (this).parameters = ["Object"];
     (this).fields = [];
     (this).methods = [new pkg_Foo_Object__foo_Method(), new pkg_Foo_Object__get_Method()];
@@ -172,7 +172,7 @@ pkg_StringFoo_foo_Method.prototype._setField = pkg_StringFoo_foo_Method__setFiel
 
 function pkg_StringFoo() {
     pkg_StringFoo.super_.call(this, "pkg.StringFoo");
-    (this).name = "StringFoo";
+    (this).name = "pkg.StringFoo";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_StringFoo_get_Method(), new pkg_StringFoo_foo_Method()];
@@ -208,7 +208,7 @@ pkg_StringFoo.prototype._setField = pkg_StringFoo__setField;
 
 function pkg_Box_builtin_String_() {
     pkg_Box_builtin_String_.super_.call(this, "pkg.Box<builtin.String>");
-    (this).name = "Box";
+    (this).name = "pkg.Box";
     (this).parameters = ["builtin.String"];
     (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [];
@@ -244,7 +244,7 @@ pkg_Box_builtin_String_.prototype._setField = pkg_Box_builtin_String___setField;
 
 function pkg_StringBox() {
     pkg_StringBox.super_.call(this, "pkg.StringBox");
-    (this).name = "StringBox";
+    (this).name = "pkg.StringBox";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [];

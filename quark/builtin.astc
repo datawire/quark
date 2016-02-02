@@ -1077,6 +1077,8 @@ File(Import(Name(builtin)),
     String("Serializes object tree into JSON. skips over fields starting with underscore",
     $type=1.builtin.String)), Type(Name(JSONObject)), Name(toJSON),
    Param(Type(Name(Object)), Name(obj), $type=1.builtin.Object),
+   Param(Type(Name(reflect), Name(Class)), Name(cls),
+   $type=1.builtin.reflect.Class),
    Block(
     Local(
      Declaration(Type(Name(JSONObject)), Name(result),
@@ -1089,11 +1091,12 @@ File(Import(Name(builtin)),
          Name(setNull), $type=1.builtin.JSONObject.setNull),
        $type=1.builtin.JSONObject)),
       Return(Var(Name(result), $type=1.builtin.JSONObject)))),
-    Local(
-     Declaration(Type(Name(reflect), Name(Class)), Name(cls),
-      Call(Attr(Var(Name(obj), $type=1.builtin.Object), Name(getClass),
-       $type=1.builtin.Object.getClass), $type=1.builtin.reflect.Class),
-     $type=1.builtin.reflect.Class)),
+    If(Call(Attr(Var(Name(cls), $type=1.builtin.reflect.Class), Name(__eq__),
+      $type=1.builtin.Object.__eq__), Null(null, $type=1.builtin.Object),
+     $type=1.builtin.bool), Block(
+      Assign(Var(Name(cls), $type=1.builtin.reflect.Class),
+       Call(Attr(Var(Name(obj), $type=1.builtin.Object), Name(getClass),
+        $type=1.builtin.Object.getClass), $type=1.builtin.reflect.Class)))),
     Local(
      Declaration(Type(Name(int)), Name(idx), Number(0, $type=1.builtin.int),
      $type=1.builtin.int)),
@@ -1158,8 +1161,8 @@ File(Import(Name(builtin)),
            $type=1.builtin.toJSON), Call(Attr(Var(Name(list),
              $type=1.builtin.List<1.builtin.Object>), Name(__get__),
             $type=1.builtin.List.__get__), Var(Name(idx), $type=1.builtin.int),
-           $type=1.builtin.Object), $type=1.builtin.JSONObject),
-         $type=1.builtin.JSONObject)),
+           $type=1.builtin.Object), Null(null, $type=1.builtin.Object),
+          $type=1.builtin.JSONObject), $type=1.builtin.JSONObject)),
         Assign(Var(Name(idx), $type=1.builtin.int), Call(Attr(Var(Name(idx),
            $type=1.builtin.int), Name(__add__),
           $type=1.builtin.numeric.__add__), Number(1, $type=1.builtin.int),
@@ -1211,7 +1214,13 @@ File(Import(Name(builtin)),
              $type=1.builtin.Object), Name(getField),
             $type=1.builtin.Object.getField), Var(Name(fieldName),
             $type=1.builtin.String), $type=1.builtin.Object),
-          $type=1.builtin.JSONObject), $type=1.builtin.void)))),
+           Call(Attr(Call(Attr(Var(Name(fields),
+               $type=1.builtin.List<1.builtin.reflect.Field>), Name(__get__),
+              $type=1.builtin.List.__get__), Var(Name(idx),
+              $type=1.builtin.int), $type=1.builtin.reflect.Field),
+             Name(getType), $type=1.builtin.reflect.Field.getType),
+           $type=1.builtin.reflect.Class), $type=1.builtin.JSONObject),
+         $type=1.builtin.void)))),
       Assign(Var(Name(idx), $type=1.builtin.int), Call(Attr(Var(Name(idx),
          $type=1.builtin.int), Name(__add__), $type=1.builtin.numeric.__add__),
         Number(1, $type=1.builtin.int), $type=1.builtin.int)))),
@@ -1420,7 +1429,42 @@ File(Import(Name(builtin)),
     Param(Type(Name(String)), Name(message), $type=1.builtin.String),
     Block(
      Assign(Var(Name(failure), $type=1.builtin.String), Var(Name(message),
-      $type=1.builtin.String))))),
+      $type=1.builtin.String)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("builtin.ResponseHolder", $type=1.builtin.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("response",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.ResponseHolder),
+         Name(response), $type=1.builtin.HTTPResponse)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("failure",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.ResponseHolder),
+         Name(failure), $type=1.builtin.String)))),
+     Return(Null(null, $type=1.builtin.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("response",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.ResponseHolder),
+         Name(response), $type=1.builtin.HTTPResponse), Cast(Var(Name(value),
+         $type=1.builtin.Object), $type=1.builtin.HTTPResponse)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("failure",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.ResponseHolder),
+         Name(failure), $type=1.builtin.String), Cast(Var(Name(value),
+         $type=1.builtin.Object), $type=1.builtin.String))))))),
 
   Interface(Name(Service),
 
@@ -1468,7 +1512,42 @@ File(Import(Name(builtin)),
     Param(Type(Name(long)), Name(timeout), $type=1.builtin.long),
     Block(
      Assign(Attr(Var(Name(self), $type=1.builtin.Client), Name(timeout),
-      $type=1.builtin.long), Var(Name(timeout), $type=1.builtin.long))))),
+      $type=1.builtin.long), Var(Name(timeout), $type=1.builtin.long)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("builtin.Client", $type=1.builtin.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("url", $type=1.builtin.String),
+      $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.Client), Name(url),
+        $type=1.builtin.String)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("timeout",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.Client), Name(timeout),
+        $type=1.builtin.long)))),
+     Return(Null(null, $type=1.builtin.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("url", $type=1.builtin.String),
+      $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.Client), Name(url),
+        $type=1.builtin.String), Cast(Var(Name(value), $type=1.builtin.Object),
+        $type=1.builtin.String)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("timeout",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.Client), Name(timeout),
+        $type=1.builtin.long), Cast(Var(Name(value), $type=1.builtin.Object),
+        $type=1.builtin.long))))))),
 
   Class(Name(ServerResponder), Type(Name(concurrent), Name(FutureListener)),
    Field(static=False, Type(Name(HTTPRequest)), Name(request),
@@ -1508,10 +1587,10 @@ File(Import(Name(builtin)),
           $type=1.builtin.HTTPResponse), Name(setBody),
          $type=1.builtin.HTTPResponse.setBody),
          Call(Attr(Call(Var(Name(toJSON), $type=1.builtin.toJSON),
-            Var(Name(result), $type=1.builtin.concurrent.Future),
-           $type=1.builtin.JSONObject), Name(toString),
-          $type=1.builtin.JSONObject.toString), $type=1.builtin.String),
-        $type=1.builtin.void)),
+            Var(Name(result), $type=1.builtin.concurrent.Future), Null(null,
+            $type=1.builtin.Object), $type=1.builtin.JSONObject),
+           Name(toString), $type=1.builtin.JSONObject.toString),
+         $type=1.builtin.String), $type=1.builtin.void)),
        ExprStmt(Call(Attr(Attr(Var(Name(self),
            $type=1.builtin.ServerResponder), Name(response),
           $type=1.builtin.HTTPResponse), Name(setCode),
@@ -1523,7 +1602,42 @@ File(Import(Name(builtin)),
          $type=1.builtin.concurrent.Context.runtime), $type=1.builtin.Runtime),
         Name(respond), $type=1.builtin.Runtime.respond), Var(Name(request),
        $type=1.builtin.HTTPRequest), Var(Name(response),
-       $type=1.builtin.HTTPResponse), $type=1.builtin.void))))),
+       $type=1.builtin.HTTPResponse), $type=1.builtin.void)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("builtin.ServerResponder", $type=1.builtin.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("request",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.ServerResponder),
+         Name(request), $type=1.builtin.HTTPRequest)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("response",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.ServerResponder),
+         Name(response), $type=1.builtin.HTTPResponse)))),
+     Return(Null(null, $type=1.builtin.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("request",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.ServerResponder),
+         Name(request), $type=1.builtin.HTTPRequest), Cast(Var(Name(value),
+         $type=1.builtin.Object), $type=1.builtin.HTTPRequest)))),
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("response",
+       $type=1.builtin.String), $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.ServerResponder),
+         Name(response), $type=1.builtin.HTTPResponse), Cast(Var(Name(value),
+         $type=1.builtin.Object), $type=1.builtin.HTTPResponse))))))),
 
   Class(Name(Server), TypeParam(Name(T)), Type(Name(HTTPServlet)),
    Field(static=False, Type(Name(T)), Name(impl), $type=1.builtin.Server.T),
@@ -1678,7 +1792,31 @@ File(Import(Name(builtin)),
           $type=1.builtin.String), $type=1.builtin.String), Name(__add__),
         $type=1.builtin.String.__add__), Var(Name(message),
         $type=1.builtin.String), $type=1.builtin.String),
-      $type=1.builtin.void))))),
+      $type=1.builtin.void)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("builtin.Server<Object>", $type=1.builtin.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("impl", $type=1.builtin.String),
+      $type=1.builtin.bool), Block(
+       Return(Attr(Var(Name(self), $type=1.builtin.Server<1.builtin.Server.T>),
+         Name(impl), $type=1.builtin.Server.T)))),
+     Return(Null(null, $type=1.builtin.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+       $type=1.builtin.Object.__eq__), String("impl", $type=1.builtin.String),
+      $type=1.builtin.bool), Block(
+       Assign(Attr(Var(Name(self), $type=1.builtin.Server<1.builtin.Server.T>),
+         Name(impl), $type=1.builtin.Server.T), Cast(Var(Name(value),
+         $type=1.builtin.Object), $type=1.builtin.Server.T))))))),
 
   Package(Name(reflect),
 
@@ -1827,7 +1965,147 @@ File(Import(Name(builtin)),
 
     MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
      Call(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(toJSON),
-      $type=1.builtin.reflect.Class.toJSON), $type=1.builtin.JSONObject))),
+      $type=1.builtin.reflect.Class.toJSON), $type=1.builtin.JSONObject)),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.reflect.Class", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("classes",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(classes),
+         $type=1.builtin.Map<1.builtin.String,1.builtin.reflect.Class>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("VOID", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(VOID),
+         $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("BOOL", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(BOOL),
+         $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("INT", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(INT),
+         $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("LONG", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(LONG),
+         $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("STRING",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(STRING), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("id", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(id),
+         $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(name),
+         $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("parameters",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(parameters), $type=1.builtin.List<1.builtin.reflect.Class>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("fields",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(fields), $type=1.builtin.List<1.builtin.reflect.Field>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("methods",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(methods), $type=1.builtin.List<1.builtin.reflect.Method>)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("classes",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(classes),
+         $type=1.builtin.Map<1.builtin.String,1.builtin.reflect.Class>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.Map<1.builtin.String,1.builtin.reflect.Class>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("VOID", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(VOID),
+         $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("BOOL", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(BOOL),
+         $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("INT", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(INT),
+         $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("LONG", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(LONG),
+         $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("STRING",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(STRING), $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("id", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(id),
+         $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class), Name(name),
+         $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("parameters",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(parameters), $type=1.builtin.List<1.builtin.reflect.Class>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.List<1.builtin.reflect.Class>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("fields",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(fields), $type=1.builtin.List<1.builtin.reflect.Field>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.List<1.builtin.reflect.Field>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("methods",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Class),
+          Name(methods), $type=1.builtin.List<1.builtin.reflect.Method>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.List<1.builtin.reflect.Method>))))))),
 
    Class(Name(Field),
     Field(static=False, Type(Name(String)), Name(type),
@@ -1850,7 +2128,42 @@ File(Import(Name(builtin)),
         $type=1.builtin.String), $type=1.builtin.reflect.Class)))),
 
     Method(static=False, Type(Name(String)), Name(getName), Block(
-      Return(Var(Name(name), $type=1.builtin.String))))),
+      Return(Var(Name(name), $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.reflect.Field", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("type", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Field), Name(type),
+         $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.reflect.Field), Name(name),
+         $type=1.builtin.String)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("type", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Field), Name(type),
+         $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.reflect.Field), Name(name),
+         $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String))))))),
 
    Class(Name(Method),
     Field(static=False, Type(Name(String)), Name(type),
@@ -1996,7 +2309,8 @@ File(Import(Name(builtin)),
       Local(
        Declaration(Type(Name(JSONObject)), Name(json), Call(Var(Name(toJSON),
          $type=1.builtin.toJSON), Var(Name(message), $type=1.builtin.Object),
-        $type=1.builtin.JSONObject), $type=1.builtin.JSONObject)),
+         Null(null, $type=1.builtin.Object), $type=1.builtin.JSONObject),
+       $type=1.builtin.JSONObject)),
       Local(
        Declaration(Type(Name(JSONObject)), Name(envelope),
         Call(Type(Name(JSONObject)), $type=1.builtin.JSONObject),
@@ -2041,7 +2355,64 @@ File(Import(Name(builtin)),
         $type=1.builtin.concurrent.FutureWait.waitFor), Var(Name(result),
         $type=1.builtin.concurrent.Future), Number(1000, $type=1.builtin.int),
        $type=1.builtin.concurrent.Future)),
-      Return(Var(Name(result), $type=1.builtin.concurrent.Future))))),
+      Return(Var(Name(result), $type=1.builtin.concurrent.Future)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.behaviors.RPC", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("service",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(service), $type=1.builtin.Service)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("returned",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(returned), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(timeout), $type=1.builtin.long)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC), Name(name),
+         $type=1.builtin.String)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("service",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(service), $type=1.builtin.Service), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.Service)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("returned",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(returned), $type=1.builtin.reflect.Class), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.reflect.Class)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC),
+          Name(timeout), $type=1.builtin.long), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.long)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPC), Name(name),
+         $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String))))))),
 
    Class(Name(RPCRequest), Type(Name(HTTPHandler)), Type(Name(concurrent),
      Name(TimeoutListener)),
@@ -2181,7 +2552,66 @@ File(Import(Name(builtin)),
           $type=1.builtin.behaviors.RPCRequest), Name(retval),
          $type=1.builtin.concurrent.Future), Name(finish),
         $type=1.builtin.concurrent.Future.finish), String("request timed out",
-        $type=1.builtin.String), $type=1.builtin.void)))))),
+        $type=1.builtin.String), $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.behaviors.RPCRequest", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("rpc", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(rpc), $type=1.builtin.behaviors.RPC)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("retval",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(retval), $type=1.builtin.concurrent.Future)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("message",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(message), $type=1.builtin.Object)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(timeout), $type=1.builtin.concurrent.Timeout)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("rpc", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(rpc), $type=1.builtin.behaviors.RPC), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.behaviors.RPC)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("retval",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(retval), $type=1.builtin.concurrent.Future),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Future)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("message",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(message), $type=1.builtin.Object), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.Object)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.behaviors.RPCRequest),
+          Name(timeout), $type=1.builtin.concurrent.Timeout),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Timeout)))))))),
 
   Package(Name(concurrent),
 
@@ -2234,7 +2664,48 @@ File(Import(Name(builtin)),
         $type=1.builtin.concurrent.FutureListener.onFuture),
         Attr(Var(Name(self), $type=1.builtin.concurrent.FutureCompletion),
          Name(future), $type=1.builtin.concurrent.Future),
-       $type=1.builtin.void))))),
+       $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.FutureCompletion",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("future",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.FutureCompletion), Name(future),
+         $type=1.builtin.concurrent.Future)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.FutureCompletion), Name(listener),
+         $type=1.builtin.concurrent.FutureListener)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("future",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.FutureCompletion), Name(future),
+         $type=1.builtin.concurrent.Future), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.concurrent.Future)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.FutureCompletion), Name(listener),
+         $type=1.builtin.concurrent.FutureListener), Cast(Var(Name(value),
+          $type=1.builtin.Object),
+         $type=1.builtin.concurrent.FutureListener))))))),
 
    Class(Annotation(Name(doc),
      String("Captures the current context, base class for all event source implementations",
@@ -2251,7 +2722,33 @@ File(Import(Name(builtin)),
 
     Method(static=False, Type(Name(Context)), Name(getContext), Block(
       Return(Attr(Var(Name(self), $type=1.builtin.concurrent.EventContext),
-        Name(_context), $type=1.builtin.concurrent.Context))))),
+        Name(_context), $type=1.builtin.concurrent.Context)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.EventContext",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.EventContext),
+          Name(_context), $type=1.builtin.concurrent.Context)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.EventContext),
+          Name(_context), $type=1.builtin.concurrent.Context),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Context))))))),
 
    Class(Annotation(Name(doc), String("The base class for value objects",
      $type=1.builtin.String)), Name(Future), Type(Name(EventContext)),
@@ -2409,7 +2906,79 @@ File(Import(Name(builtin)),
           $type=1.builtin.concurrent.Future), Name(_lock),
          $type=1.builtin.concurrent.Lock), Name(release),
         $type=1.builtin.concurrent.Mutex.release), $type=1.builtin.void)),
-      Return(Var(Name(error), $type=1.builtin.String))))),
+      Return(Var(Name(error), $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.Future", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_context), $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_finished",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_finished), $type=1.builtin.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_error",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_error), $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_callbacks",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_callbacks),
+         $type=1.builtin.List<1.builtin.concurrent.FutureCompletion>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_lock",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_lock), $type=1.builtin.concurrent.Lock)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_context), $type=1.builtin.concurrent.Context),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_finished",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_finished), $type=1.builtin.bool), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_error",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_error), $type=1.builtin.String), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_callbacks",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_callbacks),
+         $type=1.builtin.List<1.builtin.concurrent.FutureCompletion>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.List<1.builtin.concurrent.FutureCompletion>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_lock",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Future),
+          Name(_lock), $type=1.builtin.concurrent.Lock), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.concurrent.Lock))))))),
 
    Class(Annotation(Name(doc), String("Synchronization point for a Future.)",
      $type=1.builtin.String)), Name(FutureWait), Type(Name(FutureListener)),
@@ -2523,7 +3092,45 @@ File(Import(Name(builtin)),
             $type=1.builtin.concurrent.Future.isFinished),
            $type=1.builtin.bool), Name(__not__), $type=1.builtin.bool.__not__),
          $type=1.builtin.bool), Block()))),
-      Return(Var(Name(future), $type=1.builtin.concurrent.Future))))),
+      Return(Var(Name(future), $type=1.builtin.concurrent.Future)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.FutureWait",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_lock",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.FutureWait),
+          Name(_lock), $type=1.builtin.concurrent.Condition)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_future",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.FutureWait),
+          Name(_future), $type=1.builtin.concurrent.Future)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_lock",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.FutureWait),
+          Name(_lock), $type=1.builtin.concurrent.Condition),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Condition)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_future",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.FutureWait),
+          Name(_future), $type=1.builtin.concurrent.Future),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Future))))))),
 
    Class(Annotation(Name(doc), String("A simple FIFO",
      $type=1.builtin.String)), Name(Queue), TypeParam(Name(T)),
@@ -2621,7 +3228,61 @@ File(Import(Name(builtin)),
           Name(tail), $type=1.builtin.int), Name(__sub__),
         $type=1.builtin.numeric.__sub__), Attr(Var(Name(self),
          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
-         Name(head), $type=1.builtin.int), $type=1.builtin.int))))),
+         Name(head), $type=1.builtin.int), $type=1.builtin.int)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.Queue<Object>",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("items",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(items), $type=1.builtin.List<1.builtin.concurrent.Queue.T>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("head", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(head), $type=1.builtin.int)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("tail", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(tail), $type=1.builtin.int)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("items",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(items), $type=1.builtin.List<1.builtin.concurrent.Queue.T>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.List<1.builtin.concurrent.Queue.T>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("head", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(head), $type=1.builtin.int), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.int)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("tail", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Queue.T>),
+          Name(tail), $type=1.builtin.int), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.int))))))),
 
    Class(Annotation(Name(doc),
      String("Fire events one by one with no locks held",
@@ -2715,7 +3376,48 @@ File(Import(Name(builtin)),
       ExprStmt(Call(Attr(Attr(Var(Name(self),
           $type=1.builtin.concurrent.CollectorExecutor), Name(collector),
          $type=1.builtin.concurrent.Collector), Name(_poll),
-        $type=1.builtin.concurrent.Collector._poll), $type=1.builtin.void))))),
+        $type=1.builtin.concurrent.Collector._poll), $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.CollectorExecutor",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("events",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.CollectorExecutor), Name(events),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("collector",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.CollectorExecutor), Name(collector),
+         $type=1.builtin.concurrent.Collector)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("events",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.CollectorExecutor), Name(events),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("collector",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self),
+          $type=1.builtin.concurrent.CollectorExecutor), Name(collector),
+         $type=1.builtin.concurrent.Collector), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.concurrent.Collector))))))),
 
    Class(Annotation(Name(doc),
      String("An active queue of events. Each event will fire sequentially, one by one. Multiple instances of Collector are not serialized with eachother and may run in parallel.",
@@ -2807,7 +3509,68 @@ File(Import(Name(builtin)),
       ExprStmt(Call(Attr(Attr(Var(Name(self),
           $type=1.builtin.concurrent.Collector), Name(lock),
          $type=1.builtin.concurrent.Lock), Name(release),
-        $type=1.builtin.concurrent.Mutex.release), $type=1.builtin.void))))),
+        $type=1.builtin.concurrent.Mutex.release), $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.Collector", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("lock", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(lock), $type=1.builtin.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("pending",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(pending),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("executor",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(executor), $type=1.builtin.concurrent.CollectorExecutor)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("idle", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(idle), $type=1.builtin.bool)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("lock", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(lock), $type=1.builtin.concurrent.Lock), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("pending",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(pending),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Queue<1.builtin.concurrent.Event>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("executor",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(executor), $type=1.builtin.concurrent.CollectorExecutor),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.CollectorExecutor)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("idle", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Collector),
+          Name(idle), $type=1.builtin.bool), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.bool))))))),
 
    Interface(Annotation(Name(doc), String("Timeout expiry handler",
      $type=1.builtin.String)), Name(TimeoutListener),
@@ -2847,7 +3610,45 @@ File(Import(Name(builtin)),
         $type=1.builtin.concurrent.TimeoutListener.onTimeout),
         Attr(Var(Name(self), $type=1.builtin.concurrent.TimeoutExpiry),
          Name(timeout), $type=1.builtin.concurrent.Timeout),
-       $type=1.builtin.void))))),
+       $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.TimeoutExpiry",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.TimeoutExpiry),
+          Name(timeout), $type=1.builtin.concurrent.Timeout)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.TimeoutExpiry),
+          Name(listener), $type=1.builtin.concurrent.TimeoutListener)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.TimeoutExpiry),
+          Name(timeout), $type=1.builtin.concurrent.Timeout),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Timeout)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.TimeoutExpiry),
+          Name(listener), $type=1.builtin.concurrent.TimeoutListener),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.TimeoutListener))))))),
 
    Class(Annotation(Name(doc), String("Timeout", $type=1.builtin.String)),
     Name(Timeout), Type(Name(EventContext)), Type(Name(Task)),
@@ -2934,7 +3735,66 @@ File(Import(Name(builtin)),
       ExprStmt(Call(Attr(Attr(Var(Name(self),
           $type=1.builtin.concurrent.Timeout), Name(lock),
          $type=1.builtin.concurrent.Lock), Name(release),
-        $type=1.builtin.concurrent.Mutex.release), $type=1.builtin.void))))),
+        $type=1.builtin.concurrent.Mutex.release), $type=1.builtin.void)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.Timeout", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(_context), $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(timeout), $type=1.builtin.long)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("lock", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(lock), $type=1.builtin.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(listener), $type=1.builtin.concurrent.TimeoutListener)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_context",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(_context), $type=1.builtin.concurrent.Context),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("timeout",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(timeout), $type=1.builtin.long), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.long)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("lock", $type=1.builtin.String),
+       $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(lock), $type=1.builtin.concurrent.Lock), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("listener",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Timeout),
+          Name(listener), $type=1.builtin.concurrent.TimeoutListener),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.TimeoutListener))))))),
 
    Class(Annotation(Name(doc), String("internal", $type=1.builtin.String)),
     Name(TLSContextInitializer), Type(Name(TLSInitializer),
@@ -2945,7 +3805,21 @@ File(Import(Name(builtin)),
           $type=1.builtin.concurrent.Context), Name(global),
          $type=1.builtin.concurrent.Context.global),
         $type=1.builtin.concurrent.Context),
-       $type=1.builtin.concurrent.Context))))),
+       $type=1.builtin.concurrent.Context)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.TLSContextInitializer",
+       $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block())),
 
    Class(Annotation(Name(doc), String("The logical stack for async stuff.",
      $type=1.builtin.String)), Name(Context),
@@ -3012,7 +3886,81 @@ File(Import(Name(builtin)),
     Field(static=False, Type(Name(Runtime)), Name(_runtime),
     $type=1.builtin.Runtime),
     Field(static=False, Type(Name(Collector)), Name(collector),
-    $type=1.builtin.concurrent.Collector)),
+    $type=1.builtin.concurrent.Collector),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("builtin.concurrent.Context", $type=1.builtin.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_global",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_global), $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_current",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_current),
+         $type=1.builtin.concurrent.TLS<1.builtin.concurrent.Context>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_parent",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_parent), $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_runtime",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_runtime), $type=1.builtin.Runtime)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("collector",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Return(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(collector), $type=1.builtin.concurrent.Collector)))),
+      Return(Null(null, $type=1.builtin.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+     Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_global",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_global), $type=1.builtin.concurrent.Context),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_current",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_current),
+         $type=1.builtin.concurrent.TLS<1.builtin.concurrent.Context>),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.TLS<1.builtin.concurrent.Context>)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_parent",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_parent), $type=1.builtin.concurrent.Context),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("_runtime",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(_runtime), $type=1.builtin.Runtime), Cast(Var(Name(value),
+          $type=1.builtin.Object), $type=1.builtin.Runtime)))),
+      If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
+        $type=1.builtin.Object.__eq__), String("collector",
+        $type=1.builtin.String), $type=1.builtin.bool), Block(
+        Assign(Attr(Var(Name(self), $type=1.builtin.concurrent.Context),
+          Name(collector), $type=1.builtin.concurrent.Collector),
+         Cast(Var(Name(value), $type=1.builtin.Object),
+         $type=1.builtin.concurrent.Collector))))))),
 
    Primitive(Annotation(Name(mapping), Native(NativeCase(java,
        Fixed('io.datawire.quark.runtime.TLSInitializer')), NativeCase(py,

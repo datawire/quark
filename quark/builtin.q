@@ -438,14 +438,17 @@ namespace builtin {
     }
 
     @doc("Serializes object tree into JSON. skips over fields starting with underscore")
-    JSONObject toJSON(Object obj) {
+    JSONObject toJSON(Object obj, reflect.Class cls) {
         JSONObject result = new JSONObject();
         if (obj == null) {
             result.setNull();
             return result;
         }
 
-        reflect.Class cls = obj.getClass();
+        if (cls == null) {
+            cls = obj.getClass();
+        }
+
         int idx = 0;
 
         if (cls.name == "builtin.String") {
@@ -466,7 +469,7 @@ namespace builtin {
             result.setList();
             List<Object> list = ?obj;
             while (idx < list.size()) {
-                result.setListItem(idx, toJSON(list[idx]));
+                result.setListItem(idx, toJSON(list[idx], null));
                 idx = idx + 1;
             }
             return result;
@@ -484,7 +487,7 @@ namespace builtin {
         while (idx < fields.size()) {
             String fieldName = fields[idx].name;
             if (!fieldName.startsWith("_")) {
-                result[fieldName] = toJSON(obj.getField(fieldName));
+                result[fieldName] = toJSON(obj.getField(fieldName), fields[idx].getType());
             }
             idx = idx + 1;
         }
@@ -599,7 +602,7 @@ namespace builtin {
             if (error != null) {
                 response.setCode(404);
             } else {
-                self.response.setBody(toJSON(result).toString());
+                self.response.setBody(toJSON(result, null).toString());
                 self.response.setCode(200);
             }
             concurrent.Context.runtime().respond(request, response);
@@ -796,7 +799,7 @@ package behaviors {
         concurrent.Future call(Object message) {
             HTTPRequest request = new HTTPRequest(self.service.getURL());
             // XXX: assume message is not a Future, or at least not a pending one
-            JSONObject json = toJSON(message);
+            JSONObject json = toJSON(message, null);
             JSONObject envelope = new JSONObject();
             envelope["$method"] = self.name;
             envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)

@@ -4,7 +4,7 @@ public class test1_Test extends builtin.reflect.Class implements io.datawire.qua
     public static builtin.reflect.Class singleton = new test1_Test();
     public test1_Test() {
         super("test1.Test");
-        (this).name = "Test";
+        (this).name = "test1.Test";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));

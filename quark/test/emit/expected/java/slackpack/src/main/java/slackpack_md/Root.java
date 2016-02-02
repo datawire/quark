@@ -11,6 +11,7 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class slack_Channel_md = slack_Channel.singleton;
     public static builtin.reflect.Class slack_Client_md = slack_Client.singleton;
     public static builtin.reflect.Class pkg_Handler_md = pkg_Handler.singleton;
+    public static builtin.reflect.Class builtin_Map_builtin_String_builtin_Object__md = builtin_Map_builtin_String_builtin_Object_.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

@@ -4,7 +4,7 @@ public class pets_Dog extends builtin.reflect.Class implements io.datawire.quark
     public static builtin.reflect.Class singleton = new pets_Dog();
     public pets_Dog() {
         super("pets.Dog");
-        (this).name = "Dog";
+        (this).name = "pets.Dog";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pets_Dog_greet_Method()}));

@@ -4,7 +4,7 @@ public class builtin_concurrent_CollectorExecutor extends builtin.reflect.Class 
     public static builtin.reflect.Class singleton = new builtin_concurrent_CollectorExecutor();
     public builtin_concurrent_CollectorExecutor() {
         super("builtin.concurrent.CollectorExecutor");
-        (this).name = "CollectorExecutor";
+        (this).name = "builtin.concurrent.CollectorExecutor";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.concurrent.Queue<builtin.concurrent.Event>", "events"), new builtin.reflect.Field("builtin.concurrent.Collector", "collector")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_CollectorExecutor__start_Method(), new builtin_concurrent_CollectorExecutor_onExecute_Method()}));

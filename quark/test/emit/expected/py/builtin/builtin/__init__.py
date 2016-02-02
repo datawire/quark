@@ -7,7 +7,7 @@ import builtin_md
 
 
 
-def toJSON(obj):
+def toJSON(obj, cls):
     """
     Serializes object tree into JSON. skips over fields starting with underscore
     """
@@ -16,7 +16,9 @@ def toJSON(obj):
         (result).setNull();
         return result
 
-    cls = reflect.Class.get(_getClass(obj));
+    if ((cls) == (None)):
+        cls = reflect.Class.get(_getClass(obj))
+
     idx = 0;
     if (((cls).name) == (u"builtin.String")):
         (result).setString(obj);
@@ -30,7 +32,7 @@ def toJSON(obj):
         (result).setList();
         list = obj;
         while ((idx) < (len(list))):
-            (result).setListItem(idx, toJSON((list)[idx]));
+            (result).setListItem(idx, toJSON((list)[idx], None));
             idx = (idx) + (1)
 
         return result
@@ -45,7 +47,7 @@ def toJSON(obj):
     while ((idx) < (len(fields))):
         fieldName = ((fields)[idx]).name;
         if (not ((fieldName).startswith(u"_"))):
-            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName))));
+            (result).setObjectItem((fieldName), (toJSON((obj)._getField(fieldName), ((fields)[idx]).getType())));
 
         idx = (idx) + (1)
 
@@ -208,7 +210,7 @@ class ServerResponder(object):
         if ((error) != (None)):
             (self.response).setCode(404);
         else:
-            ((self).response).setBody((toJSON(result)).toString());
+            ((self).response).setBody((toJSON(result, None)).toString());
             ((self).response).setCode(200);
 
         (concurrent.Context.runtime()).respond(self.request, self.response);

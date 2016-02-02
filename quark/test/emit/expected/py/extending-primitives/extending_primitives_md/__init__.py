@@ -30,7 +30,7 @@ class pkg_C(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_C, self).__init__(u"pkg.C");
-        (self).name = u"C"
+        (self).name = u"pkg.C"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_C_event1_Method()])

@@ -4,7 +4,7 @@ public class builtin_behaviors_RPC extends builtin.reflect.Class implements io.d
     public static builtin.reflect.Class singleton = new builtin_behaviors_RPC();
     public builtin_behaviors_RPC() {
         super("builtin.behaviors.RPC");
-        (this).name = "RPC";
+        (this).name = "builtin.behaviors.RPC";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_behaviors_RPC_call_Method()}));

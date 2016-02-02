@@ -4,13 +4,15 @@ public class Functions {
     /**
      * Serializes object tree into JSON. skips over fields starting with underscore
      */
-    public static io.datawire.quark.runtime.JSONObject toJSON(Object obj) {
+    public static io.datawire.quark.runtime.JSONObject toJSON(Object obj, builtin.reflect.Class cls) {
         io.datawire.quark.runtime.JSONObject result = new io.datawire.quark.runtime.JSONObject();
         if ((obj)==(null) || ((obj) != null && (obj).equals(null))) {
             (result).setNull();
             return result;
         }
-        builtin.reflect.Class cls = builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
+        if ((cls)==(null) || ((cls) != null && (cls).equals(null))) {
+            cls = builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
+        }
         Integer idx = 0;
         if (((cls).name)==("builtin.String") || (((cls).name) != null && ((cls).name).equals("builtin.String"))) {
             (result).setString((String) (obj));
@@ -24,7 +26,7 @@ public class Functions {
             (result).setList();
             java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) (obj);
             while ((idx) < ((list).size())) {
-                (result).setListItem(idx, Functions.toJSON((list).get(idx)));
+                (result).setListItem(idx, Functions.toJSON((list).get(idx), null));
                 idx = (idx) + (1);
             }
             return result;
@@ -39,7 +41,7 @@ public class Functions {
         while ((idx) < ((fields).size())) {
             String fieldName = ((fields).get(idx)).name;
             if (!(Boolean.valueOf((fieldName).startsWith("_")))) {
-                (result).setObjectItem((fieldName), (Functions.toJSON(((io.datawire.quark.runtime.QObject) (obj))._getField(fieldName))));
+                (result).setObjectItem((fieldName), (Functions.toJSON(((io.datawire.quark.runtime.QObject) (obj))._getField(fieldName), ((fields).get(idx)).getType())));
             }
             idx = (idx) + (1);
         }

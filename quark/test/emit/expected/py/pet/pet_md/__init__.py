@@ -30,7 +30,7 @@ class pets_Cat(builtin.reflect.Class):
 
     def __init__(self):
         super(pets_Cat, self).__init__(u"pets.Cat");
-        (self).name = u"Cat"
+        (self).name = u"pets.Cat"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pets_Cat_greet_Method()])
@@ -75,7 +75,7 @@ class pets_Dog(builtin.reflect.Class):
 
     def __init__(self):
         super(pets_Dog, self).__init__(u"pets.Dog");
-        (self).name = u"Dog"
+        (self).name = u"pets.Dog"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pets_Dog_greet_Method()])

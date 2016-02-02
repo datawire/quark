@@ -4,7 +4,7 @@ public class pkg_C extends builtin.reflect.Class implements io.datawire.quark.ru
     public static builtin.reflect.Class singleton = new pkg_C();
     public pkg_C() {
         super("pkg.C");
-        (this).name = "C";
+        (this).name = "pkg.C";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_C_event1_Method()}));

@@ -4,10 +4,10 @@ public class builtin_Server_Object_ extends builtin.reflect.Class implements io.
     public static builtin.reflect.Class singleton = new builtin_Server_Object_();
     public builtin_Server_Object_() {
         super("builtin.Server<Object>");
-        (this).name = "Server";
+        (this).name = "builtin.Server";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("Object", "impl")}));
-        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_Server_Object__onHTTPRequest_Method(), new builtin_Server_Object__onServletError_Method()}));
+        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new builtin.Server<Object>((args).get(0));

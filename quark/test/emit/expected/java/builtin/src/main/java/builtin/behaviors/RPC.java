@@ -22,7 +22,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     }
     public builtin.concurrent.Future call(Object message) {
         io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).service).getURL());
-        io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(message);
+        io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(message, null);
         io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
         (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).name)));
         (envelope).setObjectItem(("$context"), ((new io.datawire.quark.runtime.JSONObject()).setString("TBD")));

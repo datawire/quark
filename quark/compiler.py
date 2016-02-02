@@ -726,8 +726,7 @@ class Reflector:
         return fields
 
     def meths(self, cls, cid, use_bindings):
-        if cls.package is None or cls.package.name.text in ("reflect", ):
-            return []
+        if cls.package and cls.package.name.text in ("builtin", "reflect"): return []
         methods = []
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
@@ -768,10 +767,8 @@ class Reflector:
         return ".".join(self.package(cls.package) + [cls.name.text])
 
     def visit_Class(self, cls):
-        if cls.file.depth != 0: return
-
         if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
-            if (cls.package is None and cls.name.text in ("List", "Map") or
+            if (cls.package and cls.package.name.text == "builtin" and cls.name.text in ("List", "Map") or
                 isinstance(cls, Interface)):
                 self.classes.append(cls)
             return
@@ -831,7 +828,7 @@ class Reflector:
         void _setField(String name, Object value) {}
     }""" % {"id": id,
             "mdname": self.mdname(id),
-            "name": cls.name,
+            "name": name,
             "parameters": params,
             "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
@@ -848,13 +845,16 @@ class Reflector:
         for cls in self.classes:
             qual = self.qual(cls)
             if cls.parameters:
-                clsid = qual + "<%s>" % ",".join(["Object"*len(cls.parameters)])
+                clsid = qual + "<%s>" % ",".join(["Object"]*len(cls.parameters))
                 params = "[%s]" % ",".join(['"Object"']*len(cls.parameters))
             else:
                 clsid = qual
                 params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
+
+            if cls.file.depth != 0 and cls not in self.class_uses:
+                continue
 
             uses = self.class_uses.get(cls, OrderedDict([(clsid,
                                                           (cls.resolved, cls, tuple(self.package(cls.package))))]))

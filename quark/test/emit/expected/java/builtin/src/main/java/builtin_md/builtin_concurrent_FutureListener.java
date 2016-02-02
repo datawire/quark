@@ -4,7 +4,7 @@ public class builtin_concurrent_FutureListener extends builtin.reflect.Class imp
     public static builtin.reflect.Class singleton = new builtin_concurrent_FutureListener();
     public builtin_concurrent_FutureListener() {
         super("builtin.concurrent.FutureListener");
-        (this).name = "FutureListener";
+        (this).name = "builtin.concurrent.FutureListener";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_FutureListener_onFuture_Method()}));

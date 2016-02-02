@@ -4,7 +4,7 @@ public class slack_event_Edited extends builtin.reflect.Class implements io.data
     public static builtin.reflect.Class singleton = new slack_event_Edited();
     public slack_event_Edited() {
         super("slack.event.Edited");
-        (this).name = "Edited";
+        (this).name = "slack.event.Edited";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("builtin.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));

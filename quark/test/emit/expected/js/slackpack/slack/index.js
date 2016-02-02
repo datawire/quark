@@ -161,6 +161,7 @@ function Client__init_fields__() {
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 Client.slack_Client_ref = slackpack_md.Root.slack_Client_md;
+Client.builtin_Map_builtin_String_builtin_Object__ref = slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md;
 /**
  * Connect the client to the slack service.
  */

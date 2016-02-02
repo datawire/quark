@@ -4,7 +4,7 @@ public class builtin_reflect_Field extends builtin.reflect.Class implements io.d
     public static builtin.reflect.Class singleton = new builtin_reflect_Field();
     public builtin_reflect_Field() {
         super("builtin.reflect.Field");
-        (this).name = "Field";
+        (this).name = "builtin.reflect.Field";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("builtin.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));

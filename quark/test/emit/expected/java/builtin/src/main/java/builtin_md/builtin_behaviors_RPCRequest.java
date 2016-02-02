@@ -4,7 +4,7 @@ public class builtin_behaviors_RPCRequest extends builtin.reflect.Class implemen
     public static builtin.reflect.Class singleton = new builtin_behaviors_RPCRequest();
     public builtin_behaviors_RPCRequest() {
         super("builtin.behaviors.RPCRequest");
-        (this).name = "RPCRequest";
+        (this).name = "builtin.behaviors.RPCRequest";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.behaviors.RPC", "rpc"), new builtin.reflect.Field("builtin.concurrent.Future", "retval"), new builtin.reflect.Field("builtin.Object", "message"), new builtin.reflect.Field("builtin.concurrent.Timeout", "timeout")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_behaviors_RPCRequest_call_Method(), new builtin_behaviors_RPCRequest_onHTTPResponse_Method(), new builtin_behaviors_RPCRequest_onTimeout_Method()}));

@@ -8,7 +8,7 @@ exports.builtin = builtin;
 
 function test1_Test() {
     test1_Test.super_.call(this, "test1.Test");
-    (this).name = "Test";
+    (this).name = "test1.Test";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];
@@ -44,7 +44,7 @@ test1_Test.prototype._setField = test1_Test__setField;
 
 function test2_Test() {
     test2_Test.super_.call(this, "test2.Test");
-    (this).name = "Test";
+    (this).name = "test2.Test";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];
@@ -112,7 +112,7 @@ test3_Box_builtin_String__get_Method.prototype._setField = test3_Box_builtin_Str
 
 function test3_Box_builtin_String_() {
     test3_Box_builtin_String_.super_.call(this, "test3.Box<builtin.String>");
-    (this).name = "Box";
+    (this).name = "test3.Box";
     (this).parameters = ["builtin.String"];
     (this).fields = [new builtin.reflect.Field("builtin.String", "contents")];
     (this).methods = [new test3_Box_builtin_String__get_Method()];

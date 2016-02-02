@@ -51,7 +51,7 @@ class pkg_A(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_A, self).__init__(u"pkg.A");
-        (self).name = u"A"
+        (self).name = u"pkg.A"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_A_foo_Method(), pkg_A_bar_Method()])
@@ -96,7 +96,7 @@ class pkg_B(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_B, self).__init__(u"pkg.B");
-        (self).name = u"B"
+        (self).name = u"pkg.B"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_B_bar_Method()])
@@ -141,7 +141,7 @@ class pkg_C(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_C, self).__init__(u"pkg.C");
-        (self).name = u"C"
+        (self).name = u"pkg.C"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_C_foo_Method()])
@@ -207,7 +207,7 @@ class pkg_T1(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_T1, self).__init__(u"pkg.T1");
-        (self).name = u"T1"
+        (self).name = u"pkg.T1"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_T1_foo_Method(), pkg_T1_bar_Method()])
@@ -273,7 +273,7 @@ class pkg_T2(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_T2, self).__init__(u"pkg.T2");
-        (self).name = u"T2"
+        (self).name = u"pkg.T2"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_T2_foo_Method(), pkg_T2_bar_Method()])
@@ -339,7 +339,7 @@ class pkg_T3(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_T3, self).__init__(u"pkg.T3");
-        (self).name = u"T3"
+        (self).name = u"pkg.T3"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_T3_foo_Method(), pkg_T3_bar_Method()])
@@ -405,7 +405,7 @@ class pkg_T4(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_T4, self).__init__(u"pkg.T4");
-        (self).name = u"T4"
+        (self).name = u"pkg.T4"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_T4_foo_Method(), pkg_T4_bar_Method()])
@@ -471,7 +471,7 @@ class pkg_T5(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_T5, self).__init__(u"pkg.T5");
-        (self).name = u"T5"
+        (self).name = u"pkg.T5"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_T5_foo_Method(), pkg_T5_bar_Method()])

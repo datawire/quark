@@ -244,3 +244,4 @@ class Client(object):
     def onHTTPFinal(self, request):
         pass
 Client.slack_Client_ref = slackpack_md.Root.slack_Client_md
+Client.builtin_Map_builtin_String_builtin_Object__ref = slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md

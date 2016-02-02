@@ -4,7 +4,7 @@ public class slack_event_SlackEvent extends builtin.reflect.Class implements io.
     public static builtin.reflect.Class singleton = new slack_event_SlackEvent();
     public slack_event_SlackEvent() {
         super("slack.event.SlackEvent");
-        (this).name = "SlackEvent";
+        (this).name = "slack.event.SlackEvent";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_event_SlackEvent_load_Method(), new slack_event_SlackEvent_dispatch_Method()}));

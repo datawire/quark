@@ -41,7 +41,7 @@ pkg_C_event1_Method.prototype._setField = pkg_C_event1_Method__setField;
 
 function pkg_C() {
     pkg_C.super_.call(this, "pkg.C");
-    (this).name = "C";
+    (this).name = "pkg.C";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_C_event1_Method()];

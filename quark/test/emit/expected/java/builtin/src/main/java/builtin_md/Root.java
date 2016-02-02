@@ -1,6 +1,10 @@
 package builtin_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton;
+    public static builtin.reflect.Class builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton;
+    public static builtin.reflect.Class builtin_List_Object__md = builtin_List_Object_.singleton;
+    public static builtin.reflect.Class builtin_Map_Object_Object__md = builtin_Map_Object_Object_.singleton;
     public static builtin.reflect.Class builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
     public static builtin.reflect.Class builtin_Service_md = builtin_Service.singleton;
     public static builtin.reflect.Class builtin_Client_md = builtin_Client.singleton;

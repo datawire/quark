@@ -74,7 +74,7 @@ pkg_A_bar_Method.prototype._setField = pkg_A_bar_Method__setField;
 
 function pkg_A() {
     pkg_A.super_.call(this, "pkg.A");
-    (this).name = "A";
+    (this).name = "pkg.A";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_A_foo_Method(), new pkg_A_bar_Method()];
@@ -143,7 +143,7 @@ pkg_B_bar_Method.prototype._setField = pkg_B_bar_Method__setField;
 
 function pkg_B() {
     pkg_B.super_.call(this, "pkg.B");
-    (this).name = "B";
+    (this).name = "pkg.B";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_B_bar_Method()];
@@ -212,7 +212,7 @@ pkg_C_foo_Method.prototype._setField = pkg_C_foo_Method__setField;
 
 function pkg_C() {
     pkg_C.super_.call(this, "pkg.C");
-    (this).name = "C";
+    (this).name = "pkg.C";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_C_foo_Method()];
@@ -314,7 +314,7 @@ pkg_T1_bar_Method.prototype._setField = pkg_T1_bar_Method__setField;
 
 function pkg_T1() {
     pkg_T1.super_.call(this, "pkg.T1");
-    (this).name = "T1";
+    (this).name = "pkg.T1";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_T1_foo_Method(), new pkg_T1_bar_Method()];
@@ -416,7 +416,7 @@ pkg_T2_bar_Method.prototype._setField = pkg_T2_bar_Method__setField;
 
 function pkg_T2() {
     pkg_T2.super_.call(this, "pkg.T2");
-    (this).name = "T2";
+    (this).name = "pkg.T2";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_T2_foo_Method(), new pkg_T2_bar_Method()];
@@ -518,7 +518,7 @@ pkg_T3_bar_Method.prototype._setField = pkg_T3_bar_Method__setField;
 
 function pkg_T3() {
     pkg_T3.super_.call(this, "pkg.T3");
-    (this).name = "T3";
+    (this).name = "pkg.T3";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_T3_foo_Method(), new pkg_T3_bar_Method()];
@@ -620,7 +620,7 @@ pkg_T4_bar_Method.prototype._setField = pkg_T4_bar_Method__setField;
 
 function pkg_T4() {
     pkg_T4.super_.call(this, "pkg.T4");
-    (this).name = "T4";
+    (this).name = "pkg.T4";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_T4_foo_Method(), new pkg_T4_bar_Method()];
@@ -722,7 +722,7 @@ pkg_T5_bar_Method.prototype._setField = pkg_T5_bar_Method__setField;
 
 function pkg_T5() {
     pkg_T5.super_.call(this, "pkg.T5");
-    (this).name = "T5";
+    (this).name = "pkg.T5";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pkg_T5_foo_Method(), new pkg_T5_bar_Method()];

@@ -49,7 +49,7 @@ class pkg_Foo_Object_(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_Foo_Object_, self).__init__(u"pkg.Foo<Object>");
-        (self).name = u"Foo"
+        (self).name = u"pkg.Foo"
         (self).parameters = _List([u"Object"])
         (self).fields = _List([])
         (self).methods = _List([pkg_Foo_Object__foo_Method(), pkg_Foo_Object__get_Method()])
@@ -113,7 +113,7 @@ class pkg_StringFoo(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_StringFoo, self).__init__(u"pkg.StringFoo");
-        (self).name = u"StringFoo"
+        (self).name = u"pkg.StringFoo"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_StringFoo_get_Method(), pkg_StringFoo_foo_Method()])
@@ -137,7 +137,7 @@ class pkg_Box_builtin_String_(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_Box_builtin_String_, self).__init__(u"pkg.Box<builtin.String>");
-        (self).name = u"Box"
+        (self).name = u"pkg.Box"
         (self).parameters = _List([u"builtin.String"])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"contents")])
         (self).methods = _List([])
@@ -161,7 +161,7 @@ class pkg_StringBox(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_StringBox, self).__init__(u"pkg.StringBox");
-        (self).name = u"StringBox"
+        (self).name = u"pkg.StringBox"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"contents")])
         (self).methods = _List([])

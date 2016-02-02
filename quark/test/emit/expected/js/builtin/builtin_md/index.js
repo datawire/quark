@@ -10,80 +10,374 @@ exports.builtin = builtin;
 
 
 
-// CLASS builtin_ResponseHolder_onHTTPResponse_Method
+// CLASS builtin_List_builtin_String_
 
-function builtin_ResponseHolder_onHTTPResponse_Method() {
-    builtin_ResponseHolder_onHTTPResponse_Method.super_.call(this, "builtin.void", "onHTTPResponse", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
+function builtin_List_builtin_String_() {
+    builtin_List_builtin_String_.super_.call(this, "builtin.List<builtin.String>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.String"];
+    (this).fields = [];
+    (this).methods = [];
 }
-exports.builtin_ResponseHolder_onHTTPResponse_Method = builtin_ResponseHolder_onHTTPResponse_Method;
-_qrt.util.inherits(builtin_ResponseHolder_onHTTPResponse_Method, builtin.reflect.Method);
+exports.builtin_List_builtin_String_ = builtin_List_builtin_String_;
+_qrt.util.inherits(builtin_List_builtin_String_, builtin.reflect.Class);
 
-function builtin_ResponseHolder_onHTTPResponse_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+function builtin_List_builtin_String___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
-builtin_ResponseHolder_onHTTPResponse_Method.prototype.__init_fields__ = builtin_ResponseHolder_onHTTPResponse_Method__init_fields__;
+builtin_List_builtin_String_.prototype.__init_fields__ = builtin_List_builtin_String___init_fields__;
+builtin_List_builtin_String_.singleton = new builtin_List_builtin_String_();
+function builtin_List_builtin_String__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_String_.prototype.construct = builtin_List_builtin_String__construct;
 
-function builtin_ResponseHolder_onHTTPResponse_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPResponse((args)[0], (args)[1]);
+function builtin_List_builtin_String___getClass() {
     return null;
 }
-builtin_ResponseHolder_onHTTPResponse_Method.prototype.invoke = builtin_ResponseHolder_onHTTPResponse_Method_invoke;
+builtin_List_builtin_String_.prototype._getClass = builtin_List_builtin_String___getClass;
 
-function builtin_ResponseHolder_onHTTPResponse_Method__getClass() {
+function builtin_List_builtin_String___getField(name) {
     return null;
 }
-builtin_ResponseHolder_onHTTPResponse_Method.prototype._getClass = builtin_ResponseHolder_onHTTPResponse_Method__getClass;
+builtin_List_builtin_String_.prototype._getField = builtin_List_builtin_String___getField;
 
-function builtin_ResponseHolder_onHTTPResponse_Method__getField(name) {
+function builtin_List_builtin_String___setField(name, value) {}
+builtin_List_builtin_String_.prototype._setField = builtin_List_builtin_String___setField;
+
+
+// CLASS builtin_List_builtin_Object_
+
+function builtin_List_builtin_Object_() {
+    builtin_List_builtin_Object_.super_.call(this, "builtin.List<builtin.Object>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.Object"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_builtin_Object_ = builtin_List_builtin_Object_;
+_qrt.util.inherits(builtin_List_builtin_Object_, builtin.reflect.Class);
+
+function builtin_List_builtin_Object___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_builtin_Object_.prototype.__init_fields__ = builtin_List_builtin_Object___init_fields__;
+builtin_List_builtin_Object_.singleton = new builtin_List_builtin_Object_();
+function builtin_List_builtin_Object__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_Object_.prototype.construct = builtin_List_builtin_Object__construct;
+
+function builtin_List_builtin_Object___getClass() {
     return null;
 }
-builtin_ResponseHolder_onHTTPResponse_Method.prototype._getField = builtin_ResponseHolder_onHTTPResponse_Method__getField;
+builtin_List_builtin_Object_.prototype._getClass = builtin_List_builtin_Object___getClass;
 
-function builtin_ResponseHolder_onHTTPResponse_Method__setField(name, value) {}
-builtin_ResponseHolder_onHTTPResponse_Method.prototype._setField = builtin_ResponseHolder_onHTTPResponse_Method__setField;
-
-// CLASS builtin_ResponseHolder_onHTTPError_Method
-
-function builtin_ResponseHolder_onHTTPError_Method() {
-    builtin_ResponseHolder_onHTTPError_Method.super_.call(this, "builtin.void", "onHTTPError", ["builtin.HTTPRequest", "builtin.String"]);
-}
-exports.builtin_ResponseHolder_onHTTPError_Method = builtin_ResponseHolder_onHTTPError_Method;
-_qrt.util.inherits(builtin_ResponseHolder_onHTTPError_Method, builtin.reflect.Method);
-
-function builtin_ResponseHolder_onHTTPError_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_ResponseHolder_onHTTPError_Method.prototype.__init_fields__ = builtin_ResponseHolder_onHTTPError_Method__init_fields__;
-
-function builtin_ResponseHolder_onHTTPError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPError((args)[0], (args)[1]);
+function builtin_List_builtin_Object___getField(name) {
     return null;
 }
-builtin_ResponseHolder_onHTTPError_Method.prototype.invoke = builtin_ResponseHolder_onHTTPError_Method_invoke;
+builtin_List_builtin_Object_.prototype._getField = builtin_List_builtin_Object___getField;
 
-function builtin_ResponseHolder_onHTTPError_Method__getClass() {
+function builtin_List_builtin_Object___setField(name, value) {}
+builtin_List_builtin_Object_.prototype._setField = builtin_List_builtin_Object___setField;
+
+
+// CLASS builtin_List_builtin_reflect_Field_
+
+function builtin_List_builtin_reflect_Field_() {
+    builtin_List_builtin_reflect_Field_.super_.call(this, "builtin.List<builtin.reflect.Field>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.reflect.Field"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_builtin_reflect_Field_ = builtin_List_builtin_reflect_Field_;
+_qrt.util.inherits(builtin_List_builtin_reflect_Field_, builtin.reflect.Class);
+
+function builtin_List_builtin_reflect_Field___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_builtin_reflect_Field_.prototype.__init_fields__ = builtin_List_builtin_reflect_Field___init_fields__;
+builtin_List_builtin_reflect_Field_.singleton = new builtin_List_builtin_reflect_Field_();
+function builtin_List_builtin_reflect_Field__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_reflect_Field_.prototype.construct = builtin_List_builtin_reflect_Field__construct;
+
+function builtin_List_builtin_reflect_Field___getClass() {
     return null;
 }
-builtin_ResponseHolder_onHTTPError_Method.prototype._getClass = builtin_ResponseHolder_onHTTPError_Method__getClass;
+builtin_List_builtin_reflect_Field_.prototype._getClass = builtin_List_builtin_reflect_Field___getClass;
 
-function builtin_ResponseHolder_onHTTPError_Method__getField(name) {
+function builtin_List_builtin_reflect_Field___getField(name) {
     return null;
 }
-builtin_ResponseHolder_onHTTPError_Method.prototype._getField = builtin_ResponseHolder_onHTTPError_Method__getField;
+builtin_List_builtin_reflect_Field_.prototype._getField = builtin_List_builtin_reflect_Field___getField;
 
-function builtin_ResponseHolder_onHTTPError_Method__setField(name, value) {}
-builtin_ResponseHolder_onHTTPError_Method.prototype._setField = builtin_ResponseHolder_onHTTPError_Method__setField;
+function builtin_List_builtin_reflect_Field___setField(name, value) {}
+builtin_List_builtin_reflect_Field_.prototype._setField = builtin_List_builtin_reflect_Field___setField;
+
+
+// CLASS builtin_List_builtin_reflect_Class_
+
+function builtin_List_builtin_reflect_Class_() {
+    builtin_List_builtin_reflect_Class_.super_.call(this, "builtin.List<builtin.reflect.Class>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.reflect.Class"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_builtin_reflect_Class_ = builtin_List_builtin_reflect_Class_;
+_qrt.util.inherits(builtin_List_builtin_reflect_Class_, builtin.reflect.Class);
+
+function builtin_List_builtin_reflect_Class___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_builtin_reflect_Class_.prototype.__init_fields__ = builtin_List_builtin_reflect_Class___init_fields__;
+builtin_List_builtin_reflect_Class_.singleton = new builtin_List_builtin_reflect_Class_();
+function builtin_List_builtin_reflect_Class__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_reflect_Class_.prototype.construct = builtin_List_builtin_reflect_Class__construct;
+
+function builtin_List_builtin_reflect_Class___getClass() {
+    return null;
+}
+builtin_List_builtin_reflect_Class_.prototype._getClass = builtin_List_builtin_reflect_Class___getClass;
+
+function builtin_List_builtin_reflect_Class___getField(name) {
+    return null;
+}
+builtin_List_builtin_reflect_Class_.prototype._getField = builtin_List_builtin_reflect_Class___getField;
+
+function builtin_List_builtin_reflect_Class___setField(name, value) {}
+builtin_List_builtin_reflect_Class_.prototype._setField = builtin_List_builtin_reflect_Class___setField;
+
+
+// CLASS builtin_List_builtin_reflect_Method_
+
+function builtin_List_builtin_reflect_Method_() {
+    builtin_List_builtin_reflect_Method_.super_.call(this, "builtin.List<builtin.reflect.Method>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.reflect.Method"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_builtin_reflect_Method_ = builtin_List_builtin_reflect_Method_;
+_qrt.util.inherits(builtin_List_builtin_reflect_Method_, builtin.reflect.Class);
+
+function builtin_List_builtin_reflect_Method___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_builtin_reflect_Method_.prototype.__init_fields__ = builtin_List_builtin_reflect_Method___init_fields__;
+builtin_List_builtin_reflect_Method_.singleton = new builtin_List_builtin_reflect_Method_();
+function builtin_List_builtin_reflect_Method__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_reflect_Method_.prototype.construct = builtin_List_builtin_reflect_Method__construct;
+
+function builtin_List_builtin_reflect_Method___getClass() {
+    return null;
+}
+builtin_List_builtin_reflect_Method_.prototype._getClass = builtin_List_builtin_reflect_Method___getClass;
+
+function builtin_List_builtin_reflect_Method___getField(name) {
+    return null;
+}
+builtin_List_builtin_reflect_Method_.prototype._getField = builtin_List_builtin_reflect_Method___getField;
+
+function builtin_List_builtin_reflect_Method___setField(name, value) {}
+builtin_List_builtin_reflect_Method_.prototype._setField = builtin_List_builtin_reflect_Method___setField;
+
+
+// CLASS builtin_List_builtin_concurrent_FutureCompletion_
+
+function builtin_List_builtin_concurrent_FutureCompletion_() {
+    builtin_List_builtin_concurrent_FutureCompletion_.super_.call(this, "builtin.List<builtin.concurrent.FutureCompletion>");
+    (this).name = "builtin.List";
+    (this).parameters = ["builtin.concurrent.FutureCompletion"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_builtin_concurrent_FutureCompletion_ = builtin_List_builtin_concurrent_FutureCompletion_;
+_qrt.util.inherits(builtin_List_builtin_concurrent_FutureCompletion_, builtin.reflect.Class);
+
+function builtin_List_builtin_concurrent_FutureCompletion___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_builtin_concurrent_FutureCompletion_.prototype.__init_fields__ = builtin_List_builtin_concurrent_FutureCompletion___init_fields__;
+builtin_List_builtin_concurrent_FutureCompletion_.singleton = new builtin_List_builtin_concurrent_FutureCompletion_();
+function builtin_List_builtin_concurrent_FutureCompletion__construct(args) {
+    return new Array();
+}
+builtin_List_builtin_concurrent_FutureCompletion_.prototype.construct = builtin_List_builtin_concurrent_FutureCompletion__construct;
+
+function builtin_List_builtin_concurrent_FutureCompletion___getClass() {
+    return null;
+}
+builtin_List_builtin_concurrent_FutureCompletion_.prototype._getClass = builtin_List_builtin_concurrent_FutureCompletion___getClass;
+
+function builtin_List_builtin_concurrent_FutureCompletion___getField(name) {
+    return null;
+}
+builtin_List_builtin_concurrent_FutureCompletion_.prototype._getField = builtin_List_builtin_concurrent_FutureCompletion___getField;
+
+function builtin_List_builtin_concurrent_FutureCompletion___setField(name, value) {}
+builtin_List_builtin_concurrent_FutureCompletion_.prototype._setField = builtin_List_builtin_concurrent_FutureCompletion___setField;
+
+
+// CLASS builtin_List_Object_
+
+function builtin_List_Object_() {
+    builtin_List_Object_.super_.call(this, "builtin.List<Object>");
+    (this).name = "builtin.List";
+    (this).parameters = ["Object"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_List_Object_ = builtin_List_Object_;
+_qrt.util.inherits(builtin_List_Object_, builtin.reflect.Class);
+
+function builtin_List_Object___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_List_Object_.prototype.__init_fields__ = builtin_List_Object___init_fields__;
+builtin_List_Object_.singleton = new builtin_List_Object_();
+function builtin_List_Object__construct(args) {
+    return new Array();
+}
+builtin_List_Object_.prototype.construct = builtin_List_Object__construct;
+
+function builtin_List_Object___getClass() {
+    return null;
+}
+builtin_List_Object_.prototype._getClass = builtin_List_Object___getClass;
+
+function builtin_List_Object___getField(name) {
+    return null;
+}
+builtin_List_Object_.prototype._getField = builtin_List_Object___getField;
+
+function builtin_List_Object___setField(name, value) {}
+builtin_List_Object_.prototype._setField = builtin_List_Object___setField;
+
+
+// CLASS builtin_Map_Object_Object_
+
+function builtin_Map_Object_Object_() {
+    builtin_Map_Object_Object_.super_.call(this, "builtin.Map<Object,Object>");
+    (this).name = "builtin.Map";
+    (this).parameters = ["Object", "Object"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_Map_Object_Object_ = builtin_Map_Object_Object_;
+_qrt.util.inherits(builtin_Map_Object_Object_, builtin.reflect.Class);
+
+function builtin_Map_Object_Object___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Map_Object_Object_.prototype.__init_fields__ = builtin_Map_Object_Object___init_fields__;
+builtin_Map_Object_Object_.singleton = new builtin_Map_Object_Object_();
+function builtin_Map_Object_Object__construct(args) {
+    return new Map();
+}
+builtin_Map_Object_Object_.prototype.construct = builtin_Map_Object_Object__construct;
+
+function builtin_Map_Object_Object___getClass() {
+    return null;
+}
+builtin_Map_Object_Object_.prototype._getClass = builtin_Map_Object_Object___getClass;
+
+function builtin_Map_Object_Object___getField(name) {
+    return null;
+}
+builtin_Map_Object_Object_.prototype._getField = builtin_Map_Object_Object___getField;
+
+function builtin_Map_Object_Object___setField(name, value) {}
+builtin_Map_Object_Object_.prototype._setField = builtin_Map_Object_Object___setField;
+
+
+// CLASS builtin_Map_builtin_String_builtin_Object_
+
+function builtin_Map_builtin_String_builtin_Object_() {
+    builtin_Map_builtin_String_builtin_Object_.super_.call(this, "builtin.Map<builtin.String,builtin.Object>");
+    (this).name = "builtin.Map";
+    (this).parameters = ["builtin.String", "builtin.Object"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_Map_builtin_String_builtin_Object_ = builtin_Map_builtin_String_builtin_Object_;
+_qrt.util.inherits(builtin_Map_builtin_String_builtin_Object_, builtin.reflect.Class);
+
+function builtin_Map_builtin_String_builtin_Object___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Map_builtin_String_builtin_Object_.prototype.__init_fields__ = builtin_Map_builtin_String_builtin_Object___init_fields__;
+builtin_Map_builtin_String_builtin_Object_.singleton = new builtin_Map_builtin_String_builtin_Object_();
+function builtin_Map_builtin_String_builtin_Object__construct(args) {
+    return new Map();
+}
+builtin_Map_builtin_String_builtin_Object_.prototype.construct = builtin_Map_builtin_String_builtin_Object__construct;
+
+function builtin_Map_builtin_String_builtin_Object___getClass() {
+    return null;
+}
+builtin_Map_builtin_String_builtin_Object_.prototype._getClass = builtin_Map_builtin_String_builtin_Object___getClass;
+
+function builtin_Map_builtin_String_builtin_Object___getField(name) {
+    return null;
+}
+builtin_Map_builtin_String_builtin_Object_.prototype._getField = builtin_Map_builtin_String_builtin_Object___getField;
+
+function builtin_Map_builtin_String_builtin_Object___setField(name, value) {}
+builtin_Map_builtin_String_builtin_Object_.prototype._setField = builtin_Map_builtin_String_builtin_Object___setField;
+
+
+// CLASS builtin_Map_builtin_String_builtin_reflect_Class_
+
+function builtin_Map_builtin_String_builtin_reflect_Class_() {
+    builtin_Map_builtin_String_builtin_reflect_Class_.super_.call(this, "builtin.Map<builtin.String,builtin.reflect.Class>");
+    (this).name = "builtin.Map";
+    (this).parameters = ["builtin.String", "builtin.reflect.Class"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_Map_builtin_String_builtin_reflect_Class_ = builtin_Map_builtin_String_builtin_reflect_Class_;
+_qrt.util.inherits(builtin_Map_builtin_String_builtin_reflect_Class_, builtin.reflect.Class);
+
+function builtin_Map_builtin_String_builtin_reflect_Class___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Map_builtin_String_builtin_reflect_Class_.prototype.__init_fields__ = builtin_Map_builtin_String_builtin_reflect_Class___init_fields__;
+builtin_Map_builtin_String_builtin_reflect_Class_.singleton = new builtin_Map_builtin_String_builtin_reflect_Class_();
+function builtin_Map_builtin_String_builtin_reflect_Class__construct(args) {
+    return new Map();
+}
+builtin_Map_builtin_String_builtin_reflect_Class_.prototype.construct = builtin_Map_builtin_String_builtin_reflect_Class__construct;
+
+function builtin_Map_builtin_String_builtin_reflect_Class___getClass() {
+    return null;
+}
+builtin_Map_builtin_String_builtin_reflect_Class_.prototype._getClass = builtin_Map_builtin_String_builtin_reflect_Class___getClass;
+
+function builtin_Map_builtin_String_builtin_reflect_Class___getField(name) {
+    return null;
+}
+builtin_Map_builtin_String_builtin_reflect_Class_.prototype._getField = builtin_Map_builtin_String_builtin_reflect_Class___getField;
+
+function builtin_Map_builtin_String_builtin_reflect_Class___setField(name, value) {}
+builtin_Map_builtin_String_builtin_reflect_Class_.prototype._setField = builtin_Map_builtin_String_builtin_reflect_Class___setField;
+
 
 // CLASS builtin_ResponseHolder
 
 function builtin_ResponseHolder() {
     builtin_ResponseHolder.super_.call(this, "builtin.ResponseHolder");
-    (this).name = "ResponseHolder";
+    (this).name = "builtin.ResponseHolder";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.HTTPResponse", "response"), new builtin.reflect.Field("builtin.String", "failure")];
-    (this).methods = [new builtin_ResponseHolder_onHTTPResponse_Method(), new builtin_ResponseHolder_onHTTPError_Method()];
+    (this).methods = [];
 }
 exports.builtin_ResponseHolder = builtin_ResponseHolder;
 _qrt.util.inherits(builtin_ResponseHolder, builtin.reflect.Class);
@@ -112,110 +406,14 @@ function builtin_ResponseHolder__setField(name, value) {}
 builtin_ResponseHolder.prototype._setField = builtin_ResponseHolder__setField;
 
 
-// CLASS builtin_Service_getURL_Method
-
-function builtin_Service_getURL_Method() {
-    builtin_Service_getURL_Method.super_.call(this, "builtin.String", "getURL", []);
-}
-exports.builtin_Service_getURL_Method = builtin_Service_getURL_Method;
-_qrt.util.inherits(builtin_Service_getURL_Method, builtin.reflect.Method);
-
-function builtin_Service_getURL_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Service_getURL_Method.prototype.__init_fields__ = builtin_Service_getURL_Method__init_fields__;
-
-function builtin_Service_getURL_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).getURL();
-}
-builtin_Service_getURL_Method.prototype.invoke = builtin_Service_getURL_Method_invoke;
-
-function builtin_Service_getURL_Method__getClass() {
-    return null;
-}
-builtin_Service_getURL_Method.prototype._getClass = builtin_Service_getURL_Method__getClass;
-
-function builtin_Service_getURL_Method__getField(name) {
-    return null;
-}
-builtin_Service_getURL_Method.prototype._getField = builtin_Service_getURL_Method__getField;
-
-function builtin_Service_getURL_Method__setField(name, value) {}
-builtin_Service_getURL_Method.prototype._setField = builtin_Service_getURL_Method__setField;
-
-// CLASS builtin_Service_getTimeout_Method
-
-function builtin_Service_getTimeout_Method() {
-    builtin_Service_getTimeout_Method.super_.call(this, "builtin.long", "getTimeout", []);
-}
-exports.builtin_Service_getTimeout_Method = builtin_Service_getTimeout_Method;
-_qrt.util.inherits(builtin_Service_getTimeout_Method, builtin.reflect.Method);
-
-function builtin_Service_getTimeout_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Service_getTimeout_Method.prototype.__init_fields__ = builtin_Service_getTimeout_Method__init_fields__;
-
-function builtin_Service_getTimeout_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).getTimeout();
-}
-builtin_Service_getTimeout_Method.prototype.invoke = builtin_Service_getTimeout_Method_invoke;
-
-function builtin_Service_getTimeout_Method__getClass() {
-    return null;
-}
-builtin_Service_getTimeout_Method.prototype._getClass = builtin_Service_getTimeout_Method__getClass;
-
-function builtin_Service_getTimeout_Method__getField(name) {
-    return null;
-}
-builtin_Service_getTimeout_Method.prototype._getField = builtin_Service_getTimeout_Method__getField;
-
-function builtin_Service_getTimeout_Method__setField(name, value) {}
-builtin_Service_getTimeout_Method.prototype._setField = builtin_Service_getTimeout_Method__setField;
-
-// CLASS builtin_Service_rpc_Method
-
-function builtin_Service_rpc_Method() {
-    builtin_Service_rpc_Method.super_.call(this, "builtin.concurrent.Future", "rpc", ["builtin.String", "builtin.Object", "builtin.List<builtin.Object>"]);
-}
-exports.builtin_Service_rpc_Method = builtin_Service_rpc_Method;
-_qrt.util.inherits(builtin_Service_rpc_Method, builtin.reflect.Method);
-
-function builtin_Service_rpc_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Service_rpc_Method.prototype.__init_fields__ = builtin_Service_rpc_Method__init_fields__;
-
-function builtin_Service_rpc_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).rpc((args)[0], (args)[1], (args)[2]);
-}
-builtin_Service_rpc_Method.prototype.invoke = builtin_Service_rpc_Method_invoke;
-
-function builtin_Service_rpc_Method__getClass() {
-    return null;
-}
-builtin_Service_rpc_Method.prototype._getClass = builtin_Service_rpc_Method__getClass;
-
-function builtin_Service_rpc_Method__getField(name) {
-    return null;
-}
-builtin_Service_rpc_Method.prototype._getField = builtin_Service_rpc_Method__getField;
-
-function builtin_Service_rpc_Method__setField(name, value) {}
-builtin_Service_rpc_Method.prototype._setField = builtin_Service_rpc_Method__setField;
-
 // CLASS builtin_Service
 
 function builtin_Service() {
     builtin_Service.super_.call(this, "builtin.Service");
-    (this).name = "Service";
+    (this).name = "builtin.Service";
     (this).parameters = [];
     (this).fields = [];
-    (this).methods = [new builtin_Service_getURL_Method(), new builtin_Service_getTimeout_Method(), new builtin_Service_rpc_Method()];
+    (this).methods = [];
 }
 exports.builtin_Service = builtin_Service;
 _qrt.util.inherits(builtin_Service, builtin.reflect.Class);
@@ -244,111 +442,14 @@ function builtin_Service__setField(name, value) {}
 builtin_Service.prototype._setField = builtin_Service__setField;
 
 
-// CLASS builtin_Client_getURL_Method
-
-function builtin_Client_getURL_Method() {
-    builtin_Client_getURL_Method.super_.call(this, "builtin.String", "getURL", []);
-}
-exports.builtin_Client_getURL_Method = builtin_Client_getURL_Method;
-_qrt.util.inherits(builtin_Client_getURL_Method, builtin.reflect.Method);
-
-function builtin_Client_getURL_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Client_getURL_Method.prototype.__init_fields__ = builtin_Client_getURL_Method__init_fields__;
-
-function builtin_Client_getURL_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).getURL();
-}
-builtin_Client_getURL_Method.prototype.invoke = builtin_Client_getURL_Method_invoke;
-
-function builtin_Client_getURL_Method__getClass() {
-    return null;
-}
-builtin_Client_getURL_Method.prototype._getClass = builtin_Client_getURL_Method__getClass;
-
-function builtin_Client_getURL_Method__getField(name) {
-    return null;
-}
-builtin_Client_getURL_Method.prototype._getField = builtin_Client_getURL_Method__getField;
-
-function builtin_Client_getURL_Method__setField(name, value) {}
-builtin_Client_getURL_Method.prototype._setField = builtin_Client_getURL_Method__setField;
-
-// CLASS builtin_Client_getTimeout_Method
-
-function builtin_Client_getTimeout_Method() {
-    builtin_Client_getTimeout_Method.super_.call(this, "builtin.long", "getTimeout", []);
-}
-exports.builtin_Client_getTimeout_Method = builtin_Client_getTimeout_Method;
-_qrt.util.inherits(builtin_Client_getTimeout_Method, builtin.reflect.Method);
-
-function builtin_Client_getTimeout_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Client_getTimeout_Method.prototype.__init_fields__ = builtin_Client_getTimeout_Method__init_fields__;
-
-function builtin_Client_getTimeout_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).getTimeout();
-}
-builtin_Client_getTimeout_Method.prototype.invoke = builtin_Client_getTimeout_Method_invoke;
-
-function builtin_Client_getTimeout_Method__getClass() {
-    return null;
-}
-builtin_Client_getTimeout_Method.prototype._getClass = builtin_Client_getTimeout_Method__getClass;
-
-function builtin_Client_getTimeout_Method__getField(name) {
-    return null;
-}
-builtin_Client_getTimeout_Method.prototype._getField = builtin_Client_getTimeout_Method__getField;
-
-function builtin_Client_getTimeout_Method__setField(name, value) {}
-builtin_Client_getTimeout_Method.prototype._setField = builtin_Client_getTimeout_Method__setField;
-
-// CLASS builtin_Client_setTimeout_Method
-
-function builtin_Client_setTimeout_Method() {
-    builtin_Client_setTimeout_Method.super_.call(this, "builtin.void", "setTimeout", ["builtin.long"]);
-}
-exports.builtin_Client_setTimeout_Method = builtin_Client_setTimeout_Method;
-_qrt.util.inherits(builtin_Client_setTimeout_Method, builtin.reflect.Method);
-
-function builtin_Client_setTimeout_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Client_setTimeout_Method.prototype.__init_fields__ = builtin_Client_setTimeout_Method__init_fields__;
-
-function builtin_Client_setTimeout_Method_invoke(object, args) {
-    var obj = object;
-    (obj).setTimeout((args)[0]);
-    return null;
-}
-builtin_Client_setTimeout_Method.prototype.invoke = builtin_Client_setTimeout_Method_invoke;
-
-function builtin_Client_setTimeout_Method__getClass() {
-    return null;
-}
-builtin_Client_setTimeout_Method.prototype._getClass = builtin_Client_setTimeout_Method__getClass;
-
-function builtin_Client_setTimeout_Method__getField(name) {
-    return null;
-}
-builtin_Client_setTimeout_Method.prototype._getField = builtin_Client_setTimeout_Method__getField;
-
-function builtin_Client_setTimeout_Method__setField(name, value) {}
-builtin_Client_setTimeout_Method.prototype._setField = builtin_Client_setTimeout_Method__setField;
-
 // CLASS builtin_Client
 
 function builtin_Client() {
     builtin_Client.super_.call(this, "builtin.Client");
-    (this).name = "Client";
+    (this).name = "builtin.Client";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "url"), new builtin.reflect.Field("builtin.long", "timeout")];
-    (this).methods = [new builtin_Client_getURL_Method(), new builtin_Client_getTimeout_Method(), new builtin_Client_setTimeout_Method()];
+    (this).methods = [];
 }
 exports.builtin_Client = builtin_Client;
 _qrt.util.inherits(builtin_Client, builtin.reflect.Class);
@@ -377,47 +478,14 @@ function builtin_Client__setField(name, value) {}
 builtin_Client.prototype._setField = builtin_Client__setField;
 
 
-// CLASS builtin_ServerResponder_onFuture_Method
-
-function builtin_ServerResponder_onFuture_Method() {
-    builtin_ServerResponder_onFuture_Method.super_.call(this, "builtin.void", "onFuture", ["builtin.concurrent.Future"]);
-}
-exports.builtin_ServerResponder_onFuture_Method = builtin_ServerResponder_onFuture_Method;
-_qrt.util.inherits(builtin_ServerResponder_onFuture_Method, builtin.reflect.Method);
-
-function builtin_ServerResponder_onFuture_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_ServerResponder_onFuture_Method.prototype.__init_fields__ = builtin_ServerResponder_onFuture_Method__init_fields__;
-
-function builtin_ServerResponder_onFuture_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onFuture((args)[0]);
-    return null;
-}
-builtin_ServerResponder_onFuture_Method.prototype.invoke = builtin_ServerResponder_onFuture_Method_invoke;
-
-function builtin_ServerResponder_onFuture_Method__getClass() {
-    return null;
-}
-builtin_ServerResponder_onFuture_Method.prototype._getClass = builtin_ServerResponder_onFuture_Method__getClass;
-
-function builtin_ServerResponder_onFuture_Method__getField(name) {
-    return null;
-}
-builtin_ServerResponder_onFuture_Method.prototype._getField = builtin_ServerResponder_onFuture_Method__getField;
-
-function builtin_ServerResponder_onFuture_Method__setField(name, value) {}
-builtin_ServerResponder_onFuture_Method.prototype._setField = builtin_ServerResponder_onFuture_Method__setField;
-
 // CLASS builtin_ServerResponder
 
 function builtin_ServerResponder() {
     builtin_ServerResponder.super_.call(this, "builtin.ServerResponder");
-    (this).name = "ServerResponder";
+    (this).name = "builtin.ServerResponder";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.HTTPRequest", "request"), new builtin.reflect.Field("builtin.HTTPResponse", "response")];
-    (this).methods = [new builtin_ServerResponder_onFuture_Method()];
+    (this).methods = [];
 }
 exports.builtin_ServerResponder = builtin_ServerResponder;
 _qrt.util.inherits(builtin_ServerResponder, builtin.reflect.Class);
@@ -446,80 +514,14 @@ function builtin_ServerResponder__setField(name, value) {}
 builtin_ServerResponder.prototype._setField = builtin_ServerResponder__setField;
 
 
-// CLASS builtin_Server_Object__onHTTPRequest_Method
-
-function builtin_Server_Object__onHTTPRequest_Method() {
-    builtin_Server_Object__onHTTPRequest_Method.super_.call(this, "builtin.void", "onHTTPRequest", ["builtin.HTTPRequest", "builtin.HTTPResponse"]);
-}
-exports.builtin_Server_Object__onHTTPRequest_Method = builtin_Server_Object__onHTTPRequest_Method;
-_qrt.util.inherits(builtin_Server_Object__onHTTPRequest_Method, builtin.reflect.Method);
-
-function builtin_Server_Object__onHTTPRequest_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Server_Object__onHTTPRequest_Method.prototype.__init_fields__ = builtin_Server_Object__onHTTPRequest_Method__init_fields__;
-
-function builtin_Server_Object__onHTTPRequest_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPRequest((args)[0], (args)[1]);
-    return null;
-}
-builtin_Server_Object__onHTTPRequest_Method.prototype.invoke = builtin_Server_Object__onHTTPRequest_Method_invoke;
-
-function builtin_Server_Object__onHTTPRequest_Method__getClass() {
-    return null;
-}
-builtin_Server_Object__onHTTPRequest_Method.prototype._getClass = builtin_Server_Object__onHTTPRequest_Method__getClass;
-
-function builtin_Server_Object__onHTTPRequest_Method__getField(name) {
-    return null;
-}
-builtin_Server_Object__onHTTPRequest_Method.prototype._getField = builtin_Server_Object__onHTTPRequest_Method__getField;
-
-function builtin_Server_Object__onHTTPRequest_Method__setField(name, value) {}
-builtin_Server_Object__onHTTPRequest_Method.prototype._setField = builtin_Server_Object__onHTTPRequest_Method__setField;
-
-// CLASS builtin_Server_Object__onServletError_Method
-
-function builtin_Server_Object__onServletError_Method() {
-    builtin_Server_Object__onServletError_Method.super_.call(this, "builtin.void", "onServletError", ["builtin.String", "builtin.String"]);
-}
-exports.builtin_Server_Object__onServletError_Method = builtin_Server_Object__onServletError_Method;
-_qrt.util.inherits(builtin_Server_Object__onServletError_Method, builtin.reflect.Method);
-
-function builtin_Server_Object__onServletError_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
-}
-builtin_Server_Object__onServletError_Method.prototype.__init_fields__ = builtin_Server_Object__onServletError_Method__init_fields__;
-
-function builtin_Server_Object__onServletError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onServletError((args)[0], (args)[1]);
-    return null;
-}
-builtin_Server_Object__onServletError_Method.prototype.invoke = builtin_Server_Object__onServletError_Method_invoke;
-
-function builtin_Server_Object__onServletError_Method__getClass() {
-    return null;
-}
-builtin_Server_Object__onServletError_Method.prototype._getClass = builtin_Server_Object__onServletError_Method__getClass;
-
-function builtin_Server_Object__onServletError_Method__getField(name) {
-    return null;
-}
-builtin_Server_Object__onServletError_Method.prototype._getField = builtin_Server_Object__onServletError_Method__getField;
-
-function builtin_Server_Object__onServletError_Method__setField(name, value) {}
-builtin_Server_Object__onServletError_Method.prototype._setField = builtin_Server_Object__onServletError_Method__setField;
-
 // CLASS builtin_Server_Object_
 
 function builtin_Server_Object_() {
     builtin_Server_Object_.super_.call(this, "builtin.Server<Object>");
-    (this).name = "Server";
+    (this).name = "builtin.Server";
     (this).parameters = ["Object"];
     (this).fields = [new builtin.reflect.Field("Object", "impl")];
-    (this).methods = [new builtin_Server_Object__onHTTPRequest_Method(), new builtin_Server_Object__onServletError_Method()];
+    (this).methods = [];
 }
 exports.builtin_Server_Object_ = builtin_Server_Object_;
 _qrt.util.inherits(builtin_Server_Object_, builtin.reflect.Class);
@@ -552,7 +554,7 @@ builtin_Server_Object_.prototype._setField = builtin_Server_Object___setField;
 
 function builtin_reflect_Class() {
     builtin_reflect_Class.super_.call(this, "builtin.reflect.Class");
-    (this).name = "Class";
+    (this).name = "builtin.reflect.Class";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.Map<builtin.String,builtin.reflect.Class>", "classes"), new builtin.reflect.Field("builtin.reflect.Class", "VOID"), new builtin.reflect.Field("builtin.reflect.Class", "BOOL"), new builtin.reflect.Field("builtin.reflect.Class", "INT"), new builtin.reflect.Field("builtin.reflect.Class", "LONG"), new builtin.reflect.Field("builtin.reflect.Class", "STRING"), new builtin.reflect.Field("builtin.String", "id"), new builtin.reflect.Field("builtin.String", "name"), new builtin.reflect.Field("builtin.List<builtin.reflect.Class>", "parameters"), new builtin.reflect.Field("builtin.List<builtin.reflect.Field>", "fields"), new builtin.reflect.Field("builtin.List<builtin.reflect.Method>", "methods")];
     (this).methods = [];
@@ -588,7 +590,7 @@ builtin_reflect_Class.prototype._setField = builtin_reflect_Class__setField;
 
 function builtin_reflect_Field() {
     builtin_reflect_Field.super_.call(this, "builtin.reflect.Field");
-    (this).name = "Field";
+    (this).name = "builtin.reflect.Field";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [];
@@ -656,7 +658,7 @@ builtin_behaviors_RPC_call_Method.prototype._setField = builtin_behaviors_RPC_ca
 
 function builtin_behaviors_RPC() {
     builtin_behaviors_RPC.super_.call(this, "builtin.behaviors.RPC");
-    (this).name = "RPC";
+    (this).name = "builtin.behaviors.RPC";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.String", "name")];
     (this).methods = [new builtin_behaviors_RPC_call_Method()];
@@ -790,7 +792,7 @@ builtin_behaviors_RPCRequest_onTimeout_Method.prototype._setField = builtin_beha
 
 function builtin_behaviors_RPCRequest() {
     builtin_behaviors_RPCRequest.super_.call(this, "builtin.behaviors.RPCRequest");
-    (this).name = "RPCRequest";
+    (this).name = "builtin.behaviors.RPCRequest";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.behaviors.RPC", "rpc"), new builtin.reflect.Field("builtin.concurrent.Future", "retval"), new builtin.reflect.Field("builtin.Object", "message"), new builtin.reflect.Field("builtin.concurrent.Timeout", "timeout")];
     (this).methods = [new builtin_behaviors_RPCRequest_call_Method(), new builtin_behaviors_RPCRequest_onHTTPResponse_Method(), new builtin_behaviors_RPCRequest_onTimeout_Method()];
@@ -891,7 +893,7 @@ builtin_concurrent_Event_fireEvent_Method.prototype._setField = builtin_concurre
 
 function builtin_concurrent_Event() {
     builtin_concurrent_Event.super_.call(this, "builtin.concurrent.Event");
-    (this).name = "Event";
+    (this).name = "builtin.concurrent.Event";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new builtin_concurrent_Event_getContext_Method(), new builtin_concurrent_Event_fireEvent_Method()];
@@ -960,7 +962,7 @@ builtin_concurrent_FutureListener_onFuture_Method.prototype._setField = builtin_
 
 function builtin_concurrent_FutureListener() {
     builtin_concurrent_FutureListener.super_.call(this, "builtin.concurrent.FutureListener");
-    (this).name = "FutureListener";
+    (this).name = "builtin.concurrent.FutureListener";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new builtin_concurrent_FutureListener_onFuture_Method()];
@@ -1061,7 +1063,7 @@ builtin_concurrent_FutureCompletion_fireEvent_Method.prototype._setField = built
 
 function builtin_concurrent_FutureCompletion() {
     builtin_concurrent_FutureCompletion.super_.call(this, "builtin.concurrent.FutureCompletion");
-    (this).name = "FutureCompletion";
+    (this).name = "builtin.concurrent.FutureCompletion";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Future", "future"), new builtin.reflect.Field("builtin.concurrent.FutureListener", "listener")];
     (this).methods = [new builtin_concurrent_FutureCompletion_getContext_Method(), new builtin_concurrent_FutureCompletion_fireEvent_Method()];
@@ -1129,7 +1131,7 @@ builtin_concurrent_EventContext_getContext_Method.prototype._setField = builtin_
 
 function builtin_concurrent_EventContext() {
     builtin_concurrent_EventContext.super_.call(this, "builtin.concurrent.EventContext");
-    (this).name = "EventContext";
+    (this).name = "builtin.concurrent.EventContext";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context")];
     (this).methods = [new builtin_concurrent_EventContext_getContext_Method()];
@@ -1327,7 +1329,7 @@ builtin_concurrent_Future_getContext_Method.prototype._setField = builtin_concur
 
 function builtin_concurrent_Future() {
     builtin_concurrent_Future.super_.call(this, "builtin.concurrent.Future");
-    (this).name = "Future";
+    (this).name = "builtin.concurrent.Future";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.bool", "_finished"), new builtin.reflect.Field("builtin.String", "_error"), new builtin.reflect.Field("builtin.List<builtin.concurrent.FutureCompletion>", "_callbacks"), new builtin.reflect.Field("builtin.concurrent.Lock", "_lock")];
     (this).methods = [new builtin_concurrent_Future_onFinished_Method(), new builtin_concurrent_Future_finish_Method(), new builtin_concurrent_Future_isFinished_Method(), new builtin_concurrent_Future_getError_Method(), new builtin_concurrent_Future_getContext_Method()];
@@ -1461,7 +1463,7 @@ builtin_concurrent_FutureWait_waitFor_Method.prototype._setField = builtin_concu
 
 function builtin_concurrent_FutureWait() {
     builtin_concurrent_FutureWait.super_.call(this, "builtin.concurrent.FutureWait");
-    (this).name = "FutureWait";
+    (this).name = "builtin.concurrent.FutureWait";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Condition", "_lock"), new builtin.reflect.Field("builtin.concurrent.Future", "_future")];
     (this).methods = [new builtin_concurrent_FutureWait_wait_Method(), new builtin_concurrent_FutureWait_onFuture_Method(), new builtin_concurrent_FutureWait_waitFor_Method()];
@@ -1594,7 +1596,7 @@ builtin_concurrent_Queue_builtin_concurrent_Event__size_Method.prototype._setFie
 
 function builtin_concurrent_Queue_builtin_concurrent_Event_() {
     builtin_concurrent_Queue_builtin_concurrent_Event_.super_.call(this, "builtin.concurrent.Queue<builtin.concurrent.Event>");
-    (this).name = "Queue";
+    (this).name = "builtin.concurrent.Queue";
     (this).parameters = ["builtin.concurrent.Event"];
     (this).fields = [new builtin.reflect.Field("builtin.List<Object>", "items"), new builtin.reflect.Field("builtin.int", "head"), new builtin.reflect.Field("builtin.int", "tail")];
     (this).methods = [new builtin_concurrent_Queue_builtin_concurrent_Event__put_Method(), new builtin_concurrent_Queue_builtin_concurrent_Event__get_Method(), new builtin_concurrent_Queue_builtin_concurrent_Event__size_Method()];
@@ -1696,7 +1698,7 @@ builtin_concurrent_CollectorExecutor_onExecute_Method.prototype._setField = buil
 
 function builtin_concurrent_CollectorExecutor() {
     builtin_concurrent_CollectorExecutor.super_.call(this, "builtin.concurrent.CollectorExecutor");
-    (this).name = "CollectorExecutor";
+    (this).name = "builtin.concurrent.CollectorExecutor";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Queue<builtin.concurrent.Event>", "events"), new builtin.reflect.Field("builtin.concurrent.Collector", "collector")];
     (this).methods = [new builtin_concurrent_CollectorExecutor__start_Method(), new builtin_concurrent_CollectorExecutor_onExecute_Method()];
@@ -1830,7 +1832,7 @@ builtin_concurrent_Collector__poll_Method.prototype._setField = builtin_concurre
 
 function builtin_concurrent_Collector() {
     builtin_concurrent_Collector.super_.call(this, "builtin.concurrent.Collector");
-    (this).name = "Collector";
+    (this).name = "builtin.concurrent.Collector";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Lock", "lock"), new builtin.reflect.Field("builtin.concurrent.Queue<builtin.concurrent.Event>", "pending"), new builtin.reflect.Field("builtin.concurrent.CollectorExecutor", "executor"), new builtin.reflect.Field("builtin.bool", "idle")];
     (this).methods = [new builtin_concurrent_Collector_put_Method(), new builtin_concurrent_Collector__swap_Method(), new builtin_concurrent_Collector__poll_Method()];
@@ -1899,7 +1901,7 @@ builtin_concurrent_TimeoutListener_onTimeout_Method.prototype._setField = builti
 
 function builtin_concurrent_TimeoutListener() {
     builtin_concurrent_TimeoutListener.super_.call(this, "builtin.concurrent.TimeoutListener");
-    (this).name = "TimeoutListener";
+    (this).name = "builtin.concurrent.TimeoutListener";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new builtin_concurrent_TimeoutListener_onTimeout_Method()];
@@ -2000,7 +2002,7 @@ builtin_concurrent_TimeoutExpiry_fireEvent_Method.prototype._setField = builtin_
 
 function builtin_concurrent_TimeoutExpiry() {
     builtin_concurrent_TimeoutExpiry.super_.call(this, "builtin.concurrent.TimeoutExpiry");
-    (this).name = "TimeoutExpiry";
+    (this).name = "builtin.concurrent.TimeoutExpiry";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Timeout", "timeout"), new builtin.reflect.Field("builtin.concurrent.TimeoutListener", "listener")];
     (this).methods = [new builtin_concurrent_TimeoutExpiry_getContext_Method(), new builtin_concurrent_TimeoutExpiry_fireEvent_Method()];
@@ -2167,7 +2169,7 @@ builtin_concurrent_Timeout_getContext_Method.prototype._setField = builtin_concu
 
 function builtin_concurrent_Timeout() {
     builtin_concurrent_Timeout.super_.call(this, "builtin.concurrent.Timeout");
-    (this).name = "Timeout";
+    (this).name = "builtin.concurrent.Timeout";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.concurrent.Lock", "lock"), new builtin.reflect.Field("builtin.concurrent.TimeoutListener", "listener")];
     (this).methods = [new builtin_concurrent_Timeout_start_Method(), new builtin_concurrent_Timeout_cancel_Method(), new builtin_concurrent_Timeout_onExecute_Method(), new builtin_concurrent_Timeout_getContext_Method()];
@@ -2235,7 +2237,7 @@ builtin_concurrent_TLSContextInitializer_getValue_Method.prototype._setField = b
 
 function builtin_concurrent_TLSContextInitializer() {
     builtin_concurrent_TLSContextInitializer.super_.call(this, "builtin.concurrent.TLSContextInitializer");
-    (this).name = "TLSContextInitializer";
+    (this).name = "builtin.concurrent.TLSContextInitializer";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new builtin_concurrent_TLSContextInitializer_getValue_Method()];
@@ -2400,7 +2402,7 @@ builtin_concurrent_Context_swap_Method.prototype._setField = builtin_concurrent_
 
 function builtin_concurrent_Context() {
     builtin_concurrent_Context.super_.call(this, "builtin.concurrent.Context");
-    (this).name = "Context";
+    (this).name = "builtin.concurrent.Context";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_global"), new builtin.reflect.Field("builtin.concurrent.TLS<builtin.concurrent.Context>", "_current"), new builtin.reflect.Field("builtin.concurrent.Context", "_parent"), new builtin.reflect.Field("builtin.Runtime", "_runtime"), new builtin.reflect.Field("builtin.concurrent.Collector", "collector")];
     (this).methods = [new builtin_concurrent_Context_current_Method(), new builtin_concurrent_Context_global_Method(), new builtin_concurrent_Context_runtime_Method(), new builtin_concurrent_Context_swap_Method()];
@@ -2440,6 +2442,10 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
+Root.builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton;
+Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton;
+Root.builtin_List_Object__md = builtin_List_Object_.singleton;
+Root.builtin_Map_Object_Object__md = builtin_Map_Object_Object_.singleton;
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
 Root.builtin_Service_md = builtin_Service.singleton;
 Root.builtin_Client_md = builtin_Client.singleton;

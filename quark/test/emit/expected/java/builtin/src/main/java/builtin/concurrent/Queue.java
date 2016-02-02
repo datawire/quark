@@ -4,6 +4,7 @@ package builtin.concurrent;
  * A simple FIFO
  */
 public class Queue<T> implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class builtin_List_Object__ref = builtin_md.Root.builtin_List_Object__md;
     public java.util.ArrayList<T> items;
     public Integer head;
     public Integer tail;

@@ -4,7 +4,7 @@ public class test_test_Test extends builtin.reflect.Class implements io.datawire
     public static builtin.reflect.Class singleton = new test_test_Test();
     public test_test_Test() {
         super("test.test.Test");
-        (this).name = "Test";
+        (this).name = "test.test.Test";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.int", "size")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new test_test_Test_go_Method()}));

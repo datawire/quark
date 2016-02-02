@@ -4,7 +4,7 @@ public class builtin_concurrent_FutureCompletion extends builtin.reflect.Class i
     public static builtin.reflect.Class singleton = new builtin_concurrent_FutureCompletion();
     public builtin_concurrent_FutureCompletion() {
         super("builtin.concurrent.FutureCompletion");
-        (this).name = "FutureCompletion";
+        (this).name = "builtin.concurrent.FutureCompletion";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.concurrent.Future", "future"), new builtin.reflect.Field("builtin.concurrent.FutureListener", "listener")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_FutureCompletion_getContext_Method(), new builtin_concurrent_FutureCompletion_fireEvent_Method()}));

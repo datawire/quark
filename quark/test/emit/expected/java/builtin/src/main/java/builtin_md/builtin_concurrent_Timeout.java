@@ -4,7 +4,7 @@ public class builtin_concurrent_Timeout extends builtin.reflect.Class implements
     public static builtin.reflect.Class singleton = new builtin_concurrent_Timeout();
     public builtin_concurrent_Timeout() {
         super("builtin.concurrent.Timeout");
-        (this).name = "Timeout";
+        (this).name = "builtin.concurrent.Timeout";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.concurrent.Lock", "lock"), new builtin.reflect.Field("builtin.concurrent.TimeoutListener", "listener")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_Timeout_start_Method(), new builtin_concurrent_Timeout_cancel_Method(), new builtin_concurrent_Timeout_onExecute_Method(), new builtin_concurrent_Timeout_getContext_Method()}));

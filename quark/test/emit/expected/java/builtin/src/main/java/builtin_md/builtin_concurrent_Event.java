@@ -4,7 +4,7 @@ public class builtin_concurrent_Event extends builtin.reflect.Class implements i
     public static builtin.reflect.Class singleton = new builtin_concurrent_Event();
     public builtin_concurrent_Event() {
         super("builtin.concurrent.Event");
-        (this).name = "Event";
+        (this).name = "builtin.concurrent.Event";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_Event_getContext_Method(), new builtin_concurrent_Event_fireEvent_Method()}));

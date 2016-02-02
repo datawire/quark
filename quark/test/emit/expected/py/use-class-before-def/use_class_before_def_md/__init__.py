@@ -30,7 +30,7 @@ class pkg_Bar(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_Bar, self).__init__(u"pkg.Bar");
-        (self).name = u"Bar"
+        (self).name = u"pkg.Bar"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_Bar_go_Method()])
@@ -54,7 +54,7 @@ class pkg_Foo(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_Foo, self).__init__(u"pkg.Foo");
-        (self).name = u"Foo"
+        (self).name = u"pkg.Foo"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
         (self).methods = _List([])

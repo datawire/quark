@@ -41,7 +41,7 @@ pets_Cat_greet_Method.prototype._setField = pets_Cat_greet_Method__setField;
 
 function pets_Cat() {
     pets_Cat.super_.call(this, "pets.Cat");
-    (this).name = "Cat";
+    (this).name = "pets.Cat";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pets_Cat_greet_Method()];
@@ -110,7 +110,7 @@ pets_Dog_greet_Method.prototype._setField = pets_Dog_greet_Method__setField;
 
 function pets_Dog() {
     pets_Dog.super_.call(this, "pets.Dog");
-    (this).name = "Dog";
+    (this).name = "pets.Dog";
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new pets_Dog_greet_Method()];

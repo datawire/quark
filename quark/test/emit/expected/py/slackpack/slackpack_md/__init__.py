@@ -51,7 +51,7 @@ class slack_event_SlackEvent(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_event_SlackEvent, self).__init__(u"slack.event.SlackEvent");
-        (self).name = u"SlackEvent"
+        (self).name = u"slack.event.SlackEvent"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"type"), builtin.reflect.Field(u"slack.User", u"user"), builtin.reflect.Field(u"slack.Channel", u"channel"), builtin.reflect.Field(u"builtin.String", u"timestamp")])
         (self).methods = _List([slack_event_SlackEvent_load_Method(), slack_event_SlackEvent_dispatch_Method()])
@@ -117,7 +117,7 @@ class slack_event_SlackError(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_event_SlackError, self).__init__(u"slack.event.SlackError");
-        (self).name = u"SlackError"
+        (self).name = u"slack.event.SlackError"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"type"), builtin.reflect.Field(u"slack.User", u"user"), builtin.reflect.Field(u"slack.Channel", u"channel"), builtin.reflect.Field(u"builtin.String", u"timestamp"), builtin.reflect.Field(u"builtin.int", u"code"), builtin.reflect.Field(u"builtin.String", u"text")])
         (self).methods = _List([slack_event_SlackError_load_Method(), slack_event_SlackError_dispatch_Method()])
@@ -183,7 +183,7 @@ class slack_event_Hello(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_event_Hello, self).__init__(u"slack.event.Hello");
-        (self).name = u"Hello"
+        (self).name = u"slack.event.Hello"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"type"), builtin.reflect.Field(u"slack.User", u"user"), builtin.reflect.Field(u"slack.Channel", u"channel"), builtin.reflect.Field(u"builtin.String", u"timestamp")])
         (self).methods = _List([slack_event_Hello_dispatch_Method(), slack_event_Hello_load_Method()])
@@ -249,7 +249,7 @@ class slack_event_Message(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_event_Message, self).__init__(u"slack.event.Message");
-        (self).name = u"Message"
+        (self).name = u"slack.event.Message"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"type"), builtin.reflect.Field(u"slack.User", u"user"), builtin.reflect.Field(u"slack.Channel", u"channel"), builtin.reflect.Field(u"builtin.String", u"timestamp"), builtin.reflect.Field(u"builtin.String", u"subtype"), builtin.reflect.Field(u"builtin.bool", u"hidden"), builtin.reflect.Field(u"builtin.String", u"text"), builtin.reflect.Field(u"slack.event.Edited", u"edited")])
         (self).methods = _List([slack_event_Message_load_Method(), slack_event_Message_dispatch_Method()])
@@ -273,7 +273,7 @@ class slack_event_Edited(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_event_Edited, self).__init__(u"slack.event.Edited");
-        (self).name = u"Edited"
+        (self).name = u"slack.event.Edited"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"slack.User", u"user"), builtin.reflect.Field(u"builtin.String", u"timestamp")])
         (self).methods = _List([])
@@ -381,7 +381,7 @@ class slack_SlackHandler(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_SlackHandler, self).__init__(u"slack.SlackHandler");
-        (self).name = u"SlackHandler"
+        (self).name = u"slack.SlackHandler"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([slack_SlackHandler_onSlackEvent_Method(), slack_SlackHandler_onHello_Method(), slack_SlackHandler_onSlackError_Method(), slack_SlackHandler_onMessage_Method()])
@@ -405,7 +405,7 @@ class slack_User(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_User, self).__init__(u"slack.User");
-        (self).name = u"User"
+        (self).name = u"slack.User"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"slack.Client", u"client"), builtin.reflect.Field(u"builtin.String", u"user")])
         (self).methods = _List([])
@@ -450,7 +450,7 @@ class slack_Channel(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_Channel, self).__init__(u"slack.Channel");
-        (self).name = u"Channel"
+        (self).name = u"slack.Channel"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"slack.Client", u"client"), builtin.reflect.Field(u"builtin.String", u"channel")])
         (self).methods = _List([slack_Channel_send_Method()])
@@ -683,7 +683,7 @@ class slack_Client(builtin.reflect.Class):
 
     def __init__(self):
         super(slack_Client, self).__init__(u"slack.Client");
-        (self).name = u"Client"
+        (self).name = u"slack.Client"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.Runtime", u"runtime"), builtin.reflect.Field(u"builtin.String", u"token"), builtin.reflect.Field(u"slack.SlackHandler", u"handler"), builtin.reflect.Field(u"builtin.int", u"event_id"), builtin.reflect.Field(u"builtin.WebSocket", u"socket")])
         (self).methods = _List([slack_Client_connect_Method(), slack_Client_request_Method(), slack_Client_ws_connect_Method(), slack_Client_ws_send_Method(), slack_Client_onWSConnected_Method(), slack_Client_onWSClose_Method(), slack_Client_onWSError_Method(), slack_Client_construct_Method(), slack_Client_onWSMessage_Method(), slack_Client_onHTTPResponse_Method()])
@@ -791,7 +791,7 @@ class pkg_Handler(builtin.reflect.Class):
 
     def __init__(self):
         super(pkg_Handler, self).__init__(u"pkg.Handler");
-        (self).name = u"Handler"
+        (self).name = u"pkg.Handler"
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([pkg_Handler_onSlackEvent_Method(), pkg_Handler_onHello_Method(), pkg_Handler_onSlackError_Method(), pkg_Handler_onMessage_Method()])
@@ -808,6 +808,30 @@ class pkg_Handler(builtin.reflect.Class):
     def _setField(self, name, value):
         pass
 pkg_Handler.singleton = pkg_Handler()
+
+class builtin_Map_builtin_String_builtin_Object_(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_Map_builtin_String_builtin_Object_, self).__init__(u"builtin.Map<builtin.String,builtin.Object>");
+        (self).name = u"builtin.Map"
+        (self).parameters = _List([u"builtin.String", u"builtin.Object"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _Map()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_Map_builtin_String_builtin_Object_.singleton = builtin_Map_builtin_String_builtin_Object_()
 
 class Root(object):
     def _init(self):
@@ -832,6 +856,7 @@ Root.slack_User_md = slack_User.singleton
 Root.slack_Channel_md = slack_Channel.singleton
 Root.slack_Client_md = slack_Client.singleton
 Root.pkg_Handler_md = pkg_Handler.singleton
+Root.builtin_Map_builtin_String_builtin_Object__md = builtin_Map_builtin_String_builtin_Object_.singleton
 
 import slack.event
 import slack

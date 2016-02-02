@@ -13,7 +13,7 @@ public class ServerResponder implements builtin.concurrent.FutureListener, io.da
         if (!((error)==(null) || ((error) != null && (error).equals(null)))) {
             (this.response).setCode(404);
         } else {
-            ((this).response).setBody((Functions.toJSON(result)).toString());
+            ((this).response).setBody((Functions.toJSON(result, null)).toString());
             ((this).response).setCode(200);
         }
         (builtin.concurrent.Context.runtime()).respond(this.request, this.response);

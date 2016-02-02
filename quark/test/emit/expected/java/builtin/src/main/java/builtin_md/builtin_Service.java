@@ -4,10 +4,10 @@ public class builtin_Service extends builtin.reflect.Class implements io.datawir
     public static builtin.reflect.Class singleton = new builtin_Service();
     public builtin_Service() {
         super("builtin.Service");
-        (this).name = "Service";
+        (this).name = "builtin.Service";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_Service_getURL_Method(), new builtin_Service_getTimeout_Method(), new builtin_Service_rpc_Method()}));
+        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return null;

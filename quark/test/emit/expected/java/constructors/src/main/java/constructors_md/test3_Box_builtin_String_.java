@@ -4,7 +4,7 @@ public class test3_Box_builtin_String_ extends builtin.reflect.Class implements 
     public static builtin.reflect.Class singleton = new test3_Box_builtin_String_();
     public test3_Box_builtin_String_() {
         super("test3.Box<builtin.String>");
-        (this).name = "Box";
+        (this).name = "test3.Box";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "contents")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new test3_Box_builtin_String__get_Method()}));

@@ -30,7 +30,7 @@ class test_Test(builtin.reflect.Class):
 
     def __init__(self):
         super(test_Test, self).__init__(u"test.Test");
-        (self).name = u"Test"
+        (self).name = u"test.Test"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
         (self).methods = _List([test_Test_go_Method()])
@@ -75,7 +75,7 @@ class test_test_Test(builtin.reflect.Class):
 
     def __init__(self):
         super(test_test_Test, self).__init__(u"test.test.Test");
-        (self).name = u"Test"
+        (self).name = u"test.test.Test"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"size")])
         (self).methods = _List([test_test_Test_go_Method()])

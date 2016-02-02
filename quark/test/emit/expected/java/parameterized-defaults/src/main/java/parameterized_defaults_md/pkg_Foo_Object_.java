@@ -4,7 +4,7 @@ public class pkg_Foo_Object_ extends builtin.reflect.Class implements io.datawir
     public static builtin.reflect.Class singleton = new pkg_Foo_Object_();
     public pkg_Foo_Object_() {
         super("pkg.Foo<Object>");
-        (this).name = "Foo";
+        (this).name = "pkg.Foo";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_Foo_Object__foo_Method(), new pkg_Foo_Object__get_Method()}));

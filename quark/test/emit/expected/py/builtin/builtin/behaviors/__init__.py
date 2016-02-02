@@ -29,7 +29,7 @@ class RPC(object):
 
     def call(self, message):
         request = _HTTPRequest(((self).service).getURL());
-        json = builtin.toJSON(message);
+        json = builtin.toJSON(message, None);
         envelope = _JSONObject();
         (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString((self).name)));
         (envelope).setObjectItem((u"$context"), ((_JSONObject()).setString(u"TBD")));

@@ -4,7 +4,7 @@ public class pkg_T3 extends builtin.reflect.Class implements io.datawire.quark.r
     public static builtin.reflect.Class singleton = new pkg_T3();
     public pkg_T3() {
         super("pkg.T3");
-        (this).name = "T3";
+        (this).name = "pkg.T3";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new pkg_T3_foo_Method(), new pkg_T3_bar_Method()}));

@@ -4,7 +4,7 @@ public class slack_event_Hello extends builtin.reflect.Class implements io.dataw
     public static builtin.reflect.Class singleton = new slack_event_Hello();
     public slack_event_Hello() {
         super("slack.event.Hello");
-        (this).name = "Hello";
+        (this).name = "slack.event.Hello";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_event_Hello_dispatch_Method(), new slack_event_Hello_load_Method()}));
