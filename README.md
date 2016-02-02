@@ -26,7 +26,7 @@ support in progress).
 The use cases for Quark are highly varied. Some examples:
 
 * the [Slack API](https://api.slack.com/) includes rate limiting
-  behavior over a WebSockets and REST API; see slack.q in the examples
+  behavior over a WebSockets and REST API; see slack.q in the `examples/slack`
   directory for an example implementation
 * the [AMQP 1.0](https://www.amqp.org/resources/specifications)
   protocol requires sophisticated client behavior for flow control and
