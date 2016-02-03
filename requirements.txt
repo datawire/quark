@@ -1,7 +1,5 @@
 # requirements for developing and/or testing quark and the runtime integrations
--e runtime/python-core
--e runtime/python-threaded
--e runtime/twisted
 -e .
+ws4py==0.3.4
 pytest
 pexpect
