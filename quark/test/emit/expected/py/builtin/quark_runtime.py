@@ -318,6 +318,7 @@ class Buffer(object):
         elif not isinstance(_data, bytearray):
             _data = bytearray(data)
         self.data = _data
+        self.rdata = buffer(_data)
         self._order(self.BE)
 
     def _order(self, packer):
@@ -332,7 +333,7 @@ class Buffer(object):
         return len(self.data)
 
     def getByte(self, index):
-        return self._b.unpack_from(self.data, index)[0]
+        return self._b.unpack_from(self.rdata, index)[0]
 
     def putByte(self, index, value):
         self.data[index:index+1] = [0]
@@ -340,7 +341,7 @@ class Buffer(object):
 
 
     def getShort(self, index):
-        return self._h.unpack_from(self.data, index)[0]
+        return self._h.unpack_from(self.rdata, index)[0]
 
     def putShort(self, index, value):
         self.data[index:index+2] = [0]*2
@@ -348,7 +349,7 @@ class Buffer(object):
 
 
     def getInt(self, index):
-        return self._i.unpack_from(self.data, index)[0]
+        return self._i.unpack_from(self.rdata, index)[0]
 
     def putInt(self, index, value):
         self.data[index:index+4] = [0]*4
@@ -356,7 +357,7 @@ class Buffer(object):
 
 
     def getLong(self, index):
-        return self._q.unpack_from(self.data, index)[0]
+        return self._q.unpack_from(self.rdata, index)[0]
 
     def putLong(self, index, value):
         self.data[index:index+8] = [0]*8
@@ -365,7 +366,7 @@ class Buffer(object):
 
 
     def getFloat(self, index):
-        return self._d.unpack_from(self.data, index)[0]
+        return self._d.unpack_from(self.rdata, index)[0]
 
     def putFloat(self, index, value):
         self.data[index:index+8] = [0]*8
