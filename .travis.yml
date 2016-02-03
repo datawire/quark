@@ -2,7 +2,7 @@ os:
 - linux
 sudo: false
 env:
-  - TRAVIS_NODE_VERSION="4.2.2"
+- TRAVIS_NODE_VERSION="4.2.2"
 language:
 - java
 - python
@@ -24,17 +24,23 @@ addons:
     - python-dev
     - libffi-dev
     - python-virtualenv
-
 install:
 - java -version 2>&1 | grep -Fe 'java version "1.8.0'
 - python --version 2>&1 | grep -Fe 'Python 2.7'
-- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION
+- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
+  && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
+  install $TRAVIS_NODE_VERSION
 - nvm alias default $TRAVIS_NODE_VERSION
 - node --version
 - virtualenv quark-travis
 - . quark-travis/bin/activate
 - pip install --upgrade pip
 - scripts/develop.sh
-
 script:
 - py.test -v quark
+notifications:
+  slack:
+    rooms:
+      secure: kK5qUpRLVg90qPYaW3rumkhz8uDeHhMmurWb5mwFQMoxP8oROTlazyXpSatBvdVBGB2PVF/zc3FWMK7EQ62Qs4JcfXhukxhnQYmAsSENJVdnQJQXAtJZamtobmE9D7F/rbCXaxpY1sXGoMXRcYlwyU2bo0CneDve0Kh0cFlr700oBUvcSx/xhF/+6Prb0BLvqiq5kpLsZSsWkI4UAuxhDCRWOLmgATNcsPKdBfROmWO4GJ2yHx1USdIlm9ibaDS+I2gv2zJIpOttCAEYNbL/oYDHx7gZdmaIBui/Fq44RDGjcnrB0zdCasGUZs9VM+6AfjXmbUvCrkU3G5+htSreS6wyMtwSr/K/+DPvbzq4di1HullcxgP+jC7UTXHLjuejh9oxxIp7azDq9P/QjMKqZ4VyiF3MUKwGhok4DqMi35HQoXtqWoWf5BgvIa8EylUFBXSPKWEw5MhtPyzq8wD1/HfvJQzmZqovSab9HsNQr8ATzlXbg3DjlInEbeFgd0bjgQW+B/8/LvLUuBXVAqv5IgHSx/fMGl6Ol9cIwQUjyLBrvgtPMpqQtHIIw1qS88q+iR/AP0XhS44eUORkw8Bm0FVlD7qR4qDQFAreO143kbDJ3f+chriSp/LcgyxxmShLIZcpg1yli2zOFIY4ZF0qoVpOOzNc6d28X2+6P6L+SM8=
+    on_success: change
+    on_failure: change
