@@ -1,4 +1,5 @@
 # Quark
+[![Build Status](https://travis-ci.org/datawire/quark.svg?branch=master)](https://travis-ci.org/datawire/quark)
 
 Quark is a specialized language for defining and implementing
 communication protocols in multiple languages. In particular,
