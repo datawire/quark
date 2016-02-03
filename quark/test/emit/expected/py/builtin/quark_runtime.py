@@ -144,6 +144,11 @@ class _JSONObject(object):
     def toString(self):
         return self._backend.dumps(self.value, separators=(',', ':'))
 
+    def keys(self):
+        if self.getType() != "object":
+            return None
+        return _List(self.value.keys())
+
     def setString(self, value):
         self.value = value
         return self

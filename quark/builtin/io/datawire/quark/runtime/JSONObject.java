@@ -137,6 +137,15 @@ public class JSONObject {
         return undefined();
     }
 
+    public ArrayList<String> keys() {
+        if (!(this.value instanceof Map)) {
+            return null;
+        }
+        @SuppressWarnings("unchecked")
+            Map<String,Object> m = (Map<String,Object>) this.value;
+        return new ArrayList(m.keySet());
+    }
+
     public Double getNumber() {
         if (this.value instanceof Number) {
             return ((Number) this.value).doubleValue();

@@ -678,6 +678,8 @@ File(Import(Name(builtin)),
 
    Method(static=False, Type(Name(JSONObject)), Name(undefined)),
 
+   Method(static=False, Type(Name(List), Type(Name(String))), Name(keys)),
+
    Method(static=False, Type(Name(String)), Name(toString)),
 
    Method(static=False, Type(Name(JSONObject)), Name(setString),

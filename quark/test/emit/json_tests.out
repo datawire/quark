@@ -15,3 +15,5 @@ l[6] = 7.8
 endpoint0
 endpoint1
 endpoint2
+[sub-list, sub-object, sub-string]
+[afalse, aint, anull, astring, atrue]

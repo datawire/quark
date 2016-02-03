@@ -263,7 +263,7 @@ namespace builtin {
         JSONObject undefined();                // undefined object returend by object and list accessors
 
         // V2:
-        // List<String> keys();                   // object keys or null if type is not 'object'
+        List<String> keys();                   // object keys or null if type is not 'object'
         // List<Pair<String,JSONObject>> items(); // object items or null if type is not 'object'
         // List<JSONObject> values();             // list values or null if type is not 'list'
 
