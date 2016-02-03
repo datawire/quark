@@ -254,8 +254,6 @@ class Node(Integration):
 
     def isolate(self):
         self.npm_prefix.ensure("node_modules", dir=True)
-        self.npm_install(self.js_core_package)
-        self.npm_install(self.js_node_package)
 
     def build(self):
         self.rundir.join("package.json").write(textwrap.dedent("""\
@@ -293,18 +291,8 @@ class Node(Integration):
         return self.runtimes / "js-core"
 
     @property
-    def js_node_package(self):
-        return self.runtimes / "js-node"
-
-    @property
     def tool_overrides(self):
         return [("npm", self.npm_command())]
-
-    @property
-    def js_node_package_name(self):
-        import json
-        package = json.loads(self.js_node_package.join("package.json").read())
-        return package["name"]
 
     def invoke_server(self, port):
         return ["node", "run-server.js", str(port)]
@@ -318,7 +306,6 @@ class AbstractPython(Integration):
 
     def isolate(self):
         command("virtualenv", "x", cwd=self.rundir)
-        self.pip_install(self.py_core_package)
 
     @property
     def pip(self):
@@ -336,10 +323,6 @@ class AbstractPython(Integration):
     def pip_install(self, package):
         assert package.check()
         command(self.pip.strpath, "install", package.strpath, cwd=self.rundir)
-
-    @property
-    def py_core_package(self):
-        return self.runtimes / "python-core"
 
     def invoke_server(self, port):
         return [self.python.strpath, "run-server.py", str(port)]
@@ -384,7 +367,6 @@ class ThreadedPython(AbstractPython):
 
     def isolate(self):
         super(ThreadedPython,self).isolate()
-        self.pip_install(self.py_threaded_package)
 
     def build(self):
         self.rundir.join("run-client.py").write(textwrap.dedent("""\
@@ -400,10 +382,6 @@ class ThreadedPython(AbstractPython):
             interop.Entrypoint().server(int(sys.argv[1]))
         """))
 
-    @property
-    def py_threaded_package(self):
-        return self.runtimes / "python-threaded"
-
 class Netty(Integration):
     def __init__(self, **kwargs):
         super(Netty, self).__init__(**kwargs)
@@ -411,8 +389,6 @@ class Netty(Integration):
     @property
     def pom_context(self):
         return dict(
-            quark_netty_version = self.quark_netty_version,
-            quark_netty_artifact = self.quark_netty_artifact,
             m2_repo = self.m2_repo.strpath,
             compile_version = self.compile.version,
             )
@@ -473,12 +449,6 @@ class Netty(Integration):
               </build>
               <dependencies>
                 <dependency>
-                  <groupId>io.datawire.quark</groupId>
-                  <artifactId>%(quark_netty_artifact)s</artifactId>
-                  <version>%(quark_netty_version)s</version>
-                  <scope>compile</scope>
-                </dependency>
-                <dependency>
                   <groupId>interop</groupId>
                   <artifactId>interop</artifactId>
                   <version>%(compile_version)s</version>
@@ -536,22 +506,6 @@ class Netty(Integration):
     @property
     def settings_xml(self):
         return self.rundir / "settings.xml"
-
-    @property
-    def quark_netty_version(self):
-        pom = self.quark_netty_package.join("pom.xml").read()
-        version = pom.split("<version>",1)[1].split("</version>",1)[0]
-        return version
-
-    @property
-    def quark_netty_artifact(self):
-        pom = self.quark_netty_package.join("pom.xml").read()
-        artifactId = pom.split("<artifactId>",1)[1].split("</artifactId>",1)[0]
-        return artifactId
-
-    @property
-    def quark_netty_package(self):
-        return self.runtimes / "netty"
 
     @property
     def m2_repo(self):
