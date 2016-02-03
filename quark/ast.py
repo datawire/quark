@@ -265,6 +265,9 @@ class DistUnit(Definition):
     def code(self, coder):
         return "package %s %s;" % (self.name.code(), self.version)
 
+    def copy(self):
+        return DistUnit(copy(self.name), self.version)
+
 class Package(Definition):
 
     indent = ["definitions"]
@@ -770,6 +773,9 @@ class Native(Expression):
     def code(self, coder):
         return "".join([c.code(coder) for c in self.cases])
 
+    def copy(self):
+        return Native(copy(self.cases))
+
 class NativeCase(AST):
 
     def __init__(self, name, children):
@@ -788,6 +794,9 @@ class NativeCase(AST):
                 assert False
         return result + "}"
 
+    def copy(self):
+        return NativeCase(self.name, copy(self.children))
+
 class Fixed(Expression):
 
     def __init__(self, text):
@@ -800,6 +809,9 @@ class Fixed(Expression):
     @coder
     def code(self, coder):
         return self.text
+
+    def copy(self):
+        return Fixed(self.text)
 
 class Cast(Expression):
 

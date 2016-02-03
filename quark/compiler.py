@@ -905,9 +905,17 @@ class Compiler:
     def emitter(self, backend, target):
         self.emitters.append((backend, target))
 
+    CACHE = {}
+
     def parse(self, name, text):
         try:
-            file = self.parser.parse(text)
+            if name in self.CACHE:
+                file = copy(self.CACHE[name])
+            else:
+                file = self.parser.parse(text)
+                if name != "reflector":
+                    self.CACHE[name] = file
+                    file = copy(file)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
         imp = Import([Name("builtin")])
