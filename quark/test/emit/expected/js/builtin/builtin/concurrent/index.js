@@ -208,6 +208,11 @@ function Future_getError() {
 }
 Future.prototype.getError = Future_getError;
 
+function Future_await(timeout) {
+    (new FutureWait()).wait(this, timeout);
+}
+Future.prototype.await = Future_await;
+
 function Future__getClass() {
     return "builtin.concurrent.Future";
 }

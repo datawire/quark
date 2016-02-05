@@ -821,6 +821,27 @@ class builtin_concurrent_Future_getError_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
+class builtin_concurrent_Future_await_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_concurrent_Future_await_Method, self).__init__(u"builtin.void", u"await", _List([u"builtin.long"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).await((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class builtin_concurrent_Future_getContext_Method(builtin.reflect.Method):
     def _init(self):
         builtin.reflect.Method._init(self)
@@ -850,7 +871,7 @@ class builtin_concurrent_Future(builtin.reflect.Class):
         (self).name = u"builtin.concurrent.Future"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.concurrent.Context", u"_context"), builtin.reflect.Field(u"builtin.bool", u"_finished"), builtin.reflect.Field(u"builtin.String", u"_error"), builtin.reflect.Field(u"builtin.List<builtin.concurrent.FutureCompletion>", u"_callbacks"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"_lock")])
-        (self).methods = _List([builtin_concurrent_Future_onFinished_Method(), builtin_concurrent_Future_finish_Method(), builtin_concurrent_Future_isFinished_Method(), builtin_concurrent_Future_getError_Method(), builtin_concurrent_Future_getContext_Method()])
+        (self).methods = _List([builtin_concurrent_Future_onFinished_Method(), builtin_concurrent_Future_finish_Method(), builtin_concurrent_Future_isFinished_Method(), builtin_concurrent_Future_getError_Method(), builtin_concurrent_Future_await_Method(), builtin_concurrent_Future_getContext_Method()])
 
     def construct(self, args):
         return builtin.concurrent.Future()

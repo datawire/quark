@@ -151,6 +151,9 @@ class Future(EventContext):
         ((self)._lock).release();
         return error
 
+    def await(self, timeout):
+        (FutureWait()).wait(self, timeout);
+
     def _getClass(self):
         return u"builtin.concurrent.Future"
 

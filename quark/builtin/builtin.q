@@ -206,6 +206,8 @@ namespace builtin {
         macro void sort() $java{java.util.Collections.sort($self)}
                           $py{($self).sort()}
                           $js{($self).sort()};
+        macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
+        macro JSONObject __to_JSONObject() self.toJSON();
     }
 
     @mapping($java{java.util.HashMap} $py{_Map} $js{Map})
@@ -228,6 +230,8 @@ namespace builtin {
         macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                                  $py{_urlencode($self)}
                                  $js{_qrt.urlencode($self)};
+        macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
+        macro JSONObject __to_JSONObject() self.toJSON();
     }
 
     @mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
@@ -1013,6 +1017,10 @@ package concurrent {
             String error = self._error;
             self._lock.release();
             return error;
+        }
+
+        void await(long timeout) {
+            new FutureWait().wait(self, timeout);
         }
     }
 

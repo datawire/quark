@@ -1257,6 +1257,39 @@ builtin_concurrent_Future_getError_Method.prototype._getField = builtin_concurre
 function builtin_concurrent_Future_getError_Method__setField(name, value) {}
 builtin_concurrent_Future_getError_Method.prototype._setField = builtin_concurrent_Future_getError_Method__setField;
 
+// CLASS builtin_concurrent_Future_await_Method
+
+function builtin_concurrent_Future_await_Method() {
+    builtin_concurrent_Future_await_Method.super_.call(this, "builtin.void", "await", ["builtin.long"]);
+}
+exports.builtin_concurrent_Future_await_Method = builtin_concurrent_Future_await_Method;
+_qrt.util.inherits(builtin_concurrent_Future_await_Method, builtin.reflect.Method);
+
+function builtin_concurrent_Future_await_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_concurrent_Future_await_Method.prototype.__init_fields__ = builtin_concurrent_Future_await_Method__init_fields__;
+
+function builtin_concurrent_Future_await_Method_invoke(object, args) {
+    var obj = object;
+    (obj).await((args)[0]);
+    return null;
+}
+builtin_concurrent_Future_await_Method.prototype.invoke = builtin_concurrent_Future_await_Method_invoke;
+
+function builtin_concurrent_Future_await_Method__getClass() {
+    return null;
+}
+builtin_concurrent_Future_await_Method.prototype._getClass = builtin_concurrent_Future_await_Method__getClass;
+
+function builtin_concurrent_Future_await_Method__getField(name) {
+    return null;
+}
+builtin_concurrent_Future_await_Method.prototype._getField = builtin_concurrent_Future_await_Method__getField;
+
+function builtin_concurrent_Future_await_Method__setField(name, value) {}
+builtin_concurrent_Future_await_Method.prototype._setField = builtin_concurrent_Future_await_Method__setField;
+
 // CLASS builtin_concurrent_Future_getContext_Method
 
 function builtin_concurrent_Future_getContext_Method() {
@@ -1296,7 +1329,7 @@ function builtin_concurrent_Future() {
     (this).name = "builtin.concurrent.Future";
     (this).parameters = [];
     (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.bool", "_finished"), new builtin.reflect.Field("builtin.String", "_error"), new builtin.reflect.Field("builtin.List<builtin.concurrent.FutureCompletion>", "_callbacks"), new builtin.reflect.Field("builtin.concurrent.Lock", "_lock")];
-    (this).methods = [new builtin_concurrent_Future_onFinished_Method(), new builtin_concurrent_Future_finish_Method(), new builtin_concurrent_Future_isFinished_Method(), new builtin_concurrent_Future_getError_Method(), new builtin_concurrent_Future_getContext_Method()];
+    (this).methods = [new builtin_concurrent_Future_onFinished_Method(), new builtin_concurrent_Future_finish_Method(), new builtin_concurrent_Future_isFinished_Method(), new builtin_concurrent_Future_getError_Method(), new builtin_concurrent_Future_await_Method(), new builtin_concurrent_Future_getContext_Method()];
 }
 exports.builtin_concurrent_Future = builtin_concurrent_Future;
 _qrt.util.inherits(builtin_concurrent_Future, builtin.reflect.Class);
