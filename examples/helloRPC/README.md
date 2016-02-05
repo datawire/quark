@@ -43,13 +43,9 @@ you cloned the repository above.
 
 ### Python
 
-Make sure the python-threaded integration is installed (`pip install
--U datawire-quark-threaded`).
-
 Compile and install the Service Contract in hello.q:
 
-        quark --python package hello.q
-        pip install hello/py/dist/hello-0.1.0-py2-none-any.whl
+        quark install hello.q --python
 
 Run the Python server with
 
@@ -61,14 +57,9 @@ Run the Python client with
 
 ### Java
 
-Note: This example requires the datawire-quark-netty integration. It
-will be installed automatically if you do not already have it
-installed.
-
 Compile and install the Service Contract in hello.q:
 
-        quark --java package hello.q
-        (cd hello/java && mvn install)
+        quark install hello.q --java
 
 Compile the Java server and client with 
 
@@ -84,17 +75,14 @@ Run the Java client with
 
 ### JavaScript
 
-Make sure the JS/Node setup has been completed:
-
-        npm install datawire-quark-node
-
 Compile and install the Service Contract in hello.q:
 
-        quark --javascript package hello.q
-        npm install hello/js/hello.tgz
+        quark install hello.q --javascript
 
 Run the Javascript server with
 
         node jsserver.js
 
-JavaScript client support is coming soon!
+Run the Javascript client with
+
+        node jsclient.js

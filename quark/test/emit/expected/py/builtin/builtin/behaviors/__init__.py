@@ -13,30 +13,31 @@ class RPC(object):
         self.timeout = None
         self.name = None
 
-    def __init__(self, service, name, options):
+    def __init__(self, service, name):
         self._init()
-        timeout = (service).getTimeout();
-        if ((len(options)) > (0)):
-            map = (options)[0];
-            override = (map).get(u"timeout");
-            if ((override) != (None)):
-                timeout = (override)
+        timeout = (service)._getField(u"timeout");
+        if (((timeout) == (None)) or ((timeout) <= ((0)))):
+            timeout = (10000)
+
+        override = (service).getTimeout();
+        if (((override) != (None)) and ((override) > ((0)))):
+            timeout = override
 
         (self).returned = ((builtin.reflect.Class.get(_getClass(service))).getMethod(name)).getType()
         (self).timeout = timeout
         (self).name = name
         (self).service = service
 
-    def call(self, message):
+    def call(self, args):
         request = _HTTPRequest(((self).service).getURL());
-        json = builtin.toJSON(message, None);
+        json = builtin.toJSON(args, None);
         envelope = _JSONObject();
         (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString((self).name)));
         (envelope).setObjectItem((u"$context"), ((_JSONObject()).setString(u"TBD")));
         (envelope).setObjectItem((u"rpc"), (json));
         (request).setBody((envelope).toString());
         (request).setMethod(u"POST");
-        rpc = RPCRequest(message, self);
+        rpc = RPCRequest(args, self);
         result = (rpc).call(request);
         builtin.concurrent.FutureWait.waitFor(result, (1000));
         return result
@@ -78,13 +79,13 @@ class RPCRequest(object):
     def _init(self):
         self.rpc = None
         self.retval = None
-        self.message = None
+        self.args = None
         self.timeout = None
 
-    def __init__(self, message, rpc):
+    def __init__(self, args, rpc):
         self._init()
         (self).retval = ((rpc).returned).construct(_List([]))
-        (self).message = message
+        (self).args = args
         (self).timeout = builtin.concurrent.Timeout((rpc).timeout)
         (self).rpc = rpc
 
@@ -106,7 +107,7 @@ class RPCRequest(object):
             ((self).retval).finish(((u"RPC ") + (((self).rpc).name)) + (u"(...) failed: Server returned unrecognizable content"));
             return
         else:
-            builtin.fromJSON((self).retval, obj);
+            builtin.fromJSON(((self).rpc).returned, (self).retval, obj);
             ((self).retval).finish(None);
 
     def onTimeout(self, timeout):
@@ -122,8 +123,8 @@ class RPCRequest(object):
         if ((name) == (u"retval")):
             return (self).retval
 
-        if ((name) == (u"message")):
-            return (self).message
+        if ((name) == (u"args")):
+            return (self).args
 
         if ((name) == (u"timeout")):
             return (self).timeout
@@ -137,8 +138,8 @@ class RPCRequest(object):
         if ((name) == (u"retval")):
             (self).retval = value
 
-        if ((name) == (u"message")):
-            (self).message = value
+        if ((name) == (u"args")):
+            (self).args = value
 
         if ((name) == (u"timeout")):
             (self).timeout = value

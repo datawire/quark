@@ -25,7 +25,7 @@ class Matrix(object):
         ((self.columns)[i])[j] = (value);
 
     def _getClass(self):
-        return u"Matrix<Object>"
+        return u"Matrix<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"width")):

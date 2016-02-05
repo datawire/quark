@@ -82,7 +82,7 @@ Websocket servlet
 Serializes object tree into JSON. skips over fields starting with underscore
 
 
-## fromJSON((0.builtin.fromJSON.result, 0.builtin.fromJSON.json))
+## fromJSON((0.builtin.fromJSON.cls, 0.builtin.fromJSON.result, 0.builtin.fromJSON.json))
 
 deserialize json into provided result object. Skip over fields starting with underscore
 

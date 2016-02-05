@@ -35,7 +35,7 @@ function Matrix___set__(i, j, value) {
 Matrix.prototype.__set__ = Matrix___set__;
 
 function Matrix__getClass() {
-    return "Matrix<Object>";
+    return "Matrix<builtin.Object>";
 }
 Matrix.prototype._getClass = Matrix__getClass;
 

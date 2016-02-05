@@ -26,7 +26,13 @@ class Class(object):
         return self.name
 
     def getParameters(self):
-        return self.parameters
+        result = _List([]);
+        idx = 0;
+        while ((idx) < (len(self.parameters))):
+            (result).append(Class.get((self.parameters)[idx]));
+            idx = (idx) + (1)
+
+        return result
 
     def construct(self, args):
         return None

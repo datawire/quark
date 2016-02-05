@@ -146,7 +146,7 @@ public class Builtins {
     }
 
     public static String _getClass(Object obj) {
-        if (obj instanceof Boolean) { return "bool"; }
+        if (obj instanceof Boolean) { return "builtin.bool"; }
 
         if (obj instanceof Byte) { return "builtin.byte"; }
         if (obj instanceof Short) { return "builtin.short"; }

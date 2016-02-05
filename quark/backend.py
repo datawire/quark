@@ -314,9 +314,16 @@ class Backend(object):
         bases = [self.type(t) for t in iface.bases]
 
         methods = []
+        static_fields = []
 
         for d in iface.definitions:
-            if isinstance(d, Method):
+            if isinstance(d, Field) and d.static:
+                static_fields.append(self.gen.static_field(self.doc(d),
+                                                           name,
+                                                           self.type(d.type),
+                                                           self.name(d.name),
+                                                           self.expr(d.value)))
+            elif isinstance(d, Method):
                 methods.append(self.gen.interface_method(self.doc(d),
                                                          name,
                                                          self.type(d.type),
@@ -324,7 +331,7 @@ class Backend(object):
                                                          [self.param(p) for p in d.params],
                                                          self.block(d.body)))
 
-        return self.gen.interface(self.doc(iface), name, parameters, bases,
+        return self.gen.interface(self.doc(iface), name, parameters, bases, static_fields,
                                   methods)
 
     def default_constructors(self, cls):
@@ -569,7 +576,7 @@ class Backend(object):
         f = get_field(cls, attr)
         if f.static:
             path = self.add_import(f.clazz)
-            return self.gen.get_static_field(path, self.name(cls.name), self.name(attr))
+            return self.gen.get_static_field(path, self.name(f.clazz.name), self.name(attr))
         else:
             return self.gen.get_field(self.expr(expr), self.name(attr))
 
@@ -671,7 +678,16 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import command
+import command, os, sys
+
+def is_virtual():
+    return hasattr(sys, "real_prefix")
+
+def is_root():
+    return os.geteuid() == 0
+
+def is_user():
+    return not is_virtual() and not is_root()
 
 class Java(Backend):
 
@@ -698,7 +714,9 @@ class Python(Backend):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            command.call_and_show("install", dir, ["pip", "install", "--upgrade", "dist/%s" % wheel])
+            cmd = ["pip", "install", "--upgrade", "dist/%s" % wheel]
+            if is_user(): cmd += ["--user"]
+            command.call_and_show("install", dir, cmd)
 
 class JavaScript(Backend):
 

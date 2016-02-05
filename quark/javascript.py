@@ -165,8 +165,8 @@ def abstract_method(doc, clazz, type, name, parameters):
 
 ## Interface definition
 
-def interface(doc, iface, parameters, bases, methods):
-    return clazz(doc, False, iface, parameters, None, [], [], [], [default_constructor(iface)], methods)
+def interface(doc, iface, parameters, bases, static_fields, methods):
+    return clazz(doc, False, iface, parameters, None, [], static_fields, [], [default_constructor(iface)], methods)
 
 def interface_method(doc, iface, type, name, parameters, body):
     params = ", ".join(parameters)

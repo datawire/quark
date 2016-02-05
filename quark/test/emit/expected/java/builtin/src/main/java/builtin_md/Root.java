@@ -2,14 +2,15 @@ package builtin_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton;
-    public static builtin.reflect.Class builtin_List_Object__md = builtin_List_Object_.singleton;
+    public static builtin.reflect.Class builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton;
+    public static builtin.reflect.Class builtin_List_builtin_reflect_Class__md = builtin_List_builtin_reflect_Class_.singleton;
     public static builtin.reflect.Class builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton;
-    public static builtin.reflect.Class builtin_Map_Object_Object__md = builtin_Map_Object_Object_.singleton;
+    public static builtin.reflect.Class builtin_Map_builtin_Object_builtin_Object__md = builtin_Map_builtin_Object_builtin_Object_.singleton;
     public static builtin.reflect.Class builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
     public static builtin.reflect.Class builtin_Service_md = builtin_Service.singleton;
     public static builtin.reflect.Class builtin_Client_md = builtin_Client.singleton;
     public static builtin.reflect.Class builtin_ServerResponder_md = builtin_ServerResponder.singleton;
-    public static builtin.reflect.Class builtin_Server_Object__md = builtin_Server_Object_.singleton;
+    public static builtin.reflect.Class builtin_Server_builtin_Object__md = builtin_Server_builtin_Object_.singleton;
     public static builtin.reflect.Class builtin_behaviors_RPC_md = builtin_behaviors_RPC.singleton;
     public static builtin.reflect.Class builtin_behaviors_RPCRequest_md = builtin_behaviors_RPCRequest.singleton;
     public static builtin.reflect.Class builtin_concurrent_Event_md = builtin_concurrent_Event.singleton;

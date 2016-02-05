@@ -118,7 +118,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
        Name(contents), $type=0.test3.Box.T)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("test3.Box<Object>", $type=1.builtin.String)))),
+     Return(String("test3.Box<builtin.Object>", $type=1.builtin.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
     Param(Type(Name(String)), Name(name), $type=1.builtin.String),

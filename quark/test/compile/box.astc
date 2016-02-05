@@ -14,7 +14,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
      $type=0.Box.T)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Box<Object>", $type=1.builtin.String)))),
+    Return(String("Box<builtin.Object>", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
@@ -56,7 +56,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
      $type=0.Crate.T)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Crate<Object>", $type=1.builtin.String)))),
+    Return(String("Crate<builtin.Object>", $type=1.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
    Param(Type(Name(String)), Name(name), $type=1.builtin.String),

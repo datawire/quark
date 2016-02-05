@@ -20,7 +20,7 @@ function Box_get() {
 Box.prototype.get = Box_get;
 
 function Box__getClass() {
-    return "test3.Box<Object>";
+    return "test3.Box<builtin.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 

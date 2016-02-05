@@ -9,7 +9,7 @@ public class Class implements io.datawire.quark.runtime.QObject {
     public static Class STRING = new Class("builtin.String");
     public String id;
     public String name;
-    public java.util.ArrayList<Class> parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+    public java.util.ArrayList<String> parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     public java.util.ArrayList<Field> fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     public java.util.ArrayList<Method> methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     public Class(String id) {
@@ -27,7 +27,13 @@ public class Class implements io.datawire.quark.runtime.QObject {
         return this.name;
     }
     public java.util.ArrayList<Class> getParameters() {
-        return this.parameters;
+        java.util.ArrayList<Class> result = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+        Integer idx = 0;
+        while ((idx) < ((this.parameters).size())) {
+            (result).add(Class.get((this.parameters).get(idx)));
+            idx = (idx) + (1);
+        }
+        return result;
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return null;
@@ -123,7 +129,7 @@ public class Class implements io.datawire.quark.runtime.QObject {
             (this).name = (String) (value);
         }
         if ((name)==("parameters") || ((name) != null && (name).equals("parameters"))) {
-            (this).parameters = (java.util.ArrayList<Class>) (value);
+            (this).parameters = (java.util.ArrayList<String>) (value);
         }
         if ((name)==("fields") || ((name) != null && (name).equals("fields"))) {
             (this).fields = (java.util.ArrayList<Field>) (value);

@@ -1,11 +1,11 @@
-package builtin_md;
+package fancy_primitive_md;
 
-public class builtin_List_Object_ extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new builtin_List_Object_();
-    public builtin_List_Object_() {
-        super("builtin.List<Object>");
+public class builtin_List_builtin_Object_ extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class singleton = new builtin_List_builtin_Object_();
+    public builtin_List_builtin_Object_() {
+        super("builtin.List<builtin.Object>");
         (this).name = "builtin.List";
-        (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"Object"}));
+        (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }

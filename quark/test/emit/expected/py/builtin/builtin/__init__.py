@@ -54,7 +54,7 @@ def toJSON(obj, cls):
     return result
 
 
-def fromJSON(result, json):
+def fromJSON(cls, result, json):
     """
     deserialize json into provided result object. Skip over fields starting with underscore
     """
@@ -62,11 +62,29 @@ def fromJSON(result, json):
         return None
 
     idx = 0;
-    cls = reflect.Class.get(_getClass(result));
+    if ((result) == (None)):
+        if (((cls).name) == (u"builtin.String")):
+            s = (json).getString();
+            return s
+
+        if (((cls).name) == (u"builtin.float")):
+            flt = (json).getNumber();
+            return flt
+
+        if (((cls).name) == (u"builtin.int")):
+            i = int(round((json).getNumber()));
+            return i
+
+        if (((cls).name) == (u"builtin.bool")):
+            b = (json).getBool();
+            return b
+
+        result = (cls).construct(_List([]))
+
     if (((cls).name) == (u"builtin.List")):
         list = result;
         while ((idx) < ((json).size())):
-            (list).append(fromJSON((((cls).parameters)[0]).construct(_List([])), (json).getListItem(idx)));
+            (list).append(fromJSON(((cls).getParameters())[0], None, (json).getListItem(idx)));
             idx = (idx) + (1)
 
         return list
@@ -78,31 +96,8 @@ def fromJSON(result, json):
         if (((f).name).startswith(u"_")):
             continue;
 
-        if ((((f).getType()).name) == (u"builtin.String")):
-            s = ((json).getObjectItem((f).name)).getString();
-            (result)._setField(((f).name), (s));
-            continue;
-
-        if ((((f).getType()).name) == (u"builtin.float")):
-            flt = ((json).getObjectItem((f).name)).getNumber();
-            (result)._setField(((f).name), (flt));
-            continue;
-
-        if ((((f).getType()).name) == (u"builtin.int")):
-            if (not (((json).getObjectItem((f).name)).isNull())):
-                i = int(round(((json).getObjectItem((f).name)).getNumber()));
-                (result)._setField(((f).name), (i));
-
-            continue;
-
-        if ((((f).getType()).name) == (u"builtin.bool")):
-            if (not (((json).getObjectItem((f).name)).isNull())):
-                b = ((json).getObjectItem((f).name)).getBool();
-                (result)._setField(((f).name), (b));
-
-            continue;
-
-        (result)._setField(((f).name), (fromJSON(((f).getType()).construct(_List([])), (json).getObjectItem((f).name))));
+        if (not (((json).getObjectItem((f).name)).isNull())):
+            (result)._setField(((f).name), (fromJSON((f).getType(), None, (json).getObjectItem((f).name))));
 
     return result
 
@@ -150,29 +145,30 @@ class Service(object):
 
     def getTimeout(self): assert False
 
-    def rpc(self, name, message, options):
-        rpc = behaviors.RPC(self, name, options);
-        return (rpc).call(message)
+    def rpc(self, name, args):
+        rpc = behaviors.RPC(self, name);
+        return (rpc).call(args)
 
 
+Service.builtin_Service_ref = builtin_md.Root.builtin_Service_md
 class Client(object):
     def _init(self):
         self.url = None
-        self.timeout = None
+        self._timeout = None
 
     def __init__(self, url):
         self._init()
         (self).url = url
-        (self).timeout = (0)
+        (self)._timeout = (0)
 
     def getURL(self):
         return (self).url
 
     def getTimeout(self):
-        return (self).timeout
+        return (self)._timeout
 
     def setTimeout(self, timeout):
-        (self).timeout = timeout
+        (self)._timeout = timeout
 
     def _getClass(self):
         return u"builtin.Client"
@@ -181,8 +177,8 @@ class Client(object):
         if ((name) == (u"url")):
             return (self).url
 
-        if ((name) == (u"timeout")):
-            return (self).timeout
+        if ((name) == (u"_timeout")):
+            return (self)._timeout
 
         return None
 
@@ -190,8 +186,8 @@ class Client(object):
         if ((name) == (u"url")):
             (self).url = value
 
-        if ((name) == (u"timeout")):
-            (self).timeout = value
+        if ((name) == (u"_timeout")):
+            (self)._timeout = value
 
     
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md
@@ -247,7 +243,7 @@ class Server(object):
     def onHTTPRequest(self, request, response):
         body = (request).getBody();
         envelope = _JSONObject.parse(body);
-        if (((((envelope).getObjectItem(u"$method")) == ((envelope).undefined())) or (((envelope).getObjectItem(u"rpc")) == ((envelope).undefined()))) or ((((envelope).getObjectItem(u"rpc")).getObjectItem(u"$class")) == (((envelope).getObjectItem(u"rpc")).undefined()))):
+        if ((((envelope).getObjectItem(u"$method")) == ((envelope).undefined())) or (((envelope).getObjectItem(u"rpc")) == ((envelope).undefined()))):
             (response).setBody(((u"Failed to understand request.\n\n") + (body)) + (u"\n"));
             (response).setCode(400);
             (concurrent.Context.runtime()).respond(request, response);
@@ -255,17 +251,21 @@ class Server(object):
             methodName = ((envelope).getObjectItem(u"$method")).getString();
             json = (envelope).getObjectItem(u"rpc");
             method = (((reflect.Class.get(_getClass(self))).getField(u"impl")).getType()).getMethod(methodName);
-            argType = reflect.Class.get(((method).parameters)[0]);
-            arg = (argType).construct(_List([]));
-            argument = fromJSON(arg, json);
-            result = (method).invoke(self.impl, _List([argument]));
+            params = (method).getParameters();
+            args = _List([]);
+            idx = 0;
+            while ((idx) < (len(params))):
+                (args).append(fromJSON((params)[idx], None, (json).getListItem(idx)));
+                idx = (idx) + (1)
+
+            result = (method).invoke(self.impl, args);
             (result).onFinished(ServerResponder(request, response));
 
     def onServletError(self, url, message):
         (concurrent.Context.runtime()).fail((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
 
     def _getClass(self):
-        return u"builtin.Server<Object>"
+        return u"builtin.Server<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"impl")):
@@ -291,4 +291,5 @@ class Server(object):
         called when the servlet is removed
         """
         pass
-Server.builtin_Server_Object__ref = builtin_md.Root.builtin_Server_Object__md
+Server.builtin_List_builtin_reflect_Class__ref = builtin_md.Root.builtin_List_builtin_reflect_Class__md
+Server.builtin_Server_builtin_Object__ref = builtin_md.Root.builtin_Server_builtin_Object__md

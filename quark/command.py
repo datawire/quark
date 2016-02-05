@@ -76,7 +76,7 @@ def check(cmd, workdir):
 
 COMMAND_DEFAULTS = {
     "mvn" : "mvn -q",
-    }
+}
 
 def user_override(command):
     cmd = command[0]

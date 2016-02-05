@@ -11,6 +11,7 @@ class Foo(object):
 
     def get(self): assert False
 
+Foo.pkg_Foo_builtin_Object__ref = parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md
 class StringFoo(object):
     def _init(self):
         pass
@@ -41,7 +42,7 @@ class Box(object):
         (self).contents = contents
 
     def _getClass(self):
-        return u"pkg.Box<Object>"
+        return u"pkg.Box<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):

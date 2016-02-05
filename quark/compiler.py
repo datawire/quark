@@ -681,7 +681,7 @@ class Reflector:
             return self.package(pkg.package) + [pkg.name.text]
 
     def qtype(self, texp):
-        if isinstance(texp.type, TypeParam): return "Object"
+        if isinstance(texp.type, TypeParam): return "builtin.Object"
         result = ".".join(self.package(texp.type.package) + [texp.type.name.text])
         if isinstance(texp.type, Class) and texp.type.parameters:
             result += "<%s>" % ",".join([self.qtype(texp.bindings.get(p, TypeExpr(p, {})))
@@ -689,7 +689,7 @@ class Reflector:
         return result
 
     def qname(self, texp):
-        if isinstance(texp.type, TypeParam): return "Object"
+        if isinstance(texp.type, TypeParam): return "builtin.Object"
         return ".".join(self.package(texp.type.package) + [texp.type.name.text])
 
     def qparams(self, texp):
@@ -780,7 +780,8 @@ class Reflector:
 
         for ftype, fname in self.fields(cls, {}):
             getter += '    if (name == "%s") { return self.%s; }\n' % (fname, fname)
-            setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
+            if not isinstance(get_field(cls, fname).clazz, Interface):
+                setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
 
         getter += '    return null;\n'
         getter += "}\n"
@@ -845,8 +846,8 @@ class Reflector:
         for cls in self.classes:
             qual = self.qual(cls)
             if cls.parameters:
-                clsid = qual + "<%s>" % ",".join(["Object"]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"Object"']*len(cls.parameters))
+                clsid = qual + "<%s>" % ",".join(["builtin.Object"]*len(cls.parameters))
+                params = "[%s]" % ",".join(['"builtin.Object"']*len(cls.parameters))
             else:
                 clsid = qual
                 params = "[]"

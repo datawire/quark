@@ -546,14 +546,34 @@ namespace builtin {
     }
 
     @doc("deserialize json into provided result object. Skip over fields starting with underscore")
-    Object fromJSON(Object result, JSONObject json) {
+    Object fromJSON(reflect.Class cls, Object result, JSONObject json) {
         if (json == null || json.isNull()) { return null; }
         int idx = 0;
-        reflect.Class cls = result.getClass();
+
+        if (result == null) {
+            if (cls.name == "builtin.String") {
+                String s = json;
+                return s;
+            }
+            if (cls.name == "builtin.float") {
+                float flt = json;
+                return flt;
+            }
+            if (cls.name == "builtin.int") {
+                int i = json;
+                return i;
+            }
+            if (cls.name == "builtin.bool") {
+                bool b = json;
+                return b;
+            }
+            result = cls.construct([]);
+        }
+
         if (cls.name == "builtin.List") {
             List<Object> list = ?result;
             while (idx < json.size()) {
-                list.add(fromJSON(cls.parameters[0].construct([]), json.getListItem(idx)));
+                list.add(fromJSON(cls.getParameters()[0], null, json.getListItem(idx)));
                 idx = idx + 1;
             }
             return list;
@@ -566,31 +586,9 @@ namespace builtin {
             if (f.name.startsWith("_")) {
                 continue;
             }
-            if (f.getType().name == "builtin.String") {
-                String s = json[f.name];
-                result.setField(f.name, s);
-                continue;
+            if (!json[f.name].isNull()) {
+                result.setField(f.name, fromJSON(f.getType(), null, json[f.name]));
             }
-            if (f.getType().name == "builtin.float") {
-                float flt = json[f.name];
-                result.setField(f.name, flt);
-                continue;
-            }
-            if (f.getType().name == "builtin.int") {
-                if (!json[f.name].isNull()) {
-                    int i = json[f.name];
-                    result.setField(f.name, i);
-                }
-                continue;
-            }
-            if (f.getType().name == "builtin.bool") {
-                if (!json[f.name].isNull()) {
-                    bool b = json[f.name];
-                    result.setField(f.name, b);
-                }
-                continue;
-            }
-            result.setField(f.name, fromJSON(f.getType().construct([]), json[f.name]));
         }
         return result;
     }
@@ -614,9 +612,9 @@ namespace builtin {
         String getURL();
         long getTimeout();
 
-        concurrent.Future rpc(String name, Object message, List<Object> options) {
-            behaviors.RPC rpc = new behaviors.RPC(self, name, options); // this could be allocated once per delegate instantiation
-            return rpc.call(message);
+        concurrent.Future rpc(String name, List<Object> args) {
+            behaviors.RPC rpc = new behaviors.RPC(self, name); // this could be allocated once per delegate instantiation
+            return rpc.call(args);
         }
     }
 
@@ -625,17 +623,17 @@ namespace builtin {
     class Client {
 
         String url;
-        long timeout;
+        long _timeout;
 
         Client(String url) {
             self.url = url;
-            self.timeout = 0;
+            self._timeout = 0;
         }
 
         String getURL() { return self.url; }
-        long getTimeout() { return self.timeout; }
+        long getTimeout() { return self._timeout; }
         void setTimeout(long timeout) {
-            self.timeout = timeout;
+            self._timeout = timeout;
         }
 
     }
@@ -672,8 +670,7 @@ namespace builtin {
             String body = request.getBody();
             JSONObject envelope = body.parseJSON();
             if (envelope["$method"] == envelope.undefined() ||
-                envelope["rpc"] == envelope.undefined() ||
-                envelope["rpc"]["$class"] == envelope["rpc"].undefined()) {
+                envelope["rpc"] == envelope.undefined()) {
                 response.setBody("Failed to understand request.\n\n" + body + "\n");
                 response.setCode(400);
                 concurrent.Context.runtime().respond(request, response);
@@ -682,10 +679,14 @@ namespace builtin {
                 JSONObject json = envelope["rpc"];
                 // XXX: contexty stuff
                 reflect.Method method = self.getClass().getField("impl").getType().getMethod(methodName);
-                reflect.Class argType = reflect.Class.get(method.parameters[0]);
-                Object arg = argType.construct([]);
-                Object argument = fromJSON(arg, json);
-                concurrent.Future result = ?method.invoke(impl,[argument]);
+                List<reflect.Class> params = method.getParameters();
+                List<Object> args = [];
+                int idx = 0;
+                while (idx < params.size()) {
+                    args.add(fromJSON(params[idx], null, json.getListItem(idx)));
+                    idx = idx + 1;
+                }
+                concurrent.Future result = ?method.invoke(impl, args);
                 result.onFinished(new ServerResponder(request, response));
                 // XXX: we should also start a timeout here if the impl does not .finish() the result
             }
@@ -715,7 +716,7 @@ package reflect {
 
         String id;
         String name;
-        List<Class> parameters = [];
+        List<String> parameters = [];
         List<Field> fields = [];
         List<Method> methods = [];
 
@@ -734,7 +735,13 @@ package reflect {
         }
 
         List<Class> getParameters() {
-            return parameters;
+            List<Class> result = [];
+            int idx = 0;
+            while (idx < parameters.size()) {
+                result.add(Class.get(parameters[idx]));
+                idx = idx + 1;
+            }
+            return result;
         }
 
         Object construct(List<Object> args) { return null; }
@@ -832,14 +839,14 @@ package behaviors {
         long timeout;
         String name;
 
-        RPC(Service service, String name, List<Object> options) {
-            long timeout = service.getTimeout();
-            if (options.size() > 0) {
-                Map<String,Object> map = ?options[0];
-                int override = ?map["timeout"];
-                if (override != null) {
-                    timeout = override;
-                }
+        RPC(Service service, String name) {
+            long timeout = ?service.getField("timeout");
+            if (timeout == null || timeout <= 0) {
+                timeout = 10000;
+            }
+            long override = service.getTimeout();
+            if (override != null && override > 0) {
+                timeout = override;
             }
             self.returned = service.getClass().getMethod(name).getType();
             self.timeout = timeout;
@@ -847,10 +854,10 @@ package behaviors {
             self.service = service;
         }
 
-        concurrent.Future call(Object message) {
+        concurrent.Future call(List<Object> args) {
             HTTPRequest request = new HTTPRequest(self.service.getURL());
             // XXX: assume message is not a Future, or at least not a pending one
-            JSONObject json = toJSON(message, null);
+            JSONObject json = toJSON(args, null);
             JSONObject envelope = new JSONObject();
             envelope["$method"] = self.name;
             envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
@@ -859,7 +866,7 @@ package behaviors {
             request.setMethod("POST");
 
 
-            RPCRequest rpc = new RPCRequest(message, self);
+            RPCRequest rpc = new RPCRequest(args, self);
 
             concurrent.Future result = rpc.call(request);
             concurrent.FutureWait.waitFor(result, 1000);
@@ -872,11 +879,11 @@ package behaviors {
     class RPCRequest extends HTTPHandler,  concurrent.TimeoutListener {
         RPC rpc;
         concurrent.Future retval;
-        Object message;
+        List<Object> args;
         concurrent.Timeout timeout;
-        RPCRequest(Object message, RPC rpc) {
+        RPCRequest(List<Object> args, RPC rpc) {
             self.retval = ?rpc.returned.construct([]); // capture current context;
-            self.message = message;
+            self.args = args;
             self.timeout = new concurrent.Timeout(rpc.timeout);
             self.rpc = rpc;
         }
@@ -903,7 +910,7 @@ package behaviors {
                 self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned unrecognizable content");
                 return;
             } else {
-                fromJSON(self.retval, obj);
+                fromJSON(self.rpc.returned, self.retval, obj);
                 self.retval.finish(null);
             }
         }

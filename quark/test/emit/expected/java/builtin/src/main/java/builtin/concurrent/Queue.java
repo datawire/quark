@@ -37,7 +37,7 @@ public class Queue<T> implements io.datawire.quark.runtime.QObject {
         return ((this).tail) - ((this).head);
     }
     public String _getClass() {
-        return "builtin.concurrent.Queue<Object>";
+        return "builtin.concurrent.Queue<builtin.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("items") || ((name) != null && (name).equals("items"))) {

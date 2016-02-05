@@ -24,6 +24,7 @@ class SlackHandler(object):
         (self).onSlackEvent(message);
 
 
+SlackHandler.slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md
 class User(object):
     """
     A reference to a user.

@@ -58,7 +58,7 @@ function X__init_fields__() {}
 X.prototype.__init_fields__ = X__init_fields__;
 
 function X__getClass() {
-    return "X<Object>";
+    return "X<builtin.Object>";
 }
 X.prototype._getClass = X__getClass;
 

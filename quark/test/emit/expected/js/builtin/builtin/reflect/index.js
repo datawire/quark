@@ -41,7 +41,13 @@ function Class_getName() {
 Class.prototype.getName = Class_getName;
 
 function Class_getParameters() {
-    return this.parameters;
+    var result = [];
+    var idx = 0;
+    while ((idx) < ((this.parameters).length)) {
+        (result).push(Class.get((this.parameters)[idx]));
+        idx = (idx) + (1);
+    }
+    return result;
 }
 Class.prototype.getParameters = Class_getParameters;
 

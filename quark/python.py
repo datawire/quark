@@ -213,9 +213,13 @@ def abstract_method(doc, clazz, type, name, parameters):
 
 ## Interface definition
 
-def interface(doc, iface, parameters, bases, methods):
+def interface(doc, iface, parameters, bases, static_fields, methods):
     body = indent("\n".join(methods))
-    return "class %s(object):%s%s" % (iface, doc, body or "\n    pass")
+    result = "class %s(object):%s%s" % (iface, doc, body or "\n    pass")
+    if static_fields:
+        result += "\n"
+        result += "\n".join(static_fields)
+    return result
 
 def interface_method(doc, iface, type, name, parameters, body):
     if body is None: body = ": assert False"

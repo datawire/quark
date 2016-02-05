@@ -12,15 +12,15 @@ exports.builtin_md = builtin_md;
 
 // CLASS RPC
 
-function RPC(service, name, options) {
+function RPC(service, name) {
     this.__init_fields__();
-    var timeout = (service).getTimeout();
-    if (((options).length) > (0)) {
-        var map = (options)[0];
-        var override = _qrt.map_get((map), ("timeout"));
-        if ((override) !== (null)) {
-            timeout = (override);
-        }
+    var timeout = (service)._getField("timeout");
+    if (((timeout) === (null)) || ((timeout) <= ((0)))) {
+        timeout = (10000);
+    }
+    var override = (service).getTimeout();
+    if (((override) !== (null)) && ((override) > ((0)))) {
+        timeout = override;
     }
     (this).returned = ((builtin.reflect.Class.get(_qrt._getClass(service))).getMethod(name)).getType();
     (this).timeout = timeout;
@@ -37,16 +37,16 @@ function RPC__init_fields__() {
 }
 RPC.prototype.__init_fields__ = RPC__init_fields__;
 RPC.builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md;
-function RPC_call(message) {
+function RPC_call(args) {
     var request = new _qrt.HTTPRequest(((this).service).getURL());
-    var json = builtin.toJSON(message, null);
+    var json = builtin.toJSON(args, null);
     var envelope = new _qrt.JSONObject();
     (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString((this).name)));
     (envelope).setObjectItem(("$context"), ((new _qrt.JSONObject()).setString("TBD")));
     (envelope).setObjectItem(("rpc"), (json));
     (request).setBody((envelope).toString());
     (request).setMethod("POST");
-    var rpc = new RPCRequest(message, this);
+    var rpc = new RPCRequest(args, this);
     var result = (rpc).call(request);
     builtin.concurrent.FutureWait.waitFor(result, (1000));
     return result;
@@ -93,10 +93,10 @@ RPC.prototype._setField = RPC__setField;
 
 // CLASS RPCRequest
 
-function RPCRequest(message, rpc) {
+function RPCRequest(args, rpc) {
     this.__init_fields__();
     (this).retval = ((rpc).returned).construct([]);
-    (this).message = message;
+    (this).args = args;
     (this).timeout = new builtin.concurrent.Timeout((rpc).timeout);
     (this).rpc = rpc;
 }
@@ -105,7 +105,7 @@ exports.RPCRequest = RPCRequest;
 function RPCRequest__init_fields__() {
     this.rpc = null;
     this.retval = null;
-    this.message = null;
+    this.args = null;
     this.timeout = null;
 }
 RPCRequest.prototype.__init_fields__ = RPCRequest__init_fields__;
@@ -130,7 +130,7 @@ function RPCRequest_onHTTPResponse(rq, response) {
         ((this).retval).finish((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned unrecognizable content"));
         return;
     } else {
-        builtin.fromJSON((this).retval, obj);
+        builtin.fromJSON(((this).rpc).returned, (this).retval, obj);
         ((this).retval).finish(null);
     }
 }
@@ -153,8 +153,8 @@ function RPCRequest__getField(name) {
     if ((name) === ("retval")) {
         return (this).retval;
     }
-    if ((name) === ("message")) {
-        return (this).message;
+    if ((name) === ("args")) {
+        return (this).args;
     }
     if ((name) === ("timeout")) {
         return (this).timeout;
@@ -170,8 +170,8 @@ function RPCRequest__setField(name, value) {
     if ((name) === ("retval")) {
         (this).retval = value;
     }
-    if ((name) === ("message")) {
-        (this).message = value;
+    if ((name) === ("args")) {
+        (this).args = value;
     }
     if ((name) === ("timeout")) {
         (this).timeout = value;

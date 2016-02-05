@@ -211,10 +211,10 @@ def abstract_method(doc, clazz, type, name, parameters):
 
 ## Interface definition
 
-def interface(doc, iface, parameters, bases, methods):
+def interface(doc, iface, parameters, bases, static_fields, methods):
     params = "<%s>" % ", ".join(parameters) if parameters else ""
     extends = " extends %s" % ", ".join(bases) if bases else ""
-    body = "\n".join(methods)
+    body = "\n".join(static_fields + methods)
     return "%spublic interface %s%s%s {%s}" % (doc, iface, params, extends, indent(body))
 
 def interface_method(doc, iface, type, name, parameters, body):
