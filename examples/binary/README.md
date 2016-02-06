@@ -23,8 +23,7 @@ cloned the repository above.
 
 Compile and install the protocol implementation in binary.q:
 
-        quark --java package binary.q
-        (cd binary/java && mvn install)
+        quark install binary.q --java
 
 Compile the Java server and client with 
 
