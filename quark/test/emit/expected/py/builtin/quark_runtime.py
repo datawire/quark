@@ -293,7 +293,7 @@ class _HTTPResponse(object):
 
 class _default_codec(object):
     def buffer(self, capacity):
-        return Buffer()
+        return Buffer(bytearray("\x00"*capacity))
 
     def toHexdump(self, buffer, offset, length, spaceScale):
         h = map(lambda x:"%02x"%x, buffer.data[offset:offset+length])

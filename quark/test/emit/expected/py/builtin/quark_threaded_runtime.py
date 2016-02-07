@@ -15,7 +15,7 @@ from Queue import Queue, Empty
 
 from ws4py.client.threadedclient import WebSocketClient
 
-from quark_runtime import _HTTPRequest, _HTTPResponse
+from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec
 
 
 class _Terminator(object):
@@ -222,7 +222,9 @@ class _QuarkWSGIApp(object):
 
 class ThreadedRuntime(object):
 
+
     def __init__(self):
+        self._codec = _default_codec()
         self.lock = threading.Condition()
         self.events = Queue()
         self.token_counter = 0
@@ -351,6 +353,9 @@ class ThreadedRuntime(object):
             # Note: sys._getframe(1) works on CPython, Jython, and PyPy. Need to test on IronPython etc.
         sys.stderr.write(message + "\n")
         os._exit(1)
+
+    def codec(self):
+        return self._codec
 
 
 _global_lock = threading.Lock()
