@@ -627,16 +627,9 @@ namespace builtin {
         return result;
     }
 
-    // XXX FIXME use discovery.q etc...
-    class Hub {
-        static Hub theHub = new Hub();
-
-        List<String> lookup(String serviceName) {
-            return ["http://127.0.0.1:8910/hello", "http://127.0.0.1:8911/hello"];
-        }
+    interface Resolver {
+        List<String> resolve(String serviceName);
     }
-
-
 
     class ResponseHolder extends HTTPHandler {
         HTTPResponse response;
@@ -653,7 +646,6 @@ namespace builtin {
     }
 
     interface Service {
-
         String getName();
         ServiceInstance getInstance();
         long getTimeout();
@@ -695,12 +687,18 @@ namespace builtin {
         }
     }
 
-    class Client {
+    @doc("DegenerateResolver assumes that the serviceName is an URL.")
+    class DegenerateResolver extends Resolver {
+        List<String> resolve(String serviceName) {
+            return [ serviceName ];
+        }
+    }
 
+    class Client {
+        Resolver resolver;
         String serviceName;
         long _timeout;
 
-        // Configurable, but with reasonable defaults
         int _failureLimit = 3;
         float _retestDelay = 8.0;  // seconds (30?)
 
@@ -710,6 +708,7 @@ namespace builtin {
 
         Client(String serviceName) {
             self.serviceName = serviceName;
+            self.resolver = new DegenerateResolver();
             self._timeout = 0;
 
             self.mutex = new concurrent.Lock();
@@ -727,11 +726,17 @@ namespace builtin {
             }
         }
 
+        void setResolver(Resolver resolver) {
+            self.resolver = resolver;
+        }
+
         ServiceInstance getInstance() {
-            List<String> urls = Hub.theHub.lookup(self.serviceName);
+            List<String> urls = self.resolver.resolve(self.serviceName);
+
             if (urls.size() <= 0) {
                 return null;
             }
+
             urls.sort();
 
             self.mutex.acquire();
