@@ -627,6 +627,17 @@ namespace builtin {
         return result;
     }
 
+    // XXX FIXME use discovery.q etc...
+    class Hub {
+        static Hub theHub = new Hub();
+
+        List<String> lookup(String serviceName) {
+            return ["http://127.0.0.1:8910/hello", "http://127.0.0.1:8911/hello"];
+        }
+    }
+
+
+
     class ResponseHolder extends HTTPHandler {
         HTTPResponse response;
         String failure = null;
@@ -643,28 +654,127 @@ namespace builtin {
 
     interface Service {
 
-        String getURL();
+        String getName();
+        ServiceInstance getInstance();
         long getTimeout();
 
-        concurrent.Future rpc(String name, List<Object> args) {
-            behaviors.RPC rpc = new behaviors.RPC(self, name); // this could be allocated once per delegate instantiation
+        concurrent.Future rpc(String methodName, List<Object> args) {
+            behaviors.RPC rpc = new behaviors.RPC(self, methodName);  // Must be allocated once per RPC!
             return rpc.call(args);
         }
     }
 
+    class ServiceInstance {
+        String serviceName;
+        String url;
+        behaviors.CircuitBreaker breaker;
 
+        ServiceInstance(String serviceName, String url, int failureLimit, float retestDelay) {
+            self.serviceName = serviceName;
+            self.url = url;
+            self.breaker = new behaviors.CircuitBreaker("[" + serviceName + " at " + url + "]",
+                                                        failureLimit, retestDelay);
+        }
+
+        bool isActive() {
+            return self.breaker.active;
+        }
+
+        String getURL() {
+            return self.url;
+        }
+
+        void succeed(String info) {
+            print("Success on call to " + self.serviceName + " service at " + self.url + " (" + info + ")");
+            self.breaker.succeed();
+        }
+
+        void fail(String info) {
+            print("FAILURE on call to " + self.serviceName + " service at " + self.url + " (" + info + ")");
+            self.breaker.fail();
+        }
+    }
 
     class Client {
 
-        String url;
+        String serviceName;
         long _timeout;
 
-        Client(String url) {
-            self.url = url;
+        // Configurable, but with reasonable defaults
+        int _failureLimit = 3;
+        float _retestDelay = 8.0;  // seconds (30?)
+
+        concurrent.Lock mutex;
+        Map<String, ServiceInstance> instanceMap;
+        int counter;
+
+        Client(String serviceName) {
+            self.serviceName = serviceName;
             self._timeout = 0;
+
+            self.mutex = new concurrent.Lock();
+            self.instanceMap = {};
+            self.counter = 0;
+
+            int failureLimit = ?self.getField("failureLimit");
+            if (failureLimit != null) {
+                self._failureLimit = failureLimit;
+            }
+
+            float retestDelay = ?self.getField("retestDelay");
+            if (retestDelay != null) {
+                self._retestDelay = retestDelay;
+            }
         }
 
-        String getURL() { return self.url; }
+        ServiceInstance getInstance() {
+            List<String> urls = Hub.theHub.lookup(self.serviceName);
+            if (urls.size() <= 0) {
+                return null;
+            }
+            urls.sort();
+
+            self.mutex.acquire();
+
+            ServiceInstance result = null;
+            int next = self.counter % urls.size();
+            self.counter = self.counter + 1;
+
+            print("Service " + self.serviceName + " has " + urls.size().toString() + " URLs.");
+
+            int idx = next;
+            while (true) {
+                String url = urls[idx];
+
+                print("- Trying URL " + (idx + 1).toString() + ": " + url);
+
+                ServiceInstance instance = self.instanceMap[url];
+                if (instance == null) {
+                    instance = new ServiceInstance(self.serviceName, url, _failureLimit, _retestDelay);
+                    self.instanceMap[url] = instance;
+                    print("- Created instance for service " + self.serviceName + " on url " +
+                          (idx + 1).toString() + ": " + url);
+                }
+
+                if (instance.isActive()) {             // Found an active instance
+                    result = instance;
+                    break;
+                }
+
+                print("-    not active, skipping.");
+
+                idx = (idx + 1) % urls.size();
+                if (idx == next) {                     // Wrapped all the way around, found nothing.
+                    print("Exhausted all options; giving up.");
+                    break;
+                }
+            }
+
+            self.mutex.release();
+            return result;
+        }
+
+        String getName() { return self.serviceName; }
         long getTimeout() { return self._timeout; }
         void setTimeout(long timeout) {
             self._timeout = timeout;
@@ -871,9 +981,10 @@ package behaviors {
         Service service;
         reflect.Class returned;
         long timeout;
-        String name;
+        String methodName;
+        ServiceInstance instance;
 
-        RPC(Service service, String name) {
+        RPC(Service service, String methodName) {
             long timeout = ?service.getField("timeout");
             if (timeout == null || timeout <= 0) {
                 timeout = 10000;
@@ -882,18 +993,19 @@ package behaviors {
             if (override != null && override > 0) {
                 timeout = override;
             }
-            self.returned = service.getClass().getMethod(name).getType();
+            self.returned = service.getClass().getMethod(methodName).getType();
             self.timeout = timeout;
-            self.name = name;
+            self.methodName = methodName;
             self.service = service;
         }
 
         concurrent.Future call(List<Object> args) {
-            HTTPRequest request = new HTTPRequest(self.service.getURL());
+            self.instance = self.service.getInstance();
+            HTTPRequest request = new HTTPRequest(self.instance.getURL());
             // XXX: assume message is not a Future, or at least not a pending one
             JSONObject json = toJSON(args, null);
             JSONObject envelope = new JSONObject();
-            envelope["$method"] = self.name;
+            envelope["$method"] = self.methodName;
             envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
             envelope["rpc"] = json;
             request.setBody(envelope.toString());
@@ -906,6 +1018,18 @@ package behaviors {
             concurrent.FutureWait.waitFor(result, 1000);
             // XXX: sync users still need to check result.getError()...
             return result;
+        }
+
+        void succeed(String info) {
+            self.instance.succeed(info);
+        }
+
+        void fail(String info) {
+            self.instance.fail(info);
+        }
+
+        String toString() {
+            return "RPC " + self.service.getName() + " at " + self.instance.getURL() + ": " + self.methodName + "(...)";
         }
 
     }
@@ -926,14 +1050,17 @@ package behaviors {
             self.timeout.start(self);
             concurrent.Context.runtime().request(request, self);
             return self.retval;
-
         }
 
         void onHTTPResponse(HTTPRequest rq, HTTPResponse response) {
+            String info;
+
             self.timeout.cancel(); // technically not strictly necessary as future fires only once
 
             if (response.getCode() != 200) {
-                self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned error " + response.getCode().toString());
+                info = self.rpc.toString() + " failed: Server returned error " + response.getCode().toString();
+                self.retval.finish(info);
+                self.rpc.fail(info);
                 return;
             }
 
@@ -941,16 +1068,66 @@ package behaviors {
             JSONObject obj = body.parseJSON();
             String classname = obj["$class"];
             if (classname == null) {
-                self.retval.finish("RPC " + self.rpc.name + "(...) failed: Server returned unrecognizable content");
+                info = self.rpc.toString() + " failed: Server returned unrecognizable content";
+                self.retval.finish(info);
+                self.rpc.fail(info);
                 return;
             } else {
                 fromJSON(self.rpc.returned, self.retval, obj);
                 self.retval.finish(null);
+                self.rpc.succeed("Success in the future...");
             }
         }
 
         void onTimeout(concurrent.Timeout timeout) {
             self.retval.finish("request timed out");
+            self.rpc.fail("request timed out");
+        }
+    }
+
+    class CircuitBreaker extends Task {
+        String id;
+        int failureLimit;
+        float retestDelay;
+
+        // Internal state
+        bool active = true;
+        int failureCount = 0;
+        concurrent.Lock mutex = new concurrent.Lock();
+
+        CircuitBreaker(String id, int failureLimit, float retestDelay) {
+            self.id = id;
+            self.failureLimit = failureLimit;
+            self.retestDelay = retestDelay;
+        }
+
+        void succeed() {
+            self.mutex.acquire();
+            self.failureCount = 0;
+            self.mutex.release();
+        }
+
+        void fail() {
+            bool doSchedule = false;
+            self.mutex.acquire();
+            self.failureCount = self.failureCount + 1;
+            if (self.failureCount >= self.failureLimit) {
+                self.active = false;
+                doSchedule = true;
+                print("    Circuit breaker triggered on " + self.id);
+            }
+            self.mutex.release();
+
+            if (doSchedule) {
+                concurrent.Context.runtime().schedule(self, self.retestDelay);
+            }
+        }
+
+        void onExecute(Runtime runtime) {
+            self.mutex.acquire();
+            self.active = true;
+            print("--> Reactivating " + self.id + " for one test");
+            self.mutex.release();
         }
     }
 
