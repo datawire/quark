@@ -110,6 +110,8 @@ namespace builtin {
         macro String toString() $java{Byte.toString($self)}
                                 $py{str($self)}
                                 $js{_qrt.toString($self)};
+        macro short __to_short() self;
+        macro int __to_int() self;
     }
 
 
@@ -118,6 +120,8 @@ namespace builtin {
         macro String toString() $java{Short.toString($self)}
                                 $py{str($self)}
                                 $js{_qrt.toString($self)};
+        macro byte __to_byte() self;
+        macro int __to_int() self;
     }
 
 
@@ -126,8 +130,12 @@ namespace builtin {
         macro String toString() $java{Integer.toString($self)}
                                 $py{str($self)}
                                 $js{_qrt.toString($self)};
-        macro byte __to_byte() self;
-        macro short __to_short() self;
+        macro byte __to_byte() $java{(byte)((Integer) ($self)).intValue()}
+                               $py{($self)}
+                               $js{($self)};
+        macro short __to_short() $java{(short) ((Integer) ($self)).intValue()}
+                                 $py{($self)}
+                                 $js{($self)};
         macro long __to_long() $java{new Long($self)}
                                $py{($self)}
                                $js{($self)};
