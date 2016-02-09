@@ -222,7 +222,7 @@ def interface(doc, iface, parameters, bases, static_fields, methods):
     return result
 
 def interface_method(doc, iface, type, name, parameters, body):
-    if body is None: body = ": assert False"
+    if body is None: body = ":\n    assert False"
     body_with_doc = ":" + doc + body[1:]
     return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
 

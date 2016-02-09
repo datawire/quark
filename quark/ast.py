@@ -56,8 +56,8 @@ class AST(object):
     fields = []
 
     def origin(self, node):
-        if not hasattr(self, "node"):
-            self.node = node
+        if not hasattr(self, "_marked"):
+            self._marked = True
             self.line, self.column = self._lineinfo(node)
             self.traverse(SetOrigin(), node)
 
@@ -66,7 +66,7 @@ class AST(object):
         return self.file.name
 
     def _lineinfo(self, node):
-        text = self.node.full_text[:self.node.start]
+        text = node.full_text[:node.start]
         line = text.count("\n") + 1
         try:
             column = len(text) - text.rindex("\n")

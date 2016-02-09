@@ -6,7 +6,8 @@ import defaulted_methods_md
 
 class A(object):
 
-    def foo(self): assert False
+    def foo(self):
+        assert False
 
     def bar(self):
         _println(u"A bar");

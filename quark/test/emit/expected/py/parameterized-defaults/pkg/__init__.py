@@ -9,7 +9,8 @@ class Foo(object):
     def foo(self):
         return self.get()
 
-    def get(self): assert False
+    def get(self):
+        assert False
 
 Foo.pkg_Foo_builtin_Object__ref = parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md
 class StringFoo(object):

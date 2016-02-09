@@ -141,9 +141,11 @@ class ResponseHolder(object):
 ResponseHolder.builtin_ResponseHolder_ref = builtin_md.Root.builtin_ResponseHolder_md
 class Service(object):
 
-    def getURL(self): assert False
+    def getURL(self):
+        assert False
 
-    def getTimeout(self): assert False
+    def getTimeout(self):
+        assert False
 
     def rpc(self, name, args):
         rpc = behaviors.RPC(self, name);

@@ -9,9 +9,11 @@ class Event(object):
     The contract between event implementations and Collector
     """
 
-    def getContext(self): assert False
+    def getContext(self):
+        assert False
 
-    def fireEvent(self): assert False
+    def fireEvent(self):
+        assert False
 
 Event.builtin_concurrent_Event_ref = builtin_md.Root.builtin_concurrent_Event_md
 class FutureListener(object):
@@ -455,7 +457,8 @@ class TimeoutListener(object):
     Timeout expiry handler
     """
 
-    def onTimeout(self, timeout): assert False
+    def onTimeout(self, timeout):
+        assert False
 
 TimeoutListener.builtin_concurrent_TimeoutListener_ref = builtin_md.Root.builtin_concurrent_TimeoutListener_md
 class TimeoutExpiry(object):
