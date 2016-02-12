@@ -5,11 +5,11 @@ File(Use(url=builtin.q), Import(Name(builtin)),
   Method(static=False, Type(Name(void)), Name(m1)),
 
   Method(static=False, Type(Name(void)), Name(m2),
-   Param(Type(Name(int)), Name(arg), $type=1.builtin.int)),
+   Param(Type(Name(int)), Name(arg), $type=0.builtin.int)),
 
   Method(static=False, Type(Name(void)), Name(m3),
    Param(Type(Name(List), Type(Name(String))), Name(args),
-   $type=1.builtin.List<1.builtin.String>))),
+   $type=0.builtin.List<0.builtin.String>))),
 
  Interface(Name(Bar), TypeParam(Name(T)),
 
@@ -20,7 +20,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
 
   Method(static=False, Type(Name(void)), Name(m3),
    Param(Type(Name(List), Type(Name(T))), Name(args),
-   $type=1.builtin.List<0.Bar.T>))),
+   $type=0.builtin.List<0.Bar.T>))),
 
  Interface(Name(BazFoo), Type(Name(Foo))),
 

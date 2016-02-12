@@ -1,15 +1,15 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Macro(Type(Name(int)), Name(pi), Number(3, $type=1.builtin.int)),
+ Macro(Type(Name(int)), Name(pi), Number(3, $type=0.builtin.int)),
 
  Function(Type(Name(void)), Name(test), Block(
    Local(
     Declaration(Type(Name(int)), Name(x), Call(Var(Name(pi), $type=0.pi),
-     $type=1.builtin.int), $type=1.builtin.int)))),
+     $type=0.builtin.int), $type=0.builtin.int)))),
 
  Class(Name(Pie),
 
-  MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=1.builtin.int)),
+  MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=0.builtin.int)),
 
   Method(static=False, Type(Name(void)), Name(test), Block(
     Local(
@@ -17,19 +17,19 @@ File(Use(url=builtin.q), Import(Name(builtin)),
       $type=0.Pie), $type=0.Pie)),
     Local(
      Declaration(Type(Name(int)), Name(x), Call(Attr(Var(Name(p), $type=0.Pie),
-        Name(slice), $type=0.Pie.slice), $type=1.builtin.int),
-     $type=1.builtin.int)))),
+        Name(slice), $type=0.Pie.slice), $type=0.builtin.int),
+     $type=0.builtin.int)))),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Pie", $type=1.builtin.String)))),
+    Return(String("Pie", $type=0.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
    Block(
-    Return(Null(null, $type=1.builtin.Object)))),
+    Return(Null(null, $type=0.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
-   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
    Block()))
 )

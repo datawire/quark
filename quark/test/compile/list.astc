@@ -4,12 +4,12 @@ File(Use(url=builtin.q), Import(Name(builtin)),
    Local(
     Declaration(Type(Name(List), Type(Name(int))), Name(list),
      Call(Type(Name(List), Type(Name(int))),
-     $type=1.builtin.List<1.builtin.int>),
-    $type=1.builtin.List<1.builtin.int>)),
-   ExprStmt(Call(Attr(Var(Name(list), $type=1.builtin.List<1.builtin.int>),
-      Name(add), $type=1.builtin.List.add), Number(3, $type=1.builtin.int),
-    $type=1.builtin.void)),
-   ExprStmt(Call(Attr(Var(Name(list), $type=1.builtin.List<1.builtin.int>),
-      Name(__get__), $type=1.builtin.List.__get__), Number(0,
-     $type=1.builtin.int), $type=1.builtin.int))))
+     $type=0.builtin.List<0.builtin.int>),
+    $type=0.builtin.List<0.builtin.int>)),
+   ExprStmt(Call(Attr(Var(Name(list), $type=0.builtin.List<0.builtin.int>),
+      Name(add), $type=0.builtin.List.add), Number(3, $type=0.builtin.int),
+    $type=0.builtin.void)),
+   ExprStmt(Call(Attr(Var(Name(list), $type=0.builtin.List<0.builtin.int>),
+      Name(__get__), $type=0.builtin.List.__get__), Number(0,
+     $type=0.builtin.int), $type=0.builtin.int))))
 )

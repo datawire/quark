@@ -45,11 +45,6 @@ def coder(method):
         return method(self, coder)
     return result
 
-class SetOrigin:
-
-    def visit_AST(self, ast, node):
-        ast.origin(node)
-
 class AST(object):
 
     indent = []
@@ -59,7 +54,6 @@ class AST(object):
         if not hasattr(self, "_marked"):
             self._marked = True
             self.line, self.column = self._lineinfo(node)
-            self.traverse(SetOrigin(), node)
 
     @property
     def filename(self):

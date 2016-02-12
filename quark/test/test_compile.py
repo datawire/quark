@@ -40,11 +40,13 @@ def compile(path, file_filter):
     try:
         c.urlparse(path)
         c.compile()
-        for ast in c.root.files:
-            if file_filter(ast.filename): continue
-            astname = os.path.splitext(ast.filename)[0] + ".astc"
-            astpath = os.path.join(dir, astname)
-            assert_file(astpath, ast.pprint())
+        for root in c.roots:
+            for ast in root.files:
+                if ast.filename == "reflector": continue
+                if file_filter(ast.filename): continue
+                astname = os.path.splitext(ast.filename)[0] + ".astc"
+                astpath = os.path.join(dir, astname)
+                assert_file(astpath, ast.pprint())
     except (CompileError, ParseError), e:
         expected = base + ".err"
         computed = str(e).replace(os.path.dirname(path) + "/", "")

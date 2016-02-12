@@ -105,8 +105,7 @@ def test_run_java(output):
     base = os.path.join(output, j.ext)
     dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]
     batch_pom(base, dirs)
-    subprocess.check_call(["mvn", "-q", "install"], cwd=base)
-    subprocess.check_call(["mvn", "-q", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
+    subprocess.check_call(["mvn", "-q", "install", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
 
     import quark.java
     run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
