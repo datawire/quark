@@ -455,6 +455,23 @@
         process.exit(1);
     };
 
+    var winston = require("winston");
+    var log_container = new winston.Container();
+    
+    Runtime.prototype.logger = function(topic) {
+        return new Logger(log_container.get(topic));
+    }
+
+    function Logger(impl) {
+        this.impl = impl;
+    }
+
+    Logger.prototype.trace = function (msg) { this.impl.silly("%s", msg); }
+    Logger.prototype.debug = function (msg) { this.impl.debug("%s", msg); }
+    Logger.prototype.info = function (msg) { this.impl.info("%s", msg); }
+    Logger.prototype.warn = function (msg) { this.impl.warn("%s", msg); }
+    Logger.prototype.error = function (msg) { this.impl.error("%s", msg); }
+
     module.exports = new Runtime();
 
 })();

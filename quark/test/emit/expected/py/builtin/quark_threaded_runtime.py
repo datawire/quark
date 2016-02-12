@@ -10,6 +10,7 @@ import time
 import traceback
 import urllib2
 import urlparse
+import logging
 from wsgiref import simple_server, util
 from Queue import Queue, Empty
 
@@ -357,6 +358,18 @@ class ThreadedRuntime(object):
     def codec(self):
         return self._codec
 
+    def logger(self, topic):
+        return Logger(topic)
+
+class Logger(object):
+    def __init__(self, topic):
+        self.impl = logging.getLogger(topic)
+
+    def trace(self, msg): self.impl.debug("%s", msg)
+    def debug(self, msg): self.impl.debug("%s", msg)
+    def info(self, msg): self.impl.info("%s", msg)
+    def warn(self, msg): self.impl.warning("%s", msg)
+    def error(self, msg): self.impl.error("%s", msg)
 
 _global_lock = threading.Lock()
 _threaded_runtime = None

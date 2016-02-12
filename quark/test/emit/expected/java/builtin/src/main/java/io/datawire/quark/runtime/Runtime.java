@@ -30,4 +30,5 @@ public interface Runtime {
     void serveWS(String url, WSServlet server);
     void respond(HTTPRequest request, HTTPResponse response);
     void fail(String message);
+    Logger logger(String topic);
 }

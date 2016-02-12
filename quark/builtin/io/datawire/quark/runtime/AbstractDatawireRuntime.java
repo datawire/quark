@@ -238,4 +238,8 @@ public abstract class AbstractDatawireRuntime {
     public void fail(String message) {
         throw new RuntimeException(message);
     }
+
+    public Logger logger(String topic) {
+        return new QuarkJavaLogger(topic);
+    }
 }
