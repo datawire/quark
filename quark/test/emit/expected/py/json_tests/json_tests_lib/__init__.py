@@ -40,7 +40,18 @@ def test_iterate_list_directory():
 
 
 
+def iterables():
+    jobj = (((_JSONObject()).setObjectItem(u"sub-object", (((((_JSONObject()).setObjectItem(u"astring", (_JSONObject()).setString(u"string value"))).setObjectItem(u"aint", (_JSONObject()).setNumber(9))).setObjectItem(u"atrue", (_JSONObject()).setBool(True))).setObjectItem(u"afalse", (_JSONObject()).setBool(False))).setObjectItem(u"anull", (_JSONObject()).setNull()))).setObjectItem(u"sub-list", (((_JSONObject()).setListItem(0, (_JSONObject()).setString(u"after this string expect 42 and null"))).setListItem(1, (_JSONObject()).setNumber(42))).setListItem(2, (_JSONObject()).setNull()))).setObjectItem(u"sub-string", (_JSONObject()).setString(u"a string"));
+    keys = (jobj).keys();
+    (keys).sort();
+    _println(keys);
+    keys = ((jobj).getObjectItem(u"sub-object")).keys()
+    (keys).sort();
+    _println(keys);
+
+
 def main():
     test_roundtrip();
     test_iterate_list();
     test_iterate_list_directory();
+    iterables();

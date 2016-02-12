@@ -3,103 +3,103 @@ File(Use(url=builtin.q), Import(Name(builtin)),
  Package(Name(test1),
 
   Class(Name(Test),
-   Field(static=False, Type(Name(String)), Name(name), $type=1.builtin.String),
+   Field(static=False, Type(Name(String)), Name(name), $type=0.builtin.String),
 
    Constructor(Name(Test), Block(
      Assign(Attr(Var(Name(self), $type=0.test1.Test), Name(name),
-      $type=1.builtin.String), String("Hello World!",
-      $type=1.builtin.String)))),
+      $type=0.builtin.String), String("Hello World!",
+      $type=0.builtin.String)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("test1.Test", $type=1.builtin.String)))),
+     Return(String("test1.Test", $type=0.builtin.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
-      $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("name", $type=0.builtin.String),
+      $type=0.builtin.bool), Block(
        Return(Attr(Var(Name(self), $type=0.test1.Test), Name(name),
-        $type=1.builtin.String)))),
-     Return(Null(null, $type=1.builtin.Object)))),
+        $type=0.builtin.String)))),
+     Return(Null(null, $type=0.builtin.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
-      $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("name", $type=0.builtin.String),
+      $type=0.builtin.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.test1.Test), Name(name),
-        $type=1.builtin.String), Cast(Var(Name(value), $type=1.builtin.Object),
-        $type=1.builtin.String)))))),
+        $type=0.builtin.String), Cast(Var(Name(value), $type=0.builtin.Object),
+        $type=0.builtin.String)))))),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(test1_Test_ref),
-    Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
-     $type=2.constructors_md.Root), Name(test1_Test_md),
-    $type=1.builtin.reflect.Class), $type=1.builtin.reflect.Class)),
+    Attr(Attr(Var(Name(constructors_md), $type=1.constructors_md), Name(Root),
+     $type=1.constructors_md.Root), Name(test1_Test_md),
+    $type=0.builtin.reflect.Class), $type=0.builtin.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(
      Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
       $type=0.test1.Test), $type=0.test1.Test)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print), Attr(Var(Name(t),
-       $type=0.test1.Test), Name(name), $type=1.builtin.String),
-     $type=1.builtin.void)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print), Attr(Var(Name(t),
+       $type=0.test1.Test), Name(name), $type=0.builtin.String),
+     $type=0.builtin.void)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print),
       Attr(Call(Type(Name(Test)), $type=0.test1.Test), Name(name),
-      $type=1.builtin.String), $type=1.builtin.void))))),
+      $type=0.builtin.String), $type=0.builtin.void))))),
 
  Package(Name(test2),
 
   Class(Name(Test),
-   Field(static=False, Type(Name(String)), Name(name), $type=1.builtin.String),
+   Field(static=False, Type(Name(String)), Name(name), $type=0.builtin.String),
 
    Constructor(Name(Test),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
     Block(
      Assign(Attr(Var(Name(self), $type=0.test2.Test), Name(name),
-      $type=1.builtin.String), Var(Name(name), $type=1.builtin.String)))),
+      $type=0.builtin.String), Var(Name(name), $type=0.builtin.String)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("test2.Test", $type=1.builtin.String)))),
+     Return(String("test2.Test", $type=0.builtin.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
-      $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("name", $type=0.builtin.String),
+      $type=0.builtin.bool), Block(
        Return(Attr(Var(Name(self), $type=0.test2.Test), Name(name),
-        $type=1.builtin.String)))),
-     Return(Null(null, $type=1.builtin.Object)))),
+        $type=0.builtin.String)))),
+     Return(Null(null, $type=0.builtin.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("name", $type=1.builtin.String),
-      $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("name", $type=0.builtin.String),
+      $type=0.builtin.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.test2.Test), Name(name),
-        $type=1.builtin.String), Cast(Var(Name(value), $type=1.builtin.Object),
-        $type=1.builtin.String)))))),
+        $type=0.builtin.String), Cast(Var(Name(value), $type=0.builtin.Object),
+        $type=0.builtin.String)))))),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(test2_Test_ref),
-    Attr(Attr(Var(Name(constructors_md), $type=2.constructors_md), Name(Root),
-     $type=2.constructors_md.Root), Name(test2_Test_md),
-    $type=1.builtin.reflect.Class), $type=1.builtin.reflect.Class)),
+    Attr(Attr(Var(Name(constructors_md), $type=1.constructors_md), Name(Root),
+     $type=1.constructors_md.Root), Name(test2_Test_md),
+    $type=0.builtin.reflect.Class), $type=0.builtin.reflect.Class)),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(
      Declaration(Type(Name(Test)), Name(t), Call(Type(Name(Test)),
-       String("Hello World!!", $type=1.builtin.String), $type=0.test2.Test),
+       String("Hello World!!", $type=0.builtin.String), $type=0.test2.Test),
      $type=0.test2.Test)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print), Attr(Var(Name(t),
-       $type=0.test2.Test), Name(name), $type=1.builtin.String),
-     $type=1.builtin.void)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print), Attr(Var(Name(t),
+       $type=0.test2.Test), Name(name), $type=0.builtin.String),
+     $type=0.builtin.void)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print),
       Attr(Call(Type(Name(Test)), String("Hello World!!",
-        $type=1.builtin.String), $type=0.test2.Test), Name(name),
-      $type=1.builtin.String), $type=1.builtin.void))))),
+        $type=0.builtin.String), $type=0.test2.Test), Name(name),
+      $type=0.builtin.String), $type=0.builtin.void))))),
 
  Package(Name(test3),
 
@@ -118,48 +118,48 @@ File(Use(url=builtin.q), Import(Name(builtin)),
        Name(contents), $type=0.test3.Box.T)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("test3.Box<Object>", $type=1.builtin.String)))),
+     Return(String("test3.Box<builtin.Object>", $type=0.builtin.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("contents",
-       $type=1.builtin.String), $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("contents",
+       $type=0.builtin.String), $type=0.builtin.bool), Block(
        Return(Attr(Var(Name(self), $type=0.test3.Box<0.test3.Box.T>),
          Name(contents), $type=0.test3.Box.T)))),
-     Return(Null(null, $type=1.builtin.Object)))),
+     Return(Null(null, $type=0.builtin.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=1.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=1.builtin.String), Name(__eq__),
-       $type=1.builtin.Object.__eq__), String("contents",
-       $type=1.builtin.String), $type=1.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
+       $type=0.builtin.Object.__eq__), String("contents",
+       $type=0.builtin.String), $type=0.builtin.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.test3.Box<0.test3.Box.T>),
          Name(contents), $type=0.test3.Box.T), Cast(Var(Name(value),
-         $type=1.builtin.Object), $type=0.test3.Box.T))))))),
+         $type=0.builtin.Object), $type=0.test3.Box.T))))))),
 
   Function(Type(Name(void)), Name(go), Block(
     Local(
      Declaration(Type(Name(Box), Type(Name(String))), Name(box),
       Call(Type(Name(Box), Type(Name(String))), String("Hello World!!!",
-       $type=1.builtin.String), $type=0.test3.Box<1.builtin.String>),
-     $type=0.test3.Box<1.builtin.String>)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print),
-      Call(Attr(Var(Name(box), $type=0.test3.Box<1.builtin.String>), Name(get),
-       $type=0.test3.Box.get), $type=1.builtin.String), $type=1.builtin.void)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print), Attr(Var(Name(box),
-       $type=0.test3.Box<1.builtin.String>), Name(contents),
-      $type=1.builtin.String), $type=1.builtin.void)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print),
+       $type=0.builtin.String), $type=0.test3.Box<0.builtin.String>),
+     $type=0.test3.Box<0.builtin.String>)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print),
+      Call(Attr(Var(Name(box), $type=0.test3.Box<0.builtin.String>), Name(get),
+       $type=0.test3.Box.get), $type=0.builtin.String), $type=0.builtin.void)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print), Attr(Var(Name(box),
+       $type=0.test3.Box<0.builtin.String>), Name(contents),
+      $type=0.builtin.String), $type=0.builtin.void)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print),
       Call(Attr(Call(Type(Name(Box), Type(Name(String))),
-         String("Hello World!!!", $type=1.builtin.String),
-        $type=0.test3.Box<1.builtin.String>), Name(get),
-       $type=0.test3.Box.get), $type=1.builtin.String), $type=1.builtin.void)),
-    ExprStmt(Call(Var(Name(print), $type=1.builtin.print),
+         String("Hello World!!!", $type=0.builtin.String),
+        $type=0.test3.Box<0.builtin.String>), Name(get),
+       $type=0.test3.Box.get), $type=0.builtin.String), $type=0.builtin.void)),
+    ExprStmt(Call(Var(Name(print), $type=0.builtin.print),
       Attr(Call(Type(Name(Box), Type(Name(String))), String("Hello World!!!",
-        $type=1.builtin.String), $type=0.test3.Box<1.builtin.String>),
-       Name(contents), $type=1.builtin.String), $type=1.builtin.void)))))
+        $type=0.builtin.String), $type=0.test3.Box<0.builtin.String>),
+       Name(contents), $type=0.builtin.String), $type=0.builtin.void)))))
 )

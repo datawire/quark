@@ -36,16 +36,16 @@ def parse(path, file_filter):
     text = open(path).read()
     maybe_xfail(text)
     c = Compiler()
-    c.parse(os.path.basename(path), text)
-    for ast in c.root.files:
+    c.urlparse(path, recurse=False)
+    for ast in c.roots[path].files:
         if file_filter(ast.filename): continue
         base = os.path.splitext(ast.filename)[0]
         assert_file(os.path.join(dir, base + ".ast"), ast.pprint())
         code = ast.code()
         assert_file(os.path.join(dir, base + ".code"), code)
         rtc = Compiler()
-        rtc.parse(base + ".code", code)
-        for f in rtc.root.files:
+        rtc.urlparse(base + ".code", recurse=False)
+        for f in rtc.roots[base + ".code"].files:
             if f.name == base + ".code":
                 assert f.code() == code
                 break

@@ -3,12 +3,12 @@ from quark_runtime import *
 import builtin.reflect
 
 
-class pkg_Foo_Object__foo_Method(builtin.reflect.Method):
+class pkg_Foo_builtin_Object__foo_Method(builtin.reflect.Method):
     def _init(self):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(pkg_Foo_Object__foo_Method, self).__init__(u"Object", u"foo", _List([]));
+        super(pkg_Foo_builtin_Object__foo_Method, self).__init__(u"builtin.Object", u"foo", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -23,12 +23,12 @@ class pkg_Foo_Object__foo_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_Foo_Object__get_Method(builtin.reflect.Method):
+class pkg_Foo_builtin_Object__get_Method(builtin.reflect.Method):
     def _init(self):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(pkg_Foo_Object__get_Method, self).__init__(u"Object", u"get", _List([]));
+        super(pkg_Foo_builtin_Object__get_Method, self).__init__(u"builtin.Object", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -43,16 +43,16 @@ class pkg_Foo_Object__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_Foo_Object_(builtin.reflect.Class):
+class pkg_Foo_builtin_Object_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
 
     def __init__(self):
-        super(pkg_Foo_Object_, self).__init__(u"pkg.Foo<Object>");
+        super(pkg_Foo_builtin_Object_, self).__init__(u"pkg.Foo<builtin.Object>");
         (self).name = u"pkg.Foo"
-        (self).parameters = _List([u"Object"])
+        (self).parameters = _List([u"builtin.Object"])
         (self).fields = _List([])
-        (self).methods = _List([pkg_Foo_Object__foo_Method(), pkg_Foo_Object__get_Method()])
+        (self).methods = _List([pkg_Foo_builtin_Object__foo_Method(), pkg_Foo_builtin_Object__get_Method()])
 
     def construct(self, args):
         return None
@@ -65,7 +65,7 @@ class pkg_Foo_Object_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-pkg_Foo_Object_.singleton = pkg_Foo_Object_()
+pkg_Foo_builtin_Object_.singleton = pkg_Foo_builtin_Object_()
 
 class pkg_StringFoo_get_Method(builtin.reflect.Method):
     def _init(self):
@@ -192,7 +192,7 @@ class Root(object):
 
     def _setField(self, name, value):
         pass
-Root.pkg_Foo_Object__md = pkg_Foo_Object_.singleton
+Root.pkg_Foo_builtin_Object__md = pkg_Foo_builtin_Object_.singleton
 Root.pkg_StringFoo_md = pkg_StringFoo.singleton
 Root.pkg_Box_builtin_String__md = pkg_Box_builtin_String_.singleton
 Root.pkg_StringBox_md = pkg_StringBox.singleton

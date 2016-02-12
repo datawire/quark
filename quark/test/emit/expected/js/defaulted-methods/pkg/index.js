@@ -14,7 +14,7 @@ exports.A = A;
 
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
-
+A.pkg_A_ref = defaulted_methods_md.Root.pkg_A_md;
 function A_foo() { /* interface */ }
 A.prototype.foo = A_foo;
 
@@ -32,7 +32,7 @@ exports.B = B;
 
 function B__init_fields__() {}
 B.prototype.__init_fields__ = B__init_fields__;
-
+B.pkg_B_ref = defaulted_methods_md.Root.pkg_B_md;
 function B_bar() {
     _qrt.print("B bar");
 }
@@ -46,7 +46,7 @@ exports.C = C;
 
 function C__init_fields__() {}
 C.prototype.__init_fields__ = C__init_fields__;
-
+C.pkg_C_ref = defaulted_methods_md.Root.pkg_C_md;
 function C_foo() {
     _qrt.print("C mixin for foo");
 }

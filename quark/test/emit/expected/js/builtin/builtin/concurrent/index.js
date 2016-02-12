@@ -17,7 +17,7 @@ exports.Event = Event;
 
 function Event__init_fields__() {}
 Event.prototype.__init_fields__ = Event__init_fields__;
-
+Event.builtin_concurrent_Event_ref = builtin_md.Root.builtin_concurrent_Event_md;
 function Event_getContext() { /* interface */ }
 Event.prototype.getContext = Event_getContext;
 
@@ -35,7 +35,7 @@ exports.FutureListener = FutureListener;
 
 function FutureListener__init_fields__() {}
 FutureListener.prototype.__init_fields__ = FutureListener__init_fields__;
-
+FutureListener.builtin_concurrent_FutureListener_ref = builtin_md.Root.builtin_concurrent_FutureListener_md;
 function FutureListener_onFuture(future) {}
 FutureListener.prototype.onFuture = FutureListener_onFuture;
 
@@ -207,6 +207,11 @@ function Future_getError() {
     return error;
 }
 Future.prototype.getError = Future_getError;
+
+function Future_await(timeout) {
+    (new FutureWait()).wait(this, timeout);
+}
+Future.prototype.await = Future_await;
 
 function Future__getClass() {
     return "builtin.concurrent.Future";
@@ -388,7 +393,7 @@ function Queue_size() {
 Queue.prototype.size = Queue_size;
 
 function Queue__getClass() {
-    return "builtin.concurrent.Queue<Object>";
+    return "builtin.concurrent.Queue<builtin.Object>";
 }
 Queue.prototype._getClass = Queue__getClass;
 
@@ -581,7 +586,7 @@ exports.TimeoutListener = TimeoutListener;
 
 function TimeoutListener__init_fields__() {}
 TimeoutListener.prototype.__init_fields__ = TimeoutListener__init_fields__;
-
+TimeoutListener.builtin_concurrent_TimeoutListener_ref = builtin_md.Root.builtin_concurrent_TimeoutListener_md;
 function TimeoutListener_onTimeout(timeout) { /* interface */ }
 TimeoutListener.prototype.onTimeout = TimeoutListener_onTimeout;
 

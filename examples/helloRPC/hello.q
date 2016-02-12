@@ -1,5 +1,7 @@
-@version("0.1.0")
-package hello {
+package hello 1.2.3;
+import builtin.concurrent;
+
+namespace hello {
 
     @doc("A value class for Request data for the hello service.")
     class Request {
@@ -7,7 +9,7 @@ package hello {
     }
 
     @doc("A value class for Response data from the hello service.")
-    class Response extends concurrent.Future {
+    class Response extends Future {
         @doc("A greeting from the hello service.")
         String result;
     }
@@ -15,9 +17,12 @@ package hello {
     @doc("The hello service.")
     interface Hello extends Service {
 
+        static int timeout = 3000;
+
         @doc("Respond to a hello request.")
-        @delegate(self.rpc, {"timeout": 3000})
-        Response hello(Request request);
+        Response hello(Request request) {
+            return ?self.rpc("hello", [request]);
+        }
 
     }
 

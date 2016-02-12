@@ -51,7 +51,7 @@ class Box(object):
         (self).contents = contents
 
     def _getClass(self):
-        return u"Box<Object>"
+        return u"Box<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):

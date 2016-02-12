@@ -30,30 +30,6 @@ class builtin_List_builtin_String_(builtin.reflect.Class):
         pass
 builtin_List_builtin_String_.singleton = builtin_List_builtin_String_()
 
-class builtin_List_Object_(builtin.reflect.Class):
-    def _init(self):
-        builtin.reflect.Class._init(self)
-
-    def __init__(self):
-        super(builtin_List_Object_, self).__init__(u"builtin.List<Object>");
-        (self).name = u"builtin.List"
-        (self).parameters = _List([u"Object"])
-        (self).fields = _List([])
-        (self).methods = _List([])
-
-    def construct(self, args):
-        return _List()
-
-    def _getClass(self):
-        return None
-
-    def _getField(self, name):
-        return None
-
-    def _setField(self, name, value):
-        pass
-builtin_List_Object_.singleton = builtin_List_Object_()
-
 class builtin_List_builtin_Object_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -174,14 +150,14 @@ class builtin_List_builtin_concurrent_FutureCompletion_(builtin.reflect.Class):
         pass
 builtin_List_builtin_concurrent_FutureCompletion_.singleton = builtin_List_builtin_concurrent_FutureCompletion_()
 
-class builtin_Map_Object_Object_(builtin.reflect.Class):
+class builtin_Map_builtin_Object_builtin_Object_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_Map_Object_Object_, self).__init__(u"builtin.Map<Object,Object>");
+        super(builtin_Map_builtin_Object_builtin_Object_, self).__init__(u"builtin.Map<builtin.Object,builtin.Object>");
         (self).name = u"builtin.Map"
-        (self).parameters = _List([u"Object", u"Object"])
+        (self).parameters = _List([u"builtin.Object", u"builtin.Object"])
         (self).fields = _List([])
         (self).methods = _List([])
 
@@ -196,7 +172,7 @@ class builtin_Map_Object_Object_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_Map_Object_Object_.singleton = builtin_Map_Object_Object_()
+builtin_Map_builtin_Object_builtin_Object_.singleton = builtin_Map_builtin_Object_builtin_Object_()
 
 class builtin_Map_builtin_String_builtin_Object_(builtin.reflect.Class):
     def _init(self):
@@ -302,7 +278,7 @@ class builtin_Client(builtin.reflect.Class):
         super(builtin_Client, self).__init__(u"builtin.Client");
         (self).name = u"builtin.Client"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"url"), builtin.reflect.Field(u"builtin.long", u"timeout")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"url"), builtin.reflect.Field(u"builtin.long", u"_timeout")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -342,15 +318,15 @@ class builtin_ServerResponder(builtin.reflect.Class):
         pass
 builtin_ServerResponder.singleton = builtin_ServerResponder()
 
-class builtin_Server_Object_(builtin.reflect.Class):
+class builtin_Server_builtin_Object_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_Server_Object_, self).__init__(u"builtin.Server<Object>");
+        super(builtin_Server_builtin_Object_, self).__init__(u"builtin.Server<builtin.Object>");
         (self).name = u"builtin.Server"
-        (self).parameters = _List([u"Object"])
-        (self).fields = _List([builtin.reflect.Field(u"Object", u"impl")])
+        (self).parameters = _List([u"builtin.Object"])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Object", u"impl")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -364,7 +340,7 @@ class builtin_Server_Object_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_Server_Object_.singleton = builtin_Server_Object_()
+builtin_Server_builtin_Object_.singleton = builtin_Server_builtin_Object_()
 
 class builtin_reflect_Class(builtin.reflect.Class):
     def _init(self):
@@ -374,7 +350,7 @@ class builtin_reflect_Class(builtin.reflect.Class):
         super(builtin_reflect_Class, self).__init__(u"builtin.reflect.Class");
         (self).name = u"builtin.reflect.Class"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.reflect.Class>", u"classes"), builtin.reflect.Field(u"builtin.reflect.Class", u"VOID"), builtin.reflect.Field(u"builtin.reflect.Class", u"BOOL"), builtin.reflect.Field(u"builtin.reflect.Class", u"INT"), builtin.reflect.Field(u"builtin.reflect.Class", u"LONG"), builtin.reflect.Field(u"builtin.reflect.Class", u"STRING"), builtin.reflect.Field(u"builtin.String", u"id"), builtin.reflect.Field(u"builtin.String", u"name"), builtin.reflect.Field(u"builtin.List<builtin.reflect.Class>", u"parameters"), builtin.reflect.Field(u"builtin.List<builtin.reflect.Field>", u"fields"), builtin.reflect.Field(u"builtin.List<builtin.reflect.Method>", u"methods")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.reflect.Class>", u"classes"), builtin.reflect.Field(u"builtin.reflect.Class", u"VOID"), builtin.reflect.Field(u"builtin.reflect.Class", u"BOOL"), builtin.reflect.Field(u"builtin.reflect.Class", u"INT"), builtin.reflect.Field(u"builtin.reflect.Class", u"LONG"), builtin.reflect.Field(u"builtin.reflect.Class", u"STRING"), builtin.reflect.Field(u"builtin.String", u"id"), builtin.reflect.Field(u"builtin.String", u"name"), builtin.reflect.Field(u"builtin.List<builtin.String>", u"parameters"), builtin.reflect.Field(u"builtin.List<builtin.reflect.Field>", u"fields"), builtin.reflect.Field(u"builtin.List<builtin.reflect.Method>", u"methods")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -419,7 +395,7 @@ class builtin_behaviors_RPC_call_Method(builtin.reflect.Method):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(builtin_behaviors_RPC_call_Method, self).__init__(u"builtin.concurrent.Future", u"call", _List([u"builtin.Object"]));
+        super(builtin_behaviors_RPC_call_Method, self).__init__(u"builtin.concurrent.Future", u"call", _List([u"builtin.List<builtin.Object>"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -446,7 +422,7 @@ class builtin_behaviors_RPC(builtin.reflect.Class):
         (self).methods = _List([builtin_behaviors_RPC_call_Method()])
 
     def construct(self, args):
-        return builtin.behaviors.RPC((args)[0], (args)[1], (args)[2])
+        return builtin.behaviors.RPC((args)[0], (args)[1])
 
     def _getClass(self):
         return None
@@ -528,7 +504,7 @@ class builtin_behaviors_RPCRequest(builtin.reflect.Class):
         super(builtin_behaviors_RPCRequest, self).__init__(u"builtin.behaviors.RPCRequest");
         (self).name = u"builtin.behaviors.RPCRequest"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.behaviors.RPC", u"rpc"), builtin.reflect.Field(u"builtin.concurrent.Future", u"retval"), builtin.reflect.Field(u"builtin.Object", u"message"), builtin.reflect.Field(u"builtin.concurrent.Timeout", u"timeout")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.behaviors.RPC", u"rpc"), builtin.reflect.Field(u"builtin.concurrent.Future", u"retval"), builtin.reflect.Field(u"builtin.List<builtin.Object>", u"args"), builtin.reflect.Field(u"builtin.concurrent.Timeout", u"timeout")])
         (self).methods = _List([builtin_behaviors_RPCRequest_call_Method(), builtin_behaviors_RPCRequest_onHTTPResponse_Method(), builtin_behaviors_RPCRequest_onTimeout_Method()])
 
     def construct(self, args):
@@ -845,6 +821,27 @@ class builtin_concurrent_Future_getError_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
+class builtin_concurrent_Future_await_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_concurrent_Future_await_Method, self).__init__(u"builtin.void", u"await", _List([u"builtin.long"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).await((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class builtin_concurrent_Future_getContext_Method(builtin.reflect.Method):
     def _init(self):
         builtin.reflect.Method._init(self)
@@ -874,7 +871,7 @@ class builtin_concurrent_Future(builtin.reflect.Class):
         (self).name = u"builtin.concurrent.Future"
         (self).parameters = _List([])
         (self).fields = _List([builtin.reflect.Field(u"builtin.concurrent.Context", u"_context"), builtin.reflect.Field(u"builtin.bool", u"_finished"), builtin.reflect.Field(u"builtin.String", u"_error"), builtin.reflect.Field(u"builtin.List<builtin.concurrent.FutureCompletion>", u"_callbacks"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"_lock")])
-        (self).methods = _List([builtin_concurrent_Future_onFinished_Method(), builtin_concurrent_Future_finish_Method(), builtin_concurrent_Future_isFinished_Method(), builtin_concurrent_Future_getError_Method(), builtin_concurrent_Future_getContext_Method()])
+        (self).methods = _List([builtin_concurrent_Future_onFinished_Method(), builtin_concurrent_Future_finish_Method(), builtin_concurrent_Future_isFinished_Method(), builtin_concurrent_Future_getError_Method(), builtin_concurrent_Future_await_Method(), builtin_concurrent_Future_getContext_Method()])
 
     def construct(self, args):
         return builtin.concurrent.Future()
@@ -1044,7 +1041,7 @@ class builtin_concurrent_Queue_builtin_concurrent_Event_(builtin.reflect.Class):
         super(builtin_concurrent_Queue_builtin_concurrent_Event_, self).__init__(u"builtin.concurrent.Queue<builtin.concurrent.Event>");
         (self).name = u"builtin.concurrent.Queue"
         (self).parameters = _List([u"builtin.concurrent.Event"])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.List<Object>", u"items"), builtin.reflect.Field(u"builtin.int", u"head"), builtin.reflect.Field(u"builtin.int", u"tail")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.List<builtin.Object>", u"items"), builtin.reflect.Field(u"builtin.int", u"head"), builtin.reflect.Field(u"builtin.int", u"tail")])
         (self).methods = _List([builtin_concurrent_Queue_builtin_concurrent_Event__put_Method(), builtin_concurrent_Queue_builtin_concurrent_Event__get_Method(), builtin_concurrent_Queue_builtin_concurrent_Event__size_Method()])
 
     def construct(self, args):
@@ -1592,14 +1589,15 @@ class Root(object):
     def _setField(self, name, value):
         pass
 Root.builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton
-Root.builtin_List_Object__md = builtin_List_Object_.singleton
+Root.builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton
+Root.builtin_List_builtin_reflect_Class__md = builtin_List_builtin_reflect_Class_.singleton
 Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton
-Root.builtin_Map_Object_Object__md = builtin_Map_Object_Object_.singleton
+Root.builtin_Map_builtin_Object_builtin_Object__md = builtin_Map_builtin_Object_builtin_Object_.singleton
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton
 Root.builtin_Service_md = builtin_Service.singleton
 Root.builtin_Client_md = builtin_Client.singleton
 Root.builtin_ServerResponder_md = builtin_ServerResponder.singleton
-Root.builtin_Server_Object__md = builtin_Server_Object_.singleton
+Root.builtin_Server_builtin_Object__md = builtin_Server_builtin_Object_.singleton
 Root.builtin_behaviors_RPC_md = builtin_behaviors_RPC.singleton
 Root.builtin_behaviors_RPCRequest_md = builtin_behaviors_RPCRequest.singleton
 Root.builtin_concurrent_Event_md = builtin_concurrent_Event.singleton

@@ -10,7 +10,7 @@ public class Box<T> implements io.datawire.quark.runtime.QObject {
         return (this).contents;
     }
     public String _getClass() {
-        return "Box<Object>";
+        return "Box<builtin.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("contents") || ((name) != null && (name).equals("contents"))) {

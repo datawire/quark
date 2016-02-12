@@ -23,7 +23,7 @@ public class Matrix<T> implements io.datawire.quark.runtime.QObject {
         ((this.columns).get(i)).set((j), (value));
     }
     public String _getClass() {
-        return "Matrix<Object>";
+        return "Matrix<builtin.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("width") || ((name) != null && (name).equals("width"))) {

@@ -4,11 +4,11 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, builti
     public static builtin.reflect.Class builtin_behaviors_RPCRequest_ref = builtin_md.Root.builtin_behaviors_RPCRequest_md;
     public RPC rpc;
     public builtin.concurrent.Future retval;
-    public Object message;
+    public java.util.ArrayList<Object> args;
     public builtin.concurrent.Timeout timeout;
-    public RPCRequest(Object message, RPC rpc) {
+    public RPCRequest(java.util.ArrayList<Object> args, RPC rpc) {
         (this).retval = (builtin.concurrent.Future) (((rpc).returned).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))));
-        (this).message = message;
+        (this).args = args;
         (this).timeout = new builtin.concurrent.Timeout((rpc).timeout);
         (this).rpc = rpc;
     }
@@ -30,7 +30,7 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, builti
             ((this).retval).finish((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned unrecognizable content"));
             return;
         } else {
-            builtin.Functions.fromJSON((this).retval, obj);
+            builtin.Functions.fromJSON(((this).rpc).returned, (this).retval, obj);
             ((this).retval).finish(null);
         }
     }
@@ -47,8 +47,8 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, builti
         if ((name)==("retval") || ((name) != null && (name).equals("retval"))) {
             return (this).retval;
         }
-        if ((name)==("message") || ((name) != null && (name).equals("message"))) {
-            return (this).message;
+        if ((name)==("args") || ((name) != null && (name).equals("args"))) {
+            return (this).args;
         }
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
             return (this).timeout;
@@ -62,8 +62,8 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, builti
         if ((name)==("retval") || ((name) != null && (name).equals("retval"))) {
             (this).retval = (builtin.concurrent.Future) (value);
         }
-        if ((name)==("message") || ((name) != null && (name).equals("message"))) {
-            (this).message = value;
+        if ((name)==("args") || ((name) != null && (name).equals("args"))) {
+            (this).args = (java.util.ArrayList<Object>) (value);
         }
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
             (this).timeout = (builtin.concurrent.Timeout) (value);

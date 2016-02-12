@@ -20,9 +20,49 @@ from .dispatch import overload
 from .helpers import *
 import ast
 
-class Root(AST):
+def join(base, rel):
+    if rel == BUILTIN:
+        return os.path.join(os.path.dirname(__file__), "builtin", BUILTIN)
+    else:
+        return urllib.basejoin(base, rel)
+
+
+class Roots(AST):
 
     def __init__(self):
+        self.roots = OrderedDict()
+
+    def add(self, root):
+        self.roots[root.url] = root
+
+    def __getitem__(self, url):
+        return self.roots[url]
+
+    def __contains__(self, url):
+        return url in self.roots
+
+    def __iter__(self):
+        return iter(self.roots.values())
+
+    def sorted(self):
+        roots = list(self)
+        def compare(x, y):
+            if x.url in y.uses:
+                return -1
+            else:
+                return 1
+        roots.sort(compare)
+        return roots
+
+    @property
+    def children(self):
+        for r in self.roots.values():
+            yield r
+
+class Root(AST):
+
+    def __init__(self, url):
+        self.url = url
         self.index = 0
         self.files = []
         self.root = self
@@ -37,6 +77,9 @@ class Root(AST):
         self.env = {}
         self.imports = []
         self.included = OrderedDict()
+        self.uses = OrderedDict()
+        self.line = -1
+        self.column = -1
 
     def add(self, file):
         self.files.append(file)
@@ -98,13 +141,19 @@ class Crosswire:
 
         self.parent = ast
 
+        if not hasattr(ast, "_marked"):
+            ast._marked = True
+            ast.line, ast.column = ast.parent.line, ast.parent.column
+
     def leave_AST(self, ast):
         self.parent = ast.parent
 
     def visit_Use(self, use):
         self.visit_AST(use)
+        qurl = join(use.root.url, use.url)
+        use.root.uses[qurl] = use
         use.file.uses[use.url] = use
-        use.target = None
+        use.qualified = qurl
 
     def visit_Include(self, inc):
         self.visit_AST(inc)
@@ -115,7 +164,6 @@ class Crosswire:
         self.visit_AST(f)
         f.uses = OrderedDict()
         f.includes = OrderedDict()
-        f.depth = 0
 
     def leave_File(self, f):
         self.leave_AST(f)
@@ -671,7 +719,7 @@ class Reflector:
         self.entry = None
 
     def visit_File(self, f):
-        if not self.entry and f.depth == 0 and f.name != "reflector":
+        if not self.entry and not is_meta(f):
             self.entry = f
 
     def package(self, pkg):
@@ -681,7 +729,7 @@ class Reflector:
             return self.package(pkg.package) + [pkg.name.text]
 
     def qtype(self, texp):
-        if isinstance(texp.type, TypeParam): return "Object"
+        if isinstance(texp.type, TypeParam): return "builtin.Object"
         result = ".".join(self.package(texp.type.package) + [texp.type.name.text])
         if isinstance(texp.type, Class) and texp.type.parameters:
             result += "<%s>" % ",".join([self.qtype(texp.bindings.get(p, TypeExpr(p, {})))
@@ -689,7 +737,7 @@ class Reflector:
         return result
 
     def qname(self, texp):
-        if isinstance(texp.type, TypeParam): return "Object"
+        if isinstance(texp.type, TypeParam): return "builtin.Object"
         return ".".join(self.package(texp.type.package) + [texp.type.name.text])
 
     def qparams(self, texp):
@@ -702,8 +750,6 @@ class Reflector:
         return '"%s"' % self.qtype(texp)
 
     def visit_Type(self, type):
-        if type.file.depth != 0: return
-
         cls = type.resolved.type
         if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
             if cls.name.text not in ("List", "Map"):
@@ -780,7 +826,8 @@ class Reflector:
 
         for ftype, fname in self.fields(cls, {}):
             getter += '    if (name == "%s") { return self.%s; }\n' % (fname, fname)
-            setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
+            if not isinstance(get_field(cls, fname).clazz, Interface):
+                setter += '    if (name == "%s") { self.%s = ?value; }\n' % (fname, fname)
 
         getter += '    return null;\n'
         getter += "}\n"
@@ -842,19 +889,21 @@ class Reflector:
         self.code = ""
         mdclasses = []
 
+        classes = OrderedDict()
         for cls in self.classes:
+            classes[cls] = None
+        classes.update(self.class_uses)
+
+        for cls in classes:
             qual = self.qual(cls)
             if cls.parameters:
-                clsid = qual + "<%s>" % ",".join(["Object"]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"Object"']*len(cls.parameters))
+                clsid = qual + "<%s>" % ",".join(["builtin.Object"]*len(cls.parameters))
+                params = "[%s]" % ",".join(['"builtin.Object"']*len(cls.parameters))
             else:
                 clsid = qual
                 params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
-
-            if cls.file.depth != 0 and cls not in self.class_uses:
-                continue
 
             uses = self.class_uses.get(cls, OrderedDict([(clsid,
                                                           (cls.resolved, cls, tuple(self.package(cls.package))))]))
@@ -887,14 +936,12 @@ class Reflector:
 class Compiler:
 
     def __init__(self):
-        self.root = Root()
+        self.roots = Roots()
+        self.root = None
         self.parser = Parser()
         self.annotators = OrderedDict()
-        self.emitters = []
-        self.generated = OrderedDict()
         self.annotator("delegate", delegate)
-        self.parsed = set()
-        self.dependencies = []
+        self.included = set()
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -902,23 +949,16 @@ class Compiler:
         else:
             self.annotators[name] = [annotator]
 
-    def emitter(self, backend, target):
-        self.emitters.append((backend, target))
-
     CACHE = {}
 
     def parse(self, name, text):
         try:
-            if name in self.CACHE:
-                file = copy(self.CACHE[name])
-            else:
-                file = self.parser.parse(text)
-                if name != "reflector":
-                    self.CACHE[name] = file
-                    file = copy(file)
+            file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
         imp = Import([Name("builtin")])
+        imp.line = -1
+        imp.column = -1
         imp._silent = True
         file.definitions.insert(0, imp)
         if not self.root.files and not name.endswith("builtin.q"):  # First file
@@ -937,59 +977,68 @@ class Compiler:
         self.root.add(file)
         return file
 
-    def urlparse(self, url, depth=0, top=True, text=None):
-        if text is None:
-            try:
-                text = self.read(url)
-            except IOError, e:
-                if top:
-                    raise CompileError(e)
-                else:
-                    raise
-        file = self.parse(url, text)
-        file.depth = depth
-        for u in file.uses.values():
-            qurl = self.join(url, u.url)
-            self.perform_use(qurl, u, depth)
-        for inc in file.includes.values():
-            qurl = self.join(url, inc.url)
-            if qurl.endswith(".q"):
-                self.perform_quark_include(qurl, inc, depth)
-            else:
-                self.perform_native_include(qurl, inc, depth)
-        return file
+    def urlparse(self, url, top=True, text=None, include=False, recurse=True):
+        if url in self.CACHE:
+            root = self.CACHE[url]
+            self.roots.add(root)
+            for u in root.uses:
+                self.roots.add(self.CACHE[u])
+            return root.files[0]
 
-    def perform_use(self, qurl, use, depth):
-        if qurl not in self.parsed:
-            self.parsed.add(qurl)
-            self.dependencies.append(qurl)
+        old = None
+        if not include and url not in self.roots:
+            old = self.root
+            self.root = Root(url)
+            self.roots.add(self.root)
+            cache = True
+        else:
+            cache = False
+        try:
+            if text is None:
+                try:
+                    text = self.read(url)
+                except IOError, e:
+                    if top:
+                        raise CompileError(e)
+                    else:
+                        raise
+            file = self.parse(url, text)
+            if recurse:
+                for u in file.uses.values():
+                    qurl = join(url, u.url)
+                    self.perform_use(qurl, u)
+                for inc in file.includes.values():
+                    qurl = join(url, inc.url)
+                    if qurl.endswith(".q"):
+                        self.perform_quark_include(qurl, inc)
+                    else:
+                        self.perform_native_include(qurl, inc)
+                self.CACHE[url] = self.root
+            return file
+        finally:
+            if old: self.root = old
+
+    def perform_use(self, qurl, use):
+        if qurl not in self.roots:
             try:
-                use.target = self.urlparse(qurl, depth=depth + 1, top=False)
+                self.urlparse(qurl, top=False)
             except IOError:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(use), use.url))  # XXX qurl instead?
 
-    def perform_quark_include(self, qurl, inc, depth):
-        if qurl not in self.parsed:
-            self.parsed.add(qurl)
+    def perform_quark_include(self, qurl, inc):
+        if qurl not in self.included:
+            self.included.add(qurl)
             try:
-                self.urlparse(qurl, depth=depth, top=False)
+                self.urlparse(qurl, top=False, include=True)
             except IOError:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
-    def perform_native_include(self, qurl, inc, depth):
-        if depth != 0:
-            return
+    def perform_native_include(self, qurl, inc):
         if inc.url not in self.root.included:
             try:
                 self.root.included[inc.url] = self.read(qurl)
             except IOError:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
-
-    def join(self, base, rel):
-        if rel == BUILTIN:
-            return os.path.join(os.path.dirname(__file__), "builtin", BUILTIN)
-        else:
-            return urllib.basejoin(base, rel)
 
     def read(self, url):
         fd = urllib.urlopen(url)
@@ -1024,15 +1073,20 @@ class Compiler:
         if check.errors:
             raise CompileError("\n".join(check.errors))
 
-    def reflect(self):
+    def reflect(self, root):
         ref = Reflector()
-        self.root.traverse(ref)
+        root.traverse(ref)
 #        with open("/tmp/reflector.q", "w") as fd:
 #            fd.write(ref.code)
-        self.parse("reflector", ref.code)
-        # XXX: this seems to cause problems, should investigate
+        old = self.root
+        self.root = root
+        try:
+            self.parse("reflector", ref.code)
+        finally:
+            self.root = old
+            # XXX: this seems to cause problems, should investigate
         #self.urlparse("reflector", text=ref.code)
-        self.icompile(self.root.files[-1])
+        self.icompile(root.files[-1])
         for cls, methods in ref.methods.items():
             for m in methods:
                 method = Parser().rule("method", m)
@@ -1047,67 +1101,45 @@ class Compiler:
                 self.icompile(field)
 
     def compile(self):
-        self.icompile(self.root)
-        self.reflect()
-        for Backend, target in self.emitters:
-            backend = Backend()
-            self.emit(backend)
-            backend.write(target)
+        for root in self.roots.sorted():
+            if getattr(root, "_compiled", False):
+                continue
+            for use in root.uses:
+                dep = self.roots[use]
+                assert getattr(dep, "_compiled", False)
+                root.env.update(dep.env)
+            self.icompile(root)
+            self.reflect(root)
+            root._compiled = True
 
-    def emit(self, backend):
-        self.root.traverse(backend)
-
-def traverse(url, func, *args, **kwargs):
+def install(url, *backends):
     c = Compiler()
     c.urlparse(url)
     c.compile()
-    for dep in c.dependencies:
-        traverse(dep, func, *args, **kwargs)
-    func(url, c, *args, **kwargs)
 
-def do_install(url, comp, backends):
-    for backend in backends:
-        b = backend()
-        if not b.is_installed(url):
-            comp.emit(b)
+    for root in c.roots.sorted():
+        for backend in backends:
+            b = backend()
+            b.roots = c.roots
+            root.traverse(b)
             b.install()
 
-def install(url, *backends):
-    traverse(url, do_install, backends)
-
-def do_compile(url, comp, target, backends, dirs):
-    dir = os.path.splitext(os.path.basename(url))[0]
-    if dir not in dirs:
-        dirs.append(dir)
-    for backend in backends:
-        b = backend()
-        comp.emit(b)
-        out = os.path.join(os.path.join(target, b.ext), dir)
-        b.write(out)
-
 def compile(url, target, *backends):
-    mods = []
-    traverse(url, do_compile, target, backends, mods)
-    return mods
-
-
-from backend import Java, Python, JavaScript
-
-
-def main(srcs, java=None, python=None, javascript=None):
     c = Compiler()
+    c.urlparse(url)
+    c.compile()
 
-    if java: c.emitter(Java, java)
-    if python: c.emitter(Python, python)
-    if javascript: c.emitter(JavaScript, javascript)
+    dirs = []
 
-    try:
-        for src in srcs:
-            c.urlparse(src)
-        c.compile()
-    except IOError, e:
-        return e
-    except ParseError, e:
-        return e
-    except CompileError, e:
-        return e
+    for root in c.roots.sorted():
+        dir = os.path.splitext(os.path.basename(root.url))[0]
+        if dir not in dirs:
+            dirs.append(dir)
+        for backend in backends:
+            b = backend()
+            b.roots = c.roots
+            root.traverse(b)
+            out = os.path.join(os.path.join(target, b.ext), dir)
+            b.write(out)
+
+    return dirs

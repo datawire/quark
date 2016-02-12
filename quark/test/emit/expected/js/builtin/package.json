@@ -4,7 +4,8 @@
     "version": "0.0.1",
     "main": "index.js",
     "dependencies": {
-        "ws": "1.0"
+        "ws": "1.0",
+        "winston": "2.1.1"
     }
 }
         

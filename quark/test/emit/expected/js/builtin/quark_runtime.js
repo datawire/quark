@@ -188,6 +188,13 @@
     }
     JSONObject.prototype.toString = JSONObject_toString;
 
+    function JSONObject_keys() {
+        if (this.getType() !== "object") {
+            return null;
+        }
+        return Object.getOwnPropertyNames(this.value);
+    }
+    JSONObject.prototype.keys = JSONObject_keys;
 
     function JSONObject_setString(value) {
         this.value = value;

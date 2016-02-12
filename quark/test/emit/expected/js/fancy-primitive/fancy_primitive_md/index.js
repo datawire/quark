@@ -4,40 +4,40 @@ exports.builtin = builtin;
 
 
 
-// CLASS builtin_List_Object_
+// CLASS builtin_List_builtin_Object_
 
-function builtin_List_Object_() {
-    builtin_List_Object_.super_.call(this, "builtin.List<Object>");
+function builtin_List_builtin_Object_() {
+    builtin_List_builtin_Object_.super_.call(this, "builtin.List<builtin.Object>");
     (this).name = "builtin.List";
-    (this).parameters = ["Object"];
+    (this).parameters = ["builtin.Object"];
     (this).fields = [];
     (this).methods = [];
 }
-exports.builtin_List_Object_ = builtin_List_Object_;
-_qrt.util.inherits(builtin_List_Object_, builtin.reflect.Class);
+exports.builtin_List_builtin_Object_ = builtin_List_builtin_Object_;
+_qrt.util.inherits(builtin_List_builtin_Object_, builtin.reflect.Class);
 
-function builtin_List_Object___init_fields__() {
+function builtin_List_builtin_Object___init_fields__() {
     builtin.reflect.Class.prototype.__init_fields__.call(this);
 }
-builtin_List_Object_.prototype.__init_fields__ = builtin_List_Object___init_fields__;
-builtin_List_Object_.singleton = new builtin_List_Object_();
-function builtin_List_Object__construct(args) {
+builtin_List_builtin_Object_.prototype.__init_fields__ = builtin_List_builtin_Object___init_fields__;
+builtin_List_builtin_Object_.singleton = new builtin_List_builtin_Object_();
+function builtin_List_builtin_Object__construct(args) {
     return new Array();
 }
-builtin_List_Object_.prototype.construct = builtin_List_Object__construct;
+builtin_List_builtin_Object_.prototype.construct = builtin_List_builtin_Object__construct;
 
-function builtin_List_Object___getClass() {
+function builtin_List_builtin_Object___getClass() {
     return null;
 }
-builtin_List_Object_.prototype._getClass = builtin_List_Object___getClass;
+builtin_List_builtin_Object_.prototype._getClass = builtin_List_builtin_Object___getClass;
 
-function builtin_List_Object___getField(name) {
+function builtin_List_builtin_Object___getField(name) {
     return null;
 }
-builtin_List_Object_.prototype._getField = builtin_List_Object___getField;
+builtin_List_builtin_Object_.prototype._getField = builtin_List_builtin_Object___getField;
 
-function builtin_List_Object___setField(name, value) {}
-builtin_List_Object_.prototype._setField = builtin_List_Object___setField;
+function builtin_List_builtin_Object___setField(name, value) {}
+builtin_List_builtin_Object_.prototype._setField = builtin_List_builtin_Object___setField;
 
 
 // CLASS Root
@@ -48,7 +48,7 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.builtin_List_Object__md = builtin_List_Object_.singleton;
+Root.builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton;
 function Root__getClass() {
     return null;
 }

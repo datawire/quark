@@ -36,7 +36,7 @@ class X(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return u"X<Object>"
+        return u"X<builtin.Object>"
 
     def _getField(self, name):
         return None

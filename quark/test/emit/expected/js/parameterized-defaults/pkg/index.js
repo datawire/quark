@@ -14,7 +14,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-
+Foo.pkg_Foo_builtin_Object__ref = parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md;
 function Foo_foo() {
     return this.get();
 }
@@ -69,7 +69,7 @@ function Box__init_fields__() {
 Box.prototype.__init_fields__ = Box__init_fields__;
 
 function Box__getClass() {
-    return "pkg.Box<Object>";
+    return "pkg.Box<builtin.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 

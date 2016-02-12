@@ -52,16 +52,34 @@ public class Functions {
     /**
      * deserialize json into provided result object. Skip over fields starting with underscore
      */
-    public static Object fromJSON(Object result, io.datawire.quark.runtime.JSONObject json) {
+    public static Object fromJSON(builtin.reflect.Class cls, Object result, io.datawire.quark.runtime.JSONObject json) {
         if (((json)==(null) || ((json) != null && (json).equals(null))) || ((json).isNull())) {
             return null;
         }
         Integer idx = 0;
-        builtin.reflect.Class cls = builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(result));
+        if ((result)==(null) || ((result) != null && (result).equals(null))) {
+            if (((cls).name)==("builtin.String") || (((cls).name) != null && ((cls).name).equals("builtin.String"))) {
+                String s = (json).getString();
+                return s;
+            }
+            if (((cls).name)==("builtin.float") || (((cls).name) != null && ((cls).name).equals("builtin.float"))) {
+                Double flt = (json).getNumber();
+                return flt;
+            }
+            if (((cls).name)==("builtin.int") || (((cls).name) != null && ((cls).name).equals("builtin.int"))) {
+                Integer i = ((int) Math.round((json).getNumber()));
+                return i;
+            }
+            if (((cls).name)==("builtin.bool") || (((cls).name) != null && ((cls).name).equals("builtin.bool"))) {
+                Boolean b = (json).getBool();
+                return b;
+            }
+            result = (cls).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        }
         if (((cls).name)==("builtin.List") || (((cls).name) != null && ((cls).name).equals("builtin.List"))) {
             java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) (result);
             while ((idx) < ((json).size())) {
-                (list).add(Functions.fromJSON((((cls).parameters).get(0)).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))), (json).getListItem(idx)));
+                (list).add(Functions.fromJSON(((cls).getParameters()).get(0), null, (json).getListItem(idx)));
                 idx = (idx) + (1);
             }
             return list;
@@ -73,31 +91,9 @@ public class Functions {
             if (Boolean.valueOf(((f).name).startsWith("_"))) {
                 continue;
             }
-            if ((((f).getType()).name)==("builtin.String") || ((((f).getType()).name) != null && (((f).getType()).name).equals("builtin.String"))) {
-                String s = ((json).getObjectItem((f).name)).getString();
-                ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, s);
-                continue;
+            if (!(((json).getObjectItem((f).name)).isNull())) {
+                ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON((f).getType(), null, (json).getObjectItem((f).name)));
             }
-            if ((((f).getType()).name)==("builtin.float") || ((((f).getType()).name) != null && (((f).getType()).name).equals("builtin.float"))) {
-                Double flt = ((json).getObjectItem((f).name)).getNumber();
-                ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, flt);
-                continue;
-            }
-            if ((((f).getType()).name)==("builtin.int") || ((((f).getType()).name) != null && (((f).getType()).name).equals("builtin.int"))) {
-                if (!(((json).getObjectItem((f).name)).isNull())) {
-                    Integer i = ((int) Math.round(((json).getObjectItem((f).name)).getNumber()));
-                    ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, i);
-                }
-                continue;
-            }
-            if ((((f).getType()).name)==("builtin.bool") || ((((f).getType()).name) != null && (((f).getType()).name).equals("builtin.bool"))) {
-                if (!(((json).getObjectItem((f).name)).isNull())) {
-                    Boolean b = ((json).getObjectItem((f).name)).getBool();
-                    ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, b);
-                }
-                continue;
-            }
-            ((io.datawire.quark.runtime.QObject) (result))._setField((f).name, Functions.fromJSON(((f).getType()).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))), (json).getObjectItem((f).name)));
         }
         return result;
     }

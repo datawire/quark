@@ -6,7 +6,7 @@ public class builtin_Client extends builtin.reflect.Class implements io.datawire
         super("builtin.Client");
         (this).name = "builtin.Client";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "url"), new builtin.reflect.Field("builtin.long", "timeout")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "url"), new builtin.reflect.Field("builtin.long", "_timeout")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

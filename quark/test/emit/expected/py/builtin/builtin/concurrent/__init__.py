@@ -9,10 +9,13 @@ class Event(object):
     The contract between event implementations and Collector
     """
 
-    def getContext(self): assert False
+    def getContext(self):
+        assert False
 
-    def fireEvent(self): assert False
+    def fireEvent(self):
+        assert False
 
+Event.builtin_concurrent_Event_ref = builtin_md.Root.builtin_concurrent_Event_md
 class FutureListener(object):
     """
     event handler for a future completion
@@ -21,6 +24,7 @@ class FutureListener(object):
     def onFuture(self, future):
         pass
 
+FutureListener.builtin_concurrent_FutureListener_ref = builtin_md.Root.builtin_concurrent_FutureListener_md
 class FutureCompletion(object):
     """
     internal class that binds a listener to a future
@@ -148,6 +152,9 @@ class Future(EventContext):
         error = (self)._error;
         ((self)._lock).release();
         return error
+
+    def await(self, timeout):
+        (FutureWait()).wait(self, timeout);
 
     def _getClass(self):
         return u"builtin.concurrent.Future"
@@ -299,7 +306,7 @@ class Queue(object):
         return ((self).tail) - ((self).head)
 
     def _getClass(self):
-        return u"builtin.concurrent.Queue<Object>"
+        return u"builtin.concurrent.Queue<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"items")):
@@ -450,8 +457,10 @@ class TimeoutListener(object):
     Timeout expiry handler
     """
 
-    def onTimeout(self, timeout): assert False
+    def onTimeout(self, timeout):
+        assert False
 
+TimeoutListener.builtin_concurrent_TimeoutListener_ref = builtin_md.Root.builtin_concurrent_TimeoutListener_md
 class TimeoutExpiry(object):
     """
     Timeout expiry event

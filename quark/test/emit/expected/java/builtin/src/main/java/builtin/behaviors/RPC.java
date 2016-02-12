@@ -6,30 +6,30 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     public builtin.reflect.Class returned;
     public Long timeout;
     public String name;
-    public RPC(builtin.Service service, String name, java.util.ArrayList<Object> options) {
-        Long timeout = (service).getTimeout();
-        if (((options).size()) > (0)) {
-            java.util.HashMap<String,Object> map = (java.util.HashMap<String,Object>) ((options).get(0));
-            Integer override = (Integer) ((map).get("timeout"));
-            if (!((override)==(null) || ((override) != null && (override).equals(null)))) {
-                timeout = new Long(override);
-            }
+    public RPC(builtin.Service service, String name) {
+        Long timeout = (Long) (((io.datawire.quark.runtime.QObject) (service))._getField("timeout"));
+        if (((timeout)==(null) || ((timeout) != null && (timeout).equals(null))) || ((timeout) <= (new Long(0)))) {
+            timeout = new Long(10000);
+        }
+        Long override = (service).getTimeout();
+        if ((!((override)==(null) || ((override) != null && (override).equals(null)))) && ((override) > (new Long(0)))) {
+            timeout = override;
         }
         (this).returned = ((builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(service))).getMethod(name)).getType();
         (this).timeout = timeout;
         (this).name = name;
         (this).service = service;
     }
-    public builtin.concurrent.Future call(Object message) {
+    public builtin.concurrent.Future call(java.util.ArrayList<Object> args) {
         io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).service).getURL());
-        io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(message, null);
+        io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(args, null);
         io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
         (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).name)));
         (envelope).setObjectItem(("$context"), ((new io.datawire.quark.runtime.JSONObject()).setString("TBD")));
         (envelope).setObjectItem(("rpc"), (json));
         (request).setBody((envelope).toString());
         (request).setMethod("POST");
-        RPCRequest rpc = new RPCRequest(message, this);
+        RPCRequest rpc = new RPCRequest(args, this);
         builtin.concurrent.Future result = (rpc).call(request);
         builtin.concurrent.FutureWait.waitFor(result, new Long(1000));
         return result;

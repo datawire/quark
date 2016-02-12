@@ -6,7 +6,7 @@ public class builtin_concurrent_Queue_builtin_concurrent_Event_ extends builtin.
         super("builtin.concurrent.Queue<builtin.concurrent.Event>");
         (this).name = "builtin.concurrent.Queue";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.concurrent.Event"}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.List<Object>", "items"), new builtin.reflect.Field("builtin.int", "head"), new builtin.reflect.Field("builtin.int", "tail")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.List<builtin.Object>", "items"), new builtin.reflect.Field("builtin.int", "head"), new builtin.reflect.Field("builtin.int", "tail")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_concurrent_Queue_builtin_concurrent_Event__put_Method(), new builtin_concurrent_Queue_builtin_concurrent_Event__get_Method(), new builtin_concurrent_Queue_builtin_concurrent_Event__size_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

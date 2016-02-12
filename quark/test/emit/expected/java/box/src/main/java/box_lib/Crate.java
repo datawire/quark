@@ -11,7 +11,7 @@ public class Crate<T> implements io.datawire.quark.runtime.QObject {
         return ((this).box).get();
     }
     public String _getClass() {
-        return "Crate<Object>";
+        return "Crate<builtin.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("box") || ((name) != null && (name).equals("box"))) {

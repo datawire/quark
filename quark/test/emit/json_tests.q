@@ -45,8 +45,30 @@ void test_iterate_list_directory() {
     }
 }
 
+void iterables() {
+    JSONObject jobj = new JSONObject()
+        .setObjectItem("sub-object", new JSONObject()
+                       .setObjectItem("astring", "string value".toJSON())
+                       .setObjectItem("aint", 9.toJSON())
+                       .setObjectItem("atrue", new JSONObject().setBool(true))
+                       .setObjectItem("afalse", new JSONObject().setBool(false))
+                       .setObjectItem("anull", new JSONObject().setNull()))
+        .setObjectItem("sub-list", new JSONObject()
+                       .setListItem(0, "after this string expect 42 and null".toJSON())
+                       .setListItem(1, 42.toJSON())
+                       .setListItem(2, new JSONObject().setNull()))
+        .setObjectItem("sub-string", new JSONObject().setString("a string"));
+    List<String> keys = jobj.keys();
+    keys.sort();
+    print(keys);
+    keys = jobj["sub-object"].keys();
+    keys.sort();
+    print(keys);
+}
+
 void main() {
     test_roundtrip();
     test_iterate_list();
     test_iterate_list_directory();
+    iterables();
 }

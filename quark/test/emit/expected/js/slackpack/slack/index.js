@@ -20,7 +20,7 @@ exports.SlackHandler = SlackHandler;
 
 function SlackHandler__init_fields__() {}
 SlackHandler.prototype.__init_fields__ = SlackHandler__init_fields__;
-
+SlackHandler.slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md;
 function SlackHandler_onSlackEvent(event) {}
 SlackHandler.prototype.onSlackEvent = SlackHandler_onSlackEvent;
 

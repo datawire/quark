@@ -38,7 +38,7 @@ install:
 - pip install --upgrade pip
 - scripts/develop.sh
 script:
-- py.test -v $TEST_SUITE
+- py.test -v $TEST_SUITE --durations=10
 notifications:
   slack:
     rooms:

@@ -24,13 +24,11 @@ Store that token in a file in this directory
 
 ## Python
 
-Compile the quark interface into a package. Install the quark Python threaded
-integration and the generated package:
+Compile and install the quark interface:
 
-    quark --python package slack.q
-    pip install datawire-quark-threaded slack/py/dist/slack-0.1.0-py2-none-any.whl
+    quark install slack.q --python
 
-Run the bot
+Run the bot:
 
     python bot.py
 
@@ -39,13 +37,11 @@ Run the bot
 
 **Note**: This will require node 4.2.2 or later.
 
-Compile the quark interface into a package. Install that package.
+Compile and install the quark interface:
 
-    quark --javascript package slack.q
-    npm install datawire-quark-node
-    npm install slack/js/slack.tgz
+    quark install slack.q --javascript
 
-Run the bot
+Run the bot:
 
     node bot.js
 
@@ -54,11 +50,10 @@ Run the bot
 
 **Note**: This will require maven.
 
-Compile the quark interface. Install the result using Maven.
+Compile and install the quark interface:
 
-    quark --java compile slack.q && ( cd slack/java && mvn install; )
+    quark install slack.q --java
 
-
-Build and run the bot
+Build and run the bot:
 
     mvn compile && mvn exec:java -Dexec.mainClass="bot.SlackBot"

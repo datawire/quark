@@ -4,14 +4,14 @@ File(Use(url=builtin.q), Import(Name(builtin)),
    Local(
     Declaration(Type(Name(Map), Type(Name(String)), Type(Name(int))),
      Name(map), Call(Type(Name(Map), Type(Name(String)), Type(Name(int))),
-     $type=1.builtin.Map<1.builtin.String,1.builtin.int>),
-    $type=1.builtin.Map<1.builtin.String,1.builtin.int>)),
+     $type=0.builtin.Map<0.builtin.String,0.builtin.int>),
+    $type=0.builtin.Map<0.builtin.String,0.builtin.int>)),
    ExprStmt(Call(Attr(Var(Name(map),
-      $type=1.builtin.Map<1.builtin.String,1.builtin.int>), Name(__set__),
-     $type=1.builtin.Map.__set__), String("pi", $type=1.builtin.String),
-     Number(3, $type=1.builtin.int), $type=1.builtin.void)),
+      $type=0.builtin.Map<0.builtin.String,0.builtin.int>), Name(__set__),
+     $type=0.builtin.Map.__set__), String("pi", $type=0.builtin.String),
+     Number(3, $type=0.builtin.int), $type=0.builtin.void)),
    ExprStmt(Call(Attr(Var(Name(map),
-      $type=1.builtin.Map<1.builtin.String,1.builtin.int>), Name(__get__),
-     $type=1.builtin.Map.__get__), String("pi", $type=1.builtin.String),
-    $type=1.builtin.int))))
+      $type=0.builtin.Map<0.builtin.String,0.builtin.int>), Name(__get__),
+     $type=0.builtin.Map.__get__), String("pi", $type=0.builtin.String),
+    $type=0.builtin.int))))
 )

@@ -64,7 +64,7 @@ function Box_set(contents) {
 Box.prototype.set = Box_set;
 
 function Box__getClass() {
-    return "Box<Object>";
+    return "Box<builtin.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 

@@ -13,7 +13,7 @@ class Box(object):
         return (self).contents
 
     def _getClass(self):
-        return u"Box<Object>"
+        return u"Box<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):
@@ -41,7 +41,7 @@ class Crate(object):
         return ((self).box).get()
 
     def _getClass(self):
-        return u"Crate<Object>"
+        return u"Crate<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"box")):

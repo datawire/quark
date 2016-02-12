@@ -19,7 +19,7 @@ public class ServerServiceStub implements Service {
     }
 
     @Override
-    public Future rpc(String name, Object message, java.util.ArrayList<Object> options) {
+    public Future rpc(String name, java.util.ArrayList<Object> args) {
         // TODO Auto-generated method stub
         return null;
     }

@@ -13,7 +13,7 @@ class Box(object):
         return (self).contents
 
     def _getClass(self):
-        return u"test3.Box<Object>"
+        return u"test3.Box<builtin.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):

@@ -10,7 +10,7 @@ public class builtin_behaviors_RPC extends builtin.reflect.Class implements io.d
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin_behaviors_RPC_call_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
-        return new builtin.behaviors.RPC((builtin.Service) ((args).get(0)), (String) ((args).get(1)), (java.util.ArrayList<Object>) ((args).get(2)));
+        return new builtin.behaviors.RPC((builtin.Service) ((args).get(0)), (String) ((args).get(1)));
     }
     public String _getClass() {
         return (String) (null);

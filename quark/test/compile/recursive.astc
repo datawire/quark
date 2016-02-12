@@ -1,5 +1,5 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
  Function(Type(Name(int)), Name(foo), Block(
-   ExprStmt(Call(Var(Name(foo), $type=0.foo), $type=1.builtin.int))))
+   ExprStmt(Call(Var(Name(foo), $type=0.foo), $type=0.builtin.int))))
 )

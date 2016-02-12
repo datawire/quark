@@ -35,6 +35,8 @@ class Backend(object):
         self.rootname = None
         self.entry = None
         self.dist = None
+        self.root = None
+        self.roots = None
         self.dependencies = OrderedDict()
 
     def install(self):
@@ -43,36 +45,37 @@ class Backend(object):
         self.write(dir)
         self.install_command(dir)
 
+    def visit_Root(self, r):
+        self.root = r
+
     def visit_DistUnit(self, du):
         self.dist = du
 
     def visit_Dependency(self, dep):
-        if dep.file.depth == 0:
-            self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
+        self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
 
     def visit_Use(self, use):
-        name, ver = namever(use.target)
-        self.dependencies[name] = use.target
+        entry = self.roots[use.qualified].files[0]
+        name, ver = namever(entry)
+        self.dependencies[name] = entry
 
     def visit_File(self, file):
-        if not self.entry and file.depth == 0 and file.name != "reflector":
+        if not self.entry and not is_meta(file):
             self.entry = file
 
     def visit_Class(self, cls):
-        if cls.file.depth == 0:
-            self.definitions.append(cls)
+        self.definitions.append(cls)
 
     def visit_Primitive(self, p):
         pass
 
     def visit_Function(self, f):
-        if f.file.depth == 0 and not isinstance(f, Method):
+        if not isinstance(f, Method):
             self.definitions.append(f)
 
     def visit_Package(self, p):
-        if p.file.depth == 0:
-            self.packages.append(p)
-            self.definitions.append(p)
+        self.packages.append(p)
+        self.definitions.append(p)
 
     def leave_Root(self, r):
         if self.dist:
@@ -91,7 +94,7 @@ class Backend(object):
                     break
             else:
                 # XXX: first file is builtin, last file is reflector
-                roots = [self.gen.name(self.fname(r.files[1]))]
+                roots = [self.gen.name(self.fname(self.entry))]
         self.rootname = "_".join(roots)
 
         for d in self.definitions:
@@ -151,7 +154,7 @@ class Backend(object):
         else:
             org = (self.rootname,)
         if pkg != org:
-            if obj.file.depth > 0:
+            if obj.root != self.root:
                 dep, ver = namever(obj.file)
             else:
                 dep = None
@@ -314,9 +317,16 @@ class Backend(object):
         bases = [self.type(t) for t in iface.bases]
 
         methods = []
+        static_fields = []
 
         for d in iface.definitions:
-            if isinstance(d, Method):
+            if isinstance(d, Field) and d.static:
+                static_fields.append(self.gen.static_field(self.doc(d),
+                                                           name,
+                                                           self.type(d.type),
+                                                           self.name(d.name),
+                                                           self.expr(d.value)))
+            elif isinstance(d, Method):
                 methods.append(self.gen.interface_method(self.doc(d),
                                                          name,
                                                          self.type(d.type),
@@ -324,7 +334,7 @@ class Backend(object):
                                                          [self.param(p) for p in d.params],
                                                          self.block(d.body)))
 
-        return self.gen.interface(self.doc(iface), name, parameters, bases,
+        return self.gen.interface(self.doc(iface), name, parameters, bases, static_fields,
                                   methods)
 
     def default_constructors(self, cls):
@@ -569,7 +579,7 @@ class Backend(object):
         f = get_field(cls, attr)
         if f.static:
             path = self.add_import(f.clazz)
-            return self.gen.get_static_field(path, self.name(cls.name), self.name(attr))
+            return self.gen.get_static_field(path, self.name(f.clazz.name), self.name(attr))
         else:
             return self.gen.get_field(self.expr(expr), self.name(attr))
 
@@ -671,7 +681,16 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import command
+import command, os, sys
+
+def is_virtual():
+    return hasattr(sys, "real_prefix")
+
+def is_root():
+    return os.geteuid() == 0
+
+def is_user():
+    return not is_virtual() and not is_root()
 
 class Java(Backend):
 
@@ -698,7 +717,9 @@ class Python(Backend):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            command.call_and_show("install", dir, ["pip", "install", "--upgrade", "dist/%s" % wheel])
+            cmd = ["pip", "install", "--upgrade", "dist/%s" % wheel]
+            if is_user(): cmd += ["--user"]
+            command.call_and_show("install", dir, cmd)
 
 class JavaScript(Backend):
 

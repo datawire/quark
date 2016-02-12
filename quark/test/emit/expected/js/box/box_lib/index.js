@@ -22,7 +22,7 @@ function Box_get() {
 Box.prototype.get = Box_get;
 
 function Box__getClass() {
-    return "Box<Object>";
+    return "Box<builtin.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 
@@ -64,7 +64,7 @@ function Crate_get() {
 Crate.prototype.get = Crate_get;
 
 function Crate__getClass() {
-    return "Crate<Object>";
+    return "Crate<builtin.Object>";
 }
 Crate.prototype._getClass = Crate__getClass;
 

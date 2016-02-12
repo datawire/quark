@@ -61,16 +61,34 @@ exports.toJSON = toJSON;
 /**
  * deserialize json into provided result object. Skip over fields starting with underscore
  */
-function fromJSON(result, json) {
+function fromJSON(cls, result, json) {
     if (((json) === (null)) || ((json).isNull())) {
         return null;
     }
     var idx = 0;
-    var cls = reflect.Class.get(_qrt._getClass(result));
+    if ((result) === (null)) {
+        if (((cls).name) === ("builtin.String")) {
+            var s = (json).getString();
+            return s;
+        }
+        if (((cls).name) === ("builtin.float")) {
+            var flt = (json).getNumber();
+            return flt;
+        }
+        if (((cls).name) === ("builtin.int")) {
+            var i = Math.round((json).getNumber());
+            return i;
+        }
+        if (((cls).name) === ("builtin.bool")) {
+            var b = (json).getBool();
+            return b;
+        }
+        result = (cls).construct([]);
+    }
     if (((cls).name) === ("builtin.List")) {
         var list = result;
         while ((idx) < ((json).size())) {
-            (list).push(fromJSON((((cls).parameters)[0]).construct([]), (json).getListItem(idx)));
+            (list).push(fromJSON(((cls).getParameters())[0], null, (json).getListItem(idx)));
             idx = (idx) + (1);
         }
         return list;
@@ -82,31 +100,9 @@ function fromJSON(result, json) {
         if ((((f).name).indexOf("_")===0)) {
             continue;
         }
-        if ((((f).getType()).name) === ("builtin.String")) {
-            var s = ((json).getObjectItem((f).name)).getString();
-            (result)._setField(((f).name), (s));
-            continue;
+        if (!(((json).getObjectItem((f).name)).isNull())) {
+            (result)._setField(((f).name), (fromJSON((f).getType(), null, (json).getObjectItem((f).name))));
         }
-        if ((((f).getType()).name) === ("builtin.float")) {
-            var flt = ((json).getObjectItem((f).name)).getNumber();
-            (result)._setField(((f).name), (flt));
-            continue;
-        }
-        if ((((f).getType()).name) === ("builtin.int")) {
-            if (!(((json).getObjectItem((f).name)).isNull())) {
-                var i = Math.round(((json).getObjectItem((f).name)).getNumber());
-                (result)._setField(((f).name), (i));
-            }
-            continue;
-        }
-        if ((((f).getType()).name) === ("builtin.bool")) {
-            if (!(((json).getObjectItem((f).name)).isNull())) {
-                var b = ((json).getObjectItem((f).name)).getBool();
-                (result)._setField(((f).name), (b));
-            }
-            continue;
-        }
-        (result)._setField(((f).name), (fromJSON(((f).getType()).construct([]), (json).getObjectItem((f).name))));
     }
     return result;
 }
@@ -174,16 +170,16 @@ exports.Service = Service;
 
 function Service__init_fields__() {}
 Service.prototype.__init_fields__ = Service__init_fields__;
-
+Service.builtin_Service_ref = builtin_md.Root.builtin_Service_md;
 function Service_getURL() { /* interface */ }
 Service.prototype.getURL = Service_getURL;
 
 function Service_getTimeout() { /* interface */ }
 Service.prototype.getTimeout = Service_getTimeout;
 
-function Service_rpc(name, message, options) {
-    var rpc = new behaviors.RPC(this, name, options);
-    return (rpc).call(message);
+function Service_rpc(name, args) {
+    var rpc = new behaviors.RPC(this, name);
+    return (rpc).call(args);
 }
 Service.prototype.rpc = Service_rpc;
 
@@ -192,13 +188,13 @@ Service.prototype.rpc = Service_rpc;
 function Client(url) {
     this.__init_fields__();
     (this).url = url;
-    (this).timeout = (0);
+    (this)._timeout = (0);
 }
 exports.Client = Client;
 
 function Client__init_fields__() {
     this.url = null;
-    this.timeout = null;
+    this._timeout = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md;
@@ -208,12 +204,12 @@ function Client_getURL() {
 Client.prototype.getURL = Client_getURL;
 
 function Client_getTimeout() {
-    return (this).timeout;
+    return (this)._timeout;
 }
 Client.prototype.getTimeout = Client_getTimeout;
 
 function Client_setTimeout(timeout) {
-    (this).timeout = timeout;
+    (this)._timeout = timeout;
 }
 Client.prototype.setTimeout = Client_setTimeout;
 
@@ -226,8 +222,8 @@ function Client__getField(name) {
     if ((name) === ("url")) {
         return (this).url;
     }
-    if ((name) === ("timeout")) {
-        return (this).timeout;
+    if ((name) === ("_timeout")) {
+        return (this)._timeout;
     }
     return null;
 }
@@ -237,8 +233,8 @@ function Client__setField(name, value) {
     if ((name) === ("url")) {
         (this).url = value;
     }
-    if ((name) === ("timeout")) {
-        (this).timeout = value;
+    if ((name) === ("_timeout")) {
+        (this)._timeout = value;
     }
 }
 Client.prototype._setField = Client__setField;
@@ -308,11 +304,12 @@ function Server__init_fields__() {
     this.impl = null;
 }
 Server.prototype.__init_fields__ = Server__init_fields__;
-Server.builtin_Server_Object__ref = builtin_md.Root.builtin_Server_Object__md;
+Server.builtin_List_builtin_reflect_Class__ref = builtin_md.Root.builtin_List_builtin_reflect_Class__md;
+Server.builtin_Server_builtin_Object__ref = builtin_md.Root.builtin_Server_builtin_Object__md;
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
     var envelope = _qrt.json_from_string(body);
-    if (((((envelope).getObjectItem("$method")) === ((envelope).undefined())) || (((envelope).getObjectItem("rpc")) === ((envelope).undefined()))) || ((((envelope).getObjectItem("rpc")).getObjectItem("$class")) === (((envelope).getObjectItem("rpc")).undefined()))) {
+    if ((((envelope).getObjectItem("$method")) === ((envelope).undefined())) || (((envelope).getObjectItem("rpc")) === ((envelope).undefined()))) {
         (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
         (response).setCode(400);
         (concurrent.Context.runtime()).respond(request, response);
@@ -320,10 +317,14 @@ function Server_onHTTPRequest(request, response) {
         var methodName = ((envelope).getObjectItem("$method")).getString();
         var json = (envelope).getObjectItem("rpc");
         var method = (((reflect.Class.get(_qrt._getClass(this))).getField("impl")).getType()).getMethod(methodName);
-        var argType = reflect.Class.get(((method).parameters)[0]);
-        var arg = (argType).construct([]);
-        var argument = fromJSON(arg, json);
-        var result = (method).invoke(this.impl, [argument]);
+        var params = (method).getParameters();
+        var args = [];
+        var idx = 0;
+        while ((idx) < ((params).length)) {
+            (args).push(fromJSON((params)[idx], null, (json).getListItem(idx)));
+            idx = (idx) + (1);
+        }
+        var result = (method).invoke(this.impl, args);
         (result).onFinished(new ServerResponder(request, response));
     }
 }
@@ -335,7 +336,7 @@ function Server_onServletError(url, message) {
 Server.prototype.onServletError = Server_onServletError;
 
 function Server__getClass() {
-    return "builtin.Server<Object>";
+    return "builtin.Server<builtin.Object>";
 }
 Server.prototype._getClass = Server__getClass;
 

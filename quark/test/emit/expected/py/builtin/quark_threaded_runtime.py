@@ -15,21 +15,18 @@ import logging
 from wsgiref import util
 from Queue import Queue, Empty
 
+import ws4py
+if ws4py.__version__ != "0.3.4":
+    from ws4py.server.wsgirefserver import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
+else:
+    from quark_ws4py_fixup import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
 from ws4py.client.threadedclient import WebSocketClient
 from ws4py.server.wsgirefserver import WSGIServer as _QuarkWSGIServer
 from ws4py.server.wsgiutils import WebSocketWSGIApplication
 from ws4py.websocket import WebSocket
 from ws4py.exc import HandshakeError
 
-import ws4py
-if ws4py.__version__ != "0.3.4":
-    from ws4py.server.wsgirefserver import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
-else:
-    from quark_ws4py_fixup import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
-
-
 from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec, Buffer
-
 
 class _Terminator(object):
 
@@ -364,7 +361,9 @@ class Url(object):
 
 class ThreadedRuntime(object):
 
+
     def __init__(self):
+        self._codec = _default_codec()
         self.lock = threading.Condition()
         self.events = Queue()
         self.token_counter = 0
@@ -495,6 +494,18 @@ class ThreadedRuntime(object):
     def codec(self):
         return self._codec
 
+    def logger(self, topic):
+        return Logger(topic)
+
+class Logger(object):
+    def __init__(self, topic):
+        self.impl = logging.getLogger(topic)
+
+    def trace(self, msg): self.impl.debug("%s", msg)
+    def debug(self, msg): self.impl.debug("%s", msg)
+    def info(self, msg): self.impl.info("%s", msg)
+    def warn(self, msg): self.impl.warning("%s", msg)
+    def error(self, msg): self.impl.error("%s", msg)
 
 _global_lock = threading.Lock()
 _threaded_runtime = None
