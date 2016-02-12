@@ -2,7 +2,6 @@ os:
 - linux
 sudo: false
 env:
-- TRAVIS_NODE_VERSION="4.2.2"
 - TEST_SUITE=quark
 - TEST_SUITE=runtime
 language:
@@ -31,8 +30,8 @@ install:
 - python --version 2>&1 | grep -Fe 'Python 2.7'
 - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
   && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
-  install $TRAVIS_NODE_VERSION
-- nvm alias default $TRAVIS_NODE_VERSION
+  install 4.2.2
+- nvm alias default 4.2.2
 - node --version
 - virtualenv quark-travis
 - . quark-travis/bin/activate
