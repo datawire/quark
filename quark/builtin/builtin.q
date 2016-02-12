@@ -1,4 +1,5 @@
 use js ws 1.0;
+use js winston 2.1.1;
 include quark_runtime.js;
 include quark_node_runtime.js;
 
@@ -24,8 +25,10 @@ include io/datawire/quark/runtime/HTTPResponse.java;
 include io/datawire/quark/runtime/HTTPServlet.java;
 include io/datawire/quark/runtime/JSONObject.java;
 include io/datawire/quark/runtime/Lock.java;
+include io/datawire/quark/runtime/Logger.java;
 include io/datawire/quark/runtime/Mutex.java;
 include io/datawire/quark/runtime/QObject.java;
+include io/datawire/quark/runtime/QuarkJavaLogger.java;
 include io/datawire/quark/runtime/Runtime.java;
 include io/datawire/quark/runtime/Servlet.java;
 include io/datawire/quark/runtime/Task.java;
@@ -401,6 +404,24 @@ namespace builtin {
 
         @doc("Display the explanatory message and then terminate the program")
         void fail(String message);
+
+        @doc("Get a logger for the specified topic.")
+        Logger logger(String topic);
+    }
+
+    @doc("A logging facility")
+    @mapping($java{io.datawire.quark.runtime.Logger})
+    primitive Logger {
+        @doc("emit a log at trace level")
+        void trace(String msg);
+        @doc("emit a log at debug level")
+        void debug(String msg);
+        @doc("emit a log at info level")
+        void info(String msg);
+        @doc("emit a log at warn level")
+        void warn(String msg);
+        @doc("emit a log at error level")
+        void error(String msg);
     }
 
     @doc("A stateless buffer of bytes. Default byte order is network byte order.")

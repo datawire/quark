@@ -52,6 +52,11 @@
 
 ## Runtime
 
+## Logger
+
+A logging facility
+
+
 ## Buffer
 
 A stateless buffer of bytes. Default byte order is network byte order.
