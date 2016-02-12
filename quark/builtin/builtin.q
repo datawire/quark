@@ -412,6 +412,7 @@ namespace builtin {
     @doc("A logging facility")
     @mapping($java{io.datawire.quark.runtime.Logger})
     primitive Logger {
+        macro Logger(String topic) builtin.concurrent.Context.current().runtime().logger(topic);
         @doc("emit a log at trace level")
         void trace(String msg);
         @doc("emit a log at debug level")
