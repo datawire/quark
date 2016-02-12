@@ -35,6 +35,8 @@ class Backend(object):
         self.rootname = None
         self.entry = None
         self.dist = None
+        self.root = None
+        self.roots = None
         self.dependencies = OrderedDict()
 
     def install(self):
@@ -43,36 +45,37 @@ class Backend(object):
         self.write(dir)
         self.install_command(dir)
 
+    def visit_Root(self, r):
+        self.root = r
+
     def visit_DistUnit(self, du):
         self.dist = du
 
     def visit_Dependency(self, dep):
-        if dep.file.depth == 0:
-            self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
+        self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
 
     def visit_Use(self, use):
-        name, ver = namever(use.target)
-        self.dependencies[name] = use.target
+        entry = self.roots[use.qualified].files[0]
+        name, ver = namever(entry)
+        self.dependencies[name] = entry
 
     def visit_File(self, file):
-        if not self.entry and file.depth == 0 and file.name != "reflector":
+        if not self.entry and not is_meta(file):
             self.entry = file
 
     def visit_Class(self, cls):
-        if cls.file.depth == 0:
-            self.definitions.append(cls)
+        self.definitions.append(cls)
 
     def visit_Primitive(self, p):
         pass
 
     def visit_Function(self, f):
-        if f.file.depth == 0 and not isinstance(f, Method):
+        if not isinstance(f, Method):
             self.definitions.append(f)
 
     def visit_Package(self, p):
-        if p.file.depth == 0:
-            self.packages.append(p)
-            self.definitions.append(p)
+        self.packages.append(p)
+        self.definitions.append(p)
 
     def leave_Root(self, r):
         if self.dist:
@@ -91,7 +94,7 @@ class Backend(object):
                     break
             else:
                 # XXX: first file is builtin, last file is reflector
-                roots = [self.gen.name(self.fname(r.files[1]))]
+                roots = [self.gen.name(self.fname(self.entry))]
         self.rootname = "_".join(roots)
 
         for d in self.definitions:
@@ -151,7 +154,7 @@ class Backend(object):
         else:
             org = (self.rootname,)
         if pkg != org:
-            if obj.file.depth > 0:
+            if obj.root != self.root:
                 dep, ver = namever(obj.file)
             else:
                 dep = None

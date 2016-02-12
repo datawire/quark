@@ -1,4 +1,4 @@
-package builtin;
+package implicit_self;
 
 public class Foo implements io.datawire.quark.runtime.QObject {
     public Foo() {}

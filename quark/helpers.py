@@ -43,11 +43,20 @@ def get_field(cls, name, default=DEFAULT):
             else:
                 return default
 
+@dispatch(Field)
+def is_meta(f):
+    return f.name.text.endswith("_ref") and f.type.code() == "reflect.Class"
+
+@dispatch(File)
+def is_meta(f):
+    return f.name == "reflector"
+
 def get_fields_r(cls, result):
     for b in cls.bases:
         get_fields_r(b.resolved.type, result)
     for d in cls.definitions:
         if isinstance(d, Field):
+            if is_meta(d): continue
             result.append(d)
     return result
 

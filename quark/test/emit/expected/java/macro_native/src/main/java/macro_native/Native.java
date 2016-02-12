@@ -1,4 +1,4 @@
-package builtin;
+package macro_native;
 
 public class Native implements io.datawire.quark.runtime.QObject {
     public Native() {}

@@ -1,4 +1,4 @@
-package builtin;
+package macro_stuff;
 
 public class Macro implements io.datawire.quark.runtime.QObject {
     public Macro() {}

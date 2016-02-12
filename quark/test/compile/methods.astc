@@ -5,21 +5,21 @@ File(Use(url=builtin.q), Import(Name(builtin)),
   Method(static=False, Type(Name(int)), Name(foo), Block()),
 
   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Test", $type=1.builtin.String)))),
+    Return(String("Test", $type=0.builtin.String)))),
 
   Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
+   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
    Block(
-    Return(Null(null, $type=1.builtin.Object)))),
+    Return(Null(null, $type=0.builtin.Object)))),
 
   Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=1.builtin.String),
-   Param(Type(Name(Object)), Name(value), $type=1.builtin.Object),
+   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+   Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
    Block())),
 
  Function(Type(Name(void)), Name(bar), Block(
    Local(
     Declaration(Type(Name(Test)), Name(t), $type=0.Test)),
    ExprStmt(Call(Attr(Var(Name(t), $type=0.Test), Name(foo), $type=0.Test.foo),
-    $type=1.builtin.int))))
+    $type=0.builtin.int))))
 )
