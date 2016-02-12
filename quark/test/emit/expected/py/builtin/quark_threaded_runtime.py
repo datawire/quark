@@ -443,7 +443,7 @@ class ThreadedRuntime(object):
         if url.scheme not in ["http", "https"]:
             self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported"), {}))
             return
-        if scheme in ["https"]:
+        if url.scheme in ["https"]:
             self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported yet"), {}))
             return
         container = self._make_container(url)
