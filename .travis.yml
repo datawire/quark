@@ -37,7 +37,7 @@ install:
 - pip install --upgrade pip
 - scripts/develop.sh
 script:
-- py.test -v quark --durations=10
+- py.test -v quarkc --durations=10
 notifications:
   slack:
     rooms:

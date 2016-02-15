@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from quark.dispatch import dispatch, overload
+from quarkc.dispatch import dispatch, overload
 
 @dispatch(int, int)
 def foo(x, y):

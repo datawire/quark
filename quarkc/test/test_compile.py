@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest
-from quark.compiler import Compiler, CompileError, ParseError
+from quarkc.compiler import Compiler, CompileError, ParseError
 from .util import assert_file, maybe_xfail, is_excluded_file
 
 directory = os.path.join(os.path.dirname(__file__), "compile")

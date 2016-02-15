@@ -15,7 +15,7 @@
 import os, pytest
 
 def is_excluded_file(name):
-    if name.endswith("quark/builtin.q") or name == "reflector":
+    if name.endswith("quarkc/builtin.q") or name == "reflector":
         return True
     else:
         return False

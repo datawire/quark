@@ -13,8 +13,8 @@
 # limitations under the License.
 
 import os, pytest, shutil, subprocess, filecmp
-from quark.backend import Java, Python, JavaScript
-from quark.compiler import Compiler, CompileError, compile
+from quarkc.backend import Java, Python, JavaScript
+from quarkc.compiler import Compiler, CompileError, compile
 from .util import check_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
@@ -107,10 +107,10 @@ def test_run_java(output):
     batch_pom(base, dirs)
     subprocess.check_call(["mvn", "-q", "install", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
 
-    import quark.java
+    import quarkc.java
     run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
                                         ":target/classes",
-                                        quark.java.name(name)])
+                                        quarkc.java.name(name)])
 
 def test_run_python(output):
     py = Python()
@@ -120,8 +120,8 @@ def test_run_python(output):
     env = {"PYTHONPATH": pypath}
     env.update(os.environ)
 
-    import quark.python
-    run_tests(base, dirs, lambda name: ["python", quark.python.name(name) + ".py"], env=env)
+    import quarkc.python
+    run_tests(base, dirs, lambda name: ["python", quarkc.python.name(name) + ".py"], env=env)
 
 def test_run_javascript(output):
     js = JavaScript()

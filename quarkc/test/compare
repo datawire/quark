@@ -22,7 +22,7 @@ Usage:
 
 CMPFILE are filenames that end with .cmp
 
-Use compare clear to remove the quark/test/emit/output directory and any .cmp
+Use compare clear to remove the quarkc/test/emit/output directory and any .cmp
 files on the filesystem below the current directory.
 
 Options:
@@ -66,7 +66,7 @@ except Exception:
     rows, columns = 25, 80
 
 git_top = subprocess.check_output("git rev-parse --show-toplevel".split()).strip()
-emit = os.path.join(git_top, "quark/test/emit")
+emit = os.path.join(git_top, "quarkc/test/emit")
 
 
 def ansi(mode, st):
