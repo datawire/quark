@@ -25,8 +25,8 @@ except ImportError:
 
 __version__ = '0.4.5'
 __doc_version__ = '1'
-#__branch__ = '0.3.x'
-#__doc_product_version__ = '0.3'
+#__branch__ = 'master'
+#__doc_product_version__ = '0.4'
 #__product__ = 'Datawire Connect'
 #__language__ = 'Datawire Connect'
 #__command__ = 'dcon'
