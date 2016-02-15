@@ -3,6 +3,33 @@ module DatawireQuarkCore
   require 'uri'
   require 'json'
 
+  class Extern
+    def self.getters(*names)
+      names.each do |name|
+        define_method('get' + to_camel_case(name)) do
+          instance_variable_get("@#{name}")
+        end
+      end
+    end
+
+    def self.setters(*names)
+      names.each do |name|
+        define_method('set' + to_camel_case(name)) do |value|
+          instance_variable_set("@#{name}", value)
+
+          nil
+        end
+      end
+    end
+
+  private
+
+    def self.to_camel_case(string)
+      string.to_s.split('_').collect(&:capitalize).join
+    end
+  end
+
+
   def self.print(message)
     Kernel.print message == nil ? 'null' : message, "\n"
   end
@@ -14,7 +41,6 @@ module DatawireQuarkCore
   def self.split(string, separator)
     return ['', ''] if string == separator
     result = string.split(separator)
-    #result = [''] + result if string.start_with? separator
     result = result + [''] if string.end_with? separator
 
     result
@@ -199,52 +225,49 @@ module DatawireQuarkCore
     end
   end
 
-  class HTTPRequest
-    def initialize(url)
-      @url = url
-      @method = 'GET'
-      @body = nil
-      @headers = {}
+  module HTTP
+    class Base < Extern
+      def setHeader(key, value)
+        @headers[key.downcase] = value
+
+        nil
+      end
+
+      def getHeader(key)
+        @headers[key.downcase]
+      end
+
+      def getHeaders
+        @headers.keys
+      end
     end
 
-    def getUrl
-      @url
+    class Request < Base
+      getters :body, :method, :url
+      setters :body, :method
+
+      def initialize(url)
+        @url = url
+        @method = 'GET'
+        @body = nil
+        @headers = {}
+      end
     end
 
-    def setMethod(method)
-      @method = method
+    class Response < Base
+      getters :code, :body
+      setters :code, :body
 
-      nil
-    end
-
-    def getMethod
-      @method
-    end
-
-    def setBody(data)
-      @body = data
-
-      nil
-    end
-
-    def getBody
-      @body
-    end
-
-    def setHeader(key, value)
-      @headers[key.downcase] = value
-
-      nil
-    end
-
-    def getHeader(key)
-      @headers[key.downcase]
-    end
-
-    def getHeaders
-      @headers.keys
+      def initialize
+        @code = 500
+        @body = ''
+        @headers = {}
+        @responded = false
+      end
     end
   end
+
+  HTTPRequest = HTTP::Request
 
   def self.url_get(url)
     Net::HTTP.get(URI(url))
