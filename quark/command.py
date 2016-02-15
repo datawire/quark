@@ -103,6 +103,7 @@ def main(args):
     java = args["--java"]
     python = args["--python"]
     javascript = args["--javascript"]
+    ruby = False
     if args["--all"] or not (java or python or javascript):
         java = python = javascript = ruby = True
 

@@ -21,6 +21,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.gem
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -62,3 +63,7 @@ target/
 
 # node modules
 **/node_modules/
+
+# Virtualenv
+venv
+.venv

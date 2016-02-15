@@ -93,7 +93,7 @@ def main(fname, common):
 
 ## Naming and imports
 
-SUBS = {'Class': 'QuarkClass'}
+SUBS = {'Class': 'QuarkClass', 'end': 'end_'}
 def name(n):
     return SUBS.get(n, n)
 
@@ -130,20 +130,28 @@ def comment(stuff):
 
 ## Class definition
 
-def clazz(doc, abstract, clazz, parameters, base, interfaces, fields, constructors, methods):
+def clazz(doc, abstract, name, parameters, base, interfaces, fields, constructors, methods):
+    upcased_name = name[0].upper() + name[1:]
     prologue = 'attr_accessor ' + ', '.join(':' + name for name, value in fields)
     init_fields = Templates.method(
         name='__init_fields__',
         parameters='',
         body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
     )
-    return Templates.class_(
-        name=clazz,
+    source = Templates.class_(
+        name=upcased_name,
         base=base or 'Object',
         prologue=prologue,
         constructors=indent('\n'.join(constructors)),
         methods=indent('\n'.join(methods + [init_fields])),
     )
+    if name != upcased_name:
+        source += Templates.method(
+            name=name,
+            parameters='',
+            body=return_(upcased_name),
+        )
+    return source
 
 def field(doc, type, name, value):
     return (name, value or null())

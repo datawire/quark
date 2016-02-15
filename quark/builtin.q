@@ -144,6 +144,11 @@ primitive integral<T> extends numeric<T> {
 
 @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
 primitive byte extends integral<byte> {
+    macro byte() $java{new Byte()}
+                 $py{int()}
+                 $rb{0}
+                 $js{Number()};
+
     macro String toString() $java{Byte.toString($self)}
                             $py{str($self)}
                             $rb{($self).to_s}
@@ -153,6 +158,11 @@ primitive byte extends integral<byte> {
 
 @mapping($java{Short} $py{int} $js{Number} $rb{Integer})
 primitive short extends integral<short> {
+    macro short() $java{new Short()}
+                  $py{int()}
+                  $rb{0}
+                  $js{Number()};
+
     macro String toString() $java{Short.toString($self)}
                             $py{str($self)}
                             $rb{($self).to_s}
@@ -162,6 +172,11 @@ primitive short extends integral<short> {
 
 @mapping($java{Integer} $py{int} $js{Number} $rb{Integer})
 primitive int extends integral<int> {
+    macro int() $java{new Integer()}
+                $py{int()}
+                $rb{0}
+                $js{Number()};
+
     macro String toString() $java{Integer.toString($self)}
                             $py{str($self)}
                             $rb{($self).to_s}
@@ -173,6 +188,11 @@ primitive int extends integral<int> {
 
 @mapping($java{Long} $py{long} $js{Number} $rb{Integer})
 primitive long extends integral<long> {
+    macro long() $java{new Long()}
+                 $py{int()}
+                 $rb{0}
+                 $js{Number()};
+
     macro String toString() $java{Long.toString($self)}
                             $py{str($self)}
                             $rb{($self).to_s}
@@ -214,7 +234,7 @@ primitive String {
                                        $js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
     macro int find(String other)       $java{($self).indexOf($other)}
                                        $py{($self).find($other)}
-                                       $rb{($self).index($other)}
+                                       $rb{(($self).index($other) || -1)}
                                        $js{($self).indexOf($other)};
     macro String substring(int start, int end) $java{($self).substring(($start), ($end))}
                                                $py{($self)[($start):($end)]}
@@ -226,7 +246,7 @@ primitive String {
                                                  $js{($self).replace(($from), ($to))};
     macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
                                          $py{($self).split($sep)}
-                                         $rb{($self).split($sep)}
+                                         $rb{DatawireQuarkCore.split($self, $sep)}
                                          $js{($self).split($sep)};
     macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
                                           $py{($self).join($parts)}
@@ -276,11 +296,11 @@ primitive Map<K,V> {
                               $js{($self).has($key)};
     macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                       $py{($self).update($other)}
-                                      $rb{($self).merge($other)}
+                                      $rb{($self).merge!($other)}
                                       $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
     macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                              $py{_urlencode($self)}
-                             $rb{CGI::escape($self)}
+                             $rb{DatawireQuarkCore.urlencode($self)}
                              $js{_qrt.urlencode($self)};
 }
 
@@ -380,7 +400,6 @@ Object fromJSON(Class cls, JSONObject json) {
     return result;
 }
 
-// TODO ruby
 @mapping($java{io.datawire.quark.runtime.JSONObject}
          $rb{DatawireQuarkCore::JSONObject}
          $py{_JSONObject}
@@ -454,7 +473,7 @@ macro void print(Object msg) $java{System.out.println($msg)}
 
 macro long now() $java{System.currentTimeMillis()}
                  $py{long(time.time()*1000)}
-                 $rb{(Time.now.to_f * 1000).round}
+                 $rb{DatawireQuarkCore.now}
                  $js{Date.now()};
 
 macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}

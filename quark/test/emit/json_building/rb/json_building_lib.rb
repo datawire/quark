@@ -648,57 +648,9 @@ class Functions < Object
     
 
     
-    def self.test1()
+    def self.test_building()
         
-        map = Hash.new()
-        (map)["pi"] = (3)
-        DatawireQuarkCore.print((map)["pi"])
-        DatawireQuarkCore.print((map)["not_there"])
-        DatawireQuarkCore.print("^--- should be null")
-
-        nil
-    end
-
-
-end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.test_update()
-        
-        first = Hash.new()
-        second = Hash.new()
-        (first)["a"] = ("first_a")
-        (first)["b"] = ("first_b")
-        (second)["b"] = ("second_b")
-        (second)["c"] = ("second_c")
-        (first).merge!(second)
-        DatawireQuarkCore.print((first)["a"])
-        DatawireQuarkCore.print((first)["b"])
-        DatawireQuarkCore.print((first)["c"])
-
-        nil
-    end
-
-
-end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.test_literal()
-        
-        map = {}
-        map = {"pi" => 3.14159, "e" => 2.718}
-        DatawireQuarkCore.print((map)["pi"])
-        DatawireQuarkCore.print((map)["e"])
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.new.setObjectItem("sub-object", DatawireQuarkCore::JSONObject.new.setObjectItem("astring", DatawireQuarkCore::JSONObject.new.setString("string value")).setObjectItem("aint", DatawireQuarkCore::JSONObject.new.setNumber(9)).setObjectItem("atrue", DatawireQuarkCore::JSONObject.new.setBool(true)).setObjectItem("afalse", DatawireQuarkCore::JSONObject.new.setBool(false)).setObjectItem("anull", DatawireQuarkCore::JSONObject.new.setNull())).setObjectItem("sub-list", DatawireQuarkCore::JSONObject.new.setListItem(0, DatawireQuarkCore::JSONObject.new.setString("after this string expect 42 and null")).setListItem(1, DatawireQuarkCore::JSONObject.new.setNumber(42)).setListItem(2, DatawireQuarkCore::JSONObject.new.setNull())).setObjectItem("sub-string", DatawireQuarkCore::JSONObject.new.setString("a string")).toString())
 
         nil
     end
@@ -714,9 +666,7 @@ class Functions < Object
     
     def self.main()
         
-        Functions.test1()
-        Functions.test_update()
-        Functions.test_literal()
+        Functions.test_building()
 
         nil
     end
@@ -754,12 +704,6 @@ class Functions < Object
             return Hash.new()
         end
         if ((className) == ("Map<String,Object>"))
-            return Hash.new()
-        end
-        if ((className) == ("Map<String,int>"))
-            return Hash.new()
-        end
-        if ((className) == ("Map<String,String>"))
             return Hash.new()
         end
         if ((className) == ("ResponseHolder"))
@@ -809,12 +753,6 @@ class Functions < Object
             return DatawireQuarkCore::List.new([])
         end
         if ((className) == ("Map<String,Object>"))
-            return DatawireQuarkCore::List.new([])
-        end
-        if ((className) == ("Map<String,int>"))
-            return DatawireQuarkCore::List.new([])
-        end
-        if ((className) == ("Map<String,String>"))
             return DatawireQuarkCore::List.new([])
         end
         if ((className) == ("ResponseHolder"))
@@ -880,16 +818,6 @@ class Functions < Object
         if (((cls).id) == ("Map<String,Object>"))
             (cls).name = "Map"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("Object")])
-            return
-        end
-        if (((cls).id) == ("Map<String,int>"))
-            (cls).name = "Map"
-            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("int")])
-            return
-        end
-        if (((cls).id) == ("Map<String,String>"))
-            (cls).name = "Map"
-            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("String")])
             return
         end
         if (((cls).id) == ("ResponseHolder"))
@@ -977,12 +905,6 @@ class Functions < Object
             nil
         end
         if ((className) == ("Map<String,Object>"))
-            nil
-        end
-        if ((className) == ("Map<String,int>"))
-            nil
-        end
-        if ((className) == ("Map<String,String>"))
             nil
         end
         if ((className) == ("ResponseHolder"))

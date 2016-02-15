@@ -1,0 +1,4 @@
+#! /bin/sh -x
+gem uninstall datawire-quark-core
+gem build *.gemspec
+gem install *.gem

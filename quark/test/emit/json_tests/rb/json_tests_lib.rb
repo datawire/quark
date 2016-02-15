@@ -648,13 +648,14 @@ class Functions < Object
     
 
     
-    def self.test1()
+    def self.test_roundtrip()
         
-        map = Hash.new()
-        (map)["pi"] = (3)
-        DatawireQuarkCore.print((map)["pi"])
-        DatawireQuarkCore.print((map)["not_there"])
-        DatawireQuarkCore.print("^--- should be null")
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setObject().toString()).toString())
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setList().toString()).toString())
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setString("").toString()).toString())
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setBool(false).toString()).toString())
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setBool(true).toString()).toString())
+        DatawireQuarkCore.print(DatawireQuarkCore::JSONObject.parse(DatawireQuarkCore::JSONObject.new.setNull().toString()).toString())
 
         nil
     end
@@ -668,18 +669,20 @@ class Functions < Object
     
 
     
-    def self.test_update()
+    def self.test_iterate_list()
         
-        first = Hash.new()
-        second = Hash.new()
-        (first)["a"] = ("first_a")
-        (first)["b"] = ("first_b")
-        (second)["b"] = ("second_b")
-        (second)["c"] = ("second_c")
-        (first).merge!(second)
-        DatawireQuarkCore.print((first)["a"])
-        DatawireQuarkCore.print((first)["b"])
-        DatawireQuarkCore.print((first)["c"])
+        l = DatawireQuarkCore::JSONObject.parse("[1.2,2.3,3.4,4.5,5.6,6.7,7.8]")
+        i = 0
+        item = l.getListItem(i)
+        while ((item) != (l.undefined())) do
+            DatawireQuarkCore.print(((("l[") + ((i).to_s)) + ("] = ")) + ((item.getNumber()).to_s))
+            i = (i) + (1)
+            item = l.getListItem(i)
+            if ((i) > (10))
+                DatawireQuarkCore.print("Error!")
+                return
+            end
+        end
 
         nil
     end
@@ -693,12 +696,20 @@ class Functions < Object
     
 
     
-    def self.test_literal()
+    def self.test_iterate_list_directory()
         
-        map = {}
-        map = {"pi" => 3.14159, "e" => 2.718}
-        DatawireQuarkCore.print((map)["pi"])
-        DatawireQuarkCore.print((map)["e"])
+        message = DatawireQuarkCore::JSONObject.new.setObjectItem("endpoints", DatawireQuarkCore::JSONObject.new.setListItem(0, DatawireQuarkCore::JSONObject.new.setString("endpoint0")).setListItem(1, DatawireQuarkCore::JSONObject.new.setString("endpoint1")).setListItem(2, DatawireQuarkCore::JSONObject.new.setString("endpoint2"))).toString()
+        DatawireQuarkCore.print(message)
+        jobj = DatawireQuarkCore::JSONObject.parse(message)
+        endpoints = (jobj).getObjectItem("endpoints")
+        i = 0
+        endpoint = endpoints.getListItem(i)
+        while ((endpoint) != (endpoints.undefined())) do
+            ep = endpoint.getString()
+            DatawireQuarkCore.print(ep)
+            i = (i) + (1)
+            endpoint = endpoints.getListItem(i)
+        end
 
         nil
     end
@@ -714,9 +725,9 @@ class Functions < Object
     
     def self.main()
         
-        Functions.test1()
-        Functions.test_update()
-        Functions.test_literal()
+        Functions.test_roundtrip()
+        Functions.test_iterate_list()
+        Functions.test_iterate_list_directory()
 
         nil
     end
@@ -754,12 +765,6 @@ class Functions < Object
             return Hash.new()
         end
         if ((className) == ("Map<String,Object>"))
-            return Hash.new()
-        end
-        if ((className) == ("Map<String,int>"))
-            return Hash.new()
-        end
-        if ((className) == ("Map<String,String>"))
             return Hash.new()
         end
         if ((className) == ("ResponseHolder"))
@@ -809,12 +814,6 @@ class Functions < Object
             return DatawireQuarkCore::List.new([])
         end
         if ((className) == ("Map<String,Object>"))
-            return DatawireQuarkCore::List.new([])
-        end
-        if ((className) == ("Map<String,int>"))
-            return DatawireQuarkCore::List.new([])
-        end
-        if ((className) == ("Map<String,String>"))
             return DatawireQuarkCore::List.new([])
         end
         if ((className) == ("ResponseHolder"))
@@ -880,16 +879,6 @@ class Functions < Object
         if (((cls).id) == ("Map<String,Object>"))
             (cls).name = "Map"
             (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("Object")])
-            return
-        end
-        if (((cls).id) == ("Map<String,int>"))
-            (cls).name = "Map"
-            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("int")])
-            return
-        end
-        if (((cls).id) == ("Map<String,String>"))
-            (cls).name = "Map"
-            (cls).parameters = DatawireQuarkCore::List.new([QuarkClass.new("String"), QuarkClass.new("String")])
             return
         end
         if (((cls).id) == ("ResponseHolder"))
@@ -977,12 +966,6 @@ class Functions < Object
             nil
         end
         if ((className) == ("Map<String,Object>"))
-            nil
-        end
-        if ((className) == ("Map<String,int>"))
-            nil
-        end
-        if ((className) == ("Map<String,String>"))
             nil
         end
         if ((className) == ("ResponseHolder"))
