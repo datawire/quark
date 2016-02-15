@@ -15,7 +15,6 @@
 import os
 from collections import OrderedDict
 from .helpers import *
-from ._metadata import __js_runtime_version__
 
 ## Packaging
 

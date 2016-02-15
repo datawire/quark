@@ -23,8 +23,8 @@ except ImportError:
     sys.stderr.write("Could not import bootstrap theme. Is it installed?%s" % os.linesep)
     better_theme = False
 
-__version__ = '0.4.2'
-__doc_version__ = '2'
+__version__ = '0.4.4'
+__doc_version__ = '1'
 #__branch__ = '0.3.x'
 #__doc_product_version__ = '0.3'
 #__product__ = 'Datawire Connect'

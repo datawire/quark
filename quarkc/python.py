@@ -16,7 +16,6 @@ import os
 from .ast import *
 from .dispatch import overload
 from .helpers import *
-from ._metadata import __py_runtime_version__
 from collections import OrderedDict
 
 ## Packaging

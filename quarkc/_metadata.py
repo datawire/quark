@@ -13,20 +13,18 @@
 # limitations under the License.
 
 __all__ = [
-    "__title__", "__summary__", "__uri__", "__author__",
-    "__email__", "__license__", "__copyright__",
-    "__version__", "__java_runtime_version__",
-    "__py_runtime_version__", "__js_runtime_version__"
+    "__title__", "__version__",
+    "__summary__", "__uri__",
+    "__author__", "__email__",
+    "__license__", "__copyright__",
 ]
 
-__title__ = "datawire-quark"
+__title__ = 'datawire-quarkdev'
+__version__ = '0.4.4'
+
 __summary__ = "Quark: an IDL for high level (micro)service interfaces"
 __uri__ = "http://datawire.github.io/quark/"
 
-__version__ = '0.4.2'
-__java_runtime_version__ = '0.4.2'
-__py_runtime_version__ = '0.4.2'
-__js_runtime_version__ = '0.4.2'
 
 __author__ = "datawire.io"
 __email__ = "hello@datawire.io"

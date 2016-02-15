@@ -18,30 +18,8 @@ from .compiler import TypeExpr
 from .dispatch import overload
 from .helpers import *
 from collections import OrderedDict
-from ._metadata import __java_runtime_version__
 
 ## Packaging
-
-if False and __java_runtime_version__.endswith("-SNAPSHOT"):
-    repository = """
-  <repositories>
-      <repository>
-          <releases>
-            <enabled>false</enabled>
-            <checksumPolicy>warn</checksumPolicy>
-          </releases>
-          <snapshots>
-            <enabled>true</enabled>
-            <checksumPolicy>fail</checksumPolicy>
-          </snapshots>
-          <id>datawire-snapshots</id>
-          <name>Sonatype snapshot repo for datawire runtime</name>
-          <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-      </repository>
-  </repositories>
-"""
-else:
-    repository = ""
 
 pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -74,7 +52,6 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
   <dependencies>
 %(dependencies)s
   </dependencies>
-  %(repository)s
 </project>
 """
 
@@ -94,8 +71,6 @@ def package(name, version, packages, srcs, deps):
     fmt_dict = {"name": name,
                 "version": version,
                 "pkg_list": repr([".".join(p) for p in packages]),
-                "runtime_version": __java_runtime_version__,
-                "repository": repository,
                 "dependencies": "\n".join(format_deps(deps))}
     files["pom.xml"] = pom_xml % fmt_dict
     return files
