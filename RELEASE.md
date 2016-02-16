@@ -64,22 +64,30 @@ The goal is to have a stable set of features that are the target for what will b
 1. Review the current release metadata and determine the appropriate
    version for the next release:
 
-       ./release version
+   ```
+   ./release version
+   ```
 
 2. Set the appropriate version number(s) for the release. This will
    automatically create a commit in your checkout with the appropriate
    version related changes:
 
-      ./release version 1.2.3
+   ```
+   ./release version 1.2.3
+   ```
 
 3. To make a signed and annotated tag for the release:
 
-       git tag -sm "Release 1.2.3" 1.2.3
+   ```
+   git tag -sm "Release 1.2.3" 1.2.3
+   ```
 
 3. Push the release:
 
-      ./release push-pkgs
-      ./release push-docs
+   ```
+   ./release push-pkgs
+   ./release push-docs
+   ```
 
 4. Update the website
 
