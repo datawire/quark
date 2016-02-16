@@ -2,13 +2,13 @@
 
 ### The helloRPC example
 
-The [helloRPC](examples/helloRPC)
+The [helloRPC](helloRPC)
 directory contains a minimal example of a simple RPC service using
 Quark.
 
 ### The slack example
 
-The [slack](examples/slack)
+The [slack](slack)
 directory illustrates how Quark can be used to build high level
 interfaces for services that require rich interaction patterns. The
 Slack service includes both a JSON RPC over HTTP
@@ -21,7 +21,7 @@ definition.
 
 ### The binary example
 
-The [binary](examples/binary)
+The [binary](binary)
 example illustrates how Quark can be used to provide an implementation
 of an arbitrary binary websocket protocol that is accessible from
 multiple languages.
