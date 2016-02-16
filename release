@@ -10,7 +10,6 @@ Usage:
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
   release [--dry] push-pkgs
   release [--dry] push-docs
-  release [--dry] metadata
 
   Options:
     --dry                  Dry run.
@@ -152,7 +151,16 @@ def push_quark():
 
 ## subcommands
 
+def show_metadata():
+    names = metadata["__all__"] + ["__doc_version__"]
+    width = max(map(lambda n: len(n.strip("_")), names))
+    for name in names:
+        print "%*s: %s" % (width, name.strip("_"), metadata[name])
+
 def version(args):
+    if not (args["--dev"] or args["--prod"] or args["--doc"] or args["<version>"]):
+        return show_metadata()
+
     if args["--dev"]:
         dev = True
     elif args["--prod"]:
@@ -264,12 +272,6 @@ def push_docs(args):
     else:
         print "Canceled"
 
-def show_metadata(args):
-    names = metadata["__all__"] + ["__doc_version__"]
-    width = max(map(lambda n: len(n.strip("_")), names))
-    for name in names:
-        print "%*s: %s" % (width, name.strip("_"), metadata[name])
-
 ## main
 
 def main(args):
@@ -283,8 +285,6 @@ def main(args):
         push_pkgs(args)
     elif args["push-docs"]:
         push_docs(args)
-    elif args["metadata"]:
-        show_metadata(args)
     else:
         assert False
 
