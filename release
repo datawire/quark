@@ -138,11 +138,16 @@ def quark_version(version, doc_version, dev):
         title = "datawire-quarkdev"
     else:
         title = "datawire-quark"
+
+    subs = {"title": title,
+            "version": version,
+            "doc_version": doc_version}
+
     updated = []
-    if update_python(base("quarkc/_metadata.py"), version=version, title=title):
-        updated.append("quarkc/_metadata.py")
-    if update_python(base("docs/conf.py"), version=version, doc_version=doc_version):
-        updated.append("docs/conf.py")
+    for fname in ("quarkc/_metadata.py", "docs/conf.py"):
+        if update_python(base(fname), **subs):
+            updated.append(fname)
+
     return title, updated
 
 def is_dev():
