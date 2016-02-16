@@ -67,7 +67,7 @@ def check(cmd, workdir):
         try:
             out = subprocess.check_output(check, cwd=workdir)
         except (subprocess.CalledProcessError, OSError):
-            raise Exception("unable to find %s: %s" % (cmd, msg))
+            raise compiler.QuarkError("unable to find %s: %s" % (cmd, msg))
 
 COMMAND_DEFAULTS = {
     "mvn" : "mvn -q",
@@ -103,9 +103,15 @@ def main(args):
     output = args["--output"] or "output"
 
     backends = []
-    if java or all: backends.append(backend.Java)
-    if python or all: backends.append(backend.Python)
-    if javascript or all: backends.append(backend.JavaScript)
+    if java or all:
+        check("mvn", ".")
+        backends.append(backend.Java)
+    if python or all:
+        check("python", ".")
+        backends.append(backend.Python)
+    if javascript or all:
+        check("npm", ".")
+        backends.append(backend.JavaScript)
 
     filenames = args["<file>"]
     try:
