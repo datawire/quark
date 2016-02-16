@@ -16,35 +16,28 @@
 Quark compiler.
 
 Usage:
-  quark [options] <command> <file>...
+  quark [options] install [ --java | --python | --javascript | --all ] <file>...
+  quark [options] compile [ -o DIR ] [ --java | --python | --javascript | --all ] <file>...
   quark -h | --help
   quark --version
 
 Commands:
-  compile               Emit code in target language(s)
-  build                 Compile, then run the target language compiler(s)
-  doc                   Build, then build target language documentation
-  package               Doc, then generate target language package artifact(s)
+  compile               Compile and emit code in the target language(s).
+  install               Compile, build, and install code in the target language(s).
 
 Options:
   -h --help             Show this screen.
   --version             Show version.
-  -o DIR, --output DIR  Target directory for output files
-                        [defaults to basename of the first input file]
-  --in-place            Outputs everything to the current directory
-                        [overrides all other directory/subdirectory options and
-                         does not delete existing output files; use with care]
-  --skip-doc            Skip the target language documentation step, used for testing
 
-Target language options:
+  -o DIR, --output DIR  Target directory for output files.
+                        [defaults to "output"]
+
   --all                 Emit code for all available target languages.
                         [this is the default if no targets are specified]
+
   --java                Emit Java code.
-  --java-out DIR        Subdirectory for Java code [default: java].
   --python              Emit Python code.
-  --python-out DIR      Subdirectory for Python code [default: py].
   --javascript          Emit JavaScript code.
-  --javascript-out DIR  Subdirectory for JavaScript code [default: js].
 """
 
 from glob import glob
@@ -63,7 +56,9 @@ import compiler
 import backend
 
 PREREQS = {
-    "mvn": (["mvn", "-v"], "please install maven in order to build java packages")
+    "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
+    "pip": (["pip", "--version"], "pip is required in order to install python packages"),
+    "npm": (["npm", "--version"], "npm is required in order to install javascript packages")
 }
 
 def check(cmd, workdir):
@@ -99,109 +94,30 @@ def main(args):
         sys.stdout.write("Quark %s\n" % _metadata.__version__)
         return
 
-    command = args["<command>"].lower()
-    if command not in "compile build doc package install".split():
-        exit("quark: %r is not a quark command. Try quark --help" % command)
-
-    skip_doc = args["--skip-doc"]
-    commands = set([command])
-    if "package" in commands:
-        if skip_doc:
-            commands.add("build")
-        else:
-            commands.add("doc")
-    if "doc" in commands:
-        commands.add("build")
-    if "build" in commands:
-        commands.add("compile")
-
     java = args["--java"]
     python = args["--python"]
     javascript = args["--javascript"]
-    if args["--all"] or not (java or python or javascript):
-        java = python = javascript = True
+
+    all = args["--all"] or not (java or python or javascript)
+
+    output = args["--output"] or "output"
+
+    backends = []
+    if java or all: backends.append(backend.Java)
+    if python or all: backends.append(backend.Python)
+    if javascript or all: backends.append(backend.JavaScript)
 
     filenames = args["<file>"]
-
-    if args["--in-place"]:
-        output = java_dir = py_dir = js_dir = "."
-    else:
-        output = args["--output"]
-        if not output:
-            output = os.path.basename(filenames[0])
-            if output.endswith(".q"):
-                output = output[:-2]
-            else:
-                exit("quark: First filename must end with .q (or use --output)")
-
-        java_dir = os.path.join(output, args["--java-out"])
-        py_dir = os.path.join(output, args["--python-out"])
-        js_dir = os.path.join(output, args["--javascript-out"])
-
-        if os.path.exists(output):
-            for dir in [os.path.join(java_dir, "src/main/java"),
-                        py_dir, js_dir]:
-                if os.path.exists(dir):
-                    shutil.rmtree(dir)
-        elif command != "install":
-            os.mkdir(output)
-
-    if command != "install":
-        assert "compile" in commands, (commands, args)
-
-    if "compile" in commands:
-        compiler_args = {}
-        if java:
-            compiler_args["java"] = java_dir
-        if python:
-            compiler_args["python"] = py_dir
-        if javascript:
-            compiler_args["javascript"] = js_dir
-        res = compiler.main(filenames, **compiler_args)
-        if res is not None:
-            return "\n".join("quark (compile): %s" % line for line in str(res).split("\n"))
-
     try:
-        if "build" in commands:
-            if java:
-                call_and_show("build", java_dir, ["mvn", "compile"])
-
-        if "doc" in commands:
-            if java:
-                call_and_show("doc", java_dir, ["mvn", "javadoc:javadoc"])
-            if python:
-                call_and_show("doc", py_dir, ["python", "setup.py", "-q", "build_sphinx"])
-            if javascript:
-                for md_file_path in glob(os.path.join(js_dir, "*/README.md")):
-                    call_and_show("doc", ".", ["markdown_py", md_file_path, "-f",
-                                               md_file_path.replace(".md", ".html")])
-
-        if "package" in commands:
-            if java:
-                call_and_show("package", java_dir, ["mvn", "package"])
-            if python:
-                call_and_show("package", py_dir, ["python", "setup.py", "-q", "bdist_wheel"])
-            if javascript:
-                pkg = os.path.join(js_dir, "package.json")
-                with open(pkg, "read") as fd:
-                    pkg_info = json.load(fd)
-                name = "%s.tgz" % pkg_info["name"]
-                tmpd = tempfile.mkdtemp()
-                intermediary = os.path.join(tmpd, name)
-                target = os.path.join(js_dir, name)
-                call_and_show("package", ".", ["tar", "czf", intermediary, "--exclude", name, "-C", js_dir, "."])
-                call_and_show("package", ".", ["mv", intermediary, target])
-
-        if "install" in commands:
-            for url in filenames:
-                if java:
-                    compiler.install(url, backend.Java)
-                if python:
-                    compiler.install(url, backend.Python)
-                if javascript:
-                    compiler.install(url, backend.JavaScript)
-    except Exception as exc:
-        return exc
+        for url in filenames:
+            if args["install"]:
+                compiler.install(url, *backends)
+            elif args["compile"]:
+                compiler.compile(url, output, *backends)
+            else:
+                assert False
+    except compiler.QuarkError as err:
+        return err
 
 
 def call_main():

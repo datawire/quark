@@ -632,8 +632,9 @@ class Check:
             return
         self.errors.append("%s: super can only be used for constructor or method invocation" % lineinfo(s))
 
-class ParseError(Exception): pass
-class CompileError(Exception): pass
+class QuarkError(Exception): pass
+class ParseError(QuarkError): pass
+class CompileError(QuarkError): pass
 
 def lineinfo(node):
     trace = getattr(node, "_trace", None)
