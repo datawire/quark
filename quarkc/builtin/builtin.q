@@ -677,12 +677,18 @@ namespace builtin {
         }
 
         void succeed(String info) {
-            print("Success on call to " + self.serviceName + " service at " + self.url + " (" + info + ")");
+            if (!self.isActive()) {
+                print("- CLOSE breaker for " + self.serviceName + " at " + self.url);
+            }
+
             self.breaker.succeed();
         }
 
         void fail(String info) {
-            print("FAILURE on call to " + self.serviceName + " service at " + self.url + " (" + info + ")");
+            if (!self.isActive()) {
+                print("- OPEN breaker for " + self.serviceName + " at " + self.url);
+            }
+
             self.breaker.fail();
         }
     }
@@ -745,32 +751,32 @@ namespace builtin {
             int next = self.counter % urls.size();
             self.counter = self.counter + 1;
 
-            print("Service " + self.serviceName + " has " + urls.size().toString() + " URLs.");
+            // print("Service " + self.serviceName + " has " + urls.size().toString() + " URLs.");
 
             int idx = next;
             while (true) {
                 String url = urls[idx];
 
-                print("- Trying URL " + (idx + 1).toString() + ": " + url);
-
                 ServiceInstance instance = self.instanceMap[url];
                 if (instance == null) {
                     instance = new ServiceInstance(self.serviceName, url, _failureLimit, _retestDelay);
                     self.instanceMap[url] = instance;
-                    print("- Created instance for service " + self.serviceName + " on url " +
-                          (idx + 1).toString() + ": " + url);
+                    // print("- Created instance for service " + self.serviceName + " on url " +
+                    //       (idx + 1).toString() + ": " + url);
                 }
 
                 if (instance.isActive()) {             // Found an active instance
+                    print("- " + self.serviceName + " using instance " + (idx + 1).toString() + ": " + url);
+
                     result = instance;
                     break;
                 }
 
-                print("-    not active, skipping.");
+                // print("- " + self.serviceName + " skipping instance " + (idx + 1).toString() + ": " + url);
 
                 idx = (idx + 1) % urls.size();
                 if (idx == next) {                     // Wrapped all the way around, found nothing.
-                    print("Exhausted all options; giving up.");
+                    print("- " + self.serviceName + ": no live instances! giving up.");
                     break;
                 }
             }
@@ -1117,6 +1123,11 @@ package behaviors {
 
         void succeed() {
             self.mutex.acquire();
+
+            if (self.failureCount > 0) {
+                print("- CLOSE breaker on " + self.id);
+            }
+
             self.failureCount = 0;
             self.mutex.release();
         }
@@ -1128,7 +1139,8 @@ package behaviors {
             if (self.failureCount >= self.failureLimit) {
                 self.active = false;
                 doSchedule = true;
-                print("    Circuit breaker triggered on " + self.id);
+
+                print("- OPEN breaker on " + self.id);
             }
             self.mutex.release();
 
@@ -1140,7 +1152,7 @@ package behaviors {
         void onExecute(Runtime runtime) {
             self.mutex.acquire();
             self.active = true;
-            print("--> Reactivating " + self.id + " for one test");
+            print("- RETEST breaker on " + self.id);
             self.mutex.release();
         }
     }
