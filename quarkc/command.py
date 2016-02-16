@@ -32,12 +32,12 @@ Options:
   -o DIR, --output DIR  Target directory for output files.
                         [defaults to "output"]
 
-  --all                 Emit code for all available target languages.
+  --all                 Install/emit code for all available target languages.
                         [this is the default if no targets are specified]
 
-  --java                Emit Java code.
-  --python              Emit Python code.
-  --javascript          Emit JavaScript code.
+  --java                Install/emit Java code.
+  --python              Install/emit Python code.
+  --javascript          Install/emit JavaScript code.
 """
 
 from glob import glob
