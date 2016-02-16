@@ -102,19 +102,19 @@ def main(args):
 
     output = args["--output"] or "output"
 
-    backends = []
-    if java or all:
-        check("mvn", ".")
-        backends.append(backend.Java)
-    if python or all:
-        check("python", ".")
-        backends.append(backend.Python)
-    if javascript or all:
-        check("npm", ".")
-        backends.append(backend.JavaScript)
-
-    filenames = args["<file>"]
     try:
+        backends = []
+        if java or all:
+            check("mvn", ".")
+            backends.append(backend.Java)
+        if python or all:
+            check("python", ".")
+            backends.append(backend.Python)
+        if javascript or all:
+            check("npm", ".")
+            backends.append(backend.JavaScript)
+
+        filenames = args["<file>"]
         for url in filenames:
             if args["install"]:
                 compiler.install(url, *backends)
