@@ -14,37 +14,13 @@ Make sure the goals of the release are met. As an example, consider the goals fo
 >
 > The overall idea is to make sure the process of a) understanding class of problems quark solves, b) trying out the examples we provide, and c) adapting our examples to fit their own specific problems is as streamlined as possible for prospective users.
 
-Prerequisites for every release:
+## Prerequisites for every release:
 
 - Installation instructions and examples work on a clean OS (latest Fedora, Ubuntu, and Mac)
 - All tests pass (xfails are okay)
 - Documentation is in sync with code (correct but not necessarily complete)
 
-## Release versions and dependencies
-
-The quark repository contains both the quark compiler and a number of
-different support packages that must all be published in order to
-complete a full release. The following diagram illustrates the
-packages and dependencies involved:
-
-```
-                  Application 
-                       |
-                       |
-             +---------+---------------+
-             |                         |
-            \|/                       \|/
-     Compiled-Package       Runtime-Implementation
-             |                   |          |
-             |                   |          |
-             +---------+---------+          +---------+
-                       |                              |
-                      \|/                            \|/
-               Runtime-Interface                  Framework
-          (Java/Python/Javascript/...)      (twisted/netty/gevent/node/...)
-```
-
-## Branching for a release
+## Branching
 
 The goal is to have a stable set of features that are the target for what will be released, making the release easier to test and document. Create the branch when the right set of features is ready.
 
