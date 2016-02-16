@@ -61,13 +61,28 @@ The goal is to have a stable set of features that are the target for what will b
    involve testing, it merely provides a repeatable way to transform a
    snapshot of the git repo into a set of published artifacts.
 
-1. Set the version number(s) for the release:
-  ./release version 1.2.3
-2. Review the diff, check the version numbers in and make a signed and annotated tag:
-  git tag -sm "Release 1.2.3" 1.2.3
+1. Review the current release metadata and determine the appropriate
+   version for the next release:
+
+       ./release version
+
+2. Set the appropriate version number(s) for the release. This will
+   automatically create a commit in your checkout with the appropriate
+   version related changes:
+
+      ./release version 1.2.3
+
+3. To make a signed and annotated tag for the release:
+
+       git tag -sm "Release 1.2.3" 1.2.3
+
 3. Push the release:
-  ./release push
+
+      ./release push-pkgs
+      ./release push-docs
+
 4. Update the website
+
 5. Announce the release
 
 The goal of the tag is to record exactly what source was used to build the released artifacts.
