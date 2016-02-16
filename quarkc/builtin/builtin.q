@@ -1000,21 +1000,30 @@ package behaviors {
         }
 
         concurrent.Future call(List<Object> args) {
+            concurrent.Future result = null;
             self.instance = self.service.getInstance();
-            HTTPRequest request = new HTTPRequest(self.instance.getURL());
-            // XXX: assume message is not a Future, or at least not a pending one
-            JSONObject json = toJSON(args, null);
-            JSONObject envelope = new JSONObject();
-            envelope["$method"] = self.methodName;
-            envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
-            envelope["rpc"] = json;
-            request.setBody(envelope.toString());
-            request.setMethod("POST");
 
+            // It's possible for getInstance to return nothing, if all the options have been exhausted.
+            if (self.instance) {
+                HTTPRequest request = new HTTPRequest(self.instance.getURL());
+                // XXX: assume message is not a Future, or at least not a pending one
+                JSONObject json = toJSON(args, null);
+                JSONObject envelope = new JSONObject();
+                envelope["$method"] = self.methodName;
+                envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
+                envelope["rpc"] = json;
+                request.setBody(envelope.toString());
+                request.setMethod("POST");
 
-            RPCRequest rpc = new RPCRequest(args, self);
+                RPCRequest rpc = new RPCRequest(args, self);
 
-            concurrent.Future result = rpc.call(request);
+                result = rpc.call(request);
+            }
+            else {
+                result = new concurrent.Future();
+                result.finish("all services are down");
+            }
+
             concurrent.FutureWait.waitFor(result, 1000);
             // XXX: sync users still need to check result.getError()...
             return result;
