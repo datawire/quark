@@ -214,7 +214,7 @@ namespace builtin {
         macro int size() $java{($self).size()}
                          $py{len($self)}
                          $js{($self).length};
-        macro void sort() $java{java.util.Collections.sort($self)}
+        macro void sort() $java{java.util.Collections.sort($self, null)}
                           $py{($self).sort()}
                           $js{($self).sort()};
         macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
