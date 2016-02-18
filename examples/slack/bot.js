@@ -20,7 +20,7 @@ function Handler() {
     this.onMessage = function(message) {
         console.log(message);
         if (message.text !== null && message.text.indexOf("quark") > -1) {
-            message.channel.send("quarkbot: " + message.text);
+            message.channel.send("JavaScript bot says hi!");
         }
     };
 }

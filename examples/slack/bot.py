@@ -17,7 +17,7 @@ class Handler(slack.SlackHandler):
     def onMessage(self, message):
         print "Received:", message.text
         if message.text and "quark" in message.text:
-            message.channel.send("bot.py is excited about \"%s\"" % message.text.replace("quark", "[bleep]"))
+            message.channel.send("Python bot says hi!")
 
     def onMessageSent(self, message):
         print "Acknowledged:", message.text

@@ -69,8 +69,8 @@ public class SlackBot implements SlackHandler {
     @Override
     public void onMessage(Message message) {
         print(message, message.text);
-        if (message.text != null && message.text.indexOf("java quark") > -1 ) {
-            message.channel.send("java quarkbot: " + message.text);
+        if (message.text != null && message.text.indexOf("quark") > -1 ) {
+            message.channel.send("Java bot says hi!");
         }
     }
     @Override
