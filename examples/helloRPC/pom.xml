@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>helloRPC</groupId>
   <artifactId>helloRPC</artifactId>
-  <version>0.0.1</version>
+  <version>3.2.1</version>
   <name>hello rpc</name>
   <build>
     <plugins>
@@ -30,7 +30,7 @@
     <dependency>
       <groupId>hello</groupId>
       <artifactId>hello</artifactId>
-      <version>0.1.0</version>
+      <version>1.2.3</version>
       <scope>compile</scope>
     </dependency>
   </dependencies>
