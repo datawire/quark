@@ -16,8 +16,8 @@ public class HelloRPCClient {
         //  - fire up the local version of the server by following the instructions
         //  in the README.md.
         //
-        HelloClient client = new HelloClient("http://hello.datawire.io/");
-        // HelloClient client = new HelloClient("http://localhost:8910/hello");
+        // HelloClient client = new HelloClient("http://hello.datawire.io/");
+        HelloClient client = new HelloClient("http://localhost:8910/hello");
 
         Request request = new Request();
 

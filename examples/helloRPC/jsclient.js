@@ -14,8 +14,8 @@ var hello = require("hello").hello;
 //  - fire up the local version of the server by following the instructions
 //  in the README.md.
 //
-var client = new hello.HelloClient("http://hello.datawire.io/");
-// var client = new hello.HelloClient("http://localhost:8910/hello");
+// var client = new hello.HelloClient("http://hello.datawire.io/");
+var client = new hello.HelloClient("http://localhost:8910/hello");
 var request = new hello.Request();
 if (process.argv[2]) {
     request.text = process.argv[2];

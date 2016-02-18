@@ -15,8 +15,8 @@ def main():
     # - fire up the local version of the server by following the instructions
     # in the file ./README.md.
 
-    client = hello.HelloClient("http://hello.datawire.io/")
-    # client = hello.HelloClient("http://127.0.0.1:8910/hello")
+    # client = hello.HelloClient("http://hello.datawire.io/")
+    client = hello.HelloClient("http://127.0.0.1:8910/hello")
 
     request = hello.Request()
 
