@@ -1,6 +1,5 @@
 # Connect to Slack
 
-from quark_threaded_runtime import get_runtime
 import slack
 
 
@@ -31,8 +30,7 @@ def main():
         # you need to go to https://api.slack.com/web and generate an access token
         exit("Failed to read Slack token. See examples/README.md for more information.")
 
-    runtime = get_runtime()
-    client = slack.SlackClient(runtime, token)
+    client = slack.SlackClient(token)
     client.post("#demo", "testing...")
     client.subscribe(Handler())
 

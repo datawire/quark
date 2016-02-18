@@ -8,8 +8,8 @@ package slack {
         Runtime runtime;
         String token;
 
-        SlackClient(Runtime runtime, String token) {
-            self.runtime = runtime;
+        SlackClient(String token) {
+            self.runtime = concurrent.Context.runtime();
             self.token = token;
         }
 

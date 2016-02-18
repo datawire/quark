@@ -5,7 +5,6 @@
 var util = require("util");
 var fs = require("fs");
 
-var runtime = require("datawire-quarkdev-node");
 var slack = require("slack").slack;
 
 function Handler() {
@@ -34,5 +33,5 @@ try {
     console.log("Failed to read Slack token. See examples/README.md for more information.");
     process.exit(1);
 }
-var client = new slack.SlackClient(runtime, token);
+var client = new slack.SlackClient(token);
 client.subscribe(new Handler());
