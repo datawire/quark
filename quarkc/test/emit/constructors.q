@@ -1,4 +1,4 @@
-package test1 {
+namespace test1 {
     class Test {
         String name;
         Test() {
@@ -13,7 +13,7 @@ package test1 {
     }
 }
 
-package test2 {
+namespace test2 {
     class Test {
         String name;
         Test(String name) {
@@ -28,7 +28,7 @@ package test2 {
     }
 }
 
-package test3 {
+namespace test3 {
     class Box<T> {
         T contents;
         Box(T contents) {

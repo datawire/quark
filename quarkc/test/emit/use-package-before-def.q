@@ -2,7 +2,7 @@ void main() {
     test.go();
 }
 
-package test {
+namespace test {
     void go() {
         print("GO!");
     }

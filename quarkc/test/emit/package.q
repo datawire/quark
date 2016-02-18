@@ -1,4 +1,4 @@
-package test {
+namespace test {
     void go() {
         print("GO!");
     }
@@ -10,7 +10,7 @@ package test {
         }
     }
 
-    package test {
+    namespace test {
         void go() {
             print("GOGO!!");
         }

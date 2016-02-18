@@ -1,4 +1,4 @@
-package pkg {
+namespace pkg {
 
     @mapping($java{java.lang.Runnable})
     primitive Runnable {

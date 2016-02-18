@@ -1,4 +1,4 @@
-package pkg {
+namespace pkg {
     class Bar {
 
 	void go() {

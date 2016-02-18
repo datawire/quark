@@ -1,4 +1,4 @@
-package pets {
+namespace pets {
 
     class Pet {
         void greet();

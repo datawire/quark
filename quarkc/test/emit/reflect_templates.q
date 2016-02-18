@@ -1,4 +1,4 @@
-package ccc {
+namespace ccc {
 class TLSContextInitializer extends TLSInitializer<Context> {
         Context getValue() {
             return new Context(Context.global());

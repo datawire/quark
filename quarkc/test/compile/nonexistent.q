@@ -1,4 +1,4 @@
-package p {
+namespace p {
     class C {
         void f(int a, int b, int c) {
             x = a;

@@ -1,1 +1,1 @@
-package Foo {}
+namespace Foo {}

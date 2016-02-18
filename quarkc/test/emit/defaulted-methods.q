@@ -1,4 +1,4 @@
-package pkg {
+namespace pkg {
     interface A {
         void foo();
         void bar() {

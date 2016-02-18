@@ -1,4 +1,4 @@
-package fancyprim {
+namespace fancyprim {
     @mapping($java{java.util.LinkedList} $py{_List} $js{Array})
     primitive LinkedList<T> {
 	macro LinkedList(List<T> elements) $java{new java.util.LinkedList($elements)}

@@ -1,6 +1,6 @@
 @version("0.1.0")
 @doc("An example of a binary websockets protocol.")
-package binary {
+namespace binary {
 
     class Binary extends WSServlet {
         Runtime runtime;

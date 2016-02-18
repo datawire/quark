@@ -1,5 +1,5 @@
 @version("1.2.3") // version is mandatory
-package interop { // package interop is mandatory
+namespace interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameters
             HelloServlet().serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server");

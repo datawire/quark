@@ -1,4 +1,4 @@
-package foo {
+namespace foo {
 
     @doc("Essential information about a pet.")
     class Pet {

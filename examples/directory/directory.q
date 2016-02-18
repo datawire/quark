@@ -1,5 +1,5 @@
 @version("0.1.0")
-package directory {
+namespace directory {
 
     @doc("A directory entry maps a named service to a set of physical endpoints.")
     class Entry {

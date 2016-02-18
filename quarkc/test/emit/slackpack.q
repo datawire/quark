@@ -1,10 +1,10 @@
 @version("0.1.0")
 @doc("A high level API for accessing all aspects of the the slack web service.")
 @doc("This includes both regular http and realtime web sockets functionality.")
-package slack {
+namespace slack {
 
-    @doc("This package contains all slack events.")
-    package event {
+    @doc("This namespace contains all slack events.")
+    namespace event {
         @doc("Base class for all slack events.")
         class SlackEvent {
 
@@ -238,7 +238,7 @@ package slack {
 }
 
 // XXX: javascript backend crashes with the handler class at the top level
-package pkg {
+namespace pkg {
     class Handler extends slack.SlackHandler {
         void onSlackEvent(slack.event.SlackEvent event) {
             print(event.type);

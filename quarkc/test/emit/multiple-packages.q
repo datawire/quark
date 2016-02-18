@@ -1,10 +1,10 @@
-package p1 {
-    package p2 {
+namespace p1 {
+    namespace p2 {
         void a() {
 	    print("a");
 	}
     }
-    package p2 {
+    namespace p2 {
         void b() {
 	    print("b");
 	}
@@ -14,7 +14,7 @@ package p1 {
     }
 }
 
-package p1 {
+namespace p1 {
     void d() {
         print("d");
     }

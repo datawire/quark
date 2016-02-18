@@ -853,7 +853,7 @@ namespace builtin {
 
     }
 
-package reflect {
+namespace reflect {
 
     class Class {
 
@@ -985,7 +985,7 @@ package reflect {
 
 }
 
-package behaviors {
+namespace behaviors {
 
     // an instance of this could be the target of the @delegate annotation.
     class RPC {
@@ -1158,7 +1158,7 @@ package behaviors {
 
 }
 
-package concurrent {
+namespace concurrent {
 
     @doc("The contract between event implementations and Collector")
     interface Event {

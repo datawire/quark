@@ -1,4 +1,4 @@
-package ipify {
+namespace ipify {
 
     interface IPConsumer {
         void consume(String ip);

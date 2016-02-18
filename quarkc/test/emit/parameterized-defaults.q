@@ -1,4 +1,4 @@
-package pkg {
+namespace pkg {
 
     interface Foo<T> {
         T foo() {
