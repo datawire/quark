@@ -32,7 +32,7 @@ function FutureListener(cb) {
 response.onFinished(
     new FutureListener( // XXX: if this can become magic then the quark-js API can be idiomatic
         function(response) {
-            if (response.getError() != null) {
+            if (response.getError() !== null) {
                 console.log("Response failed with", response.getError());
             } else {
                 console.log("Response says", response.result);
