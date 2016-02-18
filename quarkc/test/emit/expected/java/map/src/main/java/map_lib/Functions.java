@@ -35,7 +35,7 @@ public class Functions {
     public static void iterables() {
         java.util.HashMap<String,Integer> numbers = io.datawire.quark.runtime.Builtins.map(new Object[]{"zero", 0, "one", 1, "two", 2, "e", 2, "three", 3, "pi", 3, "fun", 69, "dockingbay", 94});
         java.util.ArrayList<String> keys = new java.util.ArrayList((numbers).keySet());
-        java.util.Collections.sort(keys);
+        java.util.Collections.sort(keys, null);
         do{System.out.println(keys);System.out.flush();}while(false);
     }
 

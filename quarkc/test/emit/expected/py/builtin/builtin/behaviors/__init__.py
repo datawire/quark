@@ -11,9 +11,10 @@ class RPC(object):
         self.service = None
         self.returned = None
         self.timeout = None
-        self.name = None
+        self.methodName = None
+        self.instance = None
 
-    def __init__(self, service, name):
+    def __init__(self, service, methodName):
         self._init()
         timeout = (service)._getField(u"timeout");
         if (((timeout) == (None)) or ((timeout) <= ((0)))):
@@ -23,24 +24,40 @@ class RPC(object):
         if (((override) != (None)) and ((override) > ((0)))):
             timeout = override
 
-        (self).returned = ((builtin.reflect.Class.get(_getClass(service))).getMethod(name)).getType()
+        (self).returned = ((builtin.reflect.Class.get(_getClass(service))).getMethod(methodName)).getType()
         (self).timeout = timeout
-        (self).name = name
+        (self).methodName = methodName
         (self).service = service
 
     def call(self, args):
-        request = _HTTPRequest(((self).service).getURL());
-        json = builtin.toJSON(args, None);
-        envelope = _JSONObject();
-        (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString((self).name)));
-        (envelope).setObjectItem((u"$context"), ((_JSONObject()).setString(u"TBD")));
-        (envelope).setObjectItem((u"rpc"), (json));
-        (request).setBody((envelope).toString());
-        (request).setMethod(u"POST");
-        rpc = RPCRequest(args, self);
-        result = (rpc).call(request);
+        result = None;
+        (self).instance = ((self).service).getInstance()
+        if (((self).instance) != (None)):
+            request = _HTTPRequest(((self).instance).getURL());
+            json = builtin.toJSON(args, None);
+            envelope = _JSONObject();
+            (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString((self).methodName)));
+            (envelope).setObjectItem((u"$context"), ((_JSONObject()).setString(u"TBD")));
+            (envelope).setObjectItem((u"rpc"), (json));
+            (request).setBody((envelope).toString());
+            (request).setMethod(u"POST");
+            rpc = RPCRequest(args, self);
+            result = (rpc).call(request)
+        else:
+            result = builtin.concurrent.Future()
+            (result).finish(u"all services are down");
+
         builtin.concurrent.FutureWait.waitFor(result, (1000));
         return result
+
+    def succeed(self, info):
+        ((self).instance).succeed(info);
+
+    def fail(self, info):
+        ((self).instance).fail(info);
+
+    def toString(self):
+        return ((((((u"RPC ") + (((self).service).getName())) + (u" at ")) + (((self).instance).getURL())) + (u": ")) + ((self).methodName)) + (u"(...)")
 
     def _getClass(self):
         return u"builtin.behaviors.RPC"
@@ -55,8 +72,11 @@ class RPC(object):
         if ((name) == (u"timeout")):
             return (self).timeout
 
-        if ((name) == (u"name")):
-            return (self).name
+        if ((name) == (u"methodName")):
+            return (self).methodName
+
+        if ((name) == (u"instance")):
+            return (self).instance
 
         return None
 
@@ -70,8 +90,11 @@ class RPC(object):
         if ((name) == (u"timeout")):
             (self).timeout = value
 
-        if ((name) == (u"name")):
-            (self).name = value
+        if ((name) == (u"methodName")):
+            (self).methodName = value
+
+        if ((name) == (u"instance")):
+            (self).instance = value
 
     
 RPC.builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md
@@ -95,23 +118,30 @@ class RPCRequest(object):
         return (self).retval
 
     def onHTTPResponse(self, rq, response):
+        info = None;
         ((self).timeout).cancel();
         if (((response).getCode()) != (200)):
-            ((self).retval).finish((((u"RPC ") + (((self).rpc).name)) + (u"(...) failed: Server returned error ")) + (str((response).getCode())));
+            info = ((((self).rpc).toString()) + (u" failed: Server returned error ")) + (str((response).getCode()))
+            ((self).retval).finish(info);
+            ((self).rpc).fail(info);
             return
 
         body = (response).getBody();
         obj = _JSONObject.parse(body);
         classname = ((obj).getObjectItem(u"$class")).getString();
         if ((classname) == (None)):
-            ((self).retval).finish(((u"RPC ") + (((self).rpc).name)) + (u"(...) failed: Server returned unrecognizable content"));
+            info = (((self).rpc).toString()) + (u" failed: Server returned unrecognizable content")
+            ((self).retval).finish(info);
+            ((self).rpc).fail(info);
             return
         else:
             builtin.fromJSON(((self).rpc).returned, (self).retval, obj);
             ((self).retval).finish(None);
+            ((self).rpc).succeed(u"Success in the future...");
 
     def onTimeout(self, timeout):
         ((self).retval).finish(u"request timed out");
+        ((self).rpc).fail(u"request timed out");
 
     def _getClass(self):
         return u"builtin.behaviors.RPCRequest"
@@ -153,3 +183,90 @@ class RPCRequest(object):
     def onHTTPFinal(self, request):
         pass
 RPCRequest.builtin_behaviors_RPCRequest_ref = builtin_md.Root.builtin_behaviors_RPCRequest_md
+class CircuitBreaker(object):
+    def _init(self):
+        self.id = None
+        self.failureLimit = None
+        self.retestDelay = None
+        self.active = True
+        self.failureCount = 0
+        self.mutex = _Lock()
+
+    def __init__(self, id, failureLimit, retestDelay):
+        self._init()
+        (self).id = id
+        (self).failureLimit = failureLimit
+        (self).retestDelay = retestDelay
+
+    def succeed(self):
+        ((self).mutex).acquire();
+        if (((self).failureCount) > (0)):
+            _println((u"- CLOSE breaker on ") + ((self).id));
+
+        (self).failureCount = 0
+        ((self).mutex).release();
+
+    def fail(self):
+        doSchedule = False;
+        ((self).mutex).acquire();
+        (self).failureCount = ((self).failureCount) + (1)
+        if (((self).failureCount) >= ((self).failureLimit)):
+            (self).active = False
+            doSchedule = True
+            _println((u"- OPEN breaker on ") + ((self).id));
+
+        ((self).mutex).release();
+        if (doSchedule):
+            (builtin.concurrent.Context.runtime()).schedule(self, (self).retestDelay);
+
+    def onExecute(self, runtime):
+        ((self).mutex).acquire();
+        (self).active = True
+        _println((u"- RETEST breaker on ") + ((self).id));
+        ((self).mutex).release();
+
+    def _getClass(self):
+        return u"builtin.behaviors.CircuitBreaker"
+
+    def _getField(self, name):
+        if ((name) == (u"id")):
+            return (self).id
+
+        if ((name) == (u"failureLimit")):
+            return (self).failureLimit
+
+        if ((name) == (u"retestDelay")):
+            return (self).retestDelay
+
+        if ((name) == (u"active")):
+            return (self).active
+
+        if ((name) == (u"failureCount")):
+            return (self).failureCount
+
+        if ((name) == (u"mutex")):
+            return (self).mutex
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"id")):
+            (self).id = value
+
+        if ((name) == (u"failureLimit")):
+            (self).failureLimit = value
+
+        if ((name) == (u"retestDelay")):
+            (self).retestDelay = value
+
+        if ((name) == (u"active")):
+            (self).active = value
+
+        if ((name) == (u"failureCount")):
+            (self).failureCount = value
+
+        if ((name) == (u"mutex")):
+            (self).mutex = value
+
+    
+CircuitBreaker.builtin_behaviors_CircuitBreaker_ref = builtin_md.Root.builtin_behaviors_CircuitBreaker_md

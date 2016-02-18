@@ -101,6 +101,12 @@ def fromJSON(cls, result, json):
 
     return result
 
+class Resolver(object):
+
+    def resolve(self, serviceName):
+        assert False
+
+Resolver.builtin_Resolver_ref = builtin_md.Root.builtin_Resolver_md
 class ResponseHolder(object):
     def _init(self):
         self.response = None
@@ -141,30 +147,161 @@ class ResponseHolder(object):
 ResponseHolder.builtin_ResponseHolder_ref = builtin_md.Root.builtin_ResponseHolder_md
 class Service(object):
 
-    def getURL(self):
+    def getName(self):
+        assert False
+
+    def getInstance(self):
         assert False
 
     def getTimeout(self):
         assert False
 
-    def rpc(self, name, args):
-        rpc = behaviors.RPC(self, name);
+    def rpc(self, methodName, args):
+        rpc = behaviors.RPC(self, methodName);
         return (rpc).call(args)
 
 
 Service.builtin_Service_ref = builtin_md.Root.builtin_Service_md
-class Client(object):
+class ServiceInstance(object):
     def _init(self):
+        self.serviceName = None
         self.url = None
-        self._timeout = None
+        self.breaker = None
 
-    def __init__(self, url):
+    def __init__(self, serviceName, url, failureLimit, retestDelay):
         self._init()
+        (self).serviceName = serviceName
         (self).url = url
-        (self)._timeout = (0)
+        (self).breaker = behaviors.CircuitBreaker(((((u"[") + (serviceName)) + (u" at ")) + (url)) + (u"]"), failureLimit, retestDelay)
+
+    def isActive(self):
+        return ((self).breaker).active
 
     def getURL(self):
         return (self).url
+
+    def succeed(self, info):
+        if (not ((self).isActive())):
+            _println((((u"- CLOSE breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
+
+        ((self).breaker).succeed();
+
+    def fail(self, info):
+        if (not ((self).isActive())):
+            _println((((u"- OPEN breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
+
+        ((self).breaker).fail();
+
+    def _getClass(self):
+        return u"builtin.ServiceInstance"
+
+    def _getField(self, name):
+        if ((name) == (u"serviceName")):
+            return (self).serviceName
+
+        if ((name) == (u"url")):
+            return (self).url
+
+        if ((name) == (u"breaker")):
+            return (self).breaker
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"serviceName")):
+            (self).serviceName = value
+
+        if ((name) == (u"url")):
+            (self).url = value
+
+        if ((name) == (u"breaker")):
+            (self).breaker = value
+
+    
+ServiceInstance.builtin_ServiceInstance_ref = builtin_md.Root.builtin_ServiceInstance_md
+class DegenerateResolver(object):
+    """
+    DegenerateResolver assumes that the serviceName is an URL.
+    """
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def resolve(self, serviceName):
+        return _List([serviceName])
+
+    def _getClass(self):
+        return u"builtin.DegenerateResolver"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+DegenerateResolver.builtin_DegenerateResolver_ref = builtin_md.Root.builtin_DegenerateResolver_md
+class Client(object):
+    def _init(self):
+        self.resolver = None
+        self.serviceName = None
+        self._timeout = None
+        self._failureLimit = 3
+        self._retestDelay = 8.0
+        self.mutex = None
+        self.instanceMap = None
+        self.counter = None
+
+    def __init__(self, serviceName):
+        self._init()
+        (self).serviceName = serviceName
+        (self).resolver = DegenerateResolver()
+        (self)._timeout = (0)
+        (self).mutex = _Lock()
+        (self).instanceMap = {}
+        (self).counter = 0
+        failureLimit = (self)._getField(u"failureLimit");
+        if ((failureLimit) != (None)):
+            (self)._failureLimit = failureLimit
+
+        retestDelay = (self)._getField(u"retestDelay");
+        if ((retestDelay) != (None)):
+            (self)._retestDelay = retestDelay
+
+    def setResolver(self, resolver):
+        (self).resolver = resolver
+
+    def getInstance(self):
+        urls = ((self).resolver).resolve((self).serviceName);
+        if ((len(urls)) <= (0)):
+            return None
+
+        (urls).sort();
+        ((self).mutex).acquire();
+        result = None;
+        next = ((self).counter) % (len(urls));
+        (self).counter = ((self).counter) + (1)
+        idx = next;
+        while (True):
+            url = (urls)[idx];
+            instance = ((self).instanceMap).get(url);
+            if ((instance) == (None)):
+                instance = ServiceInstance((self).serviceName, url, self._failureLimit, self._retestDelay)
+                ((self).instanceMap)[url] = (instance);
+
+            if ((instance).isActive()):
+                _println((((((u"- ") + ((self).serviceName)) + (u" using instance ")) + (str((idx) + (1)))) + (u": ")) + (url));
+                result = instance
+                break;
+
+            idx = ((idx) + (1)) % (len(urls))
+            if ((idx) == (next)):
+                _println(((u"- ") + ((self).serviceName)) + (u": no live instances! giving up."));
+                break;
+
+        ((self).mutex).release();
+        return result
+
+    def getName(self):
+        return (self).serviceName
 
     def getTimeout(self):
         return (self)._timeout
@@ -176,22 +313,59 @@ class Client(object):
         return u"builtin.Client"
 
     def _getField(self, name):
-        if ((name) == (u"url")):
-            return (self).url
+        if ((name) == (u"resolver")):
+            return (self).resolver
+
+        if ((name) == (u"serviceName")):
+            return (self).serviceName
 
         if ((name) == (u"_timeout")):
             return (self)._timeout
 
+        if ((name) == (u"_failureLimit")):
+            return (self)._failureLimit
+
+        if ((name) == (u"_retestDelay")):
+            return (self)._retestDelay
+
+        if ((name) == (u"mutex")):
+            return (self).mutex
+
+        if ((name) == (u"instanceMap")):
+            return (self).instanceMap
+
+        if ((name) == (u"counter")):
+            return (self).counter
+
         return None
 
     def _setField(self, name, value):
-        if ((name) == (u"url")):
-            (self).url = value
+        if ((name) == (u"resolver")):
+            (self).resolver = value
+
+        if ((name) == (u"serviceName")):
+            (self).serviceName = value
 
         if ((name) == (u"_timeout")):
             (self)._timeout = value
 
+        if ((name) == (u"_failureLimit")):
+            (self)._failureLimit = value
+
+        if ((name) == (u"_retestDelay")):
+            (self)._retestDelay = value
+
+        if ((name) == (u"mutex")):
+            (self).mutex = value
+
+        if ((name) == (u"instanceMap")):
+            (self).instanceMap = value
+
+        if ((name) == (u"counter")):
+            (self).counter = value
+
     
+Client.builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md
 class ServerResponder(object):
     def _init(self):

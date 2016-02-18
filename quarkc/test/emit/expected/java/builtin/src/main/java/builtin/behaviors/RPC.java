@@ -5,8 +5,9 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     public builtin.Service service;
     public builtin.reflect.Class returned;
     public Long timeout;
-    public String name;
-    public RPC(builtin.Service service, String name) {
+    public String methodName;
+    public builtin.ServiceInstance instance;
+    public RPC(builtin.Service service, String methodName) {
         Long timeout = (Long) (((io.datawire.quark.runtime.QObject) (service))._getField("timeout"));
         if (((timeout)==(null) || ((timeout) != null && (timeout).equals(null))) || ((timeout) <= (new Long(0)))) {
             timeout = new Long(10000);
@@ -15,24 +16,40 @@ public class RPC implements io.datawire.quark.runtime.QObject {
         if ((!((override)==(null) || ((override) != null && (override).equals(null)))) && ((override) > (new Long(0)))) {
             timeout = override;
         }
-        (this).returned = ((builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(service))).getMethod(name)).getType();
+        (this).returned = ((builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(service))).getMethod(methodName)).getType();
         (this).timeout = timeout;
-        (this).name = name;
+        (this).methodName = methodName;
         (this).service = service;
     }
     public builtin.concurrent.Future call(java.util.ArrayList<Object> args) {
-        io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).service).getURL());
-        io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(args, null);
-        io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
-        (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).name)));
-        (envelope).setObjectItem(("$context"), ((new io.datawire.quark.runtime.JSONObject()).setString("TBD")));
-        (envelope).setObjectItem(("rpc"), (json));
-        (request).setBody((envelope).toString());
-        (request).setMethod("POST");
-        RPCRequest rpc = new RPCRequest(args, this);
-        builtin.concurrent.Future result = (rpc).call(request);
+        builtin.concurrent.Future result = (builtin.concurrent.Future) (null);
+        (this).instance = ((this).service).getInstance();
+        if (!(((this).instance)==(null) || (((this).instance) != null && ((this).instance).equals(null)))) {
+            io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).instance).getURL());
+            io.datawire.quark.runtime.JSONObject json = builtin.Functions.toJSON(args, null);
+            io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
+            (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).methodName)));
+            (envelope).setObjectItem(("$context"), ((new io.datawire.quark.runtime.JSONObject()).setString("TBD")));
+            (envelope).setObjectItem(("rpc"), (json));
+            (request).setBody((envelope).toString());
+            (request).setMethod("POST");
+            RPCRequest rpc = new RPCRequest(args, this);
+            result = (rpc).call(request);
+        } else {
+            result = new builtin.concurrent.Future();
+            (result).finish("all services are down");
+        }
         builtin.concurrent.FutureWait.waitFor(result, new Long(1000));
         return result;
+    }
+    public void succeed(String info) {
+        ((this).instance).succeed(info);
+    }
+    public void fail(String info) {
+        ((this).instance).fail(info);
+    }
+    public String toString() {
+        return (((((("RPC ") + (((this).service).getName())) + (" at ")) + (((this).instance).getURL())) + (": ")) + ((this).methodName)) + ("(...)");
     }
     public String _getClass() {
         return "builtin.behaviors.RPC";
@@ -47,8 +64,11 @@ public class RPC implements io.datawire.quark.runtime.QObject {
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
             return (this).timeout;
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
-            return (this).name;
+        if ((name)==("methodName") || ((name) != null && (name).equals("methodName"))) {
+            return (this).methodName;
+        }
+        if ((name)==("instance") || ((name) != null && (name).equals("instance"))) {
+            return (this).instance;
         }
         return null;
     }
@@ -62,8 +82,11 @@ public class RPC implements io.datawire.quark.runtime.QObject {
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
             (this).timeout = (Long) (value);
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
-            (this).name = (String) (value);
+        if ((name)==("methodName") || ((name) != null && (name).equals("methodName"))) {
+            (this).methodName = (String) (value);
+        }
+        if ((name)==("instance") || ((name) != null && (name).equals("instance"))) {
+            (this).instance = (builtin.ServiceInstance) (value);
         }
     }
 }

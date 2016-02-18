@@ -12,7 +12,7 @@ exports.builtin_md = builtin_md;
 
 // CLASS RPC
 
-function RPC(service, name) {
+function RPC(service, methodName) {
     this.__init_fields__();
     var timeout = (service)._getField("timeout");
     if (((timeout) === (null)) || ((timeout) <= ((0)))) {
@@ -22,9 +22,9 @@ function RPC(service, name) {
     if (((override) !== (null)) && ((override) > ((0)))) {
         timeout = override;
     }
-    (this).returned = ((builtin.reflect.Class.get(_qrt._getClass(service))).getMethod(name)).getType();
+    (this).returned = ((builtin.reflect.Class.get(_qrt._getClass(service))).getMethod(methodName)).getType();
     (this).timeout = timeout;
-    (this).name = name;
+    (this).methodName = methodName;
     (this).service = service;
 }
 exports.RPC = RPC;
@@ -33,25 +33,48 @@ function RPC__init_fields__() {
     this.service = null;
     this.returned = null;
     this.timeout = null;
-    this.name = null;
+    this.methodName = null;
+    this.instance = null;
 }
 RPC.prototype.__init_fields__ = RPC__init_fields__;
 RPC.builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md;
 function RPC_call(args) {
-    var request = new _qrt.HTTPRequest(((this).service).getURL());
-    var json = builtin.toJSON(args, null);
-    var envelope = new _qrt.JSONObject();
-    (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString((this).name)));
-    (envelope).setObjectItem(("$context"), ((new _qrt.JSONObject()).setString("TBD")));
-    (envelope).setObjectItem(("rpc"), (json));
-    (request).setBody((envelope).toString());
-    (request).setMethod("POST");
-    var rpc = new RPCRequest(args, this);
-    var result = (rpc).call(request);
+    var result = null;
+    (this).instance = ((this).service).getInstance();
+    if (((this).instance) !== (null)) {
+        var request = new _qrt.HTTPRequest(((this).instance).getURL());
+        var json = builtin.toJSON(args, null);
+        var envelope = new _qrt.JSONObject();
+        (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString((this).methodName)));
+        (envelope).setObjectItem(("$context"), ((new _qrt.JSONObject()).setString("TBD")));
+        (envelope).setObjectItem(("rpc"), (json));
+        (request).setBody((envelope).toString());
+        (request).setMethod("POST");
+        var rpc = new RPCRequest(args, this);
+        result = (rpc).call(request);
+    } else {
+        result = new builtin.concurrent.Future();
+        (result).finish("all services are down");
+    }
     builtin.concurrent.FutureWait.waitFor(result, (1000));
     return result;
 }
 RPC.prototype.call = RPC_call;
+
+function RPC_succeed(info) {
+    ((this).instance).succeed(info);
+}
+RPC.prototype.succeed = RPC_succeed;
+
+function RPC_fail(info) {
+    ((this).instance).fail(info);
+}
+RPC.prototype.fail = RPC_fail;
+
+function RPC_toString() {
+    return (((((("RPC ") + (((this).service).getName())) + (" at ")) + (((this).instance).getURL())) + (": ")) + ((this).methodName)) + ("(...)");
+}
+RPC.prototype.toString = RPC_toString;
 
 function RPC__getClass() {
     return "builtin.behaviors.RPC";
@@ -68,8 +91,11 @@ function RPC__getField(name) {
     if ((name) === ("timeout")) {
         return (this).timeout;
     }
-    if ((name) === ("name")) {
-        return (this).name;
+    if ((name) === ("methodName")) {
+        return (this).methodName;
+    }
+    if ((name) === ("instance")) {
+        return (this).instance;
     }
     return null;
 }
@@ -85,8 +111,11 @@ function RPC__setField(name, value) {
     if ((name) === ("timeout")) {
         (this).timeout = value;
     }
-    if ((name) === ("name")) {
-        (this).name = value;
+    if ((name) === ("methodName")) {
+        (this).methodName = value;
+    }
+    if ((name) === ("instance")) {
+        (this).instance = value;
     }
 }
 RPC.prototype._setField = RPC__setField;
@@ -118,26 +147,33 @@ function RPCRequest_call(request) {
 RPCRequest.prototype.call = RPCRequest_call;
 
 function RPCRequest_onHTTPResponse(rq, response) {
+    var info = null;
     ((this).timeout).cancel();
     if (((response).getCode()) !== (200)) {
-        ((this).retval).finish(((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned error ")) + (_qrt.toString((response).getCode())));
+        info = ((((this).rpc).toString()) + (" failed: Server returned error ")) + (_qrt.toString((response).getCode()));
+        ((this).retval).finish(info);
+        ((this).rpc).fail(info);
         return;
     }
     var body = (response).getBody();
     var obj = _qrt.json_from_string(body);
     var classname = ((obj).getObjectItem("$class")).getString();
     if ((classname) === (null)) {
-        ((this).retval).finish((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned unrecognizable content"));
+        info = (((this).rpc).toString()) + (" failed: Server returned unrecognizable content");
+        ((this).retval).finish(info);
+        ((this).rpc).fail(info);
         return;
     } else {
         builtin.fromJSON(((this).rpc).returned, (this).retval, obj);
         ((this).retval).finish(null);
+        ((this).rpc).succeed("Success in the future...");
     }
 }
 RPCRequest.prototype.onHTTPResponse = RPCRequest_onHTTPResponse;
 
 function RPCRequest_onTimeout(timeout) {
     ((this).retval).finish("request timed out");
+    ((this).rpc).fail("request timed out");
 }
 RPCRequest.prototype.onTimeout = RPCRequest_onTimeout;
 
@@ -187,3 +223,107 @@ RPCRequest.prototype.onHTTPError = RPCRequest_onHTTPError;
 
 function RPCRequest_onHTTPFinal(request) {}
 RPCRequest.prototype.onHTTPFinal = RPCRequest_onHTTPFinal;
+
+// CLASS CircuitBreaker
+
+function CircuitBreaker(id, failureLimit, retestDelay) {
+    this.__init_fields__();
+    (this).id = id;
+    (this).failureLimit = failureLimit;
+    (this).retestDelay = retestDelay;
+}
+exports.CircuitBreaker = CircuitBreaker;
+
+function CircuitBreaker__init_fields__() {
+    this.id = null;
+    this.failureLimit = null;
+    this.retestDelay = null;
+    this.active = true;
+    this.failureCount = 0;
+    this.mutex = new _qrt.Lock();
+}
+CircuitBreaker.prototype.__init_fields__ = CircuitBreaker__init_fields__;
+CircuitBreaker.builtin_behaviors_CircuitBreaker_ref = builtin_md.Root.builtin_behaviors_CircuitBreaker_md;
+function CircuitBreaker_succeed() {
+    ((this).mutex).acquire();
+    if (((this).failureCount) > (0)) {
+        _qrt.print(("- CLOSE breaker on ") + ((this).id));
+    }
+    (this).failureCount = 0;
+    ((this).mutex).release();
+}
+CircuitBreaker.prototype.succeed = CircuitBreaker_succeed;
+
+function CircuitBreaker_fail() {
+    var doSchedule = false;
+    ((this).mutex).acquire();
+    (this).failureCount = ((this).failureCount) + (1);
+    if (((this).failureCount) >= ((this).failureLimit)) {
+        (this).active = false;
+        doSchedule = true;
+        _qrt.print(("- OPEN breaker on ") + ((this).id));
+    }
+    ((this).mutex).release();
+    if (doSchedule) {
+        (builtin.concurrent.Context.runtime()).schedule(this, (this).retestDelay);
+    }
+}
+CircuitBreaker.prototype.fail = CircuitBreaker_fail;
+
+function CircuitBreaker_onExecute(runtime) {
+    ((this).mutex).acquire();
+    (this).active = true;
+    _qrt.print(("- RETEST breaker on ") + ((this).id));
+    ((this).mutex).release();
+}
+CircuitBreaker.prototype.onExecute = CircuitBreaker_onExecute;
+
+function CircuitBreaker__getClass() {
+    return "builtin.behaviors.CircuitBreaker";
+}
+CircuitBreaker.prototype._getClass = CircuitBreaker__getClass;
+
+function CircuitBreaker__getField(name) {
+    if ((name) === ("id")) {
+        return (this).id;
+    }
+    if ((name) === ("failureLimit")) {
+        return (this).failureLimit;
+    }
+    if ((name) === ("retestDelay")) {
+        return (this).retestDelay;
+    }
+    if ((name) === ("active")) {
+        return (this).active;
+    }
+    if ((name) === ("failureCount")) {
+        return (this).failureCount;
+    }
+    if ((name) === ("mutex")) {
+        return (this).mutex;
+    }
+    return null;
+}
+CircuitBreaker.prototype._getField = CircuitBreaker__getField;
+
+function CircuitBreaker__setField(name, value) {
+    if ((name) === ("id")) {
+        (this).id = value;
+    }
+    if ((name) === ("failureLimit")) {
+        (this).failureLimit = value;
+    }
+    if ((name) === ("retestDelay")) {
+        (this).retestDelay = value;
+    }
+    if ((name) === ("active")) {
+        (this).active = value;
+    }
+    if ((name) === ("failureCount")) {
+        (this).failureCount = value;
+    }
+    if ((name) === ("mutex")) {
+        (this).mutex = value;
+    }
+}
+CircuitBreaker.prototype._setField = CircuitBreaker__setField;

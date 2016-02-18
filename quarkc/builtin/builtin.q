@@ -1015,7 +1015,7 @@ package behaviors {
             self.instance = self.service.getInstance();
 
             // It's possible for getInstance to return nothing, if all the options have been exhausted.
-            if (self.instance) {
+            if (self.instance != null) {
                 HTTPRequest request = new HTTPRequest(self.instance.getURL());
                 // XXX: assume message is not a Future, or at least not a pending one
                 JSONObject json = toJSON(args, null);
@@ -1029,8 +1029,7 @@ package behaviors {
                 RPCRequest rpc = new RPCRequest(args, self);
 
                 result = rpc.call(request);
-            }
-            else {
+            } else {
                 result = new concurrent.Future();
                 result.finish("all services are down");
             }

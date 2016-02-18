@@ -1,15 +1,69 @@
 package builtin;
 
 public class Client implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md;
     public static builtin.reflect.Class builtin_Client_ref = builtin_md.Root.builtin_Client_md;
-    public String url;
+    public Resolver resolver;
+    public String serviceName;
     public Long _timeout;
-    public Client(String url) {
-        (this).url = url;
+    public Integer _failureLimit = 3;
+    public Double _retestDelay = 8.0;
+    public io.datawire.quark.runtime.Lock mutex;
+    public java.util.HashMap<String,ServiceInstance> instanceMap;
+    public Integer counter;
+    public Client(String serviceName) {
+        (this).serviceName = serviceName;
+        (this).resolver = new DegenerateResolver();
         (this)._timeout = new Long(0);
+        (this).mutex = new io.datawire.quark.runtime.Lock();
+        (this).instanceMap = io.datawire.quark.runtime.Builtins.map(new Object[]{});
+        (this).counter = 0;
+        Integer failureLimit = (Integer) (((io.datawire.quark.runtime.QObject) (this))._getField("failureLimit"));
+        if (!((failureLimit)==(null) || ((failureLimit) != null && (failureLimit).equals(null)))) {
+            (this)._failureLimit = failureLimit;
+        }
+        Double retestDelay = (Double) (((io.datawire.quark.runtime.QObject) (this))._getField("retestDelay"));
+        if (!((retestDelay)==(null) || ((retestDelay) != null && (retestDelay).equals(null)))) {
+            (this)._retestDelay = retestDelay;
+        }
     }
-    public String getURL() {
-        return (this).url;
+    public void setResolver(Resolver resolver) {
+        (this).resolver = resolver;
+    }
+    public ServiceInstance getInstance() {
+        java.util.ArrayList<String> urls = ((this).resolver).resolve((this).serviceName);
+        if (((urls).size()) <= (0)) {
+            return (ServiceInstance) (null);
+        }
+        java.util.Collections.sort(urls, null);
+        ((this).mutex).acquire();
+        ServiceInstance result = (ServiceInstance) (null);
+        Integer next = Math.floorMod(((this).counter), ((urls).size()));
+        (this).counter = ((this).counter) + (1);
+        Integer idx = next;
+        while (true) {
+            String url = (urls).get(idx);
+            ServiceInstance instance = ((this).instanceMap).get(url);
+            if ((instance)==(null) || ((instance) != null && (instance).equals(null))) {
+                instance = new ServiceInstance((this).serviceName, url, this._failureLimit, this._retestDelay);
+                ((this).instanceMap).put((url), (instance));
+            }
+            if ((instance).isActive()) {
+                do{System.out.println(((((("- ") + ((this).serviceName)) + (" using instance ")) + (Integer.toString((idx) + (1)))) + (": ")) + (url));System.out.flush();}while(false);
+                result = instance;
+                break;
+            }
+            idx = Math.floorMod(((idx) + (1)), ((urls).size()));
+            if ((idx)==(next) || ((idx) != null && (idx).equals(next))) {
+                do{System.out.println((("- ") + ((this).serviceName)) + (": no live instances! giving up."));System.out.flush();}while(false);
+                break;
+            }
+        }
+        ((this).mutex).release();
+        return result;
+    }
+    public String getName() {
+        return (this).serviceName;
     }
     public Long getTimeout() {
         return (this)._timeout;
@@ -21,20 +75,56 @@ public class Client implements io.datawire.quark.runtime.QObject {
         return "builtin.Client";
     }
     public Object _getField(String name) {
-        if ((name)==("url") || ((name) != null && (name).equals("url"))) {
-            return (this).url;
+        if ((name)==("resolver") || ((name) != null && (name).equals("resolver"))) {
+            return (this).resolver;
+        }
+        if ((name)==("serviceName") || ((name) != null && (name).equals("serviceName"))) {
+            return (this).serviceName;
         }
         if ((name)==("_timeout") || ((name) != null && (name).equals("_timeout"))) {
             return (this)._timeout;
         }
+        if ((name)==("_failureLimit") || ((name) != null && (name).equals("_failureLimit"))) {
+            return (this)._failureLimit;
+        }
+        if ((name)==("_retestDelay") || ((name) != null && (name).equals("_retestDelay"))) {
+            return (this)._retestDelay;
+        }
+        if ((name)==("mutex") || ((name) != null && (name).equals("mutex"))) {
+            return (this).mutex;
+        }
+        if ((name)==("instanceMap") || ((name) != null && (name).equals("instanceMap"))) {
+            return (this).instanceMap;
+        }
+        if ((name)==("counter") || ((name) != null && (name).equals("counter"))) {
+            return (this).counter;
+        }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("url") || ((name) != null && (name).equals("url"))) {
-            (this).url = (String) (value);
+        if ((name)==("resolver") || ((name) != null && (name).equals("resolver"))) {
+            (this).resolver = (Resolver) (value);
+        }
+        if ((name)==("serviceName") || ((name) != null && (name).equals("serviceName"))) {
+            (this).serviceName = (String) (value);
         }
         if ((name)==("_timeout") || ((name) != null && (name).equals("_timeout"))) {
             (this)._timeout = (Long) (value);
+        }
+        if ((name)==("_failureLimit") || ((name) != null && (name).equals("_failureLimit"))) {
+            (this)._failureLimit = (Integer) (value);
+        }
+        if ((name)==("_retestDelay") || ((name) != null && (name).equals("_retestDelay"))) {
+            (this)._retestDelay = (Double) (value);
+        }
+        if ((name)==("mutex") || ((name) != null && (name).equals("mutex"))) {
+            (this).mutex = (io.datawire.quark.runtime.Lock) (value);
+        }
+        if ((name)==("instanceMap") || ((name) != null && (name).equals("instanceMap"))) {
+            (this).instanceMap = (java.util.HashMap<String,ServiceInstance>) (value);
+        }
+        if ((name)==("counter") || ((name) != null && (name).equals("counter"))) {
+            (this).counter = (Integer) (value);
         }
     }
 }

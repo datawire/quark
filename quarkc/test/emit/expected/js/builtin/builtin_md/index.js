@@ -298,6 +298,42 @@ function builtin_Map_builtin_String_builtin_Object___setField(name, value) {}
 builtin_Map_builtin_String_builtin_Object_.prototype._setField = builtin_Map_builtin_String_builtin_Object___setField;
 
 
+// CLASS builtin_Map_builtin_String_builtin_ServiceInstance_
+
+function builtin_Map_builtin_String_builtin_ServiceInstance_() {
+    builtin_Map_builtin_String_builtin_ServiceInstance_.super_.call(this, "builtin.Map<builtin.String,builtin.ServiceInstance>");
+    (this).name = "builtin.Map";
+    (this).parameters = ["builtin.String", "builtin.ServiceInstance"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_Map_builtin_String_builtin_ServiceInstance_ = builtin_Map_builtin_String_builtin_ServiceInstance_;
+_qrt.util.inherits(builtin_Map_builtin_String_builtin_ServiceInstance_, builtin.reflect.Class);
+
+function builtin_Map_builtin_String_builtin_ServiceInstance___init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Map_builtin_String_builtin_ServiceInstance_.prototype.__init_fields__ = builtin_Map_builtin_String_builtin_ServiceInstance___init_fields__;
+builtin_Map_builtin_String_builtin_ServiceInstance_.singleton = new builtin_Map_builtin_String_builtin_ServiceInstance_();
+function builtin_Map_builtin_String_builtin_ServiceInstance__construct(args) {
+    return new Map();
+}
+builtin_Map_builtin_String_builtin_ServiceInstance_.prototype.construct = builtin_Map_builtin_String_builtin_ServiceInstance__construct;
+
+function builtin_Map_builtin_String_builtin_ServiceInstance___getClass() {
+    return null;
+}
+builtin_Map_builtin_String_builtin_ServiceInstance_.prototype._getClass = builtin_Map_builtin_String_builtin_ServiceInstance___getClass;
+
+function builtin_Map_builtin_String_builtin_ServiceInstance___getField(name) {
+    return null;
+}
+builtin_Map_builtin_String_builtin_ServiceInstance_.prototype._getField = builtin_Map_builtin_String_builtin_ServiceInstance___getField;
+
+function builtin_Map_builtin_String_builtin_ServiceInstance___setField(name, value) {}
+builtin_Map_builtin_String_builtin_ServiceInstance_.prototype._setField = builtin_Map_builtin_String_builtin_ServiceInstance___setField;
+
+
 // CLASS builtin_Map_builtin_String_builtin_reflect_Class_
 
 function builtin_Map_builtin_String_builtin_reflect_Class_() {
@@ -332,6 +368,42 @@ builtin_Map_builtin_String_builtin_reflect_Class_.prototype._getField = builtin_
 
 function builtin_Map_builtin_String_builtin_reflect_Class___setField(name, value) {}
 builtin_Map_builtin_String_builtin_reflect_Class_.prototype._setField = builtin_Map_builtin_String_builtin_reflect_Class___setField;
+
+
+// CLASS builtin_Resolver
+
+function builtin_Resolver() {
+    builtin_Resolver.super_.call(this, "builtin.Resolver");
+    (this).name = "builtin.Resolver";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_Resolver = builtin_Resolver;
+_qrt.util.inherits(builtin_Resolver, builtin.reflect.Class);
+
+function builtin_Resolver__init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_Resolver.prototype.__init_fields__ = builtin_Resolver__init_fields__;
+builtin_Resolver.singleton = new builtin_Resolver();
+function builtin_Resolver_construct(args) {
+    return null;
+}
+builtin_Resolver.prototype.construct = builtin_Resolver_construct;
+
+function builtin_Resolver__getClass() {
+    return null;
+}
+builtin_Resolver.prototype._getClass = builtin_Resolver__getClass;
+
+function builtin_Resolver__getField(name) {
+    return null;
+}
+builtin_Resolver.prototype._getField = builtin_Resolver__getField;
+
+function builtin_Resolver__setField(name, value) {}
+builtin_Resolver.prototype._setField = builtin_Resolver__setField;
 
 
 // CLASS builtin_ResponseHolder
@@ -406,13 +478,85 @@ function builtin_Service__setField(name, value) {}
 builtin_Service.prototype._setField = builtin_Service__setField;
 
 
+// CLASS builtin_ServiceInstance
+
+function builtin_ServiceInstance() {
+    builtin_ServiceInstance.super_.call(this, "builtin.ServiceInstance");
+    (this).name = "builtin.ServiceInstance";
+    (this).parameters = [];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.String", "url"), new builtin.reflect.Field("builtin.behaviors.CircuitBreaker", "breaker")];
+    (this).methods = [];
+}
+exports.builtin_ServiceInstance = builtin_ServiceInstance;
+_qrt.util.inherits(builtin_ServiceInstance, builtin.reflect.Class);
+
+function builtin_ServiceInstance__init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_ServiceInstance.prototype.__init_fields__ = builtin_ServiceInstance__init_fields__;
+builtin_ServiceInstance.singleton = new builtin_ServiceInstance();
+function builtin_ServiceInstance_construct(args) {
+    return new builtin.ServiceInstance((args)[0], (args)[1], (args)[2], (args)[3]);
+}
+builtin_ServiceInstance.prototype.construct = builtin_ServiceInstance_construct;
+
+function builtin_ServiceInstance__getClass() {
+    return null;
+}
+builtin_ServiceInstance.prototype._getClass = builtin_ServiceInstance__getClass;
+
+function builtin_ServiceInstance__getField(name) {
+    return null;
+}
+builtin_ServiceInstance.prototype._getField = builtin_ServiceInstance__getField;
+
+function builtin_ServiceInstance__setField(name, value) {}
+builtin_ServiceInstance.prototype._setField = builtin_ServiceInstance__setField;
+
+
+// CLASS builtin_DegenerateResolver
+
+function builtin_DegenerateResolver() {
+    builtin_DegenerateResolver.super_.call(this, "builtin.DegenerateResolver");
+    (this).name = "builtin.DegenerateResolver";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_DegenerateResolver = builtin_DegenerateResolver;
+_qrt.util.inherits(builtin_DegenerateResolver, builtin.reflect.Class);
+
+function builtin_DegenerateResolver__init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_DegenerateResolver.prototype.__init_fields__ = builtin_DegenerateResolver__init_fields__;
+builtin_DegenerateResolver.singleton = new builtin_DegenerateResolver();
+function builtin_DegenerateResolver_construct(args) {
+    return new builtin.DegenerateResolver();
+}
+builtin_DegenerateResolver.prototype.construct = builtin_DegenerateResolver_construct;
+
+function builtin_DegenerateResolver__getClass() {
+    return null;
+}
+builtin_DegenerateResolver.prototype._getClass = builtin_DegenerateResolver__getClass;
+
+function builtin_DegenerateResolver__getField(name) {
+    return null;
+}
+builtin_DegenerateResolver.prototype._getField = builtin_DegenerateResolver__getField;
+
+function builtin_DegenerateResolver__setField(name, value) {}
+builtin_DegenerateResolver.prototype._setField = builtin_DegenerateResolver__setField;
+
+
 // CLASS builtin_Client
 
 function builtin_Client() {
     builtin_Client.super_.call(this, "builtin.Client");
     (this).name = "builtin.Client";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "url"), new builtin.reflect.Field("builtin.long", "_timeout")];
+    (this).fields = [new builtin.reflect.Field("builtin.Resolver", "resolver"), new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.long", "_timeout"), new builtin.reflect.Field("builtin.int", "_failureLimit"), new builtin.reflect.Field("builtin.float", "_retestDelay"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex"), new builtin.reflect.Field("builtin.Map<builtin.String,builtin.ServiceInstance>", "instanceMap"), new builtin.reflect.Field("builtin.int", "counter")];
     (this).methods = [];
 }
 exports.builtin_Client = builtin_Client;
@@ -618,14 +762,112 @@ builtin_behaviors_RPC_call_Method.prototype._getField = builtin_behaviors_RPC_ca
 function builtin_behaviors_RPC_call_Method__setField(name, value) {}
 builtin_behaviors_RPC_call_Method.prototype._setField = builtin_behaviors_RPC_call_Method__setField;
 
+// CLASS builtin_behaviors_RPC_succeed_Method
+
+function builtin_behaviors_RPC_succeed_Method() {
+    builtin_behaviors_RPC_succeed_Method.super_.call(this, "builtin.void", "succeed", ["builtin.String"]);
+}
+exports.builtin_behaviors_RPC_succeed_Method = builtin_behaviors_RPC_succeed_Method;
+_qrt.util.inherits(builtin_behaviors_RPC_succeed_Method, builtin.reflect.Method);
+
+function builtin_behaviors_RPC_succeed_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_RPC_succeed_Method.prototype.__init_fields__ = builtin_behaviors_RPC_succeed_Method__init_fields__;
+
+function builtin_behaviors_RPC_succeed_Method_invoke(object, args) {
+    var obj = object;
+    (obj).succeed((args)[0]);
+    return null;
+}
+builtin_behaviors_RPC_succeed_Method.prototype.invoke = builtin_behaviors_RPC_succeed_Method_invoke;
+
+function builtin_behaviors_RPC_succeed_Method__getClass() {
+    return null;
+}
+builtin_behaviors_RPC_succeed_Method.prototype._getClass = builtin_behaviors_RPC_succeed_Method__getClass;
+
+function builtin_behaviors_RPC_succeed_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_RPC_succeed_Method.prototype._getField = builtin_behaviors_RPC_succeed_Method__getField;
+
+function builtin_behaviors_RPC_succeed_Method__setField(name, value) {}
+builtin_behaviors_RPC_succeed_Method.prototype._setField = builtin_behaviors_RPC_succeed_Method__setField;
+
+// CLASS builtin_behaviors_RPC_fail_Method
+
+function builtin_behaviors_RPC_fail_Method() {
+    builtin_behaviors_RPC_fail_Method.super_.call(this, "builtin.void", "fail", ["builtin.String"]);
+}
+exports.builtin_behaviors_RPC_fail_Method = builtin_behaviors_RPC_fail_Method;
+_qrt.util.inherits(builtin_behaviors_RPC_fail_Method, builtin.reflect.Method);
+
+function builtin_behaviors_RPC_fail_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_RPC_fail_Method.prototype.__init_fields__ = builtin_behaviors_RPC_fail_Method__init_fields__;
+
+function builtin_behaviors_RPC_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail((args)[0]);
+    return null;
+}
+builtin_behaviors_RPC_fail_Method.prototype.invoke = builtin_behaviors_RPC_fail_Method_invoke;
+
+function builtin_behaviors_RPC_fail_Method__getClass() {
+    return null;
+}
+builtin_behaviors_RPC_fail_Method.prototype._getClass = builtin_behaviors_RPC_fail_Method__getClass;
+
+function builtin_behaviors_RPC_fail_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_RPC_fail_Method.prototype._getField = builtin_behaviors_RPC_fail_Method__getField;
+
+function builtin_behaviors_RPC_fail_Method__setField(name, value) {}
+builtin_behaviors_RPC_fail_Method.prototype._setField = builtin_behaviors_RPC_fail_Method__setField;
+
+// CLASS builtin_behaviors_RPC_toString_Method
+
+function builtin_behaviors_RPC_toString_Method() {
+    builtin_behaviors_RPC_toString_Method.super_.call(this, "builtin.String", "toString", []);
+}
+exports.builtin_behaviors_RPC_toString_Method = builtin_behaviors_RPC_toString_Method;
+_qrt.util.inherits(builtin_behaviors_RPC_toString_Method, builtin.reflect.Method);
+
+function builtin_behaviors_RPC_toString_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_RPC_toString_Method.prototype.__init_fields__ = builtin_behaviors_RPC_toString_Method__init_fields__;
+
+function builtin_behaviors_RPC_toString_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).toString();
+}
+builtin_behaviors_RPC_toString_Method.prototype.invoke = builtin_behaviors_RPC_toString_Method_invoke;
+
+function builtin_behaviors_RPC_toString_Method__getClass() {
+    return null;
+}
+builtin_behaviors_RPC_toString_Method.prototype._getClass = builtin_behaviors_RPC_toString_Method__getClass;
+
+function builtin_behaviors_RPC_toString_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_RPC_toString_Method.prototype._getField = builtin_behaviors_RPC_toString_Method__getField;
+
+function builtin_behaviors_RPC_toString_Method__setField(name, value) {}
+builtin_behaviors_RPC_toString_Method.prototype._setField = builtin_behaviors_RPC_toString_Method__setField;
+
 // CLASS builtin_behaviors_RPC
 
 function builtin_behaviors_RPC() {
     builtin_behaviors_RPC.super_.call(this, "builtin.behaviors.RPC");
     (this).name = "builtin.behaviors.RPC";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.String", "name")];
-    (this).methods = [new builtin_behaviors_RPC_call_Method()];
+    (this).fields = [new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.String", "methodName"), new builtin.reflect.Field("builtin.ServiceInstance", "instance")];
+    (this).methods = [new builtin_behaviors_RPC_call_Method(), new builtin_behaviors_RPC_succeed_Method(), new builtin_behaviors_RPC_fail_Method(), new builtin_behaviors_RPC_toString_Method()];
 }
 exports.builtin_behaviors_RPC = builtin_behaviors_RPC;
 _qrt.util.inherits(builtin_behaviors_RPC, builtin.reflect.Class);
@@ -786,6 +1028,141 @@ builtin_behaviors_RPCRequest.prototype._getField = builtin_behaviors_RPCRequest_
 
 function builtin_behaviors_RPCRequest__setField(name, value) {}
 builtin_behaviors_RPCRequest.prototype._setField = builtin_behaviors_RPCRequest__setField;
+
+
+// CLASS builtin_behaviors_CircuitBreaker_succeed_Method
+
+function builtin_behaviors_CircuitBreaker_succeed_Method() {
+    builtin_behaviors_CircuitBreaker_succeed_Method.super_.call(this, "builtin.void", "succeed", []);
+}
+exports.builtin_behaviors_CircuitBreaker_succeed_Method = builtin_behaviors_CircuitBreaker_succeed_Method;
+_qrt.util.inherits(builtin_behaviors_CircuitBreaker_succeed_Method, builtin.reflect.Method);
+
+function builtin_behaviors_CircuitBreaker_succeed_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_CircuitBreaker_succeed_Method.prototype.__init_fields__ = builtin_behaviors_CircuitBreaker_succeed_Method__init_fields__;
+
+function builtin_behaviors_CircuitBreaker_succeed_Method_invoke(object, args) {
+    var obj = object;
+    (obj).succeed();
+    return null;
+}
+builtin_behaviors_CircuitBreaker_succeed_Method.prototype.invoke = builtin_behaviors_CircuitBreaker_succeed_Method_invoke;
+
+function builtin_behaviors_CircuitBreaker_succeed_Method__getClass() {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_succeed_Method.prototype._getClass = builtin_behaviors_CircuitBreaker_succeed_Method__getClass;
+
+function builtin_behaviors_CircuitBreaker_succeed_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_succeed_Method.prototype._getField = builtin_behaviors_CircuitBreaker_succeed_Method__getField;
+
+function builtin_behaviors_CircuitBreaker_succeed_Method__setField(name, value) {}
+builtin_behaviors_CircuitBreaker_succeed_Method.prototype._setField = builtin_behaviors_CircuitBreaker_succeed_Method__setField;
+
+// CLASS builtin_behaviors_CircuitBreaker_fail_Method
+
+function builtin_behaviors_CircuitBreaker_fail_Method() {
+    builtin_behaviors_CircuitBreaker_fail_Method.super_.call(this, "builtin.void", "fail", []);
+}
+exports.builtin_behaviors_CircuitBreaker_fail_Method = builtin_behaviors_CircuitBreaker_fail_Method;
+_qrt.util.inherits(builtin_behaviors_CircuitBreaker_fail_Method, builtin.reflect.Method);
+
+function builtin_behaviors_CircuitBreaker_fail_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_CircuitBreaker_fail_Method.prototype.__init_fields__ = builtin_behaviors_CircuitBreaker_fail_Method__init_fields__;
+
+function builtin_behaviors_CircuitBreaker_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail();
+    return null;
+}
+builtin_behaviors_CircuitBreaker_fail_Method.prototype.invoke = builtin_behaviors_CircuitBreaker_fail_Method_invoke;
+
+function builtin_behaviors_CircuitBreaker_fail_Method__getClass() {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_fail_Method.prototype._getClass = builtin_behaviors_CircuitBreaker_fail_Method__getClass;
+
+function builtin_behaviors_CircuitBreaker_fail_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_fail_Method.prototype._getField = builtin_behaviors_CircuitBreaker_fail_Method__getField;
+
+function builtin_behaviors_CircuitBreaker_fail_Method__setField(name, value) {}
+builtin_behaviors_CircuitBreaker_fail_Method.prototype._setField = builtin_behaviors_CircuitBreaker_fail_Method__setField;
+
+// CLASS builtin_behaviors_CircuitBreaker_onExecute_Method
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method() {
+    builtin_behaviors_CircuitBreaker_onExecute_Method.super_.call(this, "builtin.void", "onExecute", ["builtin.Runtime"]);
+}
+exports.builtin_behaviors_CircuitBreaker_onExecute_Method = builtin_behaviors_CircuitBreaker_onExecute_Method;
+_qrt.util.inherits(builtin_behaviors_CircuitBreaker_onExecute_Method, builtin.reflect.Method);
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method__init_fields__() {
+    builtin.reflect.Method.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_CircuitBreaker_onExecute_Method.prototype.__init_fields__ = builtin_behaviors_CircuitBreaker_onExecute_Method__init_fields__;
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onExecute((args)[0]);
+    return null;
+}
+builtin_behaviors_CircuitBreaker_onExecute_Method.prototype.invoke = builtin_behaviors_CircuitBreaker_onExecute_Method_invoke;
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method__getClass() {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_onExecute_Method.prototype._getClass = builtin_behaviors_CircuitBreaker_onExecute_Method__getClass;
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method__getField(name) {
+    return null;
+}
+builtin_behaviors_CircuitBreaker_onExecute_Method.prototype._getField = builtin_behaviors_CircuitBreaker_onExecute_Method__getField;
+
+function builtin_behaviors_CircuitBreaker_onExecute_Method__setField(name, value) {}
+builtin_behaviors_CircuitBreaker_onExecute_Method.prototype._setField = builtin_behaviors_CircuitBreaker_onExecute_Method__setField;
+
+// CLASS builtin_behaviors_CircuitBreaker
+
+function builtin_behaviors_CircuitBreaker() {
+    builtin_behaviors_CircuitBreaker.super_.call(this, "builtin.behaviors.CircuitBreaker");
+    (this).name = "builtin.behaviors.CircuitBreaker";
+    (this).parameters = [];
+    (this).fields = [new builtin.reflect.Field("builtin.String", "id"), new builtin.reflect.Field("builtin.int", "failureLimit"), new builtin.reflect.Field("builtin.float", "retestDelay"), new builtin.reflect.Field("builtin.bool", "active"), new builtin.reflect.Field("builtin.int", "failureCount"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex")];
+    (this).methods = [new builtin_behaviors_CircuitBreaker_succeed_Method(), new builtin_behaviors_CircuitBreaker_fail_Method(), new builtin_behaviors_CircuitBreaker_onExecute_Method()];
+}
+exports.builtin_behaviors_CircuitBreaker = builtin_behaviors_CircuitBreaker;
+_qrt.util.inherits(builtin_behaviors_CircuitBreaker, builtin.reflect.Class);
+
+function builtin_behaviors_CircuitBreaker__init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_behaviors_CircuitBreaker.prototype.__init_fields__ = builtin_behaviors_CircuitBreaker__init_fields__;
+builtin_behaviors_CircuitBreaker.singleton = new builtin_behaviors_CircuitBreaker();
+function builtin_behaviors_CircuitBreaker_construct(args) {
+    return new builtin.behaviors.CircuitBreaker((args)[0], (args)[1], (args)[2]);
+}
+builtin_behaviors_CircuitBreaker.prototype.construct = builtin_behaviors_CircuitBreaker_construct;
+
+function builtin_behaviors_CircuitBreaker__getClass() {
+    return null;
+}
+builtin_behaviors_CircuitBreaker.prototype._getClass = builtin_behaviors_CircuitBreaker__getClass;
+
+function builtin_behaviors_CircuitBreaker__getField(name) {
+    return null;
+}
+builtin_behaviors_CircuitBreaker.prototype._getField = builtin_behaviors_CircuitBreaker__getField;
+
+function builtin_behaviors_CircuitBreaker__setField(name, value) {}
+builtin_behaviors_CircuitBreaker.prototype._setField = builtin_behaviors_CircuitBreaker__setField;
 
 
 // CLASS builtin_concurrent_Event_getContext_Method
@@ -2444,13 +2821,18 @@ Root.builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton;
 Root.builtin_List_builtin_reflect_Class__md = builtin_List_builtin_reflect_Class_.singleton;
 Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton;
 Root.builtin_Map_builtin_Object_builtin_Object__md = builtin_Map_builtin_Object_builtin_Object_.singleton;
+Root.builtin_Map_builtin_String_builtin_ServiceInstance__md = builtin_Map_builtin_String_builtin_ServiceInstance_.singleton;
+Root.builtin_Resolver_md = builtin_Resolver.singleton;
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
 Root.builtin_Service_md = builtin_Service.singleton;
+Root.builtin_ServiceInstance_md = builtin_ServiceInstance.singleton;
+Root.builtin_DegenerateResolver_md = builtin_DegenerateResolver.singleton;
 Root.builtin_Client_md = builtin_Client.singleton;
 Root.builtin_ServerResponder_md = builtin_ServerResponder.singleton;
 Root.builtin_Server_builtin_Object__md = builtin_Server_builtin_Object_.singleton;
 Root.builtin_behaviors_RPC_md = builtin_behaviors_RPC.singleton;
 Root.builtin_behaviors_RPCRequest_md = builtin_behaviors_RPCRequest.singleton;
+Root.builtin_behaviors_CircuitBreaker_md = builtin_behaviors_CircuitBreaker.singleton;
 Root.builtin_concurrent_Event_md = builtin_concurrent_Event.singleton;
 Root.builtin_concurrent_FutureListener_md = builtin_concurrent_FutureListener.singleton;
 Root.builtin_concurrent_FutureCompletion_md = builtin_concurrent_FutureCompletion.singleton;

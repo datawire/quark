@@ -92,9 +92,18 @@ Serializes object tree into JSON. skips over fields starting with underscore
 deserialize json into provided result object. Skip over fields starting with underscore
 
 
+## Resolver
+
 ## ResponseHolder
 
 ## Service
+
+## ServiceInstance
+
+## DegenerateResolver
+
+DegenerateResolver assumes that the serviceName is an URL.
+
 
 ## Client
 
@@ -111,6 +120,8 @@ deserialize json into provided result object. Skip over fields starting with und
 ## RPC
 
 ## RPCRequest
+
+## CircuitBreaker
 
 ## Event
 

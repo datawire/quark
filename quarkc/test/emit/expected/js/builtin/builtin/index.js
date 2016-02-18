@@ -108,6 +108,18 @@ function fromJSON(cls, result, json) {
 }
 exports.fromJSON = fromJSON;
 
+// CLASS Resolver
+function Resolver() {
+    this.__init_fields__();
+}
+exports.Resolver = Resolver;
+
+function Resolver__init_fields__() {}
+Resolver.prototype.__init_fields__ = Resolver__init_fields__;
+Resolver.builtin_Resolver_ref = builtin_md.Root.builtin_Resolver_md;
+function Resolver_resolve(serviceName) { /* interface */ }
+Resolver.prototype.resolve = Resolver_resolve;
+
 // CLASS ResponseHolder
 function ResponseHolder() {
     this.__init_fields__();
@@ -171,37 +183,203 @@ exports.Service = Service;
 function Service__init_fields__() {}
 Service.prototype.__init_fields__ = Service__init_fields__;
 Service.builtin_Service_ref = builtin_md.Root.builtin_Service_md;
-function Service_getURL() { /* interface */ }
-Service.prototype.getURL = Service_getURL;
+function Service_getName() { /* interface */ }
+Service.prototype.getName = Service_getName;
+
+function Service_getInstance() { /* interface */ }
+Service.prototype.getInstance = Service_getInstance;
 
 function Service_getTimeout() { /* interface */ }
 Service.prototype.getTimeout = Service_getTimeout;
 
-function Service_rpc(name, args) {
-    var rpc = new behaviors.RPC(this, name);
+function Service_rpc(methodName, args) {
+    var rpc = new behaviors.RPC(this, methodName);
     return (rpc).call(args);
 }
 Service.prototype.rpc = Service_rpc;
 
+// CLASS ServiceInstance
+
+function ServiceInstance(serviceName, url, failureLimit, retestDelay) {
+    this.__init_fields__();
+    (this).serviceName = serviceName;
+    (this).url = url;
+    (this).breaker = new behaviors.CircuitBreaker((((("[") + (serviceName)) + (" at ")) + (url)) + ("]"), failureLimit, retestDelay);
+}
+exports.ServiceInstance = ServiceInstance;
+
+function ServiceInstance__init_fields__() {
+    this.serviceName = null;
+    this.url = null;
+    this.breaker = null;
+}
+ServiceInstance.prototype.__init_fields__ = ServiceInstance__init_fields__;
+ServiceInstance.builtin_ServiceInstance_ref = builtin_md.Root.builtin_ServiceInstance_md;
+function ServiceInstance_isActive() {
+    return ((this).breaker).active;
+}
+ServiceInstance.prototype.isActive = ServiceInstance_isActive;
+
+function ServiceInstance_getURL() {
+    return (this).url;
+}
+ServiceInstance.prototype.getURL = ServiceInstance_getURL;
+
+function ServiceInstance_succeed(info) {
+    if (!((this).isActive())) {
+        _qrt.print(((("- CLOSE breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
+    }
+    ((this).breaker).succeed();
+}
+ServiceInstance.prototype.succeed = ServiceInstance_succeed;
+
+function ServiceInstance_fail(info) {
+    if (!((this).isActive())) {
+        _qrt.print(((("- OPEN breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
+    }
+    ((this).breaker).fail();
+}
+ServiceInstance.prototype.fail = ServiceInstance_fail;
+
+function ServiceInstance__getClass() {
+    return "builtin.ServiceInstance";
+}
+ServiceInstance.prototype._getClass = ServiceInstance__getClass;
+
+function ServiceInstance__getField(name) {
+    if ((name) === ("serviceName")) {
+        return (this).serviceName;
+    }
+    if ((name) === ("url")) {
+        return (this).url;
+    }
+    if ((name) === ("breaker")) {
+        return (this).breaker;
+    }
+    return null;
+}
+ServiceInstance.prototype._getField = ServiceInstance__getField;
+
+function ServiceInstance__setField(name, value) {
+    if ((name) === ("serviceName")) {
+        (this).serviceName = value;
+    }
+    if ((name) === ("url")) {
+        (this).url = value;
+    }
+    if ((name) === ("breaker")) {
+        (this).breaker = value;
+    }
+}
+ServiceInstance.prototype._setField = ServiceInstance__setField;
+
+// CLASS DegenerateResolver
+/**
+ * DegenerateResolver assumes that the serviceName is an URL.
+ */
+function DegenerateResolver() {
+    this.__init_fields__();
+}
+exports.DegenerateResolver = DegenerateResolver;
+
+function DegenerateResolver__init_fields__() {}
+DegenerateResolver.prototype.__init_fields__ = DegenerateResolver__init_fields__;
+DegenerateResolver.builtin_DegenerateResolver_ref = builtin_md.Root.builtin_DegenerateResolver_md;
+function DegenerateResolver_resolve(serviceName) {
+    return [serviceName];
+}
+DegenerateResolver.prototype.resolve = DegenerateResolver_resolve;
+
+function DegenerateResolver__getClass() {
+    return "builtin.DegenerateResolver";
+}
+DegenerateResolver.prototype._getClass = DegenerateResolver__getClass;
+
+function DegenerateResolver__getField(name) {
+    return null;
+}
+DegenerateResolver.prototype._getField = DegenerateResolver__getField;
+
+function DegenerateResolver__setField(name, value) {}
+DegenerateResolver.prototype._setField = DegenerateResolver__setField;
+
 // CLASS Client
 
-function Client(url) {
+function Client(serviceName) {
     this.__init_fields__();
-    (this).url = url;
+    (this).serviceName = serviceName;
+    (this).resolver = new DegenerateResolver();
     (this)._timeout = (0);
+    (this).mutex = new _qrt.Lock();
+    (this).instanceMap = new Map([]);
+    (this).counter = 0;
+    var failureLimit = (this)._getField("failureLimit");
+    if ((failureLimit) !== (null)) {
+        (this)._failureLimit = failureLimit;
+    }
+    var retestDelay = (this)._getField("retestDelay");
+    if ((retestDelay) !== (null)) {
+        (this)._retestDelay = retestDelay;
+    }
 }
 exports.Client = Client;
 
 function Client__init_fields__() {
-    this.url = null;
+    this.resolver = null;
+    this.serviceName = null;
     this._timeout = null;
+    this._failureLimit = 3;
+    this._retestDelay = 8.0;
+    this.mutex = null;
+    this.instanceMap = null;
+    this.counter = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
+Client.builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md;
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md;
-function Client_getURL() {
-    return (this).url;
+function Client_setResolver(resolver) {
+    (this).resolver = resolver;
 }
-Client.prototype.getURL = Client_getURL;
+Client.prototype.setResolver = Client_setResolver;
+
+function Client_getInstance() {
+    var urls = ((this).resolver).resolve((this).serviceName);
+    if (((urls).length) <= (0)) {
+        return null;
+    }
+    (urls).sort();
+    ((this).mutex).acquire();
+    var result = null;
+    var next = _qrt.modulo(((this).counter), ((urls).length));
+    (this).counter = ((this).counter) + (1);
+    var idx = next;
+    while (true) {
+        var url = (urls)[idx];
+        var instance = _qrt.map_get(((this).instanceMap), (url));
+        if ((instance) === (null)) {
+            instance = new ServiceInstance((this).serviceName, url, this._failureLimit, this._retestDelay);
+            ((this).instanceMap).set((url), (instance));
+        }
+        if ((instance).isActive()) {
+            _qrt.print(((((("- ") + ((this).serviceName)) + (" using instance ")) + (_qrt.toString((idx) + (1)))) + (": ")) + (url));
+            result = instance;
+            break;
+        }
+        idx = _qrt.modulo(((idx) + (1)), ((urls).length));
+        if ((idx) === (next)) {
+            _qrt.print((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
+            break;
+        }
+    }
+    ((this).mutex).release();
+    return result;
+}
+Client.prototype.getInstance = Client_getInstance;
+
+function Client_getName() {
+    return (this).serviceName;
+}
+Client.prototype.getName = Client_getName;
 
 function Client_getTimeout() {
     return (this)._timeout;
@@ -219,22 +397,58 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if ((name) === ("url")) {
-        return (this).url;
+    if ((name) === ("resolver")) {
+        return (this).resolver;
+    }
+    if ((name) === ("serviceName")) {
+        return (this).serviceName;
     }
     if ((name) === ("_timeout")) {
         return (this)._timeout;
+    }
+    if ((name) === ("_failureLimit")) {
+        return (this)._failureLimit;
+    }
+    if ((name) === ("_retestDelay")) {
+        return (this)._retestDelay;
+    }
+    if ((name) === ("mutex")) {
+        return (this).mutex;
+    }
+    if ((name) === ("instanceMap")) {
+        return (this).instanceMap;
+    }
+    if ((name) === ("counter")) {
+        return (this).counter;
     }
     return null;
 }
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if ((name) === ("url")) {
-        (this).url = value;
+    if ((name) === ("resolver")) {
+        (this).resolver = value;
+    }
+    if ((name) === ("serviceName")) {
+        (this).serviceName = value;
     }
     if ((name) === ("_timeout")) {
         (this)._timeout = value;
+    }
+    if ((name) === ("_failureLimit")) {
+        (this)._failureLimit = value;
+    }
+    if ((name) === ("_retestDelay")) {
+        (this)._retestDelay = value;
+    }
+    if ((name) === ("mutex")) {
+        (this).mutex = value;
+    }
+    if ((name) === ("instanceMap")) {
+        (this).instanceMap = value;
+    }
+    if ((name) === ("counter")) {
+        (this).counter = value;
     }
 }
 Client.prototype._setField = Client__setField;

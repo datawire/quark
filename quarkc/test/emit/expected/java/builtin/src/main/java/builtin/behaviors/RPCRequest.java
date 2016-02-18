@@ -18,24 +18,31 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, builti
         return (this).retval;
     }
     public void onHTTPResponse(io.datawire.quark.runtime.HTTPRequest rq, io.datawire.quark.runtime.HTTPResponse response) {
+        String info;
         ((this).timeout).cancel();
         if (!(((response).getCode())==(200) || (((response).getCode()) != null && ((response).getCode()).equals(200)))) {
-            ((this).retval).finish(((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned error ")) + (Integer.toString((response).getCode())));
+            info = ((((this).rpc).toString()) + (" failed: Server returned error ")) + (Integer.toString((response).getCode()));
+            ((this).retval).finish(info);
+            ((this).rpc).fail(info);
             return;
         }
         String body = (response).getBody();
         io.datawire.quark.runtime.JSONObject obj = io.datawire.quark.runtime.JSONObject.parse(body);
         String classname = ((obj).getObjectItem("$class")).getString();
         if ((classname)==(null) || ((classname) != null && (classname).equals(null))) {
-            ((this).retval).finish((("RPC ") + (((this).rpc).name)) + ("(...) failed: Server returned unrecognizable content"));
+            info = (((this).rpc).toString()) + (" failed: Server returned unrecognizable content");
+            ((this).retval).finish(info);
+            ((this).rpc).fail(info);
             return;
         } else {
             builtin.Functions.fromJSON(((this).rpc).returned, (this).retval, obj);
             ((this).retval).finish(null);
+            ((this).rpc).succeed("Success in the future...");
         }
     }
     public void onTimeout(builtin.concurrent.Timeout timeout) {
         ((this).retval).finish("request timed out");
+        ((this).rpc).fail("request timed out");
     }
     public String _getClass() {
         return "builtin.behaviors.RPCRequest";

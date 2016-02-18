@@ -61,7 +61,7 @@ public class Functions {
 
     public static void sorter() {
         java.util.ArrayList<String> stuff = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"}));
-        java.util.Collections.sort(stuff);
+        java.util.Collections.sort(stuff, null);
         do{System.out.println(stuff);System.out.flush();}while(false);
     }
 

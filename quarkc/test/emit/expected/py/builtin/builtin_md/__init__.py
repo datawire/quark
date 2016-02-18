@@ -198,6 +198,30 @@ class builtin_Map_builtin_String_builtin_Object_(builtin.reflect.Class):
         pass
 builtin_Map_builtin_String_builtin_Object_.singleton = builtin_Map_builtin_String_builtin_Object_()
 
+class builtin_Map_builtin_String_builtin_ServiceInstance_(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_Map_builtin_String_builtin_ServiceInstance_, self).__init__(u"builtin.Map<builtin.String,builtin.ServiceInstance>");
+        (self).name = u"builtin.Map"
+        (self).parameters = _List([u"builtin.String", u"builtin.ServiceInstance"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _Map()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_Map_builtin_String_builtin_ServiceInstance_.singleton = builtin_Map_builtin_String_builtin_ServiceInstance_()
+
 class builtin_Map_builtin_String_builtin_reflect_Class_(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -221,6 +245,30 @@ class builtin_Map_builtin_String_builtin_reflect_Class_(builtin.reflect.Class):
     def _setField(self, name, value):
         pass
 builtin_Map_builtin_String_builtin_reflect_Class_.singleton = builtin_Map_builtin_String_builtin_reflect_Class_()
+
+class builtin_Resolver(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_Resolver, self).__init__(u"builtin.Resolver");
+        (self).name = u"builtin.Resolver"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_Resolver.singleton = builtin_Resolver()
 
 class builtin_ResponseHolder(builtin.reflect.Class):
     def _init(self):
@@ -270,6 +318,54 @@ class builtin_Service(builtin.reflect.Class):
         pass
 builtin_Service.singleton = builtin_Service()
 
+class builtin_ServiceInstance(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_ServiceInstance, self).__init__(u"builtin.ServiceInstance");
+        (self).name = u"builtin.ServiceInstance"
+        (self).parameters = _List([])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.String", u"url"), builtin.reflect.Field(u"builtin.behaviors.CircuitBreaker", u"breaker")])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return builtin.ServiceInstance((args)[0], (args)[1], (args)[2], (args)[3])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_ServiceInstance.singleton = builtin_ServiceInstance()
+
+class builtin_DegenerateResolver(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_DegenerateResolver, self).__init__(u"builtin.DegenerateResolver");
+        (self).name = u"builtin.DegenerateResolver"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return builtin.DegenerateResolver()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_DegenerateResolver.singleton = builtin_DegenerateResolver()
+
 class builtin_Client(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -278,7 +374,7 @@ class builtin_Client(builtin.reflect.Class):
         super(builtin_Client, self).__init__(u"builtin.Client");
         (self).name = u"builtin.Client"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"url"), builtin.reflect.Field(u"builtin.long", u"_timeout")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Resolver", u"resolver"), builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.long", u"_timeout"), builtin.reflect.Field(u"builtin.int", u"_failureLimit"), builtin.reflect.Field(u"builtin.float", u"_retestDelay"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex"), builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.ServiceInstance>", u"instanceMap"), builtin.reflect.Field(u"builtin.int", u"counter")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -410,6 +506,68 @@ class builtin_behaviors_RPC_call_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
+class builtin_behaviors_RPC_succeed_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_RPC_succeed_Method, self).__init__(u"builtin.void", u"succeed", _List([u"builtin.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).succeed((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class builtin_behaviors_RPC_fail_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_RPC_fail_Method, self).__init__(u"builtin.void", u"fail", _List([u"builtin.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).fail((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class builtin_behaviors_RPC_toString_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_RPC_toString_Method, self).__init__(u"builtin.String", u"toString", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).toString()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class builtin_behaviors_RPC(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -418,8 +576,8 @@ class builtin_behaviors_RPC(builtin.reflect.Class):
         super(builtin_behaviors_RPC, self).__init__(u"builtin.behaviors.RPC");
         (self).name = u"builtin.behaviors.RPC"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Service", u"service"), builtin.reflect.Field(u"builtin.reflect.Class", u"returned"), builtin.reflect.Field(u"builtin.long", u"timeout"), builtin.reflect.Field(u"builtin.String", u"name")])
-        (self).methods = _List([builtin_behaviors_RPC_call_Method()])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Service", u"service"), builtin.reflect.Field(u"builtin.reflect.Class", u"returned"), builtin.reflect.Field(u"builtin.long", u"timeout"), builtin.reflect.Field(u"builtin.String", u"methodName"), builtin.reflect.Field(u"builtin.ServiceInstance", u"instance")])
+        (self).methods = _List([builtin_behaviors_RPC_call_Method(), builtin_behaviors_RPC_succeed_Method(), builtin_behaviors_RPC_fail_Method(), builtin_behaviors_RPC_toString_Method()])
 
     def construct(self, args):
         return builtin.behaviors.RPC((args)[0], (args)[1])
@@ -519,6 +677,93 @@ class builtin_behaviors_RPCRequest(builtin.reflect.Class):
     def _setField(self, name, value):
         pass
 builtin_behaviors_RPCRequest.singleton = builtin_behaviors_RPCRequest()
+
+class builtin_behaviors_CircuitBreaker_succeed_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_CircuitBreaker_succeed_Method, self).__init__(u"builtin.void", u"succeed", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).succeed();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class builtin_behaviors_CircuitBreaker_fail_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_CircuitBreaker_fail_Method, self).__init__(u"builtin.void", u"fail", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).fail();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class builtin_behaviors_CircuitBreaker_onExecute_Method(builtin.reflect.Method):
+    def _init(self):
+        builtin.reflect.Method._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_CircuitBreaker_onExecute_Method, self).__init__(u"builtin.void", u"onExecute", _List([u"builtin.Runtime"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onExecute((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class builtin_behaviors_CircuitBreaker(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_behaviors_CircuitBreaker, self).__init__(u"builtin.behaviors.CircuitBreaker");
+        (self).name = u"builtin.behaviors.CircuitBreaker"
+        (self).parameters = _List([])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"id"), builtin.reflect.Field(u"builtin.int", u"failureLimit"), builtin.reflect.Field(u"builtin.float", u"retestDelay"), builtin.reflect.Field(u"builtin.bool", u"active"), builtin.reflect.Field(u"builtin.int", u"failureCount"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex")])
+        (self).methods = _List([builtin_behaviors_CircuitBreaker_succeed_Method(), builtin_behaviors_CircuitBreaker_fail_Method(), builtin_behaviors_CircuitBreaker_onExecute_Method()])
+
+    def construct(self, args):
+        return builtin.behaviors.CircuitBreaker((args)[0], (args)[1], (args)[2])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_behaviors_CircuitBreaker.singleton = builtin_behaviors_CircuitBreaker()
 
 class builtin_concurrent_Event_getContext_Method(builtin.reflect.Method):
     def _init(self):
@@ -1593,13 +1838,18 @@ Root.builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton
 Root.builtin_List_builtin_reflect_Class__md = builtin_List_builtin_reflect_Class_.singleton
 Root.builtin_List_builtin_concurrent_FutureCompletion__md = builtin_List_builtin_concurrent_FutureCompletion_.singleton
 Root.builtin_Map_builtin_Object_builtin_Object__md = builtin_Map_builtin_Object_builtin_Object_.singleton
+Root.builtin_Map_builtin_String_builtin_ServiceInstance__md = builtin_Map_builtin_String_builtin_ServiceInstance_.singleton
+Root.builtin_Resolver_md = builtin_Resolver.singleton
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton
 Root.builtin_Service_md = builtin_Service.singleton
+Root.builtin_ServiceInstance_md = builtin_ServiceInstance.singleton
+Root.builtin_DegenerateResolver_md = builtin_DegenerateResolver.singleton
 Root.builtin_Client_md = builtin_Client.singleton
 Root.builtin_ServerResponder_md = builtin_ServerResponder.singleton
 Root.builtin_Server_builtin_Object__md = builtin_Server_builtin_Object_.singleton
 Root.builtin_behaviors_RPC_md = builtin_behaviors_RPC.singleton
 Root.builtin_behaviors_RPCRequest_md = builtin_behaviors_RPCRequest.singleton
+Root.builtin_behaviors_CircuitBreaker_md = builtin_behaviors_CircuitBreaker.singleton
 Root.builtin_concurrent_Event_md = builtin_concurrent_Event.singleton
 Root.builtin_concurrent_FutureListener_md = builtin_concurrent_FutureListener.singleton
 Root.builtin_concurrent_FutureCompletion_md = builtin_concurrent_FutureCompletion.singleton
