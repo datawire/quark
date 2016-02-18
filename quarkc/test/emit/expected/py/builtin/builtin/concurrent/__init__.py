@@ -215,10 +215,11 @@ class FutureWait(object):
 
         (self)._future = future
         ((self)._future).onFinished(self);
-        deadline = (long(time.time()*1000)) + (timeout);
+        rounded = long(round((1000.0) * (timeout)));
+        deadline = (long(time.time()*1000)) + (rounded);
         while (not (((self)._future).isFinished())):
             remaining = (deadline) - (long(time.time()*1000));
-            if ((timeout) != (0)):
+            if ((rounded) != (0)):
                 if ((remaining) <= ((0))):
                     break;
 
@@ -519,7 +520,7 @@ class Timeout(EventContext):
 
     def start(self, listener):
         (self).listener = listener
-        delay = (0.001) * (float((self).timeout));
+        delay = (self).timeout;
         (Context.runtime()).schedule(self, delay);
 
     def cancel(self):

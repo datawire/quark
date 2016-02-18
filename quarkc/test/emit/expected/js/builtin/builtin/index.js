@@ -198,6 +198,49 @@ function Service_rpc(methodName, args) {
 }
 Service.prototype.rpc = Service_rpc;
 
+// CLASS BaseService
+function BaseService() {
+    this.__init_fields__();
+}
+exports.BaseService = BaseService;
+
+function BaseService__init_fields__() {}
+BaseService.prototype.__init_fields__ = BaseService__init_fields__;
+BaseService.builtin_BaseService_ref = builtin_md.Root.builtin_BaseService_md;
+function BaseService_getName() {
+    return null;
+}
+BaseService.prototype.getName = BaseService_getName;
+
+function BaseService_getInstance() {
+    return null;
+}
+BaseService.prototype.getInstance = BaseService_getInstance;
+
+function BaseService_getTimeout() {
+    return -(1.0);
+}
+BaseService.prototype.getTimeout = BaseService_getTimeout;
+
+function BaseService__getClass() {
+    return "builtin.BaseService";
+}
+BaseService.prototype._getClass = BaseService__getClass;
+
+function BaseService__getField(name) {
+    return null;
+}
+BaseService.prototype._getField = BaseService__getField;
+
+function BaseService__setField(name, value) {}
+BaseService.prototype._setField = BaseService__setField;
+
+function BaseService_rpc(methodName, args) {
+    var rpc = new behaviors.RPC(this, methodName);
+    return (rpc).call(args);
+}
+BaseService.prototype.rpc = BaseService_rpc;
+
 // CLASS ServiceInstance
 
 function ServiceInstance(serviceName, url, failureLimit, retestDelay) {
@@ -309,7 +352,7 @@ function Client(serviceName) {
     this.__init_fields__();
     (this).serviceName = serviceName;
     (this).resolver = new DegenerateResolver();
-    (this)._timeout = (0);
+    (this)._timeout = 0.0;
     (this).mutex = new _qrt.Lock();
     (this).instanceMap = new Map([]);
     (this).counter = 0;

@@ -5,7 +5,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class builtin_Client_ref = builtin_md.Root.builtin_Client_md;
     public Resolver resolver;
     public String serviceName;
-    public Long _timeout;
+    public Double _timeout;
     public Integer _failureLimit = 3;
     public Double _retestDelay = 8.0;
     public io.datawire.quark.runtime.Lock mutex;
@@ -14,7 +14,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
     public Client(String serviceName) {
         (this).serviceName = serviceName;
         (this).resolver = new DegenerateResolver();
-        (this)._timeout = new Long(0);
+        (this)._timeout = 0.0;
         (this).mutex = new io.datawire.quark.runtime.Lock();
         (this).instanceMap = io.datawire.quark.runtime.Builtins.map(new Object[]{});
         (this).counter = 0;
@@ -65,10 +65,10 @@ public class Client implements io.datawire.quark.runtime.QObject {
     public String getName() {
         return (this).serviceName;
     }
-    public Long getTimeout() {
+    public Double getTimeout() {
         return (this)._timeout;
     }
-    public void setTimeout(Long timeout) {
+    public void setTimeout(Double timeout) {
         (this)._timeout = timeout;
     }
     public String _getClass() {
@@ -109,7 +109,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
             (this).serviceName = (String) (value);
         }
         if ((name)==("_timeout") || ((name) != null && (name).equals("_timeout"))) {
-            (this)._timeout = (Long) (value);
+            (this)._timeout = (Double) (value);
         }
         if ((name)==("_failureLimit") || ((name) != null && (name).equals("_failureLimit"))) {
             (this)._failureLimit = (Integer) (value);

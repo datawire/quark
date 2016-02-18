@@ -478,6 +478,42 @@ function builtin_Service__setField(name, value) {}
 builtin_Service.prototype._setField = builtin_Service__setField;
 
 
+// CLASS builtin_BaseService
+
+function builtin_BaseService() {
+    builtin_BaseService.super_.call(this, "builtin.BaseService");
+    (this).name = "builtin.BaseService";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.builtin_BaseService = builtin_BaseService;
+_qrt.util.inherits(builtin_BaseService, builtin.reflect.Class);
+
+function builtin_BaseService__init_fields__() {
+    builtin.reflect.Class.prototype.__init_fields__.call(this);
+}
+builtin_BaseService.prototype.__init_fields__ = builtin_BaseService__init_fields__;
+builtin_BaseService.singleton = new builtin_BaseService();
+function builtin_BaseService_construct(args) {
+    return new builtin.BaseService();
+}
+builtin_BaseService.prototype.construct = builtin_BaseService_construct;
+
+function builtin_BaseService__getClass() {
+    return null;
+}
+builtin_BaseService.prototype._getClass = builtin_BaseService__getClass;
+
+function builtin_BaseService__getField(name) {
+    return null;
+}
+builtin_BaseService.prototype._getField = builtin_BaseService__getField;
+
+function builtin_BaseService__setField(name, value) {}
+builtin_BaseService.prototype._setField = builtin_BaseService__setField;
+
+
 // CLASS builtin_ServiceInstance
 
 function builtin_ServiceInstance() {
@@ -556,7 +592,7 @@ function builtin_Client() {
     builtin_Client.super_.call(this, "builtin.Client");
     (this).name = "builtin.Client";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.Resolver", "resolver"), new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.long", "_timeout"), new builtin.reflect.Field("builtin.int", "_failureLimit"), new builtin.reflect.Field("builtin.float", "_retestDelay"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex"), new builtin.reflect.Field("builtin.Map<builtin.String,builtin.ServiceInstance>", "instanceMap"), new builtin.reflect.Field("builtin.int", "counter")];
+    (this).fields = [new builtin.reflect.Field("builtin.Resolver", "resolver"), new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.float", "_timeout"), new builtin.reflect.Field("builtin.int", "_failureLimit"), new builtin.reflect.Field("builtin.float", "_retestDelay"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex"), new builtin.reflect.Field("builtin.Map<builtin.String,builtin.ServiceInstance>", "instanceMap"), new builtin.reflect.Field("builtin.int", "counter")];
     (this).methods = [];
 }
 exports.builtin_Client = builtin_Client;
@@ -866,7 +902,7 @@ function builtin_behaviors_RPC() {
     builtin_behaviors_RPC.super_.call(this, "builtin.behaviors.RPC");
     (this).name = "builtin.behaviors.RPC";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.String", "methodName"), new builtin.reflect.Field("builtin.ServiceInstance", "instance")];
+    (this).fields = [new builtin.reflect.Field("builtin.Service", "service"), new builtin.reflect.Field("builtin.reflect.Class", "returned"), new builtin.reflect.Field("builtin.float", "timeout"), new builtin.reflect.Field("builtin.String", "methodName"), new builtin.reflect.Field("builtin.ServiceInstance", "instance")];
     (this).methods = [new builtin_behaviors_RPC_call_Method(), new builtin_behaviors_RPC_succeed_Method(), new builtin_behaviors_RPC_fail_Method(), new builtin_behaviors_RPC_toString_Method()];
 }
 exports.builtin_behaviors_RPC = builtin_behaviors_RPC;
@@ -1637,7 +1673,7 @@ builtin_concurrent_Future_getError_Method.prototype._setField = builtin_concurre
 // CLASS builtin_concurrent_Future_await_Method
 
 function builtin_concurrent_Future_await_Method() {
-    builtin_concurrent_Future_await_Method.super_.call(this, "builtin.void", "await", ["builtin.long"]);
+    builtin_concurrent_Future_await_Method.super_.call(this, "builtin.void", "await", ["builtin.float"]);
 }
 exports.builtin_concurrent_Future_await_Method = builtin_concurrent_Future_await_Method;
 _qrt.util.inherits(builtin_concurrent_Future_await_Method, builtin.reflect.Method);
@@ -1738,7 +1774,7 @@ builtin_concurrent_Future.prototype._setField = builtin_concurrent_Future__setFi
 // CLASS builtin_concurrent_FutureWait_wait_Method
 
 function builtin_concurrent_FutureWait_wait_Method() {
-    builtin_concurrent_FutureWait_wait_Method.super_.call(this, "builtin.void", "wait", ["builtin.concurrent.Future", "builtin.long"]);
+    builtin_concurrent_FutureWait_wait_Method.super_.call(this, "builtin.void", "wait", ["builtin.concurrent.Future", "builtin.float"]);
 }
 exports.builtin_concurrent_FutureWait_wait_Method = builtin_concurrent_FutureWait_wait_Method;
 _qrt.util.inherits(builtin_concurrent_FutureWait_wait_Method, builtin.reflect.Method);
@@ -1804,7 +1840,7 @@ builtin_concurrent_FutureWait_onFuture_Method.prototype._setField = builtin_conc
 // CLASS builtin_concurrent_FutureWait_waitFor_Method
 
 function builtin_concurrent_FutureWait_waitFor_Method() {
-    builtin_concurrent_FutureWait_waitFor_Method.super_.call(this, "builtin.concurrent.Future", "waitFor", ["builtin.concurrent.Future", "builtin.long"]);
+    builtin_concurrent_FutureWait_waitFor_Method.super_.call(this, "builtin.concurrent.Future", "waitFor", ["builtin.concurrent.Future", "builtin.float"]);
 }
 exports.builtin_concurrent_FutureWait_waitFor_Method = builtin_concurrent_FutureWait_waitFor_Method;
 _qrt.util.inherits(builtin_concurrent_FutureWait_waitFor_Method, builtin.reflect.Method);
@@ -2545,7 +2581,7 @@ function builtin_concurrent_Timeout() {
     builtin_concurrent_Timeout.super_.call(this, "builtin.concurrent.Timeout");
     (this).name = "builtin.concurrent.Timeout";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.long", "timeout"), new builtin.reflect.Field("builtin.concurrent.Lock", "lock"), new builtin.reflect.Field("builtin.concurrent.TimeoutListener", "listener")];
+    (this).fields = [new builtin.reflect.Field("builtin.concurrent.Context", "_context"), new builtin.reflect.Field("builtin.float", "timeout"), new builtin.reflect.Field("builtin.concurrent.Lock", "lock"), new builtin.reflect.Field("builtin.concurrent.TimeoutListener", "listener")];
     (this).methods = [new builtin_concurrent_Timeout_start_Method(), new builtin_concurrent_Timeout_cancel_Method(), new builtin_concurrent_Timeout_onExecute_Method(), new builtin_concurrent_Timeout_getContext_Method()];
 }
 exports.builtin_concurrent_Timeout = builtin_concurrent_Timeout;
@@ -2825,6 +2861,7 @@ Root.builtin_Map_builtin_String_builtin_ServiceInstance__md = builtin_Map_builti
 Root.builtin_Resolver_md = builtin_Resolver.singleton;
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
 Root.builtin_Service_md = builtin_Service.singleton;
+Root.builtin_BaseService_md = builtin_BaseService.singleton;
 Root.builtin_ServiceInstance_md = builtin_ServiceInstance.singleton;
 Root.builtin_DegenerateResolver_md = builtin_DegenerateResolver.singleton;
 Root.builtin_Client_md = builtin_Client.singleton;

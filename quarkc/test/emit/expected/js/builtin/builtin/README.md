@@ -98,6 +98,8 @@ deserialize json into provided result object. Skip over fields starting with und
 
 ## Service
 
+## BaseService
+
 ## ServiceInstance
 
 ## DegenerateResolver

@@ -162,6 +162,34 @@ class Service(object):
 
 
 Service.builtin_Service_ref = builtin_md.Root.builtin_Service_md
+class BaseService(object):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def getName(self):
+        return None
+
+    def getInstance(self):
+        return None
+
+    def getTimeout(self):
+        return -(1.0)
+
+    def _getClass(self):
+        return u"builtin.BaseService"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+    def rpc(self, methodName, args):
+        rpc = behaviors.RPC(self, methodName);
+        return (rpc).call(args)
+
+BaseService.builtin_BaseService_ref = builtin_md.Root.builtin_BaseService_md
 class ServiceInstance(object):
     def _init(self):
         self.serviceName = None
@@ -254,7 +282,7 @@ class Client(object):
         self._init()
         (self).serviceName = serviceName
         (self).resolver = DegenerateResolver()
-        (self)._timeout = (0)
+        (self)._timeout = 0.0
         (self).mutex = _Lock()
         (self).instanceMap = {}
         (self).counter = 0

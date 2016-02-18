@@ -4,16 +4,16 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md;
     public builtin.Service service;
     public builtin.reflect.Class returned;
-    public Long timeout;
+    public Double timeout;
     public String methodName;
     public builtin.ServiceInstance instance;
     public RPC(builtin.Service service, String methodName) {
-        Long timeout = (Long) (((io.datawire.quark.runtime.QObject) (service))._getField("timeout"));
-        if (((timeout)==(null) || ((timeout) != null && (timeout).equals(null))) || ((timeout) <= (new Long(0)))) {
-            timeout = new Long(10000);
+        Double timeout = (Double) (((io.datawire.quark.runtime.QObject) (service))._getField("timeout"));
+        if (((timeout)==(null) || ((timeout) != null && (timeout).equals(null))) || ((timeout) <= (0.0))) {
+            timeout = 10.0;
         }
-        Long override = (service).getTimeout();
-        if ((!((override)==(null) || ((override) != null && (override).equals(null)))) && ((override) > (new Long(0)))) {
+        Double override = (service).getTimeout();
+        if ((!((override)==(null) || ((override) != null && (override).equals(null)))) && ((override) > (0.0))) {
             timeout = override;
         }
         (this).returned = ((builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(service))).getMethod(methodName)).getType();
@@ -31,7 +31,8 @@ public class RPC implements io.datawire.quark.runtime.QObject {
             (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).methodName)));
             (envelope).setObjectItem(("$context"), ((new io.datawire.quark.runtime.JSONObject()).setString("TBD")));
             (envelope).setObjectItem(("rpc"), (json));
-            (request).setBody((envelope).toString());
+            String body = (envelope).toString();
+            (request).setBody(body);
             (request).setMethod("POST");
             RPCRequest rpc = new RPCRequest(args, this);
             result = (rpc).call(request);
@@ -39,7 +40,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
             result = new builtin.concurrent.Future();
             (result).finish("all services are down");
         }
-        builtin.concurrent.FutureWait.waitFor(result, new Long(1000));
+        builtin.concurrent.FutureWait.waitFor(result, 10.0);
         return result;
     }
     public void succeed(String info) {
@@ -80,7 +81,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
             (this).returned = (builtin.reflect.Class) (value);
         }
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
-            (this).timeout = (Long) (value);
+            (this).timeout = (Double) (value);
         }
         if ((name)==("methodName") || ((name) != null && (name).equals("methodName"))) {
             (this).methodName = (String) (value);

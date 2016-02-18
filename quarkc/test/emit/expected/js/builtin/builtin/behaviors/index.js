@@ -15,11 +15,11 @@ exports.builtin_md = builtin_md;
 function RPC(service, methodName) {
     this.__init_fields__();
     var timeout = (service)._getField("timeout");
-    if (((timeout) === (null)) || ((timeout) <= ((0)))) {
-        timeout = (10000);
+    if (((timeout) === (null)) || ((timeout) <= (0.0))) {
+        timeout = 10.0;
     }
     var override = (service).getTimeout();
-    if (((override) !== (null)) && ((override) > ((0)))) {
+    if (((override) !== (null)) && ((override) > (0.0))) {
         timeout = override;
     }
     (this).returned = ((builtin.reflect.Class.get(_qrt._getClass(service))).getMethod(methodName)).getType();
@@ -48,7 +48,8 @@ function RPC_call(args) {
         (envelope).setObjectItem(("$method"), ((new _qrt.JSONObject()).setString((this).methodName)));
         (envelope).setObjectItem(("$context"), ((new _qrt.JSONObject()).setString("TBD")));
         (envelope).setObjectItem(("rpc"), (json));
-        (request).setBody((envelope).toString());
+        var body = (envelope).toString();
+        (request).setBody(body);
         (request).setMethod("POST");
         var rpc = new RPCRequest(args, this);
         result = (rpc).call(request);
@@ -56,7 +57,7 @@ function RPC_call(args) {
         result = new builtin.concurrent.Future();
         (result).finish("all services are down");
     }
-    builtin.concurrent.FutureWait.waitFor(result, (1000));
+    builtin.concurrent.FutureWait.waitFor(result, 10.0);
     return result;
 }
 RPC.prototype.call = RPC_call;

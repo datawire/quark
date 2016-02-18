@@ -11,16 +11,17 @@ public class FutureWait implements FutureListener, io.datawire.quark.runtime.QOb
         (this)._lock = new io.datawire.quark.runtime.Condition();
         (this)._future = (Future) (null);
     }
-    public void wait(Future future, Long timeout) {
+    public void wait(Future future, Double timeout) {
         if ((future).isFinished()) {
             return;
         }
         (this)._future = future;
         ((this)._future).onFinished(this);
-        Long deadline = (System.currentTimeMillis()) + (timeout);
+        Long rounded = Math.round((1000.0) * (timeout));
+        Long deadline = (System.currentTimeMillis()) + (rounded);
         while (!(((this)._future).isFinished())) {
             Long remaining = (deadline) - (System.currentTimeMillis());
-            if (!((timeout)==(0) || ((timeout) != null && (timeout).equals(0)))) {
+            if (!((rounded)==(0) || ((rounded) != null && (rounded).equals(0)))) {
                 if ((remaining) <= (new Long(0))) {
                     break;
                 }
@@ -38,7 +39,7 @@ public class FutureWait implements FutureListener, io.datawire.quark.runtime.QOb
         ((this)._lock).wakeup();
         ((this)._lock).release();
     }
-    public static Future waitFor(Future future, Long timeout) {
+    public static Future waitFor(Future future, Double timeout) {
         if (false) {
             FutureWait w = new FutureWait();
             (w).wait(future, timeout);

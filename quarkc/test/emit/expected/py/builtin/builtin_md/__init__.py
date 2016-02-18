@@ -318,6 +318,30 @@ class builtin_Service(builtin.reflect.Class):
         pass
 builtin_Service.singleton = builtin_Service()
 
+class builtin_BaseService(builtin.reflect.Class):
+    def _init(self):
+        builtin.reflect.Class._init(self)
+
+    def __init__(self):
+        super(builtin_BaseService, self).__init__(u"builtin.BaseService");
+        (self).name = u"builtin.BaseService"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return builtin.BaseService()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+builtin_BaseService.singleton = builtin_BaseService()
+
 class builtin_ServiceInstance(builtin.reflect.Class):
     def _init(self):
         builtin.reflect.Class._init(self)
@@ -374,7 +398,7 @@ class builtin_Client(builtin.reflect.Class):
         super(builtin_Client, self).__init__(u"builtin.Client");
         (self).name = u"builtin.Client"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Resolver", u"resolver"), builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.long", u"_timeout"), builtin.reflect.Field(u"builtin.int", u"_failureLimit"), builtin.reflect.Field(u"builtin.float", u"_retestDelay"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex"), builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.ServiceInstance>", u"instanceMap"), builtin.reflect.Field(u"builtin.int", u"counter")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Resolver", u"resolver"), builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.float", u"_timeout"), builtin.reflect.Field(u"builtin.int", u"_failureLimit"), builtin.reflect.Field(u"builtin.float", u"_retestDelay"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex"), builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.ServiceInstance>", u"instanceMap"), builtin.reflect.Field(u"builtin.int", u"counter")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -576,7 +600,7 @@ class builtin_behaviors_RPC(builtin.reflect.Class):
         super(builtin_behaviors_RPC, self).__init__(u"builtin.behaviors.RPC");
         (self).name = u"builtin.behaviors.RPC"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Service", u"service"), builtin.reflect.Field(u"builtin.reflect.Class", u"returned"), builtin.reflect.Field(u"builtin.long", u"timeout"), builtin.reflect.Field(u"builtin.String", u"methodName"), builtin.reflect.Field(u"builtin.ServiceInstance", u"instance")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Service", u"service"), builtin.reflect.Field(u"builtin.reflect.Class", u"returned"), builtin.reflect.Field(u"builtin.float", u"timeout"), builtin.reflect.Field(u"builtin.String", u"methodName"), builtin.reflect.Field(u"builtin.ServiceInstance", u"instance")])
         (self).methods = _List([builtin_behaviors_RPC_call_Method(), builtin_behaviors_RPC_succeed_Method(), builtin_behaviors_RPC_fail_Method(), builtin_behaviors_RPC_toString_Method()])
 
     def construct(self, args):
@@ -1071,7 +1095,7 @@ class builtin_concurrent_Future_await_Method(builtin.reflect.Method):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(builtin_concurrent_Future_await_Method, self).__init__(u"builtin.void", u"await", _List([u"builtin.long"]));
+        super(builtin_concurrent_Future_await_Method, self).__init__(u"builtin.void", u"await", _List([u"builtin.float"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -1136,7 +1160,7 @@ class builtin_concurrent_FutureWait_wait_Method(builtin.reflect.Method):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(builtin_concurrent_FutureWait_wait_Method, self).__init__(u"builtin.void", u"wait", _List([u"builtin.concurrent.Future", u"builtin.long"]));
+        super(builtin_concurrent_FutureWait_wait_Method, self).__init__(u"builtin.void", u"wait", _List([u"builtin.concurrent.Future", u"builtin.float"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -1178,7 +1202,7 @@ class builtin_concurrent_FutureWait_waitFor_Method(builtin.reflect.Method):
         builtin.reflect.Method._init(self)
 
     def __init__(self):
-        super(builtin_concurrent_FutureWait_waitFor_Method, self).__init__(u"builtin.concurrent.Future", u"waitFor", _List([u"builtin.concurrent.Future", u"builtin.long"]));
+        super(builtin_concurrent_FutureWait_waitFor_Method, self).__init__(u"builtin.concurrent.Future", u"waitFor", _List([u"builtin.concurrent.Future", u"builtin.float"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -1655,7 +1679,7 @@ class builtin_concurrent_Timeout(builtin.reflect.Class):
         super(builtin_concurrent_Timeout, self).__init__(u"builtin.concurrent.Timeout");
         (self).name = u"builtin.concurrent.Timeout"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.concurrent.Context", u"_context"), builtin.reflect.Field(u"builtin.long", u"timeout"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"lock"), builtin.reflect.Field(u"builtin.concurrent.TimeoutListener", u"listener")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.concurrent.Context", u"_context"), builtin.reflect.Field(u"builtin.float", u"timeout"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"lock"), builtin.reflect.Field(u"builtin.concurrent.TimeoutListener", u"listener")])
         (self).methods = _List([builtin_concurrent_Timeout_start_Method(), builtin_concurrent_Timeout_cancel_Method(), builtin_concurrent_Timeout_onExecute_Method(), builtin_concurrent_Timeout_getContext_Method()])
 
     def construct(self, args):
@@ -1842,6 +1866,7 @@ Root.builtin_Map_builtin_String_builtin_ServiceInstance__md = builtin_Map_builti
 Root.builtin_Resolver_md = builtin_Resolver.singleton
 Root.builtin_ResponseHolder_md = builtin_ResponseHolder.singleton
 Root.builtin_Service_md = builtin_Service.singleton
+Root.builtin_BaseService_md = builtin_BaseService.singleton
 Root.builtin_ServiceInstance_md = builtin_ServiceInstance.singleton
 Root.builtin_DegenerateResolver_md = builtin_DegenerateResolver.singleton
 Root.builtin_Client_md = builtin_Client.singleton

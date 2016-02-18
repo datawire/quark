@@ -28,8 +28,8 @@ public class HelloRPCClient {
         }
         System.out.println("Request says: " + request.text);
         Response response = client.hello(request);
-        new FutureWait().wait(response, Long.valueOf(1000)); // XXX: this will go away once we figure out synchronous configuration API
-        if (!response.isFinished()) { // XXX: unless we wait indefinitely the response wait can time out so the synchronous caller should still check isFinished()
+        response.await(1.0);
+        if (!response.isFinished()) { // Unless we wait indefinitely the response wait can time out so the synchronous caller should still check isFinished()
             System.out.println("No response!");
         } else if (response.getError() != null) {
             System.out.println("Response failed with: " + response.getError());

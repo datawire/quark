@@ -58,7 +58,7 @@ public class Future extends EventContext implements io.datawire.quark.runtime.QO
         ((this)._lock).release();
         return error;
     }
-    public void await(Long timeout) {
+    public void await(Double timeout) {
         (new FutureWait()).wait(this, timeout);
     }
     public String _getClass() {

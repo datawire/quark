@@ -10,6 +10,7 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class builtin_Resolver_md = builtin_Resolver.singleton;
     public static builtin.reflect.Class builtin_ResponseHolder_md = builtin_ResponseHolder.singleton;
     public static builtin.reflect.Class builtin_Service_md = builtin_Service.singleton;
+    public static builtin.reflect.Class builtin_BaseService_md = builtin_BaseService.singleton;
     public static builtin.reflect.Class builtin_ServiceInstance_md = builtin_ServiceInstance.singleton;
     public static builtin.reflect.Class builtin_DegenerateResolver_md = builtin_DegenerateResolver.singleton;
     public static builtin.reflect.Class builtin_Client_md = builtin_Client.singleton;

@@ -648,12 +648,18 @@ namespace builtin {
     interface Service {
         String getName();
         ServiceInstance getInstance();
-        long getTimeout();
+        float getTimeout();
 
         concurrent.Future rpc(String methodName, List<Object> args) {
             behaviors.RPC rpc = new behaviors.RPC(self, methodName);  // Must be allocated once per RPC!
             return rpc.call(args);
         }
+    }
+
+    class BaseService extends Service {
+        String getName() { return null; }
+        ServiceInstance getInstance() { return null; }
+        float getTimeout() { return -1.0; }
     }
 
     class ServiceInstance {
@@ -703,7 +709,7 @@ namespace builtin {
     class Client {
         Resolver resolver;
         String serviceName;
-        long _timeout;
+        float _timeout;
 
         int _failureLimit = 3;
         float _retestDelay = 8.0;  // seconds (30?)
@@ -715,7 +721,7 @@ namespace builtin {
         Client(String serviceName) {
             self.serviceName = serviceName;
             self.resolver = new DegenerateResolver();
-            self._timeout = 0;
+            self._timeout = 0.0;
 
             self.mutex = new concurrent.Lock();
             self.instanceMap = {};
@@ -786,8 +792,8 @@ namespace builtin {
         }
 
         String getName() { return self.serviceName; }
-        long getTimeout() { return self._timeout; }
-        void setTimeout(long timeout) {
+        float getTimeout() { return self._timeout; }
+        void setTimeout(float timeout) {
             self._timeout = timeout;
         }
 
@@ -991,17 +997,17 @@ namespace behaviors {
     class RPC {
         Service service;
         reflect.Class returned;
-        long timeout;
+        float timeout;
         String methodName;
         ServiceInstance instance;
 
         RPC(Service service, String methodName) {
-            long timeout = ?service.getField("timeout");
-            if (timeout == null || timeout <= 0) {
-                timeout = 10000;
+            float timeout = ?service.getField("timeout");
+            if (timeout == null || timeout <= 0.0) {
+                timeout = 10.0;
             }
-            long override = service.getTimeout();
-            if (override != null && override > 0) {
+            float override = service.getTimeout();
+            if (override != null && override > 0.0) {
                 timeout = override;
             }
             self.returned = service.getClass().getMethod(methodName).getType();
@@ -1023,7 +1029,9 @@ namespace behaviors {
                 envelope["$method"] = self.methodName;
                 envelope["$context"] = "TBD"; // XXX: serialize intersting bits of the context (define interesting while there)
                 envelope["rpc"] = json;
-                request.setBody(envelope.toString());
+                String body = envelope.toString();
+                //print("Request: " + body);
+                request.setBody(body);
                 request.setMethod("POST");
 
                 RPCRequest rpc = new RPCRequest(args, self);
@@ -1034,7 +1042,7 @@ namespace behaviors {
                 result.finish("all services are down");
             }
 
-            concurrent.FutureWait.waitFor(result, 1000);
+            concurrent.FutureWait.waitFor(result, 10.0);
             // XXX: sync users still need to check result.getError()...
             return result;
         }
@@ -1084,6 +1092,7 @@ namespace behaviors {
             }
 
             String body = response.getBody();
+            //print("Response: " + body);
             JSONObject obj = body.parseJSON();
             String classname = obj["$class"];
             if (classname == null) {
@@ -1251,7 +1260,7 @@ namespace concurrent {
             return error;
         }
 
-        void await(long timeout) {
+        void await(float timeout) {
             new FutureWait().wait(self, timeout);
         }
     }
@@ -1266,16 +1275,17 @@ namespace concurrent {
         }
         // TODO: make sure not to call from a runtime thread (implies
         // anywhere in Node
-        void wait(Future future, long timeout) {
+        void wait(Future future, float timeout) {
             if (future.isFinished()) {
                 return;
             }
             self._future = future;
             self._future.onFinished(self);
-            long deadline = now() + timeout;
+            long rounded = (1000.0*timeout).round();
+            long deadline = now() + rounded;
             while(!self._future.isFinished()) {
                 long remaining = deadline - now();
-                if (timeout != 0) {
+                if (rounded != 0) {
                     if (remaining <= 0) {
                         break;
                     }
@@ -1294,7 +1304,7 @@ namespace concurrent {
             self._lock.release();
         }
 
-        static Future waitFor(Future future, long timeout) {
+        static Future waitFor(Future future, float timeout) {
             // XXX: probably check if current thread is allowed to
             // wait -- which should never be true for quark threads
             // and configurable for user threads, probably through a
@@ -1434,17 +1444,17 @@ namespace concurrent {
 
     @doc("Timeout")
     class Timeout extends EventContext, Task {
-        long timeout;
+        float timeout;
         Lock lock;
         TimeoutListener listener;
-        Timeout(long timeout) {
+        Timeout(float timeout) {
             self.timeout = timeout;
             self.listener = null;
             self.lock = new Lock();
         }
         void start(TimeoutListener listener) {
             self.listener = listener;
-            float delay = 0.001 * self.timeout.toFloat();
+            float delay = self.timeout;
             concurrent.Context.runtime().schedule(self, delay);
         }
         void cancel() {

@@ -281,10 +281,11 @@ function FutureWait_wait(future, timeout) {
     }
     (this)._future = future;
     ((this)._future).onFinished(this);
-    var deadline = (Date.now()) + (timeout);
+    var rounded = null;
+    var deadline = (Date.now()) + (rounded);
     while (!(((this)._future).isFinished())) {
         var remaining = (deadline) - (Date.now());
-        if ((timeout) !== (0)) {
+        if ((rounded) !== (0)) {
             if ((remaining) <= ((0))) {
                 break;
             }
@@ -668,7 +669,7 @@ Timeout.prototype.__init_fields__ = Timeout__init_fields__;
 Timeout.builtin_concurrent_Timeout_ref = builtin_md.Root.builtin_concurrent_Timeout_md;
 function Timeout_start(listener) {
     (this).listener = listener;
-    var delay = (0.001) * (((this).timeout));
+    var delay = (this).timeout;
     (Context.runtime()).schedule(this, delay);
 }
 Timeout.prototype.start = Timeout_start;

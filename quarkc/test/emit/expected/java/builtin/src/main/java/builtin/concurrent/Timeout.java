@@ -5,10 +5,10 @@ package builtin.concurrent;
  */
 public class Timeout extends EventContext implements io.datawire.quark.runtime.Task, io.datawire.quark.runtime.QObject {
     public static builtin.reflect.Class builtin_concurrent_Timeout_ref = builtin_md.Root.builtin_concurrent_Timeout_md;
-    public Long timeout;
+    public Double timeout;
     public io.datawire.quark.runtime.Lock lock;
     public TimeoutListener listener;
-    public Timeout(Long timeout) {
+    public Timeout(Double timeout) {
         super();
         (this).timeout = timeout;
         (this).listener = (TimeoutListener) (null);
@@ -16,7 +16,7 @@ public class Timeout extends EventContext implements io.datawire.quark.runtime.T
     }
     public void start(TimeoutListener listener) {
         (this).listener = listener;
-        Double delay = (0.001) * (Double.valueOf((this).timeout));
+        Double delay = (this).timeout;
         (Context.runtime()).schedule(this, delay);
     }
     public void cancel() {
@@ -55,7 +55,7 @@ public class Timeout extends EventContext implements io.datawire.quark.runtime.T
             (this)._context = (Context) (value);
         }
         if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
-            (this).timeout = (Long) (value);
+            (this).timeout = (Double) (value);
         }
         if ((name)==("lock") || ((name) != null && (name).equals("lock"))) {
             (this).lock = (io.datawire.quark.runtime.Lock) (value);

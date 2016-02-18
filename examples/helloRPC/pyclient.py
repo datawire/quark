@@ -28,8 +28,7 @@ def main():
     print "Request says %r" % request.text
 
     response = client.hello(request)
-    import time
-    builtin.concurrent.FutureWait().wait(response, 1000) # XXX:  this will go away once we figure out synchronous configuration API
+    response.await(1.0)
     if not response.isFinished():
         print "No response!"
     elif response.getError() is not None:

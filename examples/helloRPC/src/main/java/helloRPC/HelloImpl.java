@@ -4,7 +4,7 @@ import hello.Hello;
 import hello.Request;
 import hello.Response;
 
-public class HelloImpl extends ServerServiceStub implements Hello {
+public class HelloImpl extends builtin.BaseService implements Hello {
 
     @Override
     public Response hello(Request request) {

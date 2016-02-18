@@ -17,11 +17,11 @@ class RPC(object):
     def __init__(self, service, methodName):
         self._init()
         timeout = (service)._getField(u"timeout");
-        if (((timeout) == (None)) or ((timeout) <= ((0)))):
-            timeout = (10000)
+        if (((timeout) == (None)) or ((timeout) <= (0.0))):
+            timeout = 10.0
 
         override = (service).getTimeout();
-        if (((override) != (None)) and ((override) > ((0)))):
+        if (((override) != (None)) and ((override) > (0.0))):
             timeout = override
 
         (self).returned = ((builtin.reflect.Class.get(_getClass(service))).getMethod(methodName)).getType()
@@ -39,7 +39,8 @@ class RPC(object):
             (envelope).setObjectItem((u"$method"), ((_JSONObject()).setString((self).methodName)));
             (envelope).setObjectItem((u"$context"), ((_JSONObject()).setString(u"TBD")));
             (envelope).setObjectItem((u"rpc"), (json));
-            (request).setBody((envelope).toString());
+            body = (envelope).toString();
+            (request).setBody(body);
             (request).setMethod(u"POST");
             rpc = RPCRequest(args, self);
             result = (rpc).call(request)
@@ -47,7 +48,7 @@ class RPC(object):
             result = builtin.concurrent.Future()
             (result).finish(u"all services are down");
 
-        builtin.concurrent.FutureWait.waitFor(result, (1000));
+        builtin.concurrent.FutureWait.waitFor(result, 10.0);
         return result
 
     def succeed(self, info):

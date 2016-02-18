@@ -38,9 +38,9 @@ namespace petstore {
 
     interface Pets extends Service {
 
-        static int timeout = 10000;
-        static int tripCount = 3;
-        static int retryDelay = 30000;
+        static float timeout = 10.0;
+        static int failureLimit = 3;
+        static float retestDelay = 30.0;
 
         void create(Pet pet) {
             self.rpc("create", [pet]);

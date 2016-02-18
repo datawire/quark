@@ -19,7 +19,7 @@ namespace hello {
     @doc("The hello service.")
     interface Hello extends Service {
 
-        static int timeout = 3000;
+        static float timeout = 3.0;
 
         @doc("Respond to a hello request.")
         Response hello(Request request) {
