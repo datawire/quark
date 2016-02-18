@@ -1,0 +1,233 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Writing a Python Server &mdash; Datawire Connect 0.4.14 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.14',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.4.14 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Running the Python Client and Server" href="pythonRun.html" />
+    <link rel="prev" title="Creating the Python Client" href="pythonClient.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Datawire Connect 0.4.14 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="pythonClient.html" title="Previous document">Creating the Python Client</a>
+        </li>
+        <li>
+          <a href="pythonRun.html" title="Next document">Running the Python Client and Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="writing-a-python-server">
+<h1>Writing a Python Server<a class="headerlink" href="#writing-a-python-server" title="Permalink to this headline">¶</a></h1>
+<p>Let&#8217;s start by creating a simple Hello World server using the compiled Hello service contract in Python. This server will be functionally equivalent to the cloud server you used at the beginning of this walkthrough.</p>
+<p>This walkthrough assumes that your server file is named pyserver.py but there is no requirement that you do so. Please substitute your file name for pyserver.py everywhere if you choose a different name.</p>
+<p>Note: If you don&#8217;t want step-by-step guidance about how to create the server and just want to start from a completed server, there is a <a class="reference internal" href="#fullexamplepythonserver"><span>link to the full Python server file</span></a> at the bottom of this page.</p>
+<div class="section" id="part-1-importing-the-product-pieces">
+<span id="part1pythonserverimport"></span><h2>Part 1: Importing the Datawire Connect Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to import the Datawire Connect integration and the HelloRPC contract into your Python server.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
+
+<span class="hll">from datawire_quark_threaded_runtime import get_runtime
+</span><span class="hll">import hello
+</span>
+
+def main():
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">from</span> <span class="pre">datawire_quark_threaded_runtime</span> <span class="pre">import</span> <span class="pre">get_runtime</span></code> imports the user-visible portions of the datawire-quark-threaded runtime integration into your client. Note that although the integration is called datawire-quark-threaded, the module name is datawire_quark_threaded_runtime.</p>
+<p>The line <code class="docutils literal"><span class="pre">import</span> <span class="pre">hello</span></code> imports the service contract library created and built in previous steps of the tutorial.</p>
+</div>
+<div class="section" id="part-2-defining-the-response">
+<span id="part2pythonresponsedefinition"></span><h2>Part 2: Defining the Response<a class="headerlink" href="#part-2-defining-the-response" title="Permalink to this headline">¶</a></h2>
+<p>This section defines the response using the Response value class defined in the service contract.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
+
+from datawire_quark_threaded_runtime import get_runtime
+import hello
+
+
+<span class="hll">class HelloImpl(object):
+</span><span class="hll">
+</span><span class="hll">   def hello(self, request):
+</span><span class="hll">        res = hello.Response()
+</span><span class="hll">        res.result = &quot;Responding to [%s] from Python&quot; % request.text
+</span><span class="hll">        return res
+</span>
+
+def main():
+</pre></div>
+</div>
+<p>The HelloImpl class essentially defines a hello() method that defines the response to be sent back to the client given the request received. It instantiates a Response object (as defined in the service contract), populates its result property with the response text, and returns the object for further processing.</p>
+</div>
+<div class="section" id="part-3-processing-the-request">
+<span id="part3pythonprocessrequest"></span><h2>Part 3: Processing the Request<a class="headerlink" href="#part-3-processing-the-request" title="Permalink to this headline">¶</a></h2>
+<p>This section defines main module of the server, the code that calls the RPC processing defined within Datawire Connect and actually generates the response based on the request and returns it to the client application.</p>
+<p id="fullexamplepythonserver">Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre># Python Hello Server example
+
+from datawire_quark_threaded_runtime import get_runtime
+import hello
+
+
+class HelloImpl(object):
+
+   def hello(self, request):
+        res = hello.Response()
+        res.result = &quot;Responding to [%s] from Python&quot; % request.text
+        return res
+
+
+<span class="hll">def main():
+</span><span class="hll">   runtime = get_runtime()
+</span><span class="hll">   implementation = HelloImpl()
+</span><span class="hll">   server = hello.HelloServer(runtime, implementation)
+</span><span class="hll">   runtime.serveHTTP(&quot;http://127.0.0.1:8910/hello&quot;, server)
+</span>
+
+if __name__ == &#39;__main__&#39;:
+   main()
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">runtime</span> <span class="pre">=</span> <span class="pre">get_runtime()</span></code> instantiates an instance of the Datawire Connect runtime integration imported in the earlier step.</p>
+<p>The line <code class="docutils literal"><span class="pre">implementation</span> <span class="pre">=</span> <span class="pre">HelloImpl()</span></code> instatiates an implementation object, in this case an instance of the HelloImpl class defined above.</p>
+<p>The line <code class="docutils literal"><span class="pre">server</span> <span class="pre">=</span> <span class="pre">hello.HelloServer(runtime,</span> <span class="pre">implementation)</span></code> instantiates the server itself, passing the runtime and implementation arguments as input parameters to the constructor. The server stub is defined within the service contract expanding upon a default Quark server definition. The constructor defines how the runtime and implementation objects are used to launch the server process and perform the requested work of the server - this is all abstracted away from the user.</p>
+<p>The line <code class="docutils literal"><span class="pre">runtime.serveHTTP(&quot;http://127.0.0.1:8910/hello&quot;,</span> <span class="pre">server)</span></code> binds the server to the defined port and URL for the hello service. This is done by passing the service URI (<code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>) and the server instance to the serveHTTP() method of the runtime object instantiated above. The work of listening on that port, recognizing incoming requests to be processed by the server, and sending the actual responses to those requests is all abstracted away from the user.</p>
+<p>That&#8217;s it! The Python server is complete. Again, note that we don&#8217;t actually see the processing of the request; that&#8217;s handled under the covers by the code inside the Python threaded integration according to RPC handling directives defined within Datawire Connect. The user-defined portions of the server just indicate the specific format desired for the response text and passes that directive along with the received request object to the underlying processing code.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Writing a Python Server</a><ul>
+<li><a class="reference internal" href="#part-1-importing-the-product-pieces">Part 1: Importing the Datawire Connect Pieces</a></li>
+<li><a class="reference internal" href="#part-2-defining-the-response">Part 2: Defining the Response</a></li>
+<li><a class="reference internal" href="#part-3-processing-the-request">Part 3: Processing the Request</a></li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="pythonClient.html"
+                        title="previous chapter">Creating the Python Client</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="pythonRun.html"
+                        title="next chapter">Running the Python Client and Server</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/pythonServer.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="pythonClient.html" title="Previous document">Creating the Python Client</a>
+        </li>
+        <li>
+          <a href="pythonRun.html" title="Next document">Running the Python Client and Server</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.4.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

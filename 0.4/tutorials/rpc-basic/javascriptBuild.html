@@ -1,0 +1,151 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Compiling and Installing the Library in Javascript &mdash; Datawire Connect 0.4.14 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.4.14',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.4.14 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Writing the Javascript Client" href="javascriptClient.html" />
+    <link rel="prev" title="Javascript Requirements and Setup" href="javascriptSetup.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  </head>
+  <body role="document">
+    <header id="pageheader"><h1><a href="../../index.html ">
+        Datawire Connect 0.4.14 documentation
+    </a></h1></header>
+  <div class="related top">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javascriptSetup.html" title="Previous document">Javascript Requirements and Setup</a>
+        </li>
+        <li>
+          <a href="javascriptClient.html" title="Next document">Writing the Javascript Client</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="compiling-and-installing-the-library-in-javascript">
+<h1>Compiling and Installing the Library in Javascript<a class="headerlink" href="#compiling-and-installing-the-library-in-javascript" title="Permalink to this headline">¶</a></h1>
+<p>The next step is compiling the service contract and installing the resulting library in Javascript:</p>
+<p><code class="docutils literal"><span class="pre">quark</span> <span class="pre">package</span> <span class="pre">--javascript</span> <span class="pre">hello.q</span></code></p>
+<p>This command will generate a hello directory at the current location with a js subdirectory. The build artifacts are within the subdirectory. Information on other build options and the behavior of the default options including the location of all of the generated artifacts is available on the <a class="reference external" href="http://datawire.github.io/{{{doc-directory}}}/install/index.html">Compilation page</a> of the Datawire Connect Installation and Configuration Guide.</p>
+<p>To install the resulting library in Javascript, do the following:</p>
+<p><code class="docutils literal"><span class="pre">npm</span> <span class="pre">install</span> <span class="pre">hello/js/hello.tgz</span></code></p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="javascriptSetup.html"
+                        title="previous chapter">Javascript Requirements and Setup</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="javascriptClient.html"
+                        title="next chapter">Writing the Javascript Client</a></p>
+<div class="sourcelink">
+  <a href="../../_sources/tutorials/rpc-basic/javascriptBuild.txt" rel="nofollow">
+    Show page source
+  </a>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  <div class="related bottom">
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="javascriptSetup.html" title="Previous document">Javascript Requirements and Setup</a>
+        </li>
+        <li>
+          <a href="javascriptClient.html" title="Next document">Writing the Javascript Client</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+  <nav id="breadcrumbs">
+    <ul>
+      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
+      <li>
+        <a href="index.html">Getting Started with RPC Walkthrough</a>
+      </li> 
+    </ul>
+  </nav>
+  </div>
+
+  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
+      1.3.4.
+
+  </footer>
+
+  
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
