@@ -7,7 +7,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
     public String serviceName;
     public Double _timeout;
     public Integer _failureLimit = 3;
-    public Double _retestDelay = 8.0;
+    public Double _retestDelay = 30.0;
     public io.datawire.quark.runtime.Lock mutex;
     public java.util.HashMap<String,ServiceInstance> instanceMap;
     public Integer counter;

@@ -372,7 +372,7 @@ function Client__init_fields__() {
     this.serviceName = null;
     this._timeout = null;
     this._failureLimit = 3;
-    this._retestDelay = 8.0;
+    this._retestDelay = 30.0;
     this.mutex = null;
     this.instanceMap = null;
     this.counter = null;

@@ -712,7 +712,7 @@ namespace builtin {
         float _timeout;
 
         int _failureLimit = 3;
-        float _retestDelay = 8.0;  // seconds (30?)
+        float _retestDelay = 30.0;  // seconds (30?)
 
         concurrent.Lock mutex;
         Map<String, ServiceInstance> instanceMap;

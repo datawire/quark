@@ -273,7 +273,7 @@ class Client(object):
         self.serviceName = None
         self._timeout = None
         self._failureLimit = 3
-        self._retestDelay = 8.0
+        self._retestDelay = 30.0
         self.mutex = None
         self.instanceMap = None
         self.counter = None
