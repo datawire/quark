@@ -20,6 +20,8 @@ namespace hello {
     interface Hello extends Service {
 
         static float timeout = 3.0;
+        static int failureLimit = 1;
+        static float retestDelay = 30.0;
 
         @doc("Respond to a hello request.")
         Response hello(Request request) {
