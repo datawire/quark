@@ -1,0 +1,82 @@
+{%- extends "basic/layout.html" %}
+
+{%- macro relbar_custom() %}
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>{{ _('Navigation') }}</h3>
+      <ul>
+        {%- for rellink in rellinks[1:] %}
+        <li class="right" {% if loop.first %}style="margin-right: 10px"{% endif %}>
+          <a
+            href="{{ pathto(rellink[0]) }}"
+            title="{{ rellink[1]|striptags|e }}"
+            {{ accesskey(rellink[2]) }}>
+              {% if rellink[3] == 'previous' %}&larr;{% endif %}
+              {{ rellink[3] }}
+              {% if rellink[3] == 'next' %}&rarr;{% endif %}
+          </a>
+          {%- if not loop.first %}{{ reldelim2 }}{% endif %}</li>
+        {%- endfor %}
+        {%- block rootrellink %}
+        <li class="nav-item nav-item-0"><a href="{{ pathto(master_doc) }}">{{ shorttitle|e }}</a>{{ reldelim1 }}</li>
+        {%- endblock %}
+        {%- for parent in parents %}
+          <li class="nav-item nav-item-{{ loop.index }}"><a href="{{ parent.link|e }}" {% if loop.last %}{{ accesskey("U") }}{% endif %}>{{ parent.title }}</a>{{ reldelim1 }}</li>
+        {%- endfor %}
+        {%- block relbaritems %} {% endblock %}
+      </ul>
+    </div>
+{%- endmacro %}
+
+{%- block header %}
+    {%- include "header.html" %}
+{% endblock %}
+
+{%- block extrahead %}
+  {{ super() }}
+  {% if theme_touch_icon %}
+    <link rel="apple-touch-icon" href="{{ pathto('_static/' ~ theme_touch_icon, 1) }}" />
+  {% endif %}
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+{% endblock %}
+
+{%- block relbar1 %}{{ relbar_custom() }}{% endblock %}
+{%- block relbar2 %}{{ relbar_custom() }}{% endblock %}
+
+{%- block footer %}
+    <div class="footer">
+      {% if show_copyright %}&copy;{{ copyright }}.{% endif %}
+      {% if theme_show_powered_by|lower == 'true' %}
+      {% if show_copyright %}|{% endif %}
+      Powered by <a href="http://sphinx-doc.org/">Sphinx {{ sphinx_version }}</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster {{ alabaster_version }}</a>
+      {% endif %}
+      {%- if show_source and has_source and sourcename %}
+      {% if show_copyright or theme_show_powered_by %}|{% endif %}
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">{{ _('GitHub Repository') }}</a>
+      {%- endif %}
+    </div>
+
+    {% if theme_github_banner|lower != 'false' %}
+    <a href="https://github.com/{{ theme_github_user }}/{{ theme_github_repo }}" class="github">
+        <img style="position: absolute; top: 0; right: 0; border: 0;" src="{{ pathto('_static/' ~ theme_github_banner, 1) if theme_github_banner|lower != 'true' else 'https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png' }}" alt="Fork me on GitHub"  class="github"/>
+    </a>
+    {% endif %}
+
+    {% if theme_analytics_id %}
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', '{{ theme_analytics_id }}', 'auto');
+      ga('send', 'pageview');
+    </script>
+    {% endif %}
+
+    <script src="{{ pathto('_static/vendor/zc/ZeroClipboard.js', 1) }}" ></script>
+    <script src="{{ pathto('_static/js/main.js', 1) }}" ></script>
+
+{%- endblock %}

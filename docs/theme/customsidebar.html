@@ -1,0 +1,13 @@
+{% if next %}
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="{{ next.link|e }}">{{ next.title }}</a></li>
+    </ul>
+{% endif %}
+
+{% if prev %}
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="{{ prev.link|e }}">{{ prev.title }}</a></li>
+    </ul>
+{% endif %}

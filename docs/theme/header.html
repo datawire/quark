@@ -1,0 +1,16 @@
+<header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="{{ pathto('index') }}">
+                <img class="dw-logo" src="{{ pathto('_static/img/logo-datawire.png', 1) }}" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="{{ pathto('search') }}" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
