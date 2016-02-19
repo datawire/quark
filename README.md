@@ -1,6 +1,6 @@
 # Quark
 [![Build Status](https://travis-ci.org/datawire/quark.svg?branch=master)](https://travis-ci.org/datawire/quark)
-[![Slack](https://datawire-quark.herokuapp.com/badge.svg)](https://datawire-quark.herokuapp.com)
+[![Slack](https://datawire-quark.herokuapp.com/badge.svg?dummy)](https://datawire-quark.herokuapp.com)
 
 Quark is a specialized language for defining and implementing
 communication protocols in multiple languages. In particular,
