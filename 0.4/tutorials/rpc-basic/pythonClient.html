@@ -8,7 +8,7 @@
     
     <title>Creating the Python Client &mdash; Datawire Connect 0.4.14 documentation</title>
     
-    <link rel="stylesheet" href="../../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
@@ -27,34 +27,54 @@
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Writing a Python Server" href="pythonServer.html" />
     <link rel="prev" title="Compiling and Installing the Library in Python" href="pythonBuild.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
-  <body role="document">
-    <header id="pageheader"><h1><a href="../../index.html ">
-        Datawire Connect 0.4.14 documentation
-    </a></h1></header>
-  <div class="related top">
-  <nav id="rellinks">
-    <ul>
-        <li>
-          &larr;
-          <a href="pythonBuild.html" title="Previous document">Compiling and Installing the Library in Python</a>
-        </li>
-        <li>
-          <a href="pythonServer.html" title="Next document">Writing a Python Server</a>
-          &rarr;
-        </li>
-    </ul>
-  </nav>
-  <nav id="breadcrumbs">
-    <ul>
-      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
-      <li>
-        <a href="index.html">Getting Started with RPC Walkthrough</a>
-      </li> 
-    </ul>
-  </nav>
-  </div>  
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../../index.html">
+                <img class="dw-logo" src="../../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="pythonServer.html"
+            title="Writing a Python Server"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="pythonBuild.html"
+            title="Compiling and Installing the Library in Python"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.4.14 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started with RPC Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -164,76 +184,126 @@ if __name__ == &#39;__main__&#39;:
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Creating the Python Client</a><ul>
-<li><a class="reference internal" href="#part-1-importing-the-product-pieces">Part 1: Importing the Datawire Connect Pieces</a></li>
-<li><a class="reference internal" href="#part-2-initializing-the-client">Part 2: Initializing the Client</a></li>
-<li><a class="reference internal" href="#part-3-setting-up-the-request">Part 3: Setting Up the Request</a></li>
-<li><a class="reference internal" href="#part-4-sending-the-request-and-processing-the-response">Part 4: Sending the Request and Processing the Response</a></li>
+    
+
+
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../language-reference/index.html">Quark Language Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started with RPC Walkthrough</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction to RPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">Datawire Connect RPC Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quicktry.html">Quickly Trying RPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contract.html">Defining the Service Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Supported Languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonSetup.html">Python: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonBuild.html">Python: Building the Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="">Python: Writing the Client</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pythonServer.html">Python: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonRun.html">Python: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaSetup.html">Java: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaBuild.html">Java: Building the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaClient.html">Java: Writing the Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaServer.html">Java: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaRun.html">Java: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptSetup.html">Javascript: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptBuild.html">Javascript: Building the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptClient.html">Javascript: Writing the Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptServer.html">Javascript: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptRun.html">Javascript: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="try.html">Putting It All Together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
 </ul>
 </li>
 </ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Getting Started with RPC Walkthrough</a><ul>
+      <li>Previous: <a href="pythonBuild.html" title="previous chapter">Compiling and Installing the Library in Python</a></li>
+      <li>Next: <a href="pythonServer.html" title="next chapter">Writing a Python Server</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="pythonServer.html">Writing a Python Server</a></li>
+    </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="pythonBuild.html"
-                        title="previous chapter">Compiling and Installing the Library in Python</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="pythonServer.html"
-                        title="next chapter">Writing a Python Server</a></p>
-<div class="sourcelink">
-  <a href="../../_sources/tutorials/rpc-basic/pythonClient.txt" rel="nofollow">
-    Show page source
-  </a>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="pythonBuild.html">Compiling and Installing the Library in Python</a></li>
+    </ul>
 
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-  <div class="related bottom">
-  <nav id="rellinks">
-    <ul>
-        <li>
-          &larr;
-          <a href="pythonBuild.html" title="Previous document">Compiling and Installing the Library in Python</a>
-        </li>
-        <li>
-          <a href="pythonServer.html" title="Next document">Writing a Python Server</a>
-          &rarr;
-        </li>
-    </ul>
-  </nav>
-  <nav id="breadcrumbs">
-    <ul>
-      <li><a href="../../index.html">Datawire Connect 0.4.14 documentation</a></li>
-      <li>
-        <a href="index.html">Getting Started with RPC Walkthrough</a>
-      </li> 
-    </ul>
-  </nav>
-  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="pythonServer.html"
+            title="Writing a Python Server"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="pythonBuild.html"
+            title="Compiling and Installing the Library in Python"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.4.14 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Getting Started with RPC Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
 
-  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
-      1.3.4.
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
 
-  </footer>
+    
 
-  
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../../_static/js/main.js" ></script>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
