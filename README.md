@@ -54,24 +54,23 @@ Check out the examples in the [Quark Examples repository](examples):
 
 ## Next Steps
 
-The [Quark Quick
-Start](http://datawire.github.io/quark/0.2/quick-start/index.html)
+The [Quark Quick Start](http://datawire.github.io/quark/0.4/quick-start/index.html)
 provides an overview of the basic installation requirements and
 process, basic compile commands, and the Quark language. If you have
 successfully run any of the examples linked above, you can probably
 skip this book.
 
-Please read the [Quark Installation and Configuration
-Guide](http://datawire.github.io/quark/0.2/install/index.html) for
-more detailed information about installation, configuration,
+Please read the 
+[Quark Installation and Configuration Guide](http://datawire.github.io/quark/0.4/install/index.html)
+for more detailed information about installation, configuration,
 compilation, packaging, and documentation generation.
 
-The [Quark Language
-Reference](http://datawire.github.io/quark/0.2/language-reference/index.html)
+The [Quark Language Reference](http://datawire.github.io/quark/0.4/language-reference/index.html)
 provides information about how to code in Quark and specifics about
 individual language elements including keywords, operators, functions,
 data types, and annotations.
 
 The [Quark Issues list](https://github.com/datawire/quark/issues)
 provides a list of known issues - please feel free to add new issues
-or feature requests as you start to use Quark.
+or feature requests as you start to use Quark. You can also join
+our public Slack [support channel](https://datawire-quark.herokuapp.com).
