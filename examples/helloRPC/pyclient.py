@@ -1,8 +1,9 @@
 # Python Hello Client example
 
-import sys
+import sys, logging
+logging.basicConfig()
+
 import hello
-import builtin.concurrent
 
 def main():
 

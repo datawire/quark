@@ -18,13 +18,13 @@ public class ServiceInstance implements io.datawire.quark.runtime.QObject {
     }
     public void succeed(String info) {
         if (!((this).isActive())) {
-            do{System.out.println(((("- CLOSE breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));System.out.flush();}while(false);
+            (Client.logger).info(((("- CLOSE breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
         }
         ((this).breaker).succeed();
     }
     public void fail(String info) {
         if (!((this).isActive())) {
-            do{System.out.println(((("- OPEN breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));System.out.flush();}while(false);
+            (Client.logger).warn(((("- OPEN breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
         }
         ((this).breaker).fail();
     }

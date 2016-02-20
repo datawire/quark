@@ -37,7 +37,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
             RPCRequest rpc = new RPCRequest(args, this);
             result = (rpc).call(request);
         } else {
-            result = new builtin.concurrent.Future();
+            result = (builtin.concurrent.Future) ((this.returned).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}))));
             (result).finish("all services are down");
         }
         builtin.concurrent.FutureWait.waitFor(result, 10.0);

@@ -270,7 +270,7 @@ ServiceInstance.prototype.getURL = ServiceInstance_getURL;
 
 function ServiceInstance_succeed(info) {
     if (!((this).isActive())) {
-        _qrt.print(((("- CLOSE breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
+        (Client.logger).info(((("- CLOSE breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
     }
     ((this).breaker).succeed();
 }
@@ -278,7 +278,7 @@ ServiceInstance.prototype.succeed = ServiceInstance_succeed;
 
 function ServiceInstance_fail(info) {
     if (!((this).isActive())) {
-        _qrt.print(((("- OPEN breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
+        (Client.logger).warn(((("- OPEN breaker for ") + ((this).serviceName)) + (" at ")) + ((this).url));
     }
     ((this).breaker).fail();
 }
@@ -360,10 +360,12 @@ function Client(serviceName) {
     if ((failureLimit) !== (null)) {
         (this)._failureLimit = failureLimit;
     }
+    (Client.logger).info((((this).toString()) + (" failureLimit ")) + (_qrt.toString((this)._failureLimit)));
     var retestDelay = (this)._getField("retestDelay");
     if ((retestDelay) !== (null)) {
         (this)._retestDelay = retestDelay;
     }
+    (Client.logger).info((((this).toString()) + (" retestDelay ")) + (_qrt.toString((this)._retestDelay)));
 }
 exports.Client = Client;
 
@@ -378,6 +380,7 @@ function Client__init_fields__() {
     this.counter = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
+Client.logger = (concurrent.Context.runtime()).logger("quark.client");
 Client.builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md;
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md;
 function Client_setResolver(resolver) {
@@ -404,13 +407,13 @@ function Client_getInstance() {
             ((this).instanceMap).set((url), (instance));
         }
         if ((instance).isActive()) {
-            _qrt.print(((((("- ") + ((this).serviceName)) + (" using instance ")) + (_qrt.toString((idx) + (1)))) + (": ")) + (url));
+            (Client.logger).info(((((("- ") + ((this).serviceName)) + (" using instance ")) + (_qrt.toString((idx) + (1)))) + (": ")) + (url));
             result = instance;
             break;
         }
         idx = _qrt.modulo(((idx) + (1)), ((urls).length));
         if ((idx) === (next)) {
-            _qrt.print((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
+            (Client.logger).info((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
             break;
         }
     }
@@ -440,6 +443,9 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
+    if ((name) === ("logger")) {
+        return Client.logger;
+    }
     if ((name) === ("resolver")) {
         return (this).resolver;
     }
@@ -469,6 +475,9 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
+    if ((name) === ("logger")) {
+        Client.logger = value;
+    }
     if ((name) === ("resolver")) {
         (this).resolver = value;
     }

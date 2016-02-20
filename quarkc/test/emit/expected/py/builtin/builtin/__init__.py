@@ -210,13 +210,13 @@ class ServiceInstance(object):
 
     def succeed(self, info):
         if (not ((self).isActive())):
-            _println((((u"- CLOSE breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
+            (Client.logger).info((((u"- CLOSE breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
 
         ((self).breaker).succeed();
 
     def fail(self, info):
         if (not ((self).isActive())):
-            _println((((u"- OPEN breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
+            (Client.logger).warn((((u"- OPEN breaker for ") + ((self).serviceName)) + (u" at ")) + ((self).url));
 
         ((self).breaker).fail();
 
@@ -290,9 +290,12 @@ class Client(object):
         if ((failureLimit) != (None)):
             (self)._failureLimit = failureLimit
 
+        (Client.logger).info(((str(self)) + (u" failureLimit ")) + (str((self)._failureLimit)));
         retestDelay = (self)._getField(u"retestDelay");
         if ((retestDelay) != (None)):
             (self)._retestDelay = retestDelay
+
+        (Client.logger).info(((str(self)) + (u" retestDelay ")) + (repr((self)._retestDelay)));
 
     def setResolver(self, resolver):
         (self).resolver = resolver
@@ -316,13 +319,13 @@ class Client(object):
                 ((self).instanceMap)[url] = (instance);
 
             if ((instance).isActive()):
-                _println((((((u"- ") + ((self).serviceName)) + (u" using instance ")) + (str((idx) + (1)))) + (u": ")) + (url));
+                (Client.logger).info((((((u"- ") + ((self).serviceName)) + (u" using instance ")) + (str((idx) + (1)))) + (u": ")) + (url));
                 result = instance
                 break;
 
             idx = ((idx) + (1)) % (len(urls))
             if ((idx) == (next)):
-                _println(((u"- ") + ((self).serviceName)) + (u": no live instances! giving up."));
+                (Client.logger).info(((u"- ") + ((self).serviceName)) + (u": no live instances! giving up."));
                 break;
 
         ((self).mutex).release();
@@ -341,6 +344,9 @@ class Client(object):
         return u"builtin.Client"
 
     def _getField(self, name):
+        if ((name) == (u"logger")):
+            return Client.logger
+
         if ((name) == (u"resolver")):
             return (self).resolver
 
@@ -368,6 +374,9 @@ class Client(object):
         return None
 
     def _setField(self, name, value):
+        if ((name) == (u"logger")):
+            Client.logger = value
+
         if ((name) == (u"resolver")):
             (self).resolver = value
 
@@ -393,6 +402,7 @@ class Client(object):
             (self).counter = value
 
     
+Client.logger = (concurrent.Context.runtime()).logger(u"quark.client")
 Client.builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md
 class ServerResponder(object):

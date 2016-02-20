@@ -54,7 +54,7 @@ function RPC_call(args) {
         var rpc = new RPCRequest(args, this);
         result = (rpc).call(request);
     } else {
-        result = new builtin.concurrent.Future();
+        result = (this.returned).construct([]);
         (result).finish("all services are down");
     }
     builtin.concurrent.FutureWait.waitFor(result, 10.0);
@@ -248,7 +248,7 @@ CircuitBreaker.builtin_behaviors_CircuitBreaker_ref = builtin_md.Root.builtin_be
 function CircuitBreaker_succeed() {
     ((this).mutex).acquire();
     if (((this).failureCount) > (0)) {
-        _qrt.print(("- CLOSE breaker on ") + ((this).id));
+        (builtin.Client.logger).info(("- CLOSE breaker on ") + ((this).id));
     }
     (this).failureCount = 0;
     ((this).mutex).release();
@@ -262,7 +262,7 @@ function CircuitBreaker_fail() {
     if (((this).failureCount) >= ((this).failureLimit)) {
         (this).active = false;
         doSchedule = true;
-        _qrt.print(("- OPEN breaker on ") + ((this).id));
+        (builtin.Client.logger).warn(("- OPEN breaker on ") + ((this).id));
     }
     ((this).mutex).release();
     if (doSchedule) {
@@ -274,7 +274,7 @@ CircuitBreaker.prototype.fail = CircuitBreaker_fail;
 function CircuitBreaker_onExecute(runtime) {
     ((this).mutex).acquire();
     (this).active = true;
-    _qrt.print(("- RETEST breaker on ") + ((this).id));
+    (builtin.Client.logger).warn(("- RETEST breaker on ") + ((this).id));
     ((this).mutex).release();
 }
 CircuitBreaker.prototype.onExecute = CircuitBreaker_onExecute;

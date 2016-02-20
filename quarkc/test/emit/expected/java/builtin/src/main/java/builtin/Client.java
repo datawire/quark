@@ -1,6 +1,7 @@
 package builtin;
 
 public class Client implements io.datawire.quark.runtime.QObject {
+    public static io.datawire.quark.runtime.Logger logger = (builtin.concurrent.Context.runtime()).logger("quark.client");
     public static builtin.reflect.Class builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md;
     public static builtin.reflect.Class builtin_Client_ref = builtin_md.Root.builtin_Client_md;
     public Resolver resolver;
@@ -22,10 +23,12 @@ public class Client implements io.datawire.quark.runtime.QObject {
         if (!((failureLimit)==(null) || ((failureLimit) != null && (failureLimit).equals(null)))) {
             (this)._failureLimit = failureLimit;
         }
+        (Client.logger).info((((this).toString()) + (" failureLimit ")) + (Integer.toString((this)._failureLimit)));
         Double retestDelay = (Double) (((io.datawire.quark.runtime.QObject) (this))._getField("retestDelay"));
         if (!((retestDelay)==(null) || ((retestDelay) != null && (retestDelay).equals(null)))) {
             (this)._retestDelay = retestDelay;
         }
+        (Client.logger).info((((this).toString()) + (" retestDelay ")) + (Double.toString((this)._retestDelay)));
     }
     public void setResolver(Resolver resolver) {
         (this).resolver = resolver;
@@ -49,13 +52,13 @@ public class Client implements io.datawire.quark.runtime.QObject {
                 ((this).instanceMap).put((url), (instance));
             }
             if ((instance).isActive()) {
-                do{System.out.println(((((("- ") + ((this).serviceName)) + (" using instance ")) + (Integer.toString((idx) + (1)))) + (": ")) + (url));System.out.flush();}while(false);
+                (Client.logger).info(((((("- ") + ((this).serviceName)) + (" using instance ")) + (Integer.toString((idx) + (1)))) + (": ")) + (url));
                 result = instance;
                 break;
             }
             idx = Math.floorMod(((idx) + (1)), ((urls).size()));
             if ((idx)==(next) || ((idx) != null && (idx).equals(next))) {
-                do{System.out.println((("- ") + ((this).serviceName)) + (": no live instances! giving up."));System.out.flush();}while(false);
+                (Client.logger).info((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
                 break;
             }
         }
@@ -75,6 +78,9 @@ public class Client implements io.datawire.quark.runtime.QObject {
         return "builtin.Client";
     }
     public Object _getField(String name) {
+        if ((name)==("logger") || ((name) != null && (name).equals("logger"))) {
+            return Client.logger;
+        }
         if ((name)==("resolver") || ((name) != null && (name).equals("resolver"))) {
             return (this).resolver;
         }
@@ -102,6 +108,9 @@ public class Client implements io.datawire.quark.runtime.QObject {
         return null;
     }
     public void _setField(String name, Object value) {
+        if ((name)==("logger") || ((name) != null && (name).equals("logger"))) {
+            Client.logger = (io.datawire.quark.runtime.Logger) (value);
+        }
         if ((name)==("resolver") || ((name) != null && (name).equals("resolver"))) {
             (this).resolver = (Resolver) (value);
         }

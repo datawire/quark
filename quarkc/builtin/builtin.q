@@ -65,6 +65,9 @@ namespace builtin {
         macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}
                                                        $py{($self)._setField(($name), ($value))}
                                                        $js{($self)._setField(($name), ($value))};
+        macro String toString() $java{($self).toString()}
+                                $py{str($self)}
+                                $js{($self).toString()};
     }
 
     @mapping($java{void})
@@ -684,7 +687,7 @@ namespace builtin {
 
         void succeed(String info) {
             if (!self.isActive()) {
-                print("- CLOSE breaker for " + self.serviceName + " at " + self.url);
+                Client.logger.info("- CLOSE breaker for " + self.serviceName + " at " + self.url);
             }
 
             self.breaker.succeed();
@@ -692,7 +695,7 @@ namespace builtin {
 
         void fail(String info) {
             if (!self.isActive()) {
-                print("- OPEN breaker for " + self.serviceName + " at " + self.url);
+                Client.logger.warn("- OPEN breaker for " + self.serviceName + " at " + self.url);
             }
 
             self.breaker.fail();
@@ -707,6 +710,8 @@ namespace builtin {
     }
 
     class Client {
+        static Logger logger = new Logger("quark.client");
+
         Resolver resolver;
         String serviceName;
         float _timeout;
@@ -731,11 +736,13 @@ namespace builtin {
             if (failureLimit != null) {
                 self._failureLimit = failureLimit;
             }
+            logger.info(self.toString() + " failureLimit " + self._failureLimit.toString());
 
             float retestDelay = ?self.getField("retestDelay");
             if (retestDelay != null) {
                 self._retestDelay = retestDelay;
             }
+            logger.info(self.toString() + " retestDelay " + self._retestDelay.toString());
         }
 
         void setResolver(Resolver resolver) {
@@ -772,7 +779,7 @@ namespace builtin {
                 }
 
                 if (instance.isActive()) {             // Found an active instance
-                    print("- " + self.serviceName + " using instance " + (idx + 1).toString() + ": " + url);
+                    Client.logger.info("- " + self.serviceName + " using instance " + (idx + 1).toString() + ": " + url);
 
                     result = instance;
                     break;
@@ -782,7 +789,7 @@ namespace builtin {
 
                 idx = (idx + 1) % urls.size();
                 if (idx == next) {                     // Wrapped all the way around, found nothing.
-                    print("- " + self.serviceName + ": no live instances! giving up.");
+                    Client.logger.info("- " + self.serviceName + ": no live instances! giving up.");
                     break;
                 }
             }
@@ -1038,7 +1045,7 @@ namespace behaviors {
 
                 result = rpc.call(request);
             } else {
-                result = new concurrent.Future();
+                result = ?returned.construct([]);
                 result.finish("all services are down");
             }
 
@@ -1133,7 +1140,7 @@ namespace behaviors {
             self.mutex.acquire();
 
             if (self.failureCount > 0) {
-                print("- CLOSE breaker on " + self.id);
+                Client.logger.info("- CLOSE breaker on " + self.id);
             }
 
             self.failureCount = 0;
@@ -1148,7 +1155,7 @@ namespace behaviors {
                 self.active = false;
                 doSchedule = true;
 
-                print("- OPEN breaker on " + self.id);
+                Client.logger.warn("- OPEN breaker on " + self.id);
             }
             self.mutex.release();
 
@@ -1160,7 +1167,7 @@ namespace behaviors {
         void onExecute(Runtime runtime) {
             self.mutex.acquire();
             self.active = true;
-            print("- RETEST breaker on " + self.id);
+            Client.logger.warn("- RETEST breaker on " + self.id);
             self.mutex.release();
         }
     }

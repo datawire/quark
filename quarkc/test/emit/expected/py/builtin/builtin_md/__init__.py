@@ -398,7 +398,7 @@ class builtin_Client(builtin.reflect.Class):
         super(builtin_Client, self).__init__(u"builtin.Client");
         (self).name = u"builtin.Client"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Resolver", u"resolver"), builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.float", u"_timeout"), builtin.reflect.Field(u"builtin.int", u"_failureLimit"), builtin.reflect.Field(u"builtin.float", u"_retestDelay"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex"), builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.ServiceInstance>", u"instanceMap"), builtin.reflect.Field(u"builtin.int", u"counter")])
+        (self).fields = _List([builtin.reflect.Field(u"builtin.Logger", u"logger"), builtin.reflect.Field(u"builtin.Resolver", u"resolver"), builtin.reflect.Field(u"builtin.String", u"serviceName"), builtin.reflect.Field(u"builtin.float", u"_timeout"), builtin.reflect.Field(u"builtin.int", u"_failureLimit"), builtin.reflect.Field(u"builtin.float", u"_retestDelay"), builtin.reflect.Field(u"builtin.concurrent.Lock", u"mutex"), builtin.reflect.Field(u"builtin.Map<builtin.String,builtin.ServiceInstance>", u"instanceMap"), builtin.reflect.Field(u"builtin.int", u"counter")])
         (self).methods = _List([])
 
     def construct(self, args):

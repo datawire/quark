@@ -592,7 +592,7 @@ function builtin_Client() {
     builtin_Client.super_.call(this, "builtin.Client");
     (this).name = "builtin.Client";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.Resolver", "resolver"), new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.float", "_timeout"), new builtin.reflect.Field("builtin.int", "_failureLimit"), new builtin.reflect.Field("builtin.float", "_retestDelay"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex"), new builtin.reflect.Field("builtin.Map<builtin.String,builtin.ServiceInstance>", "instanceMap"), new builtin.reflect.Field("builtin.int", "counter")];
+    (this).fields = [new builtin.reflect.Field("builtin.Logger", "logger"), new builtin.reflect.Field("builtin.Resolver", "resolver"), new builtin.reflect.Field("builtin.String", "serviceName"), new builtin.reflect.Field("builtin.float", "_timeout"), new builtin.reflect.Field("builtin.int", "_failureLimit"), new builtin.reflect.Field("builtin.float", "_retestDelay"), new builtin.reflect.Field("builtin.concurrent.Lock", "mutex"), new builtin.reflect.Field("builtin.Map<builtin.String,builtin.ServiceInstance>", "instanceMap"), new builtin.reflect.Field("builtin.int", "counter")];
     (this).methods = [];
 }
 exports.builtin_Client = builtin_Client;

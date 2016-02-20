@@ -45,7 +45,7 @@ class RPC(object):
             rpc = RPCRequest(args, self);
             result = (rpc).call(request)
         else:
-            result = builtin.concurrent.Future()
+            result = (self.returned).construct(_List([]))
             (result).finish(u"all services are down");
 
         builtin.concurrent.FutureWait.waitFor(result, 10.0);
@@ -202,7 +202,7 @@ class CircuitBreaker(object):
     def succeed(self):
         ((self).mutex).acquire();
         if (((self).failureCount) > (0)):
-            _println((u"- CLOSE breaker on ") + ((self).id));
+            (builtin.Client.logger).info((u"- CLOSE breaker on ") + ((self).id));
 
         (self).failureCount = 0
         ((self).mutex).release();
@@ -214,7 +214,7 @@ class CircuitBreaker(object):
         if (((self).failureCount) >= ((self).failureLimit)):
             (self).active = False
             doSchedule = True
-            _println((u"- OPEN breaker on ") + ((self).id));
+            (builtin.Client.logger).warn((u"- OPEN breaker on ") + ((self).id));
 
         ((self).mutex).release();
         if (doSchedule):
@@ -223,7 +223,7 @@ class CircuitBreaker(object):
     def onExecute(self, runtime):
         ((self).mutex).acquire();
         (self).active = True
-        _println((u"- RETEST breaker on ") + ((self).id));
+        (builtin.Client.logger).warn((u"- RETEST breaker on ") + ((self).id));
         ((self).mutex).release();
 
     def _getClass(self):

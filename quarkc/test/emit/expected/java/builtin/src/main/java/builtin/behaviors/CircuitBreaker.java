@@ -16,7 +16,7 @@ public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawi
     public void succeed() {
         ((this).mutex).acquire();
         if (((this).failureCount) > (0)) {
-            do{System.out.println(("- CLOSE breaker on ") + ((this).id));System.out.flush();}while(false);
+            (builtin.Client.logger).info(("- CLOSE breaker on ") + ((this).id));
         }
         (this).failureCount = 0;
         ((this).mutex).release();
@@ -28,7 +28,7 @@ public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawi
         if (((this).failureCount) >= ((this).failureLimit)) {
             (this).active = false;
             doSchedule = true;
-            do{System.out.println(("- OPEN breaker on ") + ((this).id));System.out.flush();}while(false);
+            (builtin.Client.logger).warn(("- OPEN breaker on ") + ((this).id));
         }
         ((this).mutex).release();
         if (doSchedule) {
@@ -38,7 +38,7 @@ public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawi
     public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
         ((this).mutex).acquire();
         (this).active = true;
-        do{System.out.println(("- RETEST breaker on ") + ((this).id));System.out.flush();}while(false);
+        (builtin.Client.logger).warn(("- RETEST breaker on ") + ((this).id));
         ((this).mutex).release();
     }
     public String _getClass() {
