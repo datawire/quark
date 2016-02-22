@@ -1,4 +1,4 @@
-// package interop { // package interop is mandatory
+// namespace interop { // package interop is mandatory
 
     class HelloServlet extends HTTPServlet {
         TimeoutServletRequestCheck check = null;

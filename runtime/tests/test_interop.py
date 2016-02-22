@@ -57,8 +57,7 @@ class QuarkCompile(object):
             return
         self.process_includes()
         print "Need to compile", self.processed
-        self.quark("install", "--skip-doc",
-                "--output", self.outdir,
+        self.quark("install",
                 self.processed.strpath)
         self.compiled = True
 

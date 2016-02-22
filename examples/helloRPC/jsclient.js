@@ -14,8 +14,8 @@ var hello = require("hello").hello;
 //  - fire up the local version of the server by following the instructions
 //  in the README.md.
 //
-var client = new hello.HelloClient("http://hello.datawire.io/");
-// var client = new hello.HelloClient("http://localhost:8910/hello");
+// var client = new hello.HelloClient("http://hello.datawire.io/");
+var client = new hello.HelloClient("http://localhost:8910/hello");
 var request = new hello.Request();
 if (process.argv[2]) {
     request.text = process.argv[2];
@@ -32,7 +32,7 @@ function FutureListener(cb) {
 response.onFinished(
     new FutureListener( // XXX: if this can become magic then the quark-js API can be idiomatic
         function(response) {
-            if (response.getError() != null) {
+            if (response.getError() !== null) {
                 console.log("Response failed with", response.getError());
             } else {
                 console.log("Response says", response.result);

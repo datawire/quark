@@ -1,5 +1,5 @@
 @version("1.1")
-package franz {
+namespace franz {
 
     @doc("Interface to a remote topic")
     class Topic {

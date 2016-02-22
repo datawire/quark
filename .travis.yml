@@ -3,7 +3,7 @@ os:
 sudo: required
 dist: trusty
 env:
-- TEST_SUITE=quark
+- TEST_SUITE=quarkc
 - TEST_SUITE=runtime
 language:
 - java
@@ -42,7 +42,7 @@ install:
 - pip freeze
 - mvn --version
 script:
-- py.test -sxv $TEST_SUITE --durations=10
+- py.test -v $TEST_SUITE --durations=10
 notifications:
   slack:
     rooms:

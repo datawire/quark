@@ -16,17 +16,10 @@ import sys
 import os
 import shlex
 
-try:
-    from better import better_theme_path
-    better_theme = True
-except ImportError:
-    sys.stderr.write("Could not import bootstrap theme. Is it installed?%s" % os.linesep)
-    better_theme = False
-
-__version__ = '0.4.2'
-__doc_version__ = '2'
-#__branch__ = '0.3.x'
-#__doc_product_version__ = '0.3'
+__version__ = '0.4.15'
+__doc_version__ = '1'
+#__branch__ = 'master'
+#__doc_product_version__ = '0.4'
 #__product__ = 'Datawire Connect'
 #__language__ = 'Datawire Connect'
 #__command__ = 'dcon'
@@ -100,8 +93,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'{{{product}}}'
-copyright = u'2015, 2016 Datawire'
-author = u'Datawire'
+copyright = u'2015, 2016 {{{company}}}'
+author = u'{{{company}}}'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -145,7 +138,7 @@ exclude_patterns = ['_build']
 #show_authors = False
 
 # The name of the Pygments (syntax highlighting) style to use.
-pygments_style = 'sphinx'
+#pygments_style = 'friendly'
 
 # A list of ignored prefixes for module index sorting.
 #modindex_common_prefix = []
@@ -161,19 +154,15 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-if better_theme:
-    html_theme_path = [better_theme_path]
-    html_theme = 'better'
-    html_theme_options = {
-        'linktotheme': False,
-    }
-else:
-    html_theme = 'haiku'
+html_theme = 'theme'
+html_theme_path = ['.']
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-#html_theme_options = {}
+html_theme_options = {
+    'analytics_id': 'UA-57322503-4'
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
@@ -213,7 +202,13 @@ html_static_path = ['_static']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-#html_sidebars = {}
+html_sidebars = {
+  '**': [
+    'globaltoc.html',
+    'relations.html',
+    'customsidebar.html',
+  ]
+}
 
 # Additional templates that should be rendered to pages, maps page names to
 # template names.
@@ -260,7 +255,7 @@ html_static_path = ['_static']
 #html_search_scorer = 'scorer.js'
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'dcondoc'
+htmlhelp_basename = '{{{language}}}doc'
 
 # -- Options for LaTeX output ---------------------------------------------
 
@@ -283,7 +278,7 @@ latex_elements = {
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
   (master_doc, '{{{product}}}.tex', u'{{{product}}} Documentation',
-   u'Datawire', 'manual'),
+   u'{{{company}}}', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

@@ -15,17 +15,17 @@
 from setuptools import setup
 
 metadata = {}
-with open("quark/_metadata.py") as fp:
+with open("quarkc/_metadata.py") as fp:
     exec(fp.read(), metadata)
 
-setup(name='datawire-quarkdev',
+setup(name=metadata["__title__"],
       version=metadata["__version__"],
       description=metadata["__summary__"],
       author=metadata["__author__"],
       author_email=metadata["__email__"],
       url=metadata["__uri__"],
       license=metadata["__license__"],
-      packages=['quark'],
+      packages=['quarkc'],
       package_data={'': ['*.q', "builtin/*.q", "builtin/*.py", "builtin/*.js",
                          "builtin/io/datawire/quark/netty/*.java",
                          "builtin/io/datawire/quark/runtime/*.java"]},
@@ -35,8 +35,8 @@ setup(name='datawire-quarkdev',
                         "sphinx>=1.3.1",
                         "wheel",
                         "markdown"],
-      entry_points={"console_scripts": ["quark = quark.command:call_main",
-                                        "quark-grammar = quark.parser:rules"]},
+      entry_points={"console_scripts": ["quark = quarkc.command:call_main",
+                                        "quark-grammar = quarkc.parser:rules"]},
       keywords=['IDL', 'service', 'microservice', 'RPC', 'async'],
       classifiers=[
           'Development Status :: 3 - Alpha',

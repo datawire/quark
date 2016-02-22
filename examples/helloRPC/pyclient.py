@@ -1,8 +1,9 @@
 # Python Hello Client example
 
-import sys
+import sys, logging
+logging.basicConfig()
+
 import hello
-import builtin.concurrent
 
 def main():
 
@@ -15,8 +16,8 @@ def main():
     # - fire up the local version of the server by following the instructions
     # in the file ./README.md.
 
-    client = hello.HelloClient("http://hello.datawire.io/")
-    # client = hello.HelloClient("http://127.0.0.1:8910/hello")
+    # client = hello.HelloClient("http://hello.datawire.io/")
+    client = hello.HelloClient("http://127.0.0.1:8910/hello")
 
     request = hello.Request()
 
@@ -28,8 +29,7 @@ def main():
     print "Request says %r" % request.text
 
     response = client.hello(request)
-    import time
-    builtin.concurrent.FutureWait().wait(response, 1000) # XXX:  this will go away once we figure out synchronous configuration API
+    response.await(1.0)
     if not response.isFinished():
         print "No response!"
     elif response.getError() is not None:

@@ -6,18 +6,16 @@ slack.q.
 
 Each bot uses the API to connect to Slack as you and monitors every
 message you receive (except from Slack integrations or from
-itself). If it sees a message containing the trigger text, it echoes
-that message back on the same channel.
+itself). If it sees a message containing the trigger text ("quark"),
+it says replies with a greeting on the same channel.
 
-Avoid running multiple bots simultaneously. The Python bot censors
-itself, but the JS and Java bots may trigger one another, causing a
-loop that will lead to your connections getting dropped.
+You can run multiple bots simultaneously.
 
 ## Prerequisites
 
 Log into Slack, then grab an API token from https://api.slack.com/web#authentication
 
-Store that token in a file in this directory
+Store that token in a file in this directory:
 
     echo 'your API token here' > .slack.token
 
@@ -32,6 +30,9 @@ Run the bot:
 
     python bot.py
 
+Now make a comment with the word "quark" in any of your Slack channels,
+and you'll see the bot respond in the same channel with "Python bot says hi!".
+
 
 ## JavaScript
 
@@ -45,6 +46,8 @@ Run the bot:
 
     node bot.js
 
+Now make a comment with the word "quark" in any of your Slack channels,
+and you'll see the bot respond in the same channel with "JavaScript bot says hi!".
 
 ## Java
 
@@ -57,3 +60,6 @@ Compile and install the quark interface:
 Build and run the bot:
 
     mvn compile && mvn exec:java -Dexec.mainClass="bot.SlackBot"
+
+Now make a comment with the word "quark" in any of your Slack channels,
+and you'll see the bot respond in the same channel with "Java bot says hi!".

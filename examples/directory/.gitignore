@@ -1,9 +1,0 @@
-directory/
-docs/
-node_modules/quark_runtime.js
-node_modules/ws/
-pom.xml
-quark_runtime.py
-setup.py
-src/main/java/directory/
-src/main/java/io/datawire/quark_runtime.java

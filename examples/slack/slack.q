@@ -1,15 +1,16 @@
-@version("0.1.0")
+package slack 0.1.0;
+
 @doc("A high level API for accessing all aspects of the the slack web service.")
 @doc("This includes both regular http and realtime web sockets functionality.")
 
-package slack {
+namespace slack {
     @doc("A slack client can be used to make requests or subscribe to events from the slack service.")
     class SlackClient extends HTTPHandler {
         Runtime runtime;
         String token;
 
-        SlackClient(Runtime runtime, String token) {
-            self.runtime = runtime;
+        SlackClient(String token) {
+            self.runtime = concurrent.Context.runtime();
             self.token = token;
         }
 
@@ -148,8 +149,8 @@ package slack {
         }
     }
 
-    @doc("This package contains all slack events.")
-    package event {
+    @doc("This namespace contains all slack events.")
+    namespace event {
         @doc("Base class for all slack events.")
         class SlackEvent {
 
