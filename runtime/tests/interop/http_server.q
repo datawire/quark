@@ -2,6 +2,7 @@
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameter
+            print("http_server server");
             HelloServlet servlet = HelloServlet();
             servlet.expectRequest()
                 .expectMethod("POST")
@@ -12,6 +13,7 @@ package interop { // package interop is mandatory
             servlet.serveHTTP("http://127.0.0.1:" + port.toString() + "/http_server");
         }
         void client(int port) {
+            print("http_server client");
 
             TimeoutClient(port)
                 .url("/http_server")

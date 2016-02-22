@@ -108,8 +108,11 @@ class QuarkCompile(object):
                     yield row
         processed = self.path.new(dirname=self.tmpdir)
         processed.write("".join(include_expander(self.path, "processing")))
-        self.processed = processed.new(basename="interop.q")
-        self.processed.mksymlinkto(processed)
+        self.processed = processed
+
+    @property
+    def name(self):
+        return self.path.purebasename.replace(".","_")
 
     def __repr__(self):
         return "%scompiled %s in %s" % (
@@ -263,18 +266,23 @@ class Node(Integration):
         """))
         self.rundir.join("run-client.js").write(textwrap.dedent("""\
             "use strict";
-            var interop = require("interop").interop;
+            var interop = require("%(compile_name)s").interop;
             var process = require("process");
             console.log("Node client harness is started")
             new interop.Entrypoint().client(process.argv[2]);
-        """))
+        """ % self.package_context ))
         self.rundir.join("run-server.js").write(textwrap.dedent("""\
             "use strict";
-            var interop = require("interop").interop;
+            var interop = require("%(compile_name)s").interop;
             var process = require("process");
             console.log("Node server harness is started")
             new interop.Entrypoint().server(process.argv[2]);
-        """))
+        """ % self.package_context ))
+
+    @property
+    def package_context(self):
+        return dict(compile_name=self.compile.name,
+                    )
 
     def npm_install(self, package):
         command(*self.npm_command("install", package.strpath))
@@ -306,6 +314,7 @@ class AbstractPython(Integration):
 
     def isolate(self):
         command("virtualenv", "x", cwd=self.rundir)
+        command(self.pip.strpath, "freeze", cwd=self.rundir)
 
     @property
     def pip(self):
@@ -391,6 +400,7 @@ class Netty(Integration):
         return dict(
             m2_repo = self.m2_repo.strpath,
             compile_version = self.compile.version,
+            compile_name = self.compile.name,
             )
 
     def isolate(self):
@@ -431,7 +441,7 @@ class Netty(Integration):
             <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
               <modelVersion>4.0.0</modelVersion>
               <groupId>io.datawire.quark.interop-test</groupId>
-              <artifactId>interop-harness</artifactId>
+              <artifactId>%(compile_name)s-harness</artifactId>
               <version>0.0.1-SNAPSHOT</version>
               <name>interop harness</name>
               <build>
@@ -449,8 +459,8 @@ class Netty(Integration):
               </build>
               <dependencies>
                 <dependency>
-                  <groupId>interop</groupId>
-                  <artifactId>interop</artifactId>
+                  <groupId>%(compile_name)s</groupId>
+                  <artifactId>%(compile_name)s</artifactId>
                   <version>%(compile_version)s</version>
                 </dependency>
               </dependencies>
@@ -535,12 +545,6 @@ class CompileCache(object):
             self.compiles[path] = QuarkCompile(tmpdir, path)
         return self.compiles[path]
 
-class IntegrationCache(object):
-    def __init__(self): pass
-
-    def get(self, cls, compile):
-        return compile.integrations[cls]
-
 class PortGenerator(object):
     def __init__(self):
         self.port = 9876
@@ -613,10 +617,6 @@ def compile_cache():
 @pytest.fixture
 def compile(path, tmpdir, compile_cache):
     return compile_cache.get(path, tmpdir)
-
-@pytest.fixture(scope='module')
-def integration_cache():
-    return IntegrationCache()
 
 def integration_kwargs(tag):
     return dict(params=Integration.registry,

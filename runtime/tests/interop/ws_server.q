@@ -2,10 +2,12 @@
 package interop { // package interop is mandatory
     class Entrypoint { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameter
+            print("ws_server server");
             InteropWSServlet servlet = new InteropWSServlet();
             servlet.serveWS("ws://127.0.0.1:" + port.toString() + "/ws_server");
         }
         void client(int port) {
+            print("ws_server client");
             InteropWSClient().open("ws://127.0.0.1:" + port.toString() + "/ws_server");
         }
     }

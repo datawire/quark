@@ -1,6 +1,7 @@
 os:
 - linux
-sudo: false
+sudo: required
+dist: trusty
 env:
 - TEST_SUITE=quark
 - TEST_SUITE=runtime
@@ -8,7 +9,7 @@ language:
 - java
 - python
 python:
-- 2.7
+- 2.7.6
 jdk:
 - oraclejdk8
 addons:
@@ -18,6 +19,7 @@ addons:
     - swig
     - python-dev
     - curl
+    - python2.7
     - python-pip
     - tar
     - gcc
@@ -27,7 +29,7 @@ addons:
     - python-virtualenv
 install:
 - java -version 2>&1 | grep -Fe 'java version "1.8.0'
-- python --version 2>&1 | grep -Fe 'Python 2.7'
+- python -c 'import sys; print sys.version; sys.exit(int(sys.version_info[:3] < (2,7,6)))'
 - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
   && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
   install 4.2.2
@@ -37,8 +39,10 @@ install:
 - . quark-travis/bin/activate
 - pip install --upgrade pip
 - scripts/develop.sh
+- pip freeze
+- mvn --version
 script:
-- py.test -v $TEST_SUITE --durations=10
+- py.test -sxv $TEST_SUITE --durations=10
 notifications:
   slack:
     rooms:
