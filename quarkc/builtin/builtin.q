@@ -6,6 +6,7 @@ include quark_node_runtime.js;
 use py ws4py 0.3.*;
 include quark_runtime.py;
 include quark_threaded_runtime.py;
+include quark_ws4py_fixup.py;
 
 use java com.fasterxml.jackson.jr jackson-jr-objects 2.5.3;
 use java io.netty netty-all 4.0.32.Final;

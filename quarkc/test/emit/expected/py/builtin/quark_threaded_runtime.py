@@ -6,18 +6,27 @@ import atexit
 import os
 import sys
 import threading
+import contextlib
 import time
 import traceback
 import urllib2
 import urlparse
 import logging
-from wsgiref import simple_server, util
+from wsgiref import util
 from Queue import Queue, Empty
 
+import ws4py
+if ws4py.__version__ != "0.3.4":
+    from ws4py.server.wsgirefserver import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
+else:
+    from quark_ws4py_fixup import WebSocketWSGIRequestHandler as _QuarkWSGIRequestHandler
 from ws4py.client.threadedclient import WebSocketClient
+from ws4py.server.wsgirefserver import WSGIServer as _QuarkWSGIServer
+from ws4py.server.wsgiutils import WebSocketWSGIApplication
+from ws4py.websocket import WebSocket
+from ws4py.exc import HandshakeError
 
-from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec
-
+from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec, Buffer
 
 class _Terminator(object):
 
@@ -39,13 +48,20 @@ class _EventProcessor(threading.Thread):
         super(_EventProcessor, self).__init__()
         self.runtime = runtime
         self.live = set()
+        self.token_lock = threading.Lock()
         self.die_now = False
+
+    @property
+    def is_live(self):
+        with self.token_lock:
+            return bool(self.live)
 
     def run(self):
         main_thread_running = True
-        while main_thread_running or self.live:
+        while main_thread_running or self.is_live:
             if self.die_now:
-                self.live = _Terminator()
+                with self.token_lock:
+                    self.live = _Terminator()
             try:
                 event = self.runtime.events.get(block=True, timeout=1)
             except Empty:
@@ -53,7 +69,7 @@ class _EventProcessor(threading.Thread):
 
             self.runtime.acquire()
             try:
-                while self.live:
+                while self.is_live:
                     if event == self.QUIT:
                         return
                     function, args, kwargs = event
@@ -81,14 +97,12 @@ class _RequestWithMethod(urllib2.Request):
         return self._method if self._method else super(_RequestWithMethod, self).get_method()
 
 
-class _QuarkRequest(threading.Thread):
+class _QuarkRequest(object):
 
-    def __init__(self, runtime, request, handler, token):
-        super(_QuarkRequest, self).__init__()
+    def __init__(self, runtime, request, handler):
         self.runtime = runtime
         self.request = request
         self.handler = handler
-        self.token = token
         self.response = None
         headers = {key.encode("utf-8"): str(value).encode("utf-8") for key, value in request.headers.items()}
         if self.request.body:
@@ -98,7 +112,7 @@ class _QuarkRequest(threading.Thread):
             bodyBytes = None
         self.py_request = _RequestWithMethod(self.request.url, bodyBytes, headers, method=self.request.method)
 
-    def run(self):
+    def __call__(self):
         self.runtime.events.put((self.handler.onHTTPInit, (self.request,), {}))
         try:
             handle = urllib2.urlopen(self.py_request)
@@ -123,34 +137,60 @@ class _QuarkRequest(threading.Thread):
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
         self.runtime.events.put((self.handler.onHTTPFinal, (self.request,), {}))
-        self.runtime._remove_event_source(self.token)
 
+class _QuarkWSAdapter(object):
+    def __init__(self, ws):
+        self.ws = ws
 
-class _QuarkWS(WebSocketClient):
-    def __init__(self, runtime, url, handler, token):
-        super(_QuarkWS, self).__init__(url)
+    def send(self, message):
+        self.ws.send(message)
+
+    def sendBinary(self, buffer):
+        self.ws.send(buffer.data, binary=True)
+
+    def close(self):
+        self.ws.close()
+
+class _QuarkWSMixin(object):
+
+    def _quark_init(self, runtime, handler):
         self.runtime = runtime
-        self.url = url
         self.handler = handler
-        self.token = token
+        self.ws = _QuarkWSAdapter(self)
 
     def opened(self):
-        self.runtime.events.put((self.handler.onWSInit, (self,), {}))
-        self.runtime.events.put((self.handler.onWSConnected, (self,), {}))
+        self.runtime.events.put((self.handler.onWSInit, (self.ws,), {}))
+        self.runtime.events.put((self.handler.onWSConnected, (self.ws,), {}))
 
     def received_message(self, message):
         if message.is_text:
-            self.runtime.events.put((self.handler.onWSMessage, (self, unicode(message)), {}))
+            self.runtime.events.put((self.handler.onWSMessage, (self.ws, unicode(message)), {}))
         else:
-            self.runtime.events.put((self.handler.onWSBinary, (self, str(message)), {}))
+            self.runtime.events.put((self.handler.onWSBinary, (self.ws, Buffer(message.data)), {}))
 
     def closed(self, code, reason=None):
         if code == 1000:
-            self.runtime.events.put((self.handler.onWSClosed, (self,), {}))
+            self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
-            self.runtime.events.put((self.handler.onWSError, (self,), {}))
-        self.runtime.events.put((self.handler.onWSFinal, (self,), {}))
+            self.runtime.events.put((self.handler.onWSError, (self.ws,), {}))
+        self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
+        self.ws.ws = None
+        self.ws = None
+
+class _QuarkServerWS(_QuarkWSMixin, WebSocket):
+    def _quark_init(self, runtime, handler):
+        super(_QuarkServerWS, self)._quark_init(runtime, handler)
+        self.token = self.runtime._add_event_source("server websocket")
+
+    def closed(self, *args, **kwargs):
+        super(_QuarkServerWS, self).closed(*args, **kwargs)
         self.runtime._remove_event_source(self.token)
+
+class _QuarkWS(_QuarkWSMixin, WebSocketClient):
+    def __init__(self, runtime, url, handler):
+        self._quark_init(runtime, handler)
+        super(_QuarkWS, self).__init__(url)
+        self.url = url
 
     def __str__(self):
         return "WS: %s" % self.url
@@ -158,21 +198,17 @@ class _QuarkWS(WebSocketClient):
 
 class _QuarkWSGIApp(object):
 
-    def __init__(self, runtime, scheme, host, port):
+    def __init__(self, runtime, url):
         self.runtime = runtime
-        self.scheme = scheme
-        self.host = host
-        self.port = port
+        self.url = url
         self.servlets = {}  # path -> servlet
+        self.lock = threading.Condition()
 
     def call_servlet(self, servlet, request, response):
         try:
-            servlet.onHTTPRequest(request, response)
+            servlet.call_servlet(request, response)
         except Exception as exc:
-            response.setCode(500)
-            response.setBody("500 Internal Server Error (%s)\n" % exc)
-            response.setHeader("Content-Type", "text/plain")
-            response._responded = True
+            servlet.fail(response, 500, "500 Internal Server Error (%s)\r\n" % exc)
             print "Servlet call for %s failed." % request.getUrl()
             print traceback.format_exc()
 
@@ -194,11 +230,13 @@ class _QuarkWSGIApp(object):
             if key.startswith("HTTP_"):
                 request.setHeader(key[5:], environ[key])
         response = _HTTPResponse()
-        try:
-            servlet = self.servlets[path]
-        except KeyError:
+
+        with self.lock:
+            servlet = self.servlets.get(path, None)
+        if servlet is None:
             start_response("404 Not Found", [("Content-Type", "text/plain")])
-            return ["404 Not Found (%r)" % path]
+            yield "404 Not Found (%r)" % path
+            return
 
         self.runtime.events.put((self.call_servlet, (servlet, request, response), {}))
         try:
@@ -208,6 +246,37 @@ class _QuarkWSGIApp(object):
         finally:
             self.runtime.release()
 
+        for chunk in servlet.respond(environ, start_response, request, response):
+            yield chunk
+
+    def add(self, servlet):
+        servlet.url.port = self.url.port
+        if servlet.servlet is not None:
+            self.runtime.events.put((servlet.servlet.onServletInit, (servlet.url.url, self.runtime), {}))
+        with self.lock:
+            old = self.servlets.pop(servlet.url.path, None)
+            if servlet.servlet is not None:
+                self.servlets[servlet.url.path] = servlet
+        if old is not None:
+            self.runtime.events.put((old.servlet.onServletEnd, (old.url.url, ), {}))
+
+
+class HttpServletAdapter(object):
+    def __init__(self, runtime, url, servlet):
+        self.runtime = runtime
+        self.url = url
+        self.servlet = servlet
+
+    def call_servlet(self, request, response):
+        self.servlet.onHTTPRequest(request, response)
+
+    def fail(self, response, code, body):
+        response.setCode(code)
+        response.setBody(body)
+        response.setHeader("Content-Type", "text/plain")
+        response._responded = True
+
+    def respond(self, environ, start_response, request, response):
         if response.code == 200:
             status = "200 OK"
         elif response.code == 500:
@@ -215,11 +284,80 @@ class _QuarkWSGIApp(object):
         else:
             status = "%s Something something" % response.code
         headers = [(key.encode("utf-8"), value.encode("utf-8")) for key, value in response.headers.items()]
-        start_response(status, headers)
-
         body = response.body.encode("utf-8")
-        return [body]
+        headers.append(("Content-Length", str(len(body))))
+        start_response(status, headers)
+    
+        yield body
 
+class WSServletAdapter(HttpServletAdapter):
+
+    def call_servlet(self, request, response):
+        handler = self.servlet.onWSConnect(request)
+        response._ws_handler = handler
+        response._responded = True
+
+
+    def respond(self, environ, start_response, request, response):
+        if response._ws_handler is None:
+            self.fail(response, 403, "Fobidden\r\n")
+        else:
+            handler = response._ws_handler
+            def ws_factory(*args, **kwargs):
+                ws = _QuarkServerWS(*args, **kwargs)
+                ws._quark_init(self.runtime, handler)
+                return ws
+            try:
+                handshaker = WebSocketWSGIApplication(handler_cls=ws_factory)
+                return handshaker(environ, start_response)
+            except HandshakeError as exc:
+                self.fail(response, 400, str(exc))
+        return super(WSServletAdapter,self).respond(environ, start_response, request, response)
+
+class Tracker(object):
+    def __init__(self, runtime, name, target):
+        self.runtime = runtime
+        self.name = name
+        self.target = target
+        self.token = self.runtime._add_event_source(self.name)
+
+    def __call__(self, *args, **kwargs):
+        try:
+            with self._token():
+                self.target(*args, **kwargs)
+        except:
+            print traceback.format_exc()
+
+    @contextlib.contextmanager
+    def _token(self):
+        yield
+        self.runtime._remove_event_source(self.token)
+
+class _NoApplication(object):
+    def __init__(self, runtime, url, exc):
+        self.runtime = runtime
+        self.url = url
+        self.exc = exc
+
+    def add(self, servlet):
+        self.runtime.events.put((servlet.servlet.onServletError,
+                (servlet.url.url, "Failed to bind to %s:%s (%s)" % (self.url.host, self.url.port, self.exc)), {}))
+
+class Url(object):
+    def __init__(self, url):
+        self.url = url
+        self.uri = urlparse.urlparse(url)
+        self.host = self.uri.hostname or "127.0.0.1"
+        if self.uri.port is not None:
+            self.port = self.uri.port
+        else:
+            self.port = dict(http=80, ws=80, https=443, wss=80).get(self.uri.scheme)
+        self.path = self.uri.path
+        self.scheme = self.uri.scheme
+        self.is_secure = self.uri.scheme in ["https", "wss"]
+
+    def __str__(self):
+        return "%s %s:%s" % (self.url, self.host, self.port)
 
 class ThreadedRuntime(object):
 
@@ -233,6 +371,7 @@ class ThreadedRuntime(object):
         self.event_thread = _EventProcessor(self)
         self.event_thread.daemon = True
         self.event_thread.start()
+        self._codec = _default_codec()
 
     def acquire(self):
         self.lock.acquire()
@@ -246,28 +385,31 @@ class ThreadedRuntime(object):
     def wait(self, timeoutInSeconds):
         self.lock.wait(timeoutInSeconds)
 
-    def _add_event_source(self):
-        token = (self.token_counter, self)
-        self.token_counter += 1
-        self.event_thread.live.add(token)
+    def _add_event_source(self, name):
+        with self.event_thread.token_lock:
+            token = (self.token_counter, name, self)
+            self.token_counter += 1
+            self.event_thread.live.add(token)
         return token
 
     def _remove_event_source(self, token):
-        self.events.put((self.event_thread.live.remove, (token,), {}))
+        def remove_token():
+            with self.event_thread.token_lock:
+                self.event_thread.live.remove(token)
+        self.events.put((remove_token, (), {}))
 
     def open(self, url, handler):
-        def pump_websocket(runtime, url, handler, token):
-            ws = _QuarkWS(runtime, url, handler, token)
+        def pump_websocket(runtime, url, handler):
+            ws = _QuarkWS(runtime, url, handler)
             try:
                 ws.connect()
                 ws.run_forever()
             except Exception:
                 runtime.events.put((handler.onWSError, (ws,), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
-                runtime._remove_event_source(token)
         try:
             self.acquire()
-            thread = threading.Thread(target=pump_websocket, args=(self, url, handler, self._add_event_source()))
+            thread = threading.Thread(target=Tracker(self, "client websocket", pump_websocket), args=(self, url, handler))
             thread.setDaemon(True)
             thread.start()
         finally:
@@ -276,72 +418,66 @@ class ThreadedRuntime(object):
     def request(self, request, handler):
         try:
             self.acquire()
-            thread = _QuarkRequest(self, request, handler, self._add_event_source())
+            thread = threading.Thread(target=Tracker(self, "request", _QuarkRequest(self, request, handler)))
             thread.setDaemon(True)
             thread.start()
         finally:
             self.release()
 
     def schedule(self, handler, delayInSeconds):
-        def run_scheduled(runtime, handler, delayInSeconds, token):
+        def run_scheduled(runtime, handler, delayInSeconds):
             time.sleep(delayInSeconds)
             runtime.events.put((handler.onExecute, [runtime], {}))
-            runtime._remove_event_source(token)
         try:
             self.acquire()
-            thread = threading.Thread(target=run_scheduled,
-                                      args=(self, handler, delayInSeconds, self._add_event_source()))
+            thread = threading.Thread(target=Tracker(self, "task", run_scheduled),
+                                      args=(self, handler, delayInSeconds))
             thread.setDaemon(True)
             thread.start()
         finally:
             self.release()
 
-    def _parse_url(self, url):
-        uri = urlparse.urlparse(url)
-        host = uri.hostname or "127.0.0.1"
-        if uri.port is not None:
-            port = uri.port
-        else:
-            port = dict(http=80, ws=80, https=443, wss=80).get(uri.scheme)
-        return uri.scheme, host, port, uri.path
-
     def serveHTTP(self, url, servlet):
-        def launch_web_server(runtime, url, host, port, app, servlet, token):
-            try:
-                server = simple_server.make_server(host, port, app)
-                server.serve_forever()
-            except Exception as exc:
-                runtime.events.put((servlet.onServletError,
-                                    (url, "Failed to bind to %s:%s (%s)" % (host, port, exc)), {}))
-                runtime._remove_event_source(token)
-        scheme, host, port, path = self._parse_url(url)
-        if scheme in ["https", "wss"]:
-            self.events.put((servlet.onServletError, (url, scheme + " is not supported yet"), {}))
+        url = Url(url)
+        if url.scheme not in ["http", "https"]:
+            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported"), {}))
             return
-
-        try:
-            self.acquire()
-            try:
-                app = self.sites[host, port]
-                if app.scheme != scheme:
-                    message = "%s:%s already serving %s, cannot also serve %s" % (host, port, app.scheme, scheme)
-                    self.events.put((servlet.onServletError, (url, message), {}))
-                    return
-            except KeyError:
-                app = _QuarkWSGIApp(self, scheme, host, port)
-                self.sites[host, port] = app
-                thread = threading.Thread(target=launch_web_server,
-                                          args=(self, url, host, port, app, servlet, self._add_event_source()))
-                thread.setDaemon(True)
-                thread.start()
-            app.servlets[path] = servlet
-            self.events.put((servlet.onServletInit, (url, self), {}))
-        finally:
-            self.release()
+        if url.scheme in ["https"]:
+            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported yet"), {}))
+            return
+        container = self._make_container(url)
+        container.add(HttpServletAdapter(self, url, servlet))
 
     def serveWS(self, url, servlet):
-        scheme, host, port, path = self._parse_url(url)
-        raise NotImplementedError()
+        url = Url(url)
+        if url.scheme not in ["ws", "wss"]:
+            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported"), {}))
+            return
+        if url.scheme in ["wss"]:
+            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported yet"), {}))
+            return
+        container = self._make_container(url)
+        container.add(WSServletAdapter(self, url, servlet))
+
+    def _make_container(self, url):
+        try:
+            with self.lock:
+                server = self.sites.get((url.host, url.port))
+                if not server:
+                    # synchronous bind and listen...
+                    server = _QuarkWSGIServer((url.host, url.port), _QuarkWSGIRequestHandler)
+                    url.port = server.server_port
+                    app = _QuarkWSGIApp(self, url)
+                    server.set_app(app)
+                    server.initialize_websockets_manager()
+                    thread = threading.Thread(target = Tracker(self, "container", server.serve_forever))
+                    thread.setDaemon(True)
+                    thread.start()
+                    self.sites[url.host, url.port] = server
+                return server.application
+        except Exception as exc:
+            print traceback.format_exc()
+            return _NoApplication(self, url, exc)
 
     def respond(self, request, response):
         response._responded = True
@@ -392,7 +528,7 @@ def wait_for_completion():
         return
     _threaded_runtime.event_thread.main_thread_running = False
     try:
-        while _threaded_runtime.event_thread.live:
+        while _threaded_runtime.event_thread.is_live:
             time.sleep(1)
     except KeyboardInterrupt:
         pass

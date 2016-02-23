@@ -173,15 +173,7 @@ long slow_round(float v) {
         bool timedOut = false;
         String name;
         Timeout(float timeout, String name) {
-            float mss = 1000.0;
-            float ms = (timeout * mss);
-            long msl = ms.round();
-            if (msl == null) {
-                print("AIEEEE!");
-                msl = slow_round(ms);
-            }
-            print("Timeout for " + name + " is " + msl.toString() + "ms is " + ms.toString() + "ms was " + timeout.toString() + "s");
-            self.timeout = new concurrent.Timeout(msl);
+            self.timeout = new concurrent.Timeout(timeout);
             self.name = name;
         }
         void start() {
