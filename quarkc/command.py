@@ -28,6 +28,7 @@ Commands:
 Options:
   -h --help             Show this screen.
   --version             Show version.
+  -v --verbose          Show more detail
 
   -o DIR, --output DIR  Target directory for output files.
                         [defaults to "output"]
@@ -48,6 +49,7 @@ import shlex
 import subprocess
 import sys
 import tempfile
+import logging
 
 from docopt import docopt
 
@@ -79,12 +81,23 @@ def user_override(command):
                               COMMAND_DEFAULTS.get(cmd, cmd))
     return shlex.split(override) + command[1:]
 
+command_log = logging.getLogger("quark.command")
+
 def call_and_show(stage, workdir, command):
     command = user_override(command)
     check(command[0], workdir)
-    print "quark (%s):" % stage, " ".join(command)
+    command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command),
+                     extra=dict(fmt="command",
+                                stage=stage,
+                                workdir=workdir,
+                                command=command))
     try:
-        subprocess.check_call(command, cwd=workdir)
+        out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
+        command_log.debug("%s: %s", stage, ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines()),
+                     extra=dict(fmt="command",
+                                stage=stage,
+                                workdir=workdir,
+                                command=command))
     except subprocess.CalledProcessError:
         raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
 
@@ -93,6 +106,13 @@ def main(args):
     if args["--version"]:
         sys.stdout.write("Quark %s\n" % _metadata.__version__)
         return
+
+    FMT="%(message)s"
+    if args["--verbose"]:
+      logging.basicConfig(format=FMT, level=logging.DEBUG)
+      COMMAND_DEFAULTS["mvn"] = "mvn"
+    else:
+      logging.basicConfig(format=FMT, level=logging.INFO)
 
     java = args["--java"]
     python = args["--python"]

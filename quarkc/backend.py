@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, tempfile
+import os, types, java, python, javascript, tempfile, logging
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr
@@ -38,11 +38,16 @@ class Backend(object):
         self.root = None
         self.roots = None
         self.dependencies = OrderedDict()
+        self.log = logging.getLogger("quark.compile")
 
     def install(self):
-        dir = tempfile.mkdtemp(suffix="-%s" % self.__class__.__name__,
-                               prefix="%s-" % self.packages[0].name)
+        cls = self.__class__.__name__
+        pkg = self.packages[0].name
+        self.log.info("emit %s %s", cls, pkg, extra=dict(fmt="emit",backend=cls, package=pkg))
+        dir = tempfile.mkdtemp(suffix="-%s" % cls,
+                               prefix="%s-" % pkg)
         self.write(dir)
+        self.log.info("install %s %s", cls, pkg, extra=dict(fmt="install",backend=cls, package=pkg))
         self.install_command(dir)
 
     def visit_Root(self, r):
@@ -219,7 +224,7 @@ class Backend(object):
             if not os.path.exists(dir):
                 os.makedirs(dir)
             open(path, "wb").write(content)
-            print "quark (compile): wrote", path
+            self.log.debug(" wrote %s", path, extra=dict(fmt="path",backend=self.__class__.__name__,path=path))
 
     @overload(Package)
     def definition(self, pkg):
