@@ -86,11 +86,14 @@ command_log = logging.getLogger("quark.command")
 def call_and_show(stage, workdir, command):
     command = user_override(command)
     check(command[0], workdir)
+    def format_output(out):
+        return ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines())
     command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command))
     try:
         out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
-        command_log.debug("%s: %s", stage, ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines()))
-    except subprocess.CalledProcessError:
+        command_log.debug("%s: %s", stage, format_output(out))
+    except subprocess.CalledProcessError as ex:
+        command_log.warning("%s: %s", stage, format_output(ex.output))
         raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
 
 class ProgressHandler(logging.Handler):
