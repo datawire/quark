@@ -21,6 +21,8 @@ from .helpers import *
 
 class Backend(object):
 
+    PRETTY_INSTALL = "TBD"
+
     def __init__(self, ext, gen):
         self.ext = ext
         self.gen = gen
@@ -43,11 +45,11 @@ class Backend(object):
     def install(self):
         cls = self.__class__.__name__
         pkg = self.packages[0].name
-        self.log.info("emit %s %s", cls, pkg, extra=dict(fmt="emit",backend=cls, package=pkg))
+        self.log.debug("Emitting generated %s for %s", cls, pkg)
         dir = tempfile.mkdtemp(suffix="-%s" % cls,
                                prefix="%s-" % pkg)
         self.write(dir)
-        self.log.info("install %s %s", cls, pkg, extra=dict(fmt="install",backend=cls, package=pkg))
+        self.log.info("Installing %s %s with %s", cls, pkg, self.PRETTY_INSTALL)
         self.install_command(dir)
 
     def visit_Root(self, r):
@@ -224,7 +226,7 @@ class Backend(object):
             if not os.path.exists(dir):
                 os.makedirs(dir)
             open(path, "wb").write(content)
-            self.log.debug(" wrote %s", path, extra=dict(fmt="path",backend=self.__class__.__name__,path=path))
+            self.log.debug(" wrote %s", path)
 
     @overload(Package)
     def definition(self, pkg):
@@ -698,6 +700,7 @@ def is_user():
     return not is_virtual() and not is_root()
 
 class Java(Backend):
+    PRETTY_INSTALL = "Maven"
 
     @staticmethod
     def is_installed(url):
@@ -710,6 +713,7 @@ class Java(Backend):
         command.call_and_show("install", dir, ["mvn", "install"])
 
 class Python(Backend):
+    PRETTY_INSTALL = "PIP"
 
     @staticmethod
     def is_installed(url):
@@ -727,6 +731,7 @@ class Python(Backend):
             command.call_and_show("install", dir, cmd)
 
 class JavaScript(Backend):
+    PRETTY_INSTALL = "NPM"
 
     @staticmethod
     def is_installed(url):

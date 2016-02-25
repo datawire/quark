@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, inspect, urllib, tempfile
+import os, inspect, urllib, tempfile, logging
 from collections import OrderedDict
 from .ast import *
 from .parser import Parser, ParseError as GParseError
@@ -943,6 +943,7 @@ class Compiler:
         self.annotators = OrderedDict()
         self.annotator("delegate", delegate)
         self.included = set()
+        self.log = logging.getLogger("quark.compiler")
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -980,6 +981,7 @@ class Compiler:
 
     def urlparse(self, url, top=True, text=None, include=False, recurse=True):
         if url in self.CACHE:
+            self.log.debug("loading from cache: %s", url)
             root = self.CACHE[url]
             self.roots.add(root)
             for u in root.uses:
@@ -1003,6 +1005,7 @@ class Compiler:
                         raise CompileError(e)
                     else:
                         raise
+            self.log.debug("parsing %s", url)
             file = self.parse(url, text)
             if recurse:
                 for u in file.uses.values():
@@ -1042,6 +1045,7 @@ class Compiler:
                 raise CompileError("%s: error reading file: %s" % (lineinfo(inc), inc.url))  # XXX qurl instead?
 
     def read(self, url):
+        self.log.debug("Loading %s", url)
         fd = urllib.urlopen(url)
         try:
             return fd.read()
@@ -1102,6 +1106,7 @@ class Compiler:
                 self.icompile(field)
 
     def compile(self):
+        self.log.info("Compiling quark code")
         for root in self.roots.sorted():
             if getattr(root, "_compiled", False):
                 continue

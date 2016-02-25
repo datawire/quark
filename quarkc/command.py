@@ -86,18 +86,10 @@ command_log = logging.getLogger("quark.command")
 def call_and_show(stage, workdir, command):
     command = user_override(command)
     check(command[0], workdir)
-    command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command),
-                     extra=dict(fmt="command",
-                                stage=stage,
-                                workdir=workdir,
-                                command=command))
+    command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command))
     try:
         out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
-        command_log.debug("%s: %s", stage, ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines()),
-                     extra=dict(fmt="command",
-                                stage=stage,
-                                workdir=workdir,
-                                command=command))
+        command_log.debug("%s: %s", stage, ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines()))
     except subprocess.CalledProcessError:
         raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
 
@@ -144,6 +136,8 @@ def main(args):
                 assert False
     except compiler.QuarkError as err:
         return err
+
+    command_log.info("Done")
 
 
 def call_main():
