@@ -1120,6 +1120,7 @@ class Compiler:
 
 def install(url, *backends):
     c = Compiler()
+    c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
 
@@ -1132,6 +1133,7 @@ def install(url, *backends):
 
 def compile(url, target, *backends):
     c = Compiler()
+    c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
 
