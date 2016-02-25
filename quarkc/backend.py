@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, tempfile
+import os, types, java, python, javascript, tempfile, logging
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr
@@ -20,6 +20,8 @@ from .dispatch import *
 from .helpers import *
 
 class Backend(object):
+
+    PRETTY_INSTALL = "TBD"
 
     def __init__(self, ext, gen):
         self.ext = ext
@@ -38,11 +40,16 @@ class Backend(object):
         self.root = None
         self.roots = None
         self.dependencies = OrderedDict()
+        self.log = logging.getLogger("quark.compile")
 
     def install(self):
-        dir = tempfile.mkdtemp(suffix="-%s" % self.__class__.__name__,
-                               prefix="%s-" % self.packages[0].name)
+        cls = self.__class__.__name__
+        pkg = self.packages[0].name
+        self.log.debug("Emitting generated %s for %s", cls, pkg)
+        dir = tempfile.mkdtemp(suffix="-%s" % cls,
+                               prefix="%s-" % pkg)
         self.write(dir)
+        self.log.info("Installing %s %s with %s", cls, pkg, self.PRETTY_INSTALL)
         self.install_command(dir)
 
     def visit_Root(self, r):
@@ -219,7 +226,7 @@ class Backend(object):
             if not os.path.exists(dir):
                 os.makedirs(dir)
             open(path, "wb").write(content)
-            print "quark (compile): wrote", path
+            self.log.debug(" wrote %s", path)
 
     @overload(Package)
     def definition(self, pkg):
@@ -693,6 +700,7 @@ def is_user():
     return not is_virtual() and not is_root()
 
 class Java(Backend):
+    PRETTY_INSTALL = "Maven"
 
     @staticmethod
     def is_installed(url):
@@ -705,6 +713,7 @@ class Java(Backend):
         command.call_and_show("install", dir, ["mvn", "install"])
 
 class Python(Backend):
+    PRETTY_INSTALL = "PIP"
 
     @staticmethod
     def is_installed(url):
@@ -722,6 +731,7 @@ class Python(Backend):
             command.call_and_show("install", dir, cmd)
 
 class JavaScript(Backend):
+    PRETTY_INSTALL = "NPM"
 
     @staticmethod
     def is_installed(url):

@@ -28,6 +28,7 @@ Commands:
 Options:
   -h --help             Show this screen.
   --version             Show version.
+  -v --verbose          Show more detail
 
   -o DIR, --output DIR  Target directory for output files.
                         [defaults to "output"]
@@ -48,6 +49,7 @@ import shlex
 import subprocess
 import sys
 import tempfile
+import logging
 
 from docopt import docopt
 
@@ -79,20 +81,98 @@ def user_override(command):
                               COMMAND_DEFAULTS.get(cmd, cmd))
     return shlex.split(override) + command[1:]
 
+command_log = logging.getLogger("quark.command")
+
 def call_and_show(stage, workdir, command):
     command = user_override(command)
     check(command[0], workdir)
-    print "quark (%s):" % stage, " ".join(command)
+    def format_output(out):
+        return ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines())
+    command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command))
     try:
-        subprocess.check_call(command, cwd=workdir)
-    except subprocess.CalledProcessError:
+        out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
+        command_log.debug("%s: %s", stage, format_output(out))
+    except subprocess.CalledProcessError as ex:
+        command_log.warning("%s: %s", stage, format_output(ex.output))
         raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
 
+class ProgressHandler(logging.Handler):
+    def __init__(self, *args, **kwargs):
+        self.verbose = kwargs.pop("verbose", False)
+        logging.Handler.__init__(self, *args, **kwargs)
+        self.stream = sys.stdout
+        self.last = logging.NOTSET
+        self.do_debug = False
+        def spinner():
+            while True:
+                yield "."
+                yield ""
+                yield ""
+                yield ""
+        self.spinner = spinner()
+
+    def emit(self, record):
+        msg = self.format(record)
+        if record.levelno < logging.INFO:
+            if self.last < logging.INFO:
+                if self.last == logging.NOTSET:
+                    prefix = ""
+                    dbg = " (0->d) "
+                else:
+                    prefix = "\n"
+                    dbg = " (d->d) "
+                postfix = ""
+            else:
+                prefix = "\n"
+                dbg = " (i->d) "
+                postfix = ""
+            if not self.verbose:
+                prefix = ""
+                postfix = ""
+                msg = next(self.spinner)
+                dbg = ""
+        elif record.levelno == logging.INFO:
+            if self.last < logging.INFO:
+                if self.last == logging.NOTSET:
+                    prefix = ""
+                    dbg = " (0->i) "
+                else:
+                    prefix = "\n"
+                    dbg = " (d->i) "
+                postfix = " ..."
+            else:
+                prefix = " done.\n"
+                dbg = " (i->i) "
+                postfix = " ..."
+        else:
+            if self.last < logging.INFO:
+                prefix = "\n"
+                dbg = " (d->w) "
+                postfix = "\n"
+            else:
+                prefix = " done.\n"
+                dbg = " (i->w) "
+                postfix = "\n"
+        self.last = record.levelno
+        if self.do_debug:
+            prefix += dbg
+        self.stream.write("%s%s%s" % (prefix, msg, postfix))
+        self.stream.flush()
 
 def main(args):
     if args["--version"]:
         sys.stdout.write("Quark %s\n" % _metadata.__version__)
         return
+
+    if args["--verbose"]:
+      COMMAND_DEFAULTS["mvn"] = "mvn"
+    logging.basicConfig(level=logging.DEBUG)
+    log = logging.getLogger("quark")
+    log.propagate = False
+    hnd = ProgressHandler(verbose=args["--verbose"])
+    log.addHandler(hnd)
+    hnd.setFormatter(logging.Formatter("%(message)s"))
+
 
     java = args["--java"]
     python = args["--python"]
@@ -124,6 +204,8 @@ def main(args):
                 assert False
     except compiler.QuarkError as err:
         return err
+
+    command_log.warn("Done")
 
 
 def call_main():
