@@ -936,7 +936,7 @@ class Reflector:
 
 class Compiler:
 
-    def __init__(self):
+    def __init__(self, filter_native=[]):
         self.roots = Roots()
         self.root = None
         self.parser = Parser()
@@ -944,6 +944,7 @@ class Compiler:
         self.annotator("delegate", delegate)
         self.included = set()
         self.log = logging.getLogger("quark.compiler")
+        self.filter_native = filter_native
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -1039,6 +1040,8 @@ class Compiler:
 
     def perform_native_include(self, qurl, inc):
         if inc.url not in self.root.included:
+            if self.filter_native and not [ext for ext in self.filter_native if inc.url.endswith(ext)]:
+                return
             try:
                 self.root.included[inc.url] = self.read(qurl)
             except IOError:
@@ -1119,7 +1122,7 @@ class Compiler:
             root._compiled = True
 
 def install(url, *backends):
-    c = Compiler()
+    c = Compiler(filter_native=[b.ext for b in backends])
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1132,7 +1135,7 @@ def install(url, *backends):
             b.install()
 
 def compile(url, target, *backends):
-    c = Compiler()
+    c = Compiler(filter_native=[b.ext for b in backends])
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()

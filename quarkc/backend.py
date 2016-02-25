@@ -22,10 +22,10 @@ from .helpers import *
 class Backend(object):
 
     PRETTY_INSTALL = "TBD"
+    ext = None
+    gen = None
 
-    def __init__(self, ext, gen):
-        self.ext = ext
-        self.gen = gen
+    def __init__(self):
         self.files = OrderedDict()
         self._imports = OrderedDict()
         self.current_file = None
@@ -701,26 +701,24 @@ def is_user():
 
 class Java(Backend):
     PRETTY_INSTALL = "Maven"
+    ext = "java"
+    gen = java
 
     @staticmethod
     def is_installed(url):
         return False
-
-    def __init__(self):
-        Backend.__init__(self, "java", java)
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["mvn", "install"])
 
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
+    ext = "py"
+    gen = python
 
     @staticmethod
     def is_installed(url):
         return False
-
-    def __init__(self):
-        Backend.__init__(self, "py", python)
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
@@ -732,13 +730,12 @@ class Python(Backend):
 
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"
+    ext = "js"
+    gen = javascript
 
     @staticmethod
     def is_installed(url):
         return False
-
-    def __init__(self):
-        Backend.__init__(self, "js", javascript)
 
     def install_command(self, dir):
         command.call_and_show("install", ".", ["npm", "install", dir])
