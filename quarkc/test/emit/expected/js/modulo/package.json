@@ -1,0 +1,10 @@
+
+{
+    "name": "modulo",
+    "version": "0.0.1",
+    "main": "index.js",
+    "dependencies": {
+        "builtin": "0.0.1"
+    }
+}
+        
