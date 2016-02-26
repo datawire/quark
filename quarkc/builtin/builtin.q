@@ -104,7 +104,7 @@ namespace builtin {
         macro T __div__(T other) $java{~((~($self)) / ($other))}
                                  $py{($self) / ($other)}
                                  $js{Math.floor(($self) / ($other))};
-        macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
+        macro T __mod__(T other) $java{io.datawire.quark.runtime.Builtins.modulo(($self), ($other))}
                                  $py{($self) % ($other)}
                                  $js{_qrt.modulo(($self), ($other))};
         macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};

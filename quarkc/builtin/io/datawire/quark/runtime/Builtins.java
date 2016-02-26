@@ -17,9 +17,8 @@ import java.util.Map;
 import java.util.List;
 
 public class Builtins {
-    // Unused because Math.floorMod exists
     public static int modulo(int a, int b) {
-        return (a % b + b) % b;
+        return a % b + (a*b < 0 ? b : 0);
     }
 
     public static String url_get(String urlStr) {

@@ -16,9 +16,9 @@ public class Functions {
         do{System.out.println(Integer.toString(n));System.out.flush();}while(false);
         Integer m = ~((~(100)) / (-(3)));
         do{System.out.println(Integer.toString(m));System.out.flush();}while(false);
-        Integer l = Math.floorMod((100), (3));
+        Integer l = io.datawire.quark.runtime.Builtins.modulo((100), (3));
         do{System.out.println(Integer.toString(l));System.out.flush();}while(false);
-        Integer k = Math.floorMod((-(100)), (3));
+        Integer k = io.datawire.quark.runtime.Builtins.modulo((-(100)), (3));
         do{System.out.println(Integer.toString(k));System.out.flush();}while(false);
     }
 }
