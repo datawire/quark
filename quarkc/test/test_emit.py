@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, shutil, subprocess, filecmp
-from quarkc.backend import Java, Python, JavaScript
+from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, CompileError, compile
 from .util import check_file, maybe_xfail
 
@@ -34,7 +34,7 @@ def output(request):
 def path(request):
     return request.param
 
-backends = (Java, Python, JavaScript)
+backends = (Java, Python, JavaScript, Ruby)
 
 @pytest.fixture(scope="session")
 def compiled(output, path):
@@ -132,3 +132,10 @@ def test_run_javascript(output):
     env.update(os.environ)
 
     run_tests(base, dirs, lambda name: ["node", name + ".js"], env=env)
+
+def test_run_ruby(output):
+    rb = Ruby()
+    base = os.path.join(output, rb.ext)
+    dirs = [name for name in os.listdir(base)]
+
+    run_tests(base, dirs, lambda name: ["ruby", name + ".rb"])

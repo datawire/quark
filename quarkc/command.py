@@ -37,6 +37,7 @@ Options:
                         [this is the default if no targets are specified]
 
   --java                Install/emit Java code.
+  --ruby                Install/emit Ruby code.
   --python              Install/emit Python code.
   --javascript          Install/emit JavaScript code.
 """
@@ -173,12 +174,12 @@ def main(args):
     log.addHandler(hnd)
     hnd.setFormatter(logging.Formatter("%(message)s"))
 
-
     java = args["--java"]
+    ruby = args["--ruby"]
     python = args["--python"]
     javascript = args["--javascript"]
 
-    all = args["--all"] or not (java or python or javascript)
+    all = args["--all"] or not (java or python or javascript or ruby)
 
     output = args["--output"] or "output"
 
@@ -187,6 +188,8 @@ def main(args):
         if java or all:
             check("mvn", ".")
             backends.append(backend.Java)
+        if ruby or all:
+            backends.append(backend.Ruby)
         if python or all:
             check("python", ".")
             backends.append(backend.Python)

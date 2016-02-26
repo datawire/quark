@@ -8,6 +8,8 @@ include quark_runtime.py;
 include quark_threaded_runtime.py;
 include quark_ws4py_fixup.py;
 
+include datawire-quark-core.rb;
+
 use java com.fasterxml.jackson.jr jackson-jr-objects 2.5.3;
 use java io.netty netty-all 4.0.32.Final;
 use java junit junit 4.12;
@@ -48,23 +50,28 @@ include io/datawire/quark/netty/QuarkWebSocket.java;
 include io/datawire/quark/netty/Response.java;
 
 namespace builtin {
-    @mapping($java{Object} $py{object} $js{Object})
+    @mapping($java{Object} $py{object} $js{Object} $rb{Object})
     primitive Object {
         macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
                                         $py{($self) == ($other)}
+                                        $rb{($self) == ($other)}
                                         $js{($self) === ($other)};
         macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}
                                         $py{($self) != ($other)}
+                                        $rb{($self) != ($other)}
                                         $js{($self) !== ($other)};
 
         macro reflect.Class getClass() reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
                                                          $py{_getClass($self)}
+                                                         $rb{DatawireQuarkCore._getClass($self)}
                                                          $js{_qrt._getClass($self)});
         macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
                                            $py{($self)._getField($name)}
+                                           $rb{($self)._getField($name)}
                                            $js{($self)._getField($name)};
         macro void setField(String name, Object value) $java{((io.datawire.quark.runtime.QObject) ($self))._setField($name, $value)}
                                                        $py{($self)._setField(($name), ($value))}
+                                                       $rb{($self)._setField(($name), ($value))}
                                                        $js{($self)._setField(($name), ($value))};
         macro String toString() $java{($self).toString()}
                                 $py{str($self)}
@@ -74,16 +81,25 @@ namespace builtin {
     @mapping($java{void})
     primitive void {}
 
-    @mapping($java{Boolean} $py{bool} $js{Boolean})
+    // Ruby doesn't have a Boolean type, only TrueClass and FalseClass
+    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{Object})
     primitive bool {
-        macro bool __not__() $java{!($self)} $py{not ($self)} $js{!($self)};
+        macro bool __not__() $java{!($self)}
+                             $py{not ($self)}
+                             $rb{!($self)}
+                             $js{!($self)};
         macro bool __and__(bool other) $java{($self) && ($other)}
                                        $py{($self) and ($other)}
+                                       $rb{($self) && ($other)}
                                        $js{($self) && ($other)};
         macro bool __or__(bool other) $java{($self) || ($other)}
                                       $py{($self) or ($other)}
+                                      $rb{($self) || ($other)}
                                       $js{($self) || ($other)};
-        macro String toString() $java{($self).toString()} $py{str($self).lower()} $js{($self).toString()};
+        macro String toString() $java{($self).toString()}
+                                $py{str($self).lower()}
+                                $rb{($self).to_s}
+                                $js{($self).toString()};
         macro JSONObject toJSON() new JSONObject().setBool(self);
         macro JSONObject __to_JSONObject() self.toJSON();
     }
@@ -103,163 +119,222 @@ namespace builtin {
     primitive integral<T> extends numeric<T> {
         macro T __div__(T other) $java{~((~($self)) / ($other))}
                                  $py{($self) / ($other)}
+                                 $rb{($self) / ($other)}
                                  $js{Math.floor(($self) / ($other))};
         macro T __mod__(T other) $java{Math.floorMod(($self), ($other))}
                                  $py{($self) % ($other)}
+                                 $rb{($self) % ($other)}
                                  $js{_qrt.modulo(($self), ($other))};
-        macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $js{($self)};
+        macro float toFloat() $java{Double.valueOf($self)}
+                              $py{float($self)}
+                              $rb{($self).to_f}
+                              $js{($self)};
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{Byte} $py{int} $js{Number})
+    @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
     primitive byte extends integral<byte> {
+        macro byte() $java{new Byte()}
+                     $py{int()}
+                     $rb{0}
+                     $js{Number()};
+
         macro String toString() $java{Byte.toString($self)}
                                 $py{str($self)}
+                                $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro short __to_short() self;
         macro int __to_int() self;
     }
 
 
-    @mapping($java{Short} $py{int} $js{Number})
+    @mapping($java{Short} $py{int} $js{Number} $rb{Integer})
     primitive short extends integral<short> {
+        macro short() $java{new Short()}
+                      $py{int()}
+                      $rb{0}
+                      $js{Number()};
+
         macro String toString() $java{Short.toString($self)}
                                 $py{str($self)}
+                                $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() self;
         macro int __to_int() self;
     }
 
 
-    @mapping($java{Integer} $py{int} $js{Number})
+    @mapping($java{Integer} $py{int} $js{Number} $rb{Integer})
     primitive int extends integral<int> {
+        macro int() $java{new Integer()}
+                    $py{int()}
+                    $rb{0}
+                    $js{Number()};
+
         macro String toString() $java{Integer.toString($self)}
                                 $py{str($self)}
+                                $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() $java{(byte)((Integer) ($self)).intValue()}
                                $py{($self)}
+                               $rb{($self)}
                                $js{($self)};
         macro short __to_short() $java{(short) ((Integer) ($self)).intValue()}
                                  $py{($self)}
+                                 $rb{($self)}
                                  $js{($self)};
         macro long __to_long() $java{new Long($self)}
                                $py{($self)}
+                               $rb{($self)}
                                $js{($self)};
     }
 
-    @mapping($java{Long} $py{long} $js{Number})
+    @mapping($java{Long} $py{long} $js{Number} $rb{Integer})
     primitive long extends integral<long> {
+        macro long() $java{new Long()}
+                     $py{int()}
+                     $rb{0}
+                     $js{Number()};
+
         macro String toString() $java{Long.toString($self)}
                                 $py{str($self)}
                                 $js{_qrt.toString($self)};
     }
 
-    @mapping($java{Double}$py{float}$js{Number})
+    @mapping($java{Double} $py{float} $js{Number} $rb{Float})
     primitive float extends numeric<float> {
         macro float __div__(float other) $java{($self) / ($other)}
                                          $py{float($self) / float($other)}
+                                         $rb{($self) / ($other)}
                                          $js{($self) / ($other)};
         macro long round() $java{Math.round($self)}
                            $py{long(round($self))}
-                           $javascript{Math.round($self)};
+                           $rb{($self).round)}
+                           $js{Math.round($self)};
         macro String toString() $java{Double.toString($self)}
                                 $py{repr($self)}
+                                $rb{repr($self).to_s}
                                 $js{_qrt.toString($self)};
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{String} $py{str} $js{String})
+    @mapping($java{String} $py{str} $js{String} $rb{String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
         macro int size()                   $java{($self).length()}
                                            $py{len($self)}
+                                           $rb{($self).size}
                                            $js{($self).length};
         macro bool startsWith(String other) $java{Boolean.valueOf(($self).startsWith($other))}
                                            $py{($self).startswith($other)}
+                                           $rb{($self).start_with?($other)}
                                            $js{(($self).indexOf($other)===0)};
         macro bool endsWith(String other)   $java{Boolean.valueOf(($self).endsWith($other))}
                                            $py{($self).endswith($other)}
+                                           $rb{($self).end_with?($other)}
                                            $js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
         macro int find(String other)       $java{($self).indexOf($other)}
                                            $py{($self).find($other)}
+                                           $rb{($self).end_with?($other)}
                                            $js{($self).indexOf($other)};
         macro String substring(int start, int end) $java{($self).substring(($start), ($end))}
                                                    $py{($self)[($start):($end)]}
+                                                   $rb{($self)[($start)...($end)]}
                                                    $js{($self).substring(($start), ($end))};
         macro String replace(String from, String to) $java{($self).replaceFirst(java.util.regex.Pattern.quote($from), ($to))}
                                                      $py{($self).replace(($from), ($to), 1)}
+                                                     $rb{($self).sub(($from), ($to))}
                                                      $js{($self).replace(($from), ($to))};
         macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
                                              $py{($self).split($sep)}
+                                             $rb{DatawireQuarkCore.split($self, $sep)}
                                              $js{($self).split($sep)};
         macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
                                               $py{($self).join($parts)}
+                                              $rb{($parts).join($self)}
                                               $js{($parts).join($self)};
         macro JSONObject toJSON() new JSONObject().setString(self);
         macro JSONObject __to_JSONObject() self.toJSON();
         macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
                                      $py{_JSONObject.parse($self)}
+                                     $rb{DatawireQuarkCore::JSONObject.parse($self)}
                                      $js{_qrt.json_from_string($self)};
     }
 
-    @mapping($java{java.util.ArrayList} $py{_List} $js{Array})
+    @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{DatawireQuarkCore::List})
     primitive List<T> {
         macro void add(T element) $java{($self).add($element)}
                                   $py{($self).append($element)}
+                                  $rb{($self) << ($element)}
                                   $js{($self).push($element)};
         macro T __get__(int index) $java{($self).get($index)}
                                    $py{($self)[$index]}
+                                   $rb{($self)[$index]}
                                    $js{($self)[$index]};
         macro void __set__(int index, T value) $java{($self).set(($index), ($value))}
                                                $py{($self)[$index] = ($value)}
+                                               $rb{($self)[$index] = ($value)}
                                                $js{($self)[$index] = ($value)};
         macro int size() $java{($self).size()}
                          $py{len($self)}
+                         $rb{($self).size}
                          $js{($self).length};
         macro void sort() $java{java.util.Collections.sort($self, null)}
                           $py{($self).sort()}
+                          $rb{($self).sort}
                           $js{($self).sort()};
         macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{java.util.HashMap} $py{_Map} $js{Map})
+    @mapping($java{java.util.HashMap} $py{_Map} $js{Map} $rb{Hash})
     primitive Map<K,V> {
         macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
                                            $py{($self)[$key] = ($value)}
+                                           $rb{($self)[$key] = ($value)}
                                            $js{($self).set(($key), ($value))};
         macro V __get__(K key) $java{($self).get($key)}
                                $py{($self).get($key)}
+                               $rb{($self)[$key]}
                                $js{_qrt.map_get(($self), ($key))};
         macro bool contains(K key) $java{($self).containsKey($key)}
                                    $py{($key) in ($self)}
+                                   $rb{($self).key?($key)}
                                    $js{($self).has($key)};
         macro List<K> keys() $java{new java.util.ArrayList(($self).keySet())}
                              $py{_List(($self).keys())}
+                             $rb{($self).keys}
                              $js{Array.from(($self).keys())};
         macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                           $py{($self).update($other)}
+                                          $rb{($self).merge!($other)}
                                           $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
         macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                                  $py{_urlencode($self)}
+                                 $rb{DatawireQuarkCore.urlencode($self)}
                                  $js{_qrt.urlencode($self)};
         macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
+    @mapping($java{io.datawire.quark.runtime.JSONObject}
+             $py{_JSONObject}
+             $rb{DatawireQuarkCore::JSONObject}
+             $js{_qrt.JSONObject})
     primitive JSONObject {
 
         macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
                            $py{_JSONObject()}
+                           $rb{DatawireQuarkCore::JSONObject.new}
                            $js{new _qrt.JSONObject()};
 
         macro String __to_String() self.getString();
         macro float __to_float() self.getNumber();
         macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
                              $py{int(round(($self).getNumber()))}
+                             $rb{($self).getNumber.round}
                              $js{Math.round(($self).getNumber())};
         macro long __to_long() self.getNumber().round();
         macro bool __to_bool() self.getBool();
@@ -312,26 +387,32 @@ namespace builtin {
 
     macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                                  $py{_println($msg)}
+                                 $rb{DatawireQuarkCore.print($msg)}
                                  $js{_qrt.print($msg)};
 
     macro long now() $java{System.currentTimeMillis()}
                      $py{long(time.time()*1000)}
+                     $rb{DatawireQuarkCore.now}
                      $js{Date.now()};
 
     macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
                                     $py{time.sleep($seconds)}
+                                    $rb{sleep($seconds)}
                                     $js{_qrt.sleep($seconds)};
 
     macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
                                      $py{_url_get($url)}
+                                     $rb{DatawireQuarkCore.url_get($url)}
                                      $js{_qrt.url_get($url)};
 
     macro int parseInt(String st) $java{Integer.parseInt($st)}
                                   $py{int($st)}
+                                  $rb{Integer($st)}
                                   $js{parseInt($st)};
 
     macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
                                $py{_default_codec()}
+                               $rb{DatawireQuarkCore.default_codec}
                                $js{_qrt.defaultCodec()};
 
     @mapping($java{io.datawire.quark.runtime.WSHandler})
@@ -360,9 +441,14 @@ namespace builtin {
         void onHTTPFinal(HTTPRequest request) {}
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPRequest})
+    @mapping($java{io.datawire.quark.runtime.HTTPRequest}
+             $rb{DatawireQuarkCore::HTTP::Request})
     primitive HTTPRequest {
-        macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+        macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)}
+                                      $py{_HTTPRequest($url)}
+                                      $rb{DatawireQuarkCore::HTTP::Request.new($url)}
+                                      $js{new _qrt.HTTPRequest($url)};
+
         String getUrl();
         void setMethod(String method);
         String getMethod();
@@ -373,7 +459,8 @@ namespace builtin {
         List<String> getHeaders();
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPResponse})
+    @mapping($java{io.datawire.quark.runtime.HTTPResponse}
+             $rb{DatawireQuarkCore::HTTP::Response})
     primitive HTTPResponse {
         int getCode();
         void setCode(int code);

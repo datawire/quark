@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, tempfile, logging
+import os, types, java, python, javascript, ruby, tempfile, logging
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr
@@ -739,3 +739,8 @@ class JavaScript(Backend):
 
     def install_command(self, dir):
         command.call_and_show("install", ".", ["npm", "install", dir])
+
+class Ruby(Backend):
+    PRETTY_INSTALL = "GEM"
+    ext = "rb"
+    gen = ruby

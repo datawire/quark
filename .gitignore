@@ -21,6 +21,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.gem
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -65,3 +66,7 @@ target/
 
 # Doc script testing
 docs/replace-test-copy.html
+
+# Virtualenv
+venv
+.venv
