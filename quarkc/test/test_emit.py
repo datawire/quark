@@ -77,13 +77,20 @@ def has_main(name):
     return os.path.exists(code) and "main" in open(code).read()
 
 def run_tests(base, dirs, command, env=None):
+    failed_expectations = []
     for name in dirs:
         if has_main(name):
-            actual = subprocess.check_output(command(name), cwd=os.path.join(base, name), env=env)
+            try:
+                actual = subprocess.check_output(command(name), cwd=os.path.join(base, name), env=env, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError as e:
+                actual = e.output
+                print(actual)
             expected = get_expected(name)
             if expected != actual:
                 open(get_out(name) + ".cmp", "write").write(actual)
-            assert expected == actual
+                failed_expectations.append(name)
+    assert not failed_expectations, failed_expectations
+
 
 def batch_pom(target, dirs):
     with open(os.path.join(target, "pom.xml"), "write") as fd:

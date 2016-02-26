@@ -56,7 +56,8 @@ end
 
 ## Packaging
 
-def package(name, version, packages, srcs):
+def package(name, version, packages, srcs, deps):
+    # TODO handle deps
     files = OrderedDict()
     files.update(srcs)
     for path, readme in packages.items():
@@ -100,7 +101,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin):
+def import_(path, origin, dep):
     qual = qualify(path, origin)
     if tuple(origin) + tuple(qual) == tuple(path):
         prefix = './'
@@ -130,7 +131,7 @@ def comment(stuff):
 
 ## Class definition
 
-def clazz(doc, abstract, name, parameters, base, interfaces, fields, constructors, methods):
+def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
     upcased_name = name[0].upper() + name[1:]
     prologue = 'attr_accessor ' + ', '.join(':' + name for name, value in fields)
     init_fields = Templates.method(
@@ -153,7 +154,10 @@ def clazz(doc, abstract, name, parameters, base, interfaces, fields, constructor
         )
     return source
 
-def field(doc, type, name, value):
+def static_field(doc, clazz, type, name, value):
+    return "%s.%s = %s" % (clazz, name, value or "nil")
+
+def field(doc, clazz, type, name, value):
     return (name, value or null())
     # return 'self.{} = {}'.format(name, value or null())
 
@@ -181,6 +185,13 @@ def method(doc, clazz, type, name, parameters, body):
         body=body,
     )
 
+def static_method(doc, clazz, type, name, parameters, body):
+    return Templates.method(
+        name='self.' + name,
+        parameters=', '.join(parameters),
+        body=body,
+    )
+
 def abstract_method(doc, clazz, type, name, parameters):
     return Templates.method(
         name=name,
@@ -190,8 +201,8 @@ def abstract_method(doc, clazz, type, name, parameters):
 
 ## Interface definition
 
-def interface(doc, iface, parameters, bases, methods):
-    return clazz(doc, False, iface, parameters, None, [], [], [default_constructor(iface)], methods)
+def interface(doc, iface, parameters, bases, static_fields, methods):
+    return clazz(doc, False, iface, parameters, None, [], static_fields, [], [default_constructor(iface)], methods)
 
 def interface_method(doc, iface, type, name, parameters, body):
     return Templates.method(
@@ -271,7 +282,7 @@ def field_ref(name):
     return "@" + name
 
 def local_ref(v):
-    assert v
+    # assert v
     return v
 
 def invoke_function(path, name, args):
@@ -301,8 +312,16 @@ def invoke_super_method(clazz, base, method, args):
     template = "method(:{method}).super_method.call({args})".format
     return template(method=method, args=', '.join(args))
 
+def invoke_static_method(path, clazz, method, args):
+    return Templates.method_call(receiver='::'.join(path + [clazz]),
+                                 method=method,
+                                 args=', '.join(args))
+
 def get_field(expr, field):
     return "({receiver}).{name}".format(receiver=expr, name=field)
+
+def get_static_field(path, clazz, field):
+    return '::'.join(path + [clazz]) + '.' + field
 
 def cast(type, expr):
     assert expr
