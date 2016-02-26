@@ -82,6 +82,9 @@ class Class(object):
         if ((name) == (u"LONG")):
             return Class.LONG
 
+        if ((name) == (u"FLOAT")):
+            return Class.FLOAT
+
         if ((name) == (u"STRING")):
             return Class.STRING
 
@@ -118,6 +121,9 @@ class Class(object):
         if ((name) == (u"LONG")):
             Class.LONG = value
 
+        if ((name) == (u"FLOAT")):
+            Class.FLOAT = value
+
         if ((name) == (u"STRING")):
             Class.STRING = value
 
@@ -142,6 +148,7 @@ Class.VOID = Class(u"builtin.void")
 Class.BOOL = Class(u"builtin.bool")
 Class.INT = Class(u"builtin.int")
 Class.LONG = Class(u"builtin.long")
+Class.FLOAT = Class(u"builtin.float")
 Class.STRING = Class(u"builtin.String")
 class Field(object):
     def _init(self):

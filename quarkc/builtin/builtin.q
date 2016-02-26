@@ -877,6 +877,7 @@ namespace reflect {
         static Class BOOL = new Class("builtin.bool");
         static Class INT = new Class("builtin.int");
         static Class LONG = new Class("builtin.long");
+        static Class FLOAT = new Class("builtin.float");
         static Class STRING = new Class("builtin.String");
 
         static Class get(String id) {
