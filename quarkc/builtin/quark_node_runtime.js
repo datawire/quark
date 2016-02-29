@@ -14,154 +14,316 @@
  * limitations under the License.
  */
 
-// Quark's Node Runtime and associated
+// More of Quark's JavaScript runtime support
 /* jshint node: true */
 
 (function () {
     "use strict";
 
     var assert = require("assert");
+    var runtime = require("builtin/quark_runtime");
 
-    var WebSocket = require("ws");
+    // WebSockets are a little odd:
+    // - browsers have them built in;
+    // - node doesn't, you need to require('ws'), but
+    // - the interface differs between native browser WebSocket and the ws
+    // module;
+    // - browsers can't be WebSocket servers.
+    // 
+    // We cope with this by figuring out which implementation we have, 
+    // remembering that in the runtime itself, and setting up QuarkWebSocket
+    // as an impedence matcher.
+    //
+    // So. Start by assuming that we cannot do WebSocket servers...
+    var webSocketServerSupported = false;
 
-    var runtime = require("builtin/quark_runtime.js");
-
-    // CLASS QuarkWebsocket
-    function QuarkWebSocket(options, handler) {
-
-        var self = this;
-        handler.onWSInit(self);
-        if (options.socket) {
-            this.url = options.url;
-            this.socket = options.socket;
-            this.isOpen = true;
-            handler.onWSConnected(self);
-        } else {
-            this.url = options.url;
-            this.socket = new WebSocket(options.url);
-            this.isOpen = false;
-            this.socket.on("open", function () {
-                self.isOpen = true;
-                handler.onWSConnected(self);
-            });
+    // ...and defining a QuarkWebSocket that does nothing, as a default.
+    var QuarkWebSocket = (function () {
+        function QuarkWebSocket(options, handler) {
+            throw "QuarkWebSocket not supported in this environment!";
         }
-        this.socket.on("message", function (message, flags) {
-            if (flags.binary) {
-                handler.onWSBinary(self, new runtime.Buffer(message));
-            } else {
-                handler.onWSMessage(self, message);
+
+        QuarkWebSocket.prototype.send = function (message) {
+            throw "QuarkWebSocket not supported in this environment!";
+        };
+
+        QuarkWebSocket.prototype.sendBinary = function(message) {
+            throw "QuarkWebSocket not supported in this environment!";
+        };
+
+        QuarkWebSocket.prototype.close = function() {
+            throw "QuarkWebSocket not supported in this environment!";
+        };
+
+        return QuarkWebSocket;
+    })();
+
+    if ((typeof(window) == 'undefined') || (typeof(window.WebSocket) == 'undefined')) {
+        // OK, we must be in Node. Pull in 'ws'...
+        var WebSocket = require("ws");
+
+        // ...remember that we _can_ do WebSocket servers...
+        webSocketServerSupported = true;
+
+        // ...and override QuarkWebSocket with the version for 'ws'.
+
+        QuarkWebSocket = (function () {
+            function QuarkWebSocket(options, handler) {
+                var self = this;
+
+                handler.onWSInit(self);
+
+                if (options.socket) {
+                    this.url = options.url;
+                    this.socket = options.socket;
+                    this.isOpen = true;
+                    handler.onWSConnected(self);
+                }
+                else {
+                    this.url = options.url;
+                    this.socket = new WebSocket(options.url);
+                    this.isOpen = false;
+                    this.socket.on("open", function () {
+                        self.isOpen = true;
+                        handler.onWSConnected(self);
+                    });
+                }
+
+                this.socket.on("message", function (message, flags) {
+                    if (flags.binary) {
+                        handler.onWSBinary(self, new runtime.Buffer(message));
+                    } else {
+                        handler.onWSMessage(self, message);
+                    }
+                });
+
+                this.socket.on("close", function (/* code, message */) {
+                    handler.onWSClosed(self);
+                    self.socket.terminate();
+                    handler.onWSFinal(self);
+                });
+
+                this.socket.on("error", function (/* error */) {
+                    handler.onWSError(self);
+                    self.socket.terminate();
+                    handler.onWSFinal(self);
+                });
             }
-        });
-        this.socket.on("close", function (/* code, message */) {
-            handler.onWSClosed(self);
-            self.socket.terminate();
-            handler.onWSFinal(self);
-        });
-        this.socket.on("error", function (/* error */) {
-            handler.onWSError(self);
-            self.socket.terminate();
-            handler.onWSFinal(self);
-        });
-    }
-    QuarkWebSocket.prototype.send = function (message) {
-        if (this.isOpen) {
-            this.socket.send(message);
-            return true;
-        }
-        return false;
-    };
-    QuarkWebSocket.prototype.sendBinary = function(message) {
-        if (this.isOpen) {
-            this.socket.send(message.data, {binary:true});
-            return true;
-        }
-        return false;
-    };
-    QuarkWebSocket.prototype.close = function() {
-        if (this.isOpen) {
-            this.socket.close();
-            return true;
-        }
-        return false;
-    };
 
-    var http = require("http");
-    var https = require("https");
+            QuarkWebSocket.prototype.send = function (message) {
+                if (this.isOpen) {
+                    this.socket.send(message);
+                    return true;
+                }
+                return false;
+            };
+
+            QuarkWebSocket.prototype.sendBinary = function(message) {
+                if (this.isOpen) {
+                    this.socket.send(message.data, {binary:true});
+                    return true;
+                }
+                return false;
+            };
+
+            QuarkWebSocket.prototype.close = function() {
+                if (this.isOpen) {
+                    this.socket.close();
+                    return true;
+                }
+                return false;
+            };
+
+            return QuarkWebSocket;
+        })();
+    }
+    else if ((typeof(window) == "object") && (typeof(window.WebSocket) == 'function')) {
+        // We're in a browser, so we needn't pull in the 'ws' module, and
+        // we still can't do WebSocket servers. All we need to do is
+        // override QuarkWebSocket to match the browser's WebSocket module.
+
+        QuarkWebSocket = (function () {
+            function QuarkWebSocket(options, handler) {
+                var self = this;
+
+                handler.onWSInit(self);
+
+                if (options.socket) {
+                    this.url = options.url;
+                    this.socket = options.socket;
+                    this.isOpen = true;
+                    handler.onWSConnected(self);
+                }
+                else {
+                    this.url = options.url;
+                    this.socket = new window.WebSocket(options.url);
+                    this.isOpen = false;
+
+                    this.socket.onopen = function () {
+                        self.isOpen = true;
+                        handler.onWSConnected(self);
+                    };
+                }
+
+                this.socket.onmessage = function (messageEvent) {
+                    var incomingData = messageEvent.data;
+
+                    if (typeof(incomingData) == 'ArrayBuffer') {
+                        handler.onWSBinary(self, new runtime.Buffer(incomingData));
+                    }
+                    else {
+                        handler.onWSMessage(self, incomingData);
+                    }
+                };
+
+                this.socket.onclose = function (closeEvent) {
+                    handler.onWSClosed(self);
+                    self.socket.close();
+                    handler.onWSFinal(self);
+                };
+
+                this.socket.onerror = function (/* error */) {
+                    handler.onWSError(self);
+                    self.socket.close();
+                    handler.onWSFinal(self);
+                };
+            }
+
+            QuarkWebSocket.prototype.send = function (message) {
+                if (this.isOpen) {
+                    this.socket.send(message);
+                    return true;
+                }
+                return false;
+            };
+
+            QuarkWebSocket.prototype.sendBinary = function(message) {
+                if (this.isOpen) {
+                    this.socket.send(message.data, {binary:true});
+                    return true;
+                }
+                return false;
+            };
+
+            QuarkWebSocket.prototype.close = function() {
+                if (this.isOpen) {
+                    this.socket.close();
+                    return true;
+                }
+                return false;
+            };
+
+            return QuarkWebSocket;
+        })();
+    }
+
+    var request = require("request");
     var URL = require("url");
 
-    // CLASS QuarkRequest
-    function QuarkRequest(request, handler) {
-        var options = URL.parse(request.url);
-        options.method = request.method;
+    var QuarkRequest = (function () {
+        function QuarkRequest(qReq, handler) {
+            var options = {
+                uri: qReq.url,
+                method: qReq.method,
+                verbose: true
+            }
 
-        handler.onHTTPInit(request);
+            handler.onHTTPInit(qReq);
 
-        var protocol = http;
-        if (options.protocol === "https:") {
-            protocol = https;
-        }
+            if (qReq.headers) {
+                options.headers = JSON.parse(JSON.stringify(qReq.headers));  // Make a copy
+            }
+            else {
+                options.headers = [];
+            }
 
-        options.headers = JSON.parse(JSON.stringify(request.headers));  // Make a copy
-        if (request.body) {
-            options.headers["Content-Length"] = Buffer.byteLength(request.body);
-        }
+            if (qReq.body) {
+                options.headers["Content-Length"] = Buffer.byteLength(qReq.body);
+            }
 
-        var req = protocol.request(options);
-        req.on("response", function (response) {
-            var body = "";
-            response.on("data", function (data) {
-                body += data;
+            var req = request(
+                options, 
+                function (error, response, body) {
+                    if (error) {
+                        // Not so good.
+                        console.log("error (1)", error);
+
+                        handler.onHTTPError(qReq, error);
+                        this.abort();
+                        handler.onHTTPFinal(qReq);
+                    }
+                    else {
+                        console.log("final");
+
+                        var qResp = 
+                        new QuarkResponse(response.statusCode,
+                            body,
+                            response.headers);
+
+                        handler.onHTTPResponse(qReq, qResp);
+                        handler.onHTTPFinal(qReq);
+                    }
+                }
+            )
+            .on('data', function(data) {
+                // decompressed data as it is received
+                console.log('req chunk ' + data.length);
+            })
+            .on('response', function(response) {
+                // unmodified http.IncomingMessage object
+                response.on('data', function(data) {
+                    // compressed data as it is received
+                    console.log('resp data ' + data.length);
+                });
             });
-            response.on("end", function () {
-                handler.onHTTPResponse(
-                    request,
-                    new QuarkResponse(response.statusCode,
-                                      body,
-                                      response.headers));
-                req.abort();
-                handler.onHTTPFinal(request);
-            });
-        });
 
-        req.on("error", function (/* error */) {
-            handler.onHTTPError(request);
-            req.abort();
-            handler.onHTTPFinal(request);
-        });
+            if (qReq.body) {
+                req.write(qReq.body);
+            }
 
-        if (request.body) {
-            req.write(request.body);
+            req.end();
         }
-        req.end();
-    }
 
-    // CLASS QuarkResponse
-    function QuarkResponse(code, body, headers) {
-        this.code = code;
-        this.body = body;
-        this.headers = headers;
-    }
-    QuarkResponse.prototype.getCode = function () {
-        return this.code;
-    };
-    QuarkResponse.prototype.setCode = function(code) {
-        this.code = code;
-    };
-    QuarkResponse.prototype.getBody = function () {
-        return this.body;
-    };
-    QuarkResponse.prototype.setBody = function(body) {
-        this.body = body;
-    };
-    QuarkResponse.prototype.getHeader = function(key) {
-        return this.headers[key.toLowerCase()];
-    };
-    QuarkResponse.prototype.setHeader = function(key, value) {
-        this.headers[key.toLowerCase()] = value;
-    };
-    QuarkResponse.prototype.getHeaders = function() {
-        return Object.keys(this.headers).slice();
-    };
+        return QuarkRequest;
+    })();
+
+    var QuarkResponse = (function () {
+        function QuarkResponse(code, body, headers) {
+            this.code = code;
+            this.body = body;
+            this.headers = headers;
+        }
+
+        QuarkResponse.prototype.getCode = function () {
+            return this.code;
+        };
+
+        QuarkResponse.prototype.setCode = function(code) {
+            this.code = code;
+        };
+
+        QuarkResponse.prototype.getBody = function () {
+            return this.body;
+        };
+
+        QuarkResponse.prototype.setBody = function(body) {
+            this.body = body;
+        };
+
+        QuarkResponse.prototype.getHeader = function(key) {
+            return this.headers[key.toLowerCase()];
+        };
+
+        QuarkResponse.prototype.setHeader = function(key, value) {
+            this.headers[key.toLowerCase()] = value;
+        };
+
+        QuarkResponse.prototype.getHeaders = function() {
+            return Object.keys(this.headers).slice();
+        };
+
+        return QuarkResponse;
+    })();
 
     function IncomingRequest(request) {
         this.request = request;
@@ -224,6 +386,7 @@
     };
     ServletResponse.prototype.respond = function() {
         this.setHeader("content-length", Buffer.byteLength(this.body));
+        this.setHeader("Access-Control-Allow-Origin", "*");
         this.response.writeHead(this.code, this.headers);
         this.response.write(this.body, "utf-8");
         this.response.end();
@@ -359,29 +522,34 @@
                 }
             });
         });
-        server.server.on("upgrade", function(request, socket, head) {
-            var handler;
-            var wss = new WebSocket.Server(
-                {noServer: true,
-                 verifyClient : function(info, cb) {
-                     var servlet = container.lookup(info.req.url);
-                     if (servlet !== undefined) {
-                         if (servlet.protocol.startsWith("ws")) {
-                             var rq = new IncomingRequest(info.req);
-                             handler = servlet.servlet.onWSConnect(rq);
-                             cb(!!handler, 403, "not happening");
+
+        if (webSocketServerSupported) {
+            // We can support WebSocket servers, so allow upgrading.
+            server.server.on("upgrade", function(request, socket, head) {
+                var handler;
+                var wss = new WebSocket.Server(
+                    {noServer: true,
+                     verifyClient : function(info, cb) {
+                         var servlet = container.lookup(info.req.url);
+                         if (servlet !== undefined) {
+                             if (servlet.protocol.startsWith("ws")) {
+                                 var rq = new IncomingRequest(info.req);
+                                 handler = servlet.servlet.onWSConnect(rq);
+                                 cb(!!handler, 403, "not happening");
+                             } else {
+                                 cb(false, 400, "http here, move along");
+                             }
                          } else {
-                             cb(false, 400, "http here, move along");
+                             cb(false, 404, "Not found");
                          }
-                     } else {
-                         cb(false, 404, "Not found");
                      }
-                 }
+                    });
+                wss.handleUpgrade(request, socket, head, function(socket) {
+                    new QuarkWebSocket({url: socket.upgradeReq.url, socket: socket}, handler);
                 });
-            wss.handleUpgrade(request, socket, head, function(socket) {
-                new QuarkWebSocket({url: socket.upgradeReq.url, socket: socket}, handler);
             });
-        });
+        }
+
         server.server.on("error", function(/* error */) {
             delete servers[port];
         });
@@ -414,7 +582,13 @@
         server.bindServlet(uri, servlet);
     };
 
+    // serveWS allows starting WebSocket servers, so we should only
+    // allow that if we can support WebSocket servers.
     Runtime.prototype.serveWS = function(url, servlet) {
+        if (!webSocketServerSupported) {
+            throw "runtime does not support WebSocket servers";
+        }
+
         var self = this;
         var uri = URL.parse(url, false, true);
         var server;

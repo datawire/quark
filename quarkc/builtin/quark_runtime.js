@@ -549,7 +549,7 @@
     exports._getClass = _getClass;
 
     function _RuntimeFactory() {
-        this.runtimeName = "builtin/quark_node_runtime.js";
+        this.runtimeName = "builtin/quark_node_runtime";
     }
     _RuntimeFactory.prototype.create = function() {
         return require(this.runtimeName);
