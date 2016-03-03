@@ -246,36 +246,37 @@
                 function (error, response, body) {
                     if (error) {
                         // Not so good.
-                        console.log("error (1)", error);
+                        // console.log("error (1)", error);
 
                         handler.onHTTPError(qReq, error);
                         this.abort();
                         handler.onHTTPFinal(qReq);
                     }
                     else {
-                        console.log("final");
+                        // console.log("final");
 
                         var qResp = 
-                        new QuarkResponse(response.statusCode,
-                            body,
-                            response.headers);
+                            new QuarkResponse(response.statusCode,
+                                body,
+                                response.headers);
 
                         handler.onHTTPResponse(qReq, qResp);
                         handler.onHTTPFinal(qReq);
                     }
                 }
             )
-            .on('data', function(data) {
-                // decompressed data as it is received
-                console.log('req chunk ' + data.length);
-            })
-            .on('response', function(response) {
-                // unmodified http.IncomingMessage object
-                response.on('data', function(data) {
-                    // compressed data as it is received
-                    console.log('resp data ' + data.length);
-                });
-            });
+            // .on('data', function(data) {
+            //     // decompressed data as it is received
+            //     console.log('req chunk ' + data.length);
+            // })
+            // .on('response', function(response) {
+            //     // unmodified http.IncomingMessage object
+            //     response.on('data', function(data) {
+            //         // compressed data as it is received
+            //         console.log('resp data ' + data.length);
+            //     });
+            // })
+            ;
 
             if (qReq.body) {
                 req.write(qReq.body);
