@@ -629,22 +629,40 @@
         process.exit(1);
     };
 
-    var winston = require("winston");
-    var log_container = new winston.Container();
-    
-    Runtime.prototype.logger = function(topic) {
-        return new Logger(log_container.get(topic));
+    // CLASS ConsoleLogger
+    function ConsoleLogger(topic) {
+        this.topic = topic;
     }
+
+    ConsoleLogger.prototype.silly = function (msg) {
+        console.log("SILLY: " + msg);
+    };
+    ConsoleLogger.prototype.debug = function (msg) {
+        console.log("DEBUG: " + msg);
+    };
+    ConsoleLogger.prototype.info = function (msg) {
+        console.log("INFO: " + msg);
+    };
+    ConsoleLogger.prototype.warn = function (msg) {
+        console.log("WARN: " + msg);
+    };
+    ConsoleLogger.prototype.error = function (msg) {
+        console.log("ERROR: " + msg);
+    };
 
     function Logger(impl) {
         this.impl = impl;
     }
 
-    Logger.prototype.trace = function (msg) { this.impl.silly("%s", msg); }
-    Logger.prototype.debug = function (msg) { this.impl.debug("%s", msg); }
-    Logger.prototype.info = function (msg) { this.impl.info("%s", msg); }
-    Logger.prototype.warn = function (msg) { this.impl.warn("%s", msg); }
-    Logger.prototype.error = function (msg) { this.impl.error("%s", msg); }
+    Runtime.prototype.logger = function(topic) {
+        return new Logger(new ConsoleLogger(topic));
+    }
+
+    Logger.prototype.trace = function (msg) { this.impl.silly(msg); }
+    Logger.prototype.debug = function (msg) { this.impl.debug(msg); }
+    Logger.prototype.info = function (msg) { this.impl.info(msg); }
+    Logger.prototype.warn = function (msg) { this.impl.warn(msg); }
+    Logger.prototype.error = function (msg) { this.impl.error(msg); }
 
     module.exports = new Runtime();
 
