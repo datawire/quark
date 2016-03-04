@@ -1,6 +1,6 @@
 File(Import(Name(builtin)),
  Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
- Dependency(lang=jsgroup=Noneartifact=winstonversion=2.1.1),
+ Dependency(lang=jsgroup=Noneartifact=requestversion=2.69.0),
  Include(url=quark_runtime.js), Include(url=quark_node_runtime.js),
  Dependency(lang=pygroup=Noneartifact=ws4pyversion=0.3.*),
  Include(url=quark_runtime.py), Include(url=quark_threaded_runtime.py),
