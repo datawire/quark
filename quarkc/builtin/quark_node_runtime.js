@@ -76,14 +76,14 @@
     // - node doesn't, you need to require('ws'), but
     // - the interface differs between native browser WebSocket and the ws
     // module;
-    // - browsers can't be WebSocket servers.
+    // - browsers can't be WebSocket servers (or, for that matter, HTTP servers).
     // 
     // We cope with this by figuring out which implementation we have, 
     // remembering that in the runtime itself, and setting up QuarkWebSocket
     // as an impedence matcher.
     //
-    // So. Start by assuming that we cannot do WebSocket servers...
-    var webSocketServerSupported = false;
+    // So. Start by assuming that we cannot do servers...
+    var serversSupported = false;
 
     // ...and defining a QuarkWebSocket that does nothing, as a default.
     var QuarkWebSocket = (function () {
@@ -111,7 +111,7 @@
         var WebSocket = builtin_require("ws");
 
         // ...remember that we _can_ do WebSocket servers...
-        webSocketServerSupported = true;
+        serversSupported = true;
 
         // ...and override QuarkWebSocket with the version for 'ws'.
 
@@ -451,6 +451,13 @@
     // CLASS Runtime
     function Runtime() {
         this.locked = false;
+
+        if (serversSupported) {
+            this.http = require('http');
+        }
+        else {
+            this.http = undefined;
+        }
     }
 
     // Expose builtin_require in case someone else needs it.
@@ -500,7 +507,11 @@
     };
 
     function QuarkServer(container, runtime) {
-        this.server = http.createServer();
+        if (!serversSupported) {
+            throw "runtime does not support servers";
+        }
+
+        this.server = runtime.http.createServer();
         this.container = container;
         this.runtime = runtime;
     }
@@ -577,7 +588,7 @@
             });
         });
 
-        if (webSocketServerSupported) {
+        if (serversSupported) {
             // We can support WebSocket servers, so allow upgrading.
             server.server.on("upgrade", function(request, socket, head) {
                 var handler;
@@ -639,7 +650,7 @@
     // serveWS allows starting WebSocket servers, so we should only
     // allow that if we can support WebSocket servers.
     Runtime.prototype.serveWS = function(url, servlet) {
-        if (!webSocketServerSupported) {
+        if (!serversSupported) {
             throw "runtime does not support WebSocket servers";
         }
 
