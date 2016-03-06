@@ -23,54 +23,6 @@
     var assert = require("assert");
     var runtime = require("builtin/quark_runtime");
 
-    // builtin pulls in some modules as its own dependencies. While the
-    // runtime (including this file) is part of builtin in terms of Quark's
-    // namespaces, the machinery of require() kind of disagrees with that,
-    // so we have to jump through a couple of hoops to get access to those
-    // modules from here.
-    //
-    // Note that the user can override builtin's choices by require()ing
-    // their own versions of the modules we're after.
-
-    function getCached(moduleName) {
-        // console.log("getCached: " + moduleName);
-
-        try {
-            var mod = require.cache[require.resolve(moduleName)];
-
-            if (mod) {
-                return mod;
-            }
-            else {
-                return undefined;
-            }
-        }
-        catch (e) {
-            // console.log("getCached exception: " + e);
-            return undefined;
-        }
-    }
-
-    function builtin_require(moduleName) {
-        // Has the user already require()d this module?
-        var mod = getCached(moduleName);
-
-        if (mod) {
-            // Yes. Great.
-            return mod.exports;
-        }
-
-        // OK, they haven't already require()d it. Grab builtin...
-        var builtin_module = getCached('builtin');
-
-        if (!builtin_module) {
-            // Uhhhh WTF?
-            throw "impossible!! builtin is missing";
-        }
-
-        return builtin_module.require(moduleName);
-    }
-
     // WebSockets are a little odd:
     // - browsers have them built in;
     // - node doesn't, you need to require('ws'), but
@@ -108,7 +60,8 @@
 
     if ((typeof(window) == 'undefined') || (typeof(window.WebSocket) == 'undefined')) {
         // OK, we must be in Node. Pull in ws via builtin...
-        var WebSocket = builtin_require("ws");
+        // console.log("grabbing ws");
+        var WebSocket = require("ws");
 
         // ...remember that we _can_ do WebSocket servers...
         serversSupported = true;
@@ -266,7 +219,8 @@
     }
 
     // request is probably going to come from builtin too...
-    var request = builtin_require("request");
+    // console.log("grabbing request");
+    var request = require("request");
     var URL = require("url");
 
     var QuarkRequest = (function () {
@@ -459,9 +413,6 @@
             this.http = undefined;
         }
     }
-
-    // Expose builtin_require in case someone else needs it.
-    Runtime.prototype.require = builtin_require;
 
     Runtime.prototype.acquire = function () {
         assert(!this.locked);
