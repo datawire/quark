@@ -179,6 +179,8 @@ class Crosswire:
         else:
             p.env = {}
             p.root.env[name] = p
+        if p.name.text not in p.parent.env:
+            p.parent.env[p.name.text] = p
 
     def leave_Package(self, p):
         self.leave_AST(p)
@@ -934,7 +936,7 @@ class Reflector:
             self.code += "        static reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
         self.code += "    }\n}"
 
-class Compiler:
+class Compiler(object):
 
     def __init__(self, filter_native=[]):
         self.roots = Roots()
@@ -1108,6 +1110,22 @@ class Compiler:
                 field.traverse(Crosswire(cls))
                 self.icompile(field)
 
+    def merge(self, env, dep):
+        if env == dep: return
+        for k in dep:
+            if k in env:
+                self.merge_one(env[k], dep[k])
+            else:
+                env[k] = dep[k]
+
+    @overload(Package, Package)
+    def merge_one(self, p1, p2):
+        self.merge(p1.env, p2.env)
+
+    @overload(AST, AST)
+    def merge_one(self, n1, n2):
+        raise CompileError("can't merge %r and %r" % (n1, n2))
+
     def compile(self):
         self.log.info("Compiling quark code")
         for root in self.roots.sorted():
@@ -1116,7 +1134,7 @@ class Compiler:
             for use in root.uses:
                 dep = self.roots[use]
                 assert getattr(dep, "_compiled", False)
-                root.env.update(dep.env)
+                self.merge(root.env, dep.env)
             self.icompile(root)
             self.reflect(root)
             root._compiled = True
