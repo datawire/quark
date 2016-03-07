@@ -1,5 +1,6 @@
 use js ws 1.0;
-use js winston 2.1.1;
+use js request 2.69.0;
+use js timers 0.1.1;
 include quark_runtime.js;
 include quark_node_runtime.js;
 
