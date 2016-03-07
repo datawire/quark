@@ -21,6 +21,8 @@
     "use strict";
 
     var assert = require("assert");
+    var timers = require("timers");
+
     var runtime = require("builtin/quark_runtime");
 
     // WebSockets are a little odd:
@@ -436,8 +438,14 @@
 
     Runtime.prototype.schedule = function (handler, delayInSeconds) {
         var self = this;
-        setTimeout(function () { handler.onExecute(self); },
-                   delayInSeconds * 1000);
+        var ms = delayInSeconds * 1000;
+
+        if ( ms >= 1 ) {
+            timers.setTimeout(function () { handler.onExecute(self); }, ms);
+        }
+        else {
+            timers.setImmediate(function() { handler.onExecute(self); });
+        }
     };
 
     Runtime.prototype.codec = function() { return runtime.defaultCodec(); };
