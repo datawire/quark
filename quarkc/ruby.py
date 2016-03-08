@@ -78,19 +78,26 @@ def function_file(path, name, fname):
     return class_file(path, name, fname)
 
 def package_file(path, name, fname):
-    return '/'.join(path + [name + '.rb'])
+    return None
+
+def _make_file(path):
+    head = '# %r\n' % path
+    head += 'require "datawire-quark-core"\n'
+    head += ''.join('module %s\n' % name for name in path)
+    tail = ''.join('end  # module %s\n' % name for name in path)
+    return Code(head=head, tail=tail)
 
 def make_class_file(path, name):
-    return Code(head='require "datawire-quark-core"\n')
+    return _make_file([name] + path)
 
 def make_function_file(path, name):
-    return make_class_file(path, name)
+    return _make_file(path)
 
 def make_package_file(path, name):
-    return make_class_file(path, name)
+    assert False
 
 def main(fname, common):
-    return Code('require "./%s.rb" \n\nFunctions.main\n' % common)
+    return Code('require "..." # %r \n\nFunctions.main\n' % [fname, common])
 
 ## Naming and imports
 
@@ -107,7 +114,8 @@ def import_(path, origin, dep):
         prefix = './'
     else:
         prefix = '../' * len(origin)
-    return 'require "%s%s"' % (prefix, qual[0])
+    #return 'require "%s%s"' % (prefix, qual[0])
+    return 'require "..." # %r' % [path, origin, dep]
 
 def qualify(package, origin):
     if package == origin: return []
