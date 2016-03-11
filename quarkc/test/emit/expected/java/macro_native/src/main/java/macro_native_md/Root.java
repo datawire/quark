@@ -1,6 +1,7 @@
 package macro_native_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class macro_native_Native_md = macro_native_Native.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

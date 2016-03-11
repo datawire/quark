@@ -1,4 +1,4 @@
-from operator_overload_lib import main
+import operator_overload
 
 if __name__ == "__main__":
-    main()
+    operator_overload.main();

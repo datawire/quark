@@ -44,7 +44,3 @@ class Foo(object):
 
     
 Foo.pkg_Foo_ref = use_class_before_def_md.Root.pkg_Foo_md
-
-def main():
-    bar = Bar();
-    (bar).go();

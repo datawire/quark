@@ -1,3 +1,4 @@
-var common = require('./delegate_lib');
+var delegate = require('./delegate/index.js');
+exports.delegate = delegate;
 
-common.main();
+delegate.main();

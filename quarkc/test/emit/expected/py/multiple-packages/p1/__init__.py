@@ -11,10 +11,3 @@ def c():
 
 def d():
     _println(u"d");
-
-
-def main():
-    p2.a();
-    p2.b();
-    c();
-    d();

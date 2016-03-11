@@ -1,10 +1,12 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Function(Type(Name(void)), Name(test), Block(
-   Local(
-    Declaration(Type(Name(List), Type(Name(String))), Name(parts),
-     Call(Attr(String("foo bar baz", $type=0.builtin.String), Name(split),
-      $type=0.builtin.String.split), String(" ", $type=0.builtin.String),
-     $type=0.builtin.List<0.builtin.String>),
-    $type=0.builtin.List<0.builtin.String>))))
+ Package(Name(split),
+
+  Function(Type(Name(void)), Name(test), Block(
+    Local(
+     Declaration(Type(Name(List), Type(Name(String))), Name(parts),
+      Call(Attr(String("foo bar baz", $type=0.builtin.String), Name(split),
+       $type=0.builtin.String.split), String(" ", $type=0.builtin.String),
+      $type=0.builtin.List<0.builtin.String>),
+     $type=0.builtin.List<0.builtin.String>)))))
 )

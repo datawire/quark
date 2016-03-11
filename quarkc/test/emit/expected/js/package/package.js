@@ -1,3 +1,4 @@
-var common = require('./test');
+var package = require('./package/index.js');
+exports.package = package;
 
-common.main();
+package.main();

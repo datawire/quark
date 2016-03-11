@@ -1,3 +1,4 @@
-var common = require('./pets');
+var pet = require('./pet/index.js');
+exports.pet = pet;
 
-common.main();
+pet.main();

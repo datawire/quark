@@ -1,5 +1,5 @@
 nonexistent.q:4:13: unresolved variable: x
-nonexistent.q:5:13: unresolved variable: nonexistent
-nonexistent.q:5:34: unresolved variable: d
+nonexistent.q:5:13: unresolved variable: reallyreally_nonexistent
+nonexistent.q:5:47: unresolved variable: d
 nonexistent.q:11:8: unresolved variable: D
 nonexistent.q:11:20: unresolved variable: D

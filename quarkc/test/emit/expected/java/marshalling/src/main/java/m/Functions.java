@@ -12,9 +12,4 @@ public class Functions {
         do{System.out.println(Double.toString((expected).outer_float));System.out.flush();}while(false);
         do{System.out.println(Double.toString((((expected).outer_inner_list).get(1)).inner_float));System.out.flush();}while(false);
     }
-
-
-    public static void main() {
-        Functions.test_marshalling();
-    }
 }

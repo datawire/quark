@@ -1,11 +1,11 @@
 var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
 
 

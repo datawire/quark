@@ -47,6 +47,27 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
           <excludePackageNames>io.datawire:*.Functions</excludePackageNames>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <classpathLayoutType>repository</classpathLayoutType>
+              <classpathPrefix>../../../</classpathPrefix>
+              <mainClass>%(main)s.Main</mainClass>
+            </manifest>
+            <manifestEntries>
+              <mode>development</mode>
+              <url>${project.url}</url>
+              <key>value</key>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <dependencies>
@@ -63,15 +84,16 @@ def format_deps(deps):
       <version>%s</version>
     </dependency>""" % (group, name, ver)
 
-def package(name, version, packages, srcs, deps):
+def package(name_, version, packages, srcs, deps):
     files = OrderedDict()
     for fname, content in srcs.items():
         files[os.path.join("src/main/java", fname)] = content
 
-    fmt_dict = {"name": name,
+    fmt_dict = {"name": name_,
                 "version": version,
                 "pkg_list": repr([".".join(p) for p in packages]),
-                "dependencies": "\n".join(format_deps(deps))}
+                "dependencies": "\n".join(format_deps(deps)),
+                "main": name(name_)}
     files["pom.xml"] = pom_xml % fmt_dict
     return files
 
@@ -102,10 +124,15 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     assert False
 
-def main(fname, common):
-    return Code("public class %s {\n%s}\n" % \
-                (fname,
-                 indent("public static void main(String[] args) {\n    %s.Functions.main();\n}" % common)[1:]))
+def main_file(name):
+    return os.path.join(name, "Main.java")
+
+def make_main_file(name):
+    return Code(head="package %s;\n\npublic class Main {" % name,
+                tail="}")
+
+def main(statements):
+    return indent("public static void main(String[] args)%s" % block(statements))
 
 ## Naming and imports
 

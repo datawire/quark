@@ -1,0 +1,7 @@
+package stuff;
+
+public class Functions {
+    public static void main() {
+        (new Test()).test();
+    }
+}

@@ -1,5 +1,5 @@
 var _qrt = require("builtin/quark_runtime.js");
-var testlib = require('../testlib');
+var testlib = require('../testlib/index.js');
 exports.testlib = testlib;
 
 

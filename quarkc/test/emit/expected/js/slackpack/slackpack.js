@@ -1,3 +1,4 @@
-var common = require('./pkg_slack_common');
+var slackpack = require('./slackpack/index.js');
+exports.slackpack = slackpack;
 
-common.main();
+slackpack.main();

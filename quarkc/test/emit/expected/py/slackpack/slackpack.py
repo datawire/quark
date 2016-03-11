@@ -1,4 +1,4 @@
-from pkg_slack_common import main
+import slackpack
 
 if __name__ == "__main__":
-    main()
+    slackpack.main();

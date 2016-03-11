@@ -1,4 +1,4 @@
-from builtin_codec_lib import main
+import builtin_codec
 
 if __name__ == "__main__":
-    main()
+    builtin_codec.main();

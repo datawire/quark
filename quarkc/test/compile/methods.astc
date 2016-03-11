@@ -1,25 +1,31 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Class(Name(Test),
+ Package(Name(methods),
 
-  Method(static=False, Type(Name(int)), Name(foo), Block()),
+  Class(Name(Test),
 
-  Method(static=False, Type(Name(String)), Name(_getClass), Block(
-    Return(String("Test", $type=0.builtin.String)))),
+   Method(static=False, Type(Name(int)), Name(foo), Block()),
 
-  Method(static=False, Type(Name(Object)), Name(_getField),
-   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-   Block(
-    Return(Null(null, $type=0.builtin.Object)))),
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("methods.Test", $type=0.builtin.String)))),
 
-  Method(static=False, Type(Name(void)), Name(_setField),
-   Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-   Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
-   Block())),
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Block(
+     Return(Null(null, $type=0.builtin.Object)))),
 
- Function(Type(Name(void)), Name(bar), Block(
-   Local(
-    Declaration(Type(Name(Test)), Name(t), $type=0.Test)),
-   ExprStmt(Call(Attr(Var(Name(t), $type=0.Test), Name(foo), $type=0.Test.foo),
-    $type=0.builtin.int))))
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Block()),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(methods_Test_ref),
+    Attr(Attr(Var(Name(methods_md), $type=1.methods_md), Name(Root),
+     $type=1.methods_md.Root), Name(methods_Test_md),
+    $type=0.builtin.reflect.Class), $type=0.builtin.reflect.Class)),
+
+  Function(Type(Name(void)), Name(bar), Block(
+    Local(
+     Declaration(Type(Name(Test)), Name(t), $type=0.methods.Test)),
+    ExprStmt(Call(Attr(Var(Name(t), $type=0.methods.Test), Name(foo),
+      $type=0.methods.Test.foo), $type=0.builtin.int)))))
 )

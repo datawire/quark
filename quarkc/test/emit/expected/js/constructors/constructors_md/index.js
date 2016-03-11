@@ -167,9 +167,9 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var test1 = require('../test1');
+var test1 = require('../test1/index.js');
 exports.test1 = test1;
-var test2 = require('../test2');
+var test2 = require('../test2/index.js');
 exports.test2 = test2;
-var test3 = require('../test3');
+var test3 = require('../test3/index.js');
 exports.test3 = test3;

@@ -6,4 +6,4 @@ setup(name="factorial",
       version="0.0.1",
       install_requires=["builtin==0.0.1"],
       py_modules=['factorial'],
-      packages=['factorial_md'])
+      packages=['factorial', 'factorial_md'])

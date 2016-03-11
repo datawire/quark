@@ -1,3 +1,4 @@
-var common = require('./urlencode_lib');
+var urlencode = require('./urlencode/index.js');
+exports.urlencode = urlencode;
 
-common.main();
+urlencode.main();

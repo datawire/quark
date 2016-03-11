@@ -1,4 +1,4 @@
-from super_lib import main
+import super
 
 if __name__ == "__main__":
-    main()
+    super.main();

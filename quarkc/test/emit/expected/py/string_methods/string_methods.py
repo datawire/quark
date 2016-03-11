@@ -1,4 +1,4 @@
-from string_methods_lib import main
+import string_methods
 
 if __name__ == "__main__":
-    main()
+    string_methods.main();

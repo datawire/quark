@@ -1,4 +1,4 @@
-from inheritence_lib import main
+import inheritence
 
 if __name__ == "__main__":
-    main()
+    inheritence.main();

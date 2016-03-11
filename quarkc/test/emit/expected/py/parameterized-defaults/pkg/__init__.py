@@ -80,9 +80,3 @@ class StringBox(Box):
     
 StringBox.pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md
 StringBox.pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md
-
-def main():
-    box = StringBox(u"asdf");
-    _println((box).contents);
-    foo = StringFoo();
-    _println((foo).foo());

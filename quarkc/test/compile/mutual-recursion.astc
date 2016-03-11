@@ -1,8 +1,12 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Function(Type(Name(int)), Name(foo), Block(
-   ExprStmt(Call(Var(Name(bar), $type=0.bar), $type=0.builtin.String)))),
+ Package(Name(mutual_recursion),
 
- Function(Type(Name(String)), Name(bar), Block(
-   ExprStmt(Call(Var(Name(foo), $type=0.foo), $type=0.builtin.int))))
+  Function(Type(Name(int)), Name(foo), Block(
+    ExprStmt(Call(Var(Name(bar), $type=0.mutual_recursion.bar),
+     $type=0.builtin.String)))),
+
+  Function(Type(Name(String)), Name(bar), Block(
+    ExprStmt(Call(Var(Name(foo), $type=0.mutual_recursion.foo),
+     $type=0.builtin.int)))))
 )

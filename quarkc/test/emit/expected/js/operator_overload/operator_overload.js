@@ -1,3 +1,4 @@
-var common = require('./operator_overload_lib');
+var operator_overload = require('./operator_overload/index.js');
+exports.operator_overload = operator_overload;
 
-common.main();
+operator_overload.main();

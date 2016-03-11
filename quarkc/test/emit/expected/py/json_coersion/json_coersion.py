@@ -1,4 +1,4 @@
-from json_coersion_lib import main
+import json_coersion
 
 if __name__ == "__main__":
-    main()
+    json_coersion.main();

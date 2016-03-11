@@ -1,4 +1,4 @@
-from pkg import main
+import parameterized_defaults
 
 if __name__ == "__main__":
-    main()
+    parameterized_defaults.main();

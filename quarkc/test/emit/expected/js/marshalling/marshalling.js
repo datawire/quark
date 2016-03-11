@@ -1,3 +1,4 @@
-var common = require('./m');
+var marshalling = require('./marshalling/index.js');
+exports.marshalling = marshalling;
 
-common.main();
+marshalling.main();

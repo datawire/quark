@@ -3,7 +3,7 @@ var builtin = require('builtin').builtin;
 exports.builtin = builtin;
 var builtin = require('builtin').builtin;
 exports.builtin = builtin;
-var marshalling_md = require('../marshalling_md');
+var marshalling_md = require('../marshalling_md/index.js');
 exports.marshalling_md = marshalling_md;
 
 
@@ -146,8 +146,3 @@ function test_marshalling() {
     _qrt.print(_qrt.toString((((expected).outer_inner_list)[1]).inner_float));
 }
 exports.test_marshalling = test_marshalling;
-
-function main() {
-    test_marshalling();
-}
-exports.main = main;

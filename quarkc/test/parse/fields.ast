@@ -1,24 +1,26 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Class(Name(A),
-  Field(static=False, Type(Name(int)), Name(x))),
+ Package(Name(fields),
 
- Class(Name(B),
-  Field(static=False, Type(Name(int)), Name(x)),
-  Field(static=False, Type(Name(float)), Name(y))),
+  Class(Name(A),
+   Field(static=False, Type(Name(int)), Name(x))),
 
- Class(Name(C),
-  Field(static=False, Type(Name(int)), Name(x)),
+  Class(Name(B),
+   Field(static=False, Type(Name(int)), Name(x)),
+   Field(static=False, Type(Name(float)), Name(y))),
 
-  Method(static=False, Type(Name(void)), Name(method), Block()),
-  Field(static=False, Type(Name(float)), Name(y))),
+  Class(Name(C),
+   Field(static=False, Type(Name(int)), Name(x)),
 
- Class(Name(D),
-  Field(static=False, Type(Name(int)), Name(x), Call(Var(Name(foo))))),
+   Method(static=False, Type(Name(void)), Name(method), Block()),
+   Field(static=False, Type(Name(float)), Name(y))),
 
- Class(Name(E),
-  Field(static=False, Type(Name(int)), Name(x), Number(3))),
+  Class(Name(D),
+   Field(static=False, Type(Name(int)), Name(x), Call(Var(Name(foo))))),
 
- Class(Name(F),
-  Field(static=False, Type(Name(String)), Name(x), String("pie")))
+  Class(Name(E),
+   Field(static=False, Type(Name(int)), Name(x), Number(3))),
+
+  Class(Name(F),
+   Field(static=False, Type(Name(String)), Name(x), String("pie"))))
 )

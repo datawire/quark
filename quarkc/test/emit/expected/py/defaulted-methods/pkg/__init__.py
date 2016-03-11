@@ -138,24 +138,3 @@ class T5(object):
         (self).foo();
 
 T5.pkg_T5_ref = defaulted_methods_md.Root.pkg_T5_md
-
-def main():
-    t1 = T1();
-    (t1).foo();
-    (t1).bar();
-    _println(u"===");
-    t2 = T2();
-    (t2).foo();
-    (t2).bar();
-    _println(u"===");
-    t3 = T3();
-    (t3).foo();
-    (t3).bar();
-    _println(u"===");
-    t4 = T4();
-    (t4).foo();
-    (t4).bar();
-    _println(u"===");
-    t5 = T5();
-    (t5).foo();
-    (t5).bar();

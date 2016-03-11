@@ -1,7 +1,7 @@
 var _qrt = require("builtin/quark_runtime.js");
 var builtin = require('builtin').builtin;
 exports.builtin = builtin;
-var parameterized_defaults_md = require('../parameterized_defaults_md');
+var parameterized_defaults_md = require('../parameterized_defaults_md/index.js');
 exports.parameterized_defaults_md = parameterized_defaults_md;
 
 
@@ -121,11 +121,3 @@ function StringBox__setField(name, value) {
     }
 }
 StringBox.prototype._setField = StringBox__setField;
-
-function main() {
-    var box = new StringBox("asdf");
-    _qrt.print((box).contents);
-    var foo = new StringFoo();
-    _qrt.print((foo).foo());
-}
-exports.main = main;

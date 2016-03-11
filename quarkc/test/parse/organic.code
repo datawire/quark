@@ -34,4 +34,6 @@ package foo {
         }
     }
 }
-class Blah {}
+package organic {
+    class Blah {}
+}

@@ -1,4 +1,4 @@
-from modulo_lib import main
+import modulo
 
 if __name__ == "__main__":
-    main()
+    modulo.main();

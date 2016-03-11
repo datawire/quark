@@ -143,10 +143,15 @@ def get_package_version(pkg):
             return literal_to_str(ann.arguments[0])
     return "0.0.1"
 
+def sanitize(name):
+    return name.replace('-', '_').replace('.', '_')
+
+def filebase(name):
+    return os.path.splitext(os.path.basename(name))[0]
+
 def namever(file):
-    dist = [d for d in file.definitions if isinstance(d, DistUnit)]
-    if dist: return dist[0].name.text, dist[0].version
-    name = os.path.splitext(os.path.basename(file.name))[0].replace('-', '_').replace('.', '_')
+    if file.dist: return file.dist.name.text, file.dist.version
+    name = sanitize(filebase(file.name))
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
         firstPackage = packages[0]

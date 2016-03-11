@@ -130,9 +130,14 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     return make_class_file(path, name)
 
-def main(fname, common):
-    return Code(head="from %s import main" % common,
-                body='\n\nif __name__ == "__main__":\n    main()\n')
+def main_file(name):
+    return "%s.py" % name
+
+def make_main_file(name):
+    return Code()
+
+def main(statements):
+    return 'if __name__ == "__main__"%s' % block(statements)
 
 ## Naming and imports
 

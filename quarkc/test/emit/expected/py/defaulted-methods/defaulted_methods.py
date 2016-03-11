@@ -1,4 +1,4 @@
-from pkg import main
+import defaulted_methods
 
 if __name__ == "__main__":
-    main()
+    defaulted_methods.main();

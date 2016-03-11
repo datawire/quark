@@ -1,4 +1,10 @@
 var _qrt = require("builtin/quark_runtime.js");
+var builtin = require('builtin').builtin;
+exports.builtin = builtin;
+var macro_stuff_md = require('../macro_stuff_md/index.js');
+exports.macro_stuff_md = macro_stuff_md;
+
+
 
 // CLASS Macro
 function Macro() {
@@ -8,7 +14,7 @@ exports.Macro = Macro;
 
 function Macro__init_fields__() {}
 Macro.prototype.__init_fields__ = Macro__init_fields__;
-
+Macro.macro_stuff_Macro_ref = macro_stuff_md.Root.macro_stuff_Macro_md;
 function Macro_test() {
     var m1 = new Macro();
     var m2 = new Macro();
@@ -24,7 +30,7 @@ function Macro_test() {
 Macro.prototype.test = Macro_test;
 
 function Macro__getClass() {
-    return "Macro";
+    return "macro_stuff.Macro";
 }
 Macro.prototype._getClass = Macro__getClass;
 

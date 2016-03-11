@@ -1,4 +1,4 @@
-from numbers_lib import main
+import numbers
 
 if __name__ == "__main__":
-    main()
+    numbers.main();

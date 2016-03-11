@@ -237,5 +237,5 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var m = require('../m');
+var m = require('../m/index.js');
 exports.m = m;

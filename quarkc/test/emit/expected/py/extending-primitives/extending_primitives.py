@@ -1,4 +1,4 @@
-from pkg import main
+import extending_primitives
 
 if __name__ == "__main__":
-    main()
+    extending_primitives.main();

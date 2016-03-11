@@ -1,3 +1,4 @@
-var common = require('./numbers_lib');
+var numbers = require('./numbers/index.js');
+exports.numbers = numbers;
 
-common.main();
+numbers.main();

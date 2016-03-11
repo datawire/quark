@@ -1,6 +1,7 @@
 package macro_native;
 
 public class Native implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class macro_native_Native_ref = macro_native_md.Root.macro_native_Native_md;
     public Native() {}
     public void test() {
         Native n1 = new Native();
@@ -9,7 +10,7 @@ public class Native implements io.datawire.quark.runtime.QObject {
         Native n3 = n1n2;
     }
     public String _getClass() {
-        return "Native";
+        return "macro_native.Native";
     }
     public Object _getField(String name) {
         return null;

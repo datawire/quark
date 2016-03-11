@@ -1,4 +1,4 @@
-from macro_pie_lib import main
+import macro_pie
 
 if __name__ == "__main__":
-    main()
+    macro_pie.main();

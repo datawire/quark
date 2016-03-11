@@ -1,3 +1,4 @@
-var common = require('./autocast_lib');
+var autocast = require('./autocast/index.js');
+exports.autocast = autocast;
 
-common.main();
+autocast.main();

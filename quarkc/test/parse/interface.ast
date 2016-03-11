@@ -1,22 +1,24 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Interface(Name(Foo),
+ Package(Name(interface),
 
-  Method(static=False, Type(Name(void)), Name(m1)),
+  Interface(Name(Foo),
 
-  Method(static=False, Type(Name(void)), Name(m2),
-   Param(Type(Name(int)), Name(arg))),
+   Method(static=False, Type(Name(void)), Name(m1)),
 
-  Method(static=False, Type(Name(void)), Name(m3),
-   Param(Type(Name(List), Type(Name(String))), Name(args)))),
+   Method(static=False, Type(Name(void)), Name(m2),
+    Param(Type(Name(int)), Name(arg))),
 
- Interface(Name(Bar), TypeParam(Name(T)),
+   Method(static=False, Type(Name(void)), Name(m3),
+    Param(Type(Name(List), Type(Name(String))), Name(args)))),
 
-  Method(static=False, Type(Name(void)), Name(m1)),
+  Interface(Name(Bar), TypeParam(Name(T)),
 
-  Method(static=False, Type(Name(void)), Name(m2),
-   Param(Type(Name(T)), Name(arg))),
+   Method(static=False, Type(Name(void)), Name(m1)),
 
-  Method(static=False, Type(Name(void)), Name(m3),
-   Param(Type(Name(List), Type(Name(T))), Name(args))))
+   Method(static=False, Type(Name(void)), Name(m2),
+    Param(Type(Name(T)), Name(arg))),
+
+   Method(static=False, Type(Name(void)), Name(m3),
+    Param(Type(Name(List), Type(Name(T))), Name(args)))))
 )

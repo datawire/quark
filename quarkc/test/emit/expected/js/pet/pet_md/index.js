@@ -165,5 +165,5 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var pets = require('../pets');
+var pets = require('../pets/index.js');
 exports.pets = pets;

@@ -1,3 +1,4 @@
-var common = require('./map_lib');
+var map = require('./map/index.js');
+exports.map = map;
 
-common.main();
+map.main();

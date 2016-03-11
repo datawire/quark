@@ -1,3 +1,4 @@
-var common = require('./modulo_lib');
+var modulo = require('./modulo/index.js');
+exports.modulo = modulo;
 
-common.main();
+modulo.main();

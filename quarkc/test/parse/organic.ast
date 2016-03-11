@@ -55,5 +55,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
         Var(Name(z)))), Block(
        ExprStmt(Var(Name(z))))))))),
 
- Class(Name(Blah))
+ Package(Name(organic),
+
+  Class(Name(Blah)))
 )

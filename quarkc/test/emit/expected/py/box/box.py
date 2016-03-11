@@ -1,4 +1,4 @@
-from box_lib import main
+import box
 
 if __name__ == "__main__":
-    main()
+    box.main();

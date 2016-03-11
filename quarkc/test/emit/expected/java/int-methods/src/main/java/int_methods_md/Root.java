@@ -1,6 +1,7 @@
 package int_methods_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
+    public static builtin.reflect.Class int_methods_Test_md = int_methods_Test.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

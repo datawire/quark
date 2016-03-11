@@ -1,4 +1,4 @@
-from m import main
+import marshalling
 
 if __name__ == "__main__":
-    main()
+    marshalling.main();

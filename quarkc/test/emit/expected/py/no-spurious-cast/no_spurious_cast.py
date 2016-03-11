@@ -1,4 +1,4 @@
-from no_spurious_cast_lib import main
+import no_spurious_cast
 
 if __name__ == "__main__":
-    main()
+    no_spurious_cast.main();

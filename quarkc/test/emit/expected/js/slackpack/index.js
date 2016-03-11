@@ -1,8 +1,10 @@
-var slack = require('./slack');
+var slack = require('./slack/index.js');
 exports.slack = slack;
-var slack = require('./slack');
+var slack = require('./slack/index.js');
 exports.slack = slack;
-var pkg = require('./pkg');
+var pkg = require('./pkg/index.js');
 exports.pkg = pkg;
-var slackpack_md = require('./slackpack_md');
+var slackpack = require('./slackpack/index.js');
+exports.slackpack = slackpack;
+var slackpack_md = require('./slackpack_md/index.js');
 exports.slackpack_md = slackpack_md;

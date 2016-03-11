@@ -62,12 +62,18 @@ def make_function_file(path, name):
 def make_package_file(path, name):
     return make_class_file(path, name)
 
-def main(fname, common):
-    return Code("var common = require('./%s');\n\ncommon.main();\n" % common)
+def main_file(name):
+    return "%s.js" % name
+
+def make_main_file(name):
+    return Code()
+
+def main(statements):
+    return "\n".join(statements)
 
 ## Naming and imports
 
-SUBS = {"self": "this"}
+SUBS = {"self": "this", "super": "super_"}
 def name(n):
     return SUBS.get(n, n)
 
@@ -85,7 +91,7 @@ def import_(path, origin, dep):
             prefix = "./"
         else:
             prefix = "../"*len(origin)
-        req = prefix + qual[0]
+        req = prefix + qual[0] + "/index.js"
     return "var %s = require('%s')%s;\nexports.%s = %s;" % (qual[0], req, extra, qual[0], qual[0])
 
 def qualify(package, origin):

@@ -118,7 +118,3 @@ def test_marshalling():
     _println((expected).outer_string);
     _println(repr((expected).outer_float));
     _println(repr((((expected).outer_inner_list)[1]).inner_float));
-
-
-def main():
-    test_marshalling();

@@ -1,4 +1,4 @@
-from factorial_lib import main
+import factorial
 
 if __name__ == "__main__":
-    main()
+    factorial.main();

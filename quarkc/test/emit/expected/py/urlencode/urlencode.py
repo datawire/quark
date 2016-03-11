@@ -1,4 +1,4 @@
-from urlencode_lib import main
+import urlencode
 
 if __name__ == "__main__":
-    main()
+    urlencode.main();

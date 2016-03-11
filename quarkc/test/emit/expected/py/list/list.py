@@ -1,4 +1,4 @@
-from list_lib import main
+import list
 
 if __name__ == "__main__":
-    main()
+    list.main();

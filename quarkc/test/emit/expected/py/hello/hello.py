@@ -1,4 +1,4 @@
-from hello_lib import main
+import hello
 
 if __name__ == "__main__":
-    main()
+    hello.main();

@@ -1,3 +1,4 @@
-var common = require('./matrix_lib');
+var matrix = require('./matrix/index.js');
+exports.matrix = matrix;
 
-common.main();
+matrix.main();

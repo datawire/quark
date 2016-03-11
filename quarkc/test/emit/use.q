@@ -13,5 +13,5 @@ void main() {
     print(bar());
     print(tl.foo());
     t2();
-    print(qux());
+    print(foo.qux());
 }

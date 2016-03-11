@@ -1,3 +1,4 @@
-var common = require('./factorial_lib');
+var factorial = require('./factorial/index.js');
+exports.factorial = factorial;
 
-common.main();
+factorial.main();

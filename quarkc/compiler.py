@@ -15,6 +15,7 @@
 import os, inspect, urllib, tempfile, logging
 from collections import OrderedDict
 from .ast import *
+from .exceptions import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
@@ -634,10 +635,6 @@ class Check:
             return
         self.errors.append("%s: super can only be used for constructor or method invocation" % lineinfo(s))
 
-class QuarkError(Exception): pass
-class ParseError(QuarkError): pass
-class CompileError(QuarkError): pass
-
 def lineinfo(node):
     trace = getattr(node, "_trace", None)
     stack = [getattr(node, "filename", "<none>")]
@@ -780,6 +777,7 @@ class Reflector:
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
         for m in get_methods(cls, False).values():
+            if isinstance(m, Macro): continue
             mid = "%s_%s_Method" % (self.mdname(cid), m.name.text)
             mtype = self.qtype(texpr(m.type.resolved.type, bindings, m.type.resolved.bindings))
             margs = [self.qtype(texpr(p.resolved.type, bindings, p.resolved.bindings))
@@ -958,6 +956,7 @@ class Compiler(object):
 
     def parse(self, name, text):
         try:
+            self.parser._filename = name
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
@@ -1172,3 +1171,11 @@ def compile(url, target, *backends):
             b.write(out)
 
     return dirs
+
+def run(url, *backends):
+    c = Compiler(filter_native=[b.ext for b in backends])
+    file = c.urlparse(url, recurse=False)
+    name, ver = namever(file)
+    for backend in backends:
+        b = backend()
+        b.run(name, ver)

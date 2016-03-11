@@ -1,3 +1,4 @@
-var common = require('./builtin_codec_lib');
+var builtin_codec = require('./builtin_codec/index.js');
+exports.builtin_codec = builtin_codec;
 
-common.main();
+builtin_codec.main();

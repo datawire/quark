@@ -1,4 +1,4 @@
-from booleans_lib import main
+import booleans
 
 if __name__ == "__main__":
-    main()
+    booleans.main();

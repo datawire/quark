@@ -1,4 +1,4 @@
-from pets import main
+import pet
 
 if __name__ == "__main__":
-    main()
+    pet.main();

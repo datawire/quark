@@ -1,3 +1,4 @@
-var common = require('./box_lib');
+var box = require('./box/index.js');
+exports.box = box;
 
-common.main();
+box.main();

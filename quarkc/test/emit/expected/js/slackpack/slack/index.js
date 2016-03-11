@@ -1,9 +1,9 @@
 var _qrt = require("builtin/quark_runtime.js");
 var builtin = require('builtin').builtin;
 exports.builtin = builtin;
-var event = require('./event');
+var event = require('./event/index.js');
 exports.event = event;
-var slackpack_md = require('../slackpack_md');
+var slackpack_md = require('../slackpack_md/index.js');
 exports.slackpack_md = slackpack_md;
 
 

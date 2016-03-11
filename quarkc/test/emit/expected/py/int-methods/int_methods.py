@@ -1,4 +1,4 @@
-from int_methods_lib import main
+import int_methods
 
 if __name__ == "__main__":
-    main()
+    int_methods.main();

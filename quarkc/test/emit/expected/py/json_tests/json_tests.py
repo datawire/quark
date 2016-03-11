@@ -1,4 +1,4 @@
-from json_tests_lib import main
+import json_tests
 
 if __name__ == "__main__":
-    main()
+    json_tests.main();

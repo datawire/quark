@@ -1,7 +1,7 @@
 var _qrt = require("builtin/quark_runtime.js");
 var builtin = require('builtin').builtin;
 exports.builtin = builtin;
-var pet_md = require('../pet_md');
+var pet_md = require('../pet_md/index.js');
 exports.pet_md = pet_md;
 
 
@@ -79,11 +79,3 @@ Dog.prototype._getField = Dog__getField;
 
 function Dog__setField(name, value) {}
 Dog.prototype._setField = Dog__setField;
-
-function main() {
-    var evil = new Cat();
-    var good = new Dog();
-    (evil).greet();
-    (good).greet();
-}
-exports.main = main;

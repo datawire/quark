@@ -1,9 +1,11 @@
 
 
-void test() {
-    null;
-    null;
-    nullify;
-    ifnull;
-    ifnullelse;
+package null {
+    void test() {
+        null;
+        null;
+        nullify;
+        ifnull;
+        ifnullelse;
+    }
 }

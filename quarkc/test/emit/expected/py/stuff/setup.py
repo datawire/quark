@@ -6,4 +6,4 @@ setup(name="stuff",
       version="0.0.1",
       install_requires=["builtin==0.0.1"],
       py_modules=['stuff'],
-      packages=['stuff_md'])
+      packages=['stuff', 'stuff_md'])

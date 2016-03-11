@@ -6,4 +6,4 @@ setup(name="json_assembling",
       version="0.0.1",
       install_requires=["builtin==0.0.1"],
       py_modules=['json_assembling'],
-      packages=['json_assembling_md'])
+      packages=['json_assembling', 'json_assembling_md'])

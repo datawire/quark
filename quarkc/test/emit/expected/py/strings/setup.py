@@ -6,4 +6,4 @@ setup(name="strings",
       version="0.0.1",
       install_requires=["builtin==0.0.1"],
       py_modules=['strings'],
-      packages=['strings_md'])
+      packages=['strings', 'strings_md'])

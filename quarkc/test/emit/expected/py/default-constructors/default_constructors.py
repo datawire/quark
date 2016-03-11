@@ -1,4 +1,4 @@
-from default_constructors_lib import main
+import default_constructors
 
 if __name__ == "__main__":
-    main()
+    default_constructors.main();

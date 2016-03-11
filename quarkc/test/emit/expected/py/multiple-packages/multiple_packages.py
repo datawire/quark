@@ -1,4 +1,4 @@
-from p1 import main
+import multiple_packages
 
 if __name__ == "__main__":
-    main()
+    multiple_packages.main();

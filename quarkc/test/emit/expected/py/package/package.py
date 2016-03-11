@@ -1,4 +1,4 @@
-from test import main
+import package
 
 if __name__ == "__main__":
-    main()
+    package.main();

@@ -33,11 +33,3 @@ class Test(object):
 
     
 Test.test_Test_ref = package_md.Root.test_Test_md
-
-def main():
-    go();
-    test.go();
-    t1 = Test();
-    t2 = test.Test();
-    (t1).go();
-    (t2).go();

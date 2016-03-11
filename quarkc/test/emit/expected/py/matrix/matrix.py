@@ -1,4 +1,4 @@
-from matrix_lib import main
+import matrix
 
 if __name__ == "__main__":
-    main()
+    matrix.main();

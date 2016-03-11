@@ -1,3 +1,4 @@
-var common = require('./test1_test2_test3_common');
+var constructors = require('./constructors/index.js');
+exports.constructors = constructors;
 
-common.main();
+constructors.main();

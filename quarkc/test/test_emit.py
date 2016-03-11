@@ -15,6 +15,7 @@
 import os, pytest, shutil, subprocess, filecmp
 from quarkc.backend import Java, Python, JavaScript
 from quarkc.compiler import Compiler, CompileError, compile
+from quarkc.helpers import namever
 from .util import check_file, maybe_xfail
 
 directory = os.path.join(os.path.dirname(__file__), "emit")
@@ -76,6 +77,13 @@ def has_main(name):
     code = os.path.join(directory, name + ".q")
     return os.path.exists(code) and "main" in open(code).read()
 
+def get_dist(name):
+    code = os.path.join(directory, name + ".q")
+    cmp = Compiler()
+    file = cmp.urlparse(code)
+    name, ver = namever(file)
+    return name
+
 def run_tests(base, dirs, command, env=None):
     for name in dirs:
         if has_main(name):
@@ -110,7 +118,7 @@ def test_run_java(output):
     import quarkc.java
     run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
                                         ":target/classes",
-                                        quarkc.java.name(name)])
+                                        "%s.Main" % quarkc.java.name(get_dist(name))])
 
 def test_run_python(output):
     py = Python()
@@ -121,7 +129,7 @@ def test_run_python(output):
     env.update(os.environ)
 
     import quarkc.python
-    run_tests(base, dirs, lambda name: ["python", quarkc.python.name(name) + ".py"], env=env)
+    run_tests(base, dirs, lambda name: ["python", quarkc.python.name(get_dist(name)) + ".py"], env=env)
 
 def test_run_javascript(output):
     js = JavaScript()
@@ -131,4 +139,5 @@ def test_run_javascript(output):
     env = {"NODE_PATH": base}
     env.update(os.environ)
 
-    run_tests(base, dirs, lambda name: ["node", name + ".js"], env=env)
+    import quarkc.javascript
+    run_tests(base, dirs, lambda name: ["node", quarkc.javascript.name(get_dist(name)) + ".js"], env=env)

@@ -18,6 +18,7 @@ Quark compiler.
 Usage:
   quark [options] install [ --java | --python | --javascript | --all ] <file>...
   quark [options] compile [ -o DIR ] [ --java | --python | --javascript | --all ] <file>...
+  quark [options] run ( --java | --python | --javascript ) <file>...
   quark -h | --help
   quark --version
 
@@ -164,14 +165,15 @@ def main(args):
         sys.stdout.write("Quark %s\n" % _metadata.__version__)
         return
 
-    if args["--verbose"]:
-      COMMAND_DEFAULTS["mvn"] = "mvn"
-    logging.basicConfig(level=logging.DEBUG)
-    log = logging.getLogger("quark")
-    log.propagate = False
-    hnd = ProgressHandler(verbose=args["--verbose"])
-    log.addHandler(hnd)
-    hnd.setFormatter(logging.Formatter("%(message)s"))
+    if not args["run"]:
+        if args["--verbose"]:
+          COMMAND_DEFAULTS["mvn"] = "mvn"
+        logging.basicConfig(level=logging.DEBUG)
+        log = logging.getLogger("quark")
+        log.propagate = False
+        hnd = ProgressHandler(verbose=args["--verbose"])
+        log.addHandler(hnd)
+        hnd.setFormatter(logging.Formatter("%(message)s"))
 
 
     java = args["--java"]
@@ -200,6 +202,8 @@ def main(args):
                 compiler.install(url, *backends)
             elif args["compile"]:
                 compiler.compile(url, output, *backends)
+            elif args["run"]:
+                compiler.run(url, *backends)
             else:
                 assert False
     except compiler.QuarkError as err:

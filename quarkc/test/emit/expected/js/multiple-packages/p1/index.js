@@ -1,5 +1,5 @@
 var _qrt = require("builtin/quark_runtime.js");
-var p2 = require('./p2');
+var p2 = require('./p2/index.js');
 exports.p2 = p2;
 
 
@@ -14,11 +14,3 @@ function d() {
     _qrt.print("d");
 }
 exports.d = d;
-
-function main() {
-    p2.a();
-    p2.b();
-    c();
-    d();
-}
-exports.main = main;

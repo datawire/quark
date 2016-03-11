@@ -1,4 +1,4 @@
-from stuff_lib import main
+import stuff
 
 if __name__ == "__main__":
-    main()
+    stuff.main();

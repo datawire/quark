@@ -1,9 +1,9 @@
-# Setup file for package print
+# Setup file for package prtest
 
 from setuptools import setup
 
-setup(name="print",
-      version="0.0.1",
+setup(name="prtest",
+      version="1.0.0",
       install_requires=["builtin==0.0.1"],
-      py_modules=['print_'],
-      packages=['print_md'])
+      py_modules=['prtest'],
+      packages=['prtest', 'prtest_md'])

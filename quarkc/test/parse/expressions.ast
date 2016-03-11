@@ -1,21 +1,23 @@
 File(Use(url=builtin.q), Import(Name(builtin)),
 
- Function(Type(Name(void)), Name(expressions), Block(
-   ExprStmt(Var(Name(a))),
-   ExprStmt(Attr(Var(Name(a)), Name(b))),
-   ExprStmt(Call(Attr(Var(Name(a)), Name(b)))),
-   ExprStmt(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(c)))),
-   ExprStmt(Attr(Attr(Call(Var(Name(a))), Name(b)), Name(c))),
-   ExprStmt(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c))),
-   ExprStmt(Call(Attr(Var(Name(a)), Name(__add__)), Var(Name(x)))),
-   ExprStmt(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(__add__)),
-     Var(Name(x)))),
-   ExprStmt(Call(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(__add__)),
-     Var(Name(x)))),
-   ExprStmt(Call(Attr(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(c))),
-      Name(__add__)), Var(Name(x)))),
-   ExprStmt(Call(Attr(Attr(Attr(Call(Var(Name(a))), Name(b)), Name(c)),
-      Name(__add__)), Var(Name(x)))),
-   ExprStmt(Call(Attr(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c)),
-      Name(__add__)), Var(Name(x))))))
+ Package(Name(expressions),
+
+  Function(Type(Name(void)), Name(expressions), Block(
+    ExprStmt(Var(Name(a))),
+    ExprStmt(Attr(Var(Name(a)), Name(b))),
+    ExprStmt(Call(Attr(Var(Name(a)), Name(b)))),
+    ExprStmt(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(c)))),
+    ExprStmt(Attr(Attr(Call(Var(Name(a))), Name(b)), Name(c))),
+    ExprStmt(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c))),
+    ExprStmt(Call(Attr(Var(Name(a)), Name(__add__)), Var(Name(x)))),
+    ExprStmt(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(__add__)),
+      Var(Name(x)))),
+    ExprStmt(Call(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(__add__)),
+      Var(Name(x)))),
+    ExprStmt(Call(Attr(Call(Attr(Attr(Var(Name(a)), Name(b)), Name(c))),
+       Name(__add__)), Var(Name(x)))),
+    ExprStmt(Call(Attr(Attr(Attr(Call(Var(Name(a))), Name(b)), Name(c)),
+       Name(__add__)), Var(Name(x)))),
+    ExprStmt(Call(Attr(Attr(Call(Attr(Var(Name(a)), Name(b))), Name(c)),
+       Name(__add__)), Var(Name(x)))))))
 )

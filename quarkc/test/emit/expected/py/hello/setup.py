@@ -6,4 +6,4 @@ setup(name="hello",
       version="0.0.1",
       install_requires=["builtin==0.0.1"],
       py_modules=['hello'],
-      packages=['hello_md'])
+      packages=['hello', 'hello_md'])

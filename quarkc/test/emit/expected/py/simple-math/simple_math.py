@@ -1,4 +1,4 @@
-from simple_math_lib import main
+import simple_math
 
 if __name__ == "__main__":
-    main()
+    simple_math.main();
