@@ -149,8 +149,11 @@ def sanitize(name):
 def filebase(name):
     return os.path.splitext(os.path.basename(name))[0]
 
-def namever(file):
-    if file.dist: return file.dist.name.text, file.dist.version
+def namever(obj):
+    root = obj.root
+    for file in obj.root.files:
+        if file.dist: return file.dist.name.text, file.dist.version
+    file = obj
     name = sanitize(filebase(file.name))
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:

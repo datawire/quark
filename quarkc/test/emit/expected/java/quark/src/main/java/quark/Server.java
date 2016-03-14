@@ -1,7 +1,6 @@
 package quark;
 
 public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.datawire.quark.runtime.QObject {
-    public static quark.reflect.Class quark_List_quark_reflect_Class__ref = quark_md.Root.quark_List_quark_reflect_Class__md;
     public static quark.reflect.Class quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md;
     public T impl;
     public Server(T impl) {

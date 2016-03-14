@@ -6,94 +6,94 @@ File(Use(url=quark.q), Import(Name(quark)),
 
    Method(static=False, Type(Name(void)), Name(foo), Block(
      ExprStmt(Call(Var(Name(print), $type=0.quark.print), String("A",
-       $type=0.quark.String), $type=0.quark.void)))),
+       $type=1.quark.String), $type=1.quark.void)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("inheritence.A", $type=0.quark.String)))),
+     Return(String("inheritence.A", $type=1.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
     Block(
-     Return(Null(null, $type=0.quark.Object)))),
+     Return(Null(null, $type=1.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)),
     Name(inheritence_A_ref), Attr(Attr(Var(Name(inheritence_md),
       $type=1.inheritence_md), Name(Root), $type=1.inheritence_md.Root),
-     Name(inheritence_A_md), $type=0.quark.reflect.Class),
-   $type=0.quark.reflect.Class)),
+     Name(inheritence_A_md), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)),
 
   Class(Name(B), Type(Name(A)),
 
    Method(static=False, Type(Name(void)), Name(foo), Block(
      ExprStmt(Call(Var(Name(print), $type=0.quark.print), String("B",
-       $type=0.quark.String), $type=0.quark.void)))),
+       $type=1.quark.String), $type=1.quark.void)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("inheritence.B", $type=0.quark.String)))),
+     Return(String("inheritence.B", $type=1.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
     Block(
-     Return(Null(null, $type=0.quark.Object)))),
+     Return(Null(null, $type=1.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)),
     Name(inheritence_B_ref), Attr(Attr(Var(Name(inheritence_md),
       $type=1.inheritence_md), Name(Root), $type=1.inheritence_md.Root),
-     Name(inheritence_B_md), $type=0.quark.reflect.Class),
-   $type=0.quark.reflect.Class)),
+     Name(inheritence_B_md), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)),
 
   Class(Name(C), Type(Name(A)),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("inheritence.C", $type=0.quark.String)))),
+     Return(String("inheritence.C", $type=1.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
     Block(
-     Return(Null(null, $type=0.quark.Object)))),
+     Return(Null(null, $type=1.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)),
     Name(inheritence_C_ref), Attr(Attr(Var(Name(inheritence_md),
       $type=1.inheritence_md), Name(Root), $type=1.inheritence_md.Root),
-     Name(inheritence_C_md), $type=0.quark.reflect.Class),
-   $type=0.quark.reflect.Class)),
+     Name(inheritence_C_md), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)),
 
   Function(Type(Name(void)), Name(main), Block(
     Local(
      Declaration(Type(Name(A)), Name(a), Call(Type(Name(A)),
       $type=0.inheritence.A), $type=0.inheritence.A)),
     ExprStmt(Call(Attr(Var(Name(a), $type=0.inheritence.A), Name(foo),
-      $type=0.inheritence.A.foo), $type=0.quark.void)),
+      $type=0.inheritence.A.foo), $type=1.quark.void)),
     Local(
      Declaration(Type(Name(B)), Name(b), Call(Type(Name(B)),
       $type=0.inheritence.B), $type=0.inheritence.B)),
     ExprStmt(Call(Attr(Var(Name(b), $type=0.inheritence.B), Name(foo),
-      $type=0.inheritence.B.foo), $type=0.quark.void)),
+      $type=0.inheritence.B.foo), $type=1.quark.void)),
     Local(
      Declaration(Type(Name(C)), Name(c), Call(Type(Name(C)),
       $type=0.inheritence.C), $type=0.inheritence.C)),
     ExprStmt(Call(Attr(Var(Name(c), $type=0.inheritence.C), Name(foo),
-      $type=0.inheritence.A.foo), $type=0.quark.void)),
+      $type=0.inheritence.A.foo), $type=1.quark.void)),
     ExprStmt(Call(Var(Name(print), $type=0.quark.print), String("--",
-      $type=0.quark.String), $type=0.quark.void)),
+      $type=1.quark.String), $type=1.quark.void)),
     Assign(Var(Name(a), $type=0.inheritence.A), Var(Name(b),
      $type=0.inheritence.B)),
     ExprStmt(Call(Attr(Var(Name(a), $type=0.inheritence.A), Name(foo),
-      $type=0.inheritence.A.foo), $type=0.quark.void)),
+      $type=0.inheritence.A.foo), $type=1.quark.void)),
     Assign(Var(Name(a), $type=0.inheritence.A), Var(Name(c),
      $type=0.inheritence.C)),
     ExprStmt(Call(Attr(Var(Name(a), $type=0.inheritence.A), Name(foo),
-      $type=0.inheritence.A.foo), $type=0.quark.void)))))
+      $type=0.inheritence.A.foo), $type=1.quark.void)))))
 )

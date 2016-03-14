@@ -10,6 +10,10 @@ exports.quark_md = quark_md;
 
 
 
+
+
+
+
 /**
  * Serializes object tree into JSON. skips over fields starting with underscore
  */
@@ -107,6 +111,7 @@ function fromJSON(cls, result, json) {
     return result;
 }
 exports.fromJSON = fromJSON;
+
 
 // CLASS Resolver
 function Resolver() {
@@ -570,7 +575,6 @@ function Server__init_fields__() {
     this.impl = null;
 }
 Server.prototype.__init_fields__ = Server__init_fields__;
-Server.quark_List_quark_reflect_Class__ref = quark_md.Root.quark_List_quark_reflect_Class__md;
 Server.quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md;
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
@@ -637,3 +641,5 @@ Server.prototype.onServletInit = Server_onServletInit;
  */
 function Server_onServletEnd(url) {}
 Server.prototype.onServletEnd = Server_onServletEnd;
+
+
