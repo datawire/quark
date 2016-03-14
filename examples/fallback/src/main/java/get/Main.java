@@ -7,7 +7,7 @@ import fallback.Content;
 
 public class Main {
 
-    static long timeout = 1000;
+    static double timeout = 1.0;
 
     public static void main(String[] args) {
         Client cli = new Client();

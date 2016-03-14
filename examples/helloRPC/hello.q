@@ -1,5 +1,5 @@
 package hello 1.2.3;
-import builtin.concurrent;
+import quark.concurrent;
 
 namespace hello {
 

@@ -1,6 +1,6 @@
 import fallback, sys
 
-timeout = 10000
+timeout = 1.0
 
 cli = fallback.Client()
 content = cli.get(sys.argv[1:], timeout)

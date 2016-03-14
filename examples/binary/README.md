@@ -25,7 +25,7 @@ Compile and install the protocol implementation in binary.q:
 
         quark install binary.q --java
 
-Compile the Java server and client with 
+Compile the Java server and client with
 
         mvn compile
 
@@ -39,8 +39,25 @@ Run the Java client with
 
 ### Python
 
-Coming soon!
+Compile and install the protocol implementation in binary.q:
 
-### Javascript
+        quark install binary.q --python
 
-Coming soon!
+Run the Python client with
+
+        python client.py
+
+Python server coming soon!
+
+### JavaScript
+
+Compile and install the protocol implementation in binary.q:
+
+        quark install binary.q --javascript
+
+Run the JavaScript client with
+
+        node client.js
+
+JavaScript server coming soon!
+

@@ -3,7 +3,7 @@
 "use strict";
 var fallback = require("fallback").fallback;
 
-var timeout = 1000;
+var timeout = 1.0;
 
 var cli = new fallback.Client();
 var content = cli.get(["https://asdf.com", "http://www.google.com"], timeout);

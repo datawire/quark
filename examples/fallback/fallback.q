@@ -1,5 +1,5 @@
 package fallback 1.2.3;
-import builtin.concurrent;
+import quark.concurrent;
 
 namespace fallback {
 
@@ -9,7 +9,7 @@ namespace fallback {
 
     class Client {
 
-        Content get(List<String> urls, long timeout) {
+        Content get(List<String> urls, float timeout) {
             Content result = new Content();
             Fallback fallback = new Fallback(urls, timeout, result);
             fallback.call(urls[0]);
@@ -25,7 +25,7 @@ namespace fallback {
         Content result;
         Timeout timeout;
 
-        Fallback(List<String> urls, long timeout, Content result) {
+        Fallback(List<String> urls, float timeout, Content result) {
             self.urls = urls;
             self.result = result;
             self.timeout = new Timeout(timeout);
