@@ -5,8 +5,8 @@ File(Use(url=quark.q), Import(Name(quark)),
   Function(Type(Name(void)), Name(test), Block(
     Local(
      Declaration(Type(Name(List), Type(Name(String))), Name(parts),
-      Call(Attr(String("foo bar baz", $type=0.quark.String), Name(split),
-       $type=0.quark.String.split), String(" ", $type=0.quark.String),
-      $type=0.quark.List<0.quark.String>),
-     $type=0.quark.List<0.quark.String>)))))
+      Call(Attr(String("foo bar baz", $type=1.quark.String), Name(split),
+       $type=1.quark.String.split), String(" ", $type=1.quark.String),
+      $type=1.quark.List<1.quark.String>),
+     $type=1.quark.List<1.quark.String>)))))
 )

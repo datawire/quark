@@ -7,5 +7,5 @@ File(Use(url=quark.q), Import(Name(quark)),
   Function(Type(Name(void)), Name(g), Block(
     Local(
      Declaration(Type(Name(int)), Name(x), Call(Var(Name(f),
-       $type=0.return_types.f), $type=0.quark.int), $type=0.quark.int)))))
+       $type=0.return_types.f), $type=1.quark.int), $type=1.quark.int)))))
 )

@@ -78,30 +78,6 @@ class quark_List_quark_reflect_Field_(quark.reflect.Class):
         pass
 quark_List_quark_reflect_Field_.singleton = quark_List_quark_reflect_Field_()
 
-class quark_List_quark_reflect_Class_(quark.reflect.Class):
-    def _init(self):
-        quark.reflect.Class._init(self)
-
-    def __init__(self):
-        super(quark_List_quark_reflect_Class_, self).__init__(u"quark.List<quark.reflect.Class>");
-        (self).name = u"quark.List"
-        (self).parameters = _List([u"quark.reflect.Class"])
-        (self).fields = _List([])
-        (self).methods = _List([])
-
-    def construct(self, args):
-        return _List()
-
-    def _getClass(self):
-        return None
-
-    def _getField(self, name):
-        return None
-
-    def _setField(self, name, value):
-        pass
-quark_List_quark_reflect_Class_.singleton = quark_List_quark_reflect_Class_()
-
 class quark_List_quark_reflect_Method_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -125,6 +101,30 @@ class quark_List_quark_reflect_Method_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_reflect_Method_.singleton = quark_List_quark_reflect_Method_()
+
+class quark_List_quark_reflect_Class_(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_List_quark_reflect_Class_, self).__init__(u"quark.List<quark.reflect.Class>");
+        (self).name = u"quark.List"
+        (self).parameters = _List([u"quark.reflect.Class"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _List()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_List_quark_reflect_Class_.singleton = quark_List_quark_reflect_Class_()
 
 class quark_List_quark_concurrent_FutureCompletion_(quark.reflect.Class):
     def _init(self):
@@ -174,6 +174,30 @@ class quark_Map_quark_Object_quark_Object_(quark.reflect.Class):
         pass
 quark_Map_quark_Object_quark_Object_.singleton = quark_Map_quark_Object_quark_Object_()
 
+class quark_Map_quark_String_quark_reflect_Class_(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_Map_quark_String_quark_reflect_Class_, self).__init__(u"quark.Map<quark.String,quark.reflect.Class>");
+        (self).name = u"quark.Map"
+        (self).parameters = _List([u"quark.String", u"quark.reflect.Class"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _Map()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_Map_quark_String_quark_reflect_Class_.singleton = quark_Map_quark_String_quark_reflect_Class_()
+
 class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -222,19 +246,19 @@ class quark_Map_quark_String_quark_ServiceInstance_(quark.reflect.Class):
         pass
 quark_Map_quark_String_quark_ServiceInstance_.singleton = quark_Map_quark_String_quark_ServiceInstance_()
 
-class quark_Map_quark_String_quark_reflect_Class_(quark.reflect.Class):
+class quark_reflect_Class(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(quark_Map_quark_String_quark_reflect_Class_, self).__init__(u"quark.Map<quark.String,quark.reflect.Class>");
-        (self).name = u"quark.Map"
-        (self).parameters = _List([u"quark.String", u"quark.reflect.Class"])
-        (self).fields = _List([])
+        super(quark_reflect_Class, self).__init__(u"quark.reflect.Class");
+        (self).name = u"quark.reflect.Class"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.Map<quark.String,quark.reflect.Class>", u"classes"), quark.reflect.Field(u"quark.reflect.Class", u"VOID"), quark.reflect.Field(u"quark.reflect.Class", u"BOOL"), quark.reflect.Field(u"quark.reflect.Class", u"INT"), quark.reflect.Field(u"quark.reflect.Class", u"LONG"), quark.reflect.Field(u"quark.reflect.Class", u"FLOAT"), quark.reflect.Field(u"quark.reflect.Class", u"STRING"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.List<quark.String>", u"parameters"), quark.reflect.Field(u"quark.List<quark.reflect.Field>", u"fields"), quark.reflect.Field(u"quark.List<quark.reflect.Method>", u"methods")])
         (self).methods = _List([])
 
     def construct(self, args):
-        return _Map()
+        return quark.reflect.Class((args)[0])
 
     def _getClass(self):
         return None
@@ -244,7 +268,31 @@ class quark_Map_quark_String_quark_reflect_Class_(quark.reflect.Class):
 
     def _setField(self, name, value):
         pass
-quark_Map_quark_String_quark_reflect_Class_.singleton = quark_Map_quark_String_quark_reflect_Class_()
+quark_reflect_Class.singleton = quark_reflect_Class()
+
+class quark_reflect_Field(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_reflect_Field, self).__init__(u"quark.reflect.Field");
+        (self).name = u"quark.reflect.Field"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"quark.String", u"name")])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return quark.reflect.Field((args)[0], (args)[1])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_reflect_Field.singleton = quark_reflect_Field()
 
 class quark_Resolver(quark.reflect.Class):
     def _init(self):
@@ -461,54 +509,6 @@ class quark_Server_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_Server_quark_Object_.singleton = quark_Server_quark_Object_()
-
-class quark_reflect_Class(quark.reflect.Class):
-    def _init(self):
-        quark.reflect.Class._init(self)
-
-    def __init__(self):
-        super(quark_reflect_Class, self).__init__(u"quark.reflect.Class");
-        (self).name = u"quark.reflect.Class"
-        (self).parameters = _List([])
-        (self).fields = _List([quark.reflect.Field(u"quark.Map<quark.String,quark.reflect.Class>", u"classes"), quark.reflect.Field(u"quark.reflect.Class", u"VOID"), quark.reflect.Field(u"quark.reflect.Class", u"BOOL"), quark.reflect.Field(u"quark.reflect.Class", u"INT"), quark.reflect.Field(u"quark.reflect.Class", u"LONG"), quark.reflect.Field(u"quark.reflect.Class", u"FLOAT"), quark.reflect.Field(u"quark.reflect.Class", u"STRING"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.List<quark.String>", u"parameters"), quark.reflect.Field(u"quark.List<quark.reflect.Field>", u"fields"), quark.reflect.Field(u"quark.List<quark.reflect.Method>", u"methods")])
-        (self).methods = _List([])
-
-    def construct(self, args):
-        return quark.reflect.Class((args)[0])
-
-    def _getClass(self):
-        return None
-
-    def _getField(self, name):
-        return None
-
-    def _setField(self, name, value):
-        pass
-quark_reflect_Class.singleton = quark_reflect_Class()
-
-class quark_reflect_Field(quark.reflect.Class):
-    def _init(self):
-        quark.reflect.Class._init(self)
-
-    def __init__(self):
-        super(quark_reflect_Field, self).__init__(u"quark.reflect.Field");
-        (self).name = u"quark.reflect.Field"
-        (self).parameters = _List([])
-        (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"quark.String", u"name")])
-        (self).methods = _List([])
-
-    def construct(self, args):
-        return quark.reflect.Field((args)[0], (args)[1])
-
-    def _getClass(self):
-        return None
-
-    def _getField(self, name):
-        return None
-
-    def _setField(self, name, value):
-        pass
-quark_reflect_Field.singleton = quark_reflect_Field()
 
 class quark_behaviors_RPC_call_Method(quark.reflect.Method):
     def _init(self):
@@ -1859,7 +1859,6 @@ class Root(object):
         pass
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton
-Root.quark_List_quark_reflect_Class__md = quark_List_quark_reflect_Class_.singleton
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton

@@ -7,6 +7,10 @@ import quark_md
 
 
 
+
+
+
+
 def toJSON(obj, cls):
     """
     Serializes object tree into JSON. skips over fields starting with underscore
@@ -100,6 +104,7 @@ def fromJSON(cls, result, json):
             (result)._setField(((f).name), (fromJSON((f).getType(), None, (json).getObjectItem((f).name))));
 
     return result
+
 
 class Resolver(object):
 
@@ -505,5 +510,6 @@ class Server(object):
         called when the servlet is removed
         """
         pass
-Server.quark_List_quark_reflect_Class__ref = quark_md.Root.quark_List_quark_reflect_Class__md
 Server.quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md
+
+

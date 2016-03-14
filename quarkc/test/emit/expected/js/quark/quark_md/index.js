@@ -118,42 +118,6 @@ function quark_List_quark_reflect_Field___setField(name, value) {}
 quark_List_quark_reflect_Field_.prototype._setField = quark_List_quark_reflect_Field___setField;
 
 
-// CLASS quark_List_quark_reflect_Class_
-
-function quark_List_quark_reflect_Class_() {
-    quark_List_quark_reflect_Class_.super_.call(this, "quark.List<quark.reflect.Class>");
-    (this).name = "quark.List";
-    (this).parameters = ["quark.reflect.Class"];
-    (this).fields = [];
-    (this).methods = [];
-}
-exports.quark_List_quark_reflect_Class_ = quark_List_quark_reflect_Class_;
-_qrt.util.inherits(quark_List_quark_reflect_Class_, quark.reflect.Class);
-
-function quark_List_quark_reflect_Class___init_fields__() {
-    quark.reflect.Class.prototype.__init_fields__.call(this);
-}
-quark_List_quark_reflect_Class_.prototype.__init_fields__ = quark_List_quark_reflect_Class___init_fields__;
-quark_List_quark_reflect_Class_.singleton = new quark_List_quark_reflect_Class_();
-function quark_List_quark_reflect_Class__construct(args) {
-    return new Array();
-}
-quark_List_quark_reflect_Class_.prototype.construct = quark_List_quark_reflect_Class__construct;
-
-function quark_List_quark_reflect_Class___getClass() {
-    return null;
-}
-quark_List_quark_reflect_Class_.prototype._getClass = quark_List_quark_reflect_Class___getClass;
-
-function quark_List_quark_reflect_Class___getField(name) {
-    return null;
-}
-quark_List_quark_reflect_Class_.prototype._getField = quark_List_quark_reflect_Class___getField;
-
-function quark_List_quark_reflect_Class___setField(name, value) {}
-quark_List_quark_reflect_Class_.prototype._setField = quark_List_quark_reflect_Class___setField;
-
-
 // CLASS quark_List_quark_reflect_Method_
 
 function quark_List_quark_reflect_Method_() {
@@ -188,6 +152,42 @@ quark_List_quark_reflect_Method_.prototype._getField = quark_List_quark_reflect_
 
 function quark_List_quark_reflect_Method___setField(name, value) {}
 quark_List_quark_reflect_Method_.prototype._setField = quark_List_quark_reflect_Method___setField;
+
+
+// CLASS quark_List_quark_reflect_Class_
+
+function quark_List_quark_reflect_Class_() {
+    quark_List_quark_reflect_Class_.super_.call(this, "quark.List<quark.reflect.Class>");
+    (this).name = "quark.List";
+    (this).parameters = ["quark.reflect.Class"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_List_quark_reflect_Class_ = quark_List_quark_reflect_Class_;
+_qrt.util.inherits(quark_List_quark_reflect_Class_, quark.reflect.Class);
+
+function quark_List_quark_reflect_Class___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_List_quark_reflect_Class_.prototype.__init_fields__ = quark_List_quark_reflect_Class___init_fields__;
+quark_List_quark_reflect_Class_.singleton = new quark_List_quark_reflect_Class_();
+function quark_List_quark_reflect_Class__construct(args) {
+    return new Array();
+}
+quark_List_quark_reflect_Class_.prototype.construct = quark_List_quark_reflect_Class__construct;
+
+function quark_List_quark_reflect_Class___getClass() {
+    return null;
+}
+quark_List_quark_reflect_Class_.prototype._getClass = quark_List_quark_reflect_Class___getClass;
+
+function quark_List_quark_reflect_Class___getField(name) {
+    return null;
+}
+quark_List_quark_reflect_Class_.prototype._getField = quark_List_quark_reflect_Class___getField;
+
+function quark_List_quark_reflect_Class___setField(name, value) {}
+quark_List_quark_reflect_Class_.prototype._setField = quark_List_quark_reflect_Class___setField;
 
 
 // CLASS quark_List_quark_concurrent_FutureCompletion_
@@ -262,6 +262,42 @@ function quark_Map_quark_Object_quark_Object___setField(name, value) {}
 quark_Map_quark_Object_quark_Object_.prototype._setField = quark_Map_quark_Object_quark_Object___setField;
 
 
+// CLASS quark_Map_quark_String_quark_reflect_Class_
+
+function quark_Map_quark_String_quark_reflect_Class_() {
+    quark_Map_quark_String_quark_reflect_Class_.super_.call(this, "quark.Map<quark.String,quark.reflect.Class>");
+    (this).name = "quark.Map";
+    (this).parameters = ["quark.String", "quark.reflect.Class"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_Map_quark_String_quark_reflect_Class_ = quark_Map_quark_String_quark_reflect_Class_;
+_qrt.util.inherits(quark_Map_quark_String_quark_reflect_Class_, quark.reflect.Class);
+
+function quark_Map_quark_String_quark_reflect_Class___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_Map_quark_String_quark_reflect_Class_.prototype.__init_fields__ = quark_Map_quark_String_quark_reflect_Class___init_fields__;
+quark_Map_quark_String_quark_reflect_Class_.singleton = new quark_Map_quark_String_quark_reflect_Class_();
+function quark_Map_quark_String_quark_reflect_Class__construct(args) {
+    return new Map();
+}
+quark_Map_quark_String_quark_reflect_Class_.prototype.construct = quark_Map_quark_String_quark_reflect_Class__construct;
+
+function quark_Map_quark_String_quark_reflect_Class___getClass() {
+    return null;
+}
+quark_Map_quark_String_quark_reflect_Class_.prototype._getClass = quark_Map_quark_String_quark_reflect_Class___getClass;
+
+function quark_Map_quark_String_quark_reflect_Class___getField(name) {
+    return null;
+}
+quark_Map_quark_String_quark_reflect_Class_.prototype._getField = quark_Map_quark_String_quark_reflect_Class___getField;
+
+function quark_Map_quark_String_quark_reflect_Class___setField(name, value) {}
+quark_Map_quark_String_quark_reflect_Class_.prototype._setField = quark_Map_quark_String_quark_reflect_Class___setField;
+
+
 // CLASS quark_Map_quark_String_quark_Object_
 
 function quark_Map_quark_String_quark_Object_() {
@@ -334,40 +370,76 @@ function quark_Map_quark_String_quark_ServiceInstance___setField(name, value) {}
 quark_Map_quark_String_quark_ServiceInstance_.prototype._setField = quark_Map_quark_String_quark_ServiceInstance___setField;
 
 
-// CLASS quark_Map_quark_String_quark_reflect_Class_
+// CLASS quark_reflect_Class
 
-function quark_Map_quark_String_quark_reflect_Class_() {
-    quark_Map_quark_String_quark_reflect_Class_.super_.call(this, "quark.Map<quark.String,quark.reflect.Class>");
-    (this).name = "quark.Map";
-    (this).parameters = ["quark.String", "quark.reflect.Class"];
-    (this).fields = [];
+function quark_reflect_Class() {
+    quark_reflect_Class.super_.call(this, "quark.reflect.Class");
+    (this).name = "quark.reflect.Class";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.Map<quark.String,quark.reflect.Class>", "classes"), new quark.reflect.Field("quark.reflect.Class", "VOID"), new quark.reflect.Field("quark.reflect.Class", "BOOL"), new quark.reflect.Field("quark.reflect.Class", "INT"), new quark.reflect.Field("quark.reflect.Class", "LONG"), new quark.reflect.Field("quark.reflect.Class", "FLOAT"), new quark.reflect.Field("quark.reflect.Class", "STRING"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.List<quark.String>", "parameters"), new quark.reflect.Field("quark.List<quark.reflect.Field>", "fields"), new quark.reflect.Field("quark.List<quark.reflect.Method>", "methods")];
     (this).methods = [];
 }
-exports.quark_Map_quark_String_quark_reflect_Class_ = quark_Map_quark_String_quark_reflect_Class_;
-_qrt.util.inherits(quark_Map_quark_String_quark_reflect_Class_, quark.reflect.Class);
+exports.quark_reflect_Class = quark_reflect_Class;
+_qrt.util.inherits(quark_reflect_Class, quark.reflect.Class);
 
-function quark_Map_quark_String_quark_reflect_Class___init_fields__() {
+function quark_reflect_Class__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
-quark_Map_quark_String_quark_reflect_Class_.prototype.__init_fields__ = quark_Map_quark_String_quark_reflect_Class___init_fields__;
-quark_Map_quark_String_quark_reflect_Class_.singleton = new quark_Map_quark_String_quark_reflect_Class_();
-function quark_Map_quark_String_quark_reflect_Class__construct(args) {
-    return new Map();
+quark_reflect_Class.prototype.__init_fields__ = quark_reflect_Class__init_fields__;
+quark_reflect_Class.singleton = new quark_reflect_Class();
+function quark_reflect_Class_construct(args) {
+    return new quark.reflect.Class((args)[0]);
 }
-quark_Map_quark_String_quark_reflect_Class_.prototype.construct = quark_Map_quark_String_quark_reflect_Class__construct;
+quark_reflect_Class.prototype.construct = quark_reflect_Class_construct;
 
-function quark_Map_quark_String_quark_reflect_Class___getClass() {
+function quark_reflect_Class__getClass() {
     return null;
 }
-quark_Map_quark_String_quark_reflect_Class_.prototype._getClass = quark_Map_quark_String_quark_reflect_Class___getClass;
+quark_reflect_Class.prototype._getClass = quark_reflect_Class__getClass;
 
-function quark_Map_quark_String_quark_reflect_Class___getField(name) {
+function quark_reflect_Class__getField(name) {
     return null;
 }
-quark_Map_quark_String_quark_reflect_Class_.prototype._getField = quark_Map_quark_String_quark_reflect_Class___getField;
+quark_reflect_Class.prototype._getField = quark_reflect_Class__getField;
 
-function quark_Map_quark_String_quark_reflect_Class___setField(name, value) {}
-quark_Map_quark_String_quark_reflect_Class_.prototype._setField = quark_Map_quark_String_quark_reflect_Class___setField;
+function quark_reflect_Class__setField(name, value) {}
+quark_reflect_Class.prototype._setField = quark_reflect_Class__setField;
+
+
+// CLASS quark_reflect_Field
+
+function quark_reflect_Field() {
+    quark_reflect_Field.super_.call(this, "quark.reflect.Field");
+    (this).name = "quark.reflect.Field";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("quark.String", "name")];
+    (this).methods = [];
+}
+exports.quark_reflect_Field = quark_reflect_Field;
+_qrt.util.inherits(quark_reflect_Field, quark.reflect.Class);
+
+function quark_reflect_Field__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_reflect_Field.prototype.__init_fields__ = quark_reflect_Field__init_fields__;
+quark_reflect_Field.singleton = new quark_reflect_Field();
+function quark_reflect_Field_construct(args) {
+    return new quark.reflect.Field((args)[0], (args)[1]);
+}
+quark_reflect_Field.prototype.construct = quark_reflect_Field_construct;
+
+function quark_reflect_Field__getClass() {
+    return null;
+}
+quark_reflect_Field.prototype._getClass = quark_reflect_Field__getClass;
+
+function quark_reflect_Field__getField(name) {
+    return null;
+}
+quark_reflect_Field.prototype._getField = quark_reflect_Field__getField;
+
+function quark_reflect_Field__setField(name, value) {}
+quark_reflect_Field.prototype._setField = quark_reflect_Field__setField;
 
 
 // CLASS quark_Resolver
@@ -692,78 +764,6 @@ quark_Server_quark_Object_.prototype._getField = quark_Server_quark_Object___get
 
 function quark_Server_quark_Object___setField(name, value) {}
 quark_Server_quark_Object_.prototype._setField = quark_Server_quark_Object___setField;
-
-
-// CLASS quark_reflect_Class
-
-function quark_reflect_Class() {
-    quark_reflect_Class.super_.call(this, "quark.reflect.Class");
-    (this).name = "quark.reflect.Class";
-    (this).parameters = [];
-    (this).fields = [new quark.reflect.Field("quark.Map<quark.String,quark.reflect.Class>", "classes"), new quark.reflect.Field("quark.reflect.Class", "VOID"), new quark.reflect.Field("quark.reflect.Class", "BOOL"), new quark.reflect.Field("quark.reflect.Class", "INT"), new quark.reflect.Field("quark.reflect.Class", "LONG"), new quark.reflect.Field("quark.reflect.Class", "FLOAT"), new quark.reflect.Field("quark.reflect.Class", "STRING"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.List<quark.String>", "parameters"), new quark.reflect.Field("quark.List<quark.reflect.Field>", "fields"), new quark.reflect.Field("quark.List<quark.reflect.Method>", "methods")];
-    (this).methods = [];
-}
-exports.quark_reflect_Class = quark_reflect_Class;
-_qrt.util.inherits(quark_reflect_Class, quark.reflect.Class);
-
-function quark_reflect_Class__init_fields__() {
-    quark.reflect.Class.prototype.__init_fields__.call(this);
-}
-quark_reflect_Class.prototype.__init_fields__ = quark_reflect_Class__init_fields__;
-quark_reflect_Class.singleton = new quark_reflect_Class();
-function quark_reflect_Class_construct(args) {
-    return new quark.reflect.Class((args)[0]);
-}
-quark_reflect_Class.prototype.construct = quark_reflect_Class_construct;
-
-function quark_reflect_Class__getClass() {
-    return null;
-}
-quark_reflect_Class.prototype._getClass = quark_reflect_Class__getClass;
-
-function quark_reflect_Class__getField(name) {
-    return null;
-}
-quark_reflect_Class.prototype._getField = quark_reflect_Class__getField;
-
-function quark_reflect_Class__setField(name, value) {}
-quark_reflect_Class.prototype._setField = quark_reflect_Class__setField;
-
-
-// CLASS quark_reflect_Field
-
-function quark_reflect_Field() {
-    quark_reflect_Field.super_.call(this, "quark.reflect.Field");
-    (this).name = "quark.reflect.Field";
-    (this).parameters = [];
-    (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("quark.String", "name")];
-    (this).methods = [];
-}
-exports.quark_reflect_Field = quark_reflect_Field;
-_qrt.util.inherits(quark_reflect_Field, quark.reflect.Class);
-
-function quark_reflect_Field__init_fields__() {
-    quark.reflect.Class.prototype.__init_fields__.call(this);
-}
-quark_reflect_Field.prototype.__init_fields__ = quark_reflect_Field__init_fields__;
-quark_reflect_Field.singleton = new quark_reflect_Field();
-function quark_reflect_Field_construct(args) {
-    return new quark.reflect.Field((args)[0], (args)[1]);
-}
-quark_reflect_Field.prototype.construct = quark_reflect_Field_construct;
-
-function quark_reflect_Field__getClass() {
-    return null;
-}
-quark_reflect_Field.prototype._getClass = quark_reflect_Field__getClass;
-
-function quark_reflect_Field__getField(name) {
-    return null;
-}
-quark_reflect_Field.prototype._getField = quark_reflect_Field__getField;
-
-function quark_reflect_Field__setField(name, value) {}
-quark_reflect_Field.prototype._setField = quark_reflect_Field__setField;
 
 
 // CLASS quark_behaviors_RPC_call_Method
@@ -2854,7 +2854,6 @@ function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
-Root.quark_List_quark_reflect_Class__md = quark_List_quark_reflect_Class_.singleton;
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton;
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton;
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;

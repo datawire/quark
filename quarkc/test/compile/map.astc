@@ -6,14 +6,14 @@ File(Use(url=quark.q), Import(Name(quark)),
     Local(
      Declaration(Type(Name(Map), Type(Name(String)), Type(Name(int))),
       Name(map), Call(Type(Name(Map), Type(Name(String)), Type(Name(int))),
-      $type=0.quark.Map<0.quark.String,0.quark.int>),
-     $type=0.quark.Map<0.quark.String,0.quark.int>)),
+      $type=1.quark.Map<1.quark.String,1.quark.int>),
+     $type=1.quark.Map<1.quark.String,1.quark.int>)),
     ExprStmt(Call(Attr(Var(Name(map),
-       $type=0.quark.Map<0.quark.String,0.quark.int>), Name(__set__),
-      $type=0.quark.Map.__set__), String("pi", $type=0.quark.String), Number(3,
-      $type=0.quark.int), $type=0.quark.void)),
+       $type=1.quark.Map<1.quark.String,1.quark.int>), Name(__set__),
+      $type=1.quark.Map.__set__), String("pi", $type=1.quark.String), Number(3,
+      $type=1.quark.int), $type=1.quark.void)),
     ExprStmt(Call(Attr(Var(Name(map),
-       $type=0.quark.Map<0.quark.String,0.quark.int>), Name(__get__),
-      $type=0.quark.Map.__get__), String("pi", $type=0.quark.String),
-     $type=0.quark.int)))))
+       $type=1.quark.Map<1.quark.String,1.quark.int>), Name(__get__),
+      $type=1.quark.Map.__get__), String("pi", $type=1.quark.String),
+     $type=1.quark.int)))))
 )

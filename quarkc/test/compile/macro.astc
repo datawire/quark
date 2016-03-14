@@ -2,16 +2,16 @@ File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(macro),
 
-  Macro(Type(Name(int)), Name(pi), Number(3, $type=0.quark.int)),
+  Macro(Type(Name(int)), Name(pi), Number(3, $type=1.quark.int)),
 
   Function(Type(Name(void)), Name(test), Block(
     Local(
      Declaration(Type(Name(int)), Name(x), Call(Var(Name(pi),
-       $type=0.macro.pi), $type=0.quark.int), $type=0.quark.int)))),
+       $type=0.macro.pi), $type=1.quark.int), $type=1.quark.int)))),
 
   Class(Name(Pie),
 
-   MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=0.quark.int)),
+   MethodMacro(Type(Name(int)), Name(slice), Number(3, $type=1.quark.int)),
 
    Method(static=False, Type(Name(void)), Name(test), Block(
      Local(
@@ -20,22 +20,22 @@ File(Use(url=quark.q), Import(Name(quark)),
      Local(
       Declaration(Type(Name(int)), Name(x), Call(Attr(Var(Name(p),
          $type=0.macro.Pie), Name(slice), $type=0.macro.Pie.slice),
-       $type=0.quark.int), $type=0.quark.int)))),
+       $type=1.quark.int), $type=1.quark.int)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("macro.Pie", $type=0.quark.String)))),
+     Return(String("macro.Pie", $type=1.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
     Block(
-     Return(Null(null, $type=0.quark.Object)))),
+     Return(Null(null, $type=1.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(macro_Pie_ref),
     Attr(Attr(Var(Name(macro_md), $type=1.macro_md), Name(Root),
-     $type=1.macro_md.Root), Name(macro_Pie_md), $type=0.quark.reflect.Class),
-   $type=0.quark.reflect.Class)))
+     $type=1.macro_md.Root), Name(macro_Pie_md), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)))
 )
