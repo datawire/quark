@@ -160,6 +160,10 @@ def namever(file):
         version = "0.0.1"
     return name, version
 
+def mdroot(file):
+    name, _ = namever(file)
+    return name + "_md"
+
 def is_extendable(node):
     return isinstance(node.resolved.type, Class) and \
         not isinstance(node.resolved.type, (Primitive, Interface))

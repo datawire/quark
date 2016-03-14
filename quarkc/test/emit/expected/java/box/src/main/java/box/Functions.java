@@ -1,6 +1,10 @@
 package box;
 
 public class Functions {
+
+    static box_md.Root root = new box_md.Root();
+
+
     public static void test1() {
         Box<Integer> ibox = new Box<Integer>();
         (ibox).set(3);

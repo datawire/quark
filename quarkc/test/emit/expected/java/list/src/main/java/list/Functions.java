@@ -1,6 +1,10 @@
 package list;
 
 public class Functions {
+
+    static list_md.Root root = new list_md.Root();
+
+
     public static void test1() {
         java.util.ArrayList<Integer> list = new java.util.ArrayList<Integer>();
         (list).add(1);

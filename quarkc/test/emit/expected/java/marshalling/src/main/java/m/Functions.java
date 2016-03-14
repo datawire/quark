@@ -1,6 +1,10 @@
 package m;
 
 public class Functions {
+
+    static marshalling_md.Root root = new marshalling_md.Root();
+
+
     public static void test_marshalling() {
         Outer actual = (new Outer()).setup(101);
         String encoded = (builtin.Functions.toJSON(actual, builtin.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(actual)))).toString();

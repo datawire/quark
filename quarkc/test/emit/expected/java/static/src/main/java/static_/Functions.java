@@ -1,6 +1,10 @@
 package static_;
 
 public class Functions {
+
+    static static_md.Root root = new static_md.Root();
+
+
     public static void main() {
         do{System.out.println(Foo.count);System.out.flush();}while(false);
         Foo f = new Foo();

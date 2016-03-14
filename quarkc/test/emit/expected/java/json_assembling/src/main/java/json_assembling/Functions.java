@@ -1,6 +1,10 @@
 package json_assembling;
 
 public class Functions {
+
+    static json_assembling_md.Root root = new json_assembling_md.Root();
+
+
     public static void test_assembling() {
         io.datawire.quark.runtime.JSONObject innerObject = new io.datawire.quark.runtime.JSONObject();
         (innerObject).setObjectItem("astring", (new io.datawire.quark.runtime.JSONObject()).setString("string value"));

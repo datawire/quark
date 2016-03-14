@@ -1,6 +1,10 @@
 package json_tests;
 
 public class Functions {
+
+    static json_tests_md.Root root = new json_tests_md.Root();
+
+
     public static void test_roundtrip() {
         do{System.out.println((io.datawire.quark.runtime.JSONObject.parse(((new io.datawire.quark.runtime.JSONObject()).setObject()).toString())).toString());System.out.flush();}while(false);
         do{System.out.println((io.datawire.quark.runtime.JSONObject.parse(((new io.datawire.quark.runtime.JSONObject()).setList()).toString())).toString());System.out.flush();}while(false);

@@ -124,7 +124,7 @@ def package_file(path, name, fname):
 def make_class_file(path, name):
     return Code(head="from quark_runtime import *\n\n")
 
-def make_function_file(path, name):
+def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
 
 def make_package_file(path, name):

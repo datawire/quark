@@ -1,6 +1,10 @@
 package builtin;
 
 public class Functions {
+
+    static builtin_md.Root root = new builtin_md.Root();
+
+
     /**
      * Serializes object tree into JSON. skips over fields starting with underscore
      */

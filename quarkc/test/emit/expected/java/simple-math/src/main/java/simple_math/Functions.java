@@ -1,6 +1,10 @@
 package simple_math;
 
 public class Functions {
+
+    static simple_math_md.Root root = new simple_math_md.Root();
+
+
     public static void main() {
         Integer four = (2) + (2);
         do{System.out.println(Integer.toString(four));System.out.flush();}while(false);

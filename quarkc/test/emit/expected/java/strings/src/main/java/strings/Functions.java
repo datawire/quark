@@ -1,6 +1,10 @@
 package strings;
 
 public class Functions {
+
+    static strings_md.Root root = new strings_md.Root();
+
+
     public static void main() {
         do{System.out.println("\"");System.out.flush();}while(false);
         do{System.out.println("\"\"");System.out.flush();}while(false);

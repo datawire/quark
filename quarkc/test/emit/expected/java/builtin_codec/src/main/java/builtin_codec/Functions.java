@@ -1,6 +1,10 @@
 package builtin_codec;
 
 public class Functions {
+
+    static builtin_codec_md.Root root = new builtin_codec_md.Root();
+
+
     public static String hexb(Byte v) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         io.datawire.quark.runtime.Buffer b = (c).buffer(1);

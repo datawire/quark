@@ -1,6 +1,10 @@
 package string_methods;
 
 public class Functions {
+
+    static string_methods_md.Root root = new string_methods_md.Root();
+
+
     public static void main() {
         (new test_size("")).does(0);
         (new test_size("1")).does(1);

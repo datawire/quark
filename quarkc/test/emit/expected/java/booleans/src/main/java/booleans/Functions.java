@@ -1,6 +1,10 @@
 package booleans;
 
 public class Functions {
+
+    static booleans_md.Root root = new booleans_md.Root();
+
+
     public static void main() {
         if (true) {
             do{System.out.println("Hi!");System.out.flush();}while(false);

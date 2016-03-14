@@ -1,6 +1,10 @@
 package factorial;
 
 public class Functions {
+
+    static factorial_md.Root root = new factorial_md.Root();
+
+
     public static Integer factorial(Integer n) {
         if ((n)==(0) || ((n) != null && (n).equals(0))) {
             return 1;

@@ -1,6 +1,10 @@
 package autocast;
 
 public class Functions {
+
+    static autocast_md.Root root = new autocast_md.Root();
+
+
     public static void foo(String s) {
         do{System.out.println(s);System.out.flush();}while(false);
     }

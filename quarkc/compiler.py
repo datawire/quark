@@ -884,8 +884,7 @@ class Reflector:
             "construct": construct}
 
     def leave_Root(self, root):
-        mdpkg, _ = namever(self.entry)
-        mdpkg += "_md"
+        mdpkg = mdroot(self.entry)
 
         self.code = ""
         mdclasses = []

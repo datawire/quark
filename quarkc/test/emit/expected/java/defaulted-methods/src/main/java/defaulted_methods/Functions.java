@@ -1,6 +1,10 @@
 package defaulted_methods;
 
 public class Functions {
+
+    static defaulted_methods_md.Root root = new defaulted_methods_md.Root();
+
+
     public static void main() {
         pkg.T1 t1 = new pkg.T1();
         (t1).foo();

@@ -1,6 +1,10 @@
 package inheritence;
 
 public class Functions {
+
+    static inheritence_md.Root root = new inheritence_md.Root();
+
+
     public static void main() {
         A a = new A();
         (a).foo();

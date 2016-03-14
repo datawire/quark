@@ -187,7 +187,7 @@ class Backend(object):
 
     @overload(Function)
     def make_file(self, fun):
-        return self.gen.make_function_file(self.package(fun), self.name(fun.name))
+        return self.gen.make_function_file(self.package(fun), self.name(fun.name), mdroot(self.entry))
 
     @overload(Package)
     def make_file(self, pkg):

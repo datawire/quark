@@ -1,6 +1,10 @@
 package map;
 
 public class Functions {
+
+    static map_md.Root root = new map_md.Root();
+
+
     public static void test1() {
         java.util.HashMap<String,Integer> map = new java.util.HashMap<String,Integer>();
         (map).put(("pi"), (3));

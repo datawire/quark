@@ -1,6 +1,10 @@
 package json_coersion;
 
 public class Functions {
+
+    static json_coersion_md.Root root = new json_coersion_md.Root();
+
+
     public static void main() {
         io.datawire.quark.runtime.JSONObject json = new io.datawire.quark.runtime.JSONObject();
         (json).setObjectItem(("string"), ((new io.datawire.quark.runtime.JSONObject()).setString("this is a string")));
