@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS static_Foo_setCount_Method
 
 function static_Foo_setCount_Method() {
-    static_Foo_setCount_Method.super_.call(this, "builtin.void", "setCount", ["builtin.int"]);
+    static_Foo_setCount_Method.super_.call(this, "quark.void", "setCount", ["quark.int"]);
 }
 exports.static_Foo_setCount_Method = static_Foo_setCount_Method;
-_qrt.util.inherits(static_Foo_setCount_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_setCount_Method, quark.reflect.Method);
 
 function static_Foo_setCount_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_setCount_Method.prototype.__init_fields__ = static_Foo_setCount_Method__init_fields__;
 
@@ -40,13 +40,13 @@ static_Foo_setCount_Method.prototype._setField = static_Foo_setCount_Method__set
 // CLASS static_Foo_getCount_Method
 
 function static_Foo_getCount_Method() {
-    static_Foo_getCount_Method.super_.call(this, "builtin.int", "getCount", []);
+    static_Foo_getCount_Method.super_.call(this, "quark.int", "getCount", []);
 }
 exports.static_Foo_getCount_Method = static_Foo_getCount_Method;
-_qrt.util.inherits(static_Foo_getCount_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_getCount_Method, quark.reflect.Method);
 
 function static_Foo_getCount_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_getCount_Method.prototype.__init_fields__ = static_Foo_getCount_Method__init_fields__;
 
@@ -72,13 +72,13 @@ static_Foo_getCount_Method.prototype._setField = static_Foo_getCount_Method__set
 // CLASS static_Foo_test1_Method
 
 function static_Foo_test1_Method() {
-    static_Foo_test1_Method.super_.call(this, "builtin.void", "test1", []);
+    static_Foo_test1_Method.super_.call(this, "quark.void", "test1", []);
 }
 exports.static_Foo_test1_Method = static_Foo_test1_Method;
-_qrt.util.inherits(static_Foo_test1_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_test1_Method, quark.reflect.Method);
 
 function static_Foo_test1_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_test1_Method.prototype.__init_fields__ = static_Foo_test1_Method__init_fields__;
 
@@ -105,13 +105,13 @@ static_Foo_test1_Method.prototype._setField = static_Foo_test1_Method__setField;
 // CLASS static_Foo_test2_Method
 
 function static_Foo_test2_Method() {
-    static_Foo_test2_Method.super_.call(this, "builtin.void", "test2", []);
+    static_Foo_test2_Method.super_.call(this, "quark.void", "test2", []);
 }
 exports.static_Foo_test2_Method = static_Foo_test2_Method;
-_qrt.util.inherits(static_Foo_test2_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_test2_Method, quark.reflect.Method);
 
 function static_Foo_test2_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_test2_Method.prototype.__init_fields__ = static_Foo_test2_Method__init_fields__;
 
@@ -138,13 +138,13 @@ static_Foo_test2_Method.prototype._setField = static_Foo_test2_Method__setField;
 // CLASS static_Foo_test3_Method
 
 function static_Foo_test3_Method() {
-    static_Foo_test3_Method.super_.call(this, "builtin.void", "test3", []);
+    static_Foo_test3_Method.super_.call(this, "quark.void", "test3", []);
 }
 exports.static_Foo_test3_Method = static_Foo_test3_Method;
-_qrt.util.inherits(static_Foo_test3_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_test3_Method, quark.reflect.Method);
 
 function static_Foo_test3_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_test3_Method.prototype.__init_fields__ = static_Foo_test3_Method__init_fields__;
 
@@ -171,13 +171,13 @@ static_Foo_test3_Method.prototype._setField = static_Foo_test3_Method__setField;
 // CLASS static_Foo_test4_Method
 
 function static_Foo_test4_Method() {
-    static_Foo_test4_Method.super_.call(this, "builtin.void", "test4", []);
+    static_Foo_test4_Method.super_.call(this, "quark.void", "test4", []);
 }
 exports.static_Foo_test4_Method = static_Foo_test4_Method;
-_qrt.util.inherits(static_Foo_test4_Method, builtin.reflect.Method);
+_qrt.util.inherits(static_Foo_test4_Method, quark.reflect.Method);
 
 function static_Foo_test4_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 static_Foo_test4_Method.prototype.__init_fields__ = static_Foo_test4_Method__init_fields__;
 
@@ -207,14 +207,14 @@ function static_Foo() {
     static_Foo.super_.call(this, "static.Foo");
     (this).name = "static.Foo";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.int", "count")];
+    (this).fields = [new quark.reflect.Field("quark.int", "count")];
     (this).methods = [new static_Foo_setCount_Method(), new static_Foo_getCount_Method(), new static_Foo_test1_Method(), new static_Foo_test2_Method(), new static_Foo_test3_Method(), new static_Foo_test4_Method()];
 }
 exports.static_Foo = static_Foo;
-_qrt.util.inherits(static_Foo, builtin.reflect.Class);
+_qrt.util.inherits(static_Foo, quark.reflect.Class);
 
 function static_Foo__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 static_Foo.prototype.__init_fields__ = static_Foo__init_fields__;
 static_Foo.singleton = new static_Foo();

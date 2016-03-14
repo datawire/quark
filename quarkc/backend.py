@@ -15,7 +15,7 @@
 import os, types, java, python, javascript, tempfile, logging
 from collections import OrderedDict
 from .ast import *
-from .compiler import TypeExpr
+from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE
 from .dispatch import *
 from .helpers import *
 
@@ -105,7 +105,7 @@ class Backend(object):
             if self.setfile(fname, lambda: self.make_file(d)):
                 self.files[fname] += "\n"
             dfn_code = self.definition(d)
-            if dfn_code and d.package is None and d.file.name.endswith("builtin.q"):
+            if dfn_code and d.package is None and d.file.name.endswith(BUILTIN_FILE):
                 self.files[fname] += self.gen.comment("BEGIN_BUILTIN") + "\n"
                 self.files[fname] += dfn_code
                 self.files[fname] += "\n" + self.gen.comment("END_BUILTIN")
@@ -123,8 +123,8 @@ class Backend(object):
             # to import classes on demand at the point of use rather
             # than into the module/package level scope.
             raw_imports = self._imports[name].keys()
-            refimps = filter(lambda x: x[0][0] == "builtin", raw_imports)
-            imports = filter(lambda x: x[0][0] != "builtin", raw_imports)
+            refimps = filter(lambda x: x[0][0] == BUILTIN, raw_imports)
+            imports = filter(lambda x: x[0][0] != BUILTIN, raw_imports)
 
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)

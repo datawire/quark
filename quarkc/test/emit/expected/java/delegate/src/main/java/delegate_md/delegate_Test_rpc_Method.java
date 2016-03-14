@@ -1,8 +1,8 @@
 package delegate_md;
 
-public class delegate_Test_rpc_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class delegate_Test_rpc_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public delegate_Test_rpc_Method() {
-        super("delegate.Message", "rpc", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String", "delegate.Message", "builtin.List<builtin.Object>"})));
+        super("delegate.Message", "rpc", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.String", "delegate.Message", "quark.List<quark.Object>"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         delegate.Test obj = (delegate.Test) (object);

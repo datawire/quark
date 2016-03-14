@@ -1,7 +1,7 @@
 package string_methods;
 
 public class test_size extends string_test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class string_methods_test_size_ref = string_methods_md.Root.string_methods_test_size_md;
+    public static quark.reflect.Class string_methods_test_size_ref = string_methods_md.Root.string_methods_test_size_md;
     public String what;
     public test_size(String what) {
         super();

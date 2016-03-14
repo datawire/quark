@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var implicit_self_md = require('../implicit_self_md/index.js');
 exports.implicit_self_md = implicit_self_md;
 

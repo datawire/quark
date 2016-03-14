@@ -1,17 +1,17 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class default_constructors_A(builtin.reflect.Class):
+class default_constructors_A(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(default_constructors_A, self).__init__(u"default_constructors.A");
         (self).name = u"default_constructors.A"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -27,12 +27,12 @@ class default_constructors_A(builtin.reflect.Class):
         pass
 default_constructors_A.singleton = default_constructors_A()
 
-class default_constructors_B_greet_Method(builtin.reflect.Method):
+class default_constructors_B_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(default_constructors_B_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(default_constructors_B_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -48,15 +48,15 @@ class default_constructors_B_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class default_constructors_B(builtin.reflect.Class):
+class default_constructors_B(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(default_constructors_B, self).__init__(u"default_constructors.B");
         (self).name = u"default_constructors.B"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([default_constructors_B_greet_Method()])
 
     def construct(self, args):
@@ -72,12 +72,12 @@ class default_constructors_B(builtin.reflect.Class):
         pass
 default_constructors_B.singleton = default_constructors_B()
 
-class default_constructors_C_greet_Method(builtin.reflect.Method):
+class default_constructors_C_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(default_constructors_C_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(default_constructors_C_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -93,15 +93,15 @@ class default_constructors_C_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class default_constructors_C(builtin.reflect.Class):
+class default_constructors_C(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(default_constructors_C, self).__init__(u"default_constructors.C");
         (self).name = u"default_constructors.C"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([default_constructors_C_greet_Method()])
 
     def construct(self, args):
@@ -117,9 +117,9 @@ class default_constructors_C(builtin.reflect.Class):
         pass
 default_constructors_C.singleton = default_constructors_C()
 
-class default_constructors_X(builtin.reflect.Class):
+class default_constructors_X(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(default_constructors_X, self).__init__(u"default_constructors.X");
@@ -141,12 +141,12 @@ class default_constructors_X(builtin.reflect.Class):
         pass
 default_constructors_X.singleton = default_constructors_X()
 
-class default_constructors_Y_test_Method(builtin.reflect.Method):
+class default_constructors_Y_test_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(default_constructors_Y_test_Method, self).__init__(u"builtin.void", u"test", _List([]));
+        super(default_constructors_Y_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -162,15 +162,15 @@ class default_constructors_Y_test_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class default_constructors_Y(builtin.reflect.Class):
+class default_constructors_Y(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(default_constructors_Y, self).__init__(u"default_constructors.Y");
         (self).name = u"default_constructors.Y"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([default_constructors_Y_test_Method()])
 
     def construct(self, args):

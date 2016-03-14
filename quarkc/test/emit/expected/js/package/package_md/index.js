@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS test_Test_go_Method
 
 function test_Test_go_Method() {
-    test_Test_go_Method.super_.call(this, "builtin.void", "go", []);
+    test_Test_go_Method.super_.call(this, "quark.void", "go", []);
 }
 exports.test_Test_go_Method = test_Test_go_Method;
-_qrt.util.inherits(test_Test_go_Method, builtin.reflect.Method);
+_qrt.util.inherits(test_Test_go_Method, quark.reflect.Method);
 
 function test_Test_go_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 test_Test_go_Method.prototype.__init_fields__ = test_Test_go_Method__init_fields__;
 
@@ -43,14 +43,14 @@ function test_Test() {
     test_Test.super_.call(this, "test.Test");
     (this).name = "test.Test";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new test_Test_go_Method()];
 }
 exports.test_Test = test_Test;
-_qrt.util.inherits(test_Test, builtin.reflect.Class);
+_qrt.util.inherits(test_Test, quark.reflect.Class);
 
 function test_Test__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_Test.prototype.__init_fields__ = test_Test__init_fields__;
 test_Test.singleton = new test_Test();
@@ -76,13 +76,13 @@ test_Test.prototype._setField = test_Test__setField;
 // CLASS test_test_Test_go_Method
 
 function test_test_Test_go_Method() {
-    test_test_Test_go_Method.super_.call(this, "builtin.void", "go", []);
+    test_test_Test_go_Method.super_.call(this, "quark.void", "go", []);
 }
 exports.test_test_Test_go_Method = test_test_Test_go_Method;
-_qrt.util.inherits(test_test_Test_go_Method, builtin.reflect.Method);
+_qrt.util.inherits(test_test_Test_go_Method, quark.reflect.Method);
 
 function test_test_Test_go_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 test_test_Test_go_Method.prototype.__init_fields__ = test_test_Test_go_Method__init_fields__;
 
@@ -112,14 +112,14 @@ function test_test_Test() {
     test_test_Test.super_.call(this, "test.test.Test");
     (this).name = "test.test.Test";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.int", "size")];
+    (this).fields = [new quark.reflect.Field("quark.int", "size")];
     (this).methods = [new test_test_Test_go_Method()];
 }
 exports.test_test_Test = test_test_Test;
-_qrt.util.inherits(test_test_Test, builtin.reflect.Class);
+_qrt.util.inherits(test_test_Test, quark.reflect.Class);
 
 function test_test_Test__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_test_Test.prototype.__init_fields__ = test_test_Test__init_fields__;
 test_test_Test.singleton = new test_test_Test();

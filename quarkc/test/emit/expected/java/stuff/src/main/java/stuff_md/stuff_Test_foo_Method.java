@@ -1,6 +1,6 @@
 package stuff_md;
 
-public class stuff_Test_foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class stuff_Test_foo_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public stuff_Test_foo_Method() {
         super("stuff.Test", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"stuff.Test"})));
     }

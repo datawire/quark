@@ -1,7 +1,7 @@
 package implicit_self_md;
 
-public class implicit_self_Foo extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new implicit_self_Foo();
+public class implicit_self_Foo extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new implicit_self_Foo();
     public implicit_self_Foo() {
         super("implicit_self.Foo");
         (this).name = "implicit_self.Foo";

@@ -1,4 +1,4 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(map),
 
@@ -6,14 +6,14 @@ File(Use(url=builtin.q), Import(Name(builtin)),
     Local(
      Declaration(Type(Name(Map), Type(Name(String)), Type(Name(int))),
       Name(map), Call(Type(Name(Map), Type(Name(String)), Type(Name(int))),
-      $type=0.builtin.Map<0.builtin.String,0.builtin.int>),
-     $type=0.builtin.Map<0.builtin.String,0.builtin.int>)),
+      $type=0.quark.Map<0.quark.String,0.quark.int>),
+     $type=0.quark.Map<0.quark.String,0.quark.int>)),
     ExprStmt(Call(Attr(Var(Name(map),
-       $type=0.builtin.Map<0.builtin.String,0.builtin.int>), Name(__set__),
-      $type=0.builtin.Map.__set__), String("pi", $type=0.builtin.String),
-      Number(3, $type=0.builtin.int), $type=0.builtin.void)),
+       $type=0.quark.Map<0.quark.String,0.quark.int>), Name(__set__),
+      $type=0.quark.Map.__set__), String("pi", $type=0.quark.String), Number(3,
+      $type=0.quark.int), $type=0.quark.void)),
     ExprStmt(Call(Attr(Var(Name(map),
-       $type=0.builtin.Map<0.builtin.String,0.builtin.int>), Name(__get__),
-      $type=0.builtin.Map.__get__), String("pi", $type=0.builtin.String),
-     $type=0.builtin.int)))))
+       $type=0.quark.Map<0.quark.String,0.quark.int>), Name(__get__),
+      $type=0.quark.Map.__get__), String("pi", $type=0.quark.String),
+     $type=0.quark.int)))))
 )

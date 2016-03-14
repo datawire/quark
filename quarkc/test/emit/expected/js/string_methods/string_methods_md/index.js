@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS string_methods_string_test_check_Method
 
 function string_methods_string_test_check_Method() {
-    string_methods_string_test_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_string_test_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_string_test_check_Method = string_methods_string_test_check_Method;
-_qrt.util.inherits(string_methods_string_test_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_string_test_check_Method, quark.reflect.Method);
 
 function string_methods_string_test_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_string_test_check_Method.prototype.__init_fields__ = string_methods_string_test_check_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function string_methods_string_test() {
     (this).methods = [new string_methods_string_test_check_Method()];
 }
 exports.string_methods_string_test = string_methods_string_test;
-_qrt.util.inherits(string_methods_string_test, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_string_test, quark.reflect.Class);
 
 function string_methods_string_test__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_string_test.prototype.__init_fields__ = string_methods_string_test__init_fields__;
 string_methods_string_test.singleton = new string_methods_string_test();
@@ -76,13 +76,13 @@ string_methods_string_test.prototype._setField = string_methods_string_test__set
 // CLASS string_methods_test_size_does_Method
 
 function string_methods_test_size_does_Method() {
-    string_methods_test_size_does_Method.super_.call(this, "string_methods.test_size", "does", ["builtin.int"]);
+    string_methods_test_size_does_Method.super_.call(this, "string_methods.test_size", "does", ["quark.int"]);
 }
 exports.string_methods_test_size_does_Method = string_methods_test_size_does_Method;
-_qrt.util.inherits(string_methods_test_size_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_size_does_Method, quark.reflect.Method);
 
 function string_methods_test_size_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_size_does_Method.prototype.__init_fields__ = string_methods_test_size_does_Method__init_fields__;
 
@@ -108,13 +108,13 @@ string_methods_test_size_does_Method.prototype._setField = string_methods_test_s
 // CLASS string_methods_test_size_check_Method
 
 function string_methods_test_size_check_Method() {
-    string_methods_test_size_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_size_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_size_check_Method = string_methods_test_size_check_Method;
-_qrt.util.inherits(string_methods_test_size_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_size_check_Method, quark.reflect.Method);
 
 function string_methods_test_size_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_size_check_Method.prototype.__init_fields__ = string_methods_test_size_check_Method__init_fields__;
 
@@ -144,14 +144,14 @@ function string_methods_test_size() {
     string_methods_test_size.super_.call(this, "string_methods.test_size");
     (this).name = "string_methods.test_size";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what")];
     (this).methods = [new string_methods_test_size_does_Method(), new string_methods_test_size_check_Method()];
 }
 exports.string_methods_test_size = string_methods_test_size;
-_qrt.util.inherits(string_methods_test_size, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_size, quark.reflect.Class);
 
 function string_methods_test_size__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_size.prototype.__init_fields__ = string_methods_test_size__init_fields__;
 string_methods_test_size.singleton = new string_methods_test_size();
@@ -177,13 +177,13 @@ string_methods_test_size.prototype._setField = string_methods_test_size__setFiel
 // CLASS string_methods_test_startsWith_that_Method
 
 function string_methods_test_startsWith_that_Method() {
-    string_methods_test_startsWith_that_Method.super_.call(this, "string_methods.test_startsWith", "that", ["builtin.String"]);
+    string_methods_test_startsWith_that_Method.super_.call(this, "string_methods.test_startsWith", "that", ["quark.String"]);
 }
 exports.string_methods_test_startsWith_that_Method = string_methods_test_startsWith_that_Method;
-_qrt.util.inherits(string_methods_test_startsWith_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_startsWith_that_Method, quark.reflect.Method);
 
 function string_methods_test_startsWith_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_startsWith_that_Method.prototype.__init_fields__ = string_methods_test_startsWith_that_Method__init_fields__;
 
@@ -209,13 +209,13 @@ string_methods_test_startsWith_that_Method.prototype._setField = string_methods_
 // CLASS string_methods_test_startsWith_does_Method
 
 function string_methods_test_startsWith_does_Method() {
-    string_methods_test_startsWith_does_Method.super_.call(this, "string_methods.test_startsWith", "does", ["builtin.bool"]);
+    string_methods_test_startsWith_does_Method.super_.call(this, "string_methods.test_startsWith", "does", ["quark.bool"]);
 }
 exports.string_methods_test_startsWith_does_Method = string_methods_test_startsWith_does_Method;
-_qrt.util.inherits(string_methods_test_startsWith_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_startsWith_does_Method, quark.reflect.Method);
 
 function string_methods_test_startsWith_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_startsWith_does_Method.prototype.__init_fields__ = string_methods_test_startsWith_does_Method__init_fields__;
 
@@ -241,13 +241,13 @@ string_methods_test_startsWith_does_Method.prototype._setField = string_methods_
 // CLASS string_methods_test_startsWith_check_Method
 
 function string_methods_test_startsWith_check_Method() {
-    string_methods_test_startsWith_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_startsWith_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_startsWith_check_Method = string_methods_test_startsWith_check_Method;
-_qrt.util.inherits(string_methods_test_startsWith_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_startsWith_check_Method, quark.reflect.Method);
 
 function string_methods_test_startsWith_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_startsWith_check_Method.prototype.__init_fields__ = string_methods_test_startsWith_check_Method__init_fields__;
 
@@ -277,14 +277,14 @@ function string_methods_test_startsWith() {
     string_methods_test_startsWith.super_.call(this, "string_methods.test_startsWith");
     (this).name = "string_methods.test_startsWith";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.String", "_that")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new string_methods_test_startsWith_that_Method(), new string_methods_test_startsWith_does_Method(), new string_methods_test_startsWith_check_Method()];
 }
 exports.string_methods_test_startsWith = string_methods_test_startsWith;
-_qrt.util.inherits(string_methods_test_startsWith, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_startsWith, quark.reflect.Class);
 
 function string_methods_test_startsWith__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_startsWith.prototype.__init_fields__ = string_methods_test_startsWith__init_fields__;
 string_methods_test_startsWith.singleton = new string_methods_test_startsWith();
@@ -310,13 +310,13 @@ string_methods_test_startsWith.prototype._setField = string_methods_test_startsW
 // CLASS string_methods_test_endsWith_that_Method
 
 function string_methods_test_endsWith_that_Method() {
-    string_methods_test_endsWith_that_Method.super_.call(this, "string_methods.test_endsWith", "that", ["builtin.String"]);
+    string_methods_test_endsWith_that_Method.super_.call(this, "string_methods.test_endsWith", "that", ["quark.String"]);
 }
 exports.string_methods_test_endsWith_that_Method = string_methods_test_endsWith_that_Method;
-_qrt.util.inherits(string_methods_test_endsWith_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_endsWith_that_Method, quark.reflect.Method);
 
 function string_methods_test_endsWith_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_endsWith_that_Method.prototype.__init_fields__ = string_methods_test_endsWith_that_Method__init_fields__;
 
@@ -342,13 +342,13 @@ string_methods_test_endsWith_that_Method.prototype._setField = string_methods_te
 // CLASS string_methods_test_endsWith_does_Method
 
 function string_methods_test_endsWith_does_Method() {
-    string_methods_test_endsWith_does_Method.super_.call(this, "string_methods.test_endsWith", "does", ["builtin.bool"]);
+    string_methods_test_endsWith_does_Method.super_.call(this, "string_methods.test_endsWith", "does", ["quark.bool"]);
 }
 exports.string_methods_test_endsWith_does_Method = string_methods_test_endsWith_does_Method;
-_qrt.util.inherits(string_methods_test_endsWith_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_endsWith_does_Method, quark.reflect.Method);
 
 function string_methods_test_endsWith_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_endsWith_does_Method.prototype.__init_fields__ = string_methods_test_endsWith_does_Method__init_fields__;
 
@@ -374,13 +374,13 @@ string_methods_test_endsWith_does_Method.prototype._setField = string_methods_te
 // CLASS string_methods_test_endsWith_check_Method
 
 function string_methods_test_endsWith_check_Method() {
-    string_methods_test_endsWith_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_endsWith_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_endsWith_check_Method = string_methods_test_endsWith_check_Method;
-_qrt.util.inherits(string_methods_test_endsWith_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_endsWith_check_Method, quark.reflect.Method);
 
 function string_methods_test_endsWith_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_endsWith_check_Method.prototype.__init_fields__ = string_methods_test_endsWith_check_Method__init_fields__;
 
@@ -410,14 +410,14 @@ function string_methods_test_endsWith() {
     string_methods_test_endsWith.super_.call(this, "string_methods.test_endsWith");
     (this).name = "string_methods.test_endsWith";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.String", "_that")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new string_methods_test_endsWith_that_Method(), new string_methods_test_endsWith_does_Method(), new string_methods_test_endsWith_check_Method()];
 }
 exports.string_methods_test_endsWith = string_methods_test_endsWith;
-_qrt.util.inherits(string_methods_test_endsWith, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_endsWith, quark.reflect.Class);
 
 function string_methods_test_endsWith__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_endsWith.prototype.__init_fields__ = string_methods_test_endsWith__init_fields__;
 string_methods_test_endsWith.singleton = new string_methods_test_endsWith();
@@ -443,13 +443,13 @@ string_methods_test_endsWith.prototype._setField = string_methods_test_endsWith_
 // CLASS string_methods_test_find_that_Method
 
 function string_methods_test_find_that_Method() {
-    string_methods_test_find_that_Method.super_.call(this, "string_methods.test_find", "that", ["builtin.String"]);
+    string_methods_test_find_that_Method.super_.call(this, "string_methods.test_find", "that", ["quark.String"]);
 }
 exports.string_methods_test_find_that_Method = string_methods_test_find_that_Method;
-_qrt.util.inherits(string_methods_test_find_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_find_that_Method, quark.reflect.Method);
 
 function string_methods_test_find_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_find_that_Method.prototype.__init_fields__ = string_methods_test_find_that_Method__init_fields__;
 
@@ -475,13 +475,13 @@ string_methods_test_find_that_Method.prototype._setField = string_methods_test_f
 // CLASS string_methods_test_find_does_Method
 
 function string_methods_test_find_does_Method() {
-    string_methods_test_find_does_Method.super_.call(this, "string_methods.test_find", "does", ["builtin.int"]);
+    string_methods_test_find_does_Method.super_.call(this, "string_methods.test_find", "does", ["quark.int"]);
 }
 exports.string_methods_test_find_does_Method = string_methods_test_find_does_Method;
-_qrt.util.inherits(string_methods_test_find_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_find_does_Method, quark.reflect.Method);
 
 function string_methods_test_find_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_find_does_Method.prototype.__init_fields__ = string_methods_test_find_does_Method__init_fields__;
 
@@ -507,13 +507,13 @@ string_methods_test_find_does_Method.prototype._setField = string_methods_test_f
 // CLASS string_methods_test_find_check_Method
 
 function string_methods_test_find_check_Method() {
-    string_methods_test_find_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_find_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_find_check_Method = string_methods_test_find_check_Method;
-_qrt.util.inherits(string_methods_test_find_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_find_check_Method, quark.reflect.Method);
 
 function string_methods_test_find_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_find_check_Method.prototype.__init_fields__ = string_methods_test_find_check_Method__init_fields__;
 
@@ -543,14 +543,14 @@ function string_methods_test_find() {
     string_methods_test_find.super_.call(this, "string_methods.test_find");
     (this).name = "string_methods.test_find";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.String", "_that")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new string_methods_test_find_that_Method(), new string_methods_test_find_does_Method(), new string_methods_test_find_check_Method()];
 }
 exports.string_methods_test_find = string_methods_test_find;
-_qrt.util.inherits(string_methods_test_find, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_find, quark.reflect.Class);
 
 function string_methods_test_find__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_find.prototype.__init_fields__ = string_methods_test_find__init_fields__;
 string_methods_test_find.singleton = new string_methods_test_find();
@@ -576,13 +576,13 @@ string_methods_test_find.prototype._setField = string_methods_test_find__setFiel
 // CLASS string_methods_test_substring_that_Method
 
 function string_methods_test_substring_that_Method() {
-    string_methods_test_substring_that_Method.super_.call(this, "string_methods.test_substring", "that", ["builtin.int", "builtin.int"]);
+    string_methods_test_substring_that_Method.super_.call(this, "string_methods.test_substring", "that", ["quark.int", "quark.int"]);
 }
 exports.string_methods_test_substring_that_Method = string_methods_test_substring_that_Method;
-_qrt.util.inherits(string_methods_test_substring_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_substring_that_Method, quark.reflect.Method);
 
 function string_methods_test_substring_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_substring_that_Method.prototype.__init_fields__ = string_methods_test_substring_that_Method__init_fields__;
 
@@ -608,13 +608,13 @@ string_methods_test_substring_that_Method.prototype._setField = string_methods_t
 // CLASS string_methods_test_substring_does_Method
 
 function string_methods_test_substring_does_Method() {
-    string_methods_test_substring_does_Method.super_.call(this, "string_methods.test_substring", "does", ["builtin.String"]);
+    string_methods_test_substring_does_Method.super_.call(this, "string_methods.test_substring", "does", ["quark.String"]);
 }
 exports.string_methods_test_substring_does_Method = string_methods_test_substring_does_Method;
-_qrt.util.inherits(string_methods_test_substring_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_substring_does_Method, quark.reflect.Method);
 
 function string_methods_test_substring_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_substring_does_Method.prototype.__init_fields__ = string_methods_test_substring_does_Method__init_fields__;
 
@@ -640,13 +640,13 @@ string_methods_test_substring_does_Method.prototype._setField = string_methods_t
 // CLASS string_methods_test_substring_check_Method
 
 function string_methods_test_substring_check_Method() {
-    string_methods_test_substring_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_substring_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_substring_check_Method = string_methods_test_substring_check_Method;
-_qrt.util.inherits(string_methods_test_substring_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_substring_check_Method, quark.reflect.Method);
 
 function string_methods_test_substring_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_substring_check_Method.prototype.__init_fields__ = string_methods_test_substring_check_Method__init_fields__;
 
@@ -676,14 +676,14 @@ function string_methods_test_substring() {
     string_methods_test_substring.super_.call(this, "string_methods.test_substring");
     (this).name = "string_methods.test_substring";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.int", "start"), new builtin.reflect.Field("builtin.int", "end")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.int", "start"), new quark.reflect.Field("quark.int", "end")];
     (this).methods = [new string_methods_test_substring_that_Method(), new string_methods_test_substring_does_Method(), new string_methods_test_substring_check_Method()];
 }
 exports.string_methods_test_substring = string_methods_test_substring;
-_qrt.util.inherits(string_methods_test_substring, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_substring, quark.reflect.Class);
 
 function string_methods_test_substring__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_substring.prototype.__init_fields__ = string_methods_test_substring__init_fields__;
 string_methods_test_substring.singleton = new string_methods_test_substring();
@@ -709,13 +709,13 @@ string_methods_test_substring.prototype._setField = string_methods_test_substrin
 // CLASS string_methods_test_replace_that_Method
 
 function string_methods_test_replace_that_Method() {
-    string_methods_test_replace_that_Method.super_.call(this, "string_methods.test_replace", "that", ["builtin.String", "builtin.String"]);
+    string_methods_test_replace_that_Method.super_.call(this, "string_methods.test_replace", "that", ["quark.String", "quark.String"]);
 }
 exports.string_methods_test_replace_that_Method = string_methods_test_replace_that_Method;
-_qrt.util.inherits(string_methods_test_replace_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_replace_that_Method, quark.reflect.Method);
 
 function string_methods_test_replace_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_replace_that_Method.prototype.__init_fields__ = string_methods_test_replace_that_Method__init_fields__;
 
@@ -741,13 +741,13 @@ string_methods_test_replace_that_Method.prototype._setField = string_methods_tes
 // CLASS string_methods_test_replace_does_Method
 
 function string_methods_test_replace_does_Method() {
-    string_methods_test_replace_does_Method.super_.call(this, "string_methods.test_replace", "does", ["builtin.String"]);
+    string_methods_test_replace_does_Method.super_.call(this, "string_methods.test_replace", "does", ["quark.String"]);
 }
 exports.string_methods_test_replace_does_Method = string_methods_test_replace_does_Method;
-_qrt.util.inherits(string_methods_test_replace_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_replace_does_Method, quark.reflect.Method);
 
 function string_methods_test_replace_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_replace_does_Method.prototype.__init_fields__ = string_methods_test_replace_does_Method__init_fields__;
 
@@ -773,13 +773,13 @@ string_methods_test_replace_does_Method.prototype._setField = string_methods_tes
 // CLASS string_methods_test_replace_check_Method
 
 function string_methods_test_replace_check_Method() {
-    string_methods_test_replace_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_replace_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_replace_check_Method = string_methods_test_replace_check_Method;
-_qrt.util.inherits(string_methods_test_replace_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_replace_check_Method, quark.reflect.Method);
 
 function string_methods_test_replace_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_replace_check_Method.prototype.__init_fields__ = string_methods_test_replace_check_Method__init_fields__;
 
@@ -809,14 +809,14 @@ function string_methods_test_replace() {
     string_methods_test_replace.super_.call(this, "string_methods.test_replace");
     (this).name = "string_methods.test_replace";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.String", "start"), new builtin.reflect.Field("builtin.String", "end")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "start"), new quark.reflect.Field("quark.String", "end")];
     (this).methods = [new string_methods_test_replace_that_Method(), new string_methods_test_replace_does_Method(), new string_methods_test_replace_check_Method()];
 }
 exports.string_methods_test_replace = string_methods_test_replace;
-_qrt.util.inherits(string_methods_test_replace, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_replace, quark.reflect.Class);
 
 function string_methods_test_replace__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_replace.prototype.__init_fields__ = string_methods_test_replace__init_fields__;
 string_methods_test_replace.singleton = new string_methods_test_replace();
@@ -845,10 +845,10 @@ function string_methods_test_join_that_Method() {
     string_methods_test_join_that_Method.super_.call(this, "string_methods.test_join", "that", []);
 }
 exports.string_methods_test_join_that_Method = string_methods_test_join_that_Method;
-_qrt.util.inherits(string_methods_test_join_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_join_that_Method, quark.reflect.Method);
 
 function string_methods_test_join_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_join_that_Method.prototype.__init_fields__ = string_methods_test_join_that_Method__init_fields__;
 
@@ -874,13 +874,13 @@ string_methods_test_join_that_Method.prototype._setField = string_methods_test_j
 // CLASS string_methods_test_join_a_Method
 
 function string_methods_test_join_a_Method() {
-    string_methods_test_join_a_Method.super_.call(this, "string_methods.test_join", "a", ["builtin.String"]);
+    string_methods_test_join_a_Method.super_.call(this, "string_methods.test_join", "a", ["quark.String"]);
 }
 exports.string_methods_test_join_a_Method = string_methods_test_join_a_Method;
-_qrt.util.inherits(string_methods_test_join_a_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_join_a_Method, quark.reflect.Method);
 
 function string_methods_test_join_a_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_join_a_Method.prototype.__init_fields__ = string_methods_test_join_a_Method__init_fields__;
 
@@ -906,13 +906,13 @@ string_methods_test_join_a_Method.prototype._setField = string_methods_test_join
 // CLASS string_methods_test_join_does_Method
 
 function string_methods_test_join_does_Method() {
-    string_methods_test_join_does_Method.super_.call(this, "string_methods.test_join", "does", ["builtin.String"]);
+    string_methods_test_join_does_Method.super_.call(this, "string_methods.test_join", "does", ["quark.String"]);
 }
 exports.string_methods_test_join_does_Method = string_methods_test_join_does_Method;
-_qrt.util.inherits(string_methods_test_join_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_join_does_Method, quark.reflect.Method);
 
 function string_methods_test_join_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_join_does_Method.prototype.__init_fields__ = string_methods_test_join_does_Method__init_fields__;
 
@@ -938,13 +938,13 @@ string_methods_test_join_does_Method.prototype._setField = string_methods_test_j
 // CLASS string_methods_test_join_check_Method
 
 function string_methods_test_join_check_Method() {
-    string_methods_test_join_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_join_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_join_check_Method = string_methods_test_join_check_Method;
-_qrt.util.inherits(string_methods_test_join_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_join_check_Method, quark.reflect.Method);
 
 function string_methods_test_join_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_join_check_Method.prototype.__init_fields__ = string_methods_test_join_check_Method__init_fields__;
 
@@ -974,14 +974,14 @@ function string_methods_test_join() {
     string_methods_test_join.super_.call(this, "string_methods.test_join");
     (this).name = "string_methods.test_join";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.List<builtin.String>", "parts"), new builtin.reflect.Field("builtin.String", "strparts"), new builtin.reflect.Field("builtin.String", "sep")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.List<quark.String>", "parts"), new quark.reflect.Field("quark.String", "strparts"), new quark.reflect.Field("quark.String", "sep")];
     (this).methods = [new string_methods_test_join_that_Method(), new string_methods_test_join_a_Method(), new string_methods_test_join_does_Method(), new string_methods_test_join_check_Method()];
 }
 exports.string_methods_test_join = string_methods_test_join;
-_qrt.util.inherits(string_methods_test_join, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_join, quark.reflect.Class);
 
 function string_methods_test_join__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_join.prototype.__init_fields__ = string_methods_test_join__init_fields__;
 string_methods_test_join.singleton = new string_methods_test_join();
@@ -1007,13 +1007,13 @@ string_methods_test_join.prototype._setField = string_methods_test_join__setFiel
 // CLASS string_methods_test_split_that_Method
 
 function string_methods_test_split_that_Method() {
-    string_methods_test_split_that_Method.super_.call(this, "string_methods.test_split", "that", ["builtin.String"]);
+    string_methods_test_split_that_Method.super_.call(this, "string_methods.test_split", "that", ["quark.String"]);
 }
 exports.string_methods_test_split_that_Method = string_methods_test_split_that_Method;
-_qrt.util.inherits(string_methods_test_split_that_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_split_that_Method, quark.reflect.Method);
 
 function string_methods_test_split_that_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_split_that_Method.prototype.__init_fields__ = string_methods_test_split_that_Method__init_fields__;
 
@@ -1039,13 +1039,13 @@ string_methods_test_split_that_Method.prototype._setField = string_methods_test_
 // CLASS string_methods_test_split_does_Method
 
 function string_methods_test_split_does_Method() {
-    string_methods_test_split_does_Method.super_.call(this, "string_methods.test_split", "does", ["builtin.String"]);
+    string_methods_test_split_does_Method.super_.call(this, "string_methods.test_split", "does", ["quark.String"]);
 }
 exports.string_methods_test_split_does_Method = string_methods_test_split_does_Method;
-_qrt.util.inherits(string_methods_test_split_does_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_split_does_Method, quark.reflect.Method);
 
 function string_methods_test_split_does_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_split_does_Method.prototype.__init_fields__ = string_methods_test_split_does_Method__init_fields__;
 
@@ -1071,13 +1071,13 @@ string_methods_test_split_does_Method.prototype._setField = string_methods_test_
 // CLASS string_methods_test_split_check_Method
 
 function string_methods_test_split_check_Method() {
-    string_methods_test_split_check_Method.super_.call(this, "builtin.void", "check", ["builtin.String", "builtin.String", "builtin.String", "builtin.String"]);
+    string_methods_test_split_check_Method.super_.call(this, "quark.void", "check", ["quark.String", "quark.String", "quark.String", "quark.String"]);
 }
 exports.string_methods_test_split_check_Method = string_methods_test_split_check_Method;
-_qrt.util.inherits(string_methods_test_split_check_Method, builtin.reflect.Method);
+_qrt.util.inherits(string_methods_test_split_check_Method, quark.reflect.Method);
 
 function string_methods_test_split_check_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 string_methods_test_split_check_Method.prototype.__init_fields__ = string_methods_test_split_check_Method__init_fields__;
 
@@ -1107,14 +1107,14 @@ function string_methods_test_split() {
     string_methods_test_split.super_.call(this, "string_methods.test_split");
     (this).name = "string_methods.test_split";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "what"), new builtin.reflect.Field("builtin.String", "sep"), new builtin.reflect.Field("builtin.String", "altsep")];
+    (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "sep"), new quark.reflect.Field("quark.String", "altsep")];
     (this).methods = [new string_methods_test_split_that_Method(), new string_methods_test_split_does_Method(), new string_methods_test_split_check_Method()];
 }
 exports.string_methods_test_split = string_methods_test_split;
-_qrt.util.inherits(string_methods_test_split, builtin.reflect.Class);
+_qrt.util.inherits(string_methods_test_split, quark.reflect.Class);
 
 function string_methods_test_split__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 string_methods_test_split.prototype.__init_fields__ = string_methods_test_split__init_fields__;
 string_methods_test_split.singleton = new string_methods_test_split();
@@ -1137,40 +1137,40 @@ function string_methods_test_split__setField(name, value) {}
 string_methods_test_split.prototype._setField = string_methods_test_split__setField;
 
 
-// CLASS builtin_List_builtin_String_
+// CLASS quark_List_quark_String_
 
-function builtin_List_builtin_String_() {
-    builtin_List_builtin_String_.super_.call(this, "builtin.List<builtin.String>");
-    (this).name = "builtin.List";
-    (this).parameters = ["builtin.String"];
+function quark_List_quark_String_() {
+    quark_List_quark_String_.super_.call(this, "quark.List<quark.String>");
+    (this).name = "quark.List";
+    (this).parameters = ["quark.String"];
     (this).fields = [];
     (this).methods = [];
 }
-exports.builtin_List_builtin_String_ = builtin_List_builtin_String_;
-_qrt.util.inherits(builtin_List_builtin_String_, builtin.reflect.Class);
+exports.quark_List_quark_String_ = quark_List_quark_String_;
+_qrt.util.inherits(quark_List_quark_String_, quark.reflect.Class);
 
-function builtin_List_builtin_String___init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+function quark_List_quark_String___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
-builtin_List_builtin_String_.prototype.__init_fields__ = builtin_List_builtin_String___init_fields__;
-builtin_List_builtin_String_.singleton = new builtin_List_builtin_String_();
-function builtin_List_builtin_String__construct(args) {
+quark_List_quark_String_.prototype.__init_fields__ = quark_List_quark_String___init_fields__;
+quark_List_quark_String_.singleton = new quark_List_quark_String_();
+function quark_List_quark_String__construct(args) {
     return new Array();
 }
-builtin_List_builtin_String_.prototype.construct = builtin_List_builtin_String__construct;
+quark_List_quark_String_.prototype.construct = quark_List_quark_String__construct;
 
-function builtin_List_builtin_String___getClass() {
+function quark_List_quark_String___getClass() {
     return null;
 }
-builtin_List_builtin_String_.prototype._getClass = builtin_List_builtin_String___getClass;
+quark_List_quark_String_.prototype._getClass = quark_List_quark_String___getClass;
 
-function builtin_List_builtin_String___getField(name) {
+function quark_List_quark_String___getField(name) {
     return null;
 }
-builtin_List_builtin_String_.prototype._getField = builtin_List_builtin_String___getField;
+quark_List_quark_String_.prototype._getField = quark_List_quark_String___getField;
 
-function builtin_List_builtin_String___setField(name, value) {}
-builtin_List_builtin_String_.prototype._setField = builtin_List_builtin_String___setField;
+function quark_List_quark_String___setField(name, value) {}
+quark_List_quark_String_.prototype._setField = quark_List_quark_String___setField;
 
 
 // CLASS Root
@@ -1190,7 +1190,7 @@ Root.string_methods_test_substring_md = string_methods_test_substring.singleton;
 Root.string_methods_test_replace_md = string_methods_test_replace.singleton;
 Root.string_methods_test_join_md = string_methods_test_join.singleton;
 Root.string_methods_test_split_md = string_methods_test_split.singleton;
-Root.builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton;
+Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 function Root__getClass() {
     return null;
 }

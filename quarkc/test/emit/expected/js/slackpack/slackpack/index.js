@@ -1,4 +1,4 @@
-var _qrt = require("builtin/quark_runtime.js");
+var _qrt = require("quark/quark_runtime.js");
 var slack = require('../slack/index.js');
 exports.slack = slack;
 var pkg = require('../pkg/index.js');

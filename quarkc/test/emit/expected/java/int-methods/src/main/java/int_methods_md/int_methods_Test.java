@@ -1,7 +1,7 @@
 package int_methods_md;
 
-public class int_methods_Test extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new int_methods_Test();
+public class int_methods_Test extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new int_methods_Test();
     public int_methods_Test() {
         super("int_methods.Test");
         (this).name = "int_methods.Test";

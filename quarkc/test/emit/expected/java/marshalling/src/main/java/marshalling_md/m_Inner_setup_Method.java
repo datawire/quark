@@ -1,8 +1,8 @@
 package marshalling_md;
 
-public class m_Inner_setup_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class m_Inner_setup_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public m_Inner_setup_Method() {
-        super("m.Inner", "setup", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.int"})));
+        super("m.Inner", "setup", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.int"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         m.Inner obj = (m.Inner) (object);

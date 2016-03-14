@@ -1,16 +1,16 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class builtin_List_builtin_String_(builtin.reflect.Class):
+class quark_List_quark_String_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_List_builtin_String_, self).__init__(u"builtin.List<builtin.String>");
-        (self).name = u"builtin.List"
-        (self).parameters = _List([u"builtin.String"])
+        super(quark_List_quark_String_, self).__init__(u"quark.List<quark.String>");
+        (self).name = u"quark.List"
+        (self).parameters = _List([u"quark.String"])
         (self).fields = _List([])
         (self).methods = _List([])
 
@@ -25,7 +25,7 @@ class builtin_List_builtin_String_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_List_builtin_String_.singleton = builtin_List_builtin_String_()
+quark_List_quark_String_.singleton = quark_List_quark_String_()
 
 class Root(object):
     def _init(self):

@@ -1,8 +1,8 @@
 package string_methods_md;
 
-public class string_methods_test_split_check_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class string_methods_test_split_check_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public string_methods_test_split_check_Method() {
-        super("builtin.void", "check", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String", "builtin.String", "builtin.String", "builtin.String"})));
+        super("quark.void", "check", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.String", "quark.String", "quark.String", "quark.String"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         string_methods.test_split obj = (string_methods.test_split) (object);

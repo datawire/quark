@@ -1,8 +1,8 @@
 package pet_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class pets_Cat_md = pets_Cat.singleton;
-    public static builtin.reflect.Class pets_Dog_md = pets_Dog.singleton;
+    public static quark.reflect.Class pets_Cat_md = pets_Cat.singleton;
+    public static quark.reflect.Class pets_Dog_md = pets_Dog.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

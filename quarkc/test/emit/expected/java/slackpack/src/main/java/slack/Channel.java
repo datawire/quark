@@ -4,7 +4,7 @@ package slack;
  * A reference to a channel.
  */
 public class Channel implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class slack_Channel_ref = slackpack_md.Root.slack_Channel_md;
+    public static quark.reflect.Class slack_Channel_ref = slackpack_md.Root.slack_Channel_md;
     public Client client;
     public String channel;
     public Channel(Client client, String channel) {

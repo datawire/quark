@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class static_Foo_setCount_Method(builtin.reflect.Method):
+class static_Foo_setCount_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_setCount_Method, self).__init__(u"builtin.void", u"setCount", _List([u"builtin.int"]));
+        super(static_Foo_setCount_Method, self).__init__(u"quark.void", u"setCount", _List([u"quark.int"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,12 +24,12 @@ class static_Foo_setCount_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo_getCount_Method(builtin.reflect.Method):
+class static_Foo_getCount_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_getCount_Method, self).__init__(u"builtin.int", u"getCount", _List([]));
+        super(static_Foo_getCount_Method, self).__init__(u"quark.int", u"getCount", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -44,12 +44,12 @@ class static_Foo_getCount_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo_test1_Method(builtin.reflect.Method):
+class static_Foo_test1_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_test1_Method, self).__init__(u"builtin.void", u"test1", _List([]));
+        super(static_Foo_test1_Method, self).__init__(u"quark.void", u"test1", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -65,12 +65,12 @@ class static_Foo_test1_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo_test2_Method(builtin.reflect.Method):
+class static_Foo_test2_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_test2_Method, self).__init__(u"builtin.void", u"test2", _List([]));
+        super(static_Foo_test2_Method, self).__init__(u"quark.void", u"test2", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -86,12 +86,12 @@ class static_Foo_test2_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo_test3_Method(builtin.reflect.Method):
+class static_Foo_test3_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_test3_Method, self).__init__(u"builtin.void", u"test3", _List([]));
+        super(static_Foo_test3_Method, self).__init__(u"quark.void", u"test3", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -107,12 +107,12 @@ class static_Foo_test3_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo_test4_Method(builtin.reflect.Method):
+class static_Foo_test4_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(static_Foo_test4_Method, self).__init__(u"builtin.void", u"test4", _List([]));
+        super(static_Foo_test4_Method, self).__init__(u"quark.void", u"test4", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -128,15 +128,15 @@ class static_Foo_test4_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class static_Foo(builtin.reflect.Class):
+class static_Foo(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(static_Foo, self).__init__(u"static.Foo");
         (self).name = u"static.Foo"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"count")])
+        (self).fields = _List([quark.reflect.Field(u"quark.int", u"count")])
         (self).methods = _List([static_Foo_setCount_Method(), static_Foo_getCount_Method(), static_Foo_test1_Method(), static_Foo_test2_Method(), static_Foo_test3_Method(), static_Foo_test4_Method()])
 
     def construct(self, args):

@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS macro_stuff_Macro_test_Method
 
 function macro_stuff_Macro_test_Method() {
-    macro_stuff_Macro_test_Method.super_.call(this, "builtin.void", "test", []);
+    macro_stuff_Macro_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.macro_stuff_Macro_test_Method = macro_stuff_Macro_test_Method;
-_qrt.util.inherits(macro_stuff_Macro_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(macro_stuff_Macro_test_Method, quark.reflect.Method);
 
 function macro_stuff_Macro_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 macro_stuff_Macro_test_Method.prototype.__init_fields__ = macro_stuff_Macro_test_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function macro_stuff_Macro() {
     (this).methods = [new macro_stuff_Macro_test_Method()];
 }
 exports.macro_stuff_Macro = macro_stuff_Macro;
-_qrt.util.inherits(macro_stuff_Macro, builtin.reflect.Class);
+_qrt.util.inherits(macro_stuff_Macro, quark.reflect.Class);
 
 function macro_stuff_Macro__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 macro_stuff_Macro.prototype.__init_fields__ = macro_stuff_Macro__init_fields__;
 macro_stuff_Macro.singleton = new macro_stuff_Macro();

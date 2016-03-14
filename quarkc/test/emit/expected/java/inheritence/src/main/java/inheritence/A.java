@@ -1,7 +1,7 @@
 package inheritence;
 
 public class A implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class inheritence_A_ref = inheritence_md.Root.inheritence_A_md;
+    public static quark.reflect.Class inheritence_A_ref = inheritence_md.Root.inheritence_A_md;
     public A() {}
     public void foo() {
         do{System.out.println("A");System.out.flush();}while(false);

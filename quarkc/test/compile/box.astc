@@ -1,4 +1,4 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(box),
 
@@ -16,34 +16,34 @@ File(Use(url=builtin.q), Import(Name(builtin)),
       $type=0.box.Box.T)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("box.Box<builtin.Object>", $type=0.builtin.String)))),
+     Return(String("box.Box<quark.Object>", $type=0.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("contents",
-       $type=0.builtin.String), $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("contents", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.box.Box<0.box.Box.T>),
          Name(contents), $type=0.box.Box.T)))),
-     Return(Null(null, $type=0.builtin.Object)))),
+     Return(Null(null, $type=0.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("contents",
-       $type=0.builtin.String), $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("contents", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.box.Box<0.box.Box.T>),
          Name(contents), $type=0.box.Box.T), Cast(Var(Name(value),
-         $type=0.builtin.Object), $type=0.box.Box.T))))))),
+         $type=0.quark.Object), $type=0.box.Box.T))))))),
 
   Class(Name(Crate), TypeParam(Name(T)),
    Field(static=False, Type(Name(Box), Type(Name(T))), Name(box),
    $type=0.box.Box<0.box.Crate.T>),
    Field(static=False, Type(Name(Box), Type(Name(int))), Name(ibox),
-   $type=0.box.Box<0.builtin.int>),
+   $type=0.box.Box<0.quark.int>),
 
    Method(static=False, Type(Name(void)), Name(set),
     Param(Type(Name(T)), Name(stuff), $type=0.box.Crate.T),
@@ -51,7 +51,7 @@ File(Use(url=builtin.q), Import(Name(builtin)),
      ExprStmt(Call(Attr(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
          Name(box), $type=0.box.Box<0.box.Crate.T>), Name(set),
        $type=0.box.Box.set), Var(Name(stuff), $type=0.box.Crate.T),
-      $type=0.builtin.void)))),
+      $type=0.quark.void)))),
 
    Method(static=False, Type(Name(T)), Name(get), Block(
      Return(Call(Attr(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
@@ -59,149 +59,148 @@ File(Use(url=builtin.q), Import(Name(builtin)),
        $type=0.box.Box.get), $type=0.box.Crate.T)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("box.Crate<builtin.Object>", $type=0.builtin.String)))),
+     Return(String("box.Crate<quark.Object>", $type=0.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("box", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("box", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
          Name(box), $type=0.box.Box<0.box.Crate.T>)))),
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("ibox", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("ibox", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
-         Name(ibox), $type=0.box.Box<0.builtin.int>)))),
-     Return(Null(null, $type=0.builtin.Object)))),
+         Name(ibox), $type=0.box.Box<0.quark.int>)))),
+     Return(Null(null, $type=0.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("box", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("box", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
          Name(box), $type=0.box.Box<0.box.Crate.T>), Cast(Var(Name(value),
-         $type=0.builtin.Object), $type=0.box.Box<0.box.Crate.T>)))),
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("ibox", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+         $type=0.quark.Object), $type=0.box.Box<0.box.Crate.T>)))),
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("ibox", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.box.Crate<0.box.Crate.T>),
-         Name(ibox), $type=0.box.Box<0.builtin.int>), Cast(Var(Name(value),
-         $type=0.builtin.Object), $type=0.box.Box<0.builtin.int>)))))),
+         Name(ibox), $type=0.box.Box<0.quark.int>), Cast(Var(Name(value),
+         $type=0.quark.Object), $type=0.box.Box<0.quark.int>)))))),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(box_Box_builtin_Object__ref), Attr(Attr(Var(Name(box_md),
+    Name(box_Box_quark_Object__ref), Attr(Attr(Var(Name(box_md),
       $type=1.box_md), Name(Root), $type=1.box_md.Root),
-     Name(box_Box_builtin_Object__md), $type=0.builtin.reflect.Class),
-   $type=0.builtin.reflect.Class),
+     Name(box_Box_quark_Object__md), $type=0.quark.reflect.Class),
+   $type=0.quark.reflect.Class),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(box_Box_builtin_int__ref), Attr(Attr(Var(Name(box_md),
-      $type=1.box_md), Name(Root), $type=1.box_md.Root),
-     Name(box_Box_builtin_int__md), $type=0.builtin.reflect.Class),
-   $type=0.builtin.reflect.Class)),
+    Name(box_Box_quark_int__ref), Attr(Attr(Var(Name(box_md), $type=1.box_md),
+      Name(Root), $type=1.box_md.Root), Name(box_Box_quark_int__md),
+    $type=0.quark.reflect.Class), $type=0.quark.reflect.Class)),
 
   Class(Name(Sack),
    Field(static=False, Type(Name(Box), Type(Name(int))), Name(ints),
-   $type=0.box.Box<0.builtin.int>),
+   $type=0.box.Box<0.quark.int>),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("box.Sack", $type=0.builtin.String)))),
+     Return(String("box.Sack", $type=0.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("ints", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("ints", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.box.Sack), Name(ints),
-        $type=0.box.Box<0.builtin.int>)))),
-     Return(Null(null, $type=0.builtin.Object)))),
+        $type=0.box.Box<0.quark.int>)))),
+     Return(Null(null, $type=0.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("ints", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("ints", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.box.Sack), Name(ints),
-        $type=0.box.Box<0.builtin.int>), Cast(Var(Name(value),
-         $type=0.builtin.Object), $type=0.box.Box<0.builtin.int>)))))),
+        $type=0.box.Box<0.quark.int>), Cast(Var(Name(value),
+         $type=0.quark.Object), $type=0.box.Box<0.quark.int>)))))),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(box_Sack_ref),
     Attr(Attr(Var(Name(box_md), $type=1.box_md), Name(Root),
-     $type=1.box_md.Root), Name(box_Sack_md), $type=0.builtin.reflect.Class),
-   $type=0.builtin.reflect.Class)),
+     $type=1.box_md.Root), Name(box_Sack_md), $type=0.quark.reflect.Class),
+   $type=0.quark.reflect.Class)),
 
   Function(Type(Name(void)), Name(test1), Block(
     Local(
      Declaration(Type(Name(Box), Type(Name(int))), Name(ibox),
-     $type=0.box.Box<0.builtin.int>)),
-    ExprStmt(Call(Attr(Var(Name(ibox), $type=0.box.Box<0.builtin.int>),
-       Name(set), $type=0.box.Box.set), Number(3, $type=0.builtin.int),
-     $type=0.builtin.void)),
+     $type=0.box.Box<0.quark.int>)),
+    ExprStmt(Call(Attr(Var(Name(ibox), $type=0.box.Box<0.quark.int>),
+       Name(set), $type=0.box.Box.set), Number(3, $type=0.quark.int),
+     $type=0.quark.void)),
     Local(
      Declaration(Type(Name(int)), Name(three), Call(Attr(Var(Name(ibox),
-        $type=0.box.Box<0.builtin.int>), Name(get), $type=0.box.Box.get),
-      $type=0.builtin.int), $type=0.builtin.int)),
-    ExprStmt(Attr(Var(Name(ibox), $type=0.box.Box<0.builtin.int>),
-      Name(contents), $type=0.builtin.int)))),
+        $type=0.box.Box<0.quark.int>), Name(get), $type=0.box.Box.get),
+      $type=0.quark.int), $type=0.quark.int)),
+    ExprStmt(Attr(Var(Name(ibox), $type=0.box.Box<0.quark.int>),
+      Name(contents), $type=0.quark.int)))),
 
   Function(Type(Name(void)), Name(test2), Block(
     Local(
      Declaration(Type(Name(Box), Type(Name(String))), Name(sbox),
-     $type=0.box.Box<0.builtin.String>)),
-    ExprStmt(Call(Attr(Var(Name(sbox), $type=0.box.Box<0.builtin.String>),
-       Name(set), $type=0.box.Box.set), String("hello",
-      $type=0.builtin.String), $type=0.builtin.void)),
+     $type=0.box.Box<0.quark.String>)),
+    ExprStmt(Call(Attr(Var(Name(sbox), $type=0.box.Box<0.quark.String>),
+       Name(set), $type=0.box.Box.set), String("hello", $type=0.quark.String),
+     $type=0.quark.void)),
     Local(
      Declaration(Type(Name(String)), Name(hello), Call(Attr(Var(Name(sbox),
-        $type=0.box.Box<0.builtin.String>), Name(get), $type=0.box.Box.get),
-      $type=0.builtin.String), $type=0.builtin.String)),
-    ExprStmt(Attr(Var(Name(sbox), $type=0.box.Box<0.builtin.String>),
-      Name(contents), $type=0.builtin.String)))),
+        $type=0.box.Box<0.quark.String>), Name(get), $type=0.box.Box.get),
+      $type=0.quark.String), $type=0.quark.String)),
+    ExprStmt(Attr(Var(Name(sbox), $type=0.box.Box<0.quark.String>),
+      Name(contents), $type=0.quark.String)))),
 
   Function(Type(Name(void)), Name(test3), Block(
     Local(
      Declaration(Type(Name(Crate), Type(Name(int))), Name(icrate),
-     $type=0.box.Crate<0.builtin.int>)),
-    ExprStmt(Call(Attr(Var(Name(icrate), $type=0.box.Crate<0.builtin.int>),
-       Name(set), $type=0.box.Crate.set), Number(3, $type=0.builtin.int),
-     $type=0.builtin.void)),
-    ExprStmt(Call(Attr(Var(Name(icrate), $type=0.box.Crate<0.builtin.int>),
-       Name(get), $type=0.box.Crate.get), $type=0.builtin.int)),
-    ExprStmt(Attr(Attr(Var(Name(icrate), $type=0.box.Crate<0.builtin.int>),
-       Name(box), $type=0.box.Box<0.builtin.int>), Name(contents),
-     $type=0.builtin.int)))),
+     $type=0.box.Crate<0.quark.int>)),
+    ExprStmt(Call(Attr(Var(Name(icrate), $type=0.box.Crate<0.quark.int>),
+       Name(set), $type=0.box.Crate.set), Number(3, $type=0.quark.int),
+     $type=0.quark.void)),
+    ExprStmt(Call(Attr(Var(Name(icrate), $type=0.box.Crate<0.quark.int>),
+       Name(get), $type=0.box.Crate.get), $type=0.quark.int)),
+    ExprStmt(Attr(Attr(Var(Name(icrate), $type=0.box.Crate<0.quark.int>),
+       Name(box), $type=0.box.Box<0.quark.int>), Name(contents),
+     $type=0.quark.int)))),
 
   Function(Type(Name(void)), Name(test4), Block(
     Local(
      Declaration(Type(Name(Sack)), Name(s), $type=0.box.Sack)),
     ExprStmt(Attr(Var(Name(s), $type=0.box.Sack), Name(ints),
-     $type=0.box.Box<0.builtin.int>)),
+     $type=0.box.Box<0.quark.int>)),
     ExprStmt(Attr(Attr(Var(Name(s), $type=0.box.Sack), Name(ints),
-      $type=0.box.Box<0.builtin.int>), Name(contents), $type=0.builtin.int)))),
+      $type=0.box.Box<0.quark.int>), Name(contents), $type=0.quark.int)))),
 
   Function(Type(Name(void)), Name(test5), Block(
     Local(
      Declaration(Type(Name(Crate), Type(Name(String))), Name(scrate),
-     $type=0.box.Crate<0.builtin.String>)),
-    ExprStmt(Attr(Attr(Var(Name(scrate), $type=0.box.Crate<0.builtin.String>),
-       Name(box), $type=0.box.Box<0.builtin.String>), Name(contents),
-     $type=0.builtin.String)),
-    ExprStmt(Attr(Attr(Var(Name(scrate), $type=0.box.Crate<0.builtin.String>),
-       Name(ibox), $type=0.box.Box<0.builtin.int>), Name(contents),
-     $type=0.builtin.int)))),
+     $type=0.box.Crate<0.quark.String>)),
+    ExprStmt(Attr(Attr(Var(Name(scrate), $type=0.box.Crate<0.quark.String>),
+       Name(box), $type=0.box.Box<0.quark.String>), Name(contents),
+     $type=0.quark.String)),
+    ExprStmt(Attr(Attr(Var(Name(scrate), $type=0.box.Crate<0.quark.String>),
+       Name(ibox), $type=0.box.Box<0.quark.int>), Name(contents),
+     $type=0.quark.int)))),
 
   Function(Type(Name(void)), Name(test6), Block(
     Local(
      Declaration(Type(Name(Box), Type(Name(Box), Type(Name(int)))), Name(box),
-     $type=0.box.Box<0.box.Box<0.builtin.int>>)),
-    ExprStmt(Attr(Var(Name(box), $type=0.box.Box<0.box.Box<0.builtin.int>>),
-      Name(contents), $type=0.box.Box<0.builtin.int>)),
-    ExprStmt(Attr(Attr(Var(Name(box),
-       $type=0.box.Box<0.box.Box<0.builtin.int>>), Name(contents),
-      $type=0.box.Box<0.builtin.int>), Name(contents), $type=0.builtin.int)))))
+     $type=0.box.Box<0.box.Box<0.quark.int>>)),
+    ExprStmt(Attr(Var(Name(box), $type=0.box.Box<0.box.Box<0.quark.int>>),
+      Name(contents), $type=0.box.Box<0.quark.int>)),
+    ExprStmt(Attr(Attr(Var(Name(box), $type=0.box.Box<0.box.Box<0.quark.int>>),
+       Name(contents), $type=0.box.Box<0.quark.int>), Name(contents),
+     $type=0.quark.int)))))
 )

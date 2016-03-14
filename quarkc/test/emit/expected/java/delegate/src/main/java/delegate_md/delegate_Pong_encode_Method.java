@@ -1,8 +1,8 @@
 package delegate_md;
 
-public class delegate_Pong_encode_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class delegate_Pong_encode_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public delegate_Pong_encode_Method() {
-        super("builtin.String", "encode", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.String", "encode", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         delegate.Pong obj = (delegate.Pong) (object);

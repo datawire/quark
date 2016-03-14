@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var extending_primitives_md = require('../extending_primitives_md/index.js');
 exports.extending_primitives_md = extending_primitives_md;
 

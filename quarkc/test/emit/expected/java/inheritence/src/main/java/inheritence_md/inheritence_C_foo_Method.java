@@ -1,8 +1,8 @@
 package inheritence_md;
 
-public class inheritence_C_foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class inheritence_C_foo_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public inheritence_C_foo_Method() {
-        super("builtin.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         inheritence.C obj = (inheritence.C) (object);

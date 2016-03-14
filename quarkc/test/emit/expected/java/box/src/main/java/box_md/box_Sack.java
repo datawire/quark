@@ -1,12 +1,12 @@
 package box_md;
 
-public class box_Sack extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new box_Sack();
+public class box_Sack extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new box_Sack();
     public box_Sack() {
         super("box.Sack");
         (this).name = "box.Sack";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("box.Box<builtin.int>", "ints")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("box.Box<quark.int>", "ints")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

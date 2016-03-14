@@ -1,17 +1,16 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(list),
 
   Function(Type(Name(void)), Name(test), Block(
     Local(
      Declaration(Type(Name(List), Type(Name(int))), Name(list),
-      Call(Type(Name(List), Type(Name(int))),
-      $type=0.builtin.List<0.builtin.int>),
-     $type=0.builtin.List<0.builtin.int>)),
-    ExprStmt(Call(Attr(Var(Name(list), $type=0.builtin.List<0.builtin.int>),
-       Name(add), $type=0.builtin.List.add), Number(3, $type=0.builtin.int),
-     $type=0.builtin.void)),
-    ExprStmt(Call(Attr(Var(Name(list), $type=0.builtin.List<0.builtin.int>),
-       Name(__get__), $type=0.builtin.List.__get__), Number(0,
-      $type=0.builtin.int), $type=0.builtin.int)))))
+      Call(Type(Name(List), Type(Name(int))), $type=0.quark.List<0.quark.int>),
+     $type=0.quark.List<0.quark.int>)),
+    ExprStmt(Call(Attr(Var(Name(list), $type=0.quark.List<0.quark.int>),
+       Name(add), $type=0.quark.List.add), Number(3, $type=0.quark.int),
+     $type=0.quark.void)),
+    ExprStmt(Call(Attr(Var(Name(list), $type=0.quark.List<0.quark.int>),
+       Name(__get__), $type=0.quark.List.__get__), Number(0,
+      $type=0.quark.int), $type=0.quark.int)))))
 )

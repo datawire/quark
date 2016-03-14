@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class prtest_Test_test_Method(builtin.reflect.Method):
+class prtest_Test_test_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(prtest_Test_test_Method, self).__init__(u"builtin.void", u"test", _List([]));
+        super(prtest_Test_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,9 +24,9 @@ class prtest_Test_test_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class prtest_Test(builtin.reflect.Class):
+class prtest_Test(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(prtest_Test, self).__init__(u"prtest.Test");

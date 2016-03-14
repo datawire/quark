@@ -1,7 +1,7 @@
 package pkg;
 
 public class T4 implements A, C, io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class pkg_T4_ref = defaulted_methods_md.Root.pkg_T4_md;
+    public static quark.reflect.Class pkg_T4_ref = defaulted_methods_md.Root.pkg_T4_md;
     public T4() {}
     public String _getClass() {
         return "pkg.T4";

@@ -1,6 +1,6 @@
 package operator_overload_md;
 
-public class operator_overload_Overload___mul___Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class operator_overload_Overload___mul___Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public operator_overload_Overload___mul___Method() {
         super("operator_overload.Overload", "__mul__", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"operator_overload.Overload"})));
     }

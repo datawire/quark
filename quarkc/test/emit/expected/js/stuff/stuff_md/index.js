@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
@@ -10,10 +10,10 @@ function stuff_Test_foo_Method() {
     stuff_Test_foo_Method.super_.call(this, "stuff.Test", "foo", ["stuff.Test"]);
 }
 exports.stuff_Test_foo_Method = stuff_Test_foo_Method;
-_qrt.util.inherits(stuff_Test_foo_Method, builtin.reflect.Method);
+_qrt.util.inherits(stuff_Test_foo_Method, quark.reflect.Method);
 
 function stuff_Test_foo_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 stuff_Test_foo_Method.prototype.__init_fields__ = stuff_Test_foo_Method__init_fields__;
 
@@ -39,13 +39,13 @@ stuff_Test_foo_Method.prototype._setField = stuff_Test_foo_Method__setField;
 // CLASS stuff_Test_test_Method
 
 function stuff_Test_test_Method() {
-    stuff_Test_test_Method.super_.call(this, "builtin.void", "test", []);
+    stuff_Test_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.stuff_Test_test_Method = stuff_Test_test_Method;
-_qrt.util.inherits(stuff_Test_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(stuff_Test_test_Method, quark.reflect.Method);
 
 function stuff_Test_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 stuff_Test_test_Method.prototype.__init_fields__ = stuff_Test_test_Method__init_fields__;
 
@@ -79,10 +79,10 @@ function stuff_Test() {
     (this).methods = [new stuff_Test_foo_Method(), new stuff_Test_test_Method()];
 }
 exports.stuff_Test = stuff_Test;
-_qrt.util.inherits(stuff_Test, builtin.reflect.Class);
+_qrt.util.inherits(stuff_Test, quark.reflect.Class);
 
 function stuff_Test__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 stuff_Test.prototype.__init_fields__ = stuff_Test__init_fields__;
 stuff_Test.singleton = new stuff_Test();

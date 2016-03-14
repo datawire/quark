@@ -1,7 +1,7 @@
 package slackpack_md;
 
-public class pkg_Handler extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pkg_Handler();
+public class pkg_Handler extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pkg_Handler();
     public pkg_Handler() {
         super("pkg.Handler");
         (this).name = "pkg.Handler";

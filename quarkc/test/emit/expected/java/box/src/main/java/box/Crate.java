@@ -1,8 +1,8 @@
 package box;
 
 public class Crate<T> implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class box_Box_builtin_Object__ref = box_md.Root.box_Box_builtin_Object__md;
-    public static builtin.reflect.Class box_Box_builtin_int__ref = box_md.Root.box_Box_builtin_int__md;
+    public static quark.reflect.Class box_Box_quark_Object__ref = box_md.Root.box_Box_quark_Object__md;
+    public static quark.reflect.Class box_Box_quark_int__ref = box_md.Root.box_Box_quark_int__md;
     public Box<T> box = new Box<T>();
     public Box<Integer> ibox = new Box<Integer>();
     public Crate() {}
@@ -13,7 +13,7 @@ public class Crate<T> implements io.datawire.quark.runtime.QObject {
         return ((this).box).get();
     }
     public String _getClass() {
-        return "box.Crate<builtin.Object>";
+        return "box.Crate<quark.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("box") || ((name) != null && (name).equals("box"))) {

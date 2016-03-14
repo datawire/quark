@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class test_Test_go_Method(builtin.reflect.Method):
+class test_Test_go_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(test_Test_go_Method, self).__init__(u"builtin.void", u"go", _List([]));
+        super(test_Test_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,15 +24,15 @@ class test_Test_go_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class test_Test(builtin.reflect.Class):
+class test_Test(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(test_Test, self).__init__(u"test.Test");
         (self).name = u"test.Test"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([test_Test_go_Method()])
 
     def construct(self, args):
@@ -48,12 +48,12 @@ class test_Test(builtin.reflect.Class):
         pass
 test_Test.singleton = test_Test()
 
-class test_test_Test_go_Method(builtin.reflect.Method):
+class test_test_Test_go_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(test_test_Test_go_Method, self).__init__(u"builtin.void", u"go", _List([]));
+        super(test_test_Test_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -69,15 +69,15 @@ class test_test_Test_go_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class test_test_Test(builtin.reflect.Class):
+class test_test_Test(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(test_test_Test, self).__init__(u"test.test.Test");
         (self).name = u"test.test.Test"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"size")])
+        (self).fields = _List([quark.reflect.Field(u"quark.int", u"size")])
         (self).methods = _List([test_test_Test_go_Method()])
 
     def construct(self, args):

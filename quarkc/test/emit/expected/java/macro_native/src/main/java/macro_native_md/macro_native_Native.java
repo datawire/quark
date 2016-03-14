@@ -1,7 +1,7 @@
 package macro_native_md;
 
-public class macro_native_Native extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new macro_native_Native();
+public class macro_native_Native extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new macro_native_Native();
     public macro_native_Native() {
         super("macro_native.Native");
         (this).name = "macro_native.Native";

@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var matrix_md = require('../matrix_md/index.js');
 exports.matrix_md = matrix_md;
 
@@ -29,8 +29,8 @@ function Matrix__init_fields__() {
     this.columns = null;
 }
 Matrix.prototype.__init_fields__ = Matrix__init_fields__;
-Matrix.builtin_List_builtin_List_builtin_Object___ref = matrix_md.Root.builtin_List_builtin_List_builtin_Object___md;
-Matrix.builtin_List_builtin_Object__ref = matrix_md.Root.builtin_List_builtin_Object__md;
+Matrix.quark_List_quark_List_quark_Object___ref = matrix_md.Root.quark_List_quark_List_quark_Object___md;
+Matrix.quark_List_quark_Object__ref = matrix_md.Root.quark_List_quark_Object__md;
 function Matrix___get__(i, j) {
     return ((this.columns)[i])[j];
 }
@@ -42,7 +42,7 @@ function Matrix___set__(i, j, value) {
 Matrix.prototype.__set__ = Matrix___set__;
 
 function Matrix__getClass() {
-    return "matrix.Matrix<builtin.Object>";
+    return "matrix.Matrix<quark.Object>";
 }
 Matrix.prototype._getClass = Matrix__getClass;
 

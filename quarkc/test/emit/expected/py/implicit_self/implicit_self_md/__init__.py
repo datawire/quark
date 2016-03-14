@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class implicit_self_Foo_next_Method(builtin.reflect.Method):
+class implicit_self_Foo_next_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(implicit_self_Foo_next_Method, self).__init__(u"builtin.void", u"next", _List([]));
+        super(implicit_self_Foo_next_Method, self).__init__(u"quark.void", u"next", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,12 +24,12 @@ class implicit_self_Foo_next_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class implicit_self_Foo_test_Method(builtin.reflect.Method):
+class implicit_self_Foo_test_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(implicit_self_Foo_test_Method, self).__init__(u"builtin.void", u"test", _List([]));
+        super(implicit_self_Foo_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -45,9 +45,9 @@ class implicit_self_Foo_test_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class implicit_self_Foo(builtin.reflect.Class):
+class implicit_self_Foo(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(implicit_self_Foo, self).__init__(u"implicit_self.Foo");

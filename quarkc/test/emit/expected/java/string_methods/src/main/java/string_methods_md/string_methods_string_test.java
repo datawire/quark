@@ -1,7 +1,7 @@
 package string_methods_md;
 
-public class string_methods_string_test extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new string_methods_string_test();
+public class string_methods_string_test extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new string_methods_string_test();
     public string_methods_string_test() {
         super("string_methods.string_test");
         (this).name = "string_methods.string_test";

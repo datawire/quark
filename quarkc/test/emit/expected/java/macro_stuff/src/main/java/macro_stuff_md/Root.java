@@ -1,7 +1,7 @@
 package macro_stuff_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class macro_stuff_Macro_md = macro_stuff_Macro.singleton;
+    public static quark.reflect.Class macro_stuff_Macro_md = macro_stuff_Macro.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

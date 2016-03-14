@@ -1,7 +1,7 @@
 package macro_stuff_md;
 
-public class macro_stuff_Macro extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new macro_stuff_Macro();
+public class macro_stuff_Macro extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new macro_stuff_Macro();
     public macro_stuff_Macro() {
         super("macro_stuff.Macro");
         (this).name = "macro_stuff.Macro";

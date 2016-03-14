@@ -1,10 +1,10 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(function),
 
   Function(Type(Name(void)), Name(f),
-   Param(Type(Name(int)), Name(a), $type=0.builtin.int),
-   Param(Type(Name(int)), Name(b), $type=0.builtin.int),
-   Param(Type(Name(int)), Name(c), $type=0.builtin.int),
+   Param(Type(Name(int)), Name(a), $type=0.quark.int),
+   Param(Type(Name(int)), Name(b), $type=0.quark.int),
+   Param(Type(Name(int)), Name(c), $type=0.quark.int),
    Block()))
 )

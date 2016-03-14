@@ -1,7 +1,7 @@
 package extending_primitives_md;
 
-public class pkg_C extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pkg_C();
+public class pkg_C extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pkg_C();
     public pkg_C() {
         super("pkg.C");
         (this).name = "pkg.C";

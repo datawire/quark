@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var event = require('./event/index.js');
 exports.event = event;
 var slackpack_md = require('../slackpack_md/index.js');
@@ -161,7 +161,7 @@ function Client__init_fields__() {
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
 Client.slack_Client_ref = slackpack_md.Root.slack_Client_md;
-Client.builtin_Map_builtin_String_builtin_Object__ref = slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md;
+Client.quark_Map_quark_String_quark_Object__ref = slackpack_md.Root.quark_Map_quark_String_quark_Object__md;
 /**
  * Connect the client to the slack service.
  */

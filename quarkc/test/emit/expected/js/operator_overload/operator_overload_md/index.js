@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
@@ -10,10 +10,10 @@ function operator_overload_Overload___add___Method() {
     operator_overload_Overload___add___Method.super_.call(this, "operator_overload.Overload", "__add__", ["operator_overload.Overload"]);
 }
 exports.operator_overload_Overload___add___Method = operator_overload_Overload___add___Method;
-_qrt.util.inherits(operator_overload_Overload___add___Method, builtin.reflect.Method);
+_qrt.util.inherits(operator_overload_Overload___add___Method, quark.reflect.Method);
 
 function operator_overload_Overload___add___Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 operator_overload_Overload___add___Method.prototype.__init_fields__ = operator_overload_Overload___add___Method__init_fields__;
 
@@ -42,10 +42,10 @@ function operator_overload_Overload___mul___Method() {
     operator_overload_Overload___mul___Method.super_.call(this, "operator_overload.Overload", "__mul__", ["operator_overload.Overload"]);
 }
 exports.operator_overload_Overload___mul___Method = operator_overload_Overload___mul___Method;
-_qrt.util.inherits(operator_overload_Overload___mul___Method, builtin.reflect.Method);
+_qrt.util.inherits(operator_overload_Overload___mul___Method, quark.reflect.Method);
 
 function operator_overload_Overload___mul___Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 operator_overload_Overload___mul___Method.prototype.__init_fields__ = operator_overload_Overload___mul___Method__init_fields__;
 
@@ -71,13 +71,13 @@ operator_overload_Overload___mul___Method.prototype._setField = operator_overloa
 // CLASS operator_overload_Overload_test_Method
 
 function operator_overload_Overload_test_Method() {
-    operator_overload_Overload_test_Method.super_.call(this, "builtin.void", "test", []);
+    operator_overload_Overload_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.operator_overload_Overload_test_Method = operator_overload_Overload_test_Method;
-_qrt.util.inherits(operator_overload_Overload_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(operator_overload_Overload_test_Method, quark.reflect.Method);
 
 function operator_overload_Overload_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 operator_overload_Overload_test_Method.prototype.__init_fields__ = operator_overload_Overload_test_Method__init_fields__;
 
@@ -107,14 +107,14 @@ function operator_overload_Overload() {
     operator_overload_Overload.super_.call(this, "operator_overload.Overload");
     (this).name = "operator_overload.Overload";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new operator_overload_Overload___add___Method(), new operator_overload_Overload___mul___Method(), new operator_overload_Overload_test_Method()];
 }
 exports.operator_overload_Overload = operator_overload_Overload;
-_qrt.util.inherits(operator_overload_Overload, builtin.reflect.Class);
+_qrt.util.inherits(operator_overload_Overload, quark.reflect.Class);
 
 function operator_overload_Overload__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 operator_overload_Overload.prototype.__init_fields__ = operator_overload_Overload__init_fields__;
 operator_overload_Overload.singleton = new operator_overload_Overload();

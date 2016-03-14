@@ -4,7 +4,7 @@ package slack.event;
  * Base class for all slack events.
  */
 public class SlackEvent implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class slack_event_SlackEvent_ref = slackpack_md.Root.slack_event_SlackEvent_md;
+    public static quark.reflect.Class slack_event_SlackEvent_ref = slackpack_md.Root.slack_event_SlackEvent_md;
     /**
      * The event type.
      */

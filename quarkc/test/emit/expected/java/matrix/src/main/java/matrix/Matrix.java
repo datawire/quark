@@ -1,8 +1,8 @@
 package matrix;
 
 public class Matrix<T> implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class builtin_List_builtin_List_builtin_Object___ref = matrix_md.Root.builtin_List_builtin_List_builtin_Object___md;
-    public static builtin.reflect.Class builtin_List_builtin_Object__ref = matrix_md.Root.builtin_List_builtin_Object__md;
+    public static quark.reflect.Class quark_List_quark_List_quark_Object___ref = matrix_md.Root.quark_List_quark_List_quark_Object___md;
+    public static quark.reflect.Class quark_List_quark_Object__ref = matrix_md.Root.quark_List_quark_Object__md;
     public Integer width;
     public Integer height;
     public java.util.ArrayList<java.util.ArrayList<T>> columns;
@@ -25,7 +25,7 @@ public class Matrix<T> implements io.datawire.quark.runtime.QObject {
         ((this.columns).get(i)).set((j), (value));
     }
     public String _getClass() {
-        return "matrix.Matrix<builtin.Object>";
+        return "matrix.Matrix<quark.Object>";
     }
     public Object _getField(String name) {
         if ((name)==("width") || ((name) != null && (name).equals("width"))) {

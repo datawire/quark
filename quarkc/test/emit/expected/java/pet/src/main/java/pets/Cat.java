@@ -1,7 +1,7 @@
 package pets;
 
 public class Cat extends Pet implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class pets_Cat_ref = pet_md.Root.pets_Cat_md;
+    public static quark.reflect.Class pets_Cat_ref = pet_md.Root.pets_Cat_md;
     public Cat() {
         super();
     }

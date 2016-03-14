@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class inheritence_A_foo_Method(builtin.reflect.Method):
+class inheritence_A_foo_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(inheritence_A_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
+        super(inheritence_A_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,9 +24,9 @@ class inheritence_A_foo_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class inheritence_A(builtin.reflect.Class):
+class inheritence_A(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(inheritence_A, self).__init__(u"inheritence.A");
@@ -48,12 +48,12 @@ class inheritence_A(builtin.reflect.Class):
         pass
 inheritence_A.singleton = inheritence_A()
 
-class inheritence_B_foo_Method(builtin.reflect.Method):
+class inheritence_B_foo_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(inheritence_B_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
+        super(inheritence_B_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -69,9 +69,9 @@ class inheritence_B_foo_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class inheritence_B(builtin.reflect.Class):
+class inheritence_B(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(inheritence_B, self).__init__(u"inheritence.B");
@@ -93,12 +93,12 @@ class inheritence_B(builtin.reflect.Class):
         pass
 inheritence_B.singleton = inheritence_B()
 
-class inheritence_C_foo_Method(builtin.reflect.Method):
+class inheritence_C_foo_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(inheritence_C_foo_Method, self).__init__(u"builtin.void", u"foo", _List([]));
+        super(inheritence_C_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -114,9 +114,9 @@ class inheritence_C_foo_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class inheritence_C(builtin.reflect.Class):
+class inheritence_C(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(inheritence_C, self).__init__(u"inheritence.C");

@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
@@ -10,14 +10,14 @@ function default_constructors_A() {
     default_constructors_A.super_.call(this, "default_constructors.A");
     (this).name = "default_constructors.A";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [];
 }
 exports.default_constructors_A = default_constructors_A;
-_qrt.util.inherits(default_constructors_A, builtin.reflect.Class);
+_qrt.util.inherits(default_constructors_A, quark.reflect.Class);
 
 function default_constructors_A__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 default_constructors_A.prototype.__init_fields__ = default_constructors_A__init_fields__;
 default_constructors_A.singleton = new default_constructors_A();
@@ -43,13 +43,13 @@ default_constructors_A.prototype._setField = default_constructors_A__setField;
 // CLASS default_constructors_B_greet_Method
 
 function default_constructors_B_greet_Method() {
-    default_constructors_B_greet_Method.super_.call(this, "builtin.void", "greet", []);
+    default_constructors_B_greet_Method.super_.call(this, "quark.void", "greet", []);
 }
 exports.default_constructors_B_greet_Method = default_constructors_B_greet_Method;
-_qrt.util.inherits(default_constructors_B_greet_Method, builtin.reflect.Method);
+_qrt.util.inherits(default_constructors_B_greet_Method, quark.reflect.Method);
 
 function default_constructors_B_greet_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 default_constructors_B_greet_Method.prototype.__init_fields__ = default_constructors_B_greet_Method__init_fields__;
 
@@ -79,14 +79,14 @@ function default_constructors_B() {
     default_constructors_B.super_.call(this, "default_constructors.B");
     (this).name = "default_constructors.B";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new default_constructors_B_greet_Method()];
 }
 exports.default_constructors_B = default_constructors_B;
-_qrt.util.inherits(default_constructors_B, builtin.reflect.Class);
+_qrt.util.inherits(default_constructors_B, quark.reflect.Class);
 
 function default_constructors_B__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 default_constructors_B.prototype.__init_fields__ = default_constructors_B__init_fields__;
 default_constructors_B.singleton = new default_constructors_B();
@@ -112,13 +112,13 @@ default_constructors_B.prototype._setField = default_constructors_B__setField;
 // CLASS default_constructors_C_greet_Method
 
 function default_constructors_C_greet_Method() {
-    default_constructors_C_greet_Method.super_.call(this, "builtin.void", "greet", []);
+    default_constructors_C_greet_Method.super_.call(this, "quark.void", "greet", []);
 }
 exports.default_constructors_C_greet_Method = default_constructors_C_greet_Method;
-_qrt.util.inherits(default_constructors_C_greet_Method, builtin.reflect.Method);
+_qrt.util.inherits(default_constructors_C_greet_Method, quark.reflect.Method);
 
 function default_constructors_C_greet_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 default_constructors_C_greet_Method.prototype.__init_fields__ = default_constructors_C_greet_Method__init_fields__;
 
@@ -148,14 +148,14 @@ function default_constructors_C() {
     default_constructors_C.super_.call(this, "default_constructors.C");
     (this).name = "default_constructors.C";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new default_constructors_C_greet_Method()];
 }
 exports.default_constructors_C = default_constructors_C;
-_qrt.util.inherits(default_constructors_C, builtin.reflect.Class);
+_qrt.util.inherits(default_constructors_C, quark.reflect.Class);
 
 function default_constructors_C__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 default_constructors_C.prototype.__init_fields__ = default_constructors_C__init_fields__;
 default_constructors_C.singleton = new default_constructors_C();
@@ -188,10 +188,10 @@ function default_constructors_X() {
     (this).methods = [];
 }
 exports.default_constructors_X = default_constructors_X;
-_qrt.util.inherits(default_constructors_X, builtin.reflect.Class);
+_qrt.util.inherits(default_constructors_X, quark.reflect.Class);
 
 function default_constructors_X__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 default_constructors_X.prototype.__init_fields__ = default_constructors_X__init_fields__;
 default_constructors_X.singleton = new default_constructors_X();
@@ -217,13 +217,13 @@ default_constructors_X.prototype._setField = default_constructors_X__setField;
 // CLASS default_constructors_Y_test_Method
 
 function default_constructors_Y_test_Method() {
-    default_constructors_Y_test_Method.super_.call(this, "builtin.void", "test", []);
+    default_constructors_Y_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.default_constructors_Y_test_Method = default_constructors_Y_test_Method;
-_qrt.util.inherits(default_constructors_Y_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(default_constructors_Y_test_Method, quark.reflect.Method);
 
 function default_constructors_Y_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 default_constructors_Y_test_Method.prototype.__init_fields__ = default_constructors_Y_test_Method__init_fields__;
 
@@ -253,14 +253,14 @@ function default_constructors_Y() {
     default_constructors_Y.super_.call(this, "default_constructors.Y");
     (this).name = "default_constructors.Y";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new default_constructors_Y_test_Method()];
 }
 exports.default_constructors_Y = default_constructors_Y;
-_qrt.util.inherits(default_constructors_Y, builtin.reflect.Class);
+_qrt.util.inherits(default_constructors_Y, quark.reflect.Class);
 
 function default_constructors_Y__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 default_constructors_Y.prototype.__init_fields__ = default_constructors_Y__init_fields__;
 default_constructors_Y.singleton = new default_constructors_Y();

@@ -49,8 +49,8 @@
   </build>
   <dependencies>
     <dependency>
-      <groupId>builtin</groupId>
-      <artifactId>builtin</artifactId>
+      <groupId>quark</groupId>
+      <artifactId>quark</artifactId>
       <version>0.0.1</version>
     </dependency>
   </dependencies>

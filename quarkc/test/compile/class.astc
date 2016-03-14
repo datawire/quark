@@ -1,29 +1,29 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(class),
 
   Class(Name(C),
 
    Method(static=False, Type(Name(void)), Name(f),
-    Param(Type(Name(int)), Name(a), $type=0.builtin.int),
-    Param(Type(Name(int)), Name(b), $type=0.builtin.int),
-    Param(Type(Name(String)), Name(c), $type=0.builtin.String),
+    Param(Type(Name(int)), Name(a), $type=0.quark.int),
+    Param(Type(Name(int)), Name(b), $type=0.quark.int),
+    Param(Type(Name(String)), Name(c), $type=0.quark.String),
     Block()),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("class.C", $type=0.builtin.String)))),
+     Return(String("class.C", $type=0.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
     Block(
-     Return(Null(null, $type=0.builtin.Object)))),
+     Return(Null(null, $type=0.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(class_C_ref),
     Attr(Attr(Var(Name(class_md), $type=1.class_md), Name(Root),
-     $type=1.class_md.Root), Name(class_C_md), $type=0.builtin.reflect.Class),
-   $type=0.builtin.reflect.Class)))
+     $type=1.class_md.Root), Name(class_C_md), $type=0.quark.reflect.Class),
+   $type=0.quark.reflect.Class)))
 )

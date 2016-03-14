@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var string_methods_md = require('../string_methods_md/index.js');
 exports.string_methods_md = string_methods_md;
 
@@ -384,7 +384,7 @@ function test_join__init_fields__() {
 }
 test_join.prototype.__init_fields__ = test_join__init_fields__;
 test_join.string_methods_test_join_ref = string_methods_md.Root.string_methods_test_join_md;
-test_join.builtin_List_builtin_String__ref = string_methods_md.Root.builtin_List_builtin_String__md;
+test_join.quark_List_quark_String__ref = string_methods_md.Root.quark_List_quark_String__md;
 function test_join_that() {
     (this).parts = new Array();
     (this).strparts = "";

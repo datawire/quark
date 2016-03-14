@@ -52,7 +52,7 @@ class Box(object):
         (self).contents = contents
 
     def _getClass(self):
-        return u"list.Box<builtin.Object>"
+        return u"list.Box<quark.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):

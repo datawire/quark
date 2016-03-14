@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS macro_pie_Pie_test_Method
 
 function macro_pie_Pie_test_Method() {
-    macro_pie_Pie_test_Method.super_.call(this, "builtin.void", "test", []);
+    macro_pie_Pie_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.macro_pie_Pie_test_Method = macro_pie_Pie_test_Method;
-_qrt.util.inherits(macro_pie_Pie_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(macro_pie_Pie_test_Method, quark.reflect.Method);
 
 function macro_pie_Pie_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 macro_pie_Pie_test_Method.prototype.__init_fields__ = macro_pie_Pie_test_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function macro_pie_Pie() {
     (this).methods = [new macro_pie_Pie_test_Method()];
 }
 exports.macro_pie_Pie = macro_pie_Pie;
-_qrt.util.inherits(macro_pie_Pie, builtin.reflect.Class);
+_qrt.util.inherits(macro_pie_Pie, quark.reflect.Class);
 
 function macro_pie_Pie__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 macro_pie_Pie.prototype.__init_fields__ = macro_pie_Pie__init_fields__;
 macro_pie_Pie.singleton = new macro_pie_Pie();

@@ -1,8 +1,8 @@
 package prtest_md;
 
-public class prtest_Test_test_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class prtest_Test_test_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public prtest_Test_test_Method() {
-        super("builtin.void", "test", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "test", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         prtest.Test obj = (prtest.Test) (object);

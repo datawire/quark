@@ -1,8 +1,8 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var quark = require('quark').quark;
+exports.quark = quark;
 var marshalling_md = require('../marshalling_md/index.js');
 exports.marshalling_md = marshalling_md;
 
@@ -22,7 +22,7 @@ function Inner__init_fields__() {
 }
 Inner.prototype.__init_fields__ = Inner__init_fields__;
 Inner.m_Inner_ref = marshalling_md.Root.m_Inner_md;
-Inner.builtin_List_builtin_String__ref = marshalling_md.Root.builtin_List_builtin_String__md;
+Inner.quark_List_quark_String__ref = marshalling_md.Root.quark_List_quark_String__md;
 function Inner_setup(i) {
     var f = (i);
     (this).inner_int = i;
@@ -85,7 +85,7 @@ function Outer__init_fields__() {
 }
 Outer.prototype.__init_fields__ = Outer__init_fields__;
 Outer.m_Outer_ref = marshalling_md.Root.m_Outer_md;
-Outer.builtin_List_m_Inner__ref = marshalling_md.Root.builtin_List_m_Inner__md;
+Outer.quark_List_m_Inner__ref = marshalling_md.Root.quark_List_m_Inner__md;
 function Outer_setup(i) {
     var f = (i);
     (this).outer_int = (i) * (10);
@@ -136,10 +136,10 @@ Outer.prototype._setField = Outer__setField;
 
 function test_marshalling() {
     var actual = (new Outer()).setup(101);
-    var encoded = (builtin.toJSON(actual, builtin.reflect.Class.get(_qrt._getClass(actual)))).toString();
+    var encoded = (quark.toJSON(actual, quark.reflect.Class.get(_qrt._getClass(actual)))).toString();
     _qrt.print(encoded);
     var expected = new Outer();
-    builtin.fromJSON(builtin.reflect.Class.get(_qrt._getClass(expected)), expected, _qrt.json_from_string(encoded));
+    quark.fromJSON(quark.reflect.Class.get(_qrt._getClass(expected)), expected, _qrt.json_from_string(encoded));
     _qrt.print(_qrt.toString((expected).outer_int));
     _qrt.print((expected).outer_string);
     _qrt.print(_qrt.toString((expected).outer_float));

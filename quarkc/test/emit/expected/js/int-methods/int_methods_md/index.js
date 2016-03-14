@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS int_methods_Test_test_Method
 
 function int_methods_Test_test_Method() {
-    int_methods_Test_test_Method.super_.call(this, "builtin.void", "test", []);
+    int_methods_Test_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.int_methods_Test_test_Method = int_methods_Test_test_Method;
-_qrt.util.inherits(int_methods_Test_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(int_methods_Test_test_Method, quark.reflect.Method);
 
 function int_methods_Test_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 int_methods_Test_test_Method.prototype.__init_fields__ = int_methods_Test_test_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function int_methods_Test() {
     (this).methods = [new int_methods_Test_test_Method()];
 }
 exports.int_methods_Test = int_methods_Test;
-_qrt.util.inherits(int_methods_Test, builtin.reflect.Class);
+_qrt.util.inherits(int_methods_Test, quark.reflect.Class);
 
 function int_methods_Test__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 int_methods_Test.prototype.__init_fields__ = int_methods_Test__init_fields__;
 int_methods_Test.singleton = new int_methods_Test();

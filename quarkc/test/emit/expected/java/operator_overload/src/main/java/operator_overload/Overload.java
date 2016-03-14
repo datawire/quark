@@ -1,7 +1,7 @@
 package operator_overload;
 
 public class Overload implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class operator_overload_Overload_ref = operator_overload_md.Root.operator_overload_Overload_md;
+    public static quark.reflect.Class operator_overload_Overload_ref = operator_overload_md.Root.operator_overload_Overload_md;
     public String name;
     public Overload(String name) {
         (this).name = name;

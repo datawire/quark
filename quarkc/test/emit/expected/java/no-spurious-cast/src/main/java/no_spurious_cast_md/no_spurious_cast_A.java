@@ -1,7 +1,7 @@
 package no_spurious_cast_md;
 
-public class no_spurious_cast_A extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new no_spurious_cast_A();
+public class no_spurious_cast_A extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new no_spurious_cast_A();
     public no_spurious_cast_A() {
         super("no_spurious_cast.A");
         (this).name = "no_spurious_cast.A";

@@ -1,43 +1,43 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
-// CLASS builtin_List_builtin_Object_
+// CLASS quark_List_quark_Object_
 
-function builtin_List_builtin_Object_() {
-    builtin_List_builtin_Object_.super_.call(this, "builtin.List<builtin.Object>");
-    (this).name = "builtin.List";
-    (this).parameters = ["builtin.Object"];
+function quark_List_quark_Object_() {
+    quark_List_quark_Object_.super_.call(this, "quark.List<quark.Object>");
+    (this).name = "quark.List";
+    (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [];
 }
-exports.builtin_List_builtin_Object_ = builtin_List_builtin_Object_;
-_qrt.util.inherits(builtin_List_builtin_Object_, builtin.reflect.Class);
+exports.quark_List_quark_Object_ = quark_List_quark_Object_;
+_qrt.util.inherits(quark_List_quark_Object_, quark.reflect.Class);
 
-function builtin_List_builtin_Object___init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+function quark_List_quark_Object___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
-builtin_List_builtin_Object_.prototype.__init_fields__ = builtin_List_builtin_Object___init_fields__;
-builtin_List_builtin_Object_.singleton = new builtin_List_builtin_Object_();
-function builtin_List_builtin_Object__construct(args) {
+quark_List_quark_Object_.prototype.__init_fields__ = quark_List_quark_Object___init_fields__;
+quark_List_quark_Object_.singleton = new quark_List_quark_Object_();
+function quark_List_quark_Object__construct(args) {
     return new Array();
 }
-builtin_List_builtin_Object_.prototype.construct = builtin_List_builtin_Object__construct;
+quark_List_quark_Object_.prototype.construct = quark_List_quark_Object__construct;
 
-function builtin_List_builtin_Object___getClass() {
+function quark_List_quark_Object___getClass() {
     return null;
 }
-builtin_List_builtin_Object_.prototype._getClass = builtin_List_builtin_Object___getClass;
+quark_List_quark_Object_.prototype._getClass = quark_List_quark_Object___getClass;
 
-function builtin_List_builtin_Object___getField(name) {
+function quark_List_quark_Object___getField(name) {
     return null;
 }
-builtin_List_builtin_Object_.prototype._getField = builtin_List_builtin_Object___getField;
+quark_List_quark_Object_.prototype._getField = quark_List_quark_Object___getField;
 
-function builtin_List_builtin_Object___setField(name, value) {}
-builtin_List_builtin_Object_.prototype._setField = builtin_List_builtin_Object___setField;
+function quark_List_quark_Object___setField(name, value) {}
+quark_List_quark_Object_.prototype._setField = quark_List_quark_Object___setField;
 
 
 // CLASS Root
@@ -48,7 +48,7 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.builtin_List_builtin_Object__md = builtin_List_builtin_Object_.singleton;
+Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
 function Root__getClass() {
     return null;
 }

@@ -1,12 +1,12 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(mutual_recursion),
 
   Function(Type(Name(int)), Name(foo), Block(
     ExprStmt(Call(Var(Name(bar), $type=0.mutual_recursion.bar),
-     $type=0.builtin.String)))),
+     $type=0.quark.String)))),
 
   Function(Type(Name(String)), Name(bar), Block(
     ExprStmt(Call(Var(Name(foo), $type=0.mutual_recursion.foo),
-     $type=0.builtin.int)))))
+     $type=0.quark.int)))))
 )

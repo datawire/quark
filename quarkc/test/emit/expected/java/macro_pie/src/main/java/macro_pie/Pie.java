@@ -1,7 +1,7 @@
 package macro_pie;
 
 public class Pie implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class macro_pie_Pie_ref = macro_pie_md.Root.macro_pie_Pie_md;
+    public static quark.reflect.Class macro_pie_Pie_ref = macro_pie_md.Root.macro_pie_Pie_md;
     public Pie() {}
     public void test() {
         Pie p = new Pie();

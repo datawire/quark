@@ -1,7 +1,7 @@
 package default_constructors;
 
 public class Y extends X implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class default_constructors_Y_ref = default_constructors_md.Root.default_constructors_Y_md;
+    public static quark.reflect.Class default_constructors_Y_ref = default_constructors_md.Root.default_constructors_Y_md;
     public String name;
     public Y(String name) {
         super();

@@ -2,7 +2,7 @@ package static_;
 
 public class Foo implements io.datawire.quark.runtime.QObject {
     public static Integer count = 0;
-    public static builtin.reflect.Class static_Foo_ref = static_md.Root.static_Foo_md;
+    public static quark.reflect.Class static_Foo_ref = static_md.Root.static_Foo_md;
     public Foo() {
         Foo.count = (Foo.count) + (1);
     }

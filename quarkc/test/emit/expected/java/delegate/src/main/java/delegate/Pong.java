@@ -1,7 +1,7 @@
 package delegate;
 
 public class Pong extends Message implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class delegate_Pong_ref = delegate_md.Root.delegate_Pong_md;
+    public static quark.reflect.Class delegate_Pong_ref = delegate_md.Root.delegate_Pong_md;
     public Pong() {
         super();
     }

@@ -1,8 +1,8 @@
 package m;
 
 public class Inner implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class m_Inner_ref = marshalling_md.Root.m_Inner_md;
-    public static builtin.reflect.Class builtin_List_builtin_String__ref = marshalling_md.Root.builtin_List_builtin_String__md;
+    public static quark.reflect.Class m_Inner_ref = marshalling_md.Root.m_Inner_md;
+    public static quark.reflect.Class quark_List_quark_String__ref = marshalling_md.Root.quark_List_quark_String__md;
     public Integer inner_int;
     public String inner_string;
     public Double inner_float;

@@ -1,4 +1,4 @@
-var _qrt = require("builtin/quark_runtime.js");
+var _qrt = require("quark/quark_runtime.js");
 
 
 // CLASS Box
@@ -20,7 +20,7 @@ function Box_get() {
 Box.prototype.get = Box_get;
 
 function Box__getClass() {
-    return "test3.Box<builtin.Object>";
+    return "test3.Box<quark.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 

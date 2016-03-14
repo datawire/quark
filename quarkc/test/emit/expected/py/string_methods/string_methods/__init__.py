@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import string_methods_md
 
 
@@ -326,7 +326,7 @@ class test_join(string_test):
 
     
 test_join.string_methods_test_join_ref = string_methods_md.Root.string_methods_test_join_md
-test_join.builtin_List_builtin_String__ref = string_methods_md.Root.builtin_List_builtin_String__md
+test_join.quark_List_quark_String__ref = string_methods_md.Root.quark_List_quark_String__md
 class test_split(string_test):
     def _init(self):
         string_test._init(self)

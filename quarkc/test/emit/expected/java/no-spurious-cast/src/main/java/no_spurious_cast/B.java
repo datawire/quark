@@ -1,7 +1,7 @@
 package no_spurious_cast;
 
 public class B extends A implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class no_spurious_cast_B_ref = no_spurious_cast_md.Root.no_spurious_cast_B_md;
+    public static quark.reflect.Class no_spurious_cast_B_ref = no_spurious_cast_md.Root.no_spurious_cast_B_md;
     public B() {
         super();
     }

@@ -1,7 +1,7 @@
 package macro_stuff;
 
 public class Macro implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class macro_stuff_Macro_ref = macro_stuff_md.Root.macro_stuff_Macro_md;
+    public static quark.reflect.Class macro_stuff_Macro_ref = macro_stuff_md.Root.macro_stuff_Macro_md;
     public Macro() {}
     public void test() {
         Macro m1 = new Macro();

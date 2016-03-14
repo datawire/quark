@@ -1,7 +1,7 @@
 package string_methods;
 
 public class test_find extends string_test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class string_methods_test_find_ref = string_methods_md.Root.string_methods_test_find_md;
+    public static quark.reflect.Class string_methods_test_find_ref = string_methods_md.Root.string_methods_test_find_md;
     public String what;
     public String _that;
     public test_find(String what) {

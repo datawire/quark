@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class super_A_greet_Method(builtin.reflect.Method):
+class super_A_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(super_A_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(super_A_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,15 +24,15 @@ class super_A_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class super_A(builtin.reflect.Class):
+class super_A(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(super_A, self).__init__(u"super.A");
         (self).name = u"super.A"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([super_A_greet_Method()])
 
     def construct(self, args):
@@ -48,12 +48,12 @@ class super_A(builtin.reflect.Class):
         pass
 super_A.singleton = super_A()
 
-class super_B_greet_Method(builtin.reflect.Method):
+class super_B_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(super_B_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(super_B_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -69,15 +69,15 @@ class super_B_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class super_B(builtin.reflect.Class):
+class super_B(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(super_B, self).__init__(u"super.B");
         (self).name = u"super.B"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([super_B_greet_Method()])
 
     def construct(self, args):

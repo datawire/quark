@@ -1,7 +1,7 @@
 package int_methods;
 
 public class Test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class int_methods_Test_ref = int_methods_md.Root.int_methods_Test_md;
+    public static quark.reflect.Class int_methods_Test_ref = int_methods_md.Root.int_methods_Test_md;
     public Test() {}
     public void test() {
         Integer x = 1;

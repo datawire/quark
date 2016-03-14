@@ -1,7 +1,7 @@
 from quark_runtime import *
 
-import builtin.reflect
-import builtin
+import quark.reflect
+import quark
 import marshalling_md
 
 
@@ -55,7 +55,7 @@ class Inner(object):
 
     
 Inner.m_Inner_ref = marshalling_md.Root.m_Inner_md
-Inner.builtin_List_builtin_String__ref = marshalling_md.Root.builtin_List_builtin_String__md
+Inner.quark_List_quark_String__ref = marshalling_md.Root.quark_List_quark_String__md
 class Outer(object):
     def _init(self):
         self.outer_int = None
@@ -106,14 +106,14 @@ class Outer(object):
 
     
 Outer.m_Outer_ref = marshalling_md.Root.m_Outer_md
-Outer.builtin_List_m_Inner__ref = marshalling_md.Root.builtin_List_m_Inner__md
+Outer.quark_List_m_Inner__ref = marshalling_md.Root.quark_List_m_Inner__md
 
 def test_marshalling():
     actual = (Outer()).setup(101);
-    encoded = (builtin.toJSON(actual, builtin.reflect.Class.get(_getClass(actual)))).toString();
+    encoded = (quark.toJSON(actual, quark.reflect.Class.get(_getClass(actual)))).toString();
     _println(encoded);
     expected = Outer();
-    builtin.fromJSON(builtin.reflect.Class.get(_getClass(expected)), expected, _JSONObject.parse(encoded));
+    quark.fromJSON(quark.reflect.Class.get(_getClass(expected)), expected, _JSONObject.parse(encoded));
     _println(str((expected).outer_int));
     _println((expected).outer_string);
     _println(repr((expected).outer_float));

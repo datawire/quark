@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var parameterized_defaults_md = require('../parameterized_defaults_md/index.js');
 exports.parameterized_defaults_md = parameterized_defaults_md;
 
@@ -14,7 +14,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.pkg_Foo_builtin_Object__ref = parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md;
+Foo.pkg_Foo_quark_Object__ref = parameterized_defaults_md.Root.pkg_Foo_quark_Object__md;
 function Foo_foo() {
     return this.get();
 }
@@ -69,7 +69,7 @@ function Box__init_fields__() {
 Box.prototype.__init_fields__ = Box__init_fields__;
 
 function Box__getClass() {
-    return "pkg.Box<builtin.Object>";
+    return "pkg.Box<quark.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 
@@ -100,7 +100,7 @@ function StringBox__init_fields__() {
     Box.prototype.__init_fields__.call(this);
 }
 StringBox.prototype.__init_fields__ = StringBox__init_fields__;
-StringBox.pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md;
+StringBox.pkg_Box_quark_String__ref = parameterized_defaults_md.Root.pkg_Box_quark_String__md;
 StringBox.pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md;
 function StringBox__getClass() {
     return "pkg.StringBox";

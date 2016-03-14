@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS inheritence_A_foo_Method
 
 function inheritence_A_foo_Method() {
-    inheritence_A_foo_Method.super_.call(this, "builtin.void", "foo", []);
+    inheritence_A_foo_Method.super_.call(this, "quark.void", "foo", []);
 }
 exports.inheritence_A_foo_Method = inheritence_A_foo_Method;
-_qrt.util.inherits(inheritence_A_foo_Method, builtin.reflect.Method);
+_qrt.util.inherits(inheritence_A_foo_Method, quark.reflect.Method);
 
 function inheritence_A_foo_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 inheritence_A_foo_Method.prototype.__init_fields__ = inheritence_A_foo_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function inheritence_A() {
     (this).methods = [new inheritence_A_foo_Method()];
 }
 exports.inheritence_A = inheritence_A;
-_qrt.util.inherits(inheritence_A, builtin.reflect.Class);
+_qrt.util.inherits(inheritence_A, quark.reflect.Class);
 
 function inheritence_A__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritence_A.prototype.__init_fields__ = inheritence_A__init_fields__;
 inheritence_A.singleton = new inheritence_A();
@@ -76,13 +76,13 @@ inheritence_A.prototype._setField = inheritence_A__setField;
 // CLASS inheritence_B_foo_Method
 
 function inheritence_B_foo_Method() {
-    inheritence_B_foo_Method.super_.call(this, "builtin.void", "foo", []);
+    inheritence_B_foo_Method.super_.call(this, "quark.void", "foo", []);
 }
 exports.inheritence_B_foo_Method = inheritence_B_foo_Method;
-_qrt.util.inherits(inheritence_B_foo_Method, builtin.reflect.Method);
+_qrt.util.inherits(inheritence_B_foo_Method, quark.reflect.Method);
 
 function inheritence_B_foo_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 inheritence_B_foo_Method.prototype.__init_fields__ = inheritence_B_foo_Method__init_fields__;
 
@@ -116,10 +116,10 @@ function inheritence_B() {
     (this).methods = [new inheritence_B_foo_Method()];
 }
 exports.inheritence_B = inheritence_B;
-_qrt.util.inherits(inheritence_B, builtin.reflect.Class);
+_qrt.util.inherits(inheritence_B, quark.reflect.Class);
 
 function inheritence_B__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritence_B.prototype.__init_fields__ = inheritence_B__init_fields__;
 inheritence_B.singleton = new inheritence_B();
@@ -145,13 +145,13 @@ inheritence_B.prototype._setField = inheritence_B__setField;
 // CLASS inheritence_C_foo_Method
 
 function inheritence_C_foo_Method() {
-    inheritence_C_foo_Method.super_.call(this, "builtin.void", "foo", []);
+    inheritence_C_foo_Method.super_.call(this, "quark.void", "foo", []);
 }
 exports.inheritence_C_foo_Method = inheritence_C_foo_Method;
-_qrt.util.inherits(inheritence_C_foo_Method, builtin.reflect.Method);
+_qrt.util.inherits(inheritence_C_foo_Method, quark.reflect.Method);
 
 function inheritence_C_foo_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 inheritence_C_foo_Method.prototype.__init_fields__ = inheritence_C_foo_Method__init_fields__;
 
@@ -185,10 +185,10 @@ function inheritence_C() {
     (this).methods = [new inheritence_C_foo_Method()];
 }
 exports.inheritence_C = inheritence_C;
-_qrt.util.inherits(inheritence_C, builtin.reflect.Class);
+_qrt.util.inherits(inheritence_C, quark.reflect.Class);
 
 function inheritence_C__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritence_C.prototype.__init_fields__ = inheritence_C__init_fields__;
 inheritence_C.singleton = new inheritence_C();

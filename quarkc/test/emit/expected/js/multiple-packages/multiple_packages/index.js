@@ -1,4 +1,4 @@
-var _qrt = require("builtin/quark_runtime.js");
+var _qrt = require("quark/quark_runtime.js");
 var p1 = require('../p1/index.js');
 exports.p1 = p1;
 var p1 = require('../p1/index.js');

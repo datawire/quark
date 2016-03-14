@@ -1,8 +1,8 @@
 package delegate;
 
 public class Test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class delegate_Test_ref = delegate_md.Root.delegate_Test_md;
-    public static builtin.reflect.Class builtin_List_builtin_Object__ref = delegate_md.Root.builtin_List_builtin_Object__md;
+    public static quark.reflect.Class delegate_Test_ref = delegate_md.Root.delegate_Test_md;
+    public static quark.reflect.Class quark_List_quark_Object__ref = delegate_md.Root.quark_List_quark_Object__md;
     public Test() {}
     public Object bar(String name, java.util.ArrayList<Object> args, java.util.ArrayList<Object> options) {
         do{System.out.println(args);System.out.flush();}while(false);

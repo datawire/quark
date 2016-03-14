@@ -1,12 +1,12 @@
 package default_constructors_md;
 
-public class default_constructors_C extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new default_constructors_C();
+public class default_constructors_C extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new default_constructors_C();
     public default_constructors_C() {
         super("default_constructors.C");
         (this).name = "default_constructors.C";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "name")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new default_constructors_C_greet_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

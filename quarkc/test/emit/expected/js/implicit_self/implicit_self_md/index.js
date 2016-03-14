@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS implicit_self_Foo_next_Method
 
 function implicit_self_Foo_next_Method() {
-    implicit_self_Foo_next_Method.super_.call(this, "builtin.void", "next", []);
+    implicit_self_Foo_next_Method.super_.call(this, "quark.void", "next", []);
 }
 exports.implicit_self_Foo_next_Method = implicit_self_Foo_next_Method;
-_qrt.util.inherits(implicit_self_Foo_next_Method, builtin.reflect.Method);
+_qrt.util.inherits(implicit_self_Foo_next_Method, quark.reflect.Method);
 
 function implicit_self_Foo_next_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 implicit_self_Foo_next_Method.prototype.__init_fields__ = implicit_self_Foo_next_Method__init_fields__;
 
@@ -40,13 +40,13 @@ implicit_self_Foo_next_Method.prototype._setField = implicit_self_Foo_next_Metho
 // CLASS implicit_self_Foo_test_Method
 
 function implicit_self_Foo_test_Method() {
-    implicit_self_Foo_test_Method.super_.call(this, "builtin.void", "test", []);
+    implicit_self_Foo_test_Method.super_.call(this, "quark.void", "test", []);
 }
 exports.implicit_self_Foo_test_Method = implicit_self_Foo_test_Method;
-_qrt.util.inherits(implicit_self_Foo_test_Method, builtin.reflect.Method);
+_qrt.util.inherits(implicit_self_Foo_test_Method, quark.reflect.Method);
 
 function implicit_self_Foo_test_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 implicit_self_Foo_test_Method.prototype.__init_fields__ = implicit_self_Foo_test_Method__init_fields__;
 
@@ -80,10 +80,10 @@ function implicit_self_Foo() {
     (this).methods = [new implicit_self_Foo_next_Method(), new implicit_self_Foo_test_Method()];
 }
 exports.implicit_self_Foo = implicit_self_Foo;
-_qrt.util.inherits(implicit_self_Foo, builtin.reflect.Class);
+_qrt.util.inherits(implicit_self_Foo, quark.reflect.Class);
 
 function implicit_self_Foo__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 implicit_self_Foo.prototype.__init_fields__ = implicit_self_Foo__init_fields__;
 implicit_self_Foo.singleton = new implicit_self_Foo();

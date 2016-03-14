@@ -4,7 +4,7 @@
     "version": "1.0.0",
     "main": "index.js",
     "dependencies": {
-        "builtin": "0.0.1"
+        "quark": "0.0.1"
     }
 }
         

@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class box_Box_builtin_Object__set_Method(builtin.reflect.Method):
+class box_Box_quark_Object__set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_Object__set_Method, self).__init__(u"builtin.void", u"set", _List([u"builtin.Object"]));
+        super(box_Box_quark_Object__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,12 +24,12 @@ class box_Box_builtin_Object__set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_Object__get_Method(builtin.reflect.Method):
+class box_Box_quark_Object__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_Object__get_Method, self).__init__(u"builtin.Object", u"get", _List([]));
+        super(box_Box_quark_Object__get_Method, self).__init__(u"quark.Object", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -44,16 +44,16 @@ class box_Box_builtin_Object__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_Object_(builtin.reflect.Class):
+class box_Box_quark_Object_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_Object_, self).__init__(u"box.Box<builtin.Object>");
+        super(box_Box_quark_Object_, self).__init__(u"box.Box<quark.Object>");
         (self).name = u"box.Box"
-        (self).parameters = _List([u"builtin.Object"])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.Object", u"contents")])
-        (self).methods = _List([box_Box_builtin_Object__set_Method(), box_Box_builtin_Object__get_Method()])
+        (self).parameters = _List([u"quark.Object"])
+        (self).fields = _List([quark.reflect.Field(u"quark.Object", u"contents")])
+        (self).methods = _List([box_Box_quark_Object__set_Method(), box_Box_quark_Object__get_Method()])
 
     def construct(self, args):
         return box.Box()
@@ -66,14 +66,14 @@ class box_Box_builtin_Object_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Box_builtin_Object_.singleton = box_Box_builtin_Object_()
+box_Box_quark_Object_.singleton = box_Box_quark_Object_()
 
-class box_Box_builtin_int__set_Method(builtin.reflect.Method):
+class box_Box_quark_int__set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_int__set_Method, self).__init__(u"builtin.void", u"set", _List([u"builtin.int"]));
+        super(box_Box_quark_int__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.int"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -89,12 +89,12 @@ class box_Box_builtin_int__set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_int__get_Method(builtin.reflect.Method):
+class box_Box_quark_int__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_int__get_Method, self).__init__(u"builtin.int", u"get", _List([]));
+        super(box_Box_quark_int__get_Method, self).__init__(u"quark.int", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -109,16 +109,16 @@ class box_Box_builtin_int__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_int_(builtin.reflect.Class):
+class box_Box_quark_int_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_int_, self).__init__(u"box.Box<builtin.int>");
+        super(box_Box_quark_int_, self).__init__(u"box.Box<quark.int>");
         (self).name = u"box.Box"
-        (self).parameters = _List([u"builtin.int"])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"contents")])
-        (self).methods = _List([box_Box_builtin_int__set_Method(), box_Box_builtin_int__get_Method()])
+        (self).parameters = _List([u"quark.int"])
+        (self).fields = _List([quark.reflect.Field(u"quark.int", u"contents")])
+        (self).methods = _List([box_Box_quark_int__set_Method(), box_Box_quark_int__get_Method()])
 
     def construct(self, args):
         return box.Box()
@@ -131,14 +131,14 @@ class box_Box_builtin_int_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Box_builtin_int_.singleton = box_Box_builtin_int_()
+box_Box_quark_int_.singleton = box_Box_quark_int_()
 
-class box_Box_builtin_String__set_Method(builtin.reflect.Method):
+class box_Box_quark_String__set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_String__set_Method, self).__init__(u"builtin.void", u"set", _List([u"builtin.String"]));
+        super(box_Box_quark_String__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.String"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -154,12 +154,12 @@ class box_Box_builtin_String__set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_String__get_Method(builtin.reflect.Method):
+class box_Box_quark_String__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_String__get_Method, self).__init__(u"builtin.String", u"get", _List([]));
+        super(box_Box_quark_String__get_Method, self).__init__(u"quark.String", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -174,16 +174,16 @@ class box_Box_builtin_String__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_builtin_String_(builtin.reflect.Class):
+class box_Box_quark_String_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Box_builtin_String_, self).__init__(u"box.Box<builtin.String>");
+        super(box_Box_quark_String_, self).__init__(u"box.Box<quark.String>");
         (self).name = u"box.Box"
-        (self).parameters = _List([u"builtin.String"])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"contents")])
-        (self).methods = _List([box_Box_builtin_String__set_Method(), box_Box_builtin_String__get_Method()])
+        (self).parameters = _List([u"quark.String"])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"contents")])
+        (self).methods = _List([box_Box_quark_String__set_Method(), box_Box_quark_String__get_Method()])
 
     def construct(self, args):
         return box.Box()
@@ -196,14 +196,14 @@ class box_Box_builtin_String_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Box_builtin_String_.singleton = box_Box_builtin_String_()
+box_Box_quark_String_.singleton = box_Box_quark_String_()
 
-class box_Box_box_Box_builtin_int___set_Method(builtin.reflect.Method):
+class box_Box_box_Box_quark_int___set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_box_Box_builtin_int___set_Method, self).__init__(u"builtin.void", u"set", _List([u"box.Box<builtin.int>"]));
+        super(box_Box_box_Box_quark_int___set_Method, self).__init__(u"quark.void", u"set", _List([u"box.Box<quark.int>"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -219,12 +219,12 @@ class box_Box_box_Box_builtin_int___set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_box_Box_builtin_int___get_Method(builtin.reflect.Method):
+class box_Box_box_Box_quark_int___get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Box_box_Box_builtin_int___get_Method, self).__init__(u"box.Box<builtin.int>", u"get", _List([]));
+        super(box_Box_box_Box_quark_int___get_Method, self).__init__(u"box.Box<quark.int>", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -239,16 +239,16 @@ class box_Box_box_Box_builtin_int___get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Box_box_Box_builtin_int__(builtin.reflect.Class):
+class box_Box_box_Box_quark_int__(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Box_box_Box_builtin_int__, self).__init__(u"box.Box<box.Box<builtin.int>>");
+        super(box_Box_box_Box_quark_int__, self).__init__(u"box.Box<box.Box<quark.int>>");
         (self).name = u"box.Box"
-        (self).parameters = _List([u"box.Box<builtin.int>"])
-        (self).fields = _List([builtin.reflect.Field(u"box.Box<builtin.int>", u"contents")])
-        (self).methods = _List([box_Box_box_Box_builtin_int___set_Method(), box_Box_box_Box_builtin_int___get_Method()])
+        (self).parameters = _List([u"box.Box<quark.int>"])
+        (self).fields = _List([quark.reflect.Field(u"box.Box<quark.int>", u"contents")])
+        (self).methods = _List([box_Box_box_Box_quark_int___set_Method(), box_Box_box_Box_quark_int___get_Method()])
 
     def construct(self, args):
         return box.Box()
@@ -261,14 +261,14 @@ class box_Box_box_Box_builtin_int__(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Box_box_Box_builtin_int__.singleton = box_Box_box_Box_builtin_int__()
+box_Box_box_Box_quark_int__.singleton = box_Box_box_Box_quark_int__()
 
-class box_Crate_builtin_int__set_Method(builtin.reflect.Method):
+class box_Crate_quark_int__set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_int__set_Method, self).__init__(u"builtin.void", u"set", _List([u"builtin.int"]));
+        super(box_Crate_quark_int__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.int"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -284,12 +284,12 @@ class box_Crate_builtin_int__set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Crate_builtin_int__get_Method(builtin.reflect.Method):
+class box_Crate_quark_int__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_int__get_Method, self).__init__(u"builtin.int", u"get", _List([]));
+        super(box_Crate_quark_int__get_Method, self).__init__(u"quark.int", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -304,16 +304,16 @@ class box_Crate_builtin_int__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Crate_builtin_int_(builtin.reflect.Class):
+class box_Crate_quark_int_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_int_, self).__init__(u"box.Crate<builtin.int>");
+        super(box_Crate_quark_int_, self).__init__(u"box.Crate<quark.int>");
         (self).name = u"box.Crate"
-        (self).parameters = _List([u"builtin.int"])
-        (self).fields = _List([builtin.reflect.Field(u"box.Box<builtin.Object>", u"box"), builtin.reflect.Field(u"box.Box<builtin.int>", u"ibox")])
-        (self).methods = _List([box_Crate_builtin_int__set_Method(), box_Crate_builtin_int__get_Method()])
+        (self).parameters = _List([u"quark.int"])
+        (self).fields = _List([quark.reflect.Field(u"box.Box<quark.Object>", u"box"), quark.reflect.Field(u"box.Box<quark.int>", u"ibox")])
+        (self).methods = _List([box_Crate_quark_int__set_Method(), box_Crate_quark_int__get_Method()])
 
     def construct(self, args):
         return box.Crate()
@@ -326,14 +326,14 @@ class box_Crate_builtin_int_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Crate_builtin_int_.singleton = box_Crate_builtin_int_()
+box_Crate_quark_int_.singleton = box_Crate_quark_int_()
 
-class box_Crate_builtin_String__set_Method(builtin.reflect.Method):
+class box_Crate_quark_String__set_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_String__set_Method, self).__init__(u"builtin.void", u"set", _List([u"builtin.String"]));
+        super(box_Crate_quark_String__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.String"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -349,12 +349,12 @@ class box_Crate_builtin_String__set_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Crate_builtin_String__get_Method(builtin.reflect.Method):
+class box_Crate_quark_String__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_String__get_Method, self).__init__(u"builtin.String", u"get", _List([]));
+        super(box_Crate_quark_String__get_Method, self).__init__(u"quark.String", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -369,16 +369,16 @@ class box_Crate_builtin_String__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class box_Crate_builtin_String_(builtin.reflect.Class):
+class box_Crate_quark_String_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(box_Crate_builtin_String_, self).__init__(u"box.Crate<builtin.String>");
+        super(box_Crate_quark_String_, self).__init__(u"box.Crate<quark.String>");
         (self).name = u"box.Crate"
-        (self).parameters = _List([u"builtin.String"])
-        (self).fields = _List([builtin.reflect.Field(u"box.Box<builtin.Object>", u"box"), builtin.reflect.Field(u"box.Box<builtin.int>", u"ibox")])
-        (self).methods = _List([box_Crate_builtin_String__set_Method(), box_Crate_builtin_String__get_Method()])
+        (self).parameters = _List([u"quark.String"])
+        (self).fields = _List([quark.reflect.Field(u"box.Box<quark.Object>", u"box"), quark.reflect.Field(u"box.Box<quark.int>", u"ibox")])
+        (self).methods = _List([box_Crate_quark_String__set_Method(), box_Crate_quark_String__get_Method()])
 
     def construct(self, args):
         return box.Crate()
@@ -391,17 +391,17 @@ class box_Crate_builtin_String_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-box_Crate_builtin_String_.singleton = box_Crate_builtin_String_()
+box_Crate_quark_String_.singleton = box_Crate_quark_String_()
 
-class box_Sack(builtin.reflect.Class):
+class box_Sack(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(box_Sack, self).__init__(u"box.Sack");
         (self).name = u"box.Sack"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"box.Box<builtin.int>", u"ints")])
+        (self).fields = _List([quark.reflect.Field(u"box.Box<quark.int>", u"ints")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -430,8 +430,8 @@ class Root(object):
 
     def _setField(self, name, value):
         pass
-Root.box_Box_builtin_Object__md = box_Box_builtin_Object_.singleton
-Root.box_Box_builtin_int__md = box_Box_builtin_int_.singleton
+Root.box_Box_quark_Object__md = box_Box_quark_Object_.singleton
+Root.box_Box_quark_int__md = box_Box_quark_int_.singleton
 Root.box_Sack_md = box_Sack.singleton
 
 import box

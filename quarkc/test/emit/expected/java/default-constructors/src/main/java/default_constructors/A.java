@@ -1,7 +1,7 @@
 package default_constructors;
 
 public class A implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class default_constructors_A_ref = default_constructors_md.Root.default_constructors_A_md;
+    public static quark.reflect.Class default_constructors_A_ref = default_constructors_md.Root.default_constructors_A_md;
     public String name;
     public A(String name) {
         (this).name = name;

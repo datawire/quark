@@ -1,7 +1,7 @@
 package pkg;
 
 public class T3 implements B, A, io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class pkg_T3_ref = defaulted_methods_md.Root.pkg_T3_md;
+    public static quark.reflect.Class pkg_T3_ref = defaulted_methods_md.Root.pkg_T3_md;
     public T3() {}
     public void foo() {
         do{System.out.println("T3 foo");System.out.flush();}while(false);

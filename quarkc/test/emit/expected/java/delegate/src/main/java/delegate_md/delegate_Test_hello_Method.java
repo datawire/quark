@@ -1,6 +1,6 @@
 package delegate_md;
 
-public class delegate_Test_hello_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class delegate_Test_hello_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public delegate_Test_hello_Method() {
         super("delegate.Pong", "hello", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"delegate.Ping"})));
     }

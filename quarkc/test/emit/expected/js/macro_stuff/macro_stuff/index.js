@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var macro_stuff_md = require('../macro_stuff_md/index.js');
 exports.macro_stuff_md = macro_stuff_md;
 

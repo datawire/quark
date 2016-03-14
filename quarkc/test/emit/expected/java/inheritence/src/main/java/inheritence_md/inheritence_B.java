@@ -1,7 +1,7 @@
 package inheritence_md;
 
-public class inheritence_B extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new inheritence_B();
+public class inheritence_B extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new inheritence_B();
     public inheritence_B() {
         super("inheritence.B");
         (this).name = "inheritence.B";

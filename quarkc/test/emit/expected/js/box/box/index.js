@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var box_md = require('../box_md/index.js');
 exports.box_md = box_md;
 
@@ -28,7 +28,7 @@ function Box_get() {
 Box.prototype.get = Box_get;
 
 function Box__getClass() {
-    return "box.Box<builtin.Object>";
+    return "box.Box<quark.Object>";
 }
 Box.prototype._getClass = Box__getClass;
 
@@ -58,8 +58,8 @@ function Crate__init_fields__() {
     this.ibox = new Box();
 }
 Crate.prototype.__init_fields__ = Crate__init_fields__;
-Crate.box_Box_builtin_Object__ref = box_md.Root.box_Box_builtin_Object__md;
-Crate.box_Box_builtin_int__ref = box_md.Root.box_Box_builtin_int__md;
+Crate.box_Box_quark_Object__ref = box_md.Root.box_Box_quark_Object__md;
+Crate.box_Box_quark_int__ref = box_md.Root.box_Box_quark_int__md;
 function Crate_set(stuff) {
     ((this).box).set(stuff);
 }
@@ -71,7 +71,7 @@ function Crate_get() {
 Crate.prototype.get = Crate_get;
 
 function Crate__getClass() {
-    return "box.Crate<builtin.Object>";
+    return "box.Crate<quark.Object>";
 }
 Crate.prototype._getClass = Crate__getClass;
 

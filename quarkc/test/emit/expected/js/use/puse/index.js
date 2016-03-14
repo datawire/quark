@@ -1,4 +1,4 @@
-var _qrt = require("builtin/quark_runtime.js");
+var _qrt = require("quark/quark_runtime.js");
 var testlib = require('test').testlib;
 exports.testlib = testlib;
 var t2 = require('test').t2;

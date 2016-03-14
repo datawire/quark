@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import box_md
 
 
@@ -17,7 +17,7 @@ class Box(object):
         return (self).contents
 
     def _getClass(self):
-        return u"box.Box<builtin.Object>"
+        return u"box.Box<quark.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):
@@ -45,7 +45,7 @@ class Crate(object):
         return ((self).box).get()
 
     def _getClass(self):
-        return u"box.Crate<builtin.Object>"
+        return u"box.Crate<quark.Object>"
 
     def _getField(self, name):
         if ((name) == (u"box")):
@@ -64,8 +64,8 @@ class Crate(object):
             (self).ibox = value
 
     
-Crate.box_Box_builtin_Object__ref = box_md.Root.box_Box_builtin_Object__md
-Crate.box_Box_builtin_int__ref = box_md.Root.box_Box_builtin_int__md
+Crate.box_Box_quark_Object__ref = box_md.Root.box_Box_quark_Object__md
+Crate.box_Box_quark_int__ref = box_md.Root.box_Box_quark_int__md
 class Sack(object):
     def _init(self):
         self.ints = Box()

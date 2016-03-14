@@ -1,11 +1,11 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class operator_overload_Overload___add___Method(builtin.reflect.Method):
+class operator_overload_Overload___add___Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
         super(operator_overload_Overload___add___Method, self).__init__(u"operator_overload.Overload", u"__add__", _List([u"operator_overload.Overload"]));
@@ -23,9 +23,9 @@ class operator_overload_Overload___add___Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class operator_overload_Overload___mul___Method(builtin.reflect.Method):
+class operator_overload_Overload___mul___Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
         super(operator_overload_Overload___mul___Method, self).__init__(u"operator_overload.Overload", u"__mul__", _List([u"operator_overload.Overload"]));
@@ -43,12 +43,12 @@ class operator_overload_Overload___mul___Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class operator_overload_Overload_test_Method(builtin.reflect.Method):
+class operator_overload_Overload_test_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(operator_overload_Overload_test_Method, self).__init__(u"builtin.void", u"test", _List([]));
+        super(operator_overload_Overload_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -64,15 +64,15 @@ class operator_overload_Overload_test_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class operator_overload_Overload(builtin.reflect.Class):
+class operator_overload_Overload(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(operator_overload_Overload, self).__init__(u"operator_overload.Overload");
         (self).name = u"operator_overload.Overload"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([operator_overload_Overload___add___Method(), operator_overload_Overload___mul___Method(), operator_overload_Overload_test_Method()])
 
     def construct(self, args):

@@ -1,8 +1,8 @@
 package static_md;
 
-public class static_Foo_setCount_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class static_Foo_setCount_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public static_Foo_setCount_Method() {
-        super("builtin.void", "setCount", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.int"})));
+        super("quark.void", "setCount", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.int"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         static_.Foo obj = (static_.Foo) (object);

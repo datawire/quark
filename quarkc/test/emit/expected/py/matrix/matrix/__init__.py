@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import matrix_md
 
 
@@ -29,7 +29,7 @@ class Matrix(object):
         ((self.columns)[i])[j] = (value);
 
     def _getClass(self):
-        return u"matrix.Matrix<builtin.Object>"
+        return u"matrix.Matrix<quark.Object>"
 
     def _getField(self, name):
         if ((name) == (u"width")):
@@ -54,8 +54,8 @@ class Matrix(object):
             (self).columns = value
 
     
-Matrix.builtin_List_builtin_List_builtin_Object___ref = matrix_md.Root.builtin_List_builtin_List_builtin_Object___md
-Matrix.builtin_List_builtin_Object__ref = matrix_md.Root.builtin_List_builtin_Object__md
+Matrix.quark_List_quark_List_quark_Object___ref = matrix_md.Root.quark_List_quark_List_quark_Object___md
+Matrix.quark_List_quark_Object__ref = matrix_md.Root.quark_List_quark_Object__md
 
 def main():
     matrix = Matrix(3, 3);

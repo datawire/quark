@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var no_spurious_cast_md = require('../no_spurious_cast_md/index.js');
 exports.no_spurious_cast_md = no_spurious_cast_md;
 
@@ -64,7 +64,7 @@ function X__init_fields__() {}
 X.prototype.__init_fields__ = X__init_fields__;
 
 function X__getClass() {
-    return "no_spurious_cast.X<builtin.Object>";
+    return "no_spurious_cast.X<quark.Object>";
 }
 X.prototype._getClass = X__getClass;
 
@@ -88,7 +88,7 @@ function Y__init_fields__() {
     X.prototype.__init_fields__.call(this);
 }
 Y.prototype.__init_fields__ = Y__init_fields__;
-Y.no_spurious_cast_X_builtin_int__ref = no_spurious_cast_md.Root.no_spurious_cast_X_builtin_int__md;
+Y.no_spurious_cast_X_quark_int__ref = no_spurious_cast_md.Root.no_spurious_cast_X_quark_int__md;
 Y.no_spurious_cast_Y_ref = no_spurious_cast_md.Root.no_spurious_cast_Y_md;
 function Y__getClass() {
     return "no_spurious_cast.Y";

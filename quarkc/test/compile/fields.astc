@@ -1,55 +1,55 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(fields),
 
   Class(Name(Test),
-   Field(static=False, Type(Name(int)), Name(x), $type=0.builtin.int),
-   Field(static=False, Type(Name(String)), Name(y), $type=0.builtin.String),
+   Field(static=False, Type(Name(int)), Name(x), $type=0.quark.int),
+   Field(static=False, Type(Name(String)), Name(y), $type=0.quark.String),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("fields.Test", $type=0.builtin.String)))),
+     Return(String("fields.Test", $type=0.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("x", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("x", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.fields.Test), Name(x),
-        $type=0.builtin.int)))),
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("y", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+        $type=0.quark.int)))),
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("y", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Return(Attr(Var(Name(self), $type=0.fields.Test), Name(y),
-        $type=0.builtin.String)))),
-     Return(Null(null, $type=0.builtin.Object)))),
+        $type=0.quark.String)))),
+     Return(Null(null, $type=0.quark.Object)))),
 
    Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=0.builtin.String),
-    Param(Type(Name(Object)), Name(value), $type=0.builtin.Object),
+    Param(Type(Name(String)), Name(name), $type=0.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=0.quark.Object),
     Block(
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("x", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("x", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.fields.Test), Name(x),
-        $type=0.builtin.int), Cast(Var(Name(value), $type=0.builtin.Object),
-        $type=0.builtin.int)))),
-     If(Call(Attr(Var(Name(name), $type=0.builtin.String), Name(__eq__),
-       $type=0.builtin.Object.__eq__), String("y", $type=0.builtin.String),
-      $type=0.builtin.bool), Block(
+        $type=0.quark.int), Cast(Var(Name(value), $type=0.quark.Object),
+        $type=0.quark.int)))),
+     If(Call(Attr(Var(Name(name), $type=0.quark.String), Name(__eq__),
+       $type=0.quark.Object.__eq__), String("y", $type=0.quark.String),
+      $type=0.quark.bool), Block(
        Assign(Attr(Var(Name(self), $type=0.fields.Test), Name(y),
-        $type=0.builtin.String), Cast(Var(Name(value), $type=0.builtin.Object),
-        $type=0.builtin.String)))))),
+        $type=0.quark.String), Cast(Var(Name(value), $type=0.quark.Object),
+        $type=0.quark.String)))))),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(fields_Test_ref),
     Attr(Attr(Var(Name(fields_md), $type=1.fields_md), Name(Root),
      $type=1.fields_md.Root), Name(fields_Test_md),
-    $type=0.builtin.reflect.Class), $type=0.builtin.reflect.Class)),
+    $type=0.quark.reflect.Class), $type=0.quark.reflect.Class)),
 
   Function(Type(Name(void)), Name(f), Block(
     Local(
      Declaration(Type(Name(Test)), Name(t), $type=0.fields.Test)),
     ExprStmt(Attr(Var(Name(t), $type=0.fields.Test), Name(x),
-     $type=0.builtin.int)),
+     $type=0.quark.int)),
     ExprStmt(Attr(Var(Name(t), $type=0.fields.Test), Name(y),
-     $type=0.builtin.String)))))
+     $type=0.quark.String)))))
 )

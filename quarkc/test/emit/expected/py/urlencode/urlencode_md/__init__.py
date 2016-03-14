@@ -1,16 +1,16 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class builtin_Map_builtin_String_builtin_Object_(builtin.reflect.Class):
+class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_Map_builtin_String_builtin_Object_, self).__init__(u"builtin.Map<builtin.String,builtin.Object>");
-        (self).name = u"builtin.Map"
-        (self).parameters = _List([u"builtin.String", u"builtin.Object"])
+        super(quark_Map_quark_String_quark_Object_, self).__init__(u"quark.Map<quark.String,quark.Object>");
+        (self).name = u"quark.Map"
+        (self).parameters = _List([u"quark.String", u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([])
 
@@ -25,7 +25,7 @@ class builtin_Map_builtin_String_builtin_Object_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_Map_builtin_String_builtin_Object_.singleton = builtin_Map_builtin_String_builtin_Object_()
+quark_Map_quark_String_quark_Object_.singleton = quark_Map_quark_String_quark_Object_()
 
 class Root(object):
     def _init(self):

@@ -1,8 +1,8 @@
 package delegate_md;
 
-public class delegate_Test_foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class delegate_Test_foo_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public delegate_Test_foo_Method() {
-        super("builtin.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.String", "builtin.String", "builtin.int"})));
+        super("quark.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.String", "quark.String", "quark.int"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         delegate.Test obj = (delegate.Test) (object);

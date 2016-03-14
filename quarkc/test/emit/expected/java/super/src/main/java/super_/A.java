@@ -1,7 +1,7 @@
 package super_;
 
 public class A implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class super_A_ref = super_md.Root.super_A_md;
+    public static quark.reflect.Class super_A_ref = super_md.Root.super_A_md;
     public String name;
     public A(String name) {
         (this).name = name;

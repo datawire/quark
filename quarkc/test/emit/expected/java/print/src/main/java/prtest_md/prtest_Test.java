@@ -1,7 +1,7 @@
 package prtest_md;
 
-public class prtest_Test extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new prtest_Test();
+public class prtest_Test extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new prtest_Test();
     public prtest_Test() {
         super("prtest.Test");
         (this).name = "prtest.Test";

@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class pets_Cat_greet_Method(builtin.reflect.Method):
+class pets_Cat_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(pets_Cat_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(pets_Cat_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,9 +24,9 @@ class pets_Cat_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pets_Cat(builtin.reflect.Class):
+class pets_Cat(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(pets_Cat, self).__init__(u"pets.Cat");
@@ -48,12 +48,12 @@ class pets_Cat(builtin.reflect.Class):
         pass
 pets_Cat.singleton = pets_Cat()
 
-class pets_Dog_greet_Method(builtin.reflect.Method):
+class pets_Dog_greet_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(pets_Dog_greet_Method, self).__init__(u"builtin.void", u"greet", _List([]));
+        super(pets_Dog_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -69,9 +69,9 @@ class pets_Dog_greet_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pets_Dog(builtin.reflect.Class):
+class pets_Dog(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(pets_Dog, self).__init__(u"pets.Dog");

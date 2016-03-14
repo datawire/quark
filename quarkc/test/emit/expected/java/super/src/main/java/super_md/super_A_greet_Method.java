@@ -1,8 +1,8 @@
 package super_md;
 
-public class super_A_greet_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class super_A_greet_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public super_A_greet_Method() {
-        super("builtin.void", "greet", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "greet", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         super_.A obj = (super_.A) (object);

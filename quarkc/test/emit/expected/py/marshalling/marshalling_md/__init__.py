@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class m_Inner_setup_Method(builtin.reflect.Method):
+class m_Inner_setup_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(m_Inner_setup_Method, self).__init__(u"m.Inner", u"setup", _List([u"builtin.int"]));
+        super(m_Inner_setup_Method, self).__init__(u"m.Inner", u"setup", _List([u"quark.int"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -23,15 +23,15 @@ class m_Inner_setup_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class m_Inner(builtin.reflect.Class):
+class m_Inner(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(m_Inner, self).__init__(u"m.Inner");
         (self).name = u"m.Inner"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"inner_int"), builtin.reflect.Field(u"builtin.String", u"inner_string"), builtin.reflect.Field(u"builtin.float", u"inner_float"), builtin.reflect.Field(u"builtin.List<builtin.String>", u"inner_string_list")])
+        (self).fields = _List([quark.reflect.Field(u"quark.int", u"inner_int"), quark.reflect.Field(u"quark.String", u"inner_string"), quark.reflect.Field(u"quark.float", u"inner_float"), quark.reflect.Field(u"quark.List<quark.String>", u"inner_string_list")])
         (self).methods = _List([m_Inner_setup_Method()])
 
     def construct(self, args):
@@ -47,12 +47,12 @@ class m_Inner(builtin.reflect.Class):
         pass
 m_Inner.singleton = m_Inner()
 
-class m_Outer_setup_Method(builtin.reflect.Method):
+class m_Outer_setup_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(m_Outer_setup_Method, self).__init__(u"m.Outer", u"setup", _List([u"builtin.int"]));
+        super(m_Outer_setup_Method, self).__init__(u"m.Outer", u"setup", _List([u"quark.int"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -67,15 +67,15 @@ class m_Outer_setup_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class m_Outer(builtin.reflect.Class):
+class m_Outer(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(m_Outer, self).__init__(u"m.Outer");
         (self).name = u"m.Outer"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.int", u"outer_int"), builtin.reflect.Field(u"builtin.String", u"outer_string"), builtin.reflect.Field(u"builtin.float", u"outer_float"), builtin.reflect.Field(u"builtin.List<m.Inner>", u"outer_inner_list")])
+        (self).fields = _List([quark.reflect.Field(u"quark.int", u"outer_int"), quark.reflect.Field(u"quark.String", u"outer_string"), quark.reflect.Field(u"quark.float", u"outer_float"), quark.reflect.Field(u"quark.List<m.Inner>", u"outer_inner_list")])
         (self).methods = _List([m_Outer_setup_Method()])
 
     def construct(self, args):
@@ -91,14 +91,14 @@ class m_Outer(builtin.reflect.Class):
         pass
 m_Outer.singleton = m_Outer()
 
-class builtin_List_builtin_String_(builtin.reflect.Class):
+class quark_List_quark_String_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_List_builtin_String_, self).__init__(u"builtin.List<builtin.String>");
-        (self).name = u"builtin.List"
-        (self).parameters = _List([u"builtin.String"])
+        super(quark_List_quark_String_, self).__init__(u"quark.List<quark.String>");
+        (self).name = u"quark.List"
+        (self).parameters = _List([u"quark.String"])
         (self).fields = _List([])
         (self).methods = _List([])
 
@@ -113,15 +113,15 @@ class builtin_List_builtin_String_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_List_builtin_String_.singleton = builtin_List_builtin_String_()
+quark_List_quark_String_.singleton = quark_List_quark_String_()
 
-class builtin_List_m_Inner_(builtin.reflect.Class):
+class quark_List_m_Inner_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(builtin_List_m_Inner_, self).__init__(u"builtin.List<m.Inner>");
-        (self).name = u"builtin.List"
+        super(quark_List_m_Inner_, self).__init__(u"quark.List<m.Inner>");
+        (self).name = u"quark.List"
         (self).parameters = _List([u"m.Inner"])
         (self).fields = _List([])
         (self).methods = _List([])
@@ -137,7 +137,7 @@ class builtin_List_m_Inner_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-builtin_List_m_Inner_.singleton = builtin_List_m_Inner_()
+quark_List_m_Inner_.singleton = quark_List_m_Inner_()
 
 class Root(object):
     def _init(self):
@@ -154,7 +154,7 @@ class Root(object):
         pass
 Root.m_Inner_md = m_Inner.singleton
 Root.m_Outer_md = m_Outer.singleton
-Root.builtin_List_builtin_String__md = builtin_List_builtin_String_.singleton
-Root.builtin_List_m_Inner__md = builtin_List_m_Inner_.singleton
+Root.quark_List_quark_String__md = quark_List_quark_String_.singleton
+Root.quark_List_m_Inner__md = quark_List_m_Inner_.singleton
 
 import m

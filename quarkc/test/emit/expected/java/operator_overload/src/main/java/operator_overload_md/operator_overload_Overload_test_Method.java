@@ -1,8 +1,8 @@
 package operator_overload_md;
 
-public class operator_overload_Overload_test_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class operator_overload_Overload_test_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public operator_overload_Overload_test_Method() {
-        super("builtin.void", "test", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "test", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         operator_overload.Overload obj = (operator_overload.Overload) (object);

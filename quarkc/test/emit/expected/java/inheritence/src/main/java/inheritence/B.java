@@ -1,7 +1,7 @@
 package inheritence;
 
 public class B extends A implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class inheritence_B_ref = inheritence_md.Root.inheritence_B_md;
+    public static quark.reflect.Class inheritence_B_ref = inheritence_md.Root.inheritence_B_md;
     public B() {
         super();
     }

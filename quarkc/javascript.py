@@ -14,6 +14,7 @@
 
 import os
 from collections import OrderedDict
+from .compiler import BUILTIN
 from .helpers import *
 
 ## Packaging
@@ -54,7 +55,7 @@ def package_file(path, name, fname):
     return "/".join(path + [name, "index.js"])
 
 def make_class_file(path, name):
-    return Code(head='var _qrt = require("builtin/quark_runtime.js");\n')
+    return Code(head='var _qrt = require("%s/quark_runtime.js");\n' % BUILTIN)
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)

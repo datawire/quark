@@ -1,8 +1,8 @@
 package defaulted_methods_md;
 
-public class pkg_T5_foo_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class pkg_T5_foo_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_T5_foo_Method() {
-        super("builtin.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "foo", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         pkg.T5 obj = (pkg.T5) (object);

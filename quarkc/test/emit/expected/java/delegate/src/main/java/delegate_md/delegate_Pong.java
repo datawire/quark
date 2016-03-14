@@ -1,7 +1,7 @@
 package delegate_md;
 
-public class delegate_Pong extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new delegate_Pong();
+public class delegate_Pong extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new delegate_Pong();
     public delegate_Pong() {
         super("delegate.Pong");
         (this).name = "delegate.Pong";

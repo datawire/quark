@@ -1,7 +1,7 @@
 package string_methods;
 
 public class test_endsWith extends string_test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class string_methods_test_endsWith_ref = string_methods_md.Root.string_methods_test_endsWith_md;
+    public static quark.reflect.Class string_methods_test_endsWith_ref = string_methods_md.Root.string_methods_test_endsWith_md;
     public String what;
     public String _that;
     public test_endsWith(String what) {

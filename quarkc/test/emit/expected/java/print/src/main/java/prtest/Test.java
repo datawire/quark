@@ -1,7 +1,7 @@
 package prtest;
 
 public class Test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class prtest_Test_ref = prtest_md.Root.prtest_Test_md;
+    public static quark.reflect.Class prtest_Test_ref = prtest_md.Root.prtest_Test_md;
     public Test() {}
     public void test() {
         do{System.out.println("Hello World!");System.out.flush();}while(false);

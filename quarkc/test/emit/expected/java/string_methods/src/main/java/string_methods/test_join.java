@@ -1,8 +1,8 @@
 package string_methods;
 
 public class test_join extends string_test implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class string_methods_test_join_ref = string_methods_md.Root.string_methods_test_join_md;
-    public static builtin.reflect.Class builtin_List_builtin_String__ref = string_methods_md.Root.builtin_List_builtin_String__md;
+    public static quark.reflect.Class string_methods_test_join_ref = string_methods_md.Root.string_methods_test_join_md;
+    public static quark.reflect.Class quark_List_quark_String__ref = string_methods_md.Root.quark_List_quark_String__md;
     public String what;
     public java.util.ArrayList<String> parts;
     public String strparts;

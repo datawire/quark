@@ -1,7 +1,7 @@
 package use_class_before_def_md;
 
-public class pkg_Bar extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pkg_Bar();
+public class pkg_Bar extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pkg_Bar();
     public pkg_Bar() {
         super("pkg.Bar");
         (this).name = "pkg.Bar";

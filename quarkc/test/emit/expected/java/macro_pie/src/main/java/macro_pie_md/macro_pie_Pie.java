@@ -1,7 +1,7 @@
 package macro_pie_md;
 
-public class macro_pie_Pie extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new macro_pie_Pie();
+public class macro_pie_Pie extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new macro_pie_Pie();
     public macro_pie_Pie() {
         super("macro_pie.Pie");
         (this).name = "macro_pie.Pie";

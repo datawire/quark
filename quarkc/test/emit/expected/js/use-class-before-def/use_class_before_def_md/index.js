@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS pkg_Bar_go_Method
 
 function pkg_Bar_go_Method() {
-    pkg_Bar_go_Method.super_.call(this, "builtin.void", "go", []);
+    pkg_Bar_go_Method.super_.call(this, "quark.void", "go", []);
 }
 exports.pkg_Bar_go_Method = pkg_Bar_go_Method;
-_qrt.util.inherits(pkg_Bar_go_Method, builtin.reflect.Method);
+_qrt.util.inherits(pkg_Bar_go_Method, quark.reflect.Method);
 
 function pkg_Bar_go_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_Bar_go_Method.prototype.__init_fields__ = pkg_Bar_go_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function pkg_Bar() {
     (this).methods = [new pkg_Bar_go_Method()];
 }
 exports.pkg_Bar = pkg_Bar;
-_qrt.util.inherits(pkg_Bar, builtin.reflect.Class);
+_qrt.util.inherits(pkg_Bar, quark.reflect.Class);
 
 function pkg_Bar__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_Bar.prototype.__init_fields__ = pkg_Bar__init_fields__;
 pkg_Bar.singleton = new pkg_Bar();
@@ -79,14 +79,14 @@ function pkg_Foo() {
     pkg_Foo.super_.call(this, "pkg.Foo");
     (this).name = "pkg.Foo";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.String", "name")];
+    (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [];
 }
 exports.pkg_Foo = pkg_Foo;
-_qrt.util.inherits(pkg_Foo, builtin.reflect.Class);
+_qrt.util.inherits(pkg_Foo, quark.reflect.Class);
 
 function pkg_Foo__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_Foo.prototype.__init_fields__ = pkg_Foo__init_fields__;
 pkg_Foo.singleton = new pkg_Foo();

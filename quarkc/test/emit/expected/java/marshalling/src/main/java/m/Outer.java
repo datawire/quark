@@ -1,8 +1,8 @@
 package m;
 
 public class Outer implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class m_Outer_ref = marshalling_md.Root.m_Outer_md;
-    public static builtin.reflect.Class builtin_List_m_Inner__ref = marshalling_md.Root.builtin_List_m_Inner__md;
+    public static quark.reflect.Class m_Outer_ref = marshalling_md.Root.m_Outer_md;
+    public static quark.reflect.Class quark_List_m_Inner__ref = marshalling_md.Root.quark_List_m_Inner__md;
     public Integer outer_int;
     public String outer_string;
     public Double outer_float;

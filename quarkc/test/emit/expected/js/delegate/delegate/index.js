@@ -1,6 +1,6 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 var delegate_md = require('../delegate_md/index.js');
 exports.delegate_md = delegate_md;
 
@@ -99,7 +99,7 @@ exports.Test = Test;
 function Test__init_fields__() {}
 Test.prototype.__init_fields__ = Test__init_fields__;
 Test.delegate_Test_ref = delegate_md.Root.delegate_Test_md;
-Test.builtin_List_builtin_Object__ref = delegate_md.Root.builtin_List_builtin_Object__md;
+Test.quark_List_quark_Object__ref = delegate_md.Root.quark_List_quark_Object__md;
 function Test_bar(name, args, options) {
     _qrt.print(args);
     return null;

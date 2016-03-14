@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import no_spurious_cast_md
 
 
@@ -40,7 +40,7 @@ class X(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return u"no_spurious_cast.X<builtin.Object>"
+        return u"no_spurious_cast.X<quark.Object>"
 
     def _getField(self, name):
         return None
@@ -63,7 +63,7 @@ class Y(X):
 
     def _setField(self, name, value):
         pass
-Y.no_spurious_cast_X_builtin_int__ref = no_spurious_cast_md.Root.no_spurious_cast_X_builtin_int__md
+Y.no_spurious_cast_X_quark_int__ref = no_spurious_cast_md.Root.no_spurious_cast_X_quark_int__md
 Y.no_spurious_cast_Y_ref = no_spurious_cast_md.Root.no_spurious_cast_Y_md
 
 def main():

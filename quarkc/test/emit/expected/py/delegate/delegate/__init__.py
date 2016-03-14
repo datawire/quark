@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import delegate_md
 
 
@@ -87,7 +87,7 @@ class Test(object):
     def _setField(self, name, value):
         pass
 Test.delegate_Test_ref = delegate_md.Root.delegate_Test_md
-Test.builtin_List_builtin_Object__ref = delegate_md.Root.builtin_List_builtin_Object__md
+Test.quark_List_quark_Object__ref = delegate_md.Root.quark_List_quark_Object__md
 
 def main():
     t = Test();
