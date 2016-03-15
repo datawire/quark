@@ -15,7 +15,7 @@ public class Test implements io.datawire.quark.runtime.QObject {
         do{System.out.println(hello);System.out.flush();}while(false);
         Test t1 = new Test();
         Test t2 = (t1).foo(t1);
-        if (!((t2)==(t1) || ((t2) != null && (t2).equals(t1)))) {
+        if (!((t2)==(t1) || ((Object)(t2) != null && ((Object) (t2)).equals(t1)))) {
             do{System.out.println("YAY!");System.out.flush();}while(false);
         }
         Integer four = (2) + (2);

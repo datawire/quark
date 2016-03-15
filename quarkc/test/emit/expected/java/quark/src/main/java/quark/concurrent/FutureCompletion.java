@@ -21,19 +21,19 @@ public class FutureCompletion implements Event, io.datawire.quark.runtime.QObjec
         return "quark.concurrent.FutureCompletion";
     }
     public Object _getField(String name) {
-        if ((name)==("future") || ((name) != null && (name).equals("future"))) {
+        if ((name)==("future") || ((Object)(name) != null && ((Object) (name)).equals("future"))) {
             return (this).future;
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             return (this).listener;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("future") || ((name) != null && (name).equals("future"))) {
+        if ((name)==("future") || ((Object)(name) != null && ((Object) (name)).equals("future"))) {
             (this).future = (Future) (value);
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             (this).listener = (FutureListener) (value);
         }
     }

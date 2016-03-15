@@ -25,7 +25,7 @@ public class Collector implements io.datawire.quark.runtime.QObject {
     }
     public Queue<Event> _swap(Queue<Event> drained) {
         Queue<Event> pending = (this).pending;
-        (this).idle = ((pending).size())==(0) || (((pending).size()) != null && ((pending).size()).equals(0));
+        (this).idle = ((pending).size())==(0) || ((Object)((pending).size()) != null && ((Object) ((pending).size())).equals(0));
         (this).pending = drained;
         return pending;
     }
@@ -38,31 +38,31 @@ public class Collector implements io.datawire.quark.runtime.QObject {
         return "quark.concurrent.Collector";
     }
     public Object _getField(String name) {
-        if ((name)==("lock") || ((name) != null && (name).equals("lock"))) {
+        if ((name)==("lock") || ((Object)(name) != null && ((Object) (name)).equals("lock"))) {
             return (this).lock;
         }
-        if ((name)==("pending") || ((name) != null && (name).equals("pending"))) {
+        if ((name)==("pending") || ((Object)(name) != null && ((Object) (name)).equals("pending"))) {
             return (this).pending;
         }
-        if ((name)==("executor") || ((name) != null && (name).equals("executor"))) {
+        if ((name)==("executor") || ((Object)(name) != null && ((Object) (name)).equals("executor"))) {
             return (this).executor;
         }
-        if ((name)==("idle") || ((name) != null && (name).equals("idle"))) {
+        if ((name)==("idle") || ((Object)(name) != null && ((Object) (name)).equals("idle"))) {
             return (this).idle;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("lock") || ((name) != null && (name).equals("lock"))) {
+        if ((name)==("lock") || ((Object)(name) != null && ((Object) (name)).equals("lock"))) {
             (this).lock = (io.datawire.quark.runtime.Lock) (value);
         }
-        if ((name)==("pending") || ((name) != null && (name).equals("pending"))) {
+        if ((name)==("pending") || ((Object)(name) != null && ((Object) (name)).equals("pending"))) {
             (this).pending = (Queue<Event>) (value);
         }
-        if ((name)==("executor") || ((name) != null && (name).equals("executor"))) {
+        if ((name)==("executor") || ((Object)(name) != null && ((Object) (name)).equals("executor"))) {
             (this).executor = (CollectorExecutor) (value);
         }
-        if ((name)==("idle") || ((name) != null && (name).equals("idle"))) {
+        if ((name)==("idle") || ((Object)(name) != null && ((Object) (name)).equals("idle"))) {
             (this).idle = (Boolean) (value);
         }
     }

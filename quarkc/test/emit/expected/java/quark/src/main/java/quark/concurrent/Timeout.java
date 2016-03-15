@@ -26,7 +26,7 @@ public class Timeout extends EventContext implements io.datawire.quark.runtime.T
     }
     public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
         ((this).lock).acquire();
-        if (!(((this).listener)==(null) || (((this).listener) != null && ((this).listener).equals(null)))) {
+        if (!(((this).listener)==(null) || ((Object)((this).listener) != null && ((Object) ((this).listener)).equals(null)))) {
             (((this)._context).collector).put(new TimeoutExpiry(this, (this).listener));
             (this).listener = (TimeoutListener) (null);
         }
@@ -36,31 +36,31 @@ public class Timeout extends EventContext implements io.datawire.quark.runtime.T
         return "quark.concurrent.Timeout";
     }
     public Object _getField(String name) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             return (this)._context;
         }
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             return (this).timeout;
         }
-        if ((name)==("lock") || ((name) != null && (name).equals("lock"))) {
+        if ((name)==("lock") || ((Object)(name) != null && ((Object) (name)).equals("lock"))) {
             return (this).lock;
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             return (this).listener;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             (this)._context = (Context) (value);
         }
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             (this).timeout = (Double) (value);
         }
-        if ((name)==("lock") || ((name) != null && (name).equals("lock"))) {
+        if ((name)==("lock") || ((Object)(name) != null && ((Object) (name)).equals("lock"))) {
             (this).lock = (io.datawire.quark.runtime.Lock) (value);
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             (this).listener = (TimeoutListener) (value);
         }
     }

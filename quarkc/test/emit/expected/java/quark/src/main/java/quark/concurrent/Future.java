@@ -21,7 +21,7 @@ public class Future extends EventContext implements io.datawire.quark.runtime.QO
         if ((this)._finished) {
             (((this)._context).collector).put(new FutureCompletion(this, callback));
         } else {
-            if (((this)._callbacks)==(null) || (((this)._callbacks) != null && ((this)._callbacks).equals(null))) {
+            if (((this)._callbacks)==(null) || ((Object)((this)._callbacks) != null && ((Object) ((this)._callbacks)).equals(null))) {
                 (this)._callbacks = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
             }
             ((this)._callbacks).add(new FutureCompletion(this, callback));
@@ -38,7 +38,7 @@ public class Future extends EventContext implements io.datawire.quark.runtime.QO
             (this)._callbacks = (java.util.ArrayList<FutureCompletion>) (null);
         }
         ((this)._lock).release();
-        if (!((callbacks)==(null) || ((callbacks) != null && (callbacks).equals(null)))) {
+        if (!((callbacks)==(null) || ((Object)(callbacks) != null && ((Object) (callbacks)).equals(null)))) {
             Integer i = 0;
             while ((i) < ((callbacks).size())) {
                 (((this)._context).collector).put((callbacks).get(i));
@@ -65,37 +65,37 @@ public class Future extends EventContext implements io.datawire.quark.runtime.QO
         return "quark.concurrent.Future";
     }
     public Object _getField(String name) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             return (this)._context;
         }
-        if ((name)==("_finished") || ((name) != null && (name).equals("_finished"))) {
+        if ((name)==("_finished") || ((Object)(name) != null && ((Object) (name)).equals("_finished"))) {
             return (this)._finished;
         }
-        if ((name)==("_error") || ((name) != null && (name).equals("_error"))) {
+        if ((name)==("_error") || ((Object)(name) != null && ((Object) (name)).equals("_error"))) {
             return (this)._error;
         }
-        if ((name)==("_callbacks") || ((name) != null && (name).equals("_callbacks"))) {
+        if ((name)==("_callbacks") || ((Object)(name) != null && ((Object) (name)).equals("_callbacks"))) {
             return (this)._callbacks;
         }
-        if ((name)==("_lock") || ((name) != null && (name).equals("_lock"))) {
+        if ((name)==("_lock") || ((Object)(name) != null && ((Object) (name)).equals("_lock"))) {
             return (this)._lock;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             (this)._context = (Context) (value);
         }
-        if ((name)==("_finished") || ((name) != null && (name).equals("_finished"))) {
+        if ((name)==("_finished") || ((Object)(name) != null && ((Object) (name)).equals("_finished"))) {
             (this)._finished = (Boolean) (value);
         }
-        if ((name)==("_error") || ((name) != null && (name).equals("_error"))) {
+        if ((name)==("_error") || ((Object)(name) != null && ((Object) (name)).equals("_error"))) {
             (this)._error = (String) (value);
         }
-        if ((name)==("_callbacks") || ((name) != null && (name).equals("_callbacks"))) {
+        if ((name)==("_callbacks") || ((Object)(name) != null && ((Object) (name)).equals("_callbacks"))) {
             (this)._callbacks = (java.util.ArrayList<FutureCompletion>) (value);
         }
-        if ((name)==("_lock") || ((name) != null && (name).equals("_lock"))) {
+        if ((name)==("_lock") || ((Object)(name) != null && ((Object) (name)).equals("_lock"))) {
             (this)._lock = (io.datawire.quark.runtime.Lock) (value);
         }
     }

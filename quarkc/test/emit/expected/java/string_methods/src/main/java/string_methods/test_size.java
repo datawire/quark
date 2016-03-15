@@ -17,13 +17,13 @@ public class test_size extends string_test implements io.datawire.quark.runtime.
         return "string_methods.test_size";
     }
     public Object _getField(String name) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             return (this).what;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             (this).what = (String) (value);
         }
     }

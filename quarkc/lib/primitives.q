@@ -6,10 +6,10 @@ include io/datawire/quark/runtime/Codec.java;
 namespace quark {
     @mapping($java{Object} $py{object} $js{Object})
     primitive Object {
-        macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
+        macro bool __eq__(Object other) $java{($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other))}
                                         $py{($self) == ($other)}
                                         $js{($self) === ($other)};
-        macro bool __ne__(Object other) $java{!(($self)==($other) || (($self) != null && ($self).equals($other)))}
+        macro bool __ne__(Object other) $java{!(($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other)))}
                                         $py{($self) != ($other)}
                                         $js{($self) !== ($other)};
 

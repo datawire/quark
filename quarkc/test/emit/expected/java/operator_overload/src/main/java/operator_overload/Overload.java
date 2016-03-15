@@ -19,7 +19,7 @@ public class Overload implements io.datawire.quark.runtime.QObject {
         do{System.out.println((o3).name);System.out.flush();}while(false);
         o3 = (o1).__mul__(o2);
         do{System.out.println((o3).name);System.out.flush();}while(false);
-        if ((o3)==(o1) || ((o3) != null && (o3).equals(o1))) {
+        if ((o3)==(o1) || ((Object)(o3) != null && ((Object) (o3)).equals(o1))) {
             do{System.out.println("YAY!");System.out.flush();}while(false);
         }
     }
@@ -27,13 +27,13 @@ public class Overload implements io.datawire.quark.runtime.QObject {
         return "operator_overload.Overload";
     }
     public Object _getField(String name) {
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             return (this).name;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             (this).name = (String) (value);
         }
     }

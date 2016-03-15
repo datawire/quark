@@ -9,11 +9,11 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     public quark.ServiceInstance instance;
     public RPC(quark.Service service, String methodName) {
         Double timeout = (Double) (((io.datawire.quark.runtime.QObject) (service))._getField("timeout"));
-        if (((timeout)==(null) || ((timeout) != null && (timeout).equals(null))) || ((timeout) <= (0.0))) {
+        if (((timeout)==(null) || ((Object)(timeout) != null && ((Object) (timeout)).equals(null))) || ((timeout) <= (0.0))) {
             timeout = 10.0;
         }
         Double override = (service).getTimeout();
-        if ((!((override)==(null) || ((override) != null && (override).equals(null)))) && ((override) > (0.0))) {
+        if ((!((override)==(null) || ((Object)(override) != null && ((Object) (override)).equals(null)))) && ((override) > (0.0))) {
             timeout = override;
         }
         (this).returned = ((quark.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(service))).getMethod(methodName)).getType();
@@ -24,7 +24,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
     public quark.concurrent.Future call(java.util.ArrayList<Object> args) {
         quark.concurrent.Future result = (quark.concurrent.Future) (null);
         (this).instance = ((this).service).getInstance();
-        if (!(((this).instance)==(null) || (((this).instance) != null && ((this).instance).equals(null)))) {
+        if (!(((this).instance)==(null) || ((Object)((this).instance) != null && ((Object) ((this).instance)).equals(null)))) {
             io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).instance).getURL());
             io.datawire.quark.runtime.JSONObject json = quark.Functions.toJSON(args, null);
             io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
@@ -56,37 +56,37 @@ public class RPC implements io.datawire.quark.runtime.QObject {
         return "quark.behaviors.RPC";
     }
     public Object _getField(String name) {
-        if ((name)==("service") || ((name) != null && (name).equals("service"))) {
+        if ((name)==("service") || ((Object)(name) != null && ((Object) (name)).equals("service"))) {
             return (this).service;
         }
-        if ((name)==("returned") || ((name) != null && (name).equals("returned"))) {
+        if ((name)==("returned") || ((Object)(name) != null && ((Object) (name)).equals("returned"))) {
             return (this).returned;
         }
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             return (this).timeout;
         }
-        if ((name)==("methodName") || ((name) != null && (name).equals("methodName"))) {
+        if ((name)==("methodName") || ((Object)(name) != null && ((Object) (name)).equals("methodName"))) {
             return (this).methodName;
         }
-        if ((name)==("instance") || ((name) != null && (name).equals("instance"))) {
+        if ((name)==("instance") || ((Object)(name) != null && ((Object) (name)).equals("instance"))) {
             return (this).instance;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("service") || ((name) != null && (name).equals("service"))) {
+        if ((name)==("service") || ((Object)(name) != null && ((Object) (name)).equals("service"))) {
             (this).service = (quark.Service) (value);
         }
-        if ((name)==("returned") || ((name) != null && (name).equals("returned"))) {
+        if ((name)==("returned") || ((Object)(name) != null && ((Object) (name)).equals("returned"))) {
             (this).returned = (quark.reflect.Class) (value);
         }
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             (this).timeout = (Double) (value);
         }
-        if ((name)==("methodName") || ((name) != null && (name).equals("methodName"))) {
+        if ((name)==("methodName") || ((Object)(name) != null && ((Object) (name)).equals("methodName"))) {
             (this).methodName = (String) (value);
         }
-        if ((name)==("instance") || ((name) != null && (name).equals("instance"))) {
+        if ((name)==("instance") || ((Object)(name) != null && ((Object) (name)).equals("instance"))) {
             (this).instance = (quark.ServiceInstance) (value);
         }
     }

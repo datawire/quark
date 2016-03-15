@@ -21,7 +21,7 @@ public class FutureWait implements FutureListener, io.datawire.quark.runtime.QOb
         Long deadline = (System.currentTimeMillis()) + (rounded);
         while (!(((this)._future).isFinished())) {
             Long remaining = (deadline) - (System.currentTimeMillis());
-            if (!((rounded)==(0) || ((rounded) != null && (rounded).equals(0)))) {
+            if (!((rounded)==(0) || ((Object)(rounded) != null && ((Object) (rounded)).equals(0)))) {
                 if ((remaining) <= (new Long(0))) {
                     break;
                 }
@@ -51,19 +51,19 @@ public class FutureWait implements FutureListener, io.datawire.quark.runtime.QOb
         return "quark.concurrent.FutureWait";
     }
     public Object _getField(String name) {
-        if ((name)==("_lock") || ((name) != null && (name).equals("_lock"))) {
+        if ((name)==("_lock") || ((Object)(name) != null && ((Object) (name)).equals("_lock"))) {
             return (this)._lock;
         }
-        if ((name)==("_future") || ((name) != null && (name).equals("_future"))) {
+        if ((name)==("_future") || ((Object)(name) != null && ((Object) (name)).equals("_future"))) {
             return (this)._future;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("_lock") || ((name) != null && (name).equals("_lock"))) {
+        if ((name)==("_lock") || ((Object)(name) != null && ((Object) (name)).equals("_lock"))) {
             (this)._lock = (io.datawire.quark.runtime.Condition) (value);
         }
-        if ((name)==("_future") || ((name) != null && (name).equals("_future"))) {
+        if ((name)==("_future") || ((Object)(name) != null && ((Object) (name)).equals("_future"))) {
             (this)._future = (Future) (value);
         }
     }

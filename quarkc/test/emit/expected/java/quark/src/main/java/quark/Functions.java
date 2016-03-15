@@ -10,23 +10,23 @@ public class Functions {
      */
     public static io.datawire.quark.runtime.JSONObject toJSON(Object obj, quark.reflect.Class cls) {
         io.datawire.quark.runtime.JSONObject result = new io.datawire.quark.runtime.JSONObject();
-        if ((obj)==(null) || ((obj) != null && (obj).equals(null))) {
+        if ((obj)==(null) || ((Object)(obj) != null && ((Object) (obj)).equals(null))) {
             (result).setNull();
             return result;
         }
-        if ((cls)==(null) || ((cls) != null && (cls).equals(null))) {
+        if ((cls)==(null) || ((Object)(cls) != null && ((Object) (cls)).equals(null))) {
             cls = quark.reflect.Class.get(io.datawire.quark.runtime.Builtins._getClass(obj));
         }
         Integer idx = 0;
-        if (((cls).name)==("quark.String") || (((cls).name) != null && ((cls).name).equals("quark.String"))) {
+        if (((cls).name)==("quark.String") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.String"))) {
             (result).setString((String) (obj));
             return result;
         }
-        if (((((((cls).name)==("quark.byte") || (((cls).name) != null && ((cls).name).equals("quark.byte"))) || (((cls).name)==("quark.short") || (((cls).name) != null && ((cls).name).equals("quark.short")))) || (((cls).name)==("quark.int") || (((cls).name) != null && ((cls).name).equals("quark.int")))) || (((cls).name)==("quark.long") || (((cls).name) != null && ((cls).name).equals("quark.long")))) || (((cls).name)==("quark.float") || (((cls).name) != null && ((cls).name).equals("quark.float")))) {
+        if (((((((cls).name)==("quark.byte") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.byte"))) || (((cls).name)==("quark.short") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.short")))) || (((cls).name)==("quark.int") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.int")))) || (((cls).name)==("quark.long") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.long")))) || (((cls).name)==("quark.float") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.float")))) {
             (result).setNumber(obj);
             return result;
         }
-        if (((cls).name)==("quark.List") || (((cls).name) != null && ((cls).name).equals("quark.List"))) {
+        if (((cls).name)==("quark.List") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.List"))) {
             (result).setList();
             java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) (obj);
             while ((idx) < ((list).size())) {
@@ -35,7 +35,7 @@ public class Functions {
             }
             return result;
         }
-        if (((cls).name)==("quark.Map") || (((cls).name) != null && ((cls).name).equals("quark.Map"))) {
+        if (((cls).name)==("quark.Map") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.Map"))) {
             (result).setObject();
             java.util.HashMap<String,Object> map = (java.util.HashMap<String,Object>) (obj);
             return result;
@@ -57,30 +57,30 @@ public class Functions {
      * deserialize json into provided result object. Skip over fields starting with underscore
      */
     public static Object fromJSON(quark.reflect.Class cls, Object result, io.datawire.quark.runtime.JSONObject json) {
-        if (((json)==(null) || ((json) != null && (json).equals(null))) || ((json).isNull())) {
+        if (((json)==(null) || ((Object)(json) != null && ((Object) (json)).equals(null))) || ((json).isNull())) {
             return null;
         }
         Integer idx = 0;
-        if ((result)==(null) || ((result) != null && (result).equals(null))) {
-            if (((cls).name)==("quark.String") || (((cls).name) != null && ((cls).name).equals("quark.String"))) {
+        if ((result)==(null) || ((Object)(result) != null && ((Object) (result)).equals(null))) {
+            if (((cls).name)==("quark.String") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.String"))) {
                 String s = (json).getString();
                 return s;
             }
-            if (((cls).name)==("quark.float") || (((cls).name) != null && ((cls).name).equals("quark.float"))) {
+            if (((cls).name)==("quark.float") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.float"))) {
                 Double flt = (json).getNumber();
                 return flt;
             }
-            if (((cls).name)==("quark.int") || (((cls).name) != null && ((cls).name).equals("quark.int"))) {
+            if (((cls).name)==("quark.int") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.int"))) {
                 Integer i = ((int) Math.round((json).getNumber()));
                 return i;
             }
-            if (((cls).name)==("quark.bool") || (((cls).name) != null && ((cls).name).equals("quark.bool"))) {
+            if (((cls).name)==("quark.bool") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.bool"))) {
                 Boolean b = (json).getBool();
                 return b;
             }
             result = (cls).construct(new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
         }
-        if (((cls).name)==("quark.List") || (((cls).name) != null && ((cls).name).equals("quark.List"))) {
+        if (((cls).name)==("quark.List") || ((Object)((cls).name) != null && ((Object) ((cls).name)).equals("quark.List"))) {
             java.util.ArrayList<Object> list = (java.util.ArrayList<Object>) (result);
             while ((idx) < ((json).size())) {
                 (list).add(Functions.fromJSON(((cls).getParameters()).get(0), null, (json).getListItem(idx)));

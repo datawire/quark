@@ -24,25 +24,25 @@ public class test_split extends string_test implements io.datawire.quark.runtime
         return "string_methods.test_split";
     }
     public Object _getField(String name) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             return (this).what;
         }
-        if ((name)==("sep") || ((name) != null && (name).equals("sep"))) {
+        if ((name)==("sep") || ((Object)(name) != null && ((Object) (name)).equals("sep"))) {
             return (this).sep;
         }
-        if ((name)==("altsep") || ((name) != null && (name).equals("altsep"))) {
+        if ((name)==("altsep") || ((Object)(name) != null && ((Object) (name)).equals("altsep"))) {
             return (this).altsep;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             (this).what = (String) (value);
         }
-        if ((name)==("sep") || ((name) != null && (name).equals("sep"))) {
+        if ((name)==("sep") || ((Object)(name) != null && ((Object) (name)).equals("sep"))) {
             (this).sep = (String) (value);
         }
-        if ((name)==("altsep") || ((name) != null && (name).equals("altsep"))) {
+        if ((name)==("altsep") || ((Object)(name) != null && ((Object) (name)).equals("altsep"))) {
             (this).altsep = (String) (value);
         }
     }

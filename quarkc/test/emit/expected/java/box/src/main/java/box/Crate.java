@@ -16,19 +16,19 @@ public class Crate<T> implements io.datawire.quark.runtime.QObject {
         return "box.Crate<quark.Object>";
     }
     public Object _getField(String name) {
-        if ((name)==("box") || ((name) != null && (name).equals("box"))) {
+        if ((name)==("box") || ((Object)(name) != null && ((Object) (name)).equals("box"))) {
             return (this).box;
         }
-        if ((name)==("ibox") || ((name) != null && (name).equals("ibox"))) {
+        if ((name)==("ibox") || ((Object)(name) != null && ((Object) (name)).equals("ibox"))) {
             return (this).ibox;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("box") || ((name) != null && (name).equals("box"))) {
+        if ((name)==("box") || ((Object)(name) != null && ((Object) (name)).equals("box"))) {
             (this).box = (Box<T>) (value);
         }
-        if ((name)==("ibox") || ((name) != null && (name).equals("ibox"))) {
+        if ((name)==("ibox") || ((Object)(name) != null && ((Object) (name)).equals("ibox"))) {
             (this).ibox = (Box<Integer>) (value);
         }
     }

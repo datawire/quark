@@ -20,31 +20,31 @@ public class Inner implements io.datawire.quark.runtime.QObject {
         return "m.Inner";
     }
     public Object _getField(String name) {
-        if ((name)==("inner_int") || ((name) != null && (name).equals("inner_int"))) {
+        if ((name)==("inner_int") || ((Object)(name) != null && ((Object) (name)).equals("inner_int"))) {
             return (this).inner_int;
         }
-        if ((name)==("inner_string") || ((name) != null && (name).equals("inner_string"))) {
+        if ((name)==("inner_string") || ((Object)(name) != null && ((Object) (name)).equals("inner_string"))) {
             return (this).inner_string;
         }
-        if ((name)==("inner_float") || ((name) != null && (name).equals("inner_float"))) {
+        if ((name)==("inner_float") || ((Object)(name) != null && ((Object) (name)).equals("inner_float"))) {
             return (this).inner_float;
         }
-        if ((name)==("inner_string_list") || ((name) != null && (name).equals("inner_string_list"))) {
+        if ((name)==("inner_string_list") || ((Object)(name) != null && ((Object) (name)).equals("inner_string_list"))) {
             return (this).inner_string_list;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("inner_int") || ((name) != null && (name).equals("inner_int"))) {
+        if ((name)==("inner_int") || ((Object)(name) != null && ((Object) (name)).equals("inner_int"))) {
             (this).inner_int = (Integer) (value);
         }
-        if ((name)==("inner_string") || ((name) != null && (name).equals("inner_string"))) {
+        if ((name)==("inner_string") || ((Object)(name) != null && ((Object) (name)).equals("inner_string"))) {
             (this).inner_string = (String) (value);
         }
-        if ((name)==("inner_float") || ((name) != null && (name).equals("inner_float"))) {
+        if ((name)==("inner_float") || ((Object)(name) != null && ((Object) (name)).equals("inner_float"))) {
             (this).inner_float = (Double) (value);
         }
-        if ((name)==("inner_string_list") || ((name) != null && (name).equals("inner_string_list"))) {
+        if ((name)==("inner_string_list") || ((Object)(name) != null && ((Object) (name)).equals("inner_string_list"))) {
             (this).inner_string_list = (java.util.ArrayList<String>) (value);
         }
     }

@@ -11,13 +11,13 @@ public class Test implements io.datawire.quark.runtime.QObject {
         return "test.test.Test";
     }
     public Object _getField(String name) {
-        if ((name)==("size") || ((name) != null && (name).equals("size"))) {
+        if ((name)==("size") || ((Object)(name) != null && ((Object) (name)).equals("size"))) {
             return (this).size;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("size") || ((name) != null && (name).equals("size"))) {
+        if ((name)==("size") || ((Object)(name) != null && ((Object) (name)).equals("size"))) {
             (this).size = (Integer) (value);
         }
     }

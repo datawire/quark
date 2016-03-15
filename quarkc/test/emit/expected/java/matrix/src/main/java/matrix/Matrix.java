@@ -28,25 +28,25 @@ public class Matrix<T> implements io.datawire.quark.runtime.QObject {
         return "matrix.Matrix<quark.Object>";
     }
     public Object _getField(String name) {
-        if ((name)==("width") || ((name) != null && (name).equals("width"))) {
+        if ((name)==("width") || ((Object)(name) != null && ((Object) (name)).equals("width"))) {
             return (this).width;
         }
-        if ((name)==("height") || ((name) != null && (name).equals("height"))) {
+        if ((name)==("height") || ((Object)(name) != null && ((Object) (name)).equals("height"))) {
             return (this).height;
         }
-        if ((name)==("columns") || ((name) != null && (name).equals("columns"))) {
+        if ((name)==("columns") || ((Object)(name) != null && ((Object) (name)).equals("columns"))) {
             return (this).columns;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("width") || ((name) != null && (name).equals("width"))) {
+        if ((name)==("width") || ((Object)(name) != null && ((Object) (name)).equals("width"))) {
             (this).width = (Integer) (value);
         }
-        if ((name)==("height") || ((name) != null && (name).equals("height"))) {
+        if ((name)==("height") || ((Object)(name) != null && ((Object) (name)).equals("height"))) {
             (this).height = (Integer) (value);
         }
-        if ((name)==("columns") || ((name) != null && (name).equals("columns"))) {
+        if ((name)==("columns") || ((Object)(name) != null && ((Object) (name)).equals("columns"))) {
             (this).columns = (java.util.ArrayList<java.util.ArrayList<T>>) (value);
         }
     }

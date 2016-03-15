@@ -13,7 +13,7 @@ public class Test implements io.datawire.quark.runtime.QObject {
     }
     public Message rpc(String name, Message msg, java.util.ArrayList<Object> options) {
         do{System.out.println((msg).encode());System.out.flush();}while(false);
-        if ((name)==("hello") || ((name) != null && (name).equals("hello"))) {
+        if ((name)==("hello") || ((Object)(name) != null && ((Object) (name)).equals("hello"))) {
             return new Pong();
         } else {
             return (Message) (null);

@@ -9,7 +9,7 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
     public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
         String body = (request).getBody();
         io.datawire.quark.runtime.JSONObject envelope = io.datawire.quark.runtime.JSONObject.parse(body);
-        if ((((envelope).getObjectItem("$method"))==((envelope).undefined()) || (((envelope).getObjectItem("$method")) != null && ((envelope).getObjectItem("$method")).equals((envelope).undefined()))) || (((envelope).getObjectItem("rpc"))==((envelope).undefined()) || (((envelope).getObjectItem("rpc")) != null && ((envelope).getObjectItem("rpc")).equals((envelope).undefined())))) {
+        if ((((envelope).getObjectItem("$method"))==((envelope).undefined()) || ((Object)((envelope).getObjectItem("$method")) != null && ((Object) ((envelope).getObjectItem("$method"))).equals((envelope).undefined()))) || (((envelope).getObjectItem("rpc"))==((envelope).undefined()) || ((Object)((envelope).getObjectItem("rpc")) != null && ((Object) ((envelope).getObjectItem("rpc"))).equals((envelope).undefined())))) {
             (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
             (response).setCode(400);
             (quark.concurrent.Context.runtime()).respond(request, response);
@@ -35,13 +35,13 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         return "quark.Server<quark.Object>";
     }
     public Object _getField(String name) {
-        if ((name)==("impl") || ((name) != null && (name).equals("impl"))) {
+        if ((name)==("impl") || ((Object)(name) != null && ((Object) (name)).equals("impl"))) {
             return (this).impl;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("impl") || ((name) != null && (name).equals("impl"))) {
+        if ((name)==("impl") || ((Object)(name) != null && ((Object) (name)).equals("impl"))) {
             (this).impl = (T) (value);
         }
     }

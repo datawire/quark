@@ -10,13 +10,13 @@ public class StringBox extends Box<String> implements io.datawire.quark.runtime.
         return "pkg.StringBox";
     }
     public Object _getField(String name) {
-        if ((name)==("contents") || ((name) != null && (name).equals("contents"))) {
+        if ((name)==("contents") || ((Object)(name) != null && ((Object) (name)).equals("contents"))) {
             return (this).contents;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("contents") || ((name) != null && (name).equals("contents"))) {
+        if ((name)==("contents") || ((Object)(name) != null && ((Object) (name)).equals("contents"))) {
             (this).contents = (String) (value);
         }
     }

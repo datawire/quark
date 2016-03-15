@@ -28,13 +28,13 @@ public class Foo implements io.datawire.quark.runtime.QObject {
         return "static.Foo";
     }
     public Object _getField(String name) {
-        if ((name)==("count") || ((name) != null && (name).equals("count"))) {
+        if ((name)==("count") || ((Object)(name) != null && ((Object) (name)).equals("count"))) {
             return Foo.count;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("count") || ((name) != null && (name).equals("count"))) {
+        if ((name)==("count") || ((Object)(name) != null && ((Object) (name)).equals("count"))) {
             Foo.count = (Integer) (value);
         }
     }

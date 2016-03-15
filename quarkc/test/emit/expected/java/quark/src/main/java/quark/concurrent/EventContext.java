@@ -16,13 +16,13 @@ public class EventContext implements io.datawire.quark.runtime.QObject {
         return "quark.concurrent.EventContext";
     }
     public Object _getField(String name) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             return (this)._context;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("_context") || ((name) != null && (name).equals("_context"))) {
+        if ((name)==("_context") || ((Object)(name) != null && ((Object) (name)).equals("_context"))) {
             (this)._context = (Context) (value);
         }
     }

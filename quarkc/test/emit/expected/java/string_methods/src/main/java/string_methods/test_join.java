@@ -31,31 +31,31 @@ public class test_join extends string_test implements io.datawire.quark.runtime.
         return "string_methods.test_join";
     }
     public Object _getField(String name) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             return (this).what;
         }
-        if ((name)==("parts") || ((name) != null && (name).equals("parts"))) {
+        if ((name)==("parts") || ((Object)(name) != null && ((Object) (name)).equals("parts"))) {
             return (this).parts;
         }
-        if ((name)==("strparts") || ((name) != null && (name).equals("strparts"))) {
+        if ((name)==("strparts") || ((Object)(name) != null && ((Object) (name)).equals("strparts"))) {
             return (this).strparts;
         }
-        if ((name)==("sep") || ((name) != null && (name).equals("sep"))) {
+        if ((name)==("sep") || ((Object)(name) != null && ((Object) (name)).equals("sep"))) {
             return (this).sep;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             (this).what = (String) (value);
         }
-        if ((name)==("parts") || ((name) != null && (name).equals("parts"))) {
+        if ((name)==("parts") || ((Object)(name) != null && ((Object) (name)).equals("parts"))) {
             (this).parts = (java.util.ArrayList<String>) (value);
         }
-        if ((name)==("strparts") || ((name) != null && (name).equals("strparts"))) {
+        if ((name)==("strparts") || ((Object)(name) != null && ((Object) (name)).equals("strparts"))) {
             (this).strparts = (String) (value);
         }
-        if ((name)==("sep") || ((name) != null && (name).equals("sep"))) {
+        if ((name)==("sep") || ((Object)(name) != null && ((Object) (name)).equals("sep"))) {
             (this).sep = (String) (value);
         }
     }

@@ -32,25 +32,25 @@ public class ServiceInstance implements io.datawire.quark.runtime.QObject {
         return "quark.ServiceInstance";
     }
     public Object _getField(String name) {
-        if ((name)==("serviceName") || ((name) != null && (name).equals("serviceName"))) {
+        if ((name)==("serviceName") || ((Object)(name) != null && ((Object) (name)).equals("serviceName"))) {
             return (this).serviceName;
         }
-        if ((name)==("url") || ((name) != null && (name).equals("url"))) {
+        if ((name)==("url") || ((Object)(name) != null && ((Object) (name)).equals("url"))) {
             return (this).url;
         }
-        if ((name)==("breaker") || ((name) != null && (name).equals("breaker"))) {
+        if ((name)==("breaker") || ((Object)(name) != null && ((Object) (name)).equals("breaker"))) {
             return (this).breaker;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("serviceName") || ((name) != null && (name).equals("serviceName"))) {
+        if ((name)==("serviceName") || ((Object)(name) != null && ((Object) (name)).equals("serviceName"))) {
             (this).serviceName = (String) (value);
         }
-        if ((name)==("url") || ((name) != null && (name).equals("url"))) {
+        if ((name)==("url") || ((Object)(name) != null && ((Object) (name)).equals("url"))) {
             (this).url = (String) (value);
         }
-        if ((name)==("breaker") || ((name) != null && (name).equals("breaker"))) {
+        if ((name)==("breaker") || ((Object)(name) != null && ((Object) (name)).equals("breaker"))) {
             (this).breaker = (quark.behaviors.CircuitBreaker) (value);
         }
     }

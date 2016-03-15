@@ -25,19 +25,19 @@ public class Channel implements io.datawire.quark.runtime.QObject {
         return "slack.Channel";
     }
     public Object _getField(String name) {
-        if ((name)==("client") || ((name) != null && (name).equals("client"))) {
+        if ((name)==("client") || ((Object)(name) != null && ((Object) (name)).equals("client"))) {
             return (this).client;
         }
-        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+        if ((name)==("channel") || ((Object)(name) != null && ((Object) (name)).equals("channel"))) {
             return (this).channel;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("client") || ((name) != null && (name).equals("client"))) {
+        if ((name)==("client") || ((Object)(name) != null && ((Object) (name)).equals("client"))) {
             (this).client = (Client) (value);
         }
-        if ((name)==("channel") || ((name) != null && (name).equals("channel"))) {
+        if ((name)==("channel") || ((Object)(name) != null && ((Object) (name)).equals("channel"))) {
             (this).channel = (String) (value);
         }
     }

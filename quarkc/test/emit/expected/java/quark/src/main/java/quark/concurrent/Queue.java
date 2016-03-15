@@ -40,25 +40,25 @@ public class Queue<T> implements io.datawire.quark.runtime.QObject {
         return "quark.concurrent.Queue<quark.Object>";
     }
     public Object _getField(String name) {
-        if ((name)==("items") || ((name) != null && (name).equals("items"))) {
+        if ((name)==("items") || ((Object)(name) != null && ((Object) (name)).equals("items"))) {
             return (this).items;
         }
-        if ((name)==("head") || ((name) != null && (name).equals("head"))) {
+        if ((name)==("head") || ((Object)(name) != null && ((Object) (name)).equals("head"))) {
             return (this).head;
         }
-        if ((name)==("tail") || ((name) != null && (name).equals("tail"))) {
+        if ((name)==("tail") || ((Object)(name) != null && ((Object) (name)).equals("tail"))) {
             return (this).tail;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("items") || ((name) != null && (name).equals("items"))) {
+        if ((name)==("items") || ((Object)(name) != null && ((Object) (name)).equals("items"))) {
             (this).items = (java.util.ArrayList<T>) (value);
         }
-        if ((name)==("head") || ((name) != null && (name).equals("head"))) {
+        if ((name)==("head") || ((Object)(name) != null && ((Object) (name)).equals("head"))) {
             (this).head = (Integer) (value);
         }
-        if ((name)==("tail") || ((name) != null && (name).equals("tail"))) {
+        if ((name)==("tail") || ((Object)(name) != null && ((Object) (name)).equals("tail"))) {
             (this).tail = (Integer) (value);
         }
     }

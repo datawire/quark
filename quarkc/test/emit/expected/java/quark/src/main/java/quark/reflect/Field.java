@@ -17,19 +17,19 @@ public class Field implements io.datawire.quark.runtime.QObject {
         return "quark.reflect.Field";
     }
     public Object _getField(String name) {
-        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+        if ((name)==("type") || ((Object)(name) != null && ((Object) (name)).equals("type"))) {
             return (this).type;
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             return (this).name;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("type") || ((name) != null && (name).equals("type"))) {
+        if ((name)==("type") || ((Object)(name) != null && ((Object) (name)).equals("type"))) {
             (this).type = (String) (value);
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             (this).name = (String) (value);
         }
     }

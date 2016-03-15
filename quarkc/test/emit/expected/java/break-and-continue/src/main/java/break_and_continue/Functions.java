@@ -10,7 +10,7 @@ public class Functions {
         Integer idx = 0;
         while (true) {
             String s = (stuff).get(idx);
-            if ((s)==("three") || ((s) != null && (s).equals("three"))) {
+            if ((s)==("three") || ((Object)(s) != null && ((Object) (s)).equals("three"))) {
                 do{System.out.println("breaking");System.out.flush();}while(false);
                 break;
             }
@@ -21,7 +21,7 @@ public class Functions {
         Boolean loop = true;
         while (loop) {
             String s2 = (stuff).get(idx);
-            if (!((s2)==("three") || ((s2) != null && (s2).equals("three")))) {
+            if (!((s2)==("three") || ((Object)(s2) != null && ((Object) (s2)).equals("three")))) {
                 idx = (idx) + (1);
                 do{System.out.println("continuing");System.out.flush();}while(false);
                 continue;

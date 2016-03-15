@@ -14,13 +14,13 @@ public class Y extends X implements io.datawire.quark.runtime.QObject {
         return "default_constructors.Y";
     }
     public Object _getField(String name) {
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             return (this).name;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             (this).name = (String) (value);
         }
     }

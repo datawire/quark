@@ -8,13 +8,13 @@ public class Sack implements io.datawire.quark.runtime.QObject {
         return "box.Sack";
     }
     public Object _getField(String name) {
-        if ((name)==("ints") || ((name) != null && (name).equals("ints"))) {
+        if ((name)==("ints") || ((Object)(name) != null && ((Object) (name)).equals("ints"))) {
             return (this).ints;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("ints") || ((name) != null && (name).equals("ints"))) {
+        if ((name)==("ints") || ((Object)(name) != null && ((Object) (name)).equals("ints"))) {
             (this).ints = (Box<Integer>) (value);
         }
     }

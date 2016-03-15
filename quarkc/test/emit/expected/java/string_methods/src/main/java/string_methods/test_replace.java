@@ -22,25 +22,25 @@ public class test_replace extends string_test implements io.datawire.quark.runti
         return "string_methods.test_replace";
     }
     public Object _getField(String name) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             return (this).what;
         }
-        if ((name)==("start") || ((name) != null && (name).equals("start"))) {
+        if ((name)==("start") || ((Object)(name) != null && ((Object) (name)).equals("start"))) {
             return (this).start;
         }
-        if ((name)==("end") || ((name) != null && (name).equals("end"))) {
+        if ((name)==("end") || ((Object)(name) != null && ((Object) (name)).equals("end"))) {
             return (this).end;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             (this).what = (String) (value);
         }
-        if ((name)==("start") || ((name) != null && (name).equals("start"))) {
+        if ((name)==("start") || ((Object)(name) != null && ((Object) (name)).equals("start"))) {
             (this).start = (String) (value);
         }
-        if ((name)==("end") || ((name) != null && (name).equals("end"))) {
+        if ((name)==("end") || ((Object)(name) != null && ((Object) (name)).equals("end"))) {
             (this).end = (String) (value);
         }
     }

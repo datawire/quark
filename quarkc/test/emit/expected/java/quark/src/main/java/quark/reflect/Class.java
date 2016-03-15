@@ -45,7 +45,7 @@ public class Class implements io.datawire.quark.runtime.QObject {
     public Field getField(String name) {
         Integer idx = 0;
         while ((idx) < ((this.fields).size())) {
-            if ((((this.fields).get(idx)).name)==(name) || ((((this.fields).get(idx)).name) != null && (((this.fields).get(idx)).name).equals(name))) {
+            if ((((this.fields).get(idx)).name)==(name) || ((Object)(((this.fields).get(idx)).name) != null && ((Object) (((this.fields).get(idx)).name)).equals(name))) {
                 return (this.fields).get(idx);
             }
             idx = (idx) + (1);
@@ -58,7 +58,7 @@ public class Class implements io.datawire.quark.runtime.QObject {
     public Method getMethod(String name) {
         Integer idx = 0;
         while ((idx) < ((this.methods).size())) {
-            if ((((this.methods).get(idx)).name)==(name) || ((((this.methods).get(idx)).name) != null && (((this.methods).get(idx)).name).equals(name))) {
+            if ((((this.methods).get(idx)).name)==(name) || ((Object)(((this.methods).get(idx)).name) != null && ((Object) (((this.methods).get(idx)).name)).equals(name))) {
                 return (this.methods).get(idx);
             }
             idx = (idx) + (1);
@@ -69,79 +69,79 @@ public class Class implements io.datawire.quark.runtime.QObject {
         return "quark.reflect.Class";
     }
     public Object _getField(String name) {
-        if ((name)==("classes") || ((name) != null && (name).equals("classes"))) {
+        if ((name)==("classes") || ((Object)(name) != null && ((Object) (name)).equals("classes"))) {
             return Class.classes;
         }
-        if ((name)==("VOID") || ((name) != null && (name).equals("VOID"))) {
+        if ((name)==("VOID") || ((Object)(name) != null && ((Object) (name)).equals("VOID"))) {
             return Class.VOID;
         }
-        if ((name)==("BOOL") || ((name) != null && (name).equals("BOOL"))) {
+        if ((name)==("BOOL") || ((Object)(name) != null && ((Object) (name)).equals("BOOL"))) {
             return Class.BOOL;
         }
-        if ((name)==("INT") || ((name) != null && (name).equals("INT"))) {
+        if ((name)==("INT") || ((Object)(name) != null && ((Object) (name)).equals("INT"))) {
             return Class.INT;
         }
-        if ((name)==("LONG") || ((name) != null && (name).equals("LONG"))) {
+        if ((name)==("LONG") || ((Object)(name) != null && ((Object) (name)).equals("LONG"))) {
             return Class.LONG;
         }
-        if ((name)==("FLOAT") || ((name) != null && (name).equals("FLOAT"))) {
+        if ((name)==("FLOAT") || ((Object)(name) != null && ((Object) (name)).equals("FLOAT"))) {
             return Class.FLOAT;
         }
-        if ((name)==("STRING") || ((name) != null && (name).equals("STRING"))) {
+        if ((name)==("STRING") || ((Object)(name) != null && ((Object) (name)).equals("STRING"))) {
             return Class.STRING;
         }
-        if ((name)==("id") || ((name) != null && (name).equals("id"))) {
+        if ((name)==("id") || ((Object)(name) != null && ((Object) (name)).equals("id"))) {
             return (this).id;
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             return (this).name;
         }
-        if ((name)==("parameters") || ((name) != null && (name).equals("parameters"))) {
+        if ((name)==("parameters") || ((Object)(name) != null && ((Object) (name)).equals("parameters"))) {
             return (this).parameters;
         }
-        if ((name)==("fields") || ((name) != null && (name).equals("fields"))) {
+        if ((name)==("fields") || ((Object)(name) != null && ((Object) (name)).equals("fields"))) {
             return (this).fields;
         }
-        if ((name)==("methods") || ((name) != null && (name).equals("methods"))) {
+        if ((name)==("methods") || ((Object)(name) != null && ((Object) (name)).equals("methods"))) {
             return (this).methods;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("classes") || ((name) != null && (name).equals("classes"))) {
+        if ((name)==("classes") || ((Object)(name) != null && ((Object) (name)).equals("classes"))) {
             Class.classes = (java.util.HashMap<String,Class>) (value);
         }
-        if ((name)==("VOID") || ((name) != null && (name).equals("VOID"))) {
+        if ((name)==("VOID") || ((Object)(name) != null && ((Object) (name)).equals("VOID"))) {
             Class.VOID = (Class) (value);
         }
-        if ((name)==("BOOL") || ((name) != null && (name).equals("BOOL"))) {
+        if ((name)==("BOOL") || ((Object)(name) != null && ((Object) (name)).equals("BOOL"))) {
             Class.BOOL = (Class) (value);
         }
-        if ((name)==("INT") || ((name) != null && (name).equals("INT"))) {
+        if ((name)==("INT") || ((Object)(name) != null && ((Object) (name)).equals("INT"))) {
             Class.INT = (Class) (value);
         }
-        if ((name)==("LONG") || ((name) != null && (name).equals("LONG"))) {
+        if ((name)==("LONG") || ((Object)(name) != null && ((Object) (name)).equals("LONG"))) {
             Class.LONG = (Class) (value);
         }
-        if ((name)==("FLOAT") || ((name) != null && (name).equals("FLOAT"))) {
+        if ((name)==("FLOAT") || ((Object)(name) != null && ((Object) (name)).equals("FLOAT"))) {
             Class.FLOAT = (Class) (value);
         }
-        if ((name)==("STRING") || ((name) != null && (name).equals("STRING"))) {
+        if ((name)==("STRING") || ((Object)(name) != null && ((Object) (name)).equals("STRING"))) {
             Class.STRING = (Class) (value);
         }
-        if ((name)==("id") || ((name) != null && (name).equals("id"))) {
+        if ((name)==("id") || ((Object)(name) != null && ((Object) (name)).equals("id"))) {
             (this).id = (String) (value);
         }
-        if ((name)==("name") || ((name) != null && (name).equals("name"))) {
+        if ((name)==("name") || ((Object)(name) != null && ((Object) (name)).equals("name"))) {
             (this).name = (String) (value);
         }
-        if ((name)==("parameters") || ((name) != null && (name).equals("parameters"))) {
+        if ((name)==("parameters") || ((Object)(name) != null && ((Object) (name)).equals("parameters"))) {
             (this).parameters = (java.util.ArrayList<String>) (value);
         }
-        if ((name)==("fields") || ((name) != null && (name).equals("fields"))) {
+        if ((name)==("fields") || ((Object)(name) != null && ((Object) (name)).equals("fields"))) {
             (this).fields = (java.util.ArrayList<Field>) (value);
         }
-        if ((name)==("methods") || ((name) != null && (name).equals("methods"))) {
+        if ((name)==("methods") || ((Object)(name) != null && ((Object) (name)).equals("methods"))) {
             (this).methods = (java.util.ArrayList<Method>) (value);
         }
     }

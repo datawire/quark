@@ -12,7 +12,7 @@ public class Context implements io.datawire.quark.runtime.QObject {
     public Collector collector;
     public Context(Context parent) {
         (this)._parent = parent;
-        if ((parent)==(null) || ((parent) != null && (parent).equals(null))) {
+        if ((parent)==(null) || ((Object)(parent) != null && ((Object) (parent)).equals(null))) {
             (this)._runtime = io.datawire.quark.runtime.Runtime.Factory.create();
             (this).collector = new Collector();
         } else {
@@ -36,37 +36,37 @@ public class Context implements io.datawire.quark.runtime.QObject {
         return "quark.concurrent.Context";
     }
     public Object _getField(String name) {
-        if ((name)==("_global") || ((name) != null && (name).equals("_global"))) {
+        if ((name)==("_global") || ((Object)(name) != null && ((Object) (name)).equals("_global"))) {
             return Context._global;
         }
-        if ((name)==("_current") || ((name) != null && (name).equals("_current"))) {
+        if ((name)==("_current") || ((Object)(name) != null && ((Object) (name)).equals("_current"))) {
             return Context._current;
         }
-        if ((name)==("_parent") || ((name) != null && (name).equals("_parent"))) {
+        if ((name)==("_parent") || ((Object)(name) != null && ((Object) (name)).equals("_parent"))) {
             return (this)._parent;
         }
-        if ((name)==("_runtime") || ((name) != null && (name).equals("_runtime"))) {
+        if ((name)==("_runtime") || ((Object)(name) != null && ((Object) (name)).equals("_runtime"))) {
             return (this)._runtime;
         }
-        if ((name)==("collector") || ((name) != null && (name).equals("collector"))) {
+        if ((name)==("collector") || ((Object)(name) != null && ((Object) (name)).equals("collector"))) {
             return (this).collector;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("_global") || ((name) != null && (name).equals("_global"))) {
+        if ((name)==("_global") || ((Object)(name) != null && ((Object) (name)).equals("_global"))) {
             Context._global = (Context) (value);
         }
-        if ((name)==("_current") || ((name) != null && (name).equals("_current"))) {
+        if ((name)==("_current") || ((Object)(name) != null && ((Object) (name)).equals("_current"))) {
             Context._current = (io.datawire.quark.runtime.TLS<Context>) (value);
         }
-        if ((name)==("_parent") || ((name) != null && (name).equals("_parent"))) {
+        if ((name)==("_parent") || ((Object)(name) != null && ((Object) (name)).equals("_parent"))) {
             (this)._parent = (Context) (value);
         }
-        if ((name)==("_runtime") || ((name) != null && (name).equals("_runtime"))) {
+        if ((name)==("_runtime") || ((Object)(name) != null && ((Object) (name)).equals("_runtime"))) {
             (this)._runtime = (io.datawire.quark.runtime.Runtime) (value);
         }
-        if ((name)==("collector") || ((name) != null && (name).equals("collector"))) {
+        if ((name)==("collector") || ((Object)(name) != null && ((Object) (name)).equals("collector"))) {
             (this).collector = (Collector) (value);
         }
     }

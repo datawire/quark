@@ -20,31 +20,31 @@ public class Outer implements io.datawire.quark.runtime.QObject {
         return "m.Outer";
     }
     public Object _getField(String name) {
-        if ((name)==("outer_int") || ((name) != null && (name).equals("outer_int"))) {
+        if ((name)==("outer_int") || ((Object)(name) != null && ((Object) (name)).equals("outer_int"))) {
             return (this).outer_int;
         }
-        if ((name)==("outer_string") || ((name) != null && (name).equals("outer_string"))) {
+        if ((name)==("outer_string") || ((Object)(name) != null && ((Object) (name)).equals("outer_string"))) {
             return (this).outer_string;
         }
-        if ((name)==("outer_float") || ((name) != null && (name).equals("outer_float"))) {
+        if ((name)==("outer_float") || ((Object)(name) != null && ((Object) (name)).equals("outer_float"))) {
             return (this).outer_float;
         }
-        if ((name)==("outer_inner_list") || ((name) != null && (name).equals("outer_inner_list"))) {
+        if ((name)==("outer_inner_list") || ((Object)(name) != null && ((Object) (name)).equals("outer_inner_list"))) {
             return (this).outer_inner_list;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("outer_int") || ((name) != null && (name).equals("outer_int"))) {
+        if ((name)==("outer_int") || ((Object)(name) != null && ((Object) (name)).equals("outer_int"))) {
             (this).outer_int = (Integer) (value);
         }
-        if ((name)==("outer_string") || ((name) != null && (name).equals("outer_string"))) {
+        if ((name)==("outer_string") || ((Object)(name) != null && ((Object) (name)).equals("outer_string"))) {
             (this).outer_string = (String) (value);
         }
-        if ((name)==("outer_float") || ((name) != null && (name).equals("outer_float"))) {
+        if ((name)==("outer_float") || ((Object)(name) != null && ((Object) (name)).equals("outer_float"))) {
             (this).outer_float = (Double) (value);
         }
-        if ((name)==("outer_inner_list") || ((name) != null && (name).equals("outer_inner_list"))) {
+        if ((name)==("outer_inner_list") || ((Object)(name) != null && ((Object) (name)).equals("outer_inner_list"))) {
             (this).outer_inner_list = (java.util.ArrayList<Inner>) (value);
         }
     }

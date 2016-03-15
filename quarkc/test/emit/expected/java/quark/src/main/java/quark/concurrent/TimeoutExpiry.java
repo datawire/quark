@@ -21,19 +21,19 @@ public class TimeoutExpiry implements Event, io.datawire.quark.runtime.QObject {
         return "quark.concurrent.TimeoutExpiry";
     }
     public Object _getField(String name) {
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             return (this).timeout;
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             return (this).listener;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("timeout") || ((name) != null && (name).equals("timeout"))) {
+        if ((name)==("timeout") || ((Object)(name) != null && ((Object) (name)).equals("timeout"))) {
             (this).timeout = (Timeout) (value);
         }
-        if ((name)==("listener") || ((name) != null && (name).equals("listener"))) {
+        if ((name)==("listener") || ((Object)(name) != null && ((Object) (name)).equals("listener"))) {
             (this).listener = (TimeoutListener) (value);
         }
     }

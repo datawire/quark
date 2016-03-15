@@ -45,43 +45,43 @@ public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawi
         return "quark.behaviors.CircuitBreaker";
     }
     public Object _getField(String name) {
-        if ((name)==("id") || ((name) != null && (name).equals("id"))) {
+        if ((name)==("id") || ((Object)(name) != null && ((Object) (name)).equals("id"))) {
             return (this).id;
         }
-        if ((name)==("failureLimit") || ((name) != null && (name).equals("failureLimit"))) {
+        if ((name)==("failureLimit") || ((Object)(name) != null && ((Object) (name)).equals("failureLimit"))) {
             return (this).failureLimit;
         }
-        if ((name)==("retestDelay") || ((name) != null && (name).equals("retestDelay"))) {
+        if ((name)==("retestDelay") || ((Object)(name) != null && ((Object) (name)).equals("retestDelay"))) {
             return (this).retestDelay;
         }
-        if ((name)==("active") || ((name) != null && (name).equals("active"))) {
+        if ((name)==("active") || ((Object)(name) != null && ((Object) (name)).equals("active"))) {
             return (this).active;
         }
-        if ((name)==("failureCount") || ((name) != null && (name).equals("failureCount"))) {
+        if ((name)==("failureCount") || ((Object)(name) != null && ((Object) (name)).equals("failureCount"))) {
             return (this).failureCount;
         }
-        if ((name)==("mutex") || ((name) != null && (name).equals("mutex"))) {
+        if ((name)==("mutex") || ((Object)(name) != null && ((Object) (name)).equals("mutex"))) {
             return (this).mutex;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("id") || ((name) != null && (name).equals("id"))) {
+        if ((name)==("id") || ((Object)(name) != null && ((Object) (name)).equals("id"))) {
             (this).id = (String) (value);
         }
-        if ((name)==("failureLimit") || ((name) != null && (name).equals("failureLimit"))) {
+        if ((name)==("failureLimit") || ((Object)(name) != null && ((Object) (name)).equals("failureLimit"))) {
             (this).failureLimit = (Integer) (value);
         }
-        if ((name)==("retestDelay") || ((name) != null && (name).equals("retestDelay"))) {
+        if ((name)==("retestDelay") || ((Object)(name) != null && ((Object) (name)).equals("retestDelay"))) {
             (this).retestDelay = (Double) (value);
         }
-        if ((name)==("active") || ((name) != null && (name).equals("active"))) {
+        if ((name)==("active") || ((Object)(name) != null && ((Object) (name)).equals("active"))) {
             (this).active = (Boolean) (value);
         }
-        if ((name)==("failureCount") || ((name) != null && (name).equals("failureCount"))) {
+        if ((name)==("failureCount") || ((Object)(name) != null && ((Object) (name)).equals("failureCount"))) {
             (this).failureCount = (Integer) (value);
         }
-        if ((name)==("mutex") || ((name) != null && (name).equals("mutex"))) {
+        if ((name)==("mutex") || ((Object)(name) != null && ((Object) (name)).equals("mutex"))) {
             (this).mutex = (io.datawire.quark.runtime.Lock) (value);
         }
     }

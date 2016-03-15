@@ -15,19 +15,19 @@ public class ResponseHolder implements io.datawire.quark.runtime.HTTPHandler, io
         return "quark.ResponseHolder";
     }
     public Object _getField(String name) {
-        if ((name)==("response") || ((name) != null && (name).equals("response"))) {
+        if ((name)==("response") || ((Object)(name) != null && ((Object) (name)).equals("response"))) {
             return (this).response;
         }
-        if ((name)==("failure") || ((name) != null && (name).equals("failure"))) {
+        if ((name)==("failure") || ((Object)(name) != null && ((Object) (name)).equals("failure"))) {
             return (this).failure;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("response") || ((name) != null && (name).equals("response"))) {
+        if ((name)==("response") || ((Object)(name) != null && ((Object) (name)).equals("response"))) {
             (this).response = (io.datawire.quark.runtime.HTTPResponse) (value);
         }
-        if ((name)==("failure") || ((name) != null && (name).equals("failure"))) {
+        if ((name)==("failure") || ((Object)(name) != null && ((Object) (name)).equals("failure"))) {
             (this).failure = (String) (value);
         }
     }

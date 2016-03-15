@@ -30,7 +30,7 @@ public class Functions {
         do{System.out.println((fols).toString());System.out.flush();}while(false);
         String foo = "foo";
         String bar = "bar";
-        if (((foo)==("foo") || ((foo) != null && (foo).equals("foo"))) && ((bar)==("bar") || ((bar) != null && (bar).equals("bar")))) {
+        if (((foo)==("foo") || ((Object)(foo) != null && ((Object) (foo)).equals("foo"))) && ((bar)==("bar") || ((Object)(bar) != null && ((Object) (bar)).equals("bar")))) {
             do{System.out.println("foobar!!");System.out.flush();}while(false);
         }
     }

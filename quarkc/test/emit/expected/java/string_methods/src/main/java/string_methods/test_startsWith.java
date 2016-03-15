@@ -20,19 +20,19 @@ public class test_startsWith extends string_test implements io.datawire.quark.ru
         return "string_methods.test_startsWith";
     }
     public Object _getField(String name) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             return (this).what;
         }
-        if ((name)==("_that") || ((name) != null && (name).equals("_that"))) {
+        if ((name)==("_that") || ((Object)(name) != null && ((Object) (name)).equals("_that"))) {
             return (this)._that;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("what") || ((name) != null && (name).equals("what"))) {
+        if ((name)==("what") || ((Object)(name) != null && ((Object) (name)).equals("what"))) {
             (this).what = (String) (value);
         }
-        if ((name)==("_that") || ((name) != null && (name).equals("_that"))) {
+        if ((name)==("_that") || ((Object)(name) != null && ((Object) (name)).equals("_that"))) {
             (this)._that = (String) (value);
         }
     }

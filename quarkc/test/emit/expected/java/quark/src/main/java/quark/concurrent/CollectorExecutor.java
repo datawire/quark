@@ -21,7 +21,7 @@ public class CollectorExecutor implements io.datawire.quark.runtime.Task, io.dat
     public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
         Event next = ((this).events).get();
         Context old = Context.current();
-        while (!((next)==(null) || ((next) != null && (next).equals(null)))) {
+        while (!((next)==(null) || ((Object)(next) != null && ((Object) (next)).equals(null)))) {
             Context.swap(((next).getContext()).getContext());
             (next).fireEvent();
             next = ((this).events).get();
@@ -33,19 +33,19 @@ public class CollectorExecutor implements io.datawire.quark.runtime.Task, io.dat
         return "quark.concurrent.CollectorExecutor";
     }
     public Object _getField(String name) {
-        if ((name)==("events") || ((name) != null && (name).equals("events"))) {
+        if ((name)==("events") || ((Object)(name) != null && ((Object) (name)).equals("events"))) {
             return (this).events;
         }
-        if ((name)==("collector") || ((name) != null && (name).equals("collector"))) {
+        if ((name)==("collector") || ((Object)(name) != null && ((Object) (name)).equals("collector"))) {
             return (this).collector;
         }
         return null;
     }
     public void _setField(String name, Object value) {
-        if ((name)==("events") || ((name) != null && (name).equals("events"))) {
+        if ((name)==("events") || ((Object)(name) != null && ((Object) (name)).equals("events"))) {
             (this).events = (Queue<Event>) (value);
         }
-        if ((name)==("collector") || ((name) != null && (name).equals("collector"))) {
+        if ((name)==("collector") || ((Object)(name) != null && ((Object) (name)).equals("collector"))) {
             (this).collector = (Collector) (value);
         }
     }
