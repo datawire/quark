@@ -108,10 +108,10 @@ def package_file(path, name, fname):
     return None
 
 def make_class_file(path, name):
-    return Code(head="package %s;\n\n" % ".".join(path))
+    return Code(comment, head="package %s;\n\n" % ".".join(path))
 
 def make_function_file(path, name, mdpkg):
-    return Code(head="package %s;\n\npublic class Functions {\n\n"
+    return Code(comment, head="package %s;\n\npublic class Functions {\n\n"
                 "    static %s.Root root = new %s.Root();\n\n" % (".".join(path), mdpkg, mdpkg),
                 tail="}")
 
@@ -122,7 +122,7 @@ def main_file(name):
     return os.path.join(name, "Main.java")
 
 def make_main_file(name):
-    return Code(head="package %s;\n\npublic class Main {\n\n" % name,
+    return Code(comment, head="package %s;\n\npublic class Main {\n\n" % name,
                 tail="}")
 
 def main(statements):

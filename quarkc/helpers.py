@@ -14,6 +14,7 @@
 
 import os
 
+import _metadata
 from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
@@ -223,13 +224,18 @@ def indent(st, level=4):
 
 class Code:
 
-    def __init__(self, body="", head="", tail=""):
+    identifier = None
+
+    def __init__(self, comment, body="", head="", tail=""):
+        if Code.identifier is not None and comment is not None:
+            head = comment(Code.identifier) + head
+
         self.body = body
         self.head = head
         self.tail = tail
 
     def __add__(self, code):
-        return Code(self.body + code, self.head, self.tail)
+        return Code(None, self.body + code, self.head, self.tail)
 
     def __str__(self):
         return "%s%s%s" % (self.head, self.body, self.tail)

@@ -28,7 +28,7 @@ def package(name, version, packages, srcs, deps):
     for path, readme in packages.items():
         files["%s/README.md" % "/".join(path)] = readme
 
-    files["index.js"] = "%s\n" % "\n".join([import_(path, (), None) for path in packages])
+    files["index.js"] = str(Code(comment, "%s\n" % "\n".join([import_(path, (), None) for path in packages])))
 
     files["package.json"] = """
 {
@@ -55,7 +55,7 @@ def package_file(path, name, fname):
     return "/".join(path + [name, "index.js"])
 
 def make_class_file(path, name):
-    return Code(head='var _qrt = require("%s/quark_runtime.js");\n' % BUILTIN)
+    return Code(comment, head='var _qrt = require("%s/quark_runtime.js");\n' % BUILTIN)
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
@@ -67,7 +67,7 @@ def main_file(name):
     return "%s.js" % name
 
 def make_main_file(name):
-    return Code()
+    return Code(comment)
 
 def main(statements):
     return "\n".join(statements)

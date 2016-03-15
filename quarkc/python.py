@@ -122,7 +122,7 @@ def package_file(path, name, fname):
     return "/".join(path + [name, "__init__.py"])
 
 def make_class_file(path, name):
-    return Code(head="from quark_runtime import *\n\n")
+    return Code(comment, head="from quark_runtime import *\n\n")
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
@@ -134,7 +134,7 @@ def main_file(name):
     return "%s.py" % name
 
 def make_main_file(name):
-    return Code()
+    return Code(comment)
 
 def main(statements):
     return 'if __name__ == "__main__"%s' % block(statements)

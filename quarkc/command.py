@@ -48,12 +48,14 @@ import shlex
 import subprocess
 import sys
 import logging
+import datetime
 
 from docopt import docopt
 
 import _metadata
 import compiler
 import backend
+import helpers
 
 PREREQS = {
     "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
@@ -179,6 +181,8 @@ def main(args):
         hnd = ProgressHandler(verbose=args["--verbose"])
         log.addHandler(hnd)
         hnd.setFormatter(logging.Formatter("%(message)s"))
+
+    helpers.Code.identifier = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
 
     java = args["--java"]
     python = args["--python"]
