@@ -3,10 +3,12 @@ var reflect = require('./reflect/index.js');
 exports.reflect = reflect;
 var behaviors = require('./behaviors/index.js');
 exports.behaviors = behaviors;
-var concurrent = require('./concurrent/index.js');
-exports.concurrent = concurrent;
 var quark_md = require('../quark_md/index.js');
 exports.quark_md = quark_md;
+var concurrent = require('./concurrent/index.js');
+exports.concurrent = concurrent;
+var test = require('./test/index.js');
+exports.test = test;
 
 
 
@@ -641,5 +643,6 @@ Server.prototype.onServletInit = Server_onServletInit;
  */
 function Server_onServletEnd(url) {}
 Server.prototype.onServletEnd = Server_onServletEnd;
+
 
 

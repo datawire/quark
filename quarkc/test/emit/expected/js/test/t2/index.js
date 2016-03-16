@@ -4,10 +4,10 @@ exports.testlib = testlib;
 
 
 
-function test() {
+function atest() {
     /* import testlib; */
 
     var f = testlib.foo();
     _qrt.print(f);
 }
-exports.test = test;
+exports.atest = atest;

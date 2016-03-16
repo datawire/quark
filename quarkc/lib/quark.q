@@ -27,6 +27,7 @@ include service.q;
 include concurrent.q;
 include http.q;
 include ws.q;
+include testing.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}

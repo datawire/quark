@@ -9,10 +9,10 @@ exports.foo = foo;
 
 
 function main() {
-    _qrt.print(testlib.test());
+    _qrt.print(testlib.atest());
     _qrt.print(testlib.foo());
     _qrt.print(testlib.foo());
-    t2.test();
+    t2.atest();
     _qrt.print(foo.qux());
 }
 exports.main = main;

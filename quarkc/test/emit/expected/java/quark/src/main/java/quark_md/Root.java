@@ -4,6 +4,7 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_List_quark_String__md = quark_List_quark_String_.singleton;
     public static quark.reflect.Class quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
     public static quark.reflect.Class quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton;
+    public static quark.reflect.Class quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton;
     public static quark.reflect.Class quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton;
     public static quark.reflect.Class quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;
     public static quark.reflect.Class quark_Resolver_md = quark_Resolver.singleton;
@@ -32,6 +33,10 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_concurrent_Timeout_md = quark_concurrent_Timeout.singleton;
     public static quark.reflect.Class quark_concurrent_TLSContextInitializer_md = quark_concurrent_TLSContextInitializer.singleton;
     public static quark.reflect.Class quark_concurrent_Context_md = quark_concurrent_Context.singleton;
+    public static quark.reflect.Class quark_test_TestInitializer_md = quark_test_TestInitializer.singleton;
+    public static quark.reflect.Class quark_test_Test_md = quark_test_Test.singleton;
+    public static quark.reflect.Class quark_test_MethodTest_md = quark_test_MethodTest.singleton;
+    public static quark.reflect.Class quark_test_Harness_md = quark_test_Harness.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

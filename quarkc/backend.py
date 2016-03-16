@@ -15,7 +15,7 @@
 import os, types, java, python, javascript, tempfile, logging
 from collections import OrderedDict
 from .ast import *
-from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE
+from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
 from .dispatch import *
 from .helpers import *
 
@@ -123,8 +123,8 @@ class Backend(object):
             # to import classes on demand at the point of use rather
             # than into the module/package level scope.
             raw_imports = self._imports[name].keys()
-            refimps = filter(lambda x: x[0][0] == BUILTIN, raw_imports)
-            imports = filter(lambda x: x[0][0] != BUILTIN, raw_imports)
+            refimps = filter(lambda x: x[0] == (BUILTIN, REFLECT), raw_imports)
+            imports = filter(lambda x: x[0] != (BUILTIN, REFLECT), raw_imports)
 
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)

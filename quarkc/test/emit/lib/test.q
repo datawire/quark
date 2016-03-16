@@ -2,7 +2,7 @@ import testlib;
 
 @version("1.2.3")
 namespace testlib {
-    String test() {
+    String atest() {
         return "testlib";
     }
 
@@ -14,7 +14,7 @@ namespace testlib {
 
 
 namespace t2 {
-    void test() {
+    void atest() {
         import testlib;
         String f = foo();
         print(f);

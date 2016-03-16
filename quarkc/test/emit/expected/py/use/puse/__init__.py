@@ -7,8 +7,8 @@ import foo
 
 
 def main():
-    _println(testlib.test());
+    _println(testlib.atest());
     _println(testlib.foo());
     _println(testlib.foo());
-    t2.test();
+    t2.atest();
     _println(foo.qux());

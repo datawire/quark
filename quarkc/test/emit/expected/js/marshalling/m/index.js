@@ -1,10 +1,10 @@
 var _qrt = require("quark/quark_runtime.js");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark = require('quark').quark;
-exports.quark = quark;
 var marshalling_md = require('../marshalling_md/index.js');
 exports.marshalling_md = marshalling_md;
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 

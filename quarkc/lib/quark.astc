@@ -16,7 +16,7 @@ File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
  DistUnit(Name(quark)),
  Include(url=primitives.q), Include(url=logging.q), Include(url=reflect.q),
  Include(url=json.q), Include(url=service.q), Include(url=concurrent.q),
- Include(url=http.q), Include(url=ws.q),
+ Include(url=http.q), Include(url=ws.q), Include(url=testing.q),
 
  Package(Name(quark),
 

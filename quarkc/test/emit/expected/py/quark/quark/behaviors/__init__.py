@@ -1,7 +1,7 @@
 from quark_runtime import *
 
-import quark
 import quark.reflect
+import quark
 import quark.concurrent
 import quark_md
 

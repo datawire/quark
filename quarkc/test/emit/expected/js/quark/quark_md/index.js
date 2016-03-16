@@ -1,12 +1,6 @@
 var _qrt = require("quark/quark_runtime.js");
 var quark = require('../quark/index.js');
 exports.quark = quark;
-var quark = require('../quark/index.js');
-exports.quark = quark;
-var quark = require('../quark/index.js');
-exports.quark = quark;
-var quark = require('../quark/index.js');
-exports.quark = quark;
 
 
 
@@ -224,6 +218,42 @@ quark_List_quark_concurrent_FutureCompletion_.prototype._getField = quark_List_q
 
 function quark_List_quark_concurrent_FutureCompletion___setField(name, value) {}
 quark_List_quark_concurrent_FutureCompletion_.prototype._setField = quark_List_quark_concurrent_FutureCompletion___setField;
+
+
+// CLASS quark_List_quark_test_Test_
+
+function quark_List_quark_test_Test_() {
+    quark_List_quark_test_Test_.super_.call(this, "quark.List<quark.test.Test>");
+    (this).name = "quark.List";
+    (this).parameters = ["quark.test.Test"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_List_quark_test_Test_ = quark_List_quark_test_Test_;
+_qrt.util.inherits(quark_List_quark_test_Test_, quark.reflect.Class);
+
+function quark_List_quark_test_Test___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_List_quark_test_Test_.prototype.__init_fields__ = quark_List_quark_test_Test___init_fields__;
+quark_List_quark_test_Test_.singleton = new quark_List_quark_test_Test_();
+function quark_List_quark_test_Test__construct(args) {
+    return new Array();
+}
+quark_List_quark_test_Test_.prototype.construct = quark_List_quark_test_Test__construct;
+
+function quark_List_quark_test_Test___getClass() {
+    return null;
+}
+quark_List_quark_test_Test_.prototype._getClass = quark_List_quark_test_Test___getClass;
+
+function quark_List_quark_test_Test___getField(name) {
+    return null;
+}
+quark_List_quark_test_Test_.prototype._getField = quark_List_quark_test_Test___getField;
+
+function quark_List_quark_test_Test___setField(name, value) {}
+quark_List_quark_test_Test_.prototype._setField = quark_List_quark_test_Test___setField;
 
 
 // CLASS quark_Map_quark_Object_quark_Object_
@@ -2844,6 +2874,673 @@ function quark_concurrent_Context__setField(name, value) {}
 quark_concurrent_Context.prototype._setField = quark_concurrent_Context__setField;
 
 
+// CLASS quark_test_TestInitializer_getValue_Method
+
+function quark_test_TestInitializer_getValue_Method() {
+    quark_test_TestInitializer_getValue_Method.super_.call(this, "quark.test.Test", "getValue", []);
+}
+exports.quark_test_TestInitializer_getValue_Method = quark_test_TestInitializer_getValue_Method;
+_qrt.util.inherits(quark_test_TestInitializer_getValue_Method, quark.reflect.Method);
+
+function quark_test_TestInitializer_getValue_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_TestInitializer_getValue_Method.prototype.__init_fields__ = quark_test_TestInitializer_getValue_Method__init_fields__;
+
+function quark_test_TestInitializer_getValue_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).getValue();
+}
+quark_test_TestInitializer_getValue_Method.prototype.invoke = quark_test_TestInitializer_getValue_Method_invoke;
+
+function quark_test_TestInitializer_getValue_Method__getClass() {
+    return null;
+}
+quark_test_TestInitializer_getValue_Method.prototype._getClass = quark_test_TestInitializer_getValue_Method__getClass;
+
+function quark_test_TestInitializer_getValue_Method__getField(name) {
+    return null;
+}
+quark_test_TestInitializer_getValue_Method.prototype._getField = quark_test_TestInitializer_getValue_Method__getField;
+
+function quark_test_TestInitializer_getValue_Method__setField(name, value) {}
+quark_test_TestInitializer_getValue_Method.prototype._setField = quark_test_TestInitializer_getValue_Method__setField;
+
+// CLASS quark_test_TestInitializer
+
+function quark_test_TestInitializer() {
+    quark_test_TestInitializer.super_.call(this, "quark.test.TestInitializer");
+    (this).name = "quark.test.TestInitializer";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [new quark_test_TestInitializer_getValue_Method()];
+}
+exports.quark_test_TestInitializer = quark_test_TestInitializer;
+_qrt.util.inherits(quark_test_TestInitializer, quark.reflect.Class);
+
+function quark_test_TestInitializer__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_test_TestInitializer.prototype.__init_fields__ = quark_test_TestInitializer__init_fields__;
+quark_test_TestInitializer.singleton = new quark_test_TestInitializer();
+function quark_test_TestInitializer_construct(args) {
+    return new quark.test.TestInitializer();
+}
+quark_test_TestInitializer.prototype.construct = quark_test_TestInitializer_construct;
+
+function quark_test_TestInitializer__getClass() {
+    return null;
+}
+quark_test_TestInitializer.prototype._getClass = quark_test_TestInitializer__getClass;
+
+function quark_test_TestInitializer__getField(name) {
+    return null;
+}
+quark_test_TestInitializer.prototype._getField = quark_test_TestInitializer__getField;
+
+function quark_test_TestInitializer__setField(name, value) {}
+quark_test_TestInitializer.prototype._setField = quark_test_TestInitializer__setField;
+
+
+// CLASS quark_test_Test_current_Method
+
+function quark_test_Test_current_Method() {
+    quark_test_Test_current_Method.super_.call(this, "quark.test.Test", "current", []);
+}
+exports.quark_test_Test_current_Method = quark_test_Test_current_Method;
+_qrt.util.inherits(quark_test_Test_current_Method, quark.reflect.Method);
+
+function quark_test_Test_current_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_current_Method.prototype.__init_fields__ = quark_test_Test_current_Method__init_fields__;
+
+function quark_test_Test_current_Method_invoke(object, args) {
+    var obj = object;
+    return quark.test.Test.current();
+}
+quark_test_Test_current_Method.prototype.invoke = quark_test_Test_current_Method_invoke;
+
+function quark_test_Test_current_Method__getClass() {
+    return null;
+}
+quark_test_Test_current_Method.prototype._getClass = quark_test_Test_current_Method__getClass;
+
+function quark_test_Test_current_Method__getField(name) {
+    return null;
+}
+quark_test_Test_current_Method.prototype._getField = quark_test_Test_current_Method__getField;
+
+function quark_test_Test_current_Method__setField(name, value) {}
+quark_test_Test_current_Method.prototype._setField = quark_test_Test_current_Method__setField;
+
+// CLASS quark_test_Test_start_Method
+
+function quark_test_Test_start_Method() {
+    quark_test_Test_start_Method.super_.call(this, "quark.void", "start", []);
+}
+exports.quark_test_Test_start_Method = quark_test_Test_start_Method;
+_qrt.util.inherits(quark_test_Test_start_Method, quark.reflect.Method);
+
+function quark_test_Test_start_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_start_Method.prototype.__init_fields__ = quark_test_Test_start_Method__init_fields__;
+
+function quark_test_Test_start_Method_invoke(object, args) {
+    var obj = object;
+    (obj).start();
+    return null;
+}
+quark_test_Test_start_Method.prototype.invoke = quark_test_Test_start_Method_invoke;
+
+function quark_test_Test_start_Method__getClass() {
+    return null;
+}
+quark_test_Test_start_Method.prototype._getClass = quark_test_Test_start_Method__getClass;
+
+function quark_test_Test_start_Method__getField(name) {
+    return null;
+}
+quark_test_Test_start_Method.prototype._getField = quark_test_Test_start_Method__getField;
+
+function quark_test_Test_start_Method__setField(name, value) {}
+quark_test_Test_start_Method.prototype._setField = quark_test_Test_start_Method__setField;
+
+// CLASS quark_test_Test_stop_Method
+
+function quark_test_Test_stop_Method() {
+    quark_test_Test_stop_Method.super_.call(this, "quark.void", "stop", []);
+}
+exports.quark_test_Test_stop_Method = quark_test_Test_stop_Method;
+_qrt.util.inherits(quark_test_Test_stop_Method, quark.reflect.Method);
+
+function quark_test_Test_stop_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_stop_Method.prototype.__init_fields__ = quark_test_Test_stop_Method__init_fields__;
+
+function quark_test_Test_stop_Method_invoke(object, args) {
+    var obj = object;
+    (obj).stop();
+    return null;
+}
+quark_test_Test_stop_Method.prototype.invoke = quark_test_Test_stop_Method_invoke;
+
+function quark_test_Test_stop_Method__getClass() {
+    return null;
+}
+quark_test_Test_stop_Method.prototype._getClass = quark_test_Test_stop_Method__getClass;
+
+function quark_test_Test_stop_Method__getField(name) {
+    return null;
+}
+quark_test_Test_stop_Method.prototype._getField = quark_test_Test_stop_Method__getField;
+
+function quark_test_Test_stop_Method__setField(name, value) {}
+quark_test_Test_stop_Method.prototype._setField = quark_test_Test_stop_Method__setField;
+
+// CLASS quark_test_Test_check_Method
+
+function quark_test_Test_check_Method() {
+    quark_test_Test_check_Method.super_.call(this, "quark.bool", "check", ["quark.bool", "quark.String"]);
+}
+exports.quark_test_Test_check_Method = quark_test_Test_check_Method;
+_qrt.util.inherits(quark_test_Test_check_Method, quark.reflect.Method);
+
+function quark_test_Test_check_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_check_Method.prototype.__init_fields__ = quark_test_Test_check_Method__init_fields__;
+
+function quark_test_Test_check_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).check((args)[0], (args)[1]);
+}
+quark_test_Test_check_Method.prototype.invoke = quark_test_Test_check_Method_invoke;
+
+function quark_test_Test_check_Method__getClass() {
+    return null;
+}
+quark_test_Test_check_Method.prototype._getClass = quark_test_Test_check_Method__getClass;
+
+function quark_test_Test_check_Method__getField(name) {
+    return null;
+}
+quark_test_Test_check_Method.prototype._getField = quark_test_Test_check_Method__getField;
+
+function quark_test_Test_check_Method__setField(name, value) {}
+quark_test_Test_check_Method.prototype._setField = quark_test_Test_check_Method__setField;
+
+// CLASS quark_test_Test_fail_Method
+
+function quark_test_Test_fail_Method() {
+    quark_test_Test_fail_Method.super_.call(this, "quark.void", "fail", ["quark.String"]);
+}
+exports.quark_test_Test_fail_Method = quark_test_Test_fail_Method;
+_qrt.util.inherits(quark_test_Test_fail_Method, quark.reflect.Method);
+
+function quark_test_Test_fail_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_fail_Method.prototype.__init_fields__ = quark_test_Test_fail_Method__init_fields__;
+
+function quark_test_Test_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail((args)[0]);
+    return null;
+}
+quark_test_Test_fail_Method.prototype.invoke = quark_test_Test_fail_Method_invoke;
+
+function quark_test_Test_fail_Method__getClass() {
+    return null;
+}
+quark_test_Test_fail_Method.prototype._getClass = quark_test_Test_fail_Method__getClass;
+
+function quark_test_Test_fail_Method__getField(name) {
+    return null;
+}
+quark_test_Test_fail_Method.prototype._getField = quark_test_Test_fail_Method__getField;
+
+function quark_test_Test_fail_Method__setField(name, value) {}
+quark_test_Test_fail_Method.prototype._setField = quark_test_Test_fail_Method__setField;
+
+// CLASS quark_test_Test_run_Method
+
+function quark_test_Test_run_Method() {
+    quark_test_Test_run_Method.super_.call(this, "quark.void", "run", []);
+}
+exports.quark_test_Test_run_Method = quark_test_Test_run_Method;
+_qrt.util.inherits(quark_test_Test_run_Method, quark.reflect.Method);
+
+function quark_test_Test_run_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_run_Method.prototype.__init_fields__ = quark_test_Test_run_Method__init_fields__;
+
+function quark_test_Test_run_Method_invoke(object, args) {
+    var obj = object;
+    (obj).run();
+    return null;
+}
+quark_test_Test_run_Method.prototype.invoke = quark_test_Test_run_Method_invoke;
+
+function quark_test_Test_run_Method__getClass() {
+    return null;
+}
+quark_test_Test_run_Method.prototype._getClass = quark_test_Test_run_Method__getClass;
+
+function quark_test_Test_run_Method__getField(name) {
+    return null;
+}
+quark_test_Test_run_Method.prototype._getField = quark_test_Test_run_Method__getField;
+
+function quark_test_Test_run_Method__setField(name, value) {}
+quark_test_Test_run_Method.prototype._setField = quark_test_Test_run_Method__setField;
+
+// CLASS quark_test_Test
+
+function quark_test_Test() {
+    quark_test_Test.super_.call(this, "quark.test.Test");
+    (this).name = "quark.test.Test";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.concurrent.TLS<quark.test.Test>", "ctx"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.int", "checks"), new quark.reflect.Field("quark.List<quark.String>", "failures")];
+    (this).methods = [new quark_test_Test_current_Method(), new quark_test_Test_start_Method(), new quark_test_Test_stop_Method(), new quark_test_Test_check_Method(), new quark_test_Test_fail_Method(), new quark_test_Test_run_Method()];
+}
+exports.quark_test_Test = quark_test_Test;
+_qrt.util.inherits(quark_test_Test, quark.reflect.Class);
+
+function quark_test_Test__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_test_Test.prototype.__init_fields__ = quark_test_Test__init_fields__;
+quark_test_Test.singleton = new quark_test_Test();
+function quark_test_Test_construct(args) {
+    return new quark.test.Test((args)[0]);
+}
+quark_test_Test.prototype.construct = quark_test_Test_construct;
+
+function quark_test_Test__getClass() {
+    return null;
+}
+quark_test_Test.prototype._getClass = quark_test_Test__getClass;
+
+function quark_test_Test__getField(name) {
+    return null;
+}
+quark_test_Test.prototype._getField = quark_test_Test__getField;
+
+function quark_test_Test__setField(name, value) {}
+quark_test_Test.prototype._setField = quark_test_Test__setField;
+
+
+// CLASS quark_test_MethodTest_run_Method
+
+function quark_test_MethodTest_run_Method() {
+    quark_test_MethodTest_run_Method.super_.call(this, "quark.void", "run", []);
+}
+exports.quark_test_MethodTest_run_Method = quark_test_MethodTest_run_Method;
+_qrt.util.inherits(quark_test_MethodTest_run_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_run_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_run_Method.prototype.__init_fields__ = quark_test_MethodTest_run_Method__init_fields__;
+
+function quark_test_MethodTest_run_Method_invoke(object, args) {
+    var obj = object;
+    (obj).run();
+    return null;
+}
+quark_test_MethodTest_run_Method.prototype.invoke = quark_test_MethodTest_run_Method_invoke;
+
+function quark_test_MethodTest_run_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_run_Method.prototype._getClass = quark_test_MethodTest_run_Method__getClass;
+
+function quark_test_MethodTest_run_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_run_Method.prototype._getField = quark_test_MethodTest_run_Method__getField;
+
+function quark_test_MethodTest_run_Method__setField(name, value) {}
+quark_test_MethodTest_run_Method.prototype._setField = quark_test_MethodTest_run_Method__setField;
+
+// CLASS quark_test_MethodTest_current_Method
+
+function quark_test_MethodTest_current_Method() {
+    quark_test_MethodTest_current_Method.super_.call(this, "quark.test.Test", "current", []);
+}
+exports.quark_test_MethodTest_current_Method = quark_test_MethodTest_current_Method;
+_qrt.util.inherits(quark_test_MethodTest_current_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_current_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_current_Method.prototype.__init_fields__ = quark_test_MethodTest_current_Method__init_fields__;
+
+function quark_test_MethodTest_current_Method_invoke(object, args) {
+    var obj = object;
+    return quark.test.Test.current();
+}
+quark_test_MethodTest_current_Method.prototype.invoke = quark_test_MethodTest_current_Method_invoke;
+
+function quark_test_MethodTest_current_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_current_Method.prototype._getClass = quark_test_MethodTest_current_Method__getClass;
+
+function quark_test_MethodTest_current_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_current_Method.prototype._getField = quark_test_MethodTest_current_Method__getField;
+
+function quark_test_MethodTest_current_Method__setField(name, value) {}
+quark_test_MethodTest_current_Method.prototype._setField = quark_test_MethodTest_current_Method__setField;
+
+// CLASS quark_test_MethodTest_start_Method
+
+function quark_test_MethodTest_start_Method() {
+    quark_test_MethodTest_start_Method.super_.call(this, "quark.void", "start", []);
+}
+exports.quark_test_MethodTest_start_Method = quark_test_MethodTest_start_Method;
+_qrt.util.inherits(quark_test_MethodTest_start_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_start_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_start_Method.prototype.__init_fields__ = quark_test_MethodTest_start_Method__init_fields__;
+
+function quark_test_MethodTest_start_Method_invoke(object, args) {
+    var obj = object;
+    (obj).start();
+    return null;
+}
+quark_test_MethodTest_start_Method.prototype.invoke = quark_test_MethodTest_start_Method_invoke;
+
+function quark_test_MethodTest_start_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_start_Method.prototype._getClass = quark_test_MethodTest_start_Method__getClass;
+
+function quark_test_MethodTest_start_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_start_Method.prototype._getField = quark_test_MethodTest_start_Method__getField;
+
+function quark_test_MethodTest_start_Method__setField(name, value) {}
+quark_test_MethodTest_start_Method.prototype._setField = quark_test_MethodTest_start_Method__setField;
+
+// CLASS quark_test_MethodTest_stop_Method
+
+function quark_test_MethodTest_stop_Method() {
+    quark_test_MethodTest_stop_Method.super_.call(this, "quark.void", "stop", []);
+}
+exports.quark_test_MethodTest_stop_Method = quark_test_MethodTest_stop_Method;
+_qrt.util.inherits(quark_test_MethodTest_stop_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_stop_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_stop_Method.prototype.__init_fields__ = quark_test_MethodTest_stop_Method__init_fields__;
+
+function quark_test_MethodTest_stop_Method_invoke(object, args) {
+    var obj = object;
+    (obj).stop();
+    return null;
+}
+quark_test_MethodTest_stop_Method.prototype.invoke = quark_test_MethodTest_stop_Method_invoke;
+
+function quark_test_MethodTest_stop_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_stop_Method.prototype._getClass = quark_test_MethodTest_stop_Method__getClass;
+
+function quark_test_MethodTest_stop_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_stop_Method.prototype._getField = quark_test_MethodTest_stop_Method__getField;
+
+function quark_test_MethodTest_stop_Method__setField(name, value) {}
+quark_test_MethodTest_stop_Method.prototype._setField = quark_test_MethodTest_stop_Method__setField;
+
+// CLASS quark_test_MethodTest_check_Method
+
+function quark_test_MethodTest_check_Method() {
+    quark_test_MethodTest_check_Method.super_.call(this, "quark.bool", "check", ["quark.bool", "quark.String"]);
+}
+exports.quark_test_MethodTest_check_Method = quark_test_MethodTest_check_Method;
+_qrt.util.inherits(quark_test_MethodTest_check_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_check_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_check_Method.prototype.__init_fields__ = quark_test_MethodTest_check_Method__init_fields__;
+
+function quark_test_MethodTest_check_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).check((args)[0], (args)[1]);
+}
+quark_test_MethodTest_check_Method.prototype.invoke = quark_test_MethodTest_check_Method_invoke;
+
+function quark_test_MethodTest_check_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_check_Method.prototype._getClass = quark_test_MethodTest_check_Method__getClass;
+
+function quark_test_MethodTest_check_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_check_Method.prototype._getField = quark_test_MethodTest_check_Method__getField;
+
+function quark_test_MethodTest_check_Method__setField(name, value) {}
+quark_test_MethodTest_check_Method.prototype._setField = quark_test_MethodTest_check_Method__setField;
+
+// CLASS quark_test_MethodTest_fail_Method
+
+function quark_test_MethodTest_fail_Method() {
+    quark_test_MethodTest_fail_Method.super_.call(this, "quark.void", "fail", ["quark.String"]);
+}
+exports.quark_test_MethodTest_fail_Method = quark_test_MethodTest_fail_Method;
+_qrt.util.inherits(quark_test_MethodTest_fail_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_fail_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_fail_Method.prototype.__init_fields__ = quark_test_MethodTest_fail_Method__init_fields__;
+
+function quark_test_MethodTest_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail((args)[0]);
+    return null;
+}
+quark_test_MethodTest_fail_Method.prototype.invoke = quark_test_MethodTest_fail_Method_invoke;
+
+function quark_test_MethodTest_fail_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_fail_Method.prototype._getClass = quark_test_MethodTest_fail_Method__getClass;
+
+function quark_test_MethodTest_fail_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_fail_Method.prototype._getField = quark_test_MethodTest_fail_Method__getField;
+
+function quark_test_MethodTest_fail_Method__setField(name, value) {}
+quark_test_MethodTest_fail_Method.prototype._setField = quark_test_MethodTest_fail_Method__setField;
+
+// CLASS quark_test_MethodTest
+
+function quark_test_MethodTest() {
+    quark_test_MethodTest.super_.call(this, "quark.test.MethodTest");
+    (this).name = "quark.test.MethodTest";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.concurrent.TLS<quark.test.Test>", "ctx"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.int", "checks"), new quark.reflect.Field("quark.List<quark.String>", "failures"), new quark.reflect.Field("quark.reflect.Class", "klass"), new quark.reflect.Field("quark.reflect.Method", "method")];
+    (this).methods = [new quark_test_MethodTest_run_Method(), new quark_test_MethodTest_current_Method(), new quark_test_MethodTest_start_Method(), new quark_test_MethodTest_stop_Method(), new quark_test_MethodTest_check_Method(), new quark_test_MethodTest_fail_Method()];
+}
+exports.quark_test_MethodTest = quark_test_MethodTest;
+_qrt.util.inherits(quark_test_MethodTest, quark.reflect.Class);
+
+function quark_test_MethodTest__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest.prototype.__init_fields__ = quark_test_MethodTest__init_fields__;
+quark_test_MethodTest.singleton = new quark_test_MethodTest();
+function quark_test_MethodTest_construct(args) {
+    return new quark.test.MethodTest((args)[0], (args)[1]);
+}
+quark_test_MethodTest.prototype.construct = quark_test_MethodTest_construct;
+
+function quark_test_MethodTest__getClass() {
+    return null;
+}
+quark_test_MethodTest.prototype._getClass = quark_test_MethodTest__getClass;
+
+function quark_test_MethodTest__getField(name) {
+    return null;
+}
+quark_test_MethodTest.prototype._getField = quark_test_MethodTest__getField;
+
+function quark_test_MethodTest__setField(name, value) {}
+quark_test_MethodTest.prototype._setField = quark_test_MethodTest__setField;
+
+
+// CLASS quark_test_Harness_collect_Method
+
+function quark_test_Harness_collect_Method() {
+    quark_test_Harness_collect_Method.super_.call(this, "quark.void", "collect", ["quark.String"]);
+}
+exports.quark_test_Harness_collect_Method = quark_test_Harness_collect_Method;
+_qrt.util.inherits(quark_test_Harness_collect_Method, quark.reflect.Method);
+
+function quark_test_Harness_collect_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Harness_collect_Method.prototype.__init_fields__ = quark_test_Harness_collect_Method__init_fields__;
+
+function quark_test_Harness_collect_Method_invoke(object, args) {
+    var obj = object;
+    (obj).collect((args)[0]);
+    return null;
+}
+quark_test_Harness_collect_Method.prototype.invoke = quark_test_Harness_collect_Method_invoke;
+
+function quark_test_Harness_collect_Method__getClass() {
+    return null;
+}
+quark_test_Harness_collect_Method.prototype._getClass = quark_test_Harness_collect_Method__getClass;
+
+function quark_test_Harness_collect_Method__getField(name) {
+    return null;
+}
+quark_test_Harness_collect_Method.prototype._getField = quark_test_Harness_collect_Method__getField;
+
+function quark_test_Harness_collect_Method__setField(name, value) {}
+quark_test_Harness_collect_Method.prototype._setField = quark_test_Harness_collect_Method__setField;
+
+// CLASS quark_test_Harness_list_Method
+
+function quark_test_Harness_list_Method() {
+    quark_test_Harness_list_Method.super_.call(this, "quark.void", "list", []);
+}
+exports.quark_test_Harness_list_Method = quark_test_Harness_list_Method;
+_qrt.util.inherits(quark_test_Harness_list_Method, quark.reflect.Method);
+
+function quark_test_Harness_list_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Harness_list_Method.prototype.__init_fields__ = quark_test_Harness_list_Method__init_fields__;
+
+function quark_test_Harness_list_Method_invoke(object, args) {
+    var obj = object;
+    (obj).list();
+    return null;
+}
+quark_test_Harness_list_Method.prototype.invoke = quark_test_Harness_list_Method_invoke;
+
+function quark_test_Harness_list_Method__getClass() {
+    return null;
+}
+quark_test_Harness_list_Method.prototype._getClass = quark_test_Harness_list_Method__getClass;
+
+function quark_test_Harness_list_Method__getField(name) {
+    return null;
+}
+quark_test_Harness_list_Method.prototype._getField = quark_test_Harness_list_Method__getField;
+
+function quark_test_Harness_list_Method__setField(name, value) {}
+quark_test_Harness_list_Method.prototype._setField = quark_test_Harness_list_Method__setField;
+
+// CLASS quark_test_Harness_run_Method
+
+function quark_test_Harness_run_Method() {
+    quark_test_Harness_run_Method.super_.call(this, "quark.void", "run", []);
+}
+exports.quark_test_Harness_run_Method = quark_test_Harness_run_Method;
+_qrt.util.inherits(quark_test_Harness_run_Method, quark.reflect.Method);
+
+function quark_test_Harness_run_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Harness_run_Method.prototype.__init_fields__ = quark_test_Harness_run_Method__init_fields__;
+
+function quark_test_Harness_run_Method_invoke(object, args) {
+    var obj = object;
+    (obj).run();
+    return null;
+}
+quark_test_Harness_run_Method.prototype.invoke = quark_test_Harness_run_Method_invoke;
+
+function quark_test_Harness_run_Method__getClass() {
+    return null;
+}
+quark_test_Harness_run_Method.prototype._getClass = quark_test_Harness_run_Method__getClass;
+
+function quark_test_Harness_run_Method__getField(name) {
+    return null;
+}
+quark_test_Harness_run_Method.prototype._getField = quark_test_Harness_run_Method__getField;
+
+function quark_test_Harness_run_Method__setField(name, value) {}
+quark_test_Harness_run_Method.prototype._setField = quark_test_Harness_run_Method__setField;
+
+// CLASS quark_test_Harness
+
+function quark_test_Harness() {
+    quark_test_Harness.super_.call(this, "quark.test.Harness");
+    (this).name = "quark.test.Harness";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.String", "pkg"), new quark.reflect.Field("quark.List<quark.test.Test>", "tests"), new quark.reflect.Field("quark.int", "filtered")];
+    (this).methods = [new quark_test_Harness_collect_Method(), new quark_test_Harness_list_Method(), new quark_test_Harness_run_Method()];
+}
+exports.quark_test_Harness = quark_test_Harness;
+_qrt.util.inherits(quark_test_Harness, quark.reflect.Class);
+
+function quark_test_Harness__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_test_Harness.prototype.__init_fields__ = quark_test_Harness__init_fields__;
+quark_test_Harness.singleton = new quark_test_Harness();
+function quark_test_Harness_construct(args) {
+    return new quark.test.Harness((args)[0]);
+}
+quark_test_Harness.prototype.construct = quark_test_Harness_construct;
+
+function quark_test_Harness__getClass() {
+    return null;
+}
+quark_test_Harness.prototype._getClass = quark_test_Harness__getClass;
+
+function quark_test_Harness__getField(name) {
+    return null;
+}
+quark_test_Harness.prototype._getField = quark_test_Harness__getField;
+
+function quark_test_Harness__setField(name, value) {}
+quark_test_Harness.prototype._setField = quark_test_Harness__setField;
+
+
 // CLASS Root
 function Root() {
     this.__init_fields__();
@@ -2855,6 +3552,7 @@ Root.prototype.__init_fields__ = Root__init_fields__;
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton;
+Root.quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton;
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton;
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;
 Root.quark_Resolver_md = quark_Resolver.singleton;
@@ -2883,6 +3581,10 @@ Root.quark_concurrent_TimeoutExpiry_md = quark_concurrent_TimeoutExpiry.singleto
 Root.quark_concurrent_Timeout_md = quark_concurrent_Timeout.singleton;
 Root.quark_concurrent_TLSContextInitializer_md = quark_concurrent_TLSContextInitializer.singleton;
 Root.quark_concurrent_Context_md = quark_concurrent_Context.singleton;
+Root.quark_test_TestInitializer_md = quark_test_TestInitializer.singleton;
+Root.quark_test_Test_md = quark_test_Test.singleton;
+Root.quark_test_MethodTest_md = quark_test_MethodTest.singleton;
+Root.quark_test_Harness_md = quark_test_Harness.singleton;
 function Root__getClass() {
     return null;
 }
@@ -2895,3 +3597,12 @@ Root.prototype._getField = Root__getField;
 
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
+
+var quark = require('../quark/index.js');
+exports.quark = quark;
+var quark = require('../quark/index.js');
+exports.quark = quark;
+var quark = require('../quark/index.js');
+exports.quark = quark;
+var quark = require('../quark/index.js');
+exports.quark = quark;

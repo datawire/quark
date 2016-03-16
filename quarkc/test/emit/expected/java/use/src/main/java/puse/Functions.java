@@ -6,10 +6,10 @@ public class Functions {
 
 
     public static void main() {
-        do{System.out.println(testlib.Functions.test());System.out.flush();}while(false);
+        do{System.out.println(testlib.Functions.atest());System.out.flush();}while(false);
         do{System.out.println(testlib.Functions.foo());System.out.flush();}while(false);
         do{System.out.println(testlib.Functions.foo());System.out.flush();}while(false);
-        t2.Functions.test();
+        t2.Functions.atest();
         do{System.out.println(foo.Functions.qux());System.out.flush();}while(false);
     }
 }

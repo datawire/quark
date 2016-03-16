@@ -1,9 +1,6 @@
 from quark_runtime import *
 
 import quark.reflect
-import quark.concurrent
-import quark
-import quark.behaviors
 
 
 class quark_List_quark_String_(quark.reflect.Class):
@@ -149,6 +146,30 @@ class quark_List_quark_concurrent_FutureCompletion_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_concurrent_FutureCompletion_.singleton = quark_List_quark_concurrent_FutureCompletion_()
+
+class quark_List_quark_test_Test_(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_List_quark_test_Test_, self).__init__(u"quark.List<quark.test.Test>");
+        (self).name = u"quark.List"
+        (self).parameters = _List([u"quark.test.Test"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return _List()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_List_quark_test_Test_.singleton = quark_List_quark_test_Test_()
 
 class quark_Map_quark_Object_quark_Object_(quark.reflect.Class):
     def _init(self):
@@ -1844,6 +1865,433 @@ class quark_concurrent_Context(quark.reflect.Class):
         pass
 quark_concurrent_Context.singleton = quark_concurrent_Context()
 
+class quark_test_TestInitializer_getValue_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_TestInitializer_getValue_Method, self).__init__(u"quark.test.Test", u"getValue", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).getValue()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_TestInitializer(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_test_TestInitializer, self).__init__(u"quark.test.TestInitializer");
+        (self).name = u"quark.test.TestInitializer"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([quark_test_TestInitializer_getValue_Method()])
+
+    def construct(self, args):
+        return quark.test.TestInitializer()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_test_TestInitializer.singleton = quark_test_TestInitializer()
+
+class quark_test_Test_current_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_current_Method, self).__init__(u"quark.test.Test", u"current", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return quark.test.Test.current()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test_start_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_start_Method, self).__init__(u"quark.void", u"start", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).start();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test_stop_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_stop_Method, self).__init__(u"quark.void", u"stop", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).stop();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test_check_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_check_Method, self).__init__(u"quark.bool", u"check", _List([u"quark.bool", u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).check((args)[0], (args)[1])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test_fail_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_fail_Method, self).__init__(u"quark.void", u"fail", _List([u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).fail((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test_run_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_run_Method, self).__init__(u"quark.void", u"run", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).run();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Test(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_test_Test, self).__init__(u"quark.test.Test");
+        (self).name = u"quark.test.Test"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.concurrent.TLS<quark.test.Test>", u"ctx"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.int", u"checks"), quark.reflect.Field(u"quark.List<quark.String>", u"failures")])
+        (self).methods = _List([quark_test_Test_current_Method(), quark_test_Test_start_Method(), quark_test_Test_stop_Method(), quark_test_Test_check_Method(), quark_test_Test_fail_Method(), quark_test_Test_run_Method()])
+
+    def construct(self, args):
+        return quark.test.Test((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_test_Test.singleton = quark_test_Test()
+
+class quark_test_MethodTest_run_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_run_Method, self).__init__(u"quark.void", u"run", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).run();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_current_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_current_Method, self).__init__(u"quark.test.Test", u"current", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return quark.test.Test.current()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_start_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_start_Method, self).__init__(u"quark.void", u"start", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).start();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_stop_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_stop_Method, self).__init__(u"quark.void", u"stop", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).stop();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_check_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_check_Method, self).__init__(u"quark.bool", u"check", _List([u"quark.bool", u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).check((args)[0], (args)[1])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_fail_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_fail_Method, self).__init__(u"quark.void", u"fail", _List([u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).fail((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest, self).__init__(u"quark.test.MethodTest");
+        (self).name = u"quark.test.MethodTest"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.concurrent.TLS<quark.test.Test>", u"ctx"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.int", u"checks"), quark.reflect.Field(u"quark.List<quark.String>", u"failures"), quark.reflect.Field(u"quark.reflect.Class", u"klass"), quark.reflect.Field(u"quark.reflect.Method", u"method")])
+        (self).methods = _List([quark_test_MethodTest_run_Method(), quark_test_MethodTest_current_Method(), quark_test_MethodTest_start_Method(), quark_test_MethodTest_stop_Method(), quark_test_MethodTest_check_Method(), quark_test_MethodTest_fail_Method()])
+
+    def construct(self, args):
+        return quark.test.MethodTest((args)[0], (args)[1])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_test_MethodTest.singleton = quark_test_MethodTest()
+
+class quark_test_Harness_collect_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Harness_collect_Method, self).__init__(u"quark.void", u"collect", _List([u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).collect((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Harness_list_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Harness_list_Method, self).__init__(u"quark.void", u"list", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).list();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Harness_run_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Harness_run_Method, self).__init__(u"quark.void", u"run", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).run();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_Harness(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_test_Harness, self).__init__(u"quark.test.Harness");
+        (self).name = u"quark.test.Harness"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"pkg"), quark.reflect.Field(u"quark.List<quark.test.Test>", u"tests"), quark.reflect.Field(u"quark.int", u"filtered")])
+        (self).methods = _List([quark_test_Harness_collect_Method(), quark_test_Harness_list_Method(), quark_test_Harness_run_Method()])
+
+    def construct(self, args):
+        return quark.test.Harness((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_test_Harness.singleton = quark_test_Harness()
+
 class Root(object):
     def _init(self):
         pass
@@ -1860,6 +2308,7 @@ class Root(object):
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton
+Root.quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton
 Root.quark_Resolver_md = quark_Resolver.singleton
@@ -1888,3 +2337,12 @@ Root.quark_concurrent_TimeoutExpiry_md = quark_concurrent_TimeoutExpiry.singleto
 Root.quark_concurrent_Timeout_md = quark_concurrent_Timeout.singleton
 Root.quark_concurrent_TLSContextInitializer_md = quark_concurrent_TLSContextInitializer.singleton
 Root.quark_concurrent_Context_md = quark_concurrent_Context.singleton
+Root.quark_test_TestInitializer_md = quark_test_TestInitializer.singleton
+Root.quark_test_Test_md = quark_test_Test.singleton
+Root.quark_test_MethodTest_md = quark_test_MethodTest.singleton
+Root.quark_test_Harness_md = quark_test_Harness.singleton
+
+import quark.concurrent
+import quark.test
+import quark
+import quark.behaviors

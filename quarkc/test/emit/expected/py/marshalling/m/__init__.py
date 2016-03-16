@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 import quark.reflect
-import quark
 import marshalling_md
+import quark
 
 
 class Inner(object):

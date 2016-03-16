@@ -5,7 +5,7 @@ public class Functions {
     static test_md.Root root = new test_md.Root();
 
 
-    public static void test() {
+    public static void atest() {
         /* import testlib; */
 
         String f = testlib.Functions.foo();
