@@ -8,6 +8,11 @@ include quark_runtime.py;
 include quark_threaded_runtime.py;
 include quark_ws4py_fixup.py;
 
+use rb concurrent-ruby 1.0.1;
+use rb reel 0.6.1;
+use rb websocket-driver 0.6.3;
+use rb logging 2.1.0;
+use rb event_emitter 0.2.5;
 include datawire-quark-core.rb;
 
 use java com.fasterxml.jackson.jr jackson-jr-objects 2.5.3;

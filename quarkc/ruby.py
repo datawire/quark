@@ -41,12 +41,12 @@ Gem::Specification.new do |spec|
   # spec.license     = ''
   spec.files       = ['{files}']
   # spec.homepage    = ''
-  {runtime_deps}
+{runtime_deps}
 end
 """.format
 
     runtime_dep = """\
-  spec.add_runtime_dependency '{module}' # , '== {version}'
+  spec.add_runtime_dependency '{module}', '= {version}'\
 """.format
 
     class_ = """\
