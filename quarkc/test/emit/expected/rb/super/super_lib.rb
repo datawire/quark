@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class A < Object
+def self.super_lib; MODULE_super_lib; end
+module MODULE_super_lib
+class CLASS_A < Object
     attr_accessor :name
 
     
@@ -56,9 +59,9 @@ class A < Object
     end
 
 
-end
+end; def self.A; CLASS_A; end
 
-class B < A
+class CLASS_B < ::Quark.super_lib.A
     attr_accessor 
 
     
@@ -113,21 +116,15 @@ class B < A
     end
 
 
+end; def self.B; CLASS_B; end
+
+def self.main()
+    
+    b = ::Quark.super_lib.B.new()
+    b.greet()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        b = B.new()
-        b.greet()
-
-        nil
-    end
-
-
-end
+end # module MODULE_super_lib
+end # module Quark

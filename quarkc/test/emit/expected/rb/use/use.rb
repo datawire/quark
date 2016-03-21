@@ -1,3 +1,3 @@
-require "./use_lib.rb" 
+require_relative "use_lib.rb"
 
-Functions.main
+Quark.use_lib.main

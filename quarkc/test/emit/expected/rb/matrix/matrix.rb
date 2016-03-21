@@ -1,3 +1,3 @@
-require "./matrix_lib.rb" 
+require_relative "matrix_lib.rb"
 
-Functions.main
+Quark.matrix_lib.main

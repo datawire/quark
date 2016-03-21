@@ -1,10 +1,12 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "./event"
-require "../slackpack_md"
+def self.slack; MODULE_slack; end
+module MODULE_slack
+# require_relatve "builtin/reflect.rb"
+require_relative "slack/event.rb"
+# require_relatve "slackpack_md.rb"
 
-
-class SlackHandler < Object
+class CLASS_SlackHandler < Object
     attr_accessor 
 
     
@@ -52,9 +54,9 @@ class SlackHandler < Object
     end
 
 
-end
+end; def self.SlackHandler; CLASS_SlackHandler; end
 
-class User < Object
+class CLASS_User < Object
     attr_accessor :client, :user
 
     
@@ -112,9 +114,9 @@ class User < Object
     end
 
 
-end
+end; def self.User; CLASS_User; end
 
-class Channel < Object
+class CLASS_Channel < Object
     attr_accessor :client, :channel
 
     
@@ -186,9 +188,9 @@ class Channel < Object
     end
 
 
-end
+end; def self.Channel; CLASS_Channel; end
 
-class Client < Object
+class CLASS_Client < Object
     attr_accessor :runtime, :token, :handler, :event_id, :socket
 
     
@@ -263,15 +265,15 @@ class Client < Object
     def construct(type)
         
         if ((type) == ("error"))
-            return event.SlackError.new()
+            return ::Quark.slack.event.SlackError.new()
         end
         if ((type) == ("hello"))
-            return event.Hello.new()
+            return ::Quark.slack.event.Hello.new()
         end
         if ((type) == ("message"))
-            return event.Message.new()
+            return ::Quark.slack.event.Message.new()
         end
-        return event.SlackEvent.new()
+        return ::Quark.slack.event.SlackEvent.new()
 
         nil
     end
@@ -292,7 +294,7 @@ class Client < Object
         code = response.getCode()
         error = nil
         if ((code) != (200))
-            error = event.SlackError.new()
+            error = ::Quark.slack.event.SlackError.new()
             (error).code = code
             error.dispatch((self).handler)
         else
@@ -300,7 +302,7 @@ class Client < Object
             if ((login_data).getObjectItem("ok").getBool())
                 self.ws_connect((login_data).getObjectItem("url").getString())
             else
-                error = event.SlackError.new()
+                error = ::Quark.slack.event.SlackError.new()
                 (error).text = (login_data).getObjectItem("error").getString()
                 error.dispatch((self).handler)
             end
@@ -421,4 +423,6 @@ class Client < Object
     end
 
 
-end
+end; def self.Client; CLASS_Client; end
+end # module MODULE_slack
+end # module Quark

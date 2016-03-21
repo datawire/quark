@@ -1,3 +1,3 @@
-require "./macro_pie_lib.rb" 
+require_relative "macro_pie_lib.rb"
 
-Functions.main
+Quark.macro_pie_lib.main

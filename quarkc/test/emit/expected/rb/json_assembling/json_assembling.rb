@@ -1,3 +1,3 @@
-require "./json_assembling_lib.rb" 
+require_relative "json_assembling_lib.rb"
 
-Functions.main
+Quark.json_assembling_lib.main

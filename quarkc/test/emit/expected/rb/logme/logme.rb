@@ -1,3 +1,3 @@
-require "./logme_lib.rb" 
+require_relative "logme_lib.rb"
 
-Functions.main
+Quark.logme_lib.main

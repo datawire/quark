@@ -1,3 +1,3 @@
-require "./urlencode_lib.rb" 
+require_relative "urlencode_lib.rb"
 
-Functions.main
+Quark.urlencode_lib.main

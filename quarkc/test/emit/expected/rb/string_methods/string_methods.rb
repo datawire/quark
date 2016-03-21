@@ -1,3 +1,3 @@
-require "./string_methods_lib.rb" 
+require_relative "string_methods_lib.rb"
 
-Functions.main
+Quark.string_methods_lib.main

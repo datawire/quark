@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../extending_primitives_md"
+def self.pkg; MODULE_pkg; end
+module MODULE_pkg
+# require_relatve "builtin/reflect.rb"
+# require_relatve "extending_primitives_md.rb"
 
-
-class C < Object
+class CLASS_C < Object
     attr_accessor 
 
     
@@ -65,23 +67,17 @@ class C < Object
     end
 
 
+end; def self.C; CLASS_C; end
+
+def self.main()
+    
+    c = ::Quark.pkg.C.new()
+    c.event1()
+    c.event2()
+    c.run()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        c = C.new()
-        c.event1()
-        c.event2()
-        c.run()
-
-        nil
-    end
-
-
-end
+end # module MODULE_pkg
+end # module Quark

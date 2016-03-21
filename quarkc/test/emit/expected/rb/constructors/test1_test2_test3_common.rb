@@ -1,22 +1,19 @@
+module Quark
 require "datawire-quark-core"
-require "../test1"
-require "../test2"
-require "../test3"
+def self.test1_test2_test3_common; MODULE_test1_test2_test3_common; end
+module MODULE_test1_test2_test3_common
+require_relative "test1.rb"
+require_relative "test2.rb"
+require_relative "test3.rb"
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        Functions.test1__go()
-        Functions.test2__go()
-        Functions.test3__go()
-
-        nil
-    end
+    ::Quark.test1.go()
+    ::Quark.test2.go()
+    ::Quark.test3.go()
 
 
+    nil
 end
+end # module MODULE_test1_test2_test3_common
+end # module Quark

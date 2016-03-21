@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class A < Object
+def self.default_constructors_lib; MODULE_default_constructors_lib; end
+module MODULE_default_constructors_lib
+class CLASS_A < Object
     attr_accessor :name
 
     
@@ -49,9 +52,9 @@ class A < Object
     end
 
 
-end
+end; def self.A; CLASS_A; end
 
-class B < A
+class CLASS_B < ::Quark.default_constructors_lib.A
     attr_accessor 
 
     
@@ -105,9 +108,9 @@ class B < A
     end
 
 
-end
+end; def self.B; CLASS_B; end
 
-class C < A
+class CLASS_C < ::Quark.default_constructors_lib.A
     attr_accessor 
 
     
@@ -161,9 +164,9 @@ class C < A
     end
 
 
-end
+end; def self.C; CLASS_C; end
 
-class X < Object
+class CLASS_X < Object
     attr_accessor 
 
     
@@ -204,9 +207,9 @@ class X < Object
     end
 
 
-end
+end; def self.X; CLASS_X; end
 
-class Y < X
+class CLASS_Y < ::Quark.default_constructors_lib.X
     attr_accessor :name
 
     
@@ -263,25 +266,19 @@ class Y < X
     end
 
 
+end; def self.Y; CLASS_Y; end
+
+def self.main()
+    
+    b = ::Quark.default_constructors_lib.B.new("Bob")
+    b.greet()
+    c = ::Quark.default_constructors_lib.C.new("arole")
+    c.greet()
+    y = ::Quark.default_constructors_lib.Y.new("asdf")
+    y.test()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        b = B.new("Bob")
-        b.greet()
-        c = C.new("arole")
-        c.greet()
-        y = Y.new("asdf")
-        y.test()
-
-        nil
-    end
-
-
-end
+end # module MODULE_default_constructors_lib
+end # module Quark

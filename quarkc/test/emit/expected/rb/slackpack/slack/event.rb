@@ -1,10 +1,14 @@
+module Quark
 require "datawire-quark-core"
-require "../../builtin"
-require "../../slack"
-require "../../slackpack_md"
+def self.slack; MODULE_slack; end
+module MODULE_slack
+def self.event; MODULE_event; end
+module MODULE_event
+# require_relatve "builtin/reflect.rb"
+require_relative "slack.rb"
+# require_relatve "slackpack_md.rb"
 
-
-class SlackEvent < Object
+class CLASS_SlackEvent < Object
     attr_accessor :type, :user, :channel, :timestamp
 
     
@@ -22,11 +26,11 @@ class SlackEvent < Object
         (self).type = (obj).getObjectItem("type").getString()
         uid = (obj).getObjectItem("user").getString()
         if ((uid) != (nil))
-            (self).user = slack.User.new(client, uid)
+            (self).user = ::Quark.slack.User.new(client, uid)
         end
         chid = (obj).getObjectItem("channel").getString()
         if ((chid) != (nil))
-            (self).channel = slack.Channel.new(client, chid)
+            (self).channel = ::Quark.slack.Channel.new(client, chid)
         end
         (self).timestamp = (obj).getObjectItem("ts").getString()
 
@@ -96,9 +100,9 @@ class SlackEvent < Object
     end
 
 
-end
+end; def self.SlackEvent; CLASS_SlackEvent; end
 
-class SlackError < SlackEvent
+class CLASS_SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
 
     
@@ -194,9 +198,9 @@ class SlackError < SlackEvent
     end
 
 
-end
+end; def self.SlackError; CLASS_SlackError; end
 
-class Hello < SlackEvent
+class CLASS_Hello < ::Quark.slack.event.SlackEvent
     attr_accessor 
 
     
@@ -268,9 +272,9 @@ class Hello < SlackEvent
     end
 
 
-end
+end; def self.Hello; CLASS_Hello; end
 
-class Message < SlackEvent
+class CLASS_Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
 
     
@@ -292,8 +296,8 @@ class Message < SlackEvent
         (self).text = (obj).getObjectItem("text").getString()
         edited = (obj).getObjectItem("edited")
         if (edited.isDefined())
-            (self).edited = Edited.new()
-            ((self).edited).user = slack.User.new(client, (edited).getObjectItem("user").getString())
+            (self).edited = ::Quark.slack.event.Edited.new()
+            ((self).edited).user = ::Quark.slack.User.new(client, (edited).getObjectItem("user").getString())
             ((self).edited).timestamp = (edited).getObjectItem("ts").getString()
         end
 
@@ -387,9 +391,9 @@ class Message < SlackEvent
     end
 
 
-end
+end; def self.Message; CLASS_Message; end
 
-class Edited < Object
+class CLASS_Edited < Object
     attr_accessor :user, :timestamp
 
     
@@ -444,4 +448,7 @@ class Edited < Object
     end
 
 
-end
+end; def self.Edited; CLASS_Edited; end
+end # module MODULE_event
+end # module MODULE_slack
+end # module Quark

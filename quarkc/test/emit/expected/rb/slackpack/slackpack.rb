@@ -1,3 +1,3 @@
-require "./pkg_slack_common.rb" 
+require_relative "pkg_slack_common.rb"
 
-Functions.main
+Quark.pkg_slack_common.main

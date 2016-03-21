@@ -1,11 +1,13 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../test1"
-require "../test2"
-require "../test3"
+def self.constructors_md; MODULE_constructors_md; end
+module MODULE_constructors_md
+# require_relatve "builtin/reflect.rb"
+require_relative "test1.rb"
+require_relative "test2.rb"
+require_relative "test3.rb"
 
-
-class Test1_Test < builtin.reflect.QuarkClass
+class CLASS_test1_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -14,7 +16,7 @@ class Test1_Test < builtin.reflect.QuarkClass
         super("test1.Test")
         (self).name = "test1.Test"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "name")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -25,7 +27,7 @@ class Test1_Test < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return test1.Test.new()
+        return ::Quark.test1.Test.new()
 
         nil
     end
@@ -58,15 +60,9 @@ class Test1_Test < builtin.reflect.QuarkClass
     end
 
 
-end
-def test1_Test()
-    return Test1_Test
+end; def self.test1_Test; CLASS_test1_Test; end
 
-    nil
-end
-
-
-class Test2_Test < builtin.reflect.QuarkClass
+class CLASS_test2_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -75,7 +71,7 @@ class Test2_Test < builtin.reflect.QuarkClass
         super("test2.Test")
         (self).name = "test2.Test"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "name")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -86,7 +82,7 @@ class Test2_Test < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return test2.Test.new((args)[0])
+        return ::Quark.test2.Test.new((args)[0])
 
         nil
     end
@@ -119,15 +115,9 @@ class Test2_Test < builtin.reflect.QuarkClass
     end
 
 
-end
-def test2_Test()
-    return Test2_Test
+end; def self.test2_Test; CLASS_test2_Test; end
 
-    nil
-end
-
-
-class Test3_Box_builtin_String__get_Method < builtin.reflect.Method
+class CLASS_test3_Box_builtin_String__get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -177,14 +167,9 @@ class Test3_Box_builtin_String__get_Method < builtin.reflect.Method
     end
 
 
-end
-def test3_Box_builtin_String__get_Method()
-    return Test3_Box_builtin_String__get_Method
+end; def self.test3_Box_builtin_String__get_Method; CLASS_test3_Box_builtin_String__get_Method; end
 
-    nil
-end
-
-class Test3_Box_builtin_String_ < builtin.reflect.QuarkClass
+class CLASS_test3_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -193,8 +178,8 @@ class Test3_Box_builtin_String_ < builtin.reflect.QuarkClass
         super("test3.Box<builtin.String>")
         (self).name = "test3.Box"
         (self).parameters = DatawireQuarkCore::List.new(["builtin.String"])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "contents")])
-        (self).methods = DatawireQuarkCore::List.new([test3_Box_builtin_String__get_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "contents")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.constructors_md.test3_Box_builtin_String__get_Method.new()])
 
         nil
     end
@@ -204,7 +189,7 @@ class Test3_Box_builtin_String_ < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return test3.Box.new((args)[0])
+        return ::Quark.test3.Box.new((args)[0])
 
         nil
     end
@@ -237,15 +222,9 @@ class Test3_Box_builtin_String_ < builtin.reflect.QuarkClass
     end
 
 
-end
-def test3_Box_builtin_String_()
-    return Test3_Box_builtin_String_
+end; def self.test3_Box_builtin_String_; CLASS_test3_Box_builtin_String_; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -286,4 +265,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_constructors_md
+end # module Quark

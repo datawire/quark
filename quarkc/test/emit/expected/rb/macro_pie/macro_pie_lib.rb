@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Pie < Object
+def self.macro_pie_lib; MODULE_macro_pie_lib; end
+module MODULE_macro_pie_lib
+class CLASS_Pie < Object
     attr_accessor 
 
     
@@ -14,7 +17,7 @@ class Pie < Object
     
     def test()
         
-        p = Pie.new()
+        p = ::Quark.macro_pie_lib.Pie.new()
         x = 3
 
         nil
@@ -48,20 +51,14 @@ class Pie < Object
     end
 
 
+end; def self.Pie; CLASS_Pie; end
+
+def self.main()
+    
+    DatawireQuarkCore.print(3)
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        DatawireQuarkCore.print(3)
-
-        nil
-    end
-
-
-end
+end # module MODULE_macro_pie_lib
+end # module Quark

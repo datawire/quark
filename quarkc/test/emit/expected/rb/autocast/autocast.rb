@@ -1,3 +1,3 @@
-require "./autocast_lib.rb" 
+require_relative "autocast_lib.rb"
 
-Functions.main
+Quark.autocast_lib.main

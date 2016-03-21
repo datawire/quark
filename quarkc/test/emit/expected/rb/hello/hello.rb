@@ -1,3 +1,3 @@
-require "./hello_lib.rb" 
+require_relative "hello_lib.rb"
 
-Functions.main
+Quark.hello_lib.main

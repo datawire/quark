@@ -1,25 +1,21 @@
+module Quark
 require "datawire-quark-core"
-require "../../builtin"
-require "../../package_md"
+def self.test; MODULE_test; end
+module MODULE_test
+def self.test; MODULE_test; end
+module MODULE_test
+# require_relatve "builtin/reflect.rb"
+# require_relatve "package_md.rb"
 
-
-class Functions < Object
+def self.go()
     
-
-    
-
-    
-    def self.go()
-        
-        DatawireQuarkCore.print("GOGO!!")
-
-        nil
-    end
+    DatawireQuarkCore.print("GOGO!!")
 
 
+    nil
 end
 
-class Test < Object
+class CLASS_Test < Object
     attr_accessor :size
 
     
@@ -74,4 +70,7 @@ class Test < Object
     end
 
 
-end
+end; def self.Test; CLASS_Test; end
+end # module MODULE_test
+end # module MODULE_test
+end # module Quark

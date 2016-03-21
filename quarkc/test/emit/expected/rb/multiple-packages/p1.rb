@@ -1,55 +1,34 @@
+module Quark
 require "datawire-quark-core"
-require "./p2"
+def self.p1; MODULE_p1; end
+module MODULE_p1
+require_relative "p1/p2.rb"
 
-
-class Functions < Object
+def self.c()
     
-
-    
-
-    
-    def self.c()
-        
-        DatawireQuarkCore.print("c")
-
-        nil
-    end
+    DatawireQuarkCore.print("c")
 
 
+    nil
 end
 
-
-class Functions < Object
+def self.d()
     
-
-    
-
-    
-    def self.d()
-        
-        DatawireQuarkCore.print("d")
-
-        nil
-    end
+    DatawireQuarkCore.print("d")
 
 
+    nil
 end
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        Functions.p2__a()
-        Functions.p2__b()
-        Functions.c()
-        Functions.d()
-
-        nil
-    end
+    ::Quark.p1.p2.a()
+    ::Quark.p1.p2.b()
+    ::Quark.p1.c()
+    ::Quark.p1.d()
 
 
+    nil
 end
+end # module MODULE_p1
+end # module Quark

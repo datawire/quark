@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class A < Object
+def self.no_spurious_cast_lib; MODULE_no_spurious_cast_lib; end
+module MODULE_no_spurious_cast_lib
+class CLASS_A < Object
     attr_accessor 
 
     
@@ -40,9 +43,9 @@ class A < Object
     end
 
 
-end
+end; def self.A; CLASS_A; end
 
-class B < A
+class CLASS_B < ::Quark.no_spurious_cast_lib.A
     attr_accessor 
 
     
@@ -84,9 +87,9 @@ class B < A
     end
 
 
-end
+end; def self.B; CLASS_B; end
 
-class X < Object
+class CLASS_X < Object
     attr_accessor 
 
     
@@ -127,9 +130,9 @@ class X < Object
     end
 
 
-end
+end; def self.X; CLASS_X; end
 
-class Y < X
+class CLASS_Y < ::Quark.no_spurious_cast_lib.X
     attr_accessor 
 
     
@@ -171,21 +174,15 @@ class Y < X
     end
 
 
+end; def self.Y; CLASS_Y; end
+
+def self.main()
+    
+    a = ::Quark.no_spurious_cast_lib.B.new()
+    x = ::Quark.no_spurious_cast_lib.Y.new()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        a = B.new()
-        x = Y.new()
-
-        nil
-    end
-
-
-end
+end # module MODULE_no_spurious_cast_lib
+end # module Quark

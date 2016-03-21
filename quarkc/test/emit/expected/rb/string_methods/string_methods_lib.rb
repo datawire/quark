@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class String_test < Object
+def self.string_methods_lib; MODULE_string_methods_lib; end
+module MODULE_string_methods_lib
+class CLASS_string_test < Object
     attr_accessor 
 
     
@@ -51,14 +54,9 @@ class String_test < Object
     end
 
 
-end
-def string_test()
-    return String_test
+end; def self.string_test; CLASS_string_test; end
 
-    nil
-end
-
-class Test_size < string_test
+class CLASS_test_size < ::Quark.string_methods_lib.string_test
     attr_accessor :what
 
     
@@ -118,14 +116,9 @@ class Test_size < string_test
     end
 
 
-end
-def test_size()
-    return Test_size
+end; def self.test_size; CLASS_test_size; end
 
-    nil
-end
-
-class Test_startsWith < string_test
+class CLASS_test_startsWith < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
     
@@ -198,14 +191,9 @@ class Test_startsWith < string_test
     end
 
 
-end
-def test_startsWith()
-    return Test_startsWith
+end; def self.test_startsWith; CLASS_test_startsWith; end
 
-    nil
-end
-
-class Test_endsWith < string_test
+class CLASS_test_endsWith < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
     
@@ -278,14 +266,9 @@ class Test_endsWith < string_test
     end
 
 
-end
-def test_endsWith()
-    return Test_endsWith
+end; def self.test_endsWith; CLASS_test_endsWith; end
 
-    nil
-end
-
-class Test_find < string_test
+class CLASS_test_find < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
     
@@ -358,14 +341,9 @@ class Test_find < string_test
     end
 
 
-end
-def test_find()
-    return Test_find
+end; def self.test_find; CLASS_test_find; end
 
-    nil
-end
-
-class Test_substring < string_test
+class CLASS_test_substring < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :start, :end_
 
     
@@ -446,14 +424,9 @@ class Test_substring < string_test
     end
 
 
-end
-def test_substring()
-    return Test_substring
+end; def self.test_substring; CLASS_test_substring; end
 
-    nil
-end
-
-class Test_replace < string_test
+class CLASS_test_replace < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :start, :end_
 
     
@@ -534,14 +507,9 @@ class Test_replace < string_test
     end
 
 
-end
-def test_replace()
-    return Test_replace
+end; def self.test_replace; CLASS_test_replace; end
 
-    nil
-end
-
-class Test_join < string_test
+class CLASS_test_join < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :parts, :strparts, :sep
 
     
@@ -558,7 +526,7 @@ class Test_join < string_test
     
     def that()
         
-        (self).parts = DatawireQuarkCore::List.new()
+        (self).parts = ::Quark.DatawireQuarkCore::List.new()
         (self).strparts = ""
         (self).sep = ""
         return self
@@ -640,14 +608,9 @@ class Test_join < string_test
     end
 
 
-end
-def test_join()
-    return Test_join
+end; def self.test_join; CLASS_test_join; end
 
-    nil
-end
-
-class Test_split < string_test
+class CLASS_test_split < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :sep, :altsep
 
     
@@ -730,38 +693,27 @@ class Test_split < string_test
     end
 
 
-end
-def test_split()
-    return Test_split
+end; def self.test_split; CLASS_test_split; end
+
+def self.main()
+    
+    ::Quark.string_methods_lib.test_size.new("").does(0)
+    ::Quark.string_methods_lib.test_size.new("1").does(1)
+    ::Quark.string_methods_lib.test_size.new("22").does(2)
+    ::Quark.string_methods_lib.test_size.new("333").does(3)
+    ::Quark.string_methods_lib.test_size.new("4444").does(4)
+    ::Quark.string_methods_lib.test_startsWith.new("abcd").that("abc").does(true).that("bc").does(false).that("").does(true).that("abcde").does(false)
+    ::Quark.string_methods_lib.test_endsWith.new("abcd").that("bcd").does(true).that("bc").does(false).that("").does(true).that("xabcd").does(false)
+    ::Quark.string_methods_lib.test_find.new("abcd").that("bcd").does(1).that("bc").does(1).that("").does(0).that("xabcd").does(-(1)).that("abcd").does(0).that("abc").does(0).that("a").does(0).that("x").does(-(1))
+    ::Quark.string_methods_lib.test_substring.new("abcd").that(0, 0).does("").that(0, 4).does("abcd").that(0, 1).does("a").that(1, 2).does("b").that(2, 4).does("cd").that(3, 4).does("d").that(1, 1).does("").that(2, 2).does("")
+    ::Quark.string_methods_lib.test_replace.new("abcd").that("ab", "AB").does("ABcd").that("b", "bb").does("abbcd").that("ab", "ab").does("abcd").that("", "EE").does("EEabcd").that("c", "EE").does("abEEd").that("d", "EE").does("abcEE").that("x", "EE").does("abcd")
+    ::Quark.string_methods_lib.test_join.new("").that().does("").that().a("a").does("a").that().a("a").a("b").does("ab").that().a("a").a("b").a("c").does("abc")
+    ::Quark.string_methods_lib.test_join.new(",").that().does("").that().a("a").does("a").that().a("a").a("b").does("a,b").that().a("a").a("b").a("c").does("a,b,c")
+    ::Quark.string_methods_lib.test_split.new(",", "|").that("").does("").that("a").does("a").that(",").does("|").that("a,").does("a|").that(",a").does("|a").that("a,b").does("a|b").that("a,,b").does("a||b").that("a,b,c").does("a|b|c")
+    ::Quark.string_methods_lib.test_split.new("foo", "|").that("").does("").that("a").does("a").that("foo").does("|").that("afoo").does("a|").that("fooa").does("|a").that("afoob").does("a|b").that("afoofoob").does("a||b").that("afoobfooc").does("a|b|c")
+
 
     nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        test_size.new("").does(0)
-        test_size.new("1").does(1)
-        test_size.new("22").does(2)
-        test_size.new("333").does(3)
-        test_size.new("4444").does(4)
-        test_startsWith.new("abcd").that("abc").does(true).that("bc").does(false).that("").does(true).that("abcde").does(false)
-        test_endsWith.new("abcd").that("bcd").does(true).that("bc").does(false).that("").does(true).that("xabcd").does(false)
-        test_find.new("abcd").that("bcd").does(1).that("bc").does(1).that("").does(0).that("xabcd").does(-(1)).that("abcd").does(0).that("abc").does(0).that("a").does(0).that("x").does(-(1))
-        test_substring.new("abcd").that(0, 0).does("").that(0, 4).does("abcd").that(0, 1).does("a").that(1, 2).does("b").that(2, 4).does("cd").that(3, 4).does("d").that(1, 1).does("").that(2, 2).does("")
-        test_replace.new("abcd").that("ab", "AB").does("ABcd").that("b", "bb").does("abbcd").that("ab", "ab").does("abcd").that("", "EE").does("EEabcd").that("c", "EE").does("abEEd").that("d", "EE").does("abcEE").that("x", "EE").does("abcd")
-        test_join.new("").that().does("").that().a("a").does("a").that().a("a").a("b").does("ab").that().a("a").a("b").a("c").does("abc")
-        test_join.new(",").that().does("").that().a("a").does("a").that().a("a").a("b").does("a,b").that().a("a").a("b").a("c").does("a,b,c")
-        test_split.new(",", "|").that("").does("").that("a").does("a").that(",").does("|").that("a,").does("a|").that(",a").does("|a").that("a,b").does("a|b").that("a,,b").does("a||b").that("a,b,c").does("a|b|c")
-        test_split.new("foo", "|").that("").does("").that("a").does("a").that("foo").does("|").that("afoo").does("a|").that("fooa").does("|a").that("afoob").does("a|b").that("afoofoob").does("a||b").that("afoobfooc").does("a|b|c")
-
-        nil
-    end
-
-
-end
+end # module MODULE_string_methods_lib
+end # module Quark

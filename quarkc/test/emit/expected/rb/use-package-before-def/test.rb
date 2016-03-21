@@ -1,33 +1,21 @@
+module Quark
 require "datawire-quark-core"
-class Functions < Object
+def self.test; MODULE_test; end
+module MODULE_test
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        Functions.go()
-
-        nil
-    end
+    ::Quark.test.go()
 
 
+    nil
 end
 
-
-class Functions < Object
+def self.go()
     
-
-    
-
-    
-    def self.go()
-        
-        DatawireQuarkCore.print("GO!")
-
-        nil
-    end
+    DatawireQuarkCore.print("GO!")
 
 
+    nil
 end
+end # module MODULE_test
+end # module Quark

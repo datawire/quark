@@ -1,11 +1,13 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../slack"
-require "../slack"
-require "../pkg"
+def self.slackpack_md; MODULE_slackpack_md; end
+module MODULE_slackpack_md
+# require_relatve "builtin/reflect.rb"
+require_relative "slack/event.rb"
+require_relative "slack.rb"
+require_relative "pkg.rb"
 
-
-class Slack_event_SlackEvent_load_Method < builtin.reflect.Method
+class CLASS_slack_event_SlackEvent_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -56,14 +58,9 @@ class Slack_event_SlackEvent_load_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_SlackEvent_load_Method()
-    return Slack_event_SlackEvent_load_Method
+end; def self.slack_event_SlackEvent_load_Method; CLASS_slack_event_SlackEvent_load_Method; end
 
-    nil
-end
-
-class Slack_event_SlackEvent_dispatch_Method < builtin.reflect.Method
+class CLASS_slack_event_SlackEvent_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -114,14 +111,9 @@ class Slack_event_SlackEvent_dispatch_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_SlackEvent_dispatch_Method()
-    return Slack_event_SlackEvent_dispatch_Method
+end; def self.slack_event_SlackEvent_dispatch_Method; CLASS_slack_event_SlackEvent_dispatch_Method; end
 
-    nil
-end
-
-class Slack_event_SlackEvent < builtin.reflect.QuarkClass
+class CLASS_slack_event_SlackEvent < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -130,8 +122,8 @@ class Slack_event_SlackEvent < builtin.reflect.QuarkClass
         super("slack.event.SlackEvent")
         (self).name = "slack.event.SlackEvent"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "type"), builtin.reflect.Field.new("slack.User", "user"), builtin.reflect.Field.new("slack.Channel", "channel"), builtin.reflect.Field.new("builtin.String", "timestamp")])
-        (self).methods = DatawireQuarkCore::List.new([slack_event_SlackEvent_load_Method.new(), slack_event_SlackEvent_dispatch_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "type"), ::Quark.builtin.reflect.Field.new("slack.User", "user"), ::Quark.builtin.reflect.Field.new("slack.Channel", "channel"), ::Quark.builtin.reflect.Field.new("builtin.String", "timestamp")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_SlackEvent_load_Method.new(), ::Quark.slackpack_md.slack_event_SlackEvent_dispatch_Method.new()])
 
         nil
     end
@@ -141,7 +133,7 @@ class Slack_event_SlackEvent < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.event.SlackEvent.new()
+        return ::Quark.slack.event.SlackEvent.new()
 
         nil
     end
@@ -174,15 +166,9 @@ class Slack_event_SlackEvent < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_event_SlackEvent()
-    return Slack_event_SlackEvent
+end; def self.slack_event_SlackEvent; CLASS_slack_event_SlackEvent; end
 
-    nil
-end
-
-
-class Slack_event_SlackError_load_Method < builtin.reflect.Method
+class CLASS_slack_event_SlackError_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -233,14 +219,9 @@ class Slack_event_SlackError_load_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_SlackError_load_Method()
-    return Slack_event_SlackError_load_Method
+end; def self.slack_event_SlackError_load_Method; CLASS_slack_event_SlackError_load_Method; end
 
-    nil
-end
-
-class Slack_event_SlackError_dispatch_Method < builtin.reflect.Method
+class CLASS_slack_event_SlackError_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -291,14 +272,9 @@ class Slack_event_SlackError_dispatch_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_SlackError_dispatch_Method()
-    return Slack_event_SlackError_dispatch_Method
+end; def self.slack_event_SlackError_dispatch_Method; CLASS_slack_event_SlackError_dispatch_Method; end
 
-    nil
-end
-
-class Slack_event_SlackError < builtin.reflect.QuarkClass
+class CLASS_slack_event_SlackError < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -307,8 +283,8 @@ class Slack_event_SlackError < builtin.reflect.QuarkClass
         super("slack.event.SlackError")
         (self).name = "slack.event.SlackError"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "type"), builtin.reflect.Field.new("slack.User", "user"), builtin.reflect.Field.new("slack.Channel", "channel"), builtin.reflect.Field.new("builtin.String", "timestamp"), builtin.reflect.Field.new("builtin.int", "code"), builtin.reflect.Field.new("builtin.String", "text")])
-        (self).methods = DatawireQuarkCore::List.new([slack_event_SlackError_load_Method.new(), slack_event_SlackError_dispatch_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "type"), ::Quark.builtin.reflect.Field.new("slack.User", "user"), ::Quark.builtin.reflect.Field.new("slack.Channel", "channel"), ::Quark.builtin.reflect.Field.new("builtin.String", "timestamp"), ::Quark.builtin.reflect.Field.new("builtin.int", "code"), ::Quark.builtin.reflect.Field.new("builtin.String", "text")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_SlackError_load_Method.new(), ::Quark.slackpack_md.slack_event_SlackError_dispatch_Method.new()])
 
         nil
     end
@@ -318,7 +294,7 @@ class Slack_event_SlackError < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.event.SlackError.new()
+        return ::Quark.slack.event.SlackError.new()
 
         nil
     end
@@ -351,15 +327,9 @@ class Slack_event_SlackError < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_event_SlackError()
-    return Slack_event_SlackError
+end; def self.slack_event_SlackError; CLASS_slack_event_SlackError; end
 
-    nil
-end
-
-
-class Slack_event_Hello_dispatch_Method < builtin.reflect.Method
+class CLASS_slack_event_Hello_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -410,14 +380,9 @@ class Slack_event_Hello_dispatch_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_Hello_dispatch_Method()
-    return Slack_event_Hello_dispatch_Method
+end; def self.slack_event_Hello_dispatch_Method; CLASS_slack_event_Hello_dispatch_Method; end
 
-    nil
-end
-
-class Slack_event_Hello_load_Method < builtin.reflect.Method
+class CLASS_slack_event_Hello_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -468,14 +433,9 @@ class Slack_event_Hello_load_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_Hello_load_Method()
-    return Slack_event_Hello_load_Method
+end; def self.slack_event_Hello_load_Method; CLASS_slack_event_Hello_load_Method; end
 
-    nil
-end
-
-class Slack_event_Hello < builtin.reflect.QuarkClass
+class CLASS_slack_event_Hello < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -484,8 +444,8 @@ class Slack_event_Hello < builtin.reflect.QuarkClass
         super("slack.event.Hello")
         (self).name = "slack.event.Hello"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "type"), builtin.reflect.Field.new("slack.User", "user"), builtin.reflect.Field.new("slack.Channel", "channel"), builtin.reflect.Field.new("builtin.String", "timestamp")])
-        (self).methods = DatawireQuarkCore::List.new([slack_event_Hello_dispatch_Method.new(), slack_event_Hello_load_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "type"), ::Quark.builtin.reflect.Field.new("slack.User", "user"), ::Quark.builtin.reflect.Field.new("slack.Channel", "channel"), ::Quark.builtin.reflect.Field.new("builtin.String", "timestamp")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_Hello_dispatch_Method.new(), ::Quark.slackpack_md.slack_event_Hello_load_Method.new()])
 
         nil
     end
@@ -495,7 +455,7 @@ class Slack_event_Hello < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.event.Hello.new()
+        return ::Quark.slack.event.Hello.new()
 
         nil
     end
@@ -528,15 +488,9 @@ class Slack_event_Hello < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_event_Hello()
-    return Slack_event_Hello
+end; def self.slack_event_Hello; CLASS_slack_event_Hello; end
 
-    nil
-end
-
-
-class Slack_event_Message_load_Method < builtin.reflect.Method
+class CLASS_slack_event_Message_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -587,14 +541,9 @@ class Slack_event_Message_load_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_Message_load_Method()
-    return Slack_event_Message_load_Method
+end; def self.slack_event_Message_load_Method; CLASS_slack_event_Message_load_Method; end
 
-    nil
-end
-
-class Slack_event_Message_dispatch_Method < builtin.reflect.Method
+class CLASS_slack_event_Message_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -645,14 +594,9 @@ class Slack_event_Message_dispatch_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_event_Message_dispatch_Method()
-    return Slack_event_Message_dispatch_Method
+end; def self.slack_event_Message_dispatch_Method; CLASS_slack_event_Message_dispatch_Method; end
 
-    nil
-end
-
-class Slack_event_Message < builtin.reflect.QuarkClass
+class CLASS_slack_event_Message < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -661,8 +605,8 @@ class Slack_event_Message < builtin.reflect.QuarkClass
         super("slack.event.Message")
         (self).name = "slack.event.Message"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "type"), builtin.reflect.Field.new("slack.User", "user"), builtin.reflect.Field.new("slack.Channel", "channel"), builtin.reflect.Field.new("builtin.String", "timestamp"), builtin.reflect.Field.new("builtin.String", "subtype"), builtin.reflect.Field.new("builtin.bool", "hidden"), builtin.reflect.Field.new("builtin.String", "text"), builtin.reflect.Field.new("slack.event.Edited", "edited")])
-        (self).methods = DatawireQuarkCore::List.new([slack_event_Message_load_Method.new(), slack_event_Message_dispatch_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "type"), ::Quark.builtin.reflect.Field.new("slack.User", "user"), ::Quark.builtin.reflect.Field.new("slack.Channel", "channel"), ::Quark.builtin.reflect.Field.new("builtin.String", "timestamp"), ::Quark.builtin.reflect.Field.new("builtin.String", "subtype"), ::Quark.builtin.reflect.Field.new("builtin.bool", "hidden"), ::Quark.builtin.reflect.Field.new("builtin.String", "text"), ::Quark.builtin.reflect.Field.new("slack.event.Edited", "edited")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_Message_load_Method.new(), ::Quark.slackpack_md.slack_event_Message_dispatch_Method.new()])
 
         nil
     end
@@ -672,7 +616,7 @@ class Slack_event_Message < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.event.Message.new()
+        return ::Quark.slack.event.Message.new()
 
         nil
     end
@@ -705,15 +649,9 @@ class Slack_event_Message < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_event_Message()
-    return Slack_event_Message
+end; def self.slack_event_Message; CLASS_slack_event_Message; end
 
-    nil
-end
-
-
-class Slack_event_Edited < builtin.reflect.QuarkClass
+class CLASS_slack_event_Edited < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -722,7 +660,7 @@ class Slack_event_Edited < builtin.reflect.QuarkClass
         super("slack.event.Edited")
         (self).name = "slack.event.Edited"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("slack.User", "user"), builtin.reflect.Field.new("builtin.String", "timestamp")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("slack.User", "user"), ::Quark.builtin.reflect.Field.new("builtin.String", "timestamp")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -733,7 +671,7 @@ class Slack_event_Edited < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.event.Edited.new()
+        return ::Quark.slack.event.Edited.new()
 
         nil
     end
@@ -766,15 +704,9 @@ class Slack_event_Edited < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_event_Edited()
-    return Slack_event_Edited
+end; def self.slack_event_Edited; CLASS_slack_event_Edited; end
 
-    nil
-end
-
-
-class Slack_SlackHandler_onSlackEvent_Method < builtin.reflect.Method
+class CLASS_slack_SlackHandler_onSlackEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -825,14 +757,9 @@ class Slack_SlackHandler_onSlackEvent_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_SlackHandler_onSlackEvent_Method()
-    return Slack_SlackHandler_onSlackEvent_Method
+end; def self.slack_SlackHandler_onSlackEvent_Method; CLASS_slack_SlackHandler_onSlackEvent_Method; end
 
-    nil
-end
-
-class Slack_SlackHandler_onHello_Method < builtin.reflect.Method
+class CLASS_slack_SlackHandler_onHello_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -883,14 +810,9 @@ class Slack_SlackHandler_onHello_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_SlackHandler_onHello_Method()
-    return Slack_SlackHandler_onHello_Method
+end; def self.slack_SlackHandler_onHello_Method; CLASS_slack_SlackHandler_onHello_Method; end
 
-    nil
-end
-
-class Slack_SlackHandler_onSlackError_Method < builtin.reflect.Method
+class CLASS_slack_SlackHandler_onSlackError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -941,14 +863,9 @@ class Slack_SlackHandler_onSlackError_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_SlackHandler_onSlackError_Method()
-    return Slack_SlackHandler_onSlackError_Method
+end; def self.slack_SlackHandler_onSlackError_Method; CLASS_slack_SlackHandler_onSlackError_Method; end
 
-    nil
-end
-
-class Slack_SlackHandler_onMessage_Method < builtin.reflect.Method
+class CLASS_slack_SlackHandler_onMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -999,14 +916,9 @@ class Slack_SlackHandler_onMessage_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_SlackHandler_onMessage_Method()
-    return Slack_SlackHandler_onMessage_Method
+end; def self.slack_SlackHandler_onMessage_Method; CLASS_slack_SlackHandler_onMessage_Method; end
 
-    nil
-end
-
-class Slack_SlackHandler < builtin.reflect.QuarkClass
+class CLASS_slack_SlackHandler < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1016,7 +928,7 @@ class Slack_SlackHandler < builtin.reflect.QuarkClass
         (self).name = "slack.SlackHandler"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([slack_SlackHandler_onSlackEvent_Method.new(), slack_SlackHandler_onHello_Method.new(), slack_SlackHandler_onSlackError_Method.new(), slack_SlackHandler_onMessage_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_SlackHandler_onSlackEvent_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onHello_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onSlackError_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onMessage_Method.new()])
 
         nil
     end
@@ -1059,15 +971,9 @@ class Slack_SlackHandler < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_SlackHandler()
-    return Slack_SlackHandler
+end; def self.slack_SlackHandler; CLASS_slack_SlackHandler; end
 
-    nil
-end
-
-
-class Slack_User < builtin.reflect.QuarkClass
+class CLASS_slack_User < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1076,7 +982,7 @@ class Slack_User < builtin.reflect.QuarkClass
         super("slack.User")
         (self).name = "slack.User"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("slack.Client", "client"), builtin.reflect.Field.new("builtin.String", "user")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("slack.Client", "client"), ::Quark.builtin.reflect.Field.new("builtin.String", "user")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -1087,7 +993,7 @@ class Slack_User < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.User.new((args)[0], (args)[1])
+        return ::Quark.slack.User.new((args)[0], (args)[1])
 
         nil
     end
@@ -1120,15 +1026,9 @@ class Slack_User < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_User()
-    return Slack_User
+end; def self.slack_User; CLASS_slack_User; end
 
-    nil
-end
-
-
-class Slack_Channel_send_Method < builtin.reflect.Method
+class CLASS_slack_Channel_send_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1179,14 +1079,9 @@ class Slack_Channel_send_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Channel_send_Method()
-    return Slack_Channel_send_Method
+end; def self.slack_Channel_send_Method; CLASS_slack_Channel_send_Method; end
 
-    nil
-end
-
-class Slack_Channel < builtin.reflect.QuarkClass
+class CLASS_slack_Channel < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1195,8 +1090,8 @@ class Slack_Channel < builtin.reflect.QuarkClass
         super("slack.Channel")
         (self).name = "slack.Channel"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("slack.Client", "client"), builtin.reflect.Field.new("builtin.String", "channel")])
-        (self).methods = DatawireQuarkCore::List.new([slack_Channel_send_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("slack.Client", "client"), ::Quark.builtin.reflect.Field.new("builtin.String", "channel")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Channel_send_Method.new()])
 
         nil
     end
@@ -1206,7 +1101,7 @@ class Slack_Channel < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.Channel.new((args)[0], (args)[1])
+        return ::Quark.slack.Channel.new((args)[0], (args)[1])
 
         nil
     end
@@ -1239,15 +1134,9 @@ class Slack_Channel < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_Channel()
-    return Slack_Channel
+end; def self.slack_Channel; CLASS_slack_Channel; end
 
-    nil
-end
-
-
-class Slack_Client_connect_Method < builtin.reflect.Method
+class CLASS_slack_Client_connect_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1298,14 +1187,9 @@ class Slack_Client_connect_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_connect_Method()
-    return Slack_Client_connect_Method
+end; def self.slack_Client_connect_Method; CLASS_slack_Client_connect_Method; end
 
-    nil
-end
-
-class Slack_Client_request_Method < builtin.reflect.Method
+class CLASS_slack_Client_request_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1356,14 +1240,9 @@ class Slack_Client_request_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_request_Method()
-    return Slack_Client_request_Method
+end; def self.slack_Client_request_Method; CLASS_slack_Client_request_Method; end
 
-    nil
-end
-
-class Slack_Client_ws_connect_Method < builtin.reflect.Method
+class CLASS_slack_Client_ws_connect_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1414,14 +1293,9 @@ class Slack_Client_ws_connect_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_ws_connect_Method()
-    return Slack_Client_ws_connect_Method
+end; def self.slack_Client_ws_connect_Method; CLASS_slack_Client_ws_connect_Method; end
 
-    nil
-end
-
-class Slack_Client_ws_send_Method < builtin.reflect.Method
+class CLASS_slack_Client_ws_send_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1472,14 +1346,9 @@ class Slack_Client_ws_send_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_ws_send_Method()
-    return Slack_Client_ws_send_Method
+end; def self.slack_Client_ws_send_Method; CLASS_slack_Client_ws_send_Method; end
 
-    nil
-end
-
-class Slack_Client_onWSConnected_Method < builtin.reflect.Method
+class CLASS_slack_Client_onWSConnected_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1530,14 +1399,9 @@ class Slack_Client_onWSConnected_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_onWSConnected_Method()
-    return Slack_Client_onWSConnected_Method
+end; def self.slack_Client_onWSConnected_Method; CLASS_slack_Client_onWSConnected_Method; end
 
-    nil
-end
-
-class Slack_Client_onWSClose_Method < builtin.reflect.Method
+class CLASS_slack_Client_onWSClose_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1588,14 +1452,9 @@ class Slack_Client_onWSClose_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_onWSClose_Method()
-    return Slack_Client_onWSClose_Method
+end; def self.slack_Client_onWSClose_Method; CLASS_slack_Client_onWSClose_Method; end
 
-    nil
-end
-
-class Slack_Client_onWSError_Method < builtin.reflect.Method
+class CLASS_slack_Client_onWSError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1646,14 +1505,9 @@ class Slack_Client_onWSError_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_onWSError_Method()
-    return Slack_Client_onWSError_Method
+end; def self.slack_Client_onWSError_Method; CLASS_slack_Client_onWSError_Method; end
 
-    nil
-end
-
-class Slack_Client_construct_Method < builtin.reflect.Method
+class CLASS_slack_Client_construct_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1703,14 +1557,9 @@ class Slack_Client_construct_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_construct_Method()
-    return Slack_Client_construct_Method
+end; def self.slack_Client_construct_Method; CLASS_slack_Client_construct_Method; end
 
-    nil
-end
-
-class Slack_Client_onWSMessage_Method < builtin.reflect.Method
+class CLASS_slack_Client_onWSMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1761,14 +1610,9 @@ class Slack_Client_onWSMessage_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_onWSMessage_Method()
-    return Slack_Client_onWSMessage_Method
+end; def self.slack_Client_onWSMessage_Method; CLASS_slack_Client_onWSMessage_Method; end
 
-    nil
-end
-
-class Slack_Client_onHTTPResponse_Method < builtin.reflect.Method
+class CLASS_slack_Client_onHTTPResponse_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1819,14 +1663,9 @@ class Slack_Client_onHTTPResponse_Method < builtin.reflect.Method
     end
 
 
-end
-def slack_Client_onHTTPResponse_Method()
-    return Slack_Client_onHTTPResponse_Method
+end; def self.slack_Client_onHTTPResponse_Method; CLASS_slack_Client_onHTTPResponse_Method; end
 
-    nil
-end
-
-class Slack_Client < builtin.reflect.QuarkClass
+class CLASS_slack_Client < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1835,8 +1674,8 @@ class Slack_Client < builtin.reflect.QuarkClass
         super("slack.Client")
         (self).name = "slack.Client"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.Runtime", "runtime"), builtin.reflect.Field.new("builtin.String", "token"), builtin.reflect.Field.new("slack.SlackHandler", "handler"), builtin.reflect.Field.new("builtin.int", "event_id"), builtin.reflect.Field.new("builtin.WebSocket", "socket")])
-        (self).methods = DatawireQuarkCore::List.new([slack_Client_connect_Method.new(), slack_Client_request_Method.new(), slack_Client_ws_connect_Method.new(), slack_Client_ws_send_Method.new(), slack_Client_onWSConnected_Method.new(), slack_Client_onWSClose_Method.new(), slack_Client_onWSError_Method.new(), slack_Client_construct_Method.new(), slack_Client_onWSMessage_Method.new(), slack_Client_onHTTPResponse_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.Runtime", "runtime"), ::Quark.builtin.reflect.Field.new("builtin.String", "token"), ::Quark.builtin.reflect.Field.new("slack.SlackHandler", "handler"), ::Quark.builtin.reflect.Field.new("builtin.int", "event_id"), ::Quark.builtin.reflect.Field.new("builtin.WebSocket", "socket")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Client_connect_Method.new(), ::Quark.slackpack_md.slack_Client_request_Method.new(), ::Quark.slackpack_md.slack_Client_ws_connect_Method.new(), ::Quark.slackpack_md.slack_Client_ws_send_Method.new(), ::Quark.slackpack_md.slack_Client_onWSConnected_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClose_Method.new(), ::Quark.slackpack_md.slack_Client_onWSError_Method.new(), ::Quark.slackpack_md.slack_Client_construct_Method.new(), ::Quark.slackpack_md.slack_Client_onWSMessage_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPResponse_Method.new()])
 
         nil
     end
@@ -1846,7 +1685,7 @@ class Slack_Client < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return slack.Client.new((args)[0], (args)[1], (args)[2])
+        return ::Quark.slack.Client.new((args)[0], (args)[1], (args)[2])
 
         nil
     end
@@ -1879,15 +1718,9 @@ class Slack_Client < builtin.reflect.QuarkClass
     end
 
 
-end
-def slack_Client()
-    return Slack_Client
+end; def self.slack_Client; CLASS_slack_Client; end
 
-    nil
-end
-
-
-class Pkg_Handler_onSlackEvent_Method < builtin.reflect.Method
+class CLASS_pkg_Handler_onSlackEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1938,14 +1771,9 @@ class Pkg_Handler_onSlackEvent_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Handler_onSlackEvent_Method()
-    return Pkg_Handler_onSlackEvent_Method
+end; def self.pkg_Handler_onSlackEvent_Method; CLASS_pkg_Handler_onSlackEvent_Method; end
 
-    nil
-end
-
-class Pkg_Handler_onHello_Method < builtin.reflect.Method
+class CLASS_pkg_Handler_onHello_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1996,14 +1824,9 @@ class Pkg_Handler_onHello_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Handler_onHello_Method()
-    return Pkg_Handler_onHello_Method
+end; def self.pkg_Handler_onHello_Method; CLASS_pkg_Handler_onHello_Method; end
 
-    nil
-end
-
-class Pkg_Handler_onSlackError_Method < builtin.reflect.Method
+class CLASS_pkg_Handler_onSlackError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -2054,14 +1877,9 @@ class Pkg_Handler_onSlackError_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Handler_onSlackError_Method()
-    return Pkg_Handler_onSlackError_Method
+end; def self.pkg_Handler_onSlackError_Method; CLASS_pkg_Handler_onSlackError_Method; end
 
-    nil
-end
-
-class Pkg_Handler_onMessage_Method < builtin.reflect.Method
+class CLASS_pkg_Handler_onMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -2112,14 +1930,9 @@ class Pkg_Handler_onMessage_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Handler_onMessage_Method()
-    return Pkg_Handler_onMessage_Method
+end; def self.pkg_Handler_onMessage_Method; CLASS_pkg_Handler_onMessage_Method; end
 
-    nil
-end
-
-class Pkg_Handler < builtin.reflect.QuarkClass
+class CLASS_pkg_Handler < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -2129,7 +1942,7 @@ class Pkg_Handler < builtin.reflect.QuarkClass
         (self).name = "pkg.Handler"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_Handler_onSlackEvent_Method.new(), pkg_Handler_onHello_Method.new(), pkg_Handler_onSlackError_Method.new(), pkg_Handler_onMessage_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.slackpack_md.pkg_Handler_onSlackEvent_Method.new(), ::Quark.slackpack_md.pkg_Handler_onHello_Method.new(), ::Quark.slackpack_md.pkg_Handler_onSlackError_Method.new(), ::Quark.slackpack_md.pkg_Handler_onMessage_Method.new()])
 
         nil
     end
@@ -2139,7 +1952,7 @@ class Pkg_Handler < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.Handler.new()
+        return ::Quark.pkg.Handler.new()
 
         nil
     end
@@ -2172,15 +1985,9 @@ class Pkg_Handler < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_Handler()
-    return Pkg_Handler
+end; def self.pkg_Handler; CLASS_pkg_Handler; end
 
-    nil
-end
-
-
-class Builtin_Map_builtin_String_builtin_Object_ < builtin.reflect.QuarkClass
+class CLASS_builtin_Map_builtin_String_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -2233,15 +2040,9 @@ class Builtin_Map_builtin_String_builtin_Object_ < builtin.reflect.QuarkClass
     end
 
 
-end
-def builtin_Map_builtin_String_builtin_Object_()
-    return Builtin_Map_builtin_String_builtin_Object_
+end; def self.builtin_Map_builtin_String_builtin_Object_; CLASS_builtin_Map_builtin_String_builtin_Object_; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -2282,4 +2083,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_slackpack_md
+end # module Quark

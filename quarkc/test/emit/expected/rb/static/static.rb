@@ -1,3 +1,3 @@
-require "./static_lib.rb" 
+require_relative "static_lib.rb"
 
-Functions.main
+Quark.static_lib.main

@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../pkg"
+def self.defaulted_methods_md; MODULE_defaulted_methods_md; end
+module MODULE_defaulted_methods_md
+# require_relatve "builtin/reflect.rb"
+require_relative "pkg.rb"
 
-
-class Pkg_A_foo_Method < builtin.reflect.Method
+class CLASS_pkg_A_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -54,14 +56,9 @@ class Pkg_A_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_A_foo_Method()
-    return Pkg_A_foo_Method
+end; def self.pkg_A_foo_Method; CLASS_pkg_A_foo_Method; end
 
-    nil
-end
-
-class Pkg_A_bar_Method < builtin.reflect.Method
+class CLASS_pkg_A_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -112,14 +109,9 @@ class Pkg_A_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_A_bar_Method()
-    return Pkg_A_bar_Method
+end; def self.pkg_A_bar_Method; CLASS_pkg_A_bar_Method; end
 
-    nil
-end
-
-class Pkg_A < builtin.reflect.QuarkClass
+class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -129,7 +121,7 @@ class Pkg_A < builtin.reflect.QuarkClass
         (self).name = "pkg.A"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_A_foo_Method.new(), pkg_A_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_A_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_A_bar_Method.new()])
 
         nil
     end
@@ -172,15 +164,9 @@ class Pkg_A < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_A()
-    return Pkg_A
+end; def self.pkg_A; CLASS_pkg_A; end
 
-    nil
-end
-
-
-class Pkg_B_bar_Method < builtin.reflect.Method
+class CLASS_pkg_B_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -231,14 +217,9 @@ class Pkg_B_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_B_bar_Method()
-    return Pkg_B_bar_Method
+end; def self.pkg_B_bar_Method; CLASS_pkg_B_bar_Method; end
 
-    nil
-end
-
-class Pkg_B < builtin.reflect.QuarkClass
+class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -248,7 +229,7 @@ class Pkg_B < builtin.reflect.QuarkClass
         (self).name = "pkg.B"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_B_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_B_bar_Method.new()])
 
         nil
     end
@@ -291,15 +272,9 @@ class Pkg_B < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_B()
-    return Pkg_B
+end; def self.pkg_B; CLASS_pkg_B; end
 
-    nil
-end
-
-
-class Pkg_C_foo_Method < builtin.reflect.Method
+class CLASS_pkg_C_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -350,14 +325,9 @@ class Pkg_C_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_C_foo_Method()
-    return Pkg_C_foo_Method
+end; def self.pkg_C_foo_Method; CLASS_pkg_C_foo_Method; end
 
-    nil
-end
-
-class Pkg_C < builtin.reflect.QuarkClass
+class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -367,7 +337,7 @@ class Pkg_C < builtin.reflect.QuarkClass
         (self).name = "pkg.C"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_C_foo_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_C_foo_Method.new()])
 
         nil
     end
@@ -410,15 +380,9 @@ class Pkg_C < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_C()
-    return Pkg_C
+end; def self.pkg_C; CLASS_pkg_C; end
 
-    nil
-end
-
-
-class Pkg_T1_foo_Method < builtin.reflect.Method
+class CLASS_pkg_T1_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -469,14 +433,9 @@ class Pkg_T1_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T1_foo_Method()
-    return Pkg_T1_foo_Method
+end; def self.pkg_T1_foo_Method; CLASS_pkg_T1_foo_Method; end
 
-    nil
-end
-
-class Pkg_T1_bar_Method < builtin.reflect.Method
+class CLASS_pkg_T1_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -527,14 +486,9 @@ class Pkg_T1_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T1_bar_Method()
-    return Pkg_T1_bar_Method
+end; def self.pkg_T1_bar_Method; CLASS_pkg_T1_bar_Method; end
 
-    nil
-end
-
-class Pkg_T1 < builtin.reflect.QuarkClass
+class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -544,7 +498,7 @@ class Pkg_T1 < builtin.reflect.QuarkClass
         (self).name = "pkg.T1"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_T1_foo_Method.new(), pkg_T1_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_T1_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_T1_bar_Method.new()])
 
         nil
     end
@@ -554,7 +508,7 @@ class Pkg_T1 < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.T1.new()
+        return ::Quark.pkg.T1.new()
 
         nil
     end
@@ -587,15 +541,9 @@ class Pkg_T1 < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_T1()
-    return Pkg_T1
+end; def self.pkg_T1; CLASS_pkg_T1; end
 
-    nil
-end
-
-
-class Pkg_T2_foo_Method < builtin.reflect.Method
+class CLASS_pkg_T2_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -646,14 +594,9 @@ class Pkg_T2_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T2_foo_Method()
-    return Pkg_T2_foo_Method
+end; def self.pkg_T2_foo_Method; CLASS_pkg_T2_foo_Method; end
 
-    nil
-end
-
-class Pkg_T2_bar_Method < builtin.reflect.Method
+class CLASS_pkg_T2_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -704,14 +647,9 @@ class Pkg_T2_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T2_bar_Method()
-    return Pkg_T2_bar_Method
+end; def self.pkg_T2_bar_Method; CLASS_pkg_T2_bar_Method; end
 
-    nil
-end
-
-class Pkg_T2 < builtin.reflect.QuarkClass
+class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -721,7 +659,7 @@ class Pkg_T2 < builtin.reflect.QuarkClass
         (self).name = "pkg.T2"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_T2_foo_Method.new(), pkg_T2_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_T2_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_T2_bar_Method.new()])
 
         nil
     end
@@ -731,7 +669,7 @@ class Pkg_T2 < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.T2.new()
+        return ::Quark.pkg.T2.new()
 
         nil
     end
@@ -764,15 +702,9 @@ class Pkg_T2 < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_T2()
-    return Pkg_T2
+end; def self.pkg_T2; CLASS_pkg_T2; end
 
-    nil
-end
-
-
-class Pkg_T3_foo_Method < builtin.reflect.Method
+class CLASS_pkg_T3_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -823,14 +755,9 @@ class Pkg_T3_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T3_foo_Method()
-    return Pkg_T3_foo_Method
+end; def self.pkg_T3_foo_Method; CLASS_pkg_T3_foo_Method; end
 
-    nil
-end
-
-class Pkg_T3_bar_Method < builtin.reflect.Method
+class CLASS_pkg_T3_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -881,14 +808,9 @@ class Pkg_T3_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T3_bar_Method()
-    return Pkg_T3_bar_Method
+end; def self.pkg_T3_bar_Method; CLASS_pkg_T3_bar_Method; end
 
-    nil
-end
-
-class Pkg_T3 < builtin.reflect.QuarkClass
+class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -898,7 +820,7 @@ class Pkg_T3 < builtin.reflect.QuarkClass
         (self).name = "pkg.T3"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_T3_foo_Method.new(), pkg_T3_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_T3_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_T3_bar_Method.new()])
 
         nil
     end
@@ -908,7 +830,7 @@ class Pkg_T3 < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.T3.new()
+        return ::Quark.pkg.T3.new()
 
         nil
     end
@@ -941,15 +863,9 @@ class Pkg_T3 < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_T3()
-    return Pkg_T3
+end; def self.pkg_T3; CLASS_pkg_T3; end
 
-    nil
-end
-
-
-class Pkg_T4_foo_Method < builtin.reflect.Method
+class CLASS_pkg_T4_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1000,14 +916,9 @@ class Pkg_T4_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T4_foo_Method()
-    return Pkg_T4_foo_Method
+end; def self.pkg_T4_foo_Method; CLASS_pkg_T4_foo_Method; end
 
-    nil
-end
-
-class Pkg_T4_bar_Method < builtin.reflect.Method
+class CLASS_pkg_T4_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1058,14 +969,9 @@ class Pkg_T4_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T4_bar_Method()
-    return Pkg_T4_bar_Method
+end; def self.pkg_T4_bar_Method; CLASS_pkg_T4_bar_Method; end
 
-    nil
-end
-
-class Pkg_T4 < builtin.reflect.QuarkClass
+class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1075,7 +981,7 @@ class Pkg_T4 < builtin.reflect.QuarkClass
         (self).name = "pkg.T4"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_T4_foo_Method.new(), pkg_T4_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_T4_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_T4_bar_Method.new()])
 
         nil
     end
@@ -1085,7 +991,7 @@ class Pkg_T4 < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.T4.new()
+        return ::Quark.pkg.T4.new()
 
         nil
     end
@@ -1118,15 +1024,9 @@ class Pkg_T4 < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_T4()
-    return Pkg_T4
+end; def self.pkg_T4; CLASS_pkg_T4; end
 
-    nil
-end
-
-
-class Pkg_T5_foo_Method < builtin.reflect.Method
+class CLASS_pkg_T5_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1177,14 +1077,9 @@ class Pkg_T5_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T5_foo_Method()
-    return Pkg_T5_foo_Method
+end; def self.pkg_T5_foo_Method; CLASS_pkg_T5_foo_Method; end
 
-    nil
-end
-
-class Pkg_T5_bar_Method < builtin.reflect.Method
+class CLASS_pkg_T5_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -1235,14 +1130,9 @@ class Pkg_T5_bar_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_T5_bar_Method()
-    return Pkg_T5_bar_Method
+end; def self.pkg_T5_bar_Method; CLASS_pkg_T5_bar_Method; end
 
-    nil
-end
-
-class Pkg_T5 < builtin.reflect.QuarkClass
+class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -1252,7 +1142,7 @@ class Pkg_T5 < builtin.reflect.QuarkClass
         (self).name = "pkg.T5"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_T5_foo_Method.new(), pkg_T5_bar_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.defaulted_methods_md.pkg_T5_foo_Method.new(), ::Quark.defaulted_methods_md.pkg_T5_bar_Method.new()])
 
         nil
     end
@@ -1262,7 +1152,7 @@ class Pkg_T5 < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.T5.new()
+        return ::Quark.pkg.T5.new()
 
         nil
     end
@@ -1295,15 +1185,9 @@ class Pkg_T5 < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_T5()
-    return Pkg_T5
+end; def self.pkg_T5; CLASS_pkg_T5; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -1344,4 +1228,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_defaulted_methods_md
+end # module Quark

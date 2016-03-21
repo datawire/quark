@@ -1,6 +1,8 @@
+module Quark
 require "datawire-quark-core"
-
-class Root < Object
+def self.string_methods_md; MODULE_string_methods_md; end
+module MODULE_string_methods_md
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -41,4 +43,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_string_methods_md
+end # module Quark

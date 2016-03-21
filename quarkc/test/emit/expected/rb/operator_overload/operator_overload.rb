@@ -1,3 +1,3 @@
-require "./operator_overload_lib.rb" 
+require_relative "operator_overload_lib.rb"
 
-Functions.main
+Quark.operator_overload_lib.main

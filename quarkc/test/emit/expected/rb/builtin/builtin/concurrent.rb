@@ -1,9 +1,13 @@
+module Quark
 require "datawire-quark-core"
-require "../../builtin"
-require "../../builtin_md"
+def self.builtin; MODULE_builtin; end
+module MODULE_builtin
+def self.concurrent; MODULE_concurrent; end
+module MODULE_concurrent
+# require_relatve "builtin/reflect.rb"
+# require_relatve "builtin_md.rb"
 
-
-class Event < Object
+class CLASS_Event < Object
     attr_accessor 
 
     
@@ -35,9 +39,9 @@ class Event < Object
     end
 
 
-end
+end; def self.Event; CLASS_Event; end
 
-class FutureListener < Object
+class CLASS_FutureListener < Object
     attr_accessor 
 
     
@@ -64,9 +68,9 @@ class FutureListener < Object
     end
 
 
-end
+end; def self.FutureListener; CLASS_FutureListener; end
 
-class FutureCompletion < Object
+class CLASS_FutureCompletion < Object
     attr_accessor :future, :listener
 
     
@@ -138,16 +142,16 @@ class FutureCompletion < Object
     end
 
 
-end
+end; def self.FutureCompletion; CLASS_FutureCompletion; end
 
-class EventContext < Object
+class CLASS_EventContext < Object
     attr_accessor :_context
 
     
     def initialize()
         
         self.__init_fields__
-        (self)._context = Context.current()
+        (self)._context = builtin::concurrent::Context.current()
 
         nil
     end
@@ -197,9 +201,9 @@ class EventContext < Object
     end
 
 
-end
+end; def self.EventContext; CLASS_EventContext; end
 
-class Future < EventContext
+class CLASS_Future < ::Quark.builtin.concurrent.EventContext
     attr_accessor :_finished, :_error, :_callbacks, :_lock
 
     
@@ -208,7 +212,7 @@ class Future < EventContext
         super()
         (self)._finished = false
         (self)._callbacks = nil
-        (self)._lock = .new()
+        (self)._lock = ::Quark..new()
 
         nil
     end
@@ -220,12 +224,12 @@ class Future < EventContext
         
         (self)._lock.acquire()
         if ((self)._finished)
-            ((self)._context).collector.put(FutureCompletion.new(self, callback))
+            ((self)._context).collector.put(::Quark.builtin.concurrent.FutureCompletion.new(self, callback))
         else
             if (((self)._callbacks) == (nil))
                 (self)._callbacks = DatawireQuarkCore::List.new([])
             end
-            ((self)._callbacks) << (FutureCompletion.new(self, callback))
+            ((self)._callbacks) << (::Quark.builtin.concurrent.FutureCompletion.new(self, callback))
         end
         (self)._lock.release()
 
@@ -276,7 +280,7 @@ class Future < EventContext
 
     def await(timeout)
         
-        FutureWait.new().wait(self, timeout)
+        ::Quark.builtin.concurrent.FutureWait.new().wait(self, timeout)
 
         nil
     end
@@ -343,16 +347,16 @@ class Future < EventContext
     end
 
 
-end
+end; def self.Future; CLASS_Future; end
 
-class FutureWait < Object
+class CLASS_FutureWait < Object
     attr_accessor :_lock, :_future
 
     
     def initialize()
         
         self.__init_fields__
-        (self)._lock = .new()
+        (self)._lock = ::Quark..new()
         (self)._future = nil
 
         nil
@@ -400,7 +404,7 @@ class FutureWait < Object
     def self.waitFor(future, timeout)
         
         if (false)
-            w = FutureWait.new()
+            w = ::Quark.builtin.concurrent.FutureWait.new()
             w.wait(future, timeout)
             if (!(future.isFinished()))
                 nil
@@ -453,16 +457,16 @@ class FutureWait < Object
     end
 
 
-end
+end; def self.FutureWait; CLASS_FutureWait; end
 
-class Queue < Object
+class CLASS_Queue < Object
     attr_accessor :items, :head, :tail
 
     
     def initialize()
         
         self.__init_fields__
-        (self).items = DatawireQuarkCore::List.new()
+        (self).items = ::Quark.DatawireQuarkCore::List.new()
         (self).head = 0
         (self).tail = 0
 
@@ -557,16 +561,16 @@ class Queue < Object
     end
 
 
-end
+end; def self.Queue; CLASS_Queue; end
 
-class CollectorExecutor < Object
+class CLASS_CollectorExecutor < Object
     attr_accessor :events, :collector
 
     
     def initialize(collector)
         
         self.__init_fields__
-        (self).events = Queue.new()
+        (self).events = ::Quark.builtin.concurrent.Queue.new()
         (self).collector = collector
 
         nil
@@ -579,7 +583,7 @@ class CollectorExecutor < Object
         
         (self).events = (self).collector._swap((self).events)
         if (((self).events.size()) > (0))
-            Context.runtime().schedule(self, 0.0)
+            builtin::concurrent::Context.runtime().schedule(self, 0.0)
         end
 
         nil
@@ -588,13 +592,13 @@ class CollectorExecutor < Object
     def onExecute(runtime)
         
         next = (self).events.get()
-        old = Context.current()
+        old = builtin::concurrent::Context.current()
         while ((next) != (nil)) do
-            Context.swap(next.getContext().getContext())
+            builtin::concurrent::Context.swap(next.getContext().getContext())
             next.fireEvent()
             next = (self).events.get()
         end
-        Context.swap(old)
+        builtin::concurrent::Context.swap(old)
         (self).collector._poll()
 
         nil
@@ -642,18 +646,18 @@ class CollectorExecutor < Object
     end
 
 
-end
+end; def self.CollectorExecutor; CLASS_CollectorExecutor; end
 
-class Collector < Object
+class CLASS_Collector < Object
     attr_accessor :lock, :pending, :executor, :idle
 
     
     def initialize()
         
         self.__init_fields__
-        (self).lock = .new()
-        (self).pending = Queue.new()
-        (self).executor = CollectorExecutor.new(self)
+        (self).lock = ::Quark..new()
+        (self).pending = ::Quark.builtin.concurrent.Queue.new()
+        (self).executor = ::Quark.builtin.concurrent.CollectorExecutor.new(self)
         (self).idle = true
 
         nil
@@ -749,9 +753,9 @@ class Collector < Object
     end
 
 
-end
+end; def self.Collector; CLASS_Collector; end
 
-class TimeoutListener < Object
+class CLASS_TimeoutListener < Object
     attr_accessor 
 
     
@@ -777,9 +781,9 @@ class TimeoutListener < Object
     end
 
 
-end
+end; def self.TimeoutListener; CLASS_TimeoutListener; end
 
-class TimeoutExpiry < Object
+class CLASS_TimeoutExpiry < Object
     attr_accessor :timeout, :listener
 
     
@@ -851,9 +855,9 @@ class TimeoutExpiry < Object
     end
 
 
-end
+end; def self.TimeoutExpiry; CLASS_TimeoutExpiry; end
 
-class Timeout < EventContext
+class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
     attr_accessor :timeout, :lock, :listener
 
     
@@ -862,7 +866,7 @@ class Timeout < EventContext
         super()
         (self).timeout = timeout
         (self).listener = nil
-        (self).lock = .new()
+        (self).lock = ::Quark..new()
 
         nil
     end
@@ -874,7 +878,7 @@ class Timeout < EventContext
         
         (self).listener = listener
         delay = (self).timeout
-        Context.runtime().schedule(self, delay)
+        builtin::concurrent::Context.runtime().schedule(self, delay)
 
         nil
     end
@@ -892,7 +896,7 @@ class Timeout < EventContext
         
         (self).lock.acquire()
         if (((self).listener) != (nil))
-            ((self)._context).collector.put(TimeoutExpiry.new(self, (self).listener))
+            ((self)._context).collector.put(::Quark.builtin.concurrent.TimeoutExpiry.new(self, (self).listener))
             (self).listener = nil
         end
         (self).lock.release()
@@ -955,9 +959,9 @@ class Timeout < EventContext
     end
 
 
-end
+end; def self.Timeout; CLASS_Timeout; end
 
-class TLSContextInitializer < Object
+class CLASS_TLSContextInitializer < Object
     attr_accessor 
 
     
@@ -972,7 +976,7 @@ class TLSContextInitializer < Object
     
     def getValue()
         
-        return Context.new(Context.global())
+        return ::Quark.builtin.concurrent.Context.new(builtin::concurrent::Context.global())
 
         nil
     end
@@ -1005,9 +1009,9 @@ class TLSContextInitializer < Object
     end
 
 
-end
+end; def self.TLSContextInitializer; CLASS_TLSContextInitializer; end
 
-class Context < Object
+class CLASS_Context < Object
     attr_accessor :_parent, :_runtime, :collector
 
     
@@ -1017,7 +1021,7 @@ class Context < Object
         (self)._parent = parent
         if ((parent) == (nil))
             (self)._runtime = 
-            (self).collector = Collector.new()
+            (self).collector = ::Quark.builtin.concurrent.Collector.new()
         else
             (self)._runtime = (parent)._runtime
             (self).collector = (parent).collector
@@ -1031,28 +1035,28 @@ class Context < Object
     
     def self.current()
         
-        return Context._current.getValue()
+        return builtin::concurrent::Context._current.getValue()
 
         nil
     end
 
     def self.global()
         
-        return Context._global
+        return builtin::concurrent::Context._global
 
         nil
     end
 
     def self.runtime()
         
-        return (Context.current())._runtime
+        return (builtin::concurrent::Context.current())._runtime
 
         nil
     end
 
     def self.swap(c)
         
-        Context._current.setValue(c)
+        builtin::concurrent::Context._current.setValue(c)
 
         nil
     end
@@ -1067,10 +1071,10 @@ class Context < Object
     def _getField(name)
         
         if ((name) == ("_global"))
-            return Context._global
+            return builtin::concurrent::Context._global
         end
         if ((name) == ("_current"))
-            return Context._current
+            return builtin::concurrent::Context._current
         end
         if ((name) == ("_parent"))
             return (self)._parent
@@ -1089,10 +1093,10 @@ class Context < Object
     def _setField(name, value)
         
         if ((name) == ("_global"))
-            Context._global = value
+            builtin::concurrent::Context._global = value
         end
         if ((name) == ("_current"))
-            Context._current = value
+            builtin::concurrent::Context._current = value
         end
         if ((name) == ("_parent"))
             (self)._parent = value
@@ -1118,4 +1122,7 @@ class Context < Object
     end
 
 
-end
+end; def self.Context; CLASS_Context; end
+end # module MODULE_concurrent
+end # module MODULE_builtin
+end # module Quark

@@ -1,3 +1,3 @@
-require "./box_lib.rb" 
+require_relative "box_lib.rb"
 
-Functions.main
+Quark.box_lib.main

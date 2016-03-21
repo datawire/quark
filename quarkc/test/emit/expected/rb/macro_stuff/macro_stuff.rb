@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Macro < Object
+def self.macro_stuff; MODULE_macro_stuff; end
+module MODULE_macro_stuff
+class CLASS_Macro < Object
     attr_accessor 
 
     
@@ -14,8 +17,8 @@ class Macro < Object
     
     def test()
         
-        m1 = Macro.new()
-        m2 = Macro.new()
+        m1 = ::Quark.macro_stuff.Macro.new()
+        m2 = ::Quark.macro_stuff.Macro.new()
         m3 = m1
         m4 = m1
         m5 = m2
@@ -56,4 +59,6 @@ class Macro < Object
     end
 
 
-end
+end; def self.Macro; CLASS_Macro; end
+end # module MODULE_macro_stuff
+end # module Quark

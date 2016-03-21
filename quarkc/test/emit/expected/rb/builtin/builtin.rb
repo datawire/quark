@@ -1,125 +1,111 @@
+module Quark
 require "datawire-quark-core"
-require "./reflect"
-require "./behaviors"
-require "./concurrent"
-require "../builtin_md"
+def self.builtin; MODULE_builtin; end
+module MODULE_builtin
+# require_relatve "builtin/reflect.rb"
+# require_relatve "builtin/concurrent.rb"
+# require_relatve "builtin/behaviors.rb"
+# require_relatve "builtin_md.rb"
 
-
-class Functions < Object
+def self.toJSON(obj, cls)
     
-
-    
-
-    
-    def self.toJSON(obj, cls)
-        
-        result = DatawireQuarkCore::JSONObject.new
-        if ((obj) == (nil))
-            result.setNull()
-            return result
+    result = DatawireQuarkCore::JSONObject.new
+    if ((obj) == (nil))
+        result.setNull()
+        return result
+    end
+    if ((cls) == (nil))
+        cls = builtin::reflect::QuarkClass.get(DatawireQuarkCore._getClass(obj))
+    end
+    idx = 0
+    if (((cls).name) == ("builtin.String"))
+        result.setString(obj)
+        return result
+    end
+    if (((((((cls).name) == ("builtin.byte")) || (((cls).name) == ("builtin.short"))) || (((cls).name) == ("builtin.int"))) || (((cls).name) == ("builtin.long"))) || (((cls).name) == ("builtin.float")))
+        result.setNumber(obj)
+        return result
+    end
+    if (((cls).name) == ("builtin.List"))
+        result.setList()
+        list = obj
+        while ((idx) < ((list).size)) do
+            result.setListItem(idx, ::Quark.builtin.toJSON((list)[idx], nil))
+            idx = (idx) + (1)
         end
-        if ((cls) == (nil))
-            cls = reflect::QuarkClass.get(DatawireQuarkCore._getClass(obj))
+        return result
+    end
+    if (((cls).name) == ("builtin.Map"))
+        result.setObject()
+        map = obj
+        return result
+    end
+    (result).setObjectItem(("$class"), (DatawireQuarkCore::JSONObject.new.setString((cls).id)))
+    fields = cls.getFields()
+    while ((idx) < ((fields).size)) do
+        fieldName = ((fields)[idx]).name
+        if (!((fieldName).start_with?("_")))
+            (result).setObjectItem((fieldName), (::Quark.builtin.toJSON((obj)._getField(fieldName), (fields)[idx].getType())))
         end
-        idx = 0
+        idx = (idx) + (1)
+    end
+    return result
+
+
+    nil
+end
+
+def self.fromJSON(cls, result, json)
+    
+    if (((json) == (nil)) || (json.isNull()))
+        return nil
+    end
+    idx = 0
+    if ((result) == (nil))
         if (((cls).name) == ("builtin.String"))
-            result.setString(obj)
-            return result
+            s = json.getString()
+            return s
         end
-        if (((((((cls).name) == ("builtin.byte")) || (((cls).name) == ("builtin.short"))) || (((cls).name) == ("builtin.int"))) || (((cls).name) == ("builtin.long"))) || (((cls).name) == ("builtin.float")))
-            result.setNumber(obj)
-            return result
+        if (((cls).name) == ("builtin.float"))
+            flt = json.getNumber()
+            return flt
         end
-        if (((cls).name) == ("builtin.List"))
-            result.setList()
-            list = obj
-            while ((idx) < ((list).size)) do
-                result.setListItem(idx, Functions.toJSON((list)[idx], nil))
-                idx = (idx) + (1)
-            end
-            return result
+        if (((cls).name) == ("builtin.int"))
+            i = (json).getNumber.round
+            return i
         end
-        if (((cls).name) == ("builtin.Map"))
-            result.setObject()
-            map = obj
-            return result
+        if (((cls).name) == ("builtin.bool"))
+            b = json.getBool()
+            return b
         end
-        (result).setObjectItem(("$class"), (DatawireQuarkCore::JSONObject.new.setString((cls).id)))
-        fields = cls.getFields()
-        while ((idx) < ((fields).size)) do
-            fieldName = ((fields)[idx]).name
-            if (!((fieldName).start_with?("_")))
-                (result).setObjectItem((fieldName), (Functions.toJSON((obj)._getField(fieldName), (fields)[idx].getType())))
-            end
+        result = cls.construct(DatawireQuarkCore::List.new([]))
+    end
+    if (((cls).name) == ("builtin.List"))
+        list = result
+        while ((idx) < (json.size())) do
+            (list) << (::Quark.builtin.fromJSON((cls.getParameters())[0], nil, json.getListItem(idx)))
             idx = (idx) + (1)
         end
-        return result
-
-        nil
+        return list
     end
+    fields = cls.getFields()
+    while ((idx) < ((fields).size)) do
+        f = (fields)[idx]
+        idx = (idx) + (1)
+        if (((f).name).start_with?("_"))
+            next
+        end
+        if (!((json).getObjectItem((f).name).isNull()))
+            (result)._setField(((f).name), (::Quark.builtin.fromJSON(f.getType(), nil, (json).getObjectItem((f).name))))
+        end
+    end
+    return result
 
 
+    nil
 end
 
-class Functions < Object
-    
-
-    
-
-    
-    def self.fromJSON(cls, result, json)
-        
-        if (((json) == (nil)) || (json.isNull()))
-            return nil
-        end
-        idx = 0
-        if ((result) == (nil))
-            if (((cls).name) == ("builtin.String"))
-                s = json.getString()
-                return s
-            end
-            if (((cls).name) == ("builtin.float"))
-                flt = json.getNumber()
-                return flt
-            end
-            if (((cls).name) == ("builtin.int"))
-                i = (json).getNumber.round
-                return i
-            end
-            if (((cls).name) == ("builtin.bool"))
-                b = json.getBool()
-                return b
-            end
-            result = cls.construct(DatawireQuarkCore::List.new([]))
-        end
-        if (((cls).name) == ("builtin.List"))
-            list = result
-            while ((idx) < (json.size())) do
-                (list) << (Functions.fromJSON((cls.getParameters())[0], nil, json.getListItem(idx)))
-                idx = (idx) + (1)
-            end
-            return list
-        end
-        fields = cls.getFields()
-        while ((idx) < ((fields).size)) do
-            f = (fields)[idx]
-            idx = (idx) + (1)
-            if (((f).name).start_with?("_"))
-                next
-            end
-            if (!((json).getObjectItem((f).name).isNull()))
-                (result)._setField(((f).name), (Functions.fromJSON(f.getType(), nil, (json).getObjectItem((f).name))))
-            end
-        end
-        return result
-
-        nil
-    end
-
-
-end
-
-class Resolver < Object
+class CLASS_Resolver < Object
     attr_accessor 
 
     
@@ -145,9 +131,9 @@ class Resolver < Object
     end
 
 
-end
+end; def self.Resolver; CLASS_Resolver; end
 
-class ResponseHolder < Object
+class CLASS_ResponseHolder < Object
     attr_accessor :response, :failure
 
     
@@ -230,9 +216,9 @@ class ResponseHolder < Object
     end
 
 
-end
+end; def self.ResponseHolder; CLASS_ResponseHolder; end
 
-class Service < Object
+class CLASS_Service < Object
     attr_accessor 
 
     
@@ -265,7 +251,7 @@ class Service < Object
 
     def rpc(methodName, args)
         
-        rpc = behaviors.RPC.new(self, methodName)
+        rpc = ::Quark.builtin.behaviors.RPC.new(self, methodName)
         return rpc.call(args)
 
         nil
@@ -278,9 +264,9 @@ class Service < Object
     end
 
 
-end
+end; def self.Service; CLASS_Service; end
 
-class BaseService < Object
+class CLASS_BaseService < Object
     attr_accessor 
 
     
@@ -337,7 +323,7 @@ class BaseService < Object
 
     def rpc(methodName, args)
         
-        rpc = behaviors.RPC.new(self, methodName)
+        rpc = ::Quark.builtin.behaviors.RPC.new(self, methodName)
         return rpc.call(args)
 
         nil
@@ -350,9 +336,9 @@ class BaseService < Object
     end
 
 
-end
+end; def self.BaseService; CLASS_BaseService; end
 
-class ServiceInstance < Object
+class CLASS_ServiceInstance < Object
     attr_accessor :serviceName, :url, :breaker
 
     
@@ -361,7 +347,7 @@ class ServiceInstance < Object
         self.__init_fields__
         (self).serviceName = serviceName
         (self).url = url
-        (self).breaker = behaviors.CircuitBreaker.new((((("[") + (serviceName)) + (" at ")) + (url)) + ("]"), failureLimit, retestDelay)
+        (self).breaker = ::Quark.builtin.behaviors.CircuitBreaker.new((((("[") + (serviceName)) + (" at ")) + (url)) + ("]"), failureLimit, retestDelay)
 
         nil
     end
@@ -386,7 +372,7 @@ class ServiceInstance < Object
     def succeed(info)
         
         if (!(self.isActive()))
-            Client.logger.info(((("- CLOSE breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
+            builtin::Client.logger.info(((("- CLOSE breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
         end
         (self).breaker.succeed()
 
@@ -396,7 +382,7 @@ class ServiceInstance < Object
     def fail(info)
         
         if (!(self.isActive()))
-            Client.logger.warn(((("- OPEN breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
+            builtin::Client.logger.warn(((("- OPEN breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
         end
         (self).breaker.fail()
 
@@ -452,9 +438,9 @@ class ServiceInstance < Object
     end
 
 
-end
+end; def self.ServiceInstance; CLASS_ServiceInstance; end
 
-class DegenerateResolver < Object
+class CLASS_DegenerateResolver < Object
     attr_accessor 
 
     
@@ -502,9 +488,9 @@ class DegenerateResolver < Object
     end
 
 
-end
+end; def self.DegenerateResolver; CLASS_DegenerateResolver; end
 
-class Client < Object
+class CLASS_Client < Object
     attr_accessor :resolver, :serviceName, :_timeout, :_failureLimit, :_retestDelay, :mutex, :instanceMap, :counter
 
     
@@ -512,21 +498,21 @@ class Client < Object
         
         self.__init_fields__
         (self).serviceName = serviceName
-        (self).resolver = DegenerateResolver.new()
+        (self).resolver = ::Quark.builtin.DegenerateResolver.new()
         (self)._timeout = 0.0
-        (self).mutex = .new()
+        (self).mutex = ::Quark..new()
         (self).instanceMap = {}
         (self).counter = 0
         failureLimit = (self)._getField("failureLimit")
         if ((failureLimit) != (nil))
             (self)._failureLimit = failureLimit
         end
-        Client.logger.info((() + (" failureLimit ")) + (((self)._failureLimit).to_s))
+        builtin::Client.logger.info((() + (" failureLimit ")) + (((self)._failureLimit).to_s))
         retestDelay = (self)._getField("retestDelay")
         if ((retestDelay) != (nil))
             (self)._retestDelay = retestDelay
         end
-        Client.logger.info((() + (" retestDelay ")) + (repr((self)._retestDelay).to_s))
+        builtin::Client.logger.info((() + (" retestDelay ")) + (((self)._retestDelay).to_s))
 
         nil
     end
@@ -557,17 +543,17 @@ class Client < Object
             url = (urls)[idx]
             instance = ((self).instanceMap)[url]
             if ((instance) == (nil))
-                instance = ServiceInstance.new((self).serviceName, url, @_failureLimit, @_retestDelay)
+                instance = ::Quark.builtin.ServiceInstance.new((self).serviceName, url, @_failureLimit, @_retestDelay)
                 ((self).instanceMap)[url] = (instance)
             end
             if (instance.isActive())
-                Client.logger.info(((((("- ") + ((self).serviceName)) + (" using instance ")) + (((idx) + (1)).to_s)) + (": ")) + (url))
+                builtin::Client.logger.info(((((("- ") + ((self).serviceName)) + (" using instance ")) + (((idx) + (1)).to_s)) + (": ")) + (url))
                 result = instance
                 break
             end
             idx = ((idx) + (1)) % ((urls).size)
             if ((idx) == (next))
-                Client.logger.info((("- ") + ((self).serviceName)) + (": no live instances! giving up."))
+                builtin::Client.logger.info((("- ") + ((self).serviceName)) + (": no live instances! giving up."))
                 break
             end
         end
@@ -608,7 +594,7 @@ class Client < Object
     def _getField(name)
         
         if ((name) == ("logger"))
-            return Client.logger
+            return builtin::Client.logger
         end
         if ((name) == ("resolver"))
             return (self).resolver
@@ -642,7 +628,7 @@ class Client < Object
     def _setField(name, value)
         
         if ((name) == ("logger"))
-            Client.logger = value
+            builtin::Client.logger = value
         end
         if ((name) == ("resolver"))
             (self).resolver = value
@@ -688,9 +674,9 @@ class Client < Object
     end
 
 
-end
+end; def self.Client; CLASS_Client; end
 
-class ServerResponder < Object
+class CLASS_ServerResponder < Object
     attr_accessor :request, :response
 
     
@@ -712,10 +698,10 @@ class ServerResponder < Object
         if ((error) != (nil))
             @response.setCode(404)
         else
-            (self).response.setBody(Functions.toJSON(result, nil).toString())
+            (self).response.setBody(::Quark.builtin.toJSON(result, nil).toString())
             (self).response.setCode(200)
         end
-        concurrent::Context.runtime().respond(@request, @response)
+        builtin::concurrent::Context.runtime().respond(@request, @response)
 
         nil
     end
@@ -762,9 +748,9 @@ class ServerResponder < Object
     end
 
 
-end
+end; def self.ServerResponder; CLASS_ServerResponder; end
 
-class Server < Object
+class CLASS_Server < Object
     attr_accessor :impl
 
     
@@ -786,20 +772,20 @@ class Server < Object
         if ((((envelope).getObjectItem("$method")) == (envelope.undefined())) || (((envelope).getObjectItem("rpc")) == (envelope.undefined())))
             response.setBody((("Failed to understand request.\n\n") + (body)) + ("\n"))
             response.setCode(400)
-            concurrent::Context.runtime().respond(request, response)
+            builtin::concurrent::Context.runtime().respond(request, response)
         else
             methodName = (envelope).getObjectItem("$method").getString()
             json = (envelope).getObjectItem("rpc")
-            method = reflect::QuarkClass.get(DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
+            method = builtin::reflect::QuarkClass.get(DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
             params = method.getParameters()
             args = DatawireQuarkCore::List.new([])
             idx = 0
             while ((idx) < ((params).size)) do
-                (args) << (Functions.fromJSON((params)[idx], nil, json.getListItem(idx)))
+                (args) << (::Quark.builtin.fromJSON((params)[idx], nil, json.getListItem(idx)))
                 idx = (idx) + (1)
             end
             result = method.invoke(@impl, args)
-            result.onFinished(ServerResponder.new(request, response))
+            result.onFinished(::Quark.builtin.ServerResponder.new(request, response))
         end
 
         nil
@@ -807,7 +793,7 @@ class Server < Object
 
     def onServletError(url, message)
         
-        concurrent::Context.runtime().fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message))
+        builtin::concurrent::Context.runtime().fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message))
 
         nil
     end
@@ -840,7 +826,7 @@ class Server < Object
 
     def serveHTTP(url)
         
-        concurrent::Context.runtime().serveHTTP(url, self)
+        builtin::concurrent::Context.runtime().serveHTTP(url, self)
 
         nil
     end
@@ -868,4 +854,6 @@ class Server < Object
     end
 
 
-end
+end; def self.Server; CLASS_Server; end
+end # module MODULE_builtin
+end # module Quark

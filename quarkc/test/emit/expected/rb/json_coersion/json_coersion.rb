@@ -1,3 +1,3 @@
-require "./json_coersion_lib.rb" 
+require_relative "json_coersion_lib.rb"
 
-Functions.main
+Quark.json_coersion_lib.main

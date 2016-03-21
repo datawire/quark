@@ -1,3 +1,3 @@
-require "./json_tests_lib.rb" 
+require_relative "json_tests_lib.rb"
 
-Functions.main
+Quark.json_tests_lib.main

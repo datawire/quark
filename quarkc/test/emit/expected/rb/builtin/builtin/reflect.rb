@@ -1,6 +1,10 @@
+module Quark
 require "datawire-quark-core"
-
-class QuarkClass < Object
+def self.builtin; MODULE_builtin; end
+module MODULE_builtin
+def self.reflect; MODULE_reflect; end
+module MODULE_reflect
+class CLASS_QuarkClass < Object
     attr_accessor :id, :name, :parameters, :fields, :methods
 
     
@@ -8,7 +12,7 @@ class QuarkClass < Object
         
         self.__init_fields__
         (self).id = id
-        (QuarkClass.classes)[id] = (self)
+        (builtin::reflect::QuarkClass.classes)[id] = (self)
         (self).name = id
 
         nil
@@ -19,7 +23,7 @@ class QuarkClass < Object
     
     def self.get(id)
         
-        return (QuarkClass.classes)[id]
+        return (builtin::reflect::QuarkClass.classes)[id]
 
         nil
     end
@@ -43,7 +47,7 @@ class QuarkClass < Object
         result = DatawireQuarkCore::List.new([])
         idx = 0
         while ((idx) < ((@parameters).size)) do
-            (result) << (QuarkClass.get((@parameters)[idx]))
+            (result) << (builtin::reflect::QuarkClass.get((@parameters)[idx]))
             idx = (idx) + (1)
         end
         return result
@@ -110,22 +114,22 @@ class QuarkClass < Object
     def _getField(name)
         
         if ((name) == ("classes"))
-            return QuarkClass.classes
+            return builtin::reflect::QuarkClass.classes
         end
         if ((name) == ("VOID"))
-            return QuarkClass.VOID
+            return builtin::reflect::QuarkClass.VOID
         end
         if ((name) == ("BOOL"))
-            return QuarkClass.BOOL
+            return builtin::reflect::QuarkClass.BOOL
         end
         if ((name) == ("INT"))
-            return QuarkClass.INT
+            return builtin::reflect::QuarkClass.INT
         end
         if ((name) == ("LONG"))
-            return QuarkClass.LONG
+            return builtin::reflect::QuarkClass.LONG
         end
         if ((name) == ("STRING"))
-            return QuarkClass.STRING
+            return builtin::reflect::QuarkClass.STRING
         end
         if ((name) == ("id"))
             return (self).id
@@ -150,22 +154,22 @@ class QuarkClass < Object
     def _setField(name, value)
         
         if ((name) == ("classes"))
-            QuarkClass.classes = value
+            builtin::reflect::QuarkClass.classes = value
         end
         if ((name) == ("VOID"))
-            QuarkClass.VOID = value
+            builtin::reflect::QuarkClass.VOID = value
         end
         if ((name) == ("BOOL"))
-            QuarkClass.BOOL = value
+            builtin::reflect::QuarkClass.BOOL = value
         end
         if ((name) == ("INT"))
-            QuarkClass.INT = value
+            builtin::reflect::QuarkClass.INT = value
         end
         if ((name) == ("LONG"))
-            QuarkClass.LONG = value
+            builtin::reflect::QuarkClass.LONG = value
         end
         if ((name) == ("STRING"))
-            QuarkClass.STRING = value
+            builtin::reflect::QuarkClass.STRING = value
         end
         if ((name) == ("id"))
             (self).id = value
@@ -199,9 +203,9 @@ class QuarkClass < Object
     end
 
 
-end
+end; def self.QuarkClass; CLASS_QuarkClass; end
 
-class Field < Object
+class CLASS_Field < Object
     attr_accessor :type, :name
 
     
@@ -219,7 +223,7 @@ class Field < Object
     
     def getType()
         
-        return QuarkClass.get(@type)
+        return builtin::reflect::QuarkClass.get(@type)
 
         nil
     end
@@ -273,9 +277,9 @@ class Field < Object
     end
 
 
-end
+end; def self.Field; CLASS_Field; end
 
-class Method < Object
+class CLASS_Method < Object
     attr_accessor :type, :name, :parameters
 
     
@@ -294,7 +298,7 @@ class Method < Object
     
     def getType()
         
-        return QuarkClass.get(@type)
+        return builtin::reflect::QuarkClass.get(@type)
 
         nil
     end
@@ -311,7 +315,7 @@ class Method < Object
         result = DatawireQuarkCore::List.new([])
         idx = 0
         while ((idx) < ((@parameters).size)) do
-            (result) << (QuarkClass.get((@parameters)[idx]))
+            (result) << (builtin::reflect::QuarkClass.get((@parameters)[idx]))
             idx = (idx) + (1)
         end
         return result
@@ -336,4 +340,7 @@ class Method < Object
     end
 
 
-end
+end; def self.Method; CLASS_Method; end
+end # module MODULE_reflect
+end # module MODULE_builtin
+end # module Quark

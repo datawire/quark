@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Matrix < Object
+def self.matrix_lib; MODULE_matrix_lib; end
+module MODULE_matrix_lib
+class CLASS_Matrix < Object
     attr_accessor :width, :height, :columns
 
     
@@ -86,22 +89,16 @@ class Matrix < Object
     end
 
 
+end; def self.Matrix; CLASS_Matrix; end
+
+def self.main()
+    
+    matrix = ::Quark.matrix_lib.Matrix.new(3, 3)
+    matrix.__set__(2, 2, 123)
+    DatawireQuarkCore.print(matrix.__get__(2, 2))
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        matrix = Matrix.new(3, 3)
-        matrix.__set__(2, 2, 123)
-        DatawireQuarkCore.print(matrix.__get__(2, 2))
-
-        nil
-    end
-
-
-end
+end # module MODULE_matrix_lib
+end # module Quark

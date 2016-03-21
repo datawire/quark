@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Test < Object
+def self.stuff_lib; MODULE_stuff_lib; end
+module MODULE_stuff_lib
+class CLASS_Test < Object
     attr_accessor 
 
     
@@ -14,7 +17,7 @@ class Test < Object
     
     def foo(t)
         
-        return Test.new()
+        return ::Quark.stuff_lib.Test.new()
 
         nil
     end
@@ -27,7 +30,7 @@ class Test < Object
         DatawireQuarkCore.print(z)
         hello = "hello"
         DatawireQuarkCore.print(hello)
-        t1 = Test.new()
+        t1 = ::Quark.stuff_lib.Test.new()
         t2 = t1.foo(t1)
         if ((t2) != (t1))
             DatawireQuarkCore.print("YAY!")
@@ -66,20 +69,14 @@ class Test < Object
     end
 
 
+end; def self.Test; CLASS_Test; end
+
+def self.main()
+    
+    ::Quark.stuff_lib.Test.new().test()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        Test.new().test()
-
-        nil
-    end
-
-
-end
+end # module MODULE_stuff_lib
+end # module Quark

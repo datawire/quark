@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../defaulted_methods_md"
+def self.pkg; MODULE_pkg; end
+module MODULE_pkg
+# require_relatve "builtin/reflect.rb"
+# require_relatve "defaulted_methods_md.rb"
 
-
-class A < Object
+class CLASS_A < Object
     attr_accessor 
 
     
@@ -37,9 +39,9 @@ class A < Object
     end
 
 
-end
+end; def self.A; CLASS_A; end
 
-class B < Object
+class CLASS_B < Object
     attr_accessor 
 
     
@@ -66,9 +68,9 @@ class B < Object
     end
 
 
-end
+end; def self.B; CLASS_B; end
 
-class C < Object
+class CLASS_C < Object
     attr_accessor 
 
     
@@ -95,9 +97,9 @@ class C < Object
     end
 
 
-end
+end; def self.C; CLASS_C; end
 
-class T1 < Object
+class CLASS_T1 < Object
     attr_accessor 
 
     
@@ -153,9 +155,9 @@ class T1 < Object
     end
 
 
-end
+end; def self.T1; CLASS_T1; end
 
-class T2 < Object
+class CLASS_T2 < Object
     attr_accessor 
 
     
@@ -211,9 +213,9 @@ class T2 < Object
     end
 
 
-end
+end; def self.T2; CLASS_T2; end
 
-class T3 < Object
+class CLASS_T3 < Object
     attr_accessor 
 
     
@@ -268,9 +270,9 @@ class T3 < Object
     end
 
 
-end
+end; def self.T3; CLASS_T3; end
 
-class T4 < Object
+class CLASS_T4 < Object
     attr_accessor 
 
     
@@ -326,9 +328,9 @@ class T4 < Object
     end
 
 
-end
+end; def self.T4; CLASS_T4; end
 
-class T5 < Object
+class CLASS_T5 < Object
     attr_accessor 
 
     
@@ -384,38 +386,32 @@ class T5 < Object
     end
 
 
+end; def self.T5; CLASS_T5; end
+
+def self.main()
+    
+    t1 = ::Quark.pkg.T1.new()
+    t1.foo()
+    t1.bar()
+    DatawireQuarkCore.print("===")
+    t2 = ::Quark.pkg.T2.new()
+    t2.foo()
+    t2.bar()
+    DatawireQuarkCore.print("===")
+    t3 = ::Quark.pkg.T3.new()
+    t3.foo()
+    t3.bar()
+    DatawireQuarkCore.print("===")
+    t4 = ::Quark.pkg.T4.new()
+    t4.foo()
+    t4.bar()
+    DatawireQuarkCore.print("===")
+    t5 = ::Quark.pkg.T5.new()
+    t5.foo()
+    t5.bar()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        t1 = T1.new()
-        t1.foo()
-        t1.bar()
-        DatawireQuarkCore.print("===")
-        t2 = T2.new()
-        t2.foo()
-        t2.bar()
-        DatawireQuarkCore.print("===")
-        t3 = T3.new()
-        t3.foo()
-        t3.bar()
-        DatawireQuarkCore.print("===")
-        t4 = T4.new()
-        t4.foo()
-        t4.bar()
-        DatawireQuarkCore.print("===")
-        t5 = T5.new()
-        t5.foo()
-        t5.bar()
-
-        nil
-    end
-
-
-end
+end # module MODULE_pkg
+end # module Quark

@@ -1,18 +1,14 @@
+module Quark
 require "datawire-quark-core"
-
-class Functions < Object
+def self.fancyprim; MODULE_fancyprim; end
+module MODULE_fancyprim
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        s = nil
-        DatawireQuarkCore.print(s)
-
-        nil
-    end
+    s = nil
+    DatawireQuarkCore.print(s)
 
 
+    nil
 end
+end # module MODULE_fancyprim
+end # module Quark

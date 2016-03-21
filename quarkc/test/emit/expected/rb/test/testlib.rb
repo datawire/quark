@@ -1,33 +1,21 @@
+module Quark
 require "datawire-quark-core"
-
-class Functions < Object
+def self.testlib; MODULE_testlib; end
+module MODULE_testlib
+def self.test()
     
-
-    
-
-    
-    def self.test()
-        
-        return "testlib"
-
-        nil
-    end
+    return "testlib"
 
 
+    nil
 end
 
-class Functions < Object
+def self.foo()
     
-
-    
-
-    
-    def self.foo()
-        
-        return "asdf"
-
-        nil
-    end
+    return "asdf"
 
 
+    nil
 end
+end # module MODULE_testlib
+end # module Quark

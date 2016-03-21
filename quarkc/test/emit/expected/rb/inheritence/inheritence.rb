@@ -1,3 +1,3 @@
-require "./inheritence_lib.rb" 
+require_relative "inheritence_lib.rb"
 
-Functions.main
+Quark.inheritence_lib.main

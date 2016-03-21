@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../parameterized_defaults_md"
+def self.pkg; MODULE_pkg; end
+module MODULE_pkg
+# require_relatve "builtin/reflect.rb"
+# require_relatve "parameterized_defaults_md.rb"
 
-
-class Foo < Object
+class CLASS_Foo < Object
     attr_accessor 
 
     
@@ -36,9 +38,9 @@ class Foo < Object
     end
 
 
-end
+end; def self.Foo; CLASS_Foo; end
 
-class StringFoo < Object
+class CLASS_StringFoo < Object
     attr_accessor 
 
     
@@ -93,9 +95,9 @@ class StringFoo < Object
     end
 
 
-end
+end; def self.StringFoo; CLASS_StringFoo; end
 
-class Box < Object
+class CLASS_Box < Object
     attr_accessor :contents
 
     
@@ -145,9 +147,9 @@ class Box < Object
     end
 
 
-end
+end; def self.Box; CLASS_Box; end
 
-class StringBox < Box
+class CLASS_StringBox < ::Quark.pkg.Box
     attr_accessor 
 
     
@@ -194,23 +196,17 @@ class StringBox < Box
     end
 
 
+end; def self.StringBox; CLASS_StringBox; end
+
+def self.main()
+    
+    box = ::Quark.pkg.StringBox.new("asdf")
+    DatawireQuarkCore.print((box).contents)
+    foo = ::Quark.pkg.StringFoo.new()
+    DatawireQuarkCore.print(foo.foo())
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        box = StringBox.new("asdf")
-        DatawireQuarkCore.print((box).contents)
-        foo = StringFoo.new()
-        DatawireQuarkCore.print(foo.foo())
-
-        nil
-    end
-
-
-end
+end # module MODULE_pkg
+end # module Quark

@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../use_class_before_def_md"
+def self.pkg; MODULE_pkg; end
+module MODULE_pkg
+# require_relatve "builtin/reflect.rb"
+# require_relatve "use_class_before_def_md.rb"
 
-
-class Bar < Object
+class CLASS_Bar < Object
     attr_accessor 
 
     
@@ -18,7 +20,7 @@ class Bar < Object
     
     def go()
         
-        foo = Foo.new()
+        foo = ::Quark.pkg.Foo.new()
         (foo).name = "bob"
         DatawireQuarkCore.print((foo).name)
 
@@ -53,9 +55,9 @@ class Bar < Object
     end
 
 
-end
+end; def self.Bar; CLASS_Bar; end
 
-class Foo < Object
+class CLASS_Foo < Object
     attr_accessor :name
 
     
@@ -103,21 +105,15 @@ class Foo < Object
     end
 
 
+end; def self.Foo; CLASS_Foo; end
+
+def self.main()
+    
+    bar = ::Quark.pkg.Bar.new()
+    bar.go()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        bar = Bar.new()
-        bar.go()
-
-        nil
-    end
-
-
-end
+end # module MODULE_pkg
+end # module Quark

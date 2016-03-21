@@ -129,6 +129,12 @@ module DatawireQuarkCore
       self
     end
 
+    def keys
+      return undefined unless isObject
+
+      List.new value.keys
+    end
+
     # List
 
     def isList

@@ -1,3 +1,3 @@
-require "./map_lib.rb" 
+require_relative "map_lib.rb"
 
-Functions.main
+Quark.map_lib.main

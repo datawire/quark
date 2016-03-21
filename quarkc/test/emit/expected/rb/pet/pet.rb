@@ -1,3 +1,3 @@
-require "./pets.rb" 
+require_relative "pets.rb"
 
-Functions.main
+Quark.pets.main

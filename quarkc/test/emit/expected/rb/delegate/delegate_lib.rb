@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Message < Object
+def self.delegate_lib; MODULE_delegate_lib; end
+module MODULE_delegate_lib
+class CLASS_Message < Object
     attr_accessor 
 
     
@@ -47,9 +50,9 @@ class Message < Object
     end
 
 
-end
+end; def self.Message; CLASS_Message; end
 
-class Ping < Message
+class CLASS_Ping < ::Quark.delegate_lib.Message
     attr_accessor 
 
     
@@ -91,9 +94,9 @@ class Ping < Message
     end
 
 
-end
+end; def self.Ping; CLASS_Ping; end
 
-class Pong < Message
+class CLASS_Pong < ::Quark.delegate_lib.Message
     attr_accessor 
 
     
@@ -142,9 +145,9 @@ class Pong < Message
     end
 
 
-end
+end; def self.Pong; CLASS_Pong; end
 
-class Test < Object
+class CLASS_Test < Object
     attr_accessor 
 
     
@@ -176,7 +179,7 @@ class Test < Object
         
         DatawireQuarkCore.print(msg.encode())
         if ((name) == ("hello"))
-            return Pong.new()
+            return ::Quark.delegate_lib.Pong.new()
         else
             return nil
         end
@@ -219,22 +222,16 @@ class Test < Object
     end
 
 
+end; def self.Test; CLASS_Test; end
+
+def self.main()
+    
+    t = ::Quark.delegate_lib.Test.new()
+    t.foo("one", "two", 3)
+    DatawireQuarkCore.print(t.hello(::Quark.delegate_lib.Ping.new()).toString())
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        t = Test.new()
-        t.foo("one", "two", 3)
-        DatawireQuarkCore.print(t.hello(Ping.new()).toString())
-
-        nil
-    end
-
-
-end
+end # module MODULE_delegate_lib
+end # module Quark

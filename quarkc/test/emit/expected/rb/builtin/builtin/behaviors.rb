@@ -1,11 +1,15 @@
+module Quark
 require "datawire-quark-core"
-require "../../builtin"
-require "../../builtin"
-require "../../builtin"
-require "../../builtin_md"
+def self.builtin; MODULE_builtin; end
+module MODULE_builtin
+def self.behaviors; MODULE_behaviors; end
+module MODULE_behaviors
+# require_relatve "builtin.rb"
+# require_relatve "builtin/reflect.rb"
+# require_relatve "builtin/concurrent.rb"
+# require_relatve "builtin_md.rb"
 
-
-class RPC < Object
+class CLASS_RPC < Object
     attr_accessor :service, :returned, :timeout, :methodName, :instance
 
     
@@ -37,7 +41,7 @@ class RPC < Object
         (self).instance = (self).service.getInstance()
         if (((self).instance) != (nil))
             request = DatawireQuarkCore::HTTP::Request.new((self).instance.getURL())
-            json = Functions.builtin__toJSON(args, nil)
+            json = ::Quark.builtin.toJSON(args, nil)
             envelope = DatawireQuarkCore::JSONObject.new
             (envelope).setObjectItem(("$method"), (DatawireQuarkCore::JSONObject.new.setString((self).methodName)))
             (envelope).setObjectItem(("$context"), (DatawireQuarkCore::JSONObject.new.setString("TBD")))
@@ -45,7 +49,7 @@ class RPC < Object
             body = envelope.toString()
             request.setBody(body)
             request.setMethod("POST")
-            rpc = RPCRequest.new(args, self)
+            rpc = ::Quark.builtin.behaviors.RPCRequest.new(args, self)
             result = rpc.call(request)
         else
             result = @returned.construct(DatawireQuarkCore::List.new([]))
@@ -141,9 +145,9 @@ class RPC < Object
     end
 
 
-end
+end; def self.RPC; CLASS_RPC; end
 
-class RPCRequest < Object
+class CLASS_RPCRequest < Object
     attr_accessor :rpc, :retval, :args, :timeout
 
     
@@ -152,7 +156,7 @@ class RPCRequest < Object
         self.__init_fields__
         (self).retval = (rpc).returned.construct(DatawireQuarkCore::List.new([]))
         (self).args = args
-        (self).timeout = builtin.concurrent.Timeout.new((rpc).timeout)
+        (self).timeout = ::Quark.builtin.concurrent.Timeout.new((rpc).timeout)
         (self).rpc = rpc
 
         nil
@@ -189,7 +193,7 @@ class RPCRequest < Object
             (self).rpc.fail(info)
             return
         else
-            Functions.builtin__fromJSON(((self).rpc).returned, (self).retval, obj)
+            ::Quark.builtin.fromJSON(((self).rpc).returned, (self).retval, obj)
             (self).retval.finish(nil)
             (self).rpc.succeed("Success in the future...")
         end
@@ -282,9 +286,9 @@ class RPCRequest < Object
     end
 
 
-end
+end; def self.RPCRequest; CLASS_RPCRequest; end
 
-class CircuitBreaker < Object
+class CLASS_CircuitBreaker < Object
     attr_accessor :id, :failureLimit, :retestDelay, :active, :failureCount, :mutex
 
     
@@ -405,10 +409,13 @@ class CircuitBreaker < Object
         self.retestDelay = nil
         self.active = true
         self.failureCount = 0
-        self.mutex = .new()
+        self.mutex = ::Quark..new()
 
         nil
     end
 
 
-end
+end; def self.CircuitBreaker; CLASS_CircuitBreaker; end
+end # module MODULE_behaviors
+end # module MODULE_builtin
+end # module Quark

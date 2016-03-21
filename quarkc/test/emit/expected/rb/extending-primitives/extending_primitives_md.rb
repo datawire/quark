@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../pkg"
+def self.extending_primitives_md; MODULE_extending_primitives_md; end
+module MODULE_extending_primitives_md
+# require_relatve "builtin/reflect.rb"
+require_relative "pkg.rb"
 
-
-class Pkg_C_event1_Method < builtin.reflect.Method
+class CLASS_pkg_C_event1_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -54,14 +56,9 @@ class Pkg_C_event1_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_C_event1_Method()
-    return Pkg_C_event1_Method
+end; def self.pkg_C_event1_Method; CLASS_pkg_C_event1_Method; end
 
-    nil
-end
-
-class Pkg_C < builtin.reflect.QuarkClass
+class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -71,7 +68,7 @@ class Pkg_C < builtin.reflect.QuarkClass
         (self).name = "pkg.C"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_C_event1_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.extending_primitives_md.pkg_C_event1_Method.new()])
 
         nil
     end
@@ -81,7 +78,7 @@ class Pkg_C < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.C.new()
+        return ::Quark.pkg.C.new()
 
         nil
     end
@@ -114,15 +111,9 @@ class Pkg_C < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_C()
-    return Pkg_C
+end; def self.pkg_C; CLASS_pkg_C; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -163,4 +154,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_extending_primitives_md
+end # module Quark

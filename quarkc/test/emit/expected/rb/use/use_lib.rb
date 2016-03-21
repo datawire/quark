@@ -1,39 +1,28 @@
+module Quark
 require "datawire-quark-core"
-require "../testlib"
-require "../t2"
+def self.use_lib; MODULE_use_lib; end
+module MODULE_use_lib
+require_relative "testlib.rb"
+require_relative "t2.rb"
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        DatawireQuarkCore.print(Functions.testlib__test())
-        DatawireQuarkCore.print(Functions.testlib__foo())
-        DatawireQuarkCore.print(Functions.testlib__foo())
-        Functions.t2__test()
-        DatawireQuarkCore.print(Functions.qux())
-
-        nil
-    end
+    DatawireQuarkCore.print(::Quark.testlib.test())
+    DatawireQuarkCore.print(::Quark.testlib.foo())
+    DatawireQuarkCore.print(::Quark.testlib.foo())
+    ::Quark.t2.test()
+    DatawireQuarkCore.print(::Quark.use_lib.qux())
 
 
+    nil
 end
 
-class Functions < Object
+def self.qux()
     
-
-    
-
-    
-    def self.qux()
-        
-        return "moo"
-
-        nil
-    end
+    return "moo"
 
 
+    nil
 end
+end # module MODULE_use_lib
+end # module Quark

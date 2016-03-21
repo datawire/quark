@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../pkg"
+def self.parameterized_defaults_md; MODULE_parameterized_defaults_md; end
+module MODULE_parameterized_defaults_md
+# require_relatve "builtin/reflect.rb"
+require_relative "pkg.rb"
 
-
-class Pkg_Foo_builtin_Object__foo_Method < builtin.reflect.Method
+class CLASS_pkg_Foo_builtin_Object__foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -53,14 +55,9 @@ class Pkg_Foo_builtin_Object__foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Foo_builtin_Object__foo_Method()
-    return Pkg_Foo_builtin_Object__foo_Method
+end; def self.pkg_Foo_builtin_Object__foo_Method; CLASS_pkg_Foo_builtin_Object__foo_Method; end
 
-    nil
-end
-
-class Pkg_Foo_builtin_Object__get_Method < builtin.reflect.Method
+class CLASS_pkg_Foo_builtin_Object__get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -110,14 +107,9 @@ class Pkg_Foo_builtin_Object__get_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_Foo_builtin_Object__get_Method()
-    return Pkg_Foo_builtin_Object__get_Method
+end; def self.pkg_Foo_builtin_Object__get_Method; CLASS_pkg_Foo_builtin_Object__get_Method; end
 
-    nil
-end
-
-class Pkg_Foo_builtin_Object_ < builtin.reflect.QuarkClass
+class CLASS_pkg_Foo_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -127,7 +119,7 @@ class Pkg_Foo_builtin_Object_ < builtin.reflect.QuarkClass
         (self).name = "pkg.Foo"
         (self).parameters = DatawireQuarkCore::List.new(["builtin.Object"])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_Foo_builtin_Object__foo_Method.new(), pkg_Foo_builtin_Object__get_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.parameterized_defaults_md.pkg_Foo_builtin_Object__foo_Method.new(), ::Quark.parameterized_defaults_md.pkg_Foo_builtin_Object__get_Method.new()])
 
         nil
     end
@@ -170,15 +162,9 @@ class Pkg_Foo_builtin_Object_ < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_Foo_builtin_Object_()
-    return Pkg_Foo_builtin_Object_
+end; def self.pkg_Foo_builtin_Object_; CLASS_pkg_Foo_builtin_Object_; end
 
-    nil
-end
-
-
-class Pkg_StringFoo_get_Method < builtin.reflect.Method
+class CLASS_pkg_StringFoo_get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -228,14 +214,9 @@ class Pkg_StringFoo_get_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_StringFoo_get_Method()
-    return Pkg_StringFoo_get_Method
+end; def self.pkg_StringFoo_get_Method; CLASS_pkg_StringFoo_get_Method; end
 
-    nil
-end
-
-class Pkg_StringFoo_foo_Method < builtin.reflect.Method
+class CLASS_pkg_StringFoo_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -285,14 +266,9 @@ class Pkg_StringFoo_foo_Method < builtin.reflect.Method
     end
 
 
-end
-def pkg_StringFoo_foo_Method()
-    return Pkg_StringFoo_foo_Method
+end; def self.pkg_StringFoo_foo_Method; CLASS_pkg_StringFoo_foo_Method; end
 
-    nil
-end
-
-class Pkg_StringFoo < builtin.reflect.QuarkClass
+class CLASS_pkg_StringFoo < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -302,7 +278,7 @@ class Pkg_StringFoo < builtin.reflect.QuarkClass
         (self).name = "pkg.StringFoo"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pkg_StringFoo_get_Method.new(), pkg_StringFoo_foo_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.parameterized_defaults_md.pkg_StringFoo_get_Method.new(), ::Quark.parameterized_defaults_md.pkg_StringFoo_foo_Method.new()])
 
         nil
     end
@@ -312,7 +288,7 @@ class Pkg_StringFoo < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.StringFoo.new()
+        return ::Quark.pkg.StringFoo.new()
 
         nil
     end
@@ -345,15 +321,9 @@ class Pkg_StringFoo < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_StringFoo()
-    return Pkg_StringFoo
+end; def self.pkg_StringFoo; CLASS_pkg_StringFoo; end
 
-    nil
-end
-
-
-class Pkg_Box_builtin_String_ < builtin.reflect.QuarkClass
+class CLASS_pkg_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -362,7 +332,7 @@ class Pkg_Box_builtin_String_ < builtin.reflect.QuarkClass
         super("pkg.Box<builtin.String>")
         (self).name = "pkg.Box"
         (self).parameters = DatawireQuarkCore::List.new(["builtin.String"])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "contents")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "contents")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -373,7 +343,7 @@ class Pkg_Box_builtin_String_ < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.Box.new((args)[0])
+        return ::Quark.pkg.Box.new((args)[0])
 
         nil
     end
@@ -406,15 +376,9 @@ class Pkg_Box_builtin_String_ < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_Box_builtin_String_()
-    return Pkg_Box_builtin_String_
+end; def self.pkg_Box_builtin_String_; CLASS_pkg_Box_builtin_String_; end
 
-    nil
-end
-
-
-class Pkg_StringBox < builtin.reflect.QuarkClass
+class CLASS_pkg_StringBox < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -423,7 +387,7 @@ class Pkg_StringBox < builtin.reflect.QuarkClass
         super("pkg.StringBox")
         (self).name = "pkg.StringBox"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "contents")])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "contents")])
         (self).methods = DatawireQuarkCore::List.new([])
 
         nil
@@ -434,7 +398,7 @@ class Pkg_StringBox < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pkg.StringBox.new((args)[0])
+        return ::Quark.pkg.StringBox.new((args)[0])
 
         nil
     end
@@ -467,15 +431,9 @@ class Pkg_StringBox < builtin.reflect.QuarkClass
     end
 
 
-end
-def pkg_StringBox()
-    return Pkg_StringBox
+end; def self.pkg_StringBox; CLASS_pkg_StringBox; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -516,4 +474,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_parameterized_defaults_md
+end # module Quark

@@ -1,3 +1,3 @@
-require "./numbers_lib.rb" 
+require_relative "numbers_lib.rb"
 
-Functions.main
+Quark.numbers_lib.main

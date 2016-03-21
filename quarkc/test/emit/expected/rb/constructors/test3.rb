@@ -1,6 +1,8 @@
+module Quark
 require "datawire-quark-core"
-
-class Box < Object
+def self.test3; MODULE_test3; end
+module MODULE_test3
+class CLASS_Box < Object
     attr_accessor :contents
 
     
@@ -57,24 +59,18 @@ class Box < Object
     end
 
 
+end; def self.Box; CLASS_Box; end
+
+def self.go()
+    
+    box = ::Quark.test3.Box.new("Hello World!!!")
+    DatawireQuarkCore.print(box.get())
+    DatawireQuarkCore.print((box).contents)
+    DatawireQuarkCore.print(::Quark.test3.Box.new("Hello World!!!").get())
+    DatawireQuarkCore.print((::Quark.test3.Box.new("Hello World!!!")).contents)
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.go()
-        
-        box = Box.new("Hello World!!!")
-        DatawireQuarkCore.print(box.get())
-        DatawireQuarkCore.print((box).contents)
-        DatawireQuarkCore.print(Box.new("Hello World!!!").get())
-        DatawireQuarkCore.print((Box.new("Hello World!!!")).contents)
-
-        nil
-    end
-
-
-end
+end # module MODULE_test3
+end # module Quark

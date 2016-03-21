@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../pets"
+def self.pet_md; MODULE_pet_md; end
+module MODULE_pet_md
+# require_relatve "builtin/reflect.rb"
+require_relative "pets.rb"
 
-
-class Pets_Cat_greet_Method < builtin.reflect.Method
+class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -54,14 +56,9 @@ class Pets_Cat_greet_Method < builtin.reflect.Method
     end
 
 
-end
-def pets_Cat_greet_Method()
-    return Pets_Cat_greet_Method
+end; def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
 
-    nil
-end
-
-class Pets_Cat < builtin.reflect.QuarkClass
+class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -71,7 +68,7 @@ class Pets_Cat < builtin.reflect.QuarkClass
         (self).name = "pets.Cat"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pets_Cat_greet_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.pet_md.pets_Cat_greet_Method.new()])
 
         nil
     end
@@ -81,7 +78,7 @@ class Pets_Cat < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pets.Cat.new()
+        return ::Quark.pets.Cat.new()
 
         nil
     end
@@ -114,15 +111,9 @@ class Pets_Cat < builtin.reflect.QuarkClass
     end
 
 
-end
-def pets_Cat()
-    return Pets_Cat
+end; def self.pets_Cat; CLASS_pets_Cat; end
 
-    nil
-end
-
-
-class Pets_Dog_greet_Method < builtin.reflect.Method
+class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -173,14 +164,9 @@ class Pets_Dog_greet_Method < builtin.reflect.Method
     end
 
 
-end
-def pets_Dog_greet_Method()
-    return Pets_Dog_greet_Method
+end; def self.pets_Dog_greet_Method; CLASS_pets_Dog_greet_Method; end
 
-    nil
-end
-
-class Pets_Dog < builtin.reflect.QuarkClass
+class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -190,7 +176,7 @@ class Pets_Dog < builtin.reflect.QuarkClass
         (self).name = "pets.Dog"
         (self).parameters = DatawireQuarkCore::List.new([])
         (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([pets_Dog_greet_Method.new()])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.pet_md.pets_Dog_greet_Method.new()])
 
         nil
     end
@@ -200,7 +186,7 @@ class Pets_Dog < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return pets.Dog.new()
+        return ::Quark.pets.Dog.new()
 
         nil
     end
@@ -233,15 +219,9 @@ class Pets_Dog < builtin.reflect.QuarkClass
     end
 
 
-end
-def pets_Dog()
-    return Pets_Dog
+end; def self.pets_Dog; CLASS_pets_Dog; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -282,4 +262,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_pet_md
+end # module Quark

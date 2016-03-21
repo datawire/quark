@@ -1,45 +1,34 @@
+module Quark
 require "datawire-quark-core"
-class Functions < Object
+def self.factorial_lib; MODULE_factorial_lib; end
+module MODULE_factorial_lib
+def self.factorial(n)
     
-
-    
-
-    
-    def self.factorial(n)
-        
-        if ((n) == (0))
-            return 1
-        else
-            return (n) * (Functions.factorial((n) - (1)))
-        end
-
-        nil
+    if ((n) == (0))
+        return 1
+    else
+        return (n) * (::Quark.factorial_lib.factorial((n) - (1)))
     end
 
 
+    nil
 end
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        DatawireQuarkCore.print(Functions.factorial(1))
-        DatawireQuarkCore.print(Functions.factorial(2))
-        DatawireQuarkCore.print(Functions.factorial(3))
-        DatawireQuarkCore.print(Functions.factorial(4))
-        DatawireQuarkCore.print(Functions.factorial(5))
-        DatawireQuarkCore.print(Functions.factorial(6))
-        DatawireQuarkCore.print(Functions.factorial(7))
-        DatawireQuarkCore.print(Functions.factorial(8))
-        DatawireQuarkCore.print(Functions.factorial(9))
-        DatawireQuarkCore.print(Functions.factorial(10))
-
-        nil
-    end
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(1))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(2))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(3))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(4))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(5))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(6))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(7))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(8))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(9))
+    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(10))
 
 
+    nil
 end
+end # module MODULE_factorial_lib
+end # module Quark

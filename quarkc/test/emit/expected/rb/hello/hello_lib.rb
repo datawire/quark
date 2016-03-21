@@ -1,16 +1,13 @@
+module Quark
 require "datawire-quark-core"
-class Functions < Object
+def self.hello_lib; MODULE_hello_lib; end
+module MODULE_hello_lib
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        DatawireQuarkCore.print("Hello World")
-
-        nil
-    end
+    DatawireQuarkCore.print("Hello World")
 
 
+    nil
 end
+end # module MODULE_hello_lib
+end # module Quark

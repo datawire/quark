@@ -1,3 +1,3 @@
-require "./builtin_codec_lib.rb" 
+require_relative "builtin_codec_lib.rb"
 
-Functions.main
+Quark.builtin_codec_lib.main

@@ -1,3 +1,3 @@
-require "./factorial_lib.rb" 
+require_relative "factorial_lib.rb"
 
-Functions.main
+Quark.factorial_lib.main

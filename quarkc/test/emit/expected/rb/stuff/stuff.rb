@@ -1,3 +1,3 @@
-require "./stuff_lib.rb" 
+require_relative "stuff_lib.rb"
 
-Functions.main
+Quark.stuff_lib.main

@@ -1,3 +1,3 @@
-require "./super_lib.rb" 
+require_relative "super_lib.rb"
 
-Functions.main
+Quark.super_lib.main

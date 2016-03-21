@@ -1,21 +1,18 @@
+module Quark
 require "datawire-quark-core"
-require "../slack"
-require "../pkg"
+def self.pkg_slack_common; MODULE_pkg_slack_common; end
+module MODULE_pkg_slack_common
+require_relative "slack.rb"
+require_relative "pkg.rb"
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.main()
-        
-        cli = slack.Client.new(nil, "fake-token", pkg.Handler.new())
-        cli.onWSMessage(nil, "{\"type\": \"hello\"}")
-        cli.onWSMessage(nil, "{\"type\": \"message\", \"user\": \"uid-1\", \"channel\": \"chanel-1\"}")
-
-        nil
-    end
+    cli = ::Quark.slack.Client.new(nil, "fake-token", ::Quark.pkg.Handler.new())
+    cli.onWSMessage(nil, "{\"type\": \"hello\"}")
+    cli.onWSMessage(nil, "{\"type\": \"message\", \"user\": \"uid-1\", \"channel\": \"chanel-1\"}")
 
 
+    nil
 end
+end # module MODULE_pkg_slack_common
+end # module Quark

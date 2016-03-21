@@ -1,8 +1,10 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
+def self.fancy_primitive_md; MODULE_fancy_primitive_md; end
+module MODULE_fancy_primitive_md
+# require_relatve "builtin/reflect.rb"
 
-
-class Builtin_List_builtin_Object_ < builtin.reflect.QuarkClass
+class CLASS_builtin_List_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -22,7 +24,7 @@ class Builtin_List_builtin_Object_ < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return DatawireQuarkCore::List.new()
+        return ::Quark.DatawireQuarkCore::List.new()
 
         nil
     end
@@ -55,15 +57,9 @@ class Builtin_List_builtin_Object_ < builtin.reflect.QuarkClass
     end
 
 
-end
-def builtin_List_builtin_Object_()
-    return Builtin_List_builtin_Object_
+end; def self.builtin_List_builtin_Object_; CLASS_builtin_List_builtin_Object_; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -104,4 +100,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_fancy_primitive_md
+end # module Quark

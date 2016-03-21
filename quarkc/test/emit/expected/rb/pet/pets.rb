@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../pet_md"
+def self.pets; MODULE_pets; end
+module MODULE_pets
+# require_relatve "builtin/reflect.rb"
+# require_relatve "pet_md.rb"
 
-
-class Pet < Object
+class CLASS_Pet < Object
     attr_accessor 
 
     
@@ -29,9 +31,9 @@ class Pet < Object
     end
 
 
-end
+end; def self.Pet; CLASS_Pet; end
 
-class Cat < Pet
+class CLASS_Cat < ::Quark.pets.Pet
     attr_accessor 
 
     
@@ -80,9 +82,9 @@ class Cat < Pet
     end
 
 
-end
+end; def self.Cat; CLASS_Cat; end
 
-class Dog < Pet
+class CLASS_Dog < ::Quark.pets.Pet
     attr_accessor 
 
     
@@ -131,23 +133,17 @@ class Dog < Pet
     end
 
 
+end; def self.Dog; CLASS_Dog; end
+
+def self.main()
+    
+    evil = ::Quark.pets.Cat.new()
+    good = ::Quark.pets.Dog.new()
+    evil.greet()
+    good.greet()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        evil = Cat.new()
-        good = Dog.new()
-        evil.greet()
-        good.greet()
-
-        nil
-    end
-
-
-end
+end # module MODULE_pets
+end # module Quark

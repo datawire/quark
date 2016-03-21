@@ -1,91 +1,62 @@
+module Quark
 require "datawire-quark-core"
-class Functions < Object
+def self.list_lib; MODULE_list_lib; end
+module MODULE_list_lib
+def self.test1()
     
-
-    
-
-    
-    def self.test1()
-        
-        list = DatawireQuarkCore::List.new()
-        (list) << (1)
-        (list) << (2)
-        (list) << (3)
-        DatawireQuarkCore.print((list)[0])
-        DatawireQuarkCore.print((list)[1])
-        DatawireQuarkCore.print((list)[2])
-
-        nil
-    end
+    list = ::Quark.DatawireQuarkCore::List.new()
+    (list) << (1)
+    (list) << (2)
+    (list) << (3)
+    DatawireQuarkCore.print((list)[0])
+    DatawireQuarkCore.print((list)[1])
+    DatawireQuarkCore.print((list)[2])
 
 
+    nil
 end
 
-class Functions < Object
+def self.test2()
     
-
-    
-
-    
-    def self.test2()
-        
-        list = DatawireQuarkCore::List.new()
-        (list) << ("one")
-        (list) << ("two")
-        (list) << ("three")
-        DatawireQuarkCore.print((list)[0])
-        DatawireQuarkCore.print((list)[1])
-        DatawireQuarkCore.print((list)[2])
-
-        nil
-    end
+    list = ::Quark.DatawireQuarkCore::List.new()
+    (list) << ("one")
+    (list) << ("two")
+    (list) << ("three")
+    DatawireQuarkCore.print((list)[0])
+    DatawireQuarkCore.print((list)[1])
+    DatawireQuarkCore.print((list)[2])
 
 
+    nil
 end
 
-class Functions < Object
+def self.test3()
     
-
-    
-
-    
-    def self.test3()
-        
-        list = DatawireQuarkCore::List.new([])
-        DatawireQuarkCore.print(list)
-        list = DatawireQuarkCore::List.new([1])
-        DatawireQuarkCore.print(list)
-        list = DatawireQuarkCore::List.new([1, 2, 3])
-        DatawireQuarkCore.print(list)
-
-        nil
-    end
+    list = DatawireQuarkCore::List.new([])
+    DatawireQuarkCore.print(list)
+    list = DatawireQuarkCore::List.new([1])
+    DatawireQuarkCore.print(list)
+    list = DatawireQuarkCore::List.new([1, 2, 3])
+    DatawireQuarkCore.print(list)
 
 
+    nil
 end
 
-class Functions < Object
+def self.test4()
     
-
-    
-
-    
-    def self.test4()
-        
-        list = DatawireQuarkCore::List.new([])
-        DatawireQuarkCore.print(list)
-        list = DatawireQuarkCore::List.new(["one"])
-        DatawireQuarkCore.print(list)
-        list = DatawireQuarkCore::List.new(["one", "two", "three"])
-        DatawireQuarkCore.print(list)
-
-        nil
-    end
+    list = DatawireQuarkCore::List.new([])
+    DatawireQuarkCore.print(list)
+    list = DatawireQuarkCore::List.new(["one"])
+    DatawireQuarkCore.print(list)
+    list = DatawireQuarkCore::List.new(["one", "two", "three"])
+    DatawireQuarkCore.print(list)
 
 
+    nil
 end
 
-class Box < Object
+class CLASS_Box < Object
     attr_accessor :contents
 
     
@@ -147,82 +118,52 @@ class Box < Object
     end
 
 
+end; def self.Box; CLASS_Box; end
+
+def self.test5()
+    
+    boxes = DatawireQuarkCore::List.new([])
+    (boxes) << (::Quark.list_lib.Box.new())
+    (boxes)[0].set(3)
+    DatawireQuarkCore.print((boxes)[0].get())
+    boxes = DatawireQuarkCore::List.new([::Quark.list_lib.Box.new()])
+    DatawireQuarkCore.print((boxes)[0].get())
+
+
+    nil
 end
 
-class Functions < Object
+def self.test6()
     
-
-    
-
-    
-    def self.test5()
-        
-        boxes = DatawireQuarkCore::List.new([])
-        (boxes) << (Box.new())
-        (boxes)[0].set(3)
-        DatawireQuarkCore.print((boxes)[0].get())
-        boxes = DatawireQuarkCore::List.new([Box.new()])
-        DatawireQuarkCore.print((boxes)[0].get())
-
-        nil
-    end
+    matrix = DatawireQuarkCore::List.new([DatawireQuarkCore::List.new([1, 2, 3]), DatawireQuarkCore::List.new([4, 5, 6]), DatawireQuarkCore::List.new([7, 8, 9])])
+    DatawireQuarkCore.print(matrix)
 
 
+    nil
 end
 
-class Functions < Object
+def self.sorter()
     
-
-    
-
-    
-    def self.test6()
-        
-        matrix = DatawireQuarkCore::List.new([DatawireQuarkCore::List.new([1, 2, 3]), DatawireQuarkCore::List.new([4, 5, 6]), DatawireQuarkCore::List.new([7, 8, 9])])
-        DatawireQuarkCore.print(matrix)
-
-        nil
-    end
+    stuff = DatawireQuarkCore::List.new(["Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"])
+    (stuff).sort
+    DatawireQuarkCore.print(stuff)
 
 
+    nil
 end
 
-class Functions < Object
+def self.main()
     
-
-    
-
-    
-    def self.sorter()
-        
-        stuff = DatawireQuarkCore::List.new(["Richard", "Rafi", "Abhay", "Bozzo", "Phil", "Austin", "Janice", "Flynn", "Vladimir"])
-        (stuff).sort
-        DatawireQuarkCore.print(stuff)
-
-        nil
-    end
+    ::Quark.list_lib.test1()
+    ::Quark.list_lib.test2()
+    ::Quark.list_lib.test3()
+    ::Quark.list_lib.test4()
+    ::Quark.list_lib.test5()
+    ::Quark.list_lib.test6()
+    ::Quark.list_lib.sorter()
 
 
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        Functions.test1()
-        Functions.test2()
-        Functions.test3()
-        Functions.test4()
-        Functions.test5()
-        Functions.test6()
-        Functions.sorter()
-
-        nil
-    end
-
-
-end
+end # module MODULE_list_lib
+end # module Quark

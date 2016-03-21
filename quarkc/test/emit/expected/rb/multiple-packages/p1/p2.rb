@@ -1,34 +1,24 @@
+module Quark
 require "datawire-quark-core"
-
-class Functions < Object
+def self.p1; MODULE_p1; end
+module MODULE_p1
+def self.p2; MODULE_p2; end
+module MODULE_p2
+def self.a()
     
-
-    
-
-    
-    def self.a()
-        
-        DatawireQuarkCore.print("a")
-
-        nil
-    end
+    DatawireQuarkCore.print("a")
 
 
+    nil
 end
 
-
-class Functions < Object
+def self.b()
     
-
-    
-
-    
-    def self.b()
-        
-        DatawireQuarkCore.print("b")
-
-        nil
-    end
+    DatawireQuarkCore.print("b")
 
 
+    nil
 end
+end # module MODULE_p2
+end # module MODULE_p1
+end # module Quark

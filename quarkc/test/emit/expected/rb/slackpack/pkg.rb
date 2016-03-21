@@ -1,11 +1,13 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../slack"
-require "../slack"
-require "../slackpack_md"
+def self.pkg; MODULE_pkg; end
+module MODULE_pkg
+# require_relatve "builtin/reflect.rb"
+require_relative "slack.rb"
+require_relative "slack/event.rb"
+# require_relatve "slackpack_md.rb"
 
-
-class Handler < Object
+class CLASS_Handler < Object
     attr_accessor 
 
     
@@ -80,4 +82,6 @@ class Handler < Object
     end
 
 
-end
+end; def self.Handler; CLASS_Handler; end
+end # module MODULE_pkg
+end # module Quark

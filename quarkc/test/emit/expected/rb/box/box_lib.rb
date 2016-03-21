@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Box < Object
+def self.box_lib; MODULE_box_lib; end
+module MODULE_box_lib
+class CLASS_Box < Object
     attr_accessor :contents
 
     
@@ -61,9 +64,9 @@ class Box < Object
     end
 
 
-end
+end; def self.Box; CLASS_Box; end
 
-class Crate < Object
+class CLASS_Crate < Object
     attr_accessor :box, :ibox
 
     
@@ -125,16 +128,16 @@ class Crate < Object
     def __init_fields__()
         
 
-        self.box = Box.new()
-        self.ibox = Box.new()
+        self.box = ::Quark.box_lib.Box.new()
+        self.ibox = ::Quark.box_lib.Box.new()
 
         nil
     end
 
 
-end
+end; def self.Crate; CLASS_Crate; end
 
-class Sack < Object
+class CLASS_Sack < Object
     attr_accessor :ints
 
     
@@ -176,171 +179,117 @@ class Sack < Object
     def __init_fields__()
         
 
-        self.ints = Box.new()
+        self.ints = ::Quark.box_lib.Box.new()
 
         nil
     end
 
 
+end; def self.Sack; CLASS_Sack; end
+
+def self.test1()
+    
+    ibox = ::Quark.box_lib.Box.new()
+    ibox.set(3)
+    three = ibox.get()
+    DatawireQuarkCore.print(three)
+    (ibox).contents = 4
+    DatawireQuarkCore.print((ibox).contents)
+
+
+    nil
 end
 
-class Functions < Object
+def self.test2()
     
-
-    
-
-    
-    def self.test1()
-        
-        ibox = Box.new()
-        ibox.set(3)
-        three = ibox.get()
-        DatawireQuarkCore.print(three)
-        (ibox).contents = 4
-        DatawireQuarkCore.print((ibox).contents)
-
-        nil
-    end
+    sbox = ::Quark.box_lib.Box.new()
+    sbox.set("hello")
+    hello = sbox.get()
+    DatawireQuarkCore.print(hello)
+    (sbox).contents = "world"
+    DatawireQuarkCore.print((sbox).contents)
 
 
+    nil
 end
 
-class Functions < Object
+def self.test3()
     
-
-    
-
-    
-    def self.test2()
-        
-        sbox = Box.new()
-        sbox.set("hello")
-        hello = sbox.get()
-        DatawireQuarkCore.print(hello)
-        (sbox).contents = "world"
-        DatawireQuarkCore.print((sbox).contents)
-
-        nil
-    end
+    icrate = ::Quark.box_lib.Crate.new()
+    icrate.set(3)
+    DatawireQuarkCore.print(icrate.get())
+    icrate.set(4)
+    DatawireQuarkCore.print(((icrate).box).contents)
 
 
+    nil
 end
 
-class Functions < Object
+def self.test4()
     
-
-    
-
-    
-    def self.test3()
-        
-        icrate = Crate.new()
-        icrate.set(3)
-        DatawireQuarkCore.print(icrate.get())
-        icrate.set(4)
-        DatawireQuarkCore.print(((icrate).box).contents)
-
-        nil
-    end
+    s = ::Quark.box_lib.Sack.new()
+    DatawireQuarkCore.print((s).ints.get())
+    DatawireQuarkCore.print(((s).ints).contents)
+    (s).ints.set(3)
+    DatawireQuarkCore.print((s).ints.get())
+    DatawireQuarkCore.print(((s).ints).contents)
+    ((s).ints).contents = 4
+    DatawireQuarkCore.print((s).ints.get())
+    DatawireQuarkCore.print(((s).ints).contents)
 
 
+    nil
 end
 
-class Functions < Object
+def self.test5()
     
-
-    
-
-    
-    def self.test4()
-        
-        s = Sack.new()
-        DatawireQuarkCore.print((s).ints.get())
-        DatawireQuarkCore.print(((s).ints).contents)
-        (s).ints.set(3)
-        DatawireQuarkCore.print((s).ints.get())
-        DatawireQuarkCore.print(((s).ints).contents)
-        ((s).ints).contents = 4
-        DatawireQuarkCore.print((s).ints.get())
-        DatawireQuarkCore.print(((s).ints).contents)
-
-        nil
-    end
+    scrate = ::Quark.box_lib.Crate.new()
+    DatawireQuarkCore.print(scrate.get())
+    DatawireQuarkCore.print(((scrate).box).contents)
+    scrate.set("hello")
+    DatawireQuarkCore.print(scrate.get())
+    DatawireQuarkCore.print(((scrate).box).contents)
+    ((scrate).ibox).contents = 3
+    DatawireQuarkCore.print(((scrate).ibox).contents)
 
 
+    nil
 end
 
-class Functions < Object
+def self.test6()
     
-
-    
-
-    
-    def self.test5()
-        
-        scrate = Crate.new()
-        DatawireQuarkCore.print(scrate.get())
-        DatawireQuarkCore.print(((scrate).box).contents)
-        scrate.set("hello")
-        DatawireQuarkCore.print(scrate.get())
-        DatawireQuarkCore.print(((scrate).box).contents)
-        ((scrate).ibox).contents = 3
-        DatawireQuarkCore.print(((scrate).ibox).contents)
-
-        nil
-    end
+    box = ::Quark.box_lib.Box.new()
+    box.set(::Quark.box_lib.Box.new())
+    box.get().set(3)
+    DatawireQuarkCore.print(box.get().get())
+    DatawireQuarkCore.print(((box).contents).contents)
 
 
+    nil
 end
 
-class Functions < Object
+def self.main()
     
+    DatawireQuarkCore.print("test1:\n--")
+    ::Quark.box_lib.test1()
+    DatawireQuarkCore.print("")
+    DatawireQuarkCore.print("test2:\n--")
+    ::Quark.box_lib.test2()
+    DatawireQuarkCore.print("")
+    DatawireQuarkCore.print("test3:\n--")
+    ::Quark.box_lib.test3()
+    DatawireQuarkCore.print("")
+    DatawireQuarkCore.print("test4:\n--")
+    ::Quark.box_lib.test4()
+    DatawireQuarkCore.print("")
+    DatawireQuarkCore.print("test5:\n--")
+    ::Quark.box_lib.test5()
+    DatawireQuarkCore.print("")
+    DatawireQuarkCore.print("test6:\n--")
+    ::Quark.box_lib.test6()
 
-    
 
-    
-    def self.test6()
-        
-        box = Box.new()
-        box.set(Box.new())
-        box.get().set(3)
-        DatawireQuarkCore.print(box.get().get())
-        DatawireQuarkCore.print(((box).contents).contents)
-
-        nil
-    end
-
-
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        DatawireQuarkCore.print("test1:\n--")
-        Functions.test1()
-        DatawireQuarkCore.print("")
-        DatawireQuarkCore.print("test2:\n--")
-        Functions.test2()
-        DatawireQuarkCore.print("")
-        DatawireQuarkCore.print("test3:\n--")
-        Functions.test3()
-        DatawireQuarkCore.print("")
-        DatawireQuarkCore.print("test4:\n--")
-        Functions.test4()
-        DatawireQuarkCore.print("")
-        DatawireQuarkCore.print("test5:\n--")
-        Functions.test5()
-        DatawireQuarkCore.print("")
-        DatawireQuarkCore.print("test6:\n--")
-        Functions.test6()
-
-        nil
-    end
-
-
-end
+end # module MODULE_box_lib
+end # module Quark

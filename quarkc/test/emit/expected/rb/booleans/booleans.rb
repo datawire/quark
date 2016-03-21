@@ -1,3 +1,3 @@
-require "./booleans_lib.rb" 
+require_relative "booleans_lib.rb"
 
-Functions.main
+Quark.booleans_lib.main

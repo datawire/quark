@@ -1,9 +1,11 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../constructors_md"
+def self.test2; MODULE_test2; end
+module MODULE_test2
+# require_relatve "builtin/reflect.rb"
+# require_relatve "constructors_md.rb"
 
-
-class Test < Object
+class CLASS_Test < Object
     attr_accessor :name
 
     
@@ -53,22 +55,16 @@ class Test < Object
     end
 
 
+end; def self.Test; CLASS_Test; end
+
+def self.go()
+    
+    t = ::Quark.test2.Test.new("Hello World!!")
+    DatawireQuarkCore.print((t).name)
+    DatawireQuarkCore.print((::Quark.test2.Test.new("Hello World!!")).name)
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.go()
-        
-        t = Test.new("Hello World!!")
-        DatawireQuarkCore.print((t).name)
-        DatawireQuarkCore.print((Test.new("Hello World!!")).name)
-
-        nil
-    end
-
-
-end
+end # module MODULE_test2
+end # module Quark

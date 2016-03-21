@@ -1,16 +1,13 @@
+module Quark
 require "datawire-quark-core"
-class Functions < Object
+def self.void_return; MODULE_void_return; end
+module MODULE_void_return
+def self.foo()
     
-
-    
-
-    
-    def self.foo()
-        
-        return
-
-        nil
-    end
+    return
 
 
+    nil
 end
+end # module MODULE_void_return
+end # module Quark

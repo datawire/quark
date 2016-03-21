@@ -1,3 +1,3 @@
-require "./print_lib.rb" 
+require_relative "print_lib.rb"
 
-Functions.main
+Quark.print_lib.main

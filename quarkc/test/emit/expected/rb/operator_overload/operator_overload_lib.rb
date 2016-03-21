@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class Overload < Object
+def self.operator_overload_lib; MODULE_operator_overload_lib; end
+module MODULE_operator_overload_lib
+class CLASS_Overload < Object
     attr_accessor :name
 
     
@@ -30,8 +33,8 @@ class Overload < Object
 
     def test()
         
-        o1 = Overload.new("one")
-        o2 = Overload.new("two")
+        o1 = ::Quark.operator_overload_lib.Overload.new("one")
+        o2 = ::Quark.operator_overload_lib.Overload.new("two")
         o3 = o1.__add__(o2)
         DatawireQuarkCore.print((o3).name)
         o3 = o1.__mul__(o2)
@@ -78,21 +81,15 @@ class Overload < Object
     end
 
 
+end; def self.Overload; CLASS_Overload; end
+
+def self.main()
+    
+    o = ::Quark.operator_overload_lib.Overload.new("test")
+    o.test()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        o = Overload.new("test")
-        o.test()
-
-        nil
-    end
-
-
-end
+end # module MODULE_operator_overload_lib
+end # module Quark

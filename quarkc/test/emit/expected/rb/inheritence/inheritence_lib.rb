@@ -1,5 +1,8 @@
+module Quark
 require "datawire-quark-core"
-class A < Object
+def self.inheritence_lib; MODULE_inheritence_lib; end
+module MODULE_inheritence_lib
+class CLASS_A < Object
     attr_accessor 
 
     
@@ -47,9 +50,9 @@ class A < Object
     end
 
 
-end
+end; def self.A; CLASS_A; end
 
-class B < A
+class CLASS_B < ::Quark.inheritence_lib.A
     attr_accessor 
 
     
@@ -98,9 +101,9 @@ class B < A
     end
 
 
-end
+end; def self.B; CLASS_B; end
 
-class C < A
+class CLASS_C < ::Quark.inheritence_lib.A
     attr_accessor 
 
     
@@ -142,30 +145,24 @@ class C < A
     end
 
 
+end; def self.C; CLASS_C; end
+
+def self.main()
+    
+    a = ::Quark.inheritence_lib.A.new()
+    a.foo()
+    b = ::Quark.inheritence_lib.B.new()
+    b.foo()
+    c = ::Quark.inheritence_lib.C.new()
+    c.foo()
+    DatawireQuarkCore.print("--")
+    a = b
+    a.foo()
+    a = c
+    a.foo()
+
+
+    nil
 end
-
-class Functions < Object
-    
-
-    
-
-    
-    def self.main()
-        
-        a = A.new()
-        a.foo()
-        b = B.new()
-        b.foo()
-        c = C.new()
-        c.foo()
-        DatawireQuarkCore.print("--")
-        a = b
-        a.foo()
-        a = c
-        a.foo()
-
-        nil
-    end
-
-
-end
+end # module MODULE_inheritence_lib
+end # module Quark

@@ -1,6 +1,8 @@
+module Quark
 require "datawire-quark-core"
-
-class Root < Object
+def self.implicit_self_md; MODULE_implicit_self_md; end
+module MODULE_implicit_self_md
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -41,4 +43,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_implicit_self_md
+end # module Quark

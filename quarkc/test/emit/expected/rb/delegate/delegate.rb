@@ -1,3 +1,3 @@
-require "./delegate_lib.rb" 
+require_relative "delegate_lib.rb"
 
-Functions.main
+Quark.delegate_lib.main

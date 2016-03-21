@@ -1,10 +1,12 @@
+module Quark
 require "datawire-quark-core"
-require "../builtin"
-require "../test"
-require "../test"
+def self.package_md; MODULE_package_md; end
+module MODULE_package_md
+# require_relatve "builtin/reflect.rb"
+require_relative "test.rb"
+require_relative "test/test.rb"
 
-
-class Test_Test_go_Method < builtin.reflect.Method
+class CLASS_test_Test_go_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -55,14 +57,9 @@ class Test_Test_go_Method < builtin.reflect.Method
     end
 
 
-end
-def test_Test_go_Method()
-    return Test_Test_go_Method
+end; def self.test_Test_go_Method; CLASS_test_Test_go_Method; end
 
-    nil
-end
-
-class Test_Test < builtin.reflect.QuarkClass
+class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -71,8 +68,8 @@ class Test_Test < builtin.reflect.QuarkClass
         super("test.Test")
         (self).name = "test.Test"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.String", "name")])
-        (self).methods = DatawireQuarkCore::List.new([test_Test_go_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.package_md.test_Test_go_Method.new()])
 
         nil
     end
@@ -82,7 +79,7 @@ class Test_Test < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return test.Test.new()
+        return ::Quark.test.Test.new()
 
         nil
     end
@@ -115,15 +112,9 @@ class Test_Test < builtin.reflect.QuarkClass
     end
 
 
-end
-def test_Test()
-    return Test_Test
+end; def self.test_Test; CLASS_test_Test; end
 
-    nil
-end
-
-
-class Test_test_Test_go_Method < builtin.reflect.Method
+class CLASS_test_test_Test_go_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
     
@@ -174,14 +165,9 @@ class Test_test_Test_go_Method < builtin.reflect.Method
     end
 
 
-end
-def test_test_Test_go_Method()
-    return Test_test_Test_go_Method
+end; def self.test_test_Test_go_Method; CLASS_test_test_Test_go_Method; end
 
-    nil
-end
-
-class Test_test_Test < builtin.reflect.QuarkClass
+class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
 
     
@@ -190,8 +176,8 @@ class Test_test_Test < builtin.reflect.QuarkClass
         super("test.test.Test")
         (self).name = "test.test.Test"
         (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([builtin.reflect.Field.new("builtin.int", "size")])
-        (self).methods = DatawireQuarkCore::List.new([test_test_Test_go_Method.new()])
+        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.int", "size")])
+        (self).methods = DatawireQuarkCore::List.new([::Quark.package_md.test_test_Test_go_Method.new()])
 
         nil
     end
@@ -201,7 +187,7 @@ class Test_test_Test < builtin.reflect.QuarkClass
     
     def construct(args)
         
-        return test.test.Test.new()
+        return ::Quark.test.test.Test.new()
 
         nil
     end
@@ -234,15 +220,9 @@ class Test_test_Test < builtin.reflect.QuarkClass
     end
 
 
-end
-def test_test_Test()
-    return Test_test_Test
+end; def self.test_test_Test; CLASS_test_test_Test; end
 
-    nil
-end
-
-
-class Root < Object
+class CLASS_Root < Object
     attr_accessor 
 
     
@@ -283,4 +263,6 @@ class Root < Object
     end
 
 
-end
+end; def self.Root; CLASS_Root; end
+end # module MODULE_package_md
+end # module Quark
