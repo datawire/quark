@@ -214,7 +214,7 @@ namespace builtin {
                            $js{Math.round($self)};
         macro String toString() $java{Double.toString($self)}
                                 $py{repr($self)}
-                                $rb{repr($self).to_s}
+                                $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();

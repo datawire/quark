@@ -14,8 +14,9 @@
 
 from collections import OrderedDict
 from .helpers import *
-# from ._metadata import __js_runtime_version__
 
+lower = lambda name: name[0].lower() + name[1:]
+upper = lambda name: name[0].upper() + name[1:]
 
 class Templates:
 
@@ -51,7 +52,7 @@ class {name} < {base}
     {constructors}
 
     {methods}
-end
+end; def self.{alias}; {name}; end
 """.format
 
 ## Packaging
@@ -81,14 +82,16 @@ def package_file(path, name, fname):
     return None
 
 def _make_file(path):
-    head = '# %r\n' % path
-    head += 'require "datawire-quark-core"\n'
-    head += ''.join('module %s\n' % name for name in path)
-    tail = ''.join('end  # module %s\n' % name for name in path)
-    return Code(head=head, tail=tail)
+    epilogue = 'def self.{alias}; {name}; end\nmodule {name}\n'.format
+    prologue = 'end # module {name}\n'.format
+    names = [name.replace('-', '_') for name in path]
+    head = 'require "datawire-quark-core"\n'
+    head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
+    tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
+    return Code(head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
 def make_class_file(path, name):
-    return _make_file([name] + path)
+    return _make_file(path)
 
 def make_function_file(path, name):
     return _make_file(path)
@@ -97,35 +100,30 @@ def make_package_file(path, name):
     assert False
 
 def main(fname, common):
-    return Code('require "..." # %r \n\nFunctions.main\n' % [fname, common])
+    template = 'require_relative "{file}"\n\nQuark.{path}.main\n'.format
+    return Code(template(file=common.replace('-', '_') + '.rb',
+                         path=common.replace('-', '_')))
 
 ## Naming and imports
 
 SUBS = {'Class': 'QuarkClass', 'end': 'end_'}
 def name(n):
-    return SUBS.get(n, n)
+    return SUBS.get(n, n).replace('-', '_')
 
 def type(path, name, parameters):
     return ".".join(path + [name])
 
 def import_(path, origin, dep):
-    qual = qualify(path, origin)
-    if tuple(origin) + tuple(qual) == tuple(path):
-        prefix = './'
+    if 'builtin' in path or '_md' in path[0]:
+        # HACK to temporarily avoid loading metadata and builtin
+        template = '# require_relatve "{path}"'.format
     else:
-        prefix = '../' * len(origin)
-    #return 'require "%s%s"' % (prefix, qual[0])
-    return 'require "..." # %r' % [path, origin, dep]
+        template = 'require_relative "{path}"'.format
+    return template(path='/'.join(path) + '.rb')
 
 def qualify(package, origin):
-    if package == origin: return []
-    if not package: return []
-    if not origin:
-        return package
-    elif package[:len(origin)] == origin:
-        return package[len(origin):]
-    else:
-        return package
+    # Always fully-qualify names, because Ruby is not fully lexically-scoped.
+    return package
 
 ## Documentation
 
@@ -140,7 +138,6 @@ def comment(stuff):
 ## Class definition
 
 def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
-    upcased_name = name[0].upper() + name[1:]
     prologue = 'attr_accessor ' + ', '.join(':' + name for name, value in fields)
     init_fields = Templates.method(
         name='__init_fields__',
@@ -148,18 +145,13 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
         body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
     )
     source = Templates.class_(
-        name=upcased_name,
-        base=base or 'Object',
+        name='CLASS_' + name,
+        alias=name,
+        base=('::Quark.' + base) if base else 'Object',
         prologue=prologue,
         constructors=indent('\n'.join(constructors)),
         methods=indent('\n'.join(methods + [init_fields])),
     )
-    if name != upcased_name:
-        source += Templates.method(
-            name=name,
-            parameters='',
-            body=return_(upcased_name),
-        )
     return source
 
 def static_field(doc, clazz, type, name, value):
@@ -167,7 +159,6 @@ def static_field(doc, clazz, type, name, value):
 
 def field(doc, clazz, type, name, value):
     return (name, value or null())
-    # return 'self.{} = {}'.format(name, value or null())
 
 def field_init():
     return 'self.__init_fields__'
@@ -222,16 +213,10 @@ def interface_method(doc, iface, type, name, parameters, body):
 ## Function definition
 
 def function(doc, type, name, parameters, body):
-    return Templates.class_(
-        name='Functions',
-        base='Object',
-        prologue='',
-        constructors='',
-        methods=indent(Templates.method(
-            name='self.' + name,
-            parameters=', '.join(parameters),
-            body=body,
-        )),
+    return Templates.method(
+        name='self.' + name,
+        parameters=', '.join(parameters),
+        body=body,
     )
 
 ## Parameters for methods and functions
@@ -294,12 +279,17 @@ def local_ref(v):
     return v
 
 def invoke_function(path, name, args):
-    return Templates.method_call(receiver='Functions',
-                                 method='__'.join(path + [name]),
+    return Templates.method_call(receiver='::Quark',
+                                 method='.'.join([p.replace('-', '_') for p in path] + [name]),
                                  args=', '.join(args))
 
 def construct(class_, args):
-    return Templates.method_call(receiver=class_,
+    if class_ == 'Hash':
+        # XXX HACK need to distinguish ::Quark and non-::Quark things
+        receiver = class_
+    else:
+        receiver = '::Quark.' + class_.replace('-', '_')
+    return Templates.method_call(receiver=receiver,
                                  method='new',
                                  args=', '.join(args))
 

@@ -89,7 +89,9 @@ def run_tests(base, dirs, command, env=None):
             if expected != actual:
                 open(get_out(name) + ".cmp", "write").write(actual)
                 failed_expectations.append(name)
-    assert not failed_expectations, failed_expectations
+    print(failed_expectations)
+    assert not failed_expectations
+
 
 
 def batch_pom(target, dirs):
@@ -145,4 +147,5 @@ def test_run_ruby(output):
     base = os.path.join(output, rb.ext)
     dirs = [name for name in os.listdir(base)]
 
-    run_tests(base, dirs, lambda name: ["ruby", name + ".rb"])
+    import quarkc.ruby
+    run_tests(base, dirs, lambda name: ["ruby", quarkc.ruby.name(name) + ".rb"])
