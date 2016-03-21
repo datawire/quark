@@ -34,15 +34,19 @@ end
 Gem::Specification.new do |spec|
   spec.name        = '{name}'
   spec.version     = '{version}'
-  spec.add_runtime_dependency 'datawire-quark-core', '== {runtime_version}'
-  # spec.summary     = ''
+  spec.summary     = 'Quark generated {name}'
   # spec.description = ''
-  # spec.author      = ''
+  spec.author      = 'Quark compiled code'
   # spec.email       = ''
   # spec.license     = ''
-  # spec.files       = ['']
+  spec.files       = ['{files}']
   # spec.homepage    = ''
+  {runtime_deps}
 end
+""".format
+
+    runtime_dep = """\
+  spec.add_runtime_dependency '{module}' # , '== {version}'
 """.format
 
     class_ = """\
@@ -60,15 +64,19 @@ end; def self.{alias}; {name}; end
 def package(name, version, packages, srcs, deps):
     # TODO handle deps
     files = OrderedDict()
-    files.update(srcs)
+    files.update(("lib/%s" % k, v) for k, v in srcs.iteritems())
+    paths = files.keys()
     for path, readme in packages.items():
-        files['%s/README.md' % '/'.join(path)] = readme
-        gemspec = Templates.gemspec(
-            name=name,
-            version=version,
-            runtime_version='TODO',
-        )
-        files['%s/%s.gemspec' % ('/'.join(path), name)] = gemspec
+        files['lib/%s/README.md' % '/'.join(path)] = readme
+    gemspec = Templates.gemspec(
+        name=name,
+        version=version,
+        runtime_version='TODO',
+        files="', '".join(paths),
+        runtime_deps="\n".join(Templates.runtime_dep(module=d[1],version=d[2])
+                                for d in deps)
+    )
+    files['%s.gemspec' % (name)] = gemspec
     return files
 
 def class_file(path, name, fname):
