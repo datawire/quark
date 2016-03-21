@@ -210,7 +210,7 @@ namespace builtin {
                                          $js{($self) / ($other)};
         macro long round() $java{Math.round($self)}
                            $py{long(round($self))}
-                           $rb{($self).round)}
+                           $rb{($self).round()}
                            $js{Math.round($self)};
         macro String toString() $java{Double.toString($self)}
                                 $py{repr($self)}
