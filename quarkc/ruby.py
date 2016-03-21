@@ -121,13 +121,20 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep):
-    if 'builtin' in path or '_md' in path[0]:
-        # HACK to temporarily avoid loading metadata and builtin
-        template = '# require_relatve "{path}"'.format
+def import_(path, origin, dep, cache={}):
+    if dep is None:
+        if len(origin) == 1:
+            return "require '%s'" % "/".join(path)
+        else:
+            return "# require '%s' # in %s "% ( "/".join(path), "/".join(origin))
     else:
-        template = 'require_relative "{path}"'.format
-    return template(path='/'.join(path) + '.rb')
+        if len(origin) == 1:
+            if len(path) == 1:
+                return "require '%s' " % path[0]
+            else:
+                return "# require '%s' # .../%s" % (path[0], "/".join(path[1:]))
+        else:
+            return "# require '%s' # .../%s %s" % (path[0], "/".join(path[1:]), "/".join(origin))
 
 def qualify(package, origin):
     # Always fully-qualify names, because Ruby is not fully lexically-scoped.
