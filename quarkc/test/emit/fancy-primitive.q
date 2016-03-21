@@ -1,8 +1,9 @@
 namespace fancyprim {
-    @mapping($java{java.util.LinkedList} $py{_List} $js{Array})
+    @mapping($java{java.util.LinkedList} $py{_List} $js{Array} $rb{DatawireQuarkCore::List})
     primitive LinkedList<T> {
 	macro LinkedList(List<T> elements) $java{new java.util.LinkedList($elements)}
 	                                   $py{$elements}
+	                                   $rb{(DatawireQuarkCore::List.new $elements)}
 				           $js{$elements};
     }
 }

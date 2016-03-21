@@ -284,7 +284,7 @@ def invoke_function(path, name, args):
                                  args=', '.join(args))
 
 def construct(class_, args):
-    if class_ == 'Hash':
+    if class_ in ('Hash', 'DatawireQuarkCore::List'):
         # XXX HACK need to distinguish ::Quark and non-::Quark things
         receiver = class_
     else:

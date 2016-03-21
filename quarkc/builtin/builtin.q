@@ -237,7 +237,7 @@ namespace builtin {
                                            $js{(($self).indexOf(($other), ($self).length - ($other).length) !== -1)};
         macro int find(String other)       $java{($self).indexOf($other)}
                                            $py{($self).find($other)}
-                                           $rb{($self).end_with?($other)}
+                                           $rb{(($self).index($other) or -1)}
                                            $js{($self).indexOf($other)};
         macro String substring(int start, int end) $java{($self).substring(($start), ($end))}
                                                    $py{($self)[($start):($end)]}
@@ -283,7 +283,7 @@ namespace builtin {
                          $js{($self).length};
         macro void sort() $java{java.util.Collections.sort($self, null)}
                           $py{($self).sort()}
-                          $rb{($self).sort}
+                          $rb{($self).sort!}
                           $js{($self).sort()};
         macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
