@@ -81,7 +81,10 @@ def run_tests(base, dirs, command, env=None):
     for name in dirs:
         if has_main(name):
             try:
-                actual = subprocess.check_output(command(name), cwd=os.path.join(base, name), env=env, stderr=subprocess.STDOUT)
+                cmd = command(name)
+                cwd = os.path.join(base, name)
+                print "cd %s && %s" % (cwd, " ".join(cmd))
+                actual = subprocess.check_output(cmd, cwd=cwd, env=env, stderr=subprocess.STDOUT)
             except subprocess.CalledProcessError as e:
                 actual = e.output
                 print(actual)
@@ -148,4 +151,4 @@ def test_run_ruby(output):
     dirs = [name for name in os.listdir(base)]
 
     import quarkc.ruby
-    run_tests(base, dirs, lambda name: ["ruby", quarkc.ruby.name(name) + ".rb"])
+    run_tests(base, dirs, lambda name: ["bundle", "exec", "ruby", "-I../builtin/lib", "-Ilib", "lib/" + quarkc.ruby.name(name) + ".rb"])

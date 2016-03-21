@@ -204,6 +204,7 @@ namespace builtin {
 
         macro String toString() $java{Long.toString($self)}
                                 $py{str($self)}
+                                $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
     }
 

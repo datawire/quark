@@ -122,6 +122,7 @@ def type(path, name, parameters):
     return ".".join(path + [name])
 
 def import_(path, origin, dep, cache={}):
+    # print "import %s %s %s" % (path, origin, dep)
     if dep is None:
         if len(origin) == 1:
             return "require '%s'" % "/".join(path)
@@ -132,7 +133,7 @@ def import_(path, origin, dep, cache={}):
             if len(path) == 1:
                 return "require '%s' " % path[0]
             else:
-                return "# require '%s' # .../%s" % (path[0], "/".join(path[1:]))
+                return "require '%s' # .../%s" % (path[0], "/".join(path[1:]))
         else:
             return "# require '%s' # .../%s %s" % (path[0], "/".join(path[1:]), "/".join(origin))
 
