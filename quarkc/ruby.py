@@ -327,7 +327,7 @@ def invoke_super_method(clazz, base, method, args):
     return template(method=method, args=', '.join(args))
 
 def invoke_static_method(path, clazz, method, args):
-    return Templates.method_call(receiver='::'.join(path + [clazz]),
+    return Templates.method_call(receiver='.'.join(["::Quark"] + path + [clazz]),
                                  method=method,
                                  args=', '.join(args))
 
