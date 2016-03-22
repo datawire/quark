@@ -92,8 +92,12 @@ Run the Javascript client with
 Compile and install the Service Contract in hello.q:
 
         quark compile hello.q --ruby
-	bundle install
+        bundle install
 
-Run the Javascript client with
+Run the Ruby client with
 
         bundle exec ruby rbclient.rb
+
+Run the Ruby server with
+
+        bundle exec ruby rbserver.rb
