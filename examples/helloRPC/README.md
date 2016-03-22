@@ -86,3 +86,14 @@ Run the Javascript server with
 Run the Javascript client with
 
         node jsclient.js
+
+### Ruby (a non-pollutive method, does not install gems in system ruby install)
+
+Compile and install the Service Contract in hello.q:
+
+        quark compile hello.q --ruby
+	bundle install
+
+Run the Javascript client with
+
+        bundle exec ruby rbclient.rb
