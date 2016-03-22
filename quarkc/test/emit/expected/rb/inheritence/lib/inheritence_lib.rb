@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.inheritence_lib; MODULE_inheritence_lib; end
 module MODULE_inheritence_lib
+def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor 
 
@@ -50,8 +51,9 @@ class CLASS_A < Object
     end
 
 
-end; def self.A; CLASS_A; end
+end
 
+def self.B; CLASS_B; end
 class CLASS_B < ::Quark.inheritence_lib.A
     attr_accessor 
 
@@ -101,8 +103,9 @@ class CLASS_B < ::Quark.inheritence_lib.A
     end
 
 
-end; def self.B; CLASS_B; end
+end
 
+def self.C; CLASS_C; end
 class CLASS_C < ::Quark.inheritence_lib.A
     attr_accessor 
 
@@ -145,7 +148,7 @@ class CLASS_C < ::Quark.inheritence_lib.A
     end
 
 
-end; def self.C; CLASS_C; end
+end
 
 def self.main()
     

@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.super_lib; MODULE_super_lib; end
 module MODULE_super_lib
+def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor :name
 
@@ -59,8 +60,9 @@ class CLASS_A < Object
     end
 
 
-end; def self.A; CLASS_A; end
+end
 
+def self.B; CLASS_B; end
 class CLASS_B < ::Quark.super_lib.A
     attr_accessor 
 
@@ -116,7 +118,7 @@ class CLASS_B < ::Quark.super_lib.A
     end
 
 
-end; def self.B; CLASS_B; end
+end
 
 def self.main()
     

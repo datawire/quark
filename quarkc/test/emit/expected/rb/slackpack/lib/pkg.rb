@@ -7,8 +7,14 @@ require 'slack'
 require 'slack/event'
 require 'slackpack_md'
 
+def self.Handler; CLASS_Handler; end
 class CLASS_Handler < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Handler_ref: -> { ::Quark.slackpack_md.Root.pkg_Handler_md }
+
 
     
     def initialize()
@@ -82,6 +88,6 @@ class CLASS_Handler < Object
     end
 
 
-end; def self.Handler; CLASS_Handler; end
+end
 end # module MODULE_pkg
 end # module Quark

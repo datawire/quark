@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.operator_overload_md; MODULE_operator_overload_md; end
 module MODULE_operator_overload_md
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
 
@@ -43,6 +44,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_operator_overload_md
 end # module Quark

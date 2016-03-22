@@ -5,8 +5,14 @@ module MODULE_pkg
 require 'builtin' # .../reflect
 require 'parameterized_defaults_md'
 
+def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Foo_builtin_Object__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md }
+
 
     
     def initialize()
@@ -38,10 +44,16 @@ class CLASS_Foo < Object
     end
 
 
-end; def self.Foo; CLASS_Foo; end
+end
 
+def self.StringFoo; CLASS_StringFoo; end
 class CLASS_StringFoo < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_StringFoo_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringFoo_md }
+
 
     
     def initialize()
@@ -95,8 +107,9 @@ class CLASS_StringFoo < Object
     end
 
 
-end; def self.StringFoo; CLASS_StringFoo; end
+end
 
+def self.Box; CLASS_Box; end
 class CLASS_Box < Object
     attr_accessor :contents
 
@@ -147,10 +160,17 @@ class CLASS_Box < Object
     end
 
 
-end; def self.Box; CLASS_Box; end
+end
 
+def self.StringBox; CLASS_StringBox; end
 class CLASS_StringBox < ::Quark.pkg.Box
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Box_builtin_String__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Box_builtin_String__md }
+    static pkg_StringBox_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringBox_md }
+
 
     
     def initialize(contents)
@@ -196,7 +216,7 @@ class CLASS_StringBox < ::Quark.pkg.Box
     end
 
 
-end; def self.StringBox; CLASS_StringBox; end
+end
 
 def self.main()
     

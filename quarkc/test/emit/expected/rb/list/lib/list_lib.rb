@@ -56,6 +56,7 @@ def self.test4()
     nil
 end
 
+def self.Box; CLASS_Box; end
 class CLASS_Box < Object
     attr_accessor :contents
 
@@ -118,7 +119,7 @@ class CLASS_Box < Object
     end
 
 
-end; def self.Box; CLASS_Box; end
+end
 
 def self.test5()
     

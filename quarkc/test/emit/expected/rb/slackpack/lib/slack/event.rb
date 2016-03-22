@@ -8,8 +8,14 @@ module MODULE_event
 # require 'slack' # in slack/event 
 # require 'slackpack_md' # in slack/event 
 
+def self.SlackEvent; CLASS_SlackEvent; end
 class CLASS_SlackEvent < Object
     attr_accessor :type, :user, :channel, :timestamp
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_SlackEvent_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackEvent_md }
+
 
     
     def initialize()
@@ -100,10 +106,16 @@ class CLASS_SlackEvent < Object
     end
 
 
-end; def self.SlackEvent; CLASS_SlackEvent; end
+end
 
+def self.SlackError; CLASS_SlackError; end
 class CLASS_SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_SlackError_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackError_md }
+
 
     
     def initialize()
@@ -198,10 +210,16 @@ class CLASS_SlackError < ::Quark.slack.event.SlackEvent
     end
 
 
-end; def self.SlackError; CLASS_SlackError; end
+end
 
+def self.Hello; CLASS_Hello; end
 class CLASS_Hello < ::Quark.slack.event.SlackEvent
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_Hello_ref: -> { ::Quark.slackpack_md.Root.slack_event_Hello_md }
+
 
     
     def initialize()
@@ -272,10 +290,16 @@ class CLASS_Hello < ::Quark.slack.event.SlackEvent
     end
 
 
-end; def self.Hello; CLASS_Hello; end
+end
 
+def self.Message; CLASS_Message; end
 class CLASS_Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_Message_ref: -> { ::Quark.slackpack_md.Root.slack_event_Message_md }
+
 
     
     def initialize()
@@ -391,10 +415,16 @@ class CLASS_Message < ::Quark.slack.event.SlackEvent
     end
 
 
-end; def self.Message; CLASS_Message; end
+end
 
+def self.Edited; CLASS_Edited; end
 class CLASS_Edited < Object
     attr_accessor :user, :timestamp
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_Edited_ref: -> { ::Quark.slackpack_md.Root.slack_event_Edited_md }
+
 
     
     def initialize()
@@ -448,7 +478,7 @@ class CLASS_Edited < Object
     end
 
 
-end; def self.Edited; CLASS_Edited; end
+end
 end # module MODULE_event
 end # module MODULE_slack
 end # module Quark

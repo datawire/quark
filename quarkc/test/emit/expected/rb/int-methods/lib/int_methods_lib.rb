@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.int_methods_lib; MODULE_int_methods_lib; end
 module MODULE_int_methods_lib
+def self.Test; CLASS_Test; end
 class CLASS_Test < Object
     attr_accessor 
 
@@ -55,7 +56,7 @@ class CLASS_Test < Object
     end
 
 
-end; def self.Test; CLASS_Test; end
+end
 
 def self.main()
     

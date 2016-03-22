@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.macro_native; MODULE_macro_native; end
 module MODULE_macro_native
+def self.Native; CLASS_Native; end
 class CLASS_Native < Object
     attr_accessor 
 
@@ -53,6 +54,6 @@ class CLASS_Native < Object
     end
 
 
-end; def self.Native; CLASS_Native; end
+end
 end # module MODULE_macro_native
 end # module Quark

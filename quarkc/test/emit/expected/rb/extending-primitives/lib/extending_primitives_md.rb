@@ -5,6 +5,7 @@ module MODULE_extending_primitives_md
 require 'builtin' # .../reflect
 require 'pkg'
 
+def self.pkg_C_event1_Method; CLASS_pkg_C_event1_Method; end
 class CLASS_pkg_C_event1_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -56,10 +57,16 @@ class CLASS_pkg_C_event1_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_C_event1_Method; CLASS_pkg_C_event1_Method; end
+end
 
+def self.pkg_C; CLASS_pkg_C; end
 class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.extending_primitives_md.pkg_C.new() }
+
 
     
     def initialize()
@@ -111,10 +118,16 @@ class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_C; CLASS_pkg_C; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_C_md: -> { ::Quark.extending_primitives_md.pkg_C.singleton }
+
 
     
     def initialize()
@@ -154,6 +167,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_extending_primitives_md
 end # module Quark

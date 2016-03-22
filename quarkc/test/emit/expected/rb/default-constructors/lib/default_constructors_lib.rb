@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.default_constructors_lib; MODULE_default_constructors_lib; end
 module MODULE_default_constructors_lib
+def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor :name
 
@@ -52,8 +53,9 @@ class CLASS_A < Object
     end
 
 
-end; def self.A; CLASS_A; end
+end
 
+def self.B; CLASS_B; end
 class CLASS_B < ::Quark.default_constructors_lib.A
     attr_accessor 
 
@@ -108,8 +110,9 @@ class CLASS_B < ::Quark.default_constructors_lib.A
     end
 
 
-end; def self.B; CLASS_B; end
+end
 
+def self.C; CLASS_C; end
 class CLASS_C < ::Quark.default_constructors_lib.A
     attr_accessor 
 
@@ -164,8 +167,9 @@ class CLASS_C < ::Quark.default_constructors_lib.A
     end
 
 
-end; def self.C; CLASS_C; end
+end
 
+def self.X; CLASS_X; end
 class CLASS_X < Object
     attr_accessor 
 
@@ -207,8 +211,9 @@ class CLASS_X < Object
     end
 
 
-end; def self.X; CLASS_X; end
+end
 
+def self.Y; CLASS_Y; end
 class CLASS_Y < ::Quark.default_constructors_lib.X
     attr_accessor :name
 
@@ -266,7 +271,7 @@ class CLASS_Y < ::Quark.default_constructors_lib.X
     end
 
 
-end; def self.Y; CLASS_Y; end
+end
 
 def self.main()
     

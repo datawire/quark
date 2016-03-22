@@ -9,8 +9,14 @@ module MODULE_behaviors
 # require 'builtin/concurrent' # in builtin/behaviors 
 # require 'builtin_md' # in builtin/behaviors 
 
+def self.RPC; CLASS_RPC; end
 class CLASS_RPC < Object
     attr_accessor :service, :returned, :timeout, :methodName, :instance
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_behaviors_RPC_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPC_md }
+
 
     
     def initialize(service, methodName)
@@ -24,7 +30,7 @@ class CLASS_RPC < Object
         if (((override) != (nil)) && ((override) > (0.0)))
             timeout = override
         end
-        (self).returned = builtin::reflect::QuarkClass.get(DatawireQuarkCore._getClass(service)).getMethod(methodName).getType()
+        (self).returned = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(service)).getMethod(methodName).getType()
         (self).timeout = timeout
         (self).methodName = methodName
         (self).service = service
@@ -55,7 +61,7 @@ class CLASS_RPC < Object
             result = @returned.construct(DatawireQuarkCore::List.new([]))
             result.finish("all services are down")
         end
-        builtin::concurrent::FutureWait.waitFor(result, 10.0)
+        ::Quark.builtin.concurrent.FutureWait.waitFor(result, 10.0)
         return result
 
         nil
@@ -145,10 +151,16 @@ class CLASS_RPC < Object
     end
 
 
-end; def self.RPC; CLASS_RPC; end
+end
 
+def self.RPCRequest; CLASS_RPCRequest; end
 class CLASS_RPCRequest < Object
     attr_accessor :rpc, :retval, :args, :timeout
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_behaviors_RPCRequest_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPCRequest_md }
+
 
     
     def initialize(args, rpc)
@@ -168,7 +180,7 @@ class CLASS_RPCRequest < Object
     def call(request)
         
         (self).timeout.start(self)
-        builtin::concurrent::Context.runtime().request(request, self)
+        ::Quark.builtin.concurrent.Context.runtime().request(request, self)
         return (self).retval
 
         nil
@@ -286,10 +298,16 @@ class CLASS_RPCRequest < Object
     end
 
 
-end; def self.RPCRequest; CLASS_RPCRequest; end
+end
 
+def self.CircuitBreaker; CLASS_CircuitBreaker; end
 class CLASS_CircuitBreaker < Object
     attr_accessor :id, :failureLimit, :retestDelay, :active, :failureCount, :mutex
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_behaviors_CircuitBreaker_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_CircuitBreaker_md }
+
 
     
     def initialize(id, failureLimit, retestDelay)
@@ -329,7 +347,7 @@ class CLASS_CircuitBreaker < Object
         end
         (self).mutex.release()
         if (doSchedule)
-            builtin::concurrent::Context.runtime().schedule(self, (self).retestDelay)
+            ::Quark.builtin.concurrent.Context.runtime().schedule(self, (self).retestDelay)
         end
 
         nil
@@ -415,7 +433,7 @@ class CLASS_CircuitBreaker < Object
     end
 
 
-end; def self.CircuitBreaker; CLASS_CircuitBreaker; end
+end
 end # module MODULE_behaviors
 end # module MODULE_builtin
 end # module Quark

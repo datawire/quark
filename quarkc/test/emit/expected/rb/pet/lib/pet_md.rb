@@ -5,6 +5,7 @@ module MODULE_pet_md
 require 'builtin' # .../reflect
 require 'pets'
 
+def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
 class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -56,10 +57,16 @@ class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
+end
 
+def self.pets_Cat; CLASS_pets_Cat; end
 class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.pet_md.pets_Cat.new() }
+
 
     
     def initialize()
@@ -111,8 +118,9 @@ class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pets_Cat; CLASS_pets_Cat; end
+end
 
+def self.pets_Dog_greet_Method; CLASS_pets_Dog_greet_Method; end
 class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -164,10 +172,16 @@ class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pets_Dog_greet_Method; CLASS_pets_Dog_greet_Method; end
+end
 
+def self.pets_Dog; CLASS_pets_Dog; end
 class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.pet_md.pets_Dog.new() }
+
 
     
     def initialize()
@@ -219,10 +233,17 @@ class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pets_Dog; CLASS_pets_Dog; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pets_Cat_md: -> { ::Quark.pet_md.pets_Cat.singleton }
+    static pets_Dog_md: -> { ::Quark.pet_md.pets_Dog.singleton }
+
 
     
     def initialize()
@@ -262,6 +283,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_pet_md
 end # module Quark

@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.macro_stuff; MODULE_macro_stuff; end
 module MODULE_macro_stuff
+def self.Macro; CLASS_Macro; end
 class CLASS_Macro < Object
     attr_accessor 
 
@@ -59,6 +60,6 @@ class CLASS_Macro < Object
     end
 
 
-end; def self.Macro; CLASS_Macro; end
+end
 end # module MODULE_macro_stuff
 end # module Quark

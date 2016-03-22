@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.implicit_self; MODULE_implicit_self; end
 module MODULE_implicit_self
+def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
     attr_accessor 
 
@@ -57,6 +58,6 @@ class CLASS_Foo < Object
     end
 
 
-end; def self.Foo; CLASS_Foo; end
+end
 end # module MODULE_implicit_self
 end # module Quark

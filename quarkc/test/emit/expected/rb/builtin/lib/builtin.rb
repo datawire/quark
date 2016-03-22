@@ -15,7 +15,7 @@ def self.toJSON(obj, cls)
         return result
     end
     if ((cls) == (nil))
-        cls = builtin::reflect::QuarkClass.get(DatawireQuarkCore._getClass(obj))
+        cls = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(obj))
     end
     idx = 0
     if (((cls).name) == ("builtin.String"))
@@ -105,8 +105,14 @@ def self.fromJSON(cls, result, json)
     nil
 end
 
+def self.Resolver; CLASS_Resolver; end
 class CLASS_Resolver < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_Resolver_ref: -> { ::Quark.builtin_md.Root.builtin_Resolver_md }
+
 
     
     def initialize()
@@ -131,10 +137,16 @@ class CLASS_Resolver < Object
     end
 
 
-end; def self.Resolver; CLASS_Resolver; end
+end
 
+def self.ResponseHolder; CLASS_ResponseHolder; end
 class CLASS_ResponseHolder < Object
     attr_accessor :response, :failure
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_ResponseHolder_ref: -> { ::Quark.builtin_md.Root.builtin_ResponseHolder_md }
+
 
     
     def initialize()
@@ -216,10 +228,16 @@ class CLASS_ResponseHolder < Object
     end
 
 
-end; def self.ResponseHolder; CLASS_ResponseHolder; end
+end
 
+def self.Service; CLASS_Service; end
 class CLASS_Service < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_Service_ref: -> { ::Quark.builtin_md.Root.builtin_Service_md }
+
 
     
     def initialize()
@@ -264,10 +282,16 @@ class CLASS_Service < Object
     end
 
 
-end; def self.Service; CLASS_Service; end
+end
 
+def self.BaseService; CLASS_BaseService; end
 class CLASS_BaseService < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_BaseService_ref: -> { ::Quark.builtin_md.Root.builtin_BaseService_md }
+
 
     
     def initialize()
@@ -336,10 +360,16 @@ class CLASS_BaseService < Object
     end
 
 
-end; def self.BaseService; CLASS_BaseService; end
+end
 
+def self.ServiceInstance; CLASS_ServiceInstance; end
 class CLASS_ServiceInstance < Object
     attr_accessor :serviceName, :url, :breaker
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_ServiceInstance_ref: -> { ::Quark.builtin_md.Root.builtin_ServiceInstance_md }
+
 
     
     def initialize(serviceName, url, failureLimit, retestDelay)
@@ -438,10 +468,16 @@ class CLASS_ServiceInstance < Object
     end
 
 
-end; def self.ServiceInstance; CLASS_ServiceInstance; end
+end
 
+def self.DegenerateResolver; CLASS_DegenerateResolver; end
 class CLASS_DegenerateResolver < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_DegenerateResolver_ref: -> { ::Quark.builtin_md.Root.builtin_DegenerateResolver_md }
+
 
     
     def initialize()
@@ -488,10 +524,18 @@ class CLASS_DegenerateResolver < Object
     end
 
 
-end; def self.DegenerateResolver; CLASS_DegenerateResolver; end
+end
 
+def self.Client; CLASS_Client; end
 class CLASS_Client < Object
     attr_accessor :resolver, :serviceName, :_timeout, :_failureLimit, :_retestDelay, :mutex, :instanceMap, :counter
+    extend DatawireQuarkCore::Static
+
+
+    static logger: -> { ::Quark.builtin.concurrent.Context.runtime().logger("quark.client") }
+    static builtin_Map_builtin_String_builtin_ServiceInstance__ref: -> { ::Quark.builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md }
+    static builtin_Client_ref: -> { ::Quark.builtin_md.Root.builtin_Client_md }
+
 
     
     def initialize(serviceName)
@@ -674,10 +718,16 @@ class CLASS_Client < Object
     end
 
 
-end; def self.Client; CLASS_Client; end
+end
 
+def self.ServerResponder; CLASS_ServerResponder; end
 class CLASS_ServerResponder < Object
     attr_accessor :request, :response
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_ServerResponder_ref: -> { ::Quark.builtin_md.Root.builtin_ServerResponder_md }
+
 
     
     def initialize(request, response)
@@ -701,7 +751,7 @@ class CLASS_ServerResponder < Object
             (self).response.setBody(::Quark.builtin.toJSON(result, nil).toString())
             (self).response.setCode(200)
         end
-        builtin::concurrent::Context.runtime().respond(@request, @response)
+        ::Quark.builtin.concurrent.Context.runtime().respond(@request, @response)
 
         nil
     end
@@ -748,10 +798,17 @@ class CLASS_ServerResponder < Object
     end
 
 
-end; def self.ServerResponder; CLASS_ServerResponder; end
+end
 
+def self.Server; CLASS_Server; end
 class CLASS_Server < Object
     attr_accessor :impl
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_List_builtin_reflect_Class__ref: -> { ::Quark.builtin_md.Root.builtin_List_builtin_reflect_Class__md }
+    static builtin_Server_builtin_Object__ref: -> { ::Quark.builtin_md.Root.builtin_Server_builtin_Object__md }
+
 
     
     def initialize(impl)
@@ -772,11 +829,11 @@ class CLASS_Server < Object
         if ((((envelope).getObjectItem("$method")) == (envelope.undefined())) || (((envelope).getObjectItem("rpc")) == (envelope.undefined())))
             response.setBody((("Failed to understand request.\n\n") + (body)) + ("\n"))
             response.setCode(400)
-            builtin::concurrent::Context.runtime().respond(request, response)
+            ::Quark.builtin.concurrent.Context.runtime().respond(request, response)
         else
             methodName = (envelope).getObjectItem("$method").getString()
             json = (envelope).getObjectItem("rpc")
-            method = builtin::reflect::QuarkClass.get(DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
+            method = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
             params = method.getParameters()
             args = DatawireQuarkCore::List.new([])
             idx = 0
@@ -793,7 +850,7 @@ class CLASS_Server < Object
 
     def onServletError(url, message)
         
-        builtin::concurrent::Context.runtime().fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message))
+        ::Quark.builtin.concurrent.Context.runtime().fail(((("RPC Server failed to register ") + (url)) + (" due to: ")) + (message))
 
         nil
     end
@@ -826,7 +883,7 @@ class CLASS_Server < Object
 
     def serveHTTP(url)
         
-        builtin::concurrent::Context.runtime().serveHTTP(url, self)
+        ::Quark.builtin.concurrent.Context.runtime().serveHTTP(url, self)
 
         nil
     end
@@ -854,6 +911,6 @@ class CLASS_Server < Object
     end
 
 
-end; def self.Server; CLASS_Server; end
+end
 end # module MODULE_builtin
 end # module Quark

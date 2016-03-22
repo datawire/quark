@@ -7,6 +7,7 @@ require 'slack/event'
 require 'slack'
 require 'pkg'
 
+def self.slack_event_SlackEvent_load_Method; CLASS_slack_event_SlackEvent_load_Method; end
 class CLASS_slack_event_SlackEvent_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -58,8 +59,9 @@ class CLASS_slack_event_SlackEvent_load_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_SlackEvent_load_Method; CLASS_slack_event_SlackEvent_load_Method; end
+end
 
+def self.slack_event_SlackEvent_dispatch_Method; CLASS_slack_event_SlackEvent_dispatch_Method; end
 class CLASS_slack_event_SlackEvent_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -111,10 +113,16 @@ class CLASS_slack_event_SlackEvent_dispatch_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.slack_event_SlackEvent_dispatch_Method; CLASS_slack_event_SlackEvent_dispatch_Method; end
+end
 
+def self.slack_event_SlackEvent; CLASS_slack_event_SlackEvent; end
 class CLASS_slack_event_SlackEvent < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_event_SlackEvent.new() }
+
 
     
     def initialize()
@@ -166,8 +174,9 @@ class CLASS_slack_event_SlackEvent < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_event_SlackEvent; CLASS_slack_event_SlackEvent; end
+end
 
+def self.slack_event_SlackError_load_Method; CLASS_slack_event_SlackError_load_Method; end
 class CLASS_slack_event_SlackError_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -219,8 +228,9 @@ class CLASS_slack_event_SlackError_load_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_SlackError_load_Method; CLASS_slack_event_SlackError_load_Method; end
+end
 
+def self.slack_event_SlackError_dispatch_Method; CLASS_slack_event_SlackError_dispatch_Method; end
 class CLASS_slack_event_SlackError_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -272,10 +282,16 @@ class CLASS_slack_event_SlackError_dispatch_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.slack_event_SlackError_dispatch_Method; CLASS_slack_event_SlackError_dispatch_Method; end
+end
 
+def self.slack_event_SlackError; CLASS_slack_event_SlackError; end
 class CLASS_slack_event_SlackError < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_event_SlackError.new() }
+
 
     
     def initialize()
@@ -327,8 +343,9 @@ class CLASS_slack_event_SlackError < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_event_SlackError; CLASS_slack_event_SlackError; end
+end
 
+def self.slack_event_Hello_dispatch_Method; CLASS_slack_event_Hello_dispatch_Method; end
 class CLASS_slack_event_Hello_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -380,8 +397,9 @@ class CLASS_slack_event_Hello_dispatch_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_Hello_dispatch_Method; CLASS_slack_event_Hello_dispatch_Method; end
+end
 
+def self.slack_event_Hello_load_Method; CLASS_slack_event_Hello_load_Method; end
 class CLASS_slack_event_Hello_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -433,10 +451,16 @@ class CLASS_slack_event_Hello_load_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_Hello_load_Method; CLASS_slack_event_Hello_load_Method; end
+end
 
+def self.slack_event_Hello; CLASS_slack_event_Hello; end
 class CLASS_slack_event_Hello < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_event_Hello.new() }
+
 
     
     def initialize()
@@ -488,8 +512,9 @@ class CLASS_slack_event_Hello < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_event_Hello; CLASS_slack_event_Hello; end
+end
 
+def self.slack_event_Message_load_Method; CLASS_slack_event_Message_load_Method; end
 class CLASS_slack_event_Message_load_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -541,8 +566,9 @@ class CLASS_slack_event_Message_load_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_Message_load_Method; CLASS_slack_event_Message_load_Method; end
+end
 
+def self.slack_event_Message_dispatch_Method; CLASS_slack_event_Message_dispatch_Method; end
 class CLASS_slack_event_Message_dispatch_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -594,10 +620,16 @@ class CLASS_slack_event_Message_dispatch_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_event_Message_dispatch_Method; CLASS_slack_event_Message_dispatch_Method; end
+end
 
+def self.slack_event_Message; CLASS_slack_event_Message; end
 class CLASS_slack_event_Message < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_event_Message.new() }
+
 
     
     def initialize()
@@ -649,10 +681,16 @@ class CLASS_slack_event_Message < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_event_Message; CLASS_slack_event_Message; end
+end
 
+def self.slack_event_Edited; CLASS_slack_event_Edited; end
 class CLASS_slack_event_Edited < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_event_Edited.new() }
+
 
     
     def initialize()
@@ -704,8 +742,9 @@ class CLASS_slack_event_Edited < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_event_Edited; CLASS_slack_event_Edited; end
+end
 
+def self.slack_SlackHandler_onSlackEvent_Method; CLASS_slack_SlackHandler_onSlackEvent_Method; end
 class CLASS_slack_SlackHandler_onSlackEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -757,8 +796,9 @@ class CLASS_slack_SlackHandler_onSlackEvent_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.slack_SlackHandler_onSlackEvent_Method; CLASS_slack_SlackHandler_onSlackEvent_Method; end
+end
 
+def self.slack_SlackHandler_onHello_Method; CLASS_slack_SlackHandler_onHello_Method; end
 class CLASS_slack_SlackHandler_onHello_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -810,8 +850,9 @@ class CLASS_slack_SlackHandler_onHello_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_SlackHandler_onHello_Method; CLASS_slack_SlackHandler_onHello_Method; end
+end
 
+def self.slack_SlackHandler_onSlackError_Method; CLASS_slack_SlackHandler_onSlackError_Method; end
 class CLASS_slack_SlackHandler_onSlackError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -863,8 +904,9 @@ class CLASS_slack_SlackHandler_onSlackError_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.slack_SlackHandler_onSlackError_Method; CLASS_slack_SlackHandler_onSlackError_Method; end
+end
 
+def self.slack_SlackHandler_onMessage_Method; CLASS_slack_SlackHandler_onMessage_Method; end
 class CLASS_slack_SlackHandler_onMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -916,10 +958,16 @@ class CLASS_slack_SlackHandler_onMessage_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_SlackHandler_onMessage_Method; CLASS_slack_SlackHandler_onMessage_Method; end
+end
 
+def self.slack_SlackHandler; CLASS_slack_SlackHandler; end
 class CLASS_slack_SlackHandler < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_SlackHandler.new() }
+
 
     
     def initialize()
@@ -971,10 +1019,16 @@ class CLASS_slack_SlackHandler < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_SlackHandler; CLASS_slack_SlackHandler; end
+end
 
+def self.slack_User; CLASS_slack_User; end
 class CLASS_slack_User < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_User.new() }
+
 
     
     def initialize()
@@ -1026,8 +1080,9 @@ class CLASS_slack_User < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_User; CLASS_slack_User; end
+end
 
+def self.slack_Channel_send_Method; CLASS_slack_Channel_send_Method; end
 class CLASS_slack_Channel_send_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1079,10 +1134,16 @@ class CLASS_slack_Channel_send_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Channel_send_Method; CLASS_slack_Channel_send_Method; end
+end
 
+def self.slack_Channel; CLASS_slack_Channel; end
 class CLASS_slack_Channel < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_Channel.new() }
+
 
     
     def initialize()
@@ -1134,8 +1195,9 @@ class CLASS_slack_Channel < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_Channel; CLASS_slack_Channel; end
+end
 
+def self.slack_Client_connect_Method; CLASS_slack_Client_connect_Method; end
 class CLASS_slack_Client_connect_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1187,8 +1249,9 @@ class CLASS_slack_Client_connect_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_connect_Method; CLASS_slack_Client_connect_Method; end
+end
 
+def self.slack_Client_request_Method; CLASS_slack_Client_request_Method; end
 class CLASS_slack_Client_request_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1240,8 +1303,9 @@ class CLASS_slack_Client_request_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_request_Method; CLASS_slack_Client_request_Method; end
+end
 
+def self.slack_Client_ws_connect_Method; CLASS_slack_Client_ws_connect_Method; end
 class CLASS_slack_Client_ws_connect_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1293,8 +1357,9 @@ class CLASS_slack_Client_ws_connect_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_ws_connect_Method; CLASS_slack_Client_ws_connect_Method; end
+end
 
+def self.slack_Client_ws_send_Method; CLASS_slack_Client_ws_send_Method; end
 class CLASS_slack_Client_ws_send_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1346,8 +1411,9 @@ class CLASS_slack_Client_ws_send_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_ws_send_Method; CLASS_slack_Client_ws_send_Method; end
+end
 
+def self.slack_Client_onWSConnected_Method; CLASS_slack_Client_onWSConnected_Method; end
 class CLASS_slack_Client_onWSConnected_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1399,8 +1465,9 @@ class CLASS_slack_Client_onWSConnected_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_onWSConnected_Method; CLASS_slack_Client_onWSConnected_Method; end
+end
 
+def self.slack_Client_onWSClose_Method; CLASS_slack_Client_onWSClose_Method; end
 class CLASS_slack_Client_onWSClose_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1452,8 +1519,9 @@ class CLASS_slack_Client_onWSClose_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_onWSClose_Method; CLASS_slack_Client_onWSClose_Method; end
+end
 
+def self.slack_Client_onWSError_Method; CLASS_slack_Client_onWSError_Method; end
 class CLASS_slack_Client_onWSError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1505,8 +1573,9 @@ class CLASS_slack_Client_onWSError_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_onWSError_Method; CLASS_slack_Client_onWSError_Method; end
+end
 
+def self.slack_Client_construct_Method; CLASS_slack_Client_construct_Method; end
 class CLASS_slack_Client_construct_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1557,8 +1626,9 @@ class CLASS_slack_Client_construct_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_construct_Method; CLASS_slack_Client_construct_Method; end
+end
 
+def self.slack_Client_onWSMessage_Method; CLASS_slack_Client_onWSMessage_Method; end
 class CLASS_slack_Client_onWSMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1610,8 +1680,9 @@ class CLASS_slack_Client_onWSMessage_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_onWSMessage_Method; CLASS_slack_Client_onWSMessage_Method; end
+end
 
+def self.slack_Client_onHTTPResponse_Method; CLASS_slack_Client_onHTTPResponse_Method; end
 class CLASS_slack_Client_onHTTPResponse_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1663,10 +1734,16 @@ class CLASS_slack_Client_onHTTPResponse_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.slack_Client_onHTTPResponse_Method; CLASS_slack_Client_onHTTPResponse_Method; end
+end
 
+def self.slack_Client; CLASS_slack_Client; end
 class CLASS_slack_Client < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.slack_Client.new() }
+
 
     
     def initialize()
@@ -1718,8 +1795,9 @@ class CLASS_slack_Client < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.slack_Client; CLASS_slack_Client; end
+end
 
+def self.pkg_Handler_onSlackEvent_Method; CLASS_pkg_Handler_onSlackEvent_Method; end
 class CLASS_pkg_Handler_onSlackEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1771,8 +1849,9 @@ class CLASS_pkg_Handler_onSlackEvent_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Handler_onSlackEvent_Method; CLASS_pkg_Handler_onSlackEvent_Method; end
+end
 
+def self.pkg_Handler_onHello_Method; CLASS_pkg_Handler_onHello_Method; end
 class CLASS_pkg_Handler_onHello_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1824,8 +1903,9 @@ class CLASS_pkg_Handler_onHello_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Handler_onHello_Method; CLASS_pkg_Handler_onHello_Method; end
+end
 
+def self.pkg_Handler_onSlackError_Method; CLASS_pkg_Handler_onSlackError_Method; end
 class CLASS_pkg_Handler_onSlackError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1877,8 +1957,9 @@ class CLASS_pkg_Handler_onSlackError_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Handler_onSlackError_Method; CLASS_pkg_Handler_onSlackError_Method; end
+end
 
+def self.pkg_Handler_onMessage_Method; CLASS_pkg_Handler_onMessage_Method; end
 class CLASS_pkg_Handler_onMessage_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1930,10 +2011,16 @@ class CLASS_pkg_Handler_onMessage_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Handler_onMessage_Method; CLASS_pkg_Handler_onMessage_Method; end
+end
 
+def self.pkg_Handler; CLASS_pkg_Handler; end
 class CLASS_pkg_Handler < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.pkg_Handler.new() }
+
 
     
     def initialize()
@@ -1985,10 +2072,16 @@ class CLASS_pkg_Handler < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_Handler; CLASS_pkg_Handler; end
+end
 
+def self.builtin_Map_builtin_String_builtin_Object_; CLASS_builtin_Map_builtin_String_builtin_Object_; end
 class CLASS_builtin_Map_builtin_String_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.slackpack_md.builtin_Map_builtin_String_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -2040,10 +2133,26 @@ class CLASS_builtin_Map_builtin_String_builtin_Object_ < ::Quark.builtin.reflect
     end
 
 
-end; def self.builtin_Map_builtin_String_builtin_Object_; CLASS_builtin_Map_builtin_String_builtin_Object_; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static slack_event_SlackEvent_md: -> { ::Quark.slackpack_md.slack_event_SlackEvent.singleton }
+    static slack_event_SlackError_md: -> { ::Quark.slackpack_md.slack_event_SlackError.singleton }
+    static slack_event_Hello_md: -> { ::Quark.slackpack_md.slack_event_Hello.singleton }
+    static slack_event_Message_md: -> { ::Quark.slackpack_md.slack_event_Message.singleton }
+    static slack_event_Edited_md: -> { ::Quark.slackpack_md.slack_event_Edited.singleton }
+    static slack_SlackHandler_md: -> { ::Quark.slackpack_md.slack_SlackHandler.singleton }
+    static slack_User_md: -> { ::Quark.slackpack_md.slack_User.singleton }
+    static slack_Channel_md: -> { ::Quark.slackpack_md.slack_Channel.singleton }
+    static slack_Client_md: -> { ::Quark.slackpack_md.slack_Client.singleton }
+    static pkg_Handler_md: -> { ::Quark.slackpack_md.pkg_Handler.singleton }
+    static builtin_Map_builtin_String_builtin_Object__md: -> { ::Quark.slackpack_md.builtin_Map_builtin_String_builtin_Object_.singleton }
+
 
     
     def initialize()
@@ -2083,6 +2192,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_slackpack_md
 end # module Quark

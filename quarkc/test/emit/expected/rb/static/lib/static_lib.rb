@@ -2,8 +2,14 @@ module Quark
 require "datawire-quark-core"
 def self.static_lib; MODULE_static_lib; end
 module MODULE_static_lib
+def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static count: -> { 0 }
+
 
     
     def initialize()
@@ -54,7 +60,7 @@ class CLASS_Foo < Object
 
     def test4()
         
-        static_lib::Foo.setCount((static_lib::Foo.getCount()) + (1))
+        ::Quark.static_lib.Foo.setCount((::Quark.static_lib.Foo.getCount()) + (1))
 
         nil
     end
@@ -92,7 +98,7 @@ class CLASS_Foo < Object
     end
 
 
-end; def self.Foo; CLASS_Foo; end
+end
 
 def self.main()
     
@@ -117,20 +123,20 @@ def self.main()
     DatawireQuarkCore.print(::Quark.static_lib.Foo.count)
     DatawireQuarkCore.print("==")
     f.test4()
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
     DatawireQuarkCore.print("==")
-    static_lib::Foo.setCount(0)
+    ::Quark.static_lib.Foo.setCount(0)
     DatawireQuarkCore.print(::Quark.static_lib.Foo.count)
     DatawireQuarkCore.print(::Quark.static_lib.Foo.count)
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
     DatawireQuarkCore.print("==")
-    static_lib::Foo.setCount(-(1))
+    ::Quark.static_lib.Foo.setCount(-(1))
     DatawireQuarkCore.print(::Quark.static_lib.Foo.count)
     DatawireQuarkCore.print(::Quark.static_lib.Foo.count)
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
-    DatawireQuarkCore.print(static_lib::Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
+    DatawireQuarkCore.print(::Quark.static_lib.Foo.getCount())
 
 
     nil

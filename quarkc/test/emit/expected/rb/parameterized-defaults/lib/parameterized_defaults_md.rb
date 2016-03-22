@@ -5,6 +5,7 @@ module MODULE_parameterized_defaults_md
 require 'builtin' # .../reflect
 require 'pkg'
 
+def self.pkg_Foo_builtin_Object__foo_Method; CLASS_pkg_Foo_builtin_Object__foo_Method; end
 class CLASS_pkg_Foo_builtin_Object__foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -55,8 +56,9 @@ class CLASS_pkg_Foo_builtin_Object__foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Foo_builtin_Object__foo_Method; CLASS_pkg_Foo_builtin_Object__foo_Method; end
+end
 
+def self.pkg_Foo_builtin_Object__get_Method; CLASS_pkg_Foo_builtin_Object__get_Method; end
 class CLASS_pkg_Foo_builtin_Object__get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -107,10 +109,16 @@ class CLASS_pkg_Foo_builtin_Object__get_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Foo_builtin_Object__get_Method; CLASS_pkg_Foo_builtin_Object__get_Method; end
+end
 
+def self.pkg_Foo_builtin_Object_; CLASS_pkg_Foo_builtin_Object_; end
 class CLASS_pkg_Foo_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.parameterized_defaults_md.pkg_Foo_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -162,8 +170,9 @@ class CLASS_pkg_Foo_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_Foo_builtin_Object_; CLASS_pkg_Foo_builtin_Object_; end
+end
 
+def self.pkg_StringFoo_get_Method; CLASS_pkg_StringFoo_get_Method; end
 class CLASS_pkg_StringFoo_get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -214,8 +223,9 @@ class CLASS_pkg_StringFoo_get_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_StringFoo_get_Method; CLASS_pkg_StringFoo_get_Method; end
+end
 
+def self.pkg_StringFoo_foo_Method; CLASS_pkg_StringFoo_foo_Method; end
 class CLASS_pkg_StringFoo_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -266,10 +276,16 @@ class CLASS_pkg_StringFoo_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_StringFoo_foo_Method; CLASS_pkg_StringFoo_foo_Method; end
+end
 
+def self.pkg_StringFoo; CLASS_pkg_StringFoo; end
 class CLASS_pkg_StringFoo < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.parameterized_defaults_md.pkg_StringFoo.new() }
+
 
     
     def initialize()
@@ -321,10 +337,16 @@ class CLASS_pkg_StringFoo < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_StringFoo; CLASS_pkg_StringFoo; end
+end
 
+def self.pkg_Box_builtin_String_; CLASS_pkg_Box_builtin_String_; end
 class CLASS_pkg_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.parameterized_defaults_md.pkg_Box_builtin_String_.new() }
+
 
     
     def initialize()
@@ -376,10 +398,16 @@ class CLASS_pkg_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_Box_builtin_String_; CLASS_pkg_Box_builtin_String_; end
+end
 
+def self.pkg_StringBox; CLASS_pkg_StringBox; end
 class CLASS_pkg_StringBox < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.parameterized_defaults_md.pkg_StringBox.new() }
+
 
     
     def initialize()
@@ -431,10 +459,19 @@ class CLASS_pkg_StringBox < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_StringBox; CLASS_pkg_StringBox; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Foo_builtin_Object__md: -> { ::Quark.parameterized_defaults_md.pkg_Foo_builtin_Object_.singleton }
+    static pkg_StringFoo_md: -> { ::Quark.parameterized_defaults_md.pkg_StringFoo.singleton }
+    static pkg_Box_builtin_String__md: -> { ::Quark.parameterized_defaults_md.pkg_Box_builtin_String_.singleton }
+    static pkg_StringBox_md: -> { ::Quark.parameterized_defaults_md.pkg_StringBox.singleton }
+
 
     
     def initialize()
@@ -474,6 +511,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_parameterized_defaults_md
 end # module Quark

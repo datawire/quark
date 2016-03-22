@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.delegate_lib; MODULE_delegate_lib; end
 module MODULE_delegate_lib
+def self.Message; CLASS_Message; end
 class CLASS_Message < Object
     attr_accessor 
 
@@ -50,8 +51,9 @@ class CLASS_Message < Object
     end
 
 
-end; def self.Message; CLASS_Message; end
+end
 
+def self.Ping; CLASS_Ping; end
 class CLASS_Ping < ::Quark.delegate_lib.Message
     attr_accessor 
 
@@ -94,8 +96,9 @@ class CLASS_Ping < ::Quark.delegate_lib.Message
     end
 
 
-end; def self.Ping; CLASS_Ping; end
+end
 
+def self.Pong; CLASS_Pong; end
 class CLASS_Pong < ::Quark.delegate_lib.Message
     attr_accessor 
 
@@ -145,8 +148,9 @@ class CLASS_Pong < ::Quark.delegate_lib.Message
     end
 
 
-end; def self.Pong; CLASS_Pong; end
+end
 
+def self.Test; CLASS_Test; end
 class CLASS_Test < Object
     attr_accessor 
 
@@ -222,7 +226,7 @@ class CLASS_Test < Object
     end
 
 
-end; def self.Test; CLASS_Test; end
+end
 
 def self.main()
     

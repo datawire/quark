@@ -6,9 +6,9 @@ require 'builtin' # .../concurrent
 
 def self.main()
     
-    l = builtin::concurrent::Context.runtime().logger("logme")
+    l = ::Quark.builtin.concurrent.Context.runtime().logger("logme")
     l.error("logme error")
-    sweet = builtin::concurrent::Context.runtime().logger("logthat")
+    sweet = ::Quark.builtin.concurrent.Context.runtime().logger("logthat")
     sweet.error("nice")
 
 

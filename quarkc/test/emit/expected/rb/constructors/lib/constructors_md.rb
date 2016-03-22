@@ -7,8 +7,14 @@ require 'test1'
 require 'test2'
 require 'test3'
 
+def self.test1_Test; CLASS_test1_Test; end
 class CLASS_test1_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.constructors_md.test1_Test.new() }
+
 
     
     def initialize()
@@ -60,10 +66,16 @@ class CLASS_test1_Test < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.test1_Test; CLASS_test1_Test; end
+end
 
+def self.test2_Test; CLASS_test2_Test; end
 class CLASS_test2_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.constructors_md.test2_Test.new() }
+
 
     
     def initialize()
@@ -115,8 +127,9 @@ class CLASS_test2_Test < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.test2_Test; CLASS_test2_Test; end
+end
 
+def self.test3_Box_builtin_String__get_Method; CLASS_test3_Box_builtin_String__get_Method; end
 class CLASS_test3_Box_builtin_String__get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -167,10 +180,16 @@ class CLASS_test3_Box_builtin_String__get_Method < ::Quark.builtin.reflect.Metho
     end
 
 
-end; def self.test3_Box_builtin_String__get_Method; CLASS_test3_Box_builtin_String__get_Method; end
+end
 
+def self.test3_Box_builtin_String_; CLASS_test3_Box_builtin_String_; end
 class CLASS_test3_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.constructors_md.test3_Box_builtin_String_.new() }
+
 
     
     def initialize()
@@ -222,10 +241,17 @@ class CLASS_test3_Box_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.test3_Box_builtin_String_; CLASS_test3_Box_builtin_String_; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static test1_Test_md: -> { ::Quark.constructors_md.test1_Test.singleton }
+    static test2_Test_md: -> { ::Quark.constructors_md.test2_Test.singleton }
+
 
     
     def initialize()
@@ -265,6 +291,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_constructors_md
 end # module Quark

@@ -5,6 +5,7 @@ module MODULE_defaulted_methods_md
 require 'builtin' # .../reflect
 require 'pkg'
 
+def self.pkg_A_foo_Method; CLASS_pkg_A_foo_Method; end
 class CLASS_pkg_A_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -56,8 +57,9 @@ class CLASS_pkg_A_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_A_foo_Method; CLASS_pkg_A_foo_Method; end
+end
 
+def self.pkg_A_bar_Method; CLASS_pkg_A_bar_Method; end
 class CLASS_pkg_A_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -109,10 +111,16 @@ class CLASS_pkg_A_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_A_bar_Method; CLASS_pkg_A_bar_Method; end
+end
 
+def self.pkg_A; CLASS_pkg_A; end
 class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_A.new() }
+
 
     
     def initialize()
@@ -164,8 +172,9 @@ class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_A; CLASS_pkg_A; end
+end
 
+def self.pkg_B_bar_Method; CLASS_pkg_B_bar_Method; end
 class CLASS_pkg_B_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -217,10 +226,16 @@ class CLASS_pkg_B_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_B_bar_Method; CLASS_pkg_B_bar_Method; end
+end
 
+def self.pkg_B; CLASS_pkg_B; end
 class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_B.new() }
+
 
     
     def initialize()
@@ -272,8 +287,9 @@ class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_B; CLASS_pkg_B; end
+end
 
+def self.pkg_C_foo_Method; CLASS_pkg_C_foo_Method; end
 class CLASS_pkg_C_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -325,10 +341,16 @@ class CLASS_pkg_C_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_C_foo_Method; CLASS_pkg_C_foo_Method; end
+end
 
+def self.pkg_C; CLASS_pkg_C; end
 class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_C.new() }
+
 
     
     def initialize()
@@ -380,8 +402,9 @@ class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_C; CLASS_pkg_C; end
+end
 
+def self.pkg_T1_foo_Method; CLASS_pkg_T1_foo_Method; end
 class CLASS_pkg_T1_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -433,8 +456,9 @@ class CLASS_pkg_T1_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T1_foo_Method; CLASS_pkg_T1_foo_Method; end
+end
 
+def self.pkg_T1_bar_Method; CLASS_pkg_T1_bar_Method; end
 class CLASS_pkg_T1_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -486,10 +510,16 @@ class CLASS_pkg_T1_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T1_bar_Method; CLASS_pkg_T1_bar_Method; end
+end
 
+def self.pkg_T1; CLASS_pkg_T1; end
 class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_T1.new() }
+
 
     
     def initialize()
@@ -541,8 +571,9 @@ class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_T1; CLASS_pkg_T1; end
+end
 
+def self.pkg_T2_foo_Method; CLASS_pkg_T2_foo_Method; end
 class CLASS_pkg_T2_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -594,8 +625,9 @@ class CLASS_pkg_T2_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T2_foo_Method; CLASS_pkg_T2_foo_Method; end
+end
 
+def self.pkg_T2_bar_Method; CLASS_pkg_T2_bar_Method; end
 class CLASS_pkg_T2_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -647,10 +679,16 @@ class CLASS_pkg_T2_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T2_bar_Method; CLASS_pkg_T2_bar_Method; end
+end
 
+def self.pkg_T2; CLASS_pkg_T2; end
 class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_T2.new() }
+
 
     
     def initialize()
@@ -702,8 +740,9 @@ class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_T2; CLASS_pkg_T2; end
+end
 
+def self.pkg_T3_foo_Method; CLASS_pkg_T3_foo_Method; end
 class CLASS_pkg_T3_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -755,8 +794,9 @@ class CLASS_pkg_T3_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T3_foo_Method; CLASS_pkg_T3_foo_Method; end
+end
 
+def self.pkg_T3_bar_Method; CLASS_pkg_T3_bar_Method; end
 class CLASS_pkg_T3_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -808,10 +848,16 @@ class CLASS_pkg_T3_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T3_bar_Method; CLASS_pkg_T3_bar_Method; end
+end
 
+def self.pkg_T3; CLASS_pkg_T3; end
 class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_T3.new() }
+
 
     
     def initialize()
@@ -863,8 +909,9 @@ class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_T3; CLASS_pkg_T3; end
+end
 
+def self.pkg_T4_foo_Method; CLASS_pkg_T4_foo_Method; end
 class CLASS_pkg_T4_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -916,8 +963,9 @@ class CLASS_pkg_T4_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T4_foo_Method; CLASS_pkg_T4_foo_Method; end
+end
 
+def self.pkg_T4_bar_Method; CLASS_pkg_T4_bar_Method; end
 class CLASS_pkg_T4_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -969,10 +1017,16 @@ class CLASS_pkg_T4_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T4_bar_Method; CLASS_pkg_T4_bar_Method; end
+end
 
+def self.pkg_T4; CLASS_pkg_T4; end
 class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_T4.new() }
+
 
     
     def initialize()
@@ -1024,8 +1078,9 @@ class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_T4; CLASS_pkg_T4; end
+end
 
+def self.pkg_T5_foo_Method; CLASS_pkg_T5_foo_Method; end
 class CLASS_pkg_T5_foo_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1077,8 +1132,9 @@ class CLASS_pkg_T5_foo_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T5_foo_Method; CLASS_pkg_T5_foo_Method; end
+end
 
+def self.pkg_T5_bar_Method; CLASS_pkg_T5_bar_Method; end
 class CLASS_pkg_T5_bar_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1130,10 +1186,16 @@ class CLASS_pkg_T5_bar_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_T5_bar_Method; CLASS_pkg_T5_bar_Method; end
+end
 
+def self.pkg_T5; CLASS_pkg_T5; end
 class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.defaulted_methods_md.pkg_T5.new() }
+
 
     
     def initialize()
@@ -1185,10 +1247,23 @@ class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_T5; CLASS_pkg_T5; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_A_md: -> { ::Quark.defaulted_methods_md.pkg_A.singleton }
+    static pkg_B_md: -> { ::Quark.defaulted_methods_md.pkg_B.singleton }
+    static pkg_C_md: -> { ::Quark.defaulted_methods_md.pkg_C.singleton }
+    static pkg_T1_md: -> { ::Quark.defaulted_methods_md.pkg_T1.singleton }
+    static pkg_T2_md: -> { ::Quark.defaulted_methods_md.pkg_T2.singleton }
+    static pkg_T3_md: -> { ::Quark.defaulted_methods_md.pkg_T3.singleton }
+    static pkg_T4_md: -> { ::Quark.defaulted_methods_md.pkg_T4.singleton }
+    static pkg_T5_md: -> { ::Quark.defaulted_methods_md.pkg_T5.singleton }
+
 
     
     def initialize()
@@ -1228,6 +1303,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_defaulted_methods_md
 end # module Quark

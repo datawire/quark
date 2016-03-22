@@ -5,6 +5,7 @@ module MODULE_pets
 require 'builtin' # .../reflect
 require 'pet_md'
 
+def self.Pet; CLASS_Pet; end
 class CLASS_Pet < Object
     attr_accessor 
 
@@ -31,10 +32,16 @@ class CLASS_Pet < Object
     end
 
 
-end; def self.Pet; CLASS_Pet; end
+end
 
+def self.Cat; CLASS_Cat; end
 class CLASS_Cat < ::Quark.pets.Pet
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pets_Cat_ref: -> { ::Quark.pet_md.Root.pets_Cat_md }
+
 
     
     def initialize()
@@ -82,10 +89,16 @@ class CLASS_Cat < ::Quark.pets.Pet
     end
 
 
-end; def self.Cat; CLASS_Cat; end
+end
 
+def self.Dog; CLASS_Dog; end
 class CLASS_Dog < ::Quark.pets.Pet
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pets_Dog_ref: -> { ::Quark.pet_md.Root.pets_Dog_md }
+
 
     
     def initialize()
@@ -133,7 +146,7 @@ class CLASS_Dog < ::Quark.pets.Pet
     end
 
 
-end; def self.Dog; CLASS_Dog; end
+end
 
 def self.main()
     

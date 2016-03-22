@@ -6,6 +6,7 @@ require 'builtin' # .../reflect
 require 'test'
 require 'test/test'
 
+def self.test_Test_go_Method; CLASS_test_Test_go_Method; end
 class CLASS_test_Test_go_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -57,10 +58,16 @@ class CLASS_test_Test_go_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.test_Test_go_Method; CLASS_test_Test_go_Method; end
+end
 
+def self.test_Test; CLASS_test_Test; end
 class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.package_md.test_Test.new() }
+
 
     
     def initialize()
@@ -112,8 +119,9 @@ class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.test_Test; CLASS_test_Test; end
+end
 
+def self.test_test_Test_go_Method; CLASS_test_test_Test_go_Method; end
 class CLASS_test_test_Test_go_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -165,10 +173,16 @@ class CLASS_test_test_Test_go_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.test_test_Test_go_Method; CLASS_test_test_Test_go_Method; end
+end
 
+def self.test_test_Test; CLASS_test_test_Test; end
 class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.package_md.test_test_Test.new() }
+
 
     
     def initialize()
@@ -220,10 +234,17 @@ class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.test_test_Test; CLASS_test_test_Test; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static test_Test_md: -> { ::Quark.package_md.test_Test.singleton }
+    static test_test_Test_md: -> { ::Quark.package_md.test_test_Test.singleton }
+
 
     
     def initialize()
@@ -263,6 +284,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_package_md
 end # module Quark

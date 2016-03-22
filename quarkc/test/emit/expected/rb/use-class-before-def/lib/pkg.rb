@@ -5,8 +5,14 @@ module MODULE_pkg
 require 'builtin' # .../reflect
 require 'use_class_before_def_md'
 
+def self.Bar; CLASS_Bar; end
 class CLASS_Bar < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Bar_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Bar_md }
+
 
     
     def initialize()
@@ -55,10 +61,16 @@ class CLASS_Bar < Object
     end
 
 
-end; def self.Bar; CLASS_Bar; end
+end
 
+def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
     attr_accessor :name
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Foo_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Foo_md }
+
 
     
     def initialize()
@@ -105,7 +117,7 @@ class CLASS_Foo < Object
     end
 
 
-end; def self.Foo; CLASS_Foo; end
+end
 
 def self.main()
     

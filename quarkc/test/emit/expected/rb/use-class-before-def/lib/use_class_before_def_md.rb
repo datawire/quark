@@ -5,6 +5,7 @@ module MODULE_use_class_before_def_md
 require 'builtin' # .../reflect
 require 'pkg'
 
+def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
 class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -56,10 +57,16 @@ class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
+end
 
+def self.pkg_Bar; CLASS_pkg_Bar; end
 class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.use_class_before_def_md.pkg_Bar.new() }
+
 
     
     def initialize()
@@ -111,10 +118,16 @@ class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_Bar; CLASS_pkg_Bar; end
+end
 
+def self.pkg_Foo; CLASS_pkg_Foo; end
 class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.use_class_before_def_md.pkg_Foo.new() }
+
 
     
     def initialize()
@@ -166,10 +179,17 @@ class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.pkg_Foo; CLASS_pkg_Foo; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_Bar_md: -> { ::Quark.use_class_before_def_md.pkg_Bar.singleton }
+    static pkg_Foo_md: -> { ::Quark.use_class_before_def_md.pkg_Foo.singleton }
+
 
     
     def initialize()
@@ -209,6 +229,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_use_class_before_def_md
 end # module Quark

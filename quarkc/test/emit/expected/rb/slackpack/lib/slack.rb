@@ -6,8 +6,14 @@ require 'builtin' # .../reflect
 require 'slack/event'
 require 'slackpack_md'
 
+def self.SlackHandler; CLASS_SlackHandler; end
 class CLASS_SlackHandler < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static slack_SlackHandler_ref: -> { ::Quark.slackpack_md.Root.slack_SlackHandler_md }
+
 
     
     def initialize()
@@ -54,10 +60,16 @@ class CLASS_SlackHandler < Object
     end
 
 
-end; def self.SlackHandler; CLASS_SlackHandler; end
+end
 
+def self.User; CLASS_User; end
 class CLASS_User < Object
     attr_accessor :client, :user
+    extend DatawireQuarkCore::Static
+
+
+    static slack_User_ref: -> { ::Quark.slackpack_md.Root.slack_User_md }
+
 
     
     def initialize(client, user)
@@ -114,10 +126,16 @@ class CLASS_User < Object
     end
 
 
-end; def self.User; CLASS_User; end
+end
 
+def self.Channel; CLASS_Channel; end
 class CLASS_Channel < Object
     attr_accessor :client, :channel
+    extend DatawireQuarkCore::Static
+
+
+    static slack_Channel_ref: -> { ::Quark.slackpack_md.Root.slack_Channel_md }
+
 
     
     def initialize(client, channel)
@@ -188,10 +206,17 @@ class CLASS_Channel < Object
     end
 
 
-end; def self.Channel; CLASS_Channel; end
+end
 
+def self.Client; CLASS_Client; end
 class CLASS_Client < Object
     attr_accessor :runtime, :token, :handler, :event_id, :socket
+    extend DatawireQuarkCore::Static
+
+
+    static slack_Client_ref: -> { ::Quark.slackpack_md.Root.slack_Client_md }
+    static builtin_Map_builtin_String_builtin_Object__ref: -> { ::Quark.slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md }
+
 
     
     def initialize(runtime, token, handler)
@@ -423,6 +448,6 @@ class CLASS_Client < Object
     end
 
 
-end; def self.Client; CLASS_Client; end
+end
 end # module MODULE_slack
 end # module Quark

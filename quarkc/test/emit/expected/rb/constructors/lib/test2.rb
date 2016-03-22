@@ -5,8 +5,14 @@ module MODULE_test2
 require 'builtin' # .../reflect
 require 'constructors_md'
 
+def self.Test; CLASS_Test; end
 class CLASS_Test < Object
     attr_accessor :name
+    extend DatawireQuarkCore::Static
+
+
+    static test2_Test_ref: -> { ::Quark.constructors_md.Root.test2_Test_md }
+
 
     
     def initialize(name)
@@ -55,7 +61,7 @@ class CLASS_Test < Object
     end
 
 
-end; def self.Test; CLASS_Test; end
+end
 
 def self.go()
     

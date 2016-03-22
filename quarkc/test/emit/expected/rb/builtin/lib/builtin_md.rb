@@ -7,8 +7,14 @@ require 'builtin/concurrent'
 require 'builtin'
 require 'builtin/behaviors'
 
+def self.builtin_List_builtin_String_; CLASS_builtin_List_builtin_String_; end
 class CLASS_builtin_List_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_String_.new() }
+
 
     
     def initialize()
@@ -60,10 +66,16 @@ class CLASS_builtin_List_builtin_String_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_List_builtin_String_; CLASS_builtin_List_builtin_String_; end
+end
 
+def self.builtin_List_builtin_Object_; CLASS_builtin_List_builtin_Object_; end
 class CLASS_builtin_List_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -115,10 +127,16 @@ class CLASS_builtin_List_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_List_builtin_Object_; CLASS_builtin_List_builtin_Object_; end
+end
 
+def self.builtin_List_builtin_reflect_Field_; CLASS_builtin_List_builtin_reflect_Field_; end
 class CLASS_builtin_List_builtin_reflect_Field_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_reflect_Field_.new() }
+
 
     
     def initialize()
@@ -170,10 +188,16 @@ class CLASS_builtin_List_builtin_reflect_Field_ < ::Quark.builtin.reflect.QuarkC
     end
 
 
-end; def self.builtin_List_builtin_reflect_Field_; CLASS_builtin_List_builtin_reflect_Field_; end
+end
 
+def self.builtin_List_builtin_reflect_Class_; CLASS_builtin_List_builtin_reflect_Class_; end
 class CLASS_builtin_List_builtin_reflect_Class_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_reflect_Class_.new() }
+
 
     
     def initialize()
@@ -225,10 +249,16 @@ class CLASS_builtin_List_builtin_reflect_Class_ < ::Quark.builtin.reflect.QuarkC
     end
 
 
-end; def self.builtin_List_builtin_reflect_Class_; CLASS_builtin_List_builtin_reflect_Class_; end
+end
 
+def self.builtin_List_builtin_reflect_Method_; CLASS_builtin_List_builtin_reflect_Method_; end
 class CLASS_builtin_List_builtin_reflect_Method_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_reflect_Method_.new() }
+
 
     
     def initialize()
@@ -280,10 +310,16 @@ class CLASS_builtin_List_builtin_reflect_Method_ < ::Quark.builtin.reflect.Quark
     end
 
 
-end; def self.builtin_List_builtin_reflect_Method_; CLASS_builtin_List_builtin_reflect_Method_; end
+end
 
+def self.builtin_List_builtin_concurrent_FutureCompletion_; CLASS_builtin_List_builtin_concurrent_FutureCompletion_; end
 class CLASS_builtin_List_builtin_concurrent_FutureCompletion_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_List_builtin_concurrent_FutureCompletion_.new() }
+
 
     
     def initialize()
@@ -335,10 +371,16 @@ class CLASS_builtin_List_builtin_concurrent_FutureCompletion_ < ::Quark.builtin.
     end
 
 
-end; def self.builtin_List_builtin_concurrent_FutureCompletion_; CLASS_builtin_List_builtin_concurrent_FutureCompletion_; end
+end
 
+def self.builtin_Map_builtin_Object_builtin_Object_; CLASS_builtin_Map_builtin_Object_builtin_Object_; end
 class CLASS_builtin_Map_builtin_Object_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Map_builtin_Object_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -390,10 +432,16 @@ class CLASS_builtin_Map_builtin_Object_builtin_Object_ < ::Quark.builtin.reflect
     end
 
 
-end; def self.builtin_Map_builtin_Object_builtin_Object_; CLASS_builtin_Map_builtin_Object_builtin_Object_; end
+end
 
+def self.builtin_Map_builtin_String_builtin_Object_; CLASS_builtin_Map_builtin_String_builtin_Object_; end
 class CLASS_builtin_Map_builtin_String_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Map_builtin_String_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -445,10 +493,16 @@ class CLASS_builtin_Map_builtin_String_builtin_Object_ < ::Quark.builtin.reflect
     end
 
 
-end; def self.builtin_Map_builtin_String_builtin_Object_; CLASS_builtin_Map_builtin_String_builtin_Object_; end
+end
 
+def self.builtin_Map_builtin_String_builtin_ServiceInstance_; CLASS_builtin_Map_builtin_String_builtin_ServiceInstance_; end
 class CLASS_builtin_Map_builtin_String_builtin_ServiceInstance_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Map_builtin_String_builtin_ServiceInstance_.new() }
+
 
     
     def initialize()
@@ -500,10 +554,16 @@ class CLASS_builtin_Map_builtin_String_builtin_ServiceInstance_ < ::Quark.builti
     end
 
 
-end; def self.builtin_Map_builtin_String_builtin_ServiceInstance_; CLASS_builtin_Map_builtin_String_builtin_ServiceInstance_; end
+end
 
+def self.builtin_Map_builtin_String_builtin_reflect_Class_; CLASS_builtin_Map_builtin_String_builtin_reflect_Class_; end
 class CLASS_builtin_Map_builtin_String_builtin_reflect_Class_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Map_builtin_String_builtin_reflect_Class_.new() }
+
 
     
     def initialize()
@@ -555,10 +615,16 @@ class CLASS_builtin_Map_builtin_String_builtin_reflect_Class_ < ::Quark.builtin.
     end
 
 
-end; def self.builtin_Map_builtin_String_builtin_reflect_Class_; CLASS_builtin_Map_builtin_String_builtin_reflect_Class_; end
+end
 
+def self.builtin_Resolver; CLASS_builtin_Resolver; end
 class CLASS_builtin_Resolver < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Resolver.new() }
+
 
     
     def initialize()
@@ -610,10 +676,16 @@ class CLASS_builtin_Resolver < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_Resolver; CLASS_builtin_Resolver; end
+end
 
+def self.builtin_ResponseHolder; CLASS_builtin_ResponseHolder; end
 class CLASS_builtin_ResponseHolder < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_ResponseHolder.new() }
+
 
     
     def initialize()
@@ -665,10 +737,16 @@ class CLASS_builtin_ResponseHolder < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_ResponseHolder; CLASS_builtin_ResponseHolder; end
+end
 
+def self.builtin_Service; CLASS_builtin_Service; end
 class CLASS_builtin_Service < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Service.new() }
+
 
     
     def initialize()
@@ -720,10 +798,16 @@ class CLASS_builtin_Service < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_Service; CLASS_builtin_Service; end
+end
 
+def self.builtin_BaseService; CLASS_builtin_BaseService; end
 class CLASS_builtin_BaseService < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_BaseService.new() }
+
 
     
     def initialize()
@@ -775,10 +859,16 @@ class CLASS_builtin_BaseService < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_BaseService; CLASS_builtin_BaseService; end
+end
 
+def self.builtin_ServiceInstance; CLASS_builtin_ServiceInstance; end
 class CLASS_builtin_ServiceInstance < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_ServiceInstance.new() }
+
 
     
     def initialize()
@@ -830,10 +920,16 @@ class CLASS_builtin_ServiceInstance < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_ServiceInstance; CLASS_builtin_ServiceInstance; end
+end
 
+def self.builtin_DegenerateResolver; CLASS_builtin_DegenerateResolver; end
 class CLASS_builtin_DegenerateResolver < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_DegenerateResolver.new() }
+
 
     
     def initialize()
@@ -885,10 +981,16 @@ class CLASS_builtin_DegenerateResolver < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_DegenerateResolver; CLASS_builtin_DegenerateResolver; end
+end
 
+def self.builtin_Client; CLASS_builtin_Client; end
 class CLASS_builtin_Client < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Client.new() }
+
 
     
     def initialize()
@@ -940,10 +1042,16 @@ class CLASS_builtin_Client < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_Client; CLASS_builtin_Client; end
+end
 
+def self.builtin_ServerResponder; CLASS_builtin_ServerResponder; end
 class CLASS_builtin_ServerResponder < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_ServerResponder.new() }
+
 
     
     def initialize()
@@ -995,10 +1103,16 @@ class CLASS_builtin_ServerResponder < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_ServerResponder; CLASS_builtin_ServerResponder; end
+end
 
+def self.builtin_Server_builtin_Object_; CLASS_builtin_Server_builtin_Object_; end
 class CLASS_builtin_Server_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_Server_builtin_Object_.new() }
+
 
     
     def initialize()
@@ -1050,10 +1164,16 @@ class CLASS_builtin_Server_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_Server_builtin_Object_; CLASS_builtin_Server_builtin_Object_; end
+end
 
+def self.builtin_reflect_Class; CLASS_builtin_reflect_Class; end
 class CLASS_builtin_reflect_Class < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_reflect_Class.new() }
+
 
     
     def initialize()
@@ -1105,10 +1225,16 @@ class CLASS_builtin_reflect_Class < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_reflect_Class; CLASS_builtin_reflect_Class; end
+end
 
+def self.builtin_reflect_Field; CLASS_builtin_reflect_Field; end
 class CLASS_builtin_reflect_Field < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_reflect_Field.new() }
+
 
     
     def initialize()
@@ -1160,8 +1286,9 @@ class CLASS_builtin_reflect_Field < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_reflect_Field; CLASS_builtin_reflect_Field; end
+end
 
+def self.builtin_behaviors_RPC_call_Method; CLASS_builtin_behaviors_RPC_call_Method; end
 class CLASS_builtin_behaviors_RPC_call_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1212,8 +1339,9 @@ class CLASS_builtin_behaviors_RPC_call_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.builtin_behaviors_RPC_call_Method; CLASS_builtin_behaviors_RPC_call_Method; end
+end
 
+def self.builtin_behaviors_RPC_succeed_Method; CLASS_builtin_behaviors_RPC_succeed_Method; end
 class CLASS_builtin_behaviors_RPC_succeed_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1265,8 +1393,9 @@ class CLASS_builtin_behaviors_RPC_succeed_Method < ::Quark.builtin.reflect.Metho
     end
 
 
-end; def self.builtin_behaviors_RPC_succeed_Method; CLASS_builtin_behaviors_RPC_succeed_Method; end
+end
 
+def self.builtin_behaviors_RPC_fail_Method; CLASS_builtin_behaviors_RPC_fail_Method; end
 class CLASS_builtin_behaviors_RPC_fail_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1318,8 +1447,9 @@ class CLASS_builtin_behaviors_RPC_fail_Method < ::Quark.builtin.reflect.Method
     end
 
 
-end; def self.builtin_behaviors_RPC_fail_Method; CLASS_builtin_behaviors_RPC_fail_Method; end
+end
 
+def self.builtin_behaviors_RPC_toString_Method; CLASS_builtin_behaviors_RPC_toString_Method; end
 class CLASS_builtin_behaviors_RPC_toString_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1370,10 +1500,16 @@ class CLASS_builtin_behaviors_RPC_toString_Method < ::Quark.builtin.reflect.Meth
     end
 
 
-end; def self.builtin_behaviors_RPC_toString_Method; CLASS_builtin_behaviors_RPC_toString_Method; end
+end
 
+def self.builtin_behaviors_RPC; CLASS_builtin_behaviors_RPC; end
 class CLASS_builtin_behaviors_RPC < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_behaviors_RPC.new() }
+
 
     
     def initialize()
@@ -1425,8 +1561,9 @@ class CLASS_builtin_behaviors_RPC < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_behaviors_RPC; CLASS_builtin_behaviors_RPC; end
+end
 
+def self.builtin_behaviors_RPCRequest_call_Method; CLASS_builtin_behaviors_RPCRequest_call_Method; end
 class CLASS_builtin_behaviors_RPCRequest_call_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1477,8 +1614,9 @@ class CLASS_builtin_behaviors_RPCRequest_call_Method < ::Quark.builtin.reflect.M
     end
 
 
-end; def self.builtin_behaviors_RPCRequest_call_Method; CLASS_builtin_behaviors_RPCRequest_call_Method; end
+end
 
+def self.builtin_behaviors_RPCRequest_onHTTPResponse_Method; CLASS_builtin_behaviors_RPCRequest_onHTTPResponse_Method; end
 class CLASS_builtin_behaviors_RPCRequest_onHTTPResponse_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1530,8 +1668,9 @@ class CLASS_builtin_behaviors_RPCRequest_onHTTPResponse_Method < ::Quark.builtin
     end
 
 
-end; def self.builtin_behaviors_RPCRequest_onHTTPResponse_Method; CLASS_builtin_behaviors_RPCRequest_onHTTPResponse_Method; end
+end
 
+def self.builtin_behaviors_RPCRequest_onTimeout_Method; CLASS_builtin_behaviors_RPCRequest_onTimeout_Method; end
 class CLASS_builtin_behaviors_RPCRequest_onTimeout_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1583,10 +1722,16 @@ class CLASS_builtin_behaviors_RPCRequest_onTimeout_Method < ::Quark.builtin.refl
     end
 
 
-end; def self.builtin_behaviors_RPCRequest_onTimeout_Method; CLASS_builtin_behaviors_RPCRequest_onTimeout_Method; end
+end
 
+def self.builtin_behaviors_RPCRequest; CLASS_builtin_behaviors_RPCRequest; end
 class CLASS_builtin_behaviors_RPCRequest < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_behaviors_RPCRequest.new() }
+
 
     
     def initialize()
@@ -1638,8 +1783,9 @@ class CLASS_builtin_behaviors_RPCRequest < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_behaviors_RPCRequest; CLASS_builtin_behaviors_RPCRequest; end
+end
 
+def self.builtin_behaviors_CircuitBreaker_succeed_Method; CLASS_builtin_behaviors_CircuitBreaker_succeed_Method; end
 class CLASS_builtin_behaviors_CircuitBreaker_succeed_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1691,8 +1837,9 @@ class CLASS_builtin_behaviors_CircuitBreaker_succeed_Method < ::Quark.builtin.re
     end
 
 
-end; def self.builtin_behaviors_CircuitBreaker_succeed_Method; CLASS_builtin_behaviors_CircuitBreaker_succeed_Method; end
+end
 
+def self.builtin_behaviors_CircuitBreaker_fail_Method; CLASS_builtin_behaviors_CircuitBreaker_fail_Method; end
 class CLASS_builtin_behaviors_CircuitBreaker_fail_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1744,8 +1891,9 @@ class CLASS_builtin_behaviors_CircuitBreaker_fail_Method < ::Quark.builtin.refle
     end
 
 
-end; def self.builtin_behaviors_CircuitBreaker_fail_Method; CLASS_builtin_behaviors_CircuitBreaker_fail_Method; end
+end
 
+def self.builtin_behaviors_CircuitBreaker_onExecute_Method; CLASS_builtin_behaviors_CircuitBreaker_onExecute_Method; end
 class CLASS_builtin_behaviors_CircuitBreaker_onExecute_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1797,10 +1945,16 @@ class CLASS_builtin_behaviors_CircuitBreaker_onExecute_Method < ::Quark.builtin.
     end
 
 
-end; def self.builtin_behaviors_CircuitBreaker_onExecute_Method; CLASS_builtin_behaviors_CircuitBreaker_onExecute_Method; end
+end
 
+def self.builtin_behaviors_CircuitBreaker; CLASS_builtin_behaviors_CircuitBreaker; end
 class CLASS_builtin_behaviors_CircuitBreaker < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_behaviors_CircuitBreaker.new() }
+
 
     
     def initialize()
@@ -1852,8 +2006,9 @@ class CLASS_builtin_behaviors_CircuitBreaker < ::Quark.builtin.reflect.QuarkClas
     end
 
 
-end; def self.builtin_behaviors_CircuitBreaker; CLASS_builtin_behaviors_CircuitBreaker; end
+end
 
+def self.builtin_concurrent_Event_getContext_Method; CLASS_builtin_concurrent_Event_getContext_Method; end
 class CLASS_builtin_concurrent_Event_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1904,8 +2059,9 @@ class CLASS_builtin_concurrent_Event_getContext_Method < ::Quark.builtin.reflect
     end
 
 
-end; def self.builtin_concurrent_Event_getContext_Method; CLASS_builtin_concurrent_Event_getContext_Method; end
+end
 
+def self.builtin_concurrent_Event_fireEvent_Method; CLASS_builtin_concurrent_Event_fireEvent_Method; end
 class CLASS_builtin_concurrent_Event_fireEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -1957,10 +2113,16 @@ class CLASS_builtin_concurrent_Event_fireEvent_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Event_fireEvent_Method; CLASS_builtin_concurrent_Event_fireEvent_Method; end
+end
 
+def self.builtin_concurrent_Event; CLASS_builtin_concurrent_Event; end
 class CLASS_builtin_concurrent_Event < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Event.new() }
+
 
     
     def initialize()
@@ -2012,8 +2174,9 @@ class CLASS_builtin_concurrent_Event < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_Event; CLASS_builtin_concurrent_Event; end
+end
 
+def self.builtin_concurrent_FutureListener_onFuture_Method; CLASS_builtin_concurrent_FutureListener_onFuture_Method; end
 class CLASS_builtin_concurrent_FutureListener_onFuture_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2065,10 +2228,16 @@ class CLASS_builtin_concurrent_FutureListener_onFuture_Method < ::Quark.builtin.
     end
 
 
-end; def self.builtin_concurrent_FutureListener_onFuture_Method; CLASS_builtin_concurrent_FutureListener_onFuture_Method; end
+end
 
+def self.builtin_concurrent_FutureListener; CLASS_builtin_concurrent_FutureListener; end
 class CLASS_builtin_concurrent_FutureListener < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_FutureListener.new() }
+
 
     
     def initialize()
@@ -2120,8 +2289,9 @@ class CLASS_builtin_concurrent_FutureListener < ::Quark.builtin.reflect.QuarkCla
     end
 
 
-end; def self.builtin_concurrent_FutureListener; CLASS_builtin_concurrent_FutureListener; end
+end
 
+def self.builtin_concurrent_FutureCompletion_getContext_Method; CLASS_builtin_concurrent_FutureCompletion_getContext_Method; end
 class CLASS_builtin_concurrent_FutureCompletion_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2172,8 +2342,9 @@ class CLASS_builtin_concurrent_FutureCompletion_getContext_Method < ::Quark.buil
     end
 
 
-end; def self.builtin_concurrent_FutureCompletion_getContext_Method; CLASS_builtin_concurrent_FutureCompletion_getContext_Method; end
+end
 
+def self.builtin_concurrent_FutureCompletion_fireEvent_Method; CLASS_builtin_concurrent_FutureCompletion_fireEvent_Method; end
 class CLASS_builtin_concurrent_FutureCompletion_fireEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2225,10 +2396,16 @@ class CLASS_builtin_concurrent_FutureCompletion_fireEvent_Method < ::Quark.built
     end
 
 
-end; def self.builtin_concurrent_FutureCompletion_fireEvent_Method; CLASS_builtin_concurrent_FutureCompletion_fireEvent_Method; end
+end
 
+def self.builtin_concurrent_FutureCompletion; CLASS_builtin_concurrent_FutureCompletion; end
 class CLASS_builtin_concurrent_FutureCompletion < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_FutureCompletion.new() }
+
 
     
     def initialize()
@@ -2280,8 +2457,9 @@ class CLASS_builtin_concurrent_FutureCompletion < ::Quark.builtin.reflect.QuarkC
     end
 
 
-end; def self.builtin_concurrent_FutureCompletion; CLASS_builtin_concurrent_FutureCompletion; end
+end
 
+def self.builtin_concurrent_EventContext_getContext_Method; CLASS_builtin_concurrent_EventContext_getContext_Method; end
 class CLASS_builtin_concurrent_EventContext_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2332,10 +2510,16 @@ class CLASS_builtin_concurrent_EventContext_getContext_Method < ::Quark.builtin.
     end
 
 
-end; def self.builtin_concurrent_EventContext_getContext_Method; CLASS_builtin_concurrent_EventContext_getContext_Method; end
+end
 
+def self.builtin_concurrent_EventContext; CLASS_builtin_concurrent_EventContext; end
 class CLASS_builtin_concurrent_EventContext < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_EventContext.new() }
+
 
     
     def initialize()
@@ -2387,8 +2571,9 @@ class CLASS_builtin_concurrent_EventContext < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_EventContext; CLASS_builtin_concurrent_EventContext; end
+end
 
+def self.builtin_concurrent_Future_onFinished_Method; CLASS_builtin_concurrent_Future_onFinished_Method; end
 class CLASS_builtin_concurrent_Future_onFinished_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2440,8 +2625,9 @@ class CLASS_builtin_concurrent_Future_onFinished_Method < ::Quark.builtin.reflec
     end
 
 
-end; def self.builtin_concurrent_Future_onFinished_Method; CLASS_builtin_concurrent_Future_onFinished_Method; end
+end
 
+def self.builtin_concurrent_Future_finish_Method; CLASS_builtin_concurrent_Future_finish_Method; end
 class CLASS_builtin_concurrent_Future_finish_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2493,8 +2679,9 @@ class CLASS_builtin_concurrent_Future_finish_Method < ::Quark.builtin.reflect.Me
     end
 
 
-end; def self.builtin_concurrent_Future_finish_Method; CLASS_builtin_concurrent_Future_finish_Method; end
+end
 
+def self.builtin_concurrent_Future_isFinished_Method; CLASS_builtin_concurrent_Future_isFinished_Method; end
 class CLASS_builtin_concurrent_Future_isFinished_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2545,8 +2732,9 @@ class CLASS_builtin_concurrent_Future_isFinished_Method < ::Quark.builtin.reflec
     end
 
 
-end; def self.builtin_concurrent_Future_isFinished_Method; CLASS_builtin_concurrent_Future_isFinished_Method; end
+end
 
+def self.builtin_concurrent_Future_getError_Method; CLASS_builtin_concurrent_Future_getError_Method; end
 class CLASS_builtin_concurrent_Future_getError_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2597,8 +2785,9 @@ class CLASS_builtin_concurrent_Future_getError_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Future_getError_Method; CLASS_builtin_concurrent_Future_getError_Method; end
+end
 
+def self.builtin_concurrent_Future_await_Method; CLASS_builtin_concurrent_Future_await_Method; end
 class CLASS_builtin_concurrent_Future_await_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2650,8 +2839,9 @@ class CLASS_builtin_concurrent_Future_await_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.builtin_concurrent_Future_await_Method; CLASS_builtin_concurrent_Future_await_Method; end
+end
 
+def self.builtin_concurrent_Future_getContext_Method; CLASS_builtin_concurrent_Future_getContext_Method; end
 class CLASS_builtin_concurrent_Future_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2702,10 +2892,16 @@ class CLASS_builtin_concurrent_Future_getContext_Method < ::Quark.builtin.reflec
     end
 
 
-end; def self.builtin_concurrent_Future_getContext_Method; CLASS_builtin_concurrent_Future_getContext_Method; end
+end
 
+def self.builtin_concurrent_Future; CLASS_builtin_concurrent_Future; end
 class CLASS_builtin_concurrent_Future < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Future.new() }
+
 
     
     def initialize()
@@ -2757,8 +2953,9 @@ class CLASS_builtin_concurrent_Future < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_Future; CLASS_builtin_concurrent_Future; end
+end
 
+def self.builtin_concurrent_FutureWait_wait_Method; CLASS_builtin_concurrent_FutureWait_wait_Method; end
 class CLASS_builtin_concurrent_FutureWait_wait_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2810,8 +3007,9 @@ class CLASS_builtin_concurrent_FutureWait_wait_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_FutureWait_wait_Method; CLASS_builtin_concurrent_FutureWait_wait_Method; end
+end
 
+def self.builtin_concurrent_FutureWait_onFuture_Method; CLASS_builtin_concurrent_FutureWait_onFuture_Method; end
 class CLASS_builtin_concurrent_FutureWait_onFuture_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2863,8 +3061,9 @@ class CLASS_builtin_concurrent_FutureWait_onFuture_Method < ::Quark.builtin.refl
     end
 
 
-end; def self.builtin_concurrent_FutureWait_onFuture_Method; CLASS_builtin_concurrent_FutureWait_onFuture_Method; end
+end
 
+def self.builtin_concurrent_FutureWait_waitFor_Method; CLASS_builtin_concurrent_FutureWait_waitFor_Method; end
 class CLASS_builtin_concurrent_FutureWait_waitFor_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -2882,7 +3081,7 @@ class CLASS_builtin_concurrent_FutureWait_waitFor_Method < ::Quark.builtin.refle
     def invoke(object, args)
         
         obj = object
-        return builtin::concurrent::FutureWait.waitFor((args)[0], (args)[1])
+        return ::Quark.builtin.concurrent.FutureWait.waitFor((args)[0], (args)[1])
 
         nil
     end
@@ -2915,10 +3114,16 @@ class CLASS_builtin_concurrent_FutureWait_waitFor_Method < ::Quark.builtin.refle
     end
 
 
-end; def self.builtin_concurrent_FutureWait_waitFor_Method; CLASS_builtin_concurrent_FutureWait_waitFor_Method; end
+end
 
+def self.builtin_concurrent_FutureWait; CLASS_builtin_concurrent_FutureWait; end
 class CLASS_builtin_concurrent_FutureWait < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_FutureWait.new() }
+
 
     
     def initialize()
@@ -2970,8 +3175,9 @@ class CLASS_builtin_concurrent_FutureWait < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_FutureWait; CLASS_builtin_concurrent_FutureWait; end
+end
 
+def self.builtin_concurrent_Queue_builtin_concurrent_Event__put_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__put_Method; end
 class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__put_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3023,8 +3229,9 @@ class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__put_Method < ::Qu
     end
 
 
-end; def self.builtin_concurrent_Queue_builtin_concurrent_Event__put_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__put_Method; end
+end
 
+def self.builtin_concurrent_Queue_builtin_concurrent_Event__get_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__get_Method; end
 class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__get_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3075,8 +3282,9 @@ class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__get_Method < ::Qu
     end
 
 
-end; def self.builtin_concurrent_Queue_builtin_concurrent_Event__get_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__get_Method; end
+end
 
+def self.builtin_concurrent_Queue_builtin_concurrent_Event__size_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__size_Method; end
 class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__size_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3127,10 +3335,16 @@ class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__size_Method < ::Q
     end
 
 
-end; def self.builtin_concurrent_Queue_builtin_concurrent_Event__size_Method; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event__size_Method; end
+end
 
+def self.builtin_concurrent_Queue_builtin_concurrent_Event_; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event_; end
 class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event_ < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Queue_builtin_concurrent_Event_.new() }
+
 
     
     def initialize()
@@ -3182,8 +3396,9 @@ class CLASS_builtin_concurrent_Queue_builtin_concurrent_Event_ < ::Quark.builtin
     end
 
 
-end; def self.builtin_concurrent_Queue_builtin_concurrent_Event_; CLASS_builtin_concurrent_Queue_builtin_concurrent_Event_; end
+end
 
+def self.builtin_concurrent_CollectorExecutor__start_Method; CLASS_builtin_concurrent_CollectorExecutor__start_Method; end
 class CLASS_builtin_concurrent_CollectorExecutor__start_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3235,8 +3450,9 @@ class CLASS_builtin_concurrent_CollectorExecutor__start_Method < ::Quark.builtin
     end
 
 
-end; def self.builtin_concurrent_CollectorExecutor__start_Method; CLASS_builtin_concurrent_CollectorExecutor__start_Method; end
+end
 
+def self.builtin_concurrent_CollectorExecutor_onExecute_Method; CLASS_builtin_concurrent_CollectorExecutor_onExecute_Method; end
 class CLASS_builtin_concurrent_CollectorExecutor_onExecute_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3288,10 +3504,16 @@ class CLASS_builtin_concurrent_CollectorExecutor_onExecute_Method < ::Quark.buil
     end
 
 
-end; def self.builtin_concurrent_CollectorExecutor_onExecute_Method; CLASS_builtin_concurrent_CollectorExecutor_onExecute_Method; end
+end
 
+def self.builtin_concurrent_CollectorExecutor; CLASS_builtin_concurrent_CollectorExecutor; end
 class CLASS_builtin_concurrent_CollectorExecutor < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_CollectorExecutor.new() }
+
 
     
     def initialize()
@@ -3343,8 +3565,9 @@ class CLASS_builtin_concurrent_CollectorExecutor < ::Quark.builtin.reflect.Quark
     end
 
 
-end; def self.builtin_concurrent_CollectorExecutor; CLASS_builtin_concurrent_CollectorExecutor; end
+end
 
+def self.builtin_concurrent_Collector_put_Method; CLASS_builtin_concurrent_Collector_put_Method; end
 class CLASS_builtin_concurrent_Collector_put_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3396,8 +3619,9 @@ class CLASS_builtin_concurrent_Collector_put_Method < ::Quark.builtin.reflect.Me
     end
 
 
-end; def self.builtin_concurrent_Collector_put_Method; CLASS_builtin_concurrent_Collector_put_Method; end
+end
 
+def self.builtin_concurrent_Collector__swap_Method; CLASS_builtin_concurrent_Collector__swap_Method; end
 class CLASS_builtin_concurrent_Collector__swap_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3448,8 +3672,9 @@ class CLASS_builtin_concurrent_Collector__swap_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Collector__swap_Method; CLASS_builtin_concurrent_Collector__swap_Method; end
+end
 
+def self.builtin_concurrent_Collector__poll_Method; CLASS_builtin_concurrent_Collector__poll_Method; end
 class CLASS_builtin_concurrent_Collector__poll_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3501,10 +3726,16 @@ class CLASS_builtin_concurrent_Collector__poll_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Collector__poll_Method; CLASS_builtin_concurrent_Collector__poll_Method; end
+end
 
+def self.builtin_concurrent_Collector; CLASS_builtin_concurrent_Collector; end
 class CLASS_builtin_concurrent_Collector < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Collector.new() }
+
 
     
     def initialize()
@@ -3556,8 +3787,9 @@ class CLASS_builtin_concurrent_Collector < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_Collector; CLASS_builtin_concurrent_Collector; end
+end
 
+def self.builtin_concurrent_TimeoutListener_onTimeout_Method; CLASS_builtin_concurrent_TimeoutListener_onTimeout_Method; end
 class CLASS_builtin_concurrent_TimeoutListener_onTimeout_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3609,10 +3841,16 @@ class CLASS_builtin_concurrent_TimeoutListener_onTimeout_Method < ::Quark.builti
     end
 
 
-end; def self.builtin_concurrent_TimeoutListener_onTimeout_Method; CLASS_builtin_concurrent_TimeoutListener_onTimeout_Method; end
+end
 
+def self.builtin_concurrent_TimeoutListener; CLASS_builtin_concurrent_TimeoutListener; end
 class CLASS_builtin_concurrent_TimeoutListener < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_TimeoutListener.new() }
+
 
     
     def initialize()
@@ -3664,8 +3902,9 @@ class CLASS_builtin_concurrent_TimeoutListener < ::Quark.builtin.reflect.QuarkCl
     end
 
 
-end; def self.builtin_concurrent_TimeoutListener; CLASS_builtin_concurrent_TimeoutListener; end
+end
 
+def self.builtin_concurrent_TimeoutExpiry_getContext_Method; CLASS_builtin_concurrent_TimeoutExpiry_getContext_Method; end
 class CLASS_builtin_concurrent_TimeoutExpiry_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3716,8 +3955,9 @@ class CLASS_builtin_concurrent_TimeoutExpiry_getContext_Method < ::Quark.builtin
     end
 
 
-end; def self.builtin_concurrent_TimeoutExpiry_getContext_Method; CLASS_builtin_concurrent_TimeoutExpiry_getContext_Method; end
+end
 
+def self.builtin_concurrent_TimeoutExpiry_fireEvent_Method; CLASS_builtin_concurrent_TimeoutExpiry_fireEvent_Method; end
 class CLASS_builtin_concurrent_TimeoutExpiry_fireEvent_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3769,10 +4009,16 @@ class CLASS_builtin_concurrent_TimeoutExpiry_fireEvent_Method < ::Quark.builtin.
     end
 
 
-end; def self.builtin_concurrent_TimeoutExpiry_fireEvent_Method; CLASS_builtin_concurrent_TimeoutExpiry_fireEvent_Method; end
+end
 
+def self.builtin_concurrent_TimeoutExpiry; CLASS_builtin_concurrent_TimeoutExpiry; end
 class CLASS_builtin_concurrent_TimeoutExpiry < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_TimeoutExpiry.new() }
+
 
     
     def initialize()
@@ -3824,8 +4070,9 @@ class CLASS_builtin_concurrent_TimeoutExpiry < ::Quark.builtin.reflect.QuarkClas
     end
 
 
-end; def self.builtin_concurrent_TimeoutExpiry; CLASS_builtin_concurrent_TimeoutExpiry; end
+end
 
+def self.builtin_concurrent_Timeout_start_Method; CLASS_builtin_concurrent_Timeout_start_Method; end
 class CLASS_builtin_concurrent_Timeout_start_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3877,8 +4124,9 @@ class CLASS_builtin_concurrent_Timeout_start_Method < ::Quark.builtin.reflect.Me
     end
 
 
-end; def self.builtin_concurrent_Timeout_start_Method; CLASS_builtin_concurrent_Timeout_start_Method; end
+end
 
+def self.builtin_concurrent_Timeout_cancel_Method; CLASS_builtin_concurrent_Timeout_cancel_Method; end
 class CLASS_builtin_concurrent_Timeout_cancel_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3930,8 +4178,9 @@ class CLASS_builtin_concurrent_Timeout_cancel_Method < ::Quark.builtin.reflect.M
     end
 
 
-end; def self.builtin_concurrent_Timeout_cancel_Method; CLASS_builtin_concurrent_Timeout_cancel_Method; end
+end
 
+def self.builtin_concurrent_Timeout_onExecute_Method; CLASS_builtin_concurrent_Timeout_onExecute_Method; end
 class CLASS_builtin_concurrent_Timeout_onExecute_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -3983,8 +4232,9 @@ class CLASS_builtin_concurrent_Timeout_onExecute_Method < ::Quark.builtin.reflec
     end
 
 
-end; def self.builtin_concurrent_Timeout_onExecute_Method; CLASS_builtin_concurrent_Timeout_onExecute_Method; end
+end
 
+def self.builtin_concurrent_Timeout_getContext_Method; CLASS_builtin_concurrent_Timeout_getContext_Method; end
 class CLASS_builtin_concurrent_Timeout_getContext_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4035,10 +4285,16 @@ class CLASS_builtin_concurrent_Timeout_getContext_Method < ::Quark.builtin.refle
     end
 
 
-end; def self.builtin_concurrent_Timeout_getContext_Method; CLASS_builtin_concurrent_Timeout_getContext_Method; end
+end
 
+def self.builtin_concurrent_Timeout; CLASS_builtin_concurrent_Timeout; end
 class CLASS_builtin_concurrent_Timeout < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Timeout.new() }
+
 
     
     def initialize()
@@ -4090,8 +4346,9 @@ class CLASS_builtin_concurrent_Timeout < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_Timeout; CLASS_builtin_concurrent_Timeout; end
+end
 
+def self.builtin_concurrent_TLSContextInitializer_getValue_Method; CLASS_builtin_concurrent_TLSContextInitializer_getValue_Method; end
 class CLASS_builtin_concurrent_TLSContextInitializer_getValue_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4142,10 +4399,16 @@ class CLASS_builtin_concurrent_TLSContextInitializer_getValue_Method < ::Quark.b
     end
 
 
-end; def self.builtin_concurrent_TLSContextInitializer_getValue_Method; CLASS_builtin_concurrent_TLSContextInitializer_getValue_Method; end
+end
 
+def self.builtin_concurrent_TLSContextInitializer; CLASS_builtin_concurrent_TLSContextInitializer; end
 class CLASS_builtin_concurrent_TLSContextInitializer < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_TLSContextInitializer.new() }
+
 
     
     def initialize()
@@ -4197,8 +4460,9 @@ class CLASS_builtin_concurrent_TLSContextInitializer < ::Quark.builtin.reflect.Q
     end
 
 
-end; def self.builtin_concurrent_TLSContextInitializer; CLASS_builtin_concurrent_TLSContextInitializer; end
+end
 
+def self.builtin_concurrent_Context_current_Method; CLASS_builtin_concurrent_Context_current_Method; end
 class CLASS_builtin_concurrent_Context_current_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4216,7 +4480,7 @@ class CLASS_builtin_concurrent_Context_current_Method < ::Quark.builtin.reflect.
     def invoke(object, args)
         
         obj = object
-        return builtin::concurrent::Context.current()
+        return ::Quark.builtin.concurrent.Context.current()
 
         nil
     end
@@ -4249,8 +4513,9 @@ class CLASS_builtin_concurrent_Context_current_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Context_current_Method; CLASS_builtin_concurrent_Context_current_Method; end
+end
 
+def self.builtin_concurrent_Context_global_Method; CLASS_builtin_concurrent_Context_global_Method; end
 class CLASS_builtin_concurrent_Context_global_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4268,7 +4533,7 @@ class CLASS_builtin_concurrent_Context_global_Method < ::Quark.builtin.reflect.M
     def invoke(object, args)
         
         obj = object
-        return builtin::concurrent::Context.global()
+        return ::Quark.builtin.concurrent.Context.global()
 
         nil
     end
@@ -4301,8 +4566,9 @@ class CLASS_builtin_concurrent_Context_global_Method < ::Quark.builtin.reflect.M
     end
 
 
-end; def self.builtin_concurrent_Context_global_Method; CLASS_builtin_concurrent_Context_global_Method; end
+end
 
+def self.builtin_concurrent_Context_runtime_Method; CLASS_builtin_concurrent_Context_runtime_Method; end
 class CLASS_builtin_concurrent_Context_runtime_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4320,7 +4586,7 @@ class CLASS_builtin_concurrent_Context_runtime_Method < ::Quark.builtin.reflect.
     def invoke(object, args)
         
         obj = object
-        return builtin::concurrent::Context.runtime()
+        return ::Quark.builtin.concurrent.Context.runtime()
 
         nil
     end
@@ -4353,8 +4619,9 @@ class CLASS_builtin_concurrent_Context_runtime_Method < ::Quark.builtin.reflect.
     end
 
 
-end; def self.builtin_concurrent_Context_runtime_Method; CLASS_builtin_concurrent_Context_runtime_Method; end
+end
 
+def self.builtin_concurrent_Context_swap_Method; CLASS_builtin_concurrent_Context_swap_Method; end
 class CLASS_builtin_concurrent_Context_swap_Method < ::Quark.builtin.reflect.Method
     attr_accessor 
 
@@ -4372,7 +4639,7 @@ class CLASS_builtin_concurrent_Context_swap_Method < ::Quark.builtin.reflect.Met
     def invoke(object, args)
         
         obj = object
-        builtin::concurrent::Context.swap((args)[0])
+        ::Quark.builtin.concurrent.Context.swap((args)[0])
         return nil
 
         nil
@@ -4406,10 +4673,16 @@ class CLASS_builtin_concurrent_Context_swap_Method < ::Quark.builtin.reflect.Met
     end
 
 
-end; def self.builtin_concurrent_Context_swap_Method; CLASS_builtin_concurrent_Context_swap_Method; end
+end
 
+def self.builtin_concurrent_Context; CLASS_builtin_concurrent_Context; end
 class CLASS_builtin_concurrent_Context < ::Quark.builtin.reflect.QuarkClass
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static singleton: -> { ::Quark.builtin_md.builtin_concurrent_Context.new() }
+
 
     
     def initialize()
@@ -4461,10 +4734,47 @@ class CLASS_builtin_concurrent_Context < ::Quark.builtin.reflect.QuarkClass
     end
 
 
-end; def self.builtin_concurrent_Context; CLASS_builtin_concurrent_Context; end
+end
 
+def self.Root; CLASS_Root; end
 class CLASS_Root < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_List_builtin_String__md: -> { ::Quark.builtin_md.builtin_List_builtin_String_.singleton }
+    static builtin_List_builtin_Object__md: -> { ::Quark.builtin_md.builtin_List_builtin_Object_.singleton }
+    static builtin_List_builtin_reflect_Class__md: -> { ::Quark.builtin_md.builtin_List_builtin_reflect_Class_.singleton }
+    static builtin_List_builtin_concurrent_FutureCompletion__md: -> { ::Quark.builtin_md.builtin_List_builtin_concurrent_FutureCompletion_.singleton }
+    static builtin_Map_builtin_Object_builtin_Object__md: -> { ::Quark.builtin_md.builtin_Map_builtin_Object_builtin_Object_.singleton }
+    static builtin_Map_builtin_String_builtin_ServiceInstance__md: -> { ::Quark.builtin_md.builtin_Map_builtin_String_builtin_ServiceInstance_.singleton }
+    static builtin_Resolver_md: -> { ::Quark.builtin_md.builtin_Resolver.singleton }
+    static builtin_ResponseHolder_md: -> { ::Quark.builtin_md.builtin_ResponseHolder.singleton }
+    static builtin_Service_md: -> { ::Quark.builtin_md.builtin_Service.singleton }
+    static builtin_BaseService_md: -> { ::Quark.builtin_md.builtin_BaseService.singleton }
+    static builtin_ServiceInstance_md: -> { ::Quark.builtin_md.builtin_ServiceInstance.singleton }
+    static builtin_DegenerateResolver_md: -> { ::Quark.builtin_md.builtin_DegenerateResolver.singleton }
+    static builtin_Client_md: -> { ::Quark.builtin_md.builtin_Client.singleton }
+    static builtin_ServerResponder_md: -> { ::Quark.builtin_md.builtin_ServerResponder.singleton }
+    static builtin_Server_builtin_Object__md: -> { ::Quark.builtin_md.builtin_Server_builtin_Object_.singleton }
+    static builtin_behaviors_RPC_md: -> { ::Quark.builtin_md.builtin_behaviors_RPC.singleton }
+    static builtin_behaviors_RPCRequest_md: -> { ::Quark.builtin_md.builtin_behaviors_RPCRequest.singleton }
+    static builtin_behaviors_CircuitBreaker_md: -> { ::Quark.builtin_md.builtin_behaviors_CircuitBreaker.singleton }
+    static builtin_concurrent_Event_md: -> { ::Quark.builtin_md.builtin_concurrent_Event.singleton }
+    static builtin_concurrent_FutureListener_md: -> { ::Quark.builtin_md.builtin_concurrent_FutureListener.singleton }
+    static builtin_concurrent_FutureCompletion_md: -> { ::Quark.builtin_md.builtin_concurrent_FutureCompletion.singleton }
+    static builtin_concurrent_EventContext_md: -> { ::Quark.builtin_md.builtin_concurrent_EventContext.singleton }
+    static builtin_concurrent_Future_md: -> { ::Quark.builtin_md.builtin_concurrent_Future.singleton }
+    static builtin_concurrent_FutureWait_md: -> { ::Quark.builtin_md.builtin_concurrent_FutureWait.singleton }
+    static builtin_concurrent_Queue_builtin_concurrent_Event__md: -> { ::Quark.builtin_md.builtin_concurrent_Queue_builtin_concurrent_Event_.singleton }
+    static builtin_concurrent_CollectorExecutor_md: -> { ::Quark.builtin_md.builtin_concurrent_CollectorExecutor.singleton }
+    static builtin_concurrent_Collector_md: -> { ::Quark.builtin_md.builtin_concurrent_Collector.singleton }
+    static builtin_concurrent_TimeoutListener_md: -> { ::Quark.builtin_md.builtin_concurrent_TimeoutListener.singleton }
+    static builtin_concurrent_TimeoutExpiry_md: -> { ::Quark.builtin_md.builtin_concurrent_TimeoutExpiry.singleton }
+    static builtin_concurrent_Timeout_md: -> { ::Quark.builtin_md.builtin_concurrent_Timeout.singleton }
+    static builtin_concurrent_TLSContextInitializer_md: -> { ::Quark.builtin_md.builtin_concurrent_TLSContextInitializer.singleton }
+    static builtin_concurrent_Context_md: -> { ::Quark.builtin_md.builtin_concurrent_Context.singleton }
+
 
     
     def initialize()
@@ -4504,6 +4814,6 @@ class CLASS_Root < Object
     end
 
 
-end; def self.Root; CLASS_Root; end
+end
 end # module MODULE_builtin_md
 end # module Quark

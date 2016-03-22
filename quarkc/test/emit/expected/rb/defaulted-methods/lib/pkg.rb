@@ -5,8 +5,14 @@ module MODULE_pkg
 require 'builtin' # .../reflect
 require 'defaulted_methods_md'
 
+def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_A_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_A_md }
+
 
     
     def initialize()
@@ -39,10 +45,16 @@ class CLASS_A < Object
     end
 
 
-end; def self.A; CLASS_A; end
+end
 
+def self.B; CLASS_B; end
 class CLASS_B < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_B_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_B_md }
+
 
     
     def initialize()
@@ -68,10 +80,16 @@ class CLASS_B < Object
     end
 
 
-end; def self.B; CLASS_B; end
+end
 
+def self.C; CLASS_C; end
 class CLASS_C < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_C_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_C_md }
+
 
     
     def initialize()
@@ -97,10 +115,16 @@ class CLASS_C < Object
     end
 
 
-end; def self.C; CLASS_C; end
+end
 
+def self.T1; CLASS_T1; end
 class CLASS_T1 < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_T1_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T1_md }
+
 
     
     def initialize()
@@ -155,10 +179,16 @@ class CLASS_T1 < Object
     end
 
 
-end; def self.T1; CLASS_T1; end
+end
 
+def self.T2; CLASS_T2; end
 class CLASS_T2 < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_T2_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T2_md }
+
 
     
     def initialize()
@@ -213,10 +243,16 @@ class CLASS_T2 < Object
     end
 
 
-end; def self.T2; CLASS_T2; end
+end
 
+def self.T3; CLASS_T3; end
 class CLASS_T3 < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_T3_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T3_md }
+
 
     
     def initialize()
@@ -270,10 +306,16 @@ class CLASS_T3 < Object
     end
 
 
-end; def self.T3; CLASS_T3; end
+end
 
+def self.T4; CLASS_T4; end
 class CLASS_T4 < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_T4_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T4_md }
+
 
     
     def initialize()
@@ -328,10 +370,16 @@ class CLASS_T4 < Object
     end
 
 
-end; def self.T4; CLASS_T4; end
+end
 
+def self.T5; CLASS_T5; end
 class CLASS_T5 < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_T5_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T5_md }
+
 
     
     def initialize()
@@ -386,7 +434,7 @@ class CLASS_T5 < Object
     end
 
 
-end; def self.T5; CLASS_T5; end
+end
 
 def self.main()
     

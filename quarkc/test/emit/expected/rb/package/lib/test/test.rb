@@ -15,8 +15,14 @@ def self.go()
     nil
 end
 
+def self.Test; CLASS_Test; end
 class CLASS_Test < Object
     attr_accessor :size
+    extend DatawireQuarkCore::Static
+
+
+    static test_test_Test_ref: -> { ::Quark.package_md.Root.test_test_Test_md }
+
 
     
     def initialize()
@@ -70,7 +76,7 @@ class CLASS_Test < Object
     end
 
 
-end; def self.Test; CLASS_Test; end
+end
 end # module MODULE_test
 end # module MODULE_test
 end # module Quark

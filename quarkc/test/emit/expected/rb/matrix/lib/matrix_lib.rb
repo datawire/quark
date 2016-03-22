@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.matrix_lib; MODULE_matrix_lib; end
 module MODULE_matrix_lib
+def self.Matrix; CLASS_Matrix; end
 class CLASS_Matrix < Object
     attr_accessor :width, :height, :columns
 
@@ -89,7 +90,7 @@ class CLASS_Matrix < Object
     end
 
 
-end; def self.Matrix; CLASS_Matrix; end
+end
 
 def self.main()
     

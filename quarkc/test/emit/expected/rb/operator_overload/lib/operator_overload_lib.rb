@@ -2,6 +2,7 @@ module Quark
 require "datawire-quark-core"
 def self.operator_overload_lib; MODULE_operator_overload_lib; end
 module MODULE_operator_overload_lib
+def self.Overload; CLASS_Overload; end
 class CLASS_Overload < Object
     attr_accessor :name
 
@@ -81,7 +82,7 @@ class CLASS_Overload < Object
     end
 
 
-end; def self.Overload; CLASS_Overload; end
+end
 
 def self.main()
     

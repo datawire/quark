@@ -5,8 +5,14 @@ module MODULE_pkg
 require 'builtin' # .../reflect
 require 'extending_primitives_md'
 
+def self.C; CLASS_C; end
 class CLASS_C < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static pkg_C_ref: -> { ::Quark.extending_primitives_md.Root.pkg_C_md }
+
 
     
     def initialize()
@@ -67,7 +73,7 @@ class CLASS_C < Object
     end
 
 
-end; def self.C; CLASS_C; end
+end
 
 def self.main()
     

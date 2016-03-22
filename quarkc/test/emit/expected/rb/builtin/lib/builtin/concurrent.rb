@@ -7,8 +7,14 @@ module MODULE_concurrent
 # require 'builtin/reflect' # in builtin/concurrent 
 # require 'builtin_md' # in builtin/concurrent 
 
+def self.Event; CLASS_Event; end
 class CLASS_Event < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_Event_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Event_md }
+
 
     
     def initialize()
@@ -39,10 +45,16 @@ class CLASS_Event < Object
     end
 
 
-end; def self.Event; CLASS_Event; end
+end
 
+def self.FutureListener; CLASS_FutureListener; end
 class CLASS_FutureListener < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_FutureListener_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureListener_md }
+
 
     
     def initialize()
@@ -68,10 +80,16 @@ class CLASS_FutureListener < Object
     end
 
 
-end; def self.FutureListener; CLASS_FutureListener; end
+end
 
+def self.FutureCompletion; CLASS_FutureCompletion; end
 class CLASS_FutureCompletion < Object
     attr_accessor :future, :listener
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_FutureCompletion_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureCompletion_md }
+
 
     
     def initialize(future, listener)
@@ -142,16 +160,22 @@ class CLASS_FutureCompletion < Object
     end
 
 
-end; def self.FutureCompletion; CLASS_FutureCompletion; end
+end
 
+def self.EventContext; CLASS_EventContext; end
 class CLASS_EventContext < Object
     attr_accessor :_context
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_EventContext_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_EventContext_md }
+
 
     
     def initialize()
         
         self.__init_fields__
-        (self)._context = builtin::concurrent::Context.current()
+        (self)._context = ::Quark.builtin.concurrent.Context.current()
 
         nil
     end
@@ -201,10 +225,17 @@ class CLASS_EventContext < Object
     end
 
 
-end; def self.EventContext; CLASS_EventContext; end
+end
 
+def self.Future; CLASS_Future; end
 class CLASS_Future < ::Quark.builtin.concurrent.EventContext
     attr_accessor :_finished, :_error, :_callbacks, :_lock
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_List_builtin_concurrent_FutureCompletion__ref: -> { ::Quark.builtin_md.Root.builtin_List_builtin_concurrent_FutureCompletion__md }
+    static builtin_concurrent_Future_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Future_md }
+
 
     
     def initialize()
@@ -347,10 +378,16 @@ class CLASS_Future < ::Quark.builtin.concurrent.EventContext
     end
 
 
-end; def self.Future; CLASS_Future; end
+end
 
+def self.FutureWait; CLASS_FutureWait; end
 class CLASS_FutureWait < Object
     attr_accessor :_lock, :_future
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_FutureWait_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureWait_md }
+
 
     
     def initialize()
@@ -457,8 +494,9 @@ class CLASS_FutureWait < Object
     end
 
 
-end; def self.FutureWait; CLASS_FutureWait; end
+end
 
+def self.Queue; CLASS_Queue; end
 class CLASS_Queue < Object
     attr_accessor :items, :head, :tail
 
@@ -561,10 +599,17 @@ class CLASS_Queue < Object
     end
 
 
-end; def self.Queue; CLASS_Queue; end
+end
 
+def self.CollectorExecutor; CLASS_CollectorExecutor; end
 class CLASS_CollectorExecutor < Object
     attr_accessor :events, :collector
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_Queue_builtin_concurrent_Event__ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Queue_builtin_concurrent_Event__md }
+    static builtin_concurrent_CollectorExecutor_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_CollectorExecutor_md }
+
 
     
     def initialize(collector)
@@ -583,7 +628,7 @@ class CLASS_CollectorExecutor < Object
         
         (self).events = (self).collector._swap((self).events)
         if (((self).events.size()) > (0))
-            builtin::concurrent::Context.runtime().schedule(self, 0.0)
+            ::Quark.builtin.concurrent.Context.runtime().schedule(self, 0.0)
         end
 
         nil
@@ -592,13 +637,13 @@ class CLASS_CollectorExecutor < Object
     def onExecute(runtime)
         
         next_ = (self).events.get()
-        old = builtin::concurrent::Context.current()
+        old = ::Quark.builtin.concurrent.Context.current()
         while ((next_) != (nil)) do
-            builtin::concurrent::Context.swap(next_.getContext().getContext())
+            ::Quark.builtin.concurrent.Context.swap(next_.getContext().getContext())
             next_.fireEvent()
             next_ = (self).events.get()
         end
-        builtin::concurrent::Context.swap(old)
+        ::Quark.builtin.concurrent.Context.swap(old)
         (self).collector._poll()
 
         nil
@@ -646,10 +691,16 @@ class CLASS_CollectorExecutor < Object
     end
 
 
-end; def self.CollectorExecutor; CLASS_CollectorExecutor; end
+end
 
+def self.Collector; CLASS_Collector; end
 class CLASS_Collector < Object
     attr_accessor :lock, :pending, :executor, :idle
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_Collector_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Collector_md }
+
 
     
     def initialize()
@@ -753,10 +804,16 @@ class CLASS_Collector < Object
     end
 
 
-end; def self.Collector; CLASS_Collector; end
+end
 
+def self.TimeoutListener; CLASS_TimeoutListener; end
 class CLASS_TimeoutListener < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_TimeoutListener_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TimeoutListener_md }
+
 
     
     def initialize()
@@ -781,10 +838,16 @@ class CLASS_TimeoutListener < Object
     end
 
 
-end; def self.TimeoutListener; CLASS_TimeoutListener; end
+end
 
+def self.TimeoutExpiry; CLASS_TimeoutExpiry; end
 class CLASS_TimeoutExpiry < Object
     attr_accessor :timeout, :listener
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_TimeoutExpiry_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TimeoutExpiry_md }
+
 
     
     def initialize(timeout, listener)
@@ -855,10 +918,16 @@ class CLASS_TimeoutExpiry < Object
     end
 
 
-end; def self.TimeoutExpiry; CLASS_TimeoutExpiry; end
+end
 
+def self.Timeout; CLASS_Timeout; end
 class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
     attr_accessor :timeout, :lock, :listener
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_Timeout_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Timeout_md }
+
 
     
     def initialize(timeout)
@@ -878,7 +947,7 @@ class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
         
         (self).listener = listener
         delay = (self).timeout
-        builtin::concurrent::Context.runtime().schedule(self, delay)
+        ::Quark.builtin.concurrent.Context.runtime().schedule(self, delay)
 
         nil
     end
@@ -959,10 +1028,16 @@ class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
     end
 
 
-end; def self.Timeout; CLASS_Timeout; end
+end
 
+def self.TLSContextInitializer; CLASS_TLSContextInitializer; end
 class CLASS_TLSContextInitializer < Object
     attr_accessor 
+    extend DatawireQuarkCore::Static
+
+
+    static builtin_concurrent_TLSContextInitializer_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TLSContextInitializer_md }
+
 
     
     def initialize()
@@ -976,7 +1051,7 @@ class CLASS_TLSContextInitializer < Object
     
     def getValue()
         
-        return ::Quark.builtin.concurrent.Context.new(builtin::concurrent::Context.global())
+        return ::Quark.builtin.concurrent.Context.new(::Quark.builtin.concurrent.Context.global())
 
         nil
     end
@@ -1009,10 +1084,18 @@ class CLASS_TLSContextInitializer < Object
     end
 
 
-end; def self.TLSContextInitializer; CLASS_TLSContextInitializer; end
+end
 
+def self.Context; CLASS_Context; end
 class CLASS_Context < Object
     attr_accessor :_parent, :_runtime, :collector
+    extend DatawireQuarkCore::Static
+
+
+    static _global: -> { ::Quark.builtin.concurrent.Context.new(nil) }
+    static _current: -> { nil }
+    static builtin_concurrent_Context_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Context_md }
+
 
     
     def initialize(parent)
@@ -1049,7 +1132,7 @@ class CLASS_Context < Object
 
     def self.runtime()
         
-        return (builtin::concurrent::Context.current())._runtime
+        return (::Quark.builtin.concurrent.Context.current())._runtime
 
         nil
     end
@@ -1122,7 +1205,7 @@ class CLASS_Context < Object
     end
 
 
-end; def self.Context; CLASS_Context; end
+end
 end # module MODULE_concurrent
 end # module MODULE_builtin
 end # module Quark
