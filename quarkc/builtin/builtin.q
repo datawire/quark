@@ -490,7 +490,8 @@ namespace builtin {
     primitive Runtime {
         macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
                         $py{_RuntimeFactory.create()}
-                        $js{_qrt.RuntimeFactory.create()};
+                        $js{_qrt.RuntimeFactory.create()}
+                        $rb{DatawireQuarkCore::Runtime.new};
         void open(String url, WSHandler handler);
         void request(HTTPRequest request, HTTPHandler handler);
         void schedule(Task handler, float delayInSeconds);
@@ -1632,12 +1633,12 @@ namespace concurrent {
         Collector collector;
     }
 
-    @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer})
+    @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer}  $rb{DatawireQuarkCore::TLSInitializer})
     primitive TLSInitializer<T> {
         T getValue();
     }
 
-    @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS})
+    @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS} $rb{DatawireQuarkCore::TLS})
     primitive TLS<Context> {
         // FIXME: work around the compiler bug by renaming the template parameter to the only user
         macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
@@ -1647,17 +1648,17 @@ namespace concurrent {
         void setValue(Context c);
     }
 
-    @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex})
+    @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex} $rb{DatawireQuarkCore::Mutex})
     primitive Mutex {
         void acquire();
         void release();
     }
 
-    @mapping($java{io.datawire.quark.runtime.Lock} $py{_Lock} $js{_qrt.Lock})
+    @mapping($java{io.datawire.quark.runtime.Lock} $py{_Lock} $js{_qrt.Lock} $rb{DatawireQuarkCore::Lock})
     primitive Lock extends Mutex {
     }
 
-    @mapping($java{io.datawire.quark.runtime.Condition} $py{_Condition} $js{_qrt.Condition})
+    @mapping($java{io.datawire.quark.runtime.Condition} $py{_Condition} $js{_qrt.Condition} $rb{DatawireQuarkCore::Condition})
     primitive Condition extends Mutex {
         void waitWakeup(long timeout) {}
         void wakeup() {}
