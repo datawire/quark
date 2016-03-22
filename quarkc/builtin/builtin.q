@@ -80,6 +80,7 @@ namespace builtin {
                                                        $js{($self)._setField(($name), ($value))};
         macro String toString() $java{($self).toString()}
                                 $py{str($self)}
+                                $rb{($self).inspect}
                                 $js{($self).toString()};
     }
 
