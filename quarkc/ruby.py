@@ -335,7 +335,7 @@ def get_field(expr, field):
     return "({receiver}).{name}".format(receiver=expr, name=field)
 
 def get_static_field(path, clazz, field):
-    return '::'.join(path + [clazz]) + '.' + field
+    return '.'.join(['::Quark'] + path + [clazz]) + '.' + field
 
 def cast(type, expr):
     assert expr
