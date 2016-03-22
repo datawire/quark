@@ -709,7 +709,7 @@ module DatawireQuarkCore
     end
   end
 
-  class ThreadLocal
+  class TLS
     UNINITIALIZED = []
     private_constant :UNINITIALIZED
     def initialize(initializer)

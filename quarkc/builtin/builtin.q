@@ -1643,6 +1643,7 @@ namespace concurrent {
         // FIXME: work around the compiler bug by renaming the template parameter to the only user
         macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
                                                        $py{_TLS($initializer)}
+                                                       $rb{DatawireQuarkCore::TLS.new($initializer)}
                                                        $js{new _qrt.TLS($initializer)};
         Context getValue();
         void setValue(Context c);
