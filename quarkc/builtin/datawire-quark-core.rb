@@ -802,3 +802,7 @@ module DatawireQuarkCore
   end
 end
 
+# XXX: work around module referencing?
+module Quark
+  def self.DatawireQuarkCore; ::DatawireQuarkCore; end
+end
