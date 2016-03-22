@@ -372,7 +372,7 @@ class CLASS_ServiceInstance < Object
     def succeed(info)
         
         if (!(self.isActive()))
-            builtin::Client.logger.info(((("- CLOSE breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
+            ::Quark.builtin.Client.logger.info(((("- CLOSE breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
         end
         (self).breaker.succeed()
 
@@ -382,7 +382,7 @@ class CLASS_ServiceInstance < Object
     def fail(info)
         
         if (!(self.isActive()))
-            builtin::Client.logger.warn(((("- OPEN breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
+            ::Quark.builtin.Client.logger.warn(((("- OPEN breaker for ") + ((self).serviceName)) + (" at ")) + ((self).url))
         end
         (self).breaker.fail()
 
@@ -500,19 +500,19 @@ class CLASS_Client < Object
         (self).serviceName = serviceName
         (self).resolver = ::Quark.builtin.DegenerateResolver.new()
         (self)._timeout = 0.0
-        (self).mutex = ::Quark..new()
+        (self).mutex = ::Quark.DatawireQuarkCore::Lock.new()
         (self).instanceMap = {}
         (self).counter = 0
         failureLimit = (self)._getField("failureLimit")
         if ((failureLimit) != (nil))
             (self)._failureLimit = failureLimit
         end
-        builtin::Client.logger.info((() + (" failureLimit ")) + (((self)._failureLimit).to_s))
+        ::Quark.builtin.Client.logger.info((() + (" failureLimit ")) + (((self)._failureLimit).to_s))
         retestDelay = (self)._getField("retestDelay")
         if ((retestDelay) != (nil))
             (self)._retestDelay = retestDelay
         end
-        builtin::Client.logger.info((() + (" retestDelay ")) + (((self)._retestDelay).to_s))
+        ::Quark.builtin.Client.logger.info((() + (" retestDelay ")) + (((self)._retestDelay).to_s))
 
         nil
     end
@@ -547,13 +547,13 @@ class CLASS_Client < Object
                 ((self).instanceMap)[url] = (instance)
             end
             if (instance.isActive())
-                builtin::Client.logger.info(((((("- ") + ((self).serviceName)) + (" using instance ")) + (((idx) + (1)).to_s)) + (": ")) + (url))
+                ::Quark.builtin.Client.logger.info(((((("- ") + ((self).serviceName)) + (" using instance ")) + (((idx) + (1)).to_s)) + (": ")) + (url))
                 result = instance
                 break
             end
             idx = ((idx) + (1)) % ((urls).size)
             if ((idx) == (next_))
-                builtin::Client.logger.info((("- ") + ((self).serviceName)) + (": no live instances! giving up."))
+                ::Quark.builtin.Client.logger.info((("- ") + ((self).serviceName)) + (": no live instances! giving up."))
                 break
             end
         end
@@ -594,7 +594,7 @@ class CLASS_Client < Object
     def _getField(name)
         
         if ((name) == ("logger"))
-            return builtin::Client.logger
+            return ::Quark.builtin.Client.logger
         end
         if ((name) == ("resolver"))
             return (self).resolver
@@ -628,7 +628,7 @@ class CLASS_Client < Object
     def _setField(name, value)
         
         if ((name) == ("logger"))
-            builtin::Client.logger = value
+            ::Quark.builtin.Client.logger = value
         end
         if ((name) == ("resolver"))
             (self).resolver = value

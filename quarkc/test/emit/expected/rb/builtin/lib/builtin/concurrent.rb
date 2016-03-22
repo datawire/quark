@@ -212,7 +212,7 @@ class CLASS_Future < ::Quark.builtin.concurrent.EventContext
         super()
         (self)._finished = false
         (self)._callbacks = nil
-        (self)._lock = ::Quark..new()
+        (self)._lock = ::Quark.DatawireQuarkCore::Lock.new()
 
         nil
     end
@@ -356,7 +356,7 @@ class CLASS_FutureWait < Object
     def initialize()
         
         self.__init_fields__
-        (self)._lock = ::Quark..new()
+        (self)._lock = ::Quark.DatawireQuarkCore::Condition.new()
         (self)._future = nil
 
         nil
@@ -655,7 +655,7 @@ class CLASS_Collector < Object
     def initialize()
         
         self.__init_fields__
-        (self).lock = ::Quark..new()
+        (self).lock = ::Quark.DatawireQuarkCore::Lock.new()
         (self).pending = ::Quark.builtin.concurrent.Queue.new()
         (self).executor = ::Quark.builtin.concurrent.CollectorExecutor.new(self)
         (self).idle = true
@@ -866,7 +866,7 @@ class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
         super()
         (self).timeout = timeout
         (self).listener = nil
-        (self).lock = ::Quark..new()
+        (self).lock = ::Quark.DatawireQuarkCore::Lock.new()
 
         nil
     end
@@ -1020,7 +1020,7 @@ class CLASS_Context < Object
         self.__init_fields__
         (self)._parent = parent
         if ((parent) == (nil))
-            (self)._runtime = 
+            (self)._runtime = DatawireQuarkCore::Runtime.new
             (self).collector = ::Quark.builtin.concurrent.Collector.new()
         else
             (self)._runtime = (parent)._runtime
@@ -1035,14 +1035,14 @@ class CLASS_Context < Object
     
     def self.current()
         
-        return builtin::concurrent::Context._current.getValue()
+        return ::Quark.builtin.concurrent.Context._current.getValue()
 
         nil
     end
 
     def self.global()
         
-        return builtin::concurrent::Context._global
+        return ::Quark.builtin.concurrent.Context._global
 
         nil
     end
@@ -1056,7 +1056,7 @@ class CLASS_Context < Object
 
     def self.swap(c)
         
-        builtin::concurrent::Context._current.setValue(c)
+        ::Quark.builtin.concurrent.Context._current.setValue(c)
 
         nil
     end
@@ -1071,10 +1071,10 @@ class CLASS_Context < Object
     def _getField(name)
         
         if ((name) == ("_global"))
-            return builtin::concurrent::Context._global
+            return ::Quark.builtin.concurrent.Context._global
         end
         if ((name) == ("_current"))
-            return builtin::concurrent::Context._current
+            return ::Quark.builtin.concurrent.Context._current
         end
         if ((name) == ("_parent"))
             return (self)._parent
@@ -1093,10 +1093,10 @@ class CLASS_Context < Object
     def _setField(name, value)
         
         if ((name) == ("_global"))
-            builtin::concurrent::Context._global = value
+            ::Quark.builtin.concurrent.Context._global = value
         end
         if ((name) == ("_current"))
-            builtin::concurrent::Context._current = value
+            ::Quark.builtin.concurrent.Context._current = value
         end
         if ((name) == ("_parent"))
             (self)._parent = value

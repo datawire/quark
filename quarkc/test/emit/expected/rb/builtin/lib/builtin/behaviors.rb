@@ -309,7 +309,7 @@ class CLASS_CircuitBreaker < Object
         
         (self).mutex.acquire()
         if (((self).failureCount) > (0))
-            builtin::Client.logger.info(("- CLOSE breaker on ") + ((self).id))
+            ::Quark.builtin.Client.logger.info(("- CLOSE breaker on ") + ((self).id))
         end
         (self).failureCount = 0
         (self).mutex.release()
@@ -325,7 +325,7 @@ class CLASS_CircuitBreaker < Object
         if (((self).failureCount) >= ((self).failureLimit))
             (self).active = false
             doSchedule = true
-            builtin::Client.logger.warn(("- OPEN breaker on ") + ((self).id))
+            ::Quark.builtin.Client.logger.warn(("- OPEN breaker on ") + ((self).id))
         end
         (self).mutex.release()
         if (doSchedule)
@@ -339,7 +339,7 @@ class CLASS_CircuitBreaker < Object
         
         (self).mutex.acquire()
         (self).active = true
-        builtin::Client.logger.warn(("- RETEST breaker on ") + ((self).id))
+        ::Quark.builtin.Client.logger.warn(("- RETEST breaker on ") + ((self).id))
         (self).mutex.release()
 
         nil
@@ -409,7 +409,7 @@ class CLASS_CircuitBreaker < Object
         self.retestDelay = nil
         self.active = true
         self.failureCount = 0
-        self.mutex = ::Quark..new()
+        self.mutex = ::Quark.DatawireQuarkCore::Lock.new()
 
         nil
     end

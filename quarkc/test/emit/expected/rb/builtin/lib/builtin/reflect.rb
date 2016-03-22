@@ -12,7 +12,7 @@ class CLASS_QuarkClass < Object
         
         self.__init_fields__
         (self).id = id
-        (builtin::reflect::QuarkClass.classes)[id] = (self)
+        (::Quark.builtin.reflect.QuarkClass.classes)[id] = (self)
         (self).name = id
 
         nil
@@ -23,7 +23,7 @@ class CLASS_QuarkClass < Object
     
     def self.get(id)
         
-        return (builtin::reflect::QuarkClass.classes)[id]
+        return (::Quark.builtin.reflect.QuarkClass.classes)[id]
 
         nil
     end
@@ -114,22 +114,22 @@ class CLASS_QuarkClass < Object
     def _getField(name)
         
         if ((name) == ("classes"))
-            return builtin::reflect::QuarkClass.classes
+            return ::Quark.builtin.reflect.QuarkClass.classes
         end
         if ((name) == ("VOID"))
-            return builtin::reflect::QuarkClass.VOID
+            return ::Quark.builtin.reflect.QuarkClass.VOID
         end
         if ((name) == ("BOOL"))
-            return builtin::reflect::QuarkClass.BOOL
+            return ::Quark.builtin.reflect.QuarkClass.BOOL
         end
         if ((name) == ("INT"))
-            return builtin::reflect::QuarkClass.INT
+            return ::Quark.builtin.reflect.QuarkClass.INT
         end
         if ((name) == ("LONG"))
-            return builtin::reflect::QuarkClass.LONG
+            return ::Quark.builtin.reflect.QuarkClass.LONG
         end
         if ((name) == ("STRING"))
-            return builtin::reflect::QuarkClass.STRING
+            return ::Quark.builtin.reflect.QuarkClass.STRING
         end
         if ((name) == ("id"))
             return (self).id
@@ -154,22 +154,22 @@ class CLASS_QuarkClass < Object
     def _setField(name, value)
         
         if ((name) == ("classes"))
-            builtin::reflect::QuarkClass.classes = value
+            ::Quark.builtin.reflect.QuarkClass.classes = value
         end
         if ((name) == ("VOID"))
-            builtin::reflect::QuarkClass.VOID = value
+            ::Quark.builtin.reflect.QuarkClass.VOID = value
         end
         if ((name) == ("BOOL"))
-            builtin::reflect::QuarkClass.BOOL = value
+            ::Quark.builtin.reflect.QuarkClass.BOOL = value
         end
         if ((name) == ("INT"))
-            builtin::reflect::QuarkClass.INT = value
+            ::Quark.builtin.reflect.QuarkClass.INT = value
         end
         if ((name) == ("LONG"))
-            builtin::reflect::QuarkClass.LONG = value
+            ::Quark.builtin.reflect.QuarkClass.LONG = value
         end
         if ((name) == ("STRING"))
-            builtin::reflect::QuarkClass.STRING = value
+            ::Quark.builtin.reflect.QuarkClass.STRING = value
         end
         if ((name) == ("id"))
             (self).id = value
