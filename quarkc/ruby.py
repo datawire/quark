@@ -50,13 +50,14 @@ end
 """.format
 
     class_ = """\
+def self.{alias}; {name}; end
 class {name} < {base}
     {prologue}
 
     {constructors}
 
     {methods}
-end; def self.{alias}; {name}; end
+end
 """.format
 
 ## Packaging
@@ -154,7 +155,10 @@ def comment(stuff):
 ## Class definition
 
 def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
-    prologue = 'attr_accessor ' + ', '.join(':' + name for name, value in fields)
+    prologue = 'attr_accessor %s' % ', '.join(':' + name for name, value in fields)
+    if static_fields:
+        prologue += indent('extend DatawireQuarkCore::Static\n')
+        prologue += indent('\n'.join(static_fields))
     init_fields = Templates.method(
         name='__init_fields__',
         parameters='',
@@ -171,7 +175,7 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
     return source
 
 def static_field(doc, clazz, type, name, value):
-    return "%s.%s = %s" % (clazz, name, value or "nil")
+    return "static {name}: -> {{ {value} }}".format(name=name, value=value or 'nil')
 
 def field(doc, clazz, type, name, value):
     return (name, value or null())

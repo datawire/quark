@@ -34,6 +34,38 @@ module DatawireQuarkCore
     end
   end
 
+  module Static
+    Unassigned = Class.new
+
+    def static(pairs)
+      pairs.each do |name, default|
+        self.instance_variable_set("@#{name}", Unassigned)
+
+        define_singleton_method(name) do
+          value = self.instance_variable_get("@#{name}")
+
+          if value == Unassigned
+            value = default.call
+            self.instance_variable_set("@#{name}", value)
+          end
+
+          value
+        end
+
+        define_singleton_method("#{name}=") do |value|
+          self.instance_variable_set("@#{name}", value)
+        end
+
+        define_method(name) do
+          self.class.send(name)
+        end
+
+        define_method("#{name}=") do |value|
+          self.class.send("#{name}=", value)
+        end
+      end
+    end
+  end
 
   def self.print(message)
     Kernel.print message == nil ? 'null' : message, "\n"
@@ -558,7 +590,7 @@ module DatawireQuarkCore
     attr_accessor :fut
 
     private
-    
+
     def fail
       @rs.setCode(500)
       @rs.setBody("Servlet failed to pair up request and response")
