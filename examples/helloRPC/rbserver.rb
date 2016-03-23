@@ -6,14 +6,14 @@ require 'hello'
 class HelloImpl
 
     def hello(request)
-        res = ::Quark.hello.Response()
+        res = ::Quark.hello.Response.new
 
         # Uncomment the next line to simulate a long request processing
         # time and force a request timeout to occur for the client.
         # sleep 5
 
         res.result = "Responding to [%s] from Ruby" % request.text
-        res.finish(None)
+        res.finish(nil)
         return res
     end
 end
