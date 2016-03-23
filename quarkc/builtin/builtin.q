@@ -630,7 +630,9 @@ namespace builtin {
         }
 
         if (cls == null) {
+            print("toJSON Getting class of " + obj.toString());
             cls = obj.getClass();
+            print("toJSON got class " + cls.toString());
         }
 
         int idx = 0;
@@ -975,6 +977,9 @@ namespace reflect {
         static Class STRING = new Class("builtin.String");
 
         static Class get(String id) {
+            if (!classes.contains(id)) {
+                print("Cannot find " + id + " in " + classes.keys().toString());
+            }
             return classes[id];
         }
 
@@ -986,7 +991,9 @@ namespace reflect {
 
         Class(String id) {
             self.id = id;
+            print("Registering " + id + " with reflection");
             classes[id] = self;
+            print("Currently have " + classes.keys().toString());
             self.name = id;
         }
 

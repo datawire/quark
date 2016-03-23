@@ -88,22 +88,18 @@ module DatawireQuarkCore
   end
 
   def self._getClass obj
-    case obj.class
-    when NilClass
-      return nil
-    when String
-      return "builtin.String"
-    when Fixnum
-      return "builtin.int"
-    when Float
-      return "builtin.float"
-    when Array
-      return "builtin.List<builtin.Object>"
-    when Hash
-      return "builtin.Map<builtin.Object,builtin.Object>"
-    else
-      return obj._getClass
-    end
+    clz = __getClass obj
+    puts "runtime _getClass for #{obj} is #{clz}"
+    clz
+  end
+  def self.__getClass obj
+    return nil if obj.is_a? NilClass
+    return "builtin.String" if obj.is_a? String
+    return "builtin.int" if obj.is_a? Fixnum
+    return "builtin.float" if obj.is_a? Float
+    return "builtin.List<builtin.Object>" if obj.is_a? Array
+    return "builtin.Map<builtin.Object,builtin.Object>" if obj.is_a? Hash
+    return obj._getClass
   end
 
   class List < Array
