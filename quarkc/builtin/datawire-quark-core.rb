@@ -143,7 +143,7 @@ module DatawireQuarkCore
     end
 
     def ==(other)
-      value == other.value
+      not other.nil? and value == other.value
     end
 
     def toString
