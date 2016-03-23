@@ -12,6 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import itertools
 from collections import OrderedDict
 from .helpers import *
 
@@ -94,9 +95,13 @@ def _make_file(path):
     epilogue = 'def self.{alias}; {name}; end\nmodule {name}\n'.format
     prologue = 'end # module {name}\n'.format
     names = [name.replace('-', '_') for name in path]
-    head = 'require "datawire-quark-core"\n'
+    head = ''
+    # head += 'puts "begin loading module %s"\n' % ".".join(path)
+    if tuple(path) == ('builtin',):
+        head += 'require_relative "datawire-quark-core"\n'
     head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
     tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
+    # tail += 'puts "end loading module %s"\n' % ".".join(path)
     return Code(head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
 def make_class_file(path, name):
@@ -123,12 +128,18 @@ def type(path, name, parameters):
     return ".".join(path + [name])
 
 def import_(path, origin, dep, cache={}):
-    # print "import %s %s %s" % (path, origin, dep)
     if dep is None:
-        if len(origin) == 1:
-            return "require '%s'" % "/".join(path)
-        else:
-            return "# require '%s' # in %s "% ( "/".join(path), "/".join(origin))
+        # common 'directories'
+        common = len(tuple(itertools.takewhile(
+            lambda p: p[0]==p[1], zip(path[:-1], origin[:-1]))))
+        # uncommon path directories
+        lpath = path[common:-1]
+        # uncommon origin directories
+        lorigin = origin[common:-1]
+        # go up and down and load the file
+        rpath = "/".join(('..',) * len(lorigin) + lpath + path[-1:])
+        require = "require_relative '%s' # %s %s %s" % (rpath, common, lpath, lorigin)
+        return require
     else:
         if len(origin) == 1:
             if len(path) == 1:
@@ -136,7 +147,7 @@ def import_(path, origin, dep, cache={}):
             else:
                 return "require '%s' # .../%s" % (path[0], "/".join(path[1:]))
         else:
-            return "# require '%s' # .../%s %s" % (path[0], "/".join(path[1:]), "/".join(origin))
+            return "require '%s' # .../%s %s" % (path[0], "/".join(path[1:]), "/".join(origin))
 
 def qualify(package, origin):
     # Always fully-qualify names, because Ruby is not fully lexically-scoped.
