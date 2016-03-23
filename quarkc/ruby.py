@@ -140,6 +140,9 @@ def import_(path, origin, dep, cache={}):
         # go up and down and load the file
         rpath = "/".join(('..',) * len(lorigin) + lpath + path[-1:])
         require = "require_relative '%s' # %s %s %s" % (rpath, common, lpath, lorigin)
+        if origin == ('builtin_md',) and path != ('builtin', 'reflect', ):
+            # XXX: why does quark think that builtin_md depends on builtin.concurrent and builtin.behavior ???
+            require = "# for builtin_md: " + require
         return require
     else:
         if len(origin) == 1:
