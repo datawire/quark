@@ -59,6 +59,7 @@ class {name} < {base}
 
     {methods}
 end
+{name}.unlazy_statics
 """.format
 
 ## Packaging
@@ -167,9 +168,10 @@ def comment(stuff):
 
 def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
     prologue = 'attr_accessor %s' % ', '.join(':' + name for name, value in fields)
+    prologue += indent('extend DatawireQuarkCore::Static\n')
     if static_fields:
-        prologue += indent('extend DatawireQuarkCore::Static\n')
         prologue += indent('\n'.join(static_fields))
+        
     init_fields = Templates.method(
         name='__init_fields__',
         parameters='',

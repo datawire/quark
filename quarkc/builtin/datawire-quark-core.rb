@@ -37,17 +37,7 @@ module DatawireQuarkCore
   module Static
     Unassigned = Class.new
 
-    def self.extended klazz
-      class << klazz
-        def new *args
-          # puts "instantiating #{self.name}"
-          unlazy_statics
-          super
-        end
         def unlazy_statics
-          def self.unlazy_statics
-            #puts "already unlazying"
-          end
           names = _lazy_statics
           # puts "unlazying #{self.name} fields #{names}"
           names.each do |name|
@@ -57,7 +47,7 @@ module DatawireQuarkCore
         def _lazy_statics
           lazy = :@_lazy_statics
           if not self.instance_variable_defined? lazy
-            #puts "Bootstrap #{self.name}"
+            # puts "Bootstrap #{self.name}"
             l = self.instance_variable_set(lazy, {:__owner__ => self.name})
           else
             l = self.instance_variable_get(lazy)
@@ -78,7 +68,6 @@ module DatawireQuarkCore
               value = self.instance_variable_get("@#{name}")
 
               if value == Unassigned
-                self.unlazy_statics
                 value = default.call
                 self.instance_variable_set("@#{name}", value)
               end
@@ -87,7 +76,6 @@ module DatawireQuarkCore
             end
 
             define_singleton_method("#{name}=") do |value|
-              self.unlazy_statics
               self.instance_variable_set("@#{name}", value)
             end
 
@@ -100,8 +88,6 @@ module DatawireQuarkCore
             end
           end
         end
-      end
-    end
   end
 
   def self.print(message)
@@ -126,7 +112,7 @@ module DatawireQuarkCore
 
   def self._getClass obj
     clz = __getClass obj
-    puts "runtime _getClass for #{obj} is #{clz}"
+    # puts "runtime _getClass for #{obj} is #{clz}"
     clz
   end
   def self.__getClass obj
