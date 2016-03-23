@@ -16,21 +16,21 @@ def main(argv)
   request = Quark.hello.Request.new
 
   if argv.length > 0
-    request.text = str(argv[0])
+    request.text = argv[0]
   else
     request.text = "Hello from Ruby!"
   end
 
-  print "Request says %s" % request.text.inspect
+  print "Request says #{request.text.inspect}\n"
 
   response = client.hello(request)
   response.await(1.0)
   if not response.isFinished()
-      print "No response!"
+      print "No response!\n"
   elsif not response.getError().nil?
-        print "Response failed with %r" % response.getError()
+        print "Response failed with #{response.getError}\n"
   else
-        print "Response says %r" % response.result
+        print "Response says #{response.result}\n"
   end
 end
 
