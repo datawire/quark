@@ -1,10 +1,12 @@
+// -------- Datawire interface here
 // Pull in the 'Hello' service contract
 var hello = require("hello").hello;
 
 // Create a 'Hello' client to talk to our local server
 var client = new hello.HelloClient("http://localhost:8910/hello");
 
-// Save the button text while calling out.
+// -------- Browser utilities here
+// Here's where we save the button text while calling out.
 var buttonText = '';
 
 // This is our buffer for holding responses.
@@ -24,6 +26,7 @@ function newLine(line, color) {
   return lines.join("\n");
 }
 
+// -------- Browser event handlers here
 // This function gets bound to the 'Say Hello!' button on the web page
 function sayHello (buttonID, inputID, outputID) {
   // First, grab the input and output elements...
