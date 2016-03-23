@@ -430,6 +430,10 @@ module DatawireQuarkCore
       end
     end
 
+    def schedule(delay, &block)
+      @timers.post(delay, &block)
+    end
+
     def wait_for_sources
       last = Time.new - 10
       delta = 1
@@ -455,7 +459,7 @@ module DatawireQuarkCore
     end
     def schedule(task, delay)
       src = @events.add "timer"
-      @timers.post(delay) { @events.event(final:src) { task.onExecute self } }
+      @events.schedule(delay) { @events.event(final:src) { task.onExecute self } }
     end
     def request(request, handler)
       src = @events.add "http request"
