@@ -37,31 +37,68 @@ module DatawireQuarkCore
   module Static
     Unassigned = Class.new
 
-    def static(pairs)
-      pairs.each do |name, default|
-        self.instance_variable_set("@#{name}", Unassigned)
-
-        define_singleton_method(name) do
-          value = self.instance_variable_get("@#{name}")
-
-          if value == Unassigned
-            value = default.call
-            self.instance_variable_set("@#{name}", value)
+    def self.extended klazz
+      class << klazz
+        def new *args
+          # puts "instantiating #{self.name}"
+          unlazy_statics
+          super
+        end
+        def unlazy_statics
+          def self.unlazy_statics
+            #puts "already unlazying"
           end
-
-          value
+          names = _lazy_statics
+          # puts "unlazying #{self.name} fields #{names}"
+          names.each do |name|
+            self.send(name)
+          end
         end
-
-        define_singleton_method("#{name}=") do |value|
-          self.instance_variable_set("@#{name}", value)
+        def _lazy_statics
+          lazy = :@_lazy_statics
+          if not self.instance_variable_defined? lazy
+            #puts "Bootstrap #{self.name}"
+            l = self.instance_variable_set(lazy, {:__owner__ => self.name})
+          else
+            l = self.instance_variable_get(lazy)
+          end
+          if not l.has_key? self.name
+            o = l[:__owner__]
+            # puts "Adding slot for #{self.name} to lazy of #{o}"
+            l[self.name] = []
+          end
+          l[self.name]
         end
+        def static(pairs)
+          pairs.each do |name, default|
+            _lazy_statics << name
+            self.instance_variable_set("@#{name}", Unassigned)
 
-        define_method(name) do
-          self.class.send(name)
-        end
+            define_singleton_method(name) do
+              value = self.instance_variable_get("@#{name}")
 
-        define_method("#{name}=") do |value|
-          self.class.send("#{name}=", value)
+              if value == Unassigned
+                self.unlazy_statics
+                value = default.call
+                self.instance_variable_set("@#{name}", value)
+              end
+
+              value
+            end
+
+            define_singleton_method("#{name}=") do |value|
+              self.unlazy_statics
+              self.instance_variable_set("@#{name}", value)
+            end
+
+            define_method(name) do
+              self.class.send(name)
+            end
+
+            define_method("#{name}=") do |value|
+              self.class.send("#{name}=", value)
+            end
+          end
         end
       end
     end
