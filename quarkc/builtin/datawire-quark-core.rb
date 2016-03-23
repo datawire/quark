@@ -466,7 +466,7 @@ module DatawireQuarkCore
       t = Thread.new do
         begin
           url = request.getUrl
-          @events.event { handler.onHttpInit url }
+          @events.event { handler.onHTTPInit url }
           headers = {}
           request.getHeaders.each { |k| headers[k] = request.getHeader k }
           uri = URI(url)
@@ -478,13 +478,13 @@ module DatawireQuarkCore
           response = HTTP::Response.new
           response.setCode(res.code)
           response.setBody(res.body)
-          @events.event { handler.onHttpResponse request, response }
+          @events.event { handler.onHTTPResponse request, response }
         rescue Exception => e
           @log.warn "EXCEPTION: #{e.inspect}"
           @log.warn "MESSAGE: #{e.message}"
-          @events.event { handler.onHttpError request, e.message }
+          @events.event { handler.onHTTPError request, e.message }
         ensure
-          @events.event(final:src) { handler.onHttpFinal request }
+          @events.event(final:src) { handler.onHTTPFinal request }
         end
       end
     end
