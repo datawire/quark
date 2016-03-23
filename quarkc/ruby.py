@@ -53,13 +53,13 @@ end
     class_ = """\
 def self.{alias}; {name}; end
 class {name} < {base}
-    {prologue}
+{prologue}
 
-    {constructors}
+{constructors}
 
-    {methods}
+{methods}
 end
-{name}.unlazy_statics
+{postscript}\
 """.format
 
 ## Packaging
@@ -170,10 +170,15 @@ def comment(stuff):
 ## Class definition
 
 def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
-    prologue = 'attr_accessor %s' % ', '.join(':' + name for name, value in fields)
-    prologue += indent('extend DatawireQuarkCore::Static\n')
+    rname = 'CLASS_' + name
+    prologue = []
+    if fields:
+        prologue.extend(['attr_accessor %s' % ', '.join(':' + name for name, value in fields)])
+    postscript = []
     if static_fields:
-        prologue += indent('\n'.join(static_fields))
+        prologue.extend(['extend DatawireQuarkCore::Static', ''])
+        prologue.extend(static_fields)
+        postscript.append('%s.unlazy_statics' % rname)
         
     init_fields = Templates.method(
         name='__init_fields__',
@@ -181,12 +186,13 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
         body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
     )
     source = Templates.class_(
-        name='CLASS_' + name,
+        name=rname,
         alias=name,
         base=('::Quark.' + base) if base else 'Object',
-        prologue=prologue,
-        constructors=indent('\n'.join(constructors)),
-        methods=indent('\n'.join(methods + [init_fields])),
+        prologue=indent(prologue, leading_nl=False),
+        constructors=indent(constructors),
+        methods=indent(methods + [init_fields]),
+        postscript=indent(postscript, level=0, leading_nl=False),
     )
     return source
 
@@ -266,7 +272,7 @@ def param(type, name, value):
 ## Blocks
 
 def block(statements):
-    return indent('\n'.join(statements) or null())
+    return indent(statements or null())
 
 ## Statements
 
