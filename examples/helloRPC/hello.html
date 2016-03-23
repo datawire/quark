@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Say Hello!</title>
+
+	<style>
+	p {
+		font-family: sans-serif;
+	}
+
+	div#intro {
+	}
+
+	div#input-div {
+	}
+
+	input#input-text {
+		margin-right: 5px;
+	}
+
+	div#output-div {
+		margin-top: 20px;
+		border: 1px solid black;
+		padding: 5px;
+	}
+
+	p.waiting {
+		color: #CCCCCC;
+	}
+
+	p.good {
+		color: black;
+	}
+
+	p.bad {
+		color: red;
+	}
+
+	</style>
+
+</head>
+<body>
+	<script src="bhello-min.js"></script>
+
+	<div id="intro">
+		<p>Enter some text, then click "Say Hello!"</p>
+	</div>
+
+	<div id="input-div">
+		<input id="input-text" type="text" placeholder="Hello, World!" size=50>
+		<button id="input-button"
+		        onclick="sayHello('input-button', 'input-text', 'output-div');">
+		    Say Hello!
+		</button>
+	</div>
+
+	<div id="output-div">
+		<p class='waiting'>(no request made yet)</p>
+	</div>
+
+  	<script src="browserclient.js"></script>
+</body>
+</html>

@@ -73,7 +73,7 @@ Run the Java client with
 
         mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCClient
 
-### JavaScript
+### JavaScript using Node
 
 Compile and install the Service Contract in hello.q:
 
@@ -86,3 +86,43 @@ Run the Javascript server with
 Run the Javascript client with
 
         node jsclient.js
+
+### JavaScript from the browser
+
+To use Quark from the browser, you compile to JavaScript as above, but then bundle up the JavaScript to allow the browser to use `require()` to load them. We presently use `browserify` for this step.
+
+# The easy way
+
+You can run `make browser` and the included Makefile will
+
+- create a local `node_modules` directory for you, to avoid cluttering up anything else on your system,
+- install `browserify`, to bundle up the modules we need for the browser,
+- install `uglifyjs`, to minify the bundled-up JavaScript,
+- compile Quark to JavaScript, and finally
+- bundle the JavaScript up for the browser.
+
+Note that compiling to JavaScript will install to the local `node_modules` when you do this.
+
+# By hand
+
+To do all the above by hand:
+
+        mkdir node_modules
+        npm install browserify uglifyjs
+        quark install --javascript hello.q
+        node_modules/.bin/browserify -d -o bhello.js -x ws -r quark -r quark/quark_node_runtime -r hello
+        node_modules/.bin/uglifyjs --mangle --compress -o bhello-min.js bhello.js
+
+Note that you can skip creating a local `node_modules` directory if you don't mind installing `browserify`, `uglifyjs`, and `hello` into your existing npm environment, but that you'll have change the path to `browserify` and `uglifyjs` above if you do.
+
+Note also that if you do create a local `node_modules` directory then Quark will install `hello` into it.
+
+Finally, note that you can skip running `uglifyjs` if you edit the appropriate `<script>` tag in `hello.html`.
+
+# Once built
+
+However you build things, once you're ready to go you'll need to first start any of the RPC servers. The easiest way is just to run the JavaScript server, since we've just built that!
+
+        node jsserver.js
+
+Finally, open `hello.html` in your Web browser.
