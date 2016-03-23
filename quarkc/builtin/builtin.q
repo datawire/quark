@@ -630,9 +630,9 @@ namespace builtin {
         }
 
         if (cls == null) {
-            print("toJSON Getting class of " + obj.toString());
+            // print("toJSON Getting class of " + obj.toString());
             cls = obj.getClass();
-            print("toJSON got class " + cls.toString());
+            // print("toJSON got class " + cls.toString());
         }
 
         int idx = 0;
@@ -991,9 +991,9 @@ namespace reflect {
 
         Class(String id) {
             self.id = id;
-            print("Registering " + id + " with reflection");
+            // print("Registering " + id + " with reflection");
             classes[id] = self;
-            print("Currently have " + classes.keys().toString());
+            // print("Currently have " + classes.keys().toString());
             self.name = id;
         }
 
