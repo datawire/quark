@@ -476,7 +476,7 @@ module DatawireQuarkCore
             http.request(req)
           end
           response = HTTP::Response.new
-          response.setCode(res.code)
+          response.setCode(res.code.to_i)
           response.setBody(res.body)
           @events.event { handler.onHTTPResponse request, response }
         rescue Exception => e
