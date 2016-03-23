@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.macro_pie_lib; MODULE_macro_pie_lib; end
 module MODULE_macro_pie_lib
 def self.Pie; CLASS_Pie; end
 class CLASS_Pie < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Pie < Object
 
 
 
-    
+
     def test()
         
         p = ::Quark.macro_pie_lib.Pie.new()

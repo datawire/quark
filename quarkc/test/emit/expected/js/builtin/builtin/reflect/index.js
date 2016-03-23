@@ -26,6 +26,9 @@ Class.INT = new Class("builtin.int");
 Class.LONG = new Class("builtin.long");
 Class.STRING = new Class("builtin.String");
 function Class_get(id) {
+    if (!((Class.classes).has(id))) {
+        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + ((Array.from((Class.classes).keys())).toString()));
+    }
     return _qrt.map_get((Class.classes), (id));
 }
 Class.get = Class_get;

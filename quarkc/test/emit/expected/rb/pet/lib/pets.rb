@@ -1,15 +1,14 @@
 module Quark
-require "datawire-quark-core"
 def self.pets; MODULE_pets; end
 module MODULE_pets
 require 'builtin' # .../reflect
-require 'pet_md'
+require_relative 'pet_md' # 0 () ()
 
 def self.Pet; CLASS_Pet; end
 class CLASS_Pet < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -18,7 +17,7 @@ class CLASS_Pet < Object
 
 
 
-    
+
     def greet()
         raise NotImplementedError, "this is an abstract method"
 
@@ -36,14 +35,12 @@ end
 
 def self.Cat; CLASS_Cat; end
 class CLASS_Cat < ::Quark.pets.Pet
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pets_Cat_ref: -> { ::Quark.pet_md.Root.pets_Cat_md }
 
 
-    
+
     def initialize()
         
         super()
@@ -53,7 +50,7 @@ class CLASS_Cat < ::Quark.pets.Pet
 
 
 
-    
+
     def greet()
         
         DatawireQuarkCore.print("meow!")
@@ -90,17 +87,16 @@ class CLASS_Cat < ::Quark.pets.Pet
 
 
 end
+CLASS_Cat.unlazy_statics
 
 def self.Dog; CLASS_Dog; end
 class CLASS_Dog < ::Quark.pets.Pet
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pets_Dog_ref: -> { ::Quark.pet_md.Root.pets_Dog_md }
 
 
-    
+
     def initialize()
         
         super()
@@ -110,7 +106,7 @@ class CLASS_Dog < ::Quark.pets.Pet
 
 
 
-    
+
     def greet()
         
         DatawireQuarkCore.print("woof!")
@@ -147,6 +143,7 @@ class CLASS_Dog < ::Quark.pets.Pet
 
 
 end
+CLASS_Dog.unlazy_statics
 
 def self.main()
     

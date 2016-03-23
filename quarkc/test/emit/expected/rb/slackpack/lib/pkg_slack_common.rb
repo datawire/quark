@@ -1,9 +1,8 @@
 module Quark
-require "datawire-quark-core"
 def self.pkg_slack_common; MODULE_pkg_slack_common; end
 module MODULE_pkg_slack_common
-require 'slack'
-require 'pkg'
+require_relative 'slack' # 0 () ()
+require_relative 'pkg' # 0 () ()
 
 def self.main()
     

@@ -57,7 +57,7 @@ class User(object):
         if ((name) == (u"user")):
             (self).user = value
 
-    
+
 User.slack_User_ref = slackpack_md.Root.slack_User_md
 class Channel(object):
     """
@@ -101,7 +101,7 @@ class Channel(object):
         if ((name) == (u"channel")):
             (self).channel = value
 
-    
+
 Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md
 class Client(object):
     """
@@ -184,8 +184,6 @@ class Client(object):
                 error = event.SlackError()
                 (error).text = ((login_data).getObjectItem(u"error")).getString()
                 (error).dispatch((self).handler);
-
-        
 
     def _getClass(self):
         return u"slack.Client"

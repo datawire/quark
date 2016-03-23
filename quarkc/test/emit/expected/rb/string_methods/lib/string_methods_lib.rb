@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.string_methods_lib; MODULE_string_methods_lib; end
 module MODULE_string_methods_lib
 def self.string_test; CLASS_string_test; end
 class CLASS_string_test < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_string_test < Object
 
 
 
-    
+
     def check(actual, expected, op, q)
         
         if ((actual) == (expected))
@@ -61,7 +60,8 @@ def self.test_size; CLASS_test_size; end
 class CLASS_test_size < ::Quark.string_methods_lib.string_test
     attr_accessor :what
 
-    
+
+
     def initialize(what)
         
         super()
@@ -72,7 +72,7 @@ class CLASS_test_size < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def does(expected)
         
         actual = (@what).size
@@ -124,7 +124,8 @@ def self.test_startsWith; CLASS_test_startsWith; end
 class CLASS_test_startsWith < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
-    
+
+
     def initialize(what)
         
         super()
@@ -135,7 +136,7 @@ class CLASS_test_startsWith < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(_that)
         
         (self)._that = _that
@@ -200,7 +201,8 @@ def self.test_endsWith; CLASS_test_endsWith; end
 class CLASS_test_endsWith < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
-    
+
+
     def initialize(what)
         
         super()
@@ -211,7 +213,7 @@ class CLASS_test_endsWith < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(_that)
         
         (self)._that = _that
@@ -276,7 +278,8 @@ def self.test_find; CLASS_test_find; end
 class CLASS_test_find < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :_that
 
-    
+
+
     def initialize(what)
         
         super()
@@ -287,7 +290,7 @@ class CLASS_test_find < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(_that)
         
         (self)._that = _that
@@ -352,7 +355,8 @@ def self.test_substring; CLASS_test_substring; end
 class CLASS_test_substring < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :start, :end_
 
-    
+
+
     def initialize(what)
         
         super()
@@ -363,7 +367,7 @@ class CLASS_test_substring < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(start, end_)
         
         (self).start = start
@@ -436,7 +440,8 @@ def self.test_replace; CLASS_test_replace; end
 class CLASS_test_replace < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :start, :end_
 
-    
+
+
     def initialize(what)
         
         super()
@@ -447,7 +452,7 @@ class CLASS_test_replace < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(start, end_)
         
         (self).start = start
@@ -520,7 +525,8 @@ def self.test_join; CLASS_test_join; end
 class CLASS_test_join < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :parts, :strparts, :sep
 
-    
+
+
     def initialize(what)
         
         super()
@@ -531,7 +537,7 @@ class CLASS_test_join < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that()
         
         (self).parts = DatawireQuarkCore::List.new()
@@ -622,7 +628,8 @@ def self.test_split; CLASS_test_split; end
 class CLASS_test_split < ::Quark.string_methods_lib.string_test
     attr_accessor :what, :sep, :altsep
 
-    
+
+
     def initialize(sep, altsep)
         
         super()
@@ -634,7 +641,7 @@ class CLASS_test_split < ::Quark.string_methods_lib.string_test
 
 
 
-    
+
     def that(what)
         
         (self).what = what

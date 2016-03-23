@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.print_lib; MODULE_print_lib; end
 module MODULE_print_lib
 def self.Test; CLASS_Test; end
 class CLASS_Test < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Test < Object
 
 
 
-    
+
     def test()
         
         DatawireQuarkCore.print("Hello World!")

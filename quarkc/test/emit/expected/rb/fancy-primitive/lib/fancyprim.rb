@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.fancyprim; MODULE_fancyprim; end
 module MODULE_fancyprim
 def self.main()

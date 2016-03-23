@@ -25,7 +25,7 @@ class Test(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 Test.test2_Test_ref = constructors_md.Root.test2_Test_md
 
 def go():

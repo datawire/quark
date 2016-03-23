@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.no_spurious_cast_md; MODULE_no_spurious_cast_md; end
 module MODULE_no_spurious_cast_md
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil

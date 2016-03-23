@@ -1,24 +1,22 @@
 module Quark
-require "datawire-quark-core"
 def self.builtin; MODULE_builtin; end
 module MODULE_builtin
 def self.behaviors; MODULE_behaviors; end
 module MODULE_behaviors
-# require 'builtin' # in builtin/behaviors 
-# require 'builtin/reflect' # in builtin/behaviors 
-# require 'builtin/concurrent' # in builtin/behaviors 
-# require 'builtin_md' # in builtin/behaviors 
+require_relative '../builtin' # 0 () ('builtin',)
+require_relative 'reflect' # 1 () ()
+require_relative 'concurrent' # 1 () ()
+require_relative '../builtin_md' # 0 () ('builtin',)
 
 def self.RPC; CLASS_RPC; end
 class CLASS_RPC < Object
     attr_accessor :service, :returned, :timeout, :methodName, :instance
     extend DatawireQuarkCore::Static
 
-
     static builtin_behaviors_RPC_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPC_md }
 
 
-    
+
     def initialize(service, methodName)
         
         self.__init_fields__
@@ -40,7 +38,7 @@ class CLASS_RPC < Object
 
 
 
-    
+
     def call(args)
         
         result = nil
@@ -152,17 +150,17 @@ class CLASS_RPC < Object
 
 
 end
+CLASS_RPC.unlazy_statics
 
 def self.RPCRequest; CLASS_RPCRequest; end
 class CLASS_RPCRequest < Object
     attr_accessor :rpc, :retval, :args, :timeout
     extend DatawireQuarkCore::Static
 
-
     static builtin_behaviors_RPCRequest_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPCRequest_md }
 
 
-    
+
     def initialize(args, rpc)
         
         self.__init_fields__
@@ -176,7 +174,7 @@ class CLASS_RPCRequest < Object
 
 
 
-    
+
     def call(request)
         
         (self).timeout.start(self)
@@ -299,17 +297,17 @@ class CLASS_RPCRequest < Object
 
 
 end
+CLASS_RPCRequest.unlazy_statics
 
 def self.CircuitBreaker; CLASS_CircuitBreaker; end
 class CLASS_CircuitBreaker < Object
     attr_accessor :id, :failureLimit, :retestDelay, :active, :failureCount, :mutex
     extend DatawireQuarkCore::Static
 
-
     static builtin_behaviors_CircuitBreaker_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_CircuitBreaker_md }
 
 
-    
+
     def initialize(id, failureLimit, retestDelay)
         
         self.__init_fields__
@@ -322,7 +320,7 @@ class CLASS_CircuitBreaker < Object
 
 
 
-    
+
     def succeed()
         
         (self).mutex.acquire()
@@ -434,6 +432,7 @@ class CLASS_CircuitBreaker < Object
 
 
 end
+CLASS_CircuitBreaker.unlazy_statics
 end # module MODULE_behaviors
 end # module MODULE_builtin
 end # module Quark

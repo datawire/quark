@@ -1,12 +1,12 @@
 module Quark
-require "datawire-quark-core"
 def self.box_lib; MODULE_box_lib; end
 module MODULE_box_lib
 def self.Box; CLASS_Box; end
 class CLASS_Box < Object
     attr_accessor :contents
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +15,7 @@ class CLASS_Box < Object
 
 
 
-    
+
     def set(contents)
         
         (self).contents = contents
@@ -71,7 +71,8 @@ def self.Crate; CLASS_Crate; end
 class CLASS_Crate < Object
     attr_accessor :box, :ibox
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -80,7 +81,7 @@ class CLASS_Crate < Object
 
 
 
-    
+
     def set(stuff)
         
         (self).box.set(stuff)
@@ -143,7 +144,8 @@ def self.Sack; CLASS_Sack; end
 class CLASS_Sack < Object
     attr_accessor :ints
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -152,7 +154,7 @@ class CLASS_Sack < Object
 
 
 
-    
+
     def _getClass()
         
         return "Sack"

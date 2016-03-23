@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.map_lib; MODULE_map_lib; end
 module MODULE_map_lib
 def self.test1()

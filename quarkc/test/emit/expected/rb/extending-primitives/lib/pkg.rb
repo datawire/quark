@@ -1,20 +1,17 @@
 module Quark
-require "datawire-quark-core"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
 require 'builtin' # .../reflect
-require 'extending_primitives_md'
+require_relative 'extending_primitives_md' # 0 () ()
 
 def self.C; CLASS_C; end
 class CLASS_C < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_C_ref: -> { ::Quark.extending_primitives_md.Root.pkg_C_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -23,7 +20,7 @@ class CLASS_C < Object
 
 
 
-    
+
     def event1()
         
         DatawireQuarkCore.print("event1")
@@ -74,6 +71,7 @@ class CLASS_C < Object
 
 
 end
+CLASS_C.unlazy_statics
 
 def self.main()
     

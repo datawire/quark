@@ -25,7 +25,7 @@ class Box(object):
         if ((name) == (u"contents")):
             (self).contents = value
 
-    
+
 
 class Crate(object):
     def _init(self):
@@ -59,7 +59,7 @@ class Crate(object):
         if ((name) == (u"ibox")):
             (self).ibox = value
 
-    
+
 
 class Sack(object):
     def _init(self):
@@ -80,7 +80,7 @@ class Sack(object):
         if ((name) == (u"ints")):
             (self).ints = value
 
-    
+
 
 
 def test1():

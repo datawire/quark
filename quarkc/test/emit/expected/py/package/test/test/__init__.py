@@ -30,5 +30,5 @@ class Test(object):
         if ((name) == (u"size")):
             (self).size = value
 
-    
+
 Test.test_test_Test_ref = package_md.Root.test_test_Test_md

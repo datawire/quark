@@ -17,6 +17,9 @@ class Class(object):
 
     @staticmethod
     def get(id):
+        if (not ((id) in (Class.classes))):
+            _println((((u"Cannot find ") + (id)) + (u" in ")) + (str(_List((Class.classes).keys()))));
+
         return (Class.classes).get(id)
 
     def getId(self):
@@ -136,7 +139,7 @@ class Class(object):
         if ((name) == (u"methods")):
             (self).methods = value
 
-    
+
 Class.classes = {}
 Class.VOID = Class(u"builtin.void")
 Class.BOOL = Class(u"builtin.bool")
@@ -178,7 +181,7 @@ class Field(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 class Method(object):
     def _init(self):

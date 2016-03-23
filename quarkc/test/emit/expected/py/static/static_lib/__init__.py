@@ -40,7 +40,7 @@ class Foo(object):
         if ((name) == (u"count")):
             Foo.count = value
 
-    
+
 Foo.count = 0
 
 def main():

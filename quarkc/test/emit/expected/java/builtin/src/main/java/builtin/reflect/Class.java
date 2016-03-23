@@ -18,6 +18,9 @@ public class Class implements io.datawire.quark.runtime.QObject {
         (this).name = id;
     }
     public static Class get(String id) {
+        if (!((Class.classes).containsKey(id))) {
+            do{System.out.println(((("Cannot find ") + (id)) + (" in ")) + ((new java.util.ArrayList((Class.classes).keySet())).toString()));System.out.flush();}while(false);
+        }
         return (Class.classes).get(id);
     }
     public String getId() {

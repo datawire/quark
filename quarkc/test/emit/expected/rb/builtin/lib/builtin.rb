@@ -1,11 +1,11 @@
 module Quark
-require "datawire-quark-core"
+require_relative "datawire-quark-core"
 def self.builtin; MODULE_builtin; end
 module MODULE_builtin
-require 'builtin/reflect'
-require 'builtin/concurrent'
-require 'builtin/behaviors'
-require 'builtin_md'
+require_relative 'builtin/reflect' # 0 ('builtin',) ()
+require_relative 'builtin/concurrent' # 0 ('builtin',) ()
+require_relative 'builtin/behaviors' # 0 ('builtin',) ()
+require_relative 'builtin_md' # 0 () ()
 
 def self.toJSON(obj, cls)
     
@@ -107,14 +107,12 @@ end
 
 def self.Resolver; CLASS_Resolver; end
 class CLASS_Resolver < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static builtin_Resolver_ref: -> { ::Quark.builtin_md.Root.builtin_Resolver_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -123,7 +121,7 @@ class CLASS_Resolver < Object
 
 
 
-    
+
     def resolve(serviceName)
         raise NotImplementedError, "this is an abstract method"
 
@@ -138,17 +136,17 @@ class CLASS_Resolver < Object
 
 
 end
+CLASS_Resolver.unlazy_statics
 
 def self.ResponseHolder; CLASS_ResponseHolder; end
 class CLASS_ResponseHolder < Object
     attr_accessor :response, :failure
     extend DatawireQuarkCore::Static
 
-
     static builtin_ResponseHolder_ref: -> { ::Quark.builtin_md.Root.builtin_ResponseHolder_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -157,7 +155,7 @@ class CLASS_ResponseHolder < Object
 
 
 
-    
+
     def onHTTPResponse(request, response)
         
         (self).response = response
@@ -229,17 +227,16 @@ class CLASS_ResponseHolder < Object
 
 
 end
+CLASS_ResponseHolder.unlazy_statics
 
 def self.Service; CLASS_Service; end
 class CLASS_Service < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static builtin_Service_ref: -> { ::Quark.builtin_md.Root.builtin_Service_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -248,7 +245,7 @@ class CLASS_Service < Object
 
 
 
-    
+
     def getName()
         raise NotImplementedError, "this is an abstract method"
 
@@ -283,17 +280,16 @@ class CLASS_Service < Object
 
 
 end
+CLASS_Service.unlazy_statics
 
 def self.BaseService; CLASS_BaseService; end
 class CLASS_BaseService < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static builtin_BaseService_ref: -> { ::Quark.builtin_md.Root.builtin_BaseService_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -302,7 +298,7 @@ class CLASS_BaseService < Object
 
 
 
-    
+
     def getName()
         
         return nil
@@ -361,17 +357,17 @@ class CLASS_BaseService < Object
 
 
 end
+CLASS_BaseService.unlazy_statics
 
 def self.ServiceInstance; CLASS_ServiceInstance; end
 class CLASS_ServiceInstance < Object
     attr_accessor :serviceName, :url, :breaker
     extend DatawireQuarkCore::Static
 
-
     static builtin_ServiceInstance_ref: -> { ::Quark.builtin_md.Root.builtin_ServiceInstance_md }
 
 
-    
+
     def initialize(serviceName, url, failureLimit, retestDelay)
         
         self.__init_fields__
@@ -384,7 +380,7 @@ class CLASS_ServiceInstance < Object
 
 
 
-    
+
     def isActive()
         
         return ((self).breaker).active
@@ -469,17 +465,16 @@ class CLASS_ServiceInstance < Object
 
 
 end
+CLASS_ServiceInstance.unlazy_statics
 
 def self.DegenerateResolver; CLASS_DegenerateResolver; end
 class CLASS_DegenerateResolver < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static builtin_DegenerateResolver_ref: -> { ::Quark.builtin_md.Root.builtin_DegenerateResolver_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -488,7 +483,7 @@ class CLASS_DegenerateResolver < Object
 
 
 
-    
+
     def resolve(serviceName)
         
         return DatawireQuarkCore::List.new([serviceName])
@@ -525,19 +520,19 @@ class CLASS_DegenerateResolver < Object
 
 
 end
+CLASS_DegenerateResolver.unlazy_statics
 
 def self.Client; CLASS_Client; end
 class CLASS_Client < Object
     attr_accessor :resolver, :serviceName, :_timeout, :_failureLimit, :_retestDelay, :mutex, :instanceMap, :counter
     extend DatawireQuarkCore::Static
 
-
     static logger: -> { ::Quark.builtin.concurrent.Context.runtime().logger("quark.client") }
     static builtin_Map_builtin_String_builtin_ServiceInstance__ref: -> { ::Quark.builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md }
     static builtin_Client_ref: -> { ::Quark.builtin_md.Root.builtin_Client_md }
 
 
-    
+
     def initialize(serviceName)
         
         self.__init_fields__
@@ -551,19 +546,19 @@ class CLASS_Client < Object
         if ((failureLimit) != (nil))
             (self)._failureLimit = failureLimit
         end
-        ::Quark.builtin.Client.logger.info((() + (" failureLimit ")) + (((self)._failureLimit).to_s))
+        ::Quark.builtin.Client.logger.info((((self).to_s) + (" failureLimit ")) + (((self)._failureLimit).to_s))
         retestDelay = (self)._getField("retestDelay")
         if ((retestDelay) != (nil))
             (self)._retestDelay = retestDelay
         end
-        ::Quark.builtin.Client.logger.info((() + (" retestDelay ")) + (((self)._retestDelay).to_s))
+        ::Quark.builtin.Client.logger.info((((self).to_s) + (" retestDelay ")) + (((self)._retestDelay).to_s))
 
         nil
     end
 
 
 
-    
+
     def setResolver(resolver)
         
         (self).resolver = resolver
@@ -719,17 +714,17 @@ class CLASS_Client < Object
 
 
 end
+CLASS_Client.unlazy_statics
 
 def self.ServerResponder; CLASS_ServerResponder; end
 class CLASS_ServerResponder < Object
     attr_accessor :request, :response
     extend DatawireQuarkCore::Static
 
-
     static builtin_ServerResponder_ref: -> { ::Quark.builtin_md.Root.builtin_ServerResponder_md }
 
 
-    
+
     def initialize(request, response)
         
         self.__init_fields__
@@ -741,7 +736,7 @@ class CLASS_ServerResponder < Object
 
 
 
-    
+
     def onFuture(result)
         
         error = result.getError()
@@ -799,18 +794,18 @@ class CLASS_ServerResponder < Object
 
 
 end
+CLASS_ServerResponder.unlazy_statics
 
 def self.Server; CLASS_Server; end
 class CLASS_Server < Object
     attr_accessor :impl
     extend DatawireQuarkCore::Static
 
-
     static builtin_List_builtin_reflect_Class__ref: -> { ::Quark.builtin_md.Root.builtin_List_builtin_reflect_Class__md }
     static builtin_Server_builtin_Object__ref: -> { ::Quark.builtin_md.Root.builtin_Server_builtin_Object__md }
 
 
-    
+
     def initialize(impl)
         
         self.__init_fields__
@@ -821,7 +816,7 @@ class CLASS_Server < Object
 
 
 
-    
+
     def onHTTPRequest(request, response)
         
         body = request.getBody()
@@ -912,5 +907,6 @@ class CLASS_Server < Object
 
 
 end
+CLASS_Server.unlazy_statics
 end # module MODULE_builtin
 end # module Quark

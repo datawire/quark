@@ -63,7 +63,7 @@ class Box(object):
         if ((name) == (u"contents")):
             (self).contents = value
 
-    
+
 
 
 def test5():

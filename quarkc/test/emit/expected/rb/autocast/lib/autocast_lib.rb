@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.autocast_lib; MODULE_autocast_lib; end
 module MODULE_autocast_lib
 def self.foo(s)

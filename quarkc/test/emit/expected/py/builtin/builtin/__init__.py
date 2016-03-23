@@ -245,7 +245,7 @@ class ServiceInstance(object):
         if ((name) == (u"breaker")):
             (self).breaker = value
 
-    
+
 ServiceInstance.builtin_ServiceInstance_ref = builtin_md.Root.builtin_ServiceInstance_md
 class DegenerateResolver(object):
     """
@@ -401,7 +401,7 @@ class Client(object):
         if ((name) == (u"counter")):
             (self).counter = value
 
-    
+
 Client.logger = (concurrent.Context.runtime()).logger(u"quark.client")
 Client.builtin_Map_builtin_String_builtin_ServiceInstance__ref = builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md
 Client.builtin_Client_ref = builtin_md.Root.builtin_Client_md
@@ -444,7 +444,7 @@ class ServerResponder(object):
         if ((name) == (u"response")):
             (self).response = value
 
-    
+
 ServerResponder.builtin_ServerResponder_ref = builtin_md.Root.builtin_ServerResponder_md
 class Server(object):
     def _init(self):

@@ -1,15 +1,14 @@
 module Quark
-require "datawire-quark-core"
 def self.use_class_before_def_md; MODULE_use_class_before_def_md; end
 module MODULE_use_class_before_def_md
 require 'builtin' # .../reflect
-require 'pkg'
+require_relative 'pkg' # 0 () ()
 
 def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
 class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "go", DatawireQuarkCore::List.new([]))
@@ -19,7 +18,7 @@ class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -61,14 +60,12 @@ end
 
 def self.pkg_Bar; CLASS_pkg_Bar; end
 class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Bar.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.Bar")
@@ -82,7 +79,7 @@ class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.Bar.new()
@@ -119,17 +116,16 @@ class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_Bar.unlazy_statics
 
 def self.pkg_Foo; CLASS_pkg_Foo; end
 class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Foo.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.Foo")
@@ -143,7 +139,7 @@ class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.Foo.new()
@@ -180,18 +176,17 @@ class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_Foo.unlazy_statics
 
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_Bar_md: -> { ::Quark.use_class_before_def_md.pkg_Bar.singleton }
     static pkg_Foo_md: -> { ::Quark.use_class_before_def_md.pkg_Foo.singleton }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -200,7 +195,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil
@@ -230,5 +225,6 @@ class CLASS_Root < Object
 
 
 end
+CLASS_Root.unlazy_statics
 end # module MODULE_use_class_before_def_md
 end # module Quark

@@ -22,7 +22,7 @@ def test_iterate_list():
             _println(u"Error!");
             return
 
-    
+
 
 
 def test_iterate_list_directory():

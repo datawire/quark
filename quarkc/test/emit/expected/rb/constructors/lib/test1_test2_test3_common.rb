@@ -1,10 +1,9 @@
 module Quark
-require "datawire-quark-core"
 def self.test1_test2_test3_common; MODULE_test1_test2_test3_common; end
 module MODULE_test1_test2_test3_common
-require 'test1'
-require 'test2'
-require 'test3'
+require_relative 'test1' # 0 () ()
+require_relative 'test2' # 0 () ()
+require_relative 'test3' # 0 () ()
 
 def self.main()
     

@@ -21,7 +21,7 @@ class A(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 class B(A):
     def _init(self):
@@ -46,7 +46,7 @@ class B(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 class C(A):
     def _init(self):
@@ -71,7 +71,7 @@ class C(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 class X(object):
     def _init(self):
@@ -112,7 +112,7 @@ class Y(X):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 
 def main():

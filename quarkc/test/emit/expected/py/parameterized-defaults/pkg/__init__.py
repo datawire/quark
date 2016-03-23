@@ -55,7 +55,7 @@ class Box(object):
         if ((name) == (u"contents")):
             (self).contents = value
 
-    
+
 
 class StringBox(Box):
     def _init(self):
@@ -77,7 +77,7 @@ class StringBox(Box):
         if ((name) == (u"contents")):
             (self).contents = value
 
-    
+
 StringBox.pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md
 StringBox.pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md
 

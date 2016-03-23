@@ -1,15 +1,14 @@
 module Quark
-require "datawire-quark-core"
 def self.pet_md; MODULE_pet_md; end
 module MODULE_pet_md
 require 'builtin' # .../reflect
-require 'pets'
+require_relative 'pets' # 0 () ()
 
 def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
 class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "greet", DatawireQuarkCore::List.new([]))
@@ -19,7 +18,7 @@ class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -61,14 +60,12 @@ end
 
 def self.pets_Cat; CLASS_pets_Cat; end
 class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.pet_md.pets_Cat.new() }
 
 
-    
+
     def initialize()
         
         super("pets.Cat")
@@ -82,7 +79,7 @@ class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pets.Cat.new()
@@ -119,12 +116,13 @@ class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pets_Cat.unlazy_statics
 
 def self.pets_Dog_greet_Method; CLASS_pets_Dog_greet_Method; end
 class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "greet", DatawireQuarkCore::List.new([]))
@@ -134,7 +132,7 @@ class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -176,14 +174,12 @@ end
 
 def self.pets_Dog; CLASS_pets_Dog; end
 class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.pet_md.pets_Dog.new() }
 
 
-    
+
     def initialize()
         
         super("pets.Dog")
@@ -197,7 +193,7 @@ class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pets.Dog.new()
@@ -234,18 +230,17 @@ class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pets_Dog.unlazy_statics
 
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pets_Cat_md: -> { ::Quark.pet_md.pets_Cat.singleton }
     static pets_Dog_md: -> { ::Quark.pet_md.pets_Dog.singleton }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -254,7 +249,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil
@@ -284,5 +279,6 @@ class CLASS_Root < Object
 
 
 end
+CLASS_Root.unlazy_statics
 end # module MODULE_pet_md
 end # module Quark

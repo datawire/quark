@@ -1,21 +1,18 @@
 module Quark
-require "datawire-quark-core"
 def self.slack; MODULE_slack; end
 module MODULE_slack
 require 'builtin' # .../reflect
-require 'slack/event'
-require 'slackpack_md'
+require_relative 'slack/event' # 0 ('slack',) ()
+require_relative 'slackpack_md' # 0 () ()
 
 def self.SlackHandler; CLASS_SlackHandler; end
 class CLASS_SlackHandler < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static slack_SlackHandler_ref: -> { ::Quark.slackpack_md.Root.slack_SlackHandler_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -24,7 +21,7 @@ class CLASS_SlackHandler < Object
 
 
 
-    
+
     def onSlackEvent(event)
         
         nil
@@ -61,17 +58,17 @@ class CLASS_SlackHandler < Object
 
 
 end
+CLASS_SlackHandler.unlazy_statics
 
 def self.User; CLASS_User; end
 class CLASS_User < Object
     attr_accessor :client, :user
     extend DatawireQuarkCore::Static
 
-
     static slack_User_ref: -> { ::Quark.slackpack_md.Root.slack_User_md }
 
 
-    
+
     def initialize(client, user)
         
         self.__init_fields__
@@ -83,7 +80,7 @@ class CLASS_User < Object
 
 
 
-    
+
     def _getClass()
         
         return "slack.User"
@@ -127,17 +124,17 @@ class CLASS_User < Object
 
 
 end
+CLASS_User.unlazy_statics
 
 def self.Channel; CLASS_Channel; end
 class CLASS_Channel < Object
     attr_accessor :client, :channel
     extend DatawireQuarkCore::Static
 
-
     static slack_Channel_ref: -> { ::Quark.slackpack_md.Root.slack_Channel_md }
 
 
-    
+
     def initialize(client, channel)
         
         self.__init_fields__
@@ -149,7 +146,7 @@ class CLASS_Channel < Object
 
 
 
-    
+
     def send(message)
         
         id = (@client).event_id
@@ -207,18 +204,18 @@ class CLASS_Channel < Object
 
 
 end
+CLASS_Channel.unlazy_statics
 
 def self.Client; CLASS_Client; end
 class CLASS_Client < Object
     attr_accessor :runtime, :token, :handler, :event_id, :socket
     extend DatawireQuarkCore::Static
 
-
     static slack_Client_ref: -> { ::Quark.slackpack_md.Root.slack_Client_md }
     static builtin_Map_builtin_String_builtin_Object__ref: -> { ::Quark.slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md }
 
 
-    
+
     def initialize(runtime, token, handler)
         
         self.__init_fields__
@@ -231,7 +228,7 @@ class CLASS_Client < Object
 
 
 
-    
+
     def connect()
         
         self.request("rtm.start", Hash.new(), self)
@@ -449,5 +446,6 @@ class CLASS_Client < Object
 
 
 end
+CLASS_Client.unlazy_statics
 end # module MODULE_slack
 end # module Quark

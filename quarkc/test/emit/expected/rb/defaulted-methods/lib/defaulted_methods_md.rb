@@ -1,15 +1,14 @@
 module Quark
-require "datawire-quark-core"
 def self.defaulted_methods_md; MODULE_defaulted_methods_md; end
 module MODULE_defaulted_methods_md
 require 'builtin' # .../reflect
-require 'pkg'
+require_relative 'pkg' # 0 () ()
 
 def self.pkg_A_foo_Method; CLASS_pkg_A_foo_Method; end
 class CLASS_pkg_A_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -19,7 +18,7 @@ class CLASS_pkg_A_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -61,9 +60,9 @@ end
 
 def self.pkg_A_bar_Method; CLASS_pkg_A_bar_Method; end
 class CLASS_pkg_A_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -73,7 +72,7 @@ class CLASS_pkg_A_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -115,14 +114,12 @@ end
 
 def self.pkg_A; CLASS_pkg_A; end
 class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_A.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.A")
@@ -136,7 +133,7 @@ class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return nil
@@ -173,12 +170,13 @@ class CLASS_pkg_A < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_A.unlazy_statics
 
 def self.pkg_B_bar_Method; CLASS_pkg_B_bar_Method; end
 class CLASS_pkg_B_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -188,7 +186,7 @@ class CLASS_pkg_B_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -230,14 +228,12 @@ end
 
 def self.pkg_B; CLASS_pkg_B; end
 class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_B.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.B")
@@ -251,7 +247,7 @@ class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return nil
@@ -288,12 +284,13 @@ class CLASS_pkg_B < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_B.unlazy_statics
 
 def self.pkg_C_foo_Method; CLASS_pkg_C_foo_Method; end
 class CLASS_pkg_C_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -303,7 +300,7 @@ class CLASS_pkg_C_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -345,14 +342,12 @@ end
 
 def self.pkg_C; CLASS_pkg_C; end
 class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_C.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.C")
@@ -366,7 +361,7 @@ class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return nil
@@ -403,12 +398,13 @@ class CLASS_pkg_C < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_C.unlazy_statics
 
 def self.pkg_T1_foo_Method; CLASS_pkg_T1_foo_Method; end
 class CLASS_pkg_T1_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -418,7 +414,7 @@ class CLASS_pkg_T1_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -460,9 +456,9 @@ end
 
 def self.pkg_T1_bar_Method; CLASS_pkg_T1_bar_Method; end
 class CLASS_pkg_T1_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -472,7 +468,7 @@ class CLASS_pkg_T1_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -514,14 +510,12 @@ end
 
 def self.pkg_T1; CLASS_pkg_T1; end
 class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_T1.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.T1")
@@ -535,7 +529,7 @@ class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.T1.new()
@@ -572,12 +566,13 @@ class CLASS_pkg_T1 < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_T1.unlazy_statics
 
 def self.pkg_T2_foo_Method; CLASS_pkg_T2_foo_Method; end
 class CLASS_pkg_T2_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -587,7 +582,7 @@ class CLASS_pkg_T2_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -629,9 +624,9 @@ end
 
 def self.pkg_T2_bar_Method; CLASS_pkg_T2_bar_Method; end
 class CLASS_pkg_T2_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -641,7 +636,7 @@ class CLASS_pkg_T2_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -683,14 +678,12 @@ end
 
 def self.pkg_T2; CLASS_pkg_T2; end
 class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_T2.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.T2")
@@ -704,7 +697,7 @@ class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.T2.new()
@@ -741,12 +734,13 @@ class CLASS_pkg_T2 < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_T2.unlazy_statics
 
 def self.pkg_T3_foo_Method; CLASS_pkg_T3_foo_Method; end
 class CLASS_pkg_T3_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -756,7 +750,7 @@ class CLASS_pkg_T3_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -798,9 +792,9 @@ end
 
 def self.pkg_T3_bar_Method; CLASS_pkg_T3_bar_Method; end
 class CLASS_pkg_T3_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -810,7 +804,7 @@ class CLASS_pkg_T3_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -852,14 +846,12 @@ end
 
 def self.pkg_T3; CLASS_pkg_T3; end
 class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_T3.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.T3")
@@ -873,7 +865,7 @@ class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.T3.new()
@@ -910,12 +902,13 @@ class CLASS_pkg_T3 < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_T3.unlazy_statics
 
 def self.pkg_T4_foo_Method; CLASS_pkg_T4_foo_Method; end
 class CLASS_pkg_T4_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -925,7 +918,7 @@ class CLASS_pkg_T4_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -967,9 +960,9 @@ end
 
 def self.pkg_T4_bar_Method; CLASS_pkg_T4_bar_Method; end
 class CLASS_pkg_T4_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -979,7 +972,7 @@ class CLASS_pkg_T4_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -1021,14 +1014,12 @@ end
 
 def self.pkg_T4; CLASS_pkg_T4; end
 class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_T4.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.T4")
@@ -1042,7 +1033,7 @@ class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.T4.new()
@@ -1079,12 +1070,13 @@ class CLASS_pkg_T4 < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_T4.unlazy_statics
 
 def self.pkg_T5_foo_Method; CLASS_pkg_T5_foo_Method; end
 class CLASS_pkg_T5_foo_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "foo", DatawireQuarkCore::List.new([]))
@@ -1094,7 +1086,7 @@ class CLASS_pkg_T5_foo_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -1136,9 +1128,9 @@ end
 
 def self.pkg_T5_bar_Method; CLASS_pkg_T5_bar_Method; end
 class CLASS_pkg_T5_bar_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "bar", DatawireQuarkCore::List.new([]))
@@ -1148,7 +1140,7 @@ class CLASS_pkg_T5_bar_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -1190,14 +1182,12 @@ end
 
 def self.pkg_T5; CLASS_pkg_T5; end
 class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.defaulted_methods_md.pkg_T5.new() }
 
 
-    
+
     def initialize()
         
         super("pkg.T5")
@@ -1211,7 +1201,7 @@ class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.pkg.T5.new()
@@ -1248,12 +1238,11 @@ class CLASS_pkg_T5 < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_pkg_T5.unlazy_statics
 
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_A_md: -> { ::Quark.defaulted_methods_md.pkg_A.singleton }
     static pkg_B_md: -> { ::Quark.defaulted_methods_md.pkg_B.singleton }
@@ -1265,7 +1254,7 @@ class CLASS_Root < Object
     static pkg_T5_md: -> { ::Quark.defaulted_methods_md.pkg_T5.singleton }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -1274,7 +1263,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil
@@ -1304,5 +1293,6 @@ class CLASS_Root < Object
 
 
 end
+CLASS_Root.unlazy_statics
 end # module MODULE_defaulted_methods_md
 end # module Quark

@@ -1,10 +1,9 @@
 module Quark
-require "datawire-quark-core"
 def self.test; MODULE_test; end
 module MODULE_test
 require 'builtin' # .../reflect
-require 'package_md'
-require 'test/test'
+require_relative 'package_md' # 0 () ()
+require_relative 'test/test' # 0 ('test',) ()
 
 def self.go()
     
@@ -19,11 +18,10 @@ class CLASS_Test < Object
     attr_accessor :name
     extend DatawireQuarkCore::Static
 
-
     static test_Test_ref: -> { ::Quark.package_md.Root.test_Test_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -32,7 +30,7 @@ class CLASS_Test < Object
 
 
 
-    
+
     def go()
         
         DatawireQuarkCore.print("TGO!")
@@ -76,6 +74,7 @@ class CLASS_Test < Object
 
 
 end
+CLASS_Test.unlazy_statics
 
 def self.main()
     

@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.stuff_lib; MODULE_stuff_lib; end
 module MODULE_stuff_lib
 def self.Test; CLASS_Test; end
 class CLASS_Test < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Test < Object
 
 
 
-    
+
     def foo(t)
         
         return ::Quark.stuff_lib.Test.new()

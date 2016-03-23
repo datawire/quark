@@ -37,34 +37,57 @@ module DatawireQuarkCore
   module Static
     Unassigned = Class.new
 
-    def static(pairs)
-      pairs.each do |name, default|
-        self.instance_variable_set("@#{name}", Unassigned)
-
-        define_singleton_method(name) do
-          value = self.instance_variable_get("@#{name}")
-
-          if value == Unassigned
-            value = default.call
-            self.instance_variable_set("@#{name}", value)
+        def unlazy_statics
+          names = _lazy_statics
+          # puts "unlazying #{self.name} fields #{names}"
+          names.each do |name|
+            self.send(name)
           end
-
-          value
         end
-
-        define_singleton_method("#{name}=") do |value|
-          self.instance_variable_set("@#{name}", value)
+        def _lazy_statics
+          lazy = :@_lazy_statics
+          if not self.instance_variable_defined? lazy
+            # puts "Bootstrap #{self.name}"
+            l = self.instance_variable_set(lazy, {:__owner__ => self.name})
+          else
+            l = self.instance_variable_get(lazy)
+          end
+          if not l.has_key? self.name
+            o = l[:__owner__]
+            # puts "Adding slot for #{self.name} to lazy of #{o}"
+            l[self.name] = []
+          end
+          l[self.name]
         end
+        def static(pairs)
+          pairs.each do |name, default|
+            _lazy_statics << name
+            self.instance_variable_set("@#{name}", Unassigned)
 
-        define_method(name) do
-          self.class.send(name)
-        end
+            define_singleton_method(name) do
+              value = self.instance_variable_get("@#{name}")
 
-        define_method("#{name}=") do |value|
-          self.class.send("#{name}=", value)
+              if value == Unassigned
+                value = default.call
+                self.instance_variable_set("@#{name}", value)
+              end
+
+              value
+            end
+
+            define_singleton_method("#{name}=") do |value|
+              self.instance_variable_set("@#{name}", value)
+            end
+
+            define_method(name) do
+              self.class.send(name)
+            end
+
+            define_method("#{name}=") do |value|
+              self.class.send("#{name}=", value)
+            end
+          end
         end
-      end
-    end
   end
 
   def self.print(message)
@@ -87,6 +110,21 @@ module DatawireQuarkCore
     (Time.now.to_f * 1000).round
   end
 
+  def self._getClass obj
+    clz = __getClass obj
+    # puts "runtime _getClass for #{obj} is #{clz}"
+    clz
+  end
+  def self.__getClass obj
+    return nil if obj.is_a? NilClass
+    return "builtin.String" if obj.is_a? String
+    return "builtin.int" if obj.is_a? Fixnum
+    return "builtin.float" if obj.is_a? Float
+    return "builtin.List<builtin.Object>" if obj.is_a? Array
+    return "builtin.Map<builtin.Object,builtin.Object>" if obj.is_a? Hash
+    return obj._getClass
+  end
+
   class List < Array
     def to_s
       '[' + map(&:to_s).join(', ') + ']'
@@ -105,7 +143,7 @@ module DatawireQuarkCore
     end
 
     def ==(other)
-      value == other.value
+      not other.nil? and value == other.value
     end
 
     def toString
@@ -392,6 +430,10 @@ module DatawireQuarkCore
       end
     end
 
+    def schedule(delay, &block)
+      @timers.post(delay, &block)
+    end
+
     def wait_for_sources
       last = Time.new - 10
       delta = 1
@@ -417,14 +459,14 @@ module DatawireQuarkCore
     end
     def schedule(task, delay)
       src = @events.add "timer"
-      @timers.post(delay) { @events.event(final:src) { task.onExecute self } }
+      @events.schedule(delay) { @events.event(final:src) { task.onExecute self } }
     end
     def request(request, handler)
       src = @events.add "http request"
       t = Thread.new do
         begin
           url = request.getUrl
-          @events.event { handler.onHttpInit url }
+          @events.event { handler.onHTTPInit url }
           headers = {}
           request.getHeaders.each { |k| headers[k] = request.getHeader k }
           uri = URI(url)
@@ -434,15 +476,15 @@ module DatawireQuarkCore
             http.request(req)
           end
           response = HTTP::Response.new
-          response.setCode(res.code)
+          response.setCode(res.code.to_i)
           response.setBody(res.body)
-          @events.event { handler.onHttpResponse request, response }
+          @events.event { handler.onHTTPResponse request, response }
         rescue Exception => e
           @log.warn "EXCEPTION: #{e.inspect}"
           @log.warn "MESSAGE: #{e.message}"
-          @events.event { handler.onHttpError request, e.message }
+          @events.event { handler.onHTTPError request, e.message }
         ensure
-          @events.event(final:src) { handler.onHttpFinal request }
+          @events.event(final:src) { handler.onHTTPFinal request }
         end
       end
     end
@@ -709,7 +751,7 @@ module DatawireQuarkCore
     end
   end
 
-  class ThreadLocal
+  class TLS
     UNINITIALIZED = []
     private_constant :UNINITIALIZED
     def initialize(initializer)

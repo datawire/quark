@@ -49,7 +49,7 @@ class Matrix(object):
         if ((name) == (u"columns")):
             (self).columns = value
 
-    
+
 
 
 def main():

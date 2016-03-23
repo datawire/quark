@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.strings_lib; MODULE_strings_lib; end
 module MODULE_strings_lib
 def self.main()

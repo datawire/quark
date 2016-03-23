@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.builtin; MODULE_builtin; end
 module MODULE_builtin
 def self.reflect; MODULE_reflect; end
@@ -9,7 +8,6 @@ class CLASS_QuarkClass < Object
     attr_accessor :id, :name, :parameters, :fields, :methods
     extend DatawireQuarkCore::Static
 
-
     static classes: -> { {} }
     static VOID: -> { ::Quark.builtin.reflect.QuarkClass.new("builtin.void") }
     static BOOL: -> { ::Quark.builtin.reflect.QuarkClass.new("builtin.bool") }
@@ -18,7 +16,7 @@ class CLASS_QuarkClass < Object
     static STRING: -> { ::Quark.builtin.reflect.QuarkClass.new("builtin.String") }
 
 
-    
+
     def initialize(id)
         
         self.__init_fields__
@@ -31,9 +29,12 @@ class CLASS_QuarkClass < Object
 
 
 
-    
+
     def self.get(id)
         
+        if (!((::Quark.builtin.reflect.QuarkClass.classes).key?(id)))
+            DatawireQuarkCore.print(((("Cannot find ") + (id)) + (" in ")) + (((::Quark.builtin.reflect.QuarkClass.classes).keys).to_s))
+        end
         return (::Quark.builtin.reflect.QuarkClass.classes)[id]
 
         nil
@@ -215,12 +216,14 @@ class CLASS_QuarkClass < Object
 
 
 end
+CLASS_QuarkClass.unlazy_statics
 
 def self.Field; CLASS_Field; end
 class CLASS_Field < Object
     attr_accessor :type, :name
 
-    
+
+
     def initialize(type, name)
         
         self.__init_fields__
@@ -232,7 +235,7 @@ class CLASS_Field < Object
 
 
 
-    
+
     def getType()
         
         return ::Quark.builtin.reflect.QuarkClass.get(@type)
@@ -295,7 +298,8 @@ def self.Method; CLASS_Method; end
 class CLASS_Method < Object
     attr_accessor :type, :name, :parameters
 
-    
+
+
     def initialize(type, name, parameters)
         
         self.__init_fields__
@@ -308,7 +312,7 @@ class CLASS_Method < Object
 
 
 
-    
+
     def getType()
         
         return ::Quark.builtin.reflect.QuarkClass.get(@type)

@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.json_assembling_lib; MODULE_json_assembling_lib; end
 module MODULE_json_assembling_lib
 def self.test_assembling()

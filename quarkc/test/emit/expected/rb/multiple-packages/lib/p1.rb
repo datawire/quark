@@ -1,8 +1,7 @@
 module Quark
-require "datawire-quark-core"
 def self.p1; MODULE_p1; end
 module MODULE_p1
-require 'p1/p2'
+require_relative 'p1/p2' # 0 ('p1',) ()
 
 def self.c()
     

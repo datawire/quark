@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.delegate_lib; MODULE_delegate_lib; end
 module MODULE_delegate_lib
 def self.Message; CLASS_Message; end
 class CLASS_Message < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Message < Object
 
 
 
-    
+
     def encode()
         
         return "ENCODED"
@@ -55,9 +54,9 @@ end
 
 def self.Ping; CLASS_Ping; end
 class CLASS_Ping < ::Quark.delegate_lib.Message
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super()
@@ -67,7 +66,7 @@ class CLASS_Ping < ::Quark.delegate_lib.Message
 
 
 
-    
+
     def _getClass()
         
         return "Ping"
@@ -100,9 +99,9 @@ end
 
 def self.Pong; CLASS_Pong; end
 class CLASS_Pong < ::Quark.delegate_lib.Message
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super()
@@ -112,7 +111,7 @@ class CLASS_Pong < ::Quark.delegate_lib.Message
 
 
 
-    
+
     def toString()
         
         return "PONG"
@@ -152,9 +151,9 @@ end
 
 def self.Test; CLASS_Test; end
 class CLASS_Test < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -163,7 +162,7 @@ class CLASS_Test < Object
 
 
 
-    
+
     def bar(name, args, options)
         
         DatawireQuarkCore.print(args)

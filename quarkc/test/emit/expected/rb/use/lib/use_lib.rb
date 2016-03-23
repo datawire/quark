@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.use_lib; MODULE_use_lib; end
 module MODULE_use_lib
 require 'testlib' 

@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.logme_lib; MODULE_logme_lib; end
 module MODULE_logme_lib
 require 'builtin' # .../concurrent

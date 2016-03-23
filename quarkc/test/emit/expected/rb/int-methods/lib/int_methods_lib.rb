@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.int_methods_lib; MODULE_int_methods_lib; end
 module MODULE_int_methods_lib
 def self.Test; CLASS_Test; end
 class CLASS_Test < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Test < Object
 
 
 
-    
+
     def test()
         
         x = 1

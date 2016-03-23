@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.urlencode_lib; MODULE_urlencode_lib; end
 module MODULE_urlencode_lib
 def self.main()

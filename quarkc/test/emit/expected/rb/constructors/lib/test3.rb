@@ -1,12 +1,12 @@
 module Quark
-require "datawire-quark-core"
 def self.test3; MODULE_test3; end
 module MODULE_test3
 def self.Box; CLASS_Box; end
 class CLASS_Box < Object
     attr_accessor :contents
 
-    
+
+
     def initialize(contents)
         
         self.__init_fields__
@@ -17,7 +17,7 @@ class CLASS_Box < Object
 
 
 
-    
+
     def get()
         
         return (self).contents

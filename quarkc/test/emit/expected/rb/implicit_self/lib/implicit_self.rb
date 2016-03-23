@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.implicit_self; MODULE_implicit_self; end
 module MODULE_implicit_self
 def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Foo < Object
 
 
 
-    
+
     def next_()
         
         nil

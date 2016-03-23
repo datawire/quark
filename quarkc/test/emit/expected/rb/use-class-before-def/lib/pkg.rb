@@ -1,20 +1,17 @@
 module Quark
-require "datawire-quark-core"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
 require 'builtin' # .../reflect
-require 'use_class_before_def_md'
+require_relative 'use_class_before_def_md' # 0 () ()
 
 def self.Bar; CLASS_Bar; end
 class CLASS_Bar < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_Bar_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Bar_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -23,7 +20,7 @@ class CLASS_Bar < Object
 
 
 
-    
+
     def go()
         
         foo = ::Quark.pkg.Foo.new()
@@ -62,17 +59,17 @@ class CLASS_Bar < Object
 
 
 end
+CLASS_Bar.unlazy_statics
 
 def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
     attr_accessor :name
     extend DatawireQuarkCore::Static
 
-
     static pkg_Foo_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Foo_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -81,7 +78,7 @@ class CLASS_Foo < Object
 
 
 
-    
+
     def _getClass()
         
         return "pkg.Foo"
@@ -118,6 +115,7 @@ class CLASS_Foo < Object
 
 
 end
+CLASS_Foo.unlazy_statics
 
 def self.main()
     

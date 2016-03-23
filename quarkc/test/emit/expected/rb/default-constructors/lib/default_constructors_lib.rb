@@ -1,12 +1,12 @@
 module Quark
-require "datawire-quark-core"
 def self.default_constructors_lib; MODULE_default_constructors_lib; end
 module MODULE_default_constructors_lib
 def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor :name
 
-    
+
+
     def initialize(name)
         
         self.__init_fields__
@@ -17,7 +17,7 @@ class CLASS_A < Object
 
 
 
-    
+
     def _getClass()
         
         return "A"
@@ -57,9 +57,9 @@ end
 
 def self.B; CLASS_B; end
 class CLASS_B < ::Quark.default_constructors_lib.A
-    attr_accessor 
 
-    
+
+
     def initialize(name)
         
         super(name)
@@ -69,7 +69,7 @@ class CLASS_B < ::Quark.default_constructors_lib.A
 
 
 
-    
+
     def greet()
         
         DatawireQuarkCore.print(("Hello, my name is ") + ((self).name))
@@ -114,9 +114,9 @@ end
 
 def self.C; CLASS_C; end
 class CLASS_C < ::Quark.default_constructors_lib.A
-    attr_accessor 
 
-    
+
+
     def initialize(name)
         
         super(("C") + (name))
@@ -126,7 +126,7 @@ class CLASS_C < ::Quark.default_constructors_lib.A
 
 
 
-    
+
     def greet()
         
         DatawireQuarkCore.print(("Greetings, my name is ") + ((self).name))
@@ -171,9 +171,9 @@ end
 
 def self.X; CLASS_X; end
 class CLASS_X < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -182,7 +182,7 @@ class CLASS_X < Object
 
 
 
-    
+
     def _getClass()
         
         return "X"
@@ -217,7 +217,8 @@ def self.Y; CLASS_Y; end
 class CLASS_Y < ::Quark.default_constructors_lib.X
     attr_accessor :name
 
-    
+
+
     def initialize(name)
         
         super()
@@ -228,7 +229,7 @@ class CLASS_Y < ::Quark.default_constructors_lib.X
 
 
 
-    
+
     def test()
         
         DatawireQuarkCore.print((self).name)

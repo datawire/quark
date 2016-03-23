@@ -1,12 +1,12 @@
 module Quark
-require "datawire-quark-core"
 def self.super_lib; MODULE_super_lib; end
 module MODULE_super_lib
 def self.A; CLASS_A; end
 class CLASS_A < Object
     attr_accessor :name
 
-    
+
+
     def initialize(name)
         
         self.__init_fields__
@@ -17,7 +17,7 @@ class CLASS_A < Object
 
 
 
-    
+
     def greet()
         
         DatawireQuarkCore.print("Hello")
@@ -64,9 +64,9 @@ end
 
 def self.B; CLASS_B; end
 class CLASS_B < ::Quark.super_lib.A
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("Bob")
@@ -76,7 +76,7 @@ class CLASS_B < ::Quark.super_lib.A
 
 
 
-    
+
     def greet()
         
         method(:greet).super_method.call()

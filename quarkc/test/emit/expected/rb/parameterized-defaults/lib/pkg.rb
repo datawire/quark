@@ -1,20 +1,17 @@
 module Quark
-require "datawire-quark-core"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
 require 'builtin' # .../reflect
-require 'parameterized_defaults_md'
+require_relative 'parameterized_defaults_md' # 0 () ()
 
 def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_Foo_builtin_Object__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -23,7 +20,7 @@ class CLASS_Foo < Object
 
 
 
-    
+
     def foo()
         
         return self.get()
@@ -45,17 +42,16 @@ class CLASS_Foo < Object
 
 
 end
+CLASS_Foo.unlazy_statics
 
 def self.StringFoo; CLASS_StringFoo; end
 class CLASS_StringFoo < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_StringFoo_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringFoo_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -64,7 +60,7 @@ class CLASS_StringFoo < Object
 
 
 
-    
+
     def get()
         
         return "fdsa"
@@ -108,12 +104,14 @@ class CLASS_StringFoo < Object
 
 
 end
+CLASS_StringFoo.unlazy_statics
 
 def self.Box; CLASS_Box; end
 class CLASS_Box < Object
     attr_accessor :contents
 
-    
+
+
     def initialize(contents)
         
         self.__init_fields__
@@ -124,7 +122,7 @@ class CLASS_Box < Object
 
 
 
-    
+
     def _getClass()
         
         return "pkg.Box<builtin.Object>"
@@ -164,15 +162,13 @@ end
 
 def self.StringBox; CLASS_StringBox; end
 class CLASS_StringBox < ::Quark.pkg.Box
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static pkg_Box_builtin_String__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Box_builtin_String__md }
     static pkg_StringBox_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringBox_md }
 
 
-    
+
     def initialize(contents)
         
         super(contents)
@@ -182,7 +178,7 @@ class CLASS_StringBox < ::Quark.pkg.Box
 
 
 
-    
+
     def _getClass()
         
         return "pkg.StringBox"
@@ -217,6 +213,7 @@ class CLASS_StringBox < ::Quark.pkg.Box
 
 
 end
+CLASS_StringBox.unlazy_statics
 
 def self.main()
     

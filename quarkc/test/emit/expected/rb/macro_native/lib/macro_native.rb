@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.macro_native; MODULE_macro_native; end
 module MODULE_macro_native
 def self.Native; CLASS_Native; end
 class CLASS_Native < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Native < Object
 
 
 
-    
+
     def test()
         
         n1 = ::Quark.macro_native.Native.new()

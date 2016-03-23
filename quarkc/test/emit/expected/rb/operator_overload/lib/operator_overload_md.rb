@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.operator_overload_md; MODULE_operator_overload_md; end
 module MODULE_operator_overload_md
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil

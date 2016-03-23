@@ -24,7 +24,7 @@ class A(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 class B(A):
     def _init(self):
@@ -50,7 +50,7 @@ class B(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 
 
 def main():

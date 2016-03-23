@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.json_tests_lib; MODULE_json_tests_lib; end
 module MODULE_json_tests_lib
 def self.test_roundtrip()

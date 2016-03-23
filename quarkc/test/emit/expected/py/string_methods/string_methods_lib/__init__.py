@@ -48,7 +48,7 @@ class test_size(string_test):
         if ((name) == (u"what")):
             (self).what = value
 
-    
+
 
 class test_startsWith(string_test):
     def _init(self):
@@ -87,7 +87,7 @@ class test_startsWith(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 
 class test_endsWith(string_test):
     def _init(self):
@@ -126,7 +126,7 @@ class test_endsWith(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 
 class test_find(string_test):
     def _init(self):
@@ -165,7 +165,7 @@ class test_find(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 
 class test_substring(string_test):
     def _init(self):
@@ -212,7 +212,7 @@ class test_substring(string_test):
         if ((name) == (u"end")):
             (self).end = value
 
-    
+
 
 class test_replace(string_test):
     def _init(self):
@@ -259,7 +259,7 @@ class test_replace(string_test):
         if ((name) == (u"end")):
             (self).end = value
 
-    
+
 
 class test_join(string_test):
     def _init(self):
@@ -320,7 +320,7 @@ class test_join(string_test):
         if ((name) == (u"sep")):
             (self).sep = value
 
-    
+
 
 class test_split(string_test):
     def _init(self):
@@ -369,7 +369,7 @@ class test_split(string_test):
         if ((name) == (u"altsep")):
             (self).altsep = value
 
-    
+
 
 
 def main():

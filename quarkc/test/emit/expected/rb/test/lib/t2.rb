@@ -1,8 +1,7 @@
 module Quark
-require "datawire-quark-core"
 def self.t2; MODULE_t2; end
 module MODULE_t2
-require 'testlib'
+require_relative 'testlib' # 0 () ()
 
 def self.test()
     

@@ -1,17 +1,14 @@
 module Quark
-require "datawire-quark-core"
 def self.static_lib; MODULE_static_lib; end
 module MODULE_static_lib
 def self.Foo; CLASS_Foo; end
 class CLASS_Foo < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static count: -> { 0 }
 
 
-    
+
     def initialize()
         
         self.__init_fields__
@@ -22,7 +19,7 @@ class CLASS_Foo < Object
 
 
 
-    
+
     def self.setCount(n)
         
         ::Quark.static_lib.Foo.count = n
@@ -99,6 +96,7 @@ class CLASS_Foo < Object
 
 
 end
+CLASS_Foo.unlazy_statics
 
 def self.main()
     

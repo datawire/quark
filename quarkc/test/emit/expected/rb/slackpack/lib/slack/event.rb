@@ -1,23 +1,21 @@
 module Quark
-require "datawire-quark-core"
 def self.slack; MODULE_slack; end
 module MODULE_slack
 def self.event; MODULE_event; end
 module MODULE_event
-# require 'builtin' # .../reflect slack/event
-# require 'slack' # in slack/event 
-# require 'slackpack_md' # in slack/event 
+require 'builtin' # .../reflect slack/event
+require_relative '../slack' # 0 () ('slack',)
+require_relative '../slackpack_md' # 0 () ('slack',)
 
 def self.SlackEvent; CLASS_SlackEvent; end
 class CLASS_SlackEvent < Object
     attr_accessor :type, :user, :channel, :timestamp
     extend DatawireQuarkCore::Static
 
-
     static slack_event_SlackEvent_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackEvent_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -26,7 +24,7 @@ class CLASS_SlackEvent < Object
 
 
 
-    
+
     def load(client, obj)
         
         (self).type = (obj).getObjectItem("type").getString()
@@ -107,17 +105,17 @@ class CLASS_SlackEvent < Object
 
 
 end
+CLASS_SlackEvent.unlazy_statics
 
 def self.SlackError; CLASS_SlackError; end
 class CLASS_SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
     extend DatawireQuarkCore::Static
 
-
     static slack_event_SlackError_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackError_md }
 
 
-    
+
     def initialize()
         
         super()
@@ -127,7 +125,7 @@ class CLASS_SlackError < ::Quark.slack.event.SlackEvent
 
 
 
-    
+
     def load(client, obj)
         
         method(:load).super_method.call(client, obj)
@@ -211,17 +209,16 @@ class CLASS_SlackError < ::Quark.slack.event.SlackEvent
 
 
 end
+CLASS_SlackError.unlazy_statics
 
 def self.Hello; CLASS_Hello; end
 class CLASS_Hello < ::Quark.slack.event.SlackEvent
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static slack_event_Hello_ref: -> { ::Quark.slackpack_md.Root.slack_event_Hello_md }
 
 
-    
+
     def initialize()
         
         super()
@@ -231,7 +228,7 @@ class CLASS_Hello < ::Quark.slack.event.SlackEvent
 
 
 
-    
+
     def dispatch(handler)
         
         handler.onHello(self)
@@ -291,17 +288,17 @@ class CLASS_Hello < ::Quark.slack.event.SlackEvent
 
 
 end
+CLASS_Hello.unlazy_statics
 
 def self.Message; CLASS_Message; end
 class CLASS_Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
     extend DatawireQuarkCore::Static
 
-
     static slack_event_Message_ref: -> { ::Quark.slackpack_md.Root.slack_event_Message_md }
 
 
-    
+
     def initialize()
         
         super()
@@ -311,7 +308,7 @@ class CLASS_Message < ::Quark.slack.event.SlackEvent
 
 
 
-    
+
     def load(client, obj)
         
         method(:load).super_method.call(client, obj)
@@ -416,17 +413,17 @@ class CLASS_Message < ::Quark.slack.event.SlackEvent
 
 
 end
+CLASS_Message.unlazy_statics
 
 def self.Edited; CLASS_Edited; end
 class CLASS_Edited < Object
     attr_accessor :user, :timestamp
     extend DatawireQuarkCore::Static
 
-
     static slack_event_Edited_ref: -> { ::Quark.slackpack_md.Root.slack_event_Edited_md }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -435,7 +432,7 @@ class CLASS_Edited < Object
 
 
 
-    
+
     def _getClass()
         
         return "slack.event.Edited"
@@ -479,6 +476,7 @@ class CLASS_Edited < Object
 
 
 end
+CLASS_Edited.unlazy_statics
 end # module MODULE_event
 end # module MODULE_slack
 end # module Quark

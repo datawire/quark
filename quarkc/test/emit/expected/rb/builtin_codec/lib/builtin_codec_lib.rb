@@ -1,5 +1,4 @@
 module Quark
-require "datawire-quark-core"
 def self.builtin_codec_lib; MODULE_builtin_codec_lib; end
 module MODULE_builtin_codec_lib
 def self.hexb(v)

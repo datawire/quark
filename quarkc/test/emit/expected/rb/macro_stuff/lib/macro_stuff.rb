@@ -1,12 +1,11 @@
 module Quark
-require "datawire-quark-core"
 def self.macro_stuff; MODULE_macro_stuff; end
 module MODULE_macro_stuff
 def self.Macro; CLASS_Macro; end
 class CLASS_Macro < Object
-    attr_accessor 
 
-    
+
+
     def initialize()
         self.__init_fields__
 
@@ -15,7 +14,7 @@ class CLASS_Macro < Object
 
 
 
-    
+
     def test()
         
         m1 = ::Quark.macro_stuff.Macro.new()

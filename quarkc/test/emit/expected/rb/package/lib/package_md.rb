@@ -1,16 +1,15 @@
 module Quark
-require "datawire-quark-core"
 def self.package_md; MODULE_package_md; end
 module MODULE_package_md
 require 'builtin' # .../reflect
-require 'test'
-require 'test/test'
+require_relative 'test' # 0 () ()
+require_relative 'test/test' # 0 ('test',) ()
 
 def self.test_Test_go_Method; CLASS_test_Test_go_Method; end
 class CLASS_test_Test_go_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "go", DatawireQuarkCore::List.new([]))
@@ -20,7 +19,7 @@ class CLASS_test_Test_go_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -62,14 +61,12 @@ end
 
 def self.test_Test; CLASS_test_Test; end
 class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.package_md.test_Test.new() }
 
 
-    
+
     def initialize()
         
         super("test.Test")
@@ -83,7 +80,7 @@ class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.test.Test.new()
@@ -120,12 +117,13 @@ class CLASS_test_Test < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_test_Test.unlazy_statics
 
 def self.test_test_Test_go_Method; CLASS_test_test_Test_go_Method; end
 class CLASS_test_test_Test_go_Method < ::Quark.builtin.reflect.Method
-    attr_accessor 
 
-    
+
+
     def initialize()
         
         super("builtin.void", "go", DatawireQuarkCore::List.new([]))
@@ -135,7 +133,7 @@ class CLASS_test_test_Test_go_Method < ::Quark.builtin.reflect.Method
 
 
 
-    
+
     def invoke(object, args)
         
         obj = object
@@ -177,14 +175,12 @@ end
 
 def self.test_test_Test; CLASS_test_test_Test; end
 class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static singleton: -> { ::Quark.package_md.test_test_Test.new() }
 
 
-    
+
     def initialize()
         
         super("test.test.Test")
@@ -198,7 +194,7 @@ class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
 
 
 
-    
+
     def construct(args)
         
         return ::Quark.test.test.Test.new()
@@ -235,18 +231,17 @@ class CLASS_test_test_Test < ::Quark.builtin.reflect.QuarkClass
 
 
 end
+CLASS_test_test_Test.unlazy_statics
 
 def self.Root; CLASS_Root; end
 class CLASS_Root < Object
-    attr_accessor 
     extend DatawireQuarkCore::Static
-
 
     static test_Test_md: -> { ::Quark.package_md.test_Test.singleton }
     static test_test_Test_md: -> { ::Quark.package_md.test_test_Test.singleton }
 
 
-    
+
     def initialize()
         self.__init_fields__
 
@@ -255,7 +250,7 @@ class CLASS_Root < Object
 
 
 
-    
+
     def _getClass()
         
         return nil
@@ -285,5 +280,6 @@ class CLASS_Root < Object
 
 
 end
+CLASS_Root.unlazy_statics
 end # module MODULE_package_md
 end # module Quark
