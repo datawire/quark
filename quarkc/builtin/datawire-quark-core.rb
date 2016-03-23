@@ -87,6 +87,25 @@ module DatawireQuarkCore
     (Time.now.to_f * 1000).round
   end
 
+  def self._getClass obj
+    case obj.class
+    when NilClass
+      return nil
+    when String
+      return "builtin.String"
+    when Fixnum
+      return "builtin.int"
+    when Float
+      return "builtin.float"
+    when Array
+      return "builtin.List<builtin.Object>"
+    when Hash
+      return "builtin.Map<builtin.Object,builtin.Object>"
+    else
+      return obj._getClass
+    end
+  end
+
   class List < Array
     def to_s
       '[' + map(&:to_s).join(', ') + ']'
