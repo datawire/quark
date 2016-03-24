@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.delegate_lib; MODULE_delegate_lib; end
 module MODULE_delegate_lib
 def self.Message; CLASS_Message; end

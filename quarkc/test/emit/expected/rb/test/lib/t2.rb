@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.t2; MODULE_t2; end
 module MODULE_t2
 require_relative 'testlib' # 0 () ()

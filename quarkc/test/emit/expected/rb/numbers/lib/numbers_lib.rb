@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.numbers_lib; MODULE_numbers_lib; end
 module MODULE_numbers_lib
 def self.main()

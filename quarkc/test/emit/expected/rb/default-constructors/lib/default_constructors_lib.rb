@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.default_constructors_lib; MODULE_default_constructors_lib; end
 module MODULE_default_constructors_lib
 def self.A; CLASS_A; end

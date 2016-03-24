@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.json_coersion_lib; MODULE_json_coersion_lib; end
 module MODULE_json_coersion_lib
 def self.main()

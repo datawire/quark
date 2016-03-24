@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.string_methods_lib; MODULE_string_methods_lib; end
 module MODULE_string_methods_lib
 def self.string_test; CLASS_string_test; end

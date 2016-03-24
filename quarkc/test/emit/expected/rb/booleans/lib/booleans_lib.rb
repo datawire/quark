@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.booleans_lib; MODULE_booleans_lib; end
 module MODULE_booleans_lib
 def self.main()

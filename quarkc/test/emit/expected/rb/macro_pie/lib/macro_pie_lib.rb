@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.macro_pie_lib; MODULE_macro_pie_lib; end
 module MODULE_macro_pie_lib
 def self.Pie; CLASS_Pie; end

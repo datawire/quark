@@ -386,11 +386,11 @@ module DatawireQuarkCore
       r = Logging.logger.root
       if r.appenders.empty?
         r.appenders = Logging.appenders.stdout
-        Logging.logger["quark"].warn "Logging initialized by quark runtime."
+        # Logging.logger["quark"].warn "Logging initialized by quark runtime."
       else
-        Logging.logger["quark"].debug "Logging already initialized."
+        # Logging.logger["quark"].debug "Logging already initialized."
       end
-      Logging.show_configuration
+      # Logging.show_configuration
     end
 
     if Logging.level_num(:trace).nil?

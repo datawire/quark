@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.map_lib; MODULE_map_lib; end
 module MODULE_map_lib
 def self.test1()

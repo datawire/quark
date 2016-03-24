@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.test1_test2_test3_common; MODULE_test1_test2_test3_common; end
 module MODULE_test1_test2_test3_common
 require_relative 'test1' # 0 () ()

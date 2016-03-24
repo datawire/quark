@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.matrix_lib; MODULE_matrix_lib; end
 module MODULE_matrix_lib
 def self.Matrix; CLASS_Matrix; end

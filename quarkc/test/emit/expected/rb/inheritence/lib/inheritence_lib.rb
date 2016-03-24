@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.inheritence_lib; MODULE_inheritence_lib; end
 module MODULE_inheritence_lib
 def self.A; CLASS_A; end

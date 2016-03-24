@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.p1; MODULE_p1; end
 module MODULE_p1
 require_relative 'p1/p2' # 0 ('p1',) ()

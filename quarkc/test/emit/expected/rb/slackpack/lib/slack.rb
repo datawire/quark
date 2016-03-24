@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.slack; MODULE_slack; end
 module MODULE_slack
 require 'builtin' # .../reflect

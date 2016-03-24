@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.implicit_self; MODULE_implicit_self; end
 module MODULE_implicit_self
 def self.Foo; CLASS_Foo; end

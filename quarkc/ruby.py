@@ -100,6 +100,8 @@ def _make_file(path):
     # head += 'puts "begin loading module %s"\n' % ".".join(path)
     if tuple(path) == ('builtin',):
         head += 'require_relative "datawire-quark-core"\n'
+    elif path[0] != 'builtin' and not path[0].endswith("_md"):
+        head += 'require "builtin"\n'
     head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
     tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
     # tail += 'puts "end loading module %s"\n' % ".".join(path)

@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.no_spurious_cast_lib; MODULE_no_spurious_cast_lib; end
 module MODULE_no_spurious_cast_lib
 def self.A; CLASS_A; end

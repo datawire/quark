@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.fancyprim; MODULE_fancyprim; end
 module MODULE_fancyprim
 def self.main()

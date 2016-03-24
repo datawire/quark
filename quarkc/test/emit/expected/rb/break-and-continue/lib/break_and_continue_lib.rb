@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.break_and_continue_lib; MODULE_break_and_continue_lib; end
 module MODULE_break_and_continue_lib
 def self.main()

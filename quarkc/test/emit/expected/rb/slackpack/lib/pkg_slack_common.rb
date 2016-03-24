@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.pkg_slack_common; MODULE_pkg_slack_common; end
 module MODULE_pkg_slack_common
 require_relative 'slack' # 0 () ()

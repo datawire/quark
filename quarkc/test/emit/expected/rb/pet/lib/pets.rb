@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.pets; MODULE_pets; end
 module MODULE_pets
 require 'builtin' # .../reflect

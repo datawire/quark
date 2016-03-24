@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.json_tests_lib; MODULE_json_tests_lib; end
 module MODULE_json_tests_lib
 def self.test_roundtrip()

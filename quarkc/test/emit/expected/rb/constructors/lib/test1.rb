@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.test1; MODULE_test1; end
 module MODULE_test1
 require 'builtin' # .../reflect

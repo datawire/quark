@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.operator_overload_lib; MODULE_operator_overload_lib; end
 module MODULE_operator_overload_lib
 def self.Overload; CLASS_Overload; end

@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
 require 'builtin' # .../reflect

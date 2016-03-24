@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.test; MODULE_test; end
 module MODULE_test
 def self.test; MODULE_test; end

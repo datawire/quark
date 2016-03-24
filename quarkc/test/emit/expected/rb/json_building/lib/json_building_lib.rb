@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.json_building_lib; MODULE_json_building_lib; end
 module MODULE_json_building_lib
 def self.test_building()

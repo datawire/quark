@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.factorial_lib; MODULE_factorial_lib; end
 module MODULE_factorial_lib
 def self.factorial(n)

@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.int_methods_lib; MODULE_int_methods_lib; end
 module MODULE_int_methods_lib
 def self.Test; CLASS_Test; end

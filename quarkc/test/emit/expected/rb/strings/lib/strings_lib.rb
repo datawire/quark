@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.strings_lib; MODULE_strings_lib; end
 module MODULE_strings_lib
 def self.main()

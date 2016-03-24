@@ -1,4 +1,5 @@
 module Quark
+require "builtin"
 def self.macro_stuff; MODULE_macro_stuff; end
 module MODULE_macro_stuff
 def self.Macro; CLASS_Macro; end
