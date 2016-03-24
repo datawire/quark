@@ -1,0 +1,10 @@
+
+{
+    "name": "quark_delegate",
+    "version": "0.0.1",
+    "main": "index.js",
+    "dependencies": {
+        "builtin": "0.0.1"
+    }
+}
+        

@@ -1,4 +1,4 @@
-package delegate_lib;
+package quark_delegate_lib;
 
 public class Pong extends Message implements io.datawire.quark.runtime.QObject {
     public Pong() {

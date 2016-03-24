@@ -1,4 +1,4 @@
-package delegate_lib;
+package quark_delegate_lib;
 
 public class Ping extends Message implements io.datawire.quark.runtime.QObject {
     public Ping() {

@@ -390,6 +390,12 @@ module DatawireQuarkCore
     end
   end
 
+  class QuarkLayout < ::Logging::Layout
+    def format( event )
+      obj = format_obj(event.data)
+      sprintf("%s: %s\n", ::Logging::LNAMES[event.level].downcase, obj)
+    end
+  end
   class Logger
     extend Forwardable
     @@init = false
