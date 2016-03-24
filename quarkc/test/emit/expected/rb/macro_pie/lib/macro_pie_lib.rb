@@ -3,7 +3,7 @@ require "builtin"
 def self.macro_pie_lib; MODULE_macro_pie_lib; end
 module MODULE_macro_pie_lib
 def self.Pie; CLASS_Pie; end
-class CLASS_Pie < Object
+class CLASS_Pie < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -56,7 +56,7 @@ end
 
 def self.main()
     
-    DatawireQuarkCore.print(3)
+    ::DatawireQuarkCore.print(3)
 
 
     nil

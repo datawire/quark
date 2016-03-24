@@ -3,7 +3,7 @@ require "builtin"
 def self.inheritence_lib; MODULE_inheritence_lib; end
 module MODULE_inheritence_lib
 def self.A; CLASS_A; end
-class CLASS_A < Object
+class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -18,7 +18,7 @@ class CLASS_A < Object
 
     def foo()
         
-        DatawireQuarkCore.print("A")
+        ::DatawireQuarkCore.print("A")
 
         nil
     end
@@ -70,7 +70,7 @@ class CLASS_B < ::Quark.inheritence_lib.A
 
     def foo()
         
-        DatawireQuarkCore.print("B")
+        ::DatawireQuarkCore.print("B")
 
         nil
     end
@@ -158,7 +158,7 @@ def self.main()
     b.foo()
     c = ::Quark.inheritence_lib.C.new()
     c.foo()
-    DatawireQuarkCore.print("--")
+    ::DatawireQuarkCore.print("--")
     a = b
     a.foo()
     a = c

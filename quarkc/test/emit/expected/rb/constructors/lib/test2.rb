@@ -6,9 +6,9 @@ require 'builtin' # .../reflect
 require_relative 'constructors_md' # 0 () ()
 
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static test2_Test_ref: -> { ::Quark.constructors_md.Root.test2_Test_md }
 
@@ -66,8 +66,8 @@ CLASS_Test.unlazy_statics
 def self.go()
     
     t = ::Quark.test2.Test.new("Hello World!!")
-    DatawireQuarkCore.print((t).name)
-    DatawireQuarkCore.print((::Quark.test2.Test.new("Hello World!!")).name)
+    ::DatawireQuarkCore.print((t).name)
+    ::DatawireQuarkCore.print((::Quark.test2.Test.new("Hello World!!")).name)
 
 
     nil

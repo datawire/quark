@@ -2,7 +2,7 @@ module Quark
 def self.urlencode_md; MODULE_urlencode_md; end
 module MODULE_urlencode_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

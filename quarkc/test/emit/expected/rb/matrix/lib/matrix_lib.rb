@@ -3,7 +3,7 @@ require "builtin"
 def self.matrix_lib; MODULE_matrix_lib; end
 module MODULE_matrix_lib
 def self.Matrix; CLASS_Matrix; end
-class CLASS_Matrix < Object
+class CLASS_Matrix < ::DatawireQuarkCore::QuarkObject
     attr_accessor :width, :height, :columns
 
 
@@ -13,9 +13,9 @@ class CLASS_Matrix < Object
         self.__init_fields__
         (self).width = width
         (self).height = height
-        @columns = DatawireQuarkCore::List.new([])
+        @columns = ::DatawireQuarkCore::List.new([])
         while (((@columns).size) < (width)) do
-            column = DatawireQuarkCore::List.new([])
+            column = ::DatawireQuarkCore::List.new([])
             while (((column).size) < (height)) do
                 (column) << (nil)
             end
@@ -97,7 +97,7 @@ def self.main()
     
     matrix = ::Quark.matrix_lib.Matrix.new(3, 3)
     matrix.__set__(2, 2, 123)
-    DatawireQuarkCore.print(matrix.__get__(2, 2))
+    ::DatawireQuarkCore.print(matrix.__get__(2, 2))
 
 
     nil

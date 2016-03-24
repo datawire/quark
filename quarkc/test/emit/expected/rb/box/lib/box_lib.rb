@@ -3,7 +3,7 @@ require "builtin"
 def self.box_lib; MODULE_box_lib; end
 module MODULE_box_lib
 def self.Box; CLASS_Box; end
-class CLASS_Box < Object
+class CLASS_Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -69,7 +69,7 @@ class CLASS_Box < Object
 end
 
 def self.Crate; CLASS_Crate; end
-class CLASS_Crate < Object
+class CLASS_Crate < ::DatawireQuarkCore::QuarkObject
     attr_accessor :box, :ibox
 
 
@@ -142,7 +142,7 @@ class CLASS_Crate < Object
 end
 
 def self.Sack; CLASS_Sack; end
-class CLASS_Sack < Object
+class CLASS_Sack < ::DatawireQuarkCore::QuarkObject
     attr_accessor :ints
 
 
@@ -198,9 +198,9 @@ def self.test1()
     ibox = ::Quark.box_lib.Box.new()
     ibox.set(3)
     three = ibox.get()
-    DatawireQuarkCore.print(three)
+    ::DatawireQuarkCore.print(three)
     (ibox).contents = 4
-    DatawireQuarkCore.print((ibox).contents)
+    ::DatawireQuarkCore.print((ibox).contents)
 
 
     nil
@@ -211,9 +211,9 @@ def self.test2()
     sbox = ::Quark.box_lib.Box.new()
     sbox.set("hello")
     hello = sbox.get()
-    DatawireQuarkCore.print(hello)
+    ::DatawireQuarkCore.print(hello)
     (sbox).contents = "world"
-    DatawireQuarkCore.print((sbox).contents)
+    ::DatawireQuarkCore.print((sbox).contents)
 
 
     nil
@@ -223,9 +223,9 @@ def self.test3()
     
     icrate = ::Quark.box_lib.Crate.new()
     icrate.set(3)
-    DatawireQuarkCore.print(icrate.get())
+    ::DatawireQuarkCore.print(icrate.get())
     icrate.set(4)
-    DatawireQuarkCore.print(((icrate).box).contents)
+    ::DatawireQuarkCore.print(((icrate).box).contents)
 
 
     nil
@@ -234,14 +234,14 @@ end
 def self.test4()
     
     s = ::Quark.box_lib.Sack.new()
-    DatawireQuarkCore.print((s).ints.get())
-    DatawireQuarkCore.print(((s).ints).contents)
+    ::DatawireQuarkCore.print((s).ints.get())
+    ::DatawireQuarkCore.print(((s).ints).contents)
     (s).ints.set(3)
-    DatawireQuarkCore.print((s).ints.get())
-    DatawireQuarkCore.print(((s).ints).contents)
+    ::DatawireQuarkCore.print((s).ints.get())
+    ::DatawireQuarkCore.print(((s).ints).contents)
     ((s).ints).contents = 4
-    DatawireQuarkCore.print((s).ints.get())
-    DatawireQuarkCore.print(((s).ints).contents)
+    ::DatawireQuarkCore.print((s).ints.get())
+    ::DatawireQuarkCore.print(((s).ints).contents)
 
 
     nil
@@ -250,13 +250,13 @@ end
 def self.test5()
     
     scrate = ::Quark.box_lib.Crate.new()
-    DatawireQuarkCore.print(scrate.get())
-    DatawireQuarkCore.print(((scrate).box).contents)
+    ::DatawireQuarkCore.print(scrate.get())
+    ::DatawireQuarkCore.print(((scrate).box).contents)
     scrate.set("hello")
-    DatawireQuarkCore.print(scrate.get())
-    DatawireQuarkCore.print(((scrate).box).contents)
+    ::DatawireQuarkCore.print(scrate.get())
+    ::DatawireQuarkCore.print(((scrate).box).contents)
     ((scrate).ibox).contents = 3
-    DatawireQuarkCore.print(((scrate).ibox).contents)
+    ::DatawireQuarkCore.print(((scrate).ibox).contents)
 
 
     nil
@@ -267,8 +267,8 @@ def self.test6()
     box = ::Quark.box_lib.Box.new()
     box.set(::Quark.box_lib.Box.new())
     box.get().set(3)
-    DatawireQuarkCore.print(box.get().get())
-    DatawireQuarkCore.print(((box).contents).contents)
+    ::DatawireQuarkCore.print(box.get().get())
+    ::DatawireQuarkCore.print(((box).contents).contents)
 
 
     nil
@@ -276,22 +276,22 @@ end
 
 def self.main()
     
-    DatawireQuarkCore.print("test1:\n--")
+    ::DatawireQuarkCore.print("test1:\n--")
     ::Quark.box_lib.test1()
-    DatawireQuarkCore.print("")
-    DatawireQuarkCore.print("test2:\n--")
+    ::DatawireQuarkCore.print("")
+    ::DatawireQuarkCore.print("test2:\n--")
     ::Quark.box_lib.test2()
-    DatawireQuarkCore.print("")
-    DatawireQuarkCore.print("test3:\n--")
+    ::DatawireQuarkCore.print("")
+    ::DatawireQuarkCore.print("test3:\n--")
     ::Quark.box_lib.test3()
-    DatawireQuarkCore.print("")
-    DatawireQuarkCore.print("test4:\n--")
+    ::DatawireQuarkCore.print("")
+    ::DatawireQuarkCore.print("test4:\n--")
     ::Quark.box_lib.test4()
-    DatawireQuarkCore.print("")
-    DatawireQuarkCore.print("test5:\n--")
+    ::DatawireQuarkCore.print("")
+    ::DatawireQuarkCore.print("test5:\n--")
     ::Quark.box_lib.test5()
-    DatawireQuarkCore.print("")
-    DatawireQuarkCore.print("test6:\n--")
+    ::DatawireQuarkCore.print("")
+    ::DatawireQuarkCore.print("test6:\n--")
     ::Quark.box_lib.test6()
 
 

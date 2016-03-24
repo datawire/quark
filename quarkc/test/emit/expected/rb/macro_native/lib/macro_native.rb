@@ -3,7 +3,7 @@ require "builtin"
 def self.macro_native; MODULE_macro_native; end
 module MODULE_macro_native
 def self.Native; CLASS_Native; end
-class CLASS_Native < Object
+class CLASS_Native < ::DatawireQuarkCore::QuarkObject
 
 
 

@@ -12,7 +12,7 @@ end
 
 def self.go()
     
-    DatawireQuarkCore.print("GO!")
+    ::DatawireQuarkCore.print("GO!")
 
 
     nil

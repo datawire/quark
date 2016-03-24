@@ -3,7 +3,7 @@ require "builtin"
 def self.operator_overload_lib; MODULE_operator_overload_lib; end
 module MODULE_operator_overload_lib
 def self.Overload; CLASS_Overload; end
-class CLASS_Overload < Object
+class CLASS_Overload < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
 
 
@@ -38,11 +38,11 @@ class CLASS_Overload < Object
         o1 = ::Quark.operator_overload_lib.Overload.new("one")
         o2 = ::Quark.operator_overload_lib.Overload.new("two")
         o3 = o1.__add__(o2)
-        DatawireQuarkCore.print((o3).name)
+        ::DatawireQuarkCore.print((o3).name)
         o3 = o1.__mul__(o2)
-        DatawireQuarkCore.print((o3).name)
+        ::DatawireQuarkCore.print((o3).name)
         if ((o3) == (o1))
-            DatawireQuarkCore.print("YAY!")
+            ::DatawireQuarkCore.print("YAY!")
         end
 
         nil

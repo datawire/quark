@@ -3,7 +3,7 @@ require "builtin"
 def self.default_constructors_lib; MODULE_default_constructors_lib; end
 module MODULE_default_constructors_lib
 def self.A; CLASS_A; end
-class CLASS_A < Object
+class CLASS_A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
 
 
@@ -73,7 +73,7 @@ class CLASS_B < ::Quark.default_constructors_lib.A
 
     def greet()
         
-        DatawireQuarkCore.print(("Hello, my name is ") + ((self).name))
+        ::DatawireQuarkCore.print(("Hello, my name is ") + ((self).name))
 
         nil
     end
@@ -130,7 +130,7 @@ class CLASS_C < ::Quark.default_constructors_lib.A
 
     def greet()
         
-        DatawireQuarkCore.print(("Greetings, my name is ") + ((self).name))
+        ::DatawireQuarkCore.print(("Greetings, my name is ") + ((self).name))
 
         nil
     end
@@ -171,7 +171,7 @@ class CLASS_C < ::Quark.default_constructors_lib.A
 end
 
 def self.X; CLASS_X; end
-class CLASS_X < Object
+class CLASS_X < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -233,7 +233,7 @@ class CLASS_Y < ::Quark.default_constructors_lib.X
 
     def test()
         
-        DatawireQuarkCore.print((self).name)
+        ::DatawireQuarkCore.print((self).name)
 
         nil
     end

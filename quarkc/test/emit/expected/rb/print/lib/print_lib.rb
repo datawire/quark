@@ -3,7 +3,7 @@ require "builtin"
 def self.print_lib; MODULE_print_lib; end
 module MODULE_print_lib
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -18,7 +18,7 @@ class CLASS_Test < Object
 
     def test()
         
-        DatawireQuarkCore.print("Hello World!")
+        ::DatawireQuarkCore.print("Hello World!")
 
         nil
     end

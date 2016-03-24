@@ -9,16 +9,16 @@ require_relative '../package_md' # 0 () ('test',)
 
 def self.go()
     
-    DatawireQuarkCore.print("GOGO!!")
+    ::DatawireQuarkCore.print("GOGO!!")
 
 
     nil
 end
 
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :size
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static test_test_Test_ref: -> { ::Quark.package_md.Root.test_test_Test_md }
 
@@ -35,7 +35,7 @@ class CLASS_Test < Object
 
     def go()
         
-        DatawireQuarkCore.print("TTGO!!")
+        ::DatawireQuarkCore.print("TTGO!!")
 
         nil
     end

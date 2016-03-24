@@ -2,7 +2,7 @@ module Quark
 def self.json_building_md; MODULE_json_building_md; end
 module MODULE_json_building_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

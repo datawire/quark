@@ -8,8 +8,8 @@ require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
 
 def self.Handler; CLASS_Handler; end
-class CLASS_Handler < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Handler < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Handler_ref: -> { ::Quark.slackpack_md.Root.pkg_Handler_md }
 
@@ -26,12 +26,12 @@ class CLASS_Handler < Object
 
     def onSlackEvent(event)
         
-        DatawireQuarkCore.print((event).type)
+        ::DatawireQuarkCore.print((event).type)
         if (((event).user) != (nil))
-            DatawireQuarkCore.print(((event).user).user)
+            ::DatawireQuarkCore.print(((event).user).user)
         end
         if (((event).channel) != (nil))
-            DatawireQuarkCore.print(((event).channel).channel)
+            ::DatawireQuarkCore.print(((event).channel).channel)
         end
 
         nil

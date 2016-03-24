@@ -16,16 +16,16 @@ end
 
 def self.main()
     
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(1))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(2))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(3))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(4))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(5))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(6))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(7))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(8))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(9))
-    DatawireQuarkCore.print(::Quark.factorial_lib.factorial(10))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(1))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(2))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(3))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(4))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(5))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(6))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(7))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(8))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(9))
+    ::DatawireQuarkCore.print(::Quark.factorial_lib.factorial(10))
 
 
     nil

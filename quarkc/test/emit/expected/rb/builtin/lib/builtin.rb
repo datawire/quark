@@ -9,13 +9,13 @@ require_relative 'builtin_md' # 0 () ()
 
 def self.toJSON(obj, cls)
     
-    result = DatawireQuarkCore::JSONObject.new
+    result = ::DatawireQuarkCore::JSONObject.new
     if ((obj) == (nil))
         result.setNull()
         return result
     end
     if ((cls) == (nil))
-        cls = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(obj))
+        cls = ::Quark.builtin.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(obj))
     end
     idx = 0
     if (((cls).name) == ("builtin.String"))
@@ -40,7 +40,7 @@ def self.toJSON(obj, cls)
         map = obj
         return result
     end
-    (result).setObjectItem(("$class"), (DatawireQuarkCore::JSONObject.new.setString((cls).id)))
+    (result).setObjectItem(("$class"), (::DatawireQuarkCore::JSONObject.new.setString((cls).id)))
     fields = cls.getFields()
     while ((idx) < ((fields).size)) do
         fieldName = ((fields)[idx]).name
@@ -78,7 +78,7 @@ def self.fromJSON(cls, result, json)
             b = json.getBool()
             return b
         end
-        result = cls.construct(DatawireQuarkCore::List.new([]))
+        result = cls.construct(::DatawireQuarkCore::List.new([]))
     end
     if (((cls).name) == ("builtin.List"))
         list = result
@@ -106,8 +106,8 @@ def self.fromJSON(cls, result, json)
 end
 
 def self.Resolver; CLASS_Resolver; end
-class CLASS_Resolver < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Resolver < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_Resolver_ref: -> { ::Quark.builtin_md.Root.builtin_Resolver_md }
 
@@ -139,9 +139,9 @@ end
 CLASS_Resolver.unlazy_statics
 
 def self.ResponseHolder; CLASS_ResponseHolder; end
-class CLASS_ResponseHolder < Object
+class CLASS_ResponseHolder < ::DatawireQuarkCore::QuarkObject
     attr_accessor :response, :failure
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_ResponseHolder_ref: -> { ::Quark.builtin_md.Root.builtin_ResponseHolder_md }
 
@@ -230,8 +230,8 @@ end
 CLASS_ResponseHolder.unlazy_statics
 
 def self.Service; CLASS_Service; end
-class CLASS_Service < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Service < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_Service_ref: -> { ::Quark.builtin_md.Root.builtin_Service_md }
 
@@ -283,8 +283,8 @@ end
 CLASS_Service.unlazy_statics
 
 def self.BaseService; CLASS_BaseService; end
-class CLASS_BaseService < Object
-    extend DatawireQuarkCore::Static
+class CLASS_BaseService < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_BaseService_ref: -> { ::Quark.builtin_md.Root.builtin_BaseService_md }
 
@@ -360,9 +360,9 @@ end
 CLASS_BaseService.unlazy_statics
 
 def self.ServiceInstance; CLASS_ServiceInstance; end
-class CLASS_ServiceInstance < Object
+class CLASS_ServiceInstance < ::DatawireQuarkCore::QuarkObject
     attr_accessor :serviceName, :url, :breaker
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_ServiceInstance_ref: -> { ::Quark.builtin_md.Root.builtin_ServiceInstance_md }
 
@@ -468,8 +468,8 @@ end
 CLASS_ServiceInstance.unlazy_statics
 
 def self.DegenerateResolver; CLASS_DegenerateResolver; end
-class CLASS_DegenerateResolver < Object
-    extend DatawireQuarkCore::Static
+class CLASS_DegenerateResolver < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_DegenerateResolver_ref: -> { ::Quark.builtin_md.Root.builtin_DegenerateResolver_md }
 
@@ -486,7 +486,7 @@ class CLASS_DegenerateResolver < Object
 
     def resolve(serviceName)
         
-        return DatawireQuarkCore::List.new([serviceName])
+        return ::DatawireQuarkCore::List.new([serviceName])
 
         nil
     end
@@ -523,9 +523,9 @@ end
 CLASS_DegenerateResolver.unlazy_statics
 
 def self.Client; CLASS_Client; end
-class CLASS_Client < Object
+class CLASS_Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :resolver, :serviceName, :_timeout, :_failureLimit, :_retestDelay, :mutex, :instanceMap, :counter
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static logger: -> { ::Quark.builtin.concurrent.Context.runtime().logger("quark.client") }
     static builtin_Map_builtin_String_builtin_ServiceInstance__ref: -> { ::Quark.builtin_md.Root.builtin_Map_builtin_String_builtin_ServiceInstance__md }
@@ -539,7 +539,7 @@ class CLASS_Client < Object
         (self).serviceName = serviceName
         (self).resolver = ::Quark.builtin.DegenerateResolver.new()
         (self)._timeout = 0.0
-        (self).mutex = ::Quark.DatawireQuarkCore::Lock.new()
+        (self).mutex = ::DatawireQuarkCore::Lock.new()
         (self).instanceMap = {}
         (self).counter = 0
         failureLimit = (self)._getField("failureLimit")
@@ -717,9 +717,9 @@ end
 CLASS_Client.unlazy_statics
 
 def self.ServerResponder; CLASS_ServerResponder; end
-class CLASS_ServerResponder < Object
+class CLASS_ServerResponder < ::DatawireQuarkCore::QuarkObject
     attr_accessor :request, :response
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_ServerResponder_ref: -> { ::Quark.builtin_md.Root.builtin_ServerResponder_md }
 
@@ -797,9 +797,9 @@ end
 CLASS_ServerResponder.unlazy_statics
 
 def self.Server; CLASS_Server; end
-class CLASS_Server < Object
+class CLASS_Server < ::DatawireQuarkCore::QuarkObject
     attr_accessor :impl
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_List_builtin_reflect_Class__ref: -> { ::Quark.builtin_md.Root.builtin_List_builtin_reflect_Class__md }
     static builtin_Server_builtin_Object__ref: -> { ::Quark.builtin_md.Root.builtin_Server_builtin_Object__md }
@@ -820,7 +820,7 @@ class CLASS_Server < Object
     def onHTTPRequest(request, response)
         
         body = request.getBody()
-        envelope = DatawireQuarkCore::JSONObject.parse(body)
+        envelope = ::DatawireQuarkCore::JSONObject.parse(body)
         if ((((envelope).getObjectItem("$method")) == (envelope.undefined())) || (((envelope).getObjectItem("rpc")) == (envelope.undefined())))
             response.setBody((("Failed to understand request.\n\n") + (body)) + ("\n"))
             response.setCode(400)
@@ -828,15 +828,15 @@ class CLASS_Server < Object
         else
             methodName = (envelope).getObjectItem("$method").getString()
             json = (envelope).getObjectItem("rpc")
-            method = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
-            params = method.getParameters()
-            args = DatawireQuarkCore::List.new([])
+            method_ = ::Quark.builtin.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
+            params = method_.getParameters()
+            args = ::DatawireQuarkCore::List.new([])
             idx = 0
             while ((idx) < ((params).size)) do
                 (args) << (::Quark.builtin.fromJSON((params)[idx], nil, json.getListItem(idx)))
                 idx = (idx) + (1)
             end
-            result = method.invoke(@impl, args)
+            result = method_.invoke(@impl, args)
             result.onFinished(::Quark.builtin.ServerResponder.new(request, response))
         end
 

@@ -6,8 +6,8 @@ require 'builtin' # .../reflect
 require_relative 'extending_primitives_md' # 0 () ()
 
 def self.C; CLASS_C; end
-class CLASS_C < Object
-    extend DatawireQuarkCore::Static
+class CLASS_C < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_C_ref: -> { ::Quark.extending_primitives_md.Root.pkg_C_md }
 
@@ -24,7 +24,7 @@ class CLASS_C < Object
 
     def event1()
         
-        DatawireQuarkCore.print("event1")
+        ::DatawireQuarkCore.print("event1")
 
         nil
     end
@@ -52,14 +52,14 @@ class CLASS_C < Object
 
     def run()
         
-        DatawireQuarkCore.print("running")
+        ::DatawireQuarkCore.print("running")
 
         nil
     end
 
     def event2()
         
-        DatawireQuarkCore.print("default event2")
+        ::DatawireQuarkCore.print("default event2")
 
         nil
     end

@@ -2,7 +2,7 @@ module Quark
 def self.booleans_md; MODULE_booleans_md; end
 module MODULE_booleans_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

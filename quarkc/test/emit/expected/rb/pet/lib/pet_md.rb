@@ -2,7 +2,7 @@ module Quark
 def self.pet_md; MODULE_pet_md; end
 module MODULE_pet_md
 require 'builtin' # .../reflect
-require_relative 'pets' # 0 () ()
+# for ('pet_md',): require_relative 'pets' # 0 () ()
 
 def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
 class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
@@ -11,7 +11,7 @@ class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
 
     def initialize()
         
-        super("builtin.void", "greet", DatawireQuarkCore::List.new([]))
+        super("builtin.void", "greet", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -60,7 +60,7 @@ end
 
 def self.pets_Cat; CLASS_pets_Cat; end
 class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.pet_md.pets_Cat.new() }
 
@@ -70,9 +70,9 @@ class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
         
         super("pets.Cat")
         (self).name = "pets.Cat"
-        (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([::Quark.pet_md.pets_Cat_greet_Method.new()])
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.pet_md.pets_Cat_greet_Method.new()])
 
         nil
     end
@@ -125,7 +125,7 @@ class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
 
     def initialize()
         
-        super("builtin.void", "greet", DatawireQuarkCore::List.new([]))
+        super("builtin.void", "greet", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -174,7 +174,7 @@ end
 
 def self.pets_Dog; CLASS_pets_Dog; end
 class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.pet_md.pets_Dog.new() }
 
@@ -184,9 +184,9 @@ class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
         
         super("pets.Dog")
         (self).name = "pets.Dog"
-        (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([::Quark.pet_md.pets_Dog_greet_Method.new()])
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.pet_md.pets_Dog_greet_Method.new()])
 
         nil
     end
@@ -233,8 +233,8 @@ end
 CLASS_pets_Dog.unlazy_statics
 
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pets_Cat_md: -> { ::Quark.pet_md.pets_Cat.singleton }
     static pets_Dog_md: -> { ::Quark.pet_md.pets_Dog.singleton }

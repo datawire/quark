@@ -3,7 +3,7 @@ require "builtin"
 def self.int_methods_lib; MODULE_int_methods_lib; end
 module MODULE_int_methods_lib
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -21,9 +21,9 @@ class CLASS_Test < Object
         x = 1
         y = 2
         z = (((x) + (y)) - (3)) * (4)
-        DatawireQuarkCore.print(z)
+        ::DatawireQuarkCore.print(z)
         four = (2) + (2)
-        DatawireQuarkCore.print(four)
+        ::DatawireQuarkCore.print(four)
 
         nil
     end

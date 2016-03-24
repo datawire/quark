@@ -7,11 +7,11 @@ require 't2'
 
 def self.main()
     
-    DatawireQuarkCore.print(::Quark.testlib.test())
-    DatawireQuarkCore.print(::Quark.testlib.foo())
-    DatawireQuarkCore.print(::Quark.testlib.foo())
+    ::DatawireQuarkCore.print(::Quark.testlib.test())
+    ::DatawireQuarkCore.print(::Quark.testlib.foo())
+    ::DatawireQuarkCore.print(::Quark.testlib.foo())
     ::Quark.t2.test()
-    DatawireQuarkCore.print(::Quark.use_lib.qux())
+    ::DatawireQuarkCore.print(::Quark.use_lib.qux())
 
 
     nil

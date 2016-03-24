@@ -7,8 +7,8 @@ require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
 
 def self.SlackHandler; CLASS_SlackHandler; end
-class CLASS_SlackHandler < Object
-    extend DatawireQuarkCore::Static
+class CLASS_SlackHandler < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static slack_SlackHandler_ref: -> { ::Quark.slackpack_md.Root.slack_SlackHandler_md }
 
@@ -62,9 +62,9 @@ end
 CLASS_SlackHandler.unlazy_statics
 
 def self.User; CLASS_User; end
-class CLASS_User < Object
+class CLASS_User < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :user
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_User_ref: -> { ::Quark.slackpack_md.Root.slack_User_md }
 
@@ -128,9 +128,9 @@ end
 CLASS_User.unlazy_statics
 
 def self.Channel; CLASS_Channel; end
-class CLASS_Channel < Object
+class CLASS_Channel < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :channel
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_Channel_ref: -> { ::Quark.slackpack_md.Root.slack_Channel_md }
 
@@ -152,11 +152,11 @@ class CLASS_Channel < Object
         
         id = (@client).event_id
         (@client).event_id = ((@client).event_id) + (1)
-        msg = DatawireQuarkCore::JSONObject.new
-        (msg).setObjectItem(("id"), (DatawireQuarkCore::JSONObject.new.setNumber(id)))
-        (msg).setObjectItem(("type"), (DatawireQuarkCore::JSONObject.new.setString("message")))
-        (msg).setObjectItem(("channel"), (DatawireQuarkCore::JSONObject.new.setString((self).channel)))
-        (msg).setObjectItem(("text"), (DatawireQuarkCore::JSONObject.new.setString(message)))
+        msg = ::DatawireQuarkCore::JSONObject.new
+        (msg).setObjectItem(("id"), (::DatawireQuarkCore::JSONObject.new.setNumber(id)))
+        (msg).setObjectItem(("type"), (::DatawireQuarkCore::JSONObject.new.setString("message")))
+        (msg).setObjectItem(("channel"), (::DatawireQuarkCore::JSONObject.new.setString((self).channel)))
+        (msg).setObjectItem(("text"), (::DatawireQuarkCore::JSONObject.new.setString(message)))
         @client.ws_send(msg.toString())
 
         nil
@@ -208,9 +208,9 @@ end
 CLASS_Channel.unlazy_statics
 
 def self.Client; CLASS_Client; end
-class CLASS_Client < Object
+class CLASS_Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :runtime, :token, :handler, :event_id, :socket
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_Client_ref: -> { ::Quark.slackpack_md.Root.slack_Client_md }
     static builtin_Map_builtin_String_builtin_Object__ref: -> { ::Quark.slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md }
@@ -232,7 +232,7 @@ class CLASS_Client < Object
 
     def connect()
         
-        self.request("rtm.start", Hash.new(), self)
+        self.request("rtm.start", ::Hash.new(), self)
 
         nil
     end
@@ -240,10 +240,10 @@ class CLASS_Client < Object
     def request(request, params, handler)
         
         url = ("https://slack.com/api/") + (request)
-        req = DatawireQuarkCore::HTTP::Request.new(url)
+        req = ::DatawireQuarkCore::HTTP::Request.new(url)
         req.setMethod("POST")
         (params)["token"] = ((self).token)
-        req.setBody(DatawireQuarkCore.urlencode(params))
+        req.setBody(::DatawireQuarkCore.urlencode(params))
         req.setHeader("Content-Type", "application/x-www-form-urlencoded")
         (self).runtime.request(req, handler)
 
@@ -273,14 +273,14 @@ class CLASS_Client < Object
 
     def onWSClose(socket)
         
-        DatawireQuarkCore.print("socket closed")
+        ::DatawireQuarkCore.print("socket closed")
 
         nil
     end
 
     def onWSError(socket)
         
-        DatawireQuarkCore.print("socket error")
+        ::DatawireQuarkCore.print("socket error")
 
         nil
     end
@@ -303,7 +303,7 @@ class CLASS_Client < Object
 
     def onWSMessage(socket, message)
         
-        obj = DatawireQuarkCore::JSONObject.parse(message)
+        obj = ::DatawireQuarkCore::JSONObject.parse(message)
         type = (obj).getObjectItem("type").getString()
         event = self.construct(type)
         event.load(self, obj)
@@ -321,7 +321,7 @@ class CLASS_Client < Object
             (error).code = code
             error.dispatch((self).handler)
         else
-            login_data = DatawireQuarkCore::JSONObject.parse(response.getBody())
+            login_data = ::DatawireQuarkCore::JSONObject.parse(response.getBody())
             if ((login_data).getObjectItem("ok").getBool())
                 self.ws_connect((login_data).getObjectItem("url").getString())
             else

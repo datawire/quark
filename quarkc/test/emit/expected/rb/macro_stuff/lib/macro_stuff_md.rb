@@ -2,7 +2,7 @@ module Quark
 def self.macro_stuff_md; MODULE_macro_stuff_md; end
 module MODULE_macro_stuff_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

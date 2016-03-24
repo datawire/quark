@@ -3,7 +3,7 @@ require "builtin"
 def self.stuff_lib; MODULE_stuff_lib; end
 module MODULE_stuff_lib
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -28,16 +28,16 @@ class CLASS_Test < Object
         x = 2
         y = 2
         z = (x) + (y)
-        DatawireQuarkCore.print(z)
+        ::DatawireQuarkCore.print(z)
         hello = "hello"
-        DatawireQuarkCore.print(hello)
+        ::DatawireQuarkCore.print(hello)
         t1 = ::Quark.stuff_lib.Test.new()
         t2 = t1.foo(t1)
         if ((t2) != (t1))
-            DatawireQuarkCore.print("YAY!")
+            ::DatawireQuarkCore.print("YAY!")
         end
         four = (2) + (2)
-        DatawireQuarkCore.print(four)
+        ::DatawireQuarkCore.print(four)
 
         nil
     end

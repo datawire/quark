@@ -125,6 +125,23 @@ module DatawireQuarkCore
     return obj._getClass
   end
 
+  class QuarkObject < ::BasicObject
+    ### XXX: make sure to keep methods defined here in sync with list compiler's quarkc.ruby.SUBS
+    def nil?
+      false
+    end
+
+    def to_s
+      ::Object.instance_method(:to_s).bind(self).call.gsub("::MODULE_",".").gsub("::CLASS_",".")
+    end
+
+    private
+    def method_missing(name, *args, &block)
+      super unless [:method, :inspect, :is_a?].find_index name
+      ::Object.instance_method(name).bind(self).call(*args, &block)
+    end
+  end
+
   class List < Array
     def to_s
       '[' + map(&:to_s).join(', ') + ']'
@@ -874,9 +891,4 @@ module DatawireQuarkCore
       "Buffer(%s)" % Codec.new.toHexdump(self, 0, @data.length, 3)
     end
   end
-end
-
-# XXX: work around module referencing?
-module Quark
-  def self.DatawireQuarkCore; ::DatawireQuarkCore; end
 end

@@ -9,9 +9,9 @@ require_relative '../slack' # 0 () ('slack',)
 require_relative '../slackpack_md' # 0 () ('slack',)
 
 def self.SlackEvent; CLASS_SlackEvent; end
-class CLASS_SlackEvent < Object
+class CLASS_SlackEvent < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :user, :channel, :timestamp
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_event_SlackEvent_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackEvent_md }
 
@@ -111,7 +111,7 @@ CLASS_SlackEvent.unlazy_statics
 def self.SlackError; CLASS_SlackError; end
 class CLASS_SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_event_SlackError_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackError_md }
 
@@ -214,7 +214,7 @@ CLASS_SlackError.unlazy_statics
 
 def self.Hello; CLASS_Hello; end
 class CLASS_Hello < ::Quark.slack.event.SlackEvent
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_event_Hello_ref: -> { ::Quark.slackpack_md.Root.slack_event_Hello_md }
 
@@ -294,7 +294,7 @@ CLASS_Hello.unlazy_statics
 def self.Message; CLASS_Message; end
 class CLASS_Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_event_Message_ref: -> { ::Quark.slackpack_md.Root.slack_event_Message_md }
 
@@ -417,9 +417,9 @@ end
 CLASS_Message.unlazy_statics
 
 def self.Edited; CLASS_Edited; end
-class CLASS_Edited < Object
+class CLASS_Edited < ::DatawireQuarkCore::QuarkObject
     attr_accessor :user, :timestamp
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static slack_event_Edited_ref: -> { ::Quark.slackpack_md.Root.slack_event_Edited_md }
 

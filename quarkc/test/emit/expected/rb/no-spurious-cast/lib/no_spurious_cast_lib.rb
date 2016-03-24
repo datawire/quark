@@ -3,7 +3,7 @@ require "builtin"
 def self.no_spurious_cast_lib; MODULE_no_spurious_cast_lib; end
 module MODULE_no_spurious_cast_lib
 def self.A; CLASS_A; end
-class CLASS_A < Object
+class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -92,7 +92,7 @@ class CLASS_B < ::Quark.no_spurious_cast_lib.A
 end
 
 def self.X; CLASS_X; end
-class CLASS_X < Object
+class CLASS_X < ::DatawireQuarkCore::QuarkObject
 
 
 

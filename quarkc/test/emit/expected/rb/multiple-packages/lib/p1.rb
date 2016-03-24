@@ -6,7 +6,7 @@ require_relative 'p1/p2' # 0 ('p1',) ()
 
 def self.c()
     
-    DatawireQuarkCore.print("c")
+    ::DatawireQuarkCore.print("c")
 
 
     nil
@@ -14,7 +14,7 @@ end
 
 def self.d()
     
-    DatawireQuarkCore.print("d")
+    ::DatawireQuarkCore.print("d")
 
 
     nil

@@ -9,7 +9,7 @@ def self.test()
     # import testlib;
 
     f = ::Quark.testlib.foo()
-    DatawireQuarkCore.print(f)
+    ::DatawireQuarkCore.print(f)
 
 
     nil

@@ -2,7 +2,7 @@ module Quark
 def self.operator_overload_md; MODULE_operator_overload_md; end
 module MODULE_operator_overload_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

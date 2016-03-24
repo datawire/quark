@@ -6,8 +6,8 @@ require 'builtin' # .../reflect
 require_relative 'defaulted_methods_md' # 0 () ()
 
 def self.A; CLASS_A; end
-class CLASS_A < Object
-    extend DatawireQuarkCore::Static
+class CLASS_A < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_A_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_A_md }
 
@@ -30,7 +30,7 @@ class CLASS_A < Object
 
     def bar()
         
-        DatawireQuarkCore.print("A bar")
+        ::DatawireQuarkCore.print("A bar")
         self.foo()
 
         nil
@@ -47,8 +47,8 @@ end
 CLASS_A.unlazy_statics
 
 def self.B; CLASS_B; end
-class CLASS_B < Object
-    extend DatawireQuarkCore::Static
+class CLASS_B < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_B_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_B_md }
 
@@ -65,7 +65,7 @@ class CLASS_B < Object
 
     def bar()
         
-        DatawireQuarkCore.print("B bar")
+        ::DatawireQuarkCore.print("B bar")
 
         nil
     end
@@ -81,8 +81,8 @@ end
 CLASS_B.unlazy_statics
 
 def self.C; CLASS_C; end
-class CLASS_C < Object
-    extend DatawireQuarkCore::Static
+class CLASS_C < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_C_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_C_md }
 
@@ -99,7 +99,7 @@ class CLASS_C < Object
 
     def foo()
         
-        DatawireQuarkCore.print("C mixin for foo")
+        ::DatawireQuarkCore.print("C mixin for foo")
 
         nil
     end
@@ -115,8 +115,8 @@ end
 CLASS_C.unlazy_statics
 
 def self.T1; CLASS_T1; end
-class CLASS_T1 < Object
-    extend DatawireQuarkCore::Static
+class CLASS_T1 < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_T1_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T1_md }
 
@@ -133,7 +133,7 @@ class CLASS_T1 < Object
 
     def foo()
         
-        DatawireQuarkCore.print("T1 foo")
+        ::DatawireQuarkCore.print("T1 foo")
 
         nil
     end
@@ -161,7 +161,7 @@ class CLASS_T1 < Object
 
     def bar()
         
-        DatawireQuarkCore.print("A bar")
+        ::DatawireQuarkCore.print("A bar")
         self.foo()
 
         nil
@@ -178,8 +178,8 @@ end
 CLASS_T1.unlazy_statics
 
 def self.T2; CLASS_T2; end
-class CLASS_T2 < Object
-    extend DatawireQuarkCore::Static
+class CLASS_T2 < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_T2_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T2_md }
 
@@ -196,7 +196,7 @@ class CLASS_T2 < Object
 
     def foo()
         
-        DatawireQuarkCore.print("T2 foo")
+        ::DatawireQuarkCore.print("T2 foo")
 
         nil
     end
@@ -224,7 +224,7 @@ class CLASS_T2 < Object
 
     def bar()
         
-        DatawireQuarkCore.print("A bar")
+        ::DatawireQuarkCore.print("A bar")
         self.foo()
 
         nil
@@ -241,8 +241,8 @@ end
 CLASS_T2.unlazy_statics
 
 def self.T3; CLASS_T3; end
-class CLASS_T3 < Object
-    extend DatawireQuarkCore::Static
+class CLASS_T3 < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_T3_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T3_md }
 
@@ -259,7 +259,7 @@ class CLASS_T3 < Object
 
     def foo()
         
-        DatawireQuarkCore.print("T3 foo")
+        ::DatawireQuarkCore.print("T3 foo")
 
         nil
     end
@@ -287,7 +287,7 @@ class CLASS_T3 < Object
 
     def bar()
         
-        DatawireQuarkCore.print("B bar")
+        ::DatawireQuarkCore.print("B bar")
 
         nil
     end
@@ -303,8 +303,8 @@ end
 CLASS_T3.unlazy_statics
 
 def self.T4; CLASS_T4; end
-class CLASS_T4 < Object
-    extend DatawireQuarkCore::Static
+class CLASS_T4 < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_T4_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T4_md }
 
@@ -342,7 +342,7 @@ class CLASS_T4 < Object
 
     def bar()
         
-        DatawireQuarkCore.print("A bar")
+        ::DatawireQuarkCore.print("A bar")
         self.foo()
 
         nil
@@ -350,7 +350,7 @@ class CLASS_T4 < Object
 
     def foo()
         
-        DatawireQuarkCore.print("C mixin for foo")
+        ::DatawireQuarkCore.print("C mixin for foo")
 
         nil
     end
@@ -366,8 +366,8 @@ end
 CLASS_T4.unlazy_statics
 
 def self.T5; CLASS_T5; end
-class CLASS_T5 < Object
-    extend DatawireQuarkCore::Static
+class CLASS_T5 < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_T5_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T5_md }
 
@@ -384,7 +384,7 @@ class CLASS_T5 < Object
 
     def foo()
         
-        DatawireQuarkCore.print("T5 foo")
+        ::DatawireQuarkCore.print("T5 foo")
 
         nil
     end
@@ -412,7 +412,7 @@ class CLASS_T5 < Object
 
     def bar()
         
-        DatawireQuarkCore.print("A bar")
+        ::DatawireQuarkCore.print("A bar")
         self.foo()
 
         nil
@@ -433,19 +433,19 @@ def self.main()
     t1 = ::Quark.pkg.T1.new()
     t1.foo()
     t1.bar()
-    DatawireQuarkCore.print("===")
+    ::DatawireQuarkCore.print("===")
     t2 = ::Quark.pkg.T2.new()
     t2.foo()
     t2.bar()
-    DatawireQuarkCore.print("===")
+    ::DatawireQuarkCore.print("===")
     t3 = ::Quark.pkg.T3.new()
     t3.foo()
     t3.bar()
-    DatawireQuarkCore.print("===")
+    ::DatawireQuarkCore.print("===")
     t4 = ::Quark.pkg.T4.new()
     t4.foo()
     t4.bar()
-    DatawireQuarkCore.print("===")
+    ::DatawireQuarkCore.print("===")
     t5 = ::Quark.pkg.T5.new()
     t5.foo()
     t5.bar()

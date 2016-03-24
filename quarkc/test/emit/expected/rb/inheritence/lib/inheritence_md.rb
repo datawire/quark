@@ -2,7 +2,7 @@ module Quark
 def self.inheritence_md; MODULE_inheritence_md; end
 module MODULE_inheritence_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

@@ -2,7 +2,7 @@ module Quark
 def self.break_and_continue_md; MODULE_break_and_continue_md; end
 module MODULE_break_and_continue_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

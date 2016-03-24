@@ -6,7 +6,7 @@ require 'builtin' # .../reflect
 require_relative 'pet_md' # 0 () ()
 
 def self.Pet; CLASS_Pet; end
-class CLASS_Pet < Object
+class CLASS_Pet < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -36,7 +36,7 @@ end
 
 def self.Cat; CLASS_Cat; end
 class CLASS_Cat < ::Quark.pets.Pet
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static pets_Cat_ref: -> { ::Quark.pet_md.Root.pets_Cat_md }
 
@@ -54,7 +54,7 @@ class CLASS_Cat < ::Quark.pets.Pet
 
     def greet()
         
-        DatawireQuarkCore.print("meow!")
+        ::DatawireQuarkCore.print("meow!")
 
         nil
     end
@@ -92,7 +92,7 @@ CLASS_Cat.unlazy_statics
 
 def self.Dog; CLASS_Dog; end
 class CLASS_Dog < ::Quark.pets.Pet
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static pets_Dog_ref: -> { ::Quark.pet_md.Root.pets_Dog_md }
 
@@ -110,7 +110,7 @@ class CLASS_Dog < ::Quark.pets.Pet
 
     def greet()
         
-        DatawireQuarkCore.print("woof!")
+        ::DatawireQuarkCore.print("woof!")
 
         nil
     end

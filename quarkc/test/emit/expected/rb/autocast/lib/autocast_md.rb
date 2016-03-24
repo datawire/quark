@@ -2,7 +2,7 @@ module Quark
 def self.autocast_md; MODULE_autocast_md; end
 module MODULE_autocast_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

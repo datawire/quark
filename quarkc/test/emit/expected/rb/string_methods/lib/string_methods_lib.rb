@@ -3,7 +3,7 @@ require "builtin"
 def self.string_methods_lib; MODULE_string_methods_lib; end
 module MODULE_string_methods_lib
 def self.string_test; CLASS_string_test; end
-class CLASS_string_test < Object
+class CLASS_string_test < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -19,9 +19,9 @@ class CLASS_string_test < Object
     def check(actual, expected, op, q)
         
         if ((actual) == (expected))
-            DatawireQuarkCore.print(((((("OK   ") + (op)) + (" = ")) + (q)) + (actual)) + (q))
+            ::DatawireQuarkCore.print(((((("OK   ") + (op)) + (" = ")) + (q)) + (actual)) + (q))
         else
-            DatawireQuarkCore.print(((((((((("FAIL ") + (op)) + (" = ")) + (q)) + (actual)) + (q)) + (" != ")) + (q)) + (expected)) + (q))
+            ::DatawireQuarkCore.print(((((((((("FAIL ") + (op)) + (" = ")) + (q)) + (actual)) + (q)) + (" != ")) + (q)) + (expected)) + (q))
         end
 
         nil
@@ -541,7 +541,7 @@ class CLASS_test_join < ::Quark.string_methods_lib.string_test
 
     def that()
         
-        (self).parts = DatawireQuarkCore::List.new()
+        (self).parts = ::DatawireQuarkCore::List.new()
         (self).strparts = ""
         (self).sep = ""
         return self
@@ -653,7 +653,7 @@ class CLASS_test_split < ::Quark.string_methods_lib.string_test
 
     def does(expected)
         
-        parts = DatawireQuarkCore.split((self).what, (self).sep)
+        parts = ::DatawireQuarkCore.split((self).what, (self).sep)
         actual = (parts).join((self).altsep)
         self.check(actual, expected, (((((("'") + ((self).altsep)) + ("'.join('")) + ((self).what)) + ("'.split('")) + ((self).sep)) + ("'))"), "'")
         return self

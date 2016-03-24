@@ -4,7 +4,7 @@ def self.autocast_lib; MODULE_autocast_lib; end
 module MODULE_autocast_lib
 def self.foo(s)
     
-    DatawireQuarkCore.print(s)
+    ::DatawireQuarkCore.print(s)
 
 
     nil

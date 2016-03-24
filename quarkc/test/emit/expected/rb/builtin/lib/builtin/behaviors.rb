@@ -9,9 +9,9 @@ require_relative 'concurrent' # 1 () ()
 require_relative '../builtin_md' # 0 () ('builtin',)
 
 def self.RPC; CLASS_RPC; end
-class CLASS_RPC < Object
+class CLASS_RPC < ::DatawireQuarkCore::QuarkObject
     attr_accessor :service, :returned, :timeout, :methodName, :instance
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_behaviors_RPC_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPC_md }
 
@@ -28,7 +28,7 @@ class CLASS_RPC < Object
         if (((override) != (nil)) && ((override) > (0.0)))
             timeout = override
         end
-        (self).returned = ::Quark.builtin.reflect.QuarkClass.get(DatawireQuarkCore._getClass(service)).getMethod(methodName).getType()
+        (self).returned = ::Quark.builtin.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(service)).getMethod(methodName).getType()
         (self).timeout = timeout
         (self).methodName = methodName
         (self).service = service
@@ -44,11 +44,11 @@ class CLASS_RPC < Object
         result = nil
         (self).instance = (self).service.getInstance()
         if (((self).instance) != (nil))
-            request = DatawireQuarkCore::HTTP::Request.new((self).instance.getURL())
+            request = ::DatawireQuarkCore::HTTP::Request.new((self).instance.getURL())
             json = ::Quark.builtin.toJSON(args, nil)
-            envelope = DatawireQuarkCore::JSONObject.new
-            (envelope).setObjectItem(("$method"), (DatawireQuarkCore::JSONObject.new.setString((self).methodName)))
-            (envelope).setObjectItem(("$context"), (DatawireQuarkCore::JSONObject.new.setString("TBD")))
+            envelope = ::DatawireQuarkCore::JSONObject.new
+            (envelope).setObjectItem(("$method"), (::DatawireQuarkCore::JSONObject.new.setString((self).methodName)))
+            (envelope).setObjectItem(("$context"), (::DatawireQuarkCore::JSONObject.new.setString("TBD")))
             (envelope).setObjectItem(("rpc"), (json))
             body = envelope.toString()
             request.setBody(body)
@@ -56,7 +56,7 @@ class CLASS_RPC < Object
             rpc = ::Quark.builtin.behaviors.RPCRequest.new(args, self)
             result = rpc.call(request)
         else
-            result = @returned.construct(DatawireQuarkCore::List.new([]))
+            result = @returned.construct(::DatawireQuarkCore::List.new([]))
             result.finish("all services are down")
         end
         ::Quark.builtin.concurrent.FutureWait.waitFor(result, 10.0)
@@ -153,9 +153,9 @@ end
 CLASS_RPC.unlazy_statics
 
 def self.RPCRequest; CLASS_RPCRequest; end
-class CLASS_RPCRequest < Object
+class CLASS_RPCRequest < ::DatawireQuarkCore::QuarkObject
     attr_accessor :rpc, :retval, :args, :timeout
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_behaviors_RPCRequest_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_RPCRequest_md }
 
@@ -164,7 +164,7 @@ class CLASS_RPCRequest < Object
     def initialize(args, rpc)
         
         self.__init_fields__
-        (self).retval = (rpc).returned.construct(DatawireQuarkCore::List.new([]))
+        (self).retval = (rpc).returned.construct(::DatawireQuarkCore::List.new([]))
         (self).args = args
         (self).timeout = ::Quark.builtin.concurrent.Timeout.new((rpc).timeout)
         (self).rpc = rpc
@@ -195,7 +195,7 @@ class CLASS_RPCRequest < Object
             return
         end
         body = response.getBody()
-        obj = DatawireQuarkCore::JSONObject.parse(body)
+        obj = ::DatawireQuarkCore::JSONObject.parse(body)
         classname = (obj).getObjectItem("$class").getString()
         if ((classname) == (nil))
             info = ((self).rpc.toString()) + (" failed: Server returned unrecognizable content")
@@ -300,9 +300,9 @@ end
 CLASS_RPCRequest.unlazy_statics
 
 def self.CircuitBreaker; CLASS_CircuitBreaker; end
-class CLASS_CircuitBreaker < Object
+class CLASS_CircuitBreaker < ::DatawireQuarkCore::QuarkObject
     attr_accessor :id, :failureLimit, :retestDelay, :active, :failureCount, :mutex
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_behaviors_CircuitBreaker_ref: -> { ::Quark.builtin_md.Root.builtin_behaviors_CircuitBreaker_md }
 
@@ -425,7 +425,7 @@ class CLASS_CircuitBreaker < Object
         self.retestDelay = nil
         self.active = true
         self.failureCount = 0
-        self.mutex = ::Quark.DatawireQuarkCore::Lock.new()
+        self.mutex = ::DatawireQuarkCore::Lock.new()
 
         nil
     end

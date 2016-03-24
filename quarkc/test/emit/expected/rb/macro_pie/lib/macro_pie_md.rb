@@ -2,7 +2,7 @@ module Quark
 def self.macro_pie_md; MODULE_macro_pie_md; end
 module MODULE_macro_pie_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

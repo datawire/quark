@@ -2,7 +2,7 @@ module Quark
 def self.no_spurious_cast_md; MODULE_no_spurious_cast_md; end
 module MODULE_no_spurious_cast_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

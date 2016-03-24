@@ -7,8 +7,8 @@ require_relative 'reflect' # 1 () ()
 require_relative '../builtin_md' # 0 () ('builtin',)
 
 def self.Event; CLASS_Event; end
-class CLASS_Event < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Event < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_Event_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Event_md }
 
@@ -46,8 +46,8 @@ end
 CLASS_Event.unlazy_statics
 
 def self.FutureListener; CLASS_FutureListener; end
-class CLASS_FutureListener < Object
-    extend DatawireQuarkCore::Static
+class CLASS_FutureListener < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_FutureListener_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureListener_md }
 
@@ -80,9 +80,9 @@ end
 CLASS_FutureListener.unlazy_statics
 
 def self.FutureCompletion; CLASS_FutureCompletion; end
-class CLASS_FutureCompletion < Object
+class CLASS_FutureCompletion < ::DatawireQuarkCore::QuarkObject
     attr_accessor :future, :listener
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_FutureCompletion_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureCompletion_md }
 
@@ -160,9 +160,9 @@ end
 CLASS_FutureCompletion.unlazy_statics
 
 def self.EventContext; CLASS_EventContext; end
-class CLASS_EventContext < Object
+class CLASS_EventContext < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_context
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_EventContext_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_EventContext_md }
 
@@ -227,7 +227,7 @@ CLASS_EventContext.unlazy_statics
 def self.Future; CLASS_Future; end
 class CLASS_Future < ::Quark.builtin.concurrent.EventContext
     attr_accessor :_finished, :_error, :_callbacks, :_lock
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_List_builtin_concurrent_FutureCompletion__ref: -> { ::Quark.builtin_md.Root.builtin_List_builtin_concurrent_FutureCompletion__md }
     static builtin_concurrent_Future_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Future_md }
@@ -239,7 +239,7 @@ class CLASS_Future < ::Quark.builtin.concurrent.EventContext
         super()
         (self)._finished = false
         (self)._callbacks = nil
-        (self)._lock = ::Quark.DatawireQuarkCore::Lock.new()
+        (self)._lock = ::DatawireQuarkCore::Lock.new()
 
         nil
     end
@@ -254,7 +254,7 @@ class CLASS_Future < ::Quark.builtin.concurrent.EventContext
             ((self)._context).collector.put(::Quark.builtin.concurrent.FutureCompletion.new(self, callback))
         else
             if (((self)._callbacks) == (nil))
-                (self)._callbacks = DatawireQuarkCore::List.new([])
+                (self)._callbacks = ::DatawireQuarkCore::List.new([])
             end
             ((self)._callbacks) << (::Quark.builtin.concurrent.FutureCompletion.new(self, callback))
         end
@@ -378,9 +378,9 @@ end
 CLASS_Future.unlazy_statics
 
 def self.FutureWait; CLASS_FutureWait; end
-class CLASS_FutureWait < Object
+class CLASS_FutureWait < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_lock, :_future
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_FutureWait_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_FutureWait_md }
 
@@ -389,7 +389,7 @@ class CLASS_FutureWait < Object
     def initialize()
         
         self.__init_fields__
-        (self)._lock = ::Quark.DatawireQuarkCore::Condition.new()
+        (self)._lock = ::DatawireQuarkCore::Condition.new()
         (self)._future = nil
 
         nil
@@ -406,9 +406,9 @@ class CLASS_FutureWait < Object
         (self)._future = future
         (self)._future.onFinished(self)
         rounded = ((1000.0) * (timeout)).round()
-        deadline = (DatawireQuarkCore.now) + (rounded)
+        deadline = (::DatawireQuarkCore.now) + (rounded)
         while (!((self)._future.isFinished())) do
-            remaining = (deadline) - (DatawireQuarkCore.now)
+            remaining = (deadline) - (::DatawireQuarkCore.now)
             if ((rounded) != (0))
                 if ((remaining) <= ((0)))
                     break
@@ -494,7 +494,7 @@ end
 CLASS_FutureWait.unlazy_statics
 
 def self.Queue; CLASS_Queue; end
-class CLASS_Queue < Object
+class CLASS_Queue < ::DatawireQuarkCore::QuarkObject
     attr_accessor :items, :head, :tail
 
 
@@ -502,7 +502,7 @@ class CLASS_Queue < Object
     def initialize()
         
         self.__init_fields__
-        (self).items = DatawireQuarkCore::List.new()
+        (self).items = ::DatawireQuarkCore::List.new()
         (self).head = 0
         (self).tail = 0
 
@@ -600,9 +600,9 @@ class CLASS_Queue < Object
 end
 
 def self.CollectorExecutor; CLASS_CollectorExecutor; end
-class CLASS_CollectorExecutor < Object
+class CLASS_CollectorExecutor < ::DatawireQuarkCore::QuarkObject
     attr_accessor :events, :collector
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_Queue_builtin_concurrent_Event__ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Queue_builtin_concurrent_Event__md }
     static builtin_concurrent_CollectorExecutor_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_CollectorExecutor_md }
@@ -692,9 +692,9 @@ end
 CLASS_CollectorExecutor.unlazy_statics
 
 def self.Collector; CLASS_Collector; end
-class CLASS_Collector < Object
+class CLASS_Collector < ::DatawireQuarkCore::QuarkObject
     attr_accessor :lock, :pending, :executor, :idle
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_Collector_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Collector_md }
 
@@ -703,7 +703,7 @@ class CLASS_Collector < Object
     def initialize()
         
         self.__init_fields__
-        (self).lock = ::Quark.DatawireQuarkCore::Lock.new()
+        (self).lock = ::DatawireQuarkCore::Lock.new()
         (self).pending = ::Quark.builtin.concurrent.Queue.new()
         (self).executor = ::Quark.builtin.concurrent.CollectorExecutor.new(self)
         (self).idle = true
@@ -805,8 +805,8 @@ end
 CLASS_Collector.unlazy_statics
 
 def self.TimeoutListener; CLASS_TimeoutListener; end
-class CLASS_TimeoutListener < Object
-    extend DatawireQuarkCore::Static
+class CLASS_TimeoutListener < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_TimeoutListener_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TimeoutListener_md }
 
@@ -838,9 +838,9 @@ end
 CLASS_TimeoutListener.unlazy_statics
 
 def self.TimeoutExpiry; CLASS_TimeoutExpiry; end
-class CLASS_TimeoutExpiry < Object
+class CLASS_TimeoutExpiry < ::DatawireQuarkCore::QuarkObject
     attr_accessor :timeout, :listener
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_TimeoutExpiry_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TimeoutExpiry_md }
 
@@ -920,7 +920,7 @@ CLASS_TimeoutExpiry.unlazy_statics
 def self.Timeout; CLASS_Timeout; end
 class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
     attr_accessor :timeout, :lock, :listener
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_Timeout_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Timeout_md }
 
@@ -931,7 +931,7 @@ class CLASS_Timeout < ::Quark.builtin.concurrent.EventContext
         super()
         (self).timeout = timeout
         (self).listener = nil
-        (self).lock = ::Quark.DatawireQuarkCore::Lock.new()
+        (self).lock = ::DatawireQuarkCore::Lock.new()
 
         nil
     end
@@ -1028,8 +1028,8 @@ end
 CLASS_Timeout.unlazy_statics
 
 def self.TLSContextInitializer; CLASS_TLSContextInitializer; end
-class CLASS_TLSContextInitializer < Object
-    extend DatawireQuarkCore::Static
+class CLASS_TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static builtin_concurrent_TLSContextInitializer_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_TLSContextInitializer_md }
 
@@ -1083,12 +1083,12 @@ end
 CLASS_TLSContextInitializer.unlazy_statics
 
 def self.Context; CLASS_Context; end
-class CLASS_Context < Object
+class CLASS_Context < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_parent, :_runtime, :collector
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static _global: -> { ::Quark.builtin.concurrent.Context.new(nil) }
-    static _current: -> { DatawireQuarkCore::TLS.new(::Quark.builtin.concurrent.TLSContextInitializer.new()) }
+    static _current: -> { ::DatawireQuarkCore::TLS.new(::Quark.builtin.concurrent.TLSContextInitializer.new()) }
     static builtin_concurrent_Context_ref: -> { ::Quark.builtin_md.Root.builtin_concurrent_Context_md }
 
 
@@ -1098,7 +1098,7 @@ class CLASS_Context < Object
         self.__init_fields__
         (self)._parent = parent
         if ((parent) == (nil))
-            (self)._runtime = DatawireQuarkCore::Runtime.new
+            (self)._runtime = ::DatawireQuarkCore::Runtime.new
             (self).collector = ::Quark.builtin.concurrent.Collector.new()
         else
             (self)._runtime = (parent)._runtime

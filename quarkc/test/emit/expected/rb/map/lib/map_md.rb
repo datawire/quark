@@ -2,7 +2,7 @@ module Quark
 def self.map_md; MODULE_map_md; end
 module MODULE_map_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 

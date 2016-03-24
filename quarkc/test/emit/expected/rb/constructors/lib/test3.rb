@@ -3,7 +3,7 @@ require "builtin"
 def self.test3; MODULE_test3; end
 module MODULE_test3
 def self.Box; CLASS_Box; end
-class CLASS_Box < Object
+class CLASS_Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -66,10 +66,10 @@ end
 def self.go()
     
     box = ::Quark.test3.Box.new("Hello World!!!")
-    DatawireQuarkCore.print(box.get())
-    DatawireQuarkCore.print((box).contents)
-    DatawireQuarkCore.print(::Quark.test3.Box.new("Hello World!!!").get())
-    DatawireQuarkCore.print((::Quark.test3.Box.new("Hello World!!!")).contents)
+    ::DatawireQuarkCore.print(box.get())
+    ::DatawireQuarkCore.print((box).contents)
+    ::DatawireQuarkCore.print(::Quark.test3.Box.new("Hello World!!!").get())
+    ::DatawireQuarkCore.print((::Quark.test3.Box.new("Hello World!!!")).contents)
 
 
     nil

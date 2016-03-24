@@ -3,7 +3,7 @@ require "builtin"
 def self.delegate_lib; MODULE_delegate_lib; end
 module MODULE_delegate_lib
 def self.Message; CLASS_Message; end
-class CLASS_Message < Object
+class CLASS_Message < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -151,7 +151,7 @@ class CLASS_Pong < ::Quark.delegate_lib.Message
 end
 
 def self.Test; CLASS_Test; end
-class CLASS_Test < Object
+class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -166,7 +166,7 @@ class CLASS_Test < Object
 
     def bar(name, args, options)
         
-        DatawireQuarkCore.print(args)
+        ::DatawireQuarkCore.print(args)
         return nil
 
         nil
@@ -174,14 +174,14 @@ class CLASS_Test < Object
 
     def foo(foo, bar, baz)
         
-        self.bar("foo", DatawireQuarkCore::List.new([foo, bar, baz]), DatawireQuarkCore::List.new([]))
+        self.bar("foo", ::DatawireQuarkCore::List.new([foo, bar, baz]), ::DatawireQuarkCore::List.new([]))
 
         nil
     end
 
     def rpc(name, msg, options)
         
-        DatawireQuarkCore.print(msg.encode())
+        ::DatawireQuarkCore.print(msg.encode())
         if ((name) == ("hello"))
             return ::Quark.delegate_lib.Pong.new()
         else
@@ -193,7 +193,7 @@ class CLASS_Test < Object
 
     def hello(ping)
         
-        return self.rpc("hello", ping, DatawireQuarkCore::List.new([]))
+        return self.rpc("hello", ping, ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -232,7 +232,7 @@ def self.main()
     
     t = ::Quark.delegate_lib.Test.new()
     t.foo("one", "two", 3)
-    DatawireQuarkCore.print(t.hello(::Quark.delegate_lib.Ping.new()).toString())
+    ::DatawireQuarkCore.print(t.hello(::Quark.delegate_lib.Ping.new()).toString())
 
 
     nil

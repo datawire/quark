@@ -4,9 +4,9 @@ module MODULE_builtin
 def self.reflect; MODULE_reflect; end
 module MODULE_reflect
 def self.QuarkClass; CLASS_QuarkClass; end
-class CLASS_QuarkClass < Object
+class CLASS_QuarkClass < ::DatawireQuarkCore::QuarkObject
     attr_accessor :id, :name, :parameters, :fields, :methods
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static classes: -> { {} }
     static VOID: -> { ::Quark.builtin.reflect.QuarkClass.new("builtin.void") }
@@ -33,7 +33,7 @@ class CLASS_QuarkClass < Object
     def self.get(id)
         
         if (!((::Quark.builtin.reflect.QuarkClass.classes).key?(id)))
-            DatawireQuarkCore.print(((("Cannot find ") + (id)) + (" in ")) + (((::Quark.builtin.reflect.QuarkClass.classes).keys).to_s))
+            ::DatawireQuarkCore.print(((("Cannot find ") + (id)) + (" in ")) + (((::Quark.builtin.reflect.QuarkClass.classes).keys).to_s))
         end
         return (::Quark.builtin.reflect.QuarkClass.classes)[id]
 
@@ -56,7 +56,7 @@ class CLASS_QuarkClass < Object
 
     def getParameters()
         
-        result = DatawireQuarkCore::List.new([])
+        result = ::DatawireQuarkCore::List.new([])
         idx = 0
         while ((idx) < ((@parameters).size)) do
             (result) << (::Quark.builtin.reflect.QuarkClass.get((@parameters)[idx]))
@@ -207,9 +207,9 @@ class CLASS_QuarkClass < Object
 
         self.id = nil
         self.name = nil
-        self.parameters = DatawireQuarkCore::List.new([])
-        self.fields = DatawireQuarkCore::List.new([])
-        self.methods = DatawireQuarkCore::List.new([])
+        self.parameters = ::DatawireQuarkCore::List.new([])
+        self.fields = ::DatawireQuarkCore::List.new([])
+        self.methods = ::DatawireQuarkCore::List.new([])
 
         nil
     end
@@ -219,7 +219,7 @@ end
 CLASS_QuarkClass.unlazy_statics
 
 def self.Field; CLASS_Field; end
-class CLASS_Field < Object
+class CLASS_Field < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :name
 
 
@@ -295,7 +295,7 @@ class CLASS_Field < Object
 end
 
 def self.Method; CLASS_Method; end
-class CLASS_Method < Object
+class CLASS_Method < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :name, :parameters
 
 
@@ -329,7 +329,7 @@ class CLASS_Method < Object
 
     def getParameters()
         
-        result = DatawireQuarkCore::List.new([])
+        result = ::DatawireQuarkCore::List.new([])
         idx = 0
         while ((idx) < ((@parameters).size)) do
             (result) << (::Quark.builtin.reflect.QuarkClass.get((@parameters)[idx]))

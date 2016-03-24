@@ -5,15 +5,15 @@ module MODULE_booleans_lib
 def self.main()
     
     if (true)
-        DatawireQuarkCore.print("Hi!")
+        ::DatawireQuarkCore.print("Hi!")
     end
     b = (1) > (0)
     if (b)
-        DatawireQuarkCore.print("Hey!")
+        ::DatawireQuarkCore.print("Hey!")
     end
     c = false
     if (!(c))
-        DatawireQuarkCore.print("Ho!")
+        ::DatawireQuarkCore.print("Ho!")
     end
     count = 0
     while (true) do
@@ -23,13 +23,13 @@ def self.main()
         count = (count) + (1)
     end
     troo = (true) && (true)
-    DatawireQuarkCore.print((troo).to_s)
+    ::DatawireQuarkCore.print((troo).to_s)
     fols = (false) || (false)
-    DatawireQuarkCore.print((fols).to_s)
+    ::DatawireQuarkCore.print((fols).to_s)
     foo = "foo"
     bar = "bar"
     if (((foo) == ("foo")) && ((bar) == ("bar")))
-        DatawireQuarkCore.print("foobar!!")
+        ::DatawireQuarkCore.print("foobar!!")
     end
 
 

@@ -4,15 +4,15 @@ def self.break_and_continue_lib; MODULE_break_and_continue_lib; end
 module MODULE_break_and_continue_lib
 def self.main()
     
-    stuff = DatawireQuarkCore::List.new(["one", "two", "three", "four"])
+    stuff = ::DatawireQuarkCore::List.new(["one", "two", "three", "four"])
     idx = 0
     while (true) do
         s = (stuff)[idx]
         if ((s) == ("three"))
-            DatawireQuarkCore.print("breaking")
+            ::DatawireQuarkCore.print("breaking")
             break
         end
-        DatawireQuarkCore.print("not breaking")
+        ::DatawireQuarkCore.print("not breaking")
         idx = (idx) + (1)
     end
     idx = 0
@@ -21,10 +21,10 @@ def self.main()
         s2 = (stuff)[idx]
         if ((s2) != ("three"))
             idx = (idx) + (1)
-            DatawireQuarkCore.print("continuing")
+            ::DatawireQuarkCore.print("continuing")
             next
         end
-        DatawireQuarkCore.print("not continuing")
+        ::DatawireQuarkCore.print("not continuing")
         loop = false
     end
 

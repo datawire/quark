@@ -6,8 +6,8 @@ require 'builtin' # .../reflect
 require_relative 'parameterized_defaults_md' # 0 () ()
 
 def self.Foo; CLASS_Foo; end
-class CLASS_Foo < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Foo_builtin_Object__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md }
 
@@ -46,8 +46,8 @@ end
 CLASS_Foo.unlazy_statics
 
 def self.StringFoo; CLASS_StringFoo; end
-class CLASS_StringFoo < Object
-    extend DatawireQuarkCore::Static
+class CLASS_StringFoo < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_StringFoo_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringFoo_md }
 
@@ -108,7 +108,7 @@ end
 CLASS_StringFoo.unlazy_statics
 
 def self.Box; CLASS_Box; end
-class CLASS_Box < Object
+class CLASS_Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -163,7 +163,7 @@ end
 
 def self.StringBox; CLASS_StringBox; end
 class CLASS_StringBox < ::Quark.pkg.Box
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Box_builtin_String__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Box_builtin_String__md }
     static pkg_StringBox_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringBox_md }
@@ -219,9 +219,9 @@ CLASS_StringBox.unlazy_statics
 def self.main()
     
     box = ::Quark.pkg.StringBox.new("asdf")
-    DatawireQuarkCore.print((box).contents)
+    ::DatawireQuarkCore.print((box).contents)
     foo = ::Quark.pkg.StringFoo.new()
-    DatawireQuarkCore.print(foo.foo())
+    ::DatawireQuarkCore.print(foo.foo())
 
 
     nil

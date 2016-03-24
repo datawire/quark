@@ -6,8 +6,8 @@ require 'builtin' # .../reflect
 require_relative 'use_class_before_def_md' # 0 () ()
 
 def self.Bar; CLASS_Bar; end
-class CLASS_Bar < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Bar < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Bar_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Bar_md }
 
@@ -26,7 +26,7 @@ class CLASS_Bar < Object
         
         foo = ::Quark.pkg.Foo.new()
         (foo).name = "bob"
-        DatawireQuarkCore.print((foo).name)
+        ::DatawireQuarkCore.print((foo).name)
 
         nil
     end
@@ -63,9 +63,9 @@ end
 CLASS_Bar.unlazy_statics
 
 def self.Foo; CLASS_Foo; end
-class CLASS_Foo < Object
+class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Foo_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Foo_md }
 

@@ -2,7 +2,7 @@ module Quark
 def self.use_class_before_def_md; MODULE_use_class_before_def_md; end
 module MODULE_use_class_before_def_md
 require 'builtin' # .../reflect
-require_relative 'pkg' # 0 () ()
+# for ('use_class_before_def_md',): require_relative 'pkg' # 0 () ()
 
 def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
 class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
@@ -11,7 +11,7 @@ class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
 
     def initialize()
         
-        super("builtin.void", "go", DatawireQuarkCore::List.new([]))
+        super("builtin.void", "go", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -60,7 +60,7 @@ end
 
 def self.pkg_Bar; CLASS_pkg_Bar; end
 class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Bar.new() }
 
@@ -70,9 +70,9 @@ class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
         
         super("pkg.Bar")
         (self).name = "pkg.Bar"
-        (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([])
-        (self).methods = DatawireQuarkCore::List.new([::Quark.use_class_before_def_md.pkg_Bar_go_Method.new()])
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.use_class_before_def_md.pkg_Bar_go_Method.new()])
 
         nil
     end
@@ -120,7 +120,7 @@ CLASS_pkg_Bar.unlazy_statics
 
 def self.pkg_Foo; CLASS_pkg_Foo; end
 class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
-    extend DatawireQuarkCore::Static
+    extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Foo.new() }
 
@@ -130,9 +130,9 @@ class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
         
         super("pkg.Foo")
         (self).name = "pkg.Foo"
-        (self).parameters = DatawireQuarkCore::List.new([])
-        (self).fields = DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
-        (self).methods = DatawireQuarkCore::List.new([])
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
 
         nil
     end
@@ -179,8 +179,8 @@ end
 CLASS_pkg_Foo.unlazy_statics
 
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
-    extend DatawireQuarkCore::Static
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
 
     static pkg_Bar_md: -> { ::Quark.use_class_before_def_md.pkg_Bar.singleton }
     static pkg_Foo_md: -> { ::Quark.use_class_before_def_md.pkg_Foo.singleton }

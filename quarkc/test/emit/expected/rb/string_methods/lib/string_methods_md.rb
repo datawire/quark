@@ -2,7 +2,7 @@ module Quark
 def self.string_methods_md; MODULE_string_methods_md; end
 module MODULE_string_methods_md
 def self.Root; CLASS_Root; end
-class CLASS_Root < Object
+class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 
