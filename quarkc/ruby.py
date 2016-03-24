@@ -398,7 +398,7 @@ def string(s):
     assert result
     return result
 
-def list(elements):
+def list_(elements):
     return 'DatawireQuarkCore::List.new([%s])' % ', '.join(elements)
 
 def map(entries):

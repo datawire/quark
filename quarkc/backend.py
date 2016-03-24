@@ -515,7 +515,7 @@ class Backend(object):
 
     @overload(List)
     def expr(self, l):
-        return self.gen.list([self.expr(e) for e in l.elements])
+        return self.gen.list_([self.expr(e) for e in l.elements])
 
     @overload(Map)
     def expr(self, m):
