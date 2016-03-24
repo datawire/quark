@@ -1,7 +1,7 @@
 package pet_md;
 
-public class pets_Dog extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pets_Dog();
+public class pets_Dog extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pets_Dog();
     public pets_Dog() {
         super("pets.Dog");
         (this).name = "pets.Dog";

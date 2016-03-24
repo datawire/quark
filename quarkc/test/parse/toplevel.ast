@@ -1,4 +1,4 @@
-File(Use(url=builtin.q), Import(Name(builtin)), Include(url=foo.q),
+File(Use(url=quark.q), Import(Name(quark)), Include(url=foo.q),
  Include(url=native.js), Include(url=native.py),
  Include(url=native_ex/Native.java),
  Use(url=bar.q),

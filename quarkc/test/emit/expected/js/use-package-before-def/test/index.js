@@ -1,9 +1,4 @@
-var _qrt = require("builtin/quark_runtime.js");
-
-function main() {
-    go();
-}
-exports.main = main;
+var _qrt = require("quark/quark_runtime.js");
 
 
 function go() {

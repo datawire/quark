@@ -1,4 +1,4 @@
-from fancyprim import main
+import fancy_primitive
 
 if __name__ == "__main__":
-    main()
+    fancy_primitive.main();

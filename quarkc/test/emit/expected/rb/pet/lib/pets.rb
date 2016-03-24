@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.pets; MODULE_pets; end
 module MODULE_pets
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'pet_md' # 0 () ()
 
 def self.Pet; CLASS_Pet; end
@@ -145,16 +145,5 @@ class CLASS_Dog < ::Quark.pets.Pet
 
 end
 CLASS_Dog.unlazy_statics
-
-def self.main()
-    
-    evil = ::Quark.pets.Cat.new()
-    good = ::Quark.pets.Dog.new()
-    evil.greet()
-    good.greet()
-
-
-    nil
-end
 end # module MODULE_pets
 end # module Quark

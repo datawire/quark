@@ -1,17 +1,17 @@
 module Quark
 def self.use_class_before_def_md; MODULE_use_class_before_def_md; end
 module MODULE_use_class_before_def_md
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 # for ('use_class_before_def_md',): require_relative 'pkg' # 0 () ()
 
 def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
-class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
+class CLASS_pkg_Bar_go_Method < ::Quark.quark.reflect.Method
 
 
 
     def initialize()
         
-        super("builtin.void", "go", ::DatawireQuarkCore::List.new([]))
+        super("quark.void", "go", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -59,7 +59,7 @@ class CLASS_pkg_Bar_go_Method < ::Quark.builtin.reflect.Method
 end
 
 def self.pkg_Bar; CLASS_pkg_Bar; end
-class CLASS_pkg_Bar < ::Quark.builtin.reflect.QuarkClass
+class CLASS_pkg_Bar < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Bar.new() }
@@ -119,7 +119,7 @@ end
 CLASS_pkg_Bar.unlazy_statics
 
 def self.pkg_Foo; CLASS_pkg_Foo; end
-class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
+class CLASS_pkg_Foo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Foo.new() }
@@ -131,7 +131,7 @@ class CLASS_pkg_Foo < ::Quark.builtin.reflect.QuarkClass
         super("pkg.Foo")
         (self).name = "pkg.Foo"
         (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.builtin.reflect.Field.new("builtin.String", "name")])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
 
         nil

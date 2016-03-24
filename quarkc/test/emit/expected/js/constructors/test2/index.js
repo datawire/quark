@@ -1,7 +1,7 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var constructors_md = require('../constructors_md');
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var constructors_md = require('../constructors_md/index.js');
 exports.constructors_md = constructors_md;
 
 

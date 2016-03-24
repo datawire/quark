@@ -1,4 +1,4 @@
-from pkg import main
+import use_class_before_def
 
 if __name__ == "__main__":
-    main()
+    use_class_before_def.main();

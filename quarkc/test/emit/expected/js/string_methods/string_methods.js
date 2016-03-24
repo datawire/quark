@@ -1,3 +1,4 @@
-var common = require('./string_methods_lib');
+var string_methods = require('./string_methods/index.js');
+exports.string_methods = string_methods;
 
-common.main();
+string_methods.main();

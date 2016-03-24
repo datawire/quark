@@ -1,7 +1,7 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var extending_primitives_md = require('../extending_primitives_md');
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var extending_primitives_md = require('../extending_primitives_md/index.js');
 exports.extending_primitives_md = extending_primitives_md;
 
 
@@ -42,11 +42,3 @@ function C_event2() {
     _qrt.print("default event2");
 }
 C.prototype.event2 = C_event2;
-
-function main() {
-    var c = new C();
-    (c).event1();
-    (c).event2();
-    (c).run();
-}
-exports.main = main;

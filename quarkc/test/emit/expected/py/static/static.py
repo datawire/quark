@@ -1,4 +1,4 @@
-from static_lib import main
+import static
 
 if __name__ == "__main__":
-    main()
+    static.main();

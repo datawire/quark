@@ -1,9 +1,8 @@
 package test;
 
 public class Functions {
-    public static void main() {
-        Functions.go();
-    }
+
+    static use_package_before_def_md.Root root = new use_package_before_def_md.Root();
 
 
     public static void go() {

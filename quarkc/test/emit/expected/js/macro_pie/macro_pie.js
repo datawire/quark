@@ -1,3 +1,4 @@
-var common = require('./macro_pie_lib');
+var macro_pie = require('./macro_pie/index.js');
+exports.macro_pie = macro_pie;
 
-common.main();
+macro_pie.main();

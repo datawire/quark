@@ -11,7 +11,7 @@ language:
 python:
 - 2.7.6
 jdk:
-- oraclejdk8
+- oraclejdk7
 addons:
   apt:
     packages:
@@ -28,7 +28,8 @@ addons:
     - libffi-dev
     - python-virtualenv
 install:
-- java -version 2>&1 | grep -Fe 'java version "1.8.0'
+- java -version
+- java -version 2>&1 | grep -Fe 'java version "1.7.0'
 - python -c 'import sys; print sys.version; sys.exit(int(sys.version_info[:3] < (2,7,6)))'
 - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
   && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm

@@ -1,10 +1,9 @@
 module Quark
-require "builtin"
+require "quark"
 def self.test; MODULE_test; end
 module MODULE_test
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'package_md' # 0 () ()
-require_relative 'test/test' # 0 ('test',) ()
 
 def self.go()
     
@@ -76,18 +75,5 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 end
 CLASS_Test.unlazy_statics
-
-def self.main()
-    
-    ::Quark.test.go()
-    ::Quark.test.test.go()
-    t1 = ::Quark.test.Test.new()
-    t2 = ::Quark.test.test.Test.new()
-    t1.go()
-    t2.go()
-
-
-    nil
-end
 end # module MODULE_test
 end # module Quark

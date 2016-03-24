@@ -1,6 +1,7 @@
 package macro_stuff;
 
 public class Macro implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class macro_stuff_Macro_ref = macro_stuff_md.Root.macro_stuff_Macro_md;
     public Macro() {}
     public void test() {
         Macro m1 = new Macro();
@@ -15,7 +16,7 @@ public class Macro implements io.datawire.quark.runtime.QObject {
         Macro m10 = m2;
     }
     public String _getClass() {
-        return "Macro";
+        return "macro_stuff.Macro";
     }
     public Object _getField(String name) {
         return null;

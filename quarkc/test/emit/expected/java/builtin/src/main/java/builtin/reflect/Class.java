@@ -6,6 +6,7 @@ public class Class implements io.datawire.quark.runtime.QObject {
     public static Class BOOL = new Class("builtin.bool");
     public static Class INT = new Class("builtin.int");
     public static Class LONG = new Class("builtin.long");
+    public static Class FLOAT = new Class("builtin.float");
     public static Class STRING = new Class("builtin.String");
     public String id;
     public String name;
@@ -86,6 +87,9 @@ public class Class implements io.datawire.quark.runtime.QObject {
         if ((name)==("LONG") || ((name) != null && (name).equals("LONG"))) {
             return Class.LONG;
         }
+        if ((name)==("FLOAT") || ((name) != null && (name).equals("FLOAT"))) {
+            return Class.FLOAT;
+        }
         if ((name)==("STRING") || ((name) != null && (name).equals("STRING"))) {
             return Class.STRING;
         }
@@ -121,6 +125,9 @@ public class Class implements io.datawire.quark.runtime.QObject {
         }
         if ((name)==("LONG") || ((name) != null && (name).equals("LONG"))) {
             Class.LONG = (Class) (value);
+        }
+        if ((name)==("FLOAT") || ((name) != null && (name).equals("FLOAT"))) {
+            Class.FLOAT = (Class) (value);
         }
         if ((name)==("STRING") || ((name) != null && (name).equals("STRING"))) {
             Class.STRING = (Class) (value);

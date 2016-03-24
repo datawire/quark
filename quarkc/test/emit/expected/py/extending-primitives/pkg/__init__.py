@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import extending_primitives_md
 
 
@@ -28,9 +28,3 @@ class C(object):
         _println(u"default event2");
 
 C.pkg_C_ref = extending_primitives_md.Root.pkg_C_md
-
-def main():
-    c = C();
-    (c).event1();
-    (c).event2();
-    (c).run();

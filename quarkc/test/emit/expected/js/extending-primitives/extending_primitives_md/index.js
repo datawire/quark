@@ -1,19 +1,19 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
 // CLASS pkg_C_event1_Method
 
 function pkg_C_event1_Method() {
-    pkg_C_event1_Method.super_.call(this, "builtin.void", "event1", []);
+    pkg_C_event1_Method.super_.call(this, "quark.void", "event1", []);
 }
 exports.pkg_C_event1_Method = pkg_C_event1_Method;
-_qrt.util.inherits(pkg_C_event1_Method, builtin.reflect.Method);
+_qrt.util.inherits(pkg_C_event1_Method, quark.reflect.Method);
 
 function pkg_C_event1_Method__init_fields__() {
-    builtin.reflect.Method.prototype.__init_fields__.call(this);
+    quark.reflect.Method.prototype.__init_fields__.call(this);
 }
 pkg_C_event1_Method.prototype.__init_fields__ = pkg_C_event1_Method__init_fields__;
 
@@ -47,10 +47,10 @@ function pkg_C() {
     (this).methods = [new pkg_C_event1_Method()];
 }
 exports.pkg_C = pkg_C;
-_qrt.util.inherits(pkg_C, builtin.reflect.Class);
+_qrt.util.inherits(pkg_C, quark.reflect.Class);
 
 function pkg_C__init_fields__() {
-    builtin.reflect.Class.prototype.__init_fields__.call(this);
+    quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 pkg_C.prototype.__init_fields__ = pkg_C__init_fields__;
 pkg_C.singleton = new pkg_C();
@@ -95,5 +95,5 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var pkg = require('../pkg');
+var pkg = require('../pkg/index.js');
 exports.pkg = pkg;

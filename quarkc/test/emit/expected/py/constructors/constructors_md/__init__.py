@@ -1,17 +1,17 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class test1_Test(builtin.reflect.Class):
+class test1_Test(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(test1_Test, self).__init__(u"test1.Test");
         (self).name = u"test1.Test"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -27,15 +27,15 @@ class test1_Test(builtin.reflect.Class):
         pass
 test1_Test.singleton = test1_Test()
 
-class test2_Test(builtin.reflect.Class):
+class test2_Test(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(test2_Test, self).__init__(u"test2.Test");
         (self).name = u"test2.Test"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
 
     def construct(self, args):
@@ -51,12 +51,12 @@ class test2_Test(builtin.reflect.Class):
         pass
 test2_Test.singleton = test2_Test()
 
-class test3_Box_builtin_String__get_Method(builtin.reflect.Method):
+class test3_Box_quark_String__get_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(test3_Box_builtin_String__get_Method, self).__init__(u"builtin.String", u"get", _List([]));
+        super(test3_Box_quark_String__get_Method, self).__init__(u"quark.String", u"get", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -71,16 +71,16 @@ class test3_Box_builtin_String__get_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class test3_Box_builtin_String_(builtin.reflect.Class):
+class test3_Box_quark_String_(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
-        super(test3_Box_builtin_String_, self).__init__(u"test3.Box<builtin.String>");
+        super(test3_Box_quark_String_, self).__init__(u"test3.Box<quark.String>");
         (self).name = u"test3.Box"
-        (self).parameters = _List([u"builtin.String"])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"contents")])
-        (self).methods = _List([test3_Box_builtin_String__get_Method()])
+        (self).parameters = _List([u"quark.String"])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"contents")])
+        (self).methods = _List([test3_Box_quark_String__get_Method()])
 
     def construct(self, args):
         return test3.Box((args)[0])
@@ -93,7 +93,7 @@ class test3_Box_builtin_String_(builtin.reflect.Class):
 
     def _setField(self, name, value):
         pass
-test3_Box_builtin_String_.singleton = test3_Box_builtin_String_()
+test3_Box_quark_String_.singleton = test3_Box_quark_String_()
 
 class Root(object):
     def _init(self):

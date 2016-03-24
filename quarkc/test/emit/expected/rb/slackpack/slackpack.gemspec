@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.author      = 'Quark compiled code'
   # spec.email       = ''
   # spec.license     = ''
-  spec.files       = ['lib/slack/event.rb', 'lib/slack.rb', 'lib/pkg.rb', 'lib/pkg_slack_common.rb', 'lib/slackpack.rb', 'lib/slackpack_md.rb']
+  spec.files       = ['lib/slack/event.rb', 'lib/slack.rb', 'lib/pkg.rb', 'lib/slackpack.rb', 'lib/slackpack_md.rb']
   # spec.homepage    = ''
-  spec.add_runtime_dependency 'builtin', '= 0.0.1'
+  spec.add_runtime_dependency 'quark', '= 0.0.1'
 end

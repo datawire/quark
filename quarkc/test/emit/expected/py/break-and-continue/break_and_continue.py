@@ -1,4 +1,4 @@
-from break_and_continue_lib import main
+import break_and_continue
 
 if __name__ == "__main__":
-    main()
+    break_and_continue.main();

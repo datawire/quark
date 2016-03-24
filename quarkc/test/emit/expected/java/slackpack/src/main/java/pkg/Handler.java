@@ -1,14 +1,14 @@
 package pkg;
 
 public class Handler implements slack.SlackHandler, io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class pkg_Handler_ref = slackpack_md.Root.pkg_Handler_md;
+    public static quark.reflect.Class pkg_Handler_ref = slackpack_md.Root.pkg_Handler_md;
     public Handler() {}
     public void onSlackEvent(slack.event.SlackEvent event) {
         do{System.out.println((event).type);System.out.flush();}while(false);
-        if (!(((event).user)==(null) || (((event).user) != null && ((event).user).equals(null)))) {
+        if (!(((event).user)==(null) || ((Object)((event).user) != null && ((Object) ((event).user)).equals(null)))) {
             do{System.out.println(((event).user).user);System.out.flush();}while(false);
         }
-        if (!(((event).channel)==(null) || (((event).channel) != null && ((event).channel).equals(null)))) {
+        if (!(((event).channel)==(null) || ((Object)((event).channel) != null && ((Object) ((event).channel)).equals(null)))) {
             do{System.out.println(((event).channel).channel);System.out.flush();}while(false);
         }
     }

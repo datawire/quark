@@ -1,17 +1,17 @@
 module Quark
 def self.pet_md; MODULE_pet_md; end
 module MODULE_pet_md
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 # for ('pet_md',): require_relative 'pets' # 0 () ()
 
 def self.pets_Cat_greet_Method; CLASS_pets_Cat_greet_Method; end
-class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
+class CLASS_pets_Cat_greet_Method < ::Quark.quark.reflect.Method
 
 
 
     def initialize()
         
-        super("builtin.void", "greet", ::DatawireQuarkCore::List.new([]))
+        super("quark.void", "greet", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -59,7 +59,7 @@ class CLASS_pets_Cat_greet_Method < ::Quark.builtin.reflect.Method
 end
 
 def self.pets_Cat; CLASS_pets_Cat; end
-class CLASS_pets_Cat < ::Quark.builtin.reflect.QuarkClass
+class CLASS_pets_Cat < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.pet_md.pets_Cat.new() }
@@ -119,13 +119,13 @@ end
 CLASS_pets_Cat.unlazy_statics
 
 def self.pets_Dog_greet_Method; CLASS_pets_Dog_greet_Method; end
-class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
+class CLASS_pets_Dog_greet_Method < ::Quark.quark.reflect.Method
 
 
 
     def initialize()
         
-        super("builtin.void", "greet", ::DatawireQuarkCore::List.new([]))
+        super("quark.void", "greet", ::DatawireQuarkCore::List.new([]))
 
         nil
     end
@@ -173,7 +173,7 @@ class CLASS_pets_Dog_greet_Method < ::Quark.builtin.reflect.Method
 end
 
 def self.pets_Dog; CLASS_pets_Dog; end
-class CLASS_pets_Dog < ::Quark.builtin.reflect.QuarkClass
+class CLASS_pets_Dog < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.pet_md.pets_Dog.new() }

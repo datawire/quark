@@ -1,4 +1,4 @@
-from json_building_lib import main
+import json_building
 
 if __name__ == "__main__":
-    main()
+    json_building.main();

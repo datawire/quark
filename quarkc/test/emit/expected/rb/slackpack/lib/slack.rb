@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.slack; MODULE_slack; end
 module MODULE_slack
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
 
@@ -213,7 +213,7 @@ class CLASS_Client < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static slack_Client_ref: -> { ::Quark.slackpack_md.Root.slack_Client_md }
-    static builtin_Map_builtin_String_builtin_Object__ref: -> { ::Quark.slackpack_md.Root.builtin_Map_builtin_String_builtin_Object__md }
+    static quark_Map_quark_String_quark_Object__ref: -> { ::Quark.slackpack_md.Root.quark_Map_quark_String_quark_Object__md }
 
 
 

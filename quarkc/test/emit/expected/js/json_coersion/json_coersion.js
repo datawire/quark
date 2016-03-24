@@ -1,3 +1,4 @@
-var common = require('./json_coersion_lib');
+var json_coersion = require('./json_coersion/index.js');
+exports.json_coersion = json_coersion;
 
-common.main();
+json_coersion.main();

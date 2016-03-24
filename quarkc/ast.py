@@ -14,6 +14,7 @@
 
 import inspect
 from .coder import Coder
+from .exceptions import *
 from pprinter import PPrinter as _PPrinter
 
 def copy(node):
@@ -130,9 +131,33 @@ class File(AST):
 
     indent = ["definitions"]
 
-    def __init__(self, definitions):
-        self.definitions = definitions
-        self.name = None
+    def __init__(self, filename, definitions):
+        self.name = filename
+        self.definitions = []
+        self.dist = None
+
+        # The default package is the sanitized filename.
+        from .helpers import sanitize, filebase
+        name = Name(sanitize(filebase(self.name)))
+        namespaced = []
+
+        for dfn in definitions:
+            if isinstance(dfn, DistUnit):
+                if self.dist:
+                    raise ParseError("only one package declaration per file")
+                self.dist = dfn
+                if namespaced:
+                    self.definitions.append(Package(name, namespaced))
+                name = dfn.name
+                namespaced = []
+
+            if isinstance(dfn, (DistUnit, Dependency, Use, Include, Import, Package)):
+                self.definitions.append(dfn)
+            else:
+                namespaced.append(dfn)
+
+        if namespaced:
+            self.definitions.append(Package(name, namespaced))
 
     @property
     def children(self):
@@ -143,9 +168,7 @@ class File(AST):
         return coder.code(self.definitions, "\n")
 
     def copy(self):
-        result = File(copy(self.definitions))
-        result.name = self.name
-        return result
+        return File(self.name, copy(self.definitions))
 
 class Use(AST):
 

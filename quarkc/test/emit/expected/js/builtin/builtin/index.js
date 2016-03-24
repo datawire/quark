@@ -1,11 +1,11 @@
 var _qrt = require("builtin/quark_runtime.js");
-var reflect = require('./reflect');
+var reflect = require('./reflect/index.js');
 exports.reflect = reflect;
-var behaviors = require('./behaviors');
+var behaviors = require('./behaviors/index.js');
 exports.behaviors = behaviors;
-var concurrent = require('./concurrent');
+var concurrent = require('./concurrent/index.js');
 exports.concurrent = concurrent;
-var builtin_md = require('../builtin_md');
+var builtin_md = require('../builtin_md/index.js');
 exports.builtin_md = builtin_md;
 
 

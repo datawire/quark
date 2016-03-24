@@ -1,4 +1,4 @@
-from strings_lib import main
+import strings
 
 if __name__ == "__main__":
-    main()
+    strings.main();

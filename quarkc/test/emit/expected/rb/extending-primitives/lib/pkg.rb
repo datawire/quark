@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'extending_primitives_md' # 0 () ()
 
 def self.C; CLASS_C; end
@@ -73,16 +73,5 @@ class CLASS_C < ::DatawireQuarkCore::QuarkObject
 
 end
 CLASS_C.unlazy_statics
-
-def self.main()
-    
-    c = ::Quark.pkg.C.new()
-    c.event1()
-    c.event2()
-    c.run()
-
-
-    nil
-end
 end # module MODULE_pkg
 end # module Quark

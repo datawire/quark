@@ -1,5 +1,5 @@
 package petstore 1.2.3;
-import builtin.concurrent;
+import quark.concurrent;
 
 namespace petstore {
 
@@ -28,7 +28,7 @@ namespace petstore {
         String message;
     }
 
-    // XXX: we should add something like this to builtin stuff
+    // XXX: we should add something like this to the builtin stuff provided in the quark namespace
     class FList<T> extends Future {
         List<T> list;
     }

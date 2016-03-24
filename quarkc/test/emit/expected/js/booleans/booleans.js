@@ -1,3 +1,4 @@
-var common = require('./booleans_lib');
+var booleans = require('./booleans/index.js');
+exports.booleans = booleans;
 
-common.main();
+booleans.main();

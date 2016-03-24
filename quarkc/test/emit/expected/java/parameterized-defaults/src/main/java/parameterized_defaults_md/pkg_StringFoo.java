@@ -1,7 +1,7 @@
 package parameterized_defaults_md;
 
-public class pkg_StringFoo extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pkg_StringFoo();
+public class pkg_StringFoo extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pkg_StringFoo();
     public pkg_StringFoo() {
         super("pkg.StringFoo");
         (this).name = "pkg.StringFoo";

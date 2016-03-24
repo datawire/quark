@@ -5,7 +5,7 @@ package slack;
  * are delegated to onSlackEvent by default.
  */
 public interface SlackHandler {
-    public static builtin.reflect.Class slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md;
+    public static quark.reflect.Class slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md;
      void onSlackEvent(slack.event.SlackEvent event);
      void onHello(slack.event.Hello hello);
      void onSlackError(slack.event.SlackError error);

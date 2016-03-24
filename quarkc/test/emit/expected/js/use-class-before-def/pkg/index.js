@@ -1,7 +1,7 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var use_class_before_def_md = require('../use_class_before_def_md');
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var use_class_before_def_md = require('../use_class_before_def_md/index.js');
 exports.use_class_before_def_md = use_class_before_def_md;
 
 
@@ -65,9 +65,3 @@ function Foo__setField(name, value) {
     }
 }
 Foo.prototype._setField = Foo__setField;
-
-function main() {
-    var bar = new Bar();
-    (bar).go();
-}
-exports.main = main;

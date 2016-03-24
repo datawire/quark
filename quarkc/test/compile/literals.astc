@@ -1,34 +1,35 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
- Function(Type(Name(void)), Name(test1), Block(
-   Local(
-    Declaration(Type(Name(List), Type(Name(int))), Name(zero), List(,
-     $type=0.builtin.List<0.builtin.int>),
-    $type=0.builtin.List<0.builtin.int>)),
-   Local(
-    Declaration(Type(Name(List), Type(Name(int))), Name(one), List(Number(1,
-      $type=0.builtin.int), $type=0.builtin.List<0.builtin.int>),
-    $type=0.builtin.List<0.builtin.int>)),
-   Local(
-    Declaration(Type(Name(List), Type(Name(int))), Name(many), List(Number(1,
-      $type=0.builtin.int), Number(2, $type=0.builtin.int), Number(3,
-      $type=0.builtin.int), $type=0.builtin.List<0.builtin.int>),
-    $type=0.builtin.List<0.builtin.int>)))),
+ Package(Name(literals),
 
- Function(Type(Name(void)), Name(test2), Block(
-   Local(
-    Declaration(Type(Name(List), Type(Name(String))), Name(zero), List(,
-     $type=0.builtin.List<0.builtin.String>),
-    $type=0.builtin.List<0.builtin.String>)),
-   Local(
-    Declaration(Type(Name(List), Type(Name(String))), Name(one),
-     List(String("one", $type=0.builtin.String),
-     $type=0.builtin.List<0.builtin.String>),
-    $type=0.builtin.List<0.builtin.String>)),
-   Local(
-    Declaration(Type(Name(List), Type(Name(String))), Name(many),
-     List(String("one", $type=0.builtin.String), String("two",
-      $type=0.builtin.String), String("three", $type=0.builtin.String),
-     $type=0.builtin.List<0.builtin.String>),
-    $type=0.builtin.List<0.builtin.String>))))
+  Function(Type(Name(void)), Name(test1), Block(
+    Local(
+     Declaration(Type(Name(List), Type(Name(int))), Name(zero), List(,
+      $type=1.quark.List<1.quark.int>), $type=1.quark.List<1.quark.int>)),
+    Local(
+     Declaration(Type(Name(List), Type(Name(int))), Name(one), List(Number(1,
+       $type=1.quark.int), $type=1.quark.List<1.quark.int>),
+     $type=1.quark.List<1.quark.int>)),
+    Local(
+     Declaration(Type(Name(List), Type(Name(int))), Name(many), List(Number(1,
+       $type=1.quark.int), Number(2, $type=1.quark.int), Number(3,
+       $type=1.quark.int), $type=1.quark.List<1.quark.int>),
+     $type=1.quark.List<1.quark.int>)))),
+
+  Function(Type(Name(void)), Name(test2), Block(
+    Local(
+     Declaration(Type(Name(List), Type(Name(String))), Name(zero), List(,
+      $type=1.quark.List<1.quark.String>),
+     $type=1.quark.List<1.quark.String>)),
+    Local(
+     Declaration(Type(Name(List), Type(Name(String))), Name(one),
+      List(String("one", $type=1.quark.String),
+      $type=1.quark.List<1.quark.String>),
+     $type=1.quark.List<1.quark.String>)),
+    Local(
+     Declaration(Type(Name(List), Type(Name(String))), Name(many),
+      List(String("one", $type=1.quark.String), String("two",
+       $type=1.quark.String), String("three", $type=1.quark.String),
+      $type=1.quark.List<1.quark.String>),
+     $type=1.quark.List<1.quark.String>)))))
 )

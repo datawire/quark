@@ -1,3 +1,4 @@
-var common = require('./json_assembling_lib');
+var json_assembling = require('./json_assembling/index.js');
+exports.json_assembling = json_assembling;
 
-common.main();
+json_assembling.main();

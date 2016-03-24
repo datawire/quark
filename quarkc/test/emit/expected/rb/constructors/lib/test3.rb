@@ -1,5 +1,5 @@
 module Quark
-require "builtin"
+require "quark"
 def self.test3; MODULE_test3; end
 module MODULE_test3
 def self.Box; CLASS_Box; end
@@ -28,7 +28,7 @@ class CLASS_Box < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return "test3.Box<builtin.Object>"
+        return "test3.Box<quark.Object>"
 
         nil
     end

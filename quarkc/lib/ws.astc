@@ -1,0 +1,79 @@
+File(Import(Name(quark)),
+ Include(url=io/datawire/quark/runtime/AbstractWSHandler.java),
+ Include(url=io/datawire/quark/runtime/WebSocket.java),
+ Include(url=io/datawire/quark/runtime/WSHandler.java),
+ Include(url=io/datawire/quark/runtime/WSServlet.java),
+ Include(url=io/datawire/quark/netty/QuarkNettyServerWebsocket.java),
+ Include(url=io/datawire/quark/netty/QuarkWebSocket.java),
+ Include(url=io/datawire/quark/netty/QuarkNettyClientWebsocket.java),
+
+ Package(Name(quark),
+
+  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.WSHandler')))), Name(WSHandler),
+
+   Method(static=False, Type(Name(void)), Name(onWSInit),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSConnected),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSMessage),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Param(Type(Name(String)), Name(message), $type=1.quark.String),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSBinary),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Param(Type(Name(Buffer)), Name(message), $type=1.quark.Buffer),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSClosed),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSError),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onWSFinal),
+    Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Block())),
+
+  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.WebSocket')))), Name(WebSocket),
+
+   Method(static=False, Type(Name(bool)), Name(send),
+    Param(Type(Name(String)), Name(message), $type=1.quark.String)),
+
+   Method(static=False, Type(Name(bool)), Name(sendBinary),
+    Param(Type(Name(Buffer)), Name(bytes), $type=1.quark.Buffer)),
+
+   Method(static=False, Type(Name(bool)), Name(close))),
+
+  Primitive(Annotation(Name(doc), String("Websocket servlet",
+    $type=1.quark.String)), Annotation(Name(mapping), Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.WSServlet')))), Name(WSServlet),
+   Type(Name(Servlet)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("called for each new incoming WebSocket connection",
+     $type=1.quark.String)), Type(Name(WSHandler)), Name(onWSConnect),
+    Param(Type(Name(HTTPRequest)), Name(upgrade_request),
+    $type=7.quark.HTTPRequest),
+    Block(
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(serveWS),
+    Param(Type(Name(String)), Name(url), $type=1.quark.String),
+    Block(
+     ExprStmt(Call(Attr(Call(Attr(Attr(Var(Name(concurrent),
+           $type=6.quark.concurrent), Name(Context),
+          $type=6.quark.concurrent.Context), Name(runtime),
+         $type=6.quark.concurrent.Context.runtime), $type=0.quark.Runtime),
+        Name(serveWS), $type=0.quark.Runtime.serveWS), Var(Name(url),
+       $type=1.quark.String), Var(Name(self), $type=8.quark.WSServlet),
+      $type=1.quark.void))))))
+)

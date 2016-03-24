@@ -1,7 +1,7 @@
 package defaulted_methods_md;
 
-public class pkg_T1 extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new pkg_T1();
+public class pkg_T1 extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new pkg_T1();
     public pkg_T1() {
         super("pkg.T1");
         (this).name = "pkg.T1";

@@ -1,14 +1,16 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
- Function(Type(Name(void)), Name(test), Block(
-   If(Var(Name(x)), Block(
-     ExprStmt(Call(Var(Name(y)))))),
-   If(Var(Name(x)), Block(
-     ExprStmt(Call(Var(Name(y)))))),
-   If(Var(Name(x)), Block(
-     ExprStmt(Call(Var(Name(y))))), Block(
-     ExprStmt(Call(Var(Name(z)))))),
-   If(Var(Name(x)), Block(
-     ExprStmt(Call(Var(Name(y))))), Block(
-     ExprStmt(Call(Var(Name(z))))))))
+ Package(Name(if),
+
+  Function(Type(Name(void)), Name(test), Block(
+    If(Var(Name(x)), Block(
+      ExprStmt(Call(Var(Name(y)))))),
+    If(Var(Name(x)), Block(
+      ExprStmt(Call(Var(Name(y)))))),
+    If(Var(Name(x)), Block(
+      ExprStmt(Call(Var(Name(y))))), Block(
+      ExprStmt(Call(Var(Name(z)))))),
+    If(Var(Name(x)), Block(
+      ExprStmt(Call(Var(Name(y))))), Block(
+      ExprStmt(Call(Var(Name(z)))))))))
 )

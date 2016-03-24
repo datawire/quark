@@ -1,8 +1,8 @@
 package extending_primitives_md;
 
-public class pkg_C_event1_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class pkg_C_event1_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public pkg_C_event1_Method() {
-        super("builtin.void", "event1", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
+        super("quark.void", "event1", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         pkg.C obj = (pkg.C) (object);

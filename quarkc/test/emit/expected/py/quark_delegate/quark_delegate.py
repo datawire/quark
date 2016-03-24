@@ -1,4 +1,4 @@
-from quark_delegate_lib import main
+import quark_delegate
 
 if __name__ == "__main__":
-    main()
+    quark_delegate.main();

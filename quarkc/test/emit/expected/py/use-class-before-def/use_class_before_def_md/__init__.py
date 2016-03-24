@@ -1,14 +1,14 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 
 
-class pkg_Bar_go_Method(builtin.reflect.Method):
+class pkg_Bar_go_Method(quark.reflect.Method):
     def _init(self):
-        builtin.reflect.Method._init(self)
+        quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(pkg_Bar_go_Method, self).__init__(u"builtin.void", u"go", _List([]));
+        super(pkg_Bar_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
         obj = object;
@@ -24,9 +24,9 @@ class pkg_Bar_go_Method(builtin.reflect.Method):
     def _setField(self, name, value):
         pass
 
-class pkg_Bar(builtin.reflect.Class):
+class pkg_Bar(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_Bar, self).__init__(u"pkg.Bar");
@@ -48,15 +48,15 @@ class pkg_Bar(builtin.reflect.Class):
         pass
 pkg_Bar.singleton = pkg_Bar()
 
-class pkg_Foo(builtin.reflect.Class):
+class pkg_Foo(quark.reflect.Class):
     def _init(self):
-        builtin.reflect.Class._init(self)
+        quark.reflect.Class._init(self)
 
     def __init__(self):
         super(pkg_Foo, self).__init__(u"pkg.Foo");
         (self).name = u"pkg.Foo"
         (self).parameters = _List([])
-        (self).fields = _List([builtin.reflect.Field(u"builtin.String", u"name")])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
 
     def construct(self, args):

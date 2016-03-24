@@ -1,8 +1,8 @@
 package slackpack_md;
 
-public class slack_Client_onWSClose_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class slack_Client_onWSClose_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_onWSClose_Method() {
-        super("builtin.void", "onWSClose", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.WebSocket"})));
+        super("quark.void", "onWSClose", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.WebSocket"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);

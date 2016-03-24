@@ -1,9 +1,11 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
- Function(Type(Name(int)), Name(f), Block()),
+ Package(Name(return_types),
 
- Function(Type(Name(void)), Name(g), Block(
-   Local(
-    Declaration(Type(Name(int)), Name(x), Call(Var(Name(f), $type=0.f),
-     $type=0.builtin.int), $type=0.builtin.int))))
+  Function(Type(Name(int)), Name(f), Block()),
+
+  Function(Type(Name(void)), Name(g), Block(
+    Local(
+     Declaration(Type(Name(int)), Name(x), Call(Var(Name(f),
+       $type=0.return_types.f), $type=1.quark.int), $type=1.quark.int)))))
 )

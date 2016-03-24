@@ -1,12 +1,12 @@
 package slackpack_md;
 
-public class slack_event_Message extends builtin.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static builtin.reflect.Class singleton = new slack_event_Message();
+public class slack_event_Message extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new slack_event_Message();
     public slack_event_Message() {
         super("slack.event.Message");
         (this).name = "slack.event.Message";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new builtin.reflect.Field("builtin.String", "type"), new builtin.reflect.Field("slack.User", "user"), new builtin.reflect.Field("slack.Channel", "channel"), new builtin.reflect.Field("builtin.String", "timestamp"), new builtin.reflect.Field("builtin.String", "subtype"), new builtin.reflect.Field("builtin.bool", "hidden"), new builtin.reflect.Field("builtin.String", "text"), new builtin.reflect.Field("slack.event.Edited", "edited")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("slack.Channel", "channel"), new quark.reflect.Field("quark.String", "timestamp"), new quark.reflect.Field("quark.String", "subtype"), new quark.reflect.Field("quark.bool", "hidden"), new quark.reflect.Field("quark.String", "text"), new quark.reflect.Field("slack.event.Edited", "edited")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_event_Message_load_Method(), new slack_event_Message_dispatch_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

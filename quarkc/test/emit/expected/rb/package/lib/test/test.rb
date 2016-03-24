@@ -1,10 +1,10 @@
 module Quark
-require "builtin"
+require "quark"
 def self.test; MODULE_test; end
 module MODULE_test
 def self.test; MODULE_test; end
 module MODULE_test
-require 'builtin' # .../reflect test/test
+require 'quark' # .../reflect test/test
 require_relative '../package_md' # 0 () ('test',)
 
 def self.go()

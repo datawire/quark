@@ -16,22 +16,24 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [ --java | --python | --javascript | --all ] <file>...
-  quark [options] compile [ -o DIR ] [ --java | --python | --javascript | --all ] <file>...
-  quark -h | --help
+  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] run ( --java | --python | --javascript | --ruby ) <file>...
+  quark -h | --help | help
   quark --version
 
 Commands:
   compile               Compile and emit code in the target language(s).
   install               Compile, build, and install code in the target language(s).
+  run                   Run the main() function from the package namespace; the quark
+                        file must already be installed.
 
 Options:
   -h --help             Show this screen.
   --version             Show version.
-  -v --verbose          Show more detail
+  -v --verbose          Show more detail.
 
-  -o DIR, --output DIR  Target directory for output files.
-                        [defaults to "output"]
+  -o DIR, --output DIR  Target directory for output files. [default: output]
 
   --all                 Install/emit code for all available target languages.
                         [this is the default if no targets are specified]
@@ -42,21 +44,19 @@ Options:
   --javascript          Install/emit JavaScript code.
 """
 
-from glob import glob
-import json
 import os
-import shutil
 import shlex
 import subprocess
 import sys
-import tempfile
 import logging
+import datetime
 
 from docopt import docopt
 
 import _metadata
 import compiler
 import backend
+import helpers
 
 PREREQS = {
     "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
@@ -64,17 +64,19 @@ PREREQS = {
     "npm": (["npm", "--version"], "npm is required in order to install javascript packages")
 }
 
+
 def check(cmd, workdir):
     if cmd in PREREQS:
         check, msg = PREREQS[cmd]
         try:
-            out = subprocess.check_output(check, cwd=workdir)
+            subprocess.check_output(check, cwd=workdir)
         except (subprocess.CalledProcessError, OSError):
             raise compiler.QuarkError("unable to find %s: %s" % (cmd, msg))
 
 COMMAND_DEFAULTS = {
-    "mvn" : "mvn -q",
+    "mvn": "mvn -q",
 }
+
 
 def user_override(command):
     cmd = command[0]
@@ -84,11 +86,13 @@ def user_override(command):
 
 command_log = logging.getLogger("quark.command")
 
+
 def call_and_show(stage, workdir, command):
     command = user_override(command)
     check(command[0], workdir)
+
     def format_output(out):
-        return ("\n  %s: "%os.path.basename(command[0])).join(("\n"+out).splitlines())
+        return ("\n  %s: " % os.path.basename(command[0])).join(("\n" + out).splitlines())
     command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command))
     try:
         out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
@@ -97,13 +101,16 @@ def call_and_show(stage, workdir, command):
         command_log.warning("%s: %s", stage, format_output(ex.output))
         raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
 
+
 class ProgressHandler(logging.Handler):
+
     def __init__(self, *args, **kwargs):
         self.verbose = kwargs.pop("verbose", False)
         logging.Handler.__init__(self, *args, **kwargs)
         self.stream = sys.stdout
         self.last = logging.NOTSET
         self.do_debug = False
+
         def spinner():
             while True:
                 yield "."
@@ -160,19 +167,23 @@ class ProgressHandler(logging.Handler):
         self.stream.write("%s%s%s" % (prefix, msg, postfix))
         self.stream.flush()
 
-def main(args):
-    if args["--version"]:
-        sys.stdout.write("Quark %s\n" % _metadata.__version__)
-        return
 
-    if args["--verbose"]:
-      COMMAND_DEFAULTS["mvn"] = "mvn"
-    logging.basicConfig(level=logging.DEBUG)
-    log = logging.getLogger("quark")
-    log.propagate = False
-    hnd = ProgressHandler(verbose=args["--verbose"])
-    log.addHandler(hnd)
-    hnd.setFormatter(logging.Formatter("%(message)s"))
+def main(args):
+    if args["help"]:
+        print __doc__.rstrip()
+        return None
+
+    if not args["run"]:
+        if args["--verbose"]:
+            COMMAND_DEFAULTS["mvn"] = "mvn"
+        logging.basicConfig(level=logging.DEBUG)
+        log = logging.getLogger("quark")
+        log.propagate = False
+        hnd = ProgressHandler(verbose=args["--verbose"])
+        log.addHandler(hnd)
+        hnd.setFormatter(logging.Formatter("%(message)s"))
+
+    helpers.Code.identifier = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
 
     java = args["--java"]
     ruby = args["--ruby"]
@@ -181,7 +192,7 @@ def main(args):
 
     all = args["--all"] or not (java or python or javascript or ruby)
 
-    output = args["--output"] or "output"
+    output = args["--output"]
 
     try:
         backends = []
@@ -203,6 +214,8 @@ def main(args):
                 compiler.install(url, *backends)
             elif args["compile"]:
                 compiler.compile(url, output, *backends)
+            elif args["run"]:
+                compiler.run(url, *backends)
             else:
                 assert False
     except compiler.QuarkError as err:
@@ -212,7 +225,7 @@ def main(args):
 
 
 def call_main():
-    exit(main(docopt(__doc__)))
+    exit(main(docopt(__doc__, version="Quark %s" % _metadata.__version__)))
 
 
 if __name__ == "__main__":

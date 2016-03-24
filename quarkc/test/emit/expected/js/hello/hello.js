@@ -1,3 +1,4 @@
-var common = require('./hello_lib');
+var hello = require('./hello/index.js');
+exports.hello = hello;
 
-common.main();
+hello.main();

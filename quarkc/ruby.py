@@ -98,28 +98,29 @@ def _make_file(path):
     names = [name.replace('-', '_') for name in path]
     head = ''
     # head += 'puts "begin loading module %s"\n' % ".".join(path)
-    if tuple(path) == ('builtin',):
+    if tuple(path) == ('quark',):
         head += 'require_relative "datawire-quark-core"\n'
-    elif path[0] != 'builtin' and not path[0].endswith("_md"):
-        head += 'require "builtin"\n'
+    elif path[0] != 'quark' and not path[0].endswith("_md"):
+        head += 'require "quark"\n'
     head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
     tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
     # tail += 'puts "end loading module %s"\n' % ".".join(path)
-    return Code(head='module Quark\n' + head, tail=tail + 'end # module Quark')
+    return Code(comment, head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
 def make_class_file(path, name):
     return _make_file(path)
 
-def make_function_file(path, name):
+def make_function_file(path, name, mdpkg):
     return _make_file(path)
+
+def main_file(name):
+    return "%s.rb" % name
 
 def make_package_file(path, name):
     assert False
 
-def main(fname, common):
-    template = 'require_relative "{file}"\n\nQuark.{path}.main\n'.format
-    return Code(template(file=common.replace('-', '_') + '.rb',
-                         path=common.replace('-', '_')))
+def main(statements):
+    return '\nif __FILE__ == $0%send\n\n' % block(statements)
 
 ## Naming and imports
 
@@ -149,10 +150,10 @@ def import_(path, origin, dep, cache={}):
         # go up and down and load the file
         rpath = "/".join(('..',) * len(lorigin) + lpath + path[-1:])
         require = "require_relative '%s' # %s %s %s" % (rpath, common, lpath, lorigin)
-        if origin == ('builtin_md',) and path != ('builtin', 'reflect', ):
-            # XXX: why does quark think that builtin_md depends on builtin.concurrent and builtin.behavior ???
-            require = "# for builtin_md: %s" % (require, )
-        elif len(origin) == 1 and origin[0].endswith("_md") and origin[0] != 'builtin_md':
+        if origin == ('quark_md',) and path != ('quark', 'reflect', ):
+            # XXX: why does quark think that quark_md depends on quark.concurrent and quark.behavior ???
+            require = "# for quark_md: %s" % (require, )
+        elif len(origin) == 1 and origin[0].endswith("_md") and origin[0] != 'quark_md':
             require = "# for %s: %s" % (origin, require, )
         return require
     else:

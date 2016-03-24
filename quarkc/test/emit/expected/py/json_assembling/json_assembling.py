@@ -1,4 +1,4 @@
-from json_assembling_lib import main
+import json_assembling
 
 if __name__ == "__main__":
-    main()
+    json_assembling.main();

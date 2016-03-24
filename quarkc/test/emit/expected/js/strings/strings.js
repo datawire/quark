@@ -1,3 +1,4 @@
-var common = require('./strings_lib');
+var strings = require('./strings/index.js');
+exports.strings = strings;
 
-common.main();
+strings.main();

@@ -41,7 +41,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
         java.util.Collections.sort(urls, null);
         ((this).mutex).acquire();
         ServiceInstance result = (ServiceInstance) (null);
-        Integer next = Math.floorMod(((this).counter), ((urls).size()));
+        Integer next = io.datawire.quark.runtime.Builtins.modulo(((this).counter), ((urls).size()));
         (this).counter = ((this).counter) + (1);
         Integer idx = next;
         while (true) {
@@ -56,7 +56,7 @@ public class Client implements io.datawire.quark.runtime.QObject {
                 result = instance;
                 break;
             }
-            idx = Math.floorMod(((idx) + (1)), ((urls).size()));
+            idx = io.datawire.quark.runtime.Builtins.modulo(((idx) + (1)), ((urls).size()));
             if ((idx)==(next) || ((idx) != null && (idx).equals(next))) {
                 (Client.logger).info((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
                 break;

@@ -15,14 +15,22 @@
 import os, inspect, urllib, tempfile, logging
 from collections import OrderedDict
 from .ast import *
+from .exceptions import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
 import ast
 
+BUILTIN = "quark"
+BUILTIN_FILE = "%s.q" % BUILTIN
+REFLECT = "reflect"
+
+OBJECT = "%s.Object" % BUILTIN
+VOID = "%s.void" % BUILTIN
+
 def join(base, rel):
-    if rel == BUILTIN:
-        return os.path.join(os.path.dirname(__file__), "builtin", BUILTIN)
+    if rel == BUILTIN_FILE:
+        return os.path.join(os.path.dirname(__file__), "lib", BUILTIN_FILE)
     else:
         return urllib.basejoin(base, rel)
 
@@ -179,6 +187,8 @@ class Crosswire:
         else:
             p.env = {}
             p.root.env[name] = p
+        if p.name.text not in p.parent.env:
+            p.parent.env[p.name.text] = p
 
     def leave_Package(self, p):
         self.leave_AST(p)
@@ -277,14 +287,14 @@ class TypeExpr(object):
                 for sup in base.resolved.supertypes():
                     yield texpr(sup.type, sup.bindings, self.bindings)
         else:
-            sup = cls.root.env["builtin"].env["Object"].resolved
+            sup = cls.root.env[BUILTIN].env["Object"].resolved
             yield texpr(sup.type, sup.bindings, self.bindings)
 
     @overload(TypeParam)
     def supertypes(self, param):
         # should we check in bindings here and try supertypes?
         yield self
-        yield param.root.env["builtin"].env["Object"].resolved
+        yield param.root.env[BUILTIN].env["Object"].resolved
 
     def get(self, attr, errors):
         name = attr.text
@@ -310,7 +320,7 @@ class TypeExpr(object):
                 for e in self.environments(base, bindings):
                     yield e
         else:
-            yield cls.root.env["builtin"].env["Object"].env
+            yield cls.root.env[BUILTIN].env["Object"].env
 
     @overload(Call, list)
     def invoke(self, c, errors):
@@ -572,7 +582,7 @@ class Resolver(object):
                                    (lineinfo(r), r.callable.name))
             return
 
-        if not r.callable.type or r.callable.type.code() == "builtin.void":
+        if not r.callable.type or r.callable.type.code() == VOID:
             if r.expr:
                 self.errors.append("%s: %s cannot return a value" % (lineinfo(r), r.callable.name))
             return
@@ -632,10 +642,6 @@ class Check:
             return
         self.errors.append("%s: super can only be used for constructor or method invocation" % lineinfo(s))
 
-class QuarkError(Exception): pass
-class ParseError(QuarkError): pass
-class CompileError(QuarkError): pass
-
 def lineinfo(node):
     trace = getattr(node, "_trace", None)
     stack = [getattr(node, "filename", "<none>")]
@@ -690,8 +696,6 @@ class ApplyAnnotators:
                         self.modified = True
                     done.add(name)
 
-BUILTIN = "builtin.q"
-
 def delegate(node):
     ann = [a for a in node.annotations if a.name.text == "delegate"][0];
     delegate = ann.arguments[0].code()
@@ -730,7 +734,7 @@ class Reflector:
             return self.package(pkg.package) + [pkg.name.text]
 
     def qtype(self, texp):
-        if isinstance(texp.type, TypeParam): return "builtin.Object"
+        if isinstance(texp.type, TypeParam): return OBJECT
         result = ".".join(self.package(texp.type.package) + [texp.type.name.text])
         if isinstance(texp.type, Class) and texp.type.parameters:
             result += "<%s>" % ",".join([self.qtype(texp.bindings.get(p, TypeExpr(p, {})))
@@ -738,7 +742,7 @@ class Reflector:
         return result
 
     def qname(self, texp):
-        if isinstance(texp.type, TypeParam): return "builtin.Object"
+        if isinstance(texp.type, TypeParam): return OBJECT
         return ".".join(self.package(texp.type.package) + [texp.type.name.text])
 
     def qparams(self, texp):
@@ -773,11 +777,12 @@ class Reflector:
         return fields
 
     def meths(self, cls, cid, use_bindings):
-        if cls.package and cls.package.name.text in ("builtin", "reflect"): return []
+        if cls.package and cls.package.name.text in (BUILTIN, REFLECT): return []
         methods = []
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
         for m in get_methods(cls, False).values():
+            if isinstance(m, Macro): continue
             mid = "%s_%s_Method" % (self.mdname(cid), m.name.text)
             mtype = self.qtype(texpr(m.type.resolved.type, bindings, m.type.resolved.bindings))
             margs = [self.qtype(texpr(p.resolved.type, bindings, p.resolved.bindings))
@@ -787,7 +792,7 @@ class Reflector:
 
     def meth(self, mid, cid, type, name, params):
         args = ", ".join(['?args[%s]' % i for i in range(len(params))])
-        if type == "builtin.void":
+        if type == VOID:
             invoke = "        obj.%s(%s);\n        return null;" % (name, args)
         else:
             invoke = "        return obj.%s(%s);" % (name, args)
@@ -815,7 +820,7 @@ class Reflector:
 
     def visit_Class(self, cls):
         if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
-            if (cls.package and cls.package.name.text == "builtin" and cls.name.text in ("List", "Map") or
+            if (cls.package and cls.package.name.text == BUILTIN and cls.name.text in ("List", "Map") or
                 isinstance(cls, Interface)):
                 self.classes.append(cls)
             return
@@ -884,8 +889,7 @@ class Reflector:
             "construct": construct}
 
     def leave_Root(self, root):
-        mdpkg, _ = namever(self.entry)
-        mdpkg += "_md"
+        mdpkg = mdroot(self.entry)
 
         self.code = ""
         mdclasses = []
@@ -898,8 +902,8 @@ class Reflector:
         for cls in classes:
             qual = self.qual(cls)
             if cls.parameters:
-                clsid = qual + "<%s>" % ",".join(["builtin.Object"]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"builtin.Object"']*len(cls.parameters))
+                clsid = qual + "<%s>" % ",".join([OBJECT]*len(cls.parameters))
+                params = "[%s]" % ",".join(['"%s"' % OBJECT]*len(cls.parameters))
             else:
                 clsid = qual
                 params = "[]"
@@ -915,7 +919,7 @@ class Reflector:
                                                               self.clazz(cls, clsid, qual, self.qparams(texp),
                                                                          nparams, texp))
                     if not ucls: continue
-                    if ucls.package and ucls.package.name.text in ("reflect", ):
+                    if ucls.package and ucls.package.name.text in (REFLECT, ):
                         continue
                     if ucls not in self.metadata:
                         self.metadata[ucls] = OrderedDict()
@@ -934,7 +938,7 @@ class Reflector:
             self.code += "        static reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
         self.code += "    }\n}"
 
-class Compiler:
+class Compiler(object):
 
     def __init__(self, filter_native=[]):
         self.roots = Roots()
@@ -956,16 +960,17 @@ class Compiler:
 
     def parse(self, name, text):
         try:
+            self.parser._filename = name
             file = self.parser.parse(text)
         except GParseError, e:
             raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
-        imp = Import([Name("builtin")])
+        imp = Import([Name(BUILTIN)])
         imp.line = -1
         imp.column = -1
         imp._silent = True
         file.definitions.insert(0, imp)
-        if not self.root.files and not name.endswith("builtin.q"):  # First file
-            use = ast.Use(BUILTIN)
+        if not self.root.files and not name.endswith(BUILTIN_FILE):  # First file
+            use = ast.Use(BUILTIN_FILE)
             use._silent = True
             file.definitions.insert(0, use)
         while True:
@@ -1108,6 +1113,22 @@ class Compiler:
                 field.traverse(Crosswire(cls))
                 self.icompile(field)
 
+    def merge(self, env, dep):
+        if env == dep: return
+        for k in dep:
+            if k in env:
+                self.merge_one(env[k], dep[k])
+            else:
+                env[k] = dep[k]
+
+    @overload(Package, Package)
+    def merge_one(self, p1, p2):
+        self.merge(p1.env, p2.env)
+
+    @overload(AST, AST)
+    def merge_one(self, n1, n2):
+        raise CompileError("can't merge %r and %r" % (n1, n2))
+
     def compile(self):
         self.log.info("Compiling quark code")
         for root in self.roots.sorted():
@@ -1116,7 +1137,7 @@ class Compiler:
             for use in root.uses:
                 dep = self.roots[use]
                 assert getattr(dep, "_compiled", False)
-                root.env.update(dep.env)
+                self.merge(root.env, dep.env)
             self.icompile(root)
             self.reflect(root)
             root._compiled = True
@@ -1154,3 +1175,11 @@ def compile(url, target, *backends):
             b.write(out)
 
     return dirs
+
+def run(url, *backends):
+    c = Compiler(filter_native=[b.ext for b in backends])
+    file = c.urlparse(url, recurse=False)
+    name, ver = namever(file)
+    for backend in backends:
+        b = backend()
+        b.run(name, ver)

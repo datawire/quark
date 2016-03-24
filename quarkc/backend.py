@@ -15,7 +15,7 @@
 import os, types, java, python, javascript, ruby, tempfile, logging
 from collections import OrderedDict
 from .ast import *
-from .compiler import TypeExpr
+from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
 from .dispatch import *
 from .helpers import *
 
@@ -34,7 +34,6 @@ class Backend(object):
         self.definitions = []
         self.names = []
         self.bindings = None
-        self.rootname = None
         self.entry = None
         self.dist = None
         self.root = None
@@ -84,45 +83,37 @@ class Backend(object):
         self.packages.append(p)
         self.definitions.append(p)
 
+    def setfile(self, fname, maker):
+        self.current_file = fname
+        if fname not in self._imports:
+            self._imports[fname] = OrderedDict()
+        if fname not in self.files:
+            self.files[fname] = maker()
+            return False
+        return True
+
     def leave_Root(self, r):
         if self.dist:
             self.entry = self.dist.file
 
-        roots = []
-        for rpkg in [p.name.text for p in self.packages if p.package is None]:
-            if rpkg != "builtin" and not rpkg.endswith("_md") and rpkg not in roots: roots.append(rpkg) # XXX is this needed still
-        if len(roots) > 1:
-            roots.sort()
-            roots += ["common"]
-        elif not roots:
-            for d in self.definitions:
-                if isinstance(d, Function) and d.name.text == "main":
-                    roots = [self.gen.name(self.fname(d)), "lib"]
-                    break
-            else:
-                # XXX: first file is builtin, last file is reflector
-                roots = [self.gen.name(self.fname(self.entry))]
-        self.rootname = "_".join(roots)
-
+        self.mains = []
         for d in self.definitions:
             fname = self.file(d)
             if fname is None:
                 continue
-            self.current_file = fname
             self.current_package = d.package
-            if fname not in self._imports:
-                self._imports[fname] = OrderedDict()
-            if fname not in self.files:
-                self.files[fname] = self.make_file(d)
-            else:
+            if self.setfile(fname, lambda: self.make_file(d)):
                 self.files[fname] += "\n"
             dfn_code = self.definition(d)
-            if dfn_code and d.package is None and d.file.name.endswith("builtin.q"):
+            if dfn_code and d.package is None and d.file.name.endswith(BUILTIN_FILE):
                 self.files[fname] += self.gen.comment("BEGIN_BUILTIN") + "\n"
                 self.files[fname] += dfn_code
                 self.files[fname] += "\n" + self.gen.comment("END_BUILTIN")
             else:
                 self.files[fname] += dfn_code
+
+        if self.mains:
+            self.genmain()
 
         for name in self.files:
             code = self.files[name]
@@ -132,8 +123,8 @@ class Backend(object):
             # to import classes on demand at the point of use rather
             # than into the module/package level scope.
             raw_imports = self._imports[name].keys()
-            refimps = filter(lambda x: x[0][0] == "builtin", raw_imports)
-            imports = filter(lambda x: x[0][0] != "builtin", raw_imports)
+            refimps = filter(lambda x: x[0] == (BUILTIN, REFLECT), raw_imports)
+            imports = filter(lambda x: x[0] != (BUILTIN, REFLECT), raw_imports)
 
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)
@@ -149,6 +140,13 @@ class Backend(object):
             if content[-1:] != "\n": content += "\n"
             self.files[name] = content
 
+    def genmain(self):
+        self.current_package = None
+        name, ver = namever(self.entry)
+        fname = self.gen.main_file(self.gen.name(name))
+        self.setfile(fname, lambda: self.gen.make_main_file(self.gen.name(name)))
+        self.files[fname] += self.gen.main([self.gen.expr_stmt(self.invoke(fun, None, ())) for fun in self.mains])
+
     def genimps(self, imps):
         imps = [self.gen.import_(pkg, org, dep) for (pkg, org, dep) in imps]
         return "\n".join(filter(lambda x: x is not None, imps))
@@ -159,7 +157,7 @@ class Backend(object):
         if self.current_package:
             org = tuple(self.package(self.current_package))
         else:
-            org = (self.rootname,)
+            org = ()
         if pkg != org:
             if obj.root != self.root:
                 dep, ver = namever(obj.file)
@@ -189,7 +187,7 @@ class Backend(object):
 
     @overload(Function)
     def make_file(self, fun):
-        return self.gen.make_function_file(self.package(fun), self.name(fun.name))
+        return self.gen.make_function_file(self.package(fun), self.name(fun.name), mdroot(self.entry))
 
     @overload(Package)
     def make_file(self, pkg):
@@ -219,6 +217,7 @@ class Backend(object):
                     deps.append((dep.group, dep.artifact, dep.version))
             else:
                 assert False, (dep, type(dep))
+
         files = self.gen.package(name, version, packages, files_to_emit, deps)
         for name, content in files.items():
             path = os.path.join(target, name)
@@ -239,13 +238,8 @@ class Backend(object):
     @overload(Function)
     def definition(self, fun):
         if fun.body is None: return ""
-        if fun.package is None and fun.name.text == "main":
-            fname = self.gen.name(self.fname(fun))
-            old = self.current_file
-            self.current_file = fname + ".%s" % self.ext
-            self._imports[self.current_file] = OrderedDict()
-            self.files[self.current_file] = self.gen.main(fname, self.rootname)
-            self.current_file = old
+        if fun.name.text == "main" and not fun.params:
+            self.mains.append(fun)
 
         return self.gen.function(self.doc(fun),
                                  self.type(fun.type),
@@ -393,7 +387,7 @@ class Backend(object):
         elif node.package:
             return self.package(node.package)
         else:
-            return [self.rootname]
+            assert False
 
     @overload(Type)
     def type(self, t):
@@ -711,6 +705,11 @@ class Java(Backend):
     def install_command(self, dir):
         command.call_and_show("install", dir, ["mvn", "install"])
 
+    def run(self, name, version):
+        jar = os.path.join(os.environ["HOME"], ".m2", "repository", name, name, version,
+                           "%s-%s.jar" % (name, version))
+        os.execlp("java", "java", "-jar", jar)
+
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
     ext = "py"
@@ -728,6 +727,10 @@ class Python(Backend):
             if is_user(): cmd += ["--user"]
             command.call_and_show("install", dir, cmd)
 
+    def run(self, name, version):
+        main = self.gen.name(name)
+        os.execlp("python", "python", "-c", "import %s; %s.main()" % (main, main))
+
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"
     ext = "js"
@@ -740,7 +743,25 @@ class JavaScript(Backend):
     def install_command(self, dir):
         command.call_and_show("install", ".", ["npm", "install", dir])
 
+    def run(self, name, version):
+        main = self.gen.name(name)
+        os.execlp("node", "node", "-e", 'require("%s").%s.main()' % (name, main))
+
 class Ruby(Backend):
     PRETTY_INSTALL = "GEM"
     ext = "rb"
     gen = ruby
+
+    @staticmethod
+    def is_installed(url):
+        return False
+
+    def install_command(self, dir):
+        raise "TODO"
+        command.call_and_show("install", ".", ["gem", "install", dir])
+
+    def run(self, name, version):
+        raise "TODO"
+        main = self.gen.name(name)
+        os.execlp("node", "node", "-e", 'require("%s").%s.main()' % (name, main))
+

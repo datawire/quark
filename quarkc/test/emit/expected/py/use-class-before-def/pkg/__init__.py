@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import use_class_before_def_md
 
 
@@ -44,7 +44,3 @@ class Foo(object):
 
 
 Foo.pkg_Foo_ref = use_class_before_def_md.Root.pkg_Foo_md
-
-def main():
-    bar = Bar();
-    (bar).go();

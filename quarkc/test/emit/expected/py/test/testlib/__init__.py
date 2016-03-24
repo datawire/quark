@@ -2,7 +2,7 @@ from quark_runtime import *
 
 
 
-def test():
+def atest():
     return u"testlib"
 
 

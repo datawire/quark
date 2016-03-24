@@ -1,8 +1,10 @@
-var test1 = require('./test1');
+var test1 = require('./test1/index.js');
 exports.test1 = test1;
-var test2 = require('./test2');
+var test2 = require('./test2/index.js');
 exports.test2 = test2;
-var test3 = require('./test3');
+var test3 = require('./test3/index.js');
 exports.test3 = test3;
-var constructors_md = require('./constructors_md');
+var constructors = require('./constructors/index.js');
+exports.constructors = constructors;
+var constructors_md = require('./constructors_md/index.js');
 exports.constructors_md = constructors_md;

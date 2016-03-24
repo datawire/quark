@@ -1,5 +1,5 @@
 module Quark
-require "builtin"
+require "quark"
 def self.p1; MODULE_p1; end
 module MODULE_p1
 def self.p2; MODULE_p2; end

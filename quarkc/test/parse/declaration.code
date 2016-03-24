@@ -1,5 +1,7 @@
 
 
-void f() {
-    int x = (blah)();
+package declaration {
+    void f() {
+        int x = (blah)();
+    }
 }

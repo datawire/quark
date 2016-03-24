@@ -1,10 +1,12 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
- Function(Type(Name(int)), Name(factorial),
-  Param(Type(Name(int)), Name(n)),
-  Block(
-   If(Call(Attr(Var(Name(n)), Name(__eq__)), Number(0)), Block(
-     Return(Number(1))), Block(
-     Return(Call(Attr(Var(Name(n)), Name(__mul__)), Call(Var(Name(factorial)),
-        Call(Attr(Var(Name(n)), Name(__sub__)), Number(1)))))))))
+ Package(Name(functions),
+
+  Function(Type(Name(int)), Name(factorial),
+   Param(Type(Name(int)), Name(n)),
+   Block(
+    If(Call(Attr(Var(Name(n)), Name(__eq__)), Number(0)), Block(
+      Return(Number(1))), Block(
+      Return(Call(Attr(Var(Name(n)), Name(__mul__)), Call(Var(Name(factorial)),
+         Call(Attr(Var(Name(n)), Name(__sub__)), Number(1))))))))))
 )

@@ -24,6 +24,7 @@ Class.VOID = new Class("builtin.void");
 Class.BOOL = new Class("builtin.bool");
 Class.INT = new Class("builtin.int");
 Class.LONG = new Class("builtin.long");
+Class.FLOAT = new Class("builtin.float");
 Class.STRING = new Class("builtin.String");
 function Class_get(id) {
     if (!((Class.classes).has(id))) {
@@ -114,6 +115,9 @@ function Class__getField(name) {
     if ((name) === ("LONG")) {
         return Class.LONG;
     }
+    if ((name) === ("FLOAT")) {
+        return Class.FLOAT;
+    }
     if ((name) === ("STRING")) {
         return Class.STRING;
     }
@@ -151,6 +155,9 @@ function Class__setField(name, value) {
     }
     if ((name) === ("LONG")) {
         Class.LONG = value;
+    }
+    if ((name) === ("FLOAT")) {
+        Class.FLOAT = value;
     }
     if ((name) === ("STRING")) {
         Class.STRING = value;

@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.test2; MODULE_test2; end
 module MODULE_test2
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'constructors_md' # 0 () ()
 
 def self.Test; CLASS_Test; end

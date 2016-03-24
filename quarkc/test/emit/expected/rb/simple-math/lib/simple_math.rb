@@ -1,3 +1,37 @@
-require_relative "simple_math_lib.rb"
+module Quark
+require "quark"
+def self.simple_math; MODULE_simple_math; end
+module MODULE_simple_math
+require_relative 'simple_math' # 0 () ()
 
-Quark.simple_math_lib.main
+def self.main()
+    
+    four = (2) + (2)
+    ::DatawireQuarkCore.print((four).to_s)
+    half = (1) / (2)
+    ::DatawireQuarkCore.print((half).to_s)
+    num = 314.0
+    den = 100.0
+    pi = (num) / (den)
+    ::DatawireQuarkCore.print((pi).to_s)
+    pie = 3.14
+    ::DatawireQuarkCore.print((pie).to_s)
+    n = (-(100)) / (3)
+    ::DatawireQuarkCore.print((n).to_s)
+    m = (100) / (-(3))
+    ::DatawireQuarkCore.print((m).to_s)
+    l = (100) % (3)
+    ::DatawireQuarkCore.print((l).to_s)
+    k = (-(100)) % (3)
+    ::DatawireQuarkCore.print((k).to_s)
+
+
+    nil
+end
+
+if __FILE__ == $0
+    ::Quark.simple_math.main()
+end
+
+end # module MODULE_simple_math
+end # module Quark

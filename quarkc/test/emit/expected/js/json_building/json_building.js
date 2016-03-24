@@ -1,3 +1,4 @@
-var common = require('./json_building_lib');
+var json_building = require('./json_building/index.js');
+exports.json_building = json_building;
 
-common.main();
+json_building.main();

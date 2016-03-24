@@ -1,11 +1,11 @@
 var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
-var builtin = require('../builtin');
+var builtin = require('../builtin/index.js');
 exports.builtin = builtin;
 
 
@@ -700,7 +700,7 @@ function builtin_reflect_Class() {
     builtin_reflect_Class.super_.call(this, "builtin.reflect.Class");
     (this).name = "builtin.reflect.Class";
     (this).parameters = [];
-    (this).fields = [new builtin.reflect.Field("builtin.Map<builtin.String,builtin.reflect.Class>", "classes"), new builtin.reflect.Field("builtin.reflect.Class", "VOID"), new builtin.reflect.Field("builtin.reflect.Class", "BOOL"), new builtin.reflect.Field("builtin.reflect.Class", "INT"), new builtin.reflect.Field("builtin.reflect.Class", "LONG"), new builtin.reflect.Field("builtin.reflect.Class", "STRING"), new builtin.reflect.Field("builtin.String", "id"), new builtin.reflect.Field("builtin.String", "name"), new builtin.reflect.Field("builtin.List<builtin.String>", "parameters"), new builtin.reflect.Field("builtin.List<builtin.reflect.Field>", "fields"), new builtin.reflect.Field("builtin.List<builtin.reflect.Method>", "methods")];
+    (this).fields = [new builtin.reflect.Field("builtin.Map<builtin.String,builtin.reflect.Class>", "classes"), new builtin.reflect.Field("builtin.reflect.Class", "VOID"), new builtin.reflect.Field("builtin.reflect.Class", "BOOL"), new builtin.reflect.Field("builtin.reflect.Class", "INT"), new builtin.reflect.Field("builtin.reflect.Class", "LONG"), new builtin.reflect.Field("builtin.reflect.Class", "FLOAT"), new builtin.reflect.Field("builtin.reflect.Class", "STRING"), new builtin.reflect.Field("builtin.String", "id"), new builtin.reflect.Field("builtin.String", "name"), new builtin.reflect.Field("builtin.List<builtin.String>", "parameters"), new builtin.reflect.Field("builtin.List<builtin.reflect.Field>", "fields"), new builtin.reflect.Field("builtin.List<builtin.reflect.Method>", "methods")];
     (this).methods = [];
 }
 exports.builtin_reflect_Class = builtin_reflect_Class;

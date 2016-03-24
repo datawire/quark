@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.author      = 'Quark compiled code'
   # spec.email       = ''
   # spec.license     = ''
-  spec.files       = ['lib/simple_math_lib.rb', 'lib/simple_math.rb', 'lib/simple_math_md.rb']
+  spec.files       = ['lib/simple_math.rb', 'lib/simple_math_md.rb']
   # spec.homepage    = ''
-  spec.add_runtime_dependency 'builtin', '= 0.0.1'
+  spec.add_runtime_dependency 'quark', '= 0.0.1'
 end

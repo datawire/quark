@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'slack' # 0 () ()
 require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()

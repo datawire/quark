@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import parameterized_defaults_md
 
 
@@ -12,7 +12,7 @@ class Foo(object):
     def get(self):
         assert False
 
-Foo.pkg_Foo_builtin_Object__ref = parameterized_defaults_md.Root.pkg_Foo_builtin_Object__md
+Foo.pkg_Foo_quark_Object__ref = parameterized_defaults_md.Root.pkg_Foo_quark_Object__md
 class StringFoo(object):
     def _init(self):
         pass
@@ -43,7 +43,7 @@ class Box(object):
         (self).contents = contents
 
     def _getClass(self):
-        return u"pkg.Box<builtin.Object>"
+        return u"pkg.Box<quark.Object>"
 
     def _getField(self, name):
         if ((name) == (u"contents")):
@@ -78,11 +78,5 @@ class StringBox(Box):
             (self).contents = value
 
 
-StringBox.pkg_Box_builtin_String__ref = parameterized_defaults_md.Root.pkg_Box_builtin_String__md
+StringBox.pkg_Box_quark_String__ref = parameterized_defaults_md.Root.pkg_Box_quark_String__md
 StringBox.pkg_StringBox_ref = parameterized_defaults_md.Root.pkg_StringBox_md
-
-def main():
-    box = StringBox(u"asdf");
-    _println((box).contents);
-    foo = StringFoo();
-    _println((foo).foo());

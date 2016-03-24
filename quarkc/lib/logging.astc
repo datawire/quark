@@ -1,0 +1,45 @@
+File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/Logger.java),
+ Include(url=io/datawire/quark/runtime/QuarkJavaLogger.java),
+
+ Package(Name(quark),
+
+  Primitive(Annotation(Name(doc), String("A logging facility",
+    $type=1.quark.String)), Annotation(Name(mapping), Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.Logger')))), Name(Logger),
+
+   ConstructorMacro(Name(Logger),
+    Param(Type(Name(String)), Name(topic), $type=1.quark.String),
+    Call(Attr(Call(Attr(Call(Attr(Attr(Attr(Var(Name(quark), $type=0.quark),
+            Name(concurrent), $type=6.quark.concurrent), Name(Context),
+          $type=6.quark.concurrent.Context), Name(current),
+         $type=6.quark.concurrent.Context.current),
+        $type=6.quark.concurrent.Context), Name(runtime),
+       $type=6.quark.concurrent.Context.runtime), $type=0.quark.Runtime),
+      Name(logger), $type=0.quark.Runtime.logger), Var(Name(topic),
+     $type=1.quark.String), $type=2.quark.Logger)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("emit a log at trace level", $type=1.quark.String)),
+    Type(Name(void)), Name(trace),
+    Param(Type(Name(String)), Name(msg), $type=1.quark.String)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("emit a log at debug level", $type=1.quark.String)),
+    Type(Name(void)), Name(debug),
+    Param(Type(Name(String)), Name(msg), $type=1.quark.String)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("emit a log at info level", $type=1.quark.String)),
+    Type(Name(void)), Name(info),
+    Param(Type(Name(String)), Name(msg), $type=1.quark.String)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("emit a log at warn level", $type=1.quark.String)),
+    Type(Name(void)), Name(warn),
+    Param(Type(Name(String)), Name(msg), $type=1.quark.String)),
+
+   Method(static=False, Annotation(Name(doc),
+     String("emit a log at error level", $type=1.quark.String)),
+    Type(Name(void)), Name(error),
+    Param(Type(Name(String)), Name(msg), $type=1.quark.String))))
+)

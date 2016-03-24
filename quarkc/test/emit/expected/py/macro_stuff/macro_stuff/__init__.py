@@ -1,5 +1,9 @@
 from quark_runtime import *
 
+import quark.reflect
+import macro_stuff_md
+
+
 class Macro(object):
     def _init(self):
         pass
@@ -18,10 +22,11 @@ class Macro(object):
         m10 = m2;
 
     def _getClass(self):
-        return u"Macro"
+        return u"macro_stuff.Macro"
 
     def _getField(self, name):
         return None
 
     def _setField(self, name, value):
         pass
+Macro.macro_stuff_Macro_ref = macro_stuff_md.Root.macro_stuff_Macro_md

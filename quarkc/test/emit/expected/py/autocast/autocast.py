@@ -1,4 +1,4 @@
-from autocast_lib import main
+import autocast
 
 if __name__ == "__main__":
-    main()
+    autocast.main();

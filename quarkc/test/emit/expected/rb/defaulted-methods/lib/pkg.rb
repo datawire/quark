@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.pkg; MODULE_pkg; end
 module MODULE_pkg
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 require_relative 'defaulted_methods_md' # 0 () ()
 
 def self.A; CLASS_A; end
@@ -427,31 +427,5 @@ class CLASS_T5 < ::DatawireQuarkCore::QuarkObject
 
 end
 CLASS_T5.unlazy_statics
-
-def self.main()
-    
-    t1 = ::Quark.pkg.T1.new()
-    t1.foo()
-    t1.bar()
-    ::DatawireQuarkCore.print("===")
-    t2 = ::Quark.pkg.T2.new()
-    t2.foo()
-    t2.bar()
-    ::DatawireQuarkCore.print("===")
-    t3 = ::Quark.pkg.T3.new()
-    t3.foo()
-    t3.bar()
-    ::DatawireQuarkCore.print("===")
-    t4 = ::Quark.pkg.T4.new()
-    t4.foo()
-    t4.bar()
-    ::DatawireQuarkCore.print("===")
-    t5 = ::Quark.pkg.T5.new()
-    t5.foo()
-    t5.bar()
-
-
-    nil
-end
 end # module MODULE_pkg
 end # module Quark

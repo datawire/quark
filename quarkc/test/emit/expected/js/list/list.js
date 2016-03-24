@@ -1,3 +1,4 @@
-var common = require('./list_lib');
+var list = require('./list/index.js');
+exports.list = list;
 
-common.main();
+list.main();

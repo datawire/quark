@@ -1,21 +1,21 @@
 module Quark
 def self.fancy_primitive_md; MODULE_fancy_primitive_md; end
 module MODULE_fancy_primitive_md
-require 'builtin' # .../reflect
+require 'quark' # .../reflect
 
-def self.builtin_List_builtin_Object_; CLASS_builtin_List_builtin_Object_; end
-class CLASS_builtin_List_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
+def self.quark_List_quark_Object_; CLASS_quark_List_quark_Object_; end
+class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
-    static singleton: -> { ::Quark.fancy_primitive_md.builtin_List_builtin_Object_.new() }
+    static singleton: -> { ::Quark.fancy_primitive_md.quark_List_quark_Object_.new() }
 
 
 
     def initialize()
         
-        super("builtin.List<builtin.Object>")
-        (self).name = "builtin.List"
-        (self).parameters = ::DatawireQuarkCore::List.new(["builtin.Object"])
+        super("quark.List<quark.Object>")
+        (self).name = "quark.List"
+        (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
 
@@ -61,13 +61,13 @@ class CLASS_builtin_List_builtin_Object_ < ::Quark.builtin.reflect.QuarkClass
 
 
 end
-CLASS_builtin_List_builtin_Object_.unlazy_statics
+CLASS_quark_List_quark_Object_.unlazy_statics
 
 def self.Root; CLASS_Root; end
 class CLASS_Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static builtin_List_builtin_Object__md: -> { ::Quark.fancy_primitive_md.builtin_List_builtin_Object_.singleton }
+    static quark_List_quark_Object__md: -> { ::Quark.fancy_primitive_md.quark_List_quark_Object_.singleton }
 
 
 

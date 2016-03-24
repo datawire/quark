@@ -1,6 +1,7 @@
 package stuff_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class stuff_Test_md = stuff_Test.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

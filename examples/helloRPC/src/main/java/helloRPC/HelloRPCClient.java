@@ -1,6 +1,6 @@
 package helloRPC;
 
-import builtin.concurrent.FutureWait;
+import quark.concurrent.FutureWait;
 import hello.HelloClient;
 import hello.Request;
 import hello.Response;

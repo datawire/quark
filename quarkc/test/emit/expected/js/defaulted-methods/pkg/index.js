@@ -1,7 +1,7 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var defaulted_methods_md = require('../defaulted_methods_md');
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var defaulted_methods_md = require('../defaulted_methods_md/index.js');
 exports.defaulted_methods_md = defaulted_methods_md;
 
 
@@ -215,26 +215,3 @@ function T5_bar() {
     (this).foo();
 }
 T5.prototype.bar = T5_bar;
-
-function main() {
-    var t1 = new T1();
-    (t1).foo();
-    (t1).bar();
-    _qrt.print("===");
-    var t2 = new T2();
-    (t2).foo();
-    (t2).bar();
-    _qrt.print("===");
-    var t3 = new T3();
-    (t3).foo();
-    (t3).bar();
-    _qrt.print("===");
-    var t4 = new T4();
-    (t4).foo();
-    (t4).bar();
-    _qrt.print("===");
-    var t5 = new T5();
-    (t5).foo();
-    (t5).bar();
-}
-exports.main = main;

@@ -1,4 +1,4 @@
-from delegate_lib import main
+import delegate
 
 if __name__ == "__main__":
-    main()
+    delegate.main();

@@ -79,7 +79,7 @@ class Parser:
 
     @g.rule('file = toplevel* _ ~"$"')
     def visit_file(self, node, (toplevels, _, eof)):
-        return File(toplevels)
+        return File(self._filename, toplevels)
 
     @g.rule('toplevel = dist_unit / dependency / use / include / import / file_definition')
     def visit_toplevel(self, node, (top,)):

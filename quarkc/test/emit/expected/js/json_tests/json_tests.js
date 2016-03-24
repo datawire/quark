@@ -1,3 +1,4 @@
-var common = require('./json_tests_lib');
+var json_tests = require('./json_tests/index.js');
+exports.json_tests = json_tests;
 
-common.main();
+json_tests.main();

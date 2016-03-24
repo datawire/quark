@@ -1,3 +1,4 @@
-var common = require('./quark_delegate_lib');
+var quark_delegate = require('./quark_delegate/index.js');
+exports.quark_delegate = quark_delegate;
 
-common.main();
+quark_delegate.main();

@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-import builtin.reflect
+import quark.reflect
 import pet_md
 
 
@@ -50,9 +50,3 @@ class Dog(Pet):
     def _setField(self, name, value):
         pass
 Dog.pets_Dog_ref = pet_md.Root.pets_Dog_md
-
-def main():
-    evil = Cat();
-    good = Dog();
-    (evil).greet();
-    (good).greet();

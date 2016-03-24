@@ -4,7 +4,7 @@ import testlib
 
 
 
-def test():
+def atest():
     # import testlib;
 
     f = testlib.foo();

@@ -1,8 +1,8 @@
 package slackpack_md;
 
-public class slack_Client_onWSMessage_Method extends builtin.reflect.Method implements io.datawire.quark.runtime.QObject {
+public class slack_Client_onWSMessage_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
     public slack_Client_onWSMessage_Method() {
-        super("builtin.void", "onWSMessage", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"builtin.WebSocket", "builtin.String"})));
+        super("quark.void", "onWSMessage", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.WebSocket", "quark.String"})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);

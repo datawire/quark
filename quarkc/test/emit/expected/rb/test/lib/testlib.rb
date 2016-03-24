@@ -1,8 +1,8 @@
 module Quark
-require "builtin"
+require "quark"
 def self.testlib; MODULE_testlib; end
 module MODULE_testlib
-def self.test()
+def self.atest()
     
     return "testlib"
 

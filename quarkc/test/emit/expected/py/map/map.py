@@ -1,4 +1,4 @@
-from map_lib import main
+import map
 
 if __name__ == "__main__":
-    main()
+    map.main();

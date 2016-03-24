@@ -1,4 +1,10 @@
-var _qrt = require("builtin/quark_runtime.js");
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var implicit_self_md = require('../implicit_self_md/index.js');
+exports.implicit_self_md = implicit_self_md;
+
+
 
 // CLASS Foo
 function Foo() {
@@ -8,7 +14,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-
+Foo.implicit_self_Foo_ref = implicit_self_md.Root.implicit_self_Foo_md;
 function Foo_next() {}
 Foo.prototype.next = Foo_next;
 
@@ -18,7 +24,7 @@ function Foo_test() {
 Foo.prototype.test = Foo_test;
 
 function Foo__getClass() {
-    return "Foo";
+    return "implicit_self.Foo";
 }
 Foo.prototype._getClass = Foo__getClass;
 

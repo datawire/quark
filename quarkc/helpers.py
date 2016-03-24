@@ -14,6 +14,7 @@
 
 import os
 
+import _metadata
 from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
@@ -143,10 +144,18 @@ def get_package_version(pkg):
             return literal_to_str(ann.arguments[0])
     return "0.0.1"
 
-def namever(file):
-    dist = [d for d in file.definitions if isinstance(d, DistUnit)]
-    if dist: return dist[0].name.text, dist[0].version
-    name = os.path.splitext(os.path.basename(file.name))[0].replace('-', '_').replace('.', '_')
+def sanitize(name):
+    return name.replace('-', '_').replace('.', '_')
+
+def filebase(name):
+    return os.path.splitext(os.path.basename(name))[0]
+
+def namever(obj):
+    root = obj.root
+    for file in obj.root.files:
+        if file.dist: return file.dist.name.text, file.dist.version
+    file = obj
+    name = sanitize(filebase(file.name))
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
         firstPackage = packages[0]
@@ -154,6 +163,10 @@ def namever(file):
     else:
         version = "0.0.1"
     return name, version
+
+def mdroot(file):
+    name, _ = namever(file)
+    return name + "_md"
 
 def is_extendable(node):
     return isinstance(node.resolved.type, Class) and \
@@ -217,13 +230,18 @@ def indent(st, level=4, leading_nl=True):
 
 class Code:
 
-    def __init__(self, body="", head="", tail=""):
+    identifier = None
+
+    def __init__(self, comment, body="", head="", tail=""):
+        if Code.identifier is not None and comment is not None:
+            head = comment(Code.identifier) + head
+
         self.body = body
         self.head = head
         self.tail = tail
 
     def __add__(self, code):
-        return Code(self.body + code, self.head, self.tail)
+        return Code(None, self.body + code, self.head, self.tail)
 
     def __str__(self):
         return "%s%s%s" % (self.head, self.body, self.tail)

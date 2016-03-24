@@ -36,7 +36,8 @@ if [ "$dirty" != "" ]; then
         echo "Warning: Running with dirty worktree"
     fi
 fi
+branch=$(git rev-parse --abbrev-ref --symbolic HEAD)
 
 for img in $image; do
-    docker run -it -v `pwd`:/quark  -w /home/dev/quark/ "$image" /quark/scripts/dockme.sh --dockered "$@"
+    docker run -it -v `pwd`:/quark  -w /home/dev/quark/ "$img" /bin/bash /quark/scripts/dockme.sh --dockered "$branch" "$@"
 done

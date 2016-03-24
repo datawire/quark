@@ -1,15 +1,15 @@
 
-.. print documentation master file, created by Quark
+.. prtest documentation master file, created by Quark
 
-print 0.0.1
-===========
+prtest 1.0.0
+============
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: print
+.. automodule:: prtest
    :members:
 
 

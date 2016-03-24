@@ -1,9 +1,15 @@
 module Quark
-require "builtin"
+require "quark"
 def self.macro_stuff; MODULE_macro_stuff; end
 module MODULE_macro_stuff
+require 'quark' # .../reflect
+require_relative 'macro_stuff_md' # 0 () ()
+
 def self.Macro; CLASS_Macro; end
 class CLASS_Macro < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static macro_stuff_Macro_ref: -> { ::Quark.macro_stuff_md.Root.macro_stuff_Macro_md }
 
 
 
@@ -34,7 +40,7 @@ class CLASS_Macro < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return "Macro"
+        return "macro_stuff.Macro"
 
         nil
     end
@@ -61,5 +67,6 @@ class CLASS_Macro < ::DatawireQuarkCore::QuarkObject
 
 
 end
+CLASS_Macro.unlazy_statics
 end # module MODULE_macro_stuff
 end # module Quark

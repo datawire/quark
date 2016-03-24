@@ -1,5 +1,7 @@
-File(Use(url=builtin.q), Import(Name(builtin)),
+File(Use(url=quark.q), Import(Name(quark)),
 
- Function(Type(Name(int)), Name(foo), Block(
-   ExprStmt(Call(Var(Name(foo), $type=0.foo), $type=0.builtin.int))))
+ Package(Name(recursive),
+
+  Function(Type(Name(int)), Name(foo), Block(
+    ExprStmt(Call(Var(Name(foo), $type=0.recursive.foo), $type=1.quark.int)))))
 )

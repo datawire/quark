@@ -1,9 +1,9 @@
-var _qrt = require("builtin/quark_runtime.js");
-var builtin = require('builtin').builtin;
-exports.builtin = builtin;
-var test = require('./test');
+var _qrt = require("quark/quark_runtime.js");
+var quark = require('quark').quark;
+exports.quark = quark;
+var test = require('./test/index.js');
 exports.test = test;
-var package_md = require('../package_md');
+var package_md = require('../package_md/index.js');
 exports.package_md = package_md;
 
 
@@ -48,13 +48,3 @@ function Test__setField(name, value) {
     }
 }
 Test.prototype._setField = Test__setField;
-
-function main() {
-    go();
-    test.go();
-    var t1 = new Test();
-    var t2 = new test.Test();
-    (t1).go();
-    (t2).go();
-}
-exports.main = main;

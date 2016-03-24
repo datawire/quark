@@ -1,3 +1,4 @@
-var common = require('./stuff_lib');
+var stuff = require('./stuff/index.js');
+exports.stuff = stuff;
 
-common.main();
+stuff.main();

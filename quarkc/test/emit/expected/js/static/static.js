@@ -1,3 +1,4 @@
-var common = require('./static_lib');
+var static = require('./static/index.js');
+exports.static = static;
 
-common.main();
+static.main();

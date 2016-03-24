@@ -1,3 +1,4 @@
-var common = require('./inheritence_lib');
+var inheritence = require('./inheritence/index.js');
+exports.inheritence = inheritence;
 
-common.main();
+inheritence.main();
