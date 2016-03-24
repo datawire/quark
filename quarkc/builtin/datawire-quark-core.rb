@@ -125,6 +125,9 @@ module DatawireQuarkCore
     return obj._getClass
   end
 
+  class QuarkObject
+  end
+
   class List < Array
     def to_s
       '[' + map(&:to_s).join(', ') + ']'
@@ -876,7 +879,3 @@ module DatawireQuarkCore
   end
 end
 
-# XXX: work around module referencing?
-module Quark
-  def self.DatawireQuarkCore; ::DatawireQuarkCore; end
-end

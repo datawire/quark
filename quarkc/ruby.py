@@ -144,7 +144,9 @@ def import_(path, origin, dep, cache={}):
         require = "require_relative '%s' # %s %s %s" % (rpath, common, lpath, lorigin)
         if origin == ('builtin_md',) and path != ('builtin', 'reflect', ):
             # XXX: why does quark think that builtin_md depends on builtin.concurrent and builtin.behavior ???
-            require = "# for builtin_md: " + require
+            require = "# for builtin_md: %s" % (require, )
+        elif len(origin) == 1 and origin[0].endswith("_md") and origin[0] != 'builtin_md':
+            require = "# for %s: %s" % (origin, require, )
         return require
     else:
         if len(origin) == 1:
@@ -178,7 +180,7 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
         prologue.extend(['attr_accessor %s' % ', '.join(':' + name for name, value in fields)])
     postscript = []
     if static_fields:
-        prologue.extend(['extend DatawireQuarkCore::Static', ''])
+        prologue.extend(['extend ::DatawireQuarkCore::Static', ''])
         prologue.extend(static_fields)
         postscript.append('%s.unlazy_statics' % rname)
         
@@ -190,7 +192,7 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
     source = Templates.class_(
         name=rname,
         alias=name,
-        base=('::Quark.' + base) if base else 'Object',
+        base=('::Quark.' + base) if base else '::DatawireQuarkCore::QuarkObject',
         prologue=indent(prologue, leading_nl=False),
         constructors=indent(constructors),
         methods=indent(methods + [init_fields]),
@@ -323,17 +325,20 @@ def local_ref(v):
     return v
 
 def invoke_function(path, name, args):
-    return Templates.method_call(receiver='::Quark',
-                                 method='.'.join([p.replace('-', '_') for p in path] + [name]),
+    return Templates.method_call(receiver=full_ruby_name(path),
+                                 method=name,
                                  args=', '.join(args))
 
+def full_ruby_name(name):
+    if isinstance(name, (tuple, list)):
+        name = ".".join(name)
+    name = name.replace('-', '_')
+    if not name.startswith('::'):
+        name = '::Quark.' + name
+    return name
+
 def construct(class_, args):
-    if class_ in ('Hash', 'DatawireQuarkCore::List'):
-        # XXX HACK need to distinguish ::Quark and non-::Quark things
-        receiver = class_
-    else:
-        receiver = '::Quark.' + class_.replace('-', '_')
-    return Templates.method_call(receiver=receiver,
+    return Templates.method_call(receiver=full_ruby_name(class_),
                                  method='new',
                                  args=', '.join(args))
 
@@ -355,7 +360,7 @@ def invoke_super_method(clazz, base, method, args):
     return template(method=method, args=', '.join(args))
 
 def invoke_static_method(path, clazz, method, args):
-    return Templates.method_call(receiver='.'.join(["::Quark"] + path + [clazz]),
+    return Templates.method_call(receiver=full_ruby_name(path + [clazz]),
                                  method=method,
                                  args=', '.join(args))
 
@@ -363,7 +368,7 @@ def get_field(expr, field):
     return "({receiver}).{name}".format(receiver=expr, name=field)
 
 def get_static_field(path, clazz, field):
-    return '.'.join(['::Quark'] + path + [clazz]) + '.' + field
+    return full_ruby_name(path + [clazz]) + '.' + field
 
 def cast(type, expr):
     assert expr
@@ -399,7 +404,7 @@ def string(s):
     return result
 
 def list_(elements):
-    return 'DatawireQuarkCore::List.new([%s])' % ', '.join(elements)
+    return '::DatawireQuarkCore::List.new([%s])' % ', '.join(elements)
 
 def map(entries):
     pair = '{} => {}'.format

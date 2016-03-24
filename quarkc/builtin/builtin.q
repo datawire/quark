@@ -55,7 +55,7 @@ include io/datawire/quark/netty/QuarkWebSocket.java;
 include io/datawire/quark/netty/Response.java;
 
 namespace builtin {
-    @mapping($java{Object} $py{object} $js{Object} $rb{Object})
+    @mapping($java{Object} $py{object} $js{Object} $rb{::DatawireQuarkCore::QuarkObject})
     primitive Object {
         macro bool __eq__(Object other) $java{($self)==($other) || (($self) != null && ($self).equals($other))}
                                         $py{($self) == ($other)}
@@ -68,7 +68,7 @@ namespace builtin {
 
         macro reflect.Class getClass() reflect.Class.get($java{io.datawire.quark.runtime.Builtins._getClass($self)}
                                                          $py{_getClass($self)}
-                                                         $rb{DatawireQuarkCore._getClass($self)}
+                                                         $rb{::DatawireQuarkCore._getClass($self)}
                                                          $js{_qrt._getClass($self)});
         macro Object getField(String name) $java{((io.datawire.quark.runtime.QObject) ($self))._getField($name)}
                                            $py{($self)._getField($name)}
@@ -256,7 +256,7 @@ namespace builtin {
                                                      $js{($self).replace(($from), ($to))};
         macro List<String> split(String sep) $java{new java.util.ArrayList<String>(java.util.Arrays.asList(($self).split(java.util.regex.Pattern.quote($sep), -1)))}
                                              $py{($self).split($sep)}
-                                             $rb{DatawireQuarkCore.split($self, $sep)}
+                                             $rb{::DatawireQuarkCore.split($self, $sep)}
                                              $js{($self).split($sep)};
         macro String join(List<String> parts) $java{io.datawire.quark.runtime.Builtins.join(($self), ($parts))}
                                               $py{($self).join($parts)}
@@ -266,11 +266,11 @@ namespace builtin {
         macro JSONObject __to_JSONObject() self.toJSON();
         macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
                                      $py{_JSONObject.parse($self)}
-                                     $rb{DatawireQuarkCore::JSONObject.parse($self)}
+                                     $rb{::DatawireQuarkCore::JSONObject.parse($self)}
                                      $js{_qrt.json_from_string($self)};
     }
 
-    @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{DatawireQuarkCore::List})
+    @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{::DatawireQuarkCore::List})
     primitive List<T> {
         macro void add(T element) $java{($self).add($element)}
                                   $py{($self).append($element)}
@@ -296,7 +296,7 @@ namespace builtin {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{java.util.HashMap} $py{_Map} $js{Map} $rb{Hash})
+    @mapping($java{java.util.HashMap} $py{_Map} $js{Map} $rb{::Hash})
     primitive Map<K,V> {
         macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
                                            $py{($self)[$key] = ($value)}
@@ -320,7 +320,7 @@ namespace builtin {
                                           $js{($other).forEach(function (v, k) { ($self).set(k, v); })};
         macro String urlencode() $java{io.datawire.quark.runtime.Builtins.urlencode($self)}
                                  $py{_urlencode($self)}
-                                 $rb{DatawireQuarkCore.urlencode($self)}
+                                 $rb{::DatawireQuarkCore.urlencode($self)}
                                  $js{_qrt.urlencode($self)};
         macro JSONObject toJSON() builtin.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
@@ -328,13 +328,13 @@ namespace builtin {
 
     @mapping($java{io.datawire.quark.runtime.JSONObject}
              $py{_JSONObject}
-             $rb{DatawireQuarkCore::JSONObject}
+             $rb{::DatawireQuarkCore::JSONObject}
              $js{_qrt.JSONObject})
     primitive JSONObject {
 
         macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
                            $py{_JSONObject()}
-                           $rb{DatawireQuarkCore::JSONObject.new}
+                           $rb{::DatawireQuarkCore::JSONObject.new}
                            $js{new _qrt.JSONObject()};
 
         macro String __to_String() self.getString();
@@ -394,12 +394,12 @@ namespace builtin {
 
     macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                                  $py{_println($msg)}
-                                 $rb{DatawireQuarkCore.print($msg)}
+                                 $rb{::DatawireQuarkCore.print($msg)}
                                  $js{_qrt.print($msg)};
 
     macro long now() $java{System.currentTimeMillis()}
                      $py{long(time.time()*1000)}
-                     $rb{DatawireQuarkCore.now}
+                     $rb{::DatawireQuarkCore.now}
                      $js{Date.now()};
 
     macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
@@ -409,7 +409,7 @@ namespace builtin {
 
     macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
                                      $py{_url_get($url)}
-                                     $rb{DatawireQuarkCore.url_get($url)}
+                                     $rb{::DatawireQuarkCore.url_get($url)}
                                      $js{_qrt.url_get($url)};
 
     macro int parseInt(String st) $java{Integer.parseInt($st)}
@@ -419,7 +419,7 @@ namespace builtin {
 
     macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec()}
                                $py{_default_codec()}
-                               $rb{DatawireQuarkCore.default_codec}
+                               $rb{::DatawireQuarkCore.default_codec}
                                $js{_qrt.defaultCodec()};
 
     @mapping($java{io.datawire.quark.runtime.WSHandler})
@@ -449,11 +449,11 @@ namespace builtin {
     }
 
     @mapping($java{io.datawire.quark.runtime.HTTPRequest}
-             $rb{DatawireQuarkCore::HTTP::Request})
+             $rb{::DatawireQuarkCore::HTTP::Request})
     primitive HTTPRequest {
         macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)}
                                       $py{_HTTPRequest($url)}
-                                      $rb{DatawireQuarkCore::HTTP::Request.new($url)}
+                                      $rb{::DatawireQuarkCore::HTTP::Request.new($url)}
                                       $js{new _qrt.HTTPRequest($url)};
 
         String getUrl();
@@ -467,7 +467,7 @@ namespace builtin {
     }
 
     @mapping($java{io.datawire.quark.runtime.HTTPResponse}
-             $rb{DatawireQuarkCore::HTTP::Response})
+             $rb{::DatawireQuarkCore::HTTP::Response})
     primitive HTTPResponse {
         int getCode();
         void setCode(int code);
@@ -492,7 +492,7 @@ namespace builtin {
         macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
                         $py{_RuntimeFactory.create()}
                         $js{_qrt.RuntimeFactory.create()}
-                        $rb{DatawireQuarkCore::Runtime.new};
+                        $rb{::DatawireQuarkCore::Runtime.new};
         void open(String url, WSHandler handler);
         void request(HTTPRequest request, HTTPHandler handler);
         void schedule(Task handler, float delayInSeconds);
@@ -1641,33 +1641,33 @@ namespace concurrent {
         Collector collector;
     }
 
-    @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer}  $rb{DatawireQuarkCore::TLSInitializer})
+    @mapping($java{io.datawire.quark.runtime.TLSInitializer} $py{_TLSInitializer} $js{_qrt.TLSInitializer}  $rb{::DatawireQuarkCore::TLSInitializer})
     primitive TLSInitializer<T> {
         T getValue();
     }
 
-    @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS} $rb{DatawireQuarkCore::TLS})
+    @mapping($java{io.datawire.quark.runtime.TLS} $py{_TLS} $js{_qrt.TLS} $rb{::DatawireQuarkCore::TLS})
     primitive TLS<Context> {
         // FIXME: work around the compiler bug by renaming the template parameter to the only user
         macro TLS(TLSInitializer<Context> initializer) $java{new io.datawire.quark.runtime.TLS($initializer)}
                                                        $py{_TLS($initializer)}
-                                                       $rb{DatawireQuarkCore::TLS.new($initializer)}
+                                                       $rb{::DatawireQuarkCore::TLS.new($initializer)}
                                                        $js{new _qrt.TLS($initializer)};
         Context getValue();
         void setValue(Context c);
     }
 
-    @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex} $rb{DatawireQuarkCore::Mutex})
+    @mapping($java{io.datawire.quark.runtime.Mutex} $py{_Mutex} $js{_qrt.Mutex} $rb{::DatawireQuarkCore::Mutex})
     primitive Mutex {
         void acquire();
         void release();
     }
 
-    @mapping($java{io.datawire.quark.runtime.Lock} $py{_Lock} $js{_qrt.Lock} $rb{DatawireQuarkCore::Lock})
+    @mapping($java{io.datawire.quark.runtime.Lock} $py{_Lock} $js{_qrt.Lock} $rb{::DatawireQuarkCore::Lock})
     primitive Lock extends Mutex {
     }
 
-    @mapping($java{io.datawire.quark.runtime.Condition} $py{_Condition} $js{_qrt.Condition} $rb{DatawireQuarkCore::Condition})
+    @mapping($java{io.datawire.quark.runtime.Condition} $py{_Condition} $js{_qrt.Condition} $rb{::DatawireQuarkCore::Condition})
     primitive Condition extends Mutex {
         void waitWakeup(long timeout) {}
         void wakeup() {}
