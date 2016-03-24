@@ -1,4 +1,5 @@
-
+// xfail:java   default layout is too verbose
+// xfail:py     logging is not initialized
 
 void main() {
     Logger l = concurrent.Context.current().runtime().logger("logme");
