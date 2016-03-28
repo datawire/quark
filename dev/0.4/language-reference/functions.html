@@ -6,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Functions &mdash; Datawire Connect 0.4.13 documentation</title>
+    <title>Functions &mdash; Datawire Connect 0.4.17 documentation</title>
     
-    <link rel="stylesheet" href="../_static/better.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.4.13',
+        VERSION:     '0.4.17',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,41 +23,59 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.4.13 documentation" href="../index.html" />
+    <link rel="top" title="Datawire Connect 0.4.17 documentation" href="../index.html" />
     <link rel="up" title="Language Elements" href="language.html" />
     <link rel="next" title="Annotations" href="annotations.html" />
     <link rel="prev" title="Integration Interfaces" href="integrationInterfaces.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
   </head>
-  <body role="document">
-    <header id="pageheader"><h1><a href="../index.html ">
-        Datawire Connect 0.4.13 documentation
-    </a></h1></header>
-  <div class="related top">
-  <nav id="rellinks">
-    <ul>
-        <li>
-          &larr;
-          <a href="integrationInterfaces.html" title="Previous document">Integration Interfaces</a>
-        </li>
-        <li>
-          <a href="annotations.html" title="Next document">Annotations</a>
-          &rarr;
-        </li>
-    </ul>
-  </nav>
-  <nav id="breadcrumbs">
-    <ul>
-      <li><a href="../index.html">Datawire Connect 0.4.13 documentation</a></li>
-      <li>
-        <a href="index.html">Quark Language Reference</a>
-      </li>
-      <li>
-        <a href="language.html">Language Elements</a>
-      </li> 
-    </ul>
-  </nav>
-  </div>  
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="annotations.html"
+            title="Annotations"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="integrationInterfaces.html"
+            title="Integration Interfaces"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.4.17 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -842,217 +860,118 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-  <h3><a href="../index.html">Table Of Contents</a></h3>
-  <ul>
-<li><a class="reference internal" href="#">Functions</a><ul>
-<li><a class="reference internal" href="#bool-and">bool::__and__()</a></li>
-<li><a class="reference internal" href="#bool-eq">bool::__eq__()</a></li>
-<li><a class="reference internal" href="#bool-getclass">bool::getClass()</a></li>
-<li><a class="reference internal" href="#bool-getfield">bool::getField()</a></li>
-<li><a class="reference internal" href="#bool-ne">bool::__ne__()</a></li>
-<li><a class="reference internal" href="#bool-not">bool::__not__()</a></li>
-<li><a class="reference internal" href="#bool-or">bool::__or__()</a></li>
-<li><a class="reference internal" href="#bool-setclass">bool::setClass()</a></li>
-<li><a class="reference internal" href="#bool-tojson">bool::toJSON()</a></li>
-<li><a class="reference internal" href="#bool-to-jsonobject">bool::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#bool-tostring">bool::toString()</a></li>
-<li><a class="reference internal" href="#byte-add">byte::__add__()</a></li>
-<li><a class="reference internal" href="#byte-div">byte::__div__()</a></li>
-<li><a class="reference internal" href="#byte-eq">byte::__eq__()</a></li>
-<li><a class="reference internal" href="#byte-getclass">byte::getClass()</a></li>
-<li><a class="reference internal" href="#byte-getfield">byte::getField()</a></li>
-<li><a class="reference internal" href="#byte-gt">byte::__gt__()</a></li>
-<li><a class="reference internal" href="#byte-lt">byte::__lt__()</a></li>
-<li><a class="reference internal" href="#byte-mod">byte::__mod__()</a></li>
-<li><a class="reference internal" href="#byte-mul">byte::__mul__()</a></li>
-<li><a class="reference internal" href="#byte-ne">byte::__ne__()</a></li>
-<li><a class="reference internal" href="#byte-neg">byte::__neg__()</a></li>
-<li><a class="reference internal" href="#byte-setfield">byte::setField()</a></li>
-<li><a class="reference internal" href="#byte-sub">byte::__sub__()</a></li>
-<li><a class="reference internal" href="#byte-tofloat">byte::toFloat()</a></li>
-<li><a class="reference internal" href="#byte-tojson">byte::toJSON()</a></li>
-<li><a class="reference internal" href="#byte-to-jsonobject">byte::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#byte-tostring">byte::toString()</a></li>
-<li><a class="reference internal" href="#defaultcodec">defaultCodec()</a></li>
-<li><a class="reference internal" href="#float-add">float::__add__()</a></li>
-<li><a class="reference internal" href="#float-div">float::__div__()</a></li>
-<li><a class="reference internal" href="#float-eq">float::__eq__()</a></li>
-<li><a class="reference internal" href="#float-getclass">float::getClass()</a></li>
-<li><a class="reference internal" href="#float-getfield">float::getField()</a></li>
-<li><a class="reference internal" href="#float-gt">float::__gt__()</a></li>
-<li><a class="reference internal" href="#float-lt">float::__lt__()</a></li>
-<li><a class="reference internal" href="#float-mul">float::__mul__()</a></li>
-<li><a class="reference internal" href="#float-neg">float::__neg__()</a></li>
-<li><a class="reference internal" href="#float-ne">float::__ne__()</a></li>
-<li><a class="reference internal" href="#float-round">float::round()</a></li>
-<li><a class="reference internal" href="#float-setfield">float::setField()</a></li>
-<li><a class="reference internal" href="#float-sub">float::__sub__()</a></li>
-<li><a class="reference internal" href="#float-tojson">float::toJSON()</a></li>
-<li><a class="reference internal" href="#float-to-jsonobject">float::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#float-tostring">float::toString()</a></li>
-<li><a class="reference internal" href="#fromjson">fromJSON()</a></li>
-<li><a class="reference internal" href="#int-add">int::__add__()</a></li>
-<li><a class="reference internal" href="#int-div">int::__div__()</a></li>
-<li><a class="reference internal" href="#int-equal">int::__equal__()</a></li>
-<li><a class="reference internal" href="#int-getclass">int::getClass()</a></li>
-<li><a class="reference internal" href="#int-getfield">int::getField()</a></li>
-<li><a class="reference internal" href="#int-gt">int::__gt__()</a></li>
-<li><a class="reference internal" href="#int-lt">int::__lt__()</a></li>
-<li><a class="reference internal" href="#int-mod">int::__mod__()</a></li>
-<li><a class="reference internal" href="#int-mul">int::__mul__()</a></li>
-<li><a class="reference internal" href="#int-neg">int::__neg__()</a></li>
-<li><a class="reference internal" href="#int-ne">int::__ne__()</a></li>
-<li><a class="reference internal" href="#int-setfield">int::setField()</a></li>
-<li><a class="reference internal" href="#int-sub">int::__sub__()</a></li>
-<li><a class="reference internal" href="#int-to-byte">int::_to_Byte()</a></li>
-<li><a class="reference internal" href="#float-tofloat">float::toFloat()</a></li>
-<li><a class="reference internal" href="#int-tojson">int::toJSON()</a></li>
-<li><a class="reference internal" href="#int-to-jsonobject">int::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#int-to-long">int::_to_Long()</a></li>
-<li><a class="reference internal" href="#int-to-short">int::_to_Short()</a></li>
-<li><a class="reference internal" href="#int-tostring">int::toString()</a></li>
-<li><a class="reference internal" href="#list-add">List::add()</a></li>
-<li><a class="reference internal" href="#list-get">List::__get__()</a></li>
-<li><a class="reference internal" href="#list-getclass">List::getClass()</a></li>
-<li><a class="reference internal" href="#list-getfield">List::getField()</a></li>
-<li><a class="reference internal" href="#list-set">List::__set__()</a></li>
-<li><a class="reference internal" href="#list-setfield">List::setField()</a></li>
-<li><a class="reference internal" href="#list-size">List::size()</a></li>
-<li><a class="reference internal" href="#long-add">long::__add__()</a></li>
-<li><a class="reference internal" href="#long-div">long::__div__()</a></li>
-<li><a class="reference internal" href="#long-eq">long::__eq__()</a></li>
-<li><a class="reference internal" href="#long-getclass">long::getClass()</a></li>
-<li><a class="reference internal" href="#long-getfield">long::getField()</a></li>
-<li><a class="reference internal" href="#long-gt">long::__gt__()</a></li>
-<li><a class="reference internal" href="#long-lt">long::__lt__()</a></li>
-<li><a class="reference internal" href="#long-mul">long::__mul__()</a></li>
-<li><a class="reference internal" href="#long-neg">long::__neg__()</a></li>
-<li><a class="reference internal" href="#long-setfield">long::setField()</a></li>
-<li><a class="reference internal" href="#long-sub">long::__sub__()</a></li>
-<li><a class="reference internal" href="#long-tofloat">long::toFloat()</a></li>
-<li><a class="reference internal" href="#long-tojson">long::toJSON()</a></li>
-<li><a class="reference internal" href="#long-to-jsonobject">long::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#long-tostring">long::toString()</a></li>
-<li><a class="reference internal" href="#map-contains">Map::contains()</a></li>
-<li><a class="reference internal" href="#map-eq">Map::__eq__()</a></li>
-<li><a class="reference internal" href="#map-get">Map::get()</a></li>
-<li><a class="reference internal" href="#map-getclass">Map::getClass()</a></li>
-<li><a class="reference internal" href="#map-getfield">Map::getField()</a></li>
-<li><a class="reference internal" href="#map-ne">Map::__ne__()</a></li>
-<li><a class="reference internal" href="#map-set">Map::set()</a></li>
-<li><a class="reference internal" href="#map-setfield">Map::setField()</a></li>
-<li><a class="reference internal" href="#map-update">Map::update()</a></li>
-<li><a class="reference internal" href="#object-eq">Object::__eq__()</a></li>
-<li><a class="reference internal" href="#object-getclass">Object::getClass()</a></li>
-<li><a class="reference internal" href="#object-getfield">Object::getField()</a></li>
-<li><a class="reference internal" href="#object-ne">Object::__ne__()</a></li>
-<li><a class="reference internal" href="#object-setfield">Object::setField()</a></li>
-<li><a class="reference internal" href="#now">now()</a></li>
-<li><a class="reference internal" href="#parseint">parseInt()</a></li>
-<li><a class="reference internal" href="#print">print()</a></li>
-<li><a class="reference internal" href="#short-add">short::__add__()</a></li>
-<li><a class="reference internal" href="#short-div">short::__div__()</a></li>
-<li><a class="reference internal" href="#short-eq">short::__eq__()</a></li>
-<li><a class="reference internal" href="#short-getclass">short::getClass()</a></li>
-<li><a class="reference internal" href="#short-getfield">short::getField()</a></li>
-<li><a class="reference internal" href="#short-gt">short::__gt__()</a></li>
-<li><a class="reference internal" href="#short-lt">short::__lt__()</a></li>
-<li><a class="reference internal" href="#short-mod">short::__mod__()</a></li>
-<li><a class="reference internal" href="#short-mul">short::__mul__()</a></li>
-<li><a class="reference internal" href="#short-ne">short::__ne__()</a></li>
-<li><a class="reference internal" href="#short-neg">short::__neg__()</a></li>
-<li><a class="reference internal" href="#short-setfield">short::setField()</a></li>
-<li><a class="reference internal" href="#short-sub">short::__sub__()</a></li>
-<li><a class="reference internal" href="#short-tofloat">short::toFloat()</a></li>
-<li><a class="reference internal" href="#short-tojson">short::toJSON()</a></li>
-<li><a class="reference internal" href="#short-tojsonobject">short::toJSONObject()</a></li>
-<li><a class="reference internal" href="#short-tostring">short::toString()</a></li>
-<li><a class="reference internal" href="#sleep">sleep()</a></li>
-<li><a class="reference internal" href="#string-add">String::__add__()</a></li>
-<li><a class="reference internal" href="#string-endswith">string::endsWith()</a></li>
-<li><a class="reference internal" href="#string-eq">string::__eq__()</a></li>
-<li><a class="reference internal" href="#string-find">string::find()</a></li>
-<li><a class="reference internal" href="#string-getclass">string::getClass()</a></li>
-<li><a class="reference internal" href="#string-getfield">string::getField()</a></li>
-<li><a class="reference internal" href="#string-join">string::join()</a></li>
-<li><a class="reference internal" href="#string-ne">string::__ne__()</a></li>
-<li><a class="reference internal" href="#string-parsejson">string::parseJSON()</a></li>
-<li><a class="reference internal" href="#string-replace">string::replace()</a></li>
-<li><a class="reference internal" href="#string-setfield">string::setField()</a></li>
-<li><a class="reference internal" href="#string-size">string::size()</a></li>
-<li><a class="reference internal" href="#string-split">string::split()</a></li>
-<li><a class="reference internal" href="#string-startswith">string::startsWith()</a></li>
-<li><a class="reference internal" href="#string-substring">string::substring()</a></li>
-<li><a class="reference internal" href="#string-tojson">string::toJSON()</a></li>
-<li><a class="reference internal" href="#string-to-jsonobject">string::_to_JSONObject()</a></li>
-<li><a class="reference internal" href="#tojson">toJSON()</a></li>
-<li><a class="reference internal" href="#url-get">url_get()</a></li>
+    
+
+
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Quark Language Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core Concepts</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="language.html">Language Elements</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html">Integration Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationInterfaces.html">Integration Interfaces</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html">Annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
 </ul>
 </li>
 </ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rpc-basic/index.html">Getting Started with RPC Walkthrough</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Quark Language Reference</a><ul>
+  <li><a href="language.html">Language Elements</a><ul>
+      <li>Previous: <a href="integrationInterfaces.html" title="previous chapter">Integration Interfaces</a></li>
+      <li>Next: <a href="annotations.html" title="next chapter">Annotations</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="annotations.html">Annotations</a></li>
+    </ul>
 
-  <h4>Previous topic</h4>
-  <p class="topless"><a href="integrationInterfaces.html"
-                        title="previous chapter">Integration Interfaces</a></p>
-  <h4>Next topic</h4>
-  <p class="topless"><a href="annotations.html"
-                        title="next chapter">Annotations</a></p>
-<div class="sourcelink">
-  <a href="../_sources/language-reference/functions.txt" rel="nofollow">
-    Show page source
-  </a>
-</div>
-<div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
-    <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
-      <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
-    </form>
-    <p class="searchtip" style="font-size: 90%">
-    Enter search terms or a module, class or function name.
-    </p>
-</div>
-<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="integrationInterfaces.html">Integration Interfaces</a></li>
+    </ul>
 
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-  <div class="related bottom">
-  <nav id="rellinks">
-    <ul>
-        <li>
-          &larr;
-          <a href="integrationInterfaces.html" title="Previous document">Integration Interfaces</a>
-        </li>
-        <li>
-          <a href="annotations.html" title="Next document">Annotations</a>
-          &rarr;
-        </li>
-    </ul>
-  </nav>
-  <nav id="breadcrumbs">
-    <ul>
-      <li><a href="../index.html">Datawire Connect 0.4.13 documentation</a></li>
-      <li>
-        <a href="index.html">Quark Language Reference</a>
-      </li>
-      <li>
-        <a href="language.html">Language Elements</a>
-      </li> 
-    </ul>
-  </nav>
-  </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="annotations.html"
+            title="Annotations"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="integrationInterfaces.html"
+            title="Integration Interfaces"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.4.17 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>
 
-  <footer id="pagefooter">&copy; 2015, 2016 Datawire.
-      Created using <a href="http://sphinx-doc.org/">Sphinx</a>
-      1.3.4.
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
 
-  </footer>
+    
 
-  
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
 
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
