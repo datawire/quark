@@ -47,7 +47,7 @@ end
 def self.iterables()
     
     numbers = {"zero" => 0, "one" => 1, "two" => 2, "e" => 2, "three" => 3, "pi" => 3, "fun" => 69, "dockingbay" => 94}
-    keys = (numbers).keys
+    keys = ::DatawireQuarkCore::List.new((numbers).keys)
     (keys).sort!
     ::DatawireQuarkCore.print(keys)
 

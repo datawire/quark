@@ -34,7 +34,7 @@ class CLASS_QuarkClass < ::DatawireQuarkCore::QuarkObject
     def self.get(id)
         
         if (!((::Quark.quark.reflect.QuarkClass.classes).key?(id)))
-            ::DatawireQuarkCore.print(((("Cannot find ") + (id)) + (" in ")) + (((::Quark.quark.reflect.QuarkClass.classes).keys).to_s))
+            ::DatawireQuarkCore.print(((("Cannot find ") + (id)) + (" in ")) + ((::DatawireQuarkCore::List.new((::Quark.quark.reflect.QuarkClass.classes).keys)).to_s))
         end
         return (::Quark.quark.reflect.QuarkClass.classes)[id]
 

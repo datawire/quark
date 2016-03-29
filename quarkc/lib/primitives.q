@@ -320,7 +320,7 @@ namespace quark {
                                    $js{($self).has($key)};
         macro List<K> keys() $java{new java.util.ArrayList(($self).keySet())}
                              $py{_List(($self).keys())}
-                             $rb{($self).keys}
+                             $rb{::DatawireQuarkCore::List.new(($self).keys)}
                              $js{Array.from(($self).keys())};
         macro void update(Map<K,V> other) $java{($self).putAll($other)}
                                           $py{($self).update($other)}

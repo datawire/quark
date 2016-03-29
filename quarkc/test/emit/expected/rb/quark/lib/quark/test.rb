@@ -375,7 +375,7 @@ class CLASS_Harness < ::DatawireQuarkCore::QuarkObject
 
     def collect(filter)
         
-        names = (::Quark.quark.reflect.QuarkClass.classes).keys
+        names = ::DatawireQuarkCore::List.new((::Quark.quark.reflect.QuarkClass.classes).keys)
         (names).sort!
         idx = 0
         pfx = (@pkg) + (".")
