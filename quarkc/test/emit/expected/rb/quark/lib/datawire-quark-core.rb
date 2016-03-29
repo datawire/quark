@@ -116,7 +116,7 @@ module DatawireQuarkCore
     clz
   end
   def self.__getClass obj
-    return nil if obj.is_a? NilClass
+    return nil if obj.nil?
     return "quark.String" if obj.is_a? String
     return "quark.int" if obj.is_a? Fixnum
     return "quark.float" if obj.is_a? Float
