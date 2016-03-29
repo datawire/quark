@@ -2,24 +2,57 @@ module DatawireQuarkCore
   require 'net/http'
   require 'uri'
   require 'json'
+
   require 'concurrent'
   require 'celluloid/current'
   require 'reel'
   require 'logging'
   require 'event_emitter'
 
-  class Extern
-    def self.getters(*names)
+  module GettersSetters
+    # Generate Java/Quark-style getters and setters for
+    # instance variables.
+    #
+    # Example:
+    #
+    #   class Foo
+    #     extend GettersSetters
+    #
+    #     getters :fooBar, :bazQux
+    #     setters :fooBar
+    #   end
+    #
+    # The above equivalent to:
+    #
+    #   class Foo
+    #     extend GettersAndSetters
+    #
+    #     def getFooBar
+    #       @fooBar
+    #     end
+    #
+    #     def getBazQux
+    #       @bazQux
+    #     end
+    #
+    #     def setFooBar(value)
+    #       @fooBar = value
+    #
+    #       nil
+    #     end
+    #   end
+
+    def getters(*names)
       names.each do |name|
-        define_method('get' + to_camel_case(name)) do
+        define_method('get' + capitalize(name)) do
           instance_variable_get("@#{name}")
         end
       end
     end
 
-    def self.setters(*names)
+    def setters(*names)
       names.each do |name|
-        define_method('set' + to_camel_case(name)) do |value|
+        define_method('set' + capitalize(name)) do |value|
           instance_variable_set("@#{name}", value)
 
           nil
@@ -29,8 +62,8 @@ module DatawireQuarkCore
 
   private
 
-    def self.to_camel_case(string)
-      string.to_s.split('_').collect(&:capitalize).join
+    def capitalize(string)
+      string[0].upcase + string[1..-1]
     end
   end
 
@@ -310,7 +343,7 @@ module DatawireQuarkCore
   end
 
   module HTTP
-    class Base < Extern
+    class Base
       def setHeader(key, value)
         @headers[key.downcase] = value
 
@@ -327,6 +360,8 @@ module DatawireQuarkCore
     end
 
     class Request < Base
+      extend GettersSetters
+
       getters :body, :method, :url
       setters :body, :method
 
@@ -339,6 +374,8 @@ module DatawireQuarkCore
     end
 
     class Response < Base
+      extend GettersSetters
+
       getters :code, :body
       setters :code, :body
 
@@ -385,6 +422,7 @@ module DatawireQuarkCore
       sprintf("%s: %s\n", ::Logging::LNAMES[event.level].downcase, obj)
     end
   end
+
   class Logger
     extend Forwardable
     @@init = false
@@ -413,7 +451,6 @@ module DatawireQuarkCore
     end
     def_delegators :@log, :debug, :info, :warn, :error
   end
-
 
   class Eventor
     def initialize()
