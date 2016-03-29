@@ -8,10 +8,13 @@ env:
 language:
 - java
 - python
+- ruby
 python:
 - 2.7.6
 jdk:
 - oraclejdk7
+rvm:
+- 2.3.0
 addons:
   apt:
     packages:
