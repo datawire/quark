@@ -42,6 +42,7 @@ install:
 - scripts/develop.sh
 - pip freeze
 - mvn --version
+- ruby --version
 script:
 - py.test -v $TEST_SUITE --durations=10
 notifications:
