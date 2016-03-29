@@ -827,15 +827,15 @@ class CLASS_Server < ::DatawireQuarkCore::QuarkObject
         else
             methodName = (envelope).getObjectItem("$method").getString()
             json = (envelope).getObjectItem("rpc")
-            method_ = ::Quark.quark.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
-            params = method_.getParameters()
+            method = ::Quark.quark.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(self)).getField("impl").getType().getMethod(methodName)
+            params = method.getParameters()
             args = ::DatawireQuarkCore::List.new([])
             idx = 0
             while ((idx) < ((params).size)) do
                 (args) << (::Quark.quark.fromJSON((params)[idx], nil, json.getListItem(idx)))
                 idx = (idx) + (1)
             end
-            result = method_.invoke(@impl, args)
+            result = method.invoke(@impl, args)
             result.onFinished(::Quark.quark.ServerResponder.new(request, response))
         end
 

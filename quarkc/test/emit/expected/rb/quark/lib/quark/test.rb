@@ -224,18 +224,18 @@ CLASS_Test.unlazy_statics
 
 def self.MethodTest; CLASS_MethodTest; end
 class CLASS_MethodTest < ::Quark.quark.test.Test
-    attr_accessor :klass, :method_
+    attr_accessor :klass, :method
     extend ::DatawireQuarkCore::Static
 
     static quark_test_MethodTest_ref: -> { ::Quark.quark_md.Root.quark_test_MethodTest_md }
 
 
 
-    def initialize(klass, method_)
+    def initialize(klass, method)
         
-        super(((klass.getName()) + (".")) + (method_.getName()))
+        super(((klass.getName()) + (".")) + (method.getName()))
         (self).klass = klass
-        (self).method_ = method_
+        (self).method = method
 
         nil
     end
@@ -251,7 +251,7 @@ class CLASS_MethodTest < ::Quark.quark.test.Test
         if ((setup) != (nil))
             setup.invoke(test, ::DatawireQuarkCore::List.new([]))
         end
-        @method_.invoke(test, ::DatawireQuarkCore::List.new([]))
+        @method.invoke(test, ::DatawireQuarkCore::List.new([]))
         if ((teardown) != (nil))
             teardown.invoke(test, ::DatawireQuarkCore::List.new([]))
         end
@@ -284,7 +284,7 @@ class CLASS_MethodTest < ::Quark.quark.test.Test
             return (self).klass
         end
         if ((name) == ("method"))
-            return (self).method_
+            return (self).method
         end
         return nil
 
@@ -309,7 +309,7 @@ class CLASS_MethodTest < ::Quark.quark.test.Test
             (self).klass = value
         end
         if ((name) == ("method"))
-            (self).method_ = value
+            (self).method = value
         end
 
         nil
@@ -319,7 +319,7 @@ class CLASS_MethodTest < ::Quark.quark.test.Test
         
 
         self.klass = nil
-        self.method_ = nil
+        self.method = nil
 
         nil
     end

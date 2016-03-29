@@ -124,14 +124,7 @@ def main(statements):
 
 ## Naming and imports
 
-SUBS = {'Class': 'QuarkClass',
-        ### XXX: Ruby keywords, only two? Sloppy tests?
-        'end': 'end_', 'next': 'next_',
-        ### XXX: make sure to keep this part in sync with
-        ### QuarkObject#method_missing list. You can omit invalid
-        ### names in Quark, like `nil?` and `is_a?`
-        'method': 'method_', 'inspect': 'inspect_', 'to_s': 'to_s_',
-        }
+SUBS = {'Class': 'QuarkClass', 'end': 'end_', 'next': 'next_'}
 def name(n):
     return SUBS.get(n, n).replace('-', '_')
 
