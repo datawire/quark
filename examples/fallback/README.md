@@ -7,10 +7,14 @@ behavior in a communication endpoint.
 
 The fallback.q file describes a simple communication endpoint that
 implements fallback behavior. The interface takes a list of urls and
-fetchs them in order returning content from the first and then
+fetches them in order returning content from the first and then
 providing a dynamically generated fallback if none are available.
 
 ## Running this example
+
+First run a simple local web server using Python:
+
+        python -m SimpleHTTPServer 8000
 
 ### Python
 
@@ -20,7 +24,7 @@ Compile and install the endpoint in fallback.q:
 
 Run the Python client with:
 
-        python get.py <list-of-urls>
+        python get.py http://127.0.0.1:8001 http://127.0.0.1:8000
 
 ### Java
 
@@ -34,7 +38,7 @@ Compile the Java client with:
 
 Run the Java client with
 
-        mvn exec:java -Dexec.mainClass=get.Main -Dexec.args="<list-of-urls>"
+        mvn exec:java -Dexec.mainClass=get.Main -Dexec.args="http://127.0.0.1:8001 http://127.0.0.1:8000"
 
 ### JavaScript
 
@@ -44,4 +48,4 @@ Compile and install the endpoint in fallback.q:
 
 Run the Javascript client with:
 
-        node get.js
+        node get.js http://127.0.0.1:8001 http://127.0.0.1:8000

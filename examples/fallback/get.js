@@ -6,9 +6,9 @@ var fallback = require("fallback").fallback;
 var timeout = 1.0;
 
 var cli = new fallback.Client();
-var content = cli.get(["https://asdf.com", "http://www.google.com"], timeout);
-//var content = cli.get(["https://thisreallyshouldntexist.com", "http://www.google.com"], timeout);
-//var content = cli.get(["https://thisreallyshouldntexist.com", "http://anotherbadurl.com"], timeout);
+
+var args = process.argv.slice(2);
+var content = cli.get(args, timeout);
 
 function FutureListener(cb) {
     this.onFuture = cb;
@@ -16,7 +16,7 @@ function FutureListener(cb) {
 content.onFinished(
     new FutureListener( // XXX: if this can become magic then the quark-js API can be idiomatic
         function(content) {
-            if (content.getError() != null) {
+            if (content.getError() !== null) {
                 console.log("Error:", content.getError());
             } else {
                 console.log(content.body);
