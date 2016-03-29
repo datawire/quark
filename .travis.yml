@@ -43,7 +43,7 @@ install:
 - . quark-travis/bin/activate
 - pip install --upgrade pip
 - command rvm install 2.3.0
-- command rvm --default use 2.3.0
+- rvm --default use 2.3.0
 - ruby --version
 - scripts/develop.sh
 - pip freeze
