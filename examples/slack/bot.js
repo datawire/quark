@@ -34,4 +34,5 @@ try {
     process.exit(1);
 }
 var client = new slack.SlackClient(token);
+client.post("#demo", "JavaScript Slack client is connected");
 client.subscribe(new Handler());
