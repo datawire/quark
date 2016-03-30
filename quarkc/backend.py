@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, tempfile, logging
+import os, types, java, python, javascript, ruby, tempfile, logging
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
@@ -509,7 +509,7 @@ class Backend(object):
 
     @overload(List)
     def expr(self, l):
-        return self.gen.list([self.expr(e) for e in l.elements])
+        return self.gen.list_([self.expr(e) for e in l.elements])
 
     @overload(Map)
     def expr(self, m):
@@ -746,3 +746,22 @@ class JavaScript(Backend):
     def run(self, name, version):
         main = self.gen.name(name)
         os.execlp("node", "node", "-e", 'require("%s").%s.main()' % (name, main))
+
+class Ruby(Backend):
+    PRETTY_INSTALL = "GEM"
+    ext = "rb"
+    gen = ruby
+
+    @staticmethod
+    def is_installed(url):
+        return False
+
+    def install_command(self, dir):
+        raise "TODO"
+        command.call_and_show("install", ".", ["gem", "install", dir])
+
+    def run(self, name, version):
+        raise "TODO"
+        main = self.gen.name(name)
+        os.execlp("node", "node", "-e", 'require("%s").%s.main()' % (name, main))
+

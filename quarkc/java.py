@@ -339,7 +339,7 @@ def string(s):
     result += s.text[-1]
     return result
 
-def list(elements):
+def list_(elements):
     return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % ", ".join(elements)
 
 def map(entries):

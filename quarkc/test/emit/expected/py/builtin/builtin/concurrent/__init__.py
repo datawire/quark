@@ -63,7 +63,7 @@ class FutureCompletion(object):
         if ((name) == (u"listener")):
             (self).listener = value
 
-    
+
 FutureCompletion.builtin_concurrent_FutureCompletion_ref = builtin_md.Root.builtin_concurrent_FutureCompletion_md
 class EventContext(object):
     """
@@ -92,7 +92,7 @@ class EventContext(object):
         if ((name) == (u"_context")):
             (self)._context = value
 
-    
+
 EventContext.builtin_concurrent_EventContext_ref = builtin_md.Root.builtin_concurrent_EventContext_md
 class Future(EventContext):
     """
@@ -138,8 +138,6 @@ class Future(EventContext):
             while ((i) < (len(callbacks))):
                 (((self)._context).collector).put((callbacks)[i]);
                 i = (i) + (1)
-
-        
 
     def isFinished(self):
         ((self)._lock).acquire();
@@ -193,7 +191,7 @@ class Future(EventContext):
         if ((name) == (u"_lock")):
             (self)._lock = value
 
-    
+
 Future.builtin_List_builtin_concurrent_FutureCompletion__ref = builtin_md.Root.builtin_List_builtin_concurrent_FutureCompletion__md
 Future.builtin_concurrent_Future_ref = builtin_md.Root.builtin_concurrent_Future_md
 class FutureWait(object):
@@ -266,7 +264,7 @@ class FutureWait(object):
         if ((name) == (u"_future")):
             (self)._future = value
 
-    
+
 FutureWait.builtin_concurrent_FutureWait_ref = builtin_md.Root.builtin_concurrent_FutureWait_md
 class Queue(object):
     """
@@ -331,7 +329,7 @@ class Queue(object):
         if ((name) == (u"tail")):
             (self).tail = value
 
-    
+
 
 class CollectorExecutor(object):
     """
@@ -381,7 +379,7 @@ class CollectorExecutor(object):
         if ((name) == (u"collector")):
             (self).collector = value
 
-    
+
 CollectorExecutor.builtin_concurrent_Queue_builtin_concurrent_Event__ref = builtin_md.Root.builtin_concurrent_Queue_builtin_concurrent_Event__md
 CollectorExecutor.builtin_concurrent_CollectorExecutor_ref = builtin_md.Root.builtin_concurrent_CollectorExecutor_md
 class Collector(object):
@@ -451,7 +449,7 @@ class Collector(object):
         if ((name) == (u"idle")):
             (self).idle = value
 
-    
+
 Collector.builtin_concurrent_Collector_ref = builtin_md.Root.builtin_concurrent_Collector_md
 class TimeoutListener(object):
     """
@@ -500,7 +498,7 @@ class TimeoutExpiry(object):
         if ((name) == (u"listener")):
             (self).listener = value
 
-    
+
 TimeoutExpiry.builtin_concurrent_TimeoutExpiry_ref = builtin_md.Root.builtin_concurrent_TimeoutExpiry_md
 class Timeout(EventContext):
     """
@@ -567,7 +565,7 @@ class Timeout(EventContext):
         if ((name) == (u"listener")):
             (self).listener = value
 
-    
+
 Timeout.builtin_concurrent_Timeout_ref = builtin_md.Root.builtin_concurrent_Timeout_md
 class TLSContextInitializer(object):
     """
@@ -661,7 +659,7 @@ class Context(object):
         if ((name) == (u"collector")):
             (self).collector = value
 
-    
+
 Context._global = Context(None)
 Context._current = _TLS(TLSContextInitializer())
 Context.builtin_concurrent_Context_ref = builtin_md.Root.builtin_concurrent_Context_md

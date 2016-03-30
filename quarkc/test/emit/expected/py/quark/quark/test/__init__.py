@@ -109,7 +109,7 @@ class Test(object):
         if ((name) == (u"failures")):
             (self).failures = value
 
-    
+
 Test.ctx = _TLS(TestInitializer())
 Test.quark_test_Test_ref = quark_md.Root.quark_test_Test_md
 class MethodTest(Test):
@@ -177,7 +177,7 @@ class MethodTest(Test):
         if ((name) == (u"method")):
             (self).method = value
 
-    
+
 MethodTest.quark_test_MethodTest_ref = quark_md.Root.quark_test_MethodTest_md
 
 def check(value, message):
@@ -222,8 +222,6 @@ class Harness(object):
                         else:
                             if ((filter) != (None)):
                                 self.filtered = (self.filtered) + (1)
-
-                        
 
                     jdx = (jdx) + (1)
 
@@ -283,7 +281,7 @@ class Harness(object):
         if ((name) == (u"filtered")):
             (self).filtered = value
 
-    
+
 Harness.quark_List_quark_test_Test__ref = quark_md.Root.quark_List_quark_test_Test__md
 Harness.quark_test_Harness_ref = quark_md.Root.quark_test_Harness_md
 

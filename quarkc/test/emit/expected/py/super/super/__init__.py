@@ -28,7 +28,7 @@ class A(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 A.super_A_ref = super_md.Root.super_A_md
 class B(A):
     def _init(self):
@@ -54,7 +54,7 @@ class B(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 B.super_B_ref = super_md.Root.super_B_md
 
 def main():

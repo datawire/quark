@@ -20,9 +20,14 @@ namespace quark {
         void onHTTPFinal(HTTPRequest request) {}
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPRequest})
+    @mapping($java{io.datawire.quark.runtime.HTTPRequest}
+             $rb{::DatawireQuarkCore::HTTP::Request})
     primitive HTTPRequest {
-        macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)} $py{_HTTPRequest($url)} $js{new _qrt.HTTPRequest($url)};
+        macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)}
+                                      $py{_HTTPRequest($url)}
+                                      $rb{::DatawireQuarkCore::HTTP::Request.new($url)}
+                                      $js{new _qrt.HTTPRequest($url)};
+
         String getUrl();
         void setMethod(String method);
         String getMethod();
@@ -33,7 +38,8 @@ namespace quark {
         List<String> getHeaders();
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPResponse})
+    @mapping($java{io.datawire.quark.runtime.HTTPResponse}
+             $rb{::DatawireQuarkCore::HTTP::Response})
     primitive HTTPResponse {
         int getCode();
         void setCode(int code);

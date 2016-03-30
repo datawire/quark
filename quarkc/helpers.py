@@ -209,15 +209,21 @@ def get_defaulted_methods(cls):
     get_defaulted_methods(cls, result, derived, bindings)
     return result, bindings
 
-def indent(st, level=4):
+def indent(st, level=4, leading_nl=True):
     if st:
+        if isinstance(st, (tuple, list)):
+            st = "\n".join(st)
         spaces = " "*level
         pst = ""
         while pst != st:
             pst = st
             st = st.replace("\n\n\n","\n\n")
         st = ("\n" + st).replace("\n", "\n%s" % spaces) + "\n"
-        st = st.replace("\n%s\n" % spaces, "\n\n")
+        while pst != st:
+            pst = st
+            st = st.replace("\n%s\n" % spaces, "\n\n")
+        if not leading_nl:
+            st = st[1:]
         return st
     else:
         return ""

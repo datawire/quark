@@ -1,5 +1,7 @@
 from quark_runtime import *
 
+<<<<<<< HEAD:quarkc/test/emit/expected/py/delegate/delegate_lib/__init__.py
+=======
 import quark.reflect
 import delegate_md
 
@@ -88,8 +90,7 @@ class Test(object):
         pass
 Test.delegate_Test_ref = delegate_md.Root.delegate_Test_md
 Test.quark_List_quark_Object__ref = delegate_md.Root.quark_List_quark_Object__md
+>>>>>>> febff07:quarkc/test/emit/expected/py/delegate/delegate/__init__.py
 
 def main():
-    t = Test();
-    (t).foo(u"one", u"two", 3);
-    _println(((t).hello(Ping())).toString());
+    _println(u"This shadows ruby builtin module 'delegate'");

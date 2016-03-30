@@ -16,9 +16,9 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [ --java | --python | --javascript | --all ] <file>...
-  quark [options] compile [ -o DIR ] [ --java | --python | --javascript | --all ] <file>...
-  quark [options] run ( --java | --python | --javascript ) <file>...
+  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] run ( --java | --python | --javascript | --ruby ) <file>...
   quark -h | --help | help
   quark --version
 
@@ -39,6 +39,7 @@ Options:
                         [this is the default if no targets are specified]
 
   --java                Install/emit Java code.
+  --ruby                Install/emit Ruby code.
   --python              Install/emit Python code.
   --javascript          Install/emit JavaScript code.
 """
@@ -185,10 +186,11 @@ def main(args):
     helpers.Code.identifier = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
 
     java = args["--java"]
+    ruby = args["--ruby"]
     python = args["--python"]
     javascript = args["--javascript"]
 
-    all = args["--all"] or not (java or python or javascript)
+    all = args["--all"] or not (java or python or javascript or ruby)
 
     output = args["--output"]
 
@@ -197,6 +199,8 @@ def main(args):
         if java or all:
             check("mvn", ".")
             backends.append(backend.Java)
+        if ruby or all:
+            backends.append(backend.Ruby)
         if python or all:
             check("python", ".")
             backends.append(backend.Python)

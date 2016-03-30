@@ -44,7 +44,7 @@ class Foo(object):
         if ((name) == (u"count")):
             Foo.count = value
 
-    
+
 Foo.count = 0
 Foo.static_Foo_ref = static_md.Root.static_Foo_md
 

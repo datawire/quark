@@ -304,7 +304,7 @@ def string(s):
     result += s.text[-1]
     return result
 
-def list(elements):
+def list_(elements):
     return "[%s]" % ", ".join(elements)
 
 def map(entries):

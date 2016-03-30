@@ -97,7 +97,7 @@ class RPC(object):
         if ((name) == (u"instance")):
             (self).instance = value
 
-    
+
 RPC.builtin_behaviors_RPC_ref = builtin_md.Root.builtin_behaviors_RPC_md
 class RPCRequest(object):
     def _init(self):
@@ -269,5 +269,5 @@ class CircuitBreaker(object):
         if ((name) == (u"mutex")):
             (self).mutex = value
 
-    
+
 CircuitBreaker.builtin_behaviors_CircuitBreaker_ref = builtin_md.Root.builtin_behaviors_CircuitBreaker_md

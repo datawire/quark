@@ -53,7 +53,7 @@ class Matrix(object):
         if ((name) == (u"columns")):
             (self).columns = value
 
-    
+
 Matrix.quark_List_quark_List_quark_Object___ref = matrix_md.Root.quark_List_quark_List_quark_Object___md
 Matrix.quark_List_quark_Object__ref = matrix_md.Root.quark_List_quark_Object__md
 

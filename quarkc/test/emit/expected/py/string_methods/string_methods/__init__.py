@@ -52,7 +52,7 @@ class test_size(string_test):
         if ((name) == (u"what")):
             (self).what = value
 
-    
+
 test_size.string_methods_test_size_ref = string_methods_md.Root.string_methods_test_size_md
 class test_startsWith(string_test):
     def _init(self):
@@ -91,7 +91,7 @@ class test_startsWith(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 test_startsWith.string_methods_test_startsWith_ref = string_methods_md.Root.string_methods_test_startsWith_md
 class test_endsWith(string_test):
     def _init(self):
@@ -130,7 +130,7 @@ class test_endsWith(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 test_endsWith.string_methods_test_endsWith_ref = string_methods_md.Root.string_methods_test_endsWith_md
 class test_find(string_test):
     def _init(self):
@@ -169,7 +169,7 @@ class test_find(string_test):
         if ((name) == (u"_that")):
             (self)._that = value
 
-    
+
 test_find.string_methods_test_find_ref = string_methods_md.Root.string_methods_test_find_md
 class test_substring(string_test):
     def _init(self):
@@ -216,7 +216,7 @@ class test_substring(string_test):
         if ((name) == (u"end")):
             (self).end = value
 
-    
+
 test_substring.string_methods_test_substring_ref = string_methods_md.Root.string_methods_test_substring_md
 class test_replace(string_test):
     def _init(self):
@@ -263,7 +263,7 @@ class test_replace(string_test):
         if ((name) == (u"end")):
             (self).end = value
 
-    
+
 test_replace.string_methods_test_replace_ref = string_methods_md.Root.string_methods_test_replace_md
 class test_join(string_test):
     def _init(self):
@@ -324,7 +324,7 @@ class test_join(string_test):
         if ((name) == (u"sep")):
             (self).sep = value
 
-    
+
 test_join.string_methods_test_join_ref = string_methods_md.Root.string_methods_test_join_md
 test_join.quark_List_quark_String__ref = string_methods_md.Root.quark_List_quark_String__md
 class test_split(string_test):
@@ -374,7 +374,7 @@ class test_split(string_test):
         if ((name) == (u"altsep")):
             (self).altsep = value
 
-    
+
 test_split.string_methods_test_split_ref = string_methods_md.Root.string_methods_test_split_md
 
 def main():

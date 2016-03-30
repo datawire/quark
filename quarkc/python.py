@@ -343,7 +343,7 @@ def number(n):
 def string(s):
     return "u" + s.text
 
-def list(elements):
+def list_(elements):
     return "_List([%s])" % ", ".join(elements)
 
 def map(entries):
