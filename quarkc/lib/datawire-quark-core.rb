@@ -355,6 +355,7 @@ module DatawireQuarkCore
     def initialize()
       @sources = Concurrent::Map.new
       @seq = Concurrent::AtomicFixnum.new
+      @log = Logger.new "quark.runtime.sources"
     end
 
     def add (topic)
@@ -372,7 +373,9 @@ module DatawireQuarkCore
     end
 
     def explain
-      @sources.each_key { |k| puts "Waiting for %s from %s" % [k, @sources[k]]}
+      @sources.each_key { |k|
+        @log.trace "Waiting for %s from %s" % [k, @sources[k]]
+      }
     end
   end
 
@@ -395,6 +398,7 @@ module DatawireQuarkCore
       r = Logging.logger.root
       if r.appenders.empty?
         r.appenders = Logging.appenders.stdout
+        r.level = :info
         # Logging.logger["quark"].warn "Logging initialized by quark runtime."
       else
         # Logging.logger["quark"].debug "Logging already initialized."
@@ -526,11 +530,11 @@ module DatawireQuarkCore
       events = @events
       events.event { handler.onWSInit(sock) }
       client.on_client(:open) do |wsevt|
-        puts "open"
+        # puts "open"
         events.event { handler.onWSConnected(sock) }
       end
       client.on_client(:message) do |wsevt|
-        puts "message"
+        # puts "message"
         case wsevt.data
         when Array then
           buffer = Buffer.new(wsevt.data.pack("C*"))
@@ -540,13 +544,13 @@ module DatawireQuarkCore
         end
       end
       client.on_client(:close) do |wsevt|
-        puts "close"
+        # puts "close"
         events.event { handler.onWSClosed(sock) }
         events.event(final:src) { handler.onWSFinal(sock) }
       end
       client.on_client(:error) do |wsevt|
-        puts self
-        puts "error"
+        # puts self
+        # puts "error"
         events.event { handler.onWSError(sock, wsevt.reason) }
       end
       client.issues.on(:start_failed) do |err|
