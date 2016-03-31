@@ -31,7 +31,7 @@ def main():
         exit("Failed to read Slack token. See examples/README.md for more information.")
 
     client = slack.SlackClient(token)
-    client.post("#demo", "testing...")
+    client.post("#demo", "Python Slack client is connected")
     client.subscribe(Handler())
 
 
