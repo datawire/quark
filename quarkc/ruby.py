@@ -102,8 +102,8 @@ def _make_file(path):
         head += 'require_relative "datawire-quark-core"\n'
     elif path[0] != 'quark' and not path[0].endswith("_md"):
         head += 'require "quark"\n'
-    head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
-    tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
+    head += ''.join(epilogue(name=_to_camel_case(name), alias=name) for name in names)
+    tail = ''.join(prologue(name=_to_camel_case(name)) for name in reversed(names))
     # tail += 'puts "end loading module %s"\n' % ".".join(path)
     return Code(comment, head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
