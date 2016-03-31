@@ -1,8 +1,8 @@
 module Quark
-def self.booleans_md; MODULE_booleans_md; end
-module MODULE_booleans_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.booleans_md; BooleansMd; end
+module BooleansMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_booleans_md
+end # module BooleansMd
 end # module Quark

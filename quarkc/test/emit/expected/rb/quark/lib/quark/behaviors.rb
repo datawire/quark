@@ -1,15 +1,15 @@
 module Quark
-def self.quark; MODULE_quark; end
-module MODULE_quark
-def self.behaviors; MODULE_behaviors; end
-module MODULE_behaviors
+def self.quark; Quark; end
+module Quark
+def self.behaviors; Behaviors; end
+module Behaviors
 require_relative 'reflect' # 1 () ()
 require_relative '../quark' # 0 () ('quark',)
 require_relative 'concurrent' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
-def self.RPC; CLASS_RPC; end
-class CLASS_RPC < ::DatawireQuarkCore::QuarkObject
+def self.RPC; RPC; end
+class RPC < ::DatawireQuarkCore::QuarkObject
     attr_accessor :service, :returned, :timeout, :methodName, :instance
     extend ::DatawireQuarkCore::Static
 
@@ -150,10 +150,10 @@ class CLASS_RPC < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_RPC.unlazy_statics
+RPC.unlazy_statics
 
-def self.RPCRequest; CLASS_RPCRequest; end
-class CLASS_RPCRequest < ::DatawireQuarkCore::QuarkObject
+def self.RPCRequest; RPCRequest; end
+class RPCRequest < ::DatawireQuarkCore::QuarkObject
     attr_accessor :rpc, :retval, :args, :timeout
     extend ::DatawireQuarkCore::Static
 
@@ -297,10 +297,10 @@ class CLASS_RPCRequest < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_RPCRequest.unlazy_statics
+RPCRequest.unlazy_statics
 
-def self.CircuitBreaker; CLASS_CircuitBreaker; end
-class CLASS_CircuitBreaker < ::DatawireQuarkCore::QuarkObject
+def self.CircuitBreaker; CircuitBreaker; end
+class CircuitBreaker < ::DatawireQuarkCore::QuarkObject
     attr_accessor :id, :failureLimit, :retestDelay, :active, :failureCount, :mutex
     extend ::DatawireQuarkCore::Static
 
@@ -432,7 +432,7 @@ class CLASS_CircuitBreaker < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_CircuitBreaker.unlazy_statics
-end # module MODULE_behaviors
-end # module MODULE_quark
+CircuitBreaker.unlazy_statics
+end # module Behaviors
+end # module Quark
 end # module Quark

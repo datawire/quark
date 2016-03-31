@@ -1,11 +1,11 @@
 module Quark
-def self.macro_native_md; MODULE_macro_native_md; end
-module MODULE_macro_native_md
+def self.macro_native_md; MacroNativeMd; end
+module MacroNativeMd
 require 'quark' # .../reflect
 # for ('macro_native_md',): require_relative 'macro_native' # 0 () ()
 
-def self.macro_native_Native_test_Method; CLASS_macro_native_Native_test_Method; end
-class CLASS_macro_native_Native_test_Method < ::Quark.quark.reflect.Method
+def self.macro_native_Native_test_Method; MacroNativeNativeTestMethod; end
+class MacroNativeNativeTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_macro_native_Native_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.macro_native_Native; CLASS_macro_native_Native; end
-class CLASS_macro_native_Native < ::Quark.quark.reflect.QuarkClass
+def self.macro_native_Native; MacroNativeNative; end
+class MacroNativeNative < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.macro_native_md.macro_native_Native.new() }
@@ -116,10 +116,10 @@ class CLASS_macro_native_Native < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_macro_native_Native.unlazy_statics
+MacroNativeNative.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_native_Native_md: -> { ::Quark.macro_native_md.macro_native_Native.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_macro_native_md
+Root.unlazy_statics
+end # module MacroNativeMd
 end # module Quark

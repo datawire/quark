@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.t2; MODULE_t2; end
-module MODULE_t2
+def self.t2; T2; end
+module T2
 require_relative 'testlib' # 0 () ()
 
 def self.atest()
@@ -14,5 +14,5 @@ def self.atest()
 
     nil
 end
-end # module MODULE_t2
+end # module T2
 end # module Quark

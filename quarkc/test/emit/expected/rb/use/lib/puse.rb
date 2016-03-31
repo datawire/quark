@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.puse; MODULE_puse; end
-module MODULE_puse
+def self.puse; Puse; end
+module Puse
 require 'testlib' 
 require 't2' 
 require_relative 'foo' # 0 () ()
@@ -23,5 +23,5 @@ if __FILE__ == $0
     ::Quark.puse.main()
 end
 
-end # module MODULE_puse
+end # module Puse
 end # module Quark

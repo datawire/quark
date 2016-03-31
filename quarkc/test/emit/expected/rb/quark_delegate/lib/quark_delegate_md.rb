@@ -1,11 +1,11 @@
 module Quark
-def self.quark_delegate_md; MODULE_quark_delegate_md; end
-module MODULE_quark_delegate_md
+def self.quark_delegate_md; QuarkDelegateMd; end
+module QuarkDelegateMd
 require 'quark' # .../reflect
 # for ('quark_delegate_md',): require_relative 'quark_delegate' # 0 () ()
 
-def self.quark_delegate_Message_encode_Method; CLASS_quark_delegate_Message_encode_Method; end
-class CLASS_quark_delegate_Message_encode_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Message_encode_Method; QuarkDelegateMessageEncodeMethod; end
+class QuarkDelegateMessageEncodeMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -57,8 +57,8 @@ class CLASS_quark_delegate_Message_encode_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Message; CLASS_quark_delegate_Message; end
-class CLASS_quark_delegate_Message < ::Quark.quark.reflect.QuarkClass
+def self.quark_delegate_Message; QuarkDelegateMessage; end
+class QuarkDelegateMessage < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_delegate_md.quark_delegate_Message.new() }
@@ -115,10 +115,10 @@ class CLASS_quark_delegate_Message < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_delegate_Message.unlazy_statics
+QuarkDelegateMessage.unlazy_statics
 
-def self.quark_delegate_Ping_encode_Method; CLASS_quark_delegate_Ping_encode_Method; end
-class CLASS_quark_delegate_Ping_encode_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Ping_encode_Method; QuarkDelegatePingEncodeMethod; end
+class QuarkDelegatePingEncodeMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -170,8 +170,8 @@ class CLASS_quark_delegate_Ping_encode_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Ping; CLASS_quark_delegate_Ping; end
-class CLASS_quark_delegate_Ping < ::Quark.quark.reflect.QuarkClass
+def self.quark_delegate_Ping; QuarkDelegatePing; end
+class QuarkDelegatePing < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_delegate_md.quark_delegate_Ping.new() }
@@ -228,10 +228,10 @@ class CLASS_quark_delegate_Ping < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_delegate_Ping.unlazy_statics
+QuarkDelegatePing.unlazy_statics
 
-def self.quark_delegate_Pong_toString_Method; CLASS_quark_delegate_Pong_toString_Method; end
-class CLASS_quark_delegate_Pong_toString_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Pong_toString_Method; QuarkDelegatePongToStringMethod; end
+class QuarkDelegatePongToStringMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -283,8 +283,8 @@ class CLASS_quark_delegate_Pong_toString_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Pong_encode_Method; CLASS_quark_delegate_Pong_encode_Method; end
-class CLASS_quark_delegate_Pong_encode_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Pong_encode_Method; QuarkDelegatePongEncodeMethod; end
+class QuarkDelegatePongEncodeMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -336,8 +336,8 @@ class CLASS_quark_delegate_Pong_encode_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Pong; CLASS_quark_delegate_Pong; end
-class CLASS_quark_delegate_Pong < ::Quark.quark.reflect.QuarkClass
+def self.quark_delegate_Pong; QuarkDelegatePong; end
+class QuarkDelegatePong < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_delegate_md.quark_delegate_Pong.new() }
@@ -394,10 +394,10 @@ class CLASS_quark_delegate_Pong < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_delegate_Pong.unlazy_statics
+QuarkDelegatePong.unlazy_statics
 
-def self.quark_delegate_Test_bar_Method; CLASS_quark_delegate_Test_bar_Method; end
-class CLASS_quark_delegate_Test_bar_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Test_bar_Method; QuarkDelegateTestBarMethod; end
+class QuarkDelegateTestBarMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -449,8 +449,8 @@ class CLASS_quark_delegate_Test_bar_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Test_foo_Method; CLASS_quark_delegate_Test_foo_Method; end
-class CLASS_quark_delegate_Test_foo_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Test_foo_Method; QuarkDelegateTestFooMethod; end
+class QuarkDelegateTestFooMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -503,8 +503,8 @@ class CLASS_quark_delegate_Test_foo_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Test_rpc_Method; CLASS_quark_delegate_Test_rpc_Method; end
-class CLASS_quark_delegate_Test_rpc_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Test_rpc_Method; QuarkDelegateTestRpcMethod; end
+class QuarkDelegateTestRpcMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -556,8 +556,8 @@ class CLASS_quark_delegate_Test_rpc_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Test_hello_Method; CLASS_quark_delegate_Test_hello_Method; end
-class CLASS_quark_delegate_Test_hello_Method < ::Quark.quark.reflect.Method
+def self.quark_delegate_Test_hello_Method; QuarkDelegateTestHelloMethod; end
+class QuarkDelegateTestHelloMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -609,8 +609,8 @@ class CLASS_quark_delegate_Test_hello_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_delegate_Test; CLASS_quark_delegate_Test; end
-class CLASS_quark_delegate_Test < ::Quark.quark.reflect.QuarkClass
+def self.quark_delegate_Test; QuarkDelegateTest; end
+class QuarkDelegateTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_delegate_md.quark_delegate_Test.new() }
@@ -667,10 +667,10 @@ class CLASS_quark_delegate_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_delegate_Test.unlazy_statics
+QuarkDelegateTest.unlazy_statics
 
-def self.quark_List_quark_Object_; CLASS_quark_List_quark_Object_; end
-class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_Object_; QuarkListQuarkObject; end
+class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_delegate_md.quark_List_quark_Object_.new() }
@@ -727,10 +727,10 @@ class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_Object_.unlazy_statics
+QuarkListQuarkObject.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_delegate_Message_md: -> { ::Quark.quark_delegate_md.quark_delegate_Message.singleton }
@@ -779,6 +779,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_quark_delegate_md
+Root.unlazy_statics
+end # module QuarkDelegateMd
 end # module Quark

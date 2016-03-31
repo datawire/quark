@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.json_building; MODULE_json_building; end
-module MODULE_json_building
+def self.json_building; JsonBuilding; end
+module JsonBuilding
 require_relative 'json_building' # 0 () ()
 
 def self.test_building()
@@ -24,5 +24,5 @@ if __FILE__ == $0
     ::Quark.json_building.main()
 end
 
-end # module MODULE_json_building
+end # module JsonBuilding
 end # module Quark

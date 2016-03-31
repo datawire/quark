@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.slackpack; MODULE_slackpack; end
-module MODULE_slackpack
+def self.slackpack; Slackpack; end
+module Slackpack
 require_relative 'slack' # 0 () ()
 require_relative 'pkg' # 0 () ()
 require_relative 'slackpack' # 0 () ()
@@ -20,5 +20,5 @@ if __FILE__ == $0
     ::Quark.slackpack.main()
 end
 
-end # module MODULE_slackpack
+end # module Slackpack
 end # module Quark

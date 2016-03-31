@@ -1,13 +1,13 @@
 module Quark
-def self.quark; MODULE_quark; end
-module MODULE_quark
-def self.test; MODULE_test; end
-module MODULE_test
+def self.quark; Quark; end
+module Quark
+def self.test; Test; end
+module Test
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
-def self.TestInitializer; CLASS_TestInitializer; end
-class CLASS_TestInitializer < ::DatawireQuarkCore::QuarkObject
+def self.TestInitializer; TestInitializer; end
+class TestInitializer < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_test_TestInitializer_ref: -> { ::Quark.quark_md.Root.quark_test_TestInitializer_md }
@@ -59,7 +59,7 @@ class CLASS_TestInitializer < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_TestInitializer.unlazy_statics
+TestInitializer.unlazy_statics
 
 def self.red(str)
     
@@ -85,8 +85,8 @@ def self.bold(str)
     nil
 end
 
-def self.Test; CLASS_Test; end
-class CLASS_Test < ::DatawireQuarkCore::QuarkObject
+def self.Test; Test; end
+class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name, :checks, :failures
     extend ::DatawireQuarkCore::Static
 
@@ -220,10 +220,10 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Test.unlazy_statics
+Test.unlazy_statics
 
-def self.MethodTest; CLASS_MethodTest; end
-class CLASS_MethodTest < ::Quark.quark.test.Test
+def self.MethodTest; MethodTest; end
+class MethodTest < ::Quark.quark.test.Test
     attr_accessor :klass, :method
     extend ::DatawireQuarkCore::Static
 
@@ -326,7 +326,7 @@ class CLASS_MethodTest < ::Quark.quark.test.Test
 
 
 end
-CLASS_MethodTest.unlazy_statics
+MethodTest.unlazy_statics
 
 def self.check(value, message)
     
@@ -352,8 +352,8 @@ def self.fail(message)
     nil
 end
 
-def self.Harness; CLASS_Harness; end
-class CLASS_Harness < ::DatawireQuarkCore::QuarkObject
+def self.Harness; Harness; end
+class Harness < ::DatawireQuarkCore::QuarkObject
     attr_accessor :pkg, :tests, :filtered
     extend ::DatawireQuarkCore::Static
 
@@ -496,7 +496,7 @@ class CLASS_Harness < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Harness.unlazy_statics
+Harness.unlazy_statics
 
 def self.run(pkg, filter)
     
@@ -507,6 +507,6 @@ def self.run(pkg, filter)
 
     nil
 end
-end # module MODULE_test
-end # module MODULE_quark
+end # module Test
+end # module Quark
 end # module Quark

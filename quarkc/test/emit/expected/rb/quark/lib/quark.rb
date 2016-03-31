@@ -1,7 +1,7 @@
 module Quark
 require_relative "datawire-quark-core"
-def self.quark; MODULE_quark; end
-module MODULE_quark
+def self.quark; Quark; end
+module Quark
 require_relative 'quark/reflect' # 0 ('quark',) ()
 require_relative 'quark_md' # 0 () ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
@@ -105,8 +105,8 @@ def self.fromJSON(cls, result, json)
     nil
 end
 
-def self.Resolver; CLASS_Resolver; end
-class CLASS_Resolver < ::DatawireQuarkCore::QuarkObject
+def self.Resolver; Resolver; end
+class Resolver < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_Resolver_ref: -> { ::Quark.quark_md.Root.quark_Resolver_md }
@@ -136,10 +136,10 @@ class CLASS_Resolver < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Resolver.unlazy_statics
+Resolver.unlazy_statics
 
-def self.ResponseHolder; CLASS_ResponseHolder; end
-class CLASS_ResponseHolder < ::DatawireQuarkCore::QuarkObject
+def self.ResponseHolder; ResponseHolder; end
+class ResponseHolder < ::DatawireQuarkCore::QuarkObject
     attr_accessor :response, :failure
     extend ::DatawireQuarkCore::Static
 
@@ -227,10 +227,10 @@ class CLASS_ResponseHolder < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_ResponseHolder.unlazy_statics
+ResponseHolder.unlazy_statics
 
-def self.Service; CLASS_Service; end
-class CLASS_Service < ::DatawireQuarkCore::QuarkObject
+def self.Service; Service; end
+class Service < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_Service_ref: -> { ::Quark.quark_md.Root.quark_Service_md }
@@ -280,10 +280,10 @@ class CLASS_Service < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Service.unlazy_statics
+Service.unlazy_statics
 
-def self.BaseService; CLASS_BaseService; end
-class CLASS_BaseService < ::DatawireQuarkCore::QuarkObject
+def self.BaseService; BaseService; end
+class BaseService < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_BaseService_ref: -> { ::Quark.quark_md.Root.quark_BaseService_md }
@@ -357,10 +357,10 @@ class CLASS_BaseService < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_BaseService.unlazy_statics
+BaseService.unlazy_statics
 
-def self.ServiceInstance; CLASS_ServiceInstance; end
-class CLASS_ServiceInstance < ::DatawireQuarkCore::QuarkObject
+def self.ServiceInstance; ServiceInstance; end
+class ServiceInstance < ::DatawireQuarkCore::QuarkObject
     attr_accessor :serviceName, :url, :breaker
     extend ::DatawireQuarkCore::Static
 
@@ -465,10 +465,10 @@ class CLASS_ServiceInstance < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_ServiceInstance.unlazy_statics
+ServiceInstance.unlazy_statics
 
-def self.DegenerateResolver; CLASS_DegenerateResolver; end
-class CLASS_DegenerateResolver < ::DatawireQuarkCore::QuarkObject
+def self.DegenerateResolver; DegenerateResolver; end
+class DegenerateResolver < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_DegenerateResolver_ref: -> { ::Quark.quark_md.Root.quark_DegenerateResolver_md }
@@ -520,10 +520,10 @@ class CLASS_DegenerateResolver < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_DegenerateResolver.unlazy_statics
+DegenerateResolver.unlazy_statics
 
-def self.Client; CLASS_Client; end
-class CLASS_Client < ::DatawireQuarkCore::QuarkObject
+def self.Client; Client; end
+class Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :resolver, :serviceName, :_timeout, :_failureLimit, :_retestDelay, :mutex, :instanceMap, :counter
     extend ::DatawireQuarkCore::Static
 
@@ -714,10 +714,10 @@ class CLASS_Client < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Client.unlazy_statics
+Client.unlazy_statics
 
-def self.ServerResponder; CLASS_ServerResponder; end
-class CLASS_ServerResponder < ::DatawireQuarkCore::QuarkObject
+def self.ServerResponder; ServerResponder; end
+class ServerResponder < ::DatawireQuarkCore::QuarkObject
     attr_accessor :request, :response
     extend ::DatawireQuarkCore::Static
 
@@ -794,10 +794,10 @@ class CLASS_ServerResponder < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_ServerResponder.unlazy_statics
+ServerResponder.unlazy_statics
 
-def self.Server; CLASS_Server; end
-class CLASS_Server < ::DatawireQuarkCore::QuarkObject
+def self.Server; Server; end
+class Server < ::DatawireQuarkCore::QuarkObject
     attr_accessor :impl
     extend ::DatawireQuarkCore::Static
 
@@ -906,6 +906,6 @@ class CLASS_Server < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Server.unlazy_statics
-end # module MODULE_quark
+Server.unlazy_statics
+end # module Quark
 end # module Quark

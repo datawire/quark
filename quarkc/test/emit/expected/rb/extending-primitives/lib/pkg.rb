@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.pkg; MODULE_pkg; end
-module MODULE_pkg
+def self.pkg; Pkg; end
+module Pkg
 require 'quark' # .../reflect
 require_relative 'extending_primitives_md' # 0 () ()
 
-def self.C; CLASS_C; end
-class CLASS_C < ::DatawireQuarkCore::QuarkObject
+def self.C; C; end
+class C < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_C_ref: -> { ::Quark.extending_primitives_md.Root.pkg_C_md }
@@ -72,6 +72,6 @@ class CLASS_C < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_C.unlazy_statics
-end # module MODULE_pkg
+C.unlazy_statics
+end # module Pkg
 end # module Quark

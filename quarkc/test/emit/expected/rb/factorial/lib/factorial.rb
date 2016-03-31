@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.factorial; MODULE_factorial; end
-module MODULE_factorial
+def self.factorial; Factorial; end
+module Factorial
 require_relative 'factorial' # 0 () ()
 
 def self.factorial(n)
@@ -37,5 +37,5 @@ if __FILE__ == $0
     ::Quark.factorial.main()
 end
 
-end # module MODULE_factorial
+end # module Factorial
 end # module Quark

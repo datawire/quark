@@ -1,11 +1,11 @@
 module Quark
-def self.extending_primitives_md; MODULE_extending_primitives_md; end
-module MODULE_extending_primitives_md
+def self.extending_primitives_md; ExtendingPrimitivesMd; end
+module ExtendingPrimitivesMd
 require 'quark' # .../reflect
 # for ('extending_primitives_md',): require_relative 'pkg' # 0 () ()
 
-def self.pkg_C_event1_Method; CLASS_pkg_C_event1_Method; end
-class CLASS_pkg_C_event1_Method < ::Quark.quark.reflect.Method
+def self.pkg_C_event1_Method; PkgCEvent1Method; end
+class PkgCEvent1Method < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_pkg_C_event1_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.pkg_C; CLASS_pkg_C; end
-class CLASS_pkg_C < ::Quark.quark.reflect.QuarkClass
+def self.pkg_C; PkgC; end
+class PkgC < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.extending_primitives_md.pkg_C.new() }
@@ -116,10 +116,10 @@ class CLASS_pkg_C < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_pkg_C.unlazy_statics
+PkgC.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_C_md: -> { ::Quark.extending_primitives_md.pkg_C.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_extending_primitives_md
+Root.unlazy_statics
+end # module ExtendingPrimitivesMd
 end # module Quark

@@ -1,11 +1,11 @@
 module Quark
-def self.matrix_md; MODULE_matrix_md; end
-module MODULE_matrix_md
+def self.matrix_md; MatrixMd; end
+module MatrixMd
 require 'quark' # .../reflect
 # for ('matrix_md',): require_relative 'matrix' # 0 () ()
 
-def self.matrix_Matrix_quark_int____get___Method; CLASS_matrix_Matrix_quark_int____get___Method; end
-class CLASS_matrix_Matrix_quark_int____get___Method < ::Quark.quark.reflect.Method
+def self.matrix_Matrix_quark_int____get___Method; MatrixMatrixQuarkIntGetMethod; end
+class MatrixMatrixQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -57,8 +57,8 @@ class CLASS_matrix_Matrix_quark_int____get___Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.matrix_Matrix_quark_int____set___Method; CLASS_matrix_Matrix_quark_int____set___Method; end
-class CLASS_matrix_Matrix_quark_int____set___Method < ::Quark.quark.reflect.Method
+def self.matrix_Matrix_quark_int____set___Method; MatrixMatrixQuarkIntSetMethod; end
+class MatrixMatrixQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -111,8 +111,8 @@ class CLASS_matrix_Matrix_quark_int____set___Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.matrix_Matrix_quark_int_; CLASS_matrix_Matrix_quark_int_; end
-class CLASS_matrix_Matrix_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.matrix_Matrix_quark_int_; MatrixMatrixQuarkInt; end
+class MatrixMatrixQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.matrix_md.matrix_Matrix_quark_int_.new() }
@@ -169,10 +169,10 @@ class CLASS_matrix_Matrix_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_matrix_Matrix_quark_int_.unlazy_statics
+MatrixMatrixQuarkInt.unlazy_statics
 
-def self.quark_List_quark_List_quark_Object__; CLASS_quark_List_quark_List_quark_Object__; end
-class CLASS_quark_List_quark_List_quark_Object__ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_List_quark_Object__; QuarkListQuarkListQuarkObject; end
+class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.matrix_md.quark_List_quark_List_quark_Object__.new() }
@@ -229,10 +229,10 @@ class CLASS_quark_List_quark_List_quark_Object__ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_List_quark_List_quark_Object__.unlazy_statics
+QuarkListQuarkListQuarkObject.unlazy_statics
 
-def self.quark_List_quark_Object_; CLASS_quark_List_quark_Object_; end
-class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_Object_; QuarkListQuarkObject; end
+class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.matrix_md.quark_List_quark_Object_.new() }
@@ -289,10 +289,10 @@ class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_Object_.unlazy_statics
+QuarkListQuarkObject.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_List_quark_List_quark_Object___md: -> { ::Quark.matrix_md.quark_List_quark_List_quark_Object__.singleton }
@@ -338,6 +338,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_matrix_md
+Root.unlazy_statics
+end # module MatrixMd
 end # module Quark

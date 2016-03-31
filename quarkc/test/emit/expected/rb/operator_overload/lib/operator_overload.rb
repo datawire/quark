@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.operator_overload; MODULE_operator_overload; end
-module MODULE_operator_overload
+def self.operator_overload; OperatorOverload; end
+module OperatorOverload
 require 'quark' # .../reflect
 require_relative 'operator_overload_md' # 0 () ()
 require_relative 'operator_overload' # 0 () ()
 
-def self.Overload; CLASS_Overload; end
-class CLASS_Overload < ::DatawireQuarkCore::QuarkObject
+def self.Overload; Overload; end
+class Overload < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -91,7 +91,7 @@ class CLASS_Overload < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Overload.unlazy_statics
+Overload.unlazy_statics
 
 def self.main()
     
@@ -106,5 +106,5 @@ if __FILE__ == $0
     ::Quark.operator_overload.main()
 end
 
-end # module MODULE_operator_overload
+end # module OperatorOverload
 end # module Quark

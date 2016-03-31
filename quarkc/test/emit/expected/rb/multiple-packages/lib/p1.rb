@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.p1; MODULE_p1; end
-module MODULE_p1
+def self.p1; P1; end
+module P1
 def self.c()
     
     ::DatawireQuarkCore.print("c")
@@ -17,5 +17,5 @@ def self.d()
 
     nil
 end
-end # module MODULE_p1
+end # module P1
 end # module Quark

@@ -1,8 +1,8 @@
 module Quark
-def self.autocast_md; MODULE_autocast_md; end
-module MODULE_autocast_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.autocast_md; AutocastMd; end
+module AutocastMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_autocast_md
+end # module AutocastMd
 end # module Quark

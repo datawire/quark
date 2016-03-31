@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.package; MODULE_package; end
-module MODULE_package
+def self.package; Package; end
+module Package
 require_relative 'test' # 0 () ()
 require_relative 'test/test' # 0 ('test',) ()
 require_relative 'package' # 0 () ()
@@ -23,5 +23,5 @@ if __FILE__ == $0
     ::Quark.package.main()
 end
 
-end # module MODULE_package
+end # module Package
 end # module Quark

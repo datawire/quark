@@ -1,8 +1,8 @@
 module Quark
-def self.strings_md; MODULE_strings_md; end
-module MODULE_strings_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.strings_md; StringsMd; end
+module StringsMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_strings_md
+end # module StringsMd
 end # module Quark

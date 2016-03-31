@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.json_coersion; MODULE_json_coersion; end
-module MODULE_json_coersion
+def self.json_coersion; JsonCoersion; end
+module JsonCoersion
 require_relative 'json_coersion' # 0 () ()
 
 def self.main()
@@ -28,5 +28,5 @@ if __FILE__ == $0
     ::Quark.json_coersion.main()
 end
 
-end # module MODULE_json_coersion
+end # module JsonCoersion
 end # module Quark

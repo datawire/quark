@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.strings; MODULE_strings; end
-module MODULE_strings
+def self.strings; Strings; end
+module Strings
 require_relative 'strings' # 0 () ()
 
 def self.main()
@@ -23,5 +23,5 @@ if __FILE__ == $0
     ::Quark.strings.main()
 end
 
-end # module MODULE_strings
+end # module Strings
 end # module Quark

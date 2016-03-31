@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.void_return; MODULE_void_return; end
-module MODULE_void_return
+def self.void_return; VoidReturn; end
+module VoidReturn
 def self.foo()
     
     return
@@ -9,5 +9,5 @@ def self.foo()
 
     nil
 end
-end # module MODULE_void_return
+end # module VoidReturn
 end # module Quark

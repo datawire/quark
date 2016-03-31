@@ -1,15 +1,15 @@
 module Quark
 require "quark"
-def self.slack; MODULE_slack; end
-module MODULE_slack
-def self.event; MODULE_event; end
-module MODULE_event
+def self.slack; Slack; end
+module Slack
+def self.event; Event; end
+module Event
 require 'quark' # .../reflect slack/event
 require_relative '../slack' # 0 () ('slack',)
 require_relative '../slackpack_md' # 0 () ('slack',)
 
-def self.SlackEvent; CLASS_SlackEvent; end
-class CLASS_SlackEvent < ::DatawireQuarkCore::QuarkObject
+def self.SlackEvent; SlackEvent; end
+class SlackEvent < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :user, :channel, :timestamp
     extend ::DatawireQuarkCore::Static
 
@@ -106,10 +106,10 @@ class CLASS_SlackEvent < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_SlackEvent.unlazy_statics
+SlackEvent.unlazy_statics
 
-def self.SlackError; CLASS_SlackError; end
-class CLASS_SlackError < ::Quark.slack.event.SlackEvent
+def self.SlackError; SlackError; end
+class SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
     extend ::DatawireQuarkCore::Static
 
@@ -210,10 +210,10 @@ class CLASS_SlackError < ::Quark.slack.event.SlackEvent
 
 
 end
-CLASS_SlackError.unlazy_statics
+SlackError.unlazy_statics
 
-def self.Hello; CLASS_Hello; end
-class CLASS_Hello < ::Quark.slack.event.SlackEvent
+def self.Hello; Hello; end
+class Hello < ::Quark.slack.event.SlackEvent
     extend ::DatawireQuarkCore::Static
 
     static slack_event_Hello_ref: -> { ::Quark.slackpack_md.Root.slack_event_Hello_md }
@@ -289,10 +289,10 @@ class CLASS_Hello < ::Quark.slack.event.SlackEvent
 
 
 end
-CLASS_Hello.unlazy_statics
+Hello.unlazy_statics
 
-def self.Message; CLASS_Message; end
-class CLASS_Message < ::Quark.slack.event.SlackEvent
+def self.Message; Message; end
+class Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
     extend ::DatawireQuarkCore::Static
 
@@ -414,10 +414,10 @@ class CLASS_Message < ::Quark.slack.event.SlackEvent
 
 
 end
-CLASS_Message.unlazy_statics
+Message.unlazy_statics
 
-def self.Edited; CLASS_Edited; end
-class CLASS_Edited < ::DatawireQuarkCore::QuarkObject
+def self.Edited; Edited; end
+class Edited < ::DatawireQuarkCore::QuarkObject
     attr_accessor :user, :timestamp
     extend ::DatawireQuarkCore::Static
 
@@ -477,7 +477,7 @@ class CLASS_Edited < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Edited.unlazy_statics
-end # module MODULE_event
-end # module MODULE_slack
+Edited.unlazy_statics
+end # module Event
+end # module Slack
 end # module Quark

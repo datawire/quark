@@ -1,11 +1,11 @@
 module Quark
-def self.int_methods_md; MODULE_int_methods_md; end
-module MODULE_int_methods_md
+def self.int_methods_md; IntMethodsMd; end
+module IntMethodsMd
 require 'quark' # .../reflect
 # for ('int_methods_md',): require_relative 'int_methods' # 0 () ()
 
-def self.int_methods_Test_test_Method; CLASS_int_methods_Test_test_Method; end
-class CLASS_int_methods_Test_test_Method < ::Quark.quark.reflect.Method
+def self.int_methods_Test_test_Method; IntMethodsTestTestMethod; end
+class IntMethodsTestTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_int_methods_Test_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.int_methods_Test; CLASS_int_methods_Test; end
-class CLASS_int_methods_Test < ::Quark.quark.reflect.QuarkClass
+def self.int_methods_Test; IntMethodsTest; end
+class IntMethodsTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.int_methods_md.int_methods_Test.new() }
@@ -116,10 +116,10 @@ class CLASS_int_methods_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_int_methods_Test.unlazy_statics
+IntMethodsTest.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static int_methods_Test_md: -> { ::Quark.int_methods_md.int_methods_Test.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_int_methods_md
+Root.unlazy_statics
+end # module IntMethodsMd
 end # module Quark

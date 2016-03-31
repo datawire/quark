@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.default_constructors; MODULE_default_constructors; end
-module MODULE_default_constructors
+def self.default_constructors; DefaultConstructors; end
+module DefaultConstructors
 require 'quark' # .../reflect
 require_relative 'default_constructors_md' # 0 () ()
 require_relative 'default_constructors' # 0 () ()
 
-def self.A; CLASS_A; end
-class CLASS_A < ::DatawireQuarkCore::QuarkObject
+def self.A; A; end
+class A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -62,10 +62,10 @@ class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_A.unlazy_statics
+A.unlazy_statics
 
-def self.B; CLASS_B; end
-class CLASS_B < ::Quark.default_constructors.A
+def self.B; B; end
+class B < ::Quark.default_constructors.A
     extend ::DatawireQuarkCore::Static
 
     static default_constructors_B_ref: -> { ::Quark.default_constructors_md.Root.default_constructors_B_md }
@@ -123,10 +123,10 @@ class CLASS_B < ::Quark.default_constructors.A
 
 
 end
-CLASS_B.unlazy_statics
+B.unlazy_statics
 
-def self.C; CLASS_C; end
-class CLASS_C < ::Quark.default_constructors.A
+def self.C; C; end
+class C < ::Quark.default_constructors.A
     extend ::DatawireQuarkCore::Static
 
     static default_constructors_C_ref: -> { ::Quark.default_constructors_md.Root.default_constructors_C_md }
@@ -184,10 +184,10 @@ class CLASS_C < ::Quark.default_constructors.A
 
 
 end
-CLASS_C.unlazy_statics
+C.unlazy_statics
 
-def self.X; CLASS_X; end
-class CLASS_X < ::DatawireQuarkCore::QuarkObject
+def self.X; X; end
+class X < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static default_constructors_X_ref: -> { ::Quark.default_constructors_md.Root.default_constructors_X_md }
@@ -232,10 +232,10 @@ class CLASS_X < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_X.unlazy_statics
+X.unlazy_statics
 
-def self.Y; CLASS_Y; end
-class CLASS_Y < ::Quark.default_constructors.X
+def self.Y; Y; end
+class Y < ::Quark.default_constructors.X
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -297,7 +297,7 @@ class CLASS_Y < ::Quark.default_constructors.X
 
 
 end
-CLASS_Y.unlazy_statics
+Y.unlazy_statics
 
 def self.main()
     
@@ -316,5 +316,5 @@ if __FILE__ == $0
     ::Quark.default_constructors.main()
 end
 
-end # module MODULE_default_constructors
+end # module DefaultConstructors
 end # module Quark

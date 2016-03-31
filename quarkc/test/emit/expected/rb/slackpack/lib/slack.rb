@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.slack; MODULE_slack; end
-module MODULE_slack
+def self.slack; Slack; end
+module Slack
 require 'quark' # .../reflect
 require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
 
-def self.SlackHandler; CLASS_SlackHandler; end
-class CLASS_SlackHandler < ::DatawireQuarkCore::QuarkObject
+def self.SlackHandler; SlackHandler; end
+class SlackHandler < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static slack_SlackHandler_ref: -> { ::Quark.slackpack_md.Root.slack_SlackHandler_md }
@@ -59,10 +59,10 @@ class CLASS_SlackHandler < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_SlackHandler.unlazy_statics
+SlackHandler.unlazy_statics
 
-def self.User; CLASS_User; end
-class CLASS_User < ::DatawireQuarkCore::QuarkObject
+def self.User; User; end
+class User < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :user
     extend ::DatawireQuarkCore::Static
 
@@ -125,10 +125,10 @@ class CLASS_User < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_User.unlazy_statics
+User.unlazy_statics
 
-def self.Channel; CLASS_Channel; end
-class CLASS_Channel < ::DatawireQuarkCore::QuarkObject
+def self.Channel; Channel; end
+class Channel < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :channel
     extend ::DatawireQuarkCore::Static
 
@@ -205,10 +205,10 @@ class CLASS_Channel < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Channel.unlazy_statics
+Channel.unlazy_statics
 
-def self.Client; CLASS_Client; end
-class CLASS_Client < ::DatawireQuarkCore::QuarkObject
+def self.Client; Client; end
+class Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :runtime, :token, :handler, :event_id, :socket
     extend ::DatawireQuarkCore::Static
 
@@ -447,6 +447,6 @@ class CLASS_Client < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Client.unlazy_statics
-end # module MODULE_slack
+Client.unlazy_statics
+end # module Slack
 end # module Quark

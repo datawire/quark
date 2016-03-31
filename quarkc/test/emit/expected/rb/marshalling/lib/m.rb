@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.m; MODULE_m; end
-module MODULE_m
+def self.m; M; end
+module M
 require 'quark' # .../reflect
 require_relative 'marshalling_md' # 0 () ()
 require 'quark' 
 
-def self.Inner; CLASS_Inner; end
-class CLASS_Inner < ::DatawireQuarkCore::QuarkObject
+def self.Inner; Inner; end
+class Inner < ::DatawireQuarkCore::QuarkObject
     attr_accessor :inner_int, :inner_string, :inner_float, :inner_string_list
     extend ::DatawireQuarkCore::Static
 
@@ -94,10 +94,10 @@ class CLASS_Inner < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Inner.unlazy_statics
+Inner.unlazy_statics
 
-def self.Outer; CLASS_Outer; end
-class CLASS_Outer < ::DatawireQuarkCore::QuarkObject
+def self.Outer; Outer; end
+class Outer < ::DatawireQuarkCore::QuarkObject
     attr_accessor :outer_int, :outer_string, :outer_float, :outer_inner_list
     extend ::DatawireQuarkCore::Static
 
@@ -184,7 +184,7 @@ class CLASS_Outer < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Outer.unlazy_statics
+Outer.unlazy_statics
 
 def self.test_marshalling()
     
@@ -201,5 +201,5 @@ def self.test_marshalling()
 
     nil
 end
-end # module MODULE_m
+end # module M
 end # module Quark

@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.urlencode; MODULE_urlencode; end
-module MODULE_urlencode
+def self.urlencode; Urlencode; end
+module Urlencode
 require_relative 'urlencode' # 0 () ()
 
 def self.main()
@@ -18,5 +18,5 @@ if __FILE__ == $0
     ::Quark.urlencode.main()
 end
 
-end # module MODULE_urlencode
+end # module Urlencode
 end # module Quark

@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.json_tests; MODULE_json_tests; end
-module MODULE_json_tests
+def self.json_tests; JsonTests; end
+module JsonTests
 require_relative 'json_tests' # 0 () ()
 
 def self.test_roundtrip()
@@ -84,5 +84,5 @@ if __FILE__ == $0
     ::Quark.json_tests.main()
 end
 
-end # module MODULE_json_tests
+end # module JsonTests
 end # module Quark

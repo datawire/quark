@@ -1,14 +1,14 @@
 module Quark
-def self.quark_md; MODULE_quark_md; end
-module MODULE_quark_md
+def self.quark_md; QuarkMd; end
+module QuarkMd
 require_relative 'quark/reflect' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/concurrent' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/test' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark' # 0 () ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
 
-def self.quark_List_quark_String_; CLASS_quark_List_quark_String_; end
-class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_String_.new() }
@@ -65,10 +65,10 @@ class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_String_.unlazy_statics
+QuarkListQuarkString.unlazy_statics
 
-def self.quark_List_quark_Object_; CLASS_quark_List_quark_Object_; end
-class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_Object_; QuarkListQuarkObject; end
+class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_Object_.new() }
@@ -125,10 +125,10 @@ class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_Object_.unlazy_statics
+QuarkListQuarkObject.unlazy_statics
 
-def self.quark_List_quark_reflect_Field_; CLASS_quark_List_quark_reflect_Field_; end
-class CLASS_quark_List_quark_reflect_Field_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_reflect_Field_; QuarkListQuarkReflectField; end
+class QuarkListQuarkReflectField < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_reflect_Field_.new() }
@@ -185,10 +185,10 @@ class CLASS_quark_List_quark_reflect_Field_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_reflect_Field_.unlazy_statics
+QuarkListQuarkReflectField.unlazy_statics
 
-def self.quark_List_quark_reflect_Method_; CLASS_quark_List_quark_reflect_Method_; end
-class CLASS_quark_List_quark_reflect_Method_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_reflect_Method_; QuarkListQuarkReflectMethod; end
+class QuarkListQuarkReflectMethod < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_reflect_Method_.new() }
@@ -245,10 +245,10 @@ class CLASS_quark_List_quark_reflect_Method_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_reflect_Method_.unlazy_statics
+QuarkListQuarkReflectMethod.unlazy_statics
 
-def self.quark_List_quark_reflect_Class_; CLASS_quark_List_quark_reflect_Class_; end
-class CLASS_quark_List_quark_reflect_Class_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_reflect_Class_; QuarkListQuarkReflectClass; end
+class QuarkListQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_reflect_Class_.new() }
@@ -305,10 +305,10 @@ class CLASS_quark_List_quark_reflect_Class_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_reflect_Class_.unlazy_statics
+QuarkListQuarkReflectClass.unlazy_statics
 
-def self.quark_List_quark_concurrent_FutureCompletion_; CLASS_quark_List_quark_concurrent_FutureCompletion_; end
-class CLASS_quark_List_quark_concurrent_FutureCompletion_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_concurrent_FutureCompletion_; QuarkListQuarkConcurrentFutureCompletion; end
+class QuarkListQuarkConcurrentFutureCompletion < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_concurrent_FutureCompletion_.new() }
@@ -365,10 +365,10 @@ class CLASS_quark_List_quark_concurrent_FutureCompletion_ < ::Quark.quark.reflec
 
 
 end
-CLASS_quark_List_quark_concurrent_FutureCompletion_.unlazy_statics
+QuarkListQuarkConcurrentFutureCompletion.unlazy_statics
 
-def self.quark_List_quark_test_Test_; CLASS_quark_List_quark_test_Test_; end
-class CLASS_quark_List_quark_test_Test_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_test_Test_; QuarkListQuarkTestTest; end
+class QuarkListQuarkTestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_List_quark_test_Test_.new() }
@@ -425,10 +425,10 @@ class CLASS_quark_List_quark_test_Test_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_test_Test_.unlazy_statics
+QuarkListQuarkTestTest.unlazy_statics
 
-def self.quark_Map_quark_Object_quark_Object_; CLASS_quark_Map_quark_Object_quark_Object_; end
-class CLASS_quark_Map_quark_Object_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_Object_quark_Object_; QuarkMapQuarkObjectQuarkObject; end
+class QuarkMapQuarkObjectQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Map_quark_Object_quark_Object_.new() }
@@ -485,10 +485,10 @@ class CLASS_quark_Map_quark_Object_quark_Object_ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_Map_quark_Object_quark_Object_.unlazy_statics
+QuarkMapQuarkObjectQuarkObject.unlazy_statics
 
-def self.quark_Map_quark_String_quark_reflect_Class_; CLASS_quark_Map_quark_String_quark_reflect_Class_; end
-class CLASS_quark_Map_quark_String_quark_reflect_Class_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_reflect_Class_; QuarkMapQuarkStringQuarkReflectClass; end
+class QuarkMapQuarkStringQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Map_quark_String_quark_reflect_Class_.new() }
@@ -545,10 +545,10 @@ class CLASS_quark_Map_quark_String_quark_reflect_Class_ < ::Quark.quark.reflect.
 
 
 end
-CLASS_quark_Map_quark_String_quark_reflect_Class_.unlazy_statics
+QuarkMapQuarkStringQuarkReflectClass.unlazy_statics
 
-def self.quark_Map_quark_String_quark_Object_; CLASS_quark_Map_quark_String_quark_Object_; end
-class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
+class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Map_quark_String_quark_Object_.new() }
@@ -605,10 +605,10 @@ class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_Map_quark_String_quark_Object_.unlazy_statics
+QuarkMapQuarkStringQuarkObject.unlazy_statics
 
-def self.quark_Map_quark_String_quark_ServiceInstance_; CLASS_quark_Map_quark_String_quark_ServiceInstance_; end
-class CLASS_quark_Map_quark_String_quark_ServiceInstance_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_ServiceInstance_; QuarkMapQuarkStringQuarkServiceInstance; end
+class QuarkMapQuarkStringQuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Map_quark_String_quark_ServiceInstance_.new() }
@@ -665,10 +665,10 @@ class CLASS_quark_Map_quark_String_quark_ServiceInstance_ < ::Quark.quark.reflec
 
 
 end
-CLASS_quark_Map_quark_String_quark_ServiceInstance_.unlazy_statics
+QuarkMapQuarkStringQuarkServiceInstance.unlazy_statics
 
-def self.quark_reflect_Class; CLASS_quark_reflect_Class; end
-class CLASS_quark_reflect_Class < ::Quark.quark.reflect.QuarkClass
+def self.quark_reflect_Class; QuarkReflectClass; end
+class QuarkReflectClass < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_reflect_Class.new() }
@@ -725,10 +725,10 @@ class CLASS_quark_reflect_Class < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_reflect_Class.unlazy_statics
+QuarkReflectClass.unlazy_statics
 
-def self.quark_reflect_Field; CLASS_quark_reflect_Field; end
-class CLASS_quark_reflect_Field < ::Quark.quark.reflect.QuarkClass
+def self.quark_reflect_Field; QuarkReflectField; end
+class QuarkReflectField < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_reflect_Field.new() }
@@ -785,10 +785,10 @@ class CLASS_quark_reflect_Field < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_reflect_Field.unlazy_statics
+QuarkReflectField.unlazy_statics
 
-def self.quark_Resolver; CLASS_quark_Resolver; end
-class CLASS_quark_Resolver < ::Quark.quark.reflect.QuarkClass
+def self.quark_Resolver; QuarkResolver; end
+class QuarkResolver < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Resolver.new() }
@@ -845,10 +845,10 @@ class CLASS_quark_Resolver < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_Resolver.unlazy_statics
+QuarkResolver.unlazy_statics
 
-def self.quark_ResponseHolder; CLASS_quark_ResponseHolder; end
-class CLASS_quark_ResponseHolder < ::Quark.quark.reflect.QuarkClass
+def self.quark_ResponseHolder; QuarkResponseHolder; end
+class QuarkResponseHolder < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_ResponseHolder.new() }
@@ -905,10 +905,10 @@ class CLASS_quark_ResponseHolder < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_ResponseHolder.unlazy_statics
+QuarkResponseHolder.unlazy_statics
 
-def self.quark_Service; CLASS_quark_Service; end
-class CLASS_quark_Service < ::Quark.quark.reflect.QuarkClass
+def self.quark_Service; QuarkService; end
+class QuarkService < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Service.new() }
@@ -965,10 +965,10 @@ class CLASS_quark_Service < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_Service.unlazy_statics
+QuarkService.unlazy_statics
 
-def self.quark_BaseService; CLASS_quark_BaseService; end
-class CLASS_quark_BaseService < ::Quark.quark.reflect.QuarkClass
+def self.quark_BaseService; QuarkBaseService; end
+class QuarkBaseService < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_BaseService.new() }
@@ -1025,10 +1025,10 @@ class CLASS_quark_BaseService < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_BaseService.unlazy_statics
+QuarkBaseService.unlazy_statics
 
-def self.quark_ServiceInstance; CLASS_quark_ServiceInstance; end
-class CLASS_quark_ServiceInstance < ::Quark.quark.reflect.QuarkClass
+def self.quark_ServiceInstance; QuarkServiceInstance; end
+class QuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_ServiceInstance.new() }
@@ -1085,10 +1085,10 @@ class CLASS_quark_ServiceInstance < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_ServiceInstance.unlazy_statics
+QuarkServiceInstance.unlazy_statics
 
-def self.quark_DegenerateResolver; CLASS_quark_DegenerateResolver; end
-class CLASS_quark_DegenerateResolver < ::Quark.quark.reflect.QuarkClass
+def self.quark_DegenerateResolver; QuarkDegenerateResolver; end
+class QuarkDegenerateResolver < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_DegenerateResolver.new() }
@@ -1145,10 +1145,10 @@ class CLASS_quark_DegenerateResolver < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_DegenerateResolver.unlazy_statics
+QuarkDegenerateResolver.unlazy_statics
 
-def self.quark_Client; CLASS_quark_Client; end
-class CLASS_quark_Client < ::Quark.quark.reflect.QuarkClass
+def self.quark_Client; QuarkClient; end
+class QuarkClient < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Client.new() }
@@ -1205,10 +1205,10 @@ class CLASS_quark_Client < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_Client.unlazy_statics
+QuarkClient.unlazy_statics
 
-def self.quark_ServerResponder; CLASS_quark_ServerResponder; end
-class CLASS_quark_ServerResponder < ::Quark.quark.reflect.QuarkClass
+def self.quark_ServerResponder; QuarkServerResponder; end
+class QuarkServerResponder < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_ServerResponder.new() }
@@ -1265,10 +1265,10 @@ class CLASS_quark_ServerResponder < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_ServerResponder.unlazy_statics
+QuarkServerResponder.unlazy_statics
 
-def self.quark_Server_quark_Object_; CLASS_quark_Server_quark_Object_; end
-class CLASS_quark_Server_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Server_quark_Object_; QuarkServerQuarkObject; end
+class QuarkServerQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_Server_quark_Object_.new() }
@@ -1325,10 +1325,10 @@ class CLASS_quark_Server_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_Server_quark_Object_.unlazy_statics
+QuarkServerQuarkObject.unlazy_statics
 
-def self.quark_behaviors_RPC_call_Method; CLASS_quark_behaviors_RPC_call_Method; end
-class CLASS_quark_behaviors_RPC_call_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPC_call_Method; QuarkBehaviorsRPCCallMethod; end
+class QuarkBehaviorsRPCCallMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1380,8 +1380,8 @@ class CLASS_quark_behaviors_RPC_call_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_behaviors_RPC_succeed_Method; CLASS_quark_behaviors_RPC_succeed_Method; end
-class CLASS_quark_behaviors_RPC_succeed_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPC_succeed_Method; QuarkBehaviorsRPCSucceedMethod; end
+class QuarkBehaviorsRPCSucceedMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1434,8 +1434,8 @@ class CLASS_quark_behaviors_RPC_succeed_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_behaviors_RPC_fail_Method; CLASS_quark_behaviors_RPC_fail_Method; end
-class CLASS_quark_behaviors_RPC_fail_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPC_fail_Method; QuarkBehaviorsRPCFailMethod; end
+class QuarkBehaviorsRPCFailMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1488,8 +1488,8 @@ class CLASS_quark_behaviors_RPC_fail_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_behaviors_RPC_toString_Method; CLASS_quark_behaviors_RPC_toString_Method; end
-class CLASS_quark_behaviors_RPC_toString_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPC_toString_Method; QuarkBehaviorsRPCToStringMethod; end
+class QuarkBehaviorsRPCToStringMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1541,8 +1541,8 @@ class CLASS_quark_behaviors_RPC_toString_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_behaviors_RPC; CLASS_quark_behaviors_RPC; end
-class CLASS_quark_behaviors_RPC < ::Quark.quark.reflect.QuarkClass
+def self.quark_behaviors_RPC; QuarkBehaviorsRPC; end
+class QuarkBehaviorsRPC < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_behaviors_RPC.new() }
@@ -1599,10 +1599,10 @@ class CLASS_quark_behaviors_RPC < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_behaviors_RPC.unlazy_statics
+QuarkBehaviorsRPC.unlazy_statics
 
-def self.quark_behaviors_RPCRequest_call_Method; CLASS_quark_behaviors_RPCRequest_call_Method; end
-class CLASS_quark_behaviors_RPCRequest_call_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPCRequest_call_Method; QuarkBehaviorsRPCRequestCallMethod; end
+class QuarkBehaviorsRPCRequestCallMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1654,8 +1654,8 @@ class CLASS_quark_behaviors_RPCRequest_call_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.quark_behaviors_RPCRequest_onHTTPResponse_Method; CLASS_quark_behaviors_RPCRequest_onHTTPResponse_Method; end
-class CLASS_quark_behaviors_RPCRequest_onHTTPResponse_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPCRequest_onHTTPResponse_Method; QuarkBehaviorsRPCRequestOnHTTPResponseMethod; end
+class QuarkBehaviorsRPCRequestOnHTTPResponseMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1708,8 +1708,8 @@ class CLASS_quark_behaviors_RPCRequest_onHTTPResponse_Method < ::Quark.quark.ref
 
 end
 
-def self.quark_behaviors_RPCRequest_onTimeout_Method; CLASS_quark_behaviors_RPCRequest_onTimeout_Method; end
-class CLASS_quark_behaviors_RPCRequest_onTimeout_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_RPCRequest_onTimeout_Method; QuarkBehaviorsRPCRequestOnTimeoutMethod; end
+class QuarkBehaviorsRPCRequestOnTimeoutMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1762,8 +1762,8 @@ class CLASS_quark_behaviors_RPCRequest_onTimeout_Method < ::Quark.quark.reflect.
 
 end
 
-def self.quark_behaviors_RPCRequest; CLASS_quark_behaviors_RPCRequest; end
-class CLASS_quark_behaviors_RPCRequest < ::Quark.quark.reflect.QuarkClass
+def self.quark_behaviors_RPCRequest; QuarkBehaviorsRPCRequest; end
+class QuarkBehaviorsRPCRequest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_behaviors_RPCRequest.new() }
@@ -1820,10 +1820,10 @@ class CLASS_quark_behaviors_RPCRequest < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_behaviors_RPCRequest.unlazy_statics
+QuarkBehaviorsRPCRequest.unlazy_statics
 
-def self.quark_behaviors_CircuitBreaker_succeed_Method; CLASS_quark_behaviors_CircuitBreaker_succeed_Method; end
-class CLASS_quark_behaviors_CircuitBreaker_succeed_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_CircuitBreaker_succeed_Method; QuarkBehaviorsCircuitBreakerSucceedMethod; end
+class QuarkBehaviorsCircuitBreakerSucceedMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1876,8 +1876,8 @@ class CLASS_quark_behaviors_CircuitBreaker_succeed_Method < ::Quark.quark.reflec
 
 end
 
-def self.quark_behaviors_CircuitBreaker_fail_Method; CLASS_quark_behaviors_CircuitBreaker_fail_Method; end
-class CLASS_quark_behaviors_CircuitBreaker_fail_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_CircuitBreaker_fail_Method; QuarkBehaviorsCircuitBreakerFailMethod; end
+class QuarkBehaviorsCircuitBreakerFailMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1930,8 +1930,8 @@ class CLASS_quark_behaviors_CircuitBreaker_fail_Method < ::Quark.quark.reflect.M
 
 end
 
-def self.quark_behaviors_CircuitBreaker_onExecute_Method; CLASS_quark_behaviors_CircuitBreaker_onExecute_Method; end
-class CLASS_quark_behaviors_CircuitBreaker_onExecute_Method < ::Quark.quark.reflect.Method
+def self.quark_behaviors_CircuitBreaker_onExecute_Method; QuarkBehaviorsCircuitBreakerOnExecuteMethod; end
+class QuarkBehaviorsCircuitBreakerOnExecuteMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -1984,8 +1984,8 @@ class CLASS_quark_behaviors_CircuitBreaker_onExecute_Method < ::Quark.quark.refl
 
 end
 
-def self.quark_behaviors_CircuitBreaker; CLASS_quark_behaviors_CircuitBreaker; end
-class CLASS_quark_behaviors_CircuitBreaker < ::Quark.quark.reflect.QuarkClass
+def self.quark_behaviors_CircuitBreaker; QuarkBehaviorsCircuitBreaker; end
+class QuarkBehaviorsCircuitBreaker < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_behaviors_CircuitBreaker.new() }
@@ -2042,10 +2042,10 @@ class CLASS_quark_behaviors_CircuitBreaker < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_behaviors_CircuitBreaker.unlazy_statics
+QuarkBehaviorsCircuitBreaker.unlazy_statics
 
-def self.quark_concurrent_Event_getContext_Method; CLASS_quark_concurrent_Event_getContext_Method; end
-class CLASS_quark_concurrent_Event_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Event_getContext_Method; QuarkConcurrentEventGetContextMethod; end
+class QuarkConcurrentEventGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2097,8 +2097,8 @@ class CLASS_quark_concurrent_Event_getContext_Method < ::Quark.quark.reflect.Met
 
 end
 
-def self.quark_concurrent_Event_fireEvent_Method; CLASS_quark_concurrent_Event_fireEvent_Method; end
-class CLASS_quark_concurrent_Event_fireEvent_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Event_fireEvent_Method; QuarkConcurrentEventFireEventMethod; end
+class QuarkConcurrentEventFireEventMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2151,8 +2151,8 @@ class CLASS_quark_concurrent_Event_fireEvent_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Event; CLASS_quark_concurrent_Event; end
-class CLASS_quark_concurrent_Event < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Event; QuarkConcurrentEvent; end
+class QuarkConcurrentEvent < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Event.new() }
@@ -2209,10 +2209,10 @@ class CLASS_quark_concurrent_Event < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_Event.unlazy_statics
+QuarkConcurrentEvent.unlazy_statics
 
-def self.quark_concurrent_FutureListener_onFuture_Method; CLASS_quark_concurrent_FutureListener_onFuture_Method; end
-class CLASS_quark_concurrent_FutureListener_onFuture_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureListener_onFuture_Method; QuarkConcurrentFutureListenerOnFutureMethod; end
+class QuarkConcurrentFutureListenerOnFutureMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2265,8 +2265,8 @@ class CLASS_quark_concurrent_FutureListener_onFuture_Method < ::Quark.quark.refl
 
 end
 
-def self.quark_concurrent_FutureListener; CLASS_quark_concurrent_FutureListener; end
-class CLASS_quark_concurrent_FutureListener < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_FutureListener; QuarkConcurrentFutureListener; end
+class QuarkConcurrentFutureListener < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_FutureListener.new() }
@@ -2323,10 +2323,10 @@ class CLASS_quark_concurrent_FutureListener < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_FutureListener.unlazy_statics
+QuarkConcurrentFutureListener.unlazy_statics
 
-def self.quark_concurrent_FutureCompletion_getContext_Method; CLASS_quark_concurrent_FutureCompletion_getContext_Method; end
-class CLASS_quark_concurrent_FutureCompletion_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureCompletion_getContext_Method; QuarkConcurrentFutureCompletionGetContextMethod; end
+class QuarkConcurrentFutureCompletionGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2378,8 +2378,8 @@ class CLASS_quark_concurrent_FutureCompletion_getContext_Method < ::Quark.quark.
 
 end
 
-def self.quark_concurrent_FutureCompletion_fireEvent_Method; CLASS_quark_concurrent_FutureCompletion_fireEvent_Method; end
-class CLASS_quark_concurrent_FutureCompletion_fireEvent_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureCompletion_fireEvent_Method; QuarkConcurrentFutureCompletionFireEventMethod; end
+class QuarkConcurrentFutureCompletionFireEventMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2432,8 +2432,8 @@ class CLASS_quark_concurrent_FutureCompletion_fireEvent_Method < ::Quark.quark.r
 
 end
 
-def self.quark_concurrent_FutureCompletion; CLASS_quark_concurrent_FutureCompletion; end
-class CLASS_quark_concurrent_FutureCompletion < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_FutureCompletion; QuarkConcurrentFutureCompletion; end
+class QuarkConcurrentFutureCompletion < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_FutureCompletion.new() }
@@ -2490,10 +2490,10 @@ class CLASS_quark_concurrent_FutureCompletion < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_FutureCompletion.unlazy_statics
+QuarkConcurrentFutureCompletion.unlazy_statics
 
-def self.quark_concurrent_EventContext_getContext_Method; CLASS_quark_concurrent_EventContext_getContext_Method; end
-class CLASS_quark_concurrent_EventContext_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_EventContext_getContext_Method; QuarkConcurrentEventContextGetContextMethod; end
+class QuarkConcurrentEventContextGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2545,8 +2545,8 @@ class CLASS_quark_concurrent_EventContext_getContext_Method < ::Quark.quark.refl
 
 end
 
-def self.quark_concurrent_EventContext; CLASS_quark_concurrent_EventContext; end
-class CLASS_quark_concurrent_EventContext < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_EventContext; QuarkConcurrentEventContext; end
+class QuarkConcurrentEventContext < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_EventContext.new() }
@@ -2603,10 +2603,10 @@ class CLASS_quark_concurrent_EventContext < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_EventContext.unlazy_statics
+QuarkConcurrentEventContext.unlazy_statics
 
-def self.quark_concurrent_Future_onFinished_Method; CLASS_quark_concurrent_Future_onFinished_Method; end
-class CLASS_quark_concurrent_Future_onFinished_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_onFinished_Method; QuarkConcurrentFutureOnFinishedMethod; end
+class QuarkConcurrentFutureOnFinishedMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2659,8 +2659,8 @@ class CLASS_quark_concurrent_Future_onFinished_Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.quark_concurrent_Future_finish_Method; CLASS_quark_concurrent_Future_finish_Method; end
-class CLASS_quark_concurrent_Future_finish_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_finish_Method; QuarkConcurrentFutureFinishMethod; end
+class QuarkConcurrentFutureFinishMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2713,8 +2713,8 @@ class CLASS_quark_concurrent_Future_finish_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_concurrent_Future_isFinished_Method; CLASS_quark_concurrent_Future_isFinished_Method; end
-class CLASS_quark_concurrent_Future_isFinished_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_isFinished_Method; QuarkConcurrentFutureIsFinishedMethod; end
+class QuarkConcurrentFutureIsFinishedMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2766,8 +2766,8 @@ class CLASS_quark_concurrent_Future_isFinished_Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.quark_concurrent_Future_getError_Method; CLASS_quark_concurrent_Future_getError_Method; end
-class CLASS_quark_concurrent_Future_getError_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_getError_Method; QuarkConcurrentFutureGetErrorMethod; end
+class QuarkConcurrentFutureGetErrorMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2819,8 +2819,8 @@ class CLASS_quark_concurrent_Future_getError_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Future_await_Method; CLASS_quark_concurrent_Future_await_Method; end
-class CLASS_quark_concurrent_Future_await_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_await_Method; QuarkConcurrentFutureAwaitMethod; end
+class QuarkConcurrentFutureAwaitMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2873,8 +2873,8 @@ class CLASS_quark_concurrent_Future_await_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_concurrent_Future_getContext_Method; CLASS_quark_concurrent_Future_getContext_Method; end
-class CLASS_quark_concurrent_Future_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Future_getContext_Method; QuarkConcurrentFutureGetContextMethod; end
+class QuarkConcurrentFutureGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -2926,8 +2926,8 @@ class CLASS_quark_concurrent_Future_getContext_Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.quark_concurrent_Future; CLASS_quark_concurrent_Future; end
-class CLASS_quark_concurrent_Future < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Future; QuarkConcurrentFuture; end
+class QuarkConcurrentFuture < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Future.new() }
@@ -2984,10 +2984,10 @@ class CLASS_quark_concurrent_Future < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_Future.unlazy_statics
+QuarkConcurrentFuture.unlazy_statics
 
-def self.quark_concurrent_FutureWait_wait_Method; CLASS_quark_concurrent_FutureWait_wait_Method; end
-class CLASS_quark_concurrent_FutureWait_wait_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureWait_wait_Method; QuarkConcurrentFutureWaitWaitMethod; end
+class QuarkConcurrentFutureWaitWaitMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3040,8 +3040,8 @@ class CLASS_quark_concurrent_FutureWait_wait_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_FutureWait_onFuture_Method; CLASS_quark_concurrent_FutureWait_onFuture_Method; end
-class CLASS_quark_concurrent_FutureWait_onFuture_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureWait_onFuture_Method; QuarkConcurrentFutureWaitOnFutureMethod; end
+class QuarkConcurrentFutureWaitOnFutureMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3094,8 +3094,8 @@ class CLASS_quark_concurrent_FutureWait_onFuture_Method < ::Quark.quark.reflect.
 
 end
 
-def self.quark_concurrent_FutureWait_waitFor_Method; CLASS_quark_concurrent_FutureWait_waitFor_Method; end
-class CLASS_quark_concurrent_FutureWait_waitFor_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_FutureWait_waitFor_Method; QuarkConcurrentFutureWaitWaitForMethod; end
+class QuarkConcurrentFutureWaitWaitForMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3147,8 +3147,8 @@ class CLASS_quark_concurrent_FutureWait_waitFor_Method < ::Quark.quark.reflect.M
 
 end
 
-def self.quark_concurrent_FutureWait; CLASS_quark_concurrent_FutureWait; end
-class CLASS_quark_concurrent_FutureWait < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_FutureWait; QuarkConcurrentFutureWait; end
+class QuarkConcurrentFutureWait < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_FutureWait.new() }
@@ -3205,10 +3205,10 @@ class CLASS_quark_concurrent_FutureWait < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_FutureWait.unlazy_statics
+QuarkConcurrentFutureWait.unlazy_statics
 
-def self.quark_concurrent_Queue_quark_concurrent_Event__put_Method; CLASS_quark_concurrent_Queue_quark_concurrent_Event__put_Method; end
-class CLASS_quark_concurrent_Queue_quark_concurrent_Event__put_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Queue_quark_concurrent_Event__put_Method; QuarkConcurrentQueueQuarkConcurrentEventPutMethod; end
+class QuarkConcurrentQueueQuarkConcurrentEventPutMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3261,8 +3261,8 @@ class CLASS_quark_concurrent_Queue_quark_concurrent_Event__put_Method < ::Quark.
 
 end
 
-def self.quark_concurrent_Queue_quark_concurrent_Event__get_Method; CLASS_quark_concurrent_Queue_quark_concurrent_Event__get_Method; end
-class CLASS_quark_concurrent_Queue_quark_concurrent_Event__get_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Queue_quark_concurrent_Event__get_Method; QuarkConcurrentQueueQuarkConcurrentEventGetMethod; end
+class QuarkConcurrentQueueQuarkConcurrentEventGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3314,8 +3314,8 @@ class CLASS_quark_concurrent_Queue_quark_concurrent_Event__get_Method < ::Quark.
 
 end
 
-def self.quark_concurrent_Queue_quark_concurrent_Event__size_Method; CLASS_quark_concurrent_Queue_quark_concurrent_Event__size_Method; end
-class CLASS_quark_concurrent_Queue_quark_concurrent_Event__size_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Queue_quark_concurrent_Event__size_Method; QuarkConcurrentQueueQuarkConcurrentEventSizeMethod; end
+class QuarkConcurrentQueueQuarkConcurrentEventSizeMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3367,8 +3367,8 @@ class CLASS_quark_concurrent_Queue_quark_concurrent_Event__size_Method < ::Quark
 
 end
 
-def self.quark_concurrent_Queue_quark_concurrent_Event_; CLASS_quark_concurrent_Queue_quark_concurrent_Event_; end
-class CLASS_quark_concurrent_Queue_quark_concurrent_Event_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Queue_quark_concurrent_Event_; QuarkConcurrentQueueQuarkConcurrentEvent; end
+class QuarkConcurrentQueueQuarkConcurrentEvent < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Queue_quark_concurrent_Event_.new() }
@@ -3425,10 +3425,10 @@ class CLASS_quark_concurrent_Queue_quark_concurrent_Event_ < ::Quark.quark.refle
 
 
 end
-CLASS_quark_concurrent_Queue_quark_concurrent_Event_.unlazy_statics
+QuarkConcurrentQueueQuarkConcurrentEvent.unlazy_statics
 
-def self.quark_concurrent_CollectorExecutor__start_Method; CLASS_quark_concurrent_CollectorExecutor__start_Method; end
-class CLASS_quark_concurrent_CollectorExecutor__start_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_CollectorExecutor__start_Method; QuarkConcurrentCollectorExecutorStartMethod; end
+class QuarkConcurrentCollectorExecutorStartMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3481,8 +3481,8 @@ class CLASS_quark_concurrent_CollectorExecutor__start_Method < ::Quark.quark.ref
 
 end
 
-def self.quark_concurrent_CollectorExecutor_onExecute_Method; CLASS_quark_concurrent_CollectorExecutor_onExecute_Method; end
-class CLASS_quark_concurrent_CollectorExecutor_onExecute_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_CollectorExecutor_onExecute_Method; QuarkConcurrentCollectorExecutorOnExecuteMethod; end
+class QuarkConcurrentCollectorExecutorOnExecuteMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3535,8 +3535,8 @@ class CLASS_quark_concurrent_CollectorExecutor_onExecute_Method < ::Quark.quark.
 
 end
 
-def self.quark_concurrent_CollectorExecutor; CLASS_quark_concurrent_CollectorExecutor; end
-class CLASS_quark_concurrent_CollectorExecutor < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_CollectorExecutor; QuarkConcurrentCollectorExecutor; end
+class QuarkConcurrentCollectorExecutor < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_CollectorExecutor.new() }
@@ -3593,10 +3593,10 @@ class CLASS_quark_concurrent_CollectorExecutor < ::Quark.quark.reflect.QuarkClas
 
 
 end
-CLASS_quark_concurrent_CollectorExecutor.unlazy_statics
+QuarkConcurrentCollectorExecutor.unlazy_statics
 
-def self.quark_concurrent_Collector_put_Method; CLASS_quark_concurrent_Collector_put_Method; end
-class CLASS_quark_concurrent_Collector_put_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Collector_put_Method; QuarkConcurrentCollectorPutMethod; end
+class QuarkConcurrentCollectorPutMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3649,8 +3649,8 @@ class CLASS_quark_concurrent_Collector_put_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_concurrent_Collector__swap_Method; CLASS_quark_concurrent_Collector__swap_Method; end
-class CLASS_quark_concurrent_Collector__swap_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Collector__swap_Method; QuarkConcurrentCollectorSwapMethod; end
+class QuarkConcurrentCollectorSwapMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3702,8 +3702,8 @@ class CLASS_quark_concurrent_Collector__swap_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Collector__poll_Method; CLASS_quark_concurrent_Collector__poll_Method; end
-class CLASS_quark_concurrent_Collector__poll_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Collector__poll_Method; QuarkConcurrentCollectorPollMethod; end
+class QuarkConcurrentCollectorPollMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3756,8 +3756,8 @@ class CLASS_quark_concurrent_Collector__poll_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Collector; CLASS_quark_concurrent_Collector; end
-class CLASS_quark_concurrent_Collector < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Collector; QuarkConcurrentCollector; end
+class QuarkConcurrentCollector < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Collector.new() }
@@ -3814,10 +3814,10 @@ class CLASS_quark_concurrent_Collector < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_Collector.unlazy_statics
+QuarkConcurrentCollector.unlazy_statics
 
-def self.quark_concurrent_TimeoutListener_onTimeout_Method; CLASS_quark_concurrent_TimeoutListener_onTimeout_Method; end
-class CLASS_quark_concurrent_TimeoutListener_onTimeout_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_TimeoutListener_onTimeout_Method; QuarkConcurrentTimeoutListenerOnTimeoutMethod; end
+class QuarkConcurrentTimeoutListenerOnTimeoutMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3870,8 +3870,8 @@ class CLASS_quark_concurrent_TimeoutListener_onTimeout_Method < ::Quark.quark.re
 
 end
 
-def self.quark_concurrent_TimeoutListener; CLASS_quark_concurrent_TimeoutListener; end
-class CLASS_quark_concurrent_TimeoutListener < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_TimeoutListener; QuarkConcurrentTimeoutListener; end
+class QuarkConcurrentTimeoutListener < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_TimeoutListener.new() }
@@ -3928,10 +3928,10 @@ class CLASS_quark_concurrent_TimeoutListener < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_TimeoutListener.unlazy_statics
+QuarkConcurrentTimeoutListener.unlazy_statics
 
-def self.quark_concurrent_TimeoutExpiry_getContext_Method; CLASS_quark_concurrent_TimeoutExpiry_getContext_Method; end
-class CLASS_quark_concurrent_TimeoutExpiry_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_TimeoutExpiry_getContext_Method; QuarkConcurrentTimeoutExpiryGetContextMethod; end
+class QuarkConcurrentTimeoutExpiryGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -3983,8 +3983,8 @@ class CLASS_quark_concurrent_TimeoutExpiry_getContext_Method < ::Quark.quark.ref
 
 end
 
-def self.quark_concurrent_TimeoutExpiry_fireEvent_Method; CLASS_quark_concurrent_TimeoutExpiry_fireEvent_Method; end
-class CLASS_quark_concurrent_TimeoutExpiry_fireEvent_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_TimeoutExpiry_fireEvent_Method; QuarkConcurrentTimeoutExpiryFireEventMethod; end
+class QuarkConcurrentTimeoutExpiryFireEventMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4037,8 +4037,8 @@ class CLASS_quark_concurrent_TimeoutExpiry_fireEvent_Method < ::Quark.quark.refl
 
 end
 
-def self.quark_concurrent_TimeoutExpiry; CLASS_quark_concurrent_TimeoutExpiry; end
-class CLASS_quark_concurrent_TimeoutExpiry < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_TimeoutExpiry; QuarkConcurrentTimeoutExpiry; end
+class QuarkConcurrentTimeoutExpiry < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_TimeoutExpiry.new() }
@@ -4095,10 +4095,10 @@ class CLASS_quark_concurrent_TimeoutExpiry < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_TimeoutExpiry.unlazy_statics
+QuarkConcurrentTimeoutExpiry.unlazy_statics
 
-def self.quark_concurrent_Timeout_start_Method; CLASS_quark_concurrent_Timeout_start_Method; end
-class CLASS_quark_concurrent_Timeout_start_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Timeout_start_Method; QuarkConcurrentTimeoutStartMethod; end
+class QuarkConcurrentTimeoutStartMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4151,8 +4151,8 @@ class CLASS_quark_concurrent_Timeout_start_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_concurrent_Timeout_cancel_Method; CLASS_quark_concurrent_Timeout_cancel_Method; end
-class CLASS_quark_concurrent_Timeout_cancel_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Timeout_cancel_Method; QuarkConcurrentTimeoutCancelMethod; end
+class QuarkConcurrentTimeoutCancelMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4205,8 +4205,8 @@ class CLASS_quark_concurrent_Timeout_cancel_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.quark_concurrent_Timeout_onExecute_Method; CLASS_quark_concurrent_Timeout_onExecute_Method; end
-class CLASS_quark_concurrent_Timeout_onExecute_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Timeout_onExecute_Method; QuarkConcurrentTimeoutOnExecuteMethod; end
+class QuarkConcurrentTimeoutOnExecuteMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4259,8 +4259,8 @@ class CLASS_quark_concurrent_Timeout_onExecute_Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.quark_concurrent_Timeout_getContext_Method; CLASS_quark_concurrent_Timeout_getContext_Method; end
-class CLASS_quark_concurrent_Timeout_getContext_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Timeout_getContext_Method; QuarkConcurrentTimeoutGetContextMethod; end
+class QuarkConcurrentTimeoutGetContextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4312,8 +4312,8 @@ class CLASS_quark_concurrent_Timeout_getContext_Method < ::Quark.quark.reflect.M
 
 end
 
-def self.quark_concurrent_Timeout; CLASS_quark_concurrent_Timeout; end
-class CLASS_quark_concurrent_Timeout < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Timeout; QuarkConcurrentTimeout; end
+class QuarkConcurrentTimeout < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Timeout.new() }
@@ -4370,10 +4370,10 @@ class CLASS_quark_concurrent_Timeout < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_Timeout.unlazy_statics
+QuarkConcurrentTimeout.unlazy_statics
 
-def self.quark_concurrent_TLSContextInitializer_getValue_Method; CLASS_quark_concurrent_TLSContextInitializer_getValue_Method; end
-class CLASS_quark_concurrent_TLSContextInitializer_getValue_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_TLSContextInitializer_getValue_Method; QuarkConcurrentTLSContextInitializerGetValueMethod; end
+class QuarkConcurrentTLSContextInitializerGetValueMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4425,8 +4425,8 @@ class CLASS_quark_concurrent_TLSContextInitializer_getValue_Method < ::Quark.qua
 
 end
 
-def self.quark_concurrent_TLSContextInitializer; CLASS_quark_concurrent_TLSContextInitializer; end
-class CLASS_quark_concurrent_TLSContextInitializer < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_TLSContextInitializer; QuarkConcurrentTLSContextInitializer; end
+class QuarkConcurrentTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_TLSContextInitializer.new() }
@@ -4483,10 +4483,10 @@ class CLASS_quark_concurrent_TLSContextInitializer < ::Quark.quark.reflect.Quark
 
 
 end
-CLASS_quark_concurrent_TLSContextInitializer.unlazy_statics
+QuarkConcurrentTLSContextInitializer.unlazy_statics
 
-def self.quark_concurrent_Context_current_Method; CLASS_quark_concurrent_Context_current_Method; end
-class CLASS_quark_concurrent_Context_current_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Context_current_Method; QuarkConcurrentContextCurrentMethod; end
+class QuarkConcurrentContextCurrentMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4538,8 +4538,8 @@ class CLASS_quark_concurrent_Context_current_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Context_global_Method; CLASS_quark_concurrent_Context_global_Method; end
-class CLASS_quark_concurrent_Context_global_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Context_global_Method; QuarkConcurrentContextGlobalMethod; end
+class QuarkConcurrentContextGlobalMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4591,8 +4591,8 @@ class CLASS_quark_concurrent_Context_global_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.quark_concurrent_Context_runtime_Method; CLASS_quark_concurrent_Context_runtime_Method; end
-class CLASS_quark_concurrent_Context_runtime_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Context_runtime_Method; QuarkConcurrentContextRuntimeMethod; end
+class QuarkConcurrentContextRuntimeMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4644,8 +4644,8 @@ class CLASS_quark_concurrent_Context_runtime_Method < ::Quark.quark.reflect.Meth
 
 end
 
-def self.quark_concurrent_Context_swap_Method; CLASS_quark_concurrent_Context_swap_Method; end
-class CLASS_quark_concurrent_Context_swap_Method < ::Quark.quark.reflect.Method
+def self.quark_concurrent_Context_swap_Method; QuarkConcurrentContextSwapMethod; end
+class QuarkConcurrentContextSwapMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4698,8 +4698,8 @@ class CLASS_quark_concurrent_Context_swap_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_concurrent_Context; CLASS_quark_concurrent_Context; end
-class CLASS_quark_concurrent_Context < ::Quark.quark.reflect.QuarkClass
+def self.quark_concurrent_Context; QuarkConcurrentContext; end
+class QuarkConcurrentContext < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_concurrent_Context.new() }
@@ -4756,10 +4756,10 @@ class CLASS_quark_concurrent_Context < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_concurrent_Context.unlazy_statics
+QuarkConcurrentContext.unlazy_statics
 
-def self.quark_test_TestInitializer_getValue_Method; CLASS_quark_test_TestInitializer_getValue_Method; end
-class CLASS_quark_test_TestInitializer_getValue_Method < ::Quark.quark.reflect.Method
+def self.quark_test_TestInitializer_getValue_Method; QuarkTestTestInitializerGetValueMethod; end
+class QuarkTestTestInitializerGetValueMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4811,8 +4811,8 @@ class CLASS_quark_test_TestInitializer_getValue_Method < ::Quark.quark.reflect.M
 
 end
 
-def self.quark_test_TestInitializer; CLASS_quark_test_TestInitializer; end
-class CLASS_quark_test_TestInitializer < ::Quark.quark.reflect.QuarkClass
+def self.quark_test_TestInitializer; QuarkTestTestInitializer; end
+class QuarkTestTestInitializer < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_test_TestInitializer.new() }
@@ -4869,10 +4869,10 @@ class CLASS_quark_test_TestInitializer < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_test_TestInitializer.unlazy_statics
+QuarkTestTestInitializer.unlazy_statics
 
-def self.quark_test_Test_current_Method; CLASS_quark_test_Test_current_Method; end
-class CLASS_quark_test_Test_current_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_current_Method; QuarkTestTestCurrentMethod; end
+class QuarkTestTestCurrentMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4924,8 +4924,8 @@ class CLASS_quark_test_Test_current_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test_start_Method; CLASS_quark_test_Test_start_Method; end
-class CLASS_quark_test_Test_start_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_start_Method; QuarkTestTestStartMethod; end
+class QuarkTestTestStartMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -4978,8 +4978,8 @@ class CLASS_quark_test_Test_start_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test_stop_Method; CLASS_quark_test_Test_stop_Method; end
-class CLASS_quark_test_Test_stop_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_stop_Method; QuarkTestTestStopMethod; end
+class QuarkTestTestStopMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5032,8 +5032,8 @@ class CLASS_quark_test_Test_stop_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test_check_Method; CLASS_quark_test_Test_check_Method; end
-class CLASS_quark_test_Test_check_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_check_Method; QuarkTestTestCheckMethod; end
+class QuarkTestTestCheckMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5085,8 +5085,8 @@ class CLASS_quark_test_Test_check_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test_fail_Method; CLASS_quark_test_Test_fail_Method; end
-class CLASS_quark_test_Test_fail_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_fail_Method; QuarkTestTestFailMethod; end
+class QuarkTestTestFailMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5139,8 +5139,8 @@ class CLASS_quark_test_Test_fail_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test_run_Method; CLASS_quark_test_Test_run_Method; end
-class CLASS_quark_test_Test_run_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Test_run_Method; QuarkTestTestRunMethod; end
+class QuarkTestTestRunMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5193,8 +5193,8 @@ class CLASS_quark_test_Test_run_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Test; CLASS_quark_test_Test; end
-class CLASS_quark_test_Test < ::Quark.quark.reflect.QuarkClass
+def self.quark_test_Test; QuarkTestTest; end
+class QuarkTestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_test_Test.new() }
@@ -5251,10 +5251,10 @@ class CLASS_quark_test_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_test_Test.unlazy_statics
+QuarkTestTest.unlazy_statics
 
-def self.quark_test_MethodTest_run_Method; CLASS_quark_test_MethodTest_run_Method; end
-class CLASS_quark_test_MethodTest_run_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_run_Method; QuarkTestMethodTestRunMethod; end
+class QuarkTestMethodTestRunMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5307,8 +5307,8 @@ class CLASS_quark_test_MethodTest_run_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest_current_Method; CLASS_quark_test_MethodTest_current_Method; end
-class CLASS_quark_test_MethodTest_current_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_current_Method; QuarkTestMethodTestCurrentMethod; end
+class QuarkTestMethodTestCurrentMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5360,8 +5360,8 @@ class CLASS_quark_test_MethodTest_current_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest_start_Method; CLASS_quark_test_MethodTest_start_Method; end
-class CLASS_quark_test_MethodTest_start_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_start_Method; QuarkTestMethodTestStartMethod; end
+class QuarkTestMethodTestStartMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5414,8 +5414,8 @@ class CLASS_quark_test_MethodTest_start_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest_stop_Method; CLASS_quark_test_MethodTest_stop_Method; end
-class CLASS_quark_test_MethodTest_stop_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_stop_Method; QuarkTestMethodTestStopMethod; end
+class QuarkTestMethodTestStopMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5468,8 +5468,8 @@ class CLASS_quark_test_MethodTest_stop_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest_check_Method; CLASS_quark_test_MethodTest_check_Method; end
-class CLASS_quark_test_MethodTest_check_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_check_Method; QuarkTestMethodTestCheckMethod; end
+class QuarkTestMethodTestCheckMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5521,8 +5521,8 @@ class CLASS_quark_test_MethodTest_check_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest_fail_Method; CLASS_quark_test_MethodTest_fail_Method; end
-class CLASS_quark_test_MethodTest_fail_Method < ::Quark.quark.reflect.Method
+def self.quark_test_MethodTest_fail_Method; QuarkTestMethodTestFailMethod; end
+class QuarkTestMethodTestFailMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5575,8 +5575,8 @@ class CLASS_quark_test_MethodTest_fail_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_MethodTest; CLASS_quark_test_MethodTest; end
-class CLASS_quark_test_MethodTest < ::Quark.quark.reflect.QuarkClass
+def self.quark_test_MethodTest; QuarkTestMethodTest; end
+class QuarkTestMethodTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_test_MethodTest.new() }
@@ -5633,10 +5633,10 @@ class CLASS_quark_test_MethodTest < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_test_MethodTest.unlazy_statics
+QuarkTestMethodTest.unlazy_statics
 
-def self.quark_test_Harness_collect_Method; CLASS_quark_test_Harness_collect_Method; end
-class CLASS_quark_test_Harness_collect_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Harness_collect_Method; QuarkTestHarnessCollectMethod; end
+class QuarkTestHarnessCollectMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5689,8 +5689,8 @@ class CLASS_quark_test_Harness_collect_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Harness_list_Method; CLASS_quark_test_Harness_list_Method; end
-class CLASS_quark_test_Harness_list_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Harness_list_Method; QuarkTestHarnessListMethod; end
+class QuarkTestHarnessListMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5743,8 +5743,8 @@ class CLASS_quark_test_Harness_list_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Harness_run_Method; CLASS_quark_test_Harness_run_Method; end
-class CLASS_quark_test_Harness_run_Method < ::Quark.quark.reflect.Method
+def self.quark_test_Harness_run_Method; QuarkTestHarnessRunMethod; end
+class QuarkTestHarnessRunMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -5797,8 +5797,8 @@ class CLASS_quark_test_Harness_run_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.quark_test_Harness; CLASS_quark_test_Harness; end
-class CLASS_quark_test_Harness < ::Quark.quark.reflect.QuarkClass
+def self.quark_test_Harness; QuarkTestHarness; end
+class QuarkTestHarness < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.quark_md.quark_test_Harness.new() }
@@ -5855,10 +5855,10 @@ class CLASS_quark_test_Harness < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_test_Harness.unlazy_statics
+QuarkTestHarness.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_List_quark_String__md: -> { ::Quark.quark_md.quark_List_quark_String_.singleton }
@@ -5938,6 +5938,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_quark_md
+Root.unlazy_statics
+end # module QuarkMd
 end # module Quark

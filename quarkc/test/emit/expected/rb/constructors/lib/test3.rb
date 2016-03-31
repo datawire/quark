@@ -1,9 +1,9 @@
 module Quark
 require "quark"
-def self.test3; MODULE_test3; end
-module MODULE_test3
-def self.Box; CLASS_Box; end
-class CLASS_Box < ::DatawireQuarkCore::QuarkObject
+def self.test3; Test3; end
+module Test3
+def self.Box; Box; end
+class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -74,5 +74,5 @@ def self.go()
 
     nil
 end
-end # module MODULE_test3
+end # module Test3
 end # module Quark

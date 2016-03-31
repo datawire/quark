@@ -1,8 +1,8 @@
 module Quark
-def self.puse_md; MODULE_puse_md; end
-module MODULE_puse_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.puse_md; PuseMd; end
+module PuseMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_puse_md
+end # module PuseMd
 end # module Quark

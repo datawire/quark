@@ -1,10 +1,10 @@
 module Quark
-def self.fancy_primitive_md; MODULE_fancy_primitive_md; end
-module MODULE_fancy_primitive_md
+def self.fancy_primitive_md; FancyPrimitiveMd; end
+module FancyPrimitiveMd
 require 'quark' # .../reflect
 
-def self.quark_List_quark_Object_; CLASS_quark_List_quark_Object_; end
-class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_Object_; QuarkListQuarkObject; end
+class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.fancy_primitive_md.quark_List_quark_Object_.new() }
@@ -61,10 +61,10 @@ class CLASS_quark_List_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_Object_.unlazy_statics
+QuarkListQuarkObject.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_List_quark_Object__md: -> { ::Quark.fancy_primitive_md.quark_List_quark_Object_.singleton }
@@ -109,6 +109,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_fancy_primitive_md
+Root.unlazy_statics
+end # module FancyPrimitiveMd
 end # module Quark

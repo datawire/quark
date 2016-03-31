@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.pkg; MODULE_pkg; end
-module MODULE_pkg
+def self.pkg; Pkg; end
+module Pkg
 require 'quark' # .../reflect
 require_relative 'use_class_before_def_md' # 0 () ()
 
-def self.Bar; CLASS_Bar; end
-class CLASS_Bar < ::DatawireQuarkCore::QuarkObject
+def self.Bar; Bar; end
+class Bar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_Bar_ref: -> { ::Quark.use_class_before_def_md.Root.pkg_Bar_md }
@@ -60,10 +60,10 @@ class CLASS_Bar < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Bar.unlazy_statics
+Bar.unlazy_statics
 
-def self.Foo; CLASS_Foo; end
-class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
+def self.Foo; Foo; end
+class Foo < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -116,6 +116,6 @@ class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Foo.unlazy_statics
-end # module MODULE_pkg
+Foo.unlazy_statics
+end # module Pkg
 end # module Quark

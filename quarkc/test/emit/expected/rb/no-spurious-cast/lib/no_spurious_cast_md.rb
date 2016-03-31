@@ -1,11 +1,11 @@
 module Quark
-def self.no_spurious_cast_md; MODULE_no_spurious_cast_md; end
-module MODULE_no_spurious_cast_md
+def self.no_spurious_cast_md; NoSpuriousCastMd; end
+module NoSpuriousCastMd
 require 'quark' # .../reflect
 # for ('no_spurious_cast_md',): require_relative 'no_spurious_cast' # 0 () ()
 
-def self.no_spurious_cast_A; CLASS_no_spurious_cast_A; end
-class CLASS_no_spurious_cast_A < ::Quark.quark.reflect.QuarkClass
+def self.no_spurious_cast_A; NoSpuriousCastA; end
+class NoSpuriousCastA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.no_spurious_cast_md.no_spurious_cast_A.new() }
@@ -62,10 +62,10 @@ class CLASS_no_spurious_cast_A < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_no_spurious_cast_A.unlazy_statics
+NoSpuriousCastA.unlazy_statics
 
-def self.no_spurious_cast_B; CLASS_no_spurious_cast_B; end
-class CLASS_no_spurious_cast_B < ::Quark.quark.reflect.QuarkClass
+def self.no_spurious_cast_B; NoSpuriousCastB; end
+class NoSpuriousCastB < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.no_spurious_cast_md.no_spurious_cast_B.new() }
@@ -122,10 +122,10 @@ class CLASS_no_spurious_cast_B < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_no_spurious_cast_B.unlazy_statics
+NoSpuriousCastB.unlazy_statics
 
-def self.no_spurious_cast_X_quark_int_; CLASS_no_spurious_cast_X_quark_int_; end
-class CLASS_no_spurious_cast_X_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.no_spurious_cast_X_quark_int_; NoSpuriousCastXQuarkInt; end
+class NoSpuriousCastXQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.no_spurious_cast_md.no_spurious_cast_X_quark_int_.new() }
@@ -182,10 +182,10 @@ class CLASS_no_spurious_cast_X_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_no_spurious_cast_X_quark_int_.unlazy_statics
+NoSpuriousCastXQuarkInt.unlazy_statics
 
-def self.no_spurious_cast_Y; CLASS_no_spurious_cast_Y; end
-class CLASS_no_spurious_cast_Y < ::Quark.quark.reflect.QuarkClass
+def self.no_spurious_cast_Y; NoSpuriousCastY; end
+class NoSpuriousCastY < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.no_spurious_cast_md.no_spurious_cast_Y.new() }
@@ -242,10 +242,10 @@ class CLASS_no_spurious_cast_Y < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_no_spurious_cast_Y.unlazy_statics
+NoSpuriousCastY.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static no_spurious_cast_A_md: -> { ::Quark.no_spurious_cast_md.no_spurious_cast_A.singleton }
@@ -293,6 +293,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_no_spurious_cast_md
+Root.unlazy_statics
+end # module NoSpuriousCastMd
 end # module Quark

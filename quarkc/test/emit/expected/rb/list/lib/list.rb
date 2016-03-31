@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.list; MODULE_list; end
-module MODULE_list
+def self.list; List; end
+module List
 require_relative 'list' # 0 () ()
 
 def self.test1()
@@ -58,8 +58,8 @@ def self.test4()
     nil
 end
 
-def self.Box; CLASS_Box; end
-class CLASS_Box < ::DatawireQuarkCore::QuarkObject
+def self.Box; Box; end
+class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -174,5 +174,5 @@ if __FILE__ == $0
     ::Quark.list.main()
 end
 
-end # module MODULE_list
+end # module List
 end # module Quark

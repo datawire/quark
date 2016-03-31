@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.super; MODULE_super; end
-module MODULE_super
+def self.super; Super; end
+module Super
 require 'quark' # .../reflect
 require_relative 'super_md' # 0 () ()
 require_relative 'super' # 0 () ()
 
-def self.A; CLASS_A; end
-class CLASS_A < ::DatawireQuarkCore::QuarkObject
+def self.A; A; end
+class A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -69,10 +69,10 @@ class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_A.unlazy_statics
+A.unlazy_statics
 
-def self.B; CLASS_B; end
-class CLASS_B < ::Quark.super.A
+def self.B; B; end
+class B < ::Quark.super.A
     extend ::DatawireQuarkCore::Static
 
     static super_B_ref: -> { ::Quark.super_md.Root.super_B_md }
@@ -131,7 +131,7 @@ class CLASS_B < ::Quark.super.A
 
 
 end
-CLASS_B.unlazy_statics
+B.unlazy_statics
 
 def self.main()
     
@@ -146,5 +146,5 @@ if __FILE__ == $0
     ::Quark.super.main()
 end
 
-end # module MODULE_super
+end # module Super
 end # module Quark

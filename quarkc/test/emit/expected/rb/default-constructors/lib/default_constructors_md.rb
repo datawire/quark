@@ -1,11 +1,11 @@
 module Quark
-def self.default_constructors_md; MODULE_default_constructors_md; end
-module MODULE_default_constructors_md
+def self.default_constructors_md; DefaultConstructorsMd; end
+module DefaultConstructorsMd
 require 'quark' # .../reflect
 # for ('default_constructors_md',): require_relative 'default_constructors' # 0 () ()
 
-def self.default_constructors_A; CLASS_default_constructors_A; end
-class CLASS_default_constructors_A < ::Quark.quark.reflect.QuarkClass
+def self.default_constructors_A; DefaultConstructorsA; end
+class DefaultConstructorsA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.default_constructors_md.default_constructors_A.new() }
@@ -62,10 +62,10 @@ class CLASS_default_constructors_A < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_default_constructors_A.unlazy_statics
+DefaultConstructorsA.unlazy_statics
 
-def self.default_constructors_B_greet_Method; CLASS_default_constructors_B_greet_Method; end
-class CLASS_default_constructors_B_greet_Method < ::Quark.quark.reflect.Method
+def self.default_constructors_B_greet_Method; DefaultConstructorsBGreetMethod; end
+class DefaultConstructorsBGreetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -118,8 +118,8 @@ class CLASS_default_constructors_B_greet_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.default_constructors_B; CLASS_default_constructors_B; end
-class CLASS_default_constructors_B < ::Quark.quark.reflect.QuarkClass
+def self.default_constructors_B; DefaultConstructorsB; end
+class DefaultConstructorsB < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.default_constructors_md.default_constructors_B.new() }
@@ -176,10 +176,10 @@ class CLASS_default_constructors_B < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_default_constructors_B.unlazy_statics
+DefaultConstructorsB.unlazy_statics
 
-def self.default_constructors_C_greet_Method; CLASS_default_constructors_C_greet_Method; end
-class CLASS_default_constructors_C_greet_Method < ::Quark.quark.reflect.Method
+def self.default_constructors_C_greet_Method; DefaultConstructorsCGreetMethod; end
+class DefaultConstructorsCGreetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -232,8 +232,8 @@ class CLASS_default_constructors_C_greet_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.default_constructors_C; CLASS_default_constructors_C; end
-class CLASS_default_constructors_C < ::Quark.quark.reflect.QuarkClass
+def self.default_constructors_C; DefaultConstructorsC; end
+class DefaultConstructorsC < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.default_constructors_md.default_constructors_C.new() }
@@ -290,10 +290,10 @@ class CLASS_default_constructors_C < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_default_constructors_C.unlazy_statics
+DefaultConstructorsC.unlazy_statics
 
-def self.default_constructors_X; CLASS_default_constructors_X; end
-class CLASS_default_constructors_X < ::Quark.quark.reflect.QuarkClass
+def self.default_constructors_X; DefaultConstructorsX; end
+class DefaultConstructorsX < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.default_constructors_md.default_constructors_X.new() }
@@ -350,10 +350,10 @@ class CLASS_default_constructors_X < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_default_constructors_X.unlazy_statics
+DefaultConstructorsX.unlazy_statics
 
-def self.default_constructors_Y_test_Method; CLASS_default_constructors_Y_test_Method; end
-class CLASS_default_constructors_Y_test_Method < ::Quark.quark.reflect.Method
+def self.default_constructors_Y_test_Method; DefaultConstructorsYTestMethod; end
+class DefaultConstructorsYTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -406,8 +406,8 @@ class CLASS_default_constructors_Y_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.default_constructors_Y; CLASS_default_constructors_Y; end
-class CLASS_default_constructors_Y < ::Quark.quark.reflect.QuarkClass
+def self.default_constructors_Y; DefaultConstructorsY; end
+class DefaultConstructorsY < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.default_constructors_md.default_constructors_Y.new() }
@@ -464,10 +464,10 @@ class CLASS_default_constructors_Y < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_default_constructors_Y.unlazy_statics
+DefaultConstructorsY.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static default_constructors_A_md: -> { ::Quark.default_constructors_md.default_constructors_A.singleton }
@@ -516,6 +516,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_default_constructors_md
+Root.unlazy_statics
+end # module DefaultConstructorsMd
 end # module Quark

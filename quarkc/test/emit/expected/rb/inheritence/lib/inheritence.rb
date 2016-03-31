@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.inheritence; MODULE_inheritence; end
-module MODULE_inheritence
+def self.inheritence; Inheritence; end
+module Inheritence
 require 'quark' # .../reflect
 require_relative 'inheritence_md' # 0 () ()
 require_relative 'inheritence' # 0 () ()
 
-def self.A; CLASS_A; end
-class CLASS_A < ::DatawireQuarkCore::QuarkObject
+def self.A; A; end
+class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static inheritence_A_ref: -> { ::Quark.inheritence_md.Root.inheritence_A_md }
@@ -59,10 +59,10 @@ class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_A.unlazy_statics
+A.unlazy_statics
 
-def self.B; CLASS_B; end
-class CLASS_B < ::Quark.inheritence.A
+def self.B; B; end
+class B < ::Quark.inheritence.A
     extend ::DatawireQuarkCore::Static
 
     static inheritence_B_ref: -> { ::Quark.inheritence_md.Root.inheritence_B_md }
@@ -115,10 +115,10 @@ class CLASS_B < ::Quark.inheritence.A
 
 
 end
-CLASS_B.unlazy_statics
+B.unlazy_statics
 
-def self.C; CLASS_C; end
-class CLASS_C < ::Quark.inheritence.A
+def self.C; C; end
+class C < ::Quark.inheritence.A
     extend ::DatawireQuarkCore::Static
 
     static inheritence_C_ref: -> { ::Quark.inheritence_md.Root.inheritence_C_md }
@@ -164,7 +164,7 @@ class CLASS_C < ::Quark.inheritence.A
 
 
 end
-CLASS_C.unlazy_statics
+C.unlazy_statics
 
 def self.main()
     
@@ -188,5 +188,5 @@ if __FILE__ == $0
     ::Quark.inheritence.main()
 end
 
-end # module MODULE_inheritence
+end # module Inheritence
 end # module Quark

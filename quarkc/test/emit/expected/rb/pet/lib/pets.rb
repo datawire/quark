@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.pets; MODULE_pets; end
-module MODULE_pets
+def self.pets; Pets; end
+module Pets
 require 'quark' # .../reflect
 require_relative 'pet_md' # 0 () ()
 
-def self.Pet; CLASS_Pet; end
-class CLASS_Pet < ::DatawireQuarkCore::QuarkObject
+def self.Pet; Pet; end
+class Pet < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -34,8 +34,8 @@ class CLASS_Pet < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.Cat; CLASS_Cat; end
-class CLASS_Cat < ::Quark.pets.Pet
+def self.Cat; Cat; end
+class Cat < ::Quark.pets.Pet
     extend ::DatawireQuarkCore::Static
 
     static pets_Cat_ref: -> { ::Quark.pet_md.Root.pets_Cat_md }
@@ -88,10 +88,10 @@ class CLASS_Cat < ::Quark.pets.Pet
 
 
 end
-CLASS_Cat.unlazy_statics
+Cat.unlazy_statics
 
-def self.Dog; CLASS_Dog; end
-class CLASS_Dog < ::Quark.pets.Pet
+def self.Dog; Dog; end
+class Dog < ::Quark.pets.Pet
     extend ::DatawireQuarkCore::Static
 
     static pets_Dog_ref: -> { ::Quark.pet_md.Root.pets_Dog_md }
@@ -144,6 +144,6 @@ class CLASS_Dog < ::Quark.pets.Pet
 
 
 end
-CLASS_Dog.unlazy_statics
-end # module MODULE_pets
+Dog.unlazy_statics
+end # module Pets
 end # module Quark

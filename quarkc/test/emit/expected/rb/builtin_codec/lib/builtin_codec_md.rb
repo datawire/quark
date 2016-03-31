@@ -1,8 +1,8 @@
 module Quark
-def self.builtin_codec_md; MODULE_builtin_codec_md; end
-module MODULE_builtin_codec_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.builtin_codec_md; BuiltinCodecMd; end
+module BuiltinCodecMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_builtin_codec_md
+end # module BuiltinCodecMd
 end # module Quark

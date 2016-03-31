@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.test1; MODULE_test1; end
-module MODULE_test1
+def self.test1; Test1; end
+module Test1
 require 'quark' # .../reflect
 require_relative 'constructors_md' # 0 () ()
 
-def self.Test; CLASS_Test; end
-class CLASS_Test < ::DatawireQuarkCore::QuarkObject
+def self.Test; Test; end
+class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
@@ -61,7 +61,7 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Test.unlazy_statics
+Test.unlazy_statics
 
 def self.go()
     
@@ -72,5 +72,5 @@ def self.go()
 
     nil
 end
-end # module MODULE_test1
+end # module Test1
 end # module Quark

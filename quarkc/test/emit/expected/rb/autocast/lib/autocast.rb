@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.autocast; MODULE_autocast; end
-module MODULE_autocast
+def self.autocast; Autocast; end
+module Autocast
 require_relative 'autocast' # 0 () ()
 
 def self.foo(s)
@@ -28,5 +28,5 @@ if __FILE__ == $0
     ::Quark.autocast.main()
 end
 
-end # module MODULE_autocast
+end # module Autocast
 end # module Quark
