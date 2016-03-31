@@ -61,7 +61,7 @@ Compile and install the Service Contract in hello.q:
 
         quark install hello.q --java
 
-Compile the Java server and client with 
+Compile the Java server and client with
 
         mvn compile
 
@@ -94,10 +94,10 @@ Compile and install the Service Contract in hello.q:
         quark compile hello.q --ruby
         bundle install
 
-Run the Ruby client with
-
-        bundle exec ruby rbclient.rb
-
 Run the Ruby server with
 
         bundle exec ruby rbserver.rb
+
+Run the Ruby client with
+
+        bundle exec ruby rbclient.rb
