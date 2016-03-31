@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.pkg; MODULE_pkg; end
-module MODULE_pkg
+def self.pkg; Pkg; end
+module Pkg
 require 'quark' # .../reflect
 require_relative 'parameterized_defaults_md' # 0 () ()
 
-def self.Foo; CLASS_Foo; end
-class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
+def self.Foo; Foo; end
+class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_Foo_quark_Object__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Foo_quark_Object__md }
@@ -43,10 +43,10 @@ class CLASS_Foo < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Foo.unlazy_statics
+Foo.unlazy_statics
 
-def self.StringFoo; CLASS_StringFoo; end
-class CLASS_StringFoo < ::DatawireQuarkCore::QuarkObject
+def self.StringFoo; StringFoo; end
+class StringFoo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_StringFoo_ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_StringFoo_md }
@@ -105,10 +105,10 @@ class CLASS_StringFoo < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_StringFoo.unlazy_statics
+StringFoo.unlazy_statics
 
-def self.Box; CLASS_Box; end
-class CLASS_Box < ::DatawireQuarkCore::QuarkObject
+def self.Box; Box; end
+class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -161,8 +161,8 @@ class CLASS_Box < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.StringBox; CLASS_StringBox; end
-class CLASS_StringBox < ::Quark.pkg.Box
+def self.StringBox; StringBox; end
+class StringBox < ::Quark.pkg.Box
     extend ::DatawireQuarkCore::Static
 
     static pkg_Box_quark_String__ref: -> { ::Quark.parameterized_defaults_md.Root.pkg_Box_quark_String__md }
@@ -214,6 +214,6 @@ class CLASS_StringBox < ::Quark.pkg.Box
 
 
 end
-CLASS_StringBox.unlazy_statics
-end # module MODULE_pkg
+StringBox.unlazy_statics
+end # module Pkg
 end # module Quark

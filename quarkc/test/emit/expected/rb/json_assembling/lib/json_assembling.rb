@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.json_assembling; MODULE_json_assembling; end
-module MODULE_json_assembling
+def self.json_assembling; JsonAssembling; end
+module JsonAssembling
 require_relative 'json_assembling' # 0 () ()
 
 def self.test_assembling()
@@ -38,5 +38,5 @@ if __FILE__ == $0
     ::Quark.json_assembling.main()
 end
 
-end # module MODULE_json_assembling
+end # module JsonAssembling
 end # module Quark

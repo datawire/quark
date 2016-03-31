@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.simple_math; MODULE_simple_math; end
-module MODULE_simple_math
+def self.simple_math; SimpleMath; end
+module SimpleMath
 require_relative 'simple_math' # 0 () ()
 
 def self.main()
@@ -33,5 +33,5 @@ if __FILE__ == $0
     ::Quark.simple_math.main()
 end
 
-end # module MODULE_simple_math
+end # module SimpleMath
 end # module Quark

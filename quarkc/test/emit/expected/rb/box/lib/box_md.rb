@@ -1,11 +1,11 @@
 module Quark
-def self.box_md; MODULE_box_md; end
-module MODULE_box_md
+def self.box_md; BoxMd; end
+module BoxMd
 require 'quark' # .../reflect
 # for ('box_md',): require_relative 'box' # 0 () ()
 
-def self.box_Box_quark_Object__set_Method; CLASS_box_Box_quark_Object__set_Method; end
-class CLASS_box_Box_quark_Object__set_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_Object__set_Method; BoxBoxQuarkObjectSetMethod; end
+class BoxBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_box_Box_quark_Object__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_Object__get_Method; CLASS_box_Box_quark_Object__get_Method; end
-class CLASS_box_Box_quark_Object__get_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_Object__get_Method; BoxBoxQuarkObjectGetMethod; end
+class BoxBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -111,8 +111,8 @@ class CLASS_box_Box_quark_Object__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_Object_; CLASS_box_Box_quark_Object_; end
-class CLASS_box_Box_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.box_Box_quark_Object_; BoxBoxQuarkObject; end
+class BoxBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Box_quark_Object_.new() }
@@ -169,10 +169,10 @@ class CLASS_box_Box_quark_Object_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Box_quark_Object_.unlazy_statics
+BoxBoxQuarkObject.unlazy_statics
 
-def self.box_Box_quark_int__set_Method; CLASS_box_Box_quark_int__set_Method; end
-class CLASS_box_Box_quark_int__set_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_int__set_Method; BoxBoxQuarkIntSetMethod; end
+class BoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -225,8 +225,8 @@ class CLASS_box_Box_quark_int__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_int__get_Method; CLASS_box_Box_quark_int__get_Method; end
-class CLASS_box_Box_quark_int__get_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_int__get_Method; BoxBoxQuarkIntGetMethod; end
+class BoxBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -278,8 +278,8 @@ class CLASS_box_Box_quark_int__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_int_; CLASS_box_Box_quark_int_; end
-class CLASS_box_Box_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.box_Box_quark_int_; BoxBoxQuarkInt; end
+class BoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Box_quark_int_.new() }
@@ -336,10 +336,10 @@ class CLASS_box_Box_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Box_quark_int_.unlazy_statics
+BoxBoxQuarkInt.unlazy_statics
 
-def self.box_Box_quark_String__set_Method; CLASS_box_Box_quark_String__set_Method; end
-class CLASS_box_Box_quark_String__set_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_String__set_Method; BoxBoxQuarkStringSetMethod; end
+class BoxBoxQuarkStringSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -392,8 +392,8 @@ class CLASS_box_Box_quark_String__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_String__get_Method; CLASS_box_Box_quark_String__get_Method; end
-class CLASS_box_Box_quark_String__get_Method < ::Quark.quark.reflect.Method
+def self.box_Box_quark_String__get_Method; BoxBoxQuarkStringGetMethod; end
+class BoxBoxQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -445,8 +445,8 @@ class CLASS_box_Box_quark_String__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Box_quark_String_; CLASS_box_Box_quark_String_; end
-class CLASS_box_Box_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.box_Box_quark_String_; BoxBoxQuarkString; end
+class BoxBoxQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Box_quark_String_.new() }
@@ -503,10 +503,10 @@ class CLASS_box_Box_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Box_quark_String_.unlazy_statics
+BoxBoxQuarkString.unlazy_statics
 
-def self.box_Box_box_Box_quark_int___set_Method; CLASS_box_Box_box_Box_quark_int___set_Method; end
-class CLASS_box_Box_box_Box_quark_int___set_Method < ::Quark.quark.reflect.Method
+def self.box_Box_box_Box_quark_int___set_Method; BoxBoxBoxBoxQuarkIntSetMethod; end
+class BoxBoxBoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -559,8 +559,8 @@ class CLASS_box_Box_box_Box_quark_int___set_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.box_Box_box_Box_quark_int___get_Method; CLASS_box_Box_box_Box_quark_int___get_Method; end
-class CLASS_box_Box_box_Box_quark_int___get_Method < ::Quark.quark.reflect.Method
+def self.box_Box_box_Box_quark_int___get_Method; BoxBoxBoxBoxQuarkIntGetMethod; end
+class BoxBoxBoxBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -612,8 +612,8 @@ class CLASS_box_Box_box_Box_quark_int___get_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.box_Box_box_Box_quark_int__; CLASS_box_Box_box_Box_quark_int__; end
-class CLASS_box_Box_box_Box_quark_int__ < ::Quark.quark.reflect.QuarkClass
+def self.box_Box_box_Box_quark_int__; BoxBoxBoxBoxQuarkInt; end
+class BoxBoxBoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Box_box_Box_quark_int__.new() }
@@ -670,10 +670,10 @@ class CLASS_box_Box_box_Box_quark_int__ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Box_box_Box_quark_int__.unlazy_statics
+BoxBoxBoxBoxQuarkInt.unlazy_statics
 
-def self.box_Crate_quark_int__set_Method; CLASS_box_Crate_quark_int__set_Method; end
-class CLASS_box_Crate_quark_int__set_Method < ::Quark.quark.reflect.Method
+def self.box_Crate_quark_int__set_Method; BoxCrateQuarkIntSetMethod; end
+class BoxCrateQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -726,8 +726,8 @@ class CLASS_box_Crate_quark_int__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Crate_quark_int__get_Method; CLASS_box_Crate_quark_int__get_Method; end
-class CLASS_box_Crate_quark_int__get_Method < ::Quark.quark.reflect.Method
+def self.box_Crate_quark_int__get_Method; BoxCrateQuarkIntGetMethod; end
+class BoxCrateQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -779,8 +779,8 @@ class CLASS_box_Crate_quark_int__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Crate_quark_int_; CLASS_box_Crate_quark_int_; end
-class CLASS_box_Crate_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.box_Crate_quark_int_; BoxCrateQuarkInt; end
+class BoxCrateQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Crate_quark_int_.new() }
@@ -837,10 +837,10 @@ class CLASS_box_Crate_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Crate_quark_int_.unlazy_statics
+BoxCrateQuarkInt.unlazy_statics
 
-def self.box_Crate_quark_String__set_Method; CLASS_box_Crate_quark_String__set_Method; end
-class CLASS_box_Crate_quark_String__set_Method < ::Quark.quark.reflect.Method
+def self.box_Crate_quark_String__set_Method; BoxCrateQuarkStringSetMethod; end
+class BoxCrateQuarkStringSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -893,8 +893,8 @@ class CLASS_box_Crate_quark_String__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Crate_quark_String__get_Method; CLASS_box_Crate_quark_String__get_Method; end
-class CLASS_box_Crate_quark_String__get_Method < ::Quark.quark.reflect.Method
+def self.box_Crate_quark_String__get_Method; BoxCrateQuarkStringGetMethod; end
+class BoxCrateQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -946,8 +946,8 @@ class CLASS_box_Crate_quark_String__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.box_Crate_quark_String_; CLASS_box_Crate_quark_String_; end
-class CLASS_box_Crate_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.box_Crate_quark_String_; BoxCrateQuarkString; end
+class BoxCrateQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Crate_quark_String_.new() }
@@ -1004,10 +1004,10 @@ class CLASS_box_Crate_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Crate_quark_String_.unlazy_statics
+BoxCrateQuarkString.unlazy_statics
 
-def self.box_Sack; CLASS_box_Sack; end
-class CLASS_box_Sack < ::Quark.quark.reflect.QuarkClass
+def self.box_Sack; BoxSack; end
+class BoxSack < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.box_md.box_Sack.new() }
@@ -1064,10 +1064,10 @@ class CLASS_box_Sack < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_box_Sack.unlazy_statics
+BoxSack.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static box_Box_quark_Object__md: -> { ::Quark.box_md.box_Box_quark_Object_.singleton }
@@ -1114,6 +1114,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_box_md
+Root.unlazy_statics
+end # module BoxMd
 end # module Quark

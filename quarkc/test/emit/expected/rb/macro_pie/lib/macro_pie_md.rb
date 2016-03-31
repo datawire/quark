@@ -1,11 +1,11 @@
 module Quark
-def self.macro_pie_md; MODULE_macro_pie_md; end
-module MODULE_macro_pie_md
+def self.macro_pie_md; MacroPieMd; end
+module MacroPieMd
 require 'quark' # .../reflect
 # for ('macro_pie_md',): require_relative 'macro_pie' # 0 () ()
 
-def self.macro_pie_Pie_test_Method; CLASS_macro_pie_Pie_test_Method; end
-class CLASS_macro_pie_Pie_test_Method < ::Quark.quark.reflect.Method
+def self.macro_pie_Pie_test_Method; MacroPiePieTestMethod; end
+class MacroPiePieTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_macro_pie_Pie_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.macro_pie_Pie; CLASS_macro_pie_Pie; end
-class CLASS_macro_pie_Pie < ::Quark.quark.reflect.QuarkClass
+def self.macro_pie_Pie; MacroPiePie; end
+class MacroPiePie < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.macro_pie_md.macro_pie_Pie.new() }
@@ -116,10 +116,10 @@ class CLASS_macro_pie_Pie < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_macro_pie_Pie.unlazy_statics
+MacroPiePie.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_pie_Pie_md: -> { ::Quark.macro_pie_md.macro_pie_Pie.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_macro_pie_md
+Root.unlazy_statics
+end # module MacroPieMd
 end # module Quark

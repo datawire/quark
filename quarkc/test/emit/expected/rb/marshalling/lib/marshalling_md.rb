@@ -1,11 +1,11 @@
 module Quark
-def self.marshalling_md; MODULE_marshalling_md; end
-module MODULE_marshalling_md
+def self.marshalling_md; MarshallingMd; end
+module MarshallingMd
 require 'quark' # .../reflect
 # for ('marshalling_md',): require_relative 'm' # 0 () ()
 
-def self.m_Inner_setup_Method; CLASS_m_Inner_setup_Method; end
-class CLASS_m_Inner_setup_Method < ::Quark.quark.reflect.Method
+def self.m_Inner_setup_Method; MInnerSetupMethod; end
+class MInnerSetupMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -57,8 +57,8 @@ class CLASS_m_Inner_setup_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.m_Inner; CLASS_m_Inner; end
-class CLASS_m_Inner < ::Quark.quark.reflect.QuarkClass
+def self.m_Inner; MInner; end
+class MInner < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.marshalling_md.m_Inner.new() }
@@ -115,10 +115,10 @@ class CLASS_m_Inner < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_m_Inner.unlazy_statics
+MInner.unlazy_statics
 
-def self.m_Outer_setup_Method; CLASS_m_Outer_setup_Method; end
-class CLASS_m_Outer_setup_Method < ::Quark.quark.reflect.Method
+def self.m_Outer_setup_Method; MOuterSetupMethod; end
+class MOuterSetupMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -170,8 +170,8 @@ class CLASS_m_Outer_setup_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.m_Outer; CLASS_m_Outer; end
-class CLASS_m_Outer < ::Quark.quark.reflect.QuarkClass
+def self.m_Outer; MOuter; end
+class MOuter < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.marshalling_md.m_Outer.new() }
@@ -228,10 +228,10 @@ class CLASS_m_Outer < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_m_Outer.unlazy_statics
+MOuter.unlazy_statics
 
-def self.quark_List_quark_String_; CLASS_quark_List_quark_String_; end
-class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.marshalling_md.quark_List_quark_String_.new() }
@@ -288,10 +288,10 @@ class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_String_.unlazy_statics
+QuarkListQuarkString.unlazy_statics
 
-def self.quark_List_m_Inner_; CLASS_quark_List_m_Inner_; end
-class CLASS_quark_List_m_Inner_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_m_Inner_; QuarkListMInner; end
+class QuarkListMInner < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.marshalling_md.quark_List_m_Inner_.new() }
@@ -348,10 +348,10 @@ class CLASS_quark_List_m_Inner_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_m_Inner_.unlazy_statics
+QuarkListMInner.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static m_Inner_md: -> { ::Quark.marshalling_md.m_Inner.singleton }
@@ -399,6 +399,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_marshalling_md
+Root.unlazy_statics
+end # module MarshallingMd
 end # module Quark

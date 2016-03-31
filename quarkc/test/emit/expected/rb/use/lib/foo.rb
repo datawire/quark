@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.foo; MODULE_foo; end
-module MODULE_foo
+def self.foo; Foo; end
+module Foo
 def self.qux()
     
     return "moo"
@@ -9,5 +9,5 @@ def self.qux()
 
     nil
 end
-end # module MODULE_foo
+end # module Foo
 end # module Quark

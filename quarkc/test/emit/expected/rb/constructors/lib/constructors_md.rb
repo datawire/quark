@@ -1,13 +1,13 @@
 module Quark
-def self.constructors_md; MODULE_constructors_md; end
-module MODULE_constructors_md
+def self.constructors_md; ConstructorsMd; end
+module ConstructorsMd
 require 'quark' # .../reflect
 # for ('constructors_md',): require_relative 'test1' # 0 () ()
 # for ('constructors_md',): require_relative 'test2' # 0 () ()
 # for ('constructors_md',): require_relative 'test3' # 0 () ()
 
-def self.test1_Test; CLASS_test1_Test; end
-class CLASS_test1_Test < ::Quark.quark.reflect.QuarkClass
+def self.test1_Test; Test1Test; end
+class Test1Test < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.constructors_md.test1_Test.new() }
@@ -64,10 +64,10 @@ class CLASS_test1_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_test1_Test.unlazy_statics
+Test1Test.unlazy_statics
 
-def self.test2_Test; CLASS_test2_Test; end
-class CLASS_test2_Test < ::Quark.quark.reflect.QuarkClass
+def self.test2_Test; Test2Test; end
+class Test2Test < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.constructors_md.test2_Test.new() }
@@ -124,10 +124,10 @@ class CLASS_test2_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_test2_Test.unlazy_statics
+Test2Test.unlazy_statics
 
-def self.test3_Box_quark_String__get_Method; CLASS_test3_Box_quark_String__get_Method; end
-class CLASS_test3_Box_quark_String__get_Method < ::Quark.quark.reflect.Method
+def self.test3_Box_quark_String__get_Method; Test3BoxQuarkStringGetMethod; end
+class Test3BoxQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -179,8 +179,8 @@ class CLASS_test3_Box_quark_String__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.test3_Box_quark_String_; CLASS_test3_Box_quark_String_; end
-class CLASS_test3_Box_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.test3_Box_quark_String_; Test3BoxQuarkString; end
+class Test3BoxQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.constructors_md.test3_Box_quark_String_.new() }
@@ -237,10 +237,10 @@ class CLASS_test3_Box_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_test3_Box_quark_String_.unlazy_statics
+Test3BoxQuarkString.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static test1_Test_md: -> { ::Quark.constructors_md.test1_Test.singleton }
@@ -286,6 +286,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_constructors_md
+Root.unlazy_statics
+end # module ConstructorsMd
 end # module Quark

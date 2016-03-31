@@ -1,8 +1,8 @@
 module Quark
-def self.modulo_md; MODULE_modulo_md; end
-module MODULE_modulo_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.modulo_md; ModuloMd; end
+module ModuloMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_modulo_md
+end # module ModuloMd
 end # module Quark

@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.matrix; MODULE_matrix; end
-module MODULE_matrix
+def self.matrix; Matrix; end
+module Matrix
 require 'quark' # .../reflect
 require_relative 'matrix_md' # 0 () ()
 require_relative 'matrix' # 0 () ()
 
-def self.Matrix; CLASS_Matrix; end
-class CLASS_Matrix < ::DatawireQuarkCore::QuarkObject
+def self.Matrix; Matrix; end
+class Matrix < ::DatawireQuarkCore::QuarkObject
     attr_accessor :width, :height, :columns
     extend ::DatawireQuarkCore::Static
 
@@ -100,7 +100,7 @@ class CLASS_Matrix < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Matrix.unlazy_statics
+Matrix.unlazy_statics
 
 def self.main()
     
@@ -116,5 +116,5 @@ if __FILE__ == $0
     ::Quark.matrix.main()
 end
 
-end # module MODULE_matrix
+end # module Matrix
 end # module Quark

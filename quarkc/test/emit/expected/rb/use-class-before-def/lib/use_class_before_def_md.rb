@@ -1,11 +1,11 @@
 module Quark
-def self.use_class_before_def_md; MODULE_use_class_before_def_md; end
-module MODULE_use_class_before_def_md
+def self.use_class_before_def_md; UseClassBeforeDefMd; end
+module UseClassBeforeDefMd
 require 'quark' # .../reflect
 # for ('use_class_before_def_md',): require_relative 'pkg' # 0 () ()
 
-def self.pkg_Bar_go_Method; CLASS_pkg_Bar_go_Method; end
-class CLASS_pkg_Bar_go_Method < ::Quark.quark.reflect.Method
+def self.pkg_Bar_go_Method; PkgBarGoMethod; end
+class PkgBarGoMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_pkg_Bar_go_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.pkg_Bar; CLASS_pkg_Bar; end
-class CLASS_pkg_Bar < ::Quark.quark.reflect.QuarkClass
+def self.pkg_Bar; PkgBar; end
+class PkgBar < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Bar.new() }
@@ -116,10 +116,10 @@ class CLASS_pkg_Bar < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_pkg_Bar.unlazy_statics
+PkgBar.unlazy_statics
 
-def self.pkg_Foo; CLASS_pkg_Foo; end
-class CLASS_pkg_Foo < ::Quark.quark.reflect.QuarkClass
+def self.pkg_Foo; PkgFoo; end
+class PkgFoo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.use_class_before_def_md.pkg_Foo.new() }
@@ -176,10 +176,10 @@ class CLASS_pkg_Foo < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_pkg_Foo.unlazy_statics
+PkgFoo.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_Bar_md: -> { ::Quark.use_class_before_def_md.pkg_Bar.singleton }
@@ -225,6 +225,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_use_class_before_def_md
+Root.unlazy_statics
+end # module UseClassBeforeDefMd
 end # module Quark

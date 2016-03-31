@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.box; MODULE_box; end
-module MODULE_box
+def self.box; Box; end
+module Box
 require 'quark' # .../reflect
 require_relative 'box_md' # 0 () ()
 require_relative 'box' # 0 () ()
 
-def self.Box; CLASS_Box; end
-class CLASS_Box < ::DatawireQuarkCore::QuarkObject
+def self.Box; Box; end
+class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
 
 
@@ -72,8 +72,8 @@ class CLASS_Box < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.Crate; CLASS_Crate; end
-class CLASS_Crate < ::DatawireQuarkCore::QuarkObject
+def self.Crate; Crate; end
+class Crate < ::DatawireQuarkCore::QuarkObject
     attr_accessor :box, :ibox
     extend ::DatawireQuarkCore::Static
 
@@ -148,10 +148,10 @@ class CLASS_Crate < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Crate.unlazy_statics
+Crate.unlazy_statics
 
-def self.Sack; CLASS_Sack; end
-class CLASS_Sack < ::DatawireQuarkCore::QuarkObject
+def self.Sack; Sack; end
+class Sack < ::DatawireQuarkCore::QuarkObject
     attr_accessor :ints
     extend ::DatawireQuarkCore::Static
 
@@ -204,7 +204,7 @@ class CLASS_Sack < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Sack.unlazy_statics
+Sack.unlazy_statics
 
 def self.test1()
     
@@ -315,5 +315,5 @@ if __FILE__ == $0
     ::Quark.box.main()
 end
 
-end # module MODULE_box
+end # module Box
 end # module Quark

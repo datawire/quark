@@ -1,8 +1,8 @@
 module Quark
-def self.dependencies_md; MODULE_dependencies_md; end
-module MODULE_dependencies_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.dependencies_md; DependenciesMd; end
+module DependenciesMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_dependencies_md
+end # module DependenciesMd
 end # module Quark

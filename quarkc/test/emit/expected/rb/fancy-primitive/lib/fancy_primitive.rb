@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.fancy_primitive; MODULE_fancy_primitive; end
-module MODULE_fancy_primitive
+def self.fancy_primitive; FancyPrimitive; end
+module FancyPrimitive
 require_relative 'fancy_primitive' # 0 () ()
 
 def self.main()
@@ -17,5 +17,5 @@ if __FILE__ == $0
     ::Quark.fancy_primitive.main()
 end
 
-end # module MODULE_fancy_primitive
+end # module FancyPrimitive
 end # module Quark

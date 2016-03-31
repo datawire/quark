@@ -1,11 +1,11 @@
 module Quark
-def self.super_md; MODULE_super_md; end
-module MODULE_super_md
+def self.super_md; SuperMd; end
+module SuperMd
 require 'quark' # .../reflect
 # for ('super_md',): require_relative 'super' # 0 () ()
 
-def self.super_A_greet_Method; CLASS_super_A_greet_Method; end
-class CLASS_super_A_greet_Method < ::Quark.quark.reflect.Method
+def self.super_A_greet_Method; SuperAGreetMethod; end
+class SuperAGreetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_super_A_greet_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.super_A; CLASS_super_A; end
-class CLASS_super_A < ::Quark.quark.reflect.QuarkClass
+def self.super_A; SuperA; end
+class SuperA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.super_md.super_A.new() }
@@ -116,10 +116,10 @@ class CLASS_super_A < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_super_A.unlazy_statics
+SuperA.unlazy_statics
 
-def self.super_B_greet_Method; CLASS_super_B_greet_Method; end
-class CLASS_super_B_greet_Method < ::Quark.quark.reflect.Method
+def self.super_B_greet_Method; SuperBGreetMethod; end
+class SuperBGreetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -172,8 +172,8 @@ class CLASS_super_B_greet_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.super_B; CLASS_super_B; end
-class CLASS_super_B < ::Quark.quark.reflect.QuarkClass
+def self.super_B; SuperB; end
+class SuperB < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.super_md.super_B.new() }
@@ -230,10 +230,10 @@ class CLASS_super_B < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_super_B.unlazy_statics
+SuperB.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static super_A_md: -> { ::Quark.super_md.super_A.singleton }
@@ -279,6 +279,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_super_md
+Root.unlazy_statics
+end # module SuperMd
 end # module Quark

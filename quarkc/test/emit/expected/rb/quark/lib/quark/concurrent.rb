@@ -1,13 +1,13 @@
 module Quark
-def self.quark; MODULE_quark; end
-module MODULE_quark
-def self.concurrent; MODULE_concurrent; end
-module MODULE_concurrent
+def self.quark; Quark; end
+module Quark
+def self.concurrent; Concurrent; end
+module Concurrent
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
-def self.Event; CLASS_Event; end
-class CLASS_Event < ::DatawireQuarkCore::QuarkObject
+def self.Event; Event; end
+class Event < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_concurrent_Event_ref: -> { ::Quark.quark_md.Root.quark_concurrent_Event_md }
@@ -43,10 +43,10 @@ class CLASS_Event < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Event.unlazy_statics
+Event.unlazy_statics
 
-def self.FutureListener; CLASS_FutureListener; end
-class CLASS_FutureListener < ::DatawireQuarkCore::QuarkObject
+def self.FutureListener; FutureListener; end
+class FutureListener < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_concurrent_FutureListener_ref: -> { ::Quark.quark_md.Root.quark_concurrent_FutureListener_md }
@@ -77,10 +77,10 @@ class CLASS_FutureListener < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_FutureListener.unlazy_statics
+FutureListener.unlazy_statics
 
-def self.FutureCompletion; CLASS_FutureCompletion; end
-class CLASS_FutureCompletion < ::DatawireQuarkCore::QuarkObject
+def self.FutureCompletion; FutureCompletion; end
+class FutureCompletion < ::DatawireQuarkCore::QuarkObject
     attr_accessor :future, :listener
     extend ::DatawireQuarkCore::Static
 
@@ -157,10 +157,10 @@ class CLASS_FutureCompletion < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_FutureCompletion.unlazy_statics
+FutureCompletion.unlazy_statics
 
-def self.EventContext; CLASS_EventContext; end
-class CLASS_EventContext < ::DatawireQuarkCore::QuarkObject
+def self.EventContext; EventContext; end
+class EventContext < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_context
     extend ::DatawireQuarkCore::Static
 
@@ -222,10 +222,10 @@ class CLASS_EventContext < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_EventContext.unlazy_statics
+EventContext.unlazy_statics
 
-def self.Future; CLASS_Future; end
-class CLASS_Future < ::Quark.quark.concurrent.EventContext
+def self.Future; Future; end
+class Future < ::Quark.quark.concurrent.EventContext
     attr_accessor :_finished, :_error, :_callbacks, :_lock
     extend ::DatawireQuarkCore::Static
 
@@ -375,10 +375,10 @@ class CLASS_Future < ::Quark.quark.concurrent.EventContext
 
 
 end
-CLASS_Future.unlazy_statics
+Future.unlazy_statics
 
-def self.FutureWait; CLASS_FutureWait; end
-class CLASS_FutureWait < ::DatawireQuarkCore::QuarkObject
+def self.FutureWait; FutureWait; end
+class FutureWait < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_lock, :_future
     extend ::DatawireQuarkCore::Static
 
@@ -491,10 +491,10 @@ class CLASS_FutureWait < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_FutureWait.unlazy_statics
+FutureWait.unlazy_statics
 
-def self.Queue; CLASS_Queue; end
-class CLASS_Queue < ::DatawireQuarkCore::QuarkObject
+def self.Queue; Queue; end
+class Queue < ::DatawireQuarkCore::QuarkObject
     attr_accessor :items, :head, :tail
 
 
@@ -599,8 +599,8 @@ class CLASS_Queue < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.CollectorExecutor; CLASS_CollectorExecutor; end
-class CLASS_CollectorExecutor < ::DatawireQuarkCore::QuarkObject
+def self.CollectorExecutor; CollectorExecutor; end
+class CollectorExecutor < ::DatawireQuarkCore::QuarkObject
     attr_accessor :events, :collector
     extend ::DatawireQuarkCore::Static
 
@@ -689,10 +689,10 @@ class CLASS_CollectorExecutor < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_CollectorExecutor.unlazy_statics
+CollectorExecutor.unlazy_statics
 
-def self.Collector; CLASS_Collector; end
-class CLASS_Collector < ::DatawireQuarkCore::QuarkObject
+def self.Collector; Collector; end
+class Collector < ::DatawireQuarkCore::QuarkObject
     attr_accessor :lock, :pending, :executor, :idle
     extend ::DatawireQuarkCore::Static
 
@@ -802,10 +802,10 @@ class CLASS_Collector < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Collector.unlazy_statics
+Collector.unlazy_statics
 
-def self.TimeoutListener; CLASS_TimeoutListener; end
-class CLASS_TimeoutListener < ::DatawireQuarkCore::QuarkObject
+def self.TimeoutListener; TimeoutListener; end
+class TimeoutListener < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_concurrent_TimeoutListener_ref: -> { ::Quark.quark_md.Root.quark_concurrent_TimeoutListener_md }
@@ -835,10 +835,10 @@ class CLASS_TimeoutListener < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_TimeoutListener.unlazy_statics
+TimeoutListener.unlazy_statics
 
-def self.TimeoutExpiry; CLASS_TimeoutExpiry; end
-class CLASS_TimeoutExpiry < ::DatawireQuarkCore::QuarkObject
+def self.TimeoutExpiry; TimeoutExpiry; end
+class TimeoutExpiry < ::DatawireQuarkCore::QuarkObject
     attr_accessor :timeout, :listener
     extend ::DatawireQuarkCore::Static
 
@@ -915,10 +915,10 @@ class CLASS_TimeoutExpiry < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_TimeoutExpiry.unlazy_statics
+TimeoutExpiry.unlazy_statics
 
-def self.Timeout; CLASS_Timeout; end
-class CLASS_Timeout < ::Quark.quark.concurrent.EventContext
+def self.Timeout; Timeout; end
+class Timeout < ::Quark.quark.concurrent.EventContext
     attr_accessor :timeout, :lock, :listener
     extend ::DatawireQuarkCore::Static
 
@@ -1025,10 +1025,10 @@ class CLASS_Timeout < ::Quark.quark.concurrent.EventContext
 
 
 end
-CLASS_Timeout.unlazy_statics
+Timeout.unlazy_statics
 
-def self.TLSContextInitializer; CLASS_TLSContextInitializer; end
-class CLASS_TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
+def self.TLSContextInitializer; TLSContextInitializer; end
+class TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_concurrent_TLSContextInitializer_ref: -> { ::Quark.quark_md.Root.quark_concurrent_TLSContextInitializer_md }
@@ -1080,10 +1080,10 @@ class CLASS_TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_TLSContextInitializer.unlazy_statics
+TLSContextInitializer.unlazy_statics
 
-def self.Context; CLASS_Context; end
-class CLASS_Context < ::DatawireQuarkCore::QuarkObject
+def self.Context; Context; end
+class Context < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_parent, :_runtime, :collector
     extend ::DatawireQuarkCore::Static
 
@@ -1201,7 +1201,7 @@ class CLASS_Context < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Context.unlazy_statics
-end # module MODULE_concurrent
-end # module MODULE_quark
+Context.unlazy_statics
+end # module Concurrent
+end # module Quark
 end # module Quark

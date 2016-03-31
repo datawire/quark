@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.macro_native; MODULE_macro_native; end
-module MODULE_macro_native
+def self.macro_native; MacroNative; end
+module MacroNative
 require 'quark' # .../reflect
 require_relative 'macro_native_md' # 0 () ()
 
-def self.Native; CLASS_Native; end
-class CLASS_Native < ::DatawireQuarkCore::QuarkObject
+def self.Native; Native; end
+class Native < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_native_Native_ref: -> { ::Quark.macro_native_md.Root.macro_native_Native_md }
@@ -61,6 +61,6 @@ class CLASS_Native < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Native.unlazy_statics
-end # module MODULE_macro_native
+Native.unlazy_statics
+end # module MacroNative
 end # module Quark

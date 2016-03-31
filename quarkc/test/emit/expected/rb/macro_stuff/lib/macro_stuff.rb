@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.macro_stuff; MODULE_macro_stuff; end
-module MODULE_macro_stuff
+def self.macro_stuff; MacroStuff; end
+module MacroStuff
 require 'quark' # .../reflect
 require_relative 'macro_stuff_md' # 0 () ()
 
-def self.Macro; CLASS_Macro; end
-class CLASS_Macro < ::DatawireQuarkCore::QuarkObject
+def self.Macro; Macro; end
+class Macro < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_stuff_Macro_ref: -> { ::Quark.macro_stuff_md.Root.macro_stuff_Macro_md }
@@ -67,6 +67,6 @@ class CLASS_Macro < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Macro.unlazy_statics
-end # module MODULE_macro_stuff
+Macro.unlazy_statics
+end # module MacroStuff
 end # module Quark

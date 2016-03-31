@@ -1,10 +1,10 @@
 module Quark
-def self.break_and_continue_md; MODULE_break_and_continue_md; end
-module MODULE_break_and_continue_md
+def self.break_and_continue_md; BreakAndContinueMd; end
+module BreakAndContinueMd
 require 'quark' # .../reflect
 
-def self.quark_List_quark_String_; CLASS_quark_List_quark_String_; end
-class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.break_and_continue_md.quark_List_quark_String_.new() }
@@ -61,10 +61,10 @@ class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_String_.unlazy_statics
+QuarkListQuarkString.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -106,5 +106,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_break_and_continue_md
+end # module BreakAndContinueMd
 end # module Quark

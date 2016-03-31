@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.string_methods; MODULE_string_methods; end
-module MODULE_string_methods
+def self.string_methods; StringMethods; end
+module StringMethods
 require 'quark' # .../reflect
 require_relative 'string_methods_md' # 0 () ()
 require_relative 'string_methods' # 0 () ()
 
-def self.string_test; CLASS_string_test; end
-class CLASS_string_test < ::DatawireQuarkCore::QuarkObject
+def self.string_test; StringTest; end
+class StringTest < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static string_methods_string_test_ref: -> { ::Quark.string_methods_md.Root.string_methods_string_test_md }
@@ -63,10 +63,10 @@ class CLASS_string_test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_string_test.unlazy_statics
+StringTest.unlazy_statics
 
-def self.test_size; CLASS_test_size; end
-class CLASS_test_size < ::Quark.string_methods.string_test
+def self.test_size; TestSize; end
+class TestSize < ::Quark.string_methods.string_test
     attr_accessor :what
     extend ::DatawireQuarkCore::Static
 
@@ -131,10 +131,10 @@ class CLASS_test_size < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_size.unlazy_statics
+TestSize.unlazy_statics
 
-def self.test_startsWith; CLASS_test_startsWith; end
-class CLASS_test_startsWith < ::Quark.string_methods.string_test
+def self.test_startsWith; TestStartsWith; end
+class TestStartsWith < ::Quark.string_methods.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
@@ -212,10 +212,10 @@ class CLASS_test_startsWith < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_startsWith.unlazy_statics
+TestStartsWith.unlazy_statics
 
-def self.test_endsWith; CLASS_test_endsWith; end
-class CLASS_test_endsWith < ::Quark.string_methods.string_test
+def self.test_endsWith; TestEndsWith; end
+class TestEndsWith < ::Quark.string_methods.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
@@ -293,10 +293,10 @@ class CLASS_test_endsWith < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_endsWith.unlazy_statics
+TestEndsWith.unlazy_statics
 
-def self.test_find; CLASS_test_find; end
-class CLASS_test_find < ::Quark.string_methods.string_test
+def self.test_find; TestFind; end
+class TestFind < ::Quark.string_methods.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
@@ -374,10 +374,10 @@ class CLASS_test_find < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_find.unlazy_statics
+TestFind.unlazy_statics
 
-def self.test_substring; CLASS_test_substring; end
-class CLASS_test_substring < ::Quark.string_methods.string_test
+def self.test_substring; TestSubstring; end
+class TestSubstring < ::Quark.string_methods.string_test
     attr_accessor :what, :start, :end_
     extend ::DatawireQuarkCore::Static
 
@@ -463,10 +463,10 @@ class CLASS_test_substring < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_substring.unlazy_statics
+TestSubstring.unlazy_statics
 
-def self.test_replace; CLASS_test_replace; end
-class CLASS_test_replace < ::Quark.string_methods.string_test
+def self.test_replace; TestReplace; end
+class TestReplace < ::Quark.string_methods.string_test
     attr_accessor :what, :start, :end_
     extend ::DatawireQuarkCore::Static
 
@@ -552,10 +552,10 @@ class CLASS_test_replace < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_replace.unlazy_statics
+TestReplace.unlazy_statics
 
-def self.test_join; CLASS_test_join; end
-class CLASS_test_join < ::Quark.string_methods.string_test
+def self.test_join; TestJoin; end
+class TestJoin < ::Quark.string_methods.string_test
     attr_accessor :what, :parts, :strparts, :sep
     extend ::DatawireQuarkCore::Static
 
@@ -660,10 +660,10 @@ class CLASS_test_join < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_join.unlazy_statics
+TestJoin.unlazy_statics
 
-def self.test_split; CLASS_test_split; end
-class CLASS_test_split < ::Quark.string_methods.string_test
+def self.test_split; TestSplit; end
+class TestSplit < ::Quark.string_methods.string_test
     attr_accessor :what, :sep, :altsep
     extend ::DatawireQuarkCore::Static
 
@@ -751,7 +751,7 @@ class CLASS_test_split < ::Quark.string_methods.string_test
 
 
 end
-CLASS_test_split.unlazy_statics
+TestSplit.unlazy_statics
 
 def self.main()
     
@@ -778,5 +778,5 @@ if __FILE__ == $0
     ::Quark.string_methods.main()
 end
 
-end # module MODULE_string_methods
+end # module StringMethods
 end # module Quark

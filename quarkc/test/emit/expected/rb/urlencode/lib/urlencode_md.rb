@@ -1,10 +1,10 @@
 module Quark
-def self.urlencode_md; MODULE_urlencode_md; end
-module MODULE_urlencode_md
+def self.urlencode_md; UrlencodeMd; end
+module UrlencodeMd
 require 'quark' # .../reflect
 
-def self.quark_Map_quark_String_quark_Object_; CLASS_quark_Map_quark_String_quark_Object_; end
-class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
+class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.urlencode_md.quark_Map_quark_String_quark_Object_.new() }
@@ -61,10 +61,10 @@ class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_Map_quark_String_quark_Object_.unlazy_statics
+QuarkMapQuarkStringQuarkObject.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -106,5 +106,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_urlencode_md
+end # module UrlencodeMd
 end # module Quark

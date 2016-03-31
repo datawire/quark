@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.map; MODULE_map; end
-module MODULE_map
+def self.map; Map; end
+module Map
 require_relative 'map' # 0 () ()
 
 def self.test1()
@@ -70,5 +70,5 @@ if __FILE__ == $0
     ::Quark.map.main()
 end
 
-end # module MODULE_map
+end # module Map
 end # module Quark

@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.prtest; MODULE_prtest; end
-module MODULE_prtest
+def self.prtest; Prtest; end
+module Prtest
 require 'quark' # .../reflect
 require_relative 'prtest_md' # 0 () ()
 require_relative 'prtest' # 0 () ()
 
-def self.Test; CLASS_Test; end
-class CLASS_Test < ::DatawireQuarkCore::QuarkObject
+def self.Test; Test; end
+class Test < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static prtest_Test_ref: -> { ::Quark.prtest_md.Root.prtest_Test_md }
@@ -59,7 +59,7 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Test.unlazy_statics
+Test.unlazy_statics
 
 def self.main()
     
@@ -73,5 +73,5 @@ if __FILE__ == $0
     ::Quark.prtest.main()
 end
 
-end # module MODULE_prtest
+end # module Prtest
 end # module Quark

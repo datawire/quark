@@ -1,8 +1,8 @@
 module Quark
-def self.void_return_md; MODULE_void_return_md; end
-module MODULE_void_return_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.void_return_md; VoidReturnMd; end
+module VoidReturnMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_void_return_md
+end # module VoidReturnMd
 end # module Quark

@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.parameterized_defaults; MODULE_parameterized_defaults; end
-module MODULE_parameterized_defaults
+def self.parameterized_defaults; ParameterizedDefaults; end
+module ParameterizedDefaults
 require_relative 'pkg' # 0 () ()
 require_relative 'parameterized_defaults' # 0 () ()
 
@@ -20,5 +20,5 @@ if __FILE__ == $0
     ::Quark.parameterized_defaults.main()
 end
 
-end # module MODULE_parameterized_defaults
+end # module ParameterizedDefaults
 end # module Quark

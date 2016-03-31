@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.defaulted_methods; MODULE_defaulted_methods; end
-module MODULE_defaulted_methods
+def self.defaulted_methods; DefaultedMethods; end
+module DefaultedMethods
 require_relative 'pkg' # 0 () ()
 require_relative 'defaulted_methods' # 0 () ()
 
@@ -35,5 +35,5 @@ if __FILE__ == $0
     ::Quark.defaulted_methods.main()
 end
 
-end # module MODULE_defaulted_methods
+end # module DefaultedMethods
 end # module Quark

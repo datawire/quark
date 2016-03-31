@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.builtin_codec; MODULE_builtin_codec; end
-module MODULE_builtin_codec
+def self.builtin_codec; BuiltinCodec; end
+module BuiltinCodec
 require_relative 'builtin_codec' # 0 () ()
 
 def self.hexb(v)
@@ -107,5 +107,5 @@ if __FILE__ == $0
     ::Quark.builtin_codec.main()
 end
 
-end # module MODULE_builtin_codec
+end # module BuiltinCodec
 end # module Quark

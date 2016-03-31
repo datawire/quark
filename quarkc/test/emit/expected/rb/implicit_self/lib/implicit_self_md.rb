@@ -1,11 +1,11 @@
 module Quark
-def self.implicit_self_md; MODULE_implicit_self_md; end
-module MODULE_implicit_self_md
+def self.implicit_self_md; ImplicitSelfMd; end
+module ImplicitSelfMd
 require 'quark' # .../reflect
 # for ('implicit_self_md',): require_relative 'implicit_self' # 0 () ()
 
-def self.implicit_self_Foo_next_Method; CLASS_implicit_self_Foo_next_Method; end
-class CLASS_implicit_self_Foo_next_Method < ::Quark.quark.reflect.Method
+def self.implicit_self_Foo_next_Method; ImplicitSelfFooNextMethod; end
+class ImplicitSelfFooNextMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_implicit_self_Foo_next_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.implicit_self_Foo_test_Method; CLASS_implicit_self_Foo_test_Method; end
-class CLASS_implicit_self_Foo_test_Method < ::Quark.quark.reflect.Method
+def self.implicit_self_Foo_test_Method; ImplicitSelfFooTestMethod; end
+class ImplicitSelfFooTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -112,8 +112,8 @@ class CLASS_implicit_self_Foo_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.implicit_self_Foo; CLASS_implicit_self_Foo; end
-class CLASS_implicit_self_Foo < ::Quark.quark.reflect.QuarkClass
+def self.implicit_self_Foo; ImplicitSelfFoo; end
+class ImplicitSelfFoo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.implicit_self_md.implicit_self_Foo.new() }
@@ -170,10 +170,10 @@ class CLASS_implicit_self_Foo < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_implicit_self_Foo.unlazy_statics
+ImplicitSelfFoo.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static implicit_self_Foo_md: -> { ::Quark.implicit_self_md.implicit_self_Foo.singleton }
@@ -218,6 +218,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_implicit_self_md
+Root.unlazy_statics
+end # module ImplicitSelfMd
 end # module Quark

@@ -1,12 +1,12 @@
 module Quark
 require "quark"
-def self.pkg; MODULE_pkg; end
-module MODULE_pkg
+def self.pkg; Pkg; end
+module Pkg
 require 'quark' # .../reflect
 require_relative 'defaulted_methods_md' # 0 () ()
 
-def self.A; CLASS_A; end
-class CLASS_A < ::DatawireQuarkCore::QuarkObject
+def self.A; A; end
+class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_A_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_A_md }
@@ -44,10 +44,10 @@ class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_A.unlazy_statics
+A.unlazy_statics
 
-def self.B; CLASS_B; end
-class CLASS_B < ::DatawireQuarkCore::QuarkObject
+def self.B; B; end
+class B < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_B_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_B_md }
@@ -78,10 +78,10 @@ class CLASS_B < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_B.unlazy_statics
+B.unlazy_statics
 
-def self.C; CLASS_C; end
-class CLASS_C < ::DatawireQuarkCore::QuarkObject
+def self.C; C; end
+class C < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_C_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_C_md }
@@ -112,10 +112,10 @@ class CLASS_C < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_C.unlazy_statics
+C.unlazy_statics
 
-def self.T1; CLASS_T1; end
-class CLASS_T1 < ::DatawireQuarkCore::QuarkObject
+def self.T1; T1; end
+class T1 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_T1_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T1_md }
@@ -175,10 +175,10 @@ class CLASS_T1 < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_T1.unlazy_statics
+T1.unlazy_statics
 
-def self.T2; CLASS_T2; end
-class CLASS_T2 < ::DatawireQuarkCore::QuarkObject
+def self.T2; T2; end
+class T2 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_T2_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T2_md }
@@ -238,10 +238,10 @@ class CLASS_T2 < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_T2.unlazy_statics
+T2.unlazy_statics
 
-def self.T3; CLASS_T3; end
-class CLASS_T3 < ::DatawireQuarkCore::QuarkObject
+def self.T3; T3; end
+class T3 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_T3_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T3_md }
@@ -300,10 +300,10 @@ class CLASS_T3 < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_T3.unlazy_statics
+T3.unlazy_statics
 
-def self.T4; CLASS_T4; end
-class CLASS_T4 < ::DatawireQuarkCore::QuarkObject
+def self.T4; T4; end
+class T4 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_T4_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T4_md }
@@ -363,10 +363,10 @@ class CLASS_T4 < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_T4.unlazy_statics
+T4.unlazy_statics
 
-def self.T5; CLASS_T5; end
-class CLASS_T5 < ::DatawireQuarkCore::QuarkObject
+def self.T5; T5; end
+class T5 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static pkg_T5_ref: -> { ::Quark.defaulted_methods_md.Root.pkg_T5_md }
@@ -426,6 +426,6 @@ class CLASS_T5 < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_T5.unlazy_statics
-end # module MODULE_pkg
+T5.unlazy_statics
+end # module Pkg
 end # module Quark

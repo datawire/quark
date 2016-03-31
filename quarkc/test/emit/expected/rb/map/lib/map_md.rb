@@ -1,10 +1,10 @@
 module Quark
-def self.map_md; MODULE_map_md; end
-module MODULE_map_md
+def self.map_md; MapMd; end
+module MapMd
 require 'quark' # .../reflect
 
-def self.quark_Map_quark_String_quark_int_; CLASS_quark_Map_quark_String_quark_int_; end
-class CLASS_quark_Map_quark_String_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_int_; QuarkMapQuarkStringQuarkInt; end
+class QuarkMapQuarkStringQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.map_md.quark_Map_quark_String_quark_int_.new() }
@@ -61,10 +61,10 @@ class CLASS_quark_Map_quark_String_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_Map_quark_String_quark_int_.unlazy_statics
+QuarkMapQuarkStringQuarkInt.unlazy_statics
 
-def self.quark_Map_quark_String_quark_String_; CLASS_quark_Map_quark_String_quark_String_; end
-class CLASS_quark_Map_quark_String_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_String_; QuarkMapQuarkStringQuarkString; end
+class QuarkMapQuarkStringQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.map_md.quark_Map_quark_String_quark_String_.new() }
@@ -121,10 +121,10 @@ class CLASS_quark_Map_quark_String_quark_String_ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_Map_quark_String_quark_String_.unlazy_statics
+QuarkMapQuarkStringQuarkString.unlazy_statics
 
-def self.quark_Map_quark_String_quark_Object_; CLASS_quark_Map_quark_String_quark_Object_; end
-class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
+class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.map_md.quark_Map_quark_String_quark_Object_.new() }
@@ -181,10 +181,10 @@ class CLASS_quark_Map_quark_String_quark_Object_ < ::Quark.quark.reflect.QuarkCl
 
 
 end
-CLASS_quark_Map_quark_String_quark_Object_.unlazy_statics
+QuarkMapQuarkStringQuarkObject.unlazy_statics
 
-def self.quark_List_quark_String_; CLASS_quark_List_quark_String_; end
-class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.map_md.quark_List_quark_String_.new() }
@@ -241,10 +241,10 @@ class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_String_.unlazy_statics
+QuarkListQuarkString.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -286,5 +286,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_map_md
+end # module MapMd
 end # module Quark

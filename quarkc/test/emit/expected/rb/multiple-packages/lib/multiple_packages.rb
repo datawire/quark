@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.multiple_packages; MODULE_multiple_packages; end
-module MODULE_multiple_packages
+def self.multiple_packages; MultiplePackages; end
+module MultiplePackages
 require_relative 'p1/p2' # 0 ('p1',) ()
 require_relative 'p1' # 0 () ()
 require_relative 'multiple_packages' # 0 () ()
@@ -21,5 +21,5 @@ if __FILE__ == $0
     ::Quark.multiple_packages.main()
 end
 
-end # module MODULE_multiple_packages
+end # module MultiplePackages
 end # module Quark

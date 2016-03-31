@@ -1,8 +1,8 @@
 module Quark
-def self.json_building_md; MODULE_json_building_md; end
-module MODULE_json_building_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.json_building_md; JsonBuildingMd; end
+module JsonBuildingMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_json_building_md
+end # module JsonBuildingMd
 end # module Quark

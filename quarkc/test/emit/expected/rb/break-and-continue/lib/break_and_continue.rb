@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.break_and_continue; MODULE_break_and_continue; end
-module MODULE_break_and_continue
+def self.break_and_continue; BreakAndContinue; end
+module BreakAndContinue
 require_relative 'break_and_continue' # 0 () ()
 
 def self.main()
@@ -38,5 +38,5 @@ if __FILE__ == $0
     ::Quark.break_and_continue.main()
 end
 
-end # module MODULE_break_and_continue
+end # module BreakAndContinue
 end # module Quark

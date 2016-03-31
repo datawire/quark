@@ -1,11 +1,11 @@
 module Quark
-def self.list_md; MODULE_list_md; end
-module MODULE_list_md
+def self.list_md; ListMd; end
+module ListMd
 require 'quark' # .../reflect
 # for ('list_md',): require_relative 'list' # 0 () ()
 
-def self.list_Box_quark_int__get_Method; CLASS_list_Box_quark_int__get_Method; end
-class CLASS_list_Box_quark_int__get_Method < ::Quark.quark.reflect.Method
+def self.list_Box_quark_int__get_Method; ListBoxQuarkIntGetMethod; end
+class ListBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -57,8 +57,8 @@ class CLASS_list_Box_quark_int__get_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.list_Box_quark_int__set_Method; CLASS_list_Box_quark_int__set_Method; end
-class CLASS_list_Box_quark_int__set_Method < ::Quark.quark.reflect.Method
+def self.list_Box_quark_int__set_Method; ListBoxQuarkIntSetMethod; end
+class ListBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -111,8 +111,8 @@ class CLASS_list_Box_quark_int__set_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.list_Box_quark_int_; CLASS_list_Box_quark_int_; end
-class CLASS_list_Box_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.list_Box_quark_int_; ListBoxQuarkInt; end
+class ListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.list_md.list_Box_quark_int_.new() }
@@ -169,10 +169,10 @@ class CLASS_list_Box_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_list_Box_quark_int_.unlazy_statics
+ListBoxQuarkInt.unlazy_statics
 
-def self.quark_List_quark_int_; CLASS_quark_List_quark_int_; end
-class CLASS_quark_List_quark_int_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_int_; QuarkListQuarkInt; end
+class QuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.list_md.quark_List_quark_int_.new() }
@@ -229,10 +229,10 @@ class CLASS_quark_List_quark_int_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_int_.unlazy_statics
+QuarkListQuarkInt.unlazy_statics
 
-def self.quark_List_quark_String_; CLASS_quark_List_quark_String_; end
-class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.list_md.quark_List_quark_String_.new() }
@@ -289,10 +289,10 @@ class CLASS_quark_List_quark_String_ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_String_.unlazy_statics
+QuarkListQuarkString.unlazy_statics
 
-def self.quark_List_list_Box_quark_int__; CLASS_quark_List_list_Box_quark_int__; end
-class CLASS_quark_List_list_Box_quark_int__ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_list_Box_quark_int__; QuarkListListBoxQuarkInt; end
+class QuarkListListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.list_md.quark_List_list_Box_quark_int__.new() }
@@ -349,10 +349,10 @@ class CLASS_quark_List_list_Box_quark_int__ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_list_Box_quark_int__.unlazy_statics
+QuarkListListBoxQuarkInt.unlazy_statics
 
-def self.quark_List_quark_List_quark_int__; CLASS_quark_List_quark_List_quark_int__; end
-class CLASS_quark_List_quark_List_quark_int__ < ::Quark.quark.reflect.QuarkClass
+def self.quark_List_quark_List_quark_int__; QuarkListQuarkListQuarkInt; end
+class QuarkListQuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.list_md.quark_List_quark_List_quark_int__.new() }
@@ -409,10 +409,10 @@ class CLASS_quark_List_quark_List_quark_int__ < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_quark_List_quark_List_quark_int__.unlazy_statics
+QuarkListQuarkListQuarkInt.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -454,5 +454,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_list_md
+end # module ListMd
 end # module Quark

@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.no_spurious_cast; MODULE_no_spurious_cast; end
-module MODULE_no_spurious_cast
+def self.no_spurious_cast; NoSpuriousCast; end
+module NoSpuriousCast
 require 'quark' # .../reflect
 require_relative 'no_spurious_cast_md' # 0 () ()
 require_relative 'no_spurious_cast' # 0 () ()
 
-def self.A; CLASS_A; end
-class CLASS_A < ::DatawireQuarkCore::QuarkObject
+def self.A; A; end
+class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static no_spurious_cast_A_ref: -> { ::Quark.no_spurious_cast_md.Root.no_spurious_cast_A_md }
@@ -52,10 +52,10 @@ class CLASS_A < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_A.unlazy_statics
+A.unlazy_statics
 
-def self.B; CLASS_B; end
-class CLASS_B < ::Quark.no_spurious_cast.A
+def self.B; B; end
+class B < ::Quark.no_spurious_cast.A
     extend ::DatawireQuarkCore::Static
 
     static no_spurious_cast_B_ref: -> { ::Quark.no_spurious_cast_md.Root.no_spurious_cast_B_md }
@@ -101,10 +101,10 @@ class CLASS_B < ::Quark.no_spurious_cast.A
 
 
 end
-CLASS_B.unlazy_statics
+B.unlazy_statics
 
-def self.X; CLASS_X; end
-class CLASS_X < ::DatawireQuarkCore::QuarkObject
+def self.X; X; end
+class X < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -147,8 +147,8 @@ class CLASS_X < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.Y; CLASS_Y; end
-class CLASS_Y < ::Quark.no_spurious_cast.X
+def self.Y; Y; end
+class Y < ::Quark.no_spurious_cast.X
     extend ::DatawireQuarkCore::Static
 
     static no_spurious_cast_X_quark_int__ref: -> { ::Quark.no_spurious_cast_md.Root.no_spurious_cast_X_quark_int__md }
@@ -195,7 +195,7 @@ class CLASS_Y < ::Quark.no_spurious_cast.X
 
 
 end
-CLASS_Y.unlazy_statics
+Y.unlazy_statics
 
 def self.main()
     
@@ -210,5 +210,5 @@ if __FILE__ == $0
     ::Quark.no_spurious_cast.main()
 end
 
-end # module MODULE_no_spurious_cast
+end # module NoSpuriousCast
 end # module Quark

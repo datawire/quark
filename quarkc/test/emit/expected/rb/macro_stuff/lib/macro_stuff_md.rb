@@ -1,11 +1,11 @@
 module Quark
-def self.macro_stuff_md; MODULE_macro_stuff_md; end
-module MODULE_macro_stuff_md
+def self.macro_stuff_md; MacroStuffMd; end
+module MacroStuffMd
 require 'quark' # .../reflect
 # for ('macro_stuff_md',): require_relative 'macro_stuff' # 0 () ()
 
-def self.macro_stuff_Macro_test_Method; CLASS_macro_stuff_Macro_test_Method; end
-class CLASS_macro_stuff_Macro_test_Method < ::Quark.quark.reflect.Method
+def self.macro_stuff_Macro_test_Method; MacroStuffMacroTestMethod; end
+class MacroStuffMacroTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_macro_stuff_Macro_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.macro_stuff_Macro; CLASS_macro_stuff_Macro; end
-class CLASS_macro_stuff_Macro < ::Quark.quark.reflect.QuarkClass
+def self.macro_stuff_Macro; MacroStuffMacro; end
+class MacroStuffMacro < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.macro_stuff_md.macro_stuff_Macro.new() }
@@ -116,10 +116,10 @@ class CLASS_macro_stuff_Macro < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_macro_stuff_Macro.unlazy_statics
+MacroStuffMacro.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_stuff_Macro_md: -> { ::Quark.macro_stuff_md.macro_stuff_Macro.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_macro_stuff_md
+Root.unlazy_statics
+end # module MacroStuffMd
 end # module Quark

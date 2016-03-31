@@ -1,3 +1,9 @@
+// xfail:rb
+// Ruby back-end upper-cases `test` namespace to `Test`,
+// so it collides with `Test` class. The solution to that
+// will be to reject programs with public identifiers
+// distingushed only by case.
+
 namespace test {
     void go() {
         print("GO!");

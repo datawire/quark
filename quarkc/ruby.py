@@ -102,8 +102,8 @@ def _make_file(path):
         head += 'require_relative "datawire-quark-core"\n'
     elif path[0] != 'quark' and not path[0].endswith("_md"):
         head += 'require "quark"\n'
-    head += ''.join(epilogue(name='MODULE_' + name, alias=name) for name in names)
-    tail = ''.join(prologue(name='MODULE_' + name) for name in reversed(names))
+    head += ''.join(epilogue(name=_to_camel_case(name), alias=name) for name in names)
+    tail = ''.join(prologue(name=_to_camel_case(name)) for name in reversed(names))
     # tail += 'puts "end loading module %s"\n' % ".".join(path)
     return Code(comment, head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
@@ -172,10 +172,14 @@ def doc(lines):
 def comment(stuff):
     return '# %s\n' % stuff
 
+
+def _to_camel_case(string):
+    return ''.join(p[0:1].upper() + p[1:] for p in string.split('_'))
+
 ## Class definition
 
 def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fields, constructors, methods):
-    rname = 'CLASS_' + name
+    camel_case_name = _to_camel_case(name)
     prologue = []
     if fields:
         prologue.extend(['attr_accessor %s' % ', '.join(':' + name for name, value in fields)])
@@ -183,15 +187,15 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
     if static_fields:
         prologue.extend(['extend ::DatawireQuarkCore::Static', ''])
         prologue.extend(static_fields)
-        postscript.append('%s.unlazy_statics' % rname)
-        
+        postscript.append('%s.unlazy_statics' % camel_case_name)
+
     init_fields = Templates.method(
         name='__init_fields__',
         parameters='',
         body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
     )
     source = Templates.class_(
-        name=rname,
+        name=camel_case_name,
         alias=name,
         base=('::Quark.' + base) if base else '::DatawireQuarkCore::QuarkObject',
         prologue=indent(prologue, leading_nl=False),

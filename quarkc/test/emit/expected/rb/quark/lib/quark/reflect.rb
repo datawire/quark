@@ -1,10 +1,10 @@
 module Quark
-def self.quark; MODULE_quark; end
-module MODULE_quark
-def self.reflect; MODULE_reflect; end
-module MODULE_reflect
-def self.QuarkClass; CLASS_QuarkClass; end
-class CLASS_QuarkClass < ::DatawireQuarkCore::QuarkObject
+def self.quark; Quark; end
+module Quark
+def self.reflect; Reflect; end
+module Reflect
+def self.QuarkClass; QuarkClass; end
+class QuarkClass < ::DatawireQuarkCore::QuarkObject
     attr_accessor :id, :name, :parameters, :fields, :methods
     extend ::DatawireQuarkCore::Static
 
@@ -223,10 +223,10 @@ class CLASS_QuarkClass < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_QuarkClass.unlazy_statics
+QuarkClass.unlazy_statics
 
-def self.Field; CLASS_Field; end
-class CLASS_Field < ::DatawireQuarkCore::QuarkObject
+def self.Field; Field; end
+class Field < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :name
 
 
@@ -301,8 +301,8 @@ class CLASS_Field < ::DatawireQuarkCore::QuarkObject
 
 end
 
-def self.Method; CLASS_Method; end
-class CLASS_Method < ::DatawireQuarkCore::QuarkObject
+def self.Method; Method; end
+class Method < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :name, :parameters
 
 
@@ -365,6 +365,6 @@ class CLASS_Method < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_reflect
-end # module MODULE_quark
+end # module Reflect
+end # module Quark
 end # module Quark

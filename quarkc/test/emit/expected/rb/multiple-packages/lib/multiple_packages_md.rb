@@ -1,8 +1,8 @@
 module Quark
-def self.multiple_packages_md; MODULE_multiple_packages_md; end
-module MODULE_multiple_packages_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.multiple_packages_md; MultiplePackagesMd; end
+module MultiplePackagesMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_multiple_packages_md
+end # module MultiplePackagesMd
 end # module Quark

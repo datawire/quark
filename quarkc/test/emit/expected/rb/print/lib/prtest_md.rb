@@ -1,11 +1,11 @@
 module Quark
-def self.prtest_md; MODULE_prtest_md; end
-module MODULE_prtest_md
+def self.prtest_md; PrtestMd; end
+module PrtestMd
 require 'quark' # .../reflect
 # for ('prtest_md',): require_relative 'prtest' # 0 () ()
 
-def self.prtest_Test_test_Method; CLASS_prtest_Test_test_Method; end
-class CLASS_prtest_Test_test_Method < ::Quark.quark.reflect.Method
+def self.prtest_Test_test_Method; PrtestTestTestMethod; end
+class PrtestTestTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_prtest_Test_test_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.prtest_Test; CLASS_prtest_Test; end
-class CLASS_prtest_Test < ::Quark.quark.reflect.QuarkClass
+def self.prtest_Test; PrtestTest; end
+class PrtestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.prtest_md.prtest_Test.new() }
@@ -116,10 +116,10 @@ class CLASS_prtest_Test < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_prtest_Test.unlazy_statics
+PrtestTest.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static prtest_Test_md: -> { ::Quark.prtest_md.prtest_Test.singleton }
@@ -164,6 +164,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_prtest_md
+Root.unlazy_statics
+end # module PrtestMd
 end # module Quark

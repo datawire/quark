@@ -1,11 +1,11 @@
 module Quark
-def self.operator_overload_md; MODULE_operator_overload_md; end
-module MODULE_operator_overload_md
+def self.operator_overload_md; OperatorOverloadMd; end
+module OperatorOverloadMd
 require 'quark' # .../reflect
 # for ('operator_overload_md',): require_relative 'operator_overload' # 0 () ()
 
-def self.operator_overload_Overload___add___Method; CLASS_operator_overload_Overload___add___Method; end
-class CLASS_operator_overload_Overload___add___Method < ::Quark.quark.reflect.Method
+def self.operator_overload_Overload___add___Method; OperatorOverloadOverloadAddMethod; end
+class OperatorOverloadOverloadAddMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -57,8 +57,8 @@ class CLASS_operator_overload_Overload___add___Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.operator_overload_Overload___mul___Method; CLASS_operator_overload_Overload___mul___Method; end
-class CLASS_operator_overload_Overload___mul___Method < ::Quark.quark.reflect.Method
+def self.operator_overload_Overload___mul___Method; OperatorOverloadOverloadMulMethod; end
+class OperatorOverloadOverloadMulMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -110,8 +110,8 @@ class CLASS_operator_overload_Overload___mul___Method < ::Quark.quark.reflect.Me
 
 end
 
-def self.operator_overload_Overload_test_Method; CLASS_operator_overload_Overload_test_Method; end
-class CLASS_operator_overload_Overload_test_Method < ::Quark.quark.reflect.Method
+def self.operator_overload_Overload_test_Method; OperatorOverloadOverloadTestMethod; end
+class OperatorOverloadOverloadTestMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -164,8 +164,8 @@ class CLASS_operator_overload_Overload_test_Method < ::Quark.quark.reflect.Metho
 
 end
 
-def self.operator_overload_Overload; CLASS_operator_overload_Overload; end
-class CLASS_operator_overload_Overload < ::Quark.quark.reflect.QuarkClass
+def self.operator_overload_Overload; OperatorOverloadOverload; end
+class OperatorOverloadOverload < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.operator_overload_md.operator_overload_Overload.new() }
@@ -222,10 +222,10 @@ class CLASS_operator_overload_Overload < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_operator_overload_Overload.unlazy_statics
+OperatorOverloadOverload.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static operator_overload_Overload_md: -> { ::Quark.operator_overload_md.operator_overload_Overload.singleton }
@@ -270,6 +270,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_operator_overload_md
+Root.unlazy_statics
+end # module OperatorOverloadMd
 end # module Quark

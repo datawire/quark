@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.quark_delegate; MODULE_quark_delegate; end
-module MODULE_quark_delegate
+def self.quark_delegate; QuarkDelegate; end
+module QuarkDelegate
 require 'quark' # .../reflect
 require_relative 'quark_delegate_md' # 0 () ()
 require_relative 'quark_delegate' # 0 () ()
 
-def self.Message; CLASS_Message; end
-class CLASS_Message < ::DatawireQuarkCore::QuarkObject
+def self.Message; Message; end
+class Message < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_delegate_Message_ref: -> { ::Quark.quark_delegate_md.Root.quark_delegate_Message_md }
@@ -59,10 +59,10 @@ class CLASS_Message < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Message.unlazy_statics
+Message.unlazy_statics
 
-def self.Ping; CLASS_Ping; end
-class CLASS_Ping < ::Quark.quark_delegate.Message
+def self.Ping; Ping; end
+class Ping < ::Quark.quark_delegate.Message
     extend ::DatawireQuarkCore::Static
 
     static quark_delegate_Ping_ref: -> { ::Quark.quark_delegate_md.Root.quark_delegate_Ping_md }
@@ -108,10 +108,10 @@ class CLASS_Ping < ::Quark.quark_delegate.Message
 
 
 end
-CLASS_Ping.unlazy_statics
+Ping.unlazy_statics
 
-def self.Pong; CLASS_Pong; end
-class CLASS_Pong < ::Quark.quark_delegate.Message
+def self.Pong; Pong; end
+class Pong < ::Quark.quark_delegate.Message
     extend ::DatawireQuarkCore::Static
 
     static quark_delegate_Pong_ref: -> { ::Quark.quark_delegate_md.Root.quark_delegate_Pong_md }
@@ -164,10 +164,10 @@ class CLASS_Pong < ::Quark.quark_delegate.Message
 
 
 end
-CLASS_Pong.unlazy_statics
+Pong.unlazy_statics
 
-def self.Test; CLASS_Test; end
-class CLASS_Test < ::DatawireQuarkCore::QuarkObject
+def self.Test; Test; end
+class Test < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static quark_delegate_Test_ref: -> { ::Quark.quark_delegate_md.Root.quark_delegate_Test_md }
@@ -247,7 +247,7 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Test.unlazy_statics
+Test.unlazy_statics
 
 def self.main()
     
@@ -263,5 +263,5 @@ if __FILE__ == $0
     ::Quark.quark_delegate.main()
 end
 
-end # module MODULE_quark_delegate
+end # module QuarkDelegate
 end # module Quark

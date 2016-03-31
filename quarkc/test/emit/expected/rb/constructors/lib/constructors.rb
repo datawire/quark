@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.constructors; MODULE_constructors; end
-module MODULE_constructors
+def self.constructors; Constructors; end
+module Constructors
 require_relative 'test1' # 0 () ()
 require_relative 'test2' # 0 () ()
 require_relative 'test3' # 0 () ()
@@ -21,5 +21,5 @@ if __FILE__ == $0
     ::Quark.constructors.main()
 end
 
-end # module MODULE_constructors
+end # module Constructors
 end # module Quark

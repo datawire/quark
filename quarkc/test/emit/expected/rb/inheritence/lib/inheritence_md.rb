@@ -1,11 +1,11 @@
 module Quark
-def self.inheritence_md; MODULE_inheritence_md; end
-module MODULE_inheritence_md
+def self.inheritence_md; InheritenceMd; end
+module InheritenceMd
 require 'quark' # .../reflect
 # for ('inheritence_md',): require_relative 'inheritence' # 0 () ()
 
-def self.inheritence_A_foo_Method; CLASS_inheritence_A_foo_Method; end
-class CLASS_inheritence_A_foo_Method < ::Quark.quark.reflect.Method
+def self.inheritence_A_foo_Method; InheritenceAFooMethod; end
+class InheritenceAFooMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_inheritence_A_foo_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.inheritence_A; CLASS_inheritence_A; end
-class CLASS_inheritence_A < ::Quark.quark.reflect.QuarkClass
+def self.inheritence_A; InheritenceA; end
+class InheritenceA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.inheritence_md.inheritence_A.new() }
@@ -116,10 +116,10 @@ class CLASS_inheritence_A < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_inheritence_A.unlazy_statics
+InheritenceA.unlazy_statics
 
-def self.inheritence_B_foo_Method; CLASS_inheritence_B_foo_Method; end
-class CLASS_inheritence_B_foo_Method < ::Quark.quark.reflect.Method
+def self.inheritence_B_foo_Method; InheritenceBFooMethod; end
+class InheritenceBFooMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -172,8 +172,8 @@ class CLASS_inheritence_B_foo_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.inheritence_B; CLASS_inheritence_B; end
-class CLASS_inheritence_B < ::Quark.quark.reflect.QuarkClass
+def self.inheritence_B; InheritenceB; end
+class InheritenceB < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.inheritence_md.inheritence_B.new() }
@@ -230,10 +230,10 @@ class CLASS_inheritence_B < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_inheritence_B.unlazy_statics
+InheritenceB.unlazy_statics
 
-def self.inheritence_C_foo_Method; CLASS_inheritence_C_foo_Method; end
-class CLASS_inheritence_C_foo_Method < ::Quark.quark.reflect.Method
+def self.inheritence_C_foo_Method; InheritenceCFooMethod; end
+class InheritenceCFooMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -286,8 +286,8 @@ class CLASS_inheritence_C_foo_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.inheritence_C; CLASS_inheritence_C; end
-class CLASS_inheritence_C < ::Quark.quark.reflect.QuarkClass
+def self.inheritence_C; InheritenceC; end
+class InheritenceC < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.inheritence_md.inheritence_C.new() }
@@ -344,10 +344,10 @@ class CLASS_inheritence_C < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_inheritence_C.unlazy_statics
+InheritenceC.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static inheritence_A_md: -> { ::Quark.inheritence_md.inheritence_A.singleton }
@@ -394,6 +394,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_inheritence_md
+Root.unlazy_statics
+end # module InheritenceMd
 end # module Quark

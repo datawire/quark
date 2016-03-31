@@ -1,4 +1,5 @@
 require 'hello'
+Hello = ::Quark::Hello
 
 def main(argv)
   # "http://hello.datawire.io/" is the URL of the simple "Hello" cloud
@@ -11,9 +12,9 @@ def main(argv)
   # in the file ./README.md.
 
   # client = Quark.hello.HelloClient.new "http://hello.datawire.io/"
-  client = Quark.hello.HelloClient.new "http://127.0.0.1:8910/hello"
+  client = Hello::HelloClient.new "http://127.0.0.1:8910/hello"
 
-  request = Quark.hello.Request.new
+  request = Hello::Request.new
 
   if argv.length > 0
     request.text = argv[0]

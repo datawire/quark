@@ -1,11 +1,11 @@
 module Quark
-def self.static_md; MODULE_static_md; end
-module MODULE_static_md
+def self.static_md; StaticMd; end
+module StaticMd
 require 'quark' # .../reflect
 # for ('static_md',): require_relative 'static' # 0 () ()
 
-def self.static_Foo_setCount_Method; CLASS_static_Foo_setCount_Method; end
-class CLASS_static_Foo_setCount_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_setCount_Method; StaticFooSetCountMethod; end
+class StaticFooSetCountMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -58,8 +58,8 @@ class CLASS_static_Foo_setCount_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo_getCount_Method; CLASS_static_Foo_getCount_Method; end
-class CLASS_static_Foo_getCount_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_getCount_Method; StaticFooGetCountMethod; end
+class StaticFooGetCountMethod < ::Quark.quark.reflect.Method
 
 
 
@@ -111,8 +111,8 @@ class CLASS_static_Foo_getCount_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo_test1_Method; CLASS_static_Foo_test1_Method; end
-class CLASS_static_Foo_test1_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_test1_Method; StaticFooTest1Method; end
+class StaticFooTest1Method < ::Quark.quark.reflect.Method
 
 
 
@@ -165,8 +165,8 @@ class CLASS_static_Foo_test1_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo_test2_Method; CLASS_static_Foo_test2_Method; end
-class CLASS_static_Foo_test2_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_test2_Method; StaticFooTest2Method; end
+class StaticFooTest2Method < ::Quark.quark.reflect.Method
 
 
 
@@ -219,8 +219,8 @@ class CLASS_static_Foo_test2_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo_test3_Method; CLASS_static_Foo_test3_Method; end
-class CLASS_static_Foo_test3_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_test3_Method; StaticFooTest3Method; end
+class StaticFooTest3Method < ::Quark.quark.reflect.Method
 
 
 
@@ -273,8 +273,8 @@ class CLASS_static_Foo_test3_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo_test4_Method; CLASS_static_Foo_test4_Method; end
-class CLASS_static_Foo_test4_Method < ::Quark.quark.reflect.Method
+def self.static_Foo_test4_Method; StaticFooTest4Method; end
+class StaticFooTest4Method < ::Quark.quark.reflect.Method
 
 
 
@@ -327,8 +327,8 @@ class CLASS_static_Foo_test4_Method < ::Quark.quark.reflect.Method
 
 end
 
-def self.static_Foo; CLASS_static_Foo; end
-class CLASS_static_Foo < ::Quark.quark.reflect.QuarkClass
+def self.static_Foo; StaticFoo; end
+class StaticFoo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
     static singleton: -> { ::Quark.static_md.static_Foo.new() }
@@ -385,10 +385,10 @@ class CLASS_static_Foo < ::Quark.quark.reflect.QuarkClass
 
 
 end
-CLASS_static_Foo.unlazy_statics
+StaticFoo.unlazy_statics
 
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static static_Foo_md: -> { ::Quark.static_md.static_Foo.singleton }
@@ -433,6 +433,6 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Root.unlazy_statics
-end # module MODULE_static_md
+Root.unlazy_statics
+end # module StaticMd
 end # module Quark

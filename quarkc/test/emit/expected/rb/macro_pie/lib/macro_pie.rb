@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.macro_pie; MODULE_macro_pie; end
-module MODULE_macro_pie
+def self.macro_pie; MacroPie; end
+module MacroPie
 require 'quark' # .../reflect
 require_relative 'macro_pie_md' # 0 () ()
 require_relative 'macro_pie' # 0 () ()
 
-def self.Pie; CLASS_Pie; end
-class CLASS_Pie < ::DatawireQuarkCore::QuarkObject
+def self.Pie; Pie; end
+class Pie < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static macro_pie_Pie_ref: -> { ::Quark.macro_pie_md.Root.macro_pie_Pie_md }
@@ -60,7 +60,7 @@ class CLASS_Pie < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Pie.unlazy_statics
+Pie.unlazy_statics
 
 def self.main()
     
@@ -74,5 +74,5 @@ if __FILE__ == $0
     ::Quark.macro_pie.main()
 end
 
-end # module MODULE_macro_pie
+end # module MacroPie
 end # module Quark

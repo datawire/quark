@@ -1,13 +1,13 @@
 module Quark
 require "quark"
-def self.int_methods; MODULE_int_methods; end
-module MODULE_int_methods
+def self.int_methods; IntMethods; end
+module IntMethods
 require 'quark' # .../reflect
 require_relative 'int_methods_md' # 0 () ()
 require_relative 'int_methods' # 0 () ()
 
-def self.Test; CLASS_Test; end
-class CLASS_Test < ::DatawireQuarkCore::QuarkObject
+def self.Test; Test; end
+class Test < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static int_methods_Test_ref: -> { ::Quark.int_methods_md.Root.int_methods_Test_md }
@@ -64,7 +64,7 @@ class CLASS_Test < ::DatawireQuarkCore::QuarkObject
 
 
 end
-CLASS_Test.unlazy_statics
+Test.unlazy_statics
 
 def self.main()
     
@@ -78,5 +78,5 @@ if __FILE__ == $0
     ::Quark.int_methods.main()
 end
 
-end # module MODULE_int_methods
+end # module IntMethods
 end # module Quark

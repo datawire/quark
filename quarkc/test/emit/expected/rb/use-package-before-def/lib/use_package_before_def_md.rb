@@ -1,8 +1,8 @@
 module Quark
-def self.use_package_before_def_md; MODULE_use_package_before_def_md; end
-module MODULE_use_package_before_def_md
-def self.Root; CLASS_Root; end
-class CLASS_Root < ::DatawireQuarkCore::QuarkObject
+def self.use_package_before_def_md; UsePackageBeforeDefMd; end
+module UsePackageBeforeDefMd
+def self.Root; Root; end
+class Root < ::DatawireQuarkCore::QuarkObject
 
 
 
@@ -44,5 +44,5 @@ class CLASS_Root < ::DatawireQuarkCore::QuarkObject
 
 
 end
-end # module MODULE_use_package_before_def_md
+end # module UsePackageBeforeDefMd
 end # module Quark

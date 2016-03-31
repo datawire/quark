@@ -1,12 +1,13 @@
 # Ruby Hello Server example
 
 require 'hello'
+Hello = ::Quark::Hello
 
 
 class HelloImpl
 
     def hello(request)
-        res = ::Quark.hello.Response.new
+        res = Hello::Response.new
 
         # Uncomment the next line to simulate a long request processing
         # time and force a request timeout to occur for the client.
@@ -20,7 +21,7 @@ end
 
 def main()
     implementation = HelloImpl.new
-    server = ::Quark.hello.HelloServer.new(implementation)
+    server = Hello::HelloServer.new(implementation)
     server.serveHTTP("http://127.0.0.1:8910/hello")
 end
 

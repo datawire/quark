@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.booleans; MODULE_booleans; end
-module MODULE_booleans
+def self.booleans; Booleans; end
+module Booleans
 require_relative 'booleans' # 0 () ()
 
 def self.main()
@@ -42,5 +42,5 @@ if __FILE__ == $0
     ::Quark.booleans.main()
 end
 
-end # module MODULE_booleans
+end # module Booleans
 end # module Quark

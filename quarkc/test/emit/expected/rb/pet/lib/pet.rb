@@ -1,7 +1,7 @@
 module Quark
 require "quark"
-def self.pet; MODULE_pet; end
-module MODULE_pet
+def self.pet; Pet; end
+module Pet
 require_relative 'pets' # 0 () ()
 require_relative 'pet' # 0 () ()
 
@@ -20,5 +20,5 @@ if __FILE__ == $0
     ::Quark.pet.main()
 end
 
-end # module MODULE_pet
+end # module Pet
 end # module Quark
