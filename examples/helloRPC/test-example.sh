@@ -177,6 +177,10 @@ testClientServer \
   log/j-rb-c.log \
   "Responding to \[Hello from Java!\] from Ruby"
 
+###################################
+# Different clients - Cloud server
+###################################
+# TODO - implement the cloud server combinations
 
 echo "************************"
 if [ $failed == "1" ]

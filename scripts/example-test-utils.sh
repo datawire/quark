@@ -35,11 +35,6 @@ testProcessOutput() {
   sleep $3  # let process become ready
   kill $!  # signal process to die
   wait $! 2>/dev/null # block waiting for process to die
-  if [ "$?" != "0" ]
-  then
-    echo "Command \"$2\" did not exit correctly"
-    failed=1
-  fi
   sleep 2 # wait a little more before proceeding (spurious failures happen without this)
   check "$5" $4 "$1" # check the log file for 'success' pattern
 }
