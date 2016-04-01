@@ -13,12 +13,14 @@ checkStaleService 8910
 
 # Build
 npm -s uninstall hello # spurious errors happen if we don't force this
-quark install hello.q --java
-quark install hello.q --javascript
-quark install hello.q --python
+quark install hello.q --all
 mvn -q compile
 
 # Run and verify the examples
+
+###########################
+# Same client - same server
+###########################
 testClientServer \
   "Python - Python" \
   "python -u pyserver.py" \
@@ -35,7 +37,7 @@ testClientServer \
   2 \
   log/js-js-s.log \
   log/js-js-c.log \
-  "Response says Responding to \[Hello from JavaScript!\] from JavaScript"
+  "Responding to \[Hello from JavaScript!\] from JavaScript"
 
 testClientServer \
   "Java - Java" \
@@ -44,8 +46,20 @@ testClientServer \
   5 \
   log/j-j-s.log \
   log/j-j-c.log \
-  "Response says: Responding to \[Hello from Java!\] from Java"
+  "Responding to \[Hello from Java!\] from Java"
 
+testClientServer \
+  "Ruby - Ruby" \
+  "ruby rbserver.rb" \
+  "ruby rbclient.rb" \
+  2 \
+  log/rb-rb-s.log \
+  log/rb-rb-c.log \
+  "Responding to \[Hello from Ruby!\] from Ruby"
+
+###################################
+# Different clients - Python server
+###################################
 testClientServer \
   "JS - Python" \
   "python -u pyserver.py" \
@@ -53,7 +67,7 @@ testClientServer \
   2 \
   log/js-py-s.log \
   log/js-py-c.log \
-  "Response says Responding to \[Hello from JavaScript!\] from Python"
+  "Responding to \[Hello from JavaScript!\] from Python"
 
 testClientServer \
   "Java - Python" \
@@ -62,8 +76,20 @@ testClientServer \
   2 \
   log/j-py-s.log \
   log/j-py-c.log \
-  "Response says: Responding to \[Hello from Java!\] from Python"
+  "Responding to \[Hello from Java!\] from Python"
 
+testClientServer \
+  "Ruby - Python" \
+  "python pyserver.py" \
+  "ruby rbclient.rb" \
+  2 \
+  log/rb-py-s.log \
+  log/rb-py-c.log \
+  "Responding to \[Hello from Ruby!\] from Python"
+
+###################################
+# Different clients - Java server
+###################################
 testClientServer \
   "Python - Java" \
   "mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCServer" \
@@ -71,7 +97,7 @@ testClientServer \
   5 \
   log/py-j-s.log \
   log/py-j-c.log \
-  "Response says u'Responding to \[Hello from Python!\] from Java'"
+  "Responding to \[Hello from Python!\] from Java"
 
 testClientServer \
   "JS - Java" \
@@ -80,7 +106,37 @@ testClientServer \
   5 \
   log/js-j-s.log \
   log/js-j-c.log \
-  "Response says Responding to \[Hello from JavaScript!\] from Java"
+  "Responding to \[Hello from JavaScript!\] from Java"
+
+testClientServer \
+  "Ruby - Java" \
+  "mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCServer" \
+  "ruby rbclient.rb" \
+  5 \
+  log/rb-j-s.log \
+  log/rb-j-c.log \
+  "Responding to \[Hello from Ruby!\] from Java"
+
+#######################################
+# Different clients - JavaScript server
+#######################################
+testClientServer \
+  "Python - JS" \
+  "node jsserver.js" \
+  "python pyclient.py" \
+  2 \
+  log/py-js-s.log \
+  log/py-js-c.log \
+  "Responding to \[Hello from Python!\] from JavaScript"
+
+testClientServer \
+  "Ruby - JS" \
+  "node jsserver.js" \
+  "ruby rbclient.rb" \
+  2 \
+  log/rb-js-s.log \
+  log/rb-js-c.log \
+  "Responding to \[Hello from Ruby!\] from JavaScript"
 
 testClientServer \
   "Java - JS" \
@@ -89,16 +145,38 @@ testClientServer \
   2 \
   log/j-js-s.log \
   log/j-js-c.log \
-  "Response says: Responding to \[Hello from Java!\] from JavaScript"
+  "Responding to \[Hello from Java!\] from JavaScript"
+
+###################################
+# Different clients - Ruby server
+###################################
+testClientServer \
+  "Python - Ruby" \
+  "ruby rbserver.rb" \
+  "python pyclient.py" \
+  2 \
+  log/py-rb-s.log \
+  log/py-rb-c.log \
+  "Responding to \[Hello from Python!\] from Ruby"
 
 testClientServer \
-  "Python - JS" \
-  "node jsserver.js" \
-  "python -u pyclient.py" \
+  "JS - Ruby" \
+  "ruby rbserver.rb" \
+  "node jsclient.js" \
   2 \
-  log/py-js-s.log \
-  log/py-js-c.log \
-  "Response says u\'Responding to \[Hello from Python!\] from JavaScript\'"
+  log/js-rb-s.log \
+  log/js-rb-c.log \
+  "Responding to \[Hello from JavaScript!\] from Ruby"
+
+testClientServer \
+  "Java - Ruby" \
+  "ruby rbserver.rb" \
+  "mvn exec:java -Dexec.mainClass=helloRPC.HelloRPCClient" \
+  2 \
+  log/j-rb-s.log \
+  log/j-rb-c.log \
+  "Responding to \[Hello from Java!\] from Ruby"
+
 
 echo "************************"
 if [ $failed == "1" ]
