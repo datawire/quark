@@ -3,6 +3,7 @@ def self.fancy_primitive_md; FancyPrimitiveMd; end
 module FancyPrimitiveMd
 require 'quark' # .../reflect
 
+
 def self.quark_List_quark_Object_; QuarkListQuarkObject; end
 class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -63,6 +64,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkObject.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -122,6 +124,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

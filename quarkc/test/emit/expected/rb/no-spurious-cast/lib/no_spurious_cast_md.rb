@@ -4,6 +4,7 @@ module NoSpuriousCastMd
 require 'quark' # .../reflect
 # for ('no_spurious_cast_md',): require_relative 'no_spurious_cast' # 0 () ()
 
+
 def self.no_spurious_cast_A; NoSpuriousCastA; end
 class NoSpuriousCastA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -63,6 +64,7 @@ class NoSpuriousCastA < ::Quark.quark.reflect.QuarkClass
 
 end
 NoSpuriousCastA.unlazy_statics
+
 
 def self.no_spurious_cast_B; NoSpuriousCastB; end
 class NoSpuriousCastB < ::Quark.quark.reflect.QuarkClass
@@ -124,6 +126,7 @@ class NoSpuriousCastB < ::Quark.quark.reflect.QuarkClass
 end
 NoSpuriousCastB.unlazy_statics
 
+
 def self.no_spurious_cast_X_quark_int_; NoSpuriousCastXQuarkInt; end
 class NoSpuriousCastXQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -183,6 +186,7 @@ class NoSpuriousCastXQuarkInt < ::Quark.quark.reflect.QuarkClass
 
 end
 NoSpuriousCastXQuarkInt.unlazy_statics
+
 
 def self.no_spurious_cast_Y; NoSpuriousCastY; end
 class NoSpuriousCastY < ::Quark.quark.reflect.QuarkClass
@@ -244,6 +248,7 @@ class NoSpuriousCastY < ::Quark.quark.reflect.QuarkClass
 end
 NoSpuriousCastY.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -303,6 +308,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

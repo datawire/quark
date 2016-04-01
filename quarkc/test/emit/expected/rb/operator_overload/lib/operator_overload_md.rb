@@ -4,6 +4,7 @@ module OperatorOverloadMd
 require 'quark' # .../reflect
 # for ('operator_overload_md',): require_relative 'operator_overload' # 0 () ()
 
+
 def self.operator_overload_Overload___add___Method; OperatorOverloadOverloadAddMethod; end
 class OperatorOverloadOverloadAddMethod < ::Quark.quark.reflect.Method
 
@@ -224,6 +225,7 @@ class OperatorOverloadOverload < ::Quark.quark.reflect.QuarkClass
 end
 OperatorOverloadOverload.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -283,6 +285,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

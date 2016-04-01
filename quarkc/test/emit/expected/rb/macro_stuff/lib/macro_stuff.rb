@@ -5,6 +5,7 @@ module MacroStuff
 require 'quark' # .../reflect
 require_relative 'macro_stuff_md' # 0 () ()
 
+
 def self.Macro; Macro; end
 class Macro < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

@@ -4,6 +4,7 @@ def self.json_tests; JsonTests; end
 module JsonTests
 require_relative 'json_tests' # 0 () ()
 
+
 def self.test_roundtrip()
     
     ::DatawireQuarkCore.print(::DatawireQuarkCore::JSONObject.parse(::DatawireQuarkCore::JSONObject.new.setObject().toString()).toString())

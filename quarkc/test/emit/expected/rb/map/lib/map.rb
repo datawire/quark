@@ -4,6 +4,7 @@ def self.map; Map; end
 module Map
 require_relative 'map' # 0 () ()
 
+
 def self.test1()
     
     map = ::Hash.new()

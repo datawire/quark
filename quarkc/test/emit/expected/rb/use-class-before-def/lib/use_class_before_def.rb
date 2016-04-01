@@ -5,6 +5,7 @@ module UseClassBeforeDef
 require_relative 'pkg' # 0 () ()
 require_relative 'use_class_before_def' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

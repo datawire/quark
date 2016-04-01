@@ -4,6 +4,7 @@ def self.modulo; Modulo; end
 module Modulo
 require_relative 'modulo' # 0 () ()
 
+
 def self.test_modulo(a, b)
     
     ::DatawireQuarkCore.print((((((a).to_s) + (" % ")) + ((b).to_s)) + (" = ")) + (((a) % (b)).to_s))

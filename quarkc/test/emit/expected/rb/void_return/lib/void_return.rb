@@ -2,6 +2,7 @@ module Quark
 require "quark"
 def self.void_return; VoidReturn; end
 module VoidReturn
+
 def self.foo()
     
     return

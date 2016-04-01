@@ -4,6 +4,7 @@ module MacroPieMd
 require 'quark' # .../reflect
 # for ('macro_pie_md',): require_relative 'macro_pie' # 0 () ()
 
+
 def self.macro_pie_Pie_test_Method; MacroPiePieTestMethod; end
 class MacroPiePieTestMethod < ::Quark.quark.reflect.Method
 
@@ -118,6 +119,7 @@ class MacroPiePie < ::Quark.quark.reflect.QuarkClass
 end
 MacroPiePie.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -177,6 +179,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

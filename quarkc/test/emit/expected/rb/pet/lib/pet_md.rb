@@ -4,6 +4,7 @@ module PetMd
 require 'quark' # .../reflect
 # for ('pet_md',): require_relative 'pets' # 0 () ()
 
+
 def self.pets_Cat_greet_Method; PetsCatGreetMethod; end
 class PetsCatGreetMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class PetsCat < ::Quark.quark.reflect.QuarkClass
 
 end
 PetsCat.unlazy_statics
+
 
 def self.pets_Dog_greet_Method; PetsDogGreetMethod; end
 class PetsDogGreetMethod < ::Quark.quark.reflect.Method
@@ -232,6 +234,7 @@ class PetsDog < ::Quark.quark.reflect.QuarkClass
 end
 PetsDog.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -291,6 +294,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

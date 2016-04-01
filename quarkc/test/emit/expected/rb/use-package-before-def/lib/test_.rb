@@ -2,6 +2,7 @@ module Quark
 require "quark"
 def self.test_; Test; end
 module Test
+
 def self.go()
     
     ::DatawireQuarkCore.print("GO!")

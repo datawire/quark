@@ -7,6 +7,7 @@ require 't2'
 require_relative 'foo' # 0 () ()
 require_relative 'puse' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

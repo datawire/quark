@@ -5,6 +5,7 @@ module Pkg
 require 'quark' # .../reflect
 require_relative 'extending_primitives_md' # 0 () ()
 
+
 def self.C; C; end
 class C < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

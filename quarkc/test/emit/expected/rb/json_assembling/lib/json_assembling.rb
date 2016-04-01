@@ -4,6 +4,7 @@ def self.json_assembling; JsonAssembling; end
 module JsonAssembling
 require_relative 'json_assembling' # 0 () ()
 
+
 def self.test_assembling()
     
     innerObject = ::DatawireQuarkCore::JSONObject.new

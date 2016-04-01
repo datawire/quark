@@ -4,6 +4,7 @@ module StringMethodsMd
 require 'quark' # .../reflect
 # for ('string_methods_md',): require_relative 'string_methods' # 0 () ()
 
+
 def self.string_methods_string_test_check_Method; StringMethodsStringTestCheckMethod; end
 class StringMethodsStringTestCheckMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class StringMethodsStringTest < ::Quark.quark.reflect.QuarkClass
 
 end
 StringMethodsStringTest.unlazy_statics
+
 
 def self.string_methods_test_size_does_Method; StringMethodsTestSizeDoesMethod; end
 class StringMethodsTestSizeDoesMethod < ::Quark.quark.reflect.Method
@@ -284,6 +286,7 @@ class StringMethodsTestSize < ::Quark.quark.reflect.QuarkClass
 
 end
 StringMethodsTestSize.unlazy_statics
+
 
 def self.string_methods_test_startsWith_that_Method; StringMethodsTestStartsWithThatMethod; end
 class StringMethodsTestStartsWithThatMethod < ::Quark.quark.reflect.Method
@@ -505,6 +508,7 @@ class StringMethodsTestStartsWith < ::Quark.quark.reflect.QuarkClass
 end
 StringMethodsTestStartsWith.unlazy_statics
 
+
 def self.string_methods_test_endsWith_that_Method; StringMethodsTestEndsWithThatMethod; end
 class StringMethodsTestEndsWithThatMethod < ::Quark.quark.reflect.Method
 
@@ -724,6 +728,7 @@ class StringMethodsTestEndsWith < ::Quark.quark.reflect.QuarkClass
 
 end
 StringMethodsTestEndsWith.unlazy_statics
+
 
 def self.string_methods_test_find_that_Method; StringMethodsTestFindThatMethod; end
 class StringMethodsTestFindThatMethod < ::Quark.quark.reflect.Method
@@ -945,6 +950,7 @@ class StringMethodsTestFind < ::Quark.quark.reflect.QuarkClass
 end
 StringMethodsTestFind.unlazy_statics
 
+
 def self.string_methods_test_substring_that_Method; StringMethodsTestSubstringThatMethod; end
 class StringMethodsTestSubstringThatMethod < ::Quark.quark.reflect.Method
 
@@ -1165,6 +1171,7 @@ class StringMethodsTestSubstring < ::Quark.quark.reflect.QuarkClass
 end
 StringMethodsTestSubstring.unlazy_statics
 
+
 def self.string_methods_test_replace_that_Method; StringMethodsTestReplaceThatMethod; end
 class StringMethodsTestReplaceThatMethod < ::Quark.quark.reflect.Method
 
@@ -1384,6 +1391,7 @@ class StringMethodsTestReplace < ::Quark.quark.reflect.QuarkClass
 
 end
 StringMethodsTestReplace.unlazy_statics
+
 
 def self.string_methods_test_join_that_Method; StringMethodsTestJoinThatMethod; end
 class StringMethodsTestJoinThatMethod < ::Quark.quark.reflect.Method
@@ -1658,6 +1666,7 @@ class StringMethodsTestJoin < ::Quark.quark.reflect.QuarkClass
 end
 StringMethodsTestJoin.unlazy_statics
 
+
 def self.string_methods_test_split_that_Method; StringMethodsTestSplitThatMethod; end
 class StringMethodsTestSplitThatMethod < ::Quark.quark.reflect.Method
 
@@ -1878,6 +1887,7 @@ class StringMethodsTestSplit < ::Quark.quark.reflect.QuarkClass
 end
 StringMethodsTestSplit.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1937,6 +1947,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'box_md' # 0 () ()
 require_relative 'box' # 0 () ()
 
+
 def self.Box; Box; end
 class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents

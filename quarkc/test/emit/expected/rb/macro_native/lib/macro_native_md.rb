@@ -4,6 +4,7 @@ module MacroNativeMd
 require 'quark' # .../reflect
 # for ('macro_native_md',): require_relative 'macro_native' # 0 () ()
 
+
 def self.macro_native_Native_test_Method; MacroNativeNativeTestMethod; end
 class MacroNativeNativeTestMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class MacroNativeNative < ::Quark.quark.reflect.QuarkClass
 
 end
 MacroNativeNative.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -4,6 +4,7 @@ def self.autocast; Autocast; end
 module Autocast
 require_relative 'autocast' # 0 () ()
 
+
 def self.foo(s)
     
     ::DatawireQuarkCore.print(s)

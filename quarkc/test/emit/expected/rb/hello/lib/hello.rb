@@ -4,6 +4,7 @@ def self.hello; Hello; end
 module Hello
 require_relative 'hello' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

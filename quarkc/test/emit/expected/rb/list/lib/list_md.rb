@@ -4,6 +4,7 @@ module ListMd
 require 'quark' # .../reflect
 # for ('list_md',): require_relative 'list' # 0 () ()
 
+
 def self.list_Box_quark_int__get_Method; ListBoxQuarkIntGetMethod; end
 class ListBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
@@ -171,6 +172,7 @@ class ListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 ListBoxQuarkInt.unlazy_statics
 
+
 def self.quark_List_quark_int_; QuarkListQuarkInt; end
 class QuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -230,6 +232,7 @@ class QuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkInt.unlazy_statics
+
 
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
@@ -291,6 +294,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkString.unlazy_statics
 
+
 def self.quark_List_list_Box_quark_int__; QuarkListListBoxQuarkInt; end
 class QuarkListListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -351,6 +355,7 @@ class QuarkListListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListListBoxQuarkInt.unlazy_statics
 
+
 def self.quark_List_quark_List_quark_int__; QuarkListQuarkListQuarkInt; end
 class QuarkListQuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -410,6 +415,7 @@ class QuarkListQuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkListQuarkInt.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

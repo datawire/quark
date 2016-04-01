@@ -4,6 +4,7 @@ def self.simple_math; SimpleMath; end
 module SimpleMath
 require_relative 'simple_math' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

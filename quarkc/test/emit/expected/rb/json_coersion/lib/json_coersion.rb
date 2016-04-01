@@ -4,6 +4,7 @@ def self.json_coersion; JsonCoersion; end
 module JsonCoersion
 require_relative 'json_coersion' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

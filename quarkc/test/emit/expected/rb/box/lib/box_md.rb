@@ -4,6 +4,7 @@ module BoxMd
 require 'quark' # .../reflect
 # for ('box_md',): require_relative 'box' # 0 () ()
 
+
 def self.box_Box_quark_Object__set_Method; BoxBoxQuarkObjectSetMethod; end
 class BoxBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
@@ -170,6 +171,7 @@ class BoxBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 BoxBoxQuarkObject.unlazy_statics
+
 
 def self.box_Box_quark_int__set_Method; BoxBoxQuarkIntSetMethod; end
 class BoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
@@ -338,6 +340,7 @@ class BoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 BoxBoxQuarkInt.unlazy_statics
 
+
 def self.box_Box_quark_String__set_Method; BoxBoxQuarkStringSetMethod; end
 class BoxBoxQuarkStringSetMethod < ::Quark.quark.reflect.Method
 
@@ -504,6 +507,7 @@ class BoxBoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 BoxBoxQuarkString.unlazy_statics
+
 
 def self.box_Box_box_Box_quark_int___set_Method; BoxBoxBoxBoxQuarkIntSetMethod; end
 class BoxBoxBoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
@@ -672,6 +676,7 @@ class BoxBoxBoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 BoxBoxBoxBoxQuarkInt.unlazy_statics
 
+
 def self.box_Crate_quark_int__set_Method; BoxCrateQuarkIntSetMethod; end
 class BoxCrateQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
@@ -838,6 +843,7 @@ class BoxCrateQuarkInt < ::Quark.quark.reflect.QuarkClass
 
 end
 BoxCrateQuarkInt.unlazy_statics
+
 
 def self.box_Crate_quark_String__set_Method; BoxCrateQuarkStringSetMethod; end
 class BoxCrateQuarkStringSetMethod < ::Quark.quark.reflect.Method
@@ -1006,6 +1012,7 @@ class BoxCrateQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 BoxCrateQuarkString.unlazy_statics
 
+
 def self.box_Sack; BoxSack; end
 class BoxSack < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1066,6 +1073,7 @@ class BoxSack < ::Quark.quark.reflect.QuarkClass
 end
 BoxSack.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1125,6 +1133,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

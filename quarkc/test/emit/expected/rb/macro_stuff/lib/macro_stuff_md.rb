@@ -4,6 +4,7 @@ module MacroStuffMd
 require 'quark' # .../reflect
 # for ('macro_stuff_md',): require_relative 'macro_stuff' # 0 () ()
 
+
 def self.macro_stuff_Macro_test_Method; MacroStuffMacroTestMethod; end
 class MacroStuffMacroTestMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class MacroStuffMacro < ::Quark.quark.reflect.QuarkClass
 
 end
 MacroStuffMacro.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

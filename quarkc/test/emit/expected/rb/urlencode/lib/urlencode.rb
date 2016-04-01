@@ -4,6 +4,7 @@ def self.urlencode; Urlencode; end
 module Urlencode
 require_relative 'urlencode' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

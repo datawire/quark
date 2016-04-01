@@ -7,6 +7,7 @@ require_relative 'quark/reflect' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark' # 0 () ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -66,6 +67,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.quark_List_quark_Object_; QuarkListQuarkObject; end
 class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
@@ -127,6 +129,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkObject.unlazy_statics
 
+
 def self.quark_List_quark_reflect_Field_; QuarkListQuarkReflectField; end
 class QuarkListQuarkReflectField < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -186,6 +189,7 @@ class QuarkListQuarkReflectField < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkReflectField.unlazy_statics
+
 
 def self.quark_List_quark_reflect_Method_; QuarkListQuarkReflectMethod; end
 class QuarkListQuarkReflectMethod < ::Quark.quark.reflect.QuarkClass
@@ -247,6 +251,7 @@ class QuarkListQuarkReflectMethod < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkReflectMethod.unlazy_statics
 
+
 def self.quark_List_quark_reflect_Class_; QuarkListQuarkReflectClass; end
 class QuarkListQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -306,6 +311,7 @@ class QuarkListQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkReflectClass.unlazy_statics
+
 
 def self.quark_List_quark_concurrent_FutureCompletion_; QuarkListQuarkConcurrentFutureCompletion; end
 class QuarkListQuarkConcurrentFutureCompletion < ::Quark.quark.reflect.QuarkClass
@@ -367,6 +373,7 @@ class QuarkListQuarkConcurrentFutureCompletion < ::Quark.quark.reflect.QuarkClas
 end
 QuarkListQuarkConcurrentFutureCompletion.unlazy_statics
 
+
 def self.quark_List_quark_test_Test_; QuarkListQuarkTestTest; end
 class QuarkListQuarkTestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -426,6 +433,7 @@ class QuarkListQuarkTestTest < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkTestTest.unlazy_statics
+
 
 def self.quark_Map_quark_Object_quark_Object_; QuarkMapQuarkObjectQuarkObject; end
 class QuarkMapQuarkObjectQuarkObject < ::Quark.quark.reflect.QuarkClass
@@ -487,6 +495,7 @@ class QuarkMapQuarkObjectQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkMapQuarkObjectQuarkObject.unlazy_statics
 
+
 def self.quark_Map_quark_String_quark_reflect_Class_; QuarkMapQuarkStringQuarkReflectClass; end
 class QuarkMapQuarkStringQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -546,6 +555,7 @@ class QuarkMapQuarkStringQuarkReflectClass < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkReflectClass.unlazy_statics
+
 
 def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
 class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
@@ -607,6 +617,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkMapQuarkStringQuarkObject.unlazy_statics
 
+
 def self.quark_Map_quark_String_quark_ServiceInstance_; QuarkMapQuarkStringQuarkServiceInstance; end
 class QuarkMapQuarkStringQuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -666,6 +677,7 @@ class QuarkMapQuarkStringQuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkServiceInstance.unlazy_statics
+
 
 def self.quark_reflect_Class; QuarkReflectClass; end
 class QuarkReflectClass < ::Quark.quark.reflect.QuarkClass
@@ -727,6 +739,7 @@ class QuarkReflectClass < ::Quark.quark.reflect.QuarkClass
 end
 QuarkReflectClass.unlazy_statics
 
+
 def self.quark_reflect_Field; QuarkReflectField; end
 class QuarkReflectField < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -786,6 +799,7 @@ class QuarkReflectField < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkReflectField.unlazy_statics
+
 
 def self.quark_Resolver; QuarkResolver; end
 class QuarkResolver < ::Quark.quark.reflect.QuarkClass
@@ -847,6 +861,7 @@ class QuarkResolver < ::Quark.quark.reflect.QuarkClass
 end
 QuarkResolver.unlazy_statics
 
+
 def self.quark_ResponseHolder; QuarkResponseHolder; end
 class QuarkResponseHolder < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -906,6 +921,7 @@ class QuarkResponseHolder < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkResponseHolder.unlazy_statics
+
 
 def self.quark_Service; QuarkService; end
 class QuarkService < ::Quark.quark.reflect.QuarkClass
@@ -967,6 +983,7 @@ class QuarkService < ::Quark.quark.reflect.QuarkClass
 end
 QuarkService.unlazy_statics
 
+
 def self.quark_BaseService; QuarkBaseService; end
 class QuarkBaseService < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1026,6 +1043,7 @@ class QuarkBaseService < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkBaseService.unlazy_statics
+
 
 def self.quark_ServiceInstance; QuarkServiceInstance; end
 class QuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
@@ -1087,6 +1105,7 @@ class QuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
 end
 QuarkServiceInstance.unlazy_statics
 
+
 def self.quark_DegenerateResolver; QuarkDegenerateResolver; end
 class QuarkDegenerateResolver < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1146,6 +1165,7 @@ class QuarkDegenerateResolver < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkDegenerateResolver.unlazy_statics
+
 
 def self.quark_Client; QuarkClient; end
 class QuarkClient < ::Quark.quark.reflect.QuarkClass
@@ -1207,6 +1227,7 @@ class QuarkClient < ::Quark.quark.reflect.QuarkClass
 end
 QuarkClient.unlazy_statics
 
+
 def self.quark_ServerResponder; QuarkServerResponder; end
 class QuarkServerResponder < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1267,6 +1288,7 @@ class QuarkServerResponder < ::Quark.quark.reflect.QuarkClass
 end
 QuarkServerResponder.unlazy_statics
 
+
 def self.quark_Server_quark_Object_; QuarkServerQuarkObject; end
 class QuarkServerQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1326,6 +1348,7 @@ class QuarkServerQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkServerQuarkObject.unlazy_statics
+
 
 def self.quark_behaviors_RPC_call_Method; QuarkBehaviorsRPCCallMethod; end
 class QuarkBehaviorsRPCCallMethod < ::Quark.quark.reflect.Method
@@ -1601,6 +1624,7 @@ class QuarkBehaviorsRPC < ::Quark.quark.reflect.QuarkClass
 end
 QuarkBehaviorsRPC.unlazy_statics
 
+
 def self.quark_behaviors_RPCRequest_call_Method; QuarkBehaviorsRPCRequestCallMethod; end
 class QuarkBehaviorsRPCRequestCallMethod < ::Quark.quark.reflect.Method
 
@@ -1821,6 +1845,7 @@ class QuarkBehaviorsRPCRequest < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkBehaviorsRPCRequest.unlazy_statics
+
 
 def self.quark_behaviors_CircuitBreaker_succeed_Method; QuarkBehaviorsCircuitBreakerSucceedMethod; end
 class QuarkBehaviorsCircuitBreakerSucceedMethod < ::Quark.quark.reflect.Method
@@ -2044,6 +2069,7 @@ class QuarkBehaviorsCircuitBreaker < ::Quark.quark.reflect.QuarkClass
 end
 QuarkBehaviorsCircuitBreaker.unlazy_statics
 
+
 def self.quark_concurrent_Event_getContext_Method; QuarkConcurrentEventGetContextMethod; end
 class QuarkConcurrentEventGetContextMethod < ::Quark.quark.reflect.Method
 
@@ -2211,6 +2237,7 @@ class QuarkConcurrentEvent < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentEvent.unlazy_statics
 
+
 def self.quark_concurrent_FutureListener_onFuture_Method; QuarkConcurrentFutureListenerOnFutureMethod; end
 class QuarkConcurrentFutureListenerOnFutureMethod < ::Quark.quark.reflect.Method
 
@@ -2324,6 +2351,7 @@ class QuarkConcurrentFutureListener < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentFutureListener.unlazy_statics
+
 
 def self.quark_concurrent_FutureCompletion_getContext_Method; QuarkConcurrentFutureCompletionGetContextMethod; end
 class QuarkConcurrentFutureCompletionGetContextMethod < ::Quark.quark.reflect.Method
@@ -2492,6 +2520,7 @@ class QuarkConcurrentFutureCompletion < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentFutureCompletion.unlazy_statics
 
+
 def self.quark_concurrent_EventContext_getContext_Method; QuarkConcurrentEventContextGetContextMethod; end
 class QuarkConcurrentEventContextGetContextMethod < ::Quark.quark.reflect.Method
 
@@ -2604,6 +2633,7 @@ class QuarkConcurrentEventContext < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentEventContext.unlazy_statics
+
 
 def self.quark_concurrent_Future_onFinished_Method; QuarkConcurrentFutureOnFinishedMethod; end
 class QuarkConcurrentFutureOnFinishedMethod < ::Quark.quark.reflect.Method
@@ -2986,6 +3016,7 @@ class QuarkConcurrentFuture < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentFuture.unlazy_statics
 
+
 def self.quark_concurrent_FutureWait_wait_Method; QuarkConcurrentFutureWaitWaitMethod; end
 class QuarkConcurrentFutureWaitWaitMethod < ::Quark.quark.reflect.Method
 
@@ -3207,6 +3238,7 @@ class QuarkConcurrentFutureWait < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentFutureWait.unlazy_statics
 
+
 def self.quark_concurrent_Queue_quark_concurrent_Event__put_Method; QuarkConcurrentQueueQuarkConcurrentEventPutMethod; end
 class QuarkConcurrentQueueQuarkConcurrentEventPutMethod < ::Quark.quark.reflect.Method
 
@@ -3427,6 +3459,7 @@ class QuarkConcurrentQueueQuarkConcurrentEvent < ::Quark.quark.reflect.QuarkClas
 end
 QuarkConcurrentQueueQuarkConcurrentEvent.unlazy_statics
 
+
 def self.quark_concurrent_CollectorExecutor__start_Method; QuarkConcurrentCollectorExecutorStartMethod; end
 class QuarkConcurrentCollectorExecutorStartMethod < ::Quark.quark.reflect.Method
 
@@ -3594,6 +3627,7 @@ class QuarkConcurrentCollectorExecutor < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentCollectorExecutor.unlazy_statics
+
 
 def self.quark_concurrent_Collector_put_Method; QuarkConcurrentCollectorPutMethod; end
 class QuarkConcurrentCollectorPutMethod < ::Quark.quark.reflect.Method
@@ -3816,6 +3850,7 @@ class QuarkConcurrentCollector < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentCollector.unlazy_statics
 
+
 def self.quark_concurrent_TimeoutListener_onTimeout_Method; QuarkConcurrentTimeoutListenerOnTimeoutMethod; end
 class QuarkConcurrentTimeoutListenerOnTimeoutMethod < ::Quark.quark.reflect.Method
 
@@ -3929,6 +3964,7 @@ class QuarkConcurrentTimeoutListener < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentTimeoutListener.unlazy_statics
+
 
 def self.quark_concurrent_TimeoutExpiry_getContext_Method; QuarkConcurrentTimeoutExpiryGetContextMethod; end
 class QuarkConcurrentTimeoutExpiryGetContextMethod < ::Quark.quark.reflect.Method
@@ -4096,6 +4132,7 @@ class QuarkConcurrentTimeoutExpiry < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentTimeoutExpiry.unlazy_statics
+
 
 def self.quark_concurrent_Timeout_start_Method; QuarkConcurrentTimeoutStartMethod; end
 class QuarkConcurrentTimeoutStartMethod < ::Quark.quark.reflect.Method
@@ -4372,6 +4409,7 @@ class QuarkConcurrentTimeout < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentTimeout.unlazy_statics
 
+
 def self.quark_concurrent_TLSContextInitializer_getValue_Method; QuarkConcurrentTLSContextInitializerGetValueMethod; end
 class QuarkConcurrentTLSContextInitializerGetValueMethod < ::Quark.quark.reflect.Method
 
@@ -4484,6 +4522,7 @@ class QuarkConcurrentTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkConcurrentTLSContextInitializer.unlazy_statics
+
 
 def self.quark_concurrent_Context_current_Method; QuarkConcurrentContextCurrentMethod; end
 class QuarkConcurrentContextCurrentMethod < ::Quark.quark.reflect.Method
@@ -4758,6 +4797,7 @@ class QuarkConcurrentContext < ::Quark.quark.reflect.QuarkClass
 end
 QuarkConcurrentContext.unlazy_statics
 
+
 def self.quark_test_TestInitializer_getValue_Method; QuarkTestTestInitializerGetValueMethod; end
 class QuarkTestTestInitializerGetValueMethod < ::Quark.quark.reflect.Method
 
@@ -4870,6 +4910,7 @@ class QuarkTestTestInitializer < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkTestTestInitializer.unlazy_statics
+
 
 def self.quark_test_Test_current_Method; QuarkTestTestCurrentMethod; end
 class QuarkTestTestCurrentMethod < ::Quark.quark.reflect.Method
@@ -5253,6 +5294,7 @@ class QuarkTestTest < ::Quark.quark.reflect.QuarkClass
 end
 QuarkTestTest.unlazy_statics
 
+
 def self.quark_test_MethodTest_run_Method; QuarkTestMethodTestRunMethod; end
 class QuarkTestMethodTestRunMethod < ::Quark.quark.reflect.Method
 
@@ -5635,6 +5677,7 @@ class QuarkTestMethodTest < ::Quark.quark.reflect.QuarkClass
 end
 QuarkTestMethodTest.unlazy_statics
 
+
 def self.quark_test_Harness_collect_Method; QuarkTestHarnessCollectMethod; end
 class QuarkTestHarnessCollectMethod < ::Quark.quark.reflect.Method
 
@@ -5856,6 +5899,7 @@ class QuarkTestHarness < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkTestHarness.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -4,6 +4,7 @@ module ExtendingPrimitivesMd
 require 'quark' # .../reflect
 # for ('extending_primitives_md',): require_relative 'pkg' # 0 () ()
 
+
 def self.pkg_C_event1_Method; PkgCEvent1Method; end
 class PkgCEvent1Method < ::Quark.quark.reflect.Method
 
@@ -118,6 +119,7 @@ class PkgC < ::Quark.quark.reflect.QuarkClass
 end
 PkgC.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -177,6 +179,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

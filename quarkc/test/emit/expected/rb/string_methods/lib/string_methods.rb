@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'string_methods_md' # 0 () ()
 require_relative 'string_methods' # 0 () ()
 
+
 def self.string_test; StringTest; end
 class StringTest < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

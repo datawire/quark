@@ -4,6 +4,7 @@ module DefaultConstructorsMd
 require 'quark' # .../reflect
 # for ('default_constructors_md',): require_relative 'default_constructors' # 0 () ()
 
+
 def self.default_constructors_A; DefaultConstructorsA; end
 class DefaultConstructorsA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -63,6 +64,7 @@ class DefaultConstructorsA < ::Quark.quark.reflect.QuarkClass
 
 end
 DefaultConstructorsA.unlazy_statics
+
 
 def self.default_constructors_B_greet_Method; DefaultConstructorsBGreetMethod; end
 class DefaultConstructorsBGreetMethod < ::Quark.quark.reflect.Method
@@ -178,6 +180,7 @@ class DefaultConstructorsB < ::Quark.quark.reflect.QuarkClass
 end
 DefaultConstructorsB.unlazy_statics
 
+
 def self.default_constructors_C_greet_Method; DefaultConstructorsCGreetMethod; end
 class DefaultConstructorsCGreetMethod < ::Quark.quark.reflect.Method
 
@@ -292,6 +295,7 @@ class DefaultConstructorsC < ::Quark.quark.reflect.QuarkClass
 end
 DefaultConstructorsC.unlazy_statics
 
+
 def self.default_constructors_X; DefaultConstructorsX; end
 class DefaultConstructorsX < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -351,6 +355,7 @@ class DefaultConstructorsX < ::Quark.quark.reflect.QuarkClass
 
 end
 DefaultConstructorsX.unlazy_statics
+
 
 def self.default_constructors_Y_test_Method; DefaultConstructorsYTestMethod; end
 class DefaultConstructorsYTestMethod < ::Quark.quark.reflect.Method
@@ -466,6 +471,7 @@ class DefaultConstructorsY < ::Quark.quark.reflect.QuarkClass
 end
 DefaultConstructorsY.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -525,6 +531,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -8,6 +8,7 @@ require_relative '../quark' # 0 () ('quark',)
 require_relative 'concurrent' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
+
 def self.RPC; RPC; end
 class RPC < ::DatawireQuarkCore::QuarkObject
     attr_accessor :service, :returned, :timeout, :methodName, :instance

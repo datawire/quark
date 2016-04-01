@@ -4,6 +4,7 @@ module SuperMd
 require 'quark' # .../reflect
 # for ('super_md',): require_relative 'super' # 0 () ()
 
+
 def self.super_A_greet_Method; SuperAGreetMethod; end
 class SuperAGreetMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class SuperA < ::Quark.quark.reflect.QuarkClass
 
 end
 SuperA.unlazy_statics
+
 
 def self.super_B_greet_Method; SuperBGreetMethod; end
 class SuperBGreetMethod < ::Quark.quark.reflect.Method
@@ -232,6 +234,7 @@ class SuperB < ::Quark.quark.reflect.QuarkClass
 end
 SuperB.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -291,6 +294,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

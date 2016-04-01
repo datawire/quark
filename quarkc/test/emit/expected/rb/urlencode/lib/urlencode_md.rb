@@ -3,6 +3,7 @@ def self.urlencode_md; UrlencodeMd; end
 module UrlencodeMd
 require 'quark' # .../reflect
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -63,6 +64,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkString.unlazy_statics
 
+
 def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
 class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -122,6 +124,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkObject.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

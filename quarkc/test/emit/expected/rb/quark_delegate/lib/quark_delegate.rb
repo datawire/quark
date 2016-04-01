@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'quark_delegate_md' # 0 () ()
 require_relative 'quark_delegate' # 0 () ()
 
+
 def self.Message; Message; end
 class Message < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

@@ -5,6 +5,7 @@ module DefaultedMethods
 require_relative 'pkg' # 0 () ()
 require_relative 'defaulted_methods' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

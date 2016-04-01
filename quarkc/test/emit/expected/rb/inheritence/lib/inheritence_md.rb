@@ -4,6 +4,7 @@ module InheritenceMd
 require 'quark' # .../reflect
 # for ('inheritence_md',): require_relative 'inheritence' # 0 () ()
 
+
 def self.inheritence_A_foo_Method; InheritenceAFooMethod; end
 class InheritenceAFooMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class InheritenceA < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritenceA.unlazy_statics
+
 
 def self.inheritence_B_foo_Method; InheritenceBFooMethod; end
 class InheritenceBFooMethod < ::Quark.quark.reflect.Method
@@ -232,6 +234,7 @@ class InheritenceB < ::Quark.quark.reflect.QuarkClass
 end
 InheritenceB.unlazy_statics
 
+
 def self.inheritence_C_foo_Method; InheritenceCFooMethod; end
 class InheritenceCFooMethod < ::Quark.quark.reflect.Method
 
@@ -346,6 +349,7 @@ class InheritenceC < ::Quark.quark.reflect.QuarkClass
 end
 InheritenceC.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -405,6 +409,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

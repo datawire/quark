@@ -5,6 +5,7 @@ module Pets
 require 'quark' # .../reflect
 require_relative 'pet_md' # 0 () ()
 
+
 def self.Pet; Pet; end
 class Pet < ::DatawireQuarkCore::QuarkObject
 

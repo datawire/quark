@@ -4,6 +4,7 @@ module ParameterizedDefaultsMd
 require 'quark' # .../reflect
 # for ('parameterized_defaults_md',): require_relative 'pkg' # 0 () ()
 
+
 def self.pkg_Foo_quark_Object__foo_Method; PkgFooQuarkObjectFooMethod; end
 class PkgFooQuarkObjectFooMethod < ::Quark.quark.reflect.Method
 
@@ -169,6 +170,7 @@ class PkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 PkgFooQuarkObject.unlazy_statics
+
 
 def self.pkg_StringFoo_get_Method; PkgStringFooGetMethod; end
 class PkgStringFooGetMethod < ::Quark.quark.reflect.Method
@@ -336,6 +338,7 @@ class PkgStringFoo < ::Quark.quark.reflect.QuarkClass
 end
 PkgStringFoo.unlazy_statics
 
+
 def self.pkg_Box_quark_String_; PkgBoxQuarkString; end
 class PkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -395,6 +398,7 @@ class PkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 PkgBoxQuarkString.unlazy_statics
+
 
 def self.pkg_StringBox; PkgStringBox; end
 class PkgStringBox < ::Quark.quark.reflect.QuarkClass
@@ -456,6 +460,7 @@ class PkgStringBox < ::Quark.quark.reflect.QuarkClass
 end
 PkgStringBox.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -515,6 +520,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

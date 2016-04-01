@@ -4,6 +4,7 @@ module UseClassBeforeDefMd
 require 'quark' # .../reflect
 # for ('use_class_before_def_md',): require_relative 'pkg' # 0 () ()
 
+
 def self.pkg_Bar_go_Method; PkgBarGoMethod; end
 class PkgBarGoMethod < ::Quark.quark.reflect.Method
 
@@ -118,6 +119,7 @@ class PkgBar < ::Quark.quark.reflect.QuarkClass
 end
 PkgBar.unlazy_statics
 
+
 def self.pkg_Foo; PkgFoo; end
 class PkgFoo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -178,6 +180,7 @@ class PkgFoo < ::Quark.quark.reflect.QuarkClass
 end
 PkgFoo.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -237,6 +240,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

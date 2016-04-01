@@ -5,6 +5,7 @@ module ImplicitSelf
 require 'quark' # .../reflect
 require_relative 'implicit_self_md' # 0 () ()
 
+
 def self.Foo; Foo; end
 class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

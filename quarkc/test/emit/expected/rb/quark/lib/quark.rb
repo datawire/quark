@@ -3,9 +3,15 @@ require_relative "datawire-quark-core"
 def self.quark; Quark; end
 module Quark
 require_relative 'quark/reflect' # 0 ('quark',) ()
+require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark_md' # 0 () ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
-require_relative 'quark/behaviors' # 0 ('quark',) ()
+require_relative 'quark/test_' # 0 ('quark',) ()
+
+
+
+
+
 
 def self.toJSON(obj, cls)
     
@@ -104,6 +110,7 @@ def self.fromJSON(cls, result, json)
 
     nil
 end
+
 
 def self.Resolver; Resolver; end
 class Resolver < ::DatawireQuarkCore::QuarkObject
@@ -907,5 +914,9 @@ class Server < ::DatawireQuarkCore::QuarkObject
 
 end
 Server.unlazy_statics
+
+
+
+
 end # module Quark
 end # module Quark

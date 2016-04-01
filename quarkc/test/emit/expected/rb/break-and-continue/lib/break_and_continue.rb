@@ -4,6 +4,7 @@ def self.break_and_continue; BreakAndContinue; end
 module BreakAndContinue
 require_relative 'break_and_continue' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

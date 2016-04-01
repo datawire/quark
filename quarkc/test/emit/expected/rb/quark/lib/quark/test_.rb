@@ -6,6 +6,7 @@ module Test
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
+
 def self.TestInitializer; TestInitializer; end
 class TestInitializer < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

@@ -4,6 +4,7 @@ def self.list; List; end
 module List
 require_relative 'list' # 0 () ()
 
+
 def self.test1()
     
     list = ::DatawireQuarkCore::List.new()

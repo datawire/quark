@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'marshalling_md' # 0 () ()
 require 'quark' 
 
+
 def self.Inner; Inner; end
 class Inner < ::DatawireQuarkCore::QuarkObject
     attr_accessor :inner_int, :inner_string, :inner_float, :inner_string_list

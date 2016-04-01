@@ -4,6 +4,7 @@ def self.booleans; Booleans; end
 module Booleans
 require_relative 'booleans' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

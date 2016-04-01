@@ -4,6 +4,7 @@ def self.t2; T2; end
 module T2
 require_relative 'testlib' # 0 () ()
 
+
 def self.atest()
     
     # import testlib;

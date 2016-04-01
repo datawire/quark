@@ -8,6 +8,7 @@ require 'quark' # .../reflect slack/event
 require_relative '../slack' # 0 () ('slack',)
 require_relative '../slackpack_md' # 0 () ('slack',)
 
+
 def self.SlackEvent; SlackEvent; end
 class SlackEvent < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :user, :channel, :timestamp

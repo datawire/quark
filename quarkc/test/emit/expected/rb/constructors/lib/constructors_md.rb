@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 # for ('constructors_md',): require_relative 'test2' # 0 () ()
 # for ('constructors_md',): require_relative 'test3' # 0 () ()
 
+
 def self.test1_Test; Test1Test; end
 class Test1Test < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -66,6 +67,7 @@ class Test1Test < ::Quark.quark.reflect.QuarkClass
 end
 Test1Test.unlazy_statics
 
+
 def self.test2_Test; Test2Test; end
 class Test2Test < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -125,6 +127,7 @@ class Test2Test < ::Quark.quark.reflect.QuarkClass
 
 end
 Test2Test.unlazy_statics
+
 
 def self.test3_Box_quark_String__get_Method; Test3BoxQuarkStringGetMethod; end
 class Test3BoxQuarkStringGetMethod < ::Quark.quark.reflect.Method
@@ -239,6 +242,7 @@ class Test3BoxQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 Test3BoxQuarkString.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -298,6 +302,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

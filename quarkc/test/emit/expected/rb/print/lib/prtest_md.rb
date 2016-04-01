@@ -4,6 +4,7 @@ module PrtestMd
 require 'quark' # .../reflect
 # for ('prtest_md',): require_relative 'prtest' # 0 () ()
 
+
 def self.prtest_Test_test_Method; PrtestTestTestMethod; end
 class PrtestTestTestMethod < ::Quark.quark.reflect.Method
 
@@ -118,6 +119,7 @@ class PrtestTest < ::Quark.quark.reflect.QuarkClass
 end
 PrtestTest.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -177,6 +179,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -90,7 +90,7 @@ def function_file(path, name, fname):
     return class_file(path, name, fname)
 
 def package_file(path, name, fname):
-    return None
+    return '/'.join(path + [name]) + '.rb'
 
 def _make_file(path):
     epilogue = 'def self.{alias}; {name}; end\nmodule {name}\n'.format
@@ -117,7 +117,7 @@ def main_file(name):
     return "%s.rb" % name
 
 def make_package_file(path, name):
-    assert False
+    return _make_file(path + [name])
 
 def main_prolog():
     return Templates.method(

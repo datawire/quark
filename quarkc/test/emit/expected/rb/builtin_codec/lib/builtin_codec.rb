@@ -4,6 +4,7 @@ def self.builtin_codec; BuiltinCodec; end
 module BuiltinCodec
 require_relative 'builtin_codec' # 0 () ()
 
+
 def self.hexb(v)
     
     c = ::DatawireQuarkCore.default_codec

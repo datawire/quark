@@ -4,6 +4,7 @@ module StaticMd
 require 'quark' # .../reflect
 # for ('static_md',): require_relative 'static' # 0 () ()
 
+
 def self.static_Foo_setCount_Method; StaticFooSetCountMethod; end
 class StaticFooSetCountMethod < ::Quark.quark.reflect.Method
 
@@ -387,6 +388,7 @@ class StaticFoo < ::Quark.quark.reflect.QuarkClass
 end
 StaticFoo.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -446,6 +448,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

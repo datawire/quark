@@ -4,6 +4,7 @@ module ImplicitSelfMd
 require 'quark' # .../reflect
 # for ('implicit_self_md',): require_relative 'implicit_self' # 0 () ()
 
+
 def self.implicit_self_Foo_next_Method; ImplicitSelfFooNextMethod; end
 class ImplicitSelfFooNextMethod < ::Quark.quark.reflect.Method
 
@@ -171,6 +172,7 @@ class ImplicitSelfFoo < ::Quark.quark.reflect.QuarkClass
 
 end
 ImplicitSelfFoo.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -3,6 +3,7 @@ def self.quark; Quark; end
 module Quark
 def self.reflect; Reflect; end
 module Reflect
+
 def self.QuarkClass; QuarkClass; end
 class QuarkClass < ::DatawireQuarkCore::QuarkObject
     attr_accessor :id, :name, :parameters, :fields, :methods

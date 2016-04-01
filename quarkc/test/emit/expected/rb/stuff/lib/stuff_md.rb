@@ -4,6 +4,7 @@ module StuffMd
 require 'quark' # .../reflect
 # for ('stuff_md',): require_relative 'stuff' # 0 () ()
 
+
 def self.stuff_Test_foo_Method; StuffTestFooMethod; end
 class StuffTestFooMethod < ::Quark.quark.reflect.Method
 
@@ -171,6 +172,7 @@ class StuffTest < ::Quark.quark.reflect.QuarkClass
 end
 StuffTest.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -230,6 +232,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

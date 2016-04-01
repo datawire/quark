@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
 
+
 def self.SlackHandler; SlackHandler; end
 class SlackHandler < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

@@ -4,6 +4,7 @@ def self.fancy_primitive; FancyPrimitive; end
 module FancyPrimitive
 require_relative 'fancy_primitive' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

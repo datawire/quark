@@ -3,6 +3,7 @@ def self.map_md; MapMd; end
 module MapMd
 require 'quark' # .../reflect
 
+
 def self.quark_Map_quark_String_quark_int_; QuarkMapQuarkStringQuarkInt; end
 class QuarkMapQuarkStringQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -62,6 +63,7 @@ class QuarkMapQuarkStringQuarkInt < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkInt.unlazy_statics
+
 
 def self.quark_Map_quark_String_quark_String_; QuarkMapQuarkStringQuarkString; end
 class QuarkMapQuarkStringQuarkString < ::Quark.quark.reflect.QuarkClass
@@ -123,6 +125,7 @@ class QuarkMapQuarkStringQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 QuarkMapQuarkStringQuarkString.unlazy_statics
 
+
 def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
 class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -183,6 +186,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkMapQuarkStringQuarkObject.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -242,6 +246,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

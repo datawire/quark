@@ -5,6 +5,7 @@ module MacroNative
 require 'quark' # .../reflect
 require_relative 'macro_native_md' # 0 () ()
 
+
 def self.Native; Native; end
 class Native < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

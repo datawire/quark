@@ -1,6 +1,7 @@
 module Quark
 def self.test_md; TestMd; end
 module TestMd
+
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
 

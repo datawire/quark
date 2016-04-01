@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'no_spurious_cast_md' # 0 () ()
 require_relative 'no_spurious_cast' # 0 () ()
 
+
 def self.A; A; end
 class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

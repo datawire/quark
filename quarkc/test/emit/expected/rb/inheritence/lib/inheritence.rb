@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'inheritence_md' # 0 () ()
 require_relative 'inheritence' # 0 () ()
 
+
 def self.A; A; end
 class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

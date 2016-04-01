@@ -5,6 +5,7 @@ module Pkg
 require 'quark' # .../reflect
 require_relative 'parameterized_defaults_md' # 0 () ()
 
+
 def self.Foo; Foo; end
 class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

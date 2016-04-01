@@ -5,6 +5,7 @@ module Test1
 require 'quark' # .../reflect
 require_relative 'constructors_md' # 0 () ()
 
+
 def self.Test; Test; end
 class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name

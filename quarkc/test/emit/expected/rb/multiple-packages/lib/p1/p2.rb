@@ -4,6 +4,7 @@ def self.p1; P1; end
 module P1
 def self.p2; P2; end
 module P2
+
 def self.a()
     
     ::DatawireQuarkCore.print("a")
@@ -11,6 +12,7 @@ def self.a()
 
     nil
 end
+
 
 def self.b()
     

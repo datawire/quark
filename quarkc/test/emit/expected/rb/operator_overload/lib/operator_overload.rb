@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'operator_overload_md' # 0 () ()
 require_relative 'operator_overload' # 0 () ()
 
+
 def self.Overload; Overload; end
 class Overload < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name

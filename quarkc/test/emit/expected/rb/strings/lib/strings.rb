@@ -4,6 +4,7 @@ def self.strings; Strings; end
 module Strings
 require_relative 'strings' # 0 () ()
 
+
 def self.call_main()
     self.main(::DatawireQuarkCore::List.new(ARGV))
 

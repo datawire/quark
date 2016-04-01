@@ -4,6 +4,7 @@ module DefaultedMethodsMd
 require 'quark' # .../reflect
 # for ('defaulted_methods_md',): require_relative 'pkg' # 0 () ()
 
+
 def self.pkg_A_foo_Method; PkgAFooMethod; end
 class PkgAFooMethod < ::Quark.quark.reflect.Method
 
@@ -172,6 +173,7 @@ class PkgA < ::Quark.quark.reflect.QuarkClass
 end
 PkgA.unlazy_statics
 
+
 def self.pkg_B_bar_Method; PkgBBarMethod; end
 class PkgBBarMethod < ::Quark.quark.reflect.Method
 
@@ -286,6 +288,7 @@ class PkgB < ::Quark.quark.reflect.QuarkClass
 end
 PkgB.unlazy_statics
 
+
 def self.pkg_C_foo_Method; PkgCFooMethod; end
 class PkgCFooMethod < ::Quark.quark.reflect.Method
 
@@ -399,6 +402,7 @@ class PkgC < ::Quark.quark.reflect.QuarkClass
 
 end
 PkgC.unlazy_statics
+
 
 def self.pkg_T1_foo_Method; PkgT1FooMethod; end
 class PkgT1FooMethod < ::Quark.quark.reflect.Method
@@ -568,6 +572,7 @@ class PkgT1 < ::Quark.quark.reflect.QuarkClass
 end
 PkgT1.unlazy_statics
 
+
 def self.pkg_T2_foo_Method; PkgT2FooMethod; end
 class PkgT2FooMethod < ::Quark.quark.reflect.Method
 
@@ -735,6 +740,7 @@ class PkgT2 < ::Quark.quark.reflect.QuarkClass
 
 end
 PkgT2.unlazy_statics
+
 
 def self.pkg_T3_foo_Method; PkgT3FooMethod; end
 class PkgT3FooMethod < ::Quark.quark.reflect.Method
@@ -904,6 +910,7 @@ class PkgT3 < ::Quark.quark.reflect.QuarkClass
 end
 PkgT3.unlazy_statics
 
+
 def self.pkg_T4_foo_Method; PkgT4FooMethod; end
 class PkgT4FooMethod < ::Quark.quark.reflect.Method
 
@@ -1071,6 +1078,7 @@ class PkgT4 < ::Quark.quark.reflect.QuarkClass
 
 end
 PkgT4.unlazy_statics
+
 
 def self.pkg_T5_foo_Method; PkgT5FooMethod; end
 class PkgT5FooMethod < ::Quark.quark.reflect.Method
@@ -1240,6 +1248,7 @@ class PkgT5 < ::Quark.quark.reflect.QuarkClass
 end
 PkgT5.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1299,6 +1308,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

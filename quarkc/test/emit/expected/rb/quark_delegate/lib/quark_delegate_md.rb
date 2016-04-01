@@ -4,6 +4,7 @@ module QuarkDelegateMd
 require 'quark' # .../reflect
 # for ('quark_delegate_md',): require_relative 'quark_delegate' # 0 () ()
 
+
 def self.quark_delegate_Message_encode_Method; QuarkDelegateMessageEncodeMethod; end
 class QuarkDelegateMessageEncodeMethod < ::Quark.quark.reflect.Method
 
@@ -117,6 +118,7 @@ class QuarkDelegateMessage < ::Quark.quark.reflect.QuarkClass
 end
 QuarkDelegateMessage.unlazy_statics
 
+
 def self.quark_delegate_Ping_encode_Method; QuarkDelegatePingEncodeMethod; end
 class QuarkDelegatePingEncodeMethod < ::Quark.quark.reflect.Method
 
@@ -229,6 +231,7 @@ class QuarkDelegatePing < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkDelegatePing.unlazy_statics
+
 
 def self.quark_delegate_Pong_toString_Method; QuarkDelegatePongToStringMethod; end
 class QuarkDelegatePongToStringMethod < ::Quark.quark.reflect.Method
@@ -395,6 +398,7 @@ class QuarkDelegatePong < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkDelegatePong.unlazy_statics
+
 
 def self.quark_delegate_Test_bar_Method; QuarkDelegateTestBarMethod; end
 class QuarkDelegateTestBarMethod < ::Quark.quark.reflect.Method
@@ -669,6 +673,7 @@ class QuarkDelegateTest < ::Quark.quark.reflect.QuarkClass
 end
 QuarkDelegateTest.unlazy_statics
 
+
 def self.quark_List_quark_Object_; QuarkListQuarkObject; end
 class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -729,6 +734,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkObject.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -788,6 +794,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

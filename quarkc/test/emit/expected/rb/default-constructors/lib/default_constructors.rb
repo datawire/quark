@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'default_constructors_md' # 0 () ()
 require_relative 'default_constructors' # 0 () ()
 
+
 def self.A; A; end
 class A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name

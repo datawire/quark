@@ -6,6 +6,7 @@ require 'quark' # .../reflect
 require_relative 'matrix_md' # 0 () ()
 require_relative 'matrix' # 0 () ()
 
+
 def self.Matrix; Matrix; end
 class Matrix < ::DatawireQuarkCore::QuarkObject
     attr_accessor :width, :height, :columns

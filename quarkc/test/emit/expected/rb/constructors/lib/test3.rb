@@ -2,6 +2,7 @@ module Quark
 require "quark"
 def self.test3; Test3; end
 module Test3
+
 def self.Box; Box; end
 class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents

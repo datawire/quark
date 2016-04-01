@@ -6,6 +6,7 @@ module Concurrent
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
 
+
 def self.Event; Event; end
 class Event < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static

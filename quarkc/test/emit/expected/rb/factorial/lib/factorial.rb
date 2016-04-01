@@ -4,6 +4,7 @@ def self.factorial; Factorial; end
 module Factorial
 require_relative 'factorial' # 0 () ()
 
+
 def self.factorial(n)
     
     if ((n) == (0))

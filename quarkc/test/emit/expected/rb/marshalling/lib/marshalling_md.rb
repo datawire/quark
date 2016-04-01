@@ -4,6 +4,7 @@ module MarshallingMd
 require 'quark' # .../reflect
 # for ('marshalling_md',): require_relative 'm' # 0 () ()
 
+
 def self.m_Inner_setup_Method; MInnerSetupMethod; end
 class MInnerSetupMethod < ::Quark.quark.reflect.Method
 
@@ -116,6 +117,7 @@ class MInner < ::Quark.quark.reflect.QuarkClass
 
 end
 MInner.unlazy_statics
+
 
 def self.m_Outer_setup_Method; MOuterSetupMethod; end
 class MOuterSetupMethod < ::Quark.quark.reflect.Method
@@ -230,6 +232,7 @@ class MOuter < ::Quark.quark.reflect.QuarkClass
 end
 MOuter.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -290,6 +293,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkString.unlazy_statics
 
+
 def self.quark_List_m_Inner_; QuarkListMInner; end
 class QuarkListMInner < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -349,6 +353,7 @@ class QuarkListMInner < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListMInner.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

@@ -4,6 +4,7 @@ module MatrixMd
 require 'quark' # .../reflect
 # for ('matrix_md',): require_relative 'matrix' # 0 () ()
 
+
 def self.matrix_Matrix_quark_int____get___Method; MatrixMatrixQuarkIntGetMethod; end
 class MatrixMatrixQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
@@ -171,6 +172,7 @@ class MatrixMatrixQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 MatrixMatrixQuarkInt.unlazy_statics
 
+
 def self.quark_List_quark_List_quark_Object__; QuarkListQuarkListQuarkObject; end
 class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -230,6 +232,7 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkListQuarkObject.unlazy_statics
+
 
 def self.quark_List_quark_Object_; QuarkListQuarkObject; end
 class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
@@ -291,6 +294,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkObject.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -350,6 +354,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

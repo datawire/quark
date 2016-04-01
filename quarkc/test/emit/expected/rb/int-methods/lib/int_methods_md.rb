@@ -4,6 +4,7 @@ module IntMethodsMd
 require 'quark' # .../reflect
 # for ('int_methods_md',): require_relative 'int_methods' # 0 () ()
 
+
 def self.int_methods_Test_test_Method; IntMethodsTestTestMethod; end
 class IntMethodsTestTestMethod < ::Quark.quark.reflect.Method
 
@@ -118,6 +119,7 @@ class IntMethodsTest < ::Quark.quark.reflect.QuarkClass
 end
 IntMethodsTest.unlazy_statics
 
+
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -177,6 +179,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
+
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
