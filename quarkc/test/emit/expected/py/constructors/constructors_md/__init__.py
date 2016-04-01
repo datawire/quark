@@ -95,6 +95,54 @@ class test3_Box_quark_String_(quark.reflect.Class):
         pass
 test3_Box_quark_String_.singleton = test3_Box_quark_String_()
 
+class test4_Base(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(test4_Base, self).__init__(u"test4.Base");
+        (self).name = u"test4.Base"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return test4.Base()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+test4_Base.singleton = test4_Base()
+
+class test4_Test(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(test4_Test, self).__init__(u"test4.Test");
+        (self).name = u"test4.Test"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.String", u"mumble"), quark.reflect.Field(u"quark.String", u"later")])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return test4.Test()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+test4_Test.singleton = test4_Test()
+
 class quark_List_quark_String_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -134,7 +182,10 @@ class Root(object):
         pass
 Root.test1_Test_md = test1_Test.singleton
 Root.test2_Test_md = test2_Test.singleton
+Root.test4_Base_md = test4_Base.singleton
+Root.test4_Test_md = test4_Test.singleton
 
 import test1
 import test2
 import test3
+import test4

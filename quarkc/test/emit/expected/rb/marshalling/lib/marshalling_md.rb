@@ -51,6 +51,7 @@ class MInnerSetupMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -110,6 +111,7 @@ class MInner < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -165,6 +167,7 @@ class MOuterSetupMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -224,6 +227,7 @@ class MOuter < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -285,6 +289,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -346,6 +351,7 @@ class QuarkListMInner < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

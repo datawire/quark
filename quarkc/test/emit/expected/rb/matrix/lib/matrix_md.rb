@@ -51,6 +51,7 @@ class MatrixMatrixQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -105,6 +106,7 @@ class MatrixMatrixQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -164,6 +166,7 @@ class MatrixMatrixQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -225,6 +228,7 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -286,6 +290,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -347,6 +352,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

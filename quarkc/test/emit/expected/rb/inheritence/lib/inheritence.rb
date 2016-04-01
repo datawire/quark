@@ -110,6 +110,7 @@ class B < ::Quark.inheritence.A
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -159,6 +160,7 @@ class C < ::Quark.inheritence.A
 
     def __init_fields__()
         
+        super
 
         nil
     end

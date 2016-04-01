@@ -52,6 +52,7 @@ class ImplicitSelfFooNextMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -106,6 +107,7 @@ class ImplicitSelfFooTestMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -165,6 +167,7 @@ class ImplicitSelfFoo < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

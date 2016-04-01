@@ -139,7 +139,6 @@ class RPC < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.service = nil
         self.returned = nil
         self.timeout = nil
@@ -287,7 +286,6 @@ class RPCRequest < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.rpc = nil
         self.retval = nil
         self.args = nil
@@ -420,7 +418,6 @@ class CircuitBreaker < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.id = nil
         self.failureLimit = nil
         self.retestDelay = nil

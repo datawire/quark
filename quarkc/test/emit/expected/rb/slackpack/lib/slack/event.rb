@@ -96,7 +96,6 @@ class SlackEvent < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.type = nil
         self.user = nil
         self.channel = nil
@@ -202,7 +201,7 @@ class SlackError < ::Quark.slack.event.SlackEvent
 
     def __init_fields__()
         
-
+        super
         self.code = nil
         self.text = nil
 
@@ -284,6 +283,7 @@ class Hello < ::Quark.slack.event.SlackEvent
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -404,7 +404,7 @@ class Message < ::Quark.slack.event.SlackEvent
 
     def __init_fields__()
         
-
+        super
         self.subtype = nil
         self.hidden = false
         self.text = nil
@@ -469,7 +469,6 @@ class Edited < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.user = nil
         self.timestamp = nil
 

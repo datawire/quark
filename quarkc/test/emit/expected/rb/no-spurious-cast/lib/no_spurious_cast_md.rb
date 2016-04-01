@@ -57,6 +57,7 @@ class NoSpuriousCastA < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -118,6 +119,7 @@ class NoSpuriousCastB < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -179,6 +181,7 @@ class NoSpuriousCastXQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -240,6 +243,7 @@ class NoSpuriousCastY < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -301,6 +305,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

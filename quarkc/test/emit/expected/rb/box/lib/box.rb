@@ -64,7 +64,6 @@ class Box < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.contents = nil
 
         nil
@@ -140,7 +139,6 @@ class Crate < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.box = ::Quark.box.Box.new()
         self.ibox = ::Quark.box.Box.new()
 
@@ -197,7 +195,6 @@ class Sack < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.ints = ::Quark.box.Box.new()
 
         nil

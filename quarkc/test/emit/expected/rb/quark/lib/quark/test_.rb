@@ -210,7 +210,6 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.name = nil
         self.checks = 0
         self.failures = ::DatawireQuarkCore::List.new([])
@@ -317,7 +316,7 @@ class MethodTest < ::Quark.quark.test_.Test
 
     def __init_fields__()
         
-
+        super
         self.klass = nil
         self.method = nil
 
@@ -486,7 +485,6 @@ class Harness < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.pkg = nil
         self.tests = ::DatawireQuarkCore::List.new([])
         self.filtered = 0

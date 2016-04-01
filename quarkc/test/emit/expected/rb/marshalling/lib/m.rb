@@ -84,7 +84,6 @@ class Inner < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.inner_int = nil
         self.inner_string = nil
         self.inner_float = nil
@@ -174,7 +173,6 @@ class Outer < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.outer_int = nil
         self.outer_string = nil
         self.outer_float = nil

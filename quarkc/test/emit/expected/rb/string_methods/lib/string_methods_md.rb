@@ -52,6 +52,7 @@ class StringMethodsStringTestCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -111,6 +112,7 @@ class StringMethodsStringTest < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -166,6 +168,7 @@ class StringMethodsTestSizeDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -220,6 +223,7 @@ class StringMethodsTestSizeCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -279,6 +283,7 @@ class StringMethodsTestSize < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -334,6 +339,7 @@ class StringMethodsTestStartsWithThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -387,6 +393,7 @@ class StringMethodsTestStartsWithDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -441,6 +448,7 @@ class StringMethodsTestStartsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -500,6 +508,7 @@ class StringMethodsTestStartsWith < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -555,6 +564,7 @@ class StringMethodsTestEndsWithThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -608,6 +618,7 @@ class StringMethodsTestEndsWithDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -662,6 +673,7 @@ class StringMethodsTestEndsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -721,6 +733,7 @@ class StringMethodsTestEndsWith < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -776,6 +789,7 @@ class StringMethodsTestFindThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -829,6 +843,7 @@ class StringMethodsTestFindDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -883,6 +898,7 @@ class StringMethodsTestFindCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -942,6 +958,7 @@ class StringMethodsTestFind < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -997,6 +1014,7 @@ class StringMethodsTestSubstringThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1050,6 +1068,7 @@ class StringMethodsTestSubstringDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1104,6 +1123,7 @@ class StringMethodsTestSubstringCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1163,6 +1183,7 @@ class StringMethodsTestSubstring < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1218,6 +1239,7 @@ class StringMethodsTestReplaceThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1271,6 +1293,7 @@ class StringMethodsTestReplaceDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1325,6 +1348,7 @@ class StringMethodsTestReplaceCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1384,6 +1408,7 @@ class StringMethodsTestReplace < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1439,6 +1464,7 @@ class StringMethodsTestJoinThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1492,6 +1518,7 @@ class StringMethodsTestJoinAMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1545,6 +1572,7 @@ class StringMethodsTestJoinDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1599,6 +1627,7 @@ class StringMethodsTestJoinCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1658,6 +1687,7 @@ class StringMethodsTestJoin < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1713,6 +1743,7 @@ class StringMethodsTestSplitThatMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1766,6 +1797,7 @@ class StringMethodsTestSplitDoesMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1820,6 +1852,7 @@ class StringMethodsTestSplitCheckMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1879,6 +1912,7 @@ class StringMethodsTestSplit < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1940,6 +1974,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

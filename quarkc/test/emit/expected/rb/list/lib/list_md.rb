@@ -51,6 +51,7 @@ class ListBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -105,6 +106,7 @@ class ListBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -164,6 +166,7 @@ class ListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -225,6 +228,7 @@ class QuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -286,6 +290,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -347,6 +352,7 @@ class QuarkListListBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -408,6 +414,7 @@ class QuarkListQuarkListQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

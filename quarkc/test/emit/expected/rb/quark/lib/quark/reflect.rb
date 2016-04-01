@@ -212,7 +212,6 @@ class QuarkClass < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.id = nil
         self.name = nil
         self.parameters = ::DatawireQuarkCore::List.new([])
@@ -292,7 +291,6 @@ class Field < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.type = nil
         self.name = nil
 
@@ -356,7 +354,6 @@ class Method < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.type = nil
         self.name = nil
         self.parameters = nil

@@ -225,7 +225,6 @@ class ResponseHolder < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.response = nil
         self.failure = nil
 
@@ -462,7 +461,6 @@ class ServiceInstance < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.serviceName = nil
         self.url = nil
         self.breaker = nil
@@ -706,7 +704,6 @@ class Client < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.resolver = nil
         self.serviceName = nil
         self._timeout = nil
@@ -792,7 +789,6 @@ class ServerResponder < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.request = nil
         self.response = nil
 
@@ -905,7 +901,6 @@ class Server < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.impl = nil
 
         nil

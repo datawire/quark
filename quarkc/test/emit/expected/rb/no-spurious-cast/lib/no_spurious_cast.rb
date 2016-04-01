@@ -96,6 +96,7 @@ class B < ::Quark.no_spurious_cast.A
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -190,6 +191,7 @@ class Y < ::Quark.no_spurious_cast.X
 
     def __init_fields__()
         
+        super
 
         nil
     end

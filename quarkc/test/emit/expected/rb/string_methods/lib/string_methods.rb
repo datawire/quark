@@ -124,7 +124,7 @@ class TestSize < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
 
         nil
@@ -204,7 +204,7 @@ class TestStartsWith < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self._that = nil
 
@@ -285,7 +285,7 @@ class TestEndsWith < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self._that = nil
 
@@ -366,7 +366,7 @@ class TestFind < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self._that = nil
 
@@ -454,7 +454,7 @@ class TestSubstring < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self.start = nil
         self.end_ = nil
@@ -543,7 +543,7 @@ class TestReplace < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self.start = nil
         self.end_ = nil
@@ -650,7 +650,7 @@ class TestJoin < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self.parts = nil
         self.strparts = nil
@@ -742,7 +742,7 @@ class TestSplit < ::Quark.string_methods.string_test
 
     def __init_fields__()
         
-
+        super
         self.what = nil
         self.sep = nil
         self.altsep = nil

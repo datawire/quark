@@ -117,7 +117,6 @@ class User < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.client = nil
         self.user = nil
 
@@ -197,7 +196,6 @@ class Channel < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.client = nil
         self.channel = nil
 
@@ -436,7 +434,6 @@ class Client < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.runtime = nil
         self.token = nil
         self.handler = nil

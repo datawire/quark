@@ -54,6 +54,7 @@ class SlackEventSlackEventLoadMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -108,6 +109,7 @@ class SlackEventSlackEventDispatchMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -167,6 +169,7 @@ class SlackEventSlackEvent < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -223,6 +226,7 @@ class SlackEventSlackErrorLoadMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -277,6 +281,7 @@ class SlackEventSlackErrorDispatchMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -336,6 +341,7 @@ class SlackEventSlackError < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -392,6 +398,7 @@ class SlackEventHelloDispatchMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -446,6 +453,7 @@ class SlackEventHelloLoadMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -505,6 +513,7 @@ class SlackEventHello < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -561,6 +570,7 @@ class SlackEventMessageLoadMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -615,6 +625,7 @@ class SlackEventMessageDispatchMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -674,6 +685,7 @@ class SlackEventMessage < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -735,6 +747,7 @@ class SlackEventEdited < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -791,6 +804,7 @@ class SlackSlackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -845,6 +859,7 @@ class SlackSlackHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -899,6 +914,7 @@ class SlackSlackHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -953,6 +969,7 @@ class SlackSlackHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1012,6 +1029,7 @@ class SlackSlackHandler < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1073,6 +1091,7 @@ class SlackUser < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1129,6 +1148,7 @@ class SlackChannelSendMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1188,6 +1208,7 @@ class SlackChannel < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1244,6 +1265,7 @@ class SlackClientConnectMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1298,6 +1320,7 @@ class SlackClientRequestMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1352,6 +1375,7 @@ class SlackClientWsConnectMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1406,6 +1430,7 @@ class SlackClientWsSendMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1460,6 +1485,7 @@ class SlackClientOnWSConnectedMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1514,6 +1540,7 @@ class SlackClientOnWSCloseMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1568,6 +1595,7 @@ class SlackClientOnWSErrorMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1621,6 +1649,7 @@ class SlackClientConstructMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1675,6 +1704,7 @@ class SlackClientOnWSMessageMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1729,6 +1759,7 @@ class SlackClientOnHTTPResponseMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1788,6 +1819,7 @@ class SlackClient < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1844,6 +1876,7 @@ class PkgHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1898,6 +1931,7 @@ class PkgHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1952,6 +1986,7 @@ class PkgHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -2006,6 +2041,7 @@ class PkgHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -2065,6 +2101,7 @@ class PkgHandler < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -2126,6 +2163,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -2187,6 +2225,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

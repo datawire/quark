@@ -52,6 +52,7 @@ class BoxBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -105,6 +106,7 @@ class BoxBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -164,6 +166,7 @@ class BoxBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -220,6 +223,7 @@ class BoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -273,6 +277,7 @@ class BoxBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -332,6 +337,7 @@ class BoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -388,6 +394,7 @@ class BoxBoxQuarkStringSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -441,6 +448,7 @@ class BoxBoxQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -500,6 +508,7 @@ class BoxBoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -556,6 +565,7 @@ class BoxBoxBoxBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -609,6 +619,7 @@ class BoxBoxBoxBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -668,6 +679,7 @@ class BoxBoxBoxBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -724,6 +736,7 @@ class BoxCrateQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -777,6 +790,7 @@ class BoxCrateQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -836,6 +850,7 @@ class BoxCrateQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -892,6 +907,7 @@ class BoxCrateQuarkStringSetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -945,6 +961,7 @@ class BoxCrateQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1004,6 +1021,7 @@ class BoxCrateQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1065,6 +1083,7 @@ class BoxSack < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -1126,6 +1145,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

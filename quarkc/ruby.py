@@ -197,10 +197,14 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
         prologue.extend(static_fields)
         postscript.append('%s.unlazy_statics' % camel_case_name)
 
+    init_body = []
+    if base:
+        init_body.append('super')
+    init_body.extend('self.%s = %s' % pairs for pairs in fields)
     init_fields = Templates.method(
         name='__init_fields__',
         parameters='',
-        body=indent(''.join('\nself.%s = %s' % pairs for pairs in fields)),
+        body=indent(init_body),
     )
     source = Templates.class_(
         name=camel_case_name,

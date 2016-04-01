@@ -5,6 +5,7 @@ require 'quark' # .../reflect
 # for ('constructors_md',): require_relative 'test1' # 0 () ()
 # for ('constructors_md',): require_relative 'test2' # 0 () ()
 # for ('constructors_md',): require_relative 'test3' # 0 () ()
+# for ('constructors_md',): require_relative 'test4' # 0 () ()
 
 
 def self.test1_Test; Test1Test; end
@@ -59,6 +60,7 @@ class Test1Test < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -120,6 +122,7 @@ class Test2Test < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -175,6 +178,7 @@ class Test3BoxQuarkStringGetMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -234,6 +238,7 @@ class Test3BoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -241,6 +246,130 @@ class Test3BoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 Test3BoxQuarkString.unlazy_statics
+
+
+def self.test4_Base; Test4Base; end
+class Test4Base < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.constructors_md.test4_Base.new() }
+
+
+
+    def initialize()
+        
+        super("test4.Base")
+        (self).name = "test4.Base"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.test4.Base.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+Test4Base.unlazy_statics
+
+
+def self.test4_Test; Test4Test; end
+class Test4Test < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.constructors_md.test4_Test.new() }
+
+
+
+    def initialize()
+        
+        super("test4.Test")
+        (self).name = "test4.Test"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name"), ::Quark.quark.reflect.Field.new("quark.String", "mumble"), ::Quark.quark.reflect.Field.new("quark.String", "later")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.test4.Test.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+Test4Test.unlazy_statics
 
 
 def self.quark_List_quark_String_; QuarkListQuarkString; end
@@ -295,6 +424,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -310,6 +440,8 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     static test1_Test_md: -> { ::Quark.constructors_md.test1_Test.singleton }
     static test2_Test_md: -> { ::Quark.constructors_md.test2_Test.singleton }
+    static test4_Base_md: -> { ::Quark.constructors_md.test4_Base.singleton }
+    static test4_Test_md: -> { ::Quark.constructors_md.test4_Test.singleton }
 
 
 

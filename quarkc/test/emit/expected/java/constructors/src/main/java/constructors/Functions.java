@@ -13,5 +13,6 @@ public class Functions {
         test1.Functions.go();
         test2.Functions.go();
         test3.Functions.go();
+        test4.Functions.go();
     }
 }

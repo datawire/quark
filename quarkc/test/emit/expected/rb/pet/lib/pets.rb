@@ -83,6 +83,7 @@ class Cat < ::Quark.pets.Pet
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -139,6 +140,7 @@ class Dog < ::Quark.pets.Pet
 
     def __init_fields__()
         
+        super
 
         nil
     end

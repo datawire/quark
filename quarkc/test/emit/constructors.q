@@ -48,8 +48,29 @@ namespace test3 {
     }
 }
 
+namespace test4 {
+    class Base {
+        String name = "Hello World!";
+    }
+
+    class Test extends Base {
+        String mumble = "lalala";
+        String later;
+        Test() {
+            self.later = "Hello World!";
+        }
+    }
+
+    void go() {
+        Test t = new Test();
+        print(t.name);
+        print(new Test().name);
+    }
+}
+
 void main(List<String> args) {
     test1.go();
     test2.go();
     test3.go();
+    test4.go();
 }

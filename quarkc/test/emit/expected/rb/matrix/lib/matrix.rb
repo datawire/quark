@@ -91,7 +91,6 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.width = nil
         self.height = nil
         self.columns = nil

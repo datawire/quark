@@ -51,6 +51,7 @@ class QuarkDelegateMessageEncodeMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -110,6 +111,7 @@ class QuarkDelegateMessage < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -165,6 +167,7 @@ class QuarkDelegatePingEncodeMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -224,6 +227,7 @@ class QuarkDelegatePing < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -279,6 +283,7 @@ class QuarkDelegatePongToStringMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -332,6 +337,7 @@ class QuarkDelegatePongEncodeMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -391,6 +397,7 @@ class QuarkDelegatePong < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -446,6 +453,7 @@ class QuarkDelegateTestBarMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -500,6 +508,7 @@ class QuarkDelegateTestFooMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -553,6 +562,7 @@ class QuarkDelegateTestRpcMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -606,6 +616,7 @@ class QuarkDelegateTestHelloMethod < ::Quark.quark.reflect.Method
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -665,6 +676,7 @@ class QuarkDelegateTest < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -726,6 +738,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -787,6 +800,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def __init_fields__()
         
+        super
 
         nil
     end

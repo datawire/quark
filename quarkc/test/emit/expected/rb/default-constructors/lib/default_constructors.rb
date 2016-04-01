@@ -55,7 +55,6 @@ class A < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.name = nil
 
         nil
@@ -118,6 +117,7 @@ class B < ::Quark.default_constructors.A
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -179,6 +179,7 @@ class C < ::Quark.default_constructors.A
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -290,7 +291,7 @@ class Y < ::Quark.default_constructors.X
 
     def __init_fields__()
         
-
+        super
         self.name = nil
 
         nil

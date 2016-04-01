@@ -84,7 +84,6 @@ class Overload < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.name = nil
 
         nil

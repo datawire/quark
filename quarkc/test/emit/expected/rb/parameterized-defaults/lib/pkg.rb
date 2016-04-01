@@ -153,7 +153,6 @@ class Box < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.contents = nil
 
         nil
@@ -209,6 +208,7 @@ class StringBox < ::Quark.pkg.Box
 
     def __init_fields__()
         
+        super
 
         nil
     end

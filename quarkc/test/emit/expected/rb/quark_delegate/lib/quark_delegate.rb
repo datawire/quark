@@ -103,6 +103,7 @@ class Ping < ::Quark.quark_delegate.Message
 
     def __init_fields__()
         
+        super
 
         nil
     end
@@ -159,6 +160,7 @@ class Pong < ::Quark.quark_delegate.Message
 
     def __init_fields__()
         
+        super
 
         nil
     end

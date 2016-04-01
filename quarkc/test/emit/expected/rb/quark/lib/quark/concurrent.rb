@@ -149,7 +149,6 @@ class FutureCompletion < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.future = nil
         self.listener = nil
 
@@ -215,7 +214,6 @@ class EventContext < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self._context = nil
 
         nil
@@ -365,7 +363,7 @@ class Future < ::Quark.quark.concurrent.EventContext
 
     def __init_fields__()
         
-
+        super
         self._finished = nil
         self._error = nil
         self._callbacks = nil
@@ -483,7 +481,6 @@ class FutureWait < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self._lock = nil
         self._future = nil
 
@@ -589,7 +586,6 @@ class Queue < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.items = nil
         self.head = nil
         self.tail = nil
@@ -681,7 +677,6 @@ class CollectorExecutor < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.events = nil
         self.collector = nil
 
@@ -792,7 +787,6 @@ class Collector < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.lock = nil
         self.pending = nil
         self.executor = nil
@@ -907,7 +901,6 @@ class TimeoutExpiry < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self.timeout = nil
         self.listener = nil
 
@@ -1016,7 +1009,7 @@ class Timeout < ::Quark.quark.concurrent.EventContext
 
     def __init_fields__()
         
-
+        super
         self.timeout = nil
         self.lock = nil
         self.listener = nil
@@ -1192,7 +1185,6 @@ class Context < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
-
         self._parent = nil
         self._runtime = nil
         self.collector = nil
