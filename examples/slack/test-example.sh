@@ -18,7 +18,10 @@ fi
 
 # Build
 npm -s uninstall slack # spurious errors happen if we don't force this
-quark install slack.q --all
+quark install slack.q --java
+quark install slack.q --javascript
+quark install slack.q --python
+
 mvn -q compile
 
 testProcessOutput \
@@ -53,5 +56,5 @@ fi
 echo "*********************"
 
 # Exit with status so outer scripts can interpret the
-# overall demo result
+# overall example result
 exit $failed

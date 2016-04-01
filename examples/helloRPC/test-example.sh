@@ -13,7 +13,9 @@ checkStaleService 8910
 
 # Build
 npm -s uninstall hello # spurious errors happen if we don't force this
-quark install hello.q --all
+quark install hello.q --java
+quark install hello.q --javascript
+quark install hello.q --python
 mvn -q compile
 
 # Run and verify the examples
@@ -108,5 +110,5 @@ fi
 echo "************************"
 
 # Exit with status so outer scripts can interpret the
-# overall demo result
+# overall example result
 exit $failed

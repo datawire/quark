@@ -8,7 +8,7 @@ source ../scripts/example-test-utils.sh
 
 # Run and verify each example
 
-declare -a arr=("helloRPC" "slack" "binary")
+declare -a arr=("helloRPC" "slack" "binary" "fallback")
 for i in "${arr[@]}"
 do
   $i/test-example.sh

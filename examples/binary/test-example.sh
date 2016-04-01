@@ -9,10 +9,13 @@ source ../../scripts/example-test-utils.sh
 
 # Prep
 cleanLogs
+checkStaleService 8910
 
 # Build
 npm -s uninstall binary # spurious errors happen if we don't force this
-quark install binary.q --all
+quark install binary.q --java
+quark install binary.q --javascript
+quark install binary.q --python
 mvn -q compile
 
 # Launch the server that all the clients will hit
@@ -56,5 +59,5 @@ fi
 echo "**********************"
 
 # Exit with status so outer scripts can interpret the
-# overall demo result
+# overall example result
 exit $failed
