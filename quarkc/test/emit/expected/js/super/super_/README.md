@@ -2,4 +2,4 @@
 
 ## B
 
-## main(())
+## main((0.super.main.args,))

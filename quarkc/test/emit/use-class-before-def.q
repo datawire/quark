@@ -13,7 +13,7 @@ namespace pkg {
     }
 }
 
-void main() {
+void main(List<String> args) {
     pkg.Bar bar = new pkg.Bar();
     bar.go();
 }

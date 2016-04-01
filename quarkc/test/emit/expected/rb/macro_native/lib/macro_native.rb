@@ -22,7 +22,7 @@ class Native < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test()
+    def test_()
         
         n1 = ::Quark.macro_native.Native.new()
         n2 = ::Quark.macro_native.Native.new()

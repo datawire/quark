@@ -15,6 +15,6 @@ void test_building() {
           .toString());
 }
 
-void main() {
+void main(List<String> args) {
     test_building();
 }

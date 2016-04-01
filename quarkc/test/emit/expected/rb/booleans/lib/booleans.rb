@@ -4,7 +4,12 @@ def self.booleans; Booleans; end
 module Booleans
 require_relative 'booleans' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     if (true)
         ::DatawireQuarkCore.print("Hi!")
@@ -38,9 +43,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.booleans.main()
-end
+if __FILE__ == $0 then ::Quark.booleans.call_main() end
 
 end # module Booleans
 end # module Quark

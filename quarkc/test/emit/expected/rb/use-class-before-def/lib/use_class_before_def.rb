@@ -5,7 +5,12 @@ module UseClassBeforeDef
 require_relative 'pkg' # 0 () ()
 require_relative 'use_class_before_def' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     bar = ::Quark.pkg.Bar.new()
     bar.go()
@@ -14,9 +19,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.use_class_before_def.main()
-end
+if __FILE__ == $0 then ::Quark.use_class_before_def.call_main() end
 
 end # module UseClassBeforeDef
 end # module Quark

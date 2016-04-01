@@ -16,7 +16,12 @@ def self.factorial(n)
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print(::Quark.factorial.factorial(1))
     ::DatawireQuarkCore.print(::Quark.factorial.factorial(2))
@@ -33,9 +38,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.factorial.main()
-end
+if __FILE__ == $0 then ::Quark.factorial.call_main() end
 
 end # module Factorial
 end # module Quark

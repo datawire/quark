@@ -1,4 +1,4 @@
-void main() {
+void main(List<String> args) {
     Map<String,Object> map = new Map<String,Object>();
     map["pi"] = 3.14159;
 

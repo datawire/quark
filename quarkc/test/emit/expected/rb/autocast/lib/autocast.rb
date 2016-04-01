@@ -12,7 +12,12 @@ def self.foo(s)
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     o = "Hello World!"
     s = o
@@ -24,9 +29,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.autocast.main()
-end
+if __FILE__ == $0 then ::Quark.autocast.call_main() end
 
 end # module Autocast
 end # module Quark

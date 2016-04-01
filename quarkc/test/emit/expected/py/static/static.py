@@ -1,4 +1,4 @@
 import static
 
 if __name__ == "__main__":
-    static.main();
+    static.call_main()

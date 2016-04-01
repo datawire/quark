@@ -1,6 +1,6 @@
 module Quark
 require "quark"
-def self.test; Test; end
+def self.test_; Test; end
 module Test
 def self.go()
     

@@ -6,4 +6,4 @@
 
 ## iterables(())
 
-## main(())
+## main((0.map.main.args,))

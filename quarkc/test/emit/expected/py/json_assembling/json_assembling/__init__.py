@@ -19,6 +19,6 @@ def test_assembling():
     (outer).setObjectItem(u"sub-string", (_JSONObject()).setString(u"a string"));
     _println((outer).toString());
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     test_assembling();

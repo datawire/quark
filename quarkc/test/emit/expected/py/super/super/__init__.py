@@ -56,7 +56,7 @@ class B(A):
 
 
 B.super_B_ref = super_md.Root.super_B_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     b = B();
     (b).greet();

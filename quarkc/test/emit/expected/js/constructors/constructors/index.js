@@ -7,8 +7,8 @@ var test3 = require('../test3/index.js');
 exports.test3 = test3;
 
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     test1.go();
     test2.go();
     test3.go();

@@ -6,6 +6,6 @@ class Pie {
     }
 }
 
-void main() {
+void main(List<String> args) {
     print(new Pie().slice());
 }

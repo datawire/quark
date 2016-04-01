@@ -1,4 +1,4 @@
 import puse
 
 if __name__ == "__main__":
-    puse.main();
+    puse.call_main()

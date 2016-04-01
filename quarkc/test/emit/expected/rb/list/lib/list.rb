@@ -156,7 +156,12 @@ def self.sorter()
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.list.test1()
     ::Quark.list.test2()
@@ -170,9 +175,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.list.main()
-end
+if __FILE__ == $0 then ::Quark.list.call_main() end
 
 end # module List
 end # module Quark

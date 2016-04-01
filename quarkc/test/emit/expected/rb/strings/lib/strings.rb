@@ -4,7 +4,12 @@ def self.strings; Strings; end
 module Strings
 require_relative 'strings' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print("\"")
     ::DatawireQuarkCore.print("\"\"")
@@ -19,9 +24,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.strings.main()
-end
+if __FILE__ == $0 then ::Quark.strings.call_main() end
 
 end # module Strings
 end # module Quark

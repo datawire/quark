@@ -7,7 +7,12 @@ require_relative 'test2' # 0 () ()
 require_relative 'test3' # 0 () ()
 require_relative 'constructors' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.test1.go()
     ::Quark.test2.go()
@@ -17,9 +22,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.constructors.main()
-end
+if __FILE__ == $0 then ::Quark.constructors.call_main() end
 
 end # module Constructors
 end # module Quark

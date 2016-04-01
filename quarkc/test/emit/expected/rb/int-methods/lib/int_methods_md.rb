@@ -22,7 +22,7 @@ class IntMethodsTestTestMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = object
-        obj.test()
+        obj.test_()
         return nil
 
         nil
@@ -117,6 +117,66 @@ class IntMethodsTest < ::Quark.quark.reflect.QuarkClass
 
 end
 IntMethodsTest.unlazy_statics
+
+def self.quark_List_quark_String_; QuarkListQuarkString; end
+class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.int_methods_md.quark_List_quark_String_.new() }
+
+
+
+    def initialize()
+        
+        super("quark.List<quark.String>")
+        (self).name = "quark.List"
+        (self).parameters = ::DatawireQuarkCore::List.new(["quark.String"])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::DatawireQuarkCore::List.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+QuarkListQuarkString.unlazy_statics
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

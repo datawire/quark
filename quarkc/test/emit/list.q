@@ -62,7 +62,7 @@ void sorter() {
     print(stuff);
 }
 
-void main() {
+void main(List<String> args) {
     test1();
     test2();
     test3();

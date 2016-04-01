@@ -1,4 +1,4 @@
 import stuff
 
 if __name__ == "__main__":
-    stuff.main();
+    stuff.call_main()

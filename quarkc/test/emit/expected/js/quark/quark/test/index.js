@@ -71,12 +71,11 @@ Test.current = Test_current;
 
 function Test_start() {
     (Test.ctx).setValue(this);
-    _qrt.print(bold(("start ") + (this.name)));
 }
 Test.prototype.start = Test_start;
 
 function Test_stop() {
-    var result = (((((("stop ") + (this.name)) + (" [")) + (_qrt.toString(this.checks))) + (" checks, ")) + (_qrt.toString((this.failures).length))) + (" failures]");
+    var result = (((((this.name) + (" [")) + (_qrt.toString(this.checks))) + (" checks, ")) + (_qrt.toString((this.failures).length))) + (" failures]");
     if (((this.failures).length) > (0)) {
         _qrt.print(red(result));
     } else {

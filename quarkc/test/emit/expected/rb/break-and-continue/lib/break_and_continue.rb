@@ -4,7 +4,12 @@ def self.break_and_continue; BreakAndContinue; end
 module BreakAndContinue
 require_relative 'break_and_continue' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     stuff = ::DatawireQuarkCore::List.new(["one", "two", "three", "four"])
     idx = 0
@@ -34,9 +39,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.break_and_continue.main()
-end
+if __FILE__ == $0 then ::Quark.break_and_continue.call_main() end
 
 end # module BreakAndContinue
 end # module Quark

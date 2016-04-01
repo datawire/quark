@@ -7,6 +7,6 @@ class Test {
     }
 }
 
-void main() {
+void main(List<String> args) {
     new Test().test();
 }

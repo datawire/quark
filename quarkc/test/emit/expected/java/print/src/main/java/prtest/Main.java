@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        prtest.Functions.main();
+        prtest.Functions.main(args);
     }
 }

@@ -14,10 +14,9 @@ public class Test implements io.datawire.quark.runtime.QObject {
     }
     public void start() {
         (Test.ctx).setValue(this);
-        do{System.out.println(Functions.bold(("start ") + (this.name)));System.out.flush();}while(false);
     }
     public void stop() {
-        String result = (((((("stop ") + (this.name)) + (" [")) + (Integer.toString(this.checks))) + (" checks, ")) + (Integer.toString((this.failures).size()))) + (" failures]");
+        String result = (((((this.name) + (" [")) + (Integer.toString(this.checks))) + (" checks, ")) + (Integer.toString((this.failures).size()))) + (" failures]");
         if (((this.failures).size()) > (0)) {
             do{System.out.println(Functions.red(result));System.out.flush();}while(false);
         } else {

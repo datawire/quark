@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     stuff = _List([u"one", u"two", u"three", u"four"]);
     idx = 0;
     while (True):

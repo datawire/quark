@@ -88,8 +88,8 @@ class Test(object):
         pass
 Test.quark_delegate_Test_ref = quark_delegate_md.Root.quark_delegate_Test_md
 Test.quark_List_quark_Object__ref = quark_delegate_md.Root.quark_List_quark_Object__md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     t = Test();
     (t).foo(u"one", u"two", 3);
     _println(((t).hello(Ping())).toString());

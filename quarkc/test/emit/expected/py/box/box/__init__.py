@@ -144,8 +144,8 @@ def test6():
     _println(((box).get()).get());
     _println(((box).contents).contents);
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(u"test1:\n--");
     test1();
     _println(u"");

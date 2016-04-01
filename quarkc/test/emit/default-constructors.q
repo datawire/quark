@@ -34,7 +34,7 @@ class Y extends X {
     }
 }
 
-void main() {
+void main(List<String> args) {
     B b = new B("Bob");
     b.greet();
     C c = new C("arole");

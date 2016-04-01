@@ -22,7 +22,7 @@ class B extends A {
     }
 }
 
-void main() {
+void main(List<String> args) {
     B b = new B();
     b.greet();
 }

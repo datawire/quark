@@ -376,8 +376,8 @@ class test_split(string_test):
 
 
 test_split.string_methods_test_split_ref = string_methods_md.Root.string_methods_test_split_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     (test_size(u"")).does(0);
     (test_size(u"1")).does(1);
     (test_size(u"22")).does(2);

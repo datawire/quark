@@ -125,8 +125,13 @@ def make_main_file(name):
     return Code(comment, head="package %s;\n\npublic class Main {\n\n" % name,
                 tail="}")
 
-def main(statements):
-    return indent("public static void main(String[] args)%s" % block(statements))
+def main_prolog():
+    return indent("public static final void main(String[] args) {\n"
+                  "    main(new java.util.ArrayList(java.util.Arrays.asList(args)));\n}")
+
+def main(path, name):
+    expr = invoke_function(path, name, ("args",))
+    return indent("public static void main(String[] args) {\n    %s;\n}" % expr)
 
 ## Naming and imports
 

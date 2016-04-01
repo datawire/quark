@@ -29,7 +29,7 @@ class Foo < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
-    def test()
+    def test_()
         
         self.next_()
 

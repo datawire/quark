@@ -6,4 +6,4 @@
 
 ## Test
 
-## main(())
+## main((1.quark_delegate.main.args,))

@@ -24,7 +24,7 @@ namespace pkg {
     class StringBox extends Box<String> {}
 }
 
-void main() {
+void main(List<String> args) {
     pkg.StringBox box = new pkg.StringBox("asdf");
     print(box.contents);
     pkg.StringFoo foo = new pkg.StringFoo();

@@ -33,8 +33,8 @@ Pie.prototype._getField = Pie__getField;
 
 function Pie__setField(name, value) {}
 Pie.prototype._setField = Pie__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     _qrt.print(3);
 }
 exports.main = main;

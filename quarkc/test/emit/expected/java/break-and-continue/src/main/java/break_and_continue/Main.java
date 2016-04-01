@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        break_and_continue.Functions.main();
+        break_and_continue.Functions.main(args);
     }
 }

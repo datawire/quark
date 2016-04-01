@@ -5,7 +5,12 @@ module Pet
 require_relative 'pets' # 0 () ()
 require_relative 'pet' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     evil = ::Quark.pets.Cat.new()
     good = ::Quark.pets.Dog.new()
@@ -16,9 +21,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.pet.main()
-end
+if __FILE__ == $0 then ::Quark.pet.call_main() end
 
 end # module Pet
 end # module Quark

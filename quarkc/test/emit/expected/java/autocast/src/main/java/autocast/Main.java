@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        autocast.Functions.main();
+        autocast.Functions.main(args);
     }
 }

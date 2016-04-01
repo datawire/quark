@@ -55,7 +55,12 @@ def self.iterables()
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.map.test1()
     ::Quark.map.test_update()
@@ -66,9 +71,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.map.main()
-end
+if __FILE__ == $0 then ::Quark.map.call_main() end
 
 end # module Map
 end # module Quark

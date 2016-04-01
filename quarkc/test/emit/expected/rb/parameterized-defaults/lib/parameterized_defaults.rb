@@ -5,7 +5,12 @@ module ParameterizedDefaults
 require_relative 'pkg' # 0 () ()
 require_relative 'parameterized_defaults' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     box = ::Quark.pkg.StringBox.new("asdf")
     ::DatawireQuarkCore.print((box).contents)
@@ -16,9 +21,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.parameterized_defaults.main()
-end
+if __FILE__ == $0 then ::Quark.parameterized_defaults.call_main() end
 
 end # module ParameterizedDefaults
 end # module Quark

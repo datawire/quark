@@ -102,8 +102,8 @@ Y.prototype._getField = Y__getField;
 
 function Y__setField(name, value) {}
 Y.prototype._setField = Y__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var a = new B();
     var x = new Y();
 }

@@ -1,7 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     if (true) {
         _qrt.print("Hi!");
     }

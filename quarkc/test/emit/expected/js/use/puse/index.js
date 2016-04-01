@@ -7,8 +7,8 @@ var foo = require('../foo/index.js');
 exports.foo = foo;
 
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     _qrt.print(testlib.atest());
     _qrt.print(testlib.foo());
     _qrt.print(testlib.foo());

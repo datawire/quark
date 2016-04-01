@@ -80,7 +80,7 @@ void test6() {
    print(box.contents.contents);
 }
 
-void main() {
+void main(List<String> args) {
     print("test1:\n--");
     test1();
     print("");

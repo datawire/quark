@@ -40,7 +40,7 @@ class Overload < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
-    def test()
+    def test_()
         
         o1 = ::Quark.operator_overload.Overload.new("one")
         o2 = ::Quark.operator_overload.Overload.new("two")
@@ -93,18 +93,21 @@ class Overload < ::DatawireQuarkCore::QuarkObject
 end
 Overload.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     o = ::Quark.operator_overload.Overload.new("test")
-    o.test()
+    o.test_()
 
 
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.operator_overload.main()
-end
+if __FILE__ == $0 then ::Quark.operator_overload.call_main() end
 
 end # module OperatorOverload
 end # module Quark

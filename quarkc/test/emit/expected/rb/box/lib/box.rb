@@ -287,7 +287,12 @@ def self.test6()
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print("test1:\n--")
     ::Quark.box.test1()
@@ -311,9 +316,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.box.main()
-end
+if __FILE__ == $0 then ::Quark.box.call_main() end
 
 end # module Box
 end # module Quark

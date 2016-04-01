@@ -104,7 +104,12 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 end
 Foo.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print(::Quark.static.Foo.count)
     f = ::Quark.static.Foo.new()
@@ -146,9 +151,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.static.main()
-end
+if __FILE__ == $0 then ::Quark.static.call_main() end
 
 end # module Static
 end # module Quark

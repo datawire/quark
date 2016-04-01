@@ -49,10 +49,9 @@ class Test(object):
 
     def start(self):
         (Test.ctx).setValue(self);
-        _println(bold((u"start ") + (self.name)));
 
     def stop(self):
-        result = ((((((u"stop ") + (self.name)) + (u" [")) + (str(self.checks))) + (u" checks, ")) + (str(len(self.failures)))) + (u" failures]");
+        result = (((((self.name) + (u" [")) + (str(self.checks))) + (u" checks, ")) + (str(len(self.failures)))) + (u" failures]");
         if ((len(self.failures)) > (0)):
             _println(red(result));
         else:

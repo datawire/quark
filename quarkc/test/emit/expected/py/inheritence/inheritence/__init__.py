@@ -56,8 +56,8 @@ class C(A):
     def _setField(self, name, value):
         pass
 C.inheritence_C_ref = inheritence_md.Root.inheritence_C_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     a = A();
     (a).foo();
     b = B();

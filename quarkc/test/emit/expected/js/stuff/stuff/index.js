@@ -49,8 +49,8 @@ Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {}
 Test.prototype._setField = Test__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     (new Test()).test();
 }
 exports.main = main;

@@ -12,7 +12,12 @@ def self.test_building()
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.json_building.test_building()
 
@@ -20,9 +25,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.json_building.main()
-end
+if __FILE__ == $0 then ::Quark.json_building.call_main() end
 
 end # module JsonBuilding
 end # module Quark

@@ -16,4 +16,4 @@
 
 ## test6(())
 
-## main(())
+## main((0.box.main.args,))

@@ -23,7 +23,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test()
+    def test_()
         
         x = 1
         y = 2
@@ -66,17 +66,20 @@ class Test < ::DatawireQuarkCore::QuarkObject
 end
 Test.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
-    ::Quark.int_methods.Test.new().test()
+    ::Quark.int_methods.Test.new().test_()
 
 
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.int_methods.main()
-end
+if __FILE__ == $0 then ::Quark.int_methods.call_main() end
 
 end # module IntMethods
 end # module Quark

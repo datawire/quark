@@ -1,4 +1,4 @@
 // xfail:rb
-void main() {
+void main(List<String> args) {
     print("This shadows ruby builtin module 'delegate'");
 }

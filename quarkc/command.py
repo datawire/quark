@@ -18,7 +18,7 @@ Quark compiler.
 Usage:
   quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
-  quark [options] run ( --java | --python | --javascript | --ruby ) <file>...
+  quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
   quark -h | --help | help
   quark --version
 
@@ -215,7 +215,7 @@ def main(args):
             elif args["compile"]:
                 compiler.compile(url, output, *backends)
             elif args["run"]:
-                compiler.run(url, *backends)
+                compiler.run(url, args["<args>"], *backends)
             else:
                 assert False
     except compiler.QuarkError as err:

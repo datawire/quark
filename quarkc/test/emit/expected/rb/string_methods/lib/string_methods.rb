@@ -753,7 +753,12 @@ class TestSplit < ::Quark.string_methods.string_test
 end
 TestSplit.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.string_methods.test_size.new("").does(0)
     ::Quark.string_methods.test_size.new("1").does(1)
@@ -774,9 +779,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.string_methods.main()
-end
+if __FILE__ == $0 then ::Quark.string_methods.call_main() end
 
 end # module StringMethods
 end # module Quark

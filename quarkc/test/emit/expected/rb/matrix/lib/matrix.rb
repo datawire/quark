@@ -102,7 +102,12 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
 end
 Matrix.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     matrix = ::Quark.matrix.Matrix.new(3, 3)
     matrix.__set__(2, 2, 123)
@@ -112,9 +117,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.matrix.main()
-end
+if __FILE__ == $0 then ::Quark.matrix.call_main() end
 
 end # module Matrix
 end # module Quark

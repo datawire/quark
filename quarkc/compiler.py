@@ -1176,10 +1176,10 @@ def compile(url, target, *backends):
 
     return dirs
 
-def run(url, *backends):
+def run(url, args, *backends):
     c = Compiler(filter_native=[b.ext for b in backends])
     file = c.urlparse(url, recurse=False)
     name, ver = namever(file)
     for backend in backends:
         b = backend()
-        b.run(name, ver)
+        b.run(name, ver, args)

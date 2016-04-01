@@ -48,7 +48,7 @@ namespace test3 {
     }
 }
 
-void main() {
+void main(List<String> args) {
     test1.go();
     test2.go();
     test3.go();

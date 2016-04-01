@@ -249,7 +249,12 @@ class Test < ::DatawireQuarkCore::QuarkObject
 end
 Test.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     t = ::Quark.quark_delegate.Test.new()
     t.foo("one", "two", 3)
@@ -259,9 +264,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.quark_delegate.main()
-end
+if __FILE__ == $0 then ::Quark.quark_delegate.call_main() end
 
 end # module QuarkDelegate
 end # module Quark

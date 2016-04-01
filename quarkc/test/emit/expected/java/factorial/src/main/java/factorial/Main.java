@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        factorial.Functions.main();
+        factorial.Functions.main(args);
     }
 }

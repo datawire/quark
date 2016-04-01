@@ -48,6 +48,6 @@ void test_marshalling() {
 }
 }
 
-void main() {
+void main(List<String> args) {
     m.test_marshalling();
 }

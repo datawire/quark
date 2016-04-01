@@ -4,7 +4,12 @@ def self.hello; Hello; end
 module Hello
 require_relative 'hello' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print("Hello World")
 
@@ -12,9 +17,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.hello.main()
-end
+if __FILE__ == $0 then ::Quark.hello.call_main() end
 
 end # module Hello
 end # module Quark

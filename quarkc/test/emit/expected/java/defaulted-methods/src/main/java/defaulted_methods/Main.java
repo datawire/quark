@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        defaulted_methods.Functions.main();
+        defaulted_methods.Functions.main(args);
     }
 }

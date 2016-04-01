@@ -7,7 +7,12 @@ require 't2'
 require_relative 'foo' # 0 () ()
 require_relative 'puse' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print(::Quark.testlib.atest())
     ::DatawireQuarkCore.print(::Quark.testlib.foo())
@@ -19,9 +24,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.puse.main()
-end
+if __FILE__ == $0 then ::Quark.puse.call_main() end
 
 end # module Puse
 end # module Quark

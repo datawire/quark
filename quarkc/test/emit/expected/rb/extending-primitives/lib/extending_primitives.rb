@@ -5,7 +5,12 @@ module ExtendingPrimitives
 require_relative 'pkg' # 0 () ()
 require_relative 'extending_primitives' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     c = ::Quark.pkg.C.new()
     c.event1()
@@ -16,9 +21,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.extending_primitives.main()
-end
+if __FILE__ == $0 then ::Quark.extending_primitives.call_main() end
 
 end # module ExtendingPrimitives
 end # module Quark

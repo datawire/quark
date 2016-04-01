@@ -11,7 +11,7 @@ class Test<T> {
   }
 }
 
-void main() {
+void main(List<String> args) {
     new Test<byte>().run();
     new Test<short>().run();
     new Test<int>().run();

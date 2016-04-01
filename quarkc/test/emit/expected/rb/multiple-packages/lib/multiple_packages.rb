@@ -6,7 +6,12 @@ require_relative 'p1/p2' # 0 ('p1',) ()
 require_relative 'p1' # 0 () ()
 require_relative 'multiple_packages' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.p1.p2.a()
     ::Quark.p1.p2.b()
@@ -17,9 +22,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.multiple_packages.main()
-end
+if __FILE__ == $0 then ::Quark.multiple_packages.call_main() end
 
 end # module MultiplePackages
 end # module Quark

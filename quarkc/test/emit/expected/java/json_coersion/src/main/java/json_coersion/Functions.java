@@ -5,7 +5,11 @@ public class Functions {
     static json_coersion_md.Root root = new json_coersion_md.Root();
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         io.datawire.quark.runtime.JSONObject json = new io.datawire.quark.runtime.JSONObject();
         (json).setObjectItem(("string"), ((new io.datawire.quark.runtime.JSONObject()).setString("this is a string")));
         (json).setObjectItem(("number"), ((new io.datawire.quark.runtime.JSONObject()).setNumber(3.14159)));

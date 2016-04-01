@@ -36,8 +36,8 @@ def hexf(v):
     (b).putFloat(0, v);
     return (c).toHexdump(b, 0, 8, 10)
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     c = _default_codec();
     hello = u"hello world!";
     b = (c).buffer(500);

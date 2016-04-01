@@ -47,8 +47,8 @@ class Foo(object):
 
 Foo.count = 0
 Foo.static_Foo_ref = static_md.Root.static_Foo_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(Foo.count);
     f = Foo();
     _println(Foo.count);

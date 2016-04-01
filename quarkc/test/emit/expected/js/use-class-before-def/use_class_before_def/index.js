@@ -3,8 +3,8 @@ var pkg = require('../pkg/index.js');
 exports.pkg = pkg;
 
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var bar = new pkg.Bar();
     (bar).go();
 }

@@ -197,7 +197,12 @@ class Y < ::Quark.no_spurious_cast.X
 end
 Y.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     a = ::Quark.no_spurious_cast.B.new()
     x = ::Quark.no_spurious_cast.Y.new()
@@ -206,9 +211,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.no_spurious_cast.main()
-end
+if __FILE__ == $0 then ::Quark.no_spurious_cast.call_main() end
 
 end # module NoSpuriousCast
 end # module Quark

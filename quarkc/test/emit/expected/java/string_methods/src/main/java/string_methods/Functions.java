@@ -5,7 +5,11 @@ public class Functions {
     static string_methods_md.Root root = new string_methods_md.Root();
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         (new test_size("")).does(0);
         (new test_size("1")).does(1);
         (new test_size("22")).does(2);

@@ -42,7 +42,7 @@ void iterables() {
     print(keys);
 }
 
-void main() {
+void main(List<String> args) {
     test1();
     test_update();
     test_literal();

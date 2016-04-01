@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     json = _JSONObject();
     (json).setObjectItem((u"string"), ((_JSONObject()).setString(u"this is a string")));
     (json).setObjectItem((u"number"), ((_JSONObject()).setNumber(3.14159)));

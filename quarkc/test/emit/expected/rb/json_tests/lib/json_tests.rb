@@ -69,7 +69,12 @@ def self.iterables()
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.json_tests.test_roundtrip()
     ::Quark.json_tests.test_iterate_list()
@@ -80,9 +85,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.json_tests.main()
-end
+if __FILE__ == $0 then ::Quark.json_tests.call_main() end
 
 end # module JsonTests
 end # module Quark

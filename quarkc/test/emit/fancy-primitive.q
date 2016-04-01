@@ -8,7 +8,7 @@ namespace fancyprim {
     }
 }
 
-void main() {
+void main(List<String> args) {
     fancyprim.LinkedList<int> s = new fancyprim.LinkedList<int>([1, 2, 3]);
     print(s);
 }

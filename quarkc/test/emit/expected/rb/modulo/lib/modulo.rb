@@ -12,7 +12,12 @@ def self.test_modulo(a, b)
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::Quark.modulo.test_modulo(4, 3)
     ::Quark.modulo.test_modulo(4, -(3))
@@ -23,9 +28,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.modulo.main()
-end
+if __FILE__ == $0 then ::Quark.modulo.call_main() end
 
 end # module Modulo
 end # module Quark

@@ -43,7 +43,7 @@ class Overload(object):
 
 
 Overload.operator_overload_Overload_ref = operator_overload_md.Root.operator_overload_Overload_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     o = Overload(u"test");
     (o).test();

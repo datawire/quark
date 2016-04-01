@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     four = (2) + (2);
     _println(str(four));
     half = (1) / (2);

@@ -89,8 +89,8 @@ C.prototype._getField = C__getField;
 
 function C__setField(name, value) {}
 C.prototype._setField = C__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var a = new A();
     (a).foo();
     var b = new B();

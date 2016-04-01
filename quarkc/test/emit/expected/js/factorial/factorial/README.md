@@ -1,3 +1,3 @@
 ## factorial((0.factorial.factorial.n,))
 
-## main(())
+## main((0.factorial.main.args,))

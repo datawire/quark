@@ -1,4 +1,4 @@
-void main() {
+void main(List<String> args) {
     print("\"");
     print("\"\"");
     print("\u0000");

@@ -33,7 +33,7 @@ String hexf(float v) {
     return c.toHexdump(b,0,8,10);
 }
 
-void main() {
+void main(List<String> args) {
     Codec c = defaultCodec();
     String hello = "hello world!";
     Buffer b = c.buffer(500);

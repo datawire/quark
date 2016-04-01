@@ -5,8 +5,8 @@ import t2
 import foo
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(testlib.atest());
     _println(testlib.foo());
     _println(testlib.foo());

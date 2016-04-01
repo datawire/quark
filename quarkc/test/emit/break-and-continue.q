@@ -1,4 +1,4 @@
-void main() {
+void main(List<String> args) {
     List<String> stuff = ["one", "two", "three", "four"];
 
     int idx = 0;

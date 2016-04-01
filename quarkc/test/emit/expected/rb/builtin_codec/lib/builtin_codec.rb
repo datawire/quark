@@ -59,7 +59,12 @@ def self.hexf(v)
     nil
 end
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     c = ::DatawireQuarkCore.default_codec
     hello = "hello world!"
@@ -103,9 +108,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.builtin_codec.main()
-end
+if __FILE__ == $0 then ::Quark.builtin_codec.call_main() end
 
 end # module BuiltinCodec
 end # module Quark

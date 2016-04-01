@@ -4,7 +4,12 @@ def self.simple_math; SimpleMath; end
 module SimpleMath
 require_relative 'simple_math' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     four = (2) + (2)
     ::DatawireQuarkCore.print((four).to_s)
@@ -29,9 +34,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.simple_math.main()
-end
+if __FILE__ == $0 then ::Quark.simple_math.call_main() end
 
 end # module SimpleMath
 end # module Quark

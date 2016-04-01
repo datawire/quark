@@ -86,8 +86,8 @@ def sorter():
     (stuff).sort();
     _println(stuff);
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     test1();
     test2();
     test3();

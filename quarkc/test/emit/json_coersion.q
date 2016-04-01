@@ -1,4 +1,4 @@
-void main() {
+void main(List<String> args) {
     JSONObject json = new JSONObject();
     json["string"] = "this is a string";
     json["number"] = 3.14159;

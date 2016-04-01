@@ -69,8 +69,11 @@ def main_file(name):
 def make_main_file(name):
     return Code(comment)
 
-def main(statements):
-    return "\n".join(statements)
+def main_prolog():
+    return "exports.call_main = function () { main(process.argv.slice(1)); }"
+
+def main(path, name):
+    return invoke_function(path, name, ()) + ";"
 
 ## Naming and imports
 

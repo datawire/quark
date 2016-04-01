@@ -20,6 +20,6 @@ class Test {
     }
 }
 
-void main() {
+void main(List<String> args) {
     Test().test();
 }

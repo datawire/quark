@@ -38,11 +38,10 @@ class Test {
 
     void start() {
         ctx.setValue(self);
-        print(bold("start " + name));
     }
 
     void stop() {
-        String result = "stop " + name + " [" + checks.toString() + " checks, " + failures.size().toString() + " failures]";
+        String result = name + " [" + checks.toString() + " checks, " + failures.size().toString() + " failures]";
         if (failures.size() > 0) {
             print(red(result));
         } else {

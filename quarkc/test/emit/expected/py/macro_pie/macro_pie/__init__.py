@@ -22,6 +22,6 @@ class Pie(object):
     def _setField(self, name, value):
         pass
 Pie.macro_pie_Pie_ref = macro_pie_md.Root.macro_pie_Pie_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(3);

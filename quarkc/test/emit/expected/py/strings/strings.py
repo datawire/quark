@@ -1,4 +1,4 @@
 import strings
 
 if __name__ == "__main__":
-    strings.main();
+    strings.call_main()

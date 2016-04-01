@@ -1,4 +1,4 @@
 import numbers
 
 if __name__ == "__main__":
-    numbers.main();
+    numbers.call_main()

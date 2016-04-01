@@ -4,7 +4,12 @@ def self.urlencode; Urlencode; end
 module Urlencode
 require_relative 'urlencode' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     map = ::Hash.new()
     (map)["pi"] = (3.14159)
@@ -14,9 +19,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.urlencode.main()
-end
+if __FILE__ == $0 then ::Quark.urlencode.call_main() end
 
 end # module Urlencode
 end # module Quark

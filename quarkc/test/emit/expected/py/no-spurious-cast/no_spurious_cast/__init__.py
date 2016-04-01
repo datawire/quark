@@ -65,7 +65,7 @@ class Y(X):
         pass
 Y.no_spurious_cast_X_quark_int__ref = no_spurious_cast_md.Root.no_spurious_cast_X_quark_int__md
 Y.no_spurious_cast_Y_ref = no_spurious_cast_md.Root.no_spurious_cast_Y_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     a = B();
     x = Y();

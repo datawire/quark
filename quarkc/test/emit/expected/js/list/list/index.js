@@ -106,8 +106,8 @@ function sorter() {
     _qrt.print(stuff);
 }
 exports.sorter = sorter;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     test1();
     test2();
     test3();

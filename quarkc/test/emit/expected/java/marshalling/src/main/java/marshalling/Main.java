@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        marshalling.Functions.main();
+        marshalling.Functions.main(args);
     }
 }

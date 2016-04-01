@@ -30,7 +30,7 @@ namespace test {
     }
 }
 
-void main() {
+void main(List<String> args) {
     test.go();
     test.test.go();
     test.Test t1 = new test.Test();

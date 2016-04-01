@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.author      = 'Quark compiled code'
   # spec.email       = ''
   # spec.license     = ''
-  spec.files       = ['lib/quark/reflect.rb', 'lib/quark.rb', 'lib/quark/behaviors.rb', 'lib/quark/concurrent.rb', 'lib/quark/test.rb', 'lib/quark_md.rb', 'lib/datawire-quark-core.rb']
+  spec.files       = ['lib/quark/reflect.rb', 'lib/quark.rb', 'lib/quark/behaviors.rb', 'lib/quark/concurrent.rb', 'lib/quark/test_.rb', 'lib/quark_md.rb', 'lib/datawire-quark-core.rb']
   # spec.homepage    = ''
   spec.add_runtime_dependency 'concurrent-ruby', '= 1.0.1'
   spec.add_runtime_dependency 'reel', '= 0.6.1'

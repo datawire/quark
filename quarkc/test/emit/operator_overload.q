@@ -28,7 +28,7 @@ class Overload {
 
 }
 
-void main() {
+void main(List<String> args) {
     Overload o = new Overload("test");
     o.test();
 }

@@ -154,7 +154,10 @@ def namever(obj):
     root = obj.root
     for file in obj.root.files:
         if file.dist: return file.dist.name.text, file.dist.version
-    file = obj
+    if isinstance(obj, File):
+        file = obj
+    else:
+        file = obj.file
     name = sanitize(filebase(file.name))
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:

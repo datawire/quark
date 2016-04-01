@@ -254,7 +254,7 @@ class Y < ::Quark.default_constructors.X
 
 
 
-    def test()
+    def test_()
         
         ::DatawireQuarkCore.print((self).name)
 
@@ -299,22 +299,25 @@ class Y < ::Quark.default_constructors.X
 end
 Y.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     b = ::Quark.default_constructors.B.new("Bob")
     b.greet()
     c = ::Quark.default_constructors.C.new("arole")
     c.greet()
     y = ::Quark.default_constructors.Y.new("asdf")
-    y.test()
+    y.test_()
 
 
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.default_constructors.main()
-end
+if __FILE__ == $0 then ::Quark.default_constructors.call_main() end
 
 end # module DefaultConstructors
 end # module Quark

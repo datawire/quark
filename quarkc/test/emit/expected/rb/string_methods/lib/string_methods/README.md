@@ -16,4 +16,4 @@
 
 ## test_split
 
-## main(())
+## main((0.string_methods.main.args,))

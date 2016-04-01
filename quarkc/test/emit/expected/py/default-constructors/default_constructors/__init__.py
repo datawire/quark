@@ -118,8 +118,8 @@ class Y(X):
 
 
 Y.default_constructors_Y_ref = default_constructors_md.Root.default_constructors_Y_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     b = B(u"Bob");
     (b).greet();
     c = C(u"arole");

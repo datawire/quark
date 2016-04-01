@@ -5,8 +5,8 @@ import test2
 import test3
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     test1.go();
     test2.go();
     test3.go();

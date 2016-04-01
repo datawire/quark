@@ -23,7 +23,7 @@ class Pie < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test()
+    def test_()
         
         p = ::Quark.macro_pie.Pie.new()
         x = 3
@@ -62,7 +62,12 @@ class Pie < ::DatawireQuarkCore::QuarkObject
 end
 Pie.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     ::DatawireQuarkCore.print(3)
 
@@ -70,9 +75,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.macro_pie.main()
-end
+if __FILE__ == $0 then ::Quark.macro_pie.call_main() end
 
 end # module MacroPie
 end # module Quark

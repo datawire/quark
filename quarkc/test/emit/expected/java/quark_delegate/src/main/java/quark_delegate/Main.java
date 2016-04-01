@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        quark_delegate.Functions.main();
+        quark_delegate.Functions.main(args);
     }
 }

@@ -4,7 +4,12 @@ def self.json_coersion; JsonCoersion; end
 module JsonCoersion
 require_relative 'json_coersion' # 0 () ()
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     json = ::DatawireQuarkCore::JSONObject.new
     (json).setObjectItem(("string"), (::DatawireQuarkCore::JSONObject.new.setString("this is a string")))
@@ -24,9 +29,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.json_coersion.main()
-end
+if __FILE__ == $0 then ::Quark.json_coersion.call_main() end
 
 end # module JsonCoersion
 end # module Quark

@@ -119,12 +119,20 @@ def main_file(name):
 def make_package_file(path, name):
     assert False
 
-def main(statements):
-    return '\nif __FILE__ == $0%send\n\n' % block(statements)
+def main_prolog():
+    return Templates.method(
+        name='self.call_main',
+        parameters='',
+        body='self.main(::DatawireQuarkCore::List.new(ARGV))',
+    )
+
+def main(path, name):
+    expr = invoke_function(path, "call_main", ())
+    return '\nif __FILE__ == $0 then %s end\n\n' % expr
 
 ## Naming and imports
 
-SUBS = {'Class': 'QuarkClass', 'end': 'end_', 'next': 'next_'}
+SUBS = {'Class': 'QuarkClass', 'end': 'end_', 'next': 'next_', 'test': 'test_'}
 def name(n):
     return SUBS.get(n, n).replace('-', '_')
 

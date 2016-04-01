@@ -3,8 +3,8 @@ var pkg = require('../pkg/index.js');
 exports.pkg = pkg;
 
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var box = new pkg.StringBox("asdf");
     _qrt.print((box).contents);
     var foo = new pkg.StringFoo();

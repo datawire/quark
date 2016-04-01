@@ -4,4 +4,4 @@
 
 ## C
 
-## main(())
+## main((0.inheritence.main.args,))

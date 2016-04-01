@@ -22,7 +22,7 @@ class MacroNativeNativeTestMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = object
-        obj.test()
+        obj.test_()
         return nil
 
         nil

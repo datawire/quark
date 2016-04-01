@@ -133,7 +133,12 @@ class B < ::Quark.super.A
 end
 B.unlazy_statics
 
-def self.main()
+def self.call_main()
+    self.main(::DatawireQuarkCore::List.new(ARGV))
+
+    nil
+end
+def self.main(args)
     
     b = ::Quark.super.B.new()
     b.greet()
@@ -142,9 +147,7 @@ def self.main()
     nil
 end
 
-if __FILE__ == $0
-    ::Quark.super.main()
-end
+if __FILE__ == $0 then ::Quark.super.call_main() end
 
 end # module Super
 end # module Quark

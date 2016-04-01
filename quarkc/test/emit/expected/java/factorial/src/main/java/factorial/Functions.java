@@ -14,7 +14,11 @@ public class Functions {
     }
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         do{System.out.println(Functions.factorial(1));System.out.flush();}while(false);
         do{System.out.println(Functions.factorial(2));System.out.flush();}while(false);
         do{System.out.println(Functions.factorial(3));System.out.flush();}while(false);

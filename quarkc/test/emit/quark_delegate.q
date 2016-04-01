@@ -35,7 +35,7 @@ class Test {
 
 }
 
-void main() {
+void main(List<String> args) {
     Test t = new Test();
     t.foo("one", "two", 3);
     print(t.hello(new Ping()).toString());
