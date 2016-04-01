@@ -23,7 +23,7 @@ class Macro < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test_()
+    def test()
         
         m1 = ::Quark.macro_stuff.Macro.new()
         m2 = ::Quark.macro_stuff.Macro.new()

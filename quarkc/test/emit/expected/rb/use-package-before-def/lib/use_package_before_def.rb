@@ -2,7 +2,7 @@ module Quark
 require "quark"
 def self.use_package_before_def; UsePackageBeforeDef; end
 module UsePackageBeforeDef
-require_relative 'test_' # 0 () ()
+require_relative 'test' # 0 () ()
 require_relative 'use_package_before_def' # 0 () ()
 
 
@@ -13,7 +13,7 @@ def self.call_main()
 end
 def self.main(args)
     
-    ::Quark.test_.go()
+    ::Quark.test.go()
 
 
     nil

@@ -132,7 +132,7 @@ def main(path, name):
 
 ## Naming and imports
 
-SUBS = {'Class': 'QuarkClass', 'end': 'end_', 'next': 'next_', 'test': 'test_'}
+SUBS = {'Class': 'QuarkClass', 'end': 'end_', 'next': 'next_'}
 def name(n):
     return SUBS.get(n, n).replace('-', '_')
 

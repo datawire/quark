@@ -3,7 +3,7 @@ def self.quark_md; QuarkMd; end
 module QuarkMd
 require_relative 'quark/reflect' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/concurrent' # 0 ('quark',) ()
-# for quark_md: require_relative 'quark/test_' # 0 ('quark',) ()
+# for quark_md: require_relative 'quark/test' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark' # 0 () ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
 
@@ -4960,7 +4960,7 @@ class QuarkTestTestInitializer < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.test_.TestInitializer.new()
+        return ::Quark.quark.test.TestInitializer.new()
 
         nil
     end
@@ -5016,7 +5016,7 @@ class QuarkTestTestCurrentMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = object
-        return ::Quark.quark.test_.Test.current()
+        return ::Quark.quark.test.Test.current()
 
         nil
     end
@@ -5350,7 +5350,7 @@ class QuarkTestTest < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.test_.Test.new((args)[0])
+        return ::Quark.quark.test.Test.new((args)[0])
 
         nil
     end
@@ -5461,7 +5461,7 @@ class QuarkTestMethodTestCurrentMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = object
-        return ::Quark.quark.test_.Test.current()
+        return ::Quark.quark.test.Test.current()
 
         nil
     end
@@ -5740,7 +5740,7 @@ class QuarkTestMethodTest < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.test_.MethodTest.new((args)[0], (args)[1])
+        return ::Quark.quark.test.MethodTest.new((args)[0], (args)[1])
 
         nil
     end
@@ -5967,7 +5967,7 @@ class QuarkTestHarness < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.test_.Harness.new((args)[0])
+        return ::Quark.quark.test.Harness.new((args)[0])
 
         nil
     end

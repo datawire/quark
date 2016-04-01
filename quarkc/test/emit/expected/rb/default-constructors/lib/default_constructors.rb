@@ -256,7 +256,7 @@ class Y < ::Quark.default_constructors.X
 
 
 
-    def test_()
+    def test()
         
         ::DatawireQuarkCore.print((self).name)
 
@@ -313,7 +313,7 @@ def self.main(args)
     c = ::Quark.default_constructors.C.new("arole")
     c.greet()
     y = ::Quark.default_constructors.Y.new("asdf")
-    y.test_()
+    y.test()
 
 
     nil

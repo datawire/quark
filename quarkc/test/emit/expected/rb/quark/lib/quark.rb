@@ -6,7 +6,7 @@ require_relative 'quark/reflect' # 0 ('quark',) ()
 require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark_md' # 0 () ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
-require_relative 'quark/test_' # 0 ('quark',) ()
+require_relative 'quark/test' # 0 ('quark',) ()
 
 
 

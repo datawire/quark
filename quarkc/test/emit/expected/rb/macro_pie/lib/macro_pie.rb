@@ -24,7 +24,7 @@ class Pie < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test_()
+    def test()
         
         p = ::Quark.macro_pie.Pie.new()
         x = 3

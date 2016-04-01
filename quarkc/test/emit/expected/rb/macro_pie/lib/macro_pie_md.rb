@@ -23,7 +23,7 @@ class MacroPiePieTestMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = object
-        obj.test_()
+        obj.test()
         return nil
 
         nil

@@ -31,7 +31,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
-    def test_()
+    def test()
         
         x = 2
         y = 2
@@ -88,7 +88,7 @@ def self.call_main()
 end
 def self.main(args)
     
-    ::Quark.stuff.Test.new().test_()
+    ::Quark.stuff.Test.new().test()
 
 
     nil

@@ -24,7 +24,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def test_()
+    def test()
         
         ::DatawireQuarkCore.print("Hello World!")
 
@@ -69,7 +69,7 @@ def self.call_main()
 end
 def self.main(args)
     
-    ::Quark.prtest.Test.new().test_()
+    ::Quark.prtest.Test.new().test()
 
 
     nil

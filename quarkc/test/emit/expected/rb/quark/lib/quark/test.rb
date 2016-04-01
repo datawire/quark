@@ -1,7 +1,7 @@
 module Quark
 def self.quark; Quark; end
 module Quark
-def self.test_; Test; end
+def self.test; Test; end
 module Test
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
@@ -91,7 +91,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name, :checks, :failures
     extend ::DatawireQuarkCore::Static
 
-    static ctx: -> { ::DatawireQuarkCore::TLS.new(::Quark.quark.test_.TestInitializer.new()) }
+    static ctx: -> { ::DatawireQuarkCore::TLS.new(::Quark.quark.test.TestInitializer.new()) }
     static quark_test_Test_ref: -> { ::Quark.quark_md.Root.quark_test_Test_md }
 
 
@@ -109,14 +109,14 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
     def self.current()
         
-        return ::Quark.quark.test_.Test.ctx.getValue()
+        return ::Quark.quark.test.Test.ctx.getValue()
 
         nil
     end
 
     def start()
         
-        ::Quark.quark.test_.Test.ctx.setValue(self)
+        ::Quark.quark.test.Test.ctx.setValue(self)
 
         nil
     end
@@ -125,16 +125,16 @@ class Test < ::DatawireQuarkCore::QuarkObject
         
         result = (((((@name) + (" [")) + ((@checks).to_s)) + (" checks, ")) + (((@failures).size).to_s)) + (" failures]")
         if (((@failures).size) > (0))
-            ::DatawireQuarkCore.print(::Quark.quark.test_.red(result))
+            ::DatawireQuarkCore.print(::Quark.quark.test.red(result))
         else
-            ::DatawireQuarkCore.print(::Quark.quark.test_.bold(result))
+            ::DatawireQuarkCore.print(::Quark.quark.test.bold(result))
         end
         idx = 0
         while ((idx) < ((@failures).size)) do
-            ::DatawireQuarkCore.print(::Quark.quark.test_.red(("  ") + ((@failures)[idx])))
+            ::DatawireQuarkCore.print(::Quark.quark.test.red(("  ") + ((@failures)[idx])))
             idx = (idx) + (1)
         end
-        ::Quark.quark.test_.Test.ctx.setValue(nil)
+        ::Quark.quark.test.Test.ctx.setValue(nil)
 
         nil
     end
@@ -174,7 +174,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     def _getField(name)
         
         if ((name) == ("ctx"))
-            return ::Quark.quark.test_.Test.ctx
+            return ::Quark.quark.test.Test.ctx
         end
         if ((name) == ("name"))
             return (self).name
@@ -193,7 +193,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("ctx"))
-            ::Quark.quark.test_.Test.ctx = value
+            ::Quark.quark.test.Test.ctx = value
         end
         if ((name) == ("name"))
             (self).name = value
@@ -222,7 +222,7 @@ end
 Test.unlazy_statics
 
 def self.MethodTest; MethodTest; end
-class MethodTest < ::Quark.quark.test_.Test
+class MethodTest < ::Quark.quark.test.Test
     attr_accessor :klass, :method
     extend ::DatawireQuarkCore::Static
 
@@ -246,13 +246,13 @@ class MethodTest < ::Quark.quark.test_.Test
         
         setup = @klass.getMethod("setup")
         teardown = @klass.getMethod("teardown")
-        test_ = @klass.construct(::DatawireQuarkCore::List.new([]))
+        test = @klass.construct(::DatawireQuarkCore::List.new([]))
         if ((setup) != (nil))
-            setup.invoke(test_, ::DatawireQuarkCore::List.new([]))
+            setup.invoke(test, ::DatawireQuarkCore::List.new([]))
         end
-        @method.invoke(test_, ::DatawireQuarkCore::List.new([]))
+        @method.invoke(test, ::DatawireQuarkCore::List.new([]))
         if ((teardown) != (nil))
-            teardown.invoke(test_, ::DatawireQuarkCore::List.new([]))
+            teardown.invoke(test, ::DatawireQuarkCore::List.new([]))
         end
 
         nil
@@ -268,7 +268,7 @@ class MethodTest < ::Quark.quark.test_.Test
     def _getField(name)
         
         if ((name) == ("ctx"))
-            return ::Quark.quark.test_.Test.ctx
+            return ::Quark.quark.test.Test.ctx
         end
         if ((name) == ("name"))
             return (self).name
@@ -293,7 +293,7 @@ class MethodTest < ::Quark.quark.test_.Test
     def _setField(name, value)
         
         if ((name) == ("ctx"))
-            ::Quark.quark.test_.Test.ctx = value
+            ::Quark.quark.test.Test.ctx = value
         end
         if ((name) == ("name"))
             (self).name = value
@@ -329,7 +329,7 @@ MethodTest.unlazy_statics
 
 def self.check(value, message)
     
-    return ::Quark.quark.test_.Test.current().check(value, message)
+    return ::Quark.quark.test.Test.current().check(value, message)
 
 
     nil
@@ -337,7 +337,7 @@ end
 
 def self.checkEqual(expected, actual)
     
-    return ::Quark.quark.test_.Test.current().check((expected) == (actual), ((("expected ") + ((expected).to_s)) + (" got ")) + ((actual).to_s))
+    return ::Quark.quark.test.Test.current().check((expected) == (actual), ((("expected ") + ((expected).to_s)) + (" got ")) + ((actual).to_s))
 
 
     nil
@@ -345,7 +345,7 @@ end
 
 def self.fail(message)
     
-    ::Quark.quark.test_.Test.current().check(false, message)
+    ::Quark.quark.test.Test.current().check(false, message)
 
 
     nil
@@ -388,9 +388,9 @@ class Harness < ::DatawireQuarkCore::QuarkObject
                     meth = (methods)[jdx]
                     mname = meth.getName()
                     if ((mname).start_with?("test"))
-                        test_ = ::Quark.quark.test_.MethodTest.new(klass, meth)
-                        if (((filter) == (nil)) || (((((test_).name).index(filter) or -1)) >= (0)))
-                            (@tests) << (test_)
+                        test = ::Quark.quark.test.MethodTest.new(klass, meth)
+                        if (((filter) == (nil)) || (((((test).name).index(filter) or -1)) >= (0)))
+                            (@tests) << (test)
                         else
                             if ((filter) != (nil))
                                 @filtered = (@filtered) + (1)
@@ -410,8 +410,8 @@ class Harness < ::DatawireQuarkCore::QuarkObject
         
         idx = 0
         while ((idx) < ((@tests).size)) do
-            test_ = (@tests)[idx]
-            ::DatawireQuarkCore.print((test_).name)
+            test = (@tests)[idx]
+            ::DatawireQuarkCore.print((test).name)
             idx = (idx) + (1)
         end
 
@@ -420,26 +420,26 @@ class Harness < ::DatawireQuarkCore::QuarkObject
 
     def run()
         
-        ::DatawireQuarkCore.print(::Quark.quark.test_.bold("=============================== starting tests ==============================="))
+        ::DatawireQuarkCore.print(::Quark.quark.test.bold("=============================== starting tests ==============================="))
         idx = 0
         failures = 0
         while ((idx) < ((@tests).size)) do
-            test_ = (@tests)[idx]
-            test_.start()
-            test_.run()
-            test_.stop()
-            if ((((test_).failures).size) > (0))
+            test = (@tests)[idx]
+            test.start()
+            test.run()
+            test.stop()
+            if ((((test).failures).size) > (0))
                 failures = (failures) + (1)
             end
             idx = (idx) + (1)
         end
         passed = ((@tests).size) - (failures)
-        ::DatawireQuarkCore.print(::Quark.quark.test_.bold("=============================== stopping tests ==============================="))
+        ::DatawireQuarkCore.print(::Quark.quark.test.bold("=============================== stopping tests ==============================="))
         result = ((((((("Total: ") + ((((@tests).size) + (@filtered)).to_s)) + (", Filtered: ")) + ((@filtered).to_s)) + (", Passed: ")) + ((passed).to_s)) + (", Failed: ")) + ((failures).to_s)
         if ((failures) > (0))
-            ::DatawireQuarkCore.print(::Quark.quark.test_.red(result))
+            ::DatawireQuarkCore.print(::Quark.quark.test.red(result))
         else
-            ::DatawireQuarkCore.print(::Quark.quark.test_.green(result))
+            ::DatawireQuarkCore.print(::Quark.quark.test.green(result))
         end
 
         nil
@@ -498,7 +498,7 @@ Harness.unlazy_statics
 
 def self.run(pkg, filter)
     
-    h = ::Quark.quark.test_.Harness.new(pkg)
+    h = ::Quark.quark.test.Harness.new(pkg)
     h.collect(filter)
     h.run()
 

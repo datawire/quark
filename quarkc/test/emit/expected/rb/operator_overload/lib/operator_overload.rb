@@ -41,7 +41,7 @@ class Overload < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
-    def test_()
+    def test()
         
         o1 = ::Quark.operator_overload.Overload.new("one")
         o2 = ::Quark.operator_overload.Overload.new("two")
@@ -101,7 +101,7 @@ end
 def self.main(args)
     
     o = ::Quark.operator_overload.Overload.new("test")
-    o.test_()
+    o.test()
 
 
     nil
