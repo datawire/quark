@@ -701,6 +701,9 @@ class Backend(object):
 
 import command, os, sys, subprocess, json
 
+def call(*command):
+    return subprocess.check_output(command, stderr=subprocess.PIPE)
+
 def is_virtual():
     return hasattr(sys, "real_prefix")
 
@@ -735,7 +738,7 @@ class Python(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = subprocess.check_output(["pip", "show", name])
+            output = call("pip", "show", name)
             for line in output.split("\n"):
                 if line.startswith("Location: "):
                     return os.path.join(line.split(": ")[1], name)
@@ -763,7 +766,7 @@ class JavaScript(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = subprocess.check_output(["npm", "ll", "--depth", "0", "--json", name])
+            output = call("npm", "ll", "--depth", "0", "--json", name)
             return json.loads(output)["dependencies"][name]["path"]
         except subprocess.CalledProcessError, e:
             pass
@@ -784,7 +787,7 @@ class Ruby(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = subprocess.check_output(["gem", "which", name])
+            output = call("gem", "which", name)
             return output.strip()
         except subprocess.CalledProcessError, e:
             pass
