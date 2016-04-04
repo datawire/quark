@@ -1147,11 +1147,15 @@ class Compiler(object):
         raise CompileError("can't merge %r and %r" % (n1, n2))
 
     def trans_roots(self, root):
-        return [root] + [self.roots[use] for use in root.uses]
+        result = [root]
+        for use in root.uses:
+            result.extend(self.trans_roots(self.roots[use]))
+        return result
 
     def deps(self, roots):
         result = OrderedDict()
         for r in roots:
+            if not os.path.exists(r.url): continue
             result[r.url] = True
             for f in r.files:
                 for url in f.includes:
