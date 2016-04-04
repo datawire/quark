@@ -2974,6 +2974,38 @@ quark_test_Test_current_Method.prototype._getField = quark_test_Test_current_Met
 function quark_test_Test_current_Method__setField(name, value) {}
 quark_test_Test_current_Method.prototype._setField = quark_test_Test_current_Method__setField;
 
+// CLASS quark_test_Test_match_Method
+
+function quark_test_Test_match_Method() {
+    quark_test_Test_match_Method.super_.call(this, "quark.bool", "match", ["quark.List<quark.String>"]);
+}
+exports.quark_test_Test_match_Method = quark_test_Test_match_Method;
+_qrt.util.inherits(quark_test_Test_match_Method, quark.reflect.Method);
+
+function quark_test_Test_match_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_Test_match_Method.prototype.__init_fields__ = quark_test_Test_match_Method__init_fields__;
+
+function quark_test_Test_match_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).match((args)[0]);
+}
+quark_test_Test_match_Method.prototype.invoke = quark_test_Test_match_Method_invoke;
+
+function quark_test_Test_match_Method__getClass() {
+    return null;
+}
+quark_test_Test_match_Method.prototype._getClass = quark_test_Test_match_Method__getClass;
+
+function quark_test_Test_match_Method__getField(name) {
+    return null;
+}
+quark_test_Test_match_Method.prototype._getField = quark_test_Test_match_Method__getField;
+
+function quark_test_Test_match_Method__setField(name, value) {}
+quark_test_Test_match_Method.prototype._setField = quark_test_Test_match_Method__setField;
+
 // CLASS quark_test_Test_start_Method
 
 function quark_test_Test_start_Method() {
@@ -3145,7 +3177,7 @@ function quark_test_Test() {
     (this).name = "quark.test.Test";
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.concurrent.TLS<quark.test.Test>", "ctx"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.int", "checks"), new quark.reflect.Field("quark.List<quark.String>", "failures")];
-    (this).methods = [new quark_test_Test_current_Method(), new quark_test_Test_start_Method(), new quark_test_Test_stop_Method(), new quark_test_Test_check_Method(), new quark_test_Test_fail_Method(), new quark_test_Test_run_Method()];
+    (this).methods = [new quark_test_Test_current_Method(), new quark_test_Test_match_Method(), new quark_test_Test_start_Method(), new quark_test_Test_stop_Method(), new quark_test_Test_check_Method(), new quark_test_Test_fail_Method(), new quark_test_Test_run_Method()];
 }
 exports.quark_test_Test = quark_test_Test;
 _qrt.util.inherits(quark_test_Test, quark.reflect.Class);
@@ -3238,6 +3270,38 @@ quark_test_MethodTest_current_Method.prototype._getField = quark_test_MethodTest
 
 function quark_test_MethodTest_current_Method__setField(name, value) {}
 quark_test_MethodTest_current_Method.prototype._setField = quark_test_MethodTest_current_Method__setField;
+
+// CLASS quark_test_MethodTest_match_Method
+
+function quark_test_MethodTest_match_Method() {
+    quark_test_MethodTest_match_Method.super_.call(this, "quark.bool", "match", ["quark.List<quark.String>"]);
+}
+exports.quark_test_MethodTest_match_Method = quark_test_MethodTest_match_Method;
+_qrt.util.inherits(quark_test_MethodTest_match_Method, quark.reflect.Method);
+
+function quark_test_MethodTest_match_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_test_MethodTest_match_Method.prototype.__init_fields__ = quark_test_MethodTest_match_Method__init_fields__;
+
+function quark_test_MethodTest_match_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).match((args)[0]);
+}
+quark_test_MethodTest_match_Method.prototype.invoke = quark_test_MethodTest_match_Method_invoke;
+
+function quark_test_MethodTest_match_Method__getClass() {
+    return null;
+}
+quark_test_MethodTest_match_Method.prototype._getClass = quark_test_MethodTest_match_Method__getClass;
+
+function quark_test_MethodTest_match_Method__getField(name) {
+    return null;
+}
+quark_test_MethodTest_match_Method.prototype._getField = quark_test_MethodTest_match_Method__getField;
+
+function quark_test_MethodTest_match_Method__setField(name, value) {}
+quark_test_MethodTest_match_Method.prototype._setField = quark_test_MethodTest_match_Method__setField;
 
 // CLASS quark_test_MethodTest_start_Method
 
@@ -3377,7 +3441,7 @@ function quark_test_MethodTest() {
     (this).name = "quark.test.MethodTest";
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.concurrent.TLS<quark.test.Test>", "ctx"), new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.int", "checks"), new quark.reflect.Field("quark.List<quark.String>", "failures"), new quark.reflect.Field("quark.reflect.Class", "klass"), new quark.reflect.Field("quark.reflect.Method", "method")];
-    (this).methods = [new quark_test_MethodTest_run_Method(), new quark_test_MethodTest_current_Method(), new quark_test_MethodTest_start_Method(), new quark_test_MethodTest_stop_Method(), new quark_test_MethodTest_check_Method(), new quark_test_MethodTest_fail_Method()];
+    (this).methods = [new quark_test_MethodTest_run_Method(), new quark_test_MethodTest_current_Method(), new quark_test_MethodTest_match_Method(), new quark_test_MethodTest_start_Method(), new quark_test_MethodTest_stop_Method(), new quark_test_MethodTest_check_Method(), new quark_test_MethodTest_fail_Method()];
 }
 exports.quark_test_MethodTest = quark_test_MethodTest;
 _qrt.util.inherits(quark_test_MethodTest, quark.reflect.Class);
@@ -3409,7 +3473,7 @@ quark_test_MethodTest.prototype._setField = quark_test_MethodTest__setField;
 // CLASS quark_test_Harness_collect_Method
 
 function quark_test_Harness_collect_Method() {
-    quark_test_Harness_collect_Method.super_.call(this, "quark.void", "collect", ["quark.String"]);
+    quark_test_Harness_collect_Method.super_.call(this, "quark.void", "collect", ["quark.List<quark.String>"]);
 }
 exports.quark_test_Harness_collect_Method = quark_test_Harness_collect_Method;
 _qrt.util.inherits(quark_test_Harness_collect_Method, quark.reflect.Method);

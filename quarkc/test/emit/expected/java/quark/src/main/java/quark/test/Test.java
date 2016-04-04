@@ -12,6 +12,20 @@ public class Test implements io.datawire.quark.runtime.QObject {
     public static Test current() {
         return (Test.ctx).getValue();
     }
+    public Boolean match(java.util.ArrayList<String> filters) {
+        if (((filters)==(null) || ((Object)(filters) != null && ((Object) (filters)).equals(null))) || (((filters).size())==(0) || ((Object)((filters).size()) != null && ((Object) ((filters).size())).equals(0)))) {
+            return true;
+        }
+        Integer idx = 0;
+        while ((idx) < ((filters).size())) {
+            String filter = (filters).get(idx);
+            if (((this.name).indexOf(filter)) >= (0)) {
+                return true;
+            }
+            idx = (idx) + (1);
+        }
+        return false;
+    }
     public void start() {
         (Test.ctx).setValue(this);
     }

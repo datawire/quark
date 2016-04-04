@@ -114,6 +114,24 @@ class Test < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
+    def match(filters)
+        
+        if (((filters) == (nil)) || (((filters).size) == (0)))
+            return true
+        end
+        idx = 0
+        while ((idx) < ((filters).size)) do
+            filter = (filters)[idx]
+            if ((((@name).index(filter) or -1)) >= (0))
+                return true
+            end
+            idx = (idx) + (1)
+        end
+        return false
+
+        nil
+    end
+
     def start()
         
         ::Quark.quark.test.Test.ctx.setValue(self)
@@ -372,7 +390,7 @@ class Harness < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def collect(filter)
+    def collect(filters)
         
         names = ::DatawireQuarkCore::List.new((::Quark.quark.reflect.QuarkClass.classes).keys)
         (names).sort!
@@ -389,12 +407,10 @@ class Harness < ::DatawireQuarkCore::QuarkObject
                     mname = meth.getName()
                     if ((mname).start_with?("test"))
                         test = ::Quark.quark.test.MethodTest.new(klass, meth)
-                        if (((filter) == (nil)) || (((((test).name).index(filter) or -1)) >= (0)))
+                        if (test.match(filters))
                             (@tests) << (test)
                         else
-                            if ((filter) != (nil))
-                                @filtered = (@filtered) + (1)
-                            end
+                            @filtered = (@filtered) + (1)
                         end
                     end
                     jdx = (jdx) + (1)
@@ -496,11 +512,29 @@ class Harness < ::DatawireQuarkCore::QuarkObject
 end
 Harness.unlazy_statics
 
-def self.run(pkg, filter)
+def self.run(args)
     
+    pkg = (args)[0]
+    filters = ::DatawireQuarkCore::List.new([])
+    list = false
+    idx = 1
+    while ((idx) < ((args).size)) do
+        arg = (args)[idx]
+        if ((arg) == ("-l"))
+            list = true
+        else
+            (filters) << (arg)
+        end
+        idx = (idx) + (1)
+    end
     h = ::Quark.quark.test.Harness.new(pkg)
-    h.collect(filter)
-    h.run()
+    h.collect(filters)
+    if (list)
+        h.list()
+    else
+        ::DatawireQuarkCore.print(::Quark.quark.test.bold(("Running: ") + ((args).join(" "))))
+        h.run()
+    end
 
 
     nil

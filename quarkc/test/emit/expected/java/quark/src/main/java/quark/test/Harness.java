@@ -9,7 +9,7 @@ public class Harness implements io.datawire.quark.runtime.QObject {
     public Harness(String pkg) {
         (this).pkg = pkg;
     }
-    public void collect(String filter) {
+    public void collect(java.util.ArrayList<String> filters) {
         java.util.ArrayList<String> names = new java.util.ArrayList((quark.reflect.Class.classes).keySet());
         java.util.Collections.sort(names, null);
         Integer idx = 0;
@@ -25,12 +25,10 @@ public class Harness implements io.datawire.quark.runtime.QObject {
                     String mname = (meth).getName();
                     if (Boolean.valueOf((mname).startsWith("test"))) {
                         Test test = new MethodTest(klass, meth);
-                        if (((filter)==(null) || ((Object)(filter) != null && ((Object) (filter)).equals(null))) || ((((test).name).indexOf(filter)) >= (0))) {
+                        if ((test).match(filters)) {
                             (this.tests).add(test);
                         } else {
-                            if (!((filter)==(null) || ((Object)(filter) != null && ((Object) (filter)).equals(null)))) {
-                                this.filtered = (this.filtered) + (1);
-                            }
+                            this.filtered = (this.filtered) + (1);
                         }
                     }
                     jdx = (jdx) + (1);

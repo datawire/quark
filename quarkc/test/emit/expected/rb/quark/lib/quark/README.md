@@ -18,4 +18,4 @@
 
 ## Harness
 
-## run((9.quark.test.run.pkg, 9.quark.test.run.filter))
+## run((9.quark.test.run.args,))

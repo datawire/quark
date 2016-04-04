@@ -47,6 +47,20 @@ class Test(object):
     def current():
         return (Test.ctx).getValue()
 
+    def match(self, filters):
+        if (((filters) == (None)) or ((len(filters)) == (0))):
+            return True
+
+        idx = 0;
+        while ((idx) < (len(filters))):
+            filter = (filters)[idx];
+            if (((self.name).find(filter)) >= (0)):
+                return True
+
+            idx = (idx) + (1)
+
+        return False
+
     def start(self):
         (Test.ctx).setValue(self);
 
@@ -200,7 +214,7 @@ class Harness(object):
         self._init()
         (self).pkg = pkg
 
-    def collect(self, filter):
+    def collect(self, filters):
         names = _List((quark.reflect.Class.classes).keys());
         (names).sort();
         idx = 0;
@@ -216,11 +230,10 @@ class Harness(object):
                     mname = (meth).getName();
                     if ((mname).startswith(u"test")):
                         test = MethodTest(klass, meth);
-                        if (((filter) == (None)) or ((((test).name).find(filter)) >= (0))):
+                        if ((test).match(filters)):
                             (self.tests).append(test);
                         else:
-                            if ((filter) != (None)):
-                                self.filtered = (self.filtered) + (1)
+                            self.filtered = (self.filtered) + (1)
 
                     jdx = (jdx) + (1)
 
@@ -284,7 +297,25 @@ class Harness(object):
 Harness.quark_List_quark_test_Test__ref = quark_md.Root.quark_List_quark_test_Test__md
 Harness.quark_test_Harness_ref = quark_md.Root.quark_test_Harness_md
 
-def run(pkg, filter):
+def run(args):
+    pkg = (args)[0];
+    filters = _List([]);
+    list = False;
+    idx = 1;
+    while ((idx) < (len(args))):
+        arg = (args)[idx];
+        if ((arg) == (u"-l")):
+            list = True
+        else:
+            (filters).append(arg);
+
+        idx = (idx) + (1)
+
     h = Harness(pkg);
-    (h).collect(filter);
-    (h).run();
+    (h).collect(filters);
+    if (list):
+        (h).list();
+    else:
+        _println(bold((u"Running: ") + ((u" ").join(args))));
+        (h).run();
+

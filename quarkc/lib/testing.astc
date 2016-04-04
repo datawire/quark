@@ -79,6 +79,44 @@ File(Import(Name(quark)), Import(Name(quark), Name(reflect)),
       Assign(Attr(Var(Name(self), $type=9.quark.test.Test), Name(name),
        $type=1.quark.String), Var(Name(name), $type=1.quark.String)))),
 
+    Method(static=False, Type(Name(bool)), Name(match),
+     Param(Type(Name(List), Type(Name(String))), Name(filters),
+     $type=1.quark.List<1.quark.String>),
+     Block(
+      If(Call(Attr(Call(Attr(Var(Name(filters),
+           $type=1.quark.List<1.quark.String>), Name(__eq__),
+          $type=1.quark.Object.__eq__), Null(null, $type=1.quark.Object),
+         $type=1.quark.bool), Name(__or__), $type=1.quark.bool.__or__),
+        Call(Attr(Call(Attr(Var(Name(filters),
+            $type=1.quark.List<1.quark.String>), Name(size),
+           $type=1.quark.List.size), $type=1.quark.int), Name(__eq__),
+         $type=1.quark.Object.__eq__), Number(0, $type=1.quark.int),
+        $type=1.quark.bool), $type=1.quark.bool), Block(
+        Return(Bool(true, $type=1.quark.bool)))),
+      Local(
+       Declaration(Type(Name(int)), Name(idx), Number(0, $type=1.quark.int),
+       $type=1.quark.int)),
+      While(Call(Attr(Var(Name(idx), $type=1.quark.int), Name(__lt__),
+        $type=1.quark.numeric.__lt__), Call(Attr(Var(Name(filters),
+          $type=1.quark.List<1.quark.String>), Name(size),
+         $type=1.quark.List.size), $type=1.quark.int), $type=1.quark.bool),
+       Block(
+        Local(
+         Declaration(Type(Name(String)), Name(filter),
+          Call(Attr(Var(Name(filters), $type=1.quark.List<1.quark.String>),
+            Name(__get__), $type=1.quark.List.__get__), Var(Name(idx),
+           $type=1.quark.int), $type=1.quark.String), $type=1.quark.String)),
+        If(Call(Attr(Call(Attr(Var(Name(name), $type=1.quark.String),
+             Name(find), $type=1.quark.String.find), Var(Name(filter),
+            $type=1.quark.String), $type=1.quark.int), Name(__ge__),
+          $type=1.quark.numeric.__ge__), Number(0, $type=1.quark.int),
+         $type=1.quark.bool), Block(
+          Return(Bool(true, $type=1.quark.bool)))),
+        Assign(Var(Name(idx), $type=1.quark.int), Call(Attr(Var(Name(idx),
+           $type=1.quark.int), Name(__add__), $type=1.quark.numeric.__add__),
+          Number(1, $type=1.quark.int), $type=1.quark.int)))),
+      Return(Bool(false, $type=1.quark.bool)))),
+
     Method(static=False, Type(Name(void)), Name(start), Block(
       ExprStmt(Call(Attr(Var(Name(ctx),
          $type=6.quark.concurrent.TLS<9.quark.test.Test>), Name(setValue),
@@ -436,7 +474,8 @@ File(Import(Name(quark)), Import(Name(quark), Name(reflect)),
        $type=1.quark.String), Var(Name(pkg), $type=1.quark.String)))),
 
     Method(static=False, Type(Name(void)), Name(collect),
-     Param(Type(Name(String)), Name(filter), $type=1.quark.String),
+     Param(Type(Name(List), Type(Name(String))), Name(filters),
+     $type=1.quark.List<1.quark.String>),
      Block(
       Local(
        Declaration(Type(Name(List), Type(Name(String))), Name(names),
@@ -513,28 +552,18 @@ File(Import(Name(quark)), Import(Name(quark), Name(reflect)),
                  $type=3.quark.reflect.Class), Var(Name(meth),
                  $type=3.quark.reflect.Method), $type=9.quark.test.MethodTest),
                $type=9.quark.test.Test)),
-              If(Call(Attr(Call(Attr(Var(Name(filter), $type=1.quark.String),
-                   Name(__eq__), $type=1.quark.Object.__eq__), Null(null,
-                  $type=1.quark.Object), $type=1.quark.bool), Name(__or__),
-                $type=1.quark.bool.__or__),
-                Call(Attr(Call(Attr(Attr(Var(Name(test),
-                     $type=9.quark.test.Test), Name(name),
-                    $type=1.quark.String), Name(find),
-                   $type=1.quark.String.find), Var(Name(filter),
-                   $type=1.quark.String), $type=1.quark.int), Name(__ge__),
-                 $type=1.quark.numeric.__ge__), Number(0, $type=1.quark.int),
-                $type=1.quark.bool), $type=1.quark.bool), Block(
+              If(Call(Attr(Var(Name(test), $type=9.quark.test.Test),
+                 Name(match), $type=9.quark.test.Test.match),
+                Var(Name(filters), $type=1.quark.List<1.quark.String>),
+               $type=1.quark.bool), Block(
                 ExprStmt(Call(Attr(Var(Name(tests),
                    $type=1.quark.List<9.quark.test.Test>), Name(add),
                   $type=1.quark.List.add), Var(Name(test),
                   $type=9.quark.test.Test), $type=1.quark.void))), Block(
-                If(Call(Attr(Var(Name(filter), $type=1.quark.String),
-                   Name(__ne__), $type=1.quark.Object.__ne__), Null(null,
-                  $type=1.quark.Object), $type=1.quark.bool), Block(
-                  Assign(Var(Name(filtered), $type=1.quark.int),
-                   Call(Attr(Var(Name(filtered), $type=1.quark.int),
-                     Name(__add__), $type=1.quark.numeric.__add__), Number(1,
-                    $type=1.quark.int), $type=1.quark.int)))))))),
+                Assign(Var(Name(filtered), $type=1.quark.int),
+                 Call(Attr(Var(Name(filtered), $type=1.quark.int),
+                   Name(__add__), $type=1.quark.numeric.__add__), Number(1,
+                  $type=1.quark.int), $type=1.quark.int)))))),
             Assign(Var(Name(jdx), $type=1.quark.int), Call(Attr(Var(Name(jdx),
                $type=1.quark.int), Name(__add__),
               $type=1.quark.numeric.__add__), Number(1, $type=1.quark.int),
@@ -712,16 +741,64 @@ File(Import(Name(quark)), Import(Name(quark), Name(reflect)),
     $type=3.quark.reflect.Class)),
 
    Function(Type(Name(void)), Name(run),
-    Param(Type(Name(String)), Name(pkg), $type=1.quark.String),
-    Param(Type(Name(String)), Name(filter), $type=1.quark.String),
+    Param(Type(Name(List), Type(Name(String))), Name(args),
+    $type=1.quark.List<1.quark.String>),
     Block(
+     Local(
+      Declaration(Type(Name(String)), Name(pkg), Call(Attr(Var(Name(args),
+         $type=1.quark.List<1.quark.String>), Name(__get__),
+        $type=1.quark.List.__get__), Number(0, $type=1.quark.int),
+       $type=1.quark.String), $type=1.quark.String)),
+     Local(
+      Declaration(Type(Name(List), Type(Name(String))), Name(filters), List(,
+       $type=1.quark.List<1.quark.String>),
+      $type=1.quark.List<1.quark.String>)),
+     Local(
+      Declaration(Type(Name(bool)), Name(list), Bool(false,
+       $type=1.quark.bool), $type=1.quark.bool)),
+     Local(
+      Declaration(Type(Name(int)), Name(idx), Number(1, $type=1.quark.int),
+      $type=1.quark.int)),
+     While(Call(Attr(Var(Name(idx), $type=1.quark.int), Name(__lt__),
+       $type=1.quark.numeric.__lt__), Call(Attr(Var(Name(args),
+         $type=1.quark.List<1.quark.String>), Name(size),
+        $type=1.quark.List.size), $type=1.quark.int), $type=1.quark.bool),
+      Block(
+       Local(
+        Declaration(Type(Name(String)), Name(arg), Call(Attr(Var(Name(args),
+           $type=1.quark.List<1.quark.String>), Name(__get__),
+          $type=1.quark.List.__get__), Var(Name(idx), $type=1.quark.int),
+         $type=1.quark.String), $type=1.quark.String)),
+       If(Call(Attr(Var(Name(arg), $type=1.quark.String), Name(__eq__),
+         $type=1.quark.Object.__eq__), String("-l", $type=1.quark.String),
+        $type=1.quark.bool), Block(
+         Assign(Var(Name(list), $type=1.quark.bool), Bool(true,
+          $type=1.quark.bool))), Block(
+         ExprStmt(Call(Attr(Var(Name(filters),
+            $type=1.quark.List<1.quark.String>), Name(add),
+           $type=1.quark.List.add), Var(Name(arg), $type=1.quark.String),
+          $type=1.quark.void)))),
+       Assign(Var(Name(idx), $type=1.quark.int), Call(Attr(Var(Name(idx),
+          $type=1.quark.int), Name(__add__), $type=1.quark.numeric.__add__),
+         Number(1, $type=1.quark.int), $type=1.quark.int)))),
      Local(
       Declaration(Type(Name(Harness)), Name(h), Call(Type(Name(Harness)),
         Var(Name(pkg), $type=1.quark.String), $type=9.quark.test.Harness),
       $type=9.quark.test.Harness)),
      ExprStmt(Call(Attr(Var(Name(h), $type=9.quark.test.Harness),
-        Name(collect), $type=9.quark.test.Harness.collect), Var(Name(filter),
-       $type=1.quark.String), $type=1.quark.void)),
-     ExprStmt(Call(Attr(Var(Name(h), $type=9.quark.test.Harness), Name(run),
-       $type=9.quark.test.Harness.run), $type=1.quark.void))))))
+        Name(collect), $type=9.quark.test.Harness.collect), Var(Name(filters),
+       $type=1.quark.List<1.quark.String>), $type=1.quark.void)),
+     If(Var(Name(list), $type=1.quark.bool), Block(
+       ExprStmt(Call(Attr(Var(Name(h), $type=9.quark.test.Harness), Name(list),
+         $type=9.quark.test.Harness.list), $type=1.quark.void))), Block(
+       ExprStmt(Call(Var(Name(print), $type=0.quark.print),
+         Call(Var(Name(bold), $type=9.quark.test.bold),
+          Call(Attr(String("Running: ", $type=1.quark.String), Name(__add__),
+           $type=1.quark.String.__add__), Call(Attr(String(" ",
+             $type=1.quark.String), Name(join), $type=1.quark.String.join),
+            Var(Name(args), $type=1.quark.List<1.quark.String>),
+           $type=1.quark.String), $type=1.quark.String), $type=1.quark.String),
+        $type=1.quark.void)),
+       ExprStmt(Call(Attr(Var(Name(h), $type=9.quark.test.Harness), Name(run),
+         $type=9.quark.test.Harness.run), $type=1.quark.void))))))))
 )

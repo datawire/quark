@@ -5052,6 +5052,60 @@ class QuarkTestTestCurrentMethod < ::Quark.quark.reflect.Method
 
 end
 
+def self.quark_test_Test_match_Method; QuarkTestTestMatchMethod; end
+class QuarkTestTestMatchMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.bool", "match", ::DatawireQuarkCore::List.new(["quark.List<quark.String>"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.match((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
 def self.quark_test_Test_start_Method; QuarkTestTestStartMethod; end
 class QuarkTestTestStartMethod < ::Quark.quark.reflect.Method
 
@@ -5340,7 +5394,7 @@ class QuarkTestTest < ::Quark.quark.reflect.QuarkClass
         (self).name = "quark.test.Test"
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.concurrent.TLS<quark.test.Test>", "ctx"), ::Quark.quark.reflect.Field.new("quark.String", "name"), ::Quark.quark.reflect.Field.new("quark.int", "checks"), ::Quark.quark.reflect.Field.new("quark.List<quark.String>", "failures")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_test_Test_current_Method.new(), ::Quark.quark_md.quark_test_Test_start_Method.new(), ::Quark.quark_md.quark_test_Test_stop_Method.new(), ::Quark.quark_md.quark_test_Test_check_Method.new(), ::Quark.quark_md.quark_test_Test_fail_Method.new(), ::Quark.quark_md.quark_test_Test_run_Method.new()])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_test_Test_current_Method.new(), ::Quark.quark_md.quark_test_Test_match_Method.new(), ::Quark.quark_md.quark_test_Test_start_Method.new(), ::Quark.quark_md.quark_test_Test_stop_Method.new(), ::Quark.quark_md.quark_test_Test_check_Method.new(), ::Quark.quark_md.quark_test_Test_fail_Method.new(), ::Quark.quark_md.quark_test_Test_run_Method.new()])
 
         nil
     end
@@ -5462,6 +5516,60 @@ class QuarkTestMethodTestCurrentMethod < ::Quark.quark.reflect.Method
         
         obj = object
         return ::Quark.quark.test.Test.current()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_test_MethodTest_match_Method; QuarkTestMethodTestMatchMethod; end
+class QuarkTestMethodTestMatchMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.bool", "match", ::DatawireQuarkCore::List.new(["quark.List<quark.String>"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.match((args)[0])
 
         nil
     end
@@ -5730,7 +5838,7 @@ class QuarkTestMethodTest < ::Quark.quark.reflect.QuarkClass
         (self).name = "quark.test.MethodTest"
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.concurrent.TLS<quark.test.Test>", "ctx"), ::Quark.quark.reflect.Field.new("quark.String", "name"), ::Quark.quark.reflect.Field.new("quark.int", "checks"), ::Quark.quark.reflect.Field.new("quark.List<quark.String>", "failures"), ::Quark.quark.reflect.Field.new("quark.reflect.Class", "klass"), ::Quark.quark.reflect.Field.new("quark.reflect.Method", "method")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_test_MethodTest_run_Method.new(), ::Quark.quark_md.quark_test_MethodTest_current_Method.new(), ::Quark.quark_md.quark_test_MethodTest_start_Method.new(), ::Quark.quark_md.quark_test_MethodTest_stop_Method.new(), ::Quark.quark_md.quark_test_MethodTest_check_Method.new(), ::Quark.quark_md.quark_test_MethodTest_fail_Method.new()])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_test_MethodTest_run_Method.new(), ::Quark.quark_md.quark_test_MethodTest_current_Method.new(), ::Quark.quark_md.quark_test_MethodTest_match_Method.new(), ::Quark.quark_md.quark_test_MethodTest_start_Method.new(), ::Quark.quark_md.quark_test_MethodTest_stop_Method.new(), ::Quark.quark_md.quark_test_MethodTest_check_Method.new(), ::Quark.quark_md.quark_test_MethodTest_fail_Method.new()])
 
         nil
     end
@@ -5785,7 +5893,7 @@ class QuarkTestHarnessCollectMethod < ::Quark.quark.reflect.Method
 
     def initialize()
         
-        super("quark.void", "collect", ::DatawireQuarkCore::List.new(["quark.String"]))
+        super("quark.void", "collect", ::DatawireQuarkCore::List.new(["quark.List<quark.String>"]))
 
         nil
     end

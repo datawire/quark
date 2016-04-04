@@ -36,6 +36,23 @@ class Test {
         self.name = name;
     }
 
+    bool match(List<String> filters) {
+        if (filters == null || filters.size() == 0) {
+            return true;
+        }
+
+        int idx = 0;
+        while (idx < filters.size()) {
+            String filter = filters[idx];
+            if (name.find(filter) >= 0) {
+                return true;
+            }
+            idx = idx + 1;
+        }
+
+        return false;
+    }
+
     void start() {
         ctx.setValue(self);
     }
@@ -120,7 +137,7 @@ class Harness {
         self.pkg = pkg;
     }
 
-    void collect(String filter) {
+    void collect(List<String> filters) {
         List<String> names = Class.classes.keys();
         names.sort();
         int idx = 0;
@@ -136,12 +153,10 @@ class Harness {
                     String mname = meth.getName();
                     if (mname.startsWith("test")) {
                         Test test = new MethodTest(klass, meth);
-                        if (filter == null || test.name.find(filter) >= 0) {
+                        if (test.match(filters)) {
                             tests.add(test);
                         } else {
-                            if (filter != null) {
-                                filtered = filtered + 1;
-                            }
+                            filtered = filtered + 1;
                         }
                     }
                     jdx = jdx + 1;
@@ -191,10 +206,28 @@ class Harness {
     }
 }
 
-void run(String pkg, String filter) {
+void run(List<String> args) {
+    String pkg = args[0];
+    List<String> filters = [];
+    bool list = false;
+    int idx = 1;
+    while (idx < args.size()) {
+        String arg = args[idx];
+        if (arg == "-l") {
+            list = true;
+        } else {
+            filters.add(arg);
+        }
+        idx = idx + 1;
+    }
     Harness h = new Harness(pkg);
-    h.collect(filter);
-    h.run();
+    h.collect(filters);
+    if (list) {
+        h.list();
+    } else {
+        print(bold("Running: " + " ".join(args)));
+        h.run();
+    }
 }
 
 }}
