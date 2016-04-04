@@ -1173,6 +1173,7 @@ class Compiler(object):
 
         modified = []
         for url, file in self.entries.items():
+            if not os.path.exists(url): continue
             urlc = compiled_quark(url)
             trans_roots = tuple(self.trans_roots(file.root))
             deps = tuple(self.deps(trans_roots))
