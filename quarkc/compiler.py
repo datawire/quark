@@ -938,6 +938,8 @@ class Reflector:
             self.code += "        static reflect.Class %s_md = %s.singleton;\n" % (cls, cls)
         self.code += "    }\n}"
 
+ARCHIVE_END = "ARCHIVE_END"
+
 class Compiler(object):
 
     def __init__(self):
@@ -1001,10 +1003,16 @@ class Compiler(object):
                 deps = pickle.load(fd)
                 if is_newer(urlc, *deps):
                     roots = pickle.load(fd)
-                    for root in roots:
-                        self.roots.add(root)
-                    if not include: self.entries[url] = roots[0].files[0]
-                    return roots[0].files[0]
+                    try:
+                        # Check for the end record in case we
+                        # encounter a partially written file.
+                        end = pickle.load(fd)
+                        for root in roots:
+                            self.roots.add(root)
+                        if not include: self.entries[url] = roots[0].files[0]
+                        return roots[0].files[0]
+                    except EOFError:
+                        pass
 
         old = None
         if not include and url not in self.roots:
@@ -1173,6 +1181,9 @@ class Compiler(object):
                 with open(urlc, "write") as fd:
                     pickle.dump(deps, fd, -1)
                     pickle.dump(trans_roots, fd, -1)
+                    # Write out an object to mark the archive end so
+                    # we can detect partial writes.
+                    pickle.dump(ARCHIVE_END, fd, -1)
                 modified.append(file.root)
         # We compute the modified flag here so it never gets saved to disk.
         for r in modified:
