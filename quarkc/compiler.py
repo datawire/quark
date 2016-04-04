@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, inspect, urllib, tempfile, logging
+import os, inspect, urllib, tempfile, logging, cPickle as pickle
 from collections import OrderedDict
 from .ast import *
 from .exceptions import *
@@ -940,7 +940,7 @@ class Reflector:
 
 class Compiler(object):
 
-    def __init__(self, filter_native=[]):
+    def __init__(self):
         self.roots = Roots()
         self.root = None
         self.parser = Parser()
@@ -948,7 +948,7 @@ class Compiler(object):
         self.annotator("delegate", delegate)
         self.included = set()
         self.log = logging.getLogger("quark.compiler")
-        self.filter_native = filter_native
+        self.entries = OrderedDict()
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -986,22 +986,32 @@ class Compiler(object):
         return file
 
     def urlparse(self, url, top=True, text=None, include=False, recurse=True):
+        urlc = compiled_quark(url)
         if url in self.CACHE:
             self.log.debug("loading from cache: %s", url)
             root = self.CACHE[url]
             self.roots.add(root)
             for u in root.uses:
                 self.roots.add(self.CACHE[u])
+            if not include: self.entries[url] = root.files[0]
             return root.files[0]
+        elif recurse and os.path.exists(url) and is_newer(urlc, url, __file__):
+            self.log.debug("loading from: %sc", url)
+            with open(urlc) as fd:
+                deps = pickle.load(fd)
+                if is_newer(urlc, *deps):
+                    roots = pickle.load(fd)
+                    for root in roots:
+                        self.roots.add(root)
+                    if not include: self.entries[url] = roots[0].files[0]
+                    return roots[0].files[0]
 
         old = None
         if not include and url not in self.roots:
             old = self.root
             self.root = Root(url)
             self.roots.add(self.root)
-            cache = True
-        else:
-            cache = False
+
         try:
             if text is None:
                 try:
@@ -1024,6 +1034,7 @@ class Compiler(object):
                     else:
                         self.perform_native_include(qurl, inc)
                 self.CACHE[url] = self.root
+            if not include: self.entries[url] = file
             return file
         finally:
             if old: self.root = old
@@ -1045,8 +1056,6 @@ class Compiler(object):
 
     def perform_native_include(self, qurl, inc):
         if inc.url not in self.root.included:
-            if self.filter_native and not [ext for ext in self.filter_native if inc.url.endswith(ext)]:
-                return
             try:
                 self.root.included[inc.url] = self.read(qurl)
             except IOError:
@@ -1129,6 +1138,18 @@ class Compiler(object):
     def merge_one(self, n1, n2):
         raise CompileError("can't merge %r and %r" % (n1, n2))
 
+    def trans_roots(self, root):
+        return [root] + [self.roots[use] for use in root.uses]
+
+    def deps(self, roots):
+        result = OrderedDict()
+        for r in roots:
+            result[r.url] = True
+            for f in r.files:
+                for url in f.includes:
+                    result[join(r.url, url)] = True
+        return tuple(result.keys())
+
     def compile(self):
         self.log.info("Compiling quark code")
         for root in self.roots.sorted():
@@ -1142,8 +1163,23 @@ class Compiler(object):
             self.reflect(root)
             root._compiled = True
 
+        modified = []
+        for url, file in self.entries.items():
+            urlc = compiled_quark(url)
+            trans_roots = tuple(self.trans_roots(file.root))
+            deps = tuple(self.deps(trans_roots))
+            if not is_newer(urlc, __file__, *deps):
+                self.log.info("Writing %s" % urlc)
+                with open(urlc, "write") as fd:
+                    pickle.dump(deps, fd, -1)
+                    pickle.dump(trans_roots, fd, -1)
+                modified.append(file.root)
+        # We compute the modified flag here so it never gets saved to disk.
+        for r in modified:
+            r._modified = True
+
 def install(url, *backends):
-    c = Compiler(filter_native=[b.ext for b in backends])
+    c = Compiler()
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1156,7 +1192,7 @@ def install(url, *backends):
             b.install()
 
 def compile(url, target, *backends):
-    c = Compiler(filter_native=[b.ext for b in backends])
+    c = Compiler()
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1177,7 +1213,7 @@ def compile(url, target, *backends):
     return dirs
 
 def run(url, args, *backends):
-    c = Compiler(filter_native=[b.ext for b in backends])
+    c = Compiler()
     file = c.urlparse(url, recurse=False)
     name, ver = namever(file)
     for backend in backends:

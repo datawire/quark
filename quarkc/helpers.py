@@ -300,3 +300,17 @@ def readme(m, lines):
 def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
+
+def is_newer(target, *deps):
+    if not os.path.exists(target): return False
+    ctime = os.stat(target).st_mtime
+    for d in deps:
+        if d is None: return True
+        if not os.path.exists(d): return True
+        diff = ctime - os.stat(d).st_mtime
+        if diff <= 0:
+            return False
+    return True
+
+def compiled_quark(url):
+    return "%sc" % url

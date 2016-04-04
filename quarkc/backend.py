@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, ruby, tempfile, logging
+import os, types, java, python, javascript, ruby, tempfile, logging, inspect
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
@@ -44,6 +44,14 @@ class Backend(object):
     def install(self):
         cls = self.__class__.__name__
         pkg = self.packages[0].name
+
+        target = self.install_target()
+        urlc = "%sc" % self.root.url
+        if not (getattr(self.root, "_modified", False) or
+                not is_newer(target, urlc, __file__, inspect.getsourcefile(self.gen))):
+            self.log.debug("Skipping %s for %s[%s]", cls, pkg, target)
+            return
+
         self.log.debug("Emitting generated %s for %s", cls, pkg)
         dir = tempfile.mkdtemp(suffix="-%s" % cls,
                                prefix="%s-" % pkg)
@@ -691,7 +699,7 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import command, os, sys
+import command, os, sys, subprocess, json
 
 def is_virtual():
     return hasattr(sys, "real_prefix")
@@ -707,9 +715,9 @@ class Java(Backend):
     ext = "java"
     gen = java
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        return os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["mvn", "install"])
@@ -724,9 +732,16 @@ class Python(Backend):
     ext = "py"
     gen = python
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = subprocess.check_output(["pip", "show", name])
+            for line in output.split("\n"):
+                if line.startswith("Location: "):
+                    return os.path.join(line.split(": ")[1], name)
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
@@ -745,9 +760,14 @@ class JavaScript(Backend):
     ext = "js"
     gen = javascript
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = subprocess.check_output(["npm", "ll", "--depth", "0", "--json", name])
+            return json.loads(output)["dependencies"][name]["path"]
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
 
     def install_command(self, dir):
         command.call_and_show("install", ".", ["npm", "install", dir])
@@ -761,9 +781,14 @@ class Ruby(Backend):
     ext = "rb"
     gen = ruby
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = subprocess.check_output(["gem", "which", name])
+            return output.strip()
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
 
     def install_command(self, dir):
         name, ver = namever(self.entry)
