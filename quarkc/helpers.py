@@ -302,6 +302,7 @@ def readme(cls, lines):
     lines.append(doc_helper(doc(cls)))
 
 def is_newer(target, *deps):
+    if target is None: return False
     if not os.path.exists(target): return False
     ctime = os.stat(target).st_mtime
     for d in deps:
