@@ -501,6 +501,8 @@ module DatawireQuarkCore
         end
         sleep 0.1
       end
+    rescue Interrupt
+      @log.warn "Interrupted"
     end
 
   end
