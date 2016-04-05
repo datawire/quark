@@ -888,12 +888,12 @@ module DatawireQuarkCore
         end
         adapter.process_response(rq)
         case rq.action
-        when :http_respnse
+        when :http_response
           http_response(rq)
         when :detach
           connection.detach
         else
-          @log.error "Unknown action #{action} for HTTP request"
+          @log.error "Unknown action #{rq.action} for HTTP request"
           rq.fail! 500, "quark runtime is confused, unknown http request action\r\n"
           http_response(rq)
         end
