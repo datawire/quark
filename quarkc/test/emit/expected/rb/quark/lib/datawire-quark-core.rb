@@ -501,6 +501,8 @@ module DatawireQuarkCore
         end
         sleep 0.1
       end
+    rescue Interrupt
+      @log.warn "Interrupted"
     end
 
   end
@@ -888,12 +890,12 @@ module DatawireQuarkCore
         end
         adapter.process_response(rq)
         case rq.action
-        when :http_respnse
+        when :http_response
           http_response(rq)
         when :detach
           connection.detach
         else
-          @log.error "Unknown action #{action} for HTTP request"
+          @log.error "Unknown action #{rq.action} for HTTP request"
           rq.fail! 500, "quark runtime is confused, unknown http request action\r\n"
           http_response(rq)
         end
@@ -909,16 +911,6 @@ module DatawireQuarkCore
       rs.getHeaders.each { |k| headers[k] = rs.getHeader k }
       response = Reel::Response::new(rs.getCode, headers, rs.getBody)
       rq.request.respond response
-    end
-
-    def handle_websocket(request, rq)
-      handler = rq
-      if handler.nil?
-        request.respond Reel::Response::new(403, [], "Forbidden")
-      else
-        request.websocket.write "whoa"
-        request.websocket.close
-      end
     end
 
     def respond(rq, action)
