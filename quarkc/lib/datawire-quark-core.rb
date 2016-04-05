@@ -911,16 +911,6 @@ module DatawireQuarkCore
       rq.request.respond response
     end
 
-    def handle_websocket(request, rq)
-      handler = rq
-      if handler.nil?
-        request.respond Reel::Response::new(403, [], "Forbidden")
-      else
-        request.websocket.write "whoa"
-        request.websocket.close
-      end
-    end
-
     def respond(rq, action)
       if rq.action == :wait
         # condition is race-free only in the context of the originating actor
