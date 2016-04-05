@@ -514,14 +514,16 @@ Client.prototype._setField = Client__setField;
 
 // CLASS ServerResponder
 
-function ServerResponder(request, response) {
+function ServerResponder(sendCORS, request, response) {
     this.__init_fields__();
+    (this).sendCORS = sendCORS;
     (this).request = request;
     (this).response = response;
 }
 exports.ServerResponder = ServerResponder;
 
 function ServerResponder__init_fields__() {
+    this.sendCORS = null;
     this.request = null;
     this.response = null;
 }
@@ -532,6 +534,9 @@ function ServerResponder_onFuture(result) {
     if ((error) !== (null)) {
         (this.response).setCode(404);
     } else {
+        if ((this).sendCORS) {
+            ((this).response).setHeader("Access-Control-Allow-Origin", "*");
+        }
         ((this).response).setBody((toJSON(result, null)).toString());
         ((this).response).setCode(200);
     }
@@ -545,6 +550,9 @@ function ServerResponder__getClass() {
 ServerResponder.prototype._getClass = ServerResponder__getClass;
 
 function ServerResponder__getField(name) {
+    if ((name) === ("sendCORS")) {
+        return (this).sendCORS;
+    }
     if ((name) === ("request")) {
         return (this).request;
     }
@@ -556,6 +564,9 @@ function ServerResponder__getField(name) {
 ServerResponder.prototype._getField = ServerResponder__getField;
 
 function ServerResponder__setField(name, value) {
+    if ((name) === ("sendCORS")) {
+        (this).sendCORS = value;
+    }
     if ((name) === ("request")) {
         (this).request = value;
     }
@@ -570,14 +581,21 @@ ServerResponder.prototype._setField = ServerResponder__setField;
 function Server(impl) {
     this.__init_fields__();
     (this).impl = impl;
+    (this)._sendCORS = false;
 }
 exports.Server = Server;
 
 function Server__init_fields__() {
     this.impl = null;
+    this._sendCORS = null;
 }
 Server.prototype.__init_fields__ = Server__init_fields__;
 Server.quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md;
+function Server_sendCORS(send) {
+    (this)._sendCORS = send;
+}
+Server.prototype.sendCORS = Server_sendCORS;
+
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
     var envelope = _qrt.json_from_string(body);
@@ -597,7 +615,7 @@ function Server_onHTTPRequest(request, response) {
             idx = (idx) + (1);
         }
         var result = (method).invoke(this.impl, args);
-        (result).onFinished(new ServerResponder(request, response));
+        (result).onFinished(new ServerResponder((this)._sendCORS, request, response));
     }
 }
 Server.prototype.onHTTPRequest = Server_onHTTPRequest;
@@ -616,6 +634,9 @@ function Server__getField(name) {
     if ((name) === ("impl")) {
         return (this).impl;
     }
+    if ((name) === ("_sendCORS")) {
+        return (this)._sendCORS;
+    }
     return null;
 }
 Server.prototype._getField = Server__getField;
@@ -623,6 +644,9 @@ Server.prototype._getField = Server__getField;
 function Server__setField(name, value) {
     if ((name) === ("impl")) {
         (this).impl = value;
+    }
+    if ((name) === ("_sendCORS")) {
+        (this)._sendCORS = value;
     }
 }
 Server.prototype._setField = Server__setField;

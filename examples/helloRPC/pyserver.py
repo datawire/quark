@@ -20,6 +20,7 @@ class HelloImpl(object):
 def main():
     implementation = HelloImpl()
     server = hello.HelloServer(implementation)
+    server.sendCORS(True)
     server.serveHTTP("http://127.0.0.1:8910/hello")
 
 

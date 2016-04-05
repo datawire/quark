@@ -3,8 +3,13 @@ package quark;
 public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md;
     public T impl;
+    public Boolean _sendCORS;
     public Server(T impl) {
         (this).impl = impl;
+        (this)._sendCORS = false;
+    }
+    public void sendCORS(Boolean send) {
+        (this)._sendCORS = send;
     }
     public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
         String body = (request).getBody();
@@ -25,7 +30,7 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
                 idx = (idx) + (1);
             }
             quark.concurrent.Future result = (quark.concurrent.Future) ((method).invoke(this.impl, args));
-            (result).onFinished(new ServerResponder(request, response));
+            (result).onFinished(new ServerResponder((this)._sendCORS, request, response));
         }
     }
     public void onServletError(String url, String message) {
@@ -38,11 +43,17 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
         if ((name)==("impl") || ((Object)(name) != null && ((Object) (name)).equals("impl"))) {
             return (this).impl;
         }
+        if ((name)==("_sendCORS") || ((Object)(name) != null && ((Object) (name)).equals("_sendCORS"))) {
+            return (this)._sendCORS;
+        }
         return null;
     }
     public void _setField(String name, Object value) {
         if ((name)==("impl") || ((Object)(name) != null && ((Object) (name)).equals("impl"))) {
             (this).impl = (T) (value);
+        }
+        if ((name)==("_sendCORS") || ((Object)(name) != null && ((Object) (name)).equals("_sendCORS"))) {
+            (this)._sendCORS = (Boolean) (value);
         }
     }
     public void serveHTTP(String url) {

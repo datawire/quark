@@ -722,16 +722,17 @@ Client.unlazy_statics
 
 def self.ServerResponder; ServerResponder; end
 class ServerResponder < ::DatawireQuarkCore::QuarkObject
-    attr_accessor :request, :response
+    attr_accessor :sendCORS, :request, :response
     extend ::DatawireQuarkCore::Static
 
     static quark_ServerResponder_ref: -> { ::Quark.quark_md.Root.quark_ServerResponder_md }
 
 
 
-    def initialize(request, response)
+    def initialize(sendCORS, request, response)
         
         self.__init_fields__
+        (self).sendCORS = sendCORS
         (self).request = request
         (self).response = response
 
@@ -747,6 +748,9 @@ class ServerResponder < ::DatawireQuarkCore::QuarkObject
         if ((error) != (nil))
             @response.setCode(404)
         else
+            if ((self).sendCORS)
+                (self).response.setHeader("Access-Control-Allow-Origin", "*")
+            end
             (self).response.setBody(::Quark.quark.toJSON(result, nil).toString())
             (self).response.setCode(200)
         end
@@ -764,6 +768,9 @@ class ServerResponder < ::DatawireQuarkCore::QuarkObject
 
     def _getField(name)
         
+        if ((name) == ("sendCORS"))
+            return (self).sendCORS
+        end
         if ((name) == ("request"))
             return (self).request
         end
@@ -777,6 +784,9 @@ class ServerResponder < ::DatawireQuarkCore::QuarkObject
 
     def _setField(name, value)
         
+        if ((name) == ("sendCORS"))
+            (self).sendCORS = value
+        end
         if ((name) == ("request"))
             (self).request = value
         end
@@ -789,6 +799,7 @@ class ServerResponder < ::DatawireQuarkCore::QuarkObject
 
     def __init_fields__()
         
+        self.sendCORS = nil
         self.request = nil
         self.response = nil
 
@@ -801,7 +812,7 @@ ServerResponder.unlazy_statics
 
 def self.Server; Server; end
 class Server < ::DatawireQuarkCore::QuarkObject
-    attr_accessor :impl
+    attr_accessor :impl, :_sendCORS
     extend ::DatawireQuarkCore::Static
 
     static quark_Server_quark_Object__ref: -> { ::Quark.quark_md.Root.quark_Server_quark_Object__md }
@@ -812,12 +823,20 @@ class Server < ::DatawireQuarkCore::QuarkObject
         
         self.__init_fields__
         (self).impl = impl
+        (self)._sendCORS = false
 
         nil
     end
 
 
 
+
+    def sendCORS(send)
+        
+        (self)._sendCORS = send
+
+        nil
+    end
 
     def onHTTPRequest(request, response)
         
@@ -839,7 +858,7 @@ class Server < ::DatawireQuarkCore::QuarkObject
                 idx = (idx) + (1)
             end
             result = method.invoke(@impl, args)
-            result.onFinished(::Quark.quark.ServerResponder.new(request, response))
+            result.onFinished(::Quark.quark.ServerResponder.new((self)._sendCORS, request, response))
         end
 
         nil
@@ -864,6 +883,9 @@ class Server < ::DatawireQuarkCore::QuarkObject
         if ((name) == ("impl"))
             return (self).impl
         end
+        if ((name) == ("_sendCORS"))
+            return (self)._sendCORS
+        end
         return nil
 
         nil
@@ -873,6 +895,9 @@ class Server < ::DatawireQuarkCore::QuarkObject
         
         if ((name) == ("impl"))
             (self).impl = value
+        end
+        if ((name) == ("_sendCORS"))
+            (self)._sendCORS = value
         end
 
         nil
@@ -902,6 +927,7 @@ class Server < ::DatawireQuarkCore::QuarkObject
     def __init_fields__()
         
         self.impl = nil
+        self._sendCORS = nil
 
         nil
     end

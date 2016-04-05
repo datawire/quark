@@ -6,7 +6,7 @@ public class quark_Server_quark_Object_ extends quark.reflect.Class implements i
         super("quark.Server<quark.Object>");
         (this).name = "quark.Server";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.Object", "impl")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.Object", "impl"), new quark.reflect.Field("quark.bool", "_sendCORS")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
