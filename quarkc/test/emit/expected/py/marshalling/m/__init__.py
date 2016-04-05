@@ -53,7 +53,7 @@ class Inner(object):
         if ((name) == (u"inner_string_list")):
             (self).inner_string_list = value
 
-    
+
 Inner.m_Inner_ref = marshalling_md.Root.m_Inner_md
 Inner.quark_List_quark_String__ref = marshalling_md.Root.quark_List_quark_String__md
 class Outer(object):
@@ -104,7 +104,7 @@ class Outer(object):
         if ((name) == (u"outer_inner_list")):
             (self).outer_inner_list = value
 
-    
+
 Outer.m_Outer_ref = marshalling_md.Root.m_Outer_md
 Outer.quark_List_m_Inner__ref = marshalling_md.Root.quark_List_m_Inner__md
 

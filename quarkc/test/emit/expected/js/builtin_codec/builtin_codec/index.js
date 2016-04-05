@@ -40,8 +40,8 @@ function hexf(v) {
     return (c).toHexdump(b, 0, 8, 10);
 }
 exports.hexf = hexf;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var c = _qrt.defaultCodec();
     var hello = "hello world!";
     var b = (c).buffer(500);

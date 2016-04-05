@@ -5,7 +5,11 @@ public class Functions {
     static defaulted_methods_md.Root root = new defaulted_methods_md.Root();
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         pkg.T1 t1 = new pkg.T1();
         (t1).foo();
         (t1).bar();

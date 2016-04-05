@@ -1,7 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var json = new _qrt.JSONObject();
     (json).setObjectItem(("string"), ((new _qrt.JSONObject()).setString("this is a string")));
     (json).setObjectItem(("number"), ((new _qrt.JSONObject()).setNumber(3.14159)));

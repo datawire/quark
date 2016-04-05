@@ -1,4 +1,4 @@
-void main() {
+void main(List<String> args) {
     test.go();
 }
 

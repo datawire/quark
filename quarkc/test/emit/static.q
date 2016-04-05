@@ -30,7 +30,7 @@ class Foo {
     }
 }
 
-void main() {
+void main(List<String> args) {
     print(Foo.count);
     Foo f = new Foo();
     print(Foo.count);

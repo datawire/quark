@@ -8,10 +8,13 @@ env:
 language:
 - java
 - python
+- ruby
 python:
 - 2.7.6
 jdk:
 - oraclejdk7
+rvm:
+- 2.3.0
 addons:
   apt:
     packages:
@@ -39,6 +42,9 @@ install:
 - virtualenv quark-travis
 - . quark-travis/bin/activate
 - pip install --upgrade pip
+- command rvm install 2.3.0
+- rvm --default use 2.3.0
+- ruby --version
 - scripts/develop.sh
 - pip freeze
 - mvn --version

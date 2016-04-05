@@ -20,7 +20,7 @@ namespace p1 {
     }
 }
 
-void main() {
+void main(List<String> args) {
     p1.p2.a();
     p1.p2.b();
     p1.c();

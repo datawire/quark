@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, tempfile, logging
+import os, types, java, python, javascript, ruby, tempfile, logging, inspect
 from collections import OrderedDict
 from .ast import *
 from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
@@ -44,6 +44,14 @@ class Backend(object):
     def install(self):
         cls = self.__class__.__name__
         pkg = self.packages[0].name
+
+        target = self.install_target()
+        urlc = "%sc" % self.root.url
+        if not (getattr(self.root, "_modified", False) or
+                not is_newer(target, urlc, __file__, inspect.getsourcefile(self.gen))):
+            self.log.debug("Skipping %s for %s[%s]", cls, pkg, target)
+            return
+
         self.log.debug("Emitting generated %s for %s", cls, pkg)
         dir = tempfile.mkdtemp(suffix="-%s" % cls,
                                prefix="%s-" % pkg)
@@ -96,7 +104,7 @@ class Backend(object):
         if self.dist:
             self.entry = self.dist.file
 
-        self.mains = []
+        self.main = None
         for d in self.definitions:
             fname = self.file(d)
             if fname is None:
@@ -112,7 +120,7 @@ class Backend(object):
             else:
                 self.files[fname] += dfn_code
 
-        if self.mains:
+        if self.main:
             self.genmain()
 
         for name in self.files:
@@ -145,7 +153,8 @@ class Backend(object):
         name, ver = namever(self.entry)
         fname = self.gen.main_file(self.gen.name(name))
         self.setfile(fname, lambda: self.gen.make_main_file(self.gen.name(name)))
-        self.files[fname] += self.gen.main([self.gen.expr_stmt(self.invoke(fun, None, ())) for fun in self.mains])
+        path = self.add_import(self.main)
+        self.files[fname] += self.gen.main(path, self.name(self.main.name))
 
     def genimps(self, imps):
         imps = [self.gen.import_(pkg, org, dep) for (pkg, org, dep) in imps]
@@ -235,17 +244,25 @@ class Backend(object):
                 self.add_import(d)
         return "" # self.doc(pkg)
 
+    def is_entry_package(self, pkg):
+        name, ver = namever(pkg)
+        return pkg.name.text == name
+
     @overload(Function)
     def definition(self, fun):
         if fun.body is None: return ""
-        if fun.name.text == "main" and not fun.params:
-            self.mains.append(fun)
+        prolog = ""
+        if fun.name.text == "main" and len(fun.params) == 1 and \
+           fun.params[0].resolved.type.name.text == "List":
+            if self.is_entry_package(fun.package):
+                self.main = fun
+                prolog = self.gen.main_prolog()
 
-        return self.gen.function(self.doc(fun),
-                                 self.type(fun.type),
-                                 self.name(fun.name),
-                                 [self.param(p) for p in fun.params],
-                                 self.block(fun.body))
+        return prolog + self.gen.function(self.doc(fun),
+                                          self.type(fun.type),
+                                          self.name(fun.name),
+                                          [self.param(p) for p in fun.params],
+                                          self.block(fun.body))
 
     @overload(Class)
     def definition(self, cls):
@@ -509,7 +526,7 @@ class Backend(object):
 
     @overload(List)
     def expr(self, l):
-        return self.gen.list([self.expr(e) for e in l.elements])
+        return self.gen.list_([self.expr(e) for e in l.elements])
 
     @overload(Map)
     def expr(self, m):
@@ -682,7 +699,10 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import command, os, sys
+import command, os, sys, subprocess, json
+
+def call(*command):
+    return subprocess.check_output(command, stderr=subprocess.PIPE)
 
 def is_virtual():
     return hasattr(sys, "real_prefix")
@@ -698,26 +718,33 @@ class Java(Backend):
     ext = "java"
     gen = java
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        return os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["mvn", "install"])
 
-    def run(self, name, version):
+    def run(self, name, version, args):
         jar = os.path.join(os.environ["HOME"], ".m2", "repository", name, name, version,
                            "%s-%s.jar" % (name, version))
-        os.execlp("java", "java", "-jar", jar)
+        os.execlp("java", "java", "-jar", jar, name, *args)
 
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
     ext = "py"
     gen = python
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = call("pip", "show", name)
+            for line in output.split("\n"):
+                if line.startswith("Location: "):
+                    return os.path.join(line.split(": ")[1], name)
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
 
     def install_command(self, dir):
         command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
@@ -727,22 +754,50 @@ class Python(Backend):
             if is_user(): cmd += ["--user"]
             command.call_and_show("install", dir, cmd)
 
-    def run(self, name, version):
+    def run(self, name, version, args):
         main = self.gen.name(name)
-        os.execlp("python", "python", "-c", "import %s; %s.main()" % (main, main))
+        os.execlp("python", "python", "-c", "import %s; %s.call_main()" % (main, main), name, *args)
 
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"
     ext = "js"
     gen = javascript
 
-    @staticmethod
-    def is_installed(url):
-        return False
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = call("npm", "ll", "--depth", "0", "--json", name)
+            return json.loads(output)["dependencies"][name]["path"]
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
 
     def install_command(self, dir):
         command.call_and_show("install", ".", ["npm", "install", dir])
 
-    def run(self, name, version):
+    def run(self, name, version, args):
         main = self.gen.name(name)
-        os.execlp("node", "node", "-e", 'require("%s").%s.main()' % (name, main))
+        os.execlp("node", "node", "-e", 'require("%s").%s.call_main()' % (name, main), name, *args)
+
+class Ruby(Backend):
+    PRETTY_INSTALL = "GEM"
+    ext = "rb"
+    gen = ruby
+
+    def install_target(self):
+        name, ver = namever(self.entry)
+        try:
+            output = call("gem", "which", name)
+            return output.strip()
+        except subprocess.CalledProcessError, e:
+            pass
+        return None
+
+    def install_command(self, dir):
+        name, ver = namever(self.entry)
+        command.call_and_show("install", dir, ["gem", "build", "-q", "%s.gemspec" % name])
+        command.call_and_show("install", ".", ["gem", "install", "%s/%s-%s.gem" % (dir, name, ver)])
+
+    def run(self, name, version, args):
+        main = self.gen.name(name)
+        os.execlp("ruby", "ruby", "-e", "require('%s'); ::Quark.%s.call_main()" % (name, main), name, *args)

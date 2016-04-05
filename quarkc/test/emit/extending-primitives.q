@@ -25,7 +25,7 @@ namespace pkg {
 
 }
 
-void main() {
+void main(List<String> args) {
     pkg.C c = new pkg.C();
     c.event1();
     c.event2();

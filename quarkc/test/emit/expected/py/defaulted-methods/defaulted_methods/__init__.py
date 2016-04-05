@@ -3,8 +3,8 @@ from quark_runtime import *
 import pkg
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     t1 = pkg.T1();
     (t1).foo();
     (t1).bar();

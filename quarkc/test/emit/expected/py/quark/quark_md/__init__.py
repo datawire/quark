@@ -1929,6 +1929,26 @@ class quark_test_Test_current_Method(quark.reflect.Method):
     def _setField(self, name, value):
         pass
 
+class quark_test_Test_match_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_Test_match_Method, self).__init__(u"quark.bool", u"match", _List([u"quark.List<quark.String>"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).match((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class quark_test_Test_start_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2042,7 +2062,7 @@ class quark_test_Test(quark.reflect.Class):
         (self).name = u"quark.test.Test"
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.concurrent.TLS<quark.test.Test>", u"ctx"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.int", u"checks"), quark.reflect.Field(u"quark.List<quark.String>", u"failures")])
-        (self).methods = _List([quark_test_Test_current_Method(), quark_test_Test_start_Method(), quark_test_Test_stop_Method(), quark_test_Test_check_Method(), quark_test_Test_fail_Method(), quark_test_Test_run_Method()])
+        (self).methods = _List([quark_test_Test_current_Method(), quark_test_Test_match_Method(), quark_test_Test_start_Method(), quark_test_Test_stop_Method(), quark_test_Test_check_Method(), quark_test_Test_fail_Method(), quark_test_Test_run_Method()])
 
     def construct(self, args):
         return quark.test.Test((args)[0])
@@ -2088,6 +2108,26 @@ class quark_test_MethodTest_current_Method(quark.reflect.Method):
     def invoke(self, object, args):
         obj = object;
         return quark.test.Test.current()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_test_MethodTest_match_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_test_MethodTest_match_Method, self).__init__(u"quark.bool", u"match", _List([u"quark.List<quark.String>"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).match((args)[0])
 
     def _getClass(self):
         return None
@@ -2190,7 +2230,7 @@ class quark_test_MethodTest(quark.reflect.Class):
         (self).name = u"quark.test.MethodTest"
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.concurrent.TLS<quark.test.Test>", u"ctx"), quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.int", u"checks"), quark.reflect.Field(u"quark.List<quark.String>", u"failures"), quark.reflect.Field(u"quark.reflect.Class", u"klass"), quark.reflect.Field(u"quark.reflect.Method", u"method")])
-        (self).methods = _List([quark_test_MethodTest_run_Method(), quark_test_MethodTest_current_Method(), quark_test_MethodTest_start_Method(), quark_test_MethodTest_stop_Method(), quark_test_MethodTest_check_Method(), quark_test_MethodTest_fail_Method()])
+        (self).methods = _List([quark_test_MethodTest_run_Method(), quark_test_MethodTest_current_Method(), quark_test_MethodTest_match_Method(), quark_test_MethodTest_start_Method(), quark_test_MethodTest_stop_Method(), quark_test_MethodTest_check_Method(), quark_test_MethodTest_fail_Method()])
 
     def construct(self, args):
         return quark.test.MethodTest((args)[0], (args)[1])
@@ -2210,7 +2250,7 @@ class quark_test_Harness_collect_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(quark_test_Harness_collect_Method, self).__init__(u"quark.void", u"collect", _List([u"quark.String"]));
+        super(quark_test_Harness_collect_Method, self).__init__(u"quark.void", u"collect", _List([u"quark.List<quark.String>"]));
 
     def invoke(self, object, args):
         obj = object;

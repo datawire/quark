@@ -1,4 +1,4 @@
 import list
 
 if __name__ == "__main__":
-    list.main();
+    list.call_main()

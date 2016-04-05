@@ -63,7 +63,7 @@ class SlackEvent(object):
         if ((name) == (u"timestamp")):
             (self).timestamp = value
 
-    
+
 SlackEvent.slack_event_SlackEvent_ref = slackpack_md.Root.slack_event_SlackEvent_md
 class SlackError(SlackEvent):
     """
@@ -128,7 +128,7 @@ class SlackError(SlackEvent):
         if ((name) == (u"text")):
             (self).text = value
 
-    
+
 SlackError.slack_event_SlackError_ref = slackpack_md.Root.slack_event_SlackError_md
 class Hello(SlackEvent):
     """
@@ -174,7 +174,7 @@ class Hello(SlackEvent):
         if ((name) == (u"timestamp")):
             (self).timestamp = value
 
-    
+
 Hello.slack_event_Hello_ref = slackpack_md.Root.slack_event_Hello_md
 class Message(SlackEvent):
     """
@@ -259,7 +259,7 @@ class Message(SlackEvent):
         if ((name) == (u"edited")):
             (self).edited = value
 
-    
+
 Message.slack_event_Message_ref = slackpack_md.Root.slack_event_Message_md
 class Edited(object):
     """
@@ -290,5 +290,5 @@ class Edited(object):
         if ((name) == (u"timestamp")):
             (self).timestamp = value
 
-    
+
 Edited.slack_event_Edited_ref = slackpack_md.Root.slack_event_Edited_md

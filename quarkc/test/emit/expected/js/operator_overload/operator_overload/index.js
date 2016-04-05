@@ -61,8 +61,8 @@ function Overload__setField(name, value) {
     }
 }
 Overload.prototype._setField = Overload__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var o = new Overload("test");
     (o).test();
 }

@@ -41,7 +41,7 @@ class TLSContextInitializer extends TLSInitializer<Context> {
 
 }
 
-void main() {
+void main(List<String> args) {
     ccc.Context x = ccc.Context.current();
     print("OK");
 }

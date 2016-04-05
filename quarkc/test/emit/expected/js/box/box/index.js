@@ -189,8 +189,8 @@ function test6() {
     _qrt.print(((box).contents).contents);
 }
 exports.test6 = test6;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     _qrt.print("test1:\n--");
     test1();
     _qrt.print("");

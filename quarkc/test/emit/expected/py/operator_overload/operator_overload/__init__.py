@@ -41,9 +41,9 @@ class Overload(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
-Overload.operator_overload_Overload_ref = operator_overload_md.Root.operator_overload_Overload_md
 
-def main():
+Overload.operator_overload_Overload_ref = operator_overload_md.Root.operator_overload_Overload_md
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     o = Overload(u"test");
     (o).test();

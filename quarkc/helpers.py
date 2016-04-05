@@ -154,7 +154,10 @@ def namever(obj):
     root = obj.root
     for file in obj.root.files:
         if file.dist: return file.dist.name.text, file.dist.version
-    file = obj
+    if isinstance(obj, File):
+        file = obj
+    else:
+        file = obj.file
     name = sanitize(filebase(file.name))
     packages = [d for d in file.definitions if isinstance(d, Package)]
     if packages:
@@ -209,15 +212,21 @@ def get_defaulted_methods(cls):
     get_defaulted_methods(cls, result, derived, bindings)
     return result, bindings
 
-def indent(st, level=4):
+def indent(st, level=4, leading_nl=True):
     if st:
+        if isinstance(st, (tuple, list)):
+            st = "\n".join(st)
         spaces = " "*level
         pst = ""
         while pst != st:
             pst = st
             st = st.replace("\n\n\n","\n\n")
         st = ("\n" + st).replace("\n", "\n%s" % spaces) + "\n"
-        st = st.replace("\n%s\n" % spaces, "\n\n")
+        while pst != st:
+            pst = st
+            st = st.replace("\n%s\n" % spaces, "\n\n")
+        if not leading_nl:
+            st = st[1:]
         return st
     else:
         return ""
@@ -291,3 +300,18 @@ def readme(m, lines):
 def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
+
+def is_newer(target, *deps):
+    if target is None: return False
+    if not os.path.exists(target): return False
+    ctime = os.stat(target).st_mtime
+    for d in deps:
+        if d is None: return True
+        if not os.path.exists(d): return True
+        diff = ctime - os.stat(d).st_mtime
+        if diff <= 0:
+            return False
+    return True
+
+def compiled_quark(url):
+    return "%sc" % url

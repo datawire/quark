@@ -508,8 +508,8 @@ function test_split__setField(name, value) {
     }
 }
 test_split.prototype._setField = test_split__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     (new test_size("")).does(0);
     (new test_size("1")).does(1);
     (new test_size("22")).does(2);

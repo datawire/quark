@@ -82,8 +82,8 @@ function B__setField(name, value) {
     }
 }
 B.prototype._setField = B__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var b = new B();
     (b).greet();
 }

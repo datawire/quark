@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        operator_overload.Functions.main();
+        operator_overload.Functions.main(args);
     }
 }

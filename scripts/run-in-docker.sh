@@ -19,7 +19,7 @@ done
 shift $((OPTIND-1))
 
 if [ "$image" = "" ]; then
-    image="ubuntu-pip-java-node"
+    image="ubuntu-pip-java-node-ruby"
 fi
 
 cwd=$(pwd)

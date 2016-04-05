@@ -27,6 +27,9 @@ Class.LONG = new Class("quark.long");
 Class.FLOAT = new Class("quark.float");
 Class.STRING = new Class("quark.String");
 function Class_get(id) {
+    if (!((Class.classes).has(id))) {
+        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + ((Array.from((Class.classes).keys())).toString()));
+    }
     return _qrt.map_get((Class.classes), (id));
 }
 Class.get = Class_get;

@@ -13,6 +13,9 @@ namespace reflect {
         static Class STRING = new Class("quark.String");
 
         static Class get(String id) {
+            if (!classes.contains(id)) {
+                print("Cannot find " + id + " in " + classes.keys().toString());
+            }
             return classes[id];
         }
 

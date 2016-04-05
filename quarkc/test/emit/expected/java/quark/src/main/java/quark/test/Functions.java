@@ -35,9 +35,27 @@ public class Functions {
     }
 
 
-    public static void run(String pkg, String filter) {
+    public static void run(java.util.ArrayList<String> args) {
+        String pkg = (args).get(0);
+        java.util.ArrayList<String> filters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+        Boolean list = false;
+        Integer idx = 1;
+        while ((idx) < ((args).size())) {
+            String arg = (args).get(idx);
+            if ((arg)==("-l") || ((Object)(arg) != null && ((Object) (arg)).equals("-l"))) {
+                list = true;
+            } else {
+                (filters).add(arg);
+            }
+            idx = (idx) + (1);
+        }
         Harness h = new Harness(pkg);
-        (h).collect(filter);
-        (h).run();
+        (h).collect(filters);
+        if (list) {
+            (h).list();
+        } else {
+            do{System.out.println(Functions.bold(("Running: ") + (io.datawire.quark.runtime.Builtins.join((" "), (args)))));System.out.flush();}while(false);
+            (h).run();
+        }
     }
 }

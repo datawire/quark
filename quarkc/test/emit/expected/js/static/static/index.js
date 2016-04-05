@@ -67,8 +67,8 @@ function Foo__setField(name, value) {
     }
 }
 Foo.prototype._setField = Foo__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     _qrt.print(Foo.count);
     var f = new Foo();
     _qrt.print(Foo.count);

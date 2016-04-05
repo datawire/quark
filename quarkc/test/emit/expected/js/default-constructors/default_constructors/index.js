@@ -176,8 +176,8 @@ function Y__setField(name, value) {
     }
 }
 Y.prototype._setField = Y__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var b = new B("Bob");
     (b).greet();
     var c = new C("arole");

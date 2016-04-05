@@ -27,7 +27,7 @@ macro String plus(String x, String y)
            "null"));
 
 
-void main() {
+void main(List<String> args) {
     side_effects a = new side_effects();
 
     print(plus(a.R(), a.A()));

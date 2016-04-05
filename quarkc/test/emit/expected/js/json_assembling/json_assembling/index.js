@@ -19,8 +19,8 @@ function test_assembling() {
     _qrt.print((outer).toString());
 }
 exports.test_assembling = test_assembling;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     test_assembling();
 }
 exports.main = main;

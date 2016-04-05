@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     map = _Map();
     (map)[u"pi"] = (3.14159);
     _println(_urlencode(map));

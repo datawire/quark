@@ -23,7 +23,7 @@ def test_iterate_list():
             _println(u"Error!");
             return
 
-    
+
 
 
 def test_iterate_list_directory():
@@ -50,8 +50,8 @@ def iterables():
     (keys).sort();
     _println(keys);
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     test_roundtrip();
     test_iterate_list();
     test_iterate_list_directory();

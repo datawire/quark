@@ -1,8 +1,8 @@
 from quark_runtime import *
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(u"\"");
     _println(u"\"\"");
     _println(u"\u0000");

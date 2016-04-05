@@ -281,7 +281,7 @@ function FutureWait_wait(future, timeout) {
     }
     (this)._future = future;
     ((this)._future).onFinished(this);
-    var rounded = null;
+    var rounded = Math.round((1000.0) * (timeout));
     var deadline = (Date.now()) + (rounded);
     while (!(((this)._future).isFinished())) {
         var remaining = (deadline) - (Date.now());

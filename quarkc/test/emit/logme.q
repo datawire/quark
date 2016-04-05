@@ -1,6 +1,7 @@
-// xfail as all backends have different logging systems
+// xfail:java   default layout is too verbose
+// xfail:py     logging is not initialized
 
-void main() {
+void main(List<String> args) {
     Logger l = concurrent.Context.current().runtime().logger("logme");
 
     l.error("logme error");

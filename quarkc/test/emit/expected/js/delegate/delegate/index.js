@@ -6,6 +6,8 @@ exports.delegate_md = delegate_md;
 
 
 
+<<<<<<< HEAD:quarkc/test/emit/expected/js/delegate/delegate_lib/index.js
+=======
 // CLASS Message
 function Message() {
     this.__init_fields__();
@@ -139,9 +141,8 @@ Test.prototype._getField = Test__getField;
 function Test__setField(name, value) {}
 Test.prototype._setField = Test__setField;
 
+>>>>>>> febff07:quarkc/test/emit/expected/js/delegate/delegate/index.js
 function main() {
-    var t = new Test();
-    (t).foo("one", "two", 3);
-    _qrt.print(((t).hello(new Ping())).toString());
+    _qrt.print("This shadows ruby builtin module 'delegate'");
 }
 exports.main = main;

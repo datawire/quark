@@ -69,14 +69,29 @@ function Test_current() {
 }
 Test.current = Test_current;
 
+function Test_match(filters) {
+    if (((filters) === (null)) || (((filters).length) === (0))) {
+        return true;
+    }
+    var idx = 0;
+    while ((idx) < ((filters).length)) {
+        var filter = (filters)[idx];
+        if (((this.name).indexOf(filter)) >= (0)) {
+            return true;
+        }
+        idx = (idx) + (1);
+    }
+    return false;
+}
+Test.prototype.match = Test_match;
+
 function Test_start() {
     (Test.ctx).setValue(this);
-    _qrt.print(bold(("start ") + (this.name)));
 }
 Test.prototype.start = Test_start;
 
 function Test_stop() {
-    var result = (((((("stop ") + (this.name)) + (" [")) + (_qrt.toString(this.checks))) + (" checks, ")) + (_qrt.toString((this.failures).length))) + (" failures]");
+    var result = (((((this.name) + (" [")) + (_qrt.toString(this.checks))) + (" checks, ")) + (_qrt.toString((this.failures).length))) + (" failures]");
     if (((this.failures).length) > (0)) {
         _qrt.print(red(result));
     } else {
@@ -258,7 +273,7 @@ function Harness__init_fields__() {
 Harness.prototype.__init_fields__ = Harness__init_fields__;
 Harness.quark_List_quark_test_Test__ref = quark_md.Root.quark_List_quark_test_Test__md;
 Harness.quark_test_Harness_ref = quark_md.Root.quark_test_Harness_md;
-function Harness_collect(filter) {
+function Harness_collect(filters) {
     var names = Array.from((quark.reflect.Class.classes).keys());
     (names).sort();
     var idx = 0;
@@ -274,12 +289,10 @@ function Harness_collect(filter) {
                 var mname = (meth).getName();
                 if (((mname).indexOf("test")===0)) {
                     var test = new MethodTest(klass, meth);
-                    if (((filter) === (null)) || ((((test).name).indexOf(filter)) >= (0))) {
+                    if ((test).match(filters)) {
                         (this.tests).push(test);
                     } else {
-                        if ((filter) !== (null)) {
-                            this.filtered = (this.filtered) + (1);
-                        }
+                        this.filtered = (this.filtered) + (1);
                     }
                 }
                 jdx = (jdx) + (1);
@@ -357,9 +370,27 @@ function Harness__setField(name, value) {
 }
 Harness.prototype._setField = Harness__setField;
 
-function run(pkg, filter) {
+function run(args) {
+    var pkg = (args)[0];
+    var filters = [];
+    var list = false;
+    var idx = 1;
+    while ((idx) < ((args).length)) {
+        var arg = (args)[idx];
+        if ((arg) === ("-l")) {
+            list = true;
+        } else {
+            (filters).push(arg);
+        }
+        idx = (idx) + (1);
+    }
     var h = new Harness(pkg);
-    (h).collect(filter);
-    (h).run();
+    (h).collect(filters);
+    if (list) {
+        (h).list();
+    } else {
+        _qrt.print(bold(("Running: ") + ((args).join(" "))));
+        (h).run();
+    }
 }
 exports.run = run;

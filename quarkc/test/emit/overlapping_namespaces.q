@@ -18,7 +18,7 @@ namespace org {
   }
 }
 
-void main() {
+void main(List<String> args) {
     // xfail -- This test currently works for Java, however the Python
     // and Javascript backends need to be somehow modified to
     // accommodate a single package being shared across multiple

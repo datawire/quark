@@ -29,7 +29,7 @@ class Box(object):
         if ((name) == (u"contents")):
             (self).contents = value
 
-    
+
 
 class Crate(object):
     def _init(self):
@@ -63,7 +63,7 @@ class Crate(object):
         if ((name) == (u"ibox")):
             (self).ibox = value
 
-    
+
 Crate.box_Box_quark_Object__ref = box_md.Root.box_Box_quark_Object__md
 Crate.box_Box_quark_int__ref = box_md.Root.box_Box_quark_int__md
 class Sack(object):
@@ -85,7 +85,7 @@ class Sack(object):
         if ((name) == (u"ints")):
             (self).ints = value
 
-    
+
 Sack.box_Sack_ref = box_md.Root.box_Sack_md
 
 def test1():
@@ -144,8 +144,8 @@ def test6():
     _println(((box).get()).get());
     _println(((box).contents).contents);
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(u"test1:\n--");
     test1();
     _println(u"");

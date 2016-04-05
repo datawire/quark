@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.qc
 
 # C extensions
 *.so
@@ -21,6 +22,8 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+*.gem
+Gemfile.lock
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -65,3 +68,7 @@ target/
 
 # Doc script testing
 docs/replace-test-copy.html
+
+# Virtualenv
+venv
+.venv

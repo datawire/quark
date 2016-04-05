@@ -253,7 +253,7 @@ namespace pkg {
 }
 
 
-void main() {
+void main(List<String> args) {
     slack.Client cli = new slack.Client(null, "fake-token", new pkg.Handler());
     cli.onWSMessage(null, "{\"type\": \"hello\"}");
     cli.onWSMessage(null, "{\"type\": \"message\", \"user\": \"uid-1\", \"channel\": \"chanel-1\"}");

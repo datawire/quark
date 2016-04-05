@@ -36,7 +36,8 @@ File(Import(Name(quark)),
     Block())),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-      Fixed('io.datawire.quark.runtime.HTTPRequest')))), Name(HTTPRequest),
+      Fixed('io.datawire.quark.runtime.HTTPRequest')), NativeCase(rb,
+      Fixed('::DatawireQuarkCore::HTTP::Request')))), Name(HTTPRequest),
 
    ConstructorMacro(Name(HTTPRequest),
     Param(Type(Name(String)), Name(url), $type=1.quark.String),
@@ -44,8 +45,11 @@ File(Import(Name(quark)),
       Fixed('new io.datawire.quark.runtime.ClientHTTPRequest('), Var(Name(url),
       $type=1.quark.String), Fixed(')')), NativeCase(py,
       Fixed('_HTTPRequest('), Var(Name(url), $type=1.quark.String),
-      Fixed(')')), NativeCase(js, Fixed('new _qrt.HTTPRequest('),
-      Var(Name(url), $type=1.quark.String), Fixed(')')))),
+      Fixed(')')), NativeCase(rb,
+      Fixed('::DatawireQuarkCore::HTTP::Request.new('), Var(Name(url),
+      $type=1.quark.String), Fixed(')')), NativeCase(js,
+      Fixed('new _qrt.HTTPRequest('), Var(Name(url), $type=1.quark.String),
+      Fixed(')')))),
 
    Method(static=False, Type(Name(String)), Name(getUrl)),
 
@@ -70,7 +74,8 @@ File(Import(Name(quark)),
     Name(getHeaders))),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-      Fixed('io.datawire.quark.runtime.HTTPResponse')))), Name(HTTPResponse),
+      Fixed('io.datawire.quark.runtime.HTTPResponse')), NativeCase(rb,
+      Fixed('::DatawireQuarkCore::HTTP::Response')))), Name(HTTPResponse),
 
    Method(static=False, Type(Name(int)), Name(getCode)),
 

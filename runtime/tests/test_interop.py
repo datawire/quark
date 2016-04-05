@@ -58,6 +58,9 @@ class QuarkCompile(object):
         self.process_includes()
         print "Need to compile", self.processed
         self.quark("install",
+                   "--java",
+                   "--javascript",
+                   "--python",
                 self.processed.strpath)
         self.compiled = True
 

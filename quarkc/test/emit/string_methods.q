@@ -145,7 +145,7 @@ class test_split extends string_test {
     }
 }
 
-void main() {
+void main(List<String> args) {
     new test_size("").does(0);
     new test_size("1").does(1);
     new test_size("22").does(2);

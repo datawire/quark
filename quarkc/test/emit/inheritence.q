@@ -12,7 +12,7 @@ class B extends A {
 
 class C extends A {}
 
-void main() {
+void main(List<String> args) {
     A a = new A();
     a.foo();
     B b = new B();

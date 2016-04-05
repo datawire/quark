@@ -26,7 +26,7 @@ class Matrix<T> {
 	}
 }
 
-void main() {
+void main(List<String> args) {
     Matrix<int> matrix = new Matrix<int>(3, 3);
     matrix[2, 2] = 123;
     print(matrix[2, 2]);

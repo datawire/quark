@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        booleans.Functions.main();
+        booleans.Functions.main(args);
     }
 }

@@ -45,7 +45,11 @@ public class Functions {
     }
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         io.datawire.quark.runtime.Codec c = io.datawire.quark.runtime.Builtins.defaultCodec();
         String hello = "hello world!";
         io.datawire.quark.runtime.Buffer b = (c).buffer(500);

@@ -18,7 +18,7 @@ namespace pets {
 
 }
 
-void main() {
+void main(List<String> args) {
     pets.Pet evil = new pets.Cat();
     pets.Pet good = new pets.Dog();
 

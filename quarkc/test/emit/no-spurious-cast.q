@@ -6,7 +6,7 @@ class X<T> {}
 
 class Y extends X<int> {}
 
-void main() {
+void main(List<String> args) {
     A a = new B();
     X<int> x = new Y();
 }

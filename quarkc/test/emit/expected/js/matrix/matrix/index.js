@@ -72,8 +72,8 @@ function Matrix__setField(name, value) {
     }
 }
 Matrix.prototype._setField = Matrix__setField;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var matrix = new Matrix(3, 3);
     (matrix).__set__(2, 2, 123);
     _qrt.print((matrix).__get__(2, 2));

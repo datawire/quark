@@ -36,8 +36,8 @@ def iterables():
     (keys).sort();
     _println(keys);
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     test1();
     test_update();
     test_literal();

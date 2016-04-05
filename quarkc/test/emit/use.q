@@ -8,7 +8,7 @@ include lib/foo.q;
 
 package puse 4.5.6;
 
-void main() {
+void main(List<String> args) {
     print(atest());
     print(bar());
     print(tl.foo());

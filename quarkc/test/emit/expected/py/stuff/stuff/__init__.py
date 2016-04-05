@@ -36,6 +36,6 @@ class Test(object):
     def _setField(self, name, value):
         pass
 Test.stuff_Test_ref = stuff_md.Root.stuff_Test_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     (Test()).test();

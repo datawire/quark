@@ -251,7 +251,7 @@ class ServiceInstance(object):
         if ((name) == (u"breaker")):
             (self).breaker = value
 
-    
+
 ServiceInstance.quark_ServiceInstance_ref = quark_md.Root.quark_ServiceInstance_md
 class DegenerateResolver(object):
     """
@@ -407,7 +407,7 @@ class Client(object):
         if ((name) == (u"counter")):
             (self).counter = value
 
-    
+
 Client.logger = (concurrent.Context.runtime()).logger(u"quark.client")
 Client.quark_Map_quark_String_quark_ServiceInstance__ref = quark_md.Root.quark_Map_quark_String_quark_ServiceInstance__md
 Client.quark_Client_ref = quark_md.Root.quark_Client_md
@@ -450,7 +450,7 @@ class ServerResponder(object):
         if ((name) == (u"response")):
             (self).response = value
 
-    
+
 ServerResponder.quark_ServerResponder_ref = quark_md.Root.quark_ServerResponder_md
 class Server(object):
     def _init(self):

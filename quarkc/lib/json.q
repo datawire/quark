@@ -2,17 +2,23 @@ include io/datawire/quark/runtime/JSONObject.java;
 
 namespace quark {
 
-    @mapping($java{io.datawire.quark.runtime.JSONObject} $py{_JSONObject} $js{_qrt.JSONObject})
+
+    @mapping($java{io.datawire.quark.runtime.JSONObject}
+             $py{_JSONObject}
+             $rb{::DatawireQuarkCore::JSONObject}
+             $js{_qrt.JSONObject})
     primitive JSONObject {
 
         macro JSONObject() $java{new io.datawire.quark.runtime.JSONObject()}
                            $py{_JSONObject()}
+                           $rb{::DatawireQuarkCore::JSONObject.new}
                            $js{new _qrt.JSONObject()};
 
         macro String __to_String() self.getString();
         macro float __to_float() self.getNumber();
         macro int __to_int() $java{((int) Math.round(($self).getNumber()))}
                              $py{int(round(($self).getNumber()))}
+                             $rb{($self).getNumber.round}
                              $js{Math.round(($self).getNumber())};
         macro long __to_long() self.getNumber().round();
         macro bool __to_bool() self.getBool();

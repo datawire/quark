@@ -27,6 +27,7 @@ import slack.event.UserTyping;
 public class SlackBot implements SlackHandler {
     public static void main(String[] args) throws Exception {
         SlackClient client = new SlackClient(getToken());
+        client.post("#demo", "Java Slack client is connected");
         client.subscribe(new SlackBot());
 
     }

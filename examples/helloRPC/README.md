@@ -61,7 +61,7 @@ Compile and install the Service Contract in hello.q:
 
         quark install hello.q --java
 
-Compile the Java server and client with 
+Compile the Java server and client with
 
         mvn compile
 
@@ -126,3 +126,18 @@ However you build things, once you're ready to go you'll need to first start any
         node jsserver.js
 
 Finally, open `hello.html` in your Web browser.
+
+### Ruby (a non-pollutive method, does not install gems in system ruby install)
+
+Compile and install the Service Contract in hello.q:
+
+        quark compile hello.q --ruby
+        bundle install
+
+Run the Ruby server with
+
+        bundle exec ruby rbserver.rb
+
+Run the Ruby client with
+
+        bundle exec ruby rbclient.rb

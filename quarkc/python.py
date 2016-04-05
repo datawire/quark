@@ -136,8 +136,12 @@ def main_file(name):
 def make_main_file(name):
     return Code(comment)
 
-def main(statements):
-    return 'if __name__ == "__main__"%s' % block(statements)
+def main_prolog():
+    return "def call_main(): import sys; main(_List(sys.argv[1:]))"
+
+def main(path, name):
+    expr = invoke_function(path, "call_main", ())
+    return 'if __name__ == "__main__":\n    %s' % expr
 
 ## Naming and imports
 
@@ -343,7 +347,7 @@ def number(n):
 def string(s):
     return "u" + s.text
 
-def list(elements):
+def list_(elements):
     return "_List([%s])" % ", ".join(elements)
 
 def map(entries):

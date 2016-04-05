@@ -5,7 +5,11 @@ public class Functions {
     static break_and_continue_md.Root root = new break_and_continue_md.Root();
 
 
-    public static void main() {
+    public static final void main(String[] args) {
+        main(new java.util.ArrayList(java.util.Arrays.asList(args)));
+    }
+
+    public static void main(java.util.ArrayList<String> args) {
         java.util.ArrayList<String> stuff = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"one", "two", "three", "four"}));
         Integer idx = 0;
         while (true) {

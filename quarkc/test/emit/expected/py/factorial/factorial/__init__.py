@@ -9,8 +9,8 @@ def factorial(n):
         return (n) * (factorial((n) - (1)))
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     _println(factorial(1));
     _println(factorial(2));
     _println(factorial(3));

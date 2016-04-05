@@ -26,6 +26,6 @@ class Test(object):
     def _setField(self, name, value):
         pass
 Test.int_methods_Test_ref = int_methods_md.Root.int_methods_Test_md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     (Test()).test();

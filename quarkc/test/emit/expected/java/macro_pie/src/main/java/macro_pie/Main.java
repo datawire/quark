@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        macro_pie.Functions.main();
+        macro_pie.Functions.main(args);
     }
 }

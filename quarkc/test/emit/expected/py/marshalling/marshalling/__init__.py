@@ -3,6 +3,6 @@ from quark_runtime import *
 import m
 
 
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     m.test_marshalling();

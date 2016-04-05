@@ -48,7 +48,7 @@ class TestLong {
     }
 }
 
-void main() {
+void main(List<String> args) {
     new TestByte().run();
     new TestShort().run();
     new TestInt().run();

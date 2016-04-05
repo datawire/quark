@@ -39,8 +39,8 @@ function iterables() {
     _qrt.print(keys);
 }
 exports.iterables = iterables;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     test1();
     test_update();
     test_literal();

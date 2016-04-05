@@ -24,7 +24,7 @@ namespace hello {
 	// Number of failed requests before circuit breaker trips
         static int failureLimit = 1;
 	// How long (in seconds) before circuit breaker resets
-        static float retestDelay = 30.0;
+        static float retestDelay = 10.0;
 
         @doc("Respond to a hello request.")
         Response hello(Request request) {

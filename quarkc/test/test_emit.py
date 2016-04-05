@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, shutil, subprocess, filecmp
-from quarkc.backend import Java, Python, JavaScript
+from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, CompileError, compile
 from quarkc.helpers import namever
 from .util import check_file, maybe_xfail
@@ -35,7 +35,7 @@ def output(request):
 def path(request):
     return request.param
 
-backends = (Java, Python, JavaScript)
+backends = (Java, Python, JavaScript, Ruby)
 
 @pytest.fixture(scope="session")
 def compiled(output, path):
@@ -85,13 +85,25 @@ def get_dist(name):
     return name
 
 def run_tests(base, dirs, command, env=None):
+    failed_expectations = []
     for name in dirs:
         if has_main(name):
-            actual = subprocess.check_output(command(name), cwd=os.path.join(base, name), env=env)
+            try:
+                cmd = command(name)
+                cwd = os.path.join(base, name)
+                print "cd %s && %s" % (cwd, " ".join(cmd))
+                actual = subprocess.check_output(cmd, cwd=cwd, env=env, stderr=subprocess.STDOUT)
+            except subprocess.CalledProcessError as e:
+                actual = e.output
+                print(actual)
             expected = get_expected(name)
             if expected != actual:
                 open(get_out(name) + ".cmp", "write").write(actual)
-            assert expected == actual
+                failed_expectations.append(name)
+    print(failed_expectations)
+    assert not failed_expectations
+
+
 
 def batch_pom(target, dirs):
     with open(os.path.join(target, "pom.xml"), "write") as fd:
@@ -141,3 +153,14 @@ def test_run_javascript(output):
 
     import quarkc.javascript
     run_tests(base, dirs, lambda name: ["node", quarkc.javascript.name(get_dist(name)) + ".js"], env=env)
+
+def test_run_ruby(output):
+    rb = Ruby()
+    base = os.path.join(output, rb.ext)
+    dirs = [name for name in os.listdir(base)]
+    ruby_path = ":".join([os.path.join(base, name, "lib") for name in dirs])
+    env = {"RUBYLIB": ruby_path}
+    env.update(os.environ)
+
+    import quarkc.ruby
+    run_tests(base, dirs, lambda name: ["bundle", "exec", "ruby", "lib/" + quarkc.ruby.name(get_dist(name)) + ".rb"], env=env)

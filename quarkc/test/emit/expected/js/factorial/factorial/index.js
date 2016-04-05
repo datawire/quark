@@ -9,8 +9,8 @@ function factorial(n) {
     }
 }
 exports.factorial = factorial;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     _qrt.print(factorial(1));
     _qrt.print(factorial(2));
     _qrt.print(factorial(3));

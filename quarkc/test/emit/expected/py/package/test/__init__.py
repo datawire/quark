@@ -31,5 +31,5 @@ class Test(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 Test.test_Test_ref = package_md.Root.test_Test_md

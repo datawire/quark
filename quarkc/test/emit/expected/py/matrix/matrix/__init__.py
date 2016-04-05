@@ -53,11 +53,11 @@ class Matrix(object):
         if ((name) == (u"columns")):
             (self).columns = value
 
-    
+
 Matrix.quark_List_quark_List_quark_Object___ref = matrix_md.Root.quark_List_quark_List_quark_Object___md
 Matrix.quark_List_quark_Object__ref = matrix_md.Root.quark_List_quark_Object__md
-
-def main():
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     matrix = Matrix(3, 3);
     (matrix).__set__(2, 2, 123);
     _println((matrix).__get__(2, 2));

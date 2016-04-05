@@ -44,7 +44,7 @@ namespace pkg {
     }
 }
 
-void main() {
+void main(List<String> args) {
     pkg.T1 t1 = new pkg.T1();
     t1.foo();
     t1.bar();

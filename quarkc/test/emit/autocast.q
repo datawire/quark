@@ -2,7 +2,7 @@ void foo(String s) {
     print(s);
 }
 
-void main() {
+void main(List<String> args) {
     Object o = "Hello World!";
     String s = ?o;
     String s2;

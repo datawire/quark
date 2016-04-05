@@ -1,7 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
 
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     var four = (2) + (2);
     _qrt.print(_qrt.toString(four));
     var half = Math.floor((1) / (2));

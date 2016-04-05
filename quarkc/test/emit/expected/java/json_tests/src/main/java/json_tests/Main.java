@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        json_tests.Functions.main();
+        json_tests.Functions.main(args);
     }
 }

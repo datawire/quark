@@ -20,6 +20,6 @@ void test_assembling() {
     print(outer.toString());
 }
 
-void main() {
+void main(List<String> args) {
     test_assembling();
 }

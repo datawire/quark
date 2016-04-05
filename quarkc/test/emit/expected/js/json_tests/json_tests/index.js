@@ -53,8 +53,8 @@ function iterables() {
     _qrt.print(keys);
 }
 exports.iterables = iterables;
-
-function main() {
+exports.call_main = function () { main(process.argv.slice(1)); }
+function main(args) {
     test_roundtrip();
     test_iterate_list();
     test_iterate_list_directory();

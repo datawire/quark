@@ -25,7 +25,7 @@ class A(object):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 A.default_constructors_A_ref = default_constructors_md.Root.default_constructors_A_md
 class B(A):
     def _init(self):
@@ -50,7 +50,7 @@ class B(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 B.default_constructors_B_ref = default_constructors_md.Root.default_constructors_B_md
 class C(A):
     def _init(self):
@@ -75,7 +75,7 @@ class C(A):
         if ((name) == (u"name")):
             (self).name = value
 
-    
+
 C.default_constructors_C_ref = default_constructors_md.Root.default_constructors_C_md
 class X(object):
     def _init(self):
@@ -116,10 +116,10 @@ class Y(X):
         if ((name) == (u"name")):
             (self).name = value
 
-    
-Y.default_constructors_Y_ref = default_constructors_md.Root.default_constructors_Y_md
 
-def main():
+Y.default_constructors_Y_ref = default_constructors_md.Root.default_constructors_Y_md
+def call_main(): import sys; main(_List(sys.argv[1:]))
+def main(args):
     b = B(u"Bob");
     (b).greet();
     c = C(u"arole");

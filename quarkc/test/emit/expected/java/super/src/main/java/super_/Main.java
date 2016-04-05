@@ -4,6 +4,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        super_.Functions.main();
+        super_.Functions.main(args);
     }
 }
