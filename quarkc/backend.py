@@ -18,6 +18,7 @@ from .ast import *
 from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
 from .dispatch import *
 from .helpers import *
+from .environment import Environment
 
 class Backend(object):
 
@@ -679,7 +680,7 @@ class Backend(object):
             return self.expr(expr)
 
     def apply_macro(self, macro, expr, args):
-        env = {}
+        env = Environment()
         if macro.clazz and macro.type:
             bindings = expr.resolved.bindings
             for tparam in bindings:

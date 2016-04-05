@@ -1,6 +1,6 @@
 class Test {}
 class Test {}
-void foo(int a, int a) {}
+void foo_(int a, int a) {}
 class Foo {
     int x;
     int x;
@@ -12,7 +12,7 @@ class Bar {
     void foo() {}
 }
 void Bar() {}
-void test() {
+void test_duplicate_locals() {
     int x;
     int x;
 }

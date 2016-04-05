@@ -1,6 +1,6 @@
 class Test {}
 
-void test() {
+void test_nonexistent_attributes() {
     Test t = new Test();
     int x = t.nonexistent;
     int y = t.nosuchmethod();
