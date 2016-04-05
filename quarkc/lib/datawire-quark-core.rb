@@ -453,13 +453,16 @@ module DatawireQuarkCore
   end
 
   class Eventor
-    def initialize()
+    def initialize(runtime)
       @executor = Concurrent::SingleThreadExecutor.new
       @timers = Concurrent::TimerSet.new(:executor => @executor)
       @sources = Sources.new
+      @runtime = runtime
       at_exit { wait_for_sources }
       @log = Logger.new "quark.runtime"
     end
+
+    attr_reader :runtime
 
     def add(source)
       @sources.add source
@@ -498,14 +501,17 @@ module DatawireQuarkCore
         end
         sleep 0.1
       end
+    rescue Interrupt
+      @log.warn "Interrupted"
     end
 
   end
 
   class Runtime
     def initialize()
-      @events = Eventor.new
+      @events = Eventor.new self
       @log = Logger.new "quark.runtime"
+      @servers = Servers.new(@events)
     end
     def schedule(task, delay)
       src = @events.add "timer"
@@ -540,22 +546,18 @@ module DatawireQuarkCore
     end
 
     def serveHTTP(url, servlet)
-      src = @events.add "http servlet"
-      uri = URI(url)
-      # TODO multiple servlets per server
-      # TODO check scheme
-      # TODO error handling
-      @events.event { servlet.onServletInit(url, self) }
-      server = MyServer.new(uri.host, uri.port) do |request|
-        @events.event { servlet.onHTTPRequest(request, request.rs) }
-      end
+      @servers.add(HTTPAdapter.new(url, servlet, @events))
+    end
+
+    def serveWS(url, servlet)
+      @servers.add(WSAdapter.new(url, servlet, @events))
     end
 
     def respond(request, response)
       if request.rs == response
-        request.fut.set response
+        request.respond :http_response
       else
-        request.fail!
+        request.fail! 500, "servlet failed to pair up request and response\r\n"
       end
     end
 
@@ -587,8 +589,8 @@ module DatawireQuarkCore
       end
       client.on_client(:error) do |wsevt|
         # puts self
-        # puts "error"
-        events.event { handler.onWSError(sock, wsevt.reason) }
+        events.event { handler.onWSError(sock) # , wsevt.message)
+        }
       end
       client.issues.on(:start_failed) do |err|
         events.event { handler.onWSError(sock, err.to_s) }
@@ -680,51 +682,252 @@ module DatawireQuarkCore
   class IncomingRequest < HTTP::Request
     attr_accessor :rs
     attr_accessor :fut
+    attr_accessor :request
+    attr_accessor :svr
+    attr_accessor :action
+    attr_accessor :ws_handler
 
-    private
+    def fail! (code, body)
+      @rs.setCode(code)
+      @rs.setBody(body)
+      respond :http_response
+    end
 
-    def fail
-      @rs.setCode(500)
-      @rs.setBody("Servlet failed to pair up request and response")
-      @fut.set(@rs)
+    def respond(action)
+      @svr.respond(self, action)
     end
   end
 
-  class MyServer < Reel::Server::HTTP
-    def initialize(host = "127.0.0.1", port = 3000, &cb)
+  class Servers
+    include Celluloid
+    def initialize(events)
+      @servers = {}
+      @events= events
+    end
+    def add(adapter)
+      if not adapter.scheme_supported?
+        error = "${adapter.uri.scheme} is not supported"
+        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        return
+      end
+      if adapter.secure?
+        error = "${adapter.uri.scheme} is not yet supported"
+        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        return
+      end
+      server = @servers[adapter.key]
+      if server.nil?
+        if adapter.secure?
+          server = HTTPSServer.new(adapter.uri.hostname, adapter.uri.port, @events)
+        else
+          server = HTTPServer.new(adapter.uri.hostname, adapter.uri.port, @events)
+        end
+        # in case the port was 0 this will mutate the #effective_url, and #key of adapter
+        adapter.uri.port = server.local_address.ip_port
+        @servers[adapter.key] = server
+      end
+      server.add(adapter)
+    end
+  end
+
+  class Adapter
+    def initialize(url, servlet, events)
+      @url = url
+      @uri = URI(url)
+      @servlet = servlet
+      @events = events
+    end
+    attr_reader :servlet, :uri, :url
+    attr_accessor :source
+
+    def scheme_supported?
+      self.schemes.values.include? @uri.scheme
+    end
+
+    def secure?
+      self.schemes[:secure] == @uri.scheme
+    end
+
+    def key
+      "#{@uri.host}:#{@uri.port}"
+    end
+
+    def effective_url
+      @uri.to_s
+    end
+
+  end
+
+  class HTTPAdapter < Adapter
+    def schemes
+      {plain: "http", secure: "https"}
+    end
+
+    def process_request(rq)
+      if rq.request.websocket?
+        rq.fail! 400, "http here, move along\r\n"
+      else
+        @events.event { servlet.onHTTPRequest(rq, rq.rs) }
+      end
+    end
+
+    def process_response(rq)
+    end
+  end
+
+  class ServerWebsocketAdapter
+    def initialize(sock)
+      @sock = sock
+    end
+    def send (message)
+      @sock.write message
+    end
+
+    def sendBinary (message)
+      @sock.write message.data  # .unpack("C*")
+    end
+
+    def close
+      @sock.close
+    end
+  end
+
+  class WSAdapter < Adapter
+    def schemes
+      {plain: "ws", secure: "wss"}
+    end
+
+    def process_request(rq)
+      if rq.request.websocket?
+        @events.event { rq.ws_handler = servlet.onWSConnect(rq); rq.respond :detach }
+      else
+        rq.fail! 400, "websockets here, move along\r\n"
+      end
+    end
+    def process_response(rq)
+      if rq.ws_handler.nil?
+        rq.fail 403, "Forbidden\r\n"
+      else
+        websocket = rq.request.websocket
+        sock = ServerWebsocketAdapter.new(websocket)
+        handler = rq.ws_handler
+        src = @events.add ("server websocket")
+        events = @events
+        @events.event { handler.onWSInit(sock) }
+        @events.event { handler.onWSConnected(sock) }
+        websocket.on_close do |wsevent|
+          events.event { handler.onWSClosed(sock) }
+          events.event(final:src) { handler.onWSFinal(sock) }
+        end
+        websocket.on_error do |wsevt|
+          events.event { handler.onWSError(sock) #, wsevt.message)
+          }
+        end
+        Thread.new do
+          while not websocket.closed?
+            data = websocket.read
+            case data
+            when Array then
+              buffer = Buffer.new(data.pack("C*"))
+              events.event { handler.onWSBinary(sock, buffer) }
+            when String then
+              events.event { handler.onWSMessage(sock, data) }
+            end
+          end
+        end
+      end
+    rescue => ex
+      puts "aieieie", ex
+    end
+  end
+
+  module MyServer
+    def initialize(host = "127.0.0.1", port = 3000, events)
       super(host, port, &method(:on_connection))
-      @cb = cb
+      @events = events
+      @paths = {}
+      @log = Logger.new "quark.runtime.server"
+    end
+
+
+    def local_address
+        Addrinfo.new(@server.getsockname)
+    end
+
+    def add(adapter)
+      old = @paths[adapter.uri.path]
+      if not adapter.nil?
+        @paths[adapter.uri.path] = adapter
+        adapter.source = @events.add(adapter.effective_url)
+        @events.event { adapter.servlet.onServletInit(adapter.effective_url, @events.runtime) }
+      end
+      if not old.nil?
+        # XXX: servlet is not quiesced
+        @events.event(final: adapter.source) { adapter.servlet.onServletFinal(adapter.effective_url) }
+      end
     end
 
     def on_connection(connection)
       connection.each_request do |request|
-        if request.websocket?
-          handle_websocket(request.websocket)
+        begin
+        rq = IncomingRequest.new(request.url)
+        rq.setBody(request.body)
+        request.headers.each {|key, value| rq.setHeader(key, value)}
+        rq.setMethod(request.method)
+        rq.request = request
+        rq.rs = HTTP::Response.new
+        rq.fut = Celluloid::Condition.new
+        rq.svr = self
+        rq.action = :wait
+        adapter = @paths[request.uri.path]
+        if adapter.nil?
+          rq.fail! 404, "not found\r\n"
         else
-          handle_request(request)
+          adapter.process_request(rq)
+        end
+        if rq.action == :wait
+          rq.fut.wait
+        end
+        adapter.process_response(rq)
+        case rq.action
+        when :http_response
+          http_response(rq)
+        when :detach
+          connection.detach
+        else
+          @log.error "Unknown action #{rq.action} for HTTP request"
+          rq.fail! 500, "quark runtime is confused, unknown http request action\r\n"
+          http_response(rq)
+        end
+      rescue => ex
+        @log.error ex
         end
       end
     end
 
-    def handle_request(request)
-      rq = IncomingRequest.new(request.url)
-      rq.setBody(request.body)
-      request.headers.each {|key, value| rq.setHeader(key, value)}
-      rq.setMethod(request.method)
-      rq.rs = HTTP::Response.new
-      rq.fut = Concurrent::IVar.new
-      @cb.call(rq)
-      rs = rq.fut.value
+    def http_response(rq)
+      rs = rq.rs
       headers = {}
       rs.getHeaders.each { |k| headers[k] = rs.getHeader k }
       response = Reel::Response::new(rs.getCode, headers, rs.getBody)
-      request.respond response
+      rq.request.respond response
     end
 
-    def handle_websocket(sock)
-      sock << "Hello everyone out there in WebSocket land!"
-      sock.close
+    def respond(rq, action)
+      if rq.action == :wait
+        # condition is race-free only in the context of the originating actor
+        rq.fut.signal
+      end
+      rq.action = action
     end
+  end
+
+  class HTTPServer < Reel::Server::HTTP
+    include MyServer
+  end
+
+  class HTTPSServer  < Reel::Server::HTTPS
+    include MyServer
   end
 
 
@@ -738,8 +941,14 @@ module DatawireQuarkCore
     def onServletEnd(url)
     end
   end
+  
   class HTTPServlet < Servlet
     def onHTTPRequest(request, response)
+    end
+  end
+
+  class WSServlet < Servlet
+    def onWSConnect(request)
     end
   end
 
