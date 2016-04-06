@@ -491,11 +491,11 @@ class quark_ServerResponder(quark.reflect.Class):
         super(quark_ServerResponder, self).__init__(u"quark.ServerResponder");
         (self).name = u"quark.ServerResponder"
         (self).parameters = _List([])
-        (self).fields = _List([quark.reflect.Field(u"quark.HTTPRequest", u"request"), quark.reflect.Field(u"quark.HTTPResponse", u"response")])
+        (self).fields = _List([quark.reflect.Field(u"quark.bool", u"sendCORS"), quark.reflect.Field(u"quark.HTTPRequest", u"request"), quark.reflect.Field(u"quark.HTTPResponse", u"response")])
         (self).methods = _List([])
 
     def construct(self, args):
-        return quark.ServerResponder((args)[0], (args)[1])
+        return quark.ServerResponder((args)[0], (args)[1], (args)[2])
 
     def _getClass(self):
         return None
@@ -515,7 +515,7 @@ class quark_Server_quark_Object_(quark.reflect.Class):
         super(quark_Server_quark_Object_, self).__init__(u"quark.Server<quark.Object>");
         (self).name = u"quark.Server"
         (self).parameters = _List([u"quark.Object"])
-        (self).fields = _List([quark.reflect.Field(u"quark.Object", u"impl")])
+        (self).fields = _List([quark.reflect.Field(u"quark.Object", u"impl"), quark.reflect.Field(u"quark.bool", u"_sendCORS")])
         (self).methods = _List([])
 
     def construct(self, args):

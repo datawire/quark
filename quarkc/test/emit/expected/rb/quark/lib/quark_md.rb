@@ -1261,7 +1261,7 @@ class QuarkServerResponder < ::Quark.quark.reflect.QuarkClass
         super("quark.ServerResponder")
         (self).name = "quark.ServerResponder"
         (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.HTTPRequest", "request"), ::Quark.quark.reflect.Field.new("quark.HTTPResponse", "response")])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.bool", "sendCORS"), ::Quark.quark.reflect.Field.new("quark.HTTPRequest", "request"), ::Quark.quark.reflect.Field.new("quark.HTTPResponse", "response")])
         (self).methods = ::DatawireQuarkCore::List.new([])
 
         nil
@@ -1272,7 +1272,7 @@ class QuarkServerResponder < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.ServerResponder.new((args)[0], (args)[1])
+        return ::Quark.quark.ServerResponder.new((args)[0], (args)[1], (args)[2])
 
         nil
     end
@@ -1323,7 +1323,7 @@ class QuarkServerQuarkObject < ::Quark.quark.reflect.QuarkClass
         super("quark.Server<quark.Object>")
         (self).name = "quark.Server"
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "impl")])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "impl"), ::Quark.quark.reflect.Field.new("quark.bool", "_sendCORS")])
         (self).methods = ::DatawireQuarkCore::List.new([])
 
         nil

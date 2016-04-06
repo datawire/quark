@@ -25,4 +25,5 @@ function HelloImpl() {
 
 var implementation = new HelloImpl();
 var server = new hello.HelloServer(implementation);
+server.sendCORS(true);
 server.serveHTTP("http://127.0.0.1:8910/hello");

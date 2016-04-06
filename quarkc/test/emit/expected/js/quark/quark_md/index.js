@@ -730,7 +730,7 @@ function quark_ServerResponder() {
     quark_ServerResponder.super_.call(this, "quark.ServerResponder");
     (this).name = "quark.ServerResponder";
     (this).parameters = [];
-    (this).fields = [new quark.reflect.Field("quark.HTTPRequest", "request"), new quark.reflect.Field("quark.HTTPResponse", "response")];
+    (this).fields = [new quark.reflect.Field("quark.bool", "sendCORS"), new quark.reflect.Field("quark.HTTPRequest", "request"), new quark.reflect.Field("quark.HTTPResponse", "response")];
     (this).methods = [];
 }
 exports.quark_ServerResponder = quark_ServerResponder;
@@ -742,7 +742,7 @@ function quark_ServerResponder__init_fields__() {
 quark_ServerResponder.prototype.__init_fields__ = quark_ServerResponder__init_fields__;
 quark_ServerResponder.singleton = new quark_ServerResponder();
 function quark_ServerResponder_construct(args) {
-    return new quark.ServerResponder((args)[0], (args)[1]);
+    return new quark.ServerResponder((args)[0], (args)[1], (args)[2]);
 }
 quark_ServerResponder.prototype.construct = quark_ServerResponder_construct;
 
@@ -766,7 +766,7 @@ function quark_Server_quark_Object_() {
     quark_Server_quark_Object_.super_.call(this, "quark.Server<quark.Object>");
     (this).name = "quark.Server";
     (this).parameters = ["quark.Object"];
-    (this).fields = [new quark.reflect.Field("quark.Object", "impl")];
+    (this).fields = [new quark.reflect.Field("quark.Object", "impl"), new quark.reflect.Field("quark.bool", "_sendCORS")];
     (this).methods = [];
 }
 exports.quark_Server_quark_Object_ = quark_Server_quark_Object_;

@@ -190,18 +190,27 @@ namespace quark {
     }
 
     class ServerResponder extends concurrent.FutureListener {
+        bool sendCORS;
         HTTPRequest request;
         HTTPResponse response;
-        ServerResponder(HTTPRequest request, HTTPResponse response) {
+
+        ServerResponder(bool sendCORS, HTTPRequest request, HTTPResponse response) {
+            self.sendCORS = sendCORS;
             self.request = request;
             self.response = response;
         }
 
         void onFuture(concurrent.Future result) {
             String error = result.getError();
+
             if (error != null) {
                 response.setCode(404);
-            } else {
+            }
+            else {
+                if (self.sendCORS) {
+                    self.response.setHeader("Access-Control-Allow-Origin", "*");
+                }
+
                 self.response.setBody(toJSON(result, null).toString());
                 self.response.setCode(200);
             }
@@ -212,10 +221,26 @@ namespace quark {
     class Server<T> extends HTTPServlet {
 
         T impl;
+        bool _sendCORS;
 
         Server(T impl) {
             self.impl = impl;
+            self._sendCORS = false;
         }
+
+        void sendCORS(bool send) {
+            self._sendCORS = send;
+        }
+
+        //// This doesn't work, although it seems that it should. cf
+        //// https://github.com/datawire/quark/issues/121
+        //
+        // static Server<T> withCORS(T impl) {
+        //     Server<T> server = new Server<T>(impl);
+        //     server._sendCORS = true;
+
+        //     return server;
+        // }
 
         void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
             String body = request.getBody();
@@ -238,7 +263,7 @@ namespace quark {
                     idx = idx + 1;
                 }
                 concurrent.Future result = ?method.invoke(impl, args);
-                result.onFinished(new ServerResponder(request, response));
+                result.onFinished(new ServerResponder(self._sendCORS, request, response));
                 // XXX: we should also start a timeout here if the impl does not .finish() the result
             }
         }

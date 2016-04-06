@@ -1,4 +1,4 @@
-package hello 1.2.3;
+package hello 1.0.0;
 import quark.concurrent;
 
 namespace hello {

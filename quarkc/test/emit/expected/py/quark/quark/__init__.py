@@ -413,11 +413,13 @@ Client.quark_Map_quark_String_quark_ServiceInstance__ref = quark_md.Root.quark_M
 Client.quark_Client_ref = quark_md.Root.quark_Client_md
 class ServerResponder(object):
     def _init(self):
+        self.sendCORS = None
         self.request = None
         self.response = None
 
-    def __init__(self, request, response):
+    def __init__(self, sendCORS, request, response):
         self._init()
+        (self).sendCORS = sendCORS
         (self).request = request
         (self).response = response
 
@@ -426,6 +428,9 @@ class ServerResponder(object):
         if ((error) != (None)):
             (self.response).setCode(404);
         else:
+            if ((self).sendCORS):
+                ((self).response).setHeader(u"Access-Control-Allow-Origin", u"*");
+
             ((self).response).setBody((toJSON(result, None)).toString());
             ((self).response).setCode(200);
 
@@ -435,6 +440,9 @@ class ServerResponder(object):
         return u"quark.ServerResponder"
 
     def _getField(self, name):
+        if ((name) == (u"sendCORS")):
+            return (self).sendCORS
+
         if ((name) == (u"request")):
             return (self).request
 
@@ -444,6 +452,9 @@ class ServerResponder(object):
         return None
 
     def _setField(self, name, value):
+        if ((name) == (u"sendCORS")):
+            (self).sendCORS = value
+
         if ((name) == (u"request")):
             (self).request = value
 
@@ -455,10 +466,15 @@ ServerResponder.quark_ServerResponder_ref = quark_md.Root.quark_ServerResponder_
 class Server(object):
     def _init(self):
         self.impl = None
+        self._sendCORS = None
 
     def __init__(self, impl):
         self._init()
         (self).impl = impl
+        (self)._sendCORS = False
+
+    def sendCORS(self, send):
+        (self)._sendCORS = send
 
     def onHTTPRequest(self, request, response):
         body = (request).getBody();
@@ -479,7 +495,7 @@ class Server(object):
                 idx = (idx) + (1)
 
             result = (method).invoke(self.impl, args);
-            (result).onFinished(ServerResponder(request, response));
+            (result).onFinished(ServerResponder((self)._sendCORS, request, response));
 
     def onServletError(self, url, message):
         (concurrent.Context.runtime()).fail((((u"RPC Server failed to register ") + (url)) + (u" due to: ")) + (message));
@@ -491,11 +507,17 @@ class Server(object):
         if ((name) == (u"impl")):
             return (self).impl
 
+        if ((name) == (u"_sendCORS")):
+            return (self)._sendCORS
+
         return None
 
     def _setField(self, name, value):
         if ((name) == (u"impl")):
             (self).impl = value
+
+        if ((name) == (u"_sendCORS")):
+            (self)._sendCORS = value
 
     def serveHTTP(self, url):
         (concurrent.Context.runtime()).serveHTTP(url, self);
