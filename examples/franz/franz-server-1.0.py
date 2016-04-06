@@ -1,4 +1,5 @@
-# Topic server
+#!/usr/bin/env python
+
 
 import time
 import flask
@@ -15,6 +16,7 @@ def topic_data(topic):
         data = []
         topics[topic] = data
         return data
+
 
 @app.route("/subscribe/<topic>")
 def subscribe(topic):
@@ -41,3 +43,4 @@ def pop(topic, subscription_id):
 
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=8081)
+

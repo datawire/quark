@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 
 """
-Usage: launch.py EXTENSION
+Usage: simulate.py
 
 Examples:
-  launch.py first
-  launch.py second
+  simulate.py
 """
 
 import os
@@ -17,11 +16,10 @@ from docopt import docopt
 
 
 commands = """
-python out/server.py devnull
-env CLASSPATH=out:out/src/main/java java Begin
+python push.py
 python square.py
+python dump.py
 node seq_gen.js
-env CLASSPATH=out:out/src/main/java java DumpTopic
 """
 
 
@@ -46,10 +44,6 @@ def launch(command):
 
 
 def main(args):
-    if os.path.exists("out"):
-        os.unlink("out")
-    os.symlink("out." + args["EXTENSION"], "out")
-
     pids = []
     try:
         for command in commands.split("\n"):
@@ -63,7 +57,6 @@ def main(args):
                 os.kill(pid, signal.SIGTERM)
             except Exception:
                 pass
-        os.unlink("out")
 
 
 if __name__ == "__main__":

@@ -1,3 +1,6 @@
+#!/usr/bin/env python
+
+
 # Topic server
 
 import gevent
@@ -53,3 +56,4 @@ def fetch(topic, idx):
 if __name__ == "__main__":
     http_server = WSGIServer(("127.0.0.1", 8082), app)
     http_server.serve_forever()
+

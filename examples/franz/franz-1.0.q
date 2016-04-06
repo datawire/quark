@@ -1,16 +1,18 @@
-@version("1.0")
+package franz 1.0.0;
+
 namespace franz {
 
     @doc("Interface to a remote topic")
     class Topic {
+
         String baseUrl;
         String subscriptionId;
-	String name;
+	    String name;
 
         @doc("Specify URL of remote topic on creation")
-	Topic(String baseUrl, String name) {
+	    Topic(String baseUrl, String name) {
             self.baseUrl = baseUrl;
-	    self.name = name;
+	        self.name = name;
             self.subscriptionId = url_get(self.baseUrl + "/subscribe/" + self.name);
         }
 
