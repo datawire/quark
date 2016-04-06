@@ -46,9 +46,12 @@ class Backend(object):
         pkg = self.packages[0].name
 
         target = self.install_target()
-        urlc = "%sc" % self.root.url
+        if os.path.exists(self.root.url):
+            deps = (compiled_quark(self.root.url),)
+        else:
+            deps = ()
         if not (getattr(self.root, "_modified", False) or
-                not is_newer(target, urlc, __file__, inspect.getsourcefile(self.gen))):
+                not is_newer(target, __file__, inspect.getsourcefile(self.gen), *deps)):
             self.log.debug("Skipping %s for %s[%s]", cls, pkg, target)
             return
 
