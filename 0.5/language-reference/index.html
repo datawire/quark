@@ -1,0 +1,472 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Quark Language Reference &mdash; Datawire Connect 0.5.1 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.5.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.5.1 documentation" href="../index.html" />
+    <link rel="next" title="Introduction" href="intro.html" />
+    <link rel="prev" title="More Information" href="../install/links.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="intro.html"
+            title="Introduction"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="../install/links.html"
+            title="More Information"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="language-language-reference">
+<h1>Quark Language Reference<a class="headerlink" href="#language-language-reference" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="core.html">Core Concepts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="core.html#language-structure">Language Structure</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="core.html#files">Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#packages">Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#functions">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#interfaces">Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="core.html#constants">Constants</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#naming-and-other-conventions">Naming and Other Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#inheritance">Inheritance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#overloading">Overloading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#object-instantiation">Object Instantiation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#typing">Typing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#comments">Comments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#white-space">White Space</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html#end-of-statement">End of Statement</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="language.html">Language Elements</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="keywords.html">Keywords</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#break">break</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#class">class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#continue">continue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#else">else</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#extends">extends</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#false">false</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#if">if</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#interface">interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#macro">macro</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#new">new</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#null">null</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#package">package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#primitive">primitive</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#return">return</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#self">self</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#static">static</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#super">super</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#true">true</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#use">use</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keywords.html#while">while</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="operators.html">Operators</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#add">Add</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#and">And</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#at">At</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#bitwise-complement">Bitwise Complement</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#cast">Cast</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#divide">Divide</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#equals">Equals</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#equivalent">Equivalent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#greater-than">Greater Than</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#greater-than-or-equal">Greater Than or Equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#less-than">Less Than</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#less-than-or-equal">Less Than or Equal</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#modulo">Modulo</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#multiply">Multiply</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#negate">Negate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#not">Not</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#not-equivalent">Not Equivalent</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#or">Or</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html#subtract">Subtract</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="types.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="types.html#bool">bool</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#byte">byte</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#class">Class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#field">Field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#float">float</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#int">int</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#integral">integral</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#list">List</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#long">long</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#numerical">numerical</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#map">Map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#object">Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#short">short</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#string">String</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html#void">void</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="integrationTypes.html">Integration Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#buffer">Buffer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#client">Client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#codec">Codec</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#httphandler">HTTPHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#httprequest">HTTPRequest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#httpresponse">HTTPResponse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#httpservlet">HTTPServlet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#jsonobject">JSONObject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#responseholder">ResponseHolder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#runtime">Runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#server">Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#servlet">Servlet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#task">Task</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#websocket">WebSocket</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#wshandler">WSHandler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html#wsservlet">WSServlet</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="integrationInterfaces.html">Integration Interfaces</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="integrationInterfaces.html#service">Service</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-and">bool::__and__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-eq">bool::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-getclass">bool::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-getfield">bool::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-ne">bool::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-not">bool::__not__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-or">bool::__or__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-setclass">bool::setClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-tojson">bool::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-to-jsonobject">bool::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#bool-tostring">bool::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-add">byte::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-div">byte::__div__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-eq">byte::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-getclass">byte::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-getfield">byte::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-gt">byte::__gt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-lt">byte::__lt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-mod">byte::__mod__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-mul">byte::__mul__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-ne">byte::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-neg">byte::__neg__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-setfield">byte::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-sub">byte::__sub__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-tofloat">byte::toFloat()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-tojson">byte::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-to-jsonobject">byte::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#byte-tostring">byte::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#defaultcodec">defaultCodec()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-add">float::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-div">float::__div__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-eq">float::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-getclass">float::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-getfield">float::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-gt">float::__gt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-lt">float::__lt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-mul">float::__mul__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-neg">float::__neg__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-ne">float::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-round">float::round()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-setfield">float::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-sub">float::__sub__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-tojson">float::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-to-jsonobject">float::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-tostring">float::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#fromjson">fromJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-add">int::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-div">int::__div__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-equal">int::__equal__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-getclass">int::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-getfield">int::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-gt">int::__gt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-lt">int::__lt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-mod">int::__mod__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-mul">int::__mul__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-neg">int::__neg__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-ne">int::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-setfield">int::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-sub">int::__sub__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-to-byte">int::_to_Byte()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#float-tofloat">float::toFloat()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-tojson">int::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-to-jsonobject">int::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-to-long">int::_to_Long()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-to-short">int::_to_Short()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#int-tostring">int::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-add">List::add()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-get">List::__get__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-getclass">List::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-getfield">List::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-set">List::__set__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-setfield">List::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#list-size">List::size()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-add">long::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-div">long::__div__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-eq">long::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-getclass">long::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-getfield">long::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-gt">long::__gt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-lt">long::__lt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-mul">long::__mul__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-neg">long::__neg__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-setfield">long::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-sub">long::__sub__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-tofloat">long::toFloat()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-tojson">long::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-to-jsonobject">long::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#long-tostring">long::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-contains">Map::contains()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-eq">Map::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-get">Map::get()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-getclass">Map::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-getfield">Map::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-ne">Map::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-set">Map::set()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-setfield">Map::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#map-update">Map::update()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#object-eq">Object::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#object-getclass">Object::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#object-getfield">Object::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#object-ne">Object::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#object-setfield">Object::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#now">now()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#parseint">parseInt()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#print">print()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-add">short::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-div">short::__div__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-eq">short::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-getclass">short::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-getfield">short::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-gt">short::__gt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-lt">short::__lt__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-mod">short::__mod__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-mul">short::__mul__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-ne">short::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-neg">short::__neg__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-setfield">short::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-sub">short::__sub__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-tofloat">short::toFloat()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-tojson">short::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-tojsonobject">short::toJSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#short-tostring">short::toString()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#sleep">sleep()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-add">String::__add__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-endswith">string::endsWith()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-eq">string::__eq__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-find">string::find()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-getclass">string::getClass()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-getfield">string::getField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-join">string::join()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-ne">string::__ne__()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-parsejson">string::parseJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-replace">string::replace()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-setfield">string::setField()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-size">string::size()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-split">string::split()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-startswith">string::startsWith()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-substring">string::substring()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-tojson">string::toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#string-to-jsonobject">string::_to_JSONObject()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#tojson">toJSON()</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html#url-get">url_get()</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="annotations.html">Annotations</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html#delegate">&#64;delegate</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html#doc">&#64;doc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html#version">&#64;version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</div>
+<div class="section" id="document-version">
+<h2>Document Version<a class="headerlink" href="#document-version" title="Permalink to this headline">¶</a></h2>
+<p>Quark Language Reference 0.5.1-1</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    
+
+
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Quark Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core Concepts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Language Elements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rpc-basic/index.html">Getting Started with RPC Walkthrough</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../install/links.html" title="previous chapter">More Information</a></li>
+      <li>Next: <a href="intro.html" title="next chapter">Introduction</a></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="intro.html">Introduction</a></li>
+    </ul>
+
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="../install/links.html">More Information</a></li>
+    </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="intro.html"
+            title="Introduction"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="../install/links.html"
+            title="More Information"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.5.1 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
