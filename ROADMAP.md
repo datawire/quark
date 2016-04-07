@@ -16,15 +16,18 @@ The following is a roughly ordered set of priorities for Quark.
  - RPC support
  - HelloRPC example
 
-### Phase 3 (in progress)
+### Phase 3 (done)
 
  - Resiliency patterns
    + timeouts
    + circuit breakers
    + load balancing
+
+### Phase 4 (done)
+
  - Ruby support
 
-### Phase 4 (planning)
+### Phase 5 (planning)
 
  - Exceptions
  - Asynchronous RPC
@@ -32,7 +35,7 @@ The following is a roughly ordered set of priorities for Quark.
  - Performance and scalability testing
  - High performance RPC example
 
-### Phase 5 and beyond
+### Phase 6 and beyond
 
  - Go support
  - API checksum for version validation
