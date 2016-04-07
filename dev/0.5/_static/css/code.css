@@ -1,0 +1,20 @@
+.codeblock,
+pre.literal-block,
+.rst-content .literal-block,
+.rst-content pre.literal-block,
+div[class^='highlight'] {
+    border: 1px solid #e1e4e5;
+    padding: 0px;
+    overflow-x: auto;
+    background: #fff;
+    margin: 0.05rem 0 1.7rem 0;
+}
+
+.codeblock div[class^='highlight'],
+pre.literal-block div[class^='highlight'],
+.rst-content .literal-block div[class^='highlight'],
+div[class^='highlight'] div[class^='highlight'] {
+    border: none;
+    background: none;
+    margin: 0;
+}
