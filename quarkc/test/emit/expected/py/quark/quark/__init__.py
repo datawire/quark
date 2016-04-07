@@ -1,6 +1,7 @@
 from quark_runtime import *
 
 import reflect
+import logging
 import behaviors
 import quark_md
 import concurrent

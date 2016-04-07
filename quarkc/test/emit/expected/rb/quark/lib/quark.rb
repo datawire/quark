@@ -3,6 +3,7 @@ require_relative "datawire-quark-core"
 def self.quark; Quark; end
 module Quark
 require_relative 'quark/reflect' # 0 ('quark',) ()
+require_relative 'quark/logging' # 0 ('quark',) ()
 require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark_md' # 0 () ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()

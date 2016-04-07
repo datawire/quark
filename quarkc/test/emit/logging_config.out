@@ -1,0 +1,3 @@
+DEBUG quark.hello Debug log
+INFO quark.hello Info log
+ERROR quark.hello Error log

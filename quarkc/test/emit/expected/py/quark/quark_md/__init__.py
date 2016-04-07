@@ -267,6 +267,115 @@ class quark_Map_quark_String_quark_ServiceInstance_(quark.reflect.Class):
         pass
 quark_Map_quark_String_quark_ServiceInstance_.singleton = quark_Map_quark_String_quark_ServiceInstance_()
 
+class quark_logging_Appender(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_logging_Appender, self).__init__(u"quark.logging.Appender");
+        (self).name = u"quark.logging.Appender"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_logging_Appender.singleton = quark_logging_Appender()
+
+class quark_logging_Config_setAppender_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_logging_Config_setAppender_Method, self).__init__(u"quark.logging.Config", u"setAppender", _List([u"quark.logging.Appender"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).setAppender((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_logging_Config_setLevel_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_logging_Config_setLevel_Method, self).__init__(u"quark.logging.Config", u"setLevel", _List([u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj).setLevel((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_logging_Config_configure_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_logging_Config_configure_Method, self).__init__(u"quark.void", u"configure", _List([]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).configure();
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class quark_logging_Config(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_logging_Config, self).__init__(u"quark.logging.Config");
+        (self).name = u"quark.logging.Config"
+        (self).parameters = _List([])
+        (self).fields = _List([])
+        (self).methods = _List([quark_logging_Config_setAppender_Method(), quark_logging_Config_setLevel_Method(), quark_logging_Config_configure_Method()])
+
+    def construct(self, args):
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_logging_Config.singleton = quark_logging_Config()
+
 class quark_reflect_Class(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -2351,6 +2460,8 @@ Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurr
 Root.quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton
+Root.quark_logging_Appender_md = quark_logging_Appender.singleton
+Root.quark_logging_Config_md = quark_logging_Config.singleton
 Root.quark_Resolver_md = quark_Resolver.singleton
 Root.quark_ResponseHolder_md = quark_ResponseHolder.singleton
 Root.quark_Service_md = quark_Service.singleton
@@ -2385,4 +2496,5 @@ Root.quark_test_Harness_md = quark_test_Harness.singleton
 import quark.concurrent
 import quark.test
 import quark
+import quark.logging
 import quark.behaviors
