@@ -416,10 +416,78 @@ module DatawireQuarkCore
     end
   end
 
+
+  if not Logging.initialized?
+    Logging.init %w(trace debug info warn error fatal)
+  end
   class QuarkLayout < ::Logging::Layout
+    def initialize
+      @namecache = {}
+    end
     def format( event )
+      level = ::Logging::LNAMES[event.level].upcase
+      topic = topic_of(event)
       obj = format_obj(event.data)
-      sprintf("%s: %s\n", ::Logging::LNAMES[event.level].downcase, obj)
+      sprintf("%s %s %s\n", level, topic, obj)
+    end
+    def topic_of(event)
+      name = event.logger
+      topic = @namecache[name]
+      if topic.nil?
+        @namecache[name] = topic = name.gsub("::",".")
+      end
+      topic
+    end
+  end
+
+  class LogConfigurator
+    def initialize
+      @appender = STDOUT
+      @level = :info
+    end
+
+    def setAppender appender
+      @appender = appender
+      self
+    end
+
+    def setLevel level
+      @level = level
+      self
+    end
+
+    def configure
+      root = Logging.logger["quark"]
+      appender = @appender.appender
+      appender.layout = QuarkLayout.new
+      root.appenders = appender
+      root.level = @level
+      nil
+    end
+  end
+
+  class Appender
+    attr_reader :appender
+    def initialize appender
+      @appender = appender
+    end
+  end
+
+  STDOUT = Appender.new Logging.appenders.stdout
+  STDERR = Appender.new Logging.appenders.stderr
+
+  class LoggerConfig
+    def self.config
+      LogConfigurator.new
+    end
+    def self.stdout
+      STDOUT
+    end
+    def self.stderr
+      STDERR
+    end
+    def self.file(path)
+      Appender.new Logging.appenders.file(path)
     end
   end
 
@@ -427,23 +495,8 @@ module DatawireQuarkCore
     extend Forwardable
     @@init = false
     def initialize(topic)
-      check_init if not @@init
-      @log = Logging.logger[topic.gsub(".","::")]
+      @log = Logging.logger["quark::" + topic.gsub(".","::")]
     end
-
-    def check_init
-      @@init = true
-      r = Logging.logger.root
-      if r.appenders.empty?
-        r.appenders = Logging.appenders.stdout
-        r.level = :info
-        # Logging.logger["quark"].warn "Logging initialized by quark runtime."
-      else
-        # Logging.logger["quark"].debug "Logging already initialized."
-      end
-      # Logging.show_configuration
-    end
-
     if Logging.level_num(:trace).nil?
       def_delegator :@log, :debug, :trace
     else

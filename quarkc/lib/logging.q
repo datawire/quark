@@ -9,11 +9,17 @@ namespace quark {
         }
 
         macro Appender stdout() $java{io.datawire.quark.runtime.LoggerConfig.stdout()}
+                                $py{_LoggerConfig.stdout()}
+                                $rb{::DatawireQuarkCore::LoggerConfig.stdout()}
                                 $js{_qrt.LoggerConfig.stdout()};
         macro Appender stderr() $java{io.datawire.quark.runtime.LoggerConfig.stderr()}
+                                $py{_LoggerConfig.stderr()}
+                                $rb{::DatawireQuarkCore::LoggerConfig.stderr()}
                                 $js{_qrt.LoggerConfig.stderr()};
         macro Appender file(String path) $java{io.datawire.quark.runtime.LoggerConfig.file($path)}
-                                $js{_qrt.LoggerConfig.file()};
+                                $py{_LoggerConfig.file($path)}
+                                $rb{::DatawireQuarkCore::LoggerConfig.file($path)}
+                                $js{_qrt.LoggerConfig.file($path)};
 
         @doc("Logging configurator")
         interface Config {
@@ -25,6 +31,8 @@ namespace quark {
             void configure();
         }
         macro Config config() $java{io.datawire.quark.runtime.LoggerConfig.config()}
+                              $py{_LoggerConfig.config()}
+                              $rb{::DatawireQuarkCore::LoggerConfig.config()}
                               $js{_qrt.LoggerConfig.config()};
     }
 

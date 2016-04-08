@@ -7,6 +7,7 @@ include quark_node_runtime.js;
 use py ws4py 0.3.*;
 include quark_runtime.py;
 include quark_threaded_runtime.py;
+include quark_runtime_logging.py;
 include quark_ws4py_fixup.py;
 
 use rb concurrent-ruby 1.0.1;
