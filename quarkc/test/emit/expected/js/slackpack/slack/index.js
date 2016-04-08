@@ -63,10 +63,10 @@ function User__getClass() {
 User.prototype._getClass = User__getClass;
 
 function User__getField(name) {
-    if (require('lodash').isEqual((name), ("client"))) {
+    if (_qrt.equals((name), ("client"))) {
         return (this).client;
     }
-    if (require('lodash').isEqual((name), ("user"))) {
+    if (_qrt.equals((name), ("user"))) {
         return (this).user;
     }
     return null;
@@ -74,10 +74,10 @@ function User__getField(name) {
 User.prototype._getField = User__getField;
 
 function User__setField(name, value) {
-    if (require('lodash').isEqual((name), ("client"))) {
+    if (_qrt.equals((name), ("client"))) {
         (this).client = value;
     }
-    if (require('lodash').isEqual((name), ("user"))) {
+    if (_qrt.equals((name), ("user"))) {
         (this).user = value;
     }
 }
@@ -119,10 +119,10 @@ function Channel__getClass() {
 Channel.prototype._getClass = Channel__getClass;
 
 function Channel__getField(name) {
-    if (require('lodash').isEqual((name), ("client"))) {
+    if (_qrt.equals((name), ("client"))) {
         return (this).client;
     }
-    if (require('lodash').isEqual((name), ("channel"))) {
+    if (_qrt.equals((name), ("channel"))) {
         return (this).channel;
     }
     return null;
@@ -130,10 +130,10 @@ function Channel__getField(name) {
 Channel.prototype._getField = Channel__getField;
 
 function Channel__setField(name, value) {
-    if (require('lodash').isEqual((name), ("client"))) {
+    if (_qrt.equals((name), ("client"))) {
         (this).client = value;
     }
-    if (require('lodash').isEqual((name), ("channel"))) {
+    if (_qrt.equals((name), ("channel"))) {
         (this).channel = value;
     }
 }
@@ -207,13 +207,13 @@ function Client_onWSError(socket) {
 Client.prototype.onWSError = Client_onWSError;
 
 function Client_construct(type) {
-    if (require('lodash').isEqual((type), ("error"))) {
+    if (_qrt.equals((type), ("error"))) {
         return new event.SlackError();
     }
-    if (require('lodash').isEqual((type), ("hello"))) {
+    if (_qrt.equals((type), ("hello"))) {
         return new event.Hello();
     }
-    if (require('lodash').isEqual((type), ("message"))) {
+    if (_qrt.equals((type), ("message"))) {
         return new event.Message();
     }
     return new event.SlackEvent();
@@ -255,19 +255,19 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if (require('lodash').isEqual((name), ("runtime"))) {
+    if (_qrt.equals((name), ("runtime"))) {
         return (this).runtime;
     }
-    if (require('lodash').isEqual((name), ("token"))) {
+    if (_qrt.equals((name), ("token"))) {
         return (this).token;
     }
-    if (require('lodash').isEqual((name), ("handler"))) {
+    if (_qrt.equals((name), ("handler"))) {
         return (this).handler;
     }
-    if (require('lodash').isEqual((name), ("event_id"))) {
+    if (_qrt.equals((name), ("event_id"))) {
         return (this).event_id;
     }
-    if (require('lodash').isEqual((name), ("socket"))) {
+    if (_qrt.equals((name), ("socket"))) {
         return (this).socket;
     }
     return null;
@@ -275,19 +275,19 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if (require('lodash').isEqual((name), ("runtime"))) {
+    if (_qrt.equals((name), ("runtime"))) {
         (this).runtime = value;
     }
-    if (require('lodash').isEqual((name), ("token"))) {
+    if (_qrt.equals((name), ("token"))) {
         (this).token = value;
     }
-    if (require('lodash').isEqual((name), ("handler"))) {
+    if (_qrt.equals((name), ("handler"))) {
         (this).handler = value;
     }
-    if (require('lodash').isEqual((name), ("event_id"))) {
+    if (_qrt.equals((name), ("event_id"))) {
         (this).event_id = value;
     }
-    if (require('lodash').isEqual((name), ("socket"))) {
+    if (_qrt.equals((name), ("socket"))) {
         (this).socket = value;
     }
 }

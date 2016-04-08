@@ -17,7 +17,7 @@ from struct import Struct
 import threading
 import base64
 
-__all__ = """os sys time _Map _List _println _url_get _urlencode _JSONObject
+__all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
              _LoggerConfig""".split()
@@ -40,6 +40,13 @@ def _println(obj):
         sys.stdout.write((u"%s\n" % obj).encode("utf8"))
     sys.stdout.flush()
 
+def _toString(obj):
+    if obj is None:
+        return "null"
+    elif hasattr(obj, "toString"):
+        return obj.toString()
+    else:
+        return str(obj)
 
 def _url_get(url):
     try:

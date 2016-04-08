@@ -66,23 +66,23 @@ ListUtil.prototype._setField = ListUtil__setField;
  */
 function toJSON(obj, cls) {
     var result = new _qrt.JSONObject();
-    if (require('lodash').isEqual((obj), (null))) {
+    if (_qrt.equals((obj), (null))) {
         (result).setNull();
         return result;
     }
-    if (require('lodash').isEqual((cls), (null))) {
+    if (_qrt.equals((cls), (null))) {
         cls = reflect.Class.get(_qrt._getClass(obj));
     }
     var idx = 0;
-    if (require('lodash').isEqual(((cls).name), ("quark.String"))) {
+    if (_qrt.equals(((cls).name), ("quark.String"))) {
         (result).setString(obj);
         return result;
     }
-    if (((((require('lodash').isEqual(((cls).name), ("quark.byte"))) || (require('lodash').isEqual(((cls).name), ("quark.short")))) || (require('lodash').isEqual(((cls).name), ("quark.int")))) || (require('lodash').isEqual(((cls).name), ("quark.long")))) || (require('lodash').isEqual(((cls).name), ("quark.float")))) {
+    if (((((_qrt.equals(((cls).name), ("quark.byte"))) || (_qrt.equals(((cls).name), ("quark.short")))) || (_qrt.equals(((cls).name), ("quark.int")))) || (_qrt.equals(((cls).name), ("quark.long")))) || (_qrt.equals(((cls).name), ("quark.float")))) {
         (result).setNumber(obj);
         return result;
     }
-    if (require('lodash').isEqual(((cls).name), ("quark.List"))) {
+    if (_qrt.equals(((cls).name), ("quark.List"))) {
         (result).setList();
         var list = obj;
         while ((idx) < ((list).length)) {
@@ -91,7 +91,7 @@ function toJSON(obj, cls) {
         }
         return result;
     }
-    if (require('lodash').isEqual(((cls).name), ("quark.Map"))) {
+    if (_qrt.equals(((cls).name), ("quark.Map"))) {
         (result).setObject();
         var map = obj;
         return result;
@@ -113,30 +113,30 @@ exports.toJSON = toJSON;
  * deserialize json into provided result object. Skip over fields starting with underscore
  */
 function fromJSON(cls, result, json) {
-    if ((require('lodash').isEqual((json), (null))) || ((json).isNull())) {
+    if ((_qrt.equals((json), (null))) || ((json).isNull())) {
         return null;
     }
     var idx = 0;
-    if (require('lodash').isEqual((result), (null))) {
-        if (require('lodash').isEqual(((cls).name), ("quark.String"))) {
+    if (_qrt.equals((result), (null))) {
+        if (_qrt.equals(((cls).name), ("quark.String"))) {
             var s = (json).getString();
             return s;
         }
-        if (require('lodash').isEqual(((cls).name), ("quark.float"))) {
+        if (_qrt.equals(((cls).name), ("quark.float"))) {
             var flt = (json).getNumber();
             return flt;
         }
-        if (require('lodash').isEqual(((cls).name), ("quark.int"))) {
+        if (_qrt.equals(((cls).name), ("quark.int"))) {
             var i = Math.round((json).getNumber());
             return i;
         }
-        if (require('lodash').isEqual(((cls).name), ("quark.bool"))) {
+        if (_qrt.equals(((cls).name), ("quark.bool"))) {
             var b = (json).getBool();
             return b;
         }
         result = (cls).construct([]);
     }
-    if (require('lodash').isEqual(((cls).name), ("quark.List"))) {
+    if (_qrt.equals(((cls).name), ("quark.List"))) {
         var list = result;
         while ((idx) < ((json).size())) {
             (list).push(fromJSON(((cls).getParameters())[0], null, (json).getListItem(idx)));
@@ -200,10 +200,10 @@ function ResponseHolder__getClass() {
 ResponseHolder.prototype._getClass = ResponseHolder__getClass;
 
 function ResponseHolder__getField(name) {
-    if (require('lodash').isEqual((name), ("response"))) {
+    if (_qrt.equals((name), ("response"))) {
         return (this).response;
     }
-    if (require('lodash').isEqual((name), ("failure"))) {
+    if (_qrt.equals((name), ("failure"))) {
         return (this).failure;
     }
     return null;
@@ -211,10 +211,10 @@ function ResponseHolder__getField(name) {
 ResponseHolder.prototype._getField = ResponseHolder__getField;
 
 function ResponseHolder__setField(name, value) {
-    if (require('lodash').isEqual((name), ("response"))) {
+    if (_qrt.equals((name), ("response"))) {
         (this).response = value;
     }
-    if (require('lodash').isEqual((name), ("failure"))) {
+    if (_qrt.equals((name), ("failure"))) {
         (this).failure = value;
     }
 }
@@ -342,13 +342,13 @@ function ServiceInstance__getClass() {
 ServiceInstance.prototype._getClass = ServiceInstance__getClass;
 
 function ServiceInstance__getField(name) {
-    if (require('lodash').isEqual((name), ("serviceName"))) {
+    if (_qrt.equals((name), ("serviceName"))) {
         return (this).serviceName;
     }
-    if (require('lodash').isEqual((name), ("url"))) {
+    if (_qrt.equals((name), ("url"))) {
         return (this).url;
     }
-    if (require('lodash').isEqual((name), ("breaker"))) {
+    if (_qrt.equals((name), ("breaker"))) {
         return (this).breaker;
     }
     return null;
@@ -356,13 +356,13 @@ function ServiceInstance__getField(name) {
 ServiceInstance.prototype._getField = ServiceInstance__getField;
 
 function ServiceInstance__setField(name, value) {
-    if (require('lodash').isEqual((name), ("serviceName"))) {
+    if (_qrt.equals((name), ("serviceName"))) {
         (this).serviceName = value;
     }
-    if (require('lodash').isEqual((name), ("url"))) {
+    if (_qrt.equals((name), ("url"))) {
         (this).url = value;
     }
-    if (require('lodash').isEqual((name), ("breaker"))) {
+    if (_qrt.equals((name), ("breaker"))) {
         (this).breaker = value;
     }
 }
@@ -412,12 +412,12 @@ function Client(serviceName) {
     if ((failureLimit) !== (null)) {
         (this)._failureLimit = failureLimit;
     }
-    (Client.logger).info(((("" + (this))) + (" failureLimit ")) + (_qrt.toString((this)._failureLimit)));
+    (Client.logger).info(((_qrt.toString(this)) + (" failureLimit ")) + (_qrt.toString((this)._failureLimit)));
     var retestDelay = (this)._getField("retestDelay");
     if ((retestDelay) !== (null)) {
         (this)._retestDelay = retestDelay;
     }
-    (Client.logger).info(((("" + (this))) + (" retestDelay ")) + (_qrt.toString((this)._retestDelay)));
+    (Client.logger).info(((_qrt.toString(this)) + (" retestDelay ")) + (_qrt.toString((this)._retestDelay)));
 }
 exports.Client = Client;
 
@@ -454,7 +454,7 @@ function Client_getInstance() {
     while (true) {
         var url = (urls)[idx];
         var instance = _qrt.map_get(((this).instanceMap), (url));
-        if (require('lodash').isEqual((instance), (null))) {
+        if (_qrt.equals((instance), (null))) {
             instance = new ServiceInstance((this).serviceName, url, this._failureLimit, this._retestDelay);
             ((this).instanceMap).set((url), (instance));
         }
@@ -464,7 +464,7 @@ function Client_getInstance() {
             break;
         }
         idx = _qrt.modulo(((idx) + (1)), ((urls).length));
-        if (require('lodash').isEqual((idx), (next))) {
+        if (_qrt.equals((idx), (next))) {
             (Client.logger).info((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
             break;
         }
@@ -495,31 +495,31 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if (require('lodash').isEqual((name), ("logger"))) {
+    if (_qrt.equals((name), ("logger"))) {
         return Client.logger;
     }
-    if (require('lodash').isEqual((name), ("resolver"))) {
+    if (_qrt.equals((name), ("resolver"))) {
         return (this).resolver;
     }
-    if (require('lodash').isEqual((name), ("serviceName"))) {
+    if (_qrt.equals((name), ("serviceName"))) {
         return (this).serviceName;
     }
-    if (require('lodash').isEqual((name), ("_timeout"))) {
+    if (_qrt.equals((name), ("_timeout"))) {
         return (this)._timeout;
     }
-    if (require('lodash').isEqual((name), ("_failureLimit"))) {
+    if (_qrt.equals((name), ("_failureLimit"))) {
         return (this)._failureLimit;
     }
-    if (require('lodash').isEqual((name), ("_retestDelay"))) {
+    if (_qrt.equals((name), ("_retestDelay"))) {
         return (this)._retestDelay;
     }
-    if (require('lodash').isEqual((name), ("mutex"))) {
+    if (_qrt.equals((name), ("mutex"))) {
         return (this).mutex;
     }
-    if (require('lodash').isEqual((name), ("instanceMap"))) {
+    if (_qrt.equals((name), ("instanceMap"))) {
         return (this).instanceMap;
     }
-    if (require('lodash').isEqual((name), ("counter"))) {
+    if (_qrt.equals((name), ("counter"))) {
         return (this).counter;
     }
     return null;
@@ -527,31 +527,31 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if (require('lodash').isEqual((name), ("logger"))) {
+    if (_qrt.equals((name), ("logger"))) {
         Client.logger = value;
     }
-    if (require('lodash').isEqual((name), ("resolver"))) {
+    if (_qrt.equals((name), ("resolver"))) {
         (this).resolver = value;
     }
-    if (require('lodash').isEqual((name), ("serviceName"))) {
+    if (_qrt.equals((name), ("serviceName"))) {
         (this).serviceName = value;
     }
-    if (require('lodash').isEqual((name), ("_timeout"))) {
+    if (_qrt.equals((name), ("_timeout"))) {
         (this)._timeout = value;
     }
-    if (require('lodash').isEqual((name), ("_failureLimit"))) {
+    if (_qrt.equals((name), ("_failureLimit"))) {
         (this)._failureLimit = value;
     }
-    if (require('lodash').isEqual((name), ("_retestDelay"))) {
+    if (_qrt.equals((name), ("_retestDelay"))) {
         (this)._retestDelay = value;
     }
-    if (require('lodash').isEqual((name), ("mutex"))) {
+    if (_qrt.equals((name), ("mutex"))) {
         (this).mutex = value;
     }
-    if (require('lodash').isEqual((name), ("instanceMap"))) {
+    if (_qrt.equals((name), ("instanceMap"))) {
         (this).instanceMap = value;
     }
-    if (require('lodash').isEqual((name), ("counter"))) {
+    if (_qrt.equals((name), ("counter"))) {
         (this).counter = value;
     }
 }
@@ -595,13 +595,13 @@ function ServerResponder__getClass() {
 ServerResponder.prototype._getClass = ServerResponder__getClass;
 
 function ServerResponder__getField(name) {
-    if (require('lodash').isEqual((name), ("sendCORS"))) {
+    if (_qrt.equals((name), ("sendCORS"))) {
         return (this).sendCORS;
     }
-    if (require('lodash').isEqual((name), ("request"))) {
+    if (_qrt.equals((name), ("request"))) {
         return (this).request;
     }
-    if (require('lodash').isEqual((name), ("response"))) {
+    if (_qrt.equals((name), ("response"))) {
         return (this).response;
     }
     return null;
@@ -609,13 +609,13 @@ function ServerResponder__getField(name) {
 ServerResponder.prototype._getField = ServerResponder__getField;
 
 function ServerResponder__setField(name, value) {
-    if (require('lodash').isEqual((name), ("sendCORS"))) {
+    if (_qrt.equals((name), ("sendCORS"))) {
         (this).sendCORS = value;
     }
-    if (require('lodash').isEqual((name), ("request"))) {
+    if (_qrt.equals((name), ("request"))) {
         (this).request = value;
     }
-    if (require('lodash').isEqual((name), ("response"))) {
+    if (_qrt.equals((name), ("response"))) {
         (this).response = value;
     }
 }
@@ -644,7 +644,7 @@ Server.prototype.sendCORS = Server_sendCORS;
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
     var envelope = _qrt.json_from_string(body);
-    if ((require('lodash').isEqual(((envelope).getObjectItem("$method")), ((envelope).undefined()))) || (require('lodash').isEqual(((envelope).getObjectItem("rpc")), ((envelope).undefined())))) {
+    if ((_qrt.equals(((envelope).getObjectItem("$method")), ((envelope).undefined()))) || (_qrt.equals(((envelope).getObjectItem("rpc")), ((envelope).undefined())))) {
         (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
         (response).setCode(400);
         (concurrent.Context.runtime()).respond(request, response);
@@ -676,10 +676,10 @@ function Server__getClass() {
 Server.prototype._getClass = Server__getClass;
 
 function Server__getField(name) {
-    if (require('lodash').isEqual((name), ("impl"))) {
+    if (_qrt.equals((name), ("impl"))) {
         return (this).impl;
     }
-    if (require('lodash').isEqual((name), ("_sendCORS"))) {
+    if (_qrt.equals((name), ("_sendCORS"))) {
         return (this)._sendCORS;
     }
     return null;
@@ -687,10 +687,10 @@ function Server__getField(name) {
 Server.prototype._getField = Server__getField;
 
 function Server__setField(name, value) {
-    if (require('lodash').isEqual((name), ("impl"))) {
+    if (_qrt.equals((name), ("impl"))) {
         (this).impl = value;
     }
-    if (require('lodash').isEqual((name), ("_sendCORS"))) {
+    if (_qrt.equals((name), ("_sendCORS"))) {
         (this)._sendCORS = value;
     }
 }
@@ -737,7 +737,7 @@ URL.prototype.__init_fields__ = URL__init_fields__;
 URL.quark_URL_ref = quark_md.Root.quark_URL_md;
 function URL_parse(url) {
     var result = new URL();
-    if (require('lodash').isEqual((url), (null))) {
+    if (_qrt.equals((url), (null))) {
         return null;
     }
     var parts = null;
@@ -750,7 +750,7 @@ function URL_parse(url) {
         remaining = url;
     }
     var firstSlash = (remaining).indexOf("/");
-    if (require('lodash').isEqual((firstSlash), (0))) {
+    if (_qrt.equals((firstSlash), (0))) {
         (result).path = remaining;
         return result;
     }
@@ -798,16 +798,16 @@ function URL__getClass() {
 URL.prototype._getClass = URL__getClass;
 
 function URL__getField(name) {
-    if (require('lodash').isEqual((name), ("scheme"))) {
+    if (_qrt.equals((name), ("scheme"))) {
         return (this).scheme;
     }
-    if (require('lodash').isEqual((name), ("host"))) {
+    if (_qrt.equals((name), ("host"))) {
         return (this).host;
     }
-    if (require('lodash').isEqual((name), ("port"))) {
+    if (_qrt.equals((name), ("port"))) {
         return (this).port;
     }
-    if (require('lodash').isEqual((name), ("path"))) {
+    if (_qrt.equals((name), ("path"))) {
         return (this).path;
     }
     return null;
@@ -815,16 +815,16 @@ function URL__getField(name) {
 URL.prototype._getField = URL__getField;
 
 function URL__setField(name, value) {
-    if (require('lodash').isEqual((name), ("scheme"))) {
+    if (_qrt.equals((name), ("scheme"))) {
         (this).scheme = value;
     }
-    if (require('lodash').isEqual((name), ("host"))) {
+    if (_qrt.equals((name), ("host"))) {
         (this).host = value;
     }
-    if (require('lodash').isEqual((name), ("port"))) {
+    if (_qrt.equals((name), ("port"))) {
         (this).port = value;
     }
-    if (require('lodash').isEqual((name), ("path"))) {
+    if (_qrt.equals((name), ("path"))) {
         (this).path = value;
     }
 }

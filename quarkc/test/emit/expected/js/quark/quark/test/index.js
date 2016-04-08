@@ -70,7 +70,7 @@ function Test_current() {
 Test.current = Test_current;
 
 function Test_match(filters) {
-    if ((require('lodash').isEqual((filters), (null))) || (require('lodash').isEqual(((filters).length), (0)))) {
+    if ((_qrt.equals((filters), (null))) || (_qrt.equals(((filters).length), (0)))) {
         return true;
     }
     var idx = 0;
@@ -129,16 +129,16 @@ function Test__getClass() {
 Test.prototype._getClass = Test__getClass;
 
 function Test__getField(name) {
-    if (require('lodash').isEqual((name), ("ctx"))) {
+    if (_qrt.equals((name), ("ctx"))) {
         return Test.ctx;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
-    if (require('lodash').isEqual((name), ("checks"))) {
+    if (_qrt.equals((name), ("checks"))) {
         return (this).checks;
     }
-    if (require('lodash').isEqual((name), ("failures"))) {
+    if (_qrt.equals((name), ("failures"))) {
         return (this).failures;
     }
     return null;
@@ -146,16 +146,16 @@ function Test__getField(name) {
 Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
-    if (require('lodash').isEqual((name), ("ctx"))) {
+    if (_qrt.equals((name), ("ctx"))) {
         Test.ctx = value;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
-    if (require('lodash').isEqual((name), ("checks"))) {
+    if (_qrt.equals((name), ("checks"))) {
         (this).checks = value;
     }
-    if (require('lodash').isEqual((name), ("failures"))) {
+    if (_qrt.equals((name), ("failures"))) {
         (this).failures = value;
     }
 }
@@ -198,22 +198,22 @@ function MethodTest__getClass() {
 MethodTest.prototype._getClass = MethodTest__getClass;
 
 function MethodTest__getField(name) {
-    if (require('lodash').isEqual((name), ("ctx"))) {
+    if (_qrt.equals((name), ("ctx"))) {
         return Test.ctx;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
-    if (require('lodash').isEqual((name), ("checks"))) {
+    if (_qrt.equals((name), ("checks"))) {
         return (this).checks;
     }
-    if (require('lodash').isEqual((name), ("failures"))) {
+    if (_qrt.equals((name), ("failures"))) {
         return (this).failures;
     }
-    if (require('lodash').isEqual((name), ("klass"))) {
+    if (_qrt.equals((name), ("klass"))) {
         return (this).klass;
     }
-    if (require('lodash').isEqual((name), ("method"))) {
+    if (_qrt.equals((name), ("method"))) {
         return (this).method;
     }
     return null;
@@ -221,22 +221,22 @@ function MethodTest__getField(name) {
 MethodTest.prototype._getField = MethodTest__getField;
 
 function MethodTest__setField(name, value) {
-    if (require('lodash').isEqual((name), ("ctx"))) {
+    if (_qrt.equals((name), ("ctx"))) {
         Test.ctx = value;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
-    if (require('lodash').isEqual((name), ("checks"))) {
+    if (_qrt.equals((name), ("checks"))) {
         (this).checks = value;
     }
-    if (require('lodash').isEqual((name), ("failures"))) {
+    if (_qrt.equals((name), ("failures"))) {
         (this).failures = value;
     }
-    if (require('lodash').isEqual((name), ("klass"))) {
+    if (_qrt.equals((name), ("klass"))) {
         (this).klass = value;
     }
-    if (require('lodash').isEqual((name), ("method"))) {
+    if (_qrt.equals((name), ("method"))) {
         (this).method = value;
     }
 }
@@ -248,7 +248,7 @@ function check(value, message) {
 exports.check = check;
 
 function checkEqual(expected, actual) {
-    return (Test.current()).check(require('lodash').isEqual((expected), (actual)), ((("expected ") + (("" + (expected)))) + (" got ")) + (("" + (actual))));
+    return (Test.current()).check(_qrt.equals((expected), (actual)), ((("expected ") + (_qrt.toString(expected))) + (" got ")) + (_qrt.toString(actual)));
 }
 exports.checkEqual = checkEqual;
 
@@ -344,13 +344,13 @@ function Harness__getClass() {
 Harness.prototype._getClass = Harness__getClass;
 
 function Harness__getField(name) {
-    if (require('lodash').isEqual((name), ("pkg"))) {
+    if (_qrt.equals((name), ("pkg"))) {
         return (this).pkg;
     }
-    if (require('lodash').isEqual((name), ("tests"))) {
+    if (_qrt.equals((name), ("tests"))) {
         return (this).tests;
     }
-    if (require('lodash').isEqual((name), ("filtered"))) {
+    if (_qrt.equals((name), ("filtered"))) {
         return (this).filtered;
     }
     return null;
@@ -358,13 +358,13 @@ function Harness__getField(name) {
 Harness.prototype._getField = Harness__getField;
 
 function Harness__setField(name, value) {
-    if (require('lodash').isEqual((name), ("pkg"))) {
+    if (_qrt.equals((name), ("pkg"))) {
         (this).pkg = value;
     }
-    if (require('lodash').isEqual((name), ("tests"))) {
+    if (_qrt.equals((name), ("tests"))) {
         (this).tests = value;
     }
-    if (require('lodash').isEqual((name), ("filtered"))) {
+    if (_qrt.equals((name), ("filtered"))) {
         (this).filtered = value;
     }
 }
@@ -377,7 +377,7 @@ function run(args) {
     var idx = 1;
     while ((idx) < ((args).length)) {
         var arg = (args)[idx];
-        if (require('lodash').isEqual((arg), ("-l"))) {
+        if (_qrt.equals((arg), ("-l"))) {
             list = true;
         } else {
             (filters).push(arg);

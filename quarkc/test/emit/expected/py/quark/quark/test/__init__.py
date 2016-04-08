@@ -198,7 +198,7 @@ def check(value, message):
 
 
 def checkEqual(expected, actual):
-    return (Test.current()).check((expected) == (actual), (((u"expected ") + (str(expected))) + (u" got ")) + (str(actual)))
+    return (Test.current()).check((expected) == (actual), (((u"expected ") + (_toString(expected))) + (u" got ")) + (_toString(actual)))
 
 
 def fail(message):

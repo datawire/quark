@@ -25,7 +25,7 @@ function A__getClass() {
 A.prototype._getClass = A__getClass;
 
 function A__getField(name) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -33,7 +33,7 @@ function A__getField(name) {
 A.prototype._getField = A__getField;
 
 function A__setField(name, value) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }
@@ -63,7 +63,7 @@ function B__getClass() {
 B.prototype._getClass = B__getClass;
 
 function B__getField(name) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -71,7 +71,7 @@ function B__getField(name) {
 B.prototype._getField = B__getField;
 
 function B__setField(name, value) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }
@@ -101,7 +101,7 @@ function C__getClass() {
 C.prototype._getClass = C__getClass;
 
 function C__getField(name) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -109,7 +109,7 @@ function C__getField(name) {
 C.prototype._getField = C__getField;
 
 function C__setField(name, value) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }
@@ -163,7 +163,7 @@ function Y__getClass() {
 Y.prototype._getClass = Y__getClass;
 
 function Y__getField(name) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -171,7 +171,7 @@ function Y__getField(name) {
 Y.prototype._getField = Y__getField;
 
 function Y__setField(name, value) {
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }

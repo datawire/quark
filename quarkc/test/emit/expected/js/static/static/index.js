@@ -54,7 +54,7 @@ function Foo__getClass() {
 Foo.prototype._getClass = Foo__getClass;
 
 function Foo__getField(name) {
-    if (require('lodash').isEqual((name), ("count"))) {
+    if (_qrt.equals((name), ("count"))) {
         return Foo.count;
     }
     return null;
@@ -62,7 +62,7 @@ function Foo__getField(name) {
 Foo.prototype._getField = Foo__getField;
 
 function Foo__setField(name, value) {
-    if (require('lodash').isEqual((name), ("count"))) {
+    if (_qrt.equals((name), ("count"))) {
         Foo.count = value;
     }
 }

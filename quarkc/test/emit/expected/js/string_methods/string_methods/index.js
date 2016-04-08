@@ -16,7 +16,7 @@ function string_test__init_fields__() {}
 string_test.prototype.__init_fields__ = string_test__init_fields__;
 string_test.string_methods_string_test_ref = string_methods_md.Root.string_methods_string_test_md;
 function string_test_check(actual, expected, op, q) {
-    if (require('lodash').isEqual((actual), (expected))) {
+    if (_qrt.equals((actual), (expected))) {
         _qrt.print(((((("OK   ") + (op)) + (" = ")) + (q)) + (actual)) + (q));
     } else {
         _qrt.print(((((((((("FAIL ") + (op)) + (" = ")) + (q)) + (actual)) + (q)) + (" != ")) + (q)) + (expected)) + (q));
@@ -66,7 +66,7 @@ function test_size__getClass() {
 test_size.prototype._getClass = test_size__getClass;
 
 function test_size__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
     return null;
@@ -74,7 +74,7 @@ function test_size__getField(name) {
 test_size.prototype._getField = test_size__getField;
 
 function test_size__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
 }
@@ -114,10 +114,10 @@ function test_startsWith__getClass() {
 test_startsWith.prototype._getClass = test_startsWith__getClass;
 
 function test_startsWith__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         return (this)._that;
     }
     return null;
@@ -125,10 +125,10 @@ function test_startsWith__getField(name) {
 test_startsWith.prototype._getField = test_startsWith__getField;
 
 function test_startsWith__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         (this)._that = value;
     }
 }
@@ -168,10 +168,10 @@ function test_endsWith__getClass() {
 test_endsWith.prototype._getClass = test_endsWith__getClass;
 
 function test_endsWith__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         return (this)._that;
     }
     return null;
@@ -179,10 +179,10 @@ function test_endsWith__getField(name) {
 test_endsWith.prototype._getField = test_endsWith__getField;
 
 function test_endsWith__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         (this)._that = value;
     }
 }
@@ -222,10 +222,10 @@ function test_find__getClass() {
 test_find.prototype._getClass = test_find__getClass;
 
 function test_find__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         return (this)._that;
     }
     return null;
@@ -233,10 +233,10 @@ function test_find__getField(name) {
 test_find.prototype._getField = test_find__getField;
 
 function test_find__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("_that"))) {
+    if (_qrt.equals((name), ("_that"))) {
         (this)._that = value;
     }
 }
@@ -278,13 +278,13 @@ function test_substring__getClass() {
 test_substring.prototype._getClass = test_substring__getClass;
 
 function test_substring__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("start"))) {
+    if (_qrt.equals((name), ("start"))) {
         return (this).start;
     }
-    if (require('lodash').isEqual((name), ("end"))) {
+    if (_qrt.equals((name), ("end"))) {
         return (this).end;
     }
     return null;
@@ -292,13 +292,13 @@ function test_substring__getField(name) {
 test_substring.prototype._getField = test_substring__getField;
 
 function test_substring__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("start"))) {
+    if (_qrt.equals((name), ("start"))) {
         (this).start = value;
     }
-    if (require('lodash').isEqual((name), ("end"))) {
+    if (_qrt.equals((name), ("end"))) {
         (this).end = value;
     }
 }
@@ -340,13 +340,13 @@ function test_replace__getClass() {
 test_replace.prototype._getClass = test_replace__getClass;
 
 function test_replace__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("start"))) {
+    if (_qrt.equals((name), ("start"))) {
         return (this).start;
     }
-    if (require('lodash').isEqual((name), ("end"))) {
+    if (_qrt.equals((name), ("end"))) {
         return (this).end;
     }
     return null;
@@ -354,13 +354,13 @@ function test_replace__getField(name) {
 test_replace.prototype._getField = test_replace__getField;
 
 function test_replace__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("start"))) {
+    if (_qrt.equals((name), ("start"))) {
         (this).start = value;
     }
-    if (require('lodash').isEqual((name), ("end"))) {
+    if (_qrt.equals((name), ("end"))) {
         (this).end = value;
     }
 }
@@ -413,16 +413,16 @@ function test_join__getClass() {
 test_join.prototype._getClass = test_join__getClass;
 
 function test_join__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("parts"))) {
+    if (_qrt.equals((name), ("parts"))) {
         return (this).parts;
     }
-    if (require('lodash').isEqual((name), ("strparts"))) {
+    if (_qrt.equals((name), ("strparts"))) {
         return (this).strparts;
     }
-    if (require('lodash').isEqual((name), ("sep"))) {
+    if (_qrt.equals((name), ("sep"))) {
         return (this).sep;
     }
     return null;
@@ -430,16 +430,16 @@ function test_join__getField(name) {
 test_join.prototype._getField = test_join__getField;
 
 function test_join__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("parts"))) {
+    if (_qrt.equals((name), ("parts"))) {
         (this).parts = value;
     }
-    if (require('lodash').isEqual((name), ("strparts"))) {
+    if (_qrt.equals((name), ("strparts"))) {
         (this).strparts = value;
     }
-    if (require('lodash').isEqual((name), ("sep"))) {
+    if (_qrt.equals((name), ("sep"))) {
         (this).sep = value;
     }
 }
@@ -483,13 +483,13 @@ function test_split__getClass() {
 test_split.prototype._getClass = test_split__getClass;
 
 function test_split__getField(name) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         return (this).what;
     }
-    if (require('lodash').isEqual((name), ("sep"))) {
+    if (_qrt.equals((name), ("sep"))) {
         return (this).sep;
     }
-    if (require('lodash').isEqual((name), ("altsep"))) {
+    if (_qrt.equals((name), ("altsep"))) {
         return (this).altsep;
     }
     return null;
@@ -497,13 +497,13 @@ function test_split__getField(name) {
 test_split.prototype._getField = test_split__getField;
 
 function test_split__setField(name, value) {
-    if (require('lodash').isEqual((name), ("what"))) {
+    if (_qrt.equals((name), ("what"))) {
         (this).what = value;
     }
-    if (require('lodash').isEqual((name), ("sep"))) {
+    if (_qrt.equals((name), ("sep"))) {
         (this).sep = value;
     }
-    if (require('lodash').isEqual((name), ("altsep"))) {
+    if (_qrt.equals((name), ("altsep"))) {
         (this).altsep = value;
     }
 }

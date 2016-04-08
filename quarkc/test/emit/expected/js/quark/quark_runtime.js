@@ -21,6 +21,7 @@
     "use strict";
 
     exports.util = require("util");
+    var _ = require("lodash");
 
     function Platform() {
     }
@@ -35,6 +36,11 @@
 
     var platform = new Platform();
     exports.platform = platform;
+
+    function quark_equals(a, b) {
+        return _.isEqual(a, b);
+    }
+    exports.equals = quark_equals;
 
     function quark_toString(value) {
         if (value === null) {

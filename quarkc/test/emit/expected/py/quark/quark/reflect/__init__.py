@@ -18,7 +18,7 @@ class Class(object):
     @staticmethod
     def get(id):
         if (not ((id) in (Class.classes))):
-            _println((((u"Cannot find ") + (id)) + (u" in ")) + (str(_List((Class.classes).keys()))));
+            _println((((u"Cannot find ") + (id)) + (u" in ")) + (_toString(_List((Class.classes).keys()))));
 
         return (Class.classes).get(id)
 

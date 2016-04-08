@@ -9,7 +9,7 @@ namespace quark {
         macro bool __eq__(Object other) $java{($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other))}
                                         $py{($self) == ($other)}
                                         $rb{($self) == ($other)}
-                                        $js{require('lodash').isEqual(($self), ($other))};
+                                        $js{_qrt.equals(($self), ($other))};
         macro bool __ne__(Object other) $java{!(($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other)))}
                                         $py{($self) != ($other)}
                                         $rb{($self) != ($other)}
@@ -28,9 +28,9 @@ namespace quark {
                                                        $rb{($self)._setField(($name), ($value))}
                                                        $js{($self)._setField(($name), ($value))};
         macro String toString() $java{("" + ($self))}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
-                                $js{("" + ($self))};
+                                $js{_qrt.toString($self)};
     }
 
     @mapping($java{void})

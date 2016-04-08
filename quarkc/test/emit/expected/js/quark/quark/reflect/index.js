@@ -28,7 +28,7 @@ Class.FLOAT = new Class("quark.float");
 Class.STRING = new Class("quark.String");
 function Class_get(id) {
     if (!((Class.classes).has(id))) {
-        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + (("" + (Array.from((Class.classes).keys())))));
+        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + (_qrt.toString(Array.from((Class.classes).keys()))));
     }
     return _qrt.map_get((Class.classes), (id));
 }
@@ -68,7 +68,7 @@ Class.prototype.getFields = Class_getFields;
 function Class_getField(name) {
     var idx = 0;
     while ((idx) < ((this.fields).length)) {
-        if (require('lodash').isEqual((((this.fields)[idx]).name), (name))) {
+        if (_qrt.equals((((this.fields)[idx]).name), (name))) {
             return (this.fields)[idx];
         }
         idx = (idx) + (1);
@@ -85,7 +85,7 @@ Class.prototype.getMethods = Class_getMethods;
 function Class_getMethod(name) {
     var idx = 0;
     while ((idx) < ((this.methods).length)) {
-        if (require('lodash').isEqual((((this.methods)[idx]).name), (name))) {
+        if (_qrt.equals((((this.methods)[idx]).name), (name))) {
             return (this.methods)[idx];
         }
         idx = (idx) + (1);
@@ -100,40 +100,40 @@ function Class__getClass() {
 Class.prototype._getClass = Class__getClass;
 
 function Class__getField(name) {
-    if (require('lodash').isEqual((name), ("classes"))) {
+    if (_qrt.equals((name), ("classes"))) {
         return Class.classes;
     }
-    if (require('lodash').isEqual((name), ("VOID"))) {
+    if (_qrt.equals((name), ("VOID"))) {
         return Class.VOID;
     }
-    if (require('lodash').isEqual((name), ("BOOL"))) {
+    if (_qrt.equals((name), ("BOOL"))) {
         return Class.BOOL;
     }
-    if (require('lodash').isEqual((name), ("INT"))) {
+    if (_qrt.equals((name), ("INT"))) {
         return Class.INT;
     }
-    if (require('lodash').isEqual((name), ("LONG"))) {
+    if (_qrt.equals((name), ("LONG"))) {
         return Class.LONG;
     }
-    if (require('lodash').isEqual((name), ("FLOAT"))) {
+    if (_qrt.equals((name), ("FLOAT"))) {
         return Class.FLOAT;
     }
-    if (require('lodash').isEqual((name), ("STRING"))) {
+    if (_qrt.equals((name), ("STRING"))) {
         return Class.STRING;
     }
-    if (require('lodash').isEqual((name), ("id"))) {
+    if (_qrt.equals((name), ("id"))) {
         return (this).id;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
-    if (require('lodash').isEqual((name), ("parameters"))) {
+    if (_qrt.equals((name), ("parameters"))) {
         return (this).parameters;
     }
-    if (require('lodash').isEqual((name), ("fields"))) {
+    if (_qrt.equals((name), ("fields"))) {
         return (this).fields;
     }
-    if (require('lodash').isEqual((name), ("methods"))) {
+    if (_qrt.equals((name), ("methods"))) {
         return (this).methods;
     }
     return null;
@@ -141,40 +141,40 @@ function Class__getField(name) {
 Class.prototype._getField = Class__getField;
 
 function Class__setField(name, value) {
-    if (require('lodash').isEqual((name), ("classes"))) {
+    if (_qrt.equals((name), ("classes"))) {
         Class.classes = value;
     }
-    if (require('lodash').isEqual((name), ("VOID"))) {
+    if (_qrt.equals((name), ("VOID"))) {
         Class.VOID = value;
     }
-    if (require('lodash').isEqual((name), ("BOOL"))) {
+    if (_qrt.equals((name), ("BOOL"))) {
         Class.BOOL = value;
     }
-    if (require('lodash').isEqual((name), ("INT"))) {
+    if (_qrt.equals((name), ("INT"))) {
         Class.INT = value;
     }
-    if (require('lodash').isEqual((name), ("LONG"))) {
+    if (_qrt.equals((name), ("LONG"))) {
         Class.LONG = value;
     }
-    if (require('lodash').isEqual((name), ("FLOAT"))) {
+    if (_qrt.equals((name), ("FLOAT"))) {
         Class.FLOAT = value;
     }
-    if (require('lodash').isEqual((name), ("STRING"))) {
+    if (_qrt.equals((name), ("STRING"))) {
         Class.STRING = value;
     }
-    if (require('lodash').isEqual((name), ("id"))) {
+    if (_qrt.equals((name), ("id"))) {
         (this).id = value;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
-    if (require('lodash').isEqual((name), ("parameters"))) {
+    if (_qrt.equals((name), ("parameters"))) {
         (this).parameters = value;
     }
-    if (require('lodash').isEqual((name), ("fields"))) {
+    if (_qrt.equals((name), ("fields"))) {
         (this).fields = value;
     }
-    if (require('lodash').isEqual((name), ("methods"))) {
+    if (_qrt.equals((name), ("methods"))) {
         (this).methods = value;
     }
 }
@@ -211,10 +211,10 @@ function Field__getClass() {
 Field.prototype._getClass = Field__getClass;
 
 function Field__getField(name) {
-    if (require('lodash').isEqual((name), ("type"))) {
+    if (_qrt.equals((name), ("type"))) {
         return (this).type;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -222,10 +222,10 @@ function Field__getField(name) {
 Field.prototype._getField = Field__getField;
 
 function Field__setField(name, value) {
-    if (require('lodash').isEqual((name), ("type"))) {
+    if (_qrt.equals((name), ("type"))) {
         (this).type = value;
     }
-    if (require('lodash').isEqual((name), ("name"))) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }

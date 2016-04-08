@@ -330,12 +330,12 @@ class Client(object):
         if ((failureLimit) != (None)):
             (self)._failureLimit = failureLimit
 
-        (Client.logger).info(((str(self)) + (u" failureLimit ")) + (str((self)._failureLimit)));
+        (Client.logger).info(((_toString(self)) + (u" failureLimit ")) + (str((self)._failureLimit)));
         retestDelay = (self)._getField(u"retestDelay");
         if ((retestDelay) != (None)):
             (self)._retestDelay = retestDelay
 
-        (Client.logger).info(((str(self)) + (u" retestDelay ")) + (repr((self)._retestDelay)));
+        (Client.logger).info(((_toString(self)) + (u" retestDelay ")) + (repr((self)._retestDelay)));
 
     def setResolver(self, resolver):
         (self).resolver = resolver
