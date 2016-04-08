@@ -19,10 +19,13 @@ import base64
 
 __all__ = """os sys time _Map _List _println _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass
-             _RuntimeFactory _Lock _Condition _TLS _TLSInitializer """.split()
+             _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
+             _LoggerConfig""".split()
 
 
 _Map = dict
+
+from quark_runtime_logging import LoggerConfig as _LoggerConfig
 
 
 class _List(list):

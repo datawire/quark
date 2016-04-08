@@ -1,0 +1,10 @@
+
+{
+    "name": "logging_config",
+    "version": "0.0.1",
+    "main": "index.js",
+    "dependencies": {
+        "quark": "0.0.1"
+    }
+}
+        

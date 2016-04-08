@@ -120,7 +120,7 @@ def batch_pom(target, dirs):
 </project>
 """ % "\n    ".join(["<module>%s</module>" % d for d in dirs]))
 
-def test_run_java(output):
+def test_run_java_(output):
     j = Java()
     base = os.path.join(output, j.ext)
     dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]

@@ -1,4 +1,4 @@
-# Quark's Twisted Runtime and associated
+# Quark's Threaded Runtime
 
 __version__ = '0.4.2'
 
@@ -11,7 +11,6 @@ import time
 import traceback
 import urllib2
 import urlparse
-import logging
 from wsgiref import util
 from Queue import Queue, Empty
 
@@ -27,6 +26,7 @@ from ws4py.websocket import WebSocket
 from ws4py.exc import HandshakeError
 
 from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec, Buffer
+from quark_runtime_logging import Logger
 
 class _Terminator(object):
 
@@ -496,16 +496,6 @@ class ThreadedRuntime(object):
 
     def logger(self, topic):
         return Logger(topic)
-
-class Logger(object):
-    def __init__(self, topic):
-        self.impl = logging.getLogger(topic)
-
-    def trace(self, msg): self.impl.debug("%s", msg)
-    def debug(self, msg): self.impl.debug("%s", msg)
-    def info(self, msg): self.impl.info("%s", msg)
-    def warn(self, msg): self.impl.warning("%s", msg)
-    def error(self, msg): self.impl.error("%s", msg)
 
 _global_lock = threading.Lock()
 _threaded_runtime = None

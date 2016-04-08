@@ -219,6 +219,7 @@ def main(args):
             else:
                 assert False
     except compiler.QuarkError as err:
+        command_log.warn("")
         return err
 
     command_log.warn("Done")

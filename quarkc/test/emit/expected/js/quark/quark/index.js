@@ -1,6 +1,8 @@
 var _qrt = require("quark/quark_runtime.js");
 var reflect = require('./reflect/index.js');
 exports.reflect = reflect;
+var logging = require('./logging/index.js');
+exports.logging = logging;
 var behaviors = require('./behaviors/index.js');
 exports.behaviors = behaviors;
 var quark_md = require('../quark_md/index.js');

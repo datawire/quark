@@ -400,6 +400,175 @@ function quark_Map_quark_String_quark_ServiceInstance___setField(name, value) {}
 quark_Map_quark_String_quark_ServiceInstance_.prototype._setField = quark_Map_quark_String_quark_ServiceInstance___setField;
 
 
+// CLASS quark_logging_Appender
+
+function quark_logging_Appender() {
+    quark_logging_Appender.super_.call(this, "quark.logging.Appender");
+    (this).name = "quark.logging.Appender";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_logging_Appender = quark_logging_Appender;
+_qrt.util.inherits(quark_logging_Appender, quark.reflect.Class);
+
+function quark_logging_Appender__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_logging_Appender.prototype.__init_fields__ = quark_logging_Appender__init_fields__;
+quark_logging_Appender.singleton = new quark_logging_Appender();
+function quark_logging_Appender_construct(args) {
+    return null;
+}
+quark_logging_Appender.prototype.construct = quark_logging_Appender_construct;
+
+function quark_logging_Appender__getClass() {
+    return null;
+}
+quark_logging_Appender.prototype._getClass = quark_logging_Appender__getClass;
+
+function quark_logging_Appender__getField(name) {
+    return null;
+}
+quark_logging_Appender.prototype._getField = quark_logging_Appender__getField;
+
+function quark_logging_Appender__setField(name, value) {}
+quark_logging_Appender.prototype._setField = quark_logging_Appender__setField;
+
+
+// CLASS quark_logging_Config_setAppender_Method
+
+function quark_logging_Config_setAppender_Method() {
+    quark_logging_Config_setAppender_Method.super_.call(this, "quark.logging.Config", "setAppender", ["quark.logging.Appender"]);
+}
+exports.quark_logging_Config_setAppender_Method = quark_logging_Config_setAppender_Method;
+_qrt.util.inherits(quark_logging_Config_setAppender_Method, quark.reflect.Method);
+
+function quark_logging_Config_setAppender_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_logging_Config_setAppender_Method.prototype.__init_fields__ = quark_logging_Config_setAppender_Method__init_fields__;
+
+function quark_logging_Config_setAppender_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).setAppender((args)[0]);
+}
+quark_logging_Config_setAppender_Method.prototype.invoke = quark_logging_Config_setAppender_Method_invoke;
+
+function quark_logging_Config_setAppender_Method__getClass() {
+    return null;
+}
+quark_logging_Config_setAppender_Method.prototype._getClass = quark_logging_Config_setAppender_Method__getClass;
+
+function quark_logging_Config_setAppender_Method__getField(name) {
+    return null;
+}
+quark_logging_Config_setAppender_Method.prototype._getField = quark_logging_Config_setAppender_Method__getField;
+
+function quark_logging_Config_setAppender_Method__setField(name, value) {}
+quark_logging_Config_setAppender_Method.prototype._setField = quark_logging_Config_setAppender_Method__setField;
+
+// CLASS quark_logging_Config_setLevel_Method
+
+function quark_logging_Config_setLevel_Method() {
+    quark_logging_Config_setLevel_Method.super_.call(this, "quark.logging.Config", "setLevel", ["quark.String"]);
+}
+exports.quark_logging_Config_setLevel_Method = quark_logging_Config_setLevel_Method;
+_qrt.util.inherits(quark_logging_Config_setLevel_Method, quark.reflect.Method);
+
+function quark_logging_Config_setLevel_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_logging_Config_setLevel_Method.prototype.__init_fields__ = quark_logging_Config_setLevel_Method__init_fields__;
+
+function quark_logging_Config_setLevel_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).setLevel((args)[0]);
+}
+quark_logging_Config_setLevel_Method.prototype.invoke = quark_logging_Config_setLevel_Method_invoke;
+
+function quark_logging_Config_setLevel_Method__getClass() {
+    return null;
+}
+quark_logging_Config_setLevel_Method.prototype._getClass = quark_logging_Config_setLevel_Method__getClass;
+
+function quark_logging_Config_setLevel_Method__getField(name) {
+    return null;
+}
+quark_logging_Config_setLevel_Method.prototype._getField = quark_logging_Config_setLevel_Method__getField;
+
+function quark_logging_Config_setLevel_Method__setField(name, value) {}
+quark_logging_Config_setLevel_Method.prototype._setField = quark_logging_Config_setLevel_Method__setField;
+
+// CLASS quark_logging_Config_configure_Method
+
+function quark_logging_Config_configure_Method() {
+    quark_logging_Config_configure_Method.super_.call(this, "quark.void", "configure", []);
+}
+exports.quark_logging_Config_configure_Method = quark_logging_Config_configure_Method;
+_qrt.util.inherits(quark_logging_Config_configure_Method, quark.reflect.Method);
+
+function quark_logging_Config_configure_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_logging_Config_configure_Method.prototype.__init_fields__ = quark_logging_Config_configure_Method__init_fields__;
+
+function quark_logging_Config_configure_Method_invoke(object, args) {
+    var obj = object;
+    (obj).configure();
+    return null;
+}
+quark_logging_Config_configure_Method.prototype.invoke = quark_logging_Config_configure_Method_invoke;
+
+function quark_logging_Config_configure_Method__getClass() {
+    return null;
+}
+quark_logging_Config_configure_Method.prototype._getClass = quark_logging_Config_configure_Method__getClass;
+
+function quark_logging_Config_configure_Method__getField(name) {
+    return null;
+}
+quark_logging_Config_configure_Method.prototype._getField = quark_logging_Config_configure_Method__getField;
+
+function quark_logging_Config_configure_Method__setField(name, value) {}
+quark_logging_Config_configure_Method.prototype._setField = quark_logging_Config_configure_Method__setField;
+
+// CLASS quark_logging_Config
+
+function quark_logging_Config() {
+    quark_logging_Config.super_.call(this, "quark.logging.Config");
+    (this).name = "quark.logging.Config";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [new quark_logging_Config_setAppender_Method(), new quark_logging_Config_setLevel_Method(), new quark_logging_Config_configure_Method()];
+}
+exports.quark_logging_Config = quark_logging_Config;
+_qrt.util.inherits(quark_logging_Config, quark.reflect.Class);
+
+function quark_logging_Config__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_logging_Config.prototype.__init_fields__ = quark_logging_Config__init_fields__;
+quark_logging_Config.singleton = new quark_logging_Config();
+function quark_logging_Config_construct(args) {
+    return null;
+}
+quark_logging_Config.prototype.construct = quark_logging_Config_construct;
+
+function quark_logging_Config__getClass() {
+    return null;
+}
+quark_logging_Config.prototype._getClass = quark_logging_Config__getClass;
+
+function quark_logging_Config__getField(name) {
+    return null;
+}
+quark_logging_Config.prototype._getField = quark_logging_Config__getField;
+
+function quark_logging_Config__setField(name, value) {}
+quark_logging_Config.prototype._setField = quark_logging_Config__setField;
+
+
 // CLASS quark_reflect_Class
 
 function quark_reflect_Class() {
@@ -3619,6 +3788,8 @@ Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurr
 Root.quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton;
 Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton;
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;
+Root.quark_logging_Appender_md = quark_logging_Appender.singleton;
+Root.quark_logging_Config_md = quark_logging_Config.singleton;
 Root.quark_Resolver_md = quark_Resolver.singleton;
 Root.quark_ResponseHolder_md = quark_ResponseHolder.singleton;
 Root.quark_Service_md = quark_Service.singleton;
@@ -3662,6 +3833,8 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
+var quark = require('../quark/index.js');
+exports.quark = quark;
 var quark = require('../quark/index.js');
 exports.quark = quark;
 var quark = require('../quark/index.js');

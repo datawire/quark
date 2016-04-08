@@ -60,7 +60,7 @@
         return QuarkWebSocket;
     })();
 
-    if ((typeof(window) == 'undefined') || (typeof(window.WebSocket) == 'undefined')) {
+    if (runtime.platform.isNode()) {
         // OK, we must be in Node. Pull in ws via builtin...
         // console.log("grabbing ws");
         var WebSocket = require("ws");
@@ -140,7 +140,7 @@
             return QuarkWebSocket;
         })();
     }
-    else if ((typeof(window) == "object") && (typeof(window.WebSocket) == 'function')) {
+    else if (runtime.platform.isBrowser()) {
         // We're in a browser, so we needn't pull in the 'ws' module, and
         // we still can't do WebSocket servers. All we need to do is
         // override QuarkWebSocket to match the browser's WebSocket module.
@@ -653,40 +653,10 @@
         process.exit(1);
     };
 
-    // CLASS ConsoleLogger
-    function ConsoleLogger(topic) {
-        this.topic = topic;
-    }
-
-    ConsoleLogger.prototype.silly = function (msg) {
-        console.log("SILLY: " + msg);
-    };
-    ConsoleLogger.prototype.debug = function (msg) {
-        console.log("DEBUG: " + msg);
-    };
-    ConsoleLogger.prototype.info = function (msg) {
-        console.log("INFO: " + msg);
-    };
-    ConsoleLogger.prototype.warn = function (msg) {
-        console.log("WARN: " + msg);
-    };
-    ConsoleLogger.prototype.error = function (msg) {
-        console.log("ERROR: " + msg);
-    };
-
-    function Logger(impl) {
-        this.impl = impl;
-    }
-
     Runtime.prototype.logger = function(topic) {
-        return new Logger(new ConsoleLogger(topic));
+        var l = runtime.logger(topic);
+        return l;
     }
-
-    Logger.prototype.trace = function (msg) { this.impl.silly(msg); }
-    Logger.prototype.debug = function (msg) { this.impl.debug(msg); }
-    Logger.prototype.info = function (msg) { this.impl.info(msg); }
-    Logger.prototype.warn = function (msg) { this.impl.warn(msg); }
-    Logger.prototype.error = function (msg) { this.impl.error(msg); }
 
     module.exports = new Runtime();
 

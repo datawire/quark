@@ -22,6 +22,20 @@
 
     exports.util = require("util");
 
+    function Platform() {
+    }
+
+    Platform.prototype.isNode = function () {
+        return (typeof(window) == 'undefined') || (typeof(window.WebSocket) == 'undefined')
+    }
+
+    Platform.prototype.isBrowser = function () {
+        return (typeof(window) == "object") && (typeof(window.WebSocket) == 'function');
+    }
+
+    var platform = new Platform();
+    exports.platform = platform;
+
     function quark_toString(value) {
         if (value === null) {
             return "null";
@@ -631,5 +645,123 @@
 
     exports.TLS = TLS
 
+
+    if (platform.isNode()) {
+        function StreamAppender(stream) {
+            return function(line) {
+                stream.write(line);
+                stream.write("\n");
+            }
+        }
+        function FileAppender(path) {
+            var fs = require('fs');
+            return StreamAppender(fs.createWriteStream(path));
+        }
+
+        var STDOUT = StreamAppender(process.stdout);
+
+        var STDERR = StreamAppender(process.stderr);
+    } else {
+        function FileAppender(path) {
+            return function(line) {
+                console.log(line);
+            }
+        }
+
+        function STDOUT(line) {
+            console.log(line);
+        }
+
+        function STDERR(line) {
+            console.log(line);
+        }
+    }
+
+    var levels = {}
+
+    function Level(name, num) {
+        this.name = name;
+        this.num = num;
+        levels[name] = this;
+    }
+
+    var TRACE = new Level("TRACE", 1);
+    var DEBUG = new Level("DEBUG", 2);
+    var INFO = new Level("INFO", 3);
+    var WARN = new Level("WARN", 4);
+    var ERROR = new Level("ERROR", 5);
+
+    function LoggerConfig() {
+        this.appender = STDOUT;
+        this.level = INFO;
+    }
+
+    function LogConfigurator(cfg) {
+        this.cfg = cfg;
+        this.appender = STDOUT;
+        this.level = INFO;
+    }
+    LogConfigurator.prototype.setAppender = function setAppender(appender) {
+        this.appender = appender;
+        return this;
+    }
+    LogConfigurator.prototype.setLevel = function setLevel(level) {
+        if (typeof(level)=='string') {
+            level = level.toUpperCase();
+        }
+        if (level in levels) {
+            this.level = levels[level];
+        }
+        return this;
+    }
+    LogConfigurator.prototype.configure = function configure() {
+        this.cfg.appender = this.appender;
+        this.cfg.level = this.level;
+    }
+
+    LoggerConfig.prototype.config = function config() {
+        return new LogConfigurator(this);
+    }
+
+    LoggerConfig.prototype.stdout = function stdout() {
+        return STDOUT;
+    }
+
+    LoggerConfig.prototype.stderr = function stdout() {
+        return STDERR;
+    }
+
+    LoggerConfig.prototype.file = function file(path) {
+        return FileAppender(path);
+    }
+
+
+    var config = new LoggerConfig();
+    exports.LoggerConfig = config;
+
+    var loggers = {}
+
+    function Logger(topic) {
+        this.topic = "quark." + topic;
+    }
+
+    Logger.prototype.trace = function (msg) { this.log(TRACE, msg); }
+    Logger.prototype.debug = function (msg) { this.log(DEBUG, msg); }
+    Logger.prototype.info = function (msg)  { this.log(INFO,  msg); }
+    Logger.prototype.warn = function (msg)  { this.log(WARN,  msg); }
+    Logger.prototype.error = function (msg) { this.log(ERROR, msg); }
+    Logger.prototype.log = function(level, msg) {
+        if (config.level.num <= level.num) {
+            var line = level.name + " " + this.topic + " " + msg;
+            config.appender(line);
+        }
+    }
+
+    exports.logger = function(topic) {
+        if (!(topic in loggers)) {
+            loggers[topic] = new Logger(topic);
+        }
+        return loggers[topic];
+    }
 
 })();

@@ -7,6 +7,8 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_List_quark_test_Test__md = quark_List_quark_test_Test_.singleton;
     public static quark.reflect.Class quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Object_.singleton;
     public static quark.reflect.Class quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;
+    public static quark.reflect.Class quark_logging_Appender_md = quark_logging_Appender.singleton;
+    public static quark.reflect.Class quark_logging_Config_md = quark_logging_Config.singleton;
     public static quark.reflect.Class quark_Resolver_md = quark_Resolver.singleton;
     public static quark.reflect.Class quark_ResponseHolder_md = quark_ResponseHolder.singleton;
     public static quark.reflect.Class quark_Service_md = quark_Service.singleton;

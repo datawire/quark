@@ -5,6 +5,7 @@ require_relative 'quark/reflect' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/concurrent' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/test' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark' # 0 () ()
+# for quark_md: require_relative 'quark/logging' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
 
 
@@ -688,6 +689,293 @@ class QuarkMapQuarkStringQuarkServiceInstance < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkServiceInstance.unlazy_statics
+
+
+def self.quark_logging_Appender; QuarkLoggingAppender; end
+class QuarkLoggingAppender < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_logging_Appender.new() }
+
+
+
+    def initialize()
+        
+        super("quark.logging.Appender")
+        (self).name = "quark.logging.Appender"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkLoggingAppender.unlazy_statics
+
+
+def self.quark_logging_Config_setAppender_Method; QuarkLoggingConfigSetAppenderMethod; end
+class QuarkLoggingConfigSetAppenderMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.logging.Config", "setAppender", ::DatawireQuarkCore::List.new(["quark.logging.Appender"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.setAppender((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_logging_Config_setLevel_Method; QuarkLoggingConfigSetLevelMethod; end
+class QuarkLoggingConfigSetLevelMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.logging.Config", "setLevel", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.setLevel((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_logging_Config_configure_Method; QuarkLoggingConfigConfigureMethod; end
+class QuarkLoggingConfigConfigureMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "configure", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.configure()
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_logging_Config; QuarkLoggingConfig; end
+class QuarkLoggingConfig < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_logging_Config.new() }
+
+
+
+    def initialize()
+        
+        super("quark.logging.Config")
+        (self).name = "quark.logging.Config"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_logging_Config_setAppender_Method.new(), ::Quark.quark_md.quark_logging_Config_setLevel_Method.new(), ::Quark.quark_md.quark_logging_Config_configure_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkLoggingConfig.unlazy_statics
 
 
 def self.quark_reflect_Class; QuarkReflectClass; end
@@ -6123,6 +6411,8 @@ class Root < ::DatawireQuarkCore::QuarkObject
     static quark_List_quark_test_Test__md: -> { ::Quark.quark_md.quark_List_quark_test_Test_.singleton }
     static quark_Map_quark_Object_quark_Object__md: -> { ::Quark.quark_md.quark_Map_quark_Object_quark_Object_.singleton }
     static quark_Map_quark_String_quark_ServiceInstance__md: -> { ::Quark.quark_md.quark_Map_quark_String_quark_ServiceInstance_.singleton }
+    static quark_logging_Appender_md: -> { ::Quark.quark_md.quark_logging_Appender.singleton }
+    static quark_logging_Config_md: -> { ::Quark.quark_md.quark_logging_Config.singleton }
     static quark_Resolver_md: -> { ::Quark.quark_md.quark_Resolver.singleton }
     static quark_ResponseHolder_md: -> { ::Quark.quark_md.quark_ResponseHolder.singleton }
     static quark_Service_md: -> { ::Quark.quark_md.quark_Service.singleton }
