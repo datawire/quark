@@ -330,7 +330,7 @@ class Client(object):
         if ((failureLimit) != (None)):
             (self)._failureLimit = failureLimit
 
-        (Client.logger).info(((_toString(self)) + (u" failureLimit ")) + (str((self)._failureLimit)));
+        (Client.logger).info(((_toString(self)) + (u" failureLimit ")) + (_toString((self)._failureLimit)));
         retestDelay = (self)._getField(u"retestDelay");
         if ((retestDelay) != (None)):
             (self)._retestDelay = retestDelay
@@ -359,7 +359,7 @@ class Client(object):
                 ((self).instanceMap)[url] = (instance);
 
             if ((instance).isActive()):
-                (Client.logger).info((((((u"- ") + ((self).serviceName)) + (u" using instance ")) + (str((idx) + (1)))) + (u": ")) + (url));
+                (Client.logger).info((((((u"- ") + ((self).serviceName)) + (u" using instance ")) + (_toString((idx) + (1)))) + (u": ")) + (url));
                 result = instance
                 break;
 

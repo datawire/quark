@@ -48,7 +48,7 @@ namespace quark {
                                       $py{($self) or ($other)}
                                       $rb{($self) || ($other)}
                                       $js{($self) || ($other)};
-        macro String toString() $java{($self).toString()} $py{str($self).lower()} $rb{($self).to_s} $js{($self).toString()};
+        macro String toString() $java{($self).toString()} $py{_toString($self).lower()} $rb{($self).to_s} $js{($self).toString()};
         macro JSONObject toJSON() new JSONObject().setBool(self);
         macro JSONObject __to_JSONObject() self.toJSON();
     }
@@ -87,7 +87,7 @@ namespace quark {
                      $js{Number()};
 
         macro String toString() $java{Byte.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro short __to_short() self;
@@ -103,7 +103,7 @@ namespace quark {
                       $js{Number()};
 
         macro String toString() $java{Short.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() self;
@@ -119,7 +119,7 @@ namespace quark {
                     $js{Number()};
 
         macro String toString() $java{Integer.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() $java{(byte)((Integer) ($self)).intValue()}
@@ -144,9 +144,13 @@ namespace quark {
                      $js{Number()};
 
         macro String toString() $java{Long.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
+        macro int __to_int() $java{(int) ((Long) ($self)).intValue()}
+                             $py{($self)}
+                             $rb{($self)}
+                             $js{($self)};
     }
 
     @mapping($java{Double} $py{float} $js{Number} $rb{Float})

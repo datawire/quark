@@ -15,4 +15,4 @@ def main(args):
     boolean_ = ((dec).getObjectItem(u"boolean")).getBool();
     _println(string);
     _println(number);
-    _println(str(boolean_).lower());
+    _println(_toString(boolean_).lower());

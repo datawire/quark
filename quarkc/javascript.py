@@ -290,7 +290,11 @@ def bool_(b):
     return b.text
 
 def number(n):
-    return n.text
+    assert n.text
+    if n.text[-1:] == "L":
+        return n.text[:-1]
+    else:
+        return n.text
 
 def string(s):
     result = s.text[0]

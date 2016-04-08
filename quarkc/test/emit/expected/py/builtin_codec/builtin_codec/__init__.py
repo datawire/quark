@@ -41,7 +41,7 @@ def main(args):
     c = _default_codec();
     hello = u"hello world!";
     b = (c).buffer(500);
-    _println(str((b).putStringUTF8(0, hello)));
+    _println(_toString((b).putStringUTF8(0, hello)));
     _println((c).toHexdump(b, 0, len(hello), 2));
     _println((c).toBase64(b, 0, len(hello)));
     d = (c).fromHexdump(u"0x0000000102 0304 0506");
@@ -51,19 +51,19 @@ def main(args):
     while ((i) < (e)):
         if (((i) + (1)) < ((e) + (1))):
             vb = (d).getByte(i);
-            _println((((((u"B[") + (str(i))) + (u"]=")) + (str(vb))) + (u"   ")) + (hexb(vb)));
+            _println((((((u"B[") + (_toString(i))) + (u"]=")) + (_toString(vb))) + (u"   ")) + (hexb(vb)));
 
         if (((i) + (2)) < ((e) + (1))):
             vs = (d).getShort(i);
-            _println((((((u"S[") + (str(i))) + (u"]=")) + (str(vs))) + (u"   ")) + (hexs(vs)));
+            _println((((((u"S[") + (_toString(i))) + (u"]=")) + (_toString(vs))) + (u"   ")) + (hexs(vs)));
 
         if (((i) + (4)) < ((e) + (1))):
             vi = (d).getInt(i);
-            _println((((((u"I[") + (str(i))) + (u"]=")) + (str(vi))) + (u"   ")) + (hexi(vi)));
+            _println((((((u"I[") + (_toString(i))) + (u"]=")) + (_toString(vi))) + (u"   ")) + (hexi(vi)));
 
         if (((i) + (8)) < ((e) + (1))):
             vl = (d).getLong(i);
-            _println((((((u"L[") + (str(i))) + (u"]=")) + (str(vl))) + (u"   ")) + (hexl(vl)));
+            _println((((((u"L[") + (_toString(i))) + (u"]=")) + (_toString(vl))) + (u"   ")) + (hexl(vl)));
 
         i = (i) + (1)
 

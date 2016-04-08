@@ -402,7 +402,10 @@ def bool_(b):
 
 def number(n):
     assert n.text
-    return n.text
+    if n.text[-1:] == "L":
+        return n.text[:-1]
+    else:
+        return n.text
 
 def string(s):
     result = s.text[0]

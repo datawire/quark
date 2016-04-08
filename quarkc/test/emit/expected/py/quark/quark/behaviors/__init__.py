@@ -122,7 +122,7 @@ class RPCRequest(object):
         info = None;
         ((self).timeout).cancel();
         if (((response).getCode()) != (200)):
-            info = ((((self).rpc).toString()) + (u" failed: Server returned error ")) + (str((response).getCode()))
+            info = ((((self).rpc).toString()) + (u" failed: Server returned error ")) + (_toString((response).getCode()))
             ((self).retval).finish(info);
             ((self).rpc).fail(info);
             return
