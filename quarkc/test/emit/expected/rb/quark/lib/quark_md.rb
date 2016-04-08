@@ -2,11 +2,73 @@ module Quark
 def self.quark_md; QuarkMd; end
 module QuarkMd
 require_relative 'quark/reflect' # 0 ('quark',) ()
+# for quark_md: require_relative 'quark' # 0 () ()
 # for quark_md: require_relative 'quark/concurrent' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/test' # 0 ('quark',) ()
-# for quark_md: require_relative 'quark' # 0 () ()
 # for quark_md: require_relative 'quark/logging' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
+
+
+def self.quark_ListUtil_quark_Object_; QuarkListUtilQuarkObject; end
+class QuarkListUtilQuarkObject < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_ListUtil_quark_Object_.new() }
+
+
+
+    def initialize()
+        
+        super("quark.ListUtil<quark.Object>")
+        (self).name = "quark.ListUtil"
+        (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.ListUtil.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkListUtilQuarkObject.unlazy_statics
 
 
 def self.quark_List_quark_String_; QuarkListQuarkString; end
@@ -6401,10 +6463,73 @@ end
 QuarkTestHarness.unlazy_statics
 
 
+def self.quark_URL; QuarkURL; end
+class QuarkURL < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_URL.new() }
+
+
+
+    def initialize()
+        
+        super("quark.URL")
+        (self).name = "quark.URL"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "scheme"), ::Quark.quark.reflect.Field.new("quark.String", "host"), ::Quark.quark.reflect.Field.new("quark.String", "port"), ::Quark.quark.reflect.Field.new("quark.String", "path")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.URL.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkURL.unlazy_statics
+
+
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
+    static quark_ListUtil_quark_Object__md: -> { ::Quark.quark_md.quark_ListUtil_quark_Object_.singleton }
     static quark_List_quark_String__md: -> { ::Quark.quark_md.quark_List_quark_String_.singleton }
     static quark_List_quark_Object__md: -> { ::Quark.quark_md.quark_List_quark_Object_.singleton }
     static quark_List_quark_concurrent_FutureCompletion__md: -> { ::Quark.quark_md.quark_List_quark_concurrent_FutureCompletion_.singleton }
@@ -6443,6 +6568,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
     static quark_test_Test_md: -> { ::Quark.quark_md.quark_test_Test.singleton }
     static quark_test_MethodTest_md: -> { ::Quark.quark_md.quark_test_MethodTest.singleton }
     static quark_test_Harness_md: -> { ::Quark.quark_md.quark_test_Harness.singleton }
+    static quark_URL_md: -> { ::Quark.quark_md.quark_URL.singleton }
 
 
 

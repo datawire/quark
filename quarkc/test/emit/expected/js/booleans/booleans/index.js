@@ -26,7 +26,7 @@ function main(args) {
     _qrt.print((fols).toString());
     var foo = "foo";
     var bar = "bar";
-    if (((foo) === ("foo")) && ((bar) === ("bar"))) {
+    if ((require('lodash').isEqual((foo), ("foo"))) && (require('lodash').isEqual((bar), ("bar")))) {
         _qrt.print("foobar!!");
     }
 }

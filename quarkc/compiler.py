@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, inspect, urllib, tempfile, logging, cPickle as pickle
+import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle
 from collections import OrderedDict
 from .ast import *
 from .exceptions import *
@@ -20,6 +20,8 @@ from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
 import ast
+
+sys.setrecursionlimit(10000)
 
 BUILTIN = "quark"
 BUILTIN_FILE = "%s.q" % BUILTIN
@@ -993,26 +995,28 @@ class Compiler(object):
             self.log.debug("loading from cache: %s", url)
             root = self.CACHE[url]
             self.roots.add(root)
-            for u in root.uses:
-                self.roots.add(self.CACHE[u])
+            if recurse:
+                for u in root.uses:
+                    self.roots.add(self.CACHE[u])
             if not include: self.entries[url] = root.files[0]
             return root.files[0]
         elif recurse and os.path.exists(url) and is_newer(urlc, url, __file__):
             self.log.debug("loading from: %sc", url)
             with open(urlc) as fd:
-                deps = pickle.load(fd)
-                if is_newer(urlc, *deps):
-                    roots = pickle.load(fd)
-                    try:
+                try:
+                    deps = pickle.load(fd)
+                    if is_newer(urlc, *deps):
+                        roots = pickle.load(fd)
                         # Check for the end record in case we
                         # encounter a partially written file.
                         end = pickle.load(fd)
-                        for root in roots:
-                            self.roots.add(root)
-                        if not include: self.entries[url] = roots[0].files[0]
-                        return roots[0].files[0]
-                    except EOFError:
-                        pass
+                        if end == ARCHIVE_END:
+                            for root in roots:
+                                self.roots.add(root)
+                            if not include: self.entries[url] = roots[0].files[0]
+                            return roots[0].files[0]
+                except EOFError:
+                    pass
 
         old = None
         if not include and url not in self.roots:

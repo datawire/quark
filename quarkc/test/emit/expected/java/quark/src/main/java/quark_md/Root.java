@@ -1,6 +1,7 @@
 package quark_md;
 
 public class Root implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class quark_ListUtil_quark_Object__md = quark_ListUtil_quark_Object_.singleton;
     public static quark.reflect.Class quark_List_quark_String__md = quark_List_quark_String_.singleton;
     public static quark.reflect.Class quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
     public static quark.reflect.Class quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton;
@@ -39,6 +40,7 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_test_Test_md = quark_test_Test.singleton;
     public static quark.reflect.Class quark_test_MethodTest_md = quark_test_MethodTest.singleton;
     public static quark.reflect.Class quark_test_Harness_md = quark_test_Harness.singleton;
+    public static quark.reflect.Class quark_URL_md = quark_URL.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

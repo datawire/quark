@@ -1,6 +1,7 @@
 use js ws 1.0;
 use js request 2.69.0;
 use js timers 0.1.1;
+use js lodash 4.8.2;
 include quark_runtime.js;
 include quark_node_runtime.js;
 
@@ -36,6 +37,7 @@ include concurrent.q;
 include http.q;
 include ws.q;
 include testing.q;
+include url.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}

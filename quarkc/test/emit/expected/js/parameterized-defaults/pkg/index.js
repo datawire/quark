@@ -74,7 +74,7 @@ function Box__getClass() {
 Box.prototype._getClass = Box__getClass;
 
 function Box__getField(name) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         return (this).contents;
     }
     return null;
@@ -82,7 +82,7 @@ function Box__getField(name) {
 Box.prototype._getField = Box__getField;
 
 function Box__setField(name, value) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         (this).contents = value;
     }
 }
@@ -108,7 +108,7 @@ function StringBox__getClass() {
 StringBox.prototype._getClass = StringBox__getClass;
 
 function StringBox__getField(name) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         return (this).contents;
     }
     return null;
@@ -116,7 +116,7 @@ function StringBox__getField(name) {
 StringBox.prototype._getField = StringBox__getField;
 
 function StringBox__setField(name, value) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         (this).contents = value;
     }
 }

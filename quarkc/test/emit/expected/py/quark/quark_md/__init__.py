@@ -3,6 +3,30 @@ from quark_runtime import *
 import quark.reflect
 
 
+class quark_ListUtil_quark_Object_(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_ListUtil_quark_Object_, self).__init__(u"quark.ListUtil<quark.Object>");
+        (self).name = u"quark.ListUtil"
+        (self).parameters = _List([u"quark.Object"])
+        (self).fields = _List([])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return quark.ListUtil()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_ListUtil_quark_Object_.singleton = quark_ListUtil_quark_Object_()
+
 class quark_List_quark_String_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -2441,6 +2465,30 @@ class quark_test_Harness(quark.reflect.Class):
         pass
 quark_test_Harness.singleton = quark_test_Harness()
 
+class quark_URL(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(quark_URL, self).__init__(u"quark.URL");
+        (self).name = u"quark.URL"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"scheme"), quark.reflect.Field(u"quark.String", u"host"), quark.reflect.Field(u"quark.String", u"port"), quark.reflect.Field(u"quark.String", u"path")])
+        (self).methods = _List([])
+
+    def construct(self, args):
+        return quark.URL()
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+quark_URL.singleton = quark_URL()
+
 class Root(object):
     def _init(self):
         pass
@@ -2454,6 +2502,7 @@ class Root(object):
 
     def _setField(self, name, value):
         pass
+Root.quark_ListUtil_quark_Object__md = quark_ListUtil_quark_Object_.singleton
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton
@@ -2492,9 +2541,10 @@ Root.quark_test_TestInitializer_md = quark_test_TestInitializer.singleton
 Root.quark_test_Test_md = quark_test_Test.singleton
 Root.quark_test_MethodTest_md = quark_test_MethodTest.singleton
 Root.quark_test_Harness_md = quark_test_Harness.singleton
+Root.quark_URL_md = quark_URL.singleton
 
+import quark
 import quark.concurrent
 import quark.test
-import quark
 import quark.logging
 import quark.behaviors

@@ -80,7 +80,7 @@ def has_main(name):
 def get_dist(name):
     code = os.path.join(directory, name + ".q")
     cmp = Compiler()
-    file = cmp.urlparse(code)
+    file = cmp.urlparse(code, recurse=False)
     name, ver = namever(file)
     return name
 

@@ -36,7 +36,7 @@ function Overload_test() {
     _qrt.print((o3).name);
     o3 = (o1).__mul__(o2);
     _qrt.print((o3).name);
-    if ((o3) === (o1)) {
+    if (require('lodash').isEqual((o3), (o1))) {
         _qrt.print("YAY!");
     }
 }
@@ -48,7 +48,7 @@ function Overload__getClass() {
 Overload.prototype._getClass = Overload__getClass;
 
 function Overload__getField(name) {
-    if ((name) === ("name")) {
+    if (require('lodash').isEqual((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -56,7 +56,7 @@ function Overload__getField(name) {
 Overload.prototype._getField = Overload__getField;
 
 function Overload__setField(name, value) {
-    if ((name) === ("name")) {
+    if (require('lodash').isEqual((name), ("name"))) {
         (this).name = value;
     }
 }

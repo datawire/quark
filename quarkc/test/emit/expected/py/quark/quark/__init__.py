@@ -1,14 +1,47 @@
 from quark_runtime import *
 
 import reflect
+import quark_md
 import logging
 import behaviors
-import quark_md
 import concurrent
 import test
 
 
 
+class ListUtil(object):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def slice(self, list, start, stop):
+        result = _List([]);
+        if ((start) >= (len(list))):
+            start = len(list)
+        else:
+            start = (start) % (len(list))
+
+        if ((stop) >= (len(list))):
+            stop = len(list)
+        else:
+            stop = (stop) % (len(list))
+
+        idx = start;
+        while ((idx) < (stop)):
+            (result).append((list)[idx]);
+            idx = (idx) + (1)
+
+        return result
+
+    def _getClass(self):
+        return u"quark.ListUtil<quark.Object>"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+ListUtil.quark_List_quark_Object__ref = quark_md.Root.quark_List_quark_Object__md
 
 
 
@@ -538,3 +571,103 @@ Server.quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object_
 
 
 
+
+
+class URL(object):
+    """
+    A URL class.
+    """
+    def _init(self):
+        self.scheme = None
+        self.host = None
+        self.port = None
+        self.path = None
+
+    def __init__(self): self._init()
+
+    @staticmethod
+    def parse(url):
+        result = URL();
+        if ((url) == (None)):
+            return None
+
+        parts = None;
+        remaining = None;
+        idx = (url).find(u"://");
+        if ((idx) >= (0)):
+            (result).scheme = (url)[(0):(idx)]
+            remaining = (url)[((idx) + (3)):(len(url))]
+        else:
+            remaining = url
+
+        firstSlash = (remaining).find(u"/");
+        if ((firstSlash) == (0)):
+            (result).path = remaining
+            return result
+
+        if ((firstSlash) < (0)):
+            firstSlash = len(remaining)
+        else:
+            (result).path = (remaining)[(firstSlash):(len(remaining))]
+
+        idx = (remaining).find(u":")
+        if ((idx) > (firstSlash)):
+            (result).host = (remaining)[(0):(firstSlash)]
+        else:
+            if ((idx) >= (0)):
+                (result).host = (remaining)[(0):(idx)]
+                (result).port = (remaining)[((idx) + (1)):(firstSlash)]
+            else:
+                (result).host = (remaining)[(0):(firstSlash)]
+
+        return result
+
+    def toString(self):
+        result = u"";
+        if ((self.scheme) != (None)):
+            result = (self.scheme) + (u"://")
+
+        if ((self.host) != (None)):
+            result = (result) + (self.host)
+
+        if ((self.port) != (None)):
+            result = ((result) + (u":")) + (self.port)
+
+        if ((self.path) != (None)):
+            result = (result) + (self.path)
+
+        return result
+
+    def _getClass(self):
+        return u"quark.URL"
+
+    def _getField(self, name):
+        if ((name) == (u"scheme")):
+            return (self).scheme
+
+        if ((name) == (u"host")):
+            return (self).host
+
+        if ((name) == (u"port")):
+            return (self).port
+
+        if ((name) == (u"path")):
+            return (self).path
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"scheme")):
+            (self).scheme = value
+
+        if ((name) == (u"host")):
+            (self).host = value
+
+        if ((name) == (u"port")):
+            (self).port = value
+
+        if ((name) == (u"path")):
+            (self).path = value
+
+
+URL.quark_URL_ref = quark_md.Root.quark_URL_md

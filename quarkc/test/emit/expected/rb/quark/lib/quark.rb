@@ -3,13 +3,84 @@ require_relative "datawire-quark-core"
 def self.quark; Quark; end
 module Quark
 require_relative 'quark/reflect' # 0 ('quark',) ()
+require_relative 'quark_md' # 0 () ()
 require_relative 'quark/logging' # 0 ('quark',) ()
 require_relative 'quark/behaviors' # 0 ('quark',) ()
-require_relative 'quark_md' # 0 () ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
 require_relative 'quark/test' # 0 ('quark',) ()
 
 
+
+def self.ListUtil; ListUtil; end
+class ListUtil < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_List_quark_Object__ref: -> { ::Quark.quark_md.Root.quark_List_quark_Object__md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def slice(list, start, stop)
+        
+        result = ::DatawireQuarkCore::List.new([])
+        if ((start) >= ((list).size))
+            start = (list).size
+        else
+            start = (start) % ((list).size)
+        end
+        if ((stop) >= ((list).size))
+            stop = (list).size
+        else
+            stop = (stop) % ((list).size)
+        end
+        idx = start
+        while ((idx) < (stop)) do
+            (result) << ((list)[idx])
+            idx = (idx) + (1)
+        end
+        return result
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "quark.ListUtil<quark.Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+ListUtil.unlazy_statics
 
 
 
@@ -940,5 +1011,143 @@ Server.unlazy_statics
 
 
 
+
+
+def self.URL; URL; end
+class URL < ::DatawireQuarkCore::QuarkObject
+    attr_accessor :scheme, :host, :port, :path
+    extend ::DatawireQuarkCore::Static
+
+    static quark_URL_ref: -> { ::Quark.quark_md.Root.quark_URL_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def self.parse(url)
+        
+        result = ::Quark.quark.URL.new()
+        if ((url) == (nil))
+            return nil
+        end
+        parts = nil
+        remaining = nil
+        idx = ((url).index("://") or -1)
+        if ((idx) >= (0))
+            (result).scheme = (url)[(0)...(idx)]
+            remaining = (url)[((idx) + (3))...((url).size)]
+        else
+            remaining = url
+        end
+        firstSlash = ((remaining).index("/") or -1)
+        if ((firstSlash) == (0))
+            (result).path = remaining
+            return result
+        end
+        if ((firstSlash) < (0))
+            firstSlash = (remaining).size
+        else
+            (result).path = (remaining)[(firstSlash)...((remaining).size)]
+        end
+        idx = ((remaining).index(":") or -1)
+        if ((idx) > (firstSlash))
+            (result).host = (remaining)[(0)...(firstSlash)]
+        else
+            if ((idx) >= (0))
+                (result).host = (remaining)[(0)...(idx)]
+                (result).port = (remaining)[((idx) + (1))...(firstSlash)]
+            else
+                (result).host = (remaining)[(0)...(firstSlash)]
+            end
+        end
+        return result
+
+        nil
+    end
+
+    def toString()
+        
+        result = ""
+        if ((@scheme) != (nil))
+            result = (@scheme) + ("://")
+        end
+        if ((@host) != (nil))
+            result = (result) + (@host)
+        end
+        if ((@port) != (nil))
+            result = ((result) + (":")) + (@port)
+        end
+        if ((@path) != (nil))
+            result = (result) + (@path)
+        end
+        return result
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "quark.URL"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("scheme"))
+            return (self).scheme
+        end
+        if ((name) == ("host"))
+            return (self).host
+        end
+        if ((name) == ("port"))
+            return (self).port
+        end
+        if ((name) == ("path"))
+            return (self).path
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("scheme"))
+            (self).scheme = value
+        end
+        if ((name) == ("host"))
+            (self).host = value
+        end
+        if ((name) == ("port"))
+            (self).port = value
+        end
+        if ((name) == ("path"))
+            (self).path = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        self.scheme = nil
+        self.host = nil
+        self.port = nil
+        self.path = nil
+
+        nil
+    end
+
+
+end
+URL.unlazy_statics
 end # module Quark
 end # module Quark

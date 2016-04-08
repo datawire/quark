@@ -671,6 +671,7 @@ class Backend(object):
                 class FakeExpr: pass
                 fake = FakeExpr()
                 fake.expr = expr
+                fake.resolved = expr.coersion.resolved
                 return self.apply_macro(expr.coersion, fake, ())
             else:
                 return self.gen.invoke_method(self.expr(expr), self.name(expr.coersion.name), [])
@@ -680,6 +681,9 @@ class Backend(object):
     def apply_macro(self, macro, expr, args):
         env = {}
         if macro.clazz and macro.type:
+            bindings = expr.resolved.bindings
+            for tparam in bindings:
+                env[tparam.name.text] = self.type(bindings[tparam])
             # for method macros we use expr to access self
             env["self"] = self.expr(expr.expr)
         idx = 0

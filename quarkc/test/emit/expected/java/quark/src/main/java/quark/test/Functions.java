@@ -26,7 +26,7 @@ public class Functions {
 
 
     public static Boolean checkEqual(Object expected, Object actual) {
-        return (Test.current()).check((expected)==(actual) || ((Object)(expected) != null && ((Object) (expected)).equals(actual)), ((("expected ") + ((expected).toString())) + (" got ")) + ((actual).toString()));
+        return (Test.current()).check((expected)==(actual) || ((Object)(expected) != null && ((Object) (expected)).equals(actual)), ((("expected ") + (("" + (expected)))) + (" got ")) + (("" + (actual))));
     }
 
 

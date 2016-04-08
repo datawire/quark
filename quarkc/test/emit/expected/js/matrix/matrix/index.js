@@ -47,13 +47,13 @@ function Matrix__getClass() {
 Matrix.prototype._getClass = Matrix__getClass;
 
 function Matrix__getField(name) {
-    if ((name) === ("width")) {
+    if (require('lodash').isEqual((name), ("width"))) {
         return (this).width;
     }
-    if ((name) === ("height")) {
+    if (require('lodash').isEqual((name), ("height"))) {
         return (this).height;
     }
-    if ((name) === ("columns")) {
+    if (require('lodash').isEqual((name), ("columns"))) {
         return (this).columns;
     }
     return null;
@@ -61,13 +61,13 @@ function Matrix__getField(name) {
 Matrix.prototype._getField = Matrix__getField;
 
 function Matrix__setField(name, value) {
-    if ((name) === ("width")) {
+    if (require('lodash').isEqual((name), ("width"))) {
         (this).width = value;
     }
-    if ((name) === ("height")) {
+    if (require('lodash').isEqual((name), ("height"))) {
         (this).height = value;
     }
-    if ((name) === ("columns")) {
+    if (require('lodash').isEqual((name), ("columns"))) {
         (this).columns = value;
     }
 }

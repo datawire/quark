@@ -4,6 +4,42 @@ exports.quark = quark;
 
 
 
+// CLASS quark_ListUtil_quark_Object_
+
+function quark_ListUtil_quark_Object_() {
+    quark_ListUtil_quark_Object_.super_.call(this, "quark.ListUtil<quark.Object>");
+    (this).name = "quark.ListUtil";
+    (this).parameters = ["quark.Object"];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_ListUtil_quark_Object_ = quark_ListUtil_quark_Object_;
+_qrt.util.inherits(quark_ListUtil_quark_Object_, quark.reflect.Class);
+
+function quark_ListUtil_quark_Object___init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_ListUtil_quark_Object_.prototype.__init_fields__ = quark_ListUtil_quark_Object___init_fields__;
+quark_ListUtil_quark_Object_.singleton = new quark_ListUtil_quark_Object_();
+function quark_ListUtil_quark_Object__construct(args) {
+    return new quark.ListUtil();
+}
+quark_ListUtil_quark_Object_.prototype.construct = quark_ListUtil_quark_Object__construct;
+
+function quark_ListUtil_quark_Object___getClass() {
+    return null;
+}
+quark_ListUtil_quark_Object_.prototype._getClass = quark_ListUtil_quark_Object___getClass;
+
+function quark_ListUtil_quark_Object___getField(name) {
+    return null;
+}
+quark_ListUtil_quark_Object_.prototype._getField = quark_ListUtil_quark_Object___getField;
+
+function quark_ListUtil_quark_Object___setField(name, value) {}
+quark_ListUtil_quark_Object_.prototype._setField = quark_ListUtil_quark_Object___setField;
+
+
 // CLASS quark_List_quark_String_
 
 function quark_List_quark_String_() {
@@ -3774,6 +3810,42 @@ function quark_test_Harness__setField(name, value) {}
 quark_test_Harness.prototype._setField = quark_test_Harness__setField;
 
 
+// CLASS quark_URL
+
+function quark_URL() {
+    quark_URL.super_.call(this, "quark.URL");
+    (this).name = "quark.URL";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.String", "scheme"), new quark.reflect.Field("quark.String", "host"), new quark.reflect.Field("quark.String", "port"), new quark.reflect.Field("quark.String", "path")];
+    (this).methods = [];
+}
+exports.quark_URL = quark_URL;
+_qrt.util.inherits(quark_URL, quark.reflect.Class);
+
+function quark_URL__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_URL.prototype.__init_fields__ = quark_URL__init_fields__;
+quark_URL.singleton = new quark_URL();
+function quark_URL_construct(args) {
+    return new quark.URL();
+}
+quark_URL.prototype.construct = quark_URL_construct;
+
+function quark_URL__getClass() {
+    return null;
+}
+quark_URL.prototype._getClass = quark_URL__getClass;
+
+function quark_URL__getField(name) {
+    return null;
+}
+quark_URL.prototype._getField = quark_URL__getField;
+
+function quark_URL__setField(name, value) {}
+quark_URL.prototype._setField = quark_URL__setField;
+
+
 // CLASS Root
 function Root() {
     this.__init_fields__();
@@ -3782,6 +3854,7 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
+Root.quark_ListUtil_quark_Object__md = quark_ListUtil_quark_Object_.singleton;
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
 Root.quark_List_quark_concurrent_FutureCompletion__md = quark_List_quark_concurrent_FutureCompletion_.singleton;
@@ -3820,6 +3893,7 @@ Root.quark_test_TestInitializer_md = quark_test_TestInitializer.singleton;
 Root.quark_test_Test_md = quark_test_Test.singleton;
 Root.quark_test_MethodTest_md = quark_test_MethodTest.singleton;
 Root.quark_test_Harness_md = quark_test_Harness.singleton;
+Root.quark_URL_md = quark_URL.singleton;
 function Root__getClass() {
     return null;
 }

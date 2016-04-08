@@ -52,7 +52,7 @@ function Foo__getClass() {
 Foo.prototype._getClass = Foo__getClass;
 
 function Foo__getField(name) {
-    if ((name) === ("name")) {
+    if (require('lodash').isEqual((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -60,7 +60,7 @@ function Foo__getField(name) {
 Foo.prototype._getField = Foo__getField;
 
 function Foo__setField(name, value) {
-    if ((name) === ("name")) {
+    if (require('lodash').isEqual((name), ("name"))) {
         (this).name = value;
     }
 }

@@ -33,7 +33,7 @@ function Box__getClass() {
 Box.prototype._getClass = Box__getClass;
 
 function Box__getField(name) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         return (this).contents;
     }
     return null;
@@ -41,7 +41,7 @@ function Box__getField(name) {
 Box.prototype._getField = Box__getField;
 
 function Box__setField(name, value) {
-    if ((name) === ("contents")) {
+    if (require('lodash').isEqual((name), ("contents"))) {
         (this).contents = value;
     }
 }
@@ -76,10 +76,10 @@ function Crate__getClass() {
 Crate.prototype._getClass = Crate__getClass;
 
 function Crate__getField(name) {
-    if ((name) === ("box")) {
+    if (require('lodash').isEqual((name), ("box"))) {
         return (this).box;
     }
-    if ((name) === ("ibox")) {
+    if (require('lodash').isEqual((name), ("ibox"))) {
         return (this).ibox;
     }
     return null;
@@ -87,10 +87,10 @@ function Crate__getField(name) {
 Crate.prototype._getField = Crate__getField;
 
 function Crate__setField(name, value) {
-    if ((name) === ("box")) {
+    if (require('lodash').isEqual((name), ("box"))) {
         (this).box = value;
     }
-    if ((name) === ("ibox")) {
+    if (require('lodash').isEqual((name), ("ibox"))) {
         (this).ibox = value;
     }
 }
@@ -113,7 +113,7 @@ function Sack__getClass() {
 Sack.prototype._getClass = Sack__getClass;
 
 function Sack__getField(name) {
-    if ((name) === ("ints")) {
+    if (require('lodash').isEqual((name), ("ints"))) {
         return (this).ints;
     }
     return null;
@@ -121,7 +121,7 @@ function Sack__getField(name) {
 Sack.prototype._getField = Sack__getField;
 
 function Sack__setField(name, value) {
-    if ((name) === ("ints")) {
+    if (require('lodash').isEqual((name), ("ints"))) {
         (this).ints = value;
     }
 }

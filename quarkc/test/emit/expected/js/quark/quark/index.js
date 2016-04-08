@@ -1,12 +1,12 @@
 var _qrt = require("quark/quark_runtime.js");
 var reflect = require('./reflect/index.js');
 exports.reflect = reflect;
+var quark_md = require('../quark_md/index.js');
+exports.quark_md = quark_md;
 var logging = require('./logging/index.js');
 exports.logging = logging;
 var behaviors = require('./behaviors/index.js');
 exports.behaviors = behaviors;
-var quark_md = require('../quark_md/index.js');
-exports.quark_md = quark_md;
 var concurrent = require('./concurrent/index.js');
 exports.concurrent = concurrent;
 var test = require('./test/index.js');
@@ -14,6 +14,49 @@ exports.test = test;
 
 
 
+
+// CLASS ListUtil
+function ListUtil() {
+    this.__init_fields__();
+}
+exports.ListUtil = ListUtil;
+
+function ListUtil__init_fields__() {}
+ListUtil.prototype.__init_fields__ = ListUtil__init_fields__;
+ListUtil.quark_List_quark_Object__ref = quark_md.Root.quark_List_quark_Object__md;
+function ListUtil_slice(list, start, stop) {
+    var result = [];
+    if ((start) >= ((list).length)) {
+        start = (list).length;
+    } else {
+        start = _qrt.modulo((start), ((list).length));
+    }
+    if ((stop) >= ((list).length)) {
+        stop = (list).length;
+    } else {
+        stop = _qrt.modulo((stop), ((list).length));
+    }
+    var idx = start;
+    while ((idx) < (stop)) {
+        (result).push((list)[idx]);
+        idx = (idx) + (1);
+    }
+    return result;
+}
+ListUtil.prototype.slice = ListUtil_slice;
+
+function ListUtil__getClass() {
+    return "quark.ListUtil<quark.Object>";
+}
+ListUtil.prototype._getClass = ListUtil__getClass;
+
+function ListUtil__getField(name) {
+    return null;
+}
+ListUtil.prototype._getField = ListUtil__getField;
+
+function ListUtil__setField(name, value) {}
+ListUtil.prototype._setField = ListUtil__setField;
 
 
 
@@ -23,23 +66,23 @@ exports.test = test;
  */
 function toJSON(obj, cls) {
     var result = new _qrt.JSONObject();
-    if ((obj) === (null)) {
+    if (require('lodash').isEqual((obj), (null))) {
         (result).setNull();
         return result;
     }
-    if ((cls) === (null)) {
+    if (require('lodash').isEqual((cls), (null))) {
         cls = reflect.Class.get(_qrt._getClass(obj));
     }
     var idx = 0;
-    if (((cls).name) === ("quark.String")) {
+    if (require('lodash').isEqual(((cls).name), ("quark.String"))) {
         (result).setString(obj);
         return result;
     }
-    if (((((((cls).name) === ("quark.byte")) || (((cls).name) === ("quark.short"))) || (((cls).name) === ("quark.int"))) || (((cls).name) === ("quark.long"))) || (((cls).name) === ("quark.float"))) {
+    if (((((require('lodash').isEqual(((cls).name), ("quark.byte"))) || (require('lodash').isEqual(((cls).name), ("quark.short")))) || (require('lodash').isEqual(((cls).name), ("quark.int")))) || (require('lodash').isEqual(((cls).name), ("quark.long")))) || (require('lodash').isEqual(((cls).name), ("quark.float")))) {
         (result).setNumber(obj);
         return result;
     }
-    if (((cls).name) === ("quark.List")) {
+    if (require('lodash').isEqual(((cls).name), ("quark.List"))) {
         (result).setList();
         var list = obj;
         while ((idx) < ((list).length)) {
@@ -48,7 +91,7 @@ function toJSON(obj, cls) {
         }
         return result;
     }
-    if (((cls).name) === ("quark.Map")) {
+    if (require('lodash').isEqual(((cls).name), ("quark.Map"))) {
         (result).setObject();
         var map = obj;
         return result;
@@ -70,30 +113,30 @@ exports.toJSON = toJSON;
  * deserialize json into provided result object. Skip over fields starting with underscore
  */
 function fromJSON(cls, result, json) {
-    if (((json) === (null)) || ((json).isNull())) {
+    if ((require('lodash').isEqual((json), (null))) || ((json).isNull())) {
         return null;
     }
     var idx = 0;
-    if ((result) === (null)) {
-        if (((cls).name) === ("quark.String")) {
+    if (require('lodash').isEqual((result), (null))) {
+        if (require('lodash').isEqual(((cls).name), ("quark.String"))) {
             var s = (json).getString();
             return s;
         }
-        if (((cls).name) === ("quark.float")) {
+        if (require('lodash').isEqual(((cls).name), ("quark.float"))) {
             var flt = (json).getNumber();
             return flt;
         }
-        if (((cls).name) === ("quark.int")) {
+        if (require('lodash').isEqual(((cls).name), ("quark.int"))) {
             var i = Math.round((json).getNumber());
             return i;
         }
-        if (((cls).name) === ("quark.bool")) {
+        if (require('lodash').isEqual(((cls).name), ("quark.bool"))) {
             var b = (json).getBool();
             return b;
         }
         result = (cls).construct([]);
     }
-    if (((cls).name) === ("quark.List")) {
+    if (require('lodash').isEqual(((cls).name), ("quark.List"))) {
         var list = result;
         while ((idx) < ((json).size())) {
             (list).push(fromJSON(((cls).getParameters())[0], null, (json).getListItem(idx)));
@@ -157,10 +200,10 @@ function ResponseHolder__getClass() {
 ResponseHolder.prototype._getClass = ResponseHolder__getClass;
 
 function ResponseHolder__getField(name) {
-    if ((name) === ("response")) {
+    if (require('lodash').isEqual((name), ("response"))) {
         return (this).response;
     }
-    if ((name) === ("failure")) {
+    if (require('lodash').isEqual((name), ("failure"))) {
         return (this).failure;
     }
     return null;
@@ -168,10 +211,10 @@ function ResponseHolder__getField(name) {
 ResponseHolder.prototype._getField = ResponseHolder__getField;
 
 function ResponseHolder__setField(name, value) {
-    if ((name) === ("response")) {
+    if (require('lodash').isEqual((name), ("response"))) {
         (this).response = value;
     }
-    if ((name) === ("failure")) {
+    if (require('lodash').isEqual((name), ("failure"))) {
         (this).failure = value;
     }
 }
@@ -299,13 +342,13 @@ function ServiceInstance__getClass() {
 ServiceInstance.prototype._getClass = ServiceInstance__getClass;
 
 function ServiceInstance__getField(name) {
-    if ((name) === ("serviceName")) {
+    if (require('lodash').isEqual((name), ("serviceName"))) {
         return (this).serviceName;
     }
-    if ((name) === ("url")) {
+    if (require('lodash').isEqual((name), ("url"))) {
         return (this).url;
     }
-    if ((name) === ("breaker")) {
+    if (require('lodash').isEqual((name), ("breaker"))) {
         return (this).breaker;
     }
     return null;
@@ -313,13 +356,13 @@ function ServiceInstance__getField(name) {
 ServiceInstance.prototype._getField = ServiceInstance__getField;
 
 function ServiceInstance__setField(name, value) {
-    if ((name) === ("serviceName")) {
+    if (require('lodash').isEqual((name), ("serviceName"))) {
         (this).serviceName = value;
     }
-    if ((name) === ("url")) {
+    if (require('lodash').isEqual((name), ("url"))) {
         (this).url = value;
     }
-    if ((name) === ("breaker")) {
+    if (require('lodash').isEqual((name), ("breaker"))) {
         (this).breaker = value;
     }
 }
@@ -369,12 +412,12 @@ function Client(serviceName) {
     if ((failureLimit) !== (null)) {
         (this)._failureLimit = failureLimit;
     }
-    (Client.logger).info((((this).toString()) + (" failureLimit ")) + (_qrt.toString((this)._failureLimit)));
+    (Client.logger).info(((("" + (this))) + (" failureLimit ")) + (_qrt.toString((this)._failureLimit)));
     var retestDelay = (this)._getField("retestDelay");
     if ((retestDelay) !== (null)) {
         (this)._retestDelay = retestDelay;
     }
-    (Client.logger).info((((this).toString()) + (" retestDelay ")) + (_qrt.toString((this)._retestDelay)));
+    (Client.logger).info(((("" + (this))) + (" retestDelay ")) + (_qrt.toString((this)._retestDelay)));
 }
 exports.Client = Client;
 
@@ -411,7 +454,7 @@ function Client_getInstance() {
     while (true) {
         var url = (urls)[idx];
         var instance = _qrt.map_get(((this).instanceMap), (url));
-        if ((instance) === (null)) {
+        if (require('lodash').isEqual((instance), (null))) {
             instance = new ServiceInstance((this).serviceName, url, this._failureLimit, this._retestDelay);
             ((this).instanceMap).set((url), (instance));
         }
@@ -421,7 +464,7 @@ function Client_getInstance() {
             break;
         }
         idx = _qrt.modulo(((idx) + (1)), ((urls).length));
-        if ((idx) === (next)) {
+        if (require('lodash').isEqual((idx), (next))) {
             (Client.logger).info((("- ") + ((this).serviceName)) + (": no live instances! giving up."));
             break;
         }
@@ -452,31 +495,31 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if ((name) === ("logger")) {
+    if (require('lodash').isEqual((name), ("logger"))) {
         return Client.logger;
     }
-    if ((name) === ("resolver")) {
+    if (require('lodash').isEqual((name), ("resolver"))) {
         return (this).resolver;
     }
-    if ((name) === ("serviceName")) {
+    if (require('lodash').isEqual((name), ("serviceName"))) {
         return (this).serviceName;
     }
-    if ((name) === ("_timeout")) {
+    if (require('lodash').isEqual((name), ("_timeout"))) {
         return (this)._timeout;
     }
-    if ((name) === ("_failureLimit")) {
+    if (require('lodash').isEqual((name), ("_failureLimit"))) {
         return (this)._failureLimit;
     }
-    if ((name) === ("_retestDelay")) {
+    if (require('lodash').isEqual((name), ("_retestDelay"))) {
         return (this)._retestDelay;
     }
-    if ((name) === ("mutex")) {
+    if (require('lodash').isEqual((name), ("mutex"))) {
         return (this).mutex;
     }
-    if ((name) === ("instanceMap")) {
+    if (require('lodash').isEqual((name), ("instanceMap"))) {
         return (this).instanceMap;
     }
-    if ((name) === ("counter")) {
+    if (require('lodash').isEqual((name), ("counter"))) {
         return (this).counter;
     }
     return null;
@@ -484,31 +527,31 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if ((name) === ("logger")) {
+    if (require('lodash').isEqual((name), ("logger"))) {
         Client.logger = value;
     }
-    if ((name) === ("resolver")) {
+    if (require('lodash').isEqual((name), ("resolver"))) {
         (this).resolver = value;
     }
-    if ((name) === ("serviceName")) {
+    if (require('lodash').isEqual((name), ("serviceName"))) {
         (this).serviceName = value;
     }
-    if ((name) === ("_timeout")) {
+    if (require('lodash').isEqual((name), ("_timeout"))) {
         (this)._timeout = value;
     }
-    if ((name) === ("_failureLimit")) {
+    if (require('lodash').isEqual((name), ("_failureLimit"))) {
         (this)._failureLimit = value;
     }
-    if ((name) === ("_retestDelay")) {
+    if (require('lodash').isEqual((name), ("_retestDelay"))) {
         (this)._retestDelay = value;
     }
-    if ((name) === ("mutex")) {
+    if (require('lodash').isEqual((name), ("mutex"))) {
         (this).mutex = value;
     }
-    if ((name) === ("instanceMap")) {
+    if (require('lodash').isEqual((name), ("instanceMap"))) {
         (this).instanceMap = value;
     }
-    if ((name) === ("counter")) {
+    if (require('lodash').isEqual((name), ("counter"))) {
         (this).counter = value;
     }
 }
@@ -552,13 +595,13 @@ function ServerResponder__getClass() {
 ServerResponder.prototype._getClass = ServerResponder__getClass;
 
 function ServerResponder__getField(name) {
-    if ((name) === ("sendCORS")) {
+    if (require('lodash').isEqual((name), ("sendCORS"))) {
         return (this).sendCORS;
     }
-    if ((name) === ("request")) {
+    if (require('lodash').isEqual((name), ("request"))) {
         return (this).request;
     }
-    if ((name) === ("response")) {
+    if (require('lodash').isEqual((name), ("response"))) {
         return (this).response;
     }
     return null;
@@ -566,13 +609,13 @@ function ServerResponder__getField(name) {
 ServerResponder.prototype._getField = ServerResponder__getField;
 
 function ServerResponder__setField(name, value) {
-    if ((name) === ("sendCORS")) {
+    if (require('lodash').isEqual((name), ("sendCORS"))) {
         (this).sendCORS = value;
     }
-    if ((name) === ("request")) {
+    if (require('lodash').isEqual((name), ("request"))) {
         (this).request = value;
     }
-    if ((name) === ("response")) {
+    if (require('lodash').isEqual((name), ("response"))) {
         (this).response = value;
     }
 }
@@ -601,7 +644,7 @@ Server.prototype.sendCORS = Server_sendCORS;
 function Server_onHTTPRequest(request, response) {
     var body = (request).getBody();
     var envelope = _qrt.json_from_string(body);
-    if ((((envelope).getObjectItem("$method")) === ((envelope).undefined())) || (((envelope).getObjectItem("rpc")) === ((envelope).undefined()))) {
+    if ((require('lodash').isEqual(((envelope).getObjectItem("$method")), ((envelope).undefined()))) || (require('lodash').isEqual(((envelope).getObjectItem("rpc")), ((envelope).undefined())))) {
         (response).setBody((("Failed to understand request.\n\n") + (body)) + ("\n"));
         (response).setCode(400);
         (concurrent.Context.runtime()).respond(request, response);
@@ -633,10 +676,10 @@ function Server__getClass() {
 Server.prototype._getClass = Server__getClass;
 
 function Server__getField(name) {
-    if ((name) === ("impl")) {
+    if (require('lodash').isEqual((name), ("impl"))) {
         return (this).impl;
     }
-    if ((name) === ("_sendCORS")) {
+    if (require('lodash').isEqual((name), ("_sendCORS"))) {
         return (this)._sendCORS;
     }
     return null;
@@ -644,10 +687,10 @@ function Server__getField(name) {
 Server.prototype._getField = Server__getField;
 
 function Server__setField(name, value) {
-    if ((name) === ("impl")) {
+    if (require('lodash').isEqual((name), ("impl"))) {
         (this).impl = value;
     }
-    if ((name) === ("_sendCORS")) {
+    if (require('lodash').isEqual((name), ("_sendCORS"))) {
         (this)._sendCORS = value;
     }
 }
@@ -672,3 +715,117 @@ Server.prototype.onServletEnd = Server_onServletEnd;
 
 
 
+
+
+
+// CLASS URL
+/**
+ * A URL class.
+ */
+function URL() {
+    this.__init_fields__();
+}
+exports.URL = URL;
+
+function URL__init_fields__() {
+    this.scheme = null;
+    this.host = null;
+    this.port = null;
+    this.path = null;
+}
+URL.prototype.__init_fields__ = URL__init_fields__;
+URL.quark_URL_ref = quark_md.Root.quark_URL_md;
+function URL_parse(url) {
+    var result = new URL();
+    if (require('lodash').isEqual((url), (null))) {
+        return null;
+    }
+    var parts = null;
+    var remaining = null;
+    var idx = (url).indexOf("://");
+    if ((idx) >= (0)) {
+        (result).scheme = (url).substring((0), (idx));
+        remaining = (url).substring(((idx) + (3)), ((url).length));
+    } else {
+        remaining = url;
+    }
+    var firstSlash = (remaining).indexOf("/");
+    if (require('lodash').isEqual((firstSlash), (0))) {
+        (result).path = remaining;
+        return result;
+    }
+    if ((firstSlash) < (0)) {
+        firstSlash = (remaining).length;
+    } else {
+        (result).path = (remaining).substring((firstSlash), ((remaining).length));
+    }
+    idx = (remaining).indexOf(":");
+    if ((idx) > (firstSlash)) {
+        (result).host = (remaining).substring((0), (firstSlash));
+    } else {
+        if ((idx) >= (0)) {
+            (result).host = (remaining).substring((0), (idx));
+            (result).port = (remaining).substring(((idx) + (1)), (firstSlash));
+        } else {
+            (result).host = (remaining).substring((0), (firstSlash));
+        }
+    }
+    return result;
+}
+URL.parse = URL_parse;
+
+function URL_toString() {
+    var result = "";
+    if ((this.scheme) !== (null)) {
+        result = (this.scheme) + ("://");
+    }
+    if ((this.host) !== (null)) {
+        result = (result) + (this.host);
+    }
+    if ((this.port) !== (null)) {
+        result = ((result) + (":")) + (this.port);
+    }
+    if ((this.path) !== (null)) {
+        result = (result) + (this.path);
+    }
+    return result;
+}
+URL.prototype.toString = URL_toString;
+
+function URL__getClass() {
+    return "quark.URL";
+}
+URL.prototype._getClass = URL__getClass;
+
+function URL__getField(name) {
+    if (require('lodash').isEqual((name), ("scheme"))) {
+        return (this).scheme;
+    }
+    if (require('lodash').isEqual((name), ("host"))) {
+        return (this).host;
+    }
+    if (require('lodash').isEqual((name), ("port"))) {
+        return (this).port;
+    }
+    if (require('lodash').isEqual((name), ("path"))) {
+        return (this).path;
+    }
+    return null;
+}
+URL.prototype._getField = URL__getField;
+
+function URL__setField(name, value) {
+    if (require('lodash').isEqual((name), ("scheme"))) {
+        (this).scheme = value;
+    }
+    if (require('lodash').isEqual((name), ("host"))) {
+        (this).host = value;
+    }
+    if (require('lodash').isEqual((name), ("port"))) {
+        (this).port = value;
+    }
+    if (require('lodash').isEqual((name), ("path"))) {
+        (this).path = value;
+    }
+}
+URL.prototype._setField = URL__setField;

@@ -62,16 +62,16 @@ function SlackEvent__getClass() {
 SlackEvent.prototype._getClass = SlackEvent__getClass;
 
 function SlackEvent__getField(name) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         return (this).type;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         return (this).user;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         return (this).channel;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         return (this).timestamp;
     }
     return null;
@@ -79,16 +79,16 @@ function SlackEvent__getField(name) {
 SlackEvent.prototype._getField = SlackEvent__getField;
 
 function SlackEvent__setField(name, value) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         (this).type = value;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         (this).user = value;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         (this).channel = value;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         (this).timestamp = value;
     }
 }
@@ -136,22 +136,22 @@ function SlackError__getClass() {
 SlackError.prototype._getClass = SlackError__getClass;
 
 function SlackError__getField(name) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         return (this).type;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         return (this).user;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         return (this).channel;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         return (this).timestamp;
     }
-    if ((name) === ("code")) {
+    if (require('lodash').isEqual((name), ("code"))) {
         return (this).code;
     }
-    if ((name) === ("text")) {
+    if (require('lodash').isEqual((name), ("text"))) {
         return (this).text;
     }
     return null;
@@ -159,22 +159,22 @@ function SlackError__getField(name) {
 SlackError.prototype._getField = SlackError__getField;
 
 function SlackError__setField(name, value) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         (this).type = value;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         (this).user = value;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         (this).channel = value;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         (this).timestamp = value;
     }
-    if ((name) === ("code")) {
+    if (require('lodash').isEqual((name), ("code"))) {
         (this).code = value;
     }
-    if ((name) === ("text")) {
+    if (require('lodash').isEqual((name), ("text"))) {
         (this).text = value;
     }
 }
@@ -207,16 +207,16 @@ function Hello__getClass() {
 Hello.prototype._getClass = Hello__getClass;
 
 function Hello__getField(name) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         return (this).type;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         return (this).user;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         return (this).channel;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         return (this).timestamp;
     }
     return null;
@@ -224,16 +224,16 @@ function Hello__getField(name) {
 Hello.prototype._getField = Hello__getField;
 
 function Hello__setField(name, value) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         (this).type = value;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         (this).user = value;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         (this).channel = value;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         (this).timestamp = value;
     }
 }
@@ -287,28 +287,28 @@ function Message__getClass() {
 Message.prototype._getClass = Message__getClass;
 
 function Message__getField(name) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         return (this).type;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         return (this).user;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         return (this).channel;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         return (this).timestamp;
     }
-    if ((name) === ("subtype")) {
+    if (require('lodash').isEqual((name), ("subtype"))) {
         return (this).subtype;
     }
-    if ((name) === ("hidden")) {
+    if (require('lodash').isEqual((name), ("hidden"))) {
         return (this).hidden;
     }
-    if ((name) === ("text")) {
+    if (require('lodash').isEqual((name), ("text"))) {
         return (this).text;
     }
-    if ((name) === ("edited")) {
+    if (require('lodash').isEqual((name), ("edited"))) {
         return (this).edited;
     }
     return null;
@@ -316,28 +316,28 @@ function Message__getField(name) {
 Message.prototype._getField = Message__getField;
 
 function Message__setField(name, value) {
-    if ((name) === ("type")) {
+    if (require('lodash').isEqual((name), ("type"))) {
         (this).type = value;
     }
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         (this).user = value;
     }
-    if ((name) === ("channel")) {
+    if (require('lodash').isEqual((name), ("channel"))) {
         (this).channel = value;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         (this).timestamp = value;
     }
-    if ((name) === ("subtype")) {
+    if (require('lodash').isEqual((name), ("subtype"))) {
         (this).subtype = value;
     }
-    if ((name) === ("hidden")) {
+    if (require('lodash').isEqual((name), ("hidden"))) {
         (this).hidden = value;
     }
-    if ((name) === ("text")) {
+    if (require('lodash').isEqual((name), ("text"))) {
         (this).text = value;
     }
-    if ((name) === ("edited")) {
+    if (require('lodash').isEqual((name), ("edited"))) {
         (this).edited = value;
     }
 }
@@ -364,10 +364,10 @@ function Edited__getClass() {
 Edited.prototype._getClass = Edited__getClass;
 
 function Edited__getField(name) {
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         return (this).user;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         return (this).timestamp;
     }
     return null;
@@ -375,10 +375,10 @@ function Edited__getField(name) {
 Edited.prototype._getField = Edited__getField;
 
 function Edited__setField(name, value) {
-    if ((name) === ("user")) {
+    if (require('lodash').isEqual((name), ("user"))) {
         (this).user = value;
     }
-    if ((name) === ("timestamp")) {
+    if (require('lodash').isEqual((name), ("timestamp"))) {
         (this).timestamp = value;
     }
 }

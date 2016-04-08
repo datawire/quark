@@ -1,6 +1,7 @@
 File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
  Dependency(lang=jsgroup=Noneartifact=requestversion=2.69.0),
  Dependency(lang=jsgroup=Noneartifact=timersversion=0.1.1),
+ Dependency(lang=jsgroup=Noneartifact=lodashversion=4.8.2),
  Include(url=quark_runtime.js), Include(url=quark_node_runtime.js),
  Dependency(lang=pygroup=Noneartifact=ws4pyversion=0.3.*),
  Include(url=quark_runtime.py), Include(url=quark_threaded_runtime.py),
@@ -23,6 +24,7 @@ File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
  Include(url=primitives.q), Include(url=logging.q), Include(url=reflect.q),
  Include(url=json.q), Include(url=service.q), Include(url=concurrent.q),
  Include(url=http.q), Include(url=ws.q), Include(url=testing.q),
+ Include(url=url.q),
 
  Package(Name(quark),
 

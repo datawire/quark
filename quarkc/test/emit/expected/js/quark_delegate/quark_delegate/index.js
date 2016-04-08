@@ -113,7 +113,7 @@ Test.prototype.foo = Test_foo;
 
 function Test_rpc(name, msg, options) {
     _qrt.print((msg).encode());
-    if ((name) === ("hello")) {
+    if (require('lodash').isEqual((name), ("hello"))) {
         return new Pong();
     } else {
         return null;
