@@ -358,7 +358,7 @@ namespace concurrent {
             self._parent = parent;
             if (parent == null) {
                 // global context
-                self._runtime = new Runtime();
+                self._runtime = spi.RuntimeFactory.factory.makeRuntime();
                 self.collector = new Collector();
             } else {
                 self._runtime = parent._runtime;

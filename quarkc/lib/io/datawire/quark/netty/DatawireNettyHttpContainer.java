@@ -11,11 +11,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
-import io.datawire.quark.runtime.HTTPServlet;
-import io.datawire.quark.runtime.Runtime;
-import io.datawire.quark.runtime.Servlet;
-import io.datawire.quark.runtime.WSHandler;
-import io.datawire.quark.runtime.WSServlet;
+import quark.HTTPServlet;
+import quark.Runtime;
+import quark.Servlet;
+import quark.WSHandler;
+import quark.WSServlet;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -233,7 +233,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                             @Override
                             public void resolve(Route route) {
                                 if (route.servlet != null) {
-                                    route.servlet.onServletInit(root.urlOf(route), runtime);
+                                    route.servlet.onServletInit(root.urlOf(route), runtime.getRuntime());
                                 }
                             }
                         };

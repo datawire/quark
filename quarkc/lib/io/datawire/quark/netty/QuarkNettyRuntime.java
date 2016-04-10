@@ -1,18 +1,19 @@
 package io.datawire.quark.netty;
 
 import io.datawire.quark.runtime.AbstractDatawireRuntime;
+import io.datawire.quark.runtime.RuntimeSpi;
 import io.datawire.quark.runtime.Buffer;
 import io.datawire.quark.runtime.BufferImpl;
 import io.datawire.quark.runtime.Builtins;
 import io.datawire.quark.runtime.Codec;
-import io.datawire.quark.runtime.HTTPHandler;
-import io.datawire.quark.runtime.HTTPRequest;
-import io.datawire.quark.runtime.HTTPResponse;
-import io.datawire.quark.runtime.HTTPServlet;
-import io.datawire.quark.runtime.Runtime;
-import io.datawire.quark.runtime.Task;
-import io.datawire.quark.runtime.WSHandler;
-import io.datawire.quark.runtime.WSServlet;
+import quark.HTTPHandler;
+import quark.HTTPRequest;
+import quark.HTTPResponse;
+import quark.HTTPServlet;
+import quark.Runtime;
+import quark.Task;
+import quark.WSHandler;
+import quark.WSServlet;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -69,7 +70,7 @@ import java.util.logging.Logger;
 
 import javax.net.ssl.SSLException;
 
-public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtime {
+public class QuarkNettyRuntime extends AbstractDatawireRuntime implements RuntimeSpi {
     private final static Logger log = Logger.getLogger(QuarkNettyRuntime.class.getName());
     private final Object lock = new Object();
     private boolean locked = false;
@@ -83,6 +84,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     private QuarkNettyRuntime(boolean just_so_we_get_an_overload) {
 
     }
+
+    private Runtime runtime;
+    public Runtime getRuntime() { return runtime; }
+    public void setRuntime(Runtime runtime) { this.runtime = runtime; }
 
     public void acquire() {
         synchronized(lock) {
@@ -288,7 +293,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     public void schedule(Task handler, Double delayInSeconds) {
         final Task t_handler = wrap(handler);
-        final Runtime self = this;
+        final Runtime self = getRuntime();
         group.schedule(new Runnable() {
 
             @Override
@@ -633,12 +638,5 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     protected void idle() {
         busy.getAndDecrement();
-    }
-
-    static class NettyRuntimeHolder {
-        static final QuarkNettyRuntime runtime = new QuarkNettyRuntime(false);
-    }
-    public static QuarkNettyRuntime getRuntime() {
-        return NettyRuntimeHolder.runtime;
     }
 }
