@@ -16,6 +16,7 @@
 Helpers for testing based on command output capture.
 """
 
+import urllib
 import hashlib
 import os
 
@@ -72,10 +73,13 @@ class Session(object):
         self.counter = 0
 
     def _get_output_name(self, command, no_check):
-        hash_obj = hashlib.sha256()
-        hash_obj.update(self.name + "-" + command)
+        content = urllib.quote_plus(command)
+        if len(content) > 64:
+            hash_obj = hashlib.sha256()
+            hash_obj.update(self.name + "-" + command)
+            content = hash_obj.digest().encode("hex")
         suffix = "-no-check" if no_check else ""
-        return os.path.join(self.output_dir, "out-" + hash_obj.digest().encode("hex") + suffix + ".txt")
+        return os.path.join(self.output_dir, "out-" + content + suffix + ".txt")
 
     def capture(self, command, no_check=False):
         """
