@@ -4,6 +4,78 @@ exports.quark = quark;
 
 
 
+// CLASS quark_Task
+
+function quark_Task() {
+    quark_Task.super_.call(this, "quark.Task");
+    (this).name = "quark.Task";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_Task = quark_Task;
+_qrt.util.inherits(quark_Task, quark.reflect.Class);
+
+function quark_Task__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_Task.prototype.__init_fields__ = quark_Task__init_fields__;
+quark_Task.singleton = new quark_Task();
+function quark_Task_construct(args) {
+    return null;
+}
+quark_Task.prototype.construct = quark_Task_construct;
+
+function quark_Task__getClass() {
+    return null;
+}
+quark_Task.prototype._getClass = quark_Task__getClass;
+
+function quark_Task__getField(name) {
+    return null;
+}
+quark_Task.prototype._getField = quark_Task__getField;
+
+function quark_Task__setField(name, value) {}
+quark_Task.prototype._setField = quark_Task__setField;
+
+
+// CLASS quark_Runtime
+
+function quark_Runtime() {
+    quark_Runtime.super_.call(this, "quark.Runtime");
+    (this).name = "quark.Runtime";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_Runtime = quark_Runtime;
+_qrt.util.inherits(quark_Runtime, quark.reflect.Class);
+
+function quark_Runtime__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_Runtime.prototype.__init_fields__ = quark_Runtime__init_fields__;
+quark_Runtime.singleton = new quark_Runtime();
+function quark_Runtime_construct(args) {
+    return null;
+}
+quark_Runtime.prototype.construct = quark_Runtime_construct;
+
+function quark_Runtime__getClass() {
+    return null;
+}
+quark_Runtime.prototype._getClass = quark_Runtime__getClass;
+
+function quark_Runtime__getField(name) {
+    return null;
+}
+quark_Runtime.prototype._getField = quark_Runtime__getField;
+
+function quark_Runtime__setField(name, value) {}
+quark_Runtime.prototype._setField = quark_Runtime__setField;
+
+
 // CLASS quark_ListUtil_quark_Object_
 
 function quark_ListUtil_quark_Object_() {
@@ -677,6 +749,42 @@ function quark_reflect_Field__setField(name, value) {}
 quark_reflect_Field.prototype._setField = quark_reflect_Field__setField;
 
 
+// CLASS quark_Servlet
+
+function quark_Servlet() {
+    quark_Servlet.super_.call(this, "quark.Servlet");
+    (this).name = "quark.Servlet";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_Servlet = quark_Servlet;
+_qrt.util.inherits(quark_Servlet, quark.reflect.Class);
+
+function quark_Servlet__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_Servlet.prototype.__init_fields__ = quark_Servlet__init_fields__;
+quark_Servlet.singleton = new quark_Servlet();
+function quark_Servlet_construct(args) {
+    return null;
+}
+quark_Servlet.prototype.construct = quark_Servlet_construct;
+
+function quark_Servlet__getClass() {
+    return null;
+}
+quark_Servlet.prototype._getClass = quark_Servlet__getClass;
+
+function quark_Servlet__getField(name) {
+    return null;
+}
+quark_Servlet.prototype._getField = quark_Servlet__getField;
+
+function quark_Servlet__setField(name, value) {}
+quark_Servlet.prototype._setField = quark_Servlet__setField;
+
+
 // CLASS quark_Resolver
 
 function quark_Resolver() {
@@ -1265,6 +1373,105 @@ quark_behaviors_RPCRequest_onTimeout_Method.prototype._getField = quark_behavior
 function quark_behaviors_RPCRequest_onTimeout_Method__setField(name, value) {}
 quark_behaviors_RPCRequest_onTimeout_Method.prototype._setField = quark_behaviors_RPCRequest_onTimeout_Method__setField;
 
+// CLASS quark_behaviors_RPCRequest_onHTTPInit_Method
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method() {
+    quark_behaviors_RPCRequest_onHTTPInit_Method.super_.call(this, "quark.void", "onHTTPInit", ["quark.HTTPRequest"]);
+}
+exports.quark_behaviors_RPCRequest_onHTTPInit_Method = quark_behaviors_RPCRequest_onHTTPInit_Method;
+_qrt.util.inherits(quark_behaviors_RPCRequest_onHTTPInit_Method, quark.reflect.Method);
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_behaviors_RPCRequest_onHTTPInit_Method.prototype.__init_fields__ = quark_behaviors_RPCRequest_onHTTPInit_Method__init_fields__;
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPInit((args)[0]);
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPInit_Method.prototype.invoke = quark_behaviors_RPCRequest_onHTTPInit_Method_invoke;
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method__getClass() {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPInit_Method.prototype._getClass = quark_behaviors_RPCRequest_onHTTPInit_Method__getClass;
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method__getField(name) {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPInit_Method.prototype._getField = quark_behaviors_RPCRequest_onHTTPInit_Method__getField;
+
+function quark_behaviors_RPCRequest_onHTTPInit_Method__setField(name, value) {}
+quark_behaviors_RPCRequest_onHTTPInit_Method.prototype._setField = quark_behaviors_RPCRequest_onHTTPInit_Method__setField;
+
+// CLASS quark_behaviors_RPCRequest_onHTTPError_Method
+
+function quark_behaviors_RPCRequest_onHTTPError_Method() {
+    quark_behaviors_RPCRequest_onHTTPError_Method.super_.call(this, "quark.void", "onHTTPError", ["quark.HTTPRequest", "quark.String"]);
+}
+exports.quark_behaviors_RPCRequest_onHTTPError_Method = quark_behaviors_RPCRequest_onHTTPError_Method;
+_qrt.util.inherits(quark_behaviors_RPCRequest_onHTTPError_Method, quark.reflect.Method);
+
+function quark_behaviors_RPCRequest_onHTTPError_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_behaviors_RPCRequest_onHTTPError_Method.prototype.__init_fields__ = quark_behaviors_RPCRequest_onHTTPError_Method__init_fields__;
+
+function quark_behaviors_RPCRequest_onHTTPError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPError((args)[0], (args)[1]);
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPError_Method.prototype.invoke = quark_behaviors_RPCRequest_onHTTPError_Method_invoke;
+
+function quark_behaviors_RPCRequest_onHTTPError_Method__getClass() {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPError_Method.prototype._getClass = quark_behaviors_RPCRequest_onHTTPError_Method__getClass;
+
+function quark_behaviors_RPCRequest_onHTTPError_Method__getField(name) {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPError_Method.prototype._getField = quark_behaviors_RPCRequest_onHTTPError_Method__getField;
+
+function quark_behaviors_RPCRequest_onHTTPError_Method__setField(name, value) {}
+quark_behaviors_RPCRequest_onHTTPError_Method.prototype._setField = quark_behaviors_RPCRequest_onHTTPError_Method__setField;
+
+// CLASS quark_behaviors_RPCRequest_onHTTPFinal_Method
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method() {
+    quark_behaviors_RPCRequest_onHTTPFinal_Method.super_.call(this, "quark.void", "onHTTPFinal", ["quark.HTTPRequest"]);
+}
+exports.quark_behaviors_RPCRequest_onHTTPFinal_Method = quark_behaviors_RPCRequest_onHTTPFinal_Method;
+_qrt.util.inherits(quark_behaviors_RPCRequest_onHTTPFinal_Method, quark.reflect.Method);
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_behaviors_RPCRequest_onHTTPFinal_Method.prototype.__init_fields__ = quark_behaviors_RPCRequest_onHTTPFinal_Method__init_fields__;
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPFinal((args)[0]);
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPFinal_Method.prototype.invoke = quark_behaviors_RPCRequest_onHTTPFinal_Method_invoke;
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method__getClass() {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPFinal_Method.prototype._getClass = quark_behaviors_RPCRequest_onHTTPFinal_Method__getClass;
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method__getField(name) {
+    return null;
+}
+quark_behaviors_RPCRequest_onHTTPFinal_Method.prototype._getField = quark_behaviors_RPCRequest_onHTTPFinal_Method__getField;
+
+function quark_behaviors_RPCRequest_onHTTPFinal_Method__setField(name, value) {}
+quark_behaviors_RPCRequest_onHTTPFinal_Method.prototype._setField = quark_behaviors_RPCRequest_onHTTPFinal_Method__setField;
+
 // CLASS quark_behaviors_RPCRequest
 
 function quark_behaviors_RPCRequest() {
@@ -1272,7 +1479,7 @@ function quark_behaviors_RPCRequest() {
     (this).name = "quark.behaviors.RPCRequest";
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.behaviors.RPC", "rpc"), new quark.reflect.Field("quark.concurrent.Future", "retval"), new quark.reflect.Field("quark.List<quark.Object>", "args"), new quark.reflect.Field("quark.concurrent.Timeout", "timeout")];
-    (this).methods = [new quark_behaviors_RPCRequest_call_Method(), new quark_behaviors_RPCRequest_onHTTPResponse_Method(), new quark_behaviors_RPCRequest_onTimeout_Method()];
+    (this).methods = [new quark_behaviors_RPCRequest_call_Method(), new quark_behaviors_RPCRequest_onHTTPResponse_Method(), new quark_behaviors_RPCRequest_onTimeout_Method(), new quark_behaviors_RPCRequest_onHTTPInit_Method(), new quark_behaviors_RPCRequest_onHTTPError_Method(), new quark_behaviors_RPCRequest_onHTTPFinal_Method()];
 }
 exports.quark_behaviors_RPCRequest = quark_behaviors_RPCRequest;
 _qrt.util.inherits(quark_behaviors_RPCRequest, quark.reflect.Class);
@@ -3079,6 +3286,258 @@ function quark_concurrent_Context__setField(name, value) {}
 quark_concurrent_Context.prototype._setField = quark_concurrent_Context__setField;
 
 
+// CLASS quark_HTTPHandler
+
+function quark_HTTPHandler() {
+    quark_HTTPHandler.super_.call(this, "quark.HTTPHandler");
+    (this).name = "quark.HTTPHandler";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_HTTPHandler = quark_HTTPHandler;
+_qrt.util.inherits(quark_HTTPHandler, quark.reflect.Class);
+
+function quark_HTTPHandler__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_HTTPHandler.prototype.__init_fields__ = quark_HTTPHandler__init_fields__;
+quark_HTTPHandler.singleton = new quark_HTTPHandler();
+function quark_HTTPHandler_construct(args) {
+    return null;
+}
+quark_HTTPHandler.prototype.construct = quark_HTTPHandler_construct;
+
+function quark_HTTPHandler__getClass() {
+    return null;
+}
+quark_HTTPHandler.prototype._getClass = quark_HTTPHandler__getClass;
+
+function quark_HTTPHandler__getField(name) {
+    return null;
+}
+quark_HTTPHandler.prototype._getField = quark_HTTPHandler__getField;
+
+function quark_HTTPHandler__setField(name, value) {}
+quark_HTTPHandler.prototype._setField = quark_HTTPHandler__setField;
+
+
+// CLASS quark_HTTPRequest
+
+function quark_HTTPRequest() {
+    quark_HTTPRequest.super_.call(this, "quark.HTTPRequest");
+    (this).name = "quark.HTTPRequest";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_HTTPRequest = quark_HTTPRequest;
+_qrt.util.inherits(quark_HTTPRequest, quark.reflect.Class);
+
+function quark_HTTPRequest__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_HTTPRequest.prototype.__init_fields__ = quark_HTTPRequest__init_fields__;
+quark_HTTPRequest.singleton = new quark_HTTPRequest();
+function quark_HTTPRequest_construct(args) {
+    return null;
+}
+quark_HTTPRequest.prototype.construct = quark_HTTPRequest_construct;
+
+function quark_HTTPRequest__getClass() {
+    return null;
+}
+quark_HTTPRequest.prototype._getClass = quark_HTTPRequest__getClass;
+
+function quark_HTTPRequest__getField(name) {
+    return null;
+}
+quark_HTTPRequest.prototype._getField = quark_HTTPRequest__getField;
+
+function quark_HTTPRequest__setField(name, value) {}
+quark_HTTPRequest.prototype._setField = quark_HTTPRequest__setField;
+
+
+// CLASS quark_HTTPResponse
+
+function quark_HTTPResponse() {
+    quark_HTTPResponse.super_.call(this, "quark.HTTPResponse");
+    (this).name = "quark.HTTPResponse";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_HTTPResponse = quark_HTTPResponse;
+_qrt.util.inherits(quark_HTTPResponse, quark.reflect.Class);
+
+function quark_HTTPResponse__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_HTTPResponse.prototype.__init_fields__ = quark_HTTPResponse__init_fields__;
+quark_HTTPResponse.singleton = new quark_HTTPResponse();
+function quark_HTTPResponse_construct(args) {
+    return null;
+}
+quark_HTTPResponse.prototype.construct = quark_HTTPResponse_construct;
+
+function quark_HTTPResponse__getClass() {
+    return null;
+}
+quark_HTTPResponse.prototype._getClass = quark_HTTPResponse__getClass;
+
+function quark_HTTPResponse__getField(name) {
+    return null;
+}
+quark_HTTPResponse.prototype._getField = quark_HTTPResponse__getField;
+
+function quark_HTTPResponse__setField(name, value) {}
+quark_HTTPResponse.prototype._setField = quark_HTTPResponse__setField;
+
+
+// CLASS quark_HTTPServlet
+
+function quark_HTTPServlet() {
+    quark_HTTPServlet.super_.call(this, "quark.HTTPServlet");
+    (this).name = "quark.HTTPServlet";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_HTTPServlet = quark_HTTPServlet;
+_qrt.util.inherits(quark_HTTPServlet, quark.reflect.Class);
+
+function quark_HTTPServlet__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_HTTPServlet.prototype.__init_fields__ = quark_HTTPServlet__init_fields__;
+quark_HTTPServlet.singleton = new quark_HTTPServlet();
+function quark_HTTPServlet_construct(args) {
+    return null;
+}
+quark_HTTPServlet.prototype.construct = quark_HTTPServlet_construct;
+
+function quark_HTTPServlet__getClass() {
+    return null;
+}
+quark_HTTPServlet.prototype._getClass = quark_HTTPServlet__getClass;
+
+function quark_HTTPServlet__getField(name) {
+    return null;
+}
+quark_HTTPServlet.prototype._getField = quark_HTTPServlet__getField;
+
+function quark_HTTPServlet__setField(name, value) {}
+quark_HTTPServlet.prototype._setField = quark_HTTPServlet__setField;
+
+
+// CLASS quark_WSHandler
+
+function quark_WSHandler() {
+    quark_WSHandler.super_.call(this, "quark.WSHandler");
+    (this).name = "quark.WSHandler";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_WSHandler = quark_WSHandler;
+_qrt.util.inherits(quark_WSHandler, quark.reflect.Class);
+
+function quark_WSHandler__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_WSHandler.prototype.__init_fields__ = quark_WSHandler__init_fields__;
+quark_WSHandler.singleton = new quark_WSHandler();
+function quark_WSHandler_construct(args) {
+    return null;
+}
+quark_WSHandler.prototype.construct = quark_WSHandler_construct;
+
+function quark_WSHandler__getClass() {
+    return null;
+}
+quark_WSHandler.prototype._getClass = quark_WSHandler__getClass;
+
+function quark_WSHandler__getField(name) {
+    return null;
+}
+quark_WSHandler.prototype._getField = quark_WSHandler__getField;
+
+function quark_WSHandler__setField(name, value) {}
+quark_WSHandler.prototype._setField = quark_WSHandler__setField;
+
+
+// CLASS quark_WebSocket
+
+function quark_WebSocket() {
+    quark_WebSocket.super_.call(this, "quark.WebSocket");
+    (this).name = "quark.WebSocket";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_WebSocket = quark_WebSocket;
+_qrt.util.inherits(quark_WebSocket, quark.reflect.Class);
+
+function quark_WebSocket__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_WebSocket.prototype.__init_fields__ = quark_WebSocket__init_fields__;
+quark_WebSocket.singleton = new quark_WebSocket();
+function quark_WebSocket_construct(args) {
+    return null;
+}
+quark_WebSocket.prototype.construct = quark_WebSocket_construct;
+
+function quark_WebSocket__getClass() {
+    return null;
+}
+quark_WebSocket.prototype._getClass = quark_WebSocket__getClass;
+
+function quark_WebSocket__getField(name) {
+    return null;
+}
+quark_WebSocket.prototype._getField = quark_WebSocket__getField;
+
+function quark_WebSocket__setField(name, value) {}
+quark_WebSocket.prototype._setField = quark_WebSocket__setField;
+
+
+// CLASS quark_WSServlet
+
+function quark_WSServlet() {
+    quark_WSServlet.super_.call(this, "quark.WSServlet");
+    (this).name = "quark.WSServlet";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [];
+}
+exports.quark_WSServlet = quark_WSServlet;
+_qrt.util.inherits(quark_WSServlet, quark.reflect.Class);
+
+function quark_WSServlet__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_WSServlet.prototype.__init_fields__ = quark_WSServlet__init_fields__;
+quark_WSServlet.singleton = new quark_WSServlet();
+function quark_WSServlet_construct(args) {
+    return null;
+}
+quark_WSServlet.prototype.construct = quark_WSServlet_construct;
+
+function quark_WSServlet__getClass() {
+    return null;
+}
+quark_WSServlet.prototype._getClass = quark_WSServlet__getClass;
+
+function quark_WSServlet__getField(name) {
+    return null;
+}
+quark_WSServlet.prototype._getField = quark_WSServlet__getField;
+
+function quark_WSServlet__setField(name, value) {}
+quark_WSServlet.prototype._setField = quark_WSServlet__setField;
+
+
 // CLASS quark_test_TestInitializer_getValue_Method
 
 function quark_test_TestInitializer_getValue_Method() {
@@ -3846,6 +4305,1341 @@ function quark_URL__setField(name, value) {}
 quark_URL.prototype._setField = quark_URL__setField;
 
 
+// CLASS quark_spi_RuntimeSpi_open_Method
+
+function quark_spi_RuntimeSpi_open_Method() {
+    quark_spi_RuntimeSpi_open_Method.super_.call(this, "quark.void", "open", ["quark.String", "quark.WSHandler"]);
+}
+exports.quark_spi_RuntimeSpi_open_Method = quark_spi_RuntimeSpi_open_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_open_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_open_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_open_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_open_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_open_Method_invoke(object, args) {
+    var obj = object;
+    (obj).open((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_open_Method.prototype.invoke = quark_spi_RuntimeSpi_open_Method_invoke;
+
+function quark_spi_RuntimeSpi_open_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_open_Method.prototype._getClass = quark_spi_RuntimeSpi_open_Method__getClass;
+
+function quark_spi_RuntimeSpi_open_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_open_Method.prototype._getField = quark_spi_RuntimeSpi_open_Method__getField;
+
+function quark_spi_RuntimeSpi_open_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_open_Method.prototype._setField = quark_spi_RuntimeSpi_open_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_request_Method
+
+function quark_spi_RuntimeSpi_request_Method() {
+    quark_spi_RuntimeSpi_request_Method.super_.call(this, "quark.void", "request", ["quark.HTTPRequest", "quark.HTTPHandler"]);
+}
+exports.quark_spi_RuntimeSpi_request_Method = quark_spi_RuntimeSpi_request_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_request_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_request_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_request_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_request_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_request_Method_invoke(object, args) {
+    var obj = object;
+    (obj).request((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_request_Method.prototype.invoke = quark_spi_RuntimeSpi_request_Method_invoke;
+
+function quark_spi_RuntimeSpi_request_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_request_Method.prototype._getClass = quark_spi_RuntimeSpi_request_Method__getClass;
+
+function quark_spi_RuntimeSpi_request_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_request_Method.prototype._getField = quark_spi_RuntimeSpi_request_Method__getField;
+
+function quark_spi_RuntimeSpi_request_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_request_Method.prototype._setField = quark_spi_RuntimeSpi_request_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_schedule_Method
+
+function quark_spi_RuntimeSpi_schedule_Method() {
+    quark_spi_RuntimeSpi_schedule_Method.super_.call(this, "quark.void", "schedule", ["quark.Task", "quark.float"]);
+}
+exports.quark_spi_RuntimeSpi_schedule_Method = quark_spi_RuntimeSpi_schedule_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_schedule_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_schedule_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_schedule_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_schedule_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_schedule_Method_invoke(object, args) {
+    var obj = object;
+    (obj).schedule((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_schedule_Method.prototype.invoke = quark_spi_RuntimeSpi_schedule_Method_invoke;
+
+function quark_spi_RuntimeSpi_schedule_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_schedule_Method.prototype._getClass = quark_spi_RuntimeSpi_schedule_Method__getClass;
+
+function quark_spi_RuntimeSpi_schedule_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_schedule_Method.prototype._getField = quark_spi_RuntimeSpi_schedule_Method__getField;
+
+function quark_spi_RuntimeSpi_schedule_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_schedule_Method.prototype._setField = quark_spi_RuntimeSpi_schedule_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_codec_Method
+
+function quark_spi_RuntimeSpi_codec_Method() {
+    quark_spi_RuntimeSpi_codec_Method.super_.call(this, "quark.Codec", "codec", []);
+}
+exports.quark_spi_RuntimeSpi_codec_Method = quark_spi_RuntimeSpi_codec_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_codec_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_codec_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_codec_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_codec_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_codec_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).codec();
+}
+quark_spi_RuntimeSpi_codec_Method.prototype.invoke = quark_spi_RuntimeSpi_codec_Method_invoke;
+
+function quark_spi_RuntimeSpi_codec_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_codec_Method.prototype._getClass = quark_spi_RuntimeSpi_codec_Method__getClass;
+
+function quark_spi_RuntimeSpi_codec_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_codec_Method.prototype._getField = quark_spi_RuntimeSpi_codec_Method__getField;
+
+function quark_spi_RuntimeSpi_codec_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_codec_Method.prototype._setField = quark_spi_RuntimeSpi_codec_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_serveHTTP_Method
+
+function quark_spi_RuntimeSpi_serveHTTP_Method() {
+    quark_spi_RuntimeSpi_serveHTTP_Method.super_.call(this, "quark.void", "serveHTTP", ["quark.String", "quark.HTTPServlet"]);
+}
+exports.quark_spi_RuntimeSpi_serveHTTP_Method = quark_spi_RuntimeSpi_serveHTTP_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_serveHTTP_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_serveHTTP_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_serveHTTP_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_serveHTTP_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_serveHTTP_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveHTTP((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_serveHTTP_Method.prototype.invoke = quark_spi_RuntimeSpi_serveHTTP_Method_invoke;
+
+function quark_spi_RuntimeSpi_serveHTTP_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_serveHTTP_Method.prototype._getClass = quark_spi_RuntimeSpi_serveHTTP_Method__getClass;
+
+function quark_spi_RuntimeSpi_serveHTTP_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_serveHTTP_Method.prototype._getField = quark_spi_RuntimeSpi_serveHTTP_Method__getField;
+
+function quark_spi_RuntimeSpi_serveHTTP_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_serveHTTP_Method.prototype._setField = quark_spi_RuntimeSpi_serveHTTP_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_serveWS_Method
+
+function quark_spi_RuntimeSpi_serveWS_Method() {
+    quark_spi_RuntimeSpi_serveWS_Method.super_.call(this, "quark.void", "serveWS", ["quark.String", "quark.WSServlet"]);
+}
+exports.quark_spi_RuntimeSpi_serveWS_Method = quark_spi_RuntimeSpi_serveWS_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_serveWS_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_serveWS_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_serveWS_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_serveWS_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_serveWS_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveWS((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_serveWS_Method.prototype.invoke = quark_spi_RuntimeSpi_serveWS_Method_invoke;
+
+function quark_spi_RuntimeSpi_serveWS_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_serveWS_Method.prototype._getClass = quark_spi_RuntimeSpi_serveWS_Method__getClass;
+
+function quark_spi_RuntimeSpi_serveWS_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_serveWS_Method.prototype._getField = quark_spi_RuntimeSpi_serveWS_Method__getField;
+
+function quark_spi_RuntimeSpi_serveWS_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_serveWS_Method.prototype._setField = quark_spi_RuntimeSpi_serveWS_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_respond_Method
+
+function quark_spi_RuntimeSpi_respond_Method() {
+    quark_spi_RuntimeSpi_respond_Method.super_.call(this, "quark.void", "respond", ["quark.HTTPRequest", "quark.HTTPResponse"]);
+}
+exports.quark_spi_RuntimeSpi_respond_Method = quark_spi_RuntimeSpi_respond_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_respond_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_respond_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_respond_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_respond_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_respond_Method_invoke(object, args) {
+    var obj = object;
+    (obj).respond((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeSpi_respond_Method.prototype.invoke = quark_spi_RuntimeSpi_respond_Method_invoke;
+
+function quark_spi_RuntimeSpi_respond_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_respond_Method.prototype._getClass = quark_spi_RuntimeSpi_respond_Method__getClass;
+
+function quark_spi_RuntimeSpi_respond_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_respond_Method.prototype._getField = quark_spi_RuntimeSpi_respond_Method__getField;
+
+function quark_spi_RuntimeSpi_respond_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_respond_Method.prototype._setField = quark_spi_RuntimeSpi_respond_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_fail_Method
+
+function quark_spi_RuntimeSpi_fail_Method() {
+    quark_spi_RuntimeSpi_fail_Method.super_.call(this, "quark.void", "fail", ["quark.String"]);
+}
+exports.quark_spi_RuntimeSpi_fail_Method = quark_spi_RuntimeSpi_fail_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_fail_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_fail_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_fail_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_fail_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail((args)[0]);
+    return null;
+}
+quark_spi_RuntimeSpi_fail_Method.prototype.invoke = quark_spi_RuntimeSpi_fail_Method_invoke;
+
+function quark_spi_RuntimeSpi_fail_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_fail_Method.prototype._getClass = quark_spi_RuntimeSpi_fail_Method__getClass;
+
+function quark_spi_RuntimeSpi_fail_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_fail_Method.prototype._getField = quark_spi_RuntimeSpi_fail_Method__getField;
+
+function quark_spi_RuntimeSpi_fail_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_fail_Method.prototype._setField = quark_spi_RuntimeSpi_fail_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi_logger_Method
+
+function quark_spi_RuntimeSpi_logger_Method() {
+    quark_spi_RuntimeSpi_logger_Method.super_.call(this, "quark.Logger", "logger", ["quark.String"]);
+}
+exports.quark_spi_RuntimeSpi_logger_Method = quark_spi_RuntimeSpi_logger_Method;
+_qrt.util.inherits(quark_spi_RuntimeSpi_logger_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeSpi_logger_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi_logger_Method.prototype.__init_fields__ = quark_spi_RuntimeSpi_logger_Method__init_fields__;
+
+function quark_spi_RuntimeSpi_logger_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).logger((args)[0]);
+}
+quark_spi_RuntimeSpi_logger_Method.prototype.invoke = quark_spi_RuntimeSpi_logger_Method_invoke;
+
+function quark_spi_RuntimeSpi_logger_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi_logger_Method.prototype._getClass = quark_spi_RuntimeSpi_logger_Method__getClass;
+
+function quark_spi_RuntimeSpi_logger_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi_logger_Method.prototype._getField = quark_spi_RuntimeSpi_logger_Method__getField;
+
+function quark_spi_RuntimeSpi_logger_Method__setField(name, value) {}
+quark_spi_RuntimeSpi_logger_Method.prototype._setField = quark_spi_RuntimeSpi_logger_Method__setField;
+
+// CLASS quark_spi_RuntimeSpi
+
+function quark_spi_RuntimeSpi() {
+    quark_spi_RuntimeSpi.super_.call(this, "quark.spi.RuntimeSpi");
+    (this).name = "quark.spi.RuntimeSpi";
+    (this).parameters = [];
+    (this).fields = [];
+    (this).methods = [new quark_spi_RuntimeSpi_open_Method(), new quark_spi_RuntimeSpi_request_Method(), new quark_spi_RuntimeSpi_schedule_Method(), new quark_spi_RuntimeSpi_codec_Method(), new quark_spi_RuntimeSpi_serveHTTP_Method(), new quark_spi_RuntimeSpi_serveWS_Method(), new quark_spi_RuntimeSpi_respond_Method(), new quark_spi_RuntimeSpi_fail_Method(), new quark_spi_RuntimeSpi_logger_Method()];
+}
+exports.quark_spi_RuntimeSpi = quark_spi_RuntimeSpi;
+_qrt.util.inherits(quark_spi_RuntimeSpi, quark.reflect.Class);
+
+function quark_spi_RuntimeSpi__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeSpi.prototype.__init_fields__ = quark_spi_RuntimeSpi__init_fields__;
+quark_spi_RuntimeSpi.singleton = new quark_spi_RuntimeSpi();
+function quark_spi_RuntimeSpi_construct(args) {
+    return null;
+}
+quark_spi_RuntimeSpi.prototype.construct = quark_spi_RuntimeSpi_construct;
+
+function quark_spi_RuntimeSpi__getClass() {
+    return null;
+}
+quark_spi_RuntimeSpi.prototype._getClass = quark_spi_RuntimeSpi__getClass;
+
+function quark_spi_RuntimeSpi__getField(name) {
+    return null;
+}
+quark_spi_RuntimeSpi.prototype._getField = quark_spi_RuntimeSpi__getField;
+
+function quark_spi_RuntimeSpi__setField(name, value) {}
+quark_spi_RuntimeSpi.prototype._setField = quark_spi_RuntimeSpi__setField;
+
+
+// CLASS quark_spi_ServletProxy_onServletInit_Method
+
+function quark_spi_ServletProxy_onServletInit_Method() {
+    quark_spi_ServletProxy_onServletInit_Method.super_.call(this, "quark.void", "onServletInit", ["quark.String", "quark.Runtime"]);
+}
+exports.quark_spi_ServletProxy_onServletInit_Method = quark_spi_ServletProxy_onServletInit_Method;
+_qrt.util.inherits(quark_spi_ServletProxy_onServletInit_Method, quark.reflect.Method);
+
+function quark_spi_ServletProxy_onServletInit_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_ServletProxy_onServletInit_Method.prototype.__init_fields__ = quark_spi_ServletProxy_onServletInit_Method__init_fields__;
+
+function quark_spi_ServletProxy_onServletInit_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletInit((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_ServletProxy_onServletInit_Method.prototype.invoke = quark_spi_ServletProxy_onServletInit_Method_invoke;
+
+function quark_spi_ServletProxy_onServletInit_Method__getClass() {
+    return null;
+}
+quark_spi_ServletProxy_onServletInit_Method.prototype._getClass = quark_spi_ServletProxy_onServletInit_Method__getClass;
+
+function quark_spi_ServletProxy_onServletInit_Method__getField(name) {
+    return null;
+}
+quark_spi_ServletProxy_onServletInit_Method.prototype._getField = quark_spi_ServletProxy_onServletInit_Method__getField;
+
+function quark_spi_ServletProxy_onServletInit_Method__setField(name, value) {}
+quark_spi_ServletProxy_onServletInit_Method.prototype._setField = quark_spi_ServletProxy_onServletInit_Method__setField;
+
+// CLASS quark_spi_ServletProxy_onServletError_Method
+
+function quark_spi_ServletProxy_onServletError_Method() {
+    quark_spi_ServletProxy_onServletError_Method.super_.call(this, "quark.void", "onServletError", ["quark.String", "quark.String"]);
+}
+exports.quark_spi_ServletProxy_onServletError_Method = quark_spi_ServletProxy_onServletError_Method;
+_qrt.util.inherits(quark_spi_ServletProxy_onServletError_Method, quark.reflect.Method);
+
+function quark_spi_ServletProxy_onServletError_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_ServletProxy_onServletError_Method.prototype.__init_fields__ = quark_spi_ServletProxy_onServletError_Method__init_fields__;
+
+function quark_spi_ServletProxy_onServletError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletError((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_ServletProxy_onServletError_Method.prototype.invoke = quark_spi_ServletProxy_onServletError_Method_invoke;
+
+function quark_spi_ServletProxy_onServletError_Method__getClass() {
+    return null;
+}
+quark_spi_ServletProxy_onServletError_Method.prototype._getClass = quark_spi_ServletProxy_onServletError_Method__getClass;
+
+function quark_spi_ServletProxy_onServletError_Method__getField(name) {
+    return null;
+}
+quark_spi_ServletProxy_onServletError_Method.prototype._getField = quark_spi_ServletProxy_onServletError_Method__getField;
+
+function quark_spi_ServletProxy_onServletError_Method__setField(name, value) {}
+quark_spi_ServletProxy_onServletError_Method.prototype._setField = quark_spi_ServletProxy_onServletError_Method__setField;
+
+// CLASS quark_spi_ServletProxy_onServletEnd_Method
+
+function quark_spi_ServletProxy_onServletEnd_Method() {
+    quark_spi_ServletProxy_onServletEnd_Method.super_.call(this, "quark.void", "onServletEnd", ["quark.String"]);
+}
+exports.quark_spi_ServletProxy_onServletEnd_Method = quark_spi_ServletProxy_onServletEnd_Method;
+_qrt.util.inherits(quark_spi_ServletProxy_onServletEnd_Method, quark.reflect.Method);
+
+function quark_spi_ServletProxy_onServletEnd_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_ServletProxy_onServletEnd_Method.prototype.__init_fields__ = quark_spi_ServletProxy_onServletEnd_Method__init_fields__;
+
+function quark_spi_ServletProxy_onServletEnd_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletEnd((args)[0]);
+    return null;
+}
+quark_spi_ServletProxy_onServletEnd_Method.prototype.invoke = quark_spi_ServletProxy_onServletEnd_Method_invoke;
+
+function quark_spi_ServletProxy_onServletEnd_Method__getClass() {
+    return null;
+}
+quark_spi_ServletProxy_onServletEnd_Method.prototype._getClass = quark_spi_ServletProxy_onServletEnd_Method__getClass;
+
+function quark_spi_ServletProxy_onServletEnd_Method__getField(name) {
+    return null;
+}
+quark_spi_ServletProxy_onServletEnd_Method.prototype._getField = quark_spi_ServletProxy_onServletEnd_Method__getField;
+
+function quark_spi_ServletProxy_onServletEnd_Method__setField(name, value) {}
+quark_spi_ServletProxy_onServletEnd_Method.prototype._setField = quark_spi_ServletProxy_onServletEnd_Method__setField;
+
+// CLASS quark_spi_ServletProxy
+
+function quark_spi_ServletProxy() {
+    quark_spi_ServletProxy.super_.call(this, "quark.spi.ServletProxy");
+    (this).name = "quark.spi.ServletProxy";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.Servlet", "servlet_impl"), new quark.reflect.Field("quark.Runtime", "real_runtime")];
+    (this).methods = [new quark_spi_ServletProxy_onServletInit_Method(), new quark_spi_ServletProxy_onServletError_Method(), new quark_spi_ServletProxy_onServletEnd_Method()];
+}
+exports.quark_spi_ServletProxy = quark_spi_ServletProxy;
+_qrt.util.inherits(quark_spi_ServletProxy, quark.reflect.Class);
+
+function quark_spi_ServletProxy__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_ServletProxy.prototype.__init_fields__ = quark_spi_ServletProxy__init_fields__;
+quark_spi_ServletProxy.singleton = new quark_spi_ServletProxy();
+function quark_spi_ServletProxy_construct(args) {
+    return new quark.spi.ServletProxy((args)[0], (args)[1]);
+}
+quark_spi_ServletProxy.prototype.construct = quark_spi_ServletProxy_construct;
+
+function quark_spi_ServletProxy__getClass() {
+    return null;
+}
+quark_spi_ServletProxy.prototype._getClass = quark_spi_ServletProxy__getClass;
+
+function quark_spi_ServletProxy__getField(name) {
+    return null;
+}
+quark_spi_ServletProxy.prototype._getField = quark_spi_ServletProxy__getField;
+
+function quark_spi_ServletProxy__setField(name, value) {}
+quark_spi_ServletProxy.prototype._setField = quark_spi_ServletProxy__setField;
+
+
+// CLASS quark_spi_HTTPServletProxy_onHTTPRequest_Method
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method() {
+    quark_spi_HTTPServletProxy_onHTTPRequest_Method.super_.call(this, "quark.void", "onHTTPRequest", ["quark.HTTPRequest", "quark.HTTPResponse"]);
+}
+exports.quark_spi_HTTPServletProxy_onHTTPRequest_Method = quark_spi_HTTPServletProxy_onHTTPRequest_Method;
+_qrt.util.inherits(quark_spi_HTTPServletProxy_onHTTPRequest_Method, quark.reflect.Method);
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy_onHTTPRequest_Method.prototype.__init_fields__ = quark_spi_HTTPServletProxy_onHTTPRequest_Method__init_fields__;
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onHTTPRequest((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_HTTPServletProxy_onHTTPRequest_Method.prototype.invoke = quark_spi_HTTPServletProxy_onHTTPRequest_Method_invoke;
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy_onHTTPRequest_Method.prototype._getClass = quark_spi_HTTPServletProxy_onHTTPRequest_Method__getClass;
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy_onHTTPRequest_Method.prototype._getField = quark_spi_HTTPServletProxy_onHTTPRequest_Method__getField;
+
+function quark_spi_HTTPServletProxy_onHTTPRequest_Method__setField(name, value) {}
+quark_spi_HTTPServletProxy_onHTTPRequest_Method.prototype._setField = quark_spi_HTTPServletProxy_onHTTPRequest_Method__setField;
+
+// CLASS quark_spi_HTTPServletProxy_onServletInit_Method
+
+function quark_spi_HTTPServletProxy_onServletInit_Method() {
+    quark_spi_HTTPServletProxy_onServletInit_Method.super_.call(this, "quark.void", "onServletInit", ["quark.String", "quark.Runtime"]);
+}
+exports.quark_spi_HTTPServletProxy_onServletInit_Method = quark_spi_HTTPServletProxy_onServletInit_Method;
+_qrt.util.inherits(quark_spi_HTTPServletProxy_onServletInit_Method, quark.reflect.Method);
+
+function quark_spi_HTTPServletProxy_onServletInit_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy_onServletInit_Method.prototype.__init_fields__ = quark_spi_HTTPServletProxy_onServletInit_Method__init_fields__;
+
+function quark_spi_HTTPServletProxy_onServletInit_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletInit((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletInit_Method.prototype.invoke = quark_spi_HTTPServletProxy_onServletInit_Method_invoke;
+
+function quark_spi_HTTPServletProxy_onServletInit_Method__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletInit_Method.prototype._getClass = quark_spi_HTTPServletProxy_onServletInit_Method__getClass;
+
+function quark_spi_HTTPServletProxy_onServletInit_Method__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletInit_Method.prototype._getField = quark_spi_HTTPServletProxy_onServletInit_Method__getField;
+
+function quark_spi_HTTPServletProxy_onServletInit_Method__setField(name, value) {}
+quark_spi_HTTPServletProxy_onServletInit_Method.prototype._setField = quark_spi_HTTPServletProxy_onServletInit_Method__setField;
+
+// CLASS quark_spi_HTTPServletProxy_onServletError_Method
+
+function quark_spi_HTTPServletProxy_onServletError_Method() {
+    quark_spi_HTTPServletProxy_onServletError_Method.super_.call(this, "quark.void", "onServletError", ["quark.String", "quark.String"]);
+}
+exports.quark_spi_HTTPServletProxy_onServletError_Method = quark_spi_HTTPServletProxy_onServletError_Method;
+_qrt.util.inherits(quark_spi_HTTPServletProxy_onServletError_Method, quark.reflect.Method);
+
+function quark_spi_HTTPServletProxy_onServletError_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy_onServletError_Method.prototype.__init_fields__ = quark_spi_HTTPServletProxy_onServletError_Method__init_fields__;
+
+function quark_spi_HTTPServletProxy_onServletError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletError((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletError_Method.prototype.invoke = quark_spi_HTTPServletProxy_onServletError_Method_invoke;
+
+function quark_spi_HTTPServletProxy_onServletError_Method__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletError_Method.prototype._getClass = quark_spi_HTTPServletProxy_onServletError_Method__getClass;
+
+function quark_spi_HTTPServletProxy_onServletError_Method__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletError_Method.prototype._getField = quark_spi_HTTPServletProxy_onServletError_Method__getField;
+
+function quark_spi_HTTPServletProxy_onServletError_Method__setField(name, value) {}
+quark_spi_HTTPServletProxy_onServletError_Method.prototype._setField = quark_spi_HTTPServletProxy_onServletError_Method__setField;
+
+// CLASS quark_spi_HTTPServletProxy_onServletEnd_Method
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method() {
+    quark_spi_HTTPServletProxy_onServletEnd_Method.super_.call(this, "quark.void", "onServletEnd", ["quark.String"]);
+}
+exports.quark_spi_HTTPServletProxy_onServletEnd_Method = quark_spi_HTTPServletProxy_onServletEnd_Method;
+_qrt.util.inherits(quark_spi_HTTPServletProxy_onServletEnd_Method, quark.reflect.Method);
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy_onServletEnd_Method.prototype.__init_fields__ = quark_spi_HTTPServletProxy_onServletEnd_Method__init_fields__;
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletEnd((args)[0]);
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletEnd_Method.prototype.invoke = quark_spi_HTTPServletProxy_onServletEnd_Method_invoke;
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletEnd_Method.prototype._getClass = quark_spi_HTTPServletProxy_onServletEnd_Method__getClass;
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy_onServletEnd_Method.prototype._getField = quark_spi_HTTPServletProxy_onServletEnd_Method__getField;
+
+function quark_spi_HTTPServletProxy_onServletEnd_Method__setField(name, value) {}
+quark_spi_HTTPServletProxy_onServletEnd_Method.prototype._setField = quark_spi_HTTPServletProxy_onServletEnd_Method__setField;
+
+// CLASS quark_spi_HTTPServletProxy_serveHTTP_Method
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method() {
+    quark_spi_HTTPServletProxy_serveHTTP_Method.super_.call(this, "quark.void", "serveHTTP", ["quark.String"]);
+}
+exports.quark_spi_HTTPServletProxy_serveHTTP_Method = quark_spi_HTTPServletProxy_serveHTTP_Method;
+_qrt.util.inherits(quark_spi_HTTPServletProxy_serveHTTP_Method, quark.reflect.Method);
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy_serveHTTP_Method.prototype.__init_fields__ = quark_spi_HTTPServletProxy_serveHTTP_Method__init_fields__;
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveHTTP((args)[0]);
+    return null;
+}
+quark_spi_HTTPServletProxy_serveHTTP_Method.prototype.invoke = quark_spi_HTTPServletProxy_serveHTTP_Method_invoke;
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy_serveHTTP_Method.prototype._getClass = quark_spi_HTTPServletProxy_serveHTTP_Method__getClass;
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy_serveHTTP_Method.prototype._getField = quark_spi_HTTPServletProxy_serveHTTP_Method__getField;
+
+function quark_spi_HTTPServletProxy_serveHTTP_Method__setField(name, value) {}
+quark_spi_HTTPServletProxy_serveHTTP_Method.prototype._setField = quark_spi_HTTPServletProxy_serveHTTP_Method__setField;
+
+// CLASS quark_spi_HTTPServletProxy
+
+function quark_spi_HTTPServletProxy() {
+    quark_spi_HTTPServletProxy.super_.call(this, "quark.spi.HTTPServletProxy");
+    (this).name = "quark.spi.HTTPServletProxy";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.Servlet", "servlet_impl"), new quark.reflect.Field("quark.Runtime", "real_runtime"), new quark.reflect.Field("quark.HTTPServlet", "http_servlet_impl")];
+    (this).methods = [new quark_spi_HTTPServletProxy_onHTTPRequest_Method(), new quark_spi_HTTPServletProxy_onServletInit_Method(), new quark_spi_HTTPServletProxy_onServletError_Method(), new quark_spi_HTTPServletProxy_onServletEnd_Method(), new quark_spi_HTTPServletProxy_serveHTTP_Method()];
+}
+exports.quark_spi_HTTPServletProxy = quark_spi_HTTPServletProxy;
+_qrt.util.inherits(quark_spi_HTTPServletProxy, quark.reflect.Class);
+
+function quark_spi_HTTPServletProxy__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_HTTPServletProxy.prototype.__init_fields__ = quark_spi_HTTPServletProxy__init_fields__;
+quark_spi_HTTPServletProxy.singleton = new quark_spi_HTTPServletProxy();
+function quark_spi_HTTPServletProxy_construct(args) {
+    return new quark.spi.HTTPServletProxy((args)[0], (args)[1]);
+}
+quark_spi_HTTPServletProxy.prototype.construct = quark_spi_HTTPServletProxy_construct;
+
+function quark_spi_HTTPServletProxy__getClass() {
+    return null;
+}
+quark_spi_HTTPServletProxy.prototype._getClass = quark_spi_HTTPServletProxy__getClass;
+
+function quark_spi_HTTPServletProxy__getField(name) {
+    return null;
+}
+quark_spi_HTTPServletProxy.prototype._getField = quark_spi_HTTPServletProxy__getField;
+
+function quark_spi_HTTPServletProxy__setField(name, value) {}
+quark_spi_HTTPServletProxy.prototype._setField = quark_spi_HTTPServletProxy__setField;
+
+
+// CLASS quark_spi_WSServletProxy_onWSConnect_Method
+
+function quark_spi_WSServletProxy_onWSConnect_Method() {
+    quark_spi_WSServletProxy_onWSConnect_Method.super_.call(this, "quark.WSHandler", "onWSConnect", ["quark.HTTPRequest"]);
+}
+exports.quark_spi_WSServletProxy_onWSConnect_Method = quark_spi_WSServletProxy_onWSConnect_Method;
+_qrt.util.inherits(quark_spi_WSServletProxy_onWSConnect_Method, quark.reflect.Method);
+
+function quark_spi_WSServletProxy_onWSConnect_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy_onWSConnect_Method.prototype.__init_fields__ = quark_spi_WSServletProxy_onWSConnect_Method__init_fields__;
+
+function quark_spi_WSServletProxy_onWSConnect_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).onWSConnect((args)[0]);
+}
+quark_spi_WSServletProxy_onWSConnect_Method.prototype.invoke = quark_spi_WSServletProxy_onWSConnect_Method_invoke;
+
+function quark_spi_WSServletProxy_onWSConnect_Method__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy_onWSConnect_Method.prototype._getClass = quark_spi_WSServletProxy_onWSConnect_Method__getClass;
+
+function quark_spi_WSServletProxy_onWSConnect_Method__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy_onWSConnect_Method.prototype._getField = quark_spi_WSServletProxy_onWSConnect_Method__getField;
+
+function quark_spi_WSServletProxy_onWSConnect_Method__setField(name, value) {}
+quark_spi_WSServletProxy_onWSConnect_Method.prototype._setField = quark_spi_WSServletProxy_onWSConnect_Method__setField;
+
+// CLASS quark_spi_WSServletProxy_onServletInit_Method
+
+function quark_spi_WSServletProxy_onServletInit_Method() {
+    quark_spi_WSServletProxy_onServletInit_Method.super_.call(this, "quark.void", "onServletInit", ["quark.String", "quark.Runtime"]);
+}
+exports.quark_spi_WSServletProxy_onServletInit_Method = quark_spi_WSServletProxy_onServletInit_Method;
+_qrt.util.inherits(quark_spi_WSServletProxy_onServletInit_Method, quark.reflect.Method);
+
+function quark_spi_WSServletProxy_onServletInit_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy_onServletInit_Method.prototype.__init_fields__ = quark_spi_WSServletProxy_onServletInit_Method__init_fields__;
+
+function quark_spi_WSServletProxy_onServletInit_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletInit((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_WSServletProxy_onServletInit_Method.prototype.invoke = quark_spi_WSServletProxy_onServletInit_Method_invoke;
+
+function quark_spi_WSServletProxy_onServletInit_Method__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy_onServletInit_Method.prototype._getClass = quark_spi_WSServletProxy_onServletInit_Method__getClass;
+
+function quark_spi_WSServletProxy_onServletInit_Method__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy_onServletInit_Method.prototype._getField = quark_spi_WSServletProxy_onServletInit_Method__getField;
+
+function quark_spi_WSServletProxy_onServletInit_Method__setField(name, value) {}
+quark_spi_WSServletProxy_onServletInit_Method.prototype._setField = quark_spi_WSServletProxy_onServletInit_Method__setField;
+
+// CLASS quark_spi_WSServletProxy_onServletError_Method
+
+function quark_spi_WSServletProxy_onServletError_Method() {
+    quark_spi_WSServletProxy_onServletError_Method.super_.call(this, "quark.void", "onServletError", ["quark.String", "quark.String"]);
+}
+exports.quark_spi_WSServletProxy_onServletError_Method = quark_spi_WSServletProxy_onServletError_Method;
+_qrt.util.inherits(quark_spi_WSServletProxy_onServletError_Method, quark.reflect.Method);
+
+function quark_spi_WSServletProxy_onServletError_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy_onServletError_Method.prototype.__init_fields__ = quark_spi_WSServletProxy_onServletError_Method__init_fields__;
+
+function quark_spi_WSServletProxy_onServletError_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletError((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_WSServletProxy_onServletError_Method.prototype.invoke = quark_spi_WSServletProxy_onServletError_Method_invoke;
+
+function quark_spi_WSServletProxy_onServletError_Method__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy_onServletError_Method.prototype._getClass = quark_spi_WSServletProxy_onServletError_Method__getClass;
+
+function quark_spi_WSServletProxy_onServletError_Method__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy_onServletError_Method.prototype._getField = quark_spi_WSServletProxy_onServletError_Method__getField;
+
+function quark_spi_WSServletProxy_onServletError_Method__setField(name, value) {}
+quark_spi_WSServletProxy_onServletError_Method.prototype._setField = quark_spi_WSServletProxy_onServletError_Method__setField;
+
+// CLASS quark_spi_WSServletProxy_onServletEnd_Method
+
+function quark_spi_WSServletProxy_onServletEnd_Method() {
+    quark_spi_WSServletProxy_onServletEnd_Method.super_.call(this, "quark.void", "onServletEnd", ["quark.String"]);
+}
+exports.quark_spi_WSServletProxy_onServletEnd_Method = quark_spi_WSServletProxy_onServletEnd_Method;
+_qrt.util.inherits(quark_spi_WSServletProxy_onServletEnd_Method, quark.reflect.Method);
+
+function quark_spi_WSServletProxy_onServletEnd_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy_onServletEnd_Method.prototype.__init_fields__ = quark_spi_WSServletProxy_onServletEnd_Method__init_fields__;
+
+function quark_spi_WSServletProxy_onServletEnd_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onServletEnd((args)[0]);
+    return null;
+}
+quark_spi_WSServletProxy_onServletEnd_Method.prototype.invoke = quark_spi_WSServletProxy_onServletEnd_Method_invoke;
+
+function quark_spi_WSServletProxy_onServletEnd_Method__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy_onServletEnd_Method.prototype._getClass = quark_spi_WSServletProxy_onServletEnd_Method__getClass;
+
+function quark_spi_WSServletProxy_onServletEnd_Method__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy_onServletEnd_Method.prototype._getField = quark_spi_WSServletProxy_onServletEnd_Method__getField;
+
+function quark_spi_WSServletProxy_onServletEnd_Method__setField(name, value) {}
+quark_spi_WSServletProxy_onServletEnd_Method.prototype._setField = quark_spi_WSServletProxy_onServletEnd_Method__setField;
+
+// CLASS quark_spi_WSServletProxy_serveWS_Method
+
+function quark_spi_WSServletProxy_serveWS_Method() {
+    quark_spi_WSServletProxy_serveWS_Method.super_.call(this, "quark.void", "serveWS", ["quark.String"]);
+}
+exports.quark_spi_WSServletProxy_serveWS_Method = quark_spi_WSServletProxy_serveWS_Method;
+_qrt.util.inherits(quark_spi_WSServletProxy_serveWS_Method, quark.reflect.Method);
+
+function quark_spi_WSServletProxy_serveWS_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy_serveWS_Method.prototype.__init_fields__ = quark_spi_WSServletProxy_serveWS_Method__init_fields__;
+
+function quark_spi_WSServletProxy_serveWS_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveWS((args)[0]);
+    return null;
+}
+quark_spi_WSServletProxy_serveWS_Method.prototype.invoke = quark_spi_WSServletProxy_serveWS_Method_invoke;
+
+function quark_spi_WSServletProxy_serveWS_Method__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy_serveWS_Method.prototype._getClass = quark_spi_WSServletProxy_serveWS_Method__getClass;
+
+function quark_spi_WSServletProxy_serveWS_Method__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy_serveWS_Method.prototype._getField = quark_spi_WSServletProxy_serveWS_Method__getField;
+
+function quark_spi_WSServletProxy_serveWS_Method__setField(name, value) {}
+quark_spi_WSServletProxy_serveWS_Method.prototype._setField = quark_spi_WSServletProxy_serveWS_Method__setField;
+
+// CLASS quark_spi_WSServletProxy
+
+function quark_spi_WSServletProxy() {
+    quark_spi_WSServletProxy.super_.call(this, "quark.spi.WSServletProxy");
+    (this).name = "quark.spi.WSServletProxy";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.Servlet", "servlet_impl"), new quark.reflect.Field("quark.Runtime", "real_runtime"), new quark.reflect.Field("quark.WSServlet", "ws_servlet_impl")];
+    (this).methods = [new quark_spi_WSServletProxy_onWSConnect_Method(), new quark_spi_WSServletProxy_onServletInit_Method(), new quark_spi_WSServletProxy_onServletError_Method(), new quark_spi_WSServletProxy_onServletEnd_Method(), new quark_spi_WSServletProxy_serveWS_Method()];
+}
+exports.quark_spi_WSServletProxy = quark_spi_WSServletProxy;
+_qrt.util.inherits(quark_spi_WSServletProxy, quark.reflect.Class);
+
+function quark_spi_WSServletProxy__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_WSServletProxy.prototype.__init_fields__ = quark_spi_WSServletProxy__init_fields__;
+quark_spi_WSServletProxy.singleton = new quark_spi_WSServletProxy();
+function quark_spi_WSServletProxy_construct(args) {
+    return new quark.spi.WSServletProxy((args)[0], (args)[1]);
+}
+quark_spi_WSServletProxy.prototype.construct = quark_spi_WSServletProxy_construct;
+
+function quark_spi_WSServletProxy__getClass() {
+    return null;
+}
+quark_spi_WSServletProxy.prototype._getClass = quark_spi_WSServletProxy__getClass;
+
+function quark_spi_WSServletProxy__getField(name) {
+    return null;
+}
+quark_spi_WSServletProxy.prototype._getField = quark_spi_WSServletProxy__getField;
+
+function quark_spi_WSServletProxy__setField(name, value) {}
+quark_spi_WSServletProxy.prototype._setField = quark_spi_WSServletProxy__setField;
+
+
+// CLASS quark_spi_TaskProxy_onExecute_Method
+
+function quark_spi_TaskProxy_onExecute_Method() {
+    quark_spi_TaskProxy_onExecute_Method.super_.call(this, "quark.void", "onExecute", ["quark.Runtime"]);
+}
+exports.quark_spi_TaskProxy_onExecute_Method = quark_spi_TaskProxy_onExecute_Method;
+_qrt.util.inherits(quark_spi_TaskProxy_onExecute_Method, quark.reflect.Method);
+
+function quark_spi_TaskProxy_onExecute_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_TaskProxy_onExecute_Method.prototype.__init_fields__ = quark_spi_TaskProxy_onExecute_Method__init_fields__;
+
+function quark_spi_TaskProxy_onExecute_Method_invoke(object, args) {
+    var obj = object;
+    (obj).onExecute((args)[0]);
+    return null;
+}
+quark_spi_TaskProxy_onExecute_Method.prototype.invoke = quark_spi_TaskProxy_onExecute_Method_invoke;
+
+function quark_spi_TaskProxy_onExecute_Method__getClass() {
+    return null;
+}
+quark_spi_TaskProxy_onExecute_Method.prototype._getClass = quark_spi_TaskProxy_onExecute_Method__getClass;
+
+function quark_spi_TaskProxy_onExecute_Method__getField(name) {
+    return null;
+}
+quark_spi_TaskProxy_onExecute_Method.prototype._getField = quark_spi_TaskProxy_onExecute_Method__getField;
+
+function quark_spi_TaskProxy_onExecute_Method__setField(name, value) {}
+quark_spi_TaskProxy_onExecute_Method.prototype._setField = quark_spi_TaskProxy_onExecute_Method__setField;
+
+// CLASS quark_spi_TaskProxy
+
+function quark_spi_TaskProxy() {
+    quark_spi_TaskProxy.super_.call(this, "quark.spi.TaskProxy");
+    (this).name = "quark.spi.TaskProxy";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.Task", "task_impl"), new quark.reflect.Field("quark.Runtime", "real_runtime")];
+    (this).methods = [new quark_spi_TaskProxy_onExecute_Method()];
+}
+exports.quark_spi_TaskProxy = quark_spi_TaskProxy;
+_qrt.util.inherits(quark_spi_TaskProxy, quark.reflect.Class);
+
+function quark_spi_TaskProxy__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_TaskProxy.prototype.__init_fields__ = quark_spi_TaskProxy__init_fields__;
+quark_spi_TaskProxy.singleton = new quark_spi_TaskProxy();
+function quark_spi_TaskProxy_construct(args) {
+    return new quark.spi.TaskProxy((args)[0], (args)[1]);
+}
+quark_spi_TaskProxy.prototype.construct = quark_spi_TaskProxy_construct;
+
+function quark_spi_TaskProxy__getClass() {
+    return null;
+}
+quark_spi_TaskProxy.prototype._getClass = quark_spi_TaskProxy__getClass;
+
+function quark_spi_TaskProxy__getField(name) {
+    return null;
+}
+quark_spi_TaskProxy.prototype._getField = quark_spi_TaskProxy__getField;
+
+function quark_spi_TaskProxy__setField(name, value) {}
+quark_spi_TaskProxy.prototype._setField = quark_spi_TaskProxy__setField;
+
+
+// CLASS quark_spi_RuntimeApi_open_Method
+
+function quark_spi_RuntimeApi_open_Method() {
+    quark_spi_RuntimeApi_open_Method.super_.call(this, "quark.void", "open", ["quark.String", "quark.WSHandler"]);
+}
+exports.quark_spi_RuntimeApi_open_Method = quark_spi_RuntimeApi_open_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_open_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_open_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_open_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_open_Method__init_fields__;
+
+function quark_spi_RuntimeApi_open_Method_invoke(object, args) {
+    var obj = object;
+    (obj).open((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_open_Method.prototype.invoke = quark_spi_RuntimeApi_open_Method_invoke;
+
+function quark_spi_RuntimeApi_open_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_open_Method.prototype._getClass = quark_spi_RuntimeApi_open_Method__getClass;
+
+function quark_spi_RuntimeApi_open_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_open_Method.prototype._getField = quark_spi_RuntimeApi_open_Method__getField;
+
+function quark_spi_RuntimeApi_open_Method__setField(name, value) {}
+quark_spi_RuntimeApi_open_Method.prototype._setField = quark_spi_RuntimeApi_open_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_request_Method
+
+function quark_spi_RuntimeApi_request_Method() {
+    quark_spi_RuntimeApi_request_Method.super_.call(this, "quark.void", "request", ["quark.HTTPRequest", "quark.HTTPHandler"]);
+}
+exports.quark_spi_RuntimeApi_request_Method = quark_spi_RuntimeApi_request_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_request_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_request_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_request_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_request_Method__init_fields__;
+
+function quark_spi_RuntimeApi_request_Method_invoke(object, args) {
+    var obj = object;
+    (obj).request((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_request_Method.prototype.invoke = quark_spi_RuntimeApi_request_Method_invoke;
+
+function quark_spi_RuntimeApi_request_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_request_Method.prototype._getClass = quark_spi_RuntimeApi_request_Method__getClass;
+
+function quark_spi_RuntimeApi_request_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_request_Method.prototype._getField = quark_spi_RuntimeApi_request_Method__getField;
+
+function quark_spi_RuntimeApi_request_Method__setField(name, value) {}
+quark_spi_RuntimeApi_request_Method.prototype._setField = quark_spi_RuntimeApi_request_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_schedule_Method
+
+function quark_spi_RuntimeApi_schedule_Method() {
+    quark_spi_RuntimeApi_schedule_Method.super_.call(this, "quark.void", "schedule", ["quark.Task", "quark.float"]);
+}
+exports.quark_spi_RuntimeApi_schedule_Method = quark_spi_RuntimeApi_schedule_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_schedule_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_schedule_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_schedule_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_schedule_Method__init_fields__;
+
+function quark_spi_RuntimeApi_schedule_Method_invoke(object, args) {
+    var obj = object;
+    (obj).schedule((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_schedule_Method.prototype.invoke = quark_spi_RuntimeApi_schedule_Method_invoke;
+
+function quark_spi_RuntimeApi_schedule_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_schedule_Method.prototype._getClass = quark_spi_RuntimeApi_schedule_Method__getClass;
+
+function quark_spi_RuntimeApi_schedule_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_schedule_Method.prototype._getField = quark_spi_RuntimeApi_schedule_Method__getField;
+
+function quark_spi_RuntimeApi_schedule_Method__setField(name, value) {}
+quark_spi_RuntimeApi_schedule_Method.prototype._setField = quark_spi_RuntimeApi_schedule_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_codec_Method
+
+function quark_spi_RuntimeApi_codec_Method() {
+    quark_spi_RuntimeApi_codec_Method.super_.call(this, "quark.Codec", "codec", []);
+}
+exports.quark_spi_RuntimeApi_codec_Method = quark_spi_RuntimeApi_codec_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_codec_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_codec_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_codec_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_codec_Method__init_fields__;
+
+function quark_spi_RuntimeApi_codec_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).codec();
+}
+quark_spi_RuntimeApi_codec_Method.prototype.invoke = quark_spi_RuntimeApi_codec_Method_invoke;
+
+function quark_spi_RuntimeApi_codec_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_codec_Method.prototype._getClass = quark_spi_RuntimeApi_codec_Method__getClass;
+
+function quark_spi_RuntimeApi_codec_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_codec_Method.prototype._getField = quark_spi_RuntimeApi_codec_Method__getField;
+
+function quark_spi_RuntimeApi_codec_Method__setField(name, value) {}
+quark_spi_RuntimeApi_codec_Method.prototype._setField = quark_spi_RuntimeApi_codec_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_serveHTTP_Method
+
+function quark_spi_RuntimeApi_serveHTTP_Method() {
+    quark_spi_RuntimeApi_serveHTTP_Method.super_.call(this, "quark.void", "serveHTTP", ["quark.String", "quark.HTTPServlet"]);
+}
+exports.quark_spi_RuntimeApi_serveHTTP_Method = quark_spi_RuntimeApi_serveHTTP_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_serveHTTP_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_serveHTTP_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_serveHTTP_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_serveHTTP_Method__init_fields__;
+
+function quark_spi_RuntimeApi_serveHTTP_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveHTTP((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_serveHTTP_Method.prototype.invoke = quark_spi_RuntimeApi_serveHTTP_Method_invoke;
+
+function quark_spi_RuntimeApi_serveHTTP_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_serveHTTP_Method.prototype._getClass = quark_spi_RuntimeApi_serveHTTP_Method__getClass;
+
+function quark_spi_RuntimeApi_serveHTTP_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_serveHTTP_Method.prototype._getField = quark_spi_RuntimeApi_serveHTTP_Method__getField;
+
+function quark_spi_RuntimeApi_serveHTTP_Method__setField(name, value) {}
+quark_spi_RuntimeApi_serveHTTP_Method.prototype._setField = quark_spi_RuntimeApi_serveHTTP_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_serveWS_Method
+
+function quark_spi_RuntimeApi_serveWS_Method() {
+    quark_spi_RuntimeApi_serveWS_Method.super_.call(this, "quark.void", "serveWS", ["quark.String", "quark.WSServlet"]);
+}
+exports.quark_spi_RuntimeApi_serveWS_Method = quark_spi_RuntimeApi_serveWS_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_serveWS_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_serveWS_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_serveWS_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_serveWS_Method__init_fields__;
+
+function quark_spi_RuntimeApi_serveWS_Method_invoke(object, args) {
+    var obj = object;
+    (obj).serveWS((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_serveWS_Method.prototype.invoke = quark_spi_RuntimeApi_serveWS_Method_invoke;
+
+function quark_spi_RuntimeApi_serveWS_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_serveWS_Method.prototype._getClass = quark_spi_RuntimeApi_serveWS_Method__getClass;
+
+function quark_spi_RuntimeApi_serveWS_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_serveWS_Method.prototype._getField = quark_spi_RuntimeApi_serveWS_Method__getField;
+
+function quark_spi_RuntimeApi_serveWS_Method__setField(name, value) {}
+quark_spi_RuntimeApi_serveWS_Method.prototype._setField = quark_spi_RuntimeApi_serveWS_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_respond_Method
+
+function quark_spi_RuntimeApi_respond_Method() {
+    quark_spi_RuntimeApi_respond_Method.super_.call(this, "quark.void", "respond", ["quark.HTTPRequest", "quark.HTTPResponse"]);
+}
+exports.quark_spi_RuntimeApi_respond_Method = quark_spi_RuntimeApi_respond_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_respond_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_respond_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_respond_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_respond_Method__init_fields__;
+
+function quark_spi_RuntimeApi_respond_Method_invoke(object, args) {
+    var obj = object;
+    (obj).respond((args)[0], (args)[1]);
+    return null;
+}
+quark_spi_RuntimeApi_respond_Method.prototype.invoke = quark_spi_RuntimeApi_respond_Method_invoke;
+
+function quark_spi_RuntimeApi_respond_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_respond_Method.prototype._getClass = quark_spi_RuntimeApi_respond_Method__getClass;
+
+function quark_spi_RuntimeApi_respond_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_respond_Method.prototype._getField = quark_spi_RuntimeApi_respond_Method__getField;
+
+function quark_spi_RuntimeApi_respond_Method__setField(name, value) {}
+quark_spi_RuntimeApi_respond_Method.prototype._setField = quark_spi_RuntimeApi_respond_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_fail_Method
+
+function quark_spi_RuntimeApi_fail_Method() {
+    quark_spi_RuntimeApi_fail_Method.super_.call(this, "quark.void", "fail", ["quark.String"]);
+}
+exports.quark_spi_RuntimeApi_fail_Method = quark_spi_RuntimeApi_fail_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_fail_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_fail_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_fail_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_fail_Method__init_fields__;
+
+function quark_spi_RuntimeApi_fail_Method_invoke(object, args) {
+    var obj = object;
+    (obj).fail((args)[0]);
+    return null;
+}
+quark_spi_RuntimeApi_fail_Method.prototype.invoke = quark_spi_RuntimeApi_fail_Method_invoke;
+
+function quark_spi_RuntimeApi_fail_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_fail_Method.prototype._getClass = quark_spi_RuntimeApi_fail_Method__getClass;
+
+function quark_spi_RuntimeApi_fail_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_fail_Method.prototype._getField = quark_spi_RuntimeApi_fail_Method__getField;
+
+function quark_spi_RuntimeApi_fail_Method__setField(name, value) {}
+quark_spi_RuntimeApi_fail_Method.prototype._setField = quark_spi_RuntimeApi_fail_Method__setField;
+
+// CLASS quark_spi_RuntimeApi_logger_Method
+
+function quark_spi_RuntimeApi_logger_Method() {
+    quark_spi_RuntimeApi_logger_Method.super_.call(this, "quark.Logger", "logger", ["quark.String"]);
+}
+exports.quark_spi_RuntimeApi_logger_Method = quark_spi_RuntimeApi_logger_Method;
+_qrt.util.inherits(quark_spi_RuntimeApi_logger_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeApi_logger_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi_logger_Method.prototype.__init_fields__ = quark_spi_RuntimeApi_logger_Method__init_fields__;
+
+function quark_spi_RuntimeApi_logger_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).logger((args)[0]);
+}
+quark_spi_RuntimeApi_logger_Method.prototype.invoke = quark_spi_RuntimeApi_logger_Method_invoke;
+
+function quark_spi_RuntimeApi_logger_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi_logger_Method.prototype._getClass = quark_spi_RuntimeApi_logger_Method__getClass;
+
+function quark_spi_RuntimeApi_logger_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi_logger_Method.prototype._getField = quark_spi_RuntimeApi_logger_Method__getField;
+
+function quark_spi_RuntimeApi_logger_Method__setField(name, value) {}
+quark_spi_RuntimeApi_logger_Method.prototype._setField = quark_spi_RuntimeApi_logger_Method__setField;
+
+// CLASS quark_spi_RuntimeApi
+
+function quark_spi_RuntimeApi() {
+    quark_spi_RuntimeApi.super_.call(this, "quark.spi.RuntimeApi");
+    (this).name = "quark.spi.RuntimeApi";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.spi.RuntimeSpi", "impl")];
+    (this).methods = [new quark_spi_RuntimeApi_open_Method(), new quark_spi_RuntimeApi_request_Method(), new quark_spi_RuntimeApi_schedule_Method(), new quark_spi_RuntimeApi_codec_Method(), new quark_spi_RuntimeApi_serveHTTP_Method(), new quark_spi_RuntimeApi_serveWS_Method(), new quark_spi_RuntimeApi_respond_Method(), new quark_spi_RuntimeApi_fail_Method(), new quark_spi_RuntimeApi_logger_Method()];
+}
+exports.quark_spi_RuntimeApi = quark_spi_RuntimeApi;
+_qrt.util.inherits(quark_spi_RuntimeApi, quark.reflect.Class);
+
+function quark_spi_RuntimeApi__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeApi.prototype.__init_fields__ = quark_spi_RuntimeApi__init_fields__;
+quark_spi_RuntimeApi.singleton = new quark_spi_RuntimeApi();
+function quark_spi_RuntimeApi_construct(args) {
+    return new quark.spi.RuntimeApi((args)[0]);
+}
+quark_spi_RuntimeApi.prototype.construct = quark_spi_RuntimeApi_construct;
+
+function quark_spi_RuntimeApi__getClass() {
+    return null;
+}
+quark_spi_RuntimeApi.prototype._getClass = quark_spi_RuntimeApi__getClass;
+
+function quark_spi_RuntimeApi__getField(name) {
+    return null;
+}
+quark_spi_RuntimeApi.prototype._getField = quark_spi_RuntimeApi__getField;
+
+function quark_spi_RuntimeApi__setField(name, value) {}
+quark_spi_RuntimeApi.prototype._setField = quark_spi_RuntimeApi__setField;
+
+
+// CLASS quark_spi_RuntimeFactory_makeRuntime_Method
+
+function quark_spi_RuntimeFactory_makeRuntime_Method() {
+    quark_spi_RuntimeFactory_makeRuntime_Method.super_.call(this, "quark.Runtime", "makeRuntime", []);
+}
+exports.quark_spi_RuntimeFactory_makeRuntime_Method = quark_spi_RuntimeFactory_makeRuntime_Method;
+_qrt.util.inherits(quark_spi_RuntimeFactory_makeRuntime_Method, quark.reflect.Method);
+
+function quark_spi_RuntimeFactory_makeRuntime_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeFactory_makeRuntime_Method.prototype.__init_fields__ = quark_spi_RuntimeFactory_makeRuntime_Method__init_fields__;
+
+function quark_spi_RuntimeFactory_makeRuntime_Method_invoke(object, args) {
+    var obj = object;
+    return (obj).makeRuntime();
+}
+quark_spi_RuntimeFactory_makeRuntime_Method.prototype.invoke = quark_spi_RuntimeFactory_makeRuntime_Method_invoke;
+
+function quark_spi_RuntimeFactory_makeRuntime_Method__getClass() {
+    return null;
+}
+quark_spi_RuntimeFactory_makeRuntime_Method.prototype._getClass = quark_spi_RuntimeFactory_makeRuntime_Method__getClass;
+
+function quark_spi_RuntimeFactory_makeRuntime_Method__getField(name) {
+    return null;
+}
+quark_spi_RuntimeFactory_makeRuntime_Method.prototype._getField = quark_spi_RuntimeFactory_makeRuntime_Method__getField;
+
+function quark_spi_RuntimeFactory_makeRuntime_Method__setField(name, value) {}
+quark_spi_RuntimeFactory_makeRuntime_Method.prototype._setField = quark_spi_RuntimeFactory_makeRuntime_Method__setField;
+
+// CLASS quark_spi_RuntimeFactory
+
+function quark_spi_RuntimeFactory() {
+    quark_spi_RuntimeFactory.super_.call(this, "quark.spi.RuntimeFactory");
+    (this).name = "quark.spi.RuntimeFactory";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.spi.RuntimeFactory", "factory")];
+    (this).methods = [new quark_spi_RuntimeFactory_makeRuntime_Method()];
+}
+exports.quark_spi_RuntimeFactory = quark_spi_RuntimeFactory;
+_qrt.util.inherits(quark_spi_RuntimeFactory, quark.reflect.Class);
+
+function quark_spi_RuntimeFactory__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+quark_spi_RuntimeFactory.prototype.__init_fields__ = quark_spi_RuntimeFactory__init_fields__;
+quark_spi_RuntimeFactory.singleton = new quark_spi_RuntimeFactory();
+function quark_spi_RuntimeFactory_construct(args) {
+    return new quark.spi.RuntimeFactory();
+}
+quark_spi_RuntimeFactory.prototype.construct = quark_spi_RuntimeFactory_construct;
+
+function quark_spi_RuntimeFactory__getClass() {
+    return null;
+}
+quark_spi_RuntimeFactory.prototype._getClass = quark_spi_RuntimeFactory__getClass;
+
+function quark_spi_RuntimeFactory__getField(name) {
+    return null;
+}
+quark_spi_RuntimeFactory.prototype._getField = quark_spi_RuntimeFactory__getField;
+
+function quark_spi_RuntimeFactory__setField(name, value) {}
+quark_spi_RuntimeFactory.prototype._setField = quark_spi_RuntimeFactory__setField;
+
+
 // CLASS Root
 function Root() {
     this.__init_fields__();
@@ -3854,6 +5648,8 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
+Root.quark_Task_md = quark_Task.singleton;
+Root.quark_Runtime_md = quark_Runtime.singleton;
 Root.quark_ListUtil_quark_Object__md = quark_ListUtil_quark_Object_.singleton;
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
@@ -3863,6 +5659,7 @@ Root.quark_Map_quark_Object_quark_Object__md = quark_Map_quark_Object_quark_Obje
 Root.quark_Map_quark_String_quark_ServiceInstance__md = quark_Map_quark_String_quark_ServiceInstance_.singleton;
 Root.quark_logging_Appender_md = quark_logging_Appender.singleton;
 Root.quark_logging_Config_md = quark_logging_Config.singleton;
+Root.quark_Servlet_md = quark_Servlet.singleton;
 Root.quark_Resolver_md = quark_Resolver.singleton;
 Root.quark_ResponseHolder_md = quark_ResponseHolder.singleton;
 Root.quark_Service_md = quark_Service.singleton;
@@ -3889,11 +5686,25 @@ Root.quark_concurrent_TimeoutExpiry_md = quark_concurrent_TimeoutExpiry.singleto
 Root.quark_concurrent_Timeout_md = quark_concurrent_Timeout.singleton;
 Root.quark_concurrent_TLSContextInitializer_md = quark_concurrent_TLSContextInitializer.singleton;
 Root.quark_concurrent_Context_md = quark_concurrent_Context.singleton;
+Root.quark_HTTPHandler_md = quark_HTTPHandler.singleton;
+Root.quark_HTTPRequest_md = quark_HTTPRequest.singleton;
+Root.quark_HTTPResponse_md = quark_HTTPResponse.singleton;
+Root.quark_HTTPServlet_md = quark_HTTPServlet.singleton;
+Root.quark_WSHandler_md = quark_WSHandler.singleton;
+Root.quark_WebSocket_md = quark_WebSocket.singleton;
+Root.quark_WSServlet_md = quark_WSServlet.singleton;
 Root.quark_test_TestInitializer_md = quark_test_TestInitializer.singleton;
 Root.quark_test_Test_md = quark_test_Test.singleton;
 Root.quark_test_MethodTest_md = quark_test_MethodTest.singleton;
 Root.quark_test_Harness_md = quark_test_Harness.singleton;
 Root.quark_URL_md = quark_URL.singleton;
+Root.quark_spi_RuntimeSpi_md = quark_spi_RuntimeSpi.singleton;
+Root.quark_spi_ServletProxy_md = quark_spi_ServletProxy.singleton;
+Root.quark_spi_HTTPServletProxy_md = quark_spi_HTTPServletProxy.singleton;
+Root.quark_spi_WSServletProxy_md = quark_spi_WSServletProxy.singleton;
+Root.quark_spi_TaskProxy_md = quark_spi_TaskProxy.singleton;
+Root.quark_spi_RuntimeApi_md = quark_spi_RuntimeApi.singleton;
+Root.quark_spi_RuntimeFactory_md = quark_spi_RuntimeFactory.singleton;
 function Root__getClass() {
     return null;
 }
@@ -3907,6 +5718,8 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
+var quark = require('../quark/index.js');
+exports.quark = quark;
 var quark = require('../quark/index.js');
 exports.quark = quark;
 var quark = require('../quark/index.js');

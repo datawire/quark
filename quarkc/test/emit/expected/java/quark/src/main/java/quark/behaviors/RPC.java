@@ -25,7 +25,7 @@ public class RPC implements io.datawire.quark.runtime.QObject {
         quark.concurrent.Future result = (quark.concurrent.Future) (null);
         (this).instance = ((this).service).getInstance();
         if (!(((this).instance)==(null) || ((Object)((this).instance) != null && ((Object) ((this).instance)).equals(null)))) {
-            io.datawire.quark.runtime.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).instance).getURL());
+            quark.HTTPRequest request = new io.datawire.quark.runtime.ClientHTTPRequest(((this).instance).getURL());
             io.datawire.quark.runtime.JSONObject json = quark.Functions.toJSON(args, null);
             io.datawire.quark.runtime.JSONObject envelope = new io.datawire.quark.runtime.JSONObject();
             (envelope).setObjectItem(("$method"), ((new io.datawire.quark.runtime.JSONObject()).setString((this).methodName)));

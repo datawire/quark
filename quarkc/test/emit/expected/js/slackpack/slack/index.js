@@ -5,6 +5,8 @@ var event = require('./event/index.js');
 exports.event = event;
 var slackpack_md = require('../slackpack_md/index.js');
 exports.slackpack_md = slackpack_md;
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 

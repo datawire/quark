@@ -6,7 +6,7 @@ public class quark_behaviors_CircuitBreaker_onExecute_Method extends quark.refle
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         quark.behaviors.CircuitBreaker obj = (quark.behaviors.CircuitBreaker) (object);
-        (obj).onExecute((io.datawire.quark.runtime.Runtime) ((args).get(0)));
+        (obj).onExecute((quark.Runtime) ((args).get(0)));
         return null;
     }
     public String _getClass() {

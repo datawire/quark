@@ -17,14 +17,12 @@ File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
  Dependency(lang=javagroup=junitartifact=junitversion=4.12),
  Include(url=io/datawire/quark/runtime/AbstractDatawireRuntime.java),
  Include(url=io/datawire/quark/runtime/Builtins.java),
- Include(url=io/datawire/quark/runtime/Runtime.java),
- Include(url=io/datawire/quark/runtime/Task.java),
 
  DistUnit(Name(quark)),
  Include(url=primitives.q), Include(url=logging.q), Include(url=reflect.q),
  Include(url=json.q), Include(url=service.q), Include(url=concurrent.q),
  Include(url=http.q), Include(url=ws.q), Include(url=testing.q),
- Include(url=url.q),
+ Include(url=url.q), Include(url=spi.q),
 
  Package(Name(quark),
 
@@ -79,20 +77,16 @@ File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
      Fixed('::DatawireQuarkCore.default_codec')), NativeCase(js,
      Fixed('_qrt.defaultCodec()')))),
 
-  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-      Fixed('io.datawire.quark.runtime.Task')))), Name(Task),
+  Interface(Name(Task),
 
    Method(static=False, Type(Name(void)), Name(onExecute),
-    Param(Type(Name(Runtime)), Name(runtime), $type=0.quark.Runtime))),
+    Param(Type(Name(Runtime)), Name(runtime), $type=0.quark.Runtime)),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(quark_Task_ref),
+    Attr(Attr(Var(Name(quark_md), $type=12.quark_md), Name(Root),
+     $type=12.quark_md.Root), Name(quark_Task_md),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
-  Primitive(Annotation(Name(mapping), Native(NativeCase(java,
-      Fixed('io.datawire.quark.runtime.Runtime')))), Name(Runtime),
-
-   ConstructorMacro(Name(Runtime), Native(NativeCase(java,
-      Fixed('io.datawire.quark.runtime.Runtime.Factory.create()')),
-     NativeCase(py, Fixed('_RuntimeFactory.create()')), NativeCase(rb,
-      Fixed('::DatawireQuarkCore::Runtime.new')), NativeCase(js,
-      Fixed('_qrt.RuntimeFactory.create()')))),
+  Interface(Name(Runtime),
 
    Method(static=False, Type(Name(void)), Name(open),
     Param(Type(Name(String)), Name(url), $type=1.quark.String),
@@ -129,5 +123,9 @@ File(Import(Name(quark)), Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
    Method(static=False, Annotation(Name(doc),
      String("Get a logger for the specified topic.", $type=1.quark.String)),
     Type(Name(Logger)), Name(logger),
-    Param(Type(Name(String)), Name(topic), $type=1.quark.String))))
+    Param(Type(Name(String)), Name(topic), $type=1.quark.String)),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(quark_Runtime_ref), Attr(Attr(Var(Name(quark_md), $type=12.quark_md),
+      Name(Root), $type=12.quark_md.Root), Name(quark_Runtime_md),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
 )

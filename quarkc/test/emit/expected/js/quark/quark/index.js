@@ -11,8 +11,64 @@ var concurrent = require('./concurrent/index.js');
 exports.concurrent = concurrent;
 var test = require('./test/index.js');
 exports.test = test;
+var spi = require('./spi/index.js');
+exports.spi = spi;
 
 
+
+// CLASS Task
+function Task() {
+    this.__init_fields__();
+}
+exports.Task = Task;
+
+function Task__init_fields__() {}
+Task.prototype.__init_fields__ = Task__init_fields__;
+Task.quark_Task_ref = quark_md.Root.quark_Task_md;
+function Task_onExecute(runtime) { /* interface */ }
+Task.prototype.onExecute = Task_onExecute;
+
+// CLASS Runtime
+function Runtime() {
+    this.__init_fields__();
+}
+exports.Runtime = Runtime;
+
+function Runtime__init_fields__() {}
+Runtime.prototype.__init_fields__ = Runtime__init_fields__;
+Runtime.quark_Runtime_ref = quark_md.Root.quark_Runtime_md;
+function Runtime_open(url, handler) { /* interface */ }
+Runtime.prototype.open = Runtime_open;
+
+function Runtime_request(request, handler) { /* interface */ }
+Runtime.prototype.request = Runtime_request;
+
+function Runtime_schedule(handler, delayInSeconds) { /* interface */ }
+Runtime.prototype.schedule = Runtime_schedule;
+
+function Runtime_codec() { /* interface */ }
+Runtime.prototype.codec = Runtime_codec;
+
+function Runtime_serveHTTP(url, servlet) { /* interface */ }
+Runtime.prototype.serveHTTP = Runtime_serveHTTP;
+
+function Runtime_serveWS(url, servlet) { /* interface */ }
+Runtime.prototype.serveWS = Runtime_serveWS;
+
+function Runtime_respond(request, response) { /* interface */ }
+Runtime.prototype.respond = Runtime_respond;
+
+/**
+ * Display the explanatory message and then terminate the program
+ */
+function Runtime_fail(message) { /* interface */ }
+Runtime.prototype.fail = Runtime_fail;
+
+/**
+ * Get a logger for the specified topic.
+ */
+function Runtime_logger(topic) { /* interface */ }
+Runtime.prototype.logger = Runtime_logger;
 
 
 // CLASS ListUtil
@@ -159,6 +215,36 @@ function fromJSON(cls, result, json) {
 }
 exports.fromJSON = fromJSON;
 
+
+// CLASS Servlet
+/**
+ * A service addresable with an url
+ */
+function Servlet() {
+    this.__init_fields__();
+}
+exports.Servlet = Servlet;
+
+function Servlet__init_fields__() {}
+Servlet.prototype.__init_fields__ = Servlet__init_fields__;
+Servlet.quark_Servlet_ref = quark_md.Root.quark_Servlet_md;
+/**
+ * called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
+ */
+function Servlet_onServletInit(url, runtime) {}
+Servlet.prototype.onServletInit = Servlet_onServletInit;
+
+/**
+ * called if the servlet could not be installed
+ */
+function Servlet_onServletError(url, error) {}
+Servlet.prototype.onServletError = Servlet_onServletError;
+
+/**
+ * called when the servlet is removed
+ */
+function Servlet_onServletEnd(url) {}
+Servlet.prototype.onServletEnd = Servlet_onServletEnd;
 
 // CLASS Resolver
 function Resolver() {
@@ -715,6 +801,186 @@ Server.prototype.onServletEnd = Server_onServletEnd;
 
 
 
+// CLASS HTTPHandler
+function HTTPHandler() {
+    this.__init_fields__();
+}
+exports.HTTPHandler = HTTPHandler;
+
+function HTTPHandler__init_fields__() {}
+HTTPHandler.prototype.__init_fields__ = HTTPHandler__init_fields__;
+HTTPHandler.quark_HTTPHandler_ref = quark_md.Root.quark_HTTPHandler_md;
+function HTTPHandler_onHTTPInit(request) {}
+HTTPHandler.prototype.onHTTPInit = HTTPHandler_onHTTPInit;
+
+function HTTPHandler_onHTTPResponse(request, response) {}
+HTTPHandler.prototype.onHTTPResponse = HTTPHandler_onHTTPResponse;
+
+function HTTPHandler_onHTTPError(request, message) {}
+HTTPHandler.prototype.onHTTPError = HTTPHandler_onHTTPError;
+
+function HTTPHandler_onHTTPFinal(request) {}
+HTTPHandler.prototype.onHTTPFinal = HTTPHandler_onHTTPFinal;
+
+// CLASS HTTPRequest
+function HTTPRequest() {
+    this.__init_fields__();
+}
+exports.HTTPRequest = HTTPRequest;
+
+function HTTPRequest__init_fields__() {}
+HTTPRequest.prototype.__init_fields__ = HTTPRequest__init_fields__;
+HTTPRequest.quark_HTTPRequest_ref = quark_md.Root.quark_HTTPRequest_md;
+function HTTPRequest_getUrl() { /* interface */ }
+HTTPRequest.prototype.getUrl = HTTPRequest_getUrl;
+
+function HTTPRequest_setMethod(method) { /* interface */ }
+HTTPRequest.prototype.setMethod = HTTPRequest_setMethod;
+
+function HTTPRequest_getMethod() { /* interface */ }
+HTTPRequest.prototype.getMethod = HTTPRequest_getMethod;
+
+function HTTPRequest_setBody(data) { /* interface */ }
+HTTPRequest.prototype.setBody = HTTPRequest_setBody;
+
+function HTTPRequest_getBody() { /* interface */ }
+HTTPRequest.prototype.getBody = HTTPRequest_getBody;
+
+function HTTPRequest_setHeader(key, value) { /* interface */ }
+HTTPRequest.prototype.setHeader = HTTPRequest_setHeader;
+
+function HTTPRequest_getHeader(key) { /* interface */ }
+HTTPRequest.prototype.getHeader = HTTPRequest_getHeader;
+
+function HTTPRequest_getHeaders() { /* interface */ }
+HTTPRequest.prototype.getHeaders = HTTPRequest_getHeaders;
+
+// CLASS HTTPResponse
+function HTTPResponse() {
+    this.__init_fields__();
+}
+exports.HTTPResponse = HTTPResponse;
+
+function HTTPResponse__init_fields__() {}
+HTTPResponse.prototype.__init_fields__ = HTTPResponse__init_fields__;
+HTTPResponse.quark_HTTPResponse_ref = quark_md.Root.quark_HTTPResponse_md;
+function HTTPResponse_getCode() { /* interface */ }
+HTTPResponse.prototype.getCode = HTTPResponse_getCode;
+
+function HTTPResponse_setCode(code) { /* interface */ }
+HTTPResponse.prototype.setCode = HTTPResponse_setCode;
+
+function HTTPResponse_getBody() { /* interface */ }
+HTTPResponse.prototype.getBody = HTTPResponse_getBody;
+
+function HTTPResponse_setBody(body) { /* interface */ }
+HTTPResponse.prototype.setBody = HTTPResponse_setBody;
+
+function HTTPResponse_setHeader(key, value) { /* interface */ }
+HTTPResponse.prototype.setHeader = HTTPResponse_setHeader;
+
+function HTTPResponse_getHeader(key) { /* interface */ }
+HTTPResponse.prototype.getHeader = HTTPResponse_getHeader;
+
+function HTTPResponse_getHeaders() { /* interface */ }
+HTTPResponse.prototype.getHeaders = HTTPResponse_getHeaders;
+
+// CLASS HTTPServlet
+/**
+ * Http servlet
+ */
+function HTTPServlet() {
+    this.__init_fields__();
+}
+exports.HTTPServlet = HTTPServlet;
+
+function HTTPServlet__init_fields__() {}
+HTTPServlet.prototype.__init_fields__ = HTTPServlet__init_fields__;
+HTTPServlet.quark_HTTPServlet_ref = quark_md.Root.quark_HTTPServlet_md;
+/**
+ * incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime
+ */
+function HTTPServlet_onHTTPRequest(request, response) {}
+HTTPServlet.prototype.onHTTPRequest = HTTPServlet_onHTTPRequest;
+
+function HTTPServlet_serveHTTP(url) {
+    (concurrent.Context.runtime()).serveHTTP(url, this);
+}
+HTTPServlet.prototype.serveHTTP = HTTPServlet_serveHTTP;
+
+
+// CLASS WSHandler
+function WSHandler() {
+    this.__init_fields__();
+}
+exports.WSHandler = WSHandler;
+
+function WSHandler__init_fields__() {}
+WSHandler.prototype.__init_fields__ = WSHandler__init_fields__;
+WSHandler.quark_WSHandler_ref = quark_md.Root.quark_WSHandler_md;
+function WSHandler_onWSInit(socket) {}
+WSHandler.prototype.onWSInit = WSHandler_onWSInit;
+
+function WSHandler_onWSConnected(socket) {}
+WSHandler.prototype.onWSConnected = WSHandler_onWSConnected;
+
+function WSHandler_onWSMessage(socket, message) {}
+WSHandler.prototype.onWSMessage = WSHandler_onWSMessage;
+
+function WSHandler_onWSBinary(socket, message) {}
+WSHandler.prototype.onWSBinary = WSHandler_onWSBinary;
+
+function WSHandler_onWSClosed(socket) {}
+WSHandler.prototype.onWSClosed = WSHandler_onWSClosed;
+
+function WSHandler_onWSError(socket) {}
+WSHandler.prototype.onWSError = WSHandler_onWSError;
+
+function WSHandler_onWSFinal(socket) {}
+WSHandler.prototype.onWSFinal = WSHandler_onWSFinal;
+
+// CLASS WebSocket
+function WebSocket() {
+    this.__init_fields__();
+}
+exports.WebSocket = WebSocket;
+
+function WebSocket__init_fields__() {}
+WebSocket.prototype.__init_fields__ = WebSocket__init_fields__;
+WebSocket.quark_WebSocket_ref = quark_md.Root.quark_WebSocket_md;
+function WebSocket_send(message) { /* interface */ }
+WebSocket.prototype.send = WebSocket_send;
+
+function WebSocket_sendBinary(bytes) { /* interface */ }
+WebSocket.prototype.sendBinary = WebSocket_sendBinary;
+
+function WebSocket_close() { /* interface */ }
+WebSocket.prototype.close = WebSocket_close;
+
+// CLASS WSServlet
+/**
+ * Websocket servlet
+ */
+function WSServlet() {
+    this.__init_fields__();
+}
+exports.WSServlet = WSServlet;
+
+function WSServlet__init_fields__() {}
+WSServlet.prototype.__init_fields__ = WSServlet__init_fields__;
+WSServlet.quark_WSServlet_ref = quark_md.Root.quark_WSServlet_md;
+/**
+ * called for each new incoming WebSocket connection
+ */
+function WSServlet_onWSConnect(upgrade_request) {
+    return null;
+}
+WSServlet.prototype.onWSConnect = WSServlet_onWSConnect;
+
+function WSServlet_serveWS(url) {
+    (concurrent.Context.runtime()).serveWS(url, this);
+}
+WSServlet.prototype.serveWS = WSServlet_serveWS;
 
 
 

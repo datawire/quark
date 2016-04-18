@@ -1,6 +1,6 @@
 package quark.behaviors;
 
-public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, quark.concurrent.TimeoutListener, io.datawire.quark.runtime.QObject {
+public class RPCRequest implements quark.HTTPHandler, quark.concurrent.TimeoutListener, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_behaviors_RPCRequest_ref = quark_md.Root.quark_behaviors_RPCRequest_md;
     public RPC rpc;
     public quark.concurrent.Future retval;
@@ -12,12 +12,12 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, quark.
         (this).timeout = new quark.concurrent.Timeout((rpc).timeout);
         (this).rpc = rpc;
     }
-    public quark.concurrent.Future call(io.datawire.quark.runtime.HTTPRequest request) {
+    public quark.concurrent.Future call(quark.HTTPRequest request) {
         ((this).timeout).start(this);
         (quark.concurrent.Context.runtime()).request(request, this);
         return (this).retval;
     }
-    public void onHTTPResponse(io.datawire.quark.runtime.HTTPRequest rq, io.datawire.quark.runtime.HTTPResponse response) {
+    public void onHTTPResponse(quark.HTTPRequest rq, quark.HTTPResponse response) {
         String info;
         ((this).timeout).cancel();
         if (!(((response).getCode())==(200) || ((Object)((response).getCode()) != null && ((Object) ((response).getCode())).equals(200)))) {
@@ -76,7 +76,7 @@ public class RPCRequest implements io.datawire.quark.runtime.HTTPHandler, quark.
             (this).timeout = (quark.concurrent.Timeout) (value);
         }
     }
-    public void onHTTPInit(io.datawire.quark.runtime.HTTPRequest request) {}
-    public void onHTTPError(io.datawire.quark.runtime.HTTPRequest request, String message) {}
-    public void onHTTPFinal(io.datawire.quark.runtime.HTTPRequest request) {}
+    public void onHTTPInit(quark.HTTPRequest request) {}
+    public void onHTTPError(quark.HTTPRequest request, String message) {}
+    public void onHTTPFinal(quark.HTTPRequest request) {}
 }

@@ -3,6 +3,10 @@ var quark = require('../../quark/index.js');
 exports.quark = quark;
 var quark_md = require('../../quark_md/index.js');
 exports.quark_md = quark_md;
+var quark = require('../../quark/index.js');
+exports.quark = quark;
+var quark = require('../../quark/index.js');
+exports.quark = quark;
 
 
 
@@ -768,7 +772,7 @@ function Context(parent) {
     this.__init_fields__();
     (this)._parent = parent;
     if (_qrt.equals((parent), (null))) {
-        (this)._runtime = _qrt.RuntimeFactory.create();
+        (this)._runtime = (quark.spi.RuntimeFactory.factory).makeRuntime();
         (this).collector = new Collector();
     } else {
         (this)._runtime = (parent)._runtime;
@@ -783,7 +787,7 @@ function Context__init_fields__() {
     this.collector = null;
 }
 Context.prototype.__init_fields__ = Context__init_fields__;
-Context._global = new Context(null);
+Context._global = null;
 Context._current = new _qrt.TLS(new TLSContextInitializer());
 Context.quark_concurrent_Context_ref = quark_md.Root.quark_concurrent_Context_md;
 function Context_current() {
@@ -792,6 +796,9 @@ function Context_current() {
 Context.current = Context_current;
 
 function Context_global() {
+    if (_qrt.equals((Context._global), (null))) {
+        Context._global = new Context(null);
+    }
     return Context._global;
 }
 Context.global = Context_global;

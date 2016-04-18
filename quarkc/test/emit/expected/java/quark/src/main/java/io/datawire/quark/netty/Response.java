@@ -1,7 +1,7 @@
 package io.datawire.quark.netty;
 
-import io.datawire.quark.runtime.HTTPRequest;
-import io.datawire.quark.runtime.HTTPResponse;
+import quark.HTTPRequest;
+import quark.HTTPResponse;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufUtil;
 import io.netty.channel.ChannelHandlerContext;

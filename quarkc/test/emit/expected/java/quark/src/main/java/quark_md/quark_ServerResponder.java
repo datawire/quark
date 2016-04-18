@@ -10,7 +10,7 @@ public class quark_ServerResponder extends quark.reflect.Class implements io.dat
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
-        return new quark.ServerResponder((Boolean) ((args).get(0)), (io.datawire.quark.runtime.HTTPRequest) ((args).get(1)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(2)));
+        return new quark.ServerResponder((Boolean) ((args).get(0)), (quark.HTTPRequest) ((args).get(1)), (quark.HTTPResponse) ((args).get(2)));
     }
     public String _getClass() {
         return (String) (null);
