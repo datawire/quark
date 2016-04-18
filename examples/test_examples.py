@@ -15,7 +15,6 @@
 import os
 import shutil
 import filecmp
-import tempfile
 from glob import glob
 import re
 
@@ -49,26 +48,6 @@ def check_diff(diff):
     for common_dirname, common_sub_diff in diff.subdirs.items():
         if filt([common_dirname]):
             check_diff(common_sub_diff)
-
-
-boilerplate = """# Set up environment for test and capture
-import re
-from quarkc.test.capture_output import Session
-session = Session("%s", "%s", "%s")
-capture = session.capture
-capture_bg = session.capture_bg
-# --
-"""
-
-
-def run_python_old(py_file, session_name, cwd, output_dir):
-    with tempfile.TemporaryFile() as modulish:
-        modulish.write(boilerplate % (session_name, cwd, output_dir))
-        modulish.write(open(py_file, "U").read())  # Read with universal newlines for exec
-        scope = locals().copy()
-        modulish.seek(0)
-        exec(modulish, scope)
-    return scope
 
 
 def run_python(py_file, session_name, cwd, output_dir):
