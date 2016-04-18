@@ -3,6 +3,9 @@ package io.datawire.quark.runtime;
 import java.util.Date;
 import java.util.logging.*;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
 
 public class LoggerConfig {
     private static java.util.logging.Logger root = java.util.logging.Logger.getLogger("quark");
@@ -57,24 +60,38 @@ public class LoggerConfig {
                 root.setLevel(level);
                 Handler handler = appender.handler();
                 handler.setLevel(level);
+                root.setLevel(level);
                 root.addHandler(handler);
             }
         };
     }
     private interface Appender extends quark.logging.Appender {
-        java.util.logging.Handler handler();
+        Handler handler();
+    }
+    private static class FlushingStreamHandler extends StreamHandler {
+        OutputStream stream;
+        FlushingStreamHandler(OutputStream stream, Formatter formatter) {
+            super(stream, formatter);
+            this.stream = stream;
+        }
+        @Override
+        public synchronized void publish(LogRecord record) {
+            super.publish(record);
+            flush();
+        }
     }
     private static Appender STDOUT =  new Appender() {
-            public java.util.logging.Handler handler() {
-                return new java.util.logging.StreamHandler(System.out, FORMATTER);
+            public StreamHandler handler() {
+                PrintStream stream = System.out;
+                return new FlushingStreamHandler(stream, FORMATTER);
             }
         };
     public static quark.logging.Appender stdout() {
         return STDOUT;
     }
     private static Appender STDERR = new Appender() {
-            public java.util.logging.Handler handler() {
-                return new java.util.logging.StreamHandler(System.err, FORMATTER);
+            public StreamHandler handler() {
+                return new FlushingStreamHandler(System.err, FORMATTER);
             }
         };
     public static quark.logging.Appender stderr() {
@@ -82,7 +99,7 @@ public class LoggerConfig {
     }
     public static quark.logging.Appender file(final String path) {
         return new Appender() {
-            public java.util.logging.Handler handler() {
+            public StreamHandler handler() {
                 try {
                     return new java.util.logging.StreamHandler(new FileOutputStream(path),  FORMATTER);
                 } catch (java.io.FileNotFoundException ex) {
