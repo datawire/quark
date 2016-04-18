@@ -2,28 +2,63 @@ include io/datawire/quark/runtime/RuntimeSpi.java;
 namespace quark {
 namespace spi {
 
-    interface RuntimeSpi {
+    interface RuntimeSpi extends Runtime {
         macro RuntimeSpi() $java{io.datawire.quark.runtime.RuntimeSpi.Factory.create()}
         $py{_RuntimeFactory.create()}
         $rb{::DatawireQuarkCore::Runtime.new}
         $js{_qrt.RuntimeFactory.create()};
+    }
 
-        @doc("SPI needs to pass it's own API facade to callback API methods")
-        void setRuntime(Runtime runtime);
-        
-        void open(String url, WSHandler handler);
-        void request(HTTPRequest request, HTTPHandler handler);
-        void schedule(Task handler, float delayInSeconds);
-        Codec codec();
-        void serveHTTP(String url, HTTPServlet servlet);
-        void serveWS(String url, WSServlet servlet);
-        void respond(HTTPRequest request, HTTPResponse response);
+    class ServletProxy extends Servlet {
+        Servlet servlet_impl;
+        Runtime real_runtime;
+        WSServletProxy(Runtime real_runtime, Servlet servlet_impl) {
+            self.real_runtime = real_runtime;
+            self.servlet_impl = servlet_impl;
+        }
+        void onServletInit(String url, Runtime runtime) {
+            servlet_impl.onServletInit(url, real_runtime);
+        }
+        void onServletError(String url, String error) {
+            servlet_impl.onServletError(url, error);
+        }
+        void onServletEnd(String url) {
+            servlet_impl.onServletEnd(url);
+        }
+    }
 
-        @doc("Display the explanatory message and then terminate the program")
-        void fail(String message);
+    class HTTPServletProxy extends ServletProxy, HTTPServlet {
+        HTTPServlet http_servlet_impl;
+        HTTPServletProxy(Runtime real_runtime, HTTPServlet http_servlet_impl) {
+            super(real_runtime, http_servlet_impl);
+            self.http_servlet_impl = http_servlet_impl;
+        }
+        void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
+            http_servlet_impl.onHTTPRequest(request, response);
+        }
+    }
 
-        @doc("Get a logger for the specified topic.")
-        Logger logger(String topic);
+    class WSServletProxy extends ServletProxy, WSServlet {
+        WSServlet ws_servlet_impl;
+        WSServletProxy(Runtime real_runtime, WSServlet ws_servlet_impl) {
+            super(real_runtime, ws_servlet_impl);
+            self.ws_servlet_impl = ws_servlet_impl;
+        }
+        WSHandler onWSConnect(HTTPRequest upgradeRequest) {
+            return ws_servlet_impl.onWSConnect(upgradeRequest);
+        }
+    }
+
+    class TaskProxy extends Task {
+        Task task_impl;
+        Runtime real_runtime;
+        TaskProxy(Runtime real_runtime, Task task_impl) {
+            self.task_impl = task_impl;
+            self.real_runtime = real_runtime;
+        }
+        void onExecute(Runtime runtime) {
+            task_impl.onExecute(real_runtime);
+        }
     }
 
     class RuntimeApi extends Runtime {
@@ -38,16 +73,16 @@ namespace spi {
             impl.request(request, handler);
         }
         void schedule(Task handler, float delayInSeconds) {
-            impl.schedule(handler, delayInSeconds);
+            impl.schedule(new TaskProxy(self, handler), delayInSeconds);
         }
         Codec codec() {
             return impl.codec();
         }
         void serveHTTP(String url, HTTPServlet servlet) {
-            impl.serveHTTP(url, servlet);
+            impl.serveHTTP(url, new HTTPServletProxy(self, servlet));
         }
         void serveWS(String url, WSServlet servlet) {
-            impl.serveWS(url, servlet);
+            impl.serveWS(url, new WSServletProxy(self, servlet));
         }
         void respond(HTTPRequest request, HTTPResponse response) {
             impl.respond(request, response);
@@ -66,7 +101,6 @@ namespace spi {
         quark.Runtime makeRuntime() {
             RuntimeSpi spi = new RuntimeSpi();
             RuntimeApi api = new RuntimeApi(spi);
-            spi.setRuntime(api);
             return api;
         }
     }

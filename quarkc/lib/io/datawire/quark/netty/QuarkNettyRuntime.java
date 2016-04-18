@@ -85,10 +85,6 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
 
     }
 
-    private Runtime runtime;
-    public Runtime getRuntime() { return runtime; }
-    public void setRuntime(Runtime runtime) { this.runtime = runtime; }
-
     public void acquire() {
         synchronized(lock) {
             assert !locked;
@@ -293,7 +289,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     public void schedule(Task handler, Double delayInSeconds) {
         final Task t_handler = wrap(handler);
-        final Runtime self = getRuntime();
+        final Runtime self = this;
         group.schedule(new Runnable() {
 
             @Override

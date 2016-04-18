@@ -233,7 +233,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                             @Override
                             public void resolve(Route route) {
                                 if (route.servlet != null) {
-                                    route.servlet.onServletInit(root.urlOf(route), runtime.getRuntime());
+                                    route.servlet.onServletInit(root.urlOf(route), runtime);
                                 }
                             }
                         };

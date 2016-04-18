@@ -22,5 +22,4 @@ public interface RuntimeSpi extends quark.spi.RuntimeSpi {
             return ret;
         }
     }
-    Runtime getRuntime();
 }
