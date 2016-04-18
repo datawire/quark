@@ -320,12 +320,15 @@ namespace concurrent {
 
     @doc("The logical stack for async stuff.")
     class Context {
-        static Context _global = new Context(null);
+        static Context _global = null;
         static TLS<Context> _current = new TLS<Context>(new TLSContextInitializer());
         static Context current() {
             return _current.getValue();
         }
         static Context global() {
+            if (_global == null) {
+                _global = new Context(null);
+            }
             return _global;
         }
 
