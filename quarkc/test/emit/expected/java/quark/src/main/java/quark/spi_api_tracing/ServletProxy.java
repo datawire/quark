@@ -4,8 +4,8 @@ public class ServletProxy extends Identifiable implements quark.Servlet, io.data
     public static quark.reflect.Class quark_spi_api_tracing_ServletProxy_ref = quark_md.Root.quark_spi_api_tracing_ServletProxy_md;
     public quark.Servlet servlet_impl;
     public RuntimeProxy real_runtime;
-    public ServletProxy(io.datawire.quark.runtime.Logger log, RuntimeProxy real_runtime, quark.Servlet servlet_impl) {
-        super(log, servlet_impl);
+    public ServletProxy(io.datawire.quark.runtime.Logger log, String basename, RuntimeProxy real_runtime, quark.Servlet servlet_impl) {
+        super(log, basename);
         (this).real_runtime = real_runtime;
         (this).servlet_impl = servlet_impl;
     }

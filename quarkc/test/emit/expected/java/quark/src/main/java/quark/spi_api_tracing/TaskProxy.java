@@ -5,7 +5,7 @@ public class TaskProxy extends Identifiable implements quark.Task, io.datawire.q
     public quark.Task task_impl;
     public RuntimeProxy real_runtime;
     public TaskProxy(io.datawire.quark.runtime.Logger log, RuntimeProxy real_runtime, quark.Task task_impl) {
-        super(log, task_impl);
+        super(log, "Task");
         (this).task_impl = task_impl;
         (this).real_runtime = real_runtime;
     }

@@ -4,7 +4,7 @@ public class HTTPServletProxy extends ServletProxy implements quark.HTTPServlet,
     public static quark.reflect.Class quark_spi_api_tracing_HTTPServletProxy_ref = quark_md.Root.quark_spi_api_tracing_HTTPServletProxy_md;
     public quark.HTTPServlet http_servlet_impl;
     public HTTPServletProxy(io.datawire.quark.runtime.Logger log, RuntimeProxy real_runtime, quark.HTTPServlet http_servlet_impl) {
-        super(log, real_runtime, http_servlet_impl);
+        super(log, "HTTPServlet", real_runtime, http_servlet_impl);
         (this).http_servlet_impl = http_servlet_impl;
     }
     public void onHTTPRequest(quark.HTTPRequest request, quark.HTTPResponse response) {

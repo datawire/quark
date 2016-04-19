@@ -4,7 +4,7 @@ public class HTTPRequestProxy extends Identifiable implements quark.HTTPRequest,
     public static quark.reflect.Class quark_spi_api_tracing_HTTPRequestProxy_ref = quark_md.Root.quark_spi_api_tracing_HTTPRequestProxy_md;
     public quark.HTTPRequest request_impl;
     public HTTPRequestProxy(io.datawire.quark.runtime.Logger log, quark.HTTPRequest request_impl) {
-        super(log, request_impl);
+        super(log, "HTTPRequest");
         (this).request_impl = request_impl;
     }
     public String getUrl() {

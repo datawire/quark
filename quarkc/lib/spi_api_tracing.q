@@ -295,7 +295,6 @@ namespace spi_api_tracing {
         Runtime impl;
         RuntimeProxy(Runtime impl) {
             super(impl.logger("api"), "Runtime");
-            self.log.debug("new " + self.id);
             self.impl = impl;
         }
         void open(String url, WSHandler handler) {
@@ -359,9 +358,6 @@ namespace spi_api_tracing {
             impl.fail(message);
         }
         Logger logger(String topic) {
-            self.log.info(self.id + ".logger("
-                          + quote(topic)
-                          + ")");
             return impl.logger(topic);
         }
     }

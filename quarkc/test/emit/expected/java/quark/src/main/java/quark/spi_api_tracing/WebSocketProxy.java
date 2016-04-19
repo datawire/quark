@@ -4,7 +4,7 @@ public class WebSocketProxy extends Identifiable implements quark.WebSocket, io.
     public static quark.reflect.Class quark_spi_api_tracing_WebSocketProxy_ref = quark_md.Root.quark_spi_api_tracing_WebSocketProxy_md;
     public quark.WebSocket socket_impl;
     public WebSocketProxy(io.datawire.quark.runtime.Logger log, quark.WebSocket socket_impl) {
-        super(log, socket_impl);
+        super(log, "WebSocket");
         (this).socket_impl = socket_impl;
     }
     public Boolean send(String message) {

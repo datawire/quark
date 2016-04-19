@@ -4,7 +4,7 @@ public class HTTPResponseProxy extends Identifiable implements quark.HTTPRespons
     public static quark.reflect.Class quark_spi_api_tracing_HTTPResponseProxy_ref = quark_md.Root.quark_spi_api_tracing_HTTPResponseProxy_md;
     public quark.HTTPResponse response_impl;
     public HTTPResponseProxy(io.datawire.quark.runtime.Logger log, quark.HTTPResponse response_impl) {
-        super(log, response_impl);
+        super(log, "HTTPResponse");
         (this).response_impl = response_impl;
     }
     public Integer getCode() {

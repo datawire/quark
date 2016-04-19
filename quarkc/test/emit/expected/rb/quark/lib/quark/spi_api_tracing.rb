@@ -35,24 +35,13 @@ class Identificator < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def next_(what)
+    def next_(basename)
         
         @lock.acquire()
         n = @seq
         @seq = (@seq) + (1)
         @lock.release()
-        basename = nil
-        if ((what) == (nil))
-            basename = "?null?"
-        else
-            clz = ::Quark.quark.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(what))
-            if ((clz) == (nil))
-                basename = (("?") + (::Quark.quark.reflect.QuarkClass.get(::DatawireQuarkCore._getClass(self)).getName())) + ("?")
-            else
-                basename = clz.getName()
-            end
-        end
-        return ((basename) + ("-")) + ((n).to_s)
+        return ((basename) + ("$")) + ((n).to_s)
 
         nil
     end
@@ -111,10 +100,10 @@ class Identifiable < ::DatawireQuarkCore::QuarkObject
 
 
 
-    def initialize(log, impl)
+    def initialize(log, basename)
         
         self.__init_fields__
-        (self).id = ::Quark.quark.spi_api_tracing.Identifiable.namer.next_(impl)
+        (self).id = ::Quark.quark.spi_api_tracing.Identifiable.namer.next_(basename)
         (self).log = log
 
         nil
@@ -182,9 +171,9 @@ class ServletProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
 
 
-    def initialize(log, real_runtime, servlet_impl)
+    def initialize(log, basename, real_runtime, servlet_impl)
         
-        super(log, servlet_impl)
+        super(log, basename)
         (self).real_runtime = real_runtime
         (self).servlet_impl = servlet_impl
 
@@ -292,7 +281,7 @@ class HTTPRequestProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(log, request_impl)
         
-        super(log, request_impl)
+        super(log, "HTTPRequest")
         (self).request_impl = request_impl
 
         nil
@@ -424,7 +413,7 @@ class HTTPResponseProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(log, response_impl)
         
-        super(log, response_impl)
+        super(log, "HTTPResponse")
         (self).response_impl = response_impl
 
         nil
@@ -549,7 +538,7 @@ class HTTPServletProxy < ::Quark.quark.spi_api_tracing.ServletProxy
 
     def initialize(log, real_runtime, http_servlet_impl)
         
-        super(log, real_runtime, http_servlet_impl)
+        super(log, "HTTPServlet", real_runtime, http_servlet_impl)
         (self).http_servlet_impl = http_servlet_impl
 
         nil
@@ -654,7 +643,7 @@ class WSServletProxy < ::Quark.quark.spi_api_tracing.ServletProxy
 
     def initialize(log, real_runtime, ws_servlet_impl)
         
-        super(log, real_runtime, ws_servlet_impl)
+        super(log, "WSServlet", real_runtime, ws_servlet_impl)
         (self).ws_servlet_impl = ws_servlet_impl
 
         nil
@@ -766,7 +755,7 @@ class TaskProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(log, real_runtime, task_impl)
         
-        super(log, task_impl)
+        super(log, "Task")
         (self).task_impl = task_impl
         (self).real_runtime = real_runtime
 
@@ -858,7 +847,7 @@ class WebSocketProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(log, socket_impl)
         
-        super(log, socket_impl)
+        super(log, "WebSocket")
         (self).socket_impl = socket_impl
 
         nil
@@ -955,7 +944,7 @@ WebSocketProxy.unlazy_statics
 
 def self.WSHandlerProxy; WSHandlerProxy; end
 class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
-    attr_accessor :handler_impl, :wrapped_socket
+    attr_accessor :handler_impl, :_wrapped_socket
     extend ::DatawireQuarkCore::Static
 
     static quark_spi_api_tracing_WSHandlerProxy_ref: -> { ::Quark.quark_md.Root.quark_spi_api_tracing_WSHandlerProxy_md }
@@ -964,8 +953,9 @@ class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(log, handler_impl)
         
-        super(log, handler_impl)
+        super(log, "WSHandler")
         (self).handler_impl = handler_impl
+        (self)._wrapped_socket = nil
 
         nil
     end
@@ -973,59 +963,75 @@ class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
 
 
+    def _wrap_socket(socket)
+        
+        if ((@_wrapped_socket) == (nil))
+            @_wrapped_socket = ::Quark.quark.spi_api_tracing.WebSocketProxy.new((self).log, socket)
+        end
+        return @_wrapped_socket
+
+        nil
+    end
+
     def onWSInit(socket)
         
-        @wrapped_socket = ::Quark.quark.spi_api_tracing.WebSocketProxy.new((self).log, socket)
-        (self).log.debug(((((self).id) + (".onWSInit(")) + ((@wrapped_socket).id)) + (")"))
-        @handler_impl.onWSInit(@wrapped_socket)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((self).id) + (".onWSInit(")) + ((wrapped_socket).id)) + (")"))
+        @handler_impl.onWSInit(wrapped_socket)
 
         nil
     end
 
     def onWSConnected(socket)
         
-        (self).log.debug(((((self).id) + (".onWSConnected(")) + ((@wrapped_socket).id)) + (")"))
-        @handler_impl.onWSConnected(@wrapped_socket)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((self).id) + (".onWSConnected(")) + ((wrapped_socket).id)) + (")"))
+        @handler_impl.onWSConnected(wrapped_socket)
 
         nil
     end
 
     def onWSMessage(socket, message)
         
-        (self).log.debug(((((((self).id) + (".onWSMessage(")) + ((@wrapped_socket).id)) + (", ")) + (::Quark.quark.spi_api_tracing.quote(message))) + (")"))
-        @handler_impl.onWSMessage(@wrapped_socket, message)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((((self).id) + (".onWSMessage(")) + ((wrapped_socket).id)) + (", ")) + (::Quark.quark.spi_api_tracing.quote(message))) + (")"))
+        @handler_impl.onWSMessage(wrapped_socket, message)
 
         nil
     end
 
     def onWSBinary(socket, message)
         
-        (self).log.debug(((((((self).id) + (".onWSBinary(")) + ((@wrapped_socket).id)) + (", ")) + (::Quark.quark.concurrent.Context.runtime().codec().toHexdump(message, 0, message.capacity(), 4))) + (")"))
-        @handler_impl.onWSBinary(@wrapped_socket, message)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((((self).id) + (".onWSBinary(")) + ((wrapped_socket).id)) + (", ")) + (::Quark.quark.concurrent.Context.runtime().codec().toHexdump(message, 0, message.capacity(), 4))) + (")"))
+        @handler_impl.onWSBinary(wrapped_socket, message)
 
         nil
     end
 
     def onWSClosed(socket)
         
-        (self).log.debug(((((self).id) + (".onWSClosed(")) + ((@wrapped_socket).id)) + (")"))
-        @handler_impl.onWSClosed(@wrapped_socket)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((self).id) + (".onWSClosed(")) + ((wrapped_socket).id)) + (")"))
+        @handler_impl.onWSClosed(wrapped_socket)
 
         nil
     end
 
     def onWSError(socket)
         
-        (self).log.debug(((((self).id) + (".onWSError(")) + ((@wrapped_socket).id)) + (")"))
-        @handler_impl.onWSError(@wrapped_socket)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((self).id) + (".onWSError(")) + ((wrapped_socket).id)) + (")"))
+        @handler_impl.onWSError(wrapped_socket)
 
         nil
     end
 
     def onWSFinal(socket)
         
-        (self).log.debug(((((self).id) + (".onWSFinal(")) + ((@wrapped_socket).id)) + (")"))
-        @handler_impl.onWSFinal(@wrapped_socket)
+        wrapped_socket = self._wrap_socket(socket)
+        (self).log.debug(((((self).id) + (".onWSFinal(")) + ((wrapped_socket).id)) + (")"))
+        @handler_impl.onWSFinal(wrapped_socket)
 
         nil
     end
@@ -1051,8 +1057,8 @@ class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         if ((name) == ("handler_impl"))
             return (self).handler_impl
         end
-        if ((name) == ("wrapped_socket"))
-            return (self).wrapped_socket
+        if ((name) == ("_wrapped_socket"))
+            return (self)._wrapped_socket
         end
         return nil
 
@@ -1073,8 +1079,8 @@ class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         if ((name) == ("handler_impl"))
             (self).handler_impl = value
         end
-        if ((name) == ("wrapped_socket"))
-            (self).wrapped_socket = value
+        if ((name) == ("_wrapped_socket"))
+            (self)._wrapped_socket = value
         end
 
         nil
@@ -1084,7 +1090,7 @@ class WSHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         
         super
         self.handler_impl = nil
-        self.wrapped_socket = nil
+        self._wrapped_socket = nil
 
         nil
     end
@@ -1095,16 +1101,17 @@ WSHandlerProxy.unlazy_statics
 
 def self.HTTPHandlerProxy; HTTPHandlerProxy; end
 class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
-    attr_accessor :handler_impl
+    attr_accessor :handler_impl, :wrapped_request
     extend ::DatawireQuarkCore::Static
 
     static quark_spi_api_tracing_HTTPHandlerProxy_ref: -> { ::Quark.quark_md.Root.quark_spi_api_tracing_HTTPHandlerProxy_md }
 
 
 
-    def initialize(log, handler_impl)
+    def initialize(log, wrapped_request, handler_impl)
         
-        super(log, handler_impl)
+        super(log, "HTTPHandler")
+        (self).wrapped_request = wrapped_request
         (self).handler_impl = handler_impl
 
         nil
@@ -1115,8 +1122,7 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def onHTTPInit(request)
         
-        wrapped_request = request
-        (self).log.debug(((((self).id) + (".onHTTPInit(")) + ((wrapped_request).id)) + (")"))
+        (self).log.debug(((((self).id) + (".onHTTPInit(")) + ((@wrapped_request).id)) + (")"))
         (self).handler_impl.onHTTPInit(request)
 
         nil
@@ -1124,8 +1130,7 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def onHTTPResponse(request, response)
         
-        wrapped_request = request
-        (self).log.debug(((((((((self).id) + (".onHTTPResponse(")) + ((wrapped_request).id)) + (", ")) + ((response.getCode()).to_s)) + (" ")) + (::Quark.quark.spi_api_tracing.quote(response.getBody()))) + (")"))
+        (self).log.debug(((((((((self).id) + (".onHTTPResponse(")) + ((@wrapped_request).id)) + (", ")) + ((response.getCode()).to_s)) + (" ")) + (::Quark.quark.spi_api_tracing.quote(response.getBody()))) + (")"))
         (self).handler_impl.onHTTPResponse(request, response)
 
         nil
@@ -1133,8 +1138,7 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def onHTTPError(request, message)
         
-        wrapped_request = request
-        (self).log.debug(((((((self).id) + (".onHTTPError(")) + ((wrapped_request).id)) + (", ")) + (::Quark.quark.spi_api_tracing.quote(message))) + (")"))
+        (self).log.debug(((((((self).id) + (".onHTTPError(")) + ((@wrapped_request).id)) + (", ")) + (::Quark.quark.spi_api_tracing.quote(message))) + (")"))
         (self).handler_impl.onHTTPError(request, message)
 
         nil
@@ -1142,8 +1146,7 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def onHTTPFinal(request)
         
-        wrapped_request = request
-        (self).log.debug(((((self).id) + (".onHTTPFinal(")) + ((wrapped_request).id)) + (")"))
+        (self).log.debug(((((self).id) + (".onHTTPFinal(")) + ((@wrapped_request).id)) + (")"))
         (self).handler_impl.onHTTPFinal(request)
 
         nil
@@ -1170,6 +1173,9 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         if ((name) == ("handler_impl"))
             return (self).handler_impl
         end
+        if ((name) == ("wrapped_request"))
+            return (self).wrapped_request
+        end
         return nil
 
         nil
@@ -1189,6 +1195,9 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         if ((name) == ("handler_impl"))
             (self).handler_impl = value
         end
+        if ((name) == ("wrapped_request"))
+            (self).wrapped_request = value
+        end
 
         nil
     end
@@ -1197,6 +1206,7 @@ class HTTPHandlerProxy < ::Quark.quark.spi_api_tracing.Identifiable
         
         super
         self.handler_impl = nil
+        self.wrapped_request = nil
 
         nil
     end
@@ -1216,8 +1226,7 @@ class RuntimeProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def initialize(impl)
         
-        super(impl.logger("api"), impl)
-        (self).log.debug(("new ") + ((self).id))
+        super(impl.logger("api"), "Runtime")
         (self).impl = impl
 
         nil
@@ -1237,10 +1246,10 @@ class RuntimeProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def request(request, handler)
         
-        wrapped_handler = ::Quark.quark.spi_api_tracing.HTTPHandlerProxy.new((self).log, handler)
         wrapped_request = ::Quark.quark.spi_api_tracing.HTTPRequestProxy.new((self).log, request)
+        wrapped_handler = ::Quark.quark.spi_api_tracing.HTTPHandlerProxy.new((self).log, wrapped_request, handler)
         (self).log.debug(((((((((((self).id) + (".request(")) + ((wrapped_request).id)) + (" ")) + (request.getMethod())) + (" ")) + (::Quark.quark.spi_api_tracing.quote(request.getUrl()))) + (", ")) + ((wrapped_handler).id)) + (")"))
-        @impl.request(wrapped_request, wrapped_handler)
+        @impl.request(request, wrapped_handler)
 
         nil
     end
@@ -1300,7 +1309,6 @@ class RuntimeProxy < ::Quark.quark.spi_api_tracing.Identifiable
 
     def logger(topic)
         
-        (self).log.info(((((self).id) + (".logger(")) + (::Quark.quark.spi_api_tracing.quote(topic))) + (")"))
         return @impl.logger(topic)
 
         nil

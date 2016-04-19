@@ -3652,7 +3652,7 @@ class quark_spi_api_tracing_Identificator_next_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(quark_spi_api_tracing_Identificator_next_Method, self).__init__(u"quark.String", u"next", _List([u"quark.Object"]));
+        super(quark_spi_api_tracing_Identificator_next_Method, self).__init__(u"quark.String", u"next", _List([u"quark.String"]));
 
     def invoke(self, object, args):
         obj = object;
@@ -3790,7 +3790,7 @@ class quark_spi_api_tracing_ServletProxy(quark.reflect.Class):
         (self).methods = _List([quark_spi_api_tracing_ServletProxy_onServletInit_Method(), quark_spi_api_tracing_ServletProxy_onServletError_Method(), quark_spi_api_tracing_ServletProxy_onServletEnd_Method()])
 
     def construct(self, args):
-        return quark.spi_api_tracing.ServletProxy((args)[0], (args)[1], (args)[2])
+        return quark.spi_api_tracing.ServletProxy((args)[0], (args)[1], (args)[2], (args)[3])
 
     def _getClass(self):
         return None
@@ -4542,6 +4542,26 @@ class quark_spi_api_tracing_WebSocketProxy(quark.reflect.Class):
         pass
 quark_spi_api_tracing_WebSocketProxy.singleton = quark_spi_api_tracing_WebSocketProxy()
 
+class quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method, self).__init__(u"quark.spi_api_tracing.WebSocketProxy", u"_wrap_socket", _List([u"quark.WebSocket"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        return (obj)._wrap_socket((args)[0])
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -4697,8 +4717,8 @@ class quark_spi_api_tracing_WSHandlerProxy(quark.reflect.Class):
         super(quark_spi_api_tracing_WSHandlerProxy, self).__init__(u"quark.spi_api_tracing.WSHandlerProxy");
         (self).name = u"quark.spi_api_tracing.WSHandlerProxy"
         (self).parameters = _List([])
-        (self).fields = _List([quark.reflect.Field(u"quark.spi_api_tracing.Identificator", u"namer"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.Logger", u"log"), quark.reflect.Field(u"quark.WSHandler", u"handler_impl"), quark.reflect.Field(u"quark.spi_api_tracing.WebSocketProxy", u"wrapped_socket")])
-        (self).methods = _List([quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSError_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method()])
+        (self).fields = _List([quark.reflect.Field(u"quark.spi_api_tracing.Identificator", u"namer"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.Logger", u"log"), quark.reflect.Field(u"quark.WSHandler", u"handler_impl"), quark.reflect.Field(u"quark.spi_api_tracing.WebSocketProxy", u"_wrapped_socket")])
+        (self).methods = _List([quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSError_Method(), quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method()])
 
     def construct(self, args):
         return quark.spi_api_tracing.WSHandlerProxy((args)[0], (args)[1])
@@ -4805,11 +4825,11 @@ class quark_spi_api_tracing_HTTPHandlerProxy(quark.reflect.Class):
         super(quark_spi_api_tracing_HTTPHandlerProxy, self).__init__(u"quark.spi_api_tracing.HTTPHandlerProxy");
         (self).name = u"quark.spi_api_tracing.HTTPHandlerProxy"
         (self).parameters = _List([])
-        (self).fields = _List([quark.reflect.Field(u"quark.spi_api_tracing.Identificator", u"namer"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.Logger", u"log"), quark.reflect.Field(u"quark.HTTPHandler", u"handler_impl")])
+        (self).fields = _List([quark.reflect.Field(u"quark.spi_api_tracing.Identificator", u"namer"), quark.reflect.Field(u"quark.String", u"id"), quark.reflect.Field(u"quark.Logger", u"log"), quark.reflect.Field(u"quark.HTTPHandler", u"handler_impl"), quark.reflect.Field(u"quark.spi_api_tracing.HTTPRequestProxy", u"wrapped_request")])
         (self).methods = _List([quark_spi_api_tracing_HTTPHandlerProxy_onHTTPInit_Method(), quark_spi_api_tracing_HTTPHandlerProxy_onHTTPResponse_Method(), quark_spi_api_tracing_HTTPHandlerProxy_onHTTPError_Method(), quark_spi_api_tracing_HTTPHandlerProxy_onHTTPFinal_Method()])
 
     def construct(self, args):
-        return quark.spi_api_tracing.HTTPHandlerProxy((args)[0], (args)[1])
+        return quark.spi_api_tracing.HTTPHandlerProxy((args)[0], (args)[1], (args)[2])
 
     def _getClass(self):
         return None

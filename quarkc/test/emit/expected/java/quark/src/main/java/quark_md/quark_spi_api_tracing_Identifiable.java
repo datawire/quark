@@ -10,7 +10,7 @@ public class quark_spi_api_tracing_Identifiable extends quark.reflect.Class impl
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
-        return new quark.spi_api_tracing.Identifiable((io.datawire.quark.runtime.Logger) ((args).get(0)), (args).get(1));
+        return new quark.spi_api_tracing.Identifiable((io.datawire.quark.runtime.Logger) ((args).get(0)), (String) ((args).get(1)));
     }
     public String _getClass() {
         return (String) (null);

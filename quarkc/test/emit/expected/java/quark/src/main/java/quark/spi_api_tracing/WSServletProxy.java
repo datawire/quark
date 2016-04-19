@@ -4,7 +4,7 @@ public class WSServletProxy extends ServletProxy implements quark.WSServlet, io.
     public static quark.reflect.Class quark_spi_api_tracing_WSServletProxy_ref = quark_md.Root.quark_spi_api_tracing_WSServletProxy_md;
     public quark.WSServlet ws_servlet_impl;
     public WSServletProxy(io.datawire.quark.runtime.Logger log, RuntimeProxy real_runtime, quark.WSServlet ws_servlet_impl) {
-        super(log, real_runtime, ws_servlet_impl);
+        super(log, "WSServlet", real_runtime, ws_servlet_impl);
         (this).ws_servlet_impl = ws_servlet_impl;
     }
     public quark.WSHandler onWSConnect(quark.HTTPRequest request) {

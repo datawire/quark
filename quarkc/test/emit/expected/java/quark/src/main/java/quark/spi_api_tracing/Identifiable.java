@@ -5,8 +5,8 @@ public class Identifiable implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_spi_api_tracing_Identifiable_ref = quark_md.Root.quark_spi_api_tracing_Identifiable_md;
     public String id;
     public io.datawire.quark.runtime.Logger log;
-    public Identifiable(io.datawire.quark.runtime.Logger log, Object impl) {
-        (this).id = (Identifiable.namer).next(impl);
+    public Identifiable(io.datawire.quark.runtime.Logger log, String basename) {
+        (this).id = (Identifiable.namer).next(basename);
         (this).log = log;
     }
     public String _getClass() {

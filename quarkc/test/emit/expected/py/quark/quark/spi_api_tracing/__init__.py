@@ -17,22 +17,12 @@ class Identificator(object):
 
     def __init__(self): self._init()
 
-    def next(self, what):
+    def next(self, basename):
         (self.lock).acquire();
         n = self.seq;
         self.seq = (self.seq) + (1)
         (self.lock).release();
-        basename = None;
-        if ((what) == (None)):
-            basename = u"?null?"
-        else:
-            clz = quark.reflect.Class.get(_getClass(what));
-            if ((clz) == (None)):
-                basename = ((u"?") + ((quark.reflect.Class.get(_getClass(self))).getName())) + (u"?")
-            else:
-                basename = (clz).getName()
-
-        return ((basename) + (u"-")) + (_toString(n))
+        return ((basename) + (u"$")) + (_toString(n))
 
     def _getClass(self):
         return u"quark.spi_api_tracing.Identificator"
@@ -60,9 +50,9 @@ class Identifiable(object):
         self.id = None
         self.log = None
 
-    def __init__(self, log, impl):
+    def __init__(self, log, basename):
         self._init()
-        (self).id = (Identifiable.namer).next(impl)
+        (self).id = (Identifiable.namer).next(basename)
         (self).log = log
 
     def _getClass(self):
@@ -99,8 +89,8 @@ class ServletProxy(Identifiable):
         self.servlet_impl = None
         self.real_runtime = None
 
-    def __init__(self, log, real_runtime, servlet_impl):
-        super(ServletProxy, self).__init__(log, servlet_impl);
+    def __init__(self, log, basename, real_runtime, servlet_impl):
+        super(ServletProxy, self).__init__(log, basename);
         (self).real_runtime = real_runtime
         (self).servlet_impl = servlet_impl
 
@@ -161,7 +151,7 @@ class HTTPRequestProxy(Identifiable):
         self.request_impl = None
 
     def __init__(self, log, request_impl):
-        super(HTTPRequestProxy, self).__init__(log, request_impl);
+        super(HTTPRequestProxy, self).__init__(log, u"HTTPRequest");
         (self).request_impl = request_impl
 
     def getUrl(self):
@@ -227,7 +217,7 @@ class HTTPResponseProxy(Identifiable):
         self.response_impl = None
 
     def __init__(self, log, response_impl):
-        super(HTTPResponseProxy, self).__init__(log, response_impl);
+        super(HTTPResponseProxy, self).__init__(log, u"HTTPResponse");
         (self).response_impl = response_impl
 
     def getCode(self):
@@ -290,7 +280,7 @@ class HTTPServletProxy(ServletProxy):
         self.http_servlet_impl = None
 
     def __init__(self, log, real_runtime, http_servlet_impl):
-        super(HTTPServletProxy, self).__init__(log, real_runtime, http_servlet_impl);
+        super(HTTPServletProxy, self).__init__(log, u"HTTPServlet", real_runtime, http_servlet_impl);
         (self).http_servlet_impl = http_servlet_impl
 
     def onHTTPRequest(self, request, response):
@@ -352,7 +342,7 @@ class WSServletProxy(ServletProxy):
         self.ws_servlet_impl = None
 
     def __init__(self, log, real_runtime, ws_servlet_impl):
-        super(WSServletProxy, self).__init__(log, real_runtime, ws_servlet_impl);
+        super(WSServletProxy, self).__init__(log, u"WSServlet", real_runtime, ws_servlet_impl);
         (self).ws_servlet_impl = ws_servlet_impl
 
     def onWSConnect(self, request):
@@ -421,7 +411,7 @@ class TaskProxy(Identifiable):
         self.real_runtime = None
 
     def __init__(self, log, real_runtime, task_impl):
-        super(TaskProxy, self).__init__(log, task_impl);
+        super(TaskProxy, self).__init__(log, u"Task");
         (self).task_impl = task_impl
         (self).real_runtime = real_runtime
 
@@ -474,7 +464,7 @@ class WebSocketProxy(Identifiable):
         self.socket_impl = None
 
     def __init__(self, log, socket_impl):
-        super(WebSocketProxy, self).__init__(log, socket_impl);
+        super(WebSocketProxy, self).__init__(log, u"WebSocket");
         (self).socket_impl = socket_impl
 
     def send(self, message):
@@ -532,40 +522,53 @@ class WSHandlerProxy(Identifiable):
     def _init(self):
         Identifiable._init(self)
         self.handler_impl = None
-        self.wrapped_socket = None
+        self._wrapped_socket = None
 
     def __init__(self, log, handler_impl):
-        super(WSHandlerProxy, self).__init__(log, handler_impl);
+        super(WSHandlerProxy, self).__init__(log, u"WSHandler");
         (self).handler_impl = handler_impl
+        (self)._wrapped_socket = None
+
+    def _wrap_socket(self, socket):
+        if ((self._wrapped_socket) == (None)):
+            self._wrapped_socket = WebSocketProxy((self).log, socket)
+
+        return self._wrapped_socket
 
     def onWSInit(self, socket):
-        self.wrapped_socket = WebSocketProxy((self).log, socket)
-        ((self).log).debug(((((self).id) + (u".onWSInit(")) + ((self.wrapped_socket).id)) + (u")"));
-        (self.handler_impl).onWSInit(self.wrapped_socket);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((self).id) + (u".onWSInit(")) + ((wrapped_socket).id)) + (u")"));
+        (self.handler_impl).onWSInit(wrapped_socket);
 
     def onWSConnected(self, socket):
-        ((self).log).debug(((((self).id) + (u".onWSConnected(")) + ((self.wrapped_socket).id)) + (u")"));
-        (self.handler_impl).onWSConnected(self.wrapped_socket);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((self).id) + (u".onWSConnected(")) + ((wrapped_socket).id)) + (u")"));
+        (self.handler_impl).onWSConnected(wrapped_socket);
 
     def onWSMessage(self, socket, message):
-        ((self).log).debug(((((((self).id) + (u".onWSMessage(")) + ((self.wrapped_socket).id)) + (u", ")) + (quote(message))) + (u")"));
-        (self.handler_impl).onWSMessage(self.wrapped_socket, message);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((((self).id) + (u".onWSMessage(")) + ((wrapped_socket).id)) + (u", ")) + (quote(message))) + (u")"));
+        (self.handler_impl).onWSMessage(wrapped_socket, message);
 
     def onWSBinary(self, socket, message):
-        ((self).log).debug(((((((self).id) + (u".onWSBinary(")) + ((self.wrapped_socket).id)) + (u", ")) + (((quark.concurrent.Context.runtime()).codec()).toHexdump(message, 0, (message).capacity(), 4))) + (u")"));
-        (self.handler_impl).onWSBinary(self.wrapped_socket, message);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((((self).id) + (u".onWSBinary(")) + ((wrapped_socket).id)) + (u", ")) + (((quark.concurrent.Context.runtime()).codec()).toHexdump(message, 0, (message).capacity(), 4))) + (u")"));
+        (self.handler_impl).onWSBinary(wrapped_socket, message);
 
     def onWSClosed(self, socket):
-        ((self).log).debug(((((self).id) + (u".onWSClosed(")) + ((self.wrapped_socket).id)) + (u")"));
-        (self.handler_impl).onWSClosed(self.wrapped_socket);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((self).id) + (u".onWSClosed(")) + ((wrapped_socket).id)) + (u")"));
+        (self.handler_impl).onWSClosed(wrapped_socket);
 
     def onWSError(self, socket):
-        ((self).log).debug(((((self).id) + (u".onWSError(")) + ((self.wrapped_socket).id)) + (u")"));
-        (self.handler_impl).onWSError(self.wrapped_socket);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((self).id) + (u".onWSError(")) + ((wrapped_socket).id)) + (u")"));
+        (self.handler_impl).onWSError(wrapped_socket);
 
     def onWSFinal(self, socket):
-        ((self).log).debug(((((self).id) + (u".onWSFinal(")) + ((self.wrapped_socket).id)) + (u")"));
-        (self.handler_impl).onWSFinal(self.wrapped_socket);
+        wrapped_socket = self._wrap_socket(socket);
+        ((self).log).debug(((((self).id) + (u".onWSFinal(")) + ((wrapped_socket).id)) + (u")"));
+        (self.handler_impl).onWSFinal(wrapped_socket);
 
     def _getClass(self):
         return u"quark.spi_api_tracing.WSHandlerProxy"
@@ -583,8 +586,8 @@ class WSHandlerProxy(Identifiable):
         if ((name) == (u"handler_impl")):
             return (self).handler_impl
 
-        if ((name) == (u"wrapped_socket")):
-            return (self).wrapped_socket
+        if ((name) == (u"_wrapped_socket")):
+            return (self)._wrapped_socket
 
         return None
 
@@ -601,8 +604,8 @@ class WSHandlerProxy(Identifiable):
         if ((name) == (u"handler_impl")):
             (self).handler_impl = value
 
-        if ((name) == (u"wrapped_socket")):
-            (self).wrapped_socket = value
+        if ((name) == (u"_wrapped_socket")):
+            (self)._wrapped_socket = value
 
 
 WSHandlerProxy.quark_spi_api_tracing_WSHandlerProxy_ref = quark_md.Root.quark_spi_api_tracing_WSHandlerProxy_md
@@ -610,29 +613,27 @@ class HTTPHandlerProxy(Identifiable):
     def _init(self):
         Identifiable._init(self)
         self.handler_impl = None
+        self.wrapped_request = None
 
-    def __init__(self, log, handler_impl):
-        super(HTTPHandlerProxy, self).__init__(log, handler_impl);
+    def __init__(self, log, wrapped_request, handler_impl):
+        super(HTTPHandlerProxy, self).__init__(log, u"HTTPHandler");
+        (self).wrapped_request = wrapped_request
         (self).handler_impl = handler_impl
 
     def onHTTPInit(self, request):
-        wrapped_request = request;
-        ((self).log).debug(((((self).id) + (u".onHTTPInit(")) + ((wrapped_request).id)) + (u")"));
+        ((self).log).debug(((((self).id) + (u".onHTTPInit(")) + ((self.wrapped_request).id)) + (u")"));
         ((self).handler_impl).onHTTPInit(request);
 
     def onHTTPResponse(self, request, response):
-        wrapped_request = request;
-        ((self).log).debug(((((((((self).id) + (u".onHTTPResponse(")) + ((wrapped_request).id)) + (u", ")) + (_toString((response).getCode()))) + (u" ")) + (quote((response).getBody()))) + (u")"));
+        ((self).log).debug(((((((((self).id) + (u".onHTTPResponse(")) + ((self.wrapped_request).id)) + (u", ")) + (_toString((response).getCode()))) + (u" ")) + (quote((response).getBody()))) + (u")"));
         ((self).handler_impl).onHTTPResponse(request, response);
 
     def onHTTPError(self, request, message):
-        wrapped_request = request;
-        ((self).log).debug(((((((self).id) + (u".onHTTPError(")) + ((wrapped_request).id)) + (u", ")) + (quote(message))) + (u")"));
+        ((self).log).debug(((((((self).id) + (u".onHTTPError(")) + ((self.wrapped_request).id)) + (u", ")) + (quote(message))) + (u")"));
         ((self).handler_impl).onHTTPError(request, message);
 
     def onHTTPFinal(self, request):
-        wrapped_request = request;
-        ((self).log).debug(((((self).id) + (u".onHTTPFinal(")) + ((wrapped_request).id)) + (u")"));
+        ((self).log).debug(((((self).id) + (u".onHTTPFinal(")) + ((self.wrapped_request).id)) + (u")"));
         ((self).handler_impl).onHTTPFinal(request);
 
     def _getClass(self):
@@ -651,6 +652,9 @@ class HTTPHandlerProxy(Identifiable):
         if ((name) == (u"handler_impl")):
             return (self).handler_impl
 
+        if ((name) == (u"wrapped_request")):
+            return (self).wrapped_request
+
         return None
 
     def _setField(self, name, value):
@@ -666,6 +670,9 @@ class HTTPHandlerProxy(Identifiable):
         if ((name) == (u"handler_impl")):
             (self).handler_impl = value
 
+        if ((name) == (u"wrapped_request")):
+            (self).wrapped_request = value
+
 
 HTTPHandlerProxy.quark_spi_api_tracing_HTTPHandlerProxy_ref = quark_md.Root.quark_spi_api_tracing_HTTPHandlerProxy_md
 class RuntimeProxy(Identifiable):
@@ -674,8 +681,7 @@ class RuntimeProxy(Identifiable):
         self.impl = None
 
     def __init__(self, impl):
-        super(RuntimeProxy, self).__init__((impl).logger(u"api"), impl);
-        ((self).log).debug((u"new ") + ((self).id));
+        super(RuntimeProxy, self).__init__((impl).logger(u"api"), u"Runtime");
         (self).impl = impl
 
     def open(self, url, handler):
@@ -684,10 +690,10 @@ class RuntimeProxy(Identifiable):
         (self.impl).open(url, wrapped_handler);
 
     def request(self, request, handler):
-        wrapped_handler = HTTPHandlerProxy((self).log, handler);
         wrapped_request = HTTPRequestProxy((self).log, request);
+        wrapped_handler = HTTPHandlerProxy((self).log, wrapped_request, handler);
         ((self).log).debug(((((((((((self).id) + (u".request(")) + ((wrapped_request).id)) + (u" ")) + ((request).getMethod())) + (u" ")) + (quote((request).getUrl()))) + (u", ")) + ((wrapped_handler).id)) + (u")"));
-        (self.impl).request(wrapped_request, wrapped_handler);
+        (self.impl).request(request, wrapped_handler);
 
     def schedule(self, handler, delayInSeconds):
         wrapped_handler = TaskProxy((self).log, self, handler);
@@ -719,7 +725,6 @@ class RuntimeProxy(Identifiable):
         (self.impl).fail(message);
 
     def logger(self, topic):
-        ((self).log).info(((((self).id) + (u".logger(")) + (quote(topic))) + (u")"));
         return (self.impl).logger(topic)
 
     def _getClass(self):

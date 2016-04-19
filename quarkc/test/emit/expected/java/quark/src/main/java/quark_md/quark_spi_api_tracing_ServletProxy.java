@@ -10,7 +10,7 @@ public class quark_spi_api_tracing_ServletProxy extends quark.reflect.Class impl
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark_spi_api_tracing_ServletProxy_onServletInit_Method(), new quark_spi_api_tracing_ServletProxy_onServletError_Method(), new quark_spi_api_tracing_ServletProxy_onServletEnd_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
-        return new quark.spi_api_tracing.ServletProxy((io.datawire.quark.runtime.Logger) ((args).get(0)), (quark.spi_api_tracing.RuntimeProxy) ((args).get(1)), (quark.Servlet) ((args).get(2)));
+        return new quark.spi_api_tracing.ServletProxy((io.datawire.quark.runtime.Logger) ((args).get(0)), (String) ((args).get(1)), (quark.spi_api_tracing.RuntimeProxy) ((args).get(2)), (quark.Servlet) ((args).get(3)));
     }
     public String _getClass() {
         return (String) (null);

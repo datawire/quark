@@ -9563,7 +9563,7 @@ class QuarkSpiApiTracingIdentificatorNextMethod < ::Quark.quark.reflect.Method
 
     def initialize()
         
-        super("quark.String", "next", ::DatawireQuarkCore::List.new(["quark.Object"]))
+        super("quark.String", "next", ::DatawireQuarkCore::List.new(["quark.String"]))
 
         nil
     end
@@ -9923,7 +9923,7 @@ class QuarkSpiApiTracingServletProxy < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.spi_api_tracing.ServletProxy.new((args)[0], (args)[1], (args)[2])
+        return ::Quark.quark.spi_api_tracing.ServletProxy.new((args)[0], (args)[1], (args)[2], (args)[3])
 
         nil
     end
@@ -11915,6 +11915,60 @@ end
 QuarkSpiApiTracingWebSocketProxy.unlazy_statics
 
 
+def self.quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method; QuarkSpiApiTracingWSHandlerProxyWrapSocketMethod; end
+class QuarkSpiApiTracingWSHandlerProxyWrapSocketMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.WebSocketProxy", "_wrap_socket", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj._wrap_socket((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
 def self.quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method; QuarkSpiApiTracingWSHandlerProxyOnWSInitMethod; end
 class QuarkSpiApiTracingWSHandlerProxyOnWSInitMethod < ::Quark.quark.reflect.Method
 
@@ -12313,8 +12367,8 @@ class QuarkSpiApiTracingWSHandlerProxy < ::Quark.quark.reflect.QuarkClass
         super("quark.spi_api_tracing.WSHandlerProxy")
         (self).name = "quark.spi_api_tracing.WSHandlerProxy"
         (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.WSHandler", "handler_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.WebSocketProxy", "wrapped_socket")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method.new()])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.WSHandler", "handler_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.WebSocketProxy", "_wrapped_socket")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method.new()])
 
         nil
     end
@@ -12595,7 +12649,7 @@ class QuarkSpiApiTracingHTTPHandlerProxy < ::Quark.quark.reflect.QuarkClass
         super("quark.spi_api_tracing.HTTPHandlerProxy")
         (self).name = "quark.spi_api_tracing.HTTPHandlerProxy"
         (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.HTTPHandler", "handler_impl")])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.HTTPHandler", "handler_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.HTTPRequestProxy", "wrapped_request")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPResponse_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPFinal_Method.new()])
 
         nil
@@ -12606,7 +12660,7 @@ class QuarkSpiApiTracingHTTPHandlerProxy < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.quark.spi_api_tracing.HTTPHandlerProxy.new((args)[0], (args)[1])
+        return ::Quark.quark.spi_api_tracing.HTTPHandlerProxy.new((args)[0], (args)[1], (args)[2])
 
         nil
     end

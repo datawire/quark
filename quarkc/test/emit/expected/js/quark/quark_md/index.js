@@ -5643,7 +5643,7 @@ quark_spi_api_RuntimeProxy.prototype._setField = quark_spi_api_RuntimeProxy__set
 // CLASS quark_spi_api_tracing_Identificator_next_Method
 
 function quark_spi_api_tracing_Identificator_next_Method() {
-    quark_spi_api_tracing_Identificator_next_Method.super_.call(this, "quark.String", "next", ["quark.Object"]);
+    quark_spi_api_tracing_Identificator_next_Method.super_.call(this, "quark.String", "next", ["quark.String"]);
 }
 exports.quark_spi_api_tracing_Identificator_next_Method = quark_spi_api_tracing_Identificator_next_Method;
 _qrt.util.inherits(quark_spi_api_tracing_Identificator_next_Method, quark.reflect.Method);
@@ -5861,7 +5861,7 @@ function quark_spi_api_tracing_ServletProxy__init_fields__() {
 quark_spi_api_tracing_ServletProxy.prototype.__init_fields__ = quark_spi_api_tracing_ServletProxy__init_fields__;
 quark_spi_api_tracing_ServletProxy.singleton = new quark_spi_api_tracing_ServletProxy();
 function quark_spi_api_tracing_ServletProxy_construct(args) {
-    return new quark.spi_api_tracing.ServletProxy((args)[0], (args)[1], (args)[2]);
+    return new quark.spi_api_tracing.ServletProxy((args)[0], (args)[1], (args)[2], (args)[3]);
 }
 quark_spi_api_tracing_ServletProxy.prototype.construct = quark_spi_api_tracing_ServletProxy_construct;
 
@@ -7039,6 +7039,38 @@ function quark_spi_api_tracing_WebSocketProxy__setField(name, value) {}
 quark_spi_api_tracing_WebSocketProxy.prototype._setField = quark_spi_api_tracing_WebSocketProxy__setField;
 
 
+// CLASS quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method() {
+    quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.super_.call(this, "quark.spi_api_tracing.WebSocketProxy", "_wrap_socket", ["quark.WebSocket"]);
+}
+exports.quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method;
+_qrt.util.inherits(quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method, quark.reflect.Method);
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__init_fields__() {
+    quark.reflect.Method.prototype.__init_fields__.call(this);
+}
+quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.prototype.__init_fields__ = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__init_fields__;
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method_invoke(object, args) {
+    var obj = object;
+    return (obj)._wrap_socket((args)[0]);
+}
+quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.prototype.invoke = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method_invoke;
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__getClass() {
+    return null;
+}
+quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.prototype._getClass = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__getClass;
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__getField(name) {
+    return null;
+}
+quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.prototype._getField = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__getField;
+
+function quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__setField(name, value) {}
+quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method.prototype._setField = quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method__setField;
+
 // CLASS quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method
 
 function quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method() {
@@ -7276,8 +7308,8 @@ function quark_spi_api_tracing_WSHandlerProxy() {
     quark_spi_api_tracing_WSHandlerProxy.super_.call(this, "quark.spi_api_tracing.WSHandlerProxy");
     (this).name = "quark.spi_api_tracing.WSHandlerProxy";
     (this).parameters = [];
-    (this).fields = [new quark.reflect.Field("quark.spi_api_tracing.Identificator", "namer"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.Logger", "log"), new quark.reflect.Field("quark.WSHandler", "handler_impl"), new quark.reflect.Field("quark.spi_api_tracing.WebSocketProxy", "wrapped_socket")];
-    (this).methods = [new quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSError_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method()];
+    (this).fields = [new quark.reflect.Field("quark.spi_api_tracing.Identificator", "namer"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.Logger", "log"), new quark.reflect.Field("quark.WSHandler", "handler_impl"), new quark.reflect.Field("quark.spi_api_tracing.WebSocketProxy", "_wrapped_socket")];
+    (this).methods = [new quark_spi_api_tracing_WSHandlerProxy__wrap_socket_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSError_Method(), new quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method()];
 }
 exports.quark_spi_api_tracing_WSHandlerProxy = quark_spi_api_tracing_WSHandlerProxy;
 _qrt.util.inherits(quark_spi_api_tracing_WSHandlerProxy, quark.reflect.Class);
@@ -7444,7 +7476,7 @@ function quark_spi_api_tracing_HTTPHandlerProxy() {
     quark_spi_api_tracing_HTTPHandlerProxy.super_.call(this, "quark.spi_api_tracing.HTTPHandlerProxy");
     (this).name = "quark.spi_api_tracing.HTTPHandlerProxy";
     (this).parameters = [];
-    (this).fields = [new quark.reflect.Field("quark.spi_api_tracing.Identificator", "namer"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.Logger", "log"), new quark.reflect.Field("quark.HTTPHandler", "handler_impl")];
+    (this).fields = [new quark.reflect.Field("quark.spi_api_tracing.Identificator", "namer"), new quark.reflect.Field("quark.String", "id"), new quark.reflect.Field("quark.Logger", "log"), new quark.reflect.Field("quark.HTTPHandler", "handler_impl"), new quark.reflect.Field("quark.spi_api_tracing.HTTPRequestProxy", "wrapped_request")];
     (this).methods = [new quark_spi_api_tracing_HTTPHandlerProxy_onHTTPInit_Method(), new quark_spi_api_tracing_HTTPHandlerProxy_onHTTPResponse_Method(), new quark_spi_api_tracing_HTTPHandlerProxy_onHTTPError_Method(), new quark_spi_api_tracing_HTTPHandlerProxy_onHTTPFinal_Method()];
 }
 exports.quark_spi_api_tracing_HTTPHandlerProxy = quark_spi_api_tracing_HTTPHandlerProxy;
@@ -7456,7 +7488,7 @@ function quark_spi_api_tracing_HTTPHandlerProxy__init_fields__() {
 quark_spi_api_tracing_HTTPHandlerProxy.prototype.__init_fields__ = quark_spi_api_tracing_HTTPHandlerProxy__init_fields__;
 quark_spi_api_tracing_HTTPHandlerProxy.singleton = new quark_spi_api_tracing_HTTPHandlerProxy();
 function quark_spi_api_tracing_HTTPHandlerProxy_construct(args) {
-    return new quark.spi_api_tracing.HTTPHandlerProxy((args)[0], (args)[1]);
+    return new quark.spi_api_tracing.HTTPHandlerProxy((args)[0], (args)[1], (args)[2]);
 }
 quark_spi_api_tracing_HTTPHandlerProxy.prototype.construct = quark_spi_api_tracing_HTTPHandlerProxy_construct;
 

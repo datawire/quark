@@ -27,23 +27,12 @@ function Identificator__init_fields__() {
 }
 Identificator.prototype.__init_fields__ = Identificator__init_fields__;
 Identificator.quark_spi_api_tracing_Identificator_ref = quark_md.Root.quark_spi_api_tracing_Identificator_md;
-function Identificator_next(what) {
+function Identificator_next(basename) {
     (this.lock).acquire();
     var n = this.seq;
     this.seq = (this.seq) + (1);
     (this.lock).release();
-    var basename = null;
-    if (_qrt.equals((what), (null))) {
-        basename = "?null?";
-    } else {
-        var clz = quark.reflect.Class.get(_qrt._getClass(what));
-        if (_qrt.equals((clz), (null))) {
-            basename = (("?") + ((quark.reflect.Class.get(_qrt._getClass(this))).getName())) + ("?");
-        } else {
-            basename = (clz).getName();
-        }
-    }
-    return ((basename) + ("-")) + (_qrt.toString(n));
+    return ((basename) + ("$")) + (_qrt.toString(n));
 }
 Identificator.prototype.next = Identificator_next;
 
@@ -75,9 +64,9 @@ Identificator.prototype._setField = Identificator__setField;
 
 // CLASS Identifiable
 
-function Identifiable(log, impl) {
+function Identifiable(log, basename) {
     this.__init_fields__();
-    (this).id = (Identifiable.namer).next(impl);
+    (this).id = (Identifiable.namer).next(basename);
     (this).log = log;
 }
 exports.Identifiable = Identifiable;
@@ -123,8 +112,8 @@ Identifiable.prototype._setField = Identifiable__setField;
 
 // CLASS ServletProxy
 
-function ServletProxy(log, real_runtime, servlet_impl) {
-    ServletProxy.super_.call(this, log, servlet_impl);
+function ServletProxy(log, basename, real_runtime, servlet_impl) {
+    ServletProxy.super_.call(this, log, basename);
     (this).real_runtime = real_runtime;
     (this).servlet_impl = servlet_impl;
 }
@@ -203,7 +192,7 @@ ServletProxy.prototype._setField = ServletProxy__setField;
 // CLASS HTTPRequestProxy
 
 function HTTPRequestProxy(log, request_impl) {
-    HTTPRequestProxy.super_.call(this, log, request_impl);
+    HTTPRequestProxy.super_.call(this, log, "HTTPRequest");
     (this).request_impl = request_impl;
 }
 exports.HTTPRequestProxy = HTTPRequestProxy;
@@ -296,7 +285,7 @@ HTTPRequestProxy.prototype._setField = HTTPRequestProxy__setField;
 // CLASS HTTPResponseProxy
 
 function HTTPResponseProxy(log, response_impl) {
-    HTTPResponseProxy.super_.call(this, log, response_impl);
+    HTTPResponseProxy.super_.call(this, log, "HTTPResponse");
     (this).response_impl = response_impl;
 }
 exports.HTTPResponseProxy = HTTPResponseProxy;
@@ -384,7 +373,7 @@ HTTPResponseProxy.prototype._setField = HTTPResponseProxy__setField;
 // CLASS HTTPServletProxy
 
 function HTTPServletProxy(log, real_runtime, http_servlet_impl) {
-    HTTPServletProxy.super_.call(this, log, real_runtime, http_servlet_impl);
+    HTTPServletProxy.super_.call(this, log, "HTTPServlet", real_runtime, http_servlet_impl);
     (this).http_servlet_impl = http_servlet_impl;
 }
 exports.HTTPServletProxy = HTTPServletProxy;
@@ -462,7 +451,7 @@ HTTPServletProxy.prototype.serveHTTP = HTTPServletProxy_serveHTTP;
 // CLASS WSServletProxy
 
 function WSServletProxy(log, real_runtime, ws_servlet_impl) {
-    WSServletProxy.super_.call(this, log, real_runtime, ws_servlet_impl);
+    WSServletProxy.super_.call(this, log, "WSServlet", real_runtime, ws_servlet_impl);
     (this).ws_servlet_impl = ws_servlet_impl;
 }
 exports.WSServletProxy = WSServletProxy;
@@ -547,7 +536,7 @@ WSServletProxy.prototype.serveWS = WSServletProxy_serveWS;
 // CLASS TaskProxy
 
 function TaskProxy(log, real_runtime, task_impl) {
-    TaskProxy.super_.call(this, log, task_impl);
+    TaskProxy.super_.call(this, log, "Task");
     (this).task_impl = task_impl;
     (this).real_runtime = real_runtime;
 }
@@ -614,7 +603,7 @@ TaskProxy.prototype._setField = TaskProxy__setField;
 // CLASS WebSocketProxy
 
 function WebSocketProxy(log, socket_impl) {
-    WebSocketProxy.super_.call(this, log, socket_impl);
+    WebSocketProxy.super_.call(this, log, "WebSocket");
     (this).socket_impl = socket_impl;
 }
 exports.WebSocketProxy = WebSocketProxy;
@@ -691,8 +680,9 @@ WebSocketProxy.prototype._setField = WebSocketProxy__setField;
 // CLASS WSHandlerProxy
 
 function WSHandlerProxy(log, handler_impl) {
-    WSHandlerProxy.super_.call(this, log, handler_impl);
+    WSHandlerProxy.super_.call(this, log, "WSHandler");
     (this).handler_impl = handler_impl;
+    (this)._wrapped_socket = null;
 }
 exports.WSHandlerProxy = WSHandlerProxy;
 _qrt.util.inherits(WSHandlerProxy, Identifiable);
@@ -700,50 +690,64 @@ _qrt.util.inherits(WSHandlerProxy, Identifiable);
 function WSHandlerProxy__init_fields__() {
     Identifiable.prototype.__init_fields__.call(this);
     this.handler_impl = null;
-    this.wrapped_socket = null;
+    this._wrapped_socket = null;
 }
 WSHandlerProxy.prototype.__init_fields__ = WSHandlerProxy__init_fields__;
 WSHandlerProxy.quark_spi_api_tracing_WSHandlerProxy_ref = quark_md.Root.quark_spi_api_tracing_WSHandlerProxy_md;
+function WSHandlerProxy__wrap_socket(socket) {
+    if (_qrt.equals((this._wrapped_socket), (null))) {
+        this._wrapped_socket = new WebSocketProxy((this).log, socket);
+    }
+    return this._wrapped_socket;
+}
+WSHandlerProxy.prototype._wrap_socket = WSHandlerProxy__wrap_socket;
+
 function WSHandlerProxy_onWSInit(socket) {
-    this.wrapped_socket = new WebSocketProxy((this).log, socket);
-    ((this).log).debug(((((this).id) + (".onWSInit(")) + ((this.wrapped_socket).id)) + (")"));
-    (this.handler_impl).onWSInit(this.wrapped_socket);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((this).id) + (".onWSInit(")) + ((wrapped_socket).id)) + (")"));
+    (this.handler_impl).onWSInit(wrapped_socket);
 }
 WSHandlerProxy.prototype.onWSInit = WSHandlerProxy_onWSInit;
 
 function WSHandlerProxy_onWSConnected(socket) {
-    ((this).log).debug(((((this).id) + (".onWSConnected(")) + ((this.wrapped_socket).id)) + (")"));
-    (this.handler_impl).onWSConnected(this.wrapped_socket);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((this).id) + (".onWSConnected(")) + ((wrapped_socket).id)) + (")"));
+    (this.handler_impl).onWSConnected(wrapped_socket);
 }
 WSHandlerProxy.prototype.onWSConnected = WSHandlerProxy_onWSConnected;
 
 function WSHandlerProxy_onWSMessage(socket, message) {
-    ((this).log).debug(((((((this).id) + (".onWSMessage(")) + ((this.wrapped_socket).id)) + (", ")) + (quote(message))) + (")"));
-    (this.handler_impl).onWSMessage(this.wrapped_socket, message);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((((this).id) + (".onWSMessage(")) + ((wrapped_socket).id)) + (", ")) + (quote(message))) + (")"));
+    (this.handler_impl).onWSMessage(wrapped_socket, message);
 }
 WSHandlerProxy.prototype.onWSMessage = WSHandlerProxy_onWSMessage;
 
 function WSHandlerProxy_onWSBinary(socket, message) {
-    ((this).log).debug(((((((this).id) + (".onWSBinary(")) + ((this.wrapped_socket).id)) + (", ")) + (((quark.concurrent.Context.runtime()).codec()).toHexdump(message, 0, (message).capacity(), 4))) + (")"));
-    (this.handler_impl).onWSBinary(this.wrapped_socket, message);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((((this).id) + (".onWSBinary(")) + ((wrapped_socket).id)) + (", ")) + (((quark.concurrent.Context.runtime()).codec()).toHexdump(message, 0, (message).capacity(), 4))) + (")"));
+    (this.handler_impl).onWSBinary(wrapped_socket, message);
 }
 WSHandlerProxy.prototype.onWSBinary = WSHandlerProxy_onWSBinary;
 
 function WSHandlerProxy_onWSClosed(socket) {
-    ((this).log).debug(((((this).id) + (".onWSClosed(")) + ((this.wrapped_socket).id)) + (")"));
-    (this.handler_impl).onWSClosed(this.wrapped_socket);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((this).id) + (".onWSClosed(")) + ((wrapped_socket).id)) + (")"));
+    (this.handler_impl).onWSClosed(wrapped_socket);
 }
 WSHandlerProxy.prototype.onWSClosed = WSHandlerProxy_onWSClosed;
 
 function WSHandlerProxy_onWSError(socket) {
-    ((this).log).debug(((((this).id) + (".onWSError(")) + ((this.wrapped_socket).id)) + (")"));
-    (this.handler_impl).onWSError(this.wrapped_socket);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((this).id) + (".onWSError(")) + ((wrapped_socket).id)) + (")"));
+    (this.handler_impl).onWSError(wrapped_socket);
 }
 WSHandlerProxy.prototype.onWSError = WSHandlerProxy_onWSError;
 
 function WSHandlerProxy_onWSFinal(socket) {
-    ((this).log).debug(((((this).id) + (".onWSFinal(")) + ((this.wrapped_socket).id)) + (")"));
-    (this.handler_impl).onWSFinal(this.wrapped_socket);
+    var wrapped_socket = this._wrap_socket(socket);
+    ((this).log).debug(((((this).id) + (".onWSFinal(")) + ((wrapped_socket).id)) + (")"));
+    (this.handler_impl).onWSFinal(wrapped_socket);
 }
 WSHandlerProxy.prototype.onWSFinal = WSHandlerProxy_onWSFinal;
 
@@ -765,8 +769,8 @@ function WSHandlerProxy__getField(name) {
     if (_qrt.equals((name), ("handler_impl"))) {
         return (this).handler_impl;
     }
-    if (_qrt.equals((name), ("wrapped_socket"))) {
-        return (this).wrapped_socket;
+    if (_qrt.equals((name), ("_wrapped_socket"))) {
+        return (this)._wrapped_socket;
     }
     return null;
 }
@@ -785,16 +789,17 @@ function WSHandlerProxy__setField(name, value) {
     if (_qrt.equals((name), ("handler_impl"))) {
         (this).handler_impl = value;
     }
-    if (_qrt.equals((name), ("wrapped_socket"))) {
-        (this).wrapped_socket = value;
+    if (_qrt.equals((name), ("_wrapped_socket"))) {
+        (this)._wrapped_socket = value;
     }
 }
 WSHandlerProxy.prototype._setField = WSHandlerProxy__setField;
 
 // CLASS HTTPHandlerProxy
 
-function HTTPHandlerProxy(log, handler_impl) {
-    HTTPHandlerProxy.super_.call(this, log, handler_impl);
+function HTTPHandlerProxy(log, wrapped_request, handler_impl) {
+    HTTPHandlerProxy.super_.call(this, log, "HTTPHandler");
+    (this).wrapped_request = wrapped_request;
     (this).handler_impl = handler_impl;
 }
 exports.HTTPHandlerProxy = HTTPHandlerProxy;
@@ -803,33 +808,30 @@ _qrt.util.inherits(HTTPHandlerProxy, Identifiable);
 function HTTPHandlerProxy__init_fields__() {
     Identifiable.prototype.__init_fields__.call(this);
     this.handler_impl = null;
+    this.wrapped_request = null;
 }
 HTTPHandlerProxy.prototype.__init_fields__ = HTTPHandlerProxy__init_fields__;
 HTTPHandlerProxy.quark_spi_api_tracing_HTTPHandlerProxy_ref = quark_md.Root.quark_spi_api_tracing_HTTPHandlerProxy_md;
 function HTTPHandlerProxy_onHTTPInit(request) {
-    var wrapped_request = request;
-    ((this).log).debug(((((this).id) + (".onHTTPInit(")) + ((wrapped_request).id)) + (")"));
+    ((this).log).debug(((((this).id) + (".onHTTPInit(")) + ((this.wrapped_request).id)) + (")"));
     ((this).handler_impl).onHTTPInit(request);
 }
 HTTPHandlerProxy.prototype.onHTTPInit = HTTPHandlerProxy_onHTTPInit;
 
 function HTTPHandlerProxy_onHTTPResponse(request, response) {
-    var wrapped_request = request;
-    ((this).log).debug(((((((((this).id) + (".onHTTPResponse(")) + ((wrapped_request).id)) + (", ")) + (_qrt.toString((response).getCode()))) + (" ")) + (quote((response).getBody()))) + (")"));
+    ((this).log).debug(((((((((this).id) + (".onHTTPResponse(")) + ((this.wrapped_request).id)) + (", ")) + (_qrt.toString((response).getCode()))) + (" ")) + (quote((response).getBody()))) + (")"));
     ((this).handler_impl).onHTTPResponse(request, response);
 }
 HTTPHandlerProxy.prototype.onHTTPResponse = HTTPHandlerProxy_onHTTPResponse;
 
 function HTTPHandlerProxy_onHTTPError(request, message) {
-    var wrapped_request = request;
-    ((this).log).debug(((((((this).id) + (".onHTTPError(")) + ((wrapped_request).id)) + (", ")) + (quote(message))) + (")"));
+    ((this).log).debug(((((((this).id) + (".onHTTPError(")) + ((this.wrapped_request).id)) + (", ")) + (quote(message))) + (")"));
     ((this).handler_impl).onHTTPError(request, message);
 }
 HTTPHandlerProxy.prototype.onHTTPError = HTTPHandlerProxy_onHTTPError;
 
 function HTTPHandlerProxy_onHTTPFinal(request) {
-    var wrapped_request = request;
-    ((this).log).debug(((((this).id) + (".onHTTPFinal(")) + ((wrapped_request).id)) + (")"));
+    ((this).log).debug(((((this).id) + (".onHTTPFinal(")) + ((this.wrapped_request).id)) + (")"));
     ((this).handler_impl).onHTTPFinal(request);
 }
 HTTPHandlerProxy.prototype.onHTTPFinal = HTTPHandlerProxy_onHTTPFinal;
@@ -852,6 +854,9 @@ function HTTPHandlerProxy__getField(name) {
     if (_qrt.equals((name), ("handler_impl"))) {
         return (this).handler_impl;
     }
+    if (_qrt.equals((name), ("wrapped_request"))) {
+        return (this).wrapped_request;
+    }
     return null;
 }
 HTTPHandlerProxy.prototype._getField = HTTPHandlerProxy__getField;
@@ -869,14 +874,16 @@ function HTTPHandlerProxy__setField(name, value) {
     if (_qrt.equals((name), ("handler_impl"))) {
         (this).handler_impl = value;
     }
+    if (_qrt.equals((name), ("wrapped_request"))) {
+        (this).wrapped_request = value;
+    }
 }
 HTTPHandlerProxy.prototype._setField = HTTPHandlerProxy__setField;
 
 // CLASS RuntimeProxy
 
 function RuntimeProxy(impl) {
-    RuntimeProxy.super_.call(this, (impl).logger("api"), impl);
-    ((this).log).debug(("new ") + ((this).id));
+    RuntimeProxy.super_.call(this, (impl).logger("api"), "Runtime");
     (this).impl = impl;
 }
 exports.RuntimeProxy = RuntimeProxy;
@@ -896,10 +903,10 @@ function RuntimeProxy_open(url, handler) {
 RuntimeProxy.prototype.open = RuntimeProxy_open;
 
 function RuntimeProxy_request(request, handler) {
-    var wrapped_handler = new HTTPHandlerProxy((this).log, handler);
     var wrapped_request = new HTTPRequestProxy((this).log, request);
+    var wrapped_handler = new HTTPHandlerProxy((this).log, wrapped_request, handler);
     ((this).log).debug(((((((((((this).id) + (".request(")) + ((wrapped_request).id)) + (" ")) + ((request).getMethod())) + (" ")) + (quote((request).getUrl()))) + (", ")) + ((wrapped_handler).id)) + (")"));
-    (this.impl).request(wrapped_request, wrapped_handler);
+    (this.impl).request(request, wrapped_handler);
 }
 RuntimeProxy.prototype.request = RuntimeProxy_request;
 
@@ -945,7 +952,6 @@ function RuntimeProxy_fail(message) {
 RuntimeProxy.prototype.fail = RuntimeProxy_fail;
 
 function RuntimeProxy_logger(topic) {
-    ((this).log).info(((((this).id) + (".logger(")) + (quote(topic))) + (")"));
     return (this.impl).logger(topic);
 }
 RuntimeProxy.prototype.logger = RuntimeProxy_logger;

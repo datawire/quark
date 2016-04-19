@@ -4,8 +4,7 @@ public class RuntimeProxy extends Identifiable implements quark.Runtime, io.data
     public static quark.reflect.Class quark_spi_api_tracing_RuntimeProxy_ref = quark_md.Root.quark_spi_api_tracing_RuntimeProxy_md;
     public quark.Runtime impl;
     public RuntimeProxy(quark.Runtime impl) {
-        super((impl).logger("api"), impl);
-        ((this).log).debug(("new ") + ((this).id));
+        super((impl).logger("api"), "Runtime");
         (this).impl = impl;
     }
     public void open(String url, quark.WSHandler handler) {
@@ -14,10 +13,10 @@ public class RuntimeProxy extends Identifiable implements quark.Runtime, io.data
         (this.impl).open(url, wrapped_handler);
     }
     public void request(quark.HTTPRequest request, quark.HTTPHandler handler) {
-        HTTPHandlerProxy wrapped_handler = new HTTPHandlerProxy((this).log, handler);
         HTTPRequestProxy wrapped_request = new HTTPRequestProxy((this).log, request);
+        HTTPHandlerProxy wrapped_handler = new HTTPHandlerProxy((this).log, wrapped_request, handler);
         ((this).log).debug(((((((((((this).id) + (".request(")) + ((wrapped_request).id)) + (" ")) + ((request).getMethod())) + (" ")) + (Functions.quote((request).getUrl()))) + (", ")) + ((wrapped_handler).id)) + (")"));
-        (this.impl).request(wrapped_request, wrapped_handler);
+        (this.impl).request(request, wrapped_handler);
     }
     public void schedule(quark.Task handler, Double delayInSeconds) {
         TaskProxy wrapped_handler = new TaskProxy((this).log, this, handler);
@@ -49,7 +48,6 @@ public class RuntimeProxy extends Identifiable implements quark.Runtime, io.data
         (this.impl).fail(message);
     }
     public io.datawire.quark.runtime.Logger logger(String topic) {
-        ((this).log).info(((((this).id) + (".logger(")) + (Functions.quote(topic))) + (")"));
         return (this.impl).logger(topic);
     }
     public String _getClass() {
