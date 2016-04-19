@@ -1,5 +1,7 @@
 @version("1.2.3") // version is mandatory
 namespace interop { // package interop is mandatory
+////include http_server.qinc
+////include common.qinc
     class Entrypoint extends EntrypointSetup { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameter
             print("http_server server");
@@ -26,6 +28,4 @@ namespace interop { // package interop is mandatory
                 .check(0.5);
         }
     }
-////include http_server.qinc
-////include common.qinc
 }

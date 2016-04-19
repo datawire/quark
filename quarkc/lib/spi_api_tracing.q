@@ -7,29 +7,30 @@ namespace spi_api_tracing {
         concurrent.Lock lock = new concurrent.Lock();
         int seq = 0;
 
-        String next(Object what) {
+        String next(String basename) {
             lock.acquire();
             int n = seq;
             seq = seq + 1;
             lock.release();
-            return what.getClass().getName() + "-" + n.toString();
+            return basename + "$" + n.toString();
         }
     }
 
     class Identifiable {
         static Identificator namer = new Identificator();
         String id;
-        Identifiable() {
-            id = namer.next(self);
+        Logger log;
+        Identifiable(Logger log, String basename) {
+            self.id = namer.next(basename);
+            self.log = log;
         }
     }
 
     class ServletProxy extends Identifiable, Servlet {
         Servlet servlet_impl;
         RuntimeProxy real_runtime;
-        Logger log;
-        ServletProxy(Logger log, RuntimeProxy real_runtime, Servlet servlet_impl) {
-            self.log = log;
+        ServletProxy(Logger log, String basename, RuntimeProxy real_runtime, Servlet servlet_impl) {
+            super(log, basename);
             self.real_runtime = real_runtime;
             self.servlet_impl = servlet_impl;
         }
@@ -58,6 +59,7 @@ namespace spi_api_tracing {
     class HTTPRequestProxy extends Identifiable, HTTPRequest {
         HTTPRequest request_impl;
         HTTPRequestProxy(Logger log, HTTPRequest request_impl) {
+            super(log, "HTTPRequest");
             self.request_impl = request_impl;
         }
         String getUrl() { return request_impl.getUrl(); }
@@ -73,6 +75,7 @@ namespace spi_api_tracing {
     class HTTPResponseProxy extends Identifiable, HTTPResponse {
         HTTPResponse response_impl;
         HTTPResponseProxy(Logger log, HTTPResponse response_impl) {
+            super(log, "HTTPResponse");
             self.response_impl = response_impl;
         }
         int getCode() { return response_impl.getCode(); }
@@ -87,7 +90,7 @@ namespace spi_api_tracing {
     class HTTPServletProxy extends ServletProxy, HTTPServlet {
         HTTPServlet http_servlet_impl;
         HTTPServletProxy(Logger log, RuntimeProxy real_runtime, HTTPServlet http_servlet_impl) {
-            super(log, real_runtime, http_servlet_impl);
+            super(log, "HTTPServlet", real_runtime, http_servlet_impl);
             self.http_servlet_impl = http_servlet_impl;
         }
         void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
@@ -104,7 +107,7 @@ namespace spi_api_tracing {
     class WSServletProxy extends ServletProxy, WSServlet {
         WSServlet ws_servlet_impl;
         WSServletProxy(Logger log, RuntimeProxy real_runtime, WSServlet ws_servlet_impl) {
-            super(log, real_runtime, ws_servlet_impl);
+            super(log, "WSServlet", real_runtime, ws_servlet_impl);
             self.ws_servlet_impl = ws_servlet_impl;
         }
         WSHandler onWSConnect(HTTPRequest request) {
@@ -135,9 +138,8 @@ namespace spi_api_tracing {
     class TaskProxy extends Identifiable, Task {
         Task task_impl;
         RuntimeProxy real_runtime;
-        Logger log;
         TaskProxy(Logger log, RuntimeProxy real_runtime, Task task_impl) {
-            self.log = log;
+            super(log, "Task");
             self.task_impl = task_impl;
             self.real_runtime = real_runtime;
         }
@@ -151,9 +153,8 @@ namespace spi_api_tracing {
 
     class WebSocketProxy extends Identifiable, WebSocket {
         WebSocket socket_impl;
-        Logger log;
         WebSocketProxy(Logger log, WebSocket socket_impl) {
-            self.log = log;
+            super(log, "WebSocket");
             self.socket_impl = socket_impl;
         }
         bool send(String message) {
@@ -189,26 +190,34 @@ namespace spi_api_tracing {
 
     class WSHandlerProxy extends Identifiable, WSHandler {
         WSHandler handler_impl;
-        Logger log;
-        WebSocketProxy wrapped_socket;
+        WebSocketProxy _wrapped_socket;
         WSHandlerProxy(Logger log, WSHandler handler_impl) {
-            self.log = log;
+            super(log, "WSHandler");
             self.handler_impl = handler_impl;
+            self._wrapped_socket = null;
+        }
+        WebSocketProxy _wrap_socket(WebSocket socket) {
+            if (_wrapped_socket == null) {
+                _wrapped_socket = new WebSocketProxy(self.log, socket);
+            }
+            return _wrapped_socket;
         }
         void onWSInit(WebSocket socket) {
-            wrapped_socket = new WebSocketProxy(self.log, socket);
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSInit("
                            + wrapped_socket.id
                            + ")");
             handler_impl.onWSInit(wrapped_socket);
         }
         void onWSConnected(WebSocket socket) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSConnected("
                            + wrapped_socket.id
                            + ")");
             handler_impl.onWSConnected(wrapped_socket);
         }
         void onWSMessage(WebSocket socket, String message) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSMessage("
                            + wrapped_socket.id + ", "
                            + quote(message)
@@ -216,6 +225,7 @@ namespace spi_api_tracing {
             handler_impl.onWSMessage(wrapped_socket, message);
         }
         void onWSBinary(WebSocket socket, Buffer message) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSBinary("
                            + wrapped_socket.id + ", "
                            + concurrent.Context.runtime().codec().toHexdump(message, 0, message.capacity(), 4)
@@ -223,18 +233,21 @@ namespace spi_api_tracing {
             handler_impl.onWSBinary(wrapped_socket, message);
         }
         void onWSClosed(WebSocket socket) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSClosed("
                            + wrapped_socket.id
                            + ")");
             handler_impl.onWSClosed(wrapped_socket);
         }
         void onWSError(WebSocket socket) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSError("
                            + wrapped_socket.id
                            + ")");
             handler_impl.onWSError(wrapped_socket);
         }
         void onWSFinal(WebSocket socket) {
+            WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSFinal("
                            + wrapped_socket.id
                            + ")");
@@ -244,20 +257,19 @@ namespace spi_api_tracing {
 
     class HTTPHandlerProxy extends Identifiable, HTTPHandler {
         HTTPHandler handler_impl;
-        Logger log;
-        HTTPHandlerProxy(Logger log, HTTPHandler handler_impl) {
-            self.log = log;
+        HTTPRequestProxy wrapped_request;
+        HTTPHandlerProxy(Logger log, HTTPRequestProxy wrapped_request, HTTPHandler handler_impl) {
+            super(log, "HTTPHandler");
+            self.wrapped_request = wrapped_request;
             self.handler_impl = handler_impl;
         }
         void onHTTPInit(HTTPRequest request) {
-            HTTPRequestProxy wrapped_request = ?request;
             self.log.debug(self.id + ".onHTTPInit("
                            + wrapped_request.id
                            + ")");
             self.handler_impl.onHTTPInit(request);
         }
         void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
-            HTTPRequestProxy wrapped_request = ?request;
             self.log.debug(self.id + ".onHTTPResponse("
                            + wrapped_request.id + ", "
                            + response.getCode().toString() + " " + quote(response.getBody())
@@ -265,7 +277,6 @@ namespace spi_api_tracing {
             self.handler_impl.onHTTPResponse(request, response);
         }
         void onHTTPError(HTTPRequest request, String message) {
-            HTTPRequestProxy wrapped_request = ?request;
             self.log.debug(self.id + ".onHTTPError("
                            + wrapped_request.id + ", "
                            + quote(message)
@@ -273,7 +284,6 @@ namespace spi_api_tracing {
             self.handler_impl.onHTTPError(request, message);
         }
         void onHTTPFinal(HTTPRequest request) {
-            HTTPRequestProxy wrapped_request = ?request;
             self.log.debug(self.id + ".onHTTPFinal("
                            + wrapped_request.id
                            + ")");
@@ -282,15 +292,14 @@ namespace spi_api_tracing {
     }
 
     class RuntimeProxy extends Identifiable, Runtime {
-        Logger log;
         Runtime impl;
         RuntimeProxy(Runtime impl) {
-            log = impl.logger("api");
+            super(impl.logger("api"), "Runtime");
             self.log.debug("new " + self.id);
             self.impl = impl;
         }
         void open(String url, WSHandler handler) {
-            WSHandlerProxy wrapped_handler = WSHandlerProxy(log, handler);
+            WSHandlerProxy wrapped_handler = WSHandlerProxy(self.log, handler);
             self.log.debug(self.id + ".open("
                            + quote(url) + ", "
                            + wrapped_handler.id
@@ -298,16 +307,16 @@ namespace spi_api_tracing {
             impl.open(url, wrapped_handler);
         }
         void request(HTTPRequest request, HTTPHandler handler) {
-            HTTPHandlerProxy wrapped_handler = HTTPHandlerProxy(log, handler);
-            HTTPRequestProxy wrapped_request = HTTPRequestProxy(log, request);
+            HTTPRequestProxy wrapped_request = HTTPRequestProxy(self.log, request);
+            HTTPHandlerProxy wrapped_handler = HTTPHandlerProxy(self.log, wrapped_request, handler);
             self.log.debug(self.id + ".request("
                            + wrapped_request.id + " " + request.getMethod() + " " + quote(request.getUrl()) + ", "
                            + wrapped_handler.id
                            + ")");
-            impl.request(wrapped_request, wrapped_handler);
+            impl.request(request, wrapped_handler);
         }
         void schedule(Task handler, float delayInSeconds) {
-            TaskProxy wrapped_handler = new TaskProxy(log, self, handler);
+            TaskProxy wrapped_handler = new TaskProxy(self.log, self, handler);
             self.log.debug(self.id + ".schedule("
                            + wrapped_handler.id + ", "
                            + delayInSeconds.toString()
@@ -319,7 +328,7 @@ namespace spi_api_tracing {
             return impl.codec();
         }
         void serveHTTP(String url, HTTPServlet servlet) {
-            HTTPServletProxy wrapped_servlet = new HTTPServletProxy(log, self, servlet);
+            HTTPServletProxy wrapped_servlet = new HTTPServletProxy(self.log, self, servlet);
             self.log.debug(self.id + ".serveHTTP("
                            + quote(url) + ", "
                            + wrapped_servlet.id
@@ -327,7 +336,7 @@ namespace spi_api_tracing {
             impl.serveHTTP(url, wrapped_servlet);
         }
         void serveWS(String url, WSServlet servlet) {
-            WSServletProxy wrapped_servlet = new WSServletProxy(log, self, servlet);
+            WSServletProxy wrapped_servlet = new WSServletProxy(self.log, self, servlet);
             self.log.debug(self.id + ".serveWS("
                            + quote(url) + ", "
                            + wrapped_servlet.id
