@@ -159,6 +159,12 @@ module DatawireQuarkCore
   end
 
   class QuarkObject
+
+    def to_s
+      return self.toString() if self.respond_to? :toString
+      return super()
+    end
+
   end
 
   class List < Array

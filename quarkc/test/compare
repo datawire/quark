@@ -22,8 +22,9 @@ Usage:
 
 CMPFILE are filenames that end with .cmp
 
-Use compare clear to remove the quarkc/test/emit/output directory and any .cmp
-files on the filesystem below the current directory.
+Use compare clear to remove the quarkc/test/emit/output directory, the
+output directories under examples/*/gen-test, and any .cmp files on
+the filesystem below the current directory.
 
 Options:
   -h --help          Show this screen
@@ -39,8 +40,11 @@ import filecmp
 import fnmatch
 import collections
 import shutil
+from glob import glob
 
 from docopt import docopt
+
+from quarkc.test.util import get_git_top
 
 
 # Copy-pasta from datawire-common/dw
@@ -65,9 +69,6 @@ try:
 except Exception:
     rows, columns = 25, 80
 
-git_top = subprocess.check_output("git rev-parse --show-toplevel".split()).strip()
-emit = os.path.join(git_top, "quarkc/test/emit")
-
 
 def ansi(mode, st):
     return "%s%s%s" % (mode, st, RESET)
@@ -90,7 +91,7 @@ def find_cmp_files():
 
 
 def ignorable(filename):
-    return filename == "classpath" or filename.endswith(".pyc")
+    return filename == "classpath" or filename.endswith(".pyc") or "-nocmp" in filename
 
 
 def collect_comparisons(dcmp, result):
@@ -106,9 +107,19 @@ def collect_comparisons(dcmp, result):
         collect_comparisons(common_sub_dcmp, result)
 
 
-def find_different_files():
-    output = os.path.join(emit, "output")
-    expected = os.path.join(emit, "expected")
+def find_different_files(base):
+    output = os.path.join(base, "output")
+    expected = os.path.join(base, "expected")
+    result = []  # (expected file path, output file path), ...
+    if not os.path.exists(output):
+        return result
+    collect_comparisons(filecmp.dircmp(expected, output), result)
+    return result
+
+
+def find_different_emit_files(base):
+    output = os.path.join(base, "output")
+    expected = os.path.join(base, "expected")
     result = []  # (expected file path, output file path), ...
 
     if not os.path.exists(output):
@@ -130,6 +141,12 @@ def find_different_files():
 
 
 def main(options):
+    opjoin = os.path.join
+    git_top = get_git_top()
+    emit = opjoin(git_top, "quarkc/test/emit")
+    example_dirs = glob(opjoin(git_top, "examples/*/gen-test"))
+    output_dirs = [opjoin(emit, "output")] + [opjoin(example_dir, "output") for example_dir in example_dirs]
+
     names = options["CMPFILE"]
     force = options["--force"]
     pattern = options["--pattern"]
@@ -139,10 +156,11 @@ def main(options):
         print "Clearing compare files..."
         for expected, output in find_cmp_files():
             os.unlink(output)
-        try:
-            shutil.rmtree(os.path.join(emit, "output"))
-        except Exception:
-            pass
+        for output_dir in output_dirs:
+            try:
+                shutil.rmtree(output_dir)
+            except Exception:
+                pass
         print "Done."
         return
 
@@ -161,7 +179,8 @@ def main(options):
             else:
                 print "Ignoring non-cmp-file:", path
     else:
-        to_compare = find_cmp_files() + find_different_files()
+        to_compare = (find_cmp_files() + find_different_emit_files(emit) +
+                      sum((find_different_files(example_dir) for example_dir in example_dirs), []))
 
     # Pre-filter so len(to_compare) can be used for progress indicator
     to_compare = [(expected, output) for expected, output in to_compare if fnmatch.fnmatch(output, pattern)]
@@ -268,7 +287,6 @@ def main(options):
             if st.isupper():
                 def_key = st.lower()
 
-
     if summarize:
         for key in sorted(summary):
             print ansi(RED, key), "(%s)" % len(summary[key])
@@ -278,6 +296,7 @@ def main(options):
                 except Exception:
                     pass
                 print "-", value
+
 
 if __name__ == '__main__':
     main(docopt(__doc__))

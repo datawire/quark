@@ -1,0 +1,2 @@
+Request says 'Hello from Python!'
+Response says u'Responding to [Hello from Python!] from Java'

@@ -1,4 +1,4 @@
-# Copyright 2015 datawire. All rights reserved.
+# Copyright 2016 datawire. All rights reserved.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -13,6 +13,8 @@
 # limitations under the License.
 
 import os, pytest
+import subprocess
+
 
 def is_excluded_file(name):
     if name.endswith("quarkc/lib/quark.q") or name == "reflector":
@@ -68,3 +70,11 @@ def maybe_xfail(code, ext=None):
         pytest.xfail()
     if ext and ("xfail:%s"%ext) in code:
         pytest.xfail()
+
+
+def get_git_top(start="."):
+    try:
+        git_top = subprocess.check_output("git rev-parse --show-toplevel".split(), cwd=start).strip()
+    except (OSError, subprocess.CalledProcessError):
+        raise ValueError("Not a git repository: %r" % start)
+    return git_top

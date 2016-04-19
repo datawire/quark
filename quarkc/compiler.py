@@ -990,6 +990,9 @@ class Compiler(object):
         return file
 
     def urlparse(self, url, top=True, text=None, include=False, recurse=True):
+        if os.path.exists(url):
+            url = os.path.abspath(url)
+
         urlc = compiled_quark(url)
         if url in self.CACHE:
             self.log.debug("loading from cache: %s", url)
