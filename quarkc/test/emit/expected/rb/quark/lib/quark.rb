@@ -9,6 +9,8 @@ require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
 require_relative 'quark/test' # 0 ('quark',) ()
 require_relative 'quark/spi' # 0 ('quark',) ()
+require_relative 'quark/spi_api' # 0 ('quark',) ()
+require_relative 'quark/spi_api_tracing' # 0 ('quark',) ()
 
 
 def self.Task; Task; end
@@ -1714,6 +1716,8 @@ class URL < ::DatawireQuarkCore::QuarkObject
 
 end
 URL.unlazy_statics
+
+
 
 end # module Quark
 end # module Quark

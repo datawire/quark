@@ -13,6 +13,10 @@ var test = require('./test/index.js');
 exports.test = test;
 var spi = require('./spi/index.js');
 exports.spi = spi;
+var spi_api = require('./spi_api/index.js');
+exports.spi_api = spi_api;
+var spi_api_tracing = require('./spi_api_tracing/index.js');
+exports.spi_api_tracing = spi_api_tracing;
 
 
 
@@ -1095,3 +1099,5 @@ function URL__setField(name, value) {
     }
 }
 URL.prototype._setField = URL__setField;
+
+

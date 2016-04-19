@@ -52,12 +52,24 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_test_Harness_md = quark_test_Harness.singleton;
     public static quark.reflect.Class quark_URL_md = quark_URL.singleton;
     public static quark.reflect.Class quark_spi_RuntimeSpi_md = quark_spi_RuntimeSpi.singleton;
-    public static quark.reflect.Class quark_spi_ServletProxy_md = quark_spi_ServletProxy.singleton;
-    public static quark.reflect.Class quark_spi_HTTPServletProxy_md = quark_spi_HTTPServletProxy.singleton;
-    public static quark.reflect.Class quark_spi_WSServletProxy_md = quark_spi_WSServletProxy.singleton;
-    public static quark.reflect.Class quark_spi_TaskProxy_md = quark_spi_TaskProxy.singleton;
-    public static quark.reflect.Class quark_spi_RuntimeApi_md = quark_spi_RuntimeApi.singleton;
     public static quark.reflect.Class quark_spi_RuntimeFactory_md = quark_spi_RuntimeFactory.singleton;
+    public static quark.reflect.Class quark_spi_api_ServletProxy_md = quark_spi_api_ServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_HTTPServletProxy_md = quark_spi_api_HTTPServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_WSServletProxy_md = quark_spi_api_WSServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_TaskProxy_md = quark_spi_api_TaskProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_RuntimeProxy_md = quark_spi_api_RuntimeProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_Identificator_md = quark_spi_api_tracing_Identificator.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_Identifiable_md = quark_spi_api_tracing_Identifiable.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_ServletProxy_md = quark_spi_api_tracing_ServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_HTTPRequestProxy_md = quark_spi_api_tracing_HTTPRequestProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_HTTPResponseProxy_md = quark_spi_api_tracing_HTTPResponseProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_HTTPServletProxy_md = quark_spi_api_tracing_HTTPServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_WSServletProxy_md = quark_spi_api_tracing_WSServletProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_TaskProxy_md = quark_spi_api_tracing_TaskProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_WebSocketProxy_md = quark_spi_api_tracing_WebSocketProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_WSHandlerProxy_md = quark_spi_api_tracing_WSHandlerProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_HTTPHandlerProxy_md = quark_spi_api_tracing_HTTPHandlerProxy.singleton;
+    public static quark.reflect.Class quark_spi_api_tracing_RuntimeProxy_md = quark_spi_api_tracing_RuntimeProxy.singleton;
     public Root() {}
     public String _getClass() {
         return (String) (null);

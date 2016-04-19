@@ -8,6 +8,8 @@ require_relative 'quark/reflect' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/logging' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/behaviors' # 0 ('quark',) ()
 # for quark_md: require_relative 'quark/spi' # 0 ('quark',) ()
+# for quark_md: require_relative 'quark/spi_api' # 0 ('quark',) ()
+# for quark_md: require_relative 'quark/spi_api_tracing' # 0 ('quark',) ()
 
 
 def self.quark_Task; QuarkTask; end
@@ -7866,1578 +7868,6 @@ end
 QuarkSpiRuntimeSpi.unlazy_statics
 
 
-def self.quark_spi_ServletProxy_onServletInit_Method; QuarkSpiServletProxyOnServletInitMethod; end
-class QuarkSpiServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletInit((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_ServletProxy_onServletError_Method; QuarkSpiServletProxyOnServletErrorMethod; end
-class QuarkSpiServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletError((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_ServletProxy_onServletEnd_Method; QuarkSpiServletProxyOnServletEndMethod; end
-class QuarkSpiServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletEnd((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_ServletProxy; QuarkSpiServletProxy; end
-class QuarkSpiServletProxy < ::Quark.quark.reflect.QuarkClass
-    extend ::DatawireQuarkCore::Static
-
-    static singleton: -> { ::Quark.quark_md.quark_spi_ServletProxy.new() }
-
-
-
-    def initialize()
-        
-        super("quark.spi.ServletProxy")
-        (self).name = "quark.spi.ServletProxy"
-        (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_ServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_ServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_ServletProxy_onServletEnd_Method.new()])
-
-        nil
-    end
-
-
-
-
-    def construct(args)
-        
-        return ::Quark.quark.spi.ServletProxy.new((args)[0], (args)[1])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-QuarkSpiServletProxy.unlazy_statics
-
-
-def self.quark_spi_HTTPServletProxy_onHTTPRequest_Method; QuarkSpiHTTPServletProxyOnHTTPRequestMethod; end
-class QuarkSpiHTTPServletProxyOnHTTPRequestMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onHTTPRequest", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onHTTPRequest((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_HTTPServletProxy_onServletInit_Method; QuarkSpiHTTPServletProxyOnServletInitMethod; end
-class QuarkSpiHTTPServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletInit((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_HTTPServletProxy_onServletError_Method; QuarkSpiHTTPServletProxyOnServletErrorMethod; end
-class QuarkSpiHTTPServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletError((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_HTTPServletProxy_onServletEnd_Method; QuarkSpiHTTPServletProxyOnServletEndMethod; end
-class QuarkSpiHTTPServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletEnd((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_HTTPServletProxy_serveHTTP_Method; QuarkSpiHTTPServletProxyServeHTTPMethod; end
-class QuarkSpiHTTPServletProxyServeHTTPMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.serveHTTP((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_HTTPServletProxy; QuarkSpiHTTPServletProxy; end
-class QuarkSpiHTTPServletProxy < ::Quark.quark.reflect.QuarkClass
-    extend ::DatawireQuarkCore::Static
-
-    static singleton: -> { ::Quark.quark_md.quark_spi_HTTPServletProxy.new() }
-
-
-
-    def initialize()
-        
-        super("quark.spi.HTTPServletProxy")
-        (self).name = "quark.spi.HTTPServletProxy"
-        (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.HTTPServlet", "http_servlet_impl")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_HTTPServletProxy_onHTTPRequest_Method.new(), ::Quark.quark_md.quark_spi_HTTPServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_HTTPServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_HTTPServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_HTTPServletProxy_serveHTTP_Method.new()])
-
-        nil
-    end
-
-
-
-
-    def construct(args)
-        
-        return ::Quark.quark.spi.HTTPServletProxy.new((args)[0], (args)[1])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-QuarkSpiHTTPServletProxy.unlazy_statics
-
-
-def self.quark_spi_WSServletProxy_onWSConnect_Method; QuarkSpiWSServletProxyOnWSConnectMethod; end
-class QuarkSpiWSServletProxyOnWSConnectMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.WSHandler", "onWSConnect", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        return obj.onWSConnect((args)[0])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_WSServletProxy_onServletInit_Method; QuarkSpiWSServletProxyOnServletInitMethod; end
-class QuarkSpiWSServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletInit((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_WSServletProxy_onServletError_Method; QuarkSpiWSServletProxyOnServletErrorMethod; end
-class QuarkSpiWSServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletError((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_WSServletProxy_onServletEnd_Method; QuarkSpiWSServletProxyOnServletEndMethod; end
-class QuarkSpiWSServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onServletEnd((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_WSServletProxy_serveWS_Method; QuarkSpiWSServletProxyServeWSMethod; end
-class QuarkSpiWSServletProxyServeWSMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.serveWS((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_WSServletProxy; QuarkSpiWSServletProxy; end
-class QuarkSpiWSServletProxy < ::Quark.quark.reflect.QuarkClass
-    extend ::DatawireQuarkCore::Static
-
-    static singleton: -> { ::Quark.quark_md.quark_spi_WSServletProxy.new() }
-
-
-
-    def initialize()
-        
-        super("quark.spi.WSServletProxy")
-        (self).name = "quark.spi.WSServletProxy"
-        (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.WSServlet", "ws_servlet_impl")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_WSServletProxy_onWSConnect_Method.new(), ::Quark.quark_md.quark_spi_WSServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_WSServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_WSServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_WSServletProxy_serveWS_Method.new()])
-
-        nil
-    end
-
-
-
-
-    def construct(args)
-        
-        return ::Quark.quark.spi.WSServletProxy.new((args)[0], (args)[1])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-QuarkSpiWSServletProxy.unlazy_statics
-
-
-def self.quark_spi_TaskProxy_onExecute_Method; QuarkSpiTaskProxyOnExecuteMethod; end
-class QuarkSpiTaskProxyOnExecuteMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "onExecute", ::DatawireQuarkCore::List.new(["quark.Runtime"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.onExecute((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_TaskProxy; QuarkSpiTaskProxy; end
-class QuarkSpiTaskProxy < ::Quark.quark.reflect.QuarkClass
-    extend ::DatawireQuarkCore::Static
-
-    static singleton: -> { ::Quark.quark_md.quark_spi_TaskProxy.new() }
-
-
-
-    def initialize()
-        
-        super("quark.spi.TaskProxy")
-        (self).name = "quark.spi.TaskProxy"
-        (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Task", "task_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_TaskProxy_onExecute_Method.new()])
-
-        nil
-    end
-
-
-
-
-    def construct(args)
-        
-        return ::Quark.quark.spi.TaskProxy.new((args)[0], (args)[1])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-QuarkSpiTaskProxy.unlazy_statics
-
-
-def self.quark_spi_RuntimeApi_open_Method; QuarkSpiRuntimeApiOpenMethod; end
-class QuarkSpiRuntimeApiOpenMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "open", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSHandler"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.open((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_request_Method; QuarkSpiRuntimeApiRequestMethod; end
-class QuarkSpiRuntimeApiRequestMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "request", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPHandler"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.request((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_schedule_Method; QuarkSpiRuntimeApiScheduleMethod; end
-class QuarkSpiRuntimeApiScheduleMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "schedule", ::DatawireQuarkCore::List.new(["quark.Task", "quark.float"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.schedule((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_codec_Method; QuarkSpiRuntimeApiCodecMethod; end
-class QuarkSpiRuntimeApiCodecMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.Codec", "codec", ::DatawireQuarkCore::List.new([]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        return obj.codec()
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_serveHTTP_Method; QuarkSpiRuntimeApiServeHTTPMethod; end
-class QuarkSpiRuntimeApiServeHTTPMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String", "quark.HTTPServlet"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.serveHTTP((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_serveWS_Method; QuarkSpiRuntimeApiServeWSMethod; end
-class QuarkSpiRuntimeApiServeWSMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSServlet"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.serveWS((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_respond_Method; QuarkSpiRuntimeApiRespondMethod; end
-class QuarkSpiRuntimeApiRespondMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "respond", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.respond((args)[0], (args)[1])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_fail_Method; QuarkSpiRuntimeApiFailMethod; end
-class QuarkSpiRuntimeApiFailMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.void", "fail", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        obj.fail((args)[0])
-        return nil
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi_logger_Method; QuarkSpiRuntimeApiLoggerMethod; end
-class QuarkSpiRuntimeApiLoggerMethod < ::Quark.quark.reflect.Method
-
-
-
-    def initialize()
-        
-        super("quark.Logger", "logger", ::DatawireQuarkCore::List.new(["quark.String"]))
-
-        nil
-    end
-
-
-
-
-    def invoke(object, args)
-        
-        obj = object
-        return obj.logger((args)[0])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-
-def self.quark_spi_RuntimeApi; QuarkSpiRuntimeApi; end
-class QuarkSpiRuntimeApi < ::Quark.quark.reflect.QuarkClass
-    extend ::DatawireQuarkCore::Static
-
-    static singleton: -> { ::Quark.quark_md.quark_spi_RuntimeApi.new() }
-
-
-
-    def initialize()
-        
-        super("quark.spi.RuntimeApi")
-        (self).name = "quark.spi.RuntimeApi"
-        (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi.RuntimeSpi", "impl")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_RuntimeApi_open_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_request_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_schedule_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_codec_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_serveHTTP_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_serveWS_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_respond_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_fail_Method.new(), ::Quark.quark_md.quark_spi_RuntimeApi_logger_Method.new()])
-
-        nil
-    end
-
-
-
-
-    def construct(args)
-        
-        return ::Quark.quark.spi.RuntimeApi.new((args)[0])
-
-        nil
-    end
-
-    def _getClass()
-        
-        return nil
-
-        nil
-    end
-
-    def _getField(name)
-        
-        return nil
-
-        nil
-    end
-
-    def _setField(name, value)
-        
-        nil
-
-        nil
-    end
-
-    def __init_fields__()
-        
-        super
-
-        nil
-    end
-
-
-end
-QuarkSpiRuntimeApi.unlazy_statics
-
-
 def self.quark_spi_RuntimeFactory_makeRuntime_Method; QuarkSpiRuntimeFactoryMakeRuntimeMethod; end
 class QuarkSpiRuntimeFactoryMakeRuntimeMethod < ::Quark.quark.reflect.Method
 
@@ -9505,7 +7935,7 @@ class QuarkSpiRuntimeFactory < ::Quark.quark.reflect.QuarkClass
         super("quark.spi.RuntimeFactory")
         (self).name = "quark.spi.RuntimeFactory"
         (self).parameters = ::DatawireQuarkCore::List.new([])
-        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi.RuntimeFactory", "factory")])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi.RuntimeFactory", "factory"), ::Quark.quark.reflect.Field.new("quark.bool", "enable_tracing")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_RuntimeFactory_makeRuntime_Method.new()])
 
         nil
@@ -9552,6 +7982,5221 @@ class QuarkSpiRuntimeFactory < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkSpiRuntimeFactory.unlazy_statics
+
+
+def self.quark_spi_api_ServletProxy_onServletInit_Method; QuarkSpiApiServletProxyOnServletInitMethod; end
+class QuarkSpiApiServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_ServletProxy_onServletError_Method; QuarkSpiApiServletProxyOnServletErrorMethod; end
+class QuarkSpiApiServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_ServletProxy_onServletEnd_Method; QuarkSpiApiServletProxyOnServletEndMethod; end
+class QuarkSpiApiServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_ServletProxy; QuarkSpiApiServletProxy; end
+class QuarkSpiApiServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_ServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api.ServletProxy")
+        (self).name = "quark.spi_api.ServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_ServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_ServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_ServletProxy_onServletEnd_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api.ServletProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_HTTPServletProxy_onHTTPRequest_Method; QuarkSpiApiHTTPServletProxyOnHTTPRequestMethod; end
+class QuarkSpiApiHTTPServletProxyOnHTTPRequestMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPRequest", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPRequest((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_HTTPServletProxy_onServletInit_Method; QuarkSpiApiHTTPServletProxyOnServletInitMethod; end
+class QuarkSpiApiHTTPServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_HTTPServletProxy_onServletError_Method; QuarkSpiApiHTTPServletProxyOnServletErrorMethod; end
+class QuarkSpiApiHTTPServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_HTTPServletProxy_onServletEnd_Method; QuarkSpiApiHTTPServletProxyOnServletEndMethod; end
+class QuarkSpiApiHTTPServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_HTTPServletProxy_serveHTTP_Method; QuarkSpiApiHTTPServletProxyServeHTTPMethod; end
+class QuarkSpiApiHTTPServletProxyServeHTTPMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveHTTP((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_HTTPServletProxy; QuarkSpiApiHTTPServletProxy; end
+class QuarkSpiApiHTTPServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_HTTPServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api.HTTPServletProxy")
+        (self).name = "quark.spi_api.HTTPServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.HTTPServlet", "http_servlet_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_HTTPServletProxy_onHTTPRequest_Method.new(), ::Quark.quark_md.quark_spi_api_HTTPServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_HTTPServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_HTTPServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_api_HTTPServletProxy_serveHTTP_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api.HTTPServletProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiHTTPServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_WSServletProxy_onWSConnect_Method; QuarkSpiApiWSServletProxyOnWSConnectMethod; end
+class QuarkSpiApiWSServletProxyOnWSConnectMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.WSHandler", "onWSConnect", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.onWSConnect((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_WSServletProxy_onServletInit_Method; QuarkSpiApiWSServletProxyOnServletInitMethod; end
+class QuarkSpiApiWSServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_WSServletProxy_onServletError_Method; QuarkSpiApiWSServletProxyOnServletErrorMethod; end
+class QuarkSpiApiWSServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_WSServletProxy_onServletEnd_Method; QuarkSpiApiWSServletProxyOnServletEndMethod; end
+class QuarkSpiApiWSServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_WSServletProxy_serveWS_Method; QuarkSpiApiWSServletProxyServeWSMethod; end
+class QuarkSpiApiWSServletProxyServeWSMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveWS((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_WSServletProxy; QuarkSpiApiWSServletProxy; end
+class QuarkSpiApiWSServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_WSServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api.WSServletProxy")
+        (self).name = "quark.spi_api.WSServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.WSServlet", "ws_servlet_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_WSServletProxy_onWSConnect_Method.new(), ::Quark.quark_md.quark_spi_api_WSServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_WSServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_WSServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_api_WSServletProxy_serveWS_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api.WSServletProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiWSServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_TaskProxy_onExecute_Method; QuarkSpiApiTaskProxyOnExecuteMethod; end
+class QuarkSpiApiTaskProxyOnExecuteMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onExecute", ::DatawireQuarkCore::List.new(["quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onExecute((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_TaskProxy; QuarkSpiApiTaskProxy; end
+class QuarkSpiApiTaskProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_TaskProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api.TaskProxy")
+        (self).name = "quark.spi_api.TaskProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Task", "task_impl"), ::Quark.quark.reflect.Field.new("quark.Runtime", "real_runtime")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_TaskProxy_onExecute_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api.TaskProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTaskProxy.unlazy_statics
+
+
+def self.quark_spi_api_RuntimeProxy_open_Method; QuarkSpiApiRuntimeProxyOpenMethod; end
+class QuarkSpiApiRuntimeProxyOpenMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "open", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSHandler"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.open((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_request_Method; QuarkSpiApiRuntimeProxyRequestMethod; end
+class QuarkSpiApiRuntimeProxyRequestMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "request", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPHandler"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.request((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_schedule_Method; QuarkSpiApiRuntimeProxyScheduleMethod; end
+class QuarkSpiApiRuntimeProxyScheduleMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "schedule", ::DatawireQuarkCore::List.new(["quark.Task", "quark.float"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.schedule((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_codec_Method; QuarkSpiApiRuntimeProxyCodecMethod; end
+class QuarkSpiApiRuntimeProxyCodecMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.Codec", "codec", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.codec()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_serveHTTP_Method; QuarkSpiApiRuntimeProxyServeHTTPMethod; end
+class QuarkSpiApiRuntimeProxyServeHTTPMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String", "quark.HTTPServlet"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveHTTP((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_serveWS_Method; QuarkSpiApiRuntimeProxyServeWSMethod; end
+class QuarkSpiApiRuntimeProxyServeWSMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSServlet"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveWS((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_respond_Method; QuarkSpiApiRuntimeProxyRespondMethod; end
+class QuarkSpiApiRuntimeProxyRespondMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "respond", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.respond((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_fail_Method; QuarkSpiApiRuntimeProxyFailMethod; end
+class QuarkSpiApiRuntimeProxyFailMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "fail", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.fail((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy_logger_Method; QuarkSpiApiRuntimeProxyLoggerMethod; end
+class QuarkSpiApiRuntimeProxyLoggerMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.Logger", "logger", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.logger((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_RuntimeProxy; QuarkSpiApiRuntimeProxy; end
+class QuarkSpiApiRuntimeProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_RuntimeProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api.RuntimeProxy")
+        (self).name = "quark.spi_api.RuntimeProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Runtime", "impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_RuntimeProxy_open_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_request_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_schedule_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_codec_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_serveHTTP_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_serveWS_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_respond_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_fail_Method.new(), ::Quark.quark_md.quark_spi_api_RuntimeProxy_logger_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api.RuntimeProxy.new((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiRuntimeProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_Identificator_next_Method; QuarkSpiApiTracingIdentificatorNextMethod; end
+class QuarkSpiApiTracingIdentificatorNextMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "next", ::DatawireQuarkCore::List.new(["quark.Object"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.next_((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_Identificator; QuarkSpiApiTracingIdentificator; end
+class QuarkSpiApiTracingIdentificator < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_Identificator.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.Identificator")
+        (self).name = "quark.spi_api_tracing.Identificator"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.concurrent.Lock", "lock"), ::Quark.quark.reflect.Field.new("quark.int", "seq")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_Identificator_next_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.Identificator.new()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingIdentificator.unlazy_statics
+
+
+def self.quark_spi_api_tracing_Identifiable; QuarkSpiApiTracingIdentifiable; end
+class QuarkSpiApiTracingIdentifiable < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_Identifiable.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.Identifiable")
+        (self).name = "quark.spi_api_tracing.Identifiable"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.Identifiable.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingIdentifiable.unlazy_statics
+
+
+def self.quark_spi_api_tracing_ServletProxy_onServletInit_Method; QuarkSpiApiTracingServletProxyOnServletInitMethod; end
+class QuarkSpiApiTracingServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_ServletProxy_onServletError_Method; QuarkSpiApiTracingServletProxyOnServletErrorMethod; end
+class QuarkSpiApiTracingServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_ServletProxy_onServletEnd_Method; QuarkSpiApiTracingServletProxyOnServletEndMethod; end
+class QuarkSpiApiTracingServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_ServletProxy; QuarkSpiApiTracingServletProxy; end
+class QuarkSpiApiTracingServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_ServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.ServletProxy")
+        (self).name = "quark.spi_api_tracing.ServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.RuntimeProxy", "real_runtime")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_ServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_ServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_ServletProxy_onServletEnd_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.ServletProxy.new((args)[0], (args)[1], (args)[2])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_getUrl_Method; QuarkSpiApiTracingHTTPRequestProxyGetUrlMethod; end
+class QuarkSpiApiTracingHTTPRequestProxyGetUrlMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getUrl", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getUrl()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_setMethod_Method; QuarkSpiApiTracingHTTPRequestProxySetMethodMethod; end
+class QuarkSpiApiTracingHTTPRequestProxySetMethodMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setMethod", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setMethod((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_getMethod_Method; QuarkSpiApiTracingHTTPRequestProxyGetMethodMethod; end
+class QuarkSpiApiTracingHTTPRequestProxyGetMethodMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getMethod", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getMethod()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_setBody_Method; QuarkSpiApiTracingHTTPRequestProxySetBodyMethod; end
+class QuarkSpiApiTracingHTTPRequestProxySetBodyMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setBody", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setBody((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_getBody_Method; QuarkSpiApiTracingHTTPRequestProxyGetBodyMethod; end
+class QuarkSpiApiTracingHTTPRequestProxyGetBodyMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getBody", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getBody()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_setHeader_Method; QuarkSpiApiTracingHTTPRequestProxySetHeaderMethod; end
+class QuarkSpiApiTracingHTTPRequestProxySetHeaderMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setHeader", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setHeader((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_getHeader_Method; QuarkSpiApiTracingHTTPRequestProxyGetHeaderMethod; end
+class QuarkSpiApiTracingHTTPRequestProxyGetHeaderMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getHeader", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getHeader((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy_getHeaders_Method; QuarkSpiApiTracingHTTPRequestProxyGetHeadersMethod; end
+class QuarkSpiApiTracingHTTPRequestProxyGetHeadersMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.List<quark.String>", "getHeaders", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getHeaders()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPRequestProxy; QuarkSpiApiTracingHTTPRequestProxy; end
+class QuarkSpiApiTracingHTTPRequestProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.HTTPRequestProxy")
+        (self).name = "quark.spi_api_tracing.HTTPRequestProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.HTTPRequest", "request_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_getUrl_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_setMethod_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_getMethod_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_setBody_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_getBody_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_setHeader_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_getHeader_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy_getHeaders_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.HTTPRequestProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingHTTPRequestProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_getCode_Method; QuarkSpiApiTracingHTTPResponseProxyGetCodeMethod; end
+class QuarkSpiApiTracingHTTPResponseProxyGetCodeMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.int", "getCode", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getCode()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_setCode_Method; QuarkSpiApiTracingHTTPResponseProxySetCodeMethod; end
+class QuarkSpiApiTracingHTTPResponseProxySetCodeMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setCode", ::DatawireQuarkCore::List.new(["quark.int"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setCode((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_setBody_Method; QuarkSpiApiTracingHTTPResponseProxySetBodyMethod; end
+class QuarkSpiApiTracingHTTPResponseProxySetBodyMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setBody", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setBody((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_getBody_Method; QuarkSpiApiTracingHTTPResponseProxyGetBodyMethod; end
+class QuarkSpiApiTracingHTTPResponseProxyGetBodyMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getBody", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getBody()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_setHeader_Method; QuarkSpiApiTracingHTTPResponseProxySetHeaderMethod; end
+class QuarkSpiApiTracingHTTPResponseProxySetHeaderMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "setHeader", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.setHeader((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_getHeader_Method; QuarkSpiApiTracingHTTPResponseProxyGetHeaderMethod; end
+class QuarkSpiApiTracingHTTPResponseProxyGetHeaderMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.String", "getHeader", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getHeader((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy_getHeaders_Method; QuarkSpiApiTracingHTTPResponseProxyGetHeadersMethod; end
+class QuarkSpiApiTracingHTTPResponseProxyGetHeadersMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.List<quark.String>", "getHeaders", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.getHeaders()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPResponseProxy; QuarkSpiApiTracingHTTPResponseProxy; end
+class QuarkSpiApiTracingHTTPResponseProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.HTTPResponseProxy")
+        (self).name = "quark.spi_api_tracing.HTTPResponseProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.HTTPResponse", "response_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_getCode_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_setCode_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_setBody_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_getBody_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_setHeader_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_getHeader_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy_getHeaders_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.HTTPResponseProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingHTTPResponseProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_HTTPServletProxy_onHTTPRequest_Method; QuarkSpiApiTracingHTTPServletProxyOnHTTPRequestMethod; end
+class QuarkSpiApiTracingHTTPServletProxyOnHTTPRequestMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPRequest", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPRequest((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPServletProxy_onServletInit_Method; QuarkSpiApiTracingHTTPServletProxyOnServletInitMethod; end
+class QuarkSpiApiTracingHTTPServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPServletProxy_onServletError_Method; QuarkSpiApiTracingHTTPServletProxyOnServletErrorMethod; end
+class QuarkSpiApiTracingHTTPServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPServletProxy_onServletEnd_Method; QuarkSpiApiTracingHTTPServletProxyOnServletEndMethod; end
+class QuarkSpiApiTracingHTTPServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPServletProxy_serveHTTP_Method; QuarkSpiApiTracingHTTPServletProxyServeHTTPMethod; end
+class QuarkSpiApiTracingHTTPServletProxyServeHTTPMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveHTTP((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPServletProxy; QuarkSpiApiTracingHTTPServletProxy; end
+class QuarkSpiApiTracingHTTPServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.HTTPServletProxy")
+        (self).name = "quark.spi_api_tracing.HTTPServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.RuntimeProxy", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.HTTPServlet", "http_servlet_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy_onHTTPRequest_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy_serveHTTP_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.HTTPServletProxy.new((args)[0], (args)[1], (args)[2])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingHTTPServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_WSServletProxy_onWSConnect_Method; QuarkSpiApiTracingWSServletProxyOnWSConnectMethod; end
+class QuarkSpiApiTracingWSServletProxyOnWSConnectMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.WSHandler", "onWSConnect", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.onWSConnect((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSServletProxy_onServletInit_Method; QuarkSpiApiTracingWSServletProxyOnServletInitMethod; end
+class QuarkSpiApiTracingWSServletProxyOnServletInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletInit", ::DatawireQuarkCore::List.new(["quark.String", "quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletInit((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSServletProxy_onServletError_Method; QuarkSpiApiTracingWSServletProxyOnServletErrorMethod; end
+class QuarkSpiApiTracingWSServletProxyOnServletErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletError", ::DatawireQuarkCore::List.new(["quark.String", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSServletProxy_onServletEnd_Method; QuarkSpiApiTracingWSServletProxyOnServletEndMethod; end
+class QuarkSpiApiTracingWSServletProxyOnServletEndMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onServletEnd", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onServletEnd((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSServletProxy_serveWS_Method; QuarkSpiApiTracingWSServletProxyServeWSMethod; end
+class QuarkSpiApiTracingWSServletProxyServeWSMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveWS((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSServletProxy; QuarkSpiApiTracingWSServletProxy; end
+class QuarkSpiApiTracingWSServletProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.WSServletProxy")
+        (self).name = "quark.spi_api_tracing.WSServletProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.Servlet", "servlet_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.RuntimeProxy", "real_runtime"), ::Quark.quark.reflect.Field.new("quark.WSServlet", "ws_servlet_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_WSServletProxy_onWSConnect_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy_onServletInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy_onServletError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy_onServletEnd_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy_serveWS_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.WSServletProxy.new((args)[0], (args)[1], (args)[2])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingWSServletProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_TaskProxy_onExecute_Method; QuarkSpiApiTracingTaskProxyOnExecuteMethod; end
+class QuarkSpiApiTracingTaskProxyOnExecuteMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onExecute", ::DatawireQuarkCore::List.new(["quark.Runtime"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onExecute((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_TaskProxy; QuarkSpiApiTracingTaskProxy; end
+class QuarkSpiApiTracingTaskProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_TaskProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.TaskProxy")
+        (self).name = "quark.spi_api_tracing.TaskProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.Task", "task_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.RuntimeProxy", "real_runtime")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_TaskProxy_onExecute_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.TaskProxy.new((args)[0], (args)[1], (args)[2])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingTaskProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_WebSocketProxy_send_Method; QuarkSpiApiTracingWebSocketProxySendMethod; end
+class QuarkSpiApiTracingWebSocketProxySendMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.bool", "send", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.send((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WebSocketProxy_sendBinary_Method; QuarkSpiApiTracingWebSocketProxySendBinaryMethod; end
+class QuarkSpiApiTracingWebSocketProxySendBinaryMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.bool", "sendBinary", ::DatawireQuarkCore::List.new(["quark.Buffer"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.sendBinary((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WebSocketProxy_close_Method; QuarkSpiApiTracingWebSocketProxyCloseMethod; end
+class QuarkSpiApiTracingWebSocketProxyCloseMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.bool", "close", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.close()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WebSocketProxy; QuarkSpiApiTracingWebSocketProxy; end
+class QuarkSpiApiTracingWebSocketProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_WebSocketProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.WebSocketProxy")
+        (self).name = "quark.spi_api_tracing.WebSocketProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.WebSocket", "socket_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_WebSocketProxy_send_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WebSocketProxy_sendBinary_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WebSocketProxy_close_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.WebSocketProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingWebSocketProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method; QuarkSpiApiTracingWSHandlerProxyOnWSInitMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSInit", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSInit((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method; QuarkSpiApiTracingWSHandlerProxyOnWSConnectedMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSConnectedMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSConnected", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSConnected((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method; QuarkSpiApiTracingWSHandlerProxyOnWSMessageMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSMessageMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSMessage", ::DatawireQuarkCore::List.new(["quark.WebSocket", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSMessage((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method; QuarkSpiApiTracingWSHandlerProxyOnWSBinaryMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSBinaryMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSBinary", ::DatawireQuarkCore::List.new(["quark.WebSocket", "quark.Buffer"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSBinary((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method; QuarkSpiApiTracingWSHandlerProxyOnWSClosedMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSClosedMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSClosed", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSClosed((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSError_Method; QuarkSpiApiTracingWSHandlerProxyOnWSErrorMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSError", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSError((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method; QuarkSpiApiTracingWSHandlerProxyOnWSFinalMethod; end
+class QuarkSpiApiTracingWSHandlerProxyOnWSFinalMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSFinal", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSFinal((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_WSHandlerProxy; QuarkSpiApiTracingWSHandlerProxy; end
+class QuarkSpiApiTracingWSHandlerProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.WSHandlerProxy")
+        (self).name = "quark.spi_api_tracing.WSHandlerProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.WSHandler", "handler_impl"), ::Quark.quark.reflect.Field.new("quark.spi_api_tracing.WebSocketProxy", "wrapped_socket")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSConnected_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSMessage_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSBinary_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSClosed_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy_onWSFinal_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.WSHandlerProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingWSHandlerProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPInit_Method; QuarkSpiApiTracingHTTPHandlerProxyOnHTTPInitMethod; end
+class QuarkSpiApiTracingHTTPHandlerProxyOnHTTPInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPInit", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPInit((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPResponse_Method; QuarkSpiApiTracingHTTPHandlerProxyOnHTTPResponseMethod; end
+class QuarkSpiApiTracingHTTPHandlerProxyOnHTTPResponseMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPResponse", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPResponse((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPError_Method; QuarkSpiApiTracingHTTPHandlerProxyOnHTTPErrorMethod; end
+class QuarkSpiApiTracingHTTPHandlerProxyOnHTTPErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPError", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPFinal_Method; QuarkSpiApiTracingHTTPHandlerProxyOnHTTPFinalMethod; end
+class QuarkSpiApiTracingHTTPHandlerProxyOnHTTPFinalMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPFinal", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPFinal((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_HTTPHandlerProxy; QuarkSpiApiTracingHTTPHandlerProxy; end
+class QuarkSpiApiTracingHTTPHandlerProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.HTTPHandlerProxy")
+        (self).name = "quark.spi_api_tracing.HTTPHandlerProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.HTTPHandler", "handler_impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPInit_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPResponse_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPError_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy_onHTTPFinal_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.HTTPHandlerProxy.new((args)[0], (args)[1])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingHTTPHandlerProxy.unlazy_statics
+
+
+def self.quark_spi_api_tracing_RuntimeProxy_open_Method; QuarkSpiApiTracingRuntimeProxyOpenMethod; end
+class QuarkSpiApiTracingRuntimeProxyOpenMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "open", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSHandler"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.open((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_request_Method; QuarkSpiApiTracingRuntimeProxyRequestMethod; end
+class QuarkSpiApiTracingRuntimeProxyRequestMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "request", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPHandler"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.request((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_schedule_Method; QuarkSpiApiTracingRuntimeProxyScheduleMethod; end
+class QuarkSpiApiTracingRuntimeProxyScheduleMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "schedule", ::DatawireQuarkCore::List.new(["quark.Task", "quark.float"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.schedule((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_codec_Method; QuarkSpiApiTracingRuntimeProxyCodecMethod; end
+class QuarkSpiApiTracingRuntimeProxyCodecMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.Codec", "codec", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.codec()
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_serveHTTP_Method; QuarkSpiApiTracingRuntimeProxyServeHTTPMethod; end
+class QuarkSpiApiTracingRuntimeProxyServeHTTPMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveHTTP", ::DatawireQuarkCore::List.new(["quark.String", "quark.HTTPServlet"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveHTTP((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_serveWS_Method; QuarkSpiApiTracingRuntimeProxyServeWSMethod; end
+class QuarkSpiApiTracingRuntimeProxyServeWSMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "serveWS", ::DatawireQuarkCore::List.new(["quark.String", "quark.WSServlet"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.serveWS((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_respond_Method; QuarkSpiApiTracingRuntimeProxyRespondMethod; end
+class QuarkSpiApiTracingRuntimeProxyRespondMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "respond", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPResponse"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.respond((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_fail_Method; QuarkSpiApiTracingRuntimeProxyFailMethod; end
+class QuarkSpiApiTracingRuntimeProxyFailMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "fail", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.fail((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy_logger_Method; QuarkSpiApiTracingRuntimeProxyLoggerMethod; end
+class QuarkSpiApiTracingRuntimeProxyLoggerMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.Logger", "logger", ::DatawireQuarkCore::List.new(["quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        return obj.logger((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.quark_spi_api_tracing_RuntimeProxy; QuarkSpiApiTracingRuntimeProxy; end
+class QuarkSpiApiTracingRuntimeProxy < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy.new() }
+
+
+
+    def initialize()
+        
+        super("quark.spi_api_tracing.RuntimeProxy")
+        (self).name = "quark.spi_api_tracing.RuntimeProxy"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.spi_api_tracing.Identificator", "namer"), ::Quark.quark.reflect.Field.new("quark.String", "id"), ::Quark.quark.reflect.Field.new("quark.Logger", "log"), ::Quark.quark.reflect.Field.new("quark.Runtime", "impl")])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_open_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_request_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_schedule_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_codec_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_serveHTTP_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_serveWS_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_respond_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_fail_Method.new(), ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy_logger_Method.new()])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.quark.spi_api_tracing.RuntimeProxy.new((args)[0])
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+QuarkSpiApiTracingRuntimeProxy.unlazy_statics
 
 
 def self.Root; Root; end
@@ -9609,12 +13254,24 @@ class Root < ::DatawireQuarkCore::QuarkObject
     static quark_test_Harness_md: -> { ::Quark.quark_md.quark_test_Harness.singleton }
     static quark_URL_md: -> { ::Quark.quark_md.quark_URL.singleton }
     static quark_spi_RuntimeSpi_md: -> { ::Quark.quark_md.quark_spi_RuntimeSpi.singleton }
-    static quark_spi_ServletProxy_md: -> { ::Quark.quark_md.quark_spi_ServletProxy.singleton }
-    static quark_spi_HTTPServletProxy_md: -> { ::Quark.quark_md.quark_spi_HTTPServletProxy.singleton }
-    static quark_spi_WSServletProxy_md: -> { ::Quark.quark_md.quark_spi_WSServletProxy.singleton }
-    static quark_spi_TaskProxy_md: -> { ::Quark.quark_md.quark_spi_TaskProxy.singleton }
-    static quark_spi_RuntimeApi_md: -> { ::Quark.quark_md.quark_spi_RuntimeApi.singleton }
     static quark_spi_RuntimeFactory_md: -> { ::Quark.quark_md.quark_spi_RuntimeFactory.singleton }
+    static quark_spi_api_ServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_ServletProxy.singleton }
+    static quark_spi_api_HTTPServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_HTTPServletProxy.singleton }
+    static quark_spi_api_WSServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_WSServletProxy.singleton }
+    static quark_spi_api_TaskProxy_md: -> { ::Quark.quark_md.quark_spi_api_TaskProxy.singleton }
+    static quark_spi_api_RuntimeProxy_md: -> { ::Quark.quark_md.quark_spi_api_RuntimeProxy.singleton }
+    static quark_spi_api_tracing_Identificator_md: -> { ::Quark.quark_md.quark_spi_api_tracing_Identificator.singleton }
+    static quark_spi_api_tracing_Identifiable_md: -> { ::Quark.quark_md.quark_spi_api_tracing_Identifiable.singleton }
+    static quark_spi_api_tracing_ServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_ServletProxy.singleton }
+    static quark_spi_api_tracing_HTTPRequestProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPRequestProxy.singleton }
+    static quark_spi_api_tracing_HTTPResponseProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPResponseProxy.singleton }
+    static quark_spi_api_tracing_HTTPServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPServletProxy.singleton }
+    static quark_spi_api_tracing_WSServletProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_WSServletProxy.singleton }
+    static quark_spi_api_tracing_TaskProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_TaskProxy.singleton }
+    static quark_spi_api_tracing_WebSocketProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_WebSocketProxy.singleton }
+    static quark_spi_api_tracing_WSHandlerProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_WSHandlerProxy.singleton }
+    static quark_spi_api_tracing_HTTPHandlerProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_HTTPHandlerProxy.singleton }
+    static quark_spi_api_tracing_RuntimeProxy_md: -> { ::Quark.quark_md.quark_spi_api_tracing_RuntimeProxy.singleton }
 
 
 

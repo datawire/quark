@@ -6,7 +6,7 @@ public class quark_spi_RuntimeFactory extends quark.reflect.Class implements io.
         super("quark.spi.RuntimeFactory");
         (this).name = "quark.spi.RuntimeFactory";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.spi.RuntimeFactory", "factory")}));
+        (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.spi.RuntimeFactory", "factory"), new quark.reflect.Field("quark.bool", "enable_tracing")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark_spi_RuntimeFactory_makeRuntime_Method()}));
     }
     public Object construct(java.util.ArrayList<Object> args) {

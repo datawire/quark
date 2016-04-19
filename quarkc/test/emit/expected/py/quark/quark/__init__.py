@@ -7,6 +7,8 @@ import behaviors
 import concurrent
 import test
 import spi
+import spi_api
+import spi_api_tracing
 
 
 class Task(object):
@@ -872,3 +874,5 @@ class URL(object):
 
 
 URL.quark_URL_ref = quark_md.Root.quark_URL_md
+
+
