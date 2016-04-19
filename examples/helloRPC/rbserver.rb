@@ -23,6 +23,7 @@ def main()
     implementation = HelloImpl.new
     server = Hello::HelloServer.new(implementation)
     server.sendCORS(true)
+    print "Ruby HelloRPC server starting\n"
     server.serveHTTP("http://127.0.0.1:8910/hello")
 end
 

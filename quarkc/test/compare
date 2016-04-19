@@ -91,7 +91,7 @@ def find_cmp_files():
 
 
 def ignorable(filename):
-    return filename == "classpath" or filename.endswith(".pyc")
+    return filename == "classpath" or filename.endswith(".pyc") or "-nocmp" in filename
 
 
 def collect_comparisons(dcmp, result):

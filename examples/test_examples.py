@@ -23,6 +23,7 @@ import pytest
 from quarkc.test import capture_output, generate_docs
 from quarkc.test.util import get_git_top
 
+git_top = get_git_top()
 qc_files_found = True  # *.qc files break example tests and doc generation
 
 gtd = "gen-test"    # Name of directory where doc generation and test stuff is found
@@ -41,7 +42,7 @@ def example(request):
 
 
 def check_diff(diff):
-    filt = capture_output.filter_no_check
+    filt = capture_output.filter_nocmp
     assert not filt(diff.left_only), filt(diff.left_only)
     assert not filt(diff.right_only), filt(diff.right_only)
     assert not filt(diff.diff_files), filt(diff.diff_files)
@@ -50,9 +51,48 @@ def check_diff(diff):
             check_diff(common_sub_diff)
 
 
+class Filters(object):
+
+    isodateRE = re.compile(r"\d{4}-[01]\d-[0-3]\d")
+    isotimeRE = re.compile(r"[0-2]\d:[0-5]\d(:[0-5]\d(\.\d+)?)?")
+    isoTZRE = re.compile(r"(Z)|([+-][01]\d:[0-5]\d)")
+    isoDTRE = re.compile(isodateRE.pattern + "T" + isotimeRE.pattern + "(T" + isoTZRE.pattern + ")?")
+
+    @staticmethod
+    def repo(text):
+        return "\n".join(line.replace(git_top, "$REPO") for line in text.split("\n"))
+
+    @staticmethod
+    def isodate(text):
+        return "\n".join(Filters.isodateRE.sub("yyyy-mm-dd", line) for line in text.split("\n"))
+
+    @staticmethod
+    def isotime(text):
+        return "\n".join(Filters.isotimeRE.sub("HH:MM:SS", line) for line in text.split("\n"))
+
+    @staticmethod
+    def maven(text):
+        # XXX Needs more work; these are inconsistent as well:
+        # [INFO] Total time: 7.143 s
+        # [INFO] Final Memory: 15M/245M
+        return "\n".join(Filters.isoDTRE.sub("yyyy-mm-ddTHH:MM:SSTZD", line) for line in text.split("\n"))
+
+    @staticmethod
+    def quark_install(text):
+        lines = text.split("\n")  # Avoid .splitlines, which tosses ^M chars
+        res = []
+        for line in lines:
+            if line.startswith("Writing ") and "quarkc/lib/quark.q" in line:
+                continue
+            if line.startswith("Installing ") and line.split()[2] == "quark":
+                continue
+            res.append(line)
+        return "\n".join(res)
+
+
 def run_python(py_file, session_name, cwd, output_dir):
     session = capture_output.Session(session_name, cwd, output_dir)
-    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg)
+    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters)
     exec(open(py_file, "U"), scope)
     return scope
 
@@ -67,7 +107,6 @@ def gen_docs(scope, src_dir, dest_dir):
 
 def test_no_qc():
     global qc_files_found
-    git_top = get_git_top()
     print "To delete *.qc files:"
     print """find %s -type f -name "*.qc" -print0 | xargs -0 rm""" % git_top
     for root, dirs, files in os.walk(git_top):
