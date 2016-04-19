@@ -87,6 +87,12 @@ class BGProcess(object):
         self.cap.do_capture(self.child)
         return self.cap
 
+    def __enter__(self):
+        return self
+
+    def __exit__(self, ex_type, ex_value, ex_traceback):
+        self.terminate()
+
 
 def filter_nocmp(filenames):
     return [filename for filename in filenames if "-nocmp" not in filename]

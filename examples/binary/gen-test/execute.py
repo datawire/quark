@@ -14,27 +14,23 @@ javascript_quark_install = helpers.quark_install("--javascript binary.q")
 
 # Launch server
 
-java_server_bg = capture_bg("mvn exec:java -Dexec.mainClass=binary.ServerMain", nocmp=True)
-java_server_bg.child.expect("server starting")
+with capture_bg("mvn exec:java -Dexec.mainClass=binary.ServerMain", nocmp=True) as java_server_bg:
+    java_server_bg.child.expect("server starting")
 
-# Try each client
+    # Try each client
 
-java_client_bg = capture_bg("mvn exec:java -Dexec.mainClass=binary.ClientMain", nocmp=True)
-java_client_bg.child.expect("de ad be ef")
-java_client_bg.terminate()
+    java_client_bg = capture_bg("mvn exec:java -Dexec.mainClass=binary.ClientMain", nocmp=True)
+    java_client_bg.child.expect("de ad be ef")
+    java_client_bg.terminate()
 
-python_client_bg = capture_bg("python client.py")
-python_client_bg.child.expect("de ad be ef")
-python_client_bg.terminate()
+    python_client_bg = capture_bg("python client.py")
+    python_client_bg.child.expect("de ad be ef")
+    python_client_bg.terminate()
 
-javascript_client_bg = capture_bg("node client.js")
-javascript_client_bg.child.expect("de ad be ef")
-javascript_client_bg.terminate()
+    javascript_client_bg = capture_bg("node client.js")
+    javascript_client_bg.child.expect("de ad be ef")
+    javascript_client_bg.terminate()
 
-#ruby_client_bg = capture_bg("ruby client.rb")
-#ruby_client_bg.child.expect("de ad be ef")
-#ruby_client_bg.terminate()
-
-# Kill server
-
-java_server_bg.terminate()
+    #ruby_client_bg = capture_bg("ruby client.rb")
+    #ruby_client_bg.child.expect("de ad be ef")
+    #ruby_client_bg.terminate()
