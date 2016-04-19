@@ -2,28 +2,15 @@
 
 # Install everything all-at-once. This will generate the .qc files.
 
-install_all = capture("quark install binary.q", nocmp=True)
-assert install_all.output.splitlines()[-1] == "Done"
+install_all = helpers.quark_install("binary.q")
 
 # Capture individual compile/install stuff
 
-java_quark_install = capture("quark install --java binary.q",
-                             filters=[filters.repo, filters.quark_install], nocmp=True)
-assert java_quark_install.output.splitlines()[-1] == "Done"
-java_mvn_compile = capture("mvn compile", nocmp=True)
-assert "BUILD SUCCESS" in java_mvn_compile.output
-
-python_quark_install = capture("quark install --python binary.q",
-                               filters=[filters.repo, filters.quark_install], nocmp=True)
-assert python_quark_install.output.splitlines()[-1] == "Done"
-
-javascript_quark_install = capture("quark install --javascript binary.q",
-                                   filters=[filters.repo, filters.quark_install], nocmp=True)
-assert javascript_quark_install.output.splitlines()[-1] == "Done"
-
-#ruby_quark_install = capture("quark install --ruby binary.q",
-#                             filters=[filters.repo, filters.quark_install], nocmp=True)
-#assert ruby_quark_install.output.splitlines()[-1] == "Done"
+java_quark_install = helpers.quark_install("--java binary.q")
+java_mvn_compile = helpers.mvn("compile")
+python_quark_install = helpers.quark_install("--python binary.q")
+javascript_quark_install = helpers.quark_install("--javascript binary.q")
+#ruby_quark_install = helpers.quark_install("--ruby binary.q")
 
 # Launch server
 

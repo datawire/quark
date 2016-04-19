@@ -90,9 +90,26 @@ class Filters(object):
         return "\n".join(res)
 
 
+class Helpers(object):
+
+    def __init__(self, capture):
+        self.capture = capture
+
+    def quark_install(self, command):
+        res = self.capture("quark install " + command, filters=[Filters.repo, Filters.quark_install], nocmp=True)
+        assert res.output.splitlines()[-1] == "Done"
+        return res
+
+    def mvn(self, command):
+        res = self.capture("mvn " + command, nocmp=True)
+        assert "BUILD SUCCESS" in res.output
+        return res
+
+
 def run_python(py_file, session_name, cwd, output_dir):
     session = capture_output.Session(session_name, cwd, output_dir)
-    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters)
+    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters,
+                 helpers=Helpers(session.capture))
     exec(open(py_file, "U"), scope)
     return scope
 
