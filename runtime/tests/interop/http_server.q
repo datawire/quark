@@ -1,6 +1,6 @@
 @version("1.2.3") // version is mandatory
 namespace interop { // package interop is mandatory
-    class Entrypoint { // class Entrypoint is mandatory
+    class Entrypoint extends EntrypointSetup { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameter
             print("http_server server");
             HelloServlet servlet = HelloServlet();

@@ -1,6 +1,6 @@
 @version("1.2.3") // version is mandatory
 namespace interop { // package interop is mandatory
-    class Entrypoint { // class Entrypoint is mandatory
+    class Entrypoint extends EntrypointSetup { // class Entrypoint is mandatory
         void server(int port) { // port is mandatory constructor parameter
             print("ws_server server");
             InteropWSServlet servlet = new InteropWSServlet();
@@ -93,4 +93,5 @@ namespace interop { // package interop is mandatory
             socket.close();
         }
     }
+////include common.qinc
 }

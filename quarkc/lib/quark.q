@@ -37,6 +37,8 @@ include ws.q;
 include testing.q;
 include url.q;
 include spi.q;
+include spi_api.q;
+include spi_api_tracing.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
