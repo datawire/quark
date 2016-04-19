@@ -1,0 +1,11 @@
+[INFO] Scanning for projects...
+[INFO]                                                                         
+[INFO] ------------------------------------------------------------------------
+[INFO] Building Binary Web Sockets Example 0.0.1
+[INFO] ------------------------------------------------------------------------
+[INFO] 
+[INFO] --- exec-maven-plugin:1.4.0:java (default-cli) @ binary-example ---
+WebSocket Client connected!
+====[4]
+de ad be ef
+
