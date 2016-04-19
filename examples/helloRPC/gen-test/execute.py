@@ -12,14 +12,18 @@ targets = (
 )
 
 # Install everything all-at-once. This will generate the .qc files.
-install_all = capture("quark install hello.q", filters=[filters.repo, filters.quark_install])
+install_all = capture("quark install hello.q", nocmp=True)
+assert install_all.output.splitlines()[-1] == "Done"
 
 # Install everything one-at-a-time to capture individual output for docs
 for target, server_cmd, client_cmd, pattern, nocmp in targets:
-    installation = capture("quark install --%s hello.q" % target, filters=[filters.repo, filters.quark_install])
+    installation = capture("quark install --%s hello.q" % target,
+                           filters=[filters.repo, filters.quark_install], nocmp=True)
+    assert installation.output.splitlines()[-1] == "Done"
 
 # Extra step for Java
 java_compile = capture("mvn compile", nocmp=True)  # mvn's output is inconsistent
+assert "BUILD SUCCESS" in java_compile.output
 
 # Test each combo
 client_captures = {}  # server target, client target -> captured client output
