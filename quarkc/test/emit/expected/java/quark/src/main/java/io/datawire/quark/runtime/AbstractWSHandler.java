@@ -1,5 +1,7 @@
 package io.datawire.quark.runtime;
 
+import quark.WSHandler;
+import quark.WebSocket;
 
 public abstract class AbstractWSHandler implements WSHandler {
     @Override public void onWSInit(WebSocket socket) {}

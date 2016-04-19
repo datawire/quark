@@ -2,6 +2,8 @@ from quark_runtime import *
 
 import quark.reflect
 import quark_md
+import quark
+import quark.spi
 
 
 class Event(object):
@@ -600,7 +602,7 @@ class Context(object):
         self._init()
         (self)._parent = parent
         if ((parent) == (None)):
-            (self)._runtime = _RuntimeFactory.create()
+            (self)._runtime = (quark.spi.RuntimeFactory.factory).makeRuntime()
             (self).collector = Collector()
         else:
             (self)._runtime = (parent)._runtime
@@ -612,6 +614,9 @@ class Context(object):
 
     @staticmethod
     def global_():
+        if ((Context._global) == (None)):
+            Context._global = Context(None)
+
         return Context._global
 
     @staticmethod
@@ -660,6 +665,6 @@ class Context(object):
             (self).collector = value
 
 
-Context._global = Context(None)
+Context._global = None
 Context._current = _TLS(TLSContextInitializer())
 Context.quark_concurrent_Context_ref = quark_md.Root.quark_concurrent_Context_md

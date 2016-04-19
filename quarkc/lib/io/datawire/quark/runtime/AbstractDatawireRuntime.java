@@ -1,5 +1,14 @@
 package io.datawire.quark.runtime;
 
+import quark.WSHandler;
+import quark.WebSocket;
+import quark.WSServlet;
+import quark.HTTPHandler;
+import quark.HTTPRequest;
+import quark.HTTPResponse;
+import quark.HTTPServlet;
+import quark.Runtime;
+import quark.Task;
 
 public abstract class AbstractDatawireRuntime {
 
@@ -186,6 +195,11 @@ public abstract class AbstractDatawireRuntime {
                     idle();
                 }
             }
+
+            @Override
+            public void serveHTTP(String url) {
+                throw new RuntimeException("Quark should always hide this method");
+            }
         };
     }
 
@@ -231,6 +245,11 @@ public abstract class AbstractDatawireRuntime {
                 } finally {
                     wakeup();
                 }
+            }
+
+            @Override
+            public void serveWS(String url) {
+                throw new RuntimeException("Quark should always hide this method");
             }
         };
     }

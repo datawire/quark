@@ -2,8 +2,8 @@ package io.datawire.quark.netty;
 
 import io.datawire.quark.runtime.Buffer;
 import io.datawire.quark.runtime.BufferImpl;
-import io.datawire.quark.runtime.WSHandler;
-import io.datawire.quark.runtime.WebSocket;
+import quark.WSHandler;
+import quark.WebSocket;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
@@ -16,7 +16,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 abstract class QuarkWebSocket implements WebSocket {
 
     /// quark_runtime.WebSocket
-    public boolean send(String message) {
+    public Boolean send(String message) {
         TextWebSocketFrame frame = new TextWebSocketFrame(message);
         if (getCh() != null) {
             getCh().writeAndFlush(frame);
@@ -26,7 +26,7 @@ abstract class QuarkWebSocket implements WebSocket {
     }
 
     @Override
-    public boolean sendBinary(Buffer message) {
+    public Boolean sendBinary(Buffer message) {
         ByteBuf binaryData = QuarkNettyRuntime.adaptBuffer(message);
         BinaryWebSocketFrame frame = new BinaryWebSocketFrame(binaryData);
         if (getCh() != null) {
@@ -37,7 +37,7 @@ abstract class QuarkWebSocket implements WebSocket {
     }
 
     @Override
-    public boolean close() {
+    public Boolean close() {
         if (getCh() != null) {
             CloseWebSocketFrame frame = new CloseWebSocketFrame();
             getCh().writeAndFlush(frame);

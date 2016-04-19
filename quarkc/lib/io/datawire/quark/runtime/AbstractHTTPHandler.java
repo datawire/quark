@@ -1,5 +1,8 @@
 package io.datawire.quark.runtime;
 
+import quark.HTTPHandler;
+import quark.HTTPRequest;
+import quark.HTTPResponse;
 
 public abstract class AbstractHTTPHandler implements HTTPHandler {
     @Override public void onHTTPInit(HTTPRequest request) {}

@@ -172,6 +172,7 @@ class _QuarkWSMixin(object):
         if code == 1000:
             self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
+            self.runtime.log.debug("websocket closed with error %s %s" % (code, reason))
             self.runtime.events.put((self.handler.onWSError, (self.ws,), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
         self.ws.ws = None
@@ -372,6 +373,7 @@ class ThreadedRuntime(object):
         self.event_thread.daemon = True
         self.event_thread.start()
         self._codec = _default_codec()
+        self.log = Logger("quark.runtime")
 
     def acquire(self):
         self.lock.acquire()
@@ -404,7 +406,8 @@ class ThreadedRuntime(object):
             try:
                 ws.connect()
                 ws.run_forever()
-            except Exception:
+            except Exception as ex:
+                runtime.log.debug("websocket pump exception: %s" % ex);
                 runtime.events.put((handler.onWSError, (ws,), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
         try:

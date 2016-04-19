@@ -14,7 +14,7 @@
 
 import os, pytest
 from quarkc.compiler import Compiler, CompileError, ParseError
-from .util import assert_file, maybe_xfail, is_excluded_file
+from .util import assert_file, maybe_xfail, is_excluded_file, check_file
 
 directory = os.path.join(os.path.dirname(__file__), "compile")
 
@@ -40,13 +40,18 @@ def compile(path, file_filter):
     try:
         c.urlparse(path)
         c.compile()
+        failed_expectations = []
         for root in c.roots:
             for ast in root.files:
                 if ast.filename == "reflector": continue
                 if file_filter(ast.filename): continue
                 astname = os.path.splitext(ast.filename)[0] + ".astc"
                 astpath = os.path.join(dir, astname)
-                assert_file(astpath, ast.pprint())
+                content = ast.pprint()
+                expected = check_file(astpath, content)
+                if content != expected:
+                    failed_expectations.append(astname)
+        assert not failed_expectations, failed_expectations
     except (CompileError, ParseError), e:
         expected = base + ".err"
         computed = str(e).replace(os.path.dirname(path) + "/", "")

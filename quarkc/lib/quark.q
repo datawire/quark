@@ -23,8 +23,6 @@ use java io.netty netty-all 4.0.32.Final;
 use java junit junit 4.12;
 include io/datawire/quark/runtime/AbstractDatawireRuntime.java;
 include io/datawire/quark/runtime/Builtins.java;
-include io/datawire/quark/runtime/Runtime.java;
-include io/datawire/quark/runtime/Task.java;
 
 package quark 0.0.1;
 
@@ -38,6 +36,9 @@ include http.q;
 include ws.q;
 include testing.q;
 include url.q;
+include spi.q;
+include spi_api.q;
+include spi_api_tracing.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
@@ -69,8 +70,7 @@ macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec
                            $rb{::DatawireQuarkCore.default_codec}
                            $js{_qrt.defaultCodec()};
 
-@mapping($java{io.datawire.quark.runtime.Task})
-primitive Task {
+interface Task {
     void onExecute(Runtime runtime); // XXX: right now, context is not
                                      // restored for these. We should
                                      // offer a context-aware
@@ -78,12 +78,7 @@ primitive Task {
                                      // this as internal thing
 }
 
-@mapping($java{io.datawire.quark.runtime.Runtime})
-primitive Runtime {
-    macro Runtime() $java{io.datawire.quark.runtime.Runtime.Factory.create()}
-                    $py{_RuntimeFactory.create()}
-                    $rb{::DatawireQuarkCore::Runtime.new}
-                    $js{_qrt.RuntimeFactory.create()};
+interface Runtime {
     void open(String url, WSHandler handler);
     void request(HTTPRequest request, HTTPHandler handler);
     void schedule(Task handler, float delayInSeconds);

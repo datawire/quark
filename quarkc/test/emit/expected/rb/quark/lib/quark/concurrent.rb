@@ -5,6 +5,8 @@ def self.concurrent; Concurrent; end
 module Concurrent
 require_relative 'reflect' # 1 () ()
 require_relative '../quark_md' # 0 () ('quark',)
+require_relative '../quark' # 0 () ('quark',)
+require_relative 'spi' # 1 () ()
 
 
 def self.Event; Event; end
@@ -1081,7 +1083,7 @@ class Context < ::DatawireQuarkCore::QuarkObject
     attr_accessor :_parent, :_runtime, :collector
     extend ::DatawireQuarkCore::Static
 
-    static _global: -> { ::Quark.quark.concurrent.Context.new(nil) }
+    static _global: -> { nil }
     static _current: -> { ::DatawireQuarkCore::TLS.new(::Quark.quark.concurrent.TLSContextInitializer.new()) }
     static quark_concurrent_Context_ref: -> { ::Quark.quark_md.Root.quark_concurrent_Context_md }
 
@@ -1092,7 +1094,7 @@ class Context < ::DatawireQuarkCore::QuarkObject
         self.__init_fields__
         (self)._parent = parent
         if ((parent) == (nil))
-            (self)._runtime = ::DatawireQuarkCore::Runtime.new
+            (self)._runtime = ::Quark.quark.spi.RuntimeFactory.factory.makeRuntime()
             (self).collector = ::Quark.quark.concurrent.Collector.new()
         else
             (self)._runtime = (parent)._runtime
@@ -1114,6 +1116,9 @@ class Context < ::DatawireQuarkCore::QuarkObject
 
     def self.global()
         
+        if ((::Quark.quark.concurrent.Context._global) == (nil))
+            ::Quark.quark.concurrent.Context._global = ::Quark.quark.concurrent.Context.new(nil)
+        end
         return ::Quark.quark.concurrent.Context._global
 
         nil

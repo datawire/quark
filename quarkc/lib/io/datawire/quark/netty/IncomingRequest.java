@@ -1,6 +1,6 @@
 package io.datawire.quark.netty;
 
-import io.datawire.quark.runtime.HTTPRequest;
+import quark.HTTPRequest;
 import io.netty.handler.codec.http.FullHttpRequest;
 import io.netty.util.CharsetUtil;
 

@@ -6,7 +6,7 @@ public class slack_Client_onWSClose_Method extends quark.reflect.Method implemen
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);
-        (obj).onWSClose((io.datawire.quark.runtime.WebSocket) ((args).get(0)));
+        (obj).onWSClose((quark.WebSocket) ((args).get(0)));
         return null;
     }
     public String _getClass() {

@@ -6,7 +6,7 @@ public class slack_Client_onWSMessage_Method extends quark.reflect.Method implem
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);
-        (obj).onWSMessage((io.datawire.quark.runtime.WebSocket) ((args).get(0)), (String) ((args).get(1)));
+        (obj).onWSMessage((quark.WebSocket) ((args).get(0)), (String) ((args).get(1)));
         return null;
     }
     public String _getClass() {

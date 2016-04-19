@@ -6,7 +6,7 @@ public class quark_behaviors_RPCRequest_call_Method extends quark.reflect.Method
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         quark.behaviors.RPCRequest obj = (quark.behaviors.RPCRequest) (object);
-        return (obj).call((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)));
+        return (obj).call((quark.HTTPRequest) ((args).get(0)));
     }
     public String _getClass() {
         return (String) (null);

@@ -6,8 +6,53 @@ import logging
 import behaviors
 import concurrent
 import test
+import spi
+import spi_api
+import spi_api_tracing
 
 
+class Task(object):
+
+    def onExecute(self, runtime):
+        assert False
+
+Task.quark_Task_ref = quark_md.Root.quark_Task_md
+class Runtime(object):
+
+    def open(self, url, handler):
+        assert False
+
+    def request(self, request, handler):
+        assert False
+
+    def schedule(self, handler, delayInSeconds):
+        assert False
+
+    def codec(self):
+        assert False
+
+    def serveHTTP(self, url, servlet):
+        assert False
+
+    def serveWS(self, url, servlet):
+        assert False
+
+    def respond(self, request, response):
+        assert False
+
+    def fail(self, message):
+        """
+        Display the explanatory message and then terminate the program
+        """
+        assert False
+
+    def logger(self, topic):
+        """
+        Get a logger for the specified topic.
+        """
+        assert False
+
+Runtime.quark_Runtime_ref = quark_md.Root.quark_Runtime_md
 
 class ListUtil(object):
     def _init(self):
@@ -141,6 +186,30 @@ def fromJSON(cls, result, json):
     return result
 
 
+class Servlet(object):
+    """
+    A service addresable with an url
+    """
+
+    def onServletInit(self, url, runtime):
+        """
+        called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
+        """
+        pass
+
+    def onServletError(self, url, error):
+        """
+        called if the servlet could not be installed
+        """
+        pass
+
+    def onServletEnd(self, url):
+        """
+        called when the servlet is removed
+        """
+        pass
+
+Servlet.quark_Servlet_ref = quark_md.Root.quark_Servlet_md
 class Resolver(object):
 
     def resolve(self, serviceName):
@@ -570,7 +639,141 @@ class Server(object):
 Server.quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md
 
 
+class HTTPHandler(object):
 
+    def onHTTPInit(self, request):
+        pass
+
+    def onHTTPResponse(self, request, response):
+        pass
+
+    def onHTTPError(self, request, message):
+        pass
+
+    def onHTTPFinal(self, request):
+        pass
+
+HTTPHandler.quark_HTTPHandler_ref = quark_md.Root.quark_HTTPHandler_md
+class HTTPRequest(object):
+
+    def getUrl(self):
+        assert False
+
+    def setMethod(self, method):
+        assert False
+
+    def getMethod(self):
+        assert False
+
+    def setBody(self, data):
+        assert False
+
+    def getBody(self):
+        assert False
+
+    def setHeader(self, key, value):
+        assert False
+
+    def getHeader(self, key):
+        assert False
+
+    def getHeaders(self):
+        assert False
+
+HTTPRequest.quark_HTTPRequest_ref = quark_md.Root.quark_HTTPRequest_md
+class HTTPResponse(object):
+
+    def getCode(self):
+        assert False
+
+    def setCode(self, code):
+        assert False
+
+    def getBody(self):
+        assert False
+
+    def setBody(self, body):
+        assert False
+
+    def setHeader(self, key, value):
+        assert False
+
+    def getHeader(self, key):
+        assert False
+
+    def getHeaders(self):
+        assert False
+
+HTTPResponse.quark_HTTPResponse_ref = quark_md.Root.quark_HTTPResponse_md
+class HTTPServlet(object):
+    """
+    Http servlet
+    """
+
+    def onHTTPRequest(self, request, response):
+        """
+        incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime
+        """
+        pass
+
+    def serveHTTP(self, url):
+        (concurrent.Context.runtime()).serveHTTP(url, self);
+
+
+HTTPServlet.quark_HTTPServlet_ref = quark_md.Root.quark_HTTPServlet_md
+
+class WSHandler(object):
+
+    def onWSInit(self, socket):
+        pass
+
+    def onWSConnected(self, socket):
+        pass
+
+    def onWSMessage(self, socket, message):
+        pass
+
+    def onWSBinary(self, socket, message):
+        pass
+
+    def onWSClosed(self, socket):
+        pass
+
+    def onWSError(self, socket):
+        pass
+
+    def onWSFinal(self, socket):
+        pass
+
+WSHandler.quark_WSHandler_ref = quark_md.Root.quark_WSHandler_md
+class WebSocket(object):
+
+    def send(self, message):
+        assert False
+
+    def sendBinary(self, bytes):
+        assert False
+
+    def close(self):
+        assert False
+
+WebSocket.quark_WebSocket_ref = quark_md.Root.quark_WebSocket_md
+class WSServlet(object):
+    """
+    Websocket servlet
+    """
+
+    def onWSConnect(self, upgrade_request):
+        """
+        called for each new incoming WebSocket connection
+        """
+        return None
+
+    def serveWS(self, url):
+        (concurrent.Context.runtime()).serveWS(url, self);
+
+
+WSServlet.quark_WSServlet_ref = quark_md.Root.quark_WSServlet_md
 
 
 class URL(object):
@@ -671,3 +874,5 @@ class URL(object):
 
 
 URL.quark_URL_ref = quark_md.Root.quark_URL_md
+
+

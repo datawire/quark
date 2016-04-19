@@ -1,9 +1,5 @@
 include io/datawire/quark/runtime/AbstractHTTPHandler.java;
 include io/datawire/quark/runtime/ClientHTTPRequest.java;
-include io/datawire/quark/runtime/HTTPHandler.java;
-include io/datawire/quark/runtime/HTTPRequest.java;
-include io/datawire/quark/runtime/HTTPResponse.java;
-include io/datawire/quark/runtime/HTTPServlet.java;
 include io/datawire/quark/netty/DatawireNettyHttpContainer.java;
 include io/datawire/quark/netty/IncomingRequest.java;
 include io/datawire/quark/netty/QuarkNettyHttpHandler.java;
@@ -12,17 +8,14 @@ include io/datawire/quark/netty/Response.java;
 
 namespace quark {
 
-    @mapping($java{io.datawire.quark.runtime.HTTPHandler})
-    primitive HTTPHandler {
+    interface HTTPHandler {
         void onHTTPInit(HTTPRequest request) {}
         void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
         void onHTTPError(HTTPRequest request, String message) {}
         void onHTTPFinal(HTTPRequest request) {}
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPRequest}
-             $rb{::DatawireQuarkCore::HTTP::Request})
-    primitive HTTPRequest {
+    interface HTTPRequest {
         macro HTTPRequest(String url) $java{new io.datawire.quark.runtime.ClientHTTPRequest($url)}
                                       $py{_HTTPRequest($url)}
                                       $rb{::DatawireQuarkCore::HTTP::Request.new($url)}
@@ -38,9 +31,7 @@ namespace quark {
         List<String> getHeaders();
     }
 
-    @mapping($java{io.datawire.quark.runtime.HTTPResponse}
-             $rb{::DatawireQuarkCore::HTTP::Response})
-    primitive HTTPResponse {
+    interface HTTPResponse {
         int getCode();
         void setCode(int code);
         String getBody();
@@ -51,8 +42,7 @@ namespace quark {
     }
 
     @doc("Http servlet")
-    @mapping($java{io.datawire.quark.runtime.HTTPServlet})
-    primitive HTTPServlet extends Servlet {
+    interface HTTPServlet extends Servlet {
         @doc("incoming request. respond with Runtime.respond(). After responding the objects may get recycled by the runtime")
         void onHTTPRequest(HTTPRequest request, HTTPResponse response) {}
 

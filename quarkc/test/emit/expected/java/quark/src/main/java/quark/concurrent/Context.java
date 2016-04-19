@@ -4,16 +4,16 @@ package quark.concurrent;
  * The logical stack for async stuff.
  */
 public class Context implements io.datawire.quark.runtime.QObject {
-    public static Context _global = new Context(null);
+    public static Context _global = null;
     public static io.datawire.quark.runtime.TLS<Context> _current = new io.datawire.quark.runtime.TLS(new TLSContextInitializer());
     public static quark.reflect.Class quark_concurrent_Context_ref = quark_md.Root.quark_concurrent_Context_md;
     public Context _parent;
-    public io.datawire.quark.runtime.Runtime _runtime;
+    public quark.Runtime _runtime;
     public Collector collector;
     public Context(Context parent) {
         (this)._parent = parent;
         if ((parent)==(null) || ((Object)(parent) != null && ((Object) (parent)).equals(null))) {
-            (this)._runtime = io.datawire.quark.runtime.Runtime.Factory.create();
+            (this)._runtime = (quark.spi.RuntimeFactory.factory).makeRuntime();
             (this).collector = new Collector();
         } else {
             (this)._runtime = (parent)._runtime;
@@ -24,9 +24,12 @@ public class Context implements io.datawire.quark.runtime.QObject {
         return (Context._current).getValue();
     }
     public static Context global() {
+        if ((Context._global)==(null) || ((Object)(Context._global) != null && ((Object) (Context._global)).equals(null))) {
+            Context._global = new Context(null);
+        }
         return Context._global;
     }
-    public static io.datawire.quark.runtime.Runtime runtime() {
+    public static quark.Runtime runtime() {
         return (Context.current())._runtime;
     }
     public static void swap(Context c) {
@@ -64,7 +67,7 @@ public class Context implements io.datawire.quark.runtime.QObject {
             (this)._parent = (Context) (value);
         }
         if ((name)==("_runtime") || ((Object)(name) != null && ((Object) (name)).equals("_runtime"))) {
-            (this)._runtime = (io.datawire.quark.runtime.Runtime) (value);
+            (this)._runtime = (quark.Runtime) (value);
         }
         if ((name)==("collector") || ((Object)(name) != null && ((Object) (name)).equals("collector"))) {
             (this).collector = (Collector) (value);

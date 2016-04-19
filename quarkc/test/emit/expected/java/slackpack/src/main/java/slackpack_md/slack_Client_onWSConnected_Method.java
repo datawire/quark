@@ -6,7 +6,7 @@ public class slack_Client_onWSConnected_Method extends quark.reflect.Method impl
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         slack.Client obj = (slack.Client) (object);
-        (obj).onWSConnected((io.datawire.quark.runtime.WebSocket) ((args).get(0)));
+        (obj).onWSConnected((quark.WebSocket) ((args).get(0)));
         return null;
     }
     public String _getClass() {
