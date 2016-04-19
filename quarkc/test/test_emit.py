@@ -147,7 +147,6 @@ def test_run_javascript(output):
     js = JavaScript()
     base = os.path.join(output, js.ext)
     dirs = [name for name in os.listdir(base)]
-    node_path = ":".join([os.path.join(base, name) for name in dirs])
     env = {"NODE_PATH": base}
     env.update(os.environ)
 
