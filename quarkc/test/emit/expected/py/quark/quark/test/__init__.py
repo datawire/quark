@@ -228,7 +228,7 @@ class Harness(object):
                 while ((jdx) < (len(methods))):
                     meth = (methods)[jdx];
                     mname = (meth).getName();
-                    if ((mname).startswith(u"test")):
+                    if (((mname).startswith(u"test")) and ((len((meth).getParameters())) == (0))):
                         test = MethodTest(klass, meth);
                         if ((test).match(filters)):
                             (self.tests).append(test);

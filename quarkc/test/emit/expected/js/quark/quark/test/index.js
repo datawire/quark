@@ -287,7 +287,7 @@ function Harness_collect(filters) {
             while ((jdx) < ((methods).length)) {
                 var meth = (methods)[jdx];
                 var mname = (meth).getName();
-                if (((mname).indexOf("test")===0)) {
+                if ((((mname).indexOf("test")===0)) && (_qrt.equals((((meth).getParameters()).length), (0)))) {
                     var test = new MethodTest(klass, meth);
                     if ((test).match(filters)) {
                         (this.tests).push(test);

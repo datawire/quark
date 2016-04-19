@@ -405,7 +405,7 @@ class Harness < ::DatawireQuarkCore::QuarkObject
                 while ((jdx) < ((methods).size)) do
                     meth = (methods)[jdx]
                     mname = meth.getName()
-                    if ((mname).start_with?("test"))
+                    if (((mname).start_with?("test")) && (((meth.getParameters()).size) == (0)))
                         test = ::Quark.quark.test.MethodTest.new(klass, meth)
                         if (test.match(filters))
                             (@tests) << (test)

@@ -364,6 +364,8 @@
     function QuarkBuffer(arg) {
         if (Buffer.isBuffer(arg)) {
             this.data = arg;
+        } else if (Number.isInteger(arg)) {
+            this.data = new Buffer(Array(arg));
         } else {
             this.data = new Buffer(arg);
         }

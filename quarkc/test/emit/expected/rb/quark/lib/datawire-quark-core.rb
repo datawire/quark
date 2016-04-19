@@ -1188,6 +1188,9 @@ module DatawireQuarkCore
     def putFloat(index, value)
       @data[index...index+8] = [value].pack(@ord::FLOAT)
     end
+    def getSlice(index, length)
+      return Buffer.new(@data[index...index+length])
+    end
     def inspect
       "Buffer(%s)" % Codec.new.toHexdump(self, 0, @data.length, 3)
     end

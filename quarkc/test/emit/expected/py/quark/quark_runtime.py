@@ -397,8 +397,9 @@ class Buffer(object):
         return len(value)
 
     def getSlice(self, index, length):
-        other = self.__class__(self.data[index:index + value])
+        other = self.__class__(self.data[index:index + length])
         other._order(self.packer)
+        return other
 
     def putSlice(self, index, source, offset, length):
         self.data[index:index+length] = source.data[offset:offset+length]

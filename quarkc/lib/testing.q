@@ -151,7 +151,7 @@ class Harness {
                 while (jdx < methods.size()) {
                     Method meth = methods[jdx];
                     String mname = meth.getName();
-                    if (mname.startsWith("test")) {
+                    if (mname.startsWith("test") && meth.getParameters().size() == 0) {
                         Test test = new MethodTest(klass, meth);
                         if (test.match(filters)) {
                             tests.add(test);
