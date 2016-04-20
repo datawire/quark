@@ -66,10 +66,9 @@ class Captured(object):
         return child
 
     def do_capture(self, child):
-        if self.output is None:
-            if child.isalive():
-                child.expect(pexpect.EOF)
-            self.output = child.logfile_read.get_data()
+        if child.isalive():
+            child.expect(pexpect.EOF)
+        self.output = child.logfile_read.get_data()
 
 
 class BGProcess(object):
@@ -86,6 +85,10 @@ class BGProcess(object):
     def get_captured(self):
         self.cap.do_capture(self.child)
         return self.cap
+
+    def noop(self):
+        if self.child.isalive():
+            self.child.expect(pexpect.TIMEOUT, timeout=0)
 
     def __enter__(self):
         return self
@@ -105,6 +108,7 @@ class Session(object):
         self.cwd = cwd
         self.output_dir = output_dir
         self.counter = 0
+        self.bg_processes = []
 
     def _get_output_name(self, command, nocmp):
         content = urllib.quote_plus(command)
@@ -114,6 +118,10 @@ class Session(object):
             content = hash_obj.digest().encode("hex")
         suffix = "-nocmp" if nocmp else ""
         return os.path.join(self.output_dir, "out-" + content + suffix + ".txt")
+
+    def call_noop(self):
+        for bg_process in self.bg_processes:
+            bg_process.noop()
 
     def capture(self, command, nocmp=False, filters=[]):
         """
@@ -125,6 +133,7 @@ class Session(object):
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         child = cap.spawn()
         cap.do_capture(child)
+        self.call_noop()
         return cap
 
     def capture_bg(self, command, nocmp=False, filters=[]):
@@ -134,6 +143,8 @@ class Session(object):
         """
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         res = BGProcess(cap)
+        self.bg_processes.append(res)
+        self.call_noop()
         return res
 
     def capture_many(self, command_file):
