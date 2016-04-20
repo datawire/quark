@@ -24,7 +24,6 @@ from quarkc.test import capture_output, generate_docs
 from quarkc.test.util import get_git_top
 
 git_top = get_git_top()
-qc_files_found = True  # *.qc files break example tests and doc generation
 
 gtd = "gen-test"    # Name of directory where doc generation and test stuff is found
 pyf = "execute.py"  # Name of python file to be executed in the above directory
@@ -122,19 +121,7 @@ def gen_docs(scope, src_dir, dest_dir):
             out.write(template.render(scope))
 
 
-def test_no_qc():
-    global qc_files_found
-    print "To delete *.qc files:"
-    print """find %s -type f -name "*.qc" -print0 | xargs -0 rm""" % git_top
-    for root, dirs, files in os.walk(git_top):
-        for filename in files:
-            assert not filename.endswith(".qc"), "Example tests will not pass when *.qc files are present"
-    qc_files_found = False
-
-
 def test_example(example):
-    if qc_files_found:
-        pytest.xfail("Example tests will not pass when *.qc files are present")
     cwd = os.path.join(directory, example)
     gen_dir = os.path.join(directory, example, gtd)
     ex_dir = os.path.join(gen_dir, exd)
