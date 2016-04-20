@@ -5,6 +5,7 @@ dist: trusty
 env:
 - TEST_SUITE=quarkc
 - TEST_SUITE=runtime
+- TEST_SUITE=examples
 language:
 - java
 - python
