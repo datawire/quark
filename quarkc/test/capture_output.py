@@ -61,15 +61,15 @@ class Captured(object):
         self.output = None              # output for this command, i.e. contents of output_file
 
     def spawn(self):
-        child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=90,
-                              logfile=FilteredOutputFile(self.output_file, self.filters))
+        child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=90)
+        child.logfile_read = FilteredOutputFile(self.output_file, self.filters)
         return child
 
     def do_capture(self, child):
         if self.output is None:
             if child.isalive():
                 child.expect(pexpect.EOF)
-            self.output = child.logfile.get_data()
+            self.output = child.logfile_read.get_data()
 
 
 class BGProcess(object):
