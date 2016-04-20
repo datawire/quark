@@ -680,7 +680,7 @@ class Backend(object):
             return self.expr(expr)
 
     def apply_macro(self, macro, expr, args):
-        env = Environment()
+        env = {}
         if macro.clazz and macro.type:
             bindings = expr.resolved.bindings
             for tparam in bindings:

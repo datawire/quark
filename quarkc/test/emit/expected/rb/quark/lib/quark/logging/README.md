@@ -14,4 +14,4 @@ Destination for logging, just a marker interface for now
 Logging configurator
 
 
-## config(())
+## defaultConfig(())
