@@ -843,7 +843,7 @@ module DatawireQuarkCore
     end
 
     def sendBinary (message)
-      @sock.write message.data  # .unpack("C*")
+      @sock.write message.data.unpack("C*")
     end
 
     def close
