@@ -1000,6 +1000,7 @@ class Compiler(object):
             self.roots.add(root)
             if recurse:
                 for u in root.uses:
+                    assert u in self.CACHE, (url, u, self.CACHE.keys())
                     self.roots.add(self.CACHE[u])
             if not include: self.entries[url] = root.files[0]
             return root.files[0]
