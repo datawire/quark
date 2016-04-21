@@ -1,1 +1,2 @@
 JavaScript HelloRPC server starting
+^C

@@ -99,6 +99,7 @@ class BGProcess(object):
     def terminate(self):
         if self.child.isalive():
             self.child.sendintr()
+        self.child.expect([pexpect.EOF, pexpect.TIMEOUT], timeout=0)
         return self.child.close(force=True)
 
     def get_captured(self):

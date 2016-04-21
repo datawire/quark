@@ -1,1 +1,2 @@
 Python HelloRPC server starting
+^C
