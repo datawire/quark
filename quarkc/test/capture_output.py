@@ -143,24 +143,28 @@ class Session(object):
         for bg_process in self.bg_processes:
             bg_process.noop()
 
-    def capture(self, command, nocmp=False, filters=[]):
+    def capture(self, command, nocmp=False, filters=None):
         """
         Run the command synchronously and capture the output. Return an
         instance of Captured. Set option nocmp to True to tell the
         test driver not to compare this file with expected output. Pass
         filters to process the output before writing it to disk.
         """
+        if filters is None:
+            filters = []
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         child = cap.spawn()
         cap.do_capture(child)
         self.call_noop()
         return cap
 
-    def capture_bg(self, command, nocmp=False, filters=[]):
+    def capture_bg(self, command, nocmp=False, filters=None):
         """
         Run the command asynchronously, capturing the output. Return an
         instance of BGProcess. Use nocmp and filters as with capture.
         """
+        if filters is None:
+            filters = []
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         res = BGProcess(cap)
         self.bg_processes.append(res)
