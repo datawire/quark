@@ -19,16 +19,16 @@ namespace hello {
     @doc("The hello service.")
     interface Hello extends Service {
 
-	// How long (in seconds) the remote request is given to complete
+        // How long (in seconds) the remote request is given to complete
         static float timeout = 3.0;
-	// Number of failed requests before circuit breaker trips
+        // Number of failed requests before circuit breaker trips
         static int failureLimit = 1;
-	// How long (in seconds) before circuit breaker resets
+        // How long (in seconds) before circuit breaker resets
         static float retestDelay = 10.0;
 
         @doc("Respond to a hello request.")
         Response hello(Request request) {
-	    // ? operator casts the return value to a Response object
+            // ? operator casts the return value to a Response object
             return ?self.rpc("hello", [request]);
         }
 
