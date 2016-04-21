@@ -36,9 +36,9 @@ class FilteredOutputFile(object):
 
     @staticmethod
     def normalize_end_of_file(text):
-        "Remove blank lines at the end"
+        """Remove blank lines and ^C at the end"""
         lines = text.split("\n")
-        while lines and not lines[-1].strip():
+        while lines and (not lines[-1].strip() or lines[-1].strip() == "^C"):
             del lines[-1]
         return "\n".join(lines) + "\n"
 
