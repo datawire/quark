@@ -34,6 +34,14 @@ class FilteredOutputFile(object):
             res.append(line)
         return "\n".join(res)
 
+    @staticmethod
+    def normalize_end_of_file(text):
+        "Remove blank lines at the end"
+        lines = text.split("\n")
+        while lines and not lines[-1].strip():
+            del lines[-1]
+        return "\n".join(lines) + "\n"
+
     def __init__(self, filename, filters):
         self.file = open(filename, "wb", 0)
         self.filters = filters
@@ -42,6 +50,7 @@ class FilteredOutputFile(object):
         except TypeError:
             self.filters = [self.filters]
         self.filters.append(FilteredOutputFile.python_threaded_exit_crash_filter)  # XXX HACK FIXME etc.
+        self.filters.append(FilteredOutputFile.normalize_end_of_file)
         self.captured = []
 
     def get_data(self):
