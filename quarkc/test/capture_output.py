@@ -24,6 +24,15 @@ import pexpect
 
 
 class FilteredOutputFile(object):
+    @staticmethod
+    def python_threaded_exit_crash_filter(text):
+        lines = text.split("\n")
+        res = []
+        for line in lines:
+            if line.startswith("Exception in thread ") and "(most likely raised during interpreter shutdown)" in line:
+                break
+            res.append(line)
+        return "\n".join(res)
 
     def __init__(self, filename, filters):
         self.file = open(filename, "wb", 0)
@@ -32,6 +41,7 @@ class FilteredOutputFile(object):
             len(self.filters)
         except TypeError:
             self.filters = [self.filters]
+        self.filters.append(FilteredOutputFile.python_threaded_exit_crash_filter)  # XXX HACK FIXME etc.
         self.captured = []
 
     def get_data(self):
