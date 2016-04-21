@@ -36,7 +36,7 @@ class test_size(string_test):
     def does(self, expected):
         actual = len(self.what);
         op = ((u"'") + (self.what)) + (u"'.size()");
-        (self).check(str(actual), str(expected), op, u"");
+        (self).check(_toString(actual), _toString(expected), op, u"");
         return self
 
     def _getClass(self):
@@ -69,7 +69,7 @@ class test_startsWith(string_test):
         return self
 
     def does(self, expected):
-        (self).check(str(((self).what).startswith((self)._that)).lower(), str(expected).lower(), ((((u"'") + ((self).what)) + (u"'.startsWith('")) + ((self)._that)) + (u"'"), u"");
+        (self).check(_toString(((self).what).startswith((self)._that)).lower(), _toString(expected).lower(), ((((u"'") + ((self).what)) + (u"'.startsWith('")) + ((self)._that)) + (u"'"), u"");
         return self
 
     def _getClass(self):
@@ -108,7 +108,7 @@ class test_endsWith(string_test):
         return self
 
     def does(self, expected):
-        (self).check(str(((self).what).endswith((self)._that)).lower(), str(expected).lower(), ((((u"'") + ((self).what)) + (u"'.endsWith('")) + ((self)._that)) + (u"'"), u"");
+        (self).check(_toString(((self).what).endswith((self)._that)).lower(), _toString(expected).lower(), ((((u"'") + ((self).what)) + (u"'.endsWith('")) + ((self)._that)) + (u"'"), u"");
         return self
 
     def _getClass(self):
@@ -147,7 +147,7 @@ class test_find(string_test):
         return self
 
     def does(self, expected):
-        (self).check(str(((self).what).find((self)._that)), str(expected), ((((u"'") + ((self).what)) + (u"'.find('")) + ((self)._that)) + (u"'"), u"");
+        (self).check(_toString(((self).what).find((self)._that)), _toString(expected), ((((u"'") + ((self).what)) + (u"'.find('")) + ((self)._that)) + (u"'"), u"");
         return self
 
     def _getClass(self):
@@ -188,7 +188,7 @@ class test_substring(string_test):
         return self
 
     def does(self, expected):
-        (self).check(((self).what)[((self).start):((self).end)], expected, ((((((u"'") + ((self).what)) + (u"'.substring(")) + (str((self).start))) + (u", ")) + (str((self).end))) + (u")"), u"'");
+        (self).check(((self).what)[((self).start):((self).end)], expected, ((((((u"'") + ((self).what)) + (u"'.substring(")) + (_toString((self).start))) + (u", ")) + (_toString((self).end))) + (u")"), u"'");
         return self
 
     def _getClass(self):

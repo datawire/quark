@@ -677,6 +677,153 @@ class slack_Client_onHTTPResponse_Method(quark.reflect.Method):
     def _setField(self, name, value):
         pass
 
+class slack_Client_onWSInit_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onWSInit_Method, self).__init__(u"quark.void", u"onWSInit", _List([u"quark.WebSocket"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onWSInit((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onWSBinary_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onWSBinary_Method, self).__init__(u"quark.void", u"onWSBinary", _List([u"quark.WebSocket", u"quark.Buffer"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onWSBinary((args)[0], (args)[1]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onWSClosed_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onWSClosed_Method, self).__init__(u"quark.void", u"onWSClosed", _List([u"quark.WebSocket"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onWSClosed((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onWSFinal_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onWSFinal_Method, self).__init__(u"quark.void", u"onWSFinal", _List([u"quark.WebSocket"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onWSFinal((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onHTTPInit_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onHTTPInit_Method, self).__init__(u"quark.void", u"onHTTPInit", _List([u"quark.HTTPRequest"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onHTTPInit((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onHTTPError_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onHTTPError_Method, self).__init__(u"quark.void", u"onHTTPError", _List([u"quark.HTTPRequest", u"quark.String"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onHTTPError((args)[0], (args)[1]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
+class slack_Client_onHTTPFinal_Method(quark.reflect.Method):
+    def _init(self):
+        quark.reflect.Method._init(self)
+
+    def __init__(self):
+        super(slack_Client_onHTTPFinal_Method, self).__init__(u"quark.void", u"onHTTPFinal", _List([u"quark.HTTPRequest"]));
+
+    def invoke(self, object, args):
+        obj = object;
+        (obj).onHTTPFinal((args)[0]);
+        return None
+
+    def _getClass(self):
+        return None
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+
 class slack_Client(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -686,7 +833,7 @@ class slack_Client(quark.reflect.Class):
         (self).name = u"slack.Client"
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.Runtime", u"runtime"), quark.reflect.Field(u"quark.String", u"token"), quark.reflect.Field(u"slack.SlackHandler", u"handler"), quark.reflect.Field(u"quark.int", u"event_id"), quark.reflect.Field(u"quark.WebSocket", u"socket")])
-        (self).methods = _List([slack_Client_connect_Method(), slack_Client_request_Method(), slack_Client_ws_connect_Method(), slack_Client_ws_send_Method(), slack_Client_onWSConnected_Method(), slack_Client_onWSClose_Method(), slack_Client_onWSError_Method(), slack_Client_construct_Method(), slack_Client_onWSMessage_Method(), slack_Client_onHTTPResponse_Method()])
+        (self).methods = _List([slack_Client_connect_Method(), slack_Client_request_Method(), slack_Client_ws_connect_Method(), slack_Client_ws_send_Method(), slack_Client_onWSConnected_Method(), slack_Client_onWSClose_Method(), slack_Client_onWSError_Method(), slack_Client_construct_Method(), slack_Client_onWSMessage_Method(), slack_Client_onHTTPResponse_Method(), slack_Client_onWSInit_Method(), slack_Client_onWSBinary_Method(), slack_Client_onWSClosed_Method(), slack_Client_onWSFinal_Method(), slack_Client_onHTTPInit_Method(), slack_Client_onHTTPError_Method(), slack_Client_onHTTPFinal_Method()])
 
     def construct(self, args):
         return slack.Client((args)[0], (args)[1], (args)[2])
@@ -884,4 +1031,5 @@ Root.quark_Map_quark_String_quark_Object__md = quark_Map_quark_String_quark_Obje
 
 import slack.event
 import slack
+import quark
 import pkg

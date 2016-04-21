@@ -1,8 +1,8 @@
 package io.datawire.quark.netty;
 
-import io.datawire.quark.runtime.HTTPHandler;
-import io.datawire.quark.runtime.HTTPRequest;
-import io.datawire.quark.runtime.HTTPResponse;
+import quark.HTTPHandler;
+import quark.HTTPRequest;
+import quark.HTTPResponse;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpResponse;

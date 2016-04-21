@@ -492,7 +492,7 @@ class Parser:
     def visit_number(self, node, (pre, number, post)):
         return Number(number)
 
-    @g.rule(r'NUMBER = ~"[0-9]+(\.[0-9]+)?"')
+    @g.rule(r'NUMBER = ~"[0-9]+(\.[0-9]+)?" "L"?')
     def visit_NUMBER(self, node, children):
         return node.text
 

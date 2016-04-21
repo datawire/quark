@@ -5,6 +5,7 @@ module Slack
 require 'quark' # .../reflect
 require_relative 'slack/event' # 0 ('slack',) ()
 require_relative 'slackpack_md' # 0 () ()
+require 'quark' 
 
 
 def self.SlackHandler; SlackHandler; end

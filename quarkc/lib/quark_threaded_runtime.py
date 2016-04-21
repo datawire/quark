@@ -1,4 +1,4 @@
-# Quark's Twisted Runtime and associated
+# Quark's Threaded Runtime
 
 __version__ = '0.4.2'
 
@@ -11,7 +11,6 @@ import time
 import traceback
 import urllib2
 import urlparse
-import logging
 from wsgiref import util
 from Queue import Queue, Empty
 
@@ -27,6 +26,7 @@ from ws4py.websocket import WebSocket
 from ws4py.exc import HandshakeError
 
 from quark_runtime import _HTTPRequest, _HTTPResponse, _default_codec, Buffer
+from quark_runtime_logging import Logger
 
 class _Terminator(object):
 
@@ -172,6 +172,7 @@ class _QuarkWSMixin(object):
         if code == 1000:
             self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
+            self.runtime.log.debug("websocket closed with error %s %s" % (code, reason))
             self.runtime.events.put((self.handler.onWSError, (self.ws,), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
         self.ws.ws = None
@@ -372,6 +373,7 @@ class ThreadedRuntime(object):
         self.event_thread.daemon = True
         self.event_thread.start()
         self._codec = _default_codec()
+        self.log = Logger("quark.runtime")
 
     def acquire(self):
         self.lock.acquire()
@@ -404,7 +406,8 @@ class ThreadedRuntime(object):
             try:
                 ws.connect()
                 ws.run_forever()
-            except Exception:
+            except Exception as ex:
+                runtime.log.debug("websocket pump exception: %s" % ex);
                 runtime.events.put((handler.onWSError, (ws,), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
         try:
@@ -496,16 +499,6 @@ class ThreadedRuntime(object):
 
     def logger(self, topic):
         return Logger(topic)
-
-class Logger(object):
-    def __init__(self, topic):
-        self.impl = logging.getLogger(topic)
-
-    def trace(self, msg): self.impl.debug("%s", msg)
-    def debug(self, msg): self.impl.debug("%s", msg)
-    def info(self, msg): self.impl.info("%s", msg)
-    def warn(self, msg): self.impl.warning("%s", msg)
-    def error(self, msg): self.impl.error("%s", msg)
 
 _global_lock = threading.Lock()
 _threaded_runtime = None

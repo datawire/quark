@@ -3,15 +3,15 @@ package slack;
 /**
  * Represents a persistent connection to the slack service.
  */
-public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.quark.runtime.HTTPHandler, io.datawire.quark.runtime.QObject {
+public class Client implements quark.WSHandler, quark.HTTPHandler, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class slack_Client_ref = slackpack_md.Root.slack_Client_md;
     public static quark.reflect.Class quark_Map_quark_String_quark_Object__ref = slackpack_md.Root.quark_Map_quark_String_quark_Object__md;
-    public io.datawire.quark.runtime.Runtime runtime;
+    public quark.Runtime runtime;
     public String token;
     public SlackHandler handler;
     public Integer event_id = 0;
-    public io.datawire.quark.runtime.WebSocket socket = null;
-    public Client(io.datawire.quark.runtime.Runtime runtime, String token, SlackHandler handler) {
+    public quark.WebSocket socket = null;
+    public Client(quark.Runtime runtime, String token, SlackHandler handler) {
         (this).runtime = runtime;
         (this).token = token;
         (this).handler = handler;
@@ -22,9 +22,9 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     public void connect() {
         (this).request("rtm.start", new java.util.HashMap<String,Object>(), this);
     }
-    public void request(String request, java.util.HashMap<String,Object> params, io.datawire.quark.runtime.HTTPHandler handler) {
+    public void request(String request, java.util.HashMap<String,Object> params, quark.HTTPHandler handler) {
         String url = ("https://slack.com/api/") + (request);
-        io.datawire.quark.runtime.HTTPRequest req = new io.datawire.quark.runtime.ClientHTTPRequest(url);
+        quark.HTTPRequest req = new io.datawire.quark.runtime.ClientHTTPRequest(url);
         (req).setMethod("POST");
         (params).put(("token"), ((this).token));
         (req).setBody(io.datawire.quark.runtime.Builtins.urlencode(params));
@@ -37,13 +37,13 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     public void ws_send(String message) {
         (this.socket).send(message);
     }
-    public void onWSConnected(io.datawire.quark.runtime.WebSocket socket) {
+    public void onWSConnected(quark.WebSocket socket) {
         (this).socket = socket;
     }
-    public void onWSClose(io.datawire.quark.runtime.WebSocket socket) {
+    public void onWSClose(quark.WebSocket socket) {
         do{System.out.println("socket closed");System.out.flush();}while(false);
     }
-    public void onWSError(io.datawire.quark.runtime.WebSocket socket) {
+    public void onWSError(quark.WebSocket socket) {
         do{System.out.println("socket error");System.out.flush();}while(false);
     }
     public slack.event.SlackEvent construct(String type) {
@@ -58,14 +58,14 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
         }
         return new slack.event.SlackEvent();
     }
-    public void onWSMessage(io.datawire.quark.runtime.WebSocket socket, String message) {
+    public void onWSMessage(quark.WebSocket socket, String message) {
         io.datawire.quark.runtime.JSONObject obj = io.datawire.quark.runtime.JSONObject.parse(message);
         String type = ((obj).getObjectItem("type")).getString();
         slack.event.SlackEvent event = (this).construct(type);
         (event).load(this, obj);
         (event).dispatch((this).handler);
     }
-    public void onHTTPResponse(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
+    public void onHTTPResponse(quark.HTTPRequest request, quark.HTTPResponse response) {
         Integer code = (response).getCode();
         slack.event.SlackError error = (slack.event.SlackError) (null);
         if (!((code)==(200) || ((Object)(code) != null && ((Object) (code)).equals(200)))) {
@@ -106,7 +106,7 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
     }
     public void _setField(String name, Object value) {
         if ((name)==("runtime") || ((Object)(name) != null && ((Object) (name)).equals("runtime"))) {
-            (this).runtime = (io.datawire.quark.runtime.Runtime) (value);
+            (this).runtime = (quark.Runtime) (value);
         }
         if ((name)==("token") || ((Object)(name) != null && ((Object) (name)).equals("token"))) {
             (this).token = (String) (value);
@@ -118,14 +118,14 @@ public class Client implements io.datawire.quark.runtime.WSHandler, io.datawire.
             (this).event_id = (Integer) (value);
         }
         if ((name)==("socket") || ((Object)(name) != null && ((Object) (name)).equals("socket"))) {
-            (this).socket = (io.datawire.quark.runtime.WebSocket) (value);
+            (this).socket = (quark.WebSocket) (value);
         }
     }
-    public void onWSInit(io.datawire.quark.runtime.WebSocket socket) {}
-    public void onWSBinary(io.datawire.quark.runtime.WebSocket socket, io.datawire.quark.runtime.Buffer message) {}
-    public void onWSClosed(io.datawire.quark.runtime.WebSocket socket) {}
-    public void onWSFinal(io.datawire.quark.runtime.WebSocket socket) {}
-    public void onHTTPInit(io.datawire.quark.runtime.HTTPRequest request) {}
-    public void onHTTPError(io.datawire.quark.runtime.HTTPRequest request, String message) {}
-    public void onHTTPFinal(io.datawire.quark.runtime.HTTPRequest request) {}
+    public void onWSInit(quark.WebSocket socket) {}
+    public void onWSBinary(quark.WebSocket socket, io.datawire.quark.runtime.Buffer message) {}
+    public void onWSClosed(quark.WebSocket socket) {}
+    public void onWSFinal(quark.WebSocket socket) {}
+    public void onHTTPInit(quark.HTTPRequest request) {}
+    public void onHTTPError(quark.HTTPRequest request, String message) {}
+    public void onHTTPFinal(quark.HTTPRequest request) {}
 }

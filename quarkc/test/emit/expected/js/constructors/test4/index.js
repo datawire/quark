@@ -23,7 +23,7 @@ function Base__getClass() {
 Base.prototype._getClass = Base__getClass;
 
 function Base__getField(name) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -31,7 +31,7 @@ function Base__getField(name) {
 Base.prototype._getField = Base__getField;
 
 function Base__setField(name, value) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }
@@ -59,13 +59,13 @@ function Test__getClass() {
 Test.prototype._getClass = Test__getClass;
 
 function Test__getField(name) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
-    if ((name) === ("mumble")) {
+    if (_qrt.equals((name), ("mumble"))) {
         return (this).mumble;
     }
-    if ((name) === ("later")) {
+    if (_qrt.equals((name), ("later"))) {
         return (this).later;
     }
     return null;
@@ -73,13 +73,13 @@ function Test__getField(name) {
 Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
-    if ((name) === ("mumble")) {
+    if (_qrt.equals((name), ("mumble"))) {
         (this).mumble = value;
     }
-    if ((name) === ("later")) {
+    if (_qrt.equals((name), ("later"))) {
         (this).later = value;
     }
 }

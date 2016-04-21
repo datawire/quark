@@ -1,6 +1,6 @@
 package quark;
 
-public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.datawire.quark.runtime.QObject {
+public class Server<T> implements HTTPServlet, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_Server_quark_Object__ref = quark_md.Root.quark_Server_quark_Object__md;
     public T impl;
     public Boolean _sendCORS;
@@ -11,7 +11,7 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
     public void sendCORS(Boolean send) {
         (this)._sendCORS = send;
     }
-    public void onHTTPRequest(io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
+    public void onHTTPRequest(HTTPRequest request, HTTPResponse response) {
         String body = (request).getBody();
         io.datawire.quark.runtime.JSONObject envelope = io.datawire.quark.runtime.JSONObject.parse(body);
         if ((((envelope).getObjectItem("$method"))==((envelope).undefined()) || ((Object)((envelope).getObjectItem("$method")) != null && ((Object) ((envelope).getObjectItem("$method"))).equals((envelope).undefined()))) || (((envelope).getObjectItem("rpc"))==((envelope).undefined()) || ((Object)((envelope).getObjectItem("rpc")) != null && ((Object) ((envelope).getObjectItem("rpc"))).equals((envelope).undefined())))) {
@@ -62,7 +62,7 @@ public class Server<T> implements io.datawire.quark.runtime.HTTPServlet, io.data
     /**
      * called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested
      */
-    public void onServletInit(String url, io.datawire.quark.runtime.Runtime runtime) {}
+    public void onServletInit(String url, Runtime runtime) {}
     /**
      * called when the servlet is removed
      */

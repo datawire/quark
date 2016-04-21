@@ -39,16 +39,16 @@ function Inner__getClass() {
 Inner.prototype._getClass = Inner__getClass;
 
 function Inner__getField(name) {
-    if ((name) === ("inner_int")) {
+    if (_qrt.equals((name), ("inner_int"))) {
         return (this).inner_int;
     }
-    if ((name) === ("inner_string")) {
+    if (_qrt.equals((name), ("inner_string"))) {
         return (this).inner_string;
     }
-    if ((name) === ("inner_float")) {
+    if (_qrt.equals((name), ("inner_float"))) {
         return (this).inner_float;
     }
-    if ((name) === ("inner_string_list")) {
+    if (_qrt.equals((name), ("inner_string_list"))) {
         return (this).inner_string_list;
     }
     return null;
@@ -56,16 +56,16 @@ function Inner__getField(name) {
 Inner.prototype._getField = Inner__getField;
 
 function Inner__setField(name, value) {
-    if ((name) === ("inner_int")) {
+    if (_qrt.equals((name), ("inner_int"))) {
         (this).inner_int = value;
     }
-    if ((name) === ("inner_string")) {
+    if (_qrt.equals((name), ("inner_string"))) {
         (this).inner_string = value;
     }
-    if ((name) === ("inner_float")) {
+    if (_qrt.equals((name), ("inner_float"))) {
         (this).inner_float = value;
     }
-    if ((name) === ("inner_string_list")) {
+    if (_qrt.equals((name), ("inner_string_list"))) {
         (this).inner_string_list = value;
     }
 }
@@ -102,16 +102,16 @@ function Outer__getClass() {
 Outer.prototype._getClass = Outer__getClass;
 
 function Outer__getField(name) {
-    if ((name) === ("outer_int")) {
+    if (_qrt.equals((name), ("outer_int"))) {
         return (this).outer_int;
     }
-    if ((name) === ("outer_string")) {
+    if (_qrt.equals((name), ("outer_string"))) {
         return (this).outer_string;
     }
-    if ((name) === ("outer_float")) {
+    if (_qrt.equals((name), ("outer_float"))) {
         return (this).outer_float;
     }
-    if ((name) === ("outer_inner_list")) {
+    if (_qrt.equals((name), ("outer_inner_list"))) {
         return (this).outer_inner_list;
     }
     return null;
@@ -119,16 +119,16 @@ function Outer__getField(name) {
 Outer.prototype._getField = Outer__getField;
 
 function Outer__setField(name, value) {
-    if ((name) === ("outer_int")) {
+    if (_qrt.equals((name), ("outer_int"))) {
         (this).outer_int = value;
     }
-    if ((name) === ("outer_string")) {
+    if (_qrt.equals((name), ("outer_string"))) {
         (this).outer_string = value;
     }
-    if ((name) === ("outer_float")) {
+    if (_qrt.equals((name), ("outer_float"))) {
         (this).outer_float = value;
     }
-    if ((name) === ("outer_inner_list")) {
+    if (_qrt.equals((name), ("outer_inner_list"))) {
         (this).outer_inner_list = value;
     }
 }

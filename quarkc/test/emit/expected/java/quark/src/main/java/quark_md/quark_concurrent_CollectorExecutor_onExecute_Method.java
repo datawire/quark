@@ -6,7 +6,7 @@ public class quark_concurrent_CollectorExecutor_onExecute_Method extends quark.r
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         quark.concurrent.CollectorExecutor obj = (quark.concurrent.CollectorExecutor) (object);
-        (obj).onExecute((io.datawire.quark.runtime.Runtime) ((args).get(0)));
+        (obj).onExecute((quark.Runtime) ((args).get(0)));
         return null;
     }
     public String _getClass() {

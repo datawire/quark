@@ -1,6 +1,6 @@
 package quark.behaviors;
 
-public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawire.quark.runtime.QObject {
+public class CircuitBreaker implements quark.Task, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_behaviors_CircuitBreaker_ref = quark_md.Root.quark_behaviors_CircuitBreaker_md;
     public String id;
     public Integer failureLimit;
@@ -35,7 +35,7 @@ public class CircuitBreaker implements io.datawire.quark.runtime.Task, io.datawi
             (quark.concurrent.Context.runtime()).schedule(this, (this).retestDelay);
         }
     }
-    public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
+    public void onExecute(quark.Runtime runtime) {
         ((this).mutex).acquire();
         (this).active = true;
         (quark.Client.logger).warn(("- RETEST breaker on ") + ((this).id));

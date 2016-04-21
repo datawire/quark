@@ -1,8 +1,8 @@
 package io.datawire.quark.netty;
 
 import io.datawire.quark.runtime.Buffer;
-import io.datawire.quark.runtime.WSHandler;
-import io.datawire.quark.runtime.WebSocket;
+import quark.WSHandler;
+import quark.WebSocket;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;

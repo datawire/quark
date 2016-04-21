@@ -3,12 +3,201 @@ require_relative "datawire-quark-core"
 def self.quark; Quark; end
 module Quark
 require_relative 'quark/reflect' # 0 ('quark',) ()
-require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark_md' # 0 () ()
+require_relative 'quark/logging' # 0 ('quark',) ()
+require_relative 'quark/behaviors' # 0 ('quark',) ()
 require_relative 'quark/concurrent' # 0 ('quark',) ()
 require_relative 'quark/test' # 0 ('quark',) ()
+require_relative 'quark/spi' # 0 ('quark',) ()
+require_relative 'quark/spi_api' # 0 ('quark',) ()
+require_relative 'quark/spi_api_tracing' # 0 ('quark',) ()
 
 
+def self.Task; Task; end
+class Task < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_Task_ref: -> { ::Quark.quark_md.Root.quark_Task_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onExecute(runtime)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+Task.unlazy_statics
+
+def self.Runtime; Runtime; end
+class Runtime < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_Runtime_ref: -> { ::Quark.quark_md.Root.quark_Runtime_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def open(url, handler)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def request(request, handler)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def schedule(handler, delayInSeconds)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def codec()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def serveHTTP(url, servlet)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def serveWS(url, servlet)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def respond(request, response)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def fail(message)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def logger(topic)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+Runtime.unlazy_statics
+
+
+def self.ListUtil; ListUtil; end
+class ListUtil < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_List_quark_Object__ref: -> { ::Quark.quark_md.Root.quark_List_quark_Object__md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def slice(list, start, stop)
+        
+        result = ::DatawireQuarkCore::List.new([])
+        if ((start) >= ((list).size))
+            start = (list).size
+        else
+            start = (start) % ((list).size)
+        end
+        if ((stop) >= ((list).size))
+            stop = (list).size
+        else
+            stop = (stop) % ((list).size)
+        end
+        idx = start
+        while ((idx) < (stop)) do
+            (result) << ((list)[idx])
+            idx = (idx) + (1)
+        end
+        return result
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "quark.ListUtil<quark.Object>"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+ListUtil.unlazy_statics
 
 
 
@@ -111,6 +300,54 @@ def self.fromJSON(cls, result, json)
     nil
 end
 
+
+def self.Servlet; Servlet; end
+class Servlet < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_Servlet_ref: -> { ::Quark.quark_md.Root.quark_Servlet_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onServletInit(url, runtime)
+        
+        nil
+
+        nil
+    end
+
+    def onServletError(url, error)
+        
+        nil
+
+        nil
+    end
+
+    def onServletEnd(url)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+Servlet.unlazy_statics
 
 def self.Resolver; Resolver; end
 class Resolver < ::DatawireQuarkCore::QuarkObject
@@ -936,6 +1173,549 @@ class Server < ::DatawireQuarkCore::QuarkObject
 end
 Server.unlazy_statics
 
+
+
+def self.HTTPHandler; HTTPHandler; end
+class HTTPHandler < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_HTTPHandler_ref: -> { ::Quark.quark_md.Root.quark_HTTPHandler_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onHTTPInit(request)
+        
+        nil
+
+        nil
+    end
+
+    def onHTTPResponse(request, response)
+        
+        nil
+
+        nil
+    end
+
+    def onHTTPError(request, message)
+        
+        nil
+
+        nil
+    end
+
+    def onHTTPFinal(request)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+HTTPHandler.unlazy_statics
+
+def self.HTTPRequest; HTTPRequest; end
+class HTTPRequest < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_HTTPRequest_ref: -> { ::Quark.quark_md.Root.quark_HTTPRequest_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def getUrl()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setMethod(method)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getMethod()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setBody(data)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getBody()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setHeader(key, value)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getHeader(key)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getHeaders()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+HTTPRequest.unlazy_statics
+
+def self.HTTPResponse; HTTPResponse; end
+class HTTPResponse < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_HTTPResponse_ref: -> { ::Quark.quark_md.Root.quark_HTTPResponse_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def getCode()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setCode(code)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getBody()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setBody(body)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def setHeader(key, value)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getHeader(key)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def getHeaders()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+HTTPResponse.unlazy_statics
+
+def self.HTTPServlet; HTTPServlet; end
+class HTTPServlet < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_HTTPServlet_ref: -> { ::Quark.quark_md.Root.quark_HTTPServlet_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onHTTPRequest(request, response)
+        
+        nil
+
+        nil
+    end
+
+    def serveHTTP(url)
+        
+        ::Quark.quark.concurrent.Context.runtime().serveHTTP(url, self)
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+HTTPServlet.unlazy_statics
+
+
+def self.WSHandler; WSHandler; end
+class WSHandler < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_WSHandler_ref: -> { ::Quark.quark_md.Root.quark_WSHandler_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onWSInit(socket)
+        
+        nil
+
+        nil
+    end
+
+    def onWSConnected(socket)
+        
+        nil
+
+        nil
+    end
+
+    def onWSMessage(socket, message)
+        
+        nil
+
+        nil
+    end
+
+    def onWSBinary(socket, message)
+        
+        nil
+
+        nil
+    end
+
+    def onWSClosed(socket)
+        
+        nil
+
+        nil
+    end
+
+    def onWSError(socket)
+        
+        nil
+
+        nil
+    end
+
+    def onWSFinal(socket)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+WSHandler.unlazy_statics
+
+def self.WebSocket; WebSocket; end
+class WebSocket < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_WebSocket_ref: -> { ::Quark.quark_md.Root.quark_WebSocket_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def send(message)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def sendBinary(bytes)
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def close()
+        raise NotImplementedError, "this is an abstract method"
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+WebSocket.unlazy_statics
+
+def self.WSServlet; WSServlet; end
+class WSServlet < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static quark_WSServlet_ref: -> { ::Quark.quark_md.Root.quark_WSServlet_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def onWSConnect(upgrade_request)
+        
+        return nil
+
+        nil
+    end
+
+    def serveWS(url)
+        
+        ::Quark.quark.concurrent.Context.runtime().serveWS(url, self)
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+WSServlet.unlazy_statics
+
+
+
+def self.URL; URL; end
+class URL < ::DatawireQuarkCore::QuarkObject
+    attr_accessor :scheme, :host, :port, :path
+    extend ::DatawireQuarkCore::Static
+
+    static quark_URL_ref: -> { ::Quark.quark_md.Root.quark_URL_md }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def self.parse(url)
+        
+        result = ::Quark.quark.URL.new()
+        if ((url) == (nil))
+            return nil
+        end
+        parts = nil
+        remaining = nil
+        idx = ((url).index("://") or -1)
+        if ((idx) >= (0))
+            (result).scheme = (url)[(0)...(idx)]
+            remaining = (url)[((idx) + (3))...((url).size)]
+        else
+            remaining = url
+        end
+        firstSlash = ((remaining).index("/") or -1)
+        if ((firstSlash) == (0))
+            (result).path = remaining
+            return result
+        end
+        if ((firstSlash) < (0))
+            firstSlash = (remaining).size
+        else
+            (result).path = (remaining)[(firstSlash)...((remaining).size)]
+        end
+        idx = ((remaining).index(":") or -1)
+        if ((idx) > (firstSlash))
+            (result).host = (remaining)[(0)...(firstSlash)]
+        else
+            if ((idx) >= (0))
+                (result).host = (remaining)[(0)...(idx)]
+                (result).port = (remaining)[((idx) + (1))...(firstSlash)]
+            else
+                (result).host = (remaining)[(0)...(firstSlash)]
+            end
+        end
+        return result
+
+        nil
+    end
+
+    def toString()
+        
+        result = ""
+        if ((@scheme) != (nil))
+            result = (@scheme) + ("://")
+        end
+        if ((@host) != (nil))
+            result = (result) + (@host)
+        end
+        if ((@port) != (nil))
+            result = ((result) + (":")) + (@port)
+        end
+        if ((@path) != (nil))
+            result = (result) + (@path)
+        end
+        return result
+
+        nil
+    end
+
+    def _getClass()
+        
+        return "quark.URL"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("scheme"))
+            return (self).scheme
+        end
+        if ((name) == ("host"))
+            return (self).host
+        end
+        if ((name) == ("port"))
+            return (self).port
+        end
+        if ((name) == ("path"))
+            return (self).path
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        if ((name) == ("scheme"))
+            (self).scheme = value
+        end
+        if ((name) == ("host"))
+            (self).host = value
+        end
+        if ((name) == ("port"))
+            (self).port = value
+        end
+        if ((name) == ("path"))
+            (self).path = value
+        end
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        self.scheme = nil
+        self.host = nil
+        self.port = nil
+        self.path = nil
+
+        nil
+    end
+
+
+end
+URL.unlazy_statics
 
 
 

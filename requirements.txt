@@ -1,5 +1,7 @@
 # requirements for developing and/or testing quark and the runtime integrations
 -e .
+setuptools>=18
+pip>=8
 ws4py==0.3.4
 pytest
 pexpect

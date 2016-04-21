@@ -65,7 +65,7 @@ class Test(object):
         (Test.ctx).setValue(self);
 
     def stop(self):
-        result = (((((self.name) + (u" [")) + (str(self.checks))) + (u" checks, ")) + (str(len(self.failures)))) + (u" failures]");
+        result = (((((self.name) + (u" [")) + (_toString(self.checks))) + (u" checks, ")) + (_toString(len(self.failures)))) + (u" failures]");
         if ((len(self.failures)) > (0)):
             _println(red(result));
         else:
@@ -198,7 +198,7 @@ def check(value, message):
 
 
 def checkEqual(expected, actual):
-    return (Test.current()).check((expected) == (actual), (((u"expected ") + (str(expected))) + (u" got ")) + (str(actual)))
+    return (Test.current()).check((expected) == (actual), (((u"expected ") + (_toString(expected))) + (u" got ")) + (_toString(actual)))
 
 
 def fail(message):
@@ -228,7 +228,7 @@ class Harness(object):
                 while ((jdx) < (len(methods))):
                     meth = (methods)[jdx];
                     mname = (meth).getName();
-                    if ((mname).startswith(u"test")):
+                    if (((mname).startswith(u"test")) and ((len((meth).getParameters())) == (0))):
                         test = MethodTest(klass, meth);
                         if ((test).match(filters)):
                             (self.tests).append(test);
@@ -262,7 +262,7 @@ class Harness(object):
 
         passed = (len(self.tests)) - (failures);
         _println(bold(u"=============================== stopping tests ==============================="));
-        result = (((((((u"Total: ") + (str((len(self.tests)) + (self.filtered)))) + (u", Filtered: ")) + (str(self.filtered))) + (u", Passed: ")) + (str(passed))) + (u", Failed: ")) + (str(failures));
+        result = (((((((u"Total: ") + (_toString((len(self.tests)) + (self.filtered)))) + (u", Filtered: ")) + (_toString(self.filtered))) + (u", Passed: ")) + (_toString(passed))) + (u", Failed: ")) + (_toString(failures));
         if ((failures) > (0)):
             _println(red(result));
         else:

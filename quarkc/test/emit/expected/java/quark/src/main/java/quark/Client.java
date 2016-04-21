@@ -23,12 +23,12 @@ public class Client implements io.datawire.quark.runtime.QObject {
         if (!((failureLimit)==(null) || ((Object)(failureLimit) != null && ((Object) (failureLimit)).equals(null)))) {
             (this)._failureLimit = failureLimit;
         }
-        (Client.logger).info((((this).toString()) + (" failureLimit ")) + (Integer.toString((this)._failureLimit)));
+        (Client.logger).info(((("" + (this))) + (" failureLimit ")) + (Integer.toString((this)._failureLimit)));
         Double retestDelay = (Double) (((io.datawire.quark.runtime.QObject) (this))._getField("retestDelay"));
         if (!((retestDelay)==(null) || ((Object)(retestDelay) != null && ((Object) (retestDelay)).equals(null)))) {
             (this)._retestDelay = retestDelay;
         }
-        (Client.logger).info((((this).toString()) + (" retestDelay ")) + (Double.toString((this)._retestDelay)));
+        (Client.logger).info(((("" + (this))) + (" retestDelay ")) + (Double.toString((this)._retestDelay)));
     }
     public void setResolver(Resolver resolver) {
         (this).resolver = resolver;

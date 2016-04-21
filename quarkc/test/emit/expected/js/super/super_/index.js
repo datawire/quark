@@ -30,7 +30,7 @@ function A__getClass() {
 A.prototype._getClass = A__getClass;
 
 function A__getField(name) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -38,7 +38,7 @@ function A__getField(name) {
 A.prototype._getField = A__getField;
 
 function A__setField(name, value) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }
@@ -69,7 +69,7 @@ function B__getClass() {
 B.prototype._getClass = B__getClass;
 
 function B__getField(name) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -77,7 +77,7 @@ function B__getField(name) {
 B.prototype._getField = B__getField;
 
 function B__setField(name, value) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }

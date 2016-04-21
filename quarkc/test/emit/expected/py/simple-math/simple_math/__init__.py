@@ -4,9 +4,9 @@ from quark_runtime import *
 def call_main(): import sys; main(_List(sys.argv[1:]))
 def main(args):
     four = (2) + (2);
-    _println(str(four));
+    _println(_toString(four));
     half = (1) / (2);
-    _println(str(half));
+    _println(_toString(half));
     num = 314.0;
     den = 100.0;
     pi = float(num) / float(den);
@@ -14,10 +14,10 @@ def main(args):
     pie = 3.14;
     _println(repr(pie));
     n = (-(100)) / (3);
-    _println(str(n));
+    _println(_toString(n));
     m = (100) / (-(3));
-    _println(str(m));
+    _println(_toString(m));
     l = (100) % (3);
-    _println(str(l));
+    _println(_toString(l));
     k = (-(100)) % (3);
-    _println(str(k));
+    _println(_toString(k));

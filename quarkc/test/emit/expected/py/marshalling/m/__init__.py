@@ -17,7 +17,7 @@ class Inner(object):
     def setup(self, i):
         f = float(i);
         (self).inner_int = i
-        (self).inner_string = (u"str of ") + (str(i))
+        (self).inner_string = (u"str of ") + (_toString(i))
         (self).inner_float = (300.14) + (f)
         (self).inner_string_list = _List([u"i"])
         return self
@@ -68,7 +68,7 @@ class Outer(object):
     def setup(self, i):
         f = float(i);
         (self).outer_int = (i) * (10)
-        (self).outer_string = (u"str of ") + (str(i))
+        (self).outer_string = (u"str of ") + (_toString(i))
         (self).outer_float = (314000.15) + (f)
         (self).outer_inner_list = _List([(Inner()).setup(i), (Inner()).setup((i) + (42)), (Inner()).setup((i) * (42))])
         return self
@@ -114,7 +114,7 @@ def test_marshalling():
     _println(encoded);
     expected = Outer();
     quark.fromJSON(quark.reflect.Class.get(_getClass(expected)), expected, _JSONObject.parse(encoded));
-    _println(str((expected).outer_int));
+    _println(_toString((expected).outer_int));
     _println((expected).outer_string);
     _println(repr((expected).outer_float));
     _println(repr((((expected).outer_inner_list)[1]).inner_float));

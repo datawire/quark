@@ -17,12 +17,15 @@ from struct import Struct
 import threading
 import base64
 
-__all__ = """os sys time _Map _List _println _url_get _urlencode _JSONObject
+__all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass
-             _RuntimeFactory _Lock _Condition _TLS _TLSInitializer """.split()
+             _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
+             _LoggerConfig""".split()
 
 
 _Map = dict
+
+from quark_runtime_logging import LoggerConfig as _LoggerConfig
 
 
 class _List(list):
@@ -37,6 +40,13 @@ def _println(obj):
         sys.stdout.write((u"%s\n" % obj).encode("utf8"))
     sys.stdout.flush()
 
+def _toString(obj):
+    if obj is None:
+        return "null"
+    elif hasattr(obj, "toString"):
+        return obj.toString()
+    else:
+        return str(obj)
 
 def _url_get(url):
     try:
@@ -387,8 +397,9 @@ class Buffer(object):
         return len(value)
 
     def getSlice(self, index, length):
-        other = self.__class__(self.data[index:index + value])
+        other = self.__class__(self.data[index:index + length])
         other._order(self.packer)
+        return other
 
     def putSlice(self, index, source, offset, length):
         self.data[index:index+length] = source.data[offset:offset+length]

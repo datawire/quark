@@ -26,4 +26,5 @@ function HelloImpl() {
 var implementation = new HelloImpl();
 var server = new hello.HelloServer(implementation);
 server.sendCORS(true);
+console.log("JavaScript HelloRPC server starting")
 server.serveHTTP("http://127.0.0.1:8910/hello");

@@ -5,6 +5,8 @@ var event = require('./event/index.js');
 exports.event = event;
 var slackpack_md = require('../slackpack_md/index.js');
 exports.slackpack_md = slackpack_md;
+var quark = require('quark').quark;
+exports.quark = quark;
 
 
 
@@ -63,10 +65,10 @@ function User__getClass() {
 User.prototype._getClass = User__getClass;
 
 function User__getField(name) {
-    if ((name) === ("client")) {
+    if (_qrt.equals((name), ("client"))) {
         return (this).client;
     }
-    if ((name) === ("user")) {
+    if (_qrt.equals((name), ("user"))) {
         return (this).user;
     }
     return null;
@@ -74,10 +76,10 @@ function User__getField(name) {
 User.prototype._getField = User__getField;
 
 function User__setField(name, value) {
-    if ((name) === ("client")) {
+    if (_qrt.equals((name), ("client"))) {
         (this).client = value;
     }
-    if ((name) === ("user")) {
+    if (_qrt.equals((name), ("user"))) {
         (this).user = value;
     }
 }
@@ -119,10 +121,10 @@ function Channel__getClass() {
 Channel.prototype._getClass = Channel__getClass;
 
 function Channel__getField(name) {
-    if ((name) === ("client")) {
+    if (_qrt.equals((name), ("client"))) {
         return (this).client;
     }
-    if ((name) === ("channel")) {
+    if (_qrt.equals((name), ("channel"))) {
         return (this).channel;
     }
     return null;
@@ -130,10 +132,10 @@ function Channel__getField(name) {
 Channel.prototype._getField = Channel__getField;
 
 function Channel__setField(name, value) {
-    if ((name) === ("client")) {
+    if (_qrt.equals((name), ("client"))) {
         (this).client = value;
     }
-    if ((name) === ("channel")) {
+    if (_qrt.equals((name), ("channel"))) {
         (this).channel = value;
     }
 }
@@ -207,13 +209,13 @@ function Client_onWSError(socket) {
 Client.prototype.onWSError = Client_onWSError;
 
 function Client_construct(type) {
-    if ((type) === ("error")) {
+    if (_qrt.equals((type), ("error"))) {
         return new event.SlackError();
     }
-    if ((type) === ("hello")) {
+    if (_qrt.equals((type), ("hello"))) {
         return new event.Hello();
     }
-    if ((type) === ("message")) {
+    if (_qrt.equals((type), ("message"))) {
         return new event.Message();
     }
     return new event.SlackEvent();
@@ -255,19 +257,19 @@ function Client__getClass() {
 Client.prototype._getClass = Client__getClass;
 
 function Client__getField(name) {
-    if ((name) === ("runtime")) {
+    if (_qrt.equals((name), ("runtime"))) {
         return (this).runtime;
     }
-    if ((name) === ("token")) {
+    if (_qrt.equals((name), ("token"))) {
         return (this).token;
     }
-    if ((name) === ("handler")) {
+    if (_qrt.equals((name), ("handler"))) {
         return (this).handler;
     }
-    if ((name) === ("event_id")) {
+    if (_qrt.equals((name), ("event_id"))) {
         return (this).event_id;
     }
-    if ((name) === ("socket")) {
+    if (_qrt.equals((name), ("socket"))) {
         return (this).socket;
     }
     return null;
@@ -275,19 +277,19 @@ function Client__getField(name) {
 Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
-    if ((name) === ("runtime")) {
+    if (_qrt.equals((name), ("runtime"))) {
         (this).runtime = value;
     }
-    if ((name) === ("token")) {
+    if (_qrt.equals((name), ("token"))) {
         (this).token = value;
     }
-    if ((name) === ("handler")) {
+    if (_qrt.equals((name), ("handler"))) {
         (this).handler = value;
     }
-    if ((name) === ("event_id")) {
+    if (_qrt.equals((name), ("event_id"))) {
         (this).event_id = value;
     }
-    if ((name) === ("socket")) {
+    if (_qrt.equals((name), ("socket"))) {
         (this).socket = value;
     }
 }

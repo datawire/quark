@@ -3,9 +3,9 @@ package quark;
 public class ServerResponder implements quark.concurrent.FutureListener, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_ServerResponder_ref = quark_md.Root.quark_ServerResponder_md;
     public Boolean sendCORS;
-    public io.datawire.quark.runtime.HTTPRequest request;
-    public io.datawire.quark.runtime.HTTPResponse response;
-    public ServerResponder(Boolean sendCORS, io.datawire.quark.runtime.HTTPRequest request, io.datawire.quark.runtime.HTTPResponse response) {
+    public HTTPRequest request;
+    public HTTPResponse response;
+    public ServerResponder(Boolean sendCORS, HTTPRequest request, HTTPResponse response) {
         (this).sendCORS = sendCORS;
         (this).request = request;
         (this).response = response;
@@ -43,10 +43,10 @@ public class ServerResponder implements quark.concurrent.FutureListener, io.data
             (this).sendCORS = (Boolean) (value);
         }
         if ((name)==("request") || ((Object)(name) != null && ((Object) (name)).equals("request"))) {
-            (this).request = (io.datawire.quark.runtime.HTTPRequest) (value);
+            (this).request = (HTTPRequest) (value);
         }
         if ((name)==("response") || ((Object)(name) != null && ((Object) (name)).equals("response"))) {
-            (this).response = (io.datawire.quark.runtime.HTTPResponse) (value);
+            (this).response = (HTTPResponse) (value);
         }
     }
 }

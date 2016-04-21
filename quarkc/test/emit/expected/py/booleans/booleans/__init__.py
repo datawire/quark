@@ -22,9 +22,9 @@ def main(args):
         count = (count) + (1)
 
     troo = (True) and (True);
-    _println(str(troo).lower());
+    _println(_toString(troo).lower());
     fols = (False) or (False);
-    _println(str(fols).lower());
+    _println(_toString(fols).lower());
     foo = u"foo";
     bar = u"bar";
     if (((foo) == (u"foo")) and ((bar) == (u"bar"))):

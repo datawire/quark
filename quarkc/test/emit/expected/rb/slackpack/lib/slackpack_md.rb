@@ -4,6 +4,7 @@ module SlackpackMd
 require 'quark' # .../reflect
 # for ('slackpack_md',): require_relative 'slack/event' # 0 ('slack',) ()
 # for ('slackpack_md',): require_relative 'slack' # 0 () ()
+require 'quark' 
 # for ('slackpack_md',): require_relative 'pkg' # 0 () ()
 
 
@@ -1767,6 +1768,391 @@ class SlackClientOnHTTPResponseMethod < ::Quark.quark.reflect.Method
 
 end
 
+def self.slack_Client_onWSInit_Method; SlackClientOnWSInitMethod; end
+class SlackClientOnWSInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSInit", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSInit((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onWSBinary_Method; SlackClientOnWSBinaryMethod; end
+class SlackClientOnWSBinaryMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSBinary", ::DatawireQuarkCore::List.new(["quark.WebSocket", "quark.Buffer"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSBinary((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onWSClosed_Method; SlackClientOnWSClosedMethod; end
+class SlackClientOnWSClosedMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSClosed", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSClosed((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onWSFinal_Method; SlackClientOnWSFinalMethod; end
+class SlackClientOnWSFinalMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onWSFinal", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onWSFinal((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onHTTPInit_Method; SlackClientOnHTTPInitMethod; end
+class SlackClientOnHTTPInitMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPInit", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPInit((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onHTTPError_Method; SlackClientOnHTTPErrorMethod; end
+class SlackClientOnHTTPErrorMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPError", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.String"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPError((args)[0], (args)[1])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.slack_Client_onHTTPFinal_Method; SlackClientOnHTTPFinalMethod; end
+class SlackClientOnHTTPFinalMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "onHTTPFinal", ::DatawireQuarkCore::List.new(["quark.HTTPRequest"]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = object
+        obj.onHTTPFinal((args)[0])
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return nil
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
 def self.slack_Client; SlackClient; end
 class SlackClient < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1781,7 +2167,7 @@ class SlackClient < ::Quark.quark.reflect.QuarkClass
         (self).name = "slack.Client"
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Runtime", "runtime"), ::Quark.quark.reflect.Field.new("quark.String", "token"), ::Quark.quark.reflect.Field.new("slack.SlackHandler", "handler"), ::Quark.quark.reflect.Field.new("quark.int", "event_id"), ::Quark.quark.reflect.Field.new("quark.WebSocket", "socket")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Client_connect_Method.new(), ::Quark.slackpack_md.slack_Client_request_Method.new(), ::Quark.slackpack_md.slack_Client_ws_connect_Method.new(), ::Quark.slackpack_md.slack_Client_ws_send_Method.new(), ::Quark.slackpack_md.slack_Client_onWSConnected_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClose_Method.new(), ::Quark.slackpack_md.slack_Client_onWSError_Method.new(), ::Quark.slackpack_md.slack_Client_construct_Method.new(), ::Quark.slackpack_md.slack_Client_onWSMessage_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPResponse_Method.new()])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Client_connect_Method.new(), ::Quark.slackpack_md.slack_Client_request_Method.new(), ::Quark.slackpack_md.slack_Client_ws_connect_Method.new(), ::Quark.slackpack_md.slack_Client_ws_send_Method.new(), ::Quark.slackpack_md.slack_Client_onWSConnected_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClose_Method.new(), ::Quark.slackpack_md.slack_Client_onWSError_Method.new(), ::Quark.slackpack_md.slack_Client_construct_Method.new(), ::Quark.slackpack_md.slack_Client_onWSMessage_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPResponse_Method.new(), ::Quark.slackpack_md.slack_Client_onWSInit_Method.new(), ::Quark.slackpack_md.slack_Client_onWSBinary_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClosed_Method.new(), ::Quark.slackpack_md.slack_Client_onWSFinal_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPInit_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPError_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPFinal_Method.new()])
 
         nil
     end

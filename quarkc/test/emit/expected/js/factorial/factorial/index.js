@@ -2,7 +2,7 @@ var _qrt = require("quark/quark_runtime.js");
 
 
 function factorial(n) {
-    if ((n) === (0)) {
+    if (_qrt.equals((n), (0))) {
         return 1;
     } else {
         return (n) * (factorial((n) - (1)));

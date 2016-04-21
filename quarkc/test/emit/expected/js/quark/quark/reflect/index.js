@@ -28,7 +28,7 @@ Class.FLOAT = new Class("quark.float");
 Class.STRING = new Class("quark.String");
 function Class_get(id) {
     if (!((Class.classes).has(id))) {
-        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + ((Array.from((Class.classes).keys())).toString()));
+        _qrt.print(((("Cannot find ") + (id)) + (" in ")) + (_qrt.toString(Array.from((Class.classes).keys()))));
     }
     return _qrt.map_get((Class.classes), (id));
 }
@@ -68,7 +68,7 @@ Class.prototype.getFields = Class_getFields;
 function Class_getField(name) {
     var idx = 0;
     while ((idx) < ((this.fields).length)) {
-        if ((((this.fields)[idx]).name) === (name)) {
+        if (_qrt.equals((((this.fields)[idx]).name), (name))) {
             return (this.fields)[idx];
         }
         idx = (idx) + (1);
@@ -85,7 +85,7 @@ Class.prototype.getMethods = Class_getMethods;
 function Class_getMethod(name) {
     var idx = 0;
     while ((idx) < ((this.methods).length)) {
-        if ((((this.methods)[idx]).name) === (name)) {
+        if (_qrt.equals((((this.methods)[idx]).name), (name))) {
             return (this.methods)[idx];
         }
         idx = (idx) + (1);
@@ -100,40 +100,40 @@ function Class__getClass() {
 Class.prototype._getClass = Class__getClass;
 
 function Class__getField(name) {
-    if ((name) === ("classes")) {
+    if (_qrt.equals((name), ("classes"))) {
         return Class.classes;
     }
-    if ((name) === ("VOID")) {
+    if (_qrt.equals((name), ("VOID"))) {
         return Class.VOID;
     }
-    if ((name) === ("BOOL")) {
+    if (_qrt.equals((name), ("BOOL"))) {
         return Class.BOOL;
     }
-    if ((name) === ("INT")) {
+    if (_qrt.equals((name), ("INT"))) {
         return Class.INT;
     }
-    if ((name) === ("LONG")) {
+    if (_qrt.equals((name), ("LONG"))) {
         return Class.LONG;
     }
-    if ((name) === ("FLOAT")) {
+    if (_qrt.equals((name), ("FLOAT"))) {
         return Class.FLOAT;
     }
-    if ((name) === ("STRING")) {
+    if (_qrt.equals((name), ("STRING"))) {
         return Class.STRING;
     }
-    if ((name) === ("id")) {
+    if (_qrt.equals((name), ("id"))) {
         return (this).id;
     }
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
-    if ((name) === ("parameters")) {
+    if (_qrt.equals((name), ("parameters"))) {
         return (this).parameters;
     }
-    if ((name) === ("fields")) {
+    if (_qrt.equals((name), ("fields"))) {
         return (this).fields;
     }
-    if ((name) === ("methods")) {
+    if (_qrt.equals((name), ("methods"))) {
         return (this).methods;
     }
     return null;
@@ -141,40 +141,40 @@ function Class__getField(name) {
 Class.prototype._getField = Class__getField;
 
 function Class__setField(name, value) {
-    if ((name) === ("classes")) {
+    if (_qrt.equals((name), ("classes"))) {
         Class.classes = value;
     }
-    if ((name) === ("VOID")) {
+    if (_qrt.equals((name), ("VOID"))) {
         Class.VOID = value;
     }
-    if ((name) === ("BOOL")) {
+    if (_qrt.equals((name), ("BOOL"))) {
         Class.BOOL = value;
     }
-    if ((name) === ("INT")) {
+    if (_qrt.equals((name), ("INT"))) {
         Class.INT = value;
     }
-    if ((name) === ("LONG")) {
+    if (_qrt.equals((name), ("LONG"))) {
         Class.LONG = value;
     }
-    if ((name) === ("FLOAT")) {
+    if (_qrt.equals((name), ("FLOAT"))) {
         Class.FLOAT = value;
     }
-    if ((name) === ("STRING")) {
+    if (_qrt.equals((name), ("STRING"))) {
         Class.STRING = value;
     }
-    if ((name) === ("id")) {
+    if (_qrt.equals((name), ("id"))) {
         (this).id = value;
     }
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
-    if ((name) === ("parameters")) {
+    if (_qrt.equals((name), ("parameters"))) {
         (this).parameters = value;
     }
-    if ((name) === ("fields")) {
+    if (_qrt.equals((name), ("fields"))) {
         (this).fields = value;
     }
-    if ((name) === ("methods")) {
+    if (_qrt.equals((name), ("methods"))) {
         (this).methods = value;
     }
 }
@@ -211,10 +211,10 @@ function Field__getClass() {
 Field.prototype._getClass = Field__getClass;
 
 function Field__getField(name) {
-    if ((name) === ("type")) {
+    if (_qrt.equals((name), ("type"))) {
         return (this).type;
     }
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -222,10 +222,10 @@ function Field__getField(name) {
 Field.prototype._getField = Field__getField;
 
 function Field__setField(name, value) {
-    if ((name) === ("type")) {
+    if (_qrt.equals((name), ("type"))) {
         (this).type = value;
     }
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }

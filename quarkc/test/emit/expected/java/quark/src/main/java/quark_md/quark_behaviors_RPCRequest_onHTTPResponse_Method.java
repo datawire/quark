@@ -6,7 +6,7 @@ public class quark_behaviors_RPCRequest_onHTTPResponse_Method extends quark.refl
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
         quark.behaviors.RPCRequest obj = (quark.behaviors.RPCRequest) (object);
-        (obj).onHTTPResponse((io.datawire.quark.runtime.HTTPRequest) ((args).get(0)), (io.datawire.quark.runtime.HTTPResponse) ((args).get(1)));
+        (obj).onHTTPResponse((quark.HTTPRequest) ((args).get(0)), (quark.HTTPResponse) ((args).get(1)));
         return null;
     }
     public String _getClass() {

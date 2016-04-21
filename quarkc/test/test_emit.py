@@ -80,7 +80,7 @@ def has_main(name):
 def get_dist(name):
     code = os.path.join(directory, name + ".q")
     cmp = Compiler()
-    file = cmp.urlparse(code)
+    file = cmp.urlparse(code, recurse=False)
     name, ver = namever(file)
     return name
 
@@ -120,7 +120,7 @@ def batch_pom(target, dirs):
 </project>
 """ % "\n    ".join(["<module>%s</module>" % d for d in dirs]))
 
-def test_run_java(output):
+def test_run_java_(output):
     j = Java()
     base = os.path.join(output, j.ext)
     dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]
@@ -147,7 +147,6 @@ def test_run_javascript(output):
     js = JavaScript()
     base = os.path.join(output, js.ext)
     dirs = [name for name in os.listdir(base)]
-    node_path = ":".join([os.path.join(base, name) for name in dirs])
     env = {"NODE_PATH": base}
     env.update(os.environ)
 

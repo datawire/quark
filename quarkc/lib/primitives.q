@@ -9,7 +9,7 @@ namespace quark {
         macro bool __eq__(Object other) $java{($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other))}
                                         $py{($self) == ($other)}
                                         $rb{($self) == ($other)}
-                                        $js{($self) === ($other)};
+                                        $js{_qrt.equals(($self), ($other))};
         macro bool __ne__(Object other) $java{!(($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other)))}
                                         $py{($self) != ($other)}
                                         $rb{($self) != ($other)}
@@ -27,10 +27,10 @@ namespace quark {
                                                        $py{($self)._setField(($name), ($value))}
                                                        $rb{($self)._setField(($name), ($value))}
                                                        $js{($self)._setField(($name), ($value))};
-        macro String toString() $java{($self).toString()}
-                                $py{str($self)}
+        macro String toString() $java{("" + ($self))}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
-                                $js{($self).toString()};
+                                $js{_qrt.toString($self)};
     }
 
     @mapping($java{void})
@@ -48,7 +48,7 @@ namespace quark {
                                       $py{($self) or ($other)}
                                       $rb{($self) || ($other)}
                                       $js{($self) || ($other)};
-        macro String toString() $java{($self).toString()} $py{str($self).lower()} $rb{($self).to_s} $js{($self).toString()};
+        macro String toString() $java{($self).toString()} $py{_toString($self).lower()} $rb{($self).to_s} $js{($self).toString()};
         macro JSONObject toJSON() new JSONObject().setBool(self);
         macro JSONObject __to_JSONObject() self.toJSON();
     }
@@ -87,7 +87,7 @@ namespace quark {
                      $js{Number()};
 
         macro String toString() $java{Byte.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro short __to_short() self;
@@ -103,7 +103,7 @@ namespace quark {
                       $js{Number()};
 
         macro String toString() $java{Short.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() self;
@@ -119,7 +119,7 @@ namespace quark {
                     $js{Number()};
 
         macro String toString() $java{Integer.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
         macro byte __to_byte() $java{(byte)((Integer) ($self)).intValue()}
@@ -144,9 +144,13 @@ namespace quark {
                      $js{Number()};
 
         macro String toString() $java{Long.toString($self)}
-                                $py{str($self)}
+                                $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
+        macro int __to_int() $java{(int) ((Long) ($self)).intValue()}
+                             $py{($self)}
+                             $rb{($self)}
+                             $js{($self)};
     }
 
     @mapping($java{Double} $py{float} $js{Number} $rb{Float})
@@ -278,6 +282,32 @@ namespace quark {
         Buffer fromBase64(String base64);
     }
 
+    class ListUtil<T> {
+        List<T> slice(List<T> list, int start, int stop) {
+            List<T> result = [];
+
+            if (start >= list.size()) {
+                start = list.size();
+            } else {
+                start = start % list.size();
+            }
+
+            if (stop >= list.size()) {
+                stop = list.size();
+            } else {
+                stop = stop % list.size();
+            }
+
+            int idx = start;
+            while (idx < stop) {
+                result.add(list[idx]);
+                idx = idx + 1;
+            }
+
+            return result;
+        }
+    }
+
     @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{::DatawireQuarkCore::List})
     primitive List<T> {
         macro void add(T element) $java{($self).add($element)}
@@ -292,6 +322,7 @@ namespace quark {
                                                $py{($self)[$index] = ($value)}
                                                $rb{($self)[$index] = ($value)}
                                                $js{($self)[$index] = ($value)};
+        macro List<T> slice(int start, int stop) new ListUtil<T>().slice(self, start, stop);
         macro int size() $java{($self).size()}
                          $py{len($self)}
                          $rb{($self).size}

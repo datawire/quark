@@ -3,6 +3,10 @@ var quark = require('../../quark/index.js');
 exports.quark = quark;
 var quark_md = require('../../quark_md/index.js');
 exports.quark_md = quark_md;
+var quark = require('../../quark/index.js');
+exports.quark = quark;
+var quark = require('../../quark/index.js');
+exports.quark = quark;
 
 
 
@@ -73,10 +77,10 @@ function FutureCompletion__getClass() {
 FutureCompletion.prototype._getClass = FutureCompletion__getClass;
 
 function FutureCompletion__getField(name) {
-    if ((name) === ("future")) {
+    if (_qrt.equals((name), ("future"))) {
         return (this).future;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         return (this).listener;
     }
     return null;
@@ -84,10 +88,10 @@ function FutureCompletion__getField(name) {
 FutureCompletion.prototype._getField = FutureCompletion__getField;
 
 function FutureCompletion__setField(name, value) {
-    if ((name) === ("future")) {
+    if (_qrt.equals((name), ("future"))) {
         (this).future = value;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         (this).listener = value;
     }
 }
@@ -120,7 +124,7 @@ function EventContext__getClass() {
 EventContext.prototype._getClass = EventContext__getClass;
 
 function EventContext__getField(name) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         return (this)._context;
     }
     return null;
@@ -128,7 +132,7 @@ function EventContext__getField(name) {
 EventContext.prototype._getField = EventContext__getField;
 
 function EventContext__setField(name, value) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         (this)._context = value;
     }
 }
@@ -163,7 +167,7 @@ function Future_onFinished(callback) {
     if ((this)._finished) {
         (((this)._context).collector).put(new FutureCompletion(this, callback));
     } else {
-        if (((this)._callbacks) === (null)) {
+        if (_qrt.equals(((this)._callbacks), (null))) {
             (this)._callbacks = [];
         }
         ((this)._callbacks).push(new FutureCompletion(this, callback));
@@ -219,19 +223,19 @@ function Future__getClass() {
 Future.prototype._getClass = Future__getClass;
 
 function Future__getField(name) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         return (this)._context;
     }
-    if ((name) === ("_finished")) {
+    if (_qrt.equals((name), ("_finished"))) {
         return (this)._finished;
     }
-    if ((name) === ("_error")) {
+    if (_qrt.equals((name), ("_error"))) {
         return (this)._error;
     }
-    if ((name) === ("_callbacks")) {
+    if (_qrt.equals((name), ("_callbacks"))) {
         return (this)._callbacks;
     }
-    if ((name) === ("_lock")) {
+    if (_qrt.equals((name), ("_lock"))) {
         return (this)._lock;
     }
     return null;
@@ -239,19 +243,19 @@ function Future__getField(name) {
 Future.prototype._getField = Future__getField;
 
 function Future__setField(name, value) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         (this)._context = value;
     }
-    if ((name) === ("_finished")) {
+    if (_qrt.equals((name), ("_finished"))) {
         (this)._finished = value;
     }
-    if ((name) === ("_error")) {
+    if (_qrt.equals((name), ("_error"))) {
         (this)._error = value;
     }
-    if ((name) === ("_callbacks")) {
+    if (_qrt.equals((name), ("_callbacks"))) {
         (this)._callbacks = value;
     }
-    if ((name) === ("_lock")) {
+    if (_qrt.equals((name), ("_lock"))) {
         (this)._lock = value;
     }
 }
@@ -323,10 +327,10 @@ function FutureWait__getClass() {
 FutureWait.prototype._getClass = FutureWait__getClass;
 
 function FutureWait__getField(name) {
-    if ((name) === ("_lock")) {
+    if (_qrt.equals((name), ("_lock"))) {
         return (this)._lock;
     }
-    if ((name) === ("_future")) {
+    if (_qrt.equals((name), ("_future"))) {
         return (this)._future;
     }
     return null;
@@ -334,10 +338,10 @@ function FutureWait__getField(name) {
 FutureWait.prototype._getField = FutureWait__getField;
 
 function FutureWait__setField(name, value) {
-    if ((name) === ("_lock")) {
+    if (_qrt.equals((name), ("_lock"))) {
         (this)._lock = value;
     }
-    if ((name) === ("_future")) {
+    if (_qrt.equals((name), ("_future"))) {
         (this)._future = value;
     }
 }
@@ -399,13 +403,13 @@ function Queue__getClass() {
 Queue.prototype._getClass = Queue__getClass;
 
 function Queue__getField(name) {
-    if ((name) === ("items")) {
+    if (_qrt.equals((name), ("items"))) {
         return (this).items;
     }
-    if ((name) === ("head")) {
+    if (_qrt.equals((name), ("head"))) {
         return (this).head;
     }
-    if ((name) === ("tail")) {
+    if (_qrt.equals((name), ("tail"))) {
         return (this).tail;
     }
     return null;
@@ -413,13 +417,13 @@ function Queue__getField(name) {
 Queue.prototype._getField = Queue__getField;
 
 function Queue__setField(name, value) {
-    if ((name) === ("items")) {
+    if (_qrt.equals((name), ("items"))) {
         (this).items = value;
     }
-    if ((name) === ("head")) {
+    if (_qrt.equals((name), ("head"))) {
         (this).head = value;
     }
-    if ((name) === ("tail")) {
+    if (_qrt.equals((name), ("tail"))) {
         (this).tail = value;
     }
 }
@@ -471,10 +475,10 @@ function CollectorExecutor__getClass() {
 CollectorExecutor.prototype._getClass = CollectorExecutor__getClass;
 
 function CollectorExecutor__getField(name) {
-    if ((name) === ("events")) {
+    if (_qrt.equals((name), ("events"))) {
         return (this).events;
     }
-    if ((name) === ("collector")) {
+    if (_qrt.equals((name), ("collector"))) {
         return (this).collector;
     }
     return null;
@@ -482,10 +486,10 @@ function CollectorExecutor__getField(name) {
 CollectorExecutor.prototype._getField = CollectorExecutor__getField;
 
 function CollectorExecutor__setField(name, value) {
-    if ((name) === ("events")) {
+    if (_qrt.equals((name), ("events"))) {
         (this).events = value;
     }
-    if ((name) === ("collector")) {
+    if (_qrt.equals((name), ("collector"))) {
         (this).collector = value;
     }
 }
@@ -525,7 +529,7 @@ Collector.prototype.put = Collector_put;
 
 function Collector__swap(drained) {
     var pending = (this).pending;
-    (this).idle = ((pending).size()) === (0);
+    (this).idle = _qrt.equals(((pending).size()), (0));
     (this).pending = drained;
     return pending;
 }
@@ -544,16 +548,16 @@ function Collector__getClass() {
 Collector.prototype._getClass = Collector__getClass;
 
 function Collector__getField(name) {
-    if ((name) === ("lock")) {
+    if (_qrt.equals((name), ("lock"))) {
         return (this).lock;
     }
-    if ((name) === ("pending")) {
+    if (_qrt.equals((name), ("pending"))) {
         return (this).pending;
     }
-    if ((name) === ("executor")) {
+    if (_qrt.equals((name), ("executor"))) {
         return (this).executor;
     }
-    if ((name) === ("idle")) {
+    if (_qrt.equals((name), ("idle"))) {
         return (this).idle;
     }
     return null;
@@ -561,16 +565,16 @@ function Collector__getField(name) {
 Collector.prototype._getField = Collector__getField;
 
 function Collector__setField(name, value) {
-    if ((name) === ("lock")) {
+    if (_qrt.equals((name), ("lock"))) {
         (this).lock = value;
     }
-    if ((name) === ("pending")) {
+    if (_qrt.equals((name), ("pending"))) {
         (this).pending = value;
     }
-    if ((name) === ("executor")) {
+    if (_qrt.equals((name), ("executor"))) {
         (this).executor = value;
     }
-    if ((name) === ("idle")) {
+    if (_qrt.equals((name), ("idle"))) {
         (this).idle = value;
     }
 }
@@ -625,10 +629,10 @@ function TimeoutExpiry__getClass() {
 TimeoutExpiry.prototype._getClass = TimeoutExpiry__getClass;
 
 function TimeoutExpiry__getField(name) {
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         return (this).timeout;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         return (this).listener;
     }
     return null;
@@ -636,10 +640,10 @@ function TimeoutExpiry__getField(name) {
 TimeoutExpiry.prototype._getField = TimeoutExpiry__getField;
 
 function TimeoutExpiry__setField(name, value) {
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         (this).timeout = value;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         (this).listener = value;
     }
 }
@@ -697,16 +701,16 @@ function Timeout__getClass() {
 Timeout.prototype._getClass = Timeout__getClass;
 
 function Timeout__getField(name) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         return (this)._context;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         return (this).timeout;
     }
-    if ((name) === ("lock")) {
+    if (_qrt.equals((name), ("lock"))) {
         return (this).lock;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         return (this).listener;
     }
     return null;
@@ -714,16 +718,16 @@ function Timeout__getField(name) {
 Timeout.prototype._getField = Timeout__getField;
 
 function Timeout__setField(name, value) {
-    if ((name) === ("_context")) {
+    if (_qrt.equals((name), ("_context"))) {
         (this)._context = value;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         (this).timeout = value;
     }
-    if ((name) === ("lock")) {
+    if (_qrt.equals((name), ("lock"))) {
         (this).lock = value;
     }
-    if ((name) === ("listener")) {
+    if (_qrt.equals((name), ("listener"))) {
         (this).listener = value;
     }
 }
@@ -767,8 +771,8 @@ TLSContextInitializer.prototype._setField = TLSContextInitializer__setField;
 function Context(parent) {
     this.__init_fields__();
     (this)._parent = parent;
-    if ((parent) === (null)) {
-        (this)._runtime = _qrt.RuntimeFactory.create();
+    if (_qrt.equals((parent), (null))) {
+        (this)._runtime = (quark.spi.RuntimeFactory.factory).makeRuntime();
         (this).collector = new Collector();
     } else {
         (this)._runtime = (parent)._runtime;
@@ -783,7 +787,7 @@ function Context__init_fields__() {
     this.collector = null;
 }
 Context.prototype.__init_fields__ = Context__init_fields__;
-Context._global = new Context(null);
+Context._global = null;
 Context._current = new _qrt.TLS(new TLSContextInitializer());
 Context.quark_concurrent_Context_ref = quark_md.Root.quark_concurrent_Context_md;
 function Context_current() {
@@ -792,6 +796,9 @@ function Context_current() {
 Context.current = Context_current;
 
 function Context_global() {
+    if (_qrt.equals((Context._global), (null))) {
+        Context._global = new Context(null);
+    }
     return Context._global;
 }
 Context.global = Context_global;
@@ -812,19 +819,19 @@ function Context__getClass() {
 Context.prototype._getClass = Context__getClass;
 
 function Context__getField(name) {
-    if ((name) === ("_global")) {
+    if (_qrt.equals((name), ("_global"))) {
         return Context._global;
     }
-    if ((name) === ("_current")) {
+    if (_qrt.equals((name), ("_current"))) {
         return Context._current;
     }
-    if ((name) === ("_parent")) {
+    if (_qrt.equals((name), ("_parent"))) {
         return (this)._parent;
     }
-    if ((name) === ("_runtime")) {
+    if (_qrt.equals((name), ("_runtime"))) {
         return (this)._runtime;
     }
-    if ((name) === ("collector")) {
+    if (_qrt.equals((name), ("collector"))) {
         return (this).collector;
     }
     return null;
@@ -832,19 +839,19 @@ function Context__getField(name) {
 Context.prototype._getField = Context__getField;
 
 function Context__setField(name, value) {
-    if ((name) === ("_global")) {
+    if (_qrt.equals((name), ("_global"))) {
         Context._global = value;
     }
-    if ((name) === ("_current")) {
+    if (_qrt.equals((name), ("_current"))) {
         Context._current = value;
     }
-    if ((name) === ("_parent")) {
+    if (_qrt.equals((name), ("_parent"))) {
         (this)._parent = value;
     }
-    if ((name) === ("_runtime")) {
+    if (_qrt.equals((name), ("_runtime"))) {
         (this)._runtime = value;
     }
-    if ((name) === ("collector")) {
+    if (_qrt.equals((name), ("collector"))) {
         (this).collector = value;
     }
 }

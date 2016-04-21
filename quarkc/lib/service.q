@@ -1,10 +1,8 @@
-include io/datawire/quark/runtime/Servlet.java;
 
 namespace quark {
 
     @doc("A service addresable with an url")
-    @mapping($java{io.datawire.quark.runtime.Servlet})
-    primitive Servlet {
+    interface Servlet {
         @doc("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")
         void onServletInit(String url, Runtime runtime) {}
         @doc("called if the servlet could not be installed")

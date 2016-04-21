@@ -23,7 +23,7 @@ public class Harness implements io.datawire.quark.runtime.QObject {
                 while ((jdx) < ((methods).size())) {
                     quark.reflect.Method meth = (methods).get(jdx);
                     String mname = (meth).getName();
-                    if (Boolean.valueOf((mname).startsWith("test"))) {
+                    if ((Boolean.valueOf((mname).startsWith("test"))) && ((((meth).getParameters()).size())==(0) || ((Object)(((meth).getParameters()).size()) != null && ((Object) (((meth).getParameters()).size())).equals(0)))) {
                         Test test = new MethodTest(klass, meth);
                         if ((test).match(filters)) {
                             (this.tests).add(test);

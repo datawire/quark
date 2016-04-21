@@ -3,7 +3,7 @@ package quark.concurrent;
 /**
  * Timeout
  */
-public class Timeout extends EventContext implements io.datawire.quark.runtime.Task, io.datawire.quark.runtime.QObject {
+public class Timeout extends EventContext implements quark.Task, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_concurrent_Timeout_ref = quark_md.Root.quark_concurrent_Timeout_md;
     public Double timeout;
     public io.datawire.quark.runtime.Lock lock;
@@ -24,7 +24,7 @@ public class Timeout extends EventContext implements io.datawire.quark.runtime.T
         (this).listener = (TimeoutListener) (null);
         ((this).lock).release();
     }
-    public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
+    public void onExecute(quark.Runtime runtime) {
         ((this).lock).acquire();
         if (!(((this).listener)==(null) || ((Object)((this).listener) != null && ((Object) ((this).listener)).equals(null)))) {
             (((this)._context).collector).put(new TimeoutExpiry(this, (this).listener));

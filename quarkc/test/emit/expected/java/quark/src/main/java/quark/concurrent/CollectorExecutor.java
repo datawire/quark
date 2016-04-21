@@ -3,7 +3,7 @@ package quark.concurrent;
 /**
  * Fire events one by one with no locks held
  */
-public class CollectorExecutor implements io.datawire.quark.runtime.Task, io.datawire.quark.runtime.QObject {
+public class CollectorExecutor implements quark.Task, io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class quark_concurrent_Queue_quark_concurrent_Event__ref = quark_md.Root.quark_concurrent_Queue_quark_concurrent_Event__md;
     public static quark.reflect.Class quark_concurrent_CollectorExecutor_ref = quark_md.Root.quark_concurrent_CollectorExecutor_md;
     public Queue<Event> events;
@@ -18,7 +18,7 @@ public class CollectorExecutor implements io.datawire.quark.runtime.Task, io.dat
             (Context.runtime()).schedule(this, 0.0);
         }
     }
-    public void onExecute(io.datawire.quark.runtime.Runtime runtime) {
+    public void onExecute(quark.Runtime runtime) {
         Event next = ((this).events).get();
         Context old = Context.current();
         while (!((next)==(null) || ((Object)(next) != null && ((Object) (next)).equals(null)))) {

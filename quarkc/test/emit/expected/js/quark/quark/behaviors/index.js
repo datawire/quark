@@ -15,7 +15,7 @@ exports.quark_md = quark_md;
 function RPC(service, methodName) {
     this.__init_fields__();
     var timeout = (service)._getField("timeout");
-    if (((timeout) === (null)) || ((timeout) <= (0.0))) {
+    if ((_qrt.equals((timeout), (null))) || ((timeout) <= (0.0))) {
         timeout = 10.0;
     }
     var override = (service).getTimeout();
@@ -83,19 +83,19 @@ function RPC__getClass() {
 RPC.prototype._getClass = RPC__getClass;
 
 function RPC__getField(name) {
-    if ((name) === ("service")) {
+    if (_qrt.equals((name), ("service"))) {
         return (this).service;
     }
-    if ((name) === ("returned")) {
+    if (_qrt.equals((name), ("returned"))) {
         return (this).returned;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         return (this).timeout;
     }
-    if ((name) === ("methodName")) {
+    if (_qrt.equals((name), ("methodName"))) {
         return (this).methodName;
     }
-    if ((name) === ("instance")) {
+    if (_qrt.equals((name), ("instance"))) {
         return (this).instance;
     }
     return null;
@@ -103,19 +103,19 @@ function RPC__getField(name) {
 RPC.prototype._getField = RPC__getField;
 
 function RPC__setField(name, value) {
-    if ((name) === ("service")) {
+    if (_qrt.equals((name), ("service"))) {
         (this).service = value;
     }
-    if ((name) === ("returned")) {
+    if (_qrt.equals((name), ("returned"))) {
         (this).returned = value;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         (this).timeout = value;
     }
-    if ((name) === ("methodName")) {
+    if (_qrt.equals((name), ("methodName"))) {
         (this).methodName = value;
     }
-    if ((name) === ("instance")) {
+    if (_qrt.equals((name), ("instance"))) {
         (this).instance = value;
     }
 }
@@ -159,7 +159,7 @@ function RPCRequest_onHTTPResponse(rq, response) {
     var body = (response).getBody();
     var obj = _qrt.json_from_string(body);
     var classname = ((obj).getObjectItem("$class")).getString();
-    if ((classname) === (null)) {
+    if (_qrt.equals((classname), (null))) {
         info = (((this).rpc).toString()) + (" failed: Server returned unrecognizable content");
         ((this).retval).finish(info);
         ((this).rpc).fail(info);
@@ -184,16 +184,16 @@ function RPCRequest__getClass() {
 RPCRequest.prototype._getClass = RPCRequest__getClass;
 
 function RPCRequest__getField(name) {
-    if ((name) === ("rpc")) {
+    if (_qrt.equals((name), ("rpc"))) {
         return (this).rpc;
     }
-    if ((name) === ("retval")) {
+    if (_qrt.equals((name), ("retval"))) {
         return (this).retval;
     }
-    if ((name) === ("args")) {
+    if (_qrt.equals((name), ("args"))) {
         return (this).args;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         return (this).timeout;
     }
     return null;
@@ -201,16 +201,16 @@ function RPCRequest__getField(name) {
 RPCRequest.prototype._getField = RPCRequest__getField;
 
 function RPCRequest__setField(name, value) {
-    if ((name) === ("rpc")) {
+    if (_qrt.equals((name), ("rpc"))) {
         (this).rpc = value;
     }
-    if ((name) === ("retval")) {
+    if (_qrt.equals((name), ("retval"))) {
         (this).retval = value;
     }
-    if ((name) === ("args")) {
+    if (_qrt.equals((name), ("args"))) {
         (this).args = value;
     }
-    if ((name) === ("timeout")) {
+    if (_qrt.equals((name), ("timeout"))) {
         (this).timeout = value;
     }
 }
@@ -285,22 +285,22 @@ function CircuitBreaker__getClass() {
 CircuitBreaker.prototype._getClass = CircuitBreaker__getClass;
 
 function CircuitBreaker__getField(name) {
-    if ((name) === ("id")) {
+    if (_qrt.equals((name), ("id"))) {
         return (this).id;
     }
-    if ((name) === ("failureLimit")) {
+    if (_qrt.equals((name), ("failureLimit"))) {
         return (this).failureLimit;
     }
-    if ((name) === ("retestDelay")) {
+    if (_qrt.equals((name), ("retestDelay"))) {
         return (this).retestDelay;
     }
-    if ((name) === ("active")) {
+    if (_qrt.equals((name), ("active"))) {
         return (this).active;
     }
-    if ((name) === ("failureCount")) {
+    if (_qrt.equals((name), ("failureCount"))) {
         return (this).failureCount;
     }
-    if ((name) === ("mutex")) {
+    if (_qrt.equals((name), ("mutex"))) {
         return (this).mutex;
     }
     return null;
@@ -308,22 +308,22 @@ function CircuitBreaker__getField(name) {
 CircuitBreaker.prototype._getField = CircuitBreaker__getField;
 
 function CircuitBreaker__setField(name, value) {
-    if ((name) === ("id")) {
+    if (_qrt.equals((name), ("id"))) {
         (this).id = value;
     }
-    if ((name) === ("failureLimit")) {
+    if (_qrt.equals((name), ("failureLimit"))) {
         (this).failureLimit = value;
     }
-    if ((name) === ("retestDelay")) {
+    if (_qrt.equals((name), ("retestDelay"))) {
         (this).retestDelay = value;
     }
-    if ((name) === ("active")) {
+    if (_qrt.equals((name), ("active"))) {
         (this).active = value;
     }
-    if ((name) === ("failureCount")) {
+    if (_qrt.equals((name), ("failureCount"))) {
         (this).failureCount = value;
     }
-    if ((name) === ("mutex")) {
+    if (_qrt.equals((name), ("mutex"))) {
         (this).mutex = value;
     }
 }

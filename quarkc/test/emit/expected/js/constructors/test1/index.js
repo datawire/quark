@@ -25,7 +25,7 @@ function Test__getClass() {
 Test.prototype._getClass = Test__getClass;
 
 function Test__getField(name) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         return (this).name;
     }
     return null;
@@ -33,7 +33,7 @@ function Test__getField(name) {
 Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
-    if ((name) === ("name")) {
+    if (_qrt.equals((name), ("name"))) {
         (this).name = value;
     }
 }

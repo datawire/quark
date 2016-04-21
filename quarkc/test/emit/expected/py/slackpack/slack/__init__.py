@@ -3,6 +3,7 @@ from quark_runtime import *
 import quark.reflect
 import event
 import slackpack_md
+import quark
 
 
 class SlackHandler(object):

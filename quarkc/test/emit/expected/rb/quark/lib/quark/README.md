@@ -1,21 +1,25 @@
-## TestInitializer
+## quote((13.quark.spi_api_tracing.quote.str,))
 
-## red((9.quark.test.red.str,))
+## Identificator
 
-## green((9.quark.test.green.str,))
+## Identifiable
 
-## bold((9.quark.test.bold.str,))
+## ServletProxy
 
-## Test
+## HTTPRequestProxy
 
-## MethodTest
+## HTTPResponseProxy
 
-## check((9.quark.test.check.value, 9.quark.test.check.message))
+## HTTPServletProxy
 
-## checkEqual((9.quark.test.checkEqual.expected, 9.quark.test.checkEqual.actual))
+## WSServletProxy
 
-## fail((9.quark.test.fail.message,))
+## TaskProxy
 
-## Harness
+## WebSocketProxy
 
-## run((9.quark.test.run.args,))
+## WSHandlerProxy
+
+## HTTPHandlerProxy
+
+## RuntimeProxy

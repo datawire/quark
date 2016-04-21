@@ -6,7 +6,7 @@ function main(args) {
     var idx = 0;
     while (true) {
         var s = (stuff)[idx];
-        if ((s) === ("three")) {
+        if (_qrt.equals((s), ("three"))) {
             _qrt.print("breaking");
             break;
         }
