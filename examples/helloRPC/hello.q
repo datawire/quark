@@ -3,6 +3,13 @@ import quark.concurrent;
 
 namespace hello {
 
+    class DoTrace {
+        DoTrace() {
+            //logging.config().setLevel("DEBUG").setAppender(logging.file("trace.log")).configure();
+            logging.config().setLevel("DEBUG").configure();
+        }
+    }
+
     @doc("A value class for Request data for the hello service.")
     class Request {
         String text;
@@ -35,9 +42,13 @@ namespace hello {
     }
 
     @doc("A client adapter for the hello service.")
-    class HelloClient extends Client, Hello {}
+    class HelloClient extends Client, Hello {
+        static DoTrace unused = new DoTrace();
+    }
 
     @doc("A server adapter for the hello service.")
-    class HelloServer extends Server<Hello> {}
+    class HelloServer extends Server<Hello> {
+        static DoTrace unused = new DoTrace();
+    }
 
 }
