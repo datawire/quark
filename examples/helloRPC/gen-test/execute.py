@@ -33,4 +33,5 @@ for server_target, server_cmd, _, server_pattern, server_nocmp in targets:
             client_captures[key] = capture(client_cmd + suffix, nocmp=client_nocmp)
             assert "Responding to [Hello from %s!] from %s" % (client_pattern, server_pattern) in \
                    client_captures[key].output
+    sleep(1.0)
     server_captures[server_target] = server_bg.get_captured()

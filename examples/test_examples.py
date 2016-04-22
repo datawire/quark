@@ -17,6 +17,7 @@ import shutil
 import filecmp
 from glob import glob
 import re
+import time
 
 import pytest
 
@@ -107,7 +108,8 @@ class Helpers(object):
 
 def run_python(py_file, session_name, cwd, output_dir):
     session = capture_output.Session(session_name, cwd, output_dir)
-    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters,
+    scope = dict(re=re, sleep=time.sleep,
+                 session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters,
                  helpers=Helpers(session.capture))
     exec(open(py_file, "U"), scope)
     return scope
@@ -138,5 +140,5 @@ def test_example(example):
     scope = run_python(py_file, example, cwd, ac_dir)
     gen_docs(scope, gen_dir, cwd)
 
-    diff = filecmp.dircmp(ex_dir, ac_dir, )
+    diff = filecmp.dircmp(ex_dir, ac_dir)
     check_diff(diff)
