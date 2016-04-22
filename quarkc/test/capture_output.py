@@ -84,7 +84,12 @@ class Captured(object):
         child.logfile_read = FilteredOutputFile(self.output_file, self.filters)
         return child
 
-    def do_capture(self, child):
+    def update_capture(self, child):
+        if child.isalive():
+            child.expect(pexpect.TIMEOUT, timeout=0)
+        self.output = child.logfile_read.get_data()
+
+    def finish_capture(self, child):
         if child.isalive():
             child.expect(pexpect.EOF)
         self.output = child.logfile_read.get_data()
@@ -103,7 +108,7 @@ class BGProcess(object):
         return self.child.close(force=True)
 
     def get_captured(self):
-        self.cap.do_capture(self.child)
+        self.cap.update_capture(self.child)
         return self.cap
 
     def noop(self):
@@ -154,7 +159,7 @@ class Session(object):
             filters = []
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         child = cap.spawn()
-        cap.do_capture(child)
+        cap.finish_capture(child)
         self.call_noop()
         return cap
 
