@@ -1,5 +1,0 @@
-INFO quark.quark.client [object Object] failureLimit 1
-INFO quark.quark.client [object Object] retestDelay 10
-Request says Hello from JavaScript!
-INFO quark.quark.client - http://localhost:8910/hello using instance 1: http://localhost:8910/hello
-Response says Responding to [Hello from JavaScript!] from Python
