@@ -3,9 +3,12 @@ os:
 sudo: required
 dist: trusty
 env:
-- TEST_SUITE=quarkc
-- TEST_SUITE=runtime
-- TEST_SUITE=examples
+  matrix:
+  - TEST_SUITE=quarkc
+  - TEST_SUITE=runtime
+  - TEST_SUITE=examples
+  global:
+    secure: Ht+kRWkOtZl6i0RmWaKc4OJj2m4JG8ugWzweilaCH5xfxUEUeRhTvFSZNWeA1ZNxWmgSdS27HxAfdzDiZcp8lkZdLbeFBjcWIlFHVjB71hXV5ZV88v59TDZPcmULAFwp2SdZ5ZVjKU471CeBdVFhWupjSIxTfyULMk6/70vpLthioVMEGEUDtY190fNXr5NaBfEnIJ5+/XbVLnBC4knNQ6vjjO1I/KmJvjtpj7h2pBJDfK54fXL3I7x4N90tEOmU3mIJm1YoQO6CexOyz3CdlJRUvSPZVBF5Y0qDd3tPVqDE7F1DH+JSz7SJOn5HHASFFK0BXpscwSwskmGmiNSOEbWLHiFojCszs3GHUx/Lv9/bKRl6NbsZkcFfMzPnqXIg7+HQcaqF/wW7TN5rDmp1H9m2o0sD93Spk5gW9a/d4sUrRS1D+B4HPN9kZoBeKPah0gM6QelKOaLxZvQYcY4gJZOFHi+JPVGeomVpWVXPYuKrYbrCtzuDth1UdmslO6kM7s3joQKnSX2At5VekpAJd4eKNjojunwxHssUWjcQixkul3Wd2i0ap4yzDNsPo9I1KreMnopxANqPJCeIWW+PZ1uO5hNAFSML45fmlNcct7h/qLfSzazeujcPW7zwW4YhPxZFYAWdAwlD3/VrEI4JbVQQN0xkfmeyNQpXYIMl9Ak=
 language:
 - java
 - python
