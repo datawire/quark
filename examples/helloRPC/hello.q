@@ -3,13 +3,6 @@ import quark.concurrent;
 
 namespace hello {
 
-    class DoTrace {
-        DoTrace() {
-            //logging.config().setLevel("DEBUG").setAppender(logging.file("trace.log")).configure();
-            logging.config().setLevel("DEBUG").configure();
-        }
-    }
-
     @doc("A value class for Request data for the hello service.")
     class Request {
         String text;
@@ -41,14 +34,24 @@ namespace hello {
 
     }
 
+    // FIXME: This class and its uses below are temporary. Please ignore!
+    @doc("Class to enable Quark tracing via static instantiation")
+    class DoTrace {
+        DoTrace() {
+            //logging.config().setLevel("DEBUG")
+            //    .setAppender(logging.file("trace.log")).configure();
+            logging.config().setLevel("DEBUG").configure();
+        }
+    }
+
     @doc("A client adapter for the hello service.")
     class HelloClient extends Client, Hello {
-        static DoTrace unused = new DoTrace();
+        static DoTrace unused = new DoTrace();  // FIXME: Please ignore this
     }
 
     @doc("A server adapter for the hello service.")
     class HelloServer extends Server<Hello> {
-        static DoTrace unused = new DoTrace();
+        static DoTrace unused = new DoTrace();  // FIXME: Please ignore this
     }
 
 }
