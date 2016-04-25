@@ -139,5 +139,6 @@ def test_example(example):
     scope = run_python(py_file, example, cwd, ac_dir)
     gen_docs(scope, gen_dir, cwd)
 
-    diff = filecmp.dircmp(ex_dir, ac_dir)
-    check_diff(diff)
+    if os.path.exists(ex_dir):
+        diff = filecmp.dircmp(ex_dir, ac_dir)
+        check_diff(diff)
