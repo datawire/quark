@@ -24,6 +24,23 @@ import pexpect
 
 
 class FilteredOutputFile(object):
+    @staticmethod
+    def python_threaded_exit_crash_filter(text):
+        lines = text.split("\n")
+        res = []
+        for line in lines:
+            if line.startswith("Exception in thread ") and "(most likely raised during interpreter shutdown)" in line:
+                break
+            res.append(line)
+        return "\n".join(res)
+
+    @staticmethod
+    def normalize_end_of_file(text):
+        """Remove blank lines and ^C at the end"""
+        lines = text.split("\n")
+        while lines and (not lines[-1].strip() or lines[-1].strip() == "^C"):
+            del lines[-1]
+        return "\n".join(lines) + "\n"
 
     def __init__(self, filename, filters):
         self.file = open(filename, "wb", 0)
@@ -32,6 +49,8 @@ class FilteredOutputFile(object):
             len(self.filters)
         except TypeError:
             self.filters = [self.filters]
+        self.filters.append(FilteredOutputFile.python_threaded_exit_crash_filter)  # XXX HACK FIXME etc.
+        self.filters.append(FilteredOutputFile.normalize_end_of_file)
         self.captured = []
 
     def get_data(self):
@@ -65,7 +84,12 @@ class Captured(object):
         child.logfile_read = FilteredOutputFile(self.output_file, self.filters)
         return child
 
-    def do_capture(self, child):
+    def update_capture(self, child):
+        if child.isalive():
+            child.expect(pexpect.TIMEOUT, timeout=0)
+        self.output = child.logfile_read.get_data()
+
+    def finish_capture(self, child):
         if child.isalive():
             child.expect(pexpect.EOF)
         self.output = child.logfile_read.get_data()
@@ -80,10 +104,11 @@ class BGProcess(object):
     def terminate(self):
         if self.child.isalive():
             self.child.sendintr()
+        self.child.expect([pexpect.EOF, pexpect.TIMEOUT], timeout=0)
         return self.child.close(force=True)
 
     def get_captured(self):
-        self.cap.do_capture(self.child)
+        self.cap.update_capture(self.child)
         return self.cap
 
     def noop(self):
@@ -123,24 +148,28 @@ class Session(object):
         for bg_process in self.bg_processes:
             bg_process.noop()
 
-    def capture(self, command, nocmp=False, filters=[]):
+    def capture(self, command, nocmp=False, filters=None):
         """
         Run the command synchronously and capture the output. Return an
         instance of Captured. Set option nocmp to True to tell the
         test driver not to compare this file with expected output. Pass
         filters to process the output before writing it to disk.
         """
+        if filters is None:
+            filters = []
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         child = cap.spawn()
-        cap.do_capture(child)
+        cap.finish_capture(child)
         self.call_noop()
         return cap
 
-    def capture_bg(self, command, nocmp=False, filters=[]):
+    def capture_bg(self, command, nocmp=False, filters=None):
         """
         Run the command asynchronously, capturing the output. Return an
         instance of BGProcess. Use nocmp and filters as with capture.
         """
+        if filters is None:
+            filters = []
         cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
         res = BGProcess(cap)
         self.bg_processes.append(res)

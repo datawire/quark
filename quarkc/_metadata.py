@@ -30,4 +30,4 @@ __author__ = "datawire.io"
 __email__ = "hello@datawire.io"
 
 __license__ = "Apache License, Version 2.0"
-__copyright__ = "2015 %s" % __author__
+__copyright__ = "2016 %s" % __author__
