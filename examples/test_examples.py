@@ -130,8 +130,7 @@ def test_example(example):
     ac_dir = os.path.join(gen_dir, acd)
     py_file = os.path.join(gen_dir, pyf)
 
-    assert os.path.exists(ex_dir)
-    assert os.path.exists(py_file)
+    assert os.path.exists(py_file), "No test file found: %s" % py_file
 
     if os.path.exists(ac_dir):
         shutil.rmtree(ac_dir, ignore_errors=True)
