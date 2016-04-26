@@ -103,14 +103,19 @@ before_deploy:
     scripts/compute-next-version;
   fi
 deploy:
-- provider: script
+- provider: pypi
+  distributions: sdist
+  server: https://testpypi.python.org/pypi
+  user: bozzo
+  password:
+    secure: edLNPe42PWFBVWvNb0i+cQBniI9LhWTvTE5l0eQs601iEy7L+OaY7CgaQUHCekQH23xYQiX78mLNUTJrl9+aMO0SoUX7iD7OhYj8wPIgNgoU6qp08zgJdFjMbecl+lDh0Z/eaVtjobWS3TBgFltY4GHQMrTGF+ZM2nuZdgy72ug1Pot4x0wzAw/Fwj/ROug4FalsgLsTTfpAVzUxmYTvk78HEp/0QkXZ/SMtJ0TViUwQsibahpkLltU6G2TlZqTGLZQpK3p2CJKmSbHmkQLZxxe1g9hs3W9ppHQdZC9IqN5Z2m7oDco+32R7bfwOkM2LqT7B6wm9KbhS32dgzsTCaSw4hFT5SMcZwQBGVopK+lCvwq7EOa0jz6ju7TpwJXyb804ddiBACpjW/xdyYjpl9eYt6Jl4EU4HEZSdfEmgbbT+F/Wrf8Ms1Fjl+V/1rEUThFxcDEfIeY327ftvaWZT8EMBSYIoXI4ZSWb3c5fyFcoRF3/OfTrEydno5T3niQVbYym0GCGN9bk5pqYbrpjFPWI2l+I69ljoazaXnpB9iSBXUoqWoyu2dLeZ9wSsnPwrpaV/ar+Ka6k5Y+ae8VSccQOjBgdUEbBPeTCdBBrVAYbHXxkpI+lms6Uys/meZIYC+PwnTuG8LqJ5rIi0ZEmq7QEMtfezkMkMgJnRa0BYIXw=
   skip_cleanup: true
   on:
     repo: datawire/quark
     branch: quarkdev-ci
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
-  script: scripts/respawn.sh STATE=validate-dev PYPI="$TESTPYPI" QUARK_PACKAGE="datawire-quarkdev"
+
 - provider: pypi
   distributions: sdist
   server: https://testpypi.python.org/pypi
@@ -122,4 +127,13 @@ deploy:
     repo: datawire/quark
     branch: quarkdev-ci
     tags: false
+    condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" ) && ( -f .PROVIDER.DISABLED.HACK )
+
+- provider: script
+  skip_cleanup: true
+  on:
+    repo: datawire/quark
+    branch: quarkdev-ci
+    tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
+  script: scripts/respawn.sh STATE=validate-dev PYPI="$TESTPYPI" QUARK_PACKAGE="datawire-quarkdev-bozzo"
