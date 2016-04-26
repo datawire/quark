@@ -98,6 +98,14 @@ before_deploy:
 - git fetch --unshallow
 - scripts/compute-next-version
 deploy:
+- provider: script
+  skip_cleanup: true
+  on:
+    repo: datawire/quark
+    branch: quarkdev-ci
+    tags: false
+    condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
+  script: scripts/respawn.sh STATE=validate-dev PYPI="$TEST" QUARK_PACKAGE="datawire-quarkdev"
 - provider: pypi
   distributions: sdist
   server: https://testpypi.python.org/pypi
@@ -110,11 +118,3 @@ deploy:
     branch: quarkdev-ci
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
-- provider: script
-  skip_cleanup: true
-  on:
-    repo: datawire/quark
-    branch: quarkdev-ci
-    tags: false
-    condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
-  script: scripts/respawn.sh STATE=validate-dev PYPI="$TEST" QUARK_PACKAGE="datawire-quarkdev"
