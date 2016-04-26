@@ -8,6 +8,7 @@ matrix:
       env: TEST_SUITE=runtime
     - os: linux
       env: TEST_SUITE=examples
+
 sudo: required
 dist: trusty
 env:
@@ -19,15 +20,6 @@ env:
   - REALPYPI=https://pypi.python.org/pypi
   - PYPI=$REALPYPI
   - DEPLOYMENT_TOKEN_FILE=.i.am.the.master
-
-python:
-- 2.7.6
-
-jdk:
-- oraclejdk7
-
-rvm:
-- 2.3.0
 
 addons:
   apt:
