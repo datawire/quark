@@ -73,9 +73,12 @@ script:
 - py.test -v $TEST_SUITE --durations=10 --collect-only
 - if $(npm bin)/travis-after-all ; then
     touch $DEPLOYMENT_TOKEN_FILE ;
+    ls -l $DEPLOYMENT_TOKEN_FILE ;
   else
     rm -f $DEPLOYMENT_TOKEN_FILE;
+    echo "not master or failure";
   fi
+- echo "State: =$STATE="
 
 notifications:
   slack:
@@ -84,11 +87,11 @@ notifications:
     on_success: always
     on_failure: always
 after_success:
-- if [[ ( -f $DEPLOYMENT_TOKEN_FILE ) && ( $STATE = "validate-dev" ) ]] ; then
+- if [[ ( -f $DEPLOYMENT_TOKEN_FILE ) && ( $STATE" = "validate-dev" ) ]] ; then
     echo TODO TAG with DEV-success;
   fi
 after_failure:
-- if [[ ( -f $DEPLOYMENT_TOKEN_FILE ) && ( $STATE = "validate-dev" ) ]] ; then
+- if [[ ( -f $DEPLOYMENT_TOKEN_FILE ) && ( $STATE" = "validate-dev" ) ]] ; then
     echo TODO TAG with DEV-fail;
   fi
 before_deploy:
@@ -105,14 +108,14 @@ deploy:
   skip_cleanup: true
   on:
     repo: datawire/quark
-    branch: develop
+    branch: quarkdev-ci
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
 - provider: script
   skip_cleanup: true
   on:
     repo: datawire/quark
-    branch: develop
+    branch: quarkdev-ci
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
   script: scripts/respawn.sh STATE=validate-dev PYPI="$TEST" QUARK_PACKAGE="datawire-quarkdev"
