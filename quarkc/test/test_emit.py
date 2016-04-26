@@ -18,31 +18,37 @@ from quarkc.compiler import Compiler, CompileError, compile
 from quarkc.helpers import namever
 from .util import check_file, maybe_xfail
 
-directory = os.path.join(os.path.dirname(__file__), "emit")
-files = [name for name in os.listdir(directory) if name.endswith(".q")]
-paths = [os.path.join(directory, name) for name in files]
-expected = os.path.join(directory, "expected")
+backends = (Java, Python, JavaScript, Ruby)
 
-@pytest.fixture(scope="session")
-def output(request):
+def do_compile(output, path):
+    text = open(path).read()
+    for b in backends:
+        maybe_xfail(text, b().ext)
+    return path, compile(path, output, *backends)
+
+def do_output(directory):
     result = os.path.join(directory, "output")
     if os.path.exists(result):
         shutil.rmtree(result)
     os.mkdir(result)
     return result
 
-@pytest.fixture(scope="session", params=paths)
-def path(request):
-    return request.param
-
-backends = (Java, Python, JavaScript, Ruby)
+ffi_dir = os.path.join(os.path.dirname(__file__), "ffi")
+ffi_files = [name for name in os.listdir(ffi_dir) if name.endswith(".q")]
+ffi_paths = [os.path.join(ffi_dir, name) for name in ffi_files]
+ffi_expected = os.path.join(ffi_dir, "expected")
 
 @pytest.fixture(scope="session")
-def compiled(output, path):
-    text = open(path).read()
-    for b in backends:
-        maybe_xfail(text, b().ext)
-    return path, compile(path, output, *backends)
+def ffi_output(request):
+    return do_output(ffi_dir)
+
+@pytest.fixture(scope="session", params=ffi_paths)
+def ffi_path(request):
+    return request.param
+
+@pytest.fixture(scope="session")
+def ffi_compiled(ffi_output, ffi_path):
+    return do_compile(ffi_output, ffi_path)
 
 def check_diff(diff):
     # left is output, right is expected
@@ -52,15 +58,44 @@ def check_diff(diff):
     for common_dirname, common_sub_diff in diff.subdirs.items():
         check_diff(common_sub_diff)
 
-def test_diff(output, compiled):
-    path, dirs = compiled
+def test_ffi(ffi_output, ffi_compiled):
+    path, dirs = ffi_compiled
     for b in backends:
         for name in dirs:
+            if name == "quark": continue
             ext = b().ext
-            diff = filecmp.dircmp(os.path.join(output, ext, name),
-                                  os.path.join(expected, ext, name),
+            diff = filecmp.dircmp(os.path.join(ffi_output, ext, name),
+                                  os.path.join(ffi_expected, ext, name),
                                   ['target']) # XXX: should only filter out target for java
             check_diff(diff)
+
+def test_ffi_build_java(ffi_output):
+    j = Java()
+    base = os.path.join(ffi_output, j.ext)
+    dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]
+    batch_pom(base, dirs)
+    subprocess.check_call(["mvn", "-q", "compile"], cwd=base)
+
+directory = os.path.join(os.path.dirname(__file__), "emit")
+files = [name for name in os.listdir(directory) if name.endswith(".q")]
+paths = [os.path.join(directory, name) for name in files]
+
+@pytest.fixture(scope="session")
+def output(request):
+    return do_output(directory)
+
+@pytest.fixture(scope="session", params=paths)
+def path(request):
+    return request.param
+
+@pytest.fixture(scope="session")
+def compiled(output, path):
+    return do_compile(output, path)
+
+# This test is necessary to glue together the compiled fixture to
+# test_run_*
+def test_emit(output, compiled):
+    pass
 
 def get_out(name):
     return os.path.join(directory, name + ".out")
