@@ -173,5 +173,5 @@ class change_impact(object):
 logging.basicConfig(level = logging.INFO)
 
 l = last_release()
-c = change_impact(l)
+c = change_impact(l, "HEAD")
 m = metadata_version().update(l.version, c.next_version)
