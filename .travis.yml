@@ -94,9 +94,14 @@ after_failure:
     echo TODO TAG with DEV-fail;
   fi
 before_deploy:
-- git remote set-branches --add origin master
-- git fetch --unshallow
-- scripts/compute-next-version
+- if [[ -f .before.deploy.flag ]] ; then
+    echo "Duplicate before_deploy???";
+  else
+    touch .before.deploy.flag &&
+    git remote set-branches --add origin master &&
+    git fetch --unshallow &&
+    scripts/compute-next-version;
+  fi
 deploy:
 - provider: script
   skip_cleanup: true
