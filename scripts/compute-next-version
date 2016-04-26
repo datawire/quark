@@ -1,0 +1,177 @@
+#!/usr/bin/env python
+import logging
+import subprocess, re, os
+from semantic_version import Version
+
+dry_run = True
+
+class Subprocess(object):
+    log = logging.getLogger("subprocess")
+    @classmethod
+    def check_output(cls, *args, **kwargs):
+        cls.log.debug("invoking %s" % args[0])
+        return subprocess.check_output(*args, **kwargs)
+
+class last_release(object):
+    """Find last release tag for the given commit or master branch by default """
+
+    log = logging.getLogger("last_release")
+
+    def __init__(self, master = "origin/master"):
+        self.master = master
+        self._tag = None
+        self._version = None
+
+    @property
+    def tag(self):
+        """Name of last release tag"""
+        if self._tag is None:
+            out = Subprocess.check_output([
+                "git", "describe", "--abbrev=0", "--match=v[0-9]*", self.master
+                ])
+            self._tag = out.strip()
+            self.log.debug("tag of %s was %s" % (self.master, self._tag))
+        return self._tag
+
+    @property
+    def version(self):
+        """Version of the last release"""
+        if self._version is None:
+            self._version = Version(self.tag[1:])
+            self.log.info("version of %s was %s" % (self.master, self._version))
+        return self._version
+
+class metadata_version(object):
+    """Last released version as stored in the metadata file"""
+
+    log = logging.getLogger("metadata_version")
+
+    def __init__(self,
+                 metadata_file="quarkc/_metadata.py",
+                 version_re="""^__version__ = (["'])(?P<ver>[^'"]+)\\1$"""):
+        self.metadata_file = metadata_file
+        self.version_re = version_re
+        self.rev = re.compile(version_re)
+        self._version = None
+        self._before = None
+        self._after = None
+
+    @property
+    def version(self):
+        """Version of the last release"""
+        if self._version is None:
+            before = []
+            after = []
+            with open(self.metadata_file) as metadata:
+                for line in metadata:
+                    if after:
+                        after.append(line)
+                    else:
+                        match = self.rev.match(line.rstrip())
+                        if match:
+                            self._version = Version(match.group('ver'))
+                            before.append(line[:match.start('ver')])
+                            after.append(line[match.end('ver'):])
+                        else:
+                            before.append(line)
+            assert self._version is not None, \
+              "%r did not match in %s" % (self.version_re, self.metadata_file)
+            self._before = "".join(before)
+            self._after = "".join(after)
+            self.log.info("version of %s is %s" % (self.metadata_file, self._version))
+        return self._version
+
+    def update(self, current, next):
+        """Rewrite metadata file by replacing the current version with the next version"""
+        current = Version(str(current))
+        next = Version(str(next))
+        assert current == self.version, "Current version %s does not match file content %s of %s" % (current, self.version, self.metadata_file)
+        assert next > current, "next version %s must be greater than current version %s" % (next, current)
+        temp = "%s.tmp" % self.metadata_file
+        with open(temp, "w") as metadata:
+            metadata.write(self._before + str(next) + self._after)
+
+        updated = self.__class__(temp, self.version_re).version
+        assert updated == next, "Updating version failed horriby in strange ways, expected %s found %s" % (next, updated)
+        if dry_run:
+            self.log.info("[dry run] not renaming %s to %s" % (temp, self.metadata_file))
+            self.log.info("Updated version in %s from %s to %s" % (temp, current, next))
+        else:
+            os.rename(temp, self.metadata_file)
+            self.log.info("Updated version in %s from %s to %s" % (self.metadata_file, current, next))
+
+class Change(object):
+    def __init__(self, scale, xform, tag):
+        self.scale = scale
+        self.xform = xform
+        self.tag = tag
+
+class change_impact(object):
+    """ how new commits affect project version """
+    log = logging.getLogger("change_impact")
+    FIX   = Change( (0,0,1), Version.next_patch, "[FIX]")
+    MINOR = Change( (0,1,0), Version.next_minor, "[MINOR]")
+    MAJOR = Change( (1,0,0), Version.next_major, "[MAJOR]")
+
+    def __init__(self, last_release, develop = "origin/develop"):
+        self.last_release = last_release
+        self.develop = develop
+        if self.last_release.version.major == 0:
+            self.log.info("While the project is in %s version, all changes are considered lesser impact" % self.last_release.version)
+            self.MINOR.xform = Version.next_patch
+            self.MAJOR.xform = Version.next_minor
+
+    def commits(self):
+        for line in Subprocess.check_output(
+            "git log --reverse --oneline".split() + [
+                self.develop,
+                "--not",
+                self.last_release.tag,
+                ]).splitlines():
+            commit, subject = line.split(" ",1)
+            yield commit, subject
+
+    def commit_severities(self):
+        for commit, subject in self.commits():
+            for t in [self.MAJOR, self.MINOR, self.FIX]:
+                if t.tag in subject:
+                    yield t
+                    break
+            else:
+                self.log.debug("warning: assuming %s in commit %s %s" % (self.FIX.tag, commit, subject))
+                yield self.FIX
+
+    def version_change(self):
+        changes = []
+        state = self.FIX
+        current = (0,0,0)
+        for s in self.commit_severities():
+            if s > state.scale:
+                self.log.debug("Bigger change had %s now %s, dropping delta %s start with %s" % (state.tag, s.tag, current, s.scale))
+                state = s
+                changes = [s]
+                curent = s.scale
+            else:
+                changes.append(self.FIX)
+                current = tuple(map(sum, zip(current, self.FIX.scale)))
+        assert changes, "no changes found, no point in releasing"
+
+        self.log.info("Version must be increased by %s in %s steps" % (current, len(changes)))
+        return changes
+
+
+    @property
+    def next_version(self):
+        version = self.last_release.version
+        for change in self.version_change():
+            version = change.xform(version)
+        self.log.debug("version has to change from %s to %s" % (self.last_release.version, version))
+        return version
+
+
+
+logging.basicConfig(level = logging.INFO)
+
+l = last_release()
+c = change_impact(l)
+m = metadata_version().update(l.version, c.next_version)

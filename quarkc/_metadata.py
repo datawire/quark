@@ -20,7 +20,7 @@ __all__ = [
 ]
 
 __title__ = 'datawire-quarkdev'
-__version__ = '0.5.3'
+__version__ = '0.5.2'
 
 __summary__ = "Quark: an IDL for high level (micro)service interfaces"
 __uri__ = "http://datawire.github.io/quark/"
