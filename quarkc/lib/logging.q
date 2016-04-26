@@ -30,7 +30,7 @@ namespace quark {
             @doc("Configure the logging")
             void configure();
         }
-        macro Config defaultConfig() $java{io.datawire.quark.runtime.LoggerConfig.config()}
+        macro Config makeConfig() $java{io.datawire.quark.runtime.LoggerConfig.config()}
                               $py{_LoggerConfig.config()}
                               $rb{::DatawireQuarkCore::LoggerConfig.config()}
                               $js{_qrt.LoggerConfig.config()};

@@ -2,7 +2,7 @@
 
     class EntrypointSetup {
         EntrypointSetup() {
-            logging.defaultConfig().setLevel("debug").setAppender(logging.stdout()).configure();
+            logging.makeConfig().setLevel("debug").setAppender(logging.stdout()).configure();
         }
     }
 
