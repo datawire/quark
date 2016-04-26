@@ -73,12 +73,11 @@ script:
 - py.test -v $TEST_SUITE --durations=10 --collect-only
 - if $(npm bin)/travis-after-all ; then
     touch $DEPLOYMENT_TOKEN_FILE ;
-    ls -l $DEPLOYMENT_TOKEN_FILE ;
+    echo "Master in STATE=$STATE.";
   else
     rm -f $DEPLOYMENT_TOKEN_FILE;
-    echo "not master or failure";
+    echo "Failure or Not Master in STATE=$STATE.";
   fi
-- echo "State: =$STATE="
 
 notifications:
   slack:
