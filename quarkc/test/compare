@@ -111,9 +111,8 @@ def find_different_files(base):
     output = os.path.join(base, "output")
     expected = os.path.join(base, "expected")
     result = []  # (expected file path, output file path), ...
-    if not os.path.exists(output):
-        return result
-    collect_comparisons(filecmp.dircmp(expected, output), result)
+    if os.path.exists(expected) and os.path.exists(output):
+        collect_comparisons(filecmp.dircmp(expected, output), result)
     return result
 
 
