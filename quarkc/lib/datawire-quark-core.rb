@@ -662,7 +662,7 @@ module DatawireQuarkCore
     end
 
     def fail(message)
-      @log.fatal message
+      @log.error message
       exit! 1
     end
 
