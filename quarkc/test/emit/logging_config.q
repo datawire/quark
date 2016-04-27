@@ -1,5 +1,5 @@
 void main(List<String> args) {
-    logging.config().setAppender(logging.stdout()).setLevel("DEBUG").configure();
+    logging.makeConfig().setAppender(logging.stdout()).setLevel("DEBUG").configure();
     Logger l = new Logger("hello");
     l.trace("Should not see trace log");
     l.debug("Debug log");

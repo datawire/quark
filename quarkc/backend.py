@@ -18,6 +18,7 @@ from .ast import *
 from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
 from .dispatch import *
 from .helpers import *
+from .environment import Environment
 
 class Backend(object):
 
