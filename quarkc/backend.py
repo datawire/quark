@@ -706,13 +706,11 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import command, os, sys, subprocess, json
-
-def call(*command):
-    return subprocess.check_output(command, stderr=subprocess.PIPE)
+import shell, os, sys, subprocess, json
 
 def is_virtual():
-    return hasattr(sys, "real_prefix")
+    output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')
+    return output.strip() == "True"
 
 def is_root():
     return os.geteuid() == 0
@@ -730,7 +728,7 @@ class Java(Backend):
         return os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
 
     def install_command(self, dir):
-        command.call_and_show("install", dir, ["mvn", "install"])
+        shell.call("mvn", "install", cwd=dir, stage="install")
 
     def run(self, name, version, args):
         jar = os.path.join(os.environ["HOME"], ".m2", "repository", name, name, version,
@@ -744,22 +742,15 @@ class Python(Backend):
 
     def install_target(self):
         name, ver = namever(self.entry)
-        try:
-            output = call("pip", "show", name)
-            for line in output.split("\n"):
-                if line.startswith("Location: "):
-                    return os.path.join(line.split(": ")[1], name)
-        except subprocess.CalledProcessError, e:
-            pass
-        return None
+        return shell.get_pip_pkg(name, stage="install")
 
     def install_command(self, dir):
-        command.call_and_show("install", dir, ["python", "setup.py", "-q", "bdist_wheel"])
+        shell.call("python", "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
             cmd = ["pip", "install", "--upgrade", "dist/%s" % wheel]
             if is_user(): cmd += ["--user"]
-            command.call_and_show("install", dir, cmd)
+            shell.call(*cmd, cwd=dir, stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)
@@ -773,14 +764,14 @@ class JavaScript(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = call("npm", "ll", "--depth", "0", "--json", name)
+            output = shell.call("npm", "ll", "--depth", "0", "--json", name)
             return json.loads(output)["dependencies"][name]["path"]
-        except subprocess.CalledProcessError, e:
+        except shell.ShellError, e:
             pass
         return None
 
     def install_command(self, dir):
-        command.call_and_show("install", ".", ["npm", "install", dir])
+        shell.call("npm", "install", dir, stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)
@@ -794,16 +785,16 @@ class Ruby(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = call("gem", "which", name)
+            output = shell.call("gem", "which", name, stage="install")
             return output.strip()
-        except subprocess.CalledProcessError, e:
+        except shell.ShellError, e:
             pass
         return None
 
     def install_command(self, dir):
         name, ver = namever(self.entry)
-        command.call_and_show("install", dir, ["gem", "build", "-q", "%s.gemspec" % name])
-        command.call_and_show("install", ".", ["gem", "install", "%s/%s-%s.gem" % (dir, name, ver)])
+        shell.call("gem", "build", "-q", "%s.gemspec" % name, cwd=dir, stage="install")
+        shell.call("gem", "install", "%s/%s-%s.gem" % (dir, name, ver), stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)
