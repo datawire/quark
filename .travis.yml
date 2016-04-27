@@ -1,4 +1,7 @@
-language: generic
+language: python
+
+python:
+  - 2.7.6
 
 matrix:
   include:
@@ -8,6 +11,9 @@ matrix:
       env: TEST_SUITE=runtime
     - os: linux
       env: TEST_SUITE=examples
+#   - os: osx
+#     env TEST_SUITE=examples
+#     language: generic
 
 sudo: required
 dist: trusty
@@ -43,6 +49,9 @@ before_install:
 - openssl aes-256-cbc -K $encrypted_cdfbaa8bcf7f_key -iv $encrypted_cdfbaa8bcf7f_iv
   -in .respawn.token.enc -out .respawn.token -d
 
+# TODO: osx will require complete redo of install step, should move
+# everything to a script but last pip install
+
 install:
 - javac -version
 - java -version
@@ -75,6 +84,10 @@ script:
     rm -f $DEPLOYMENT_TOKEN_FILE;
     echo "Failure or Not Master in STATE=$STATE.";
   fi
+
+# TODO: travis is way too fragile to handle any of the stuff below,
+# move to shellscripts and call them at the end of script block inside
+# travis-after-all
 
 notifications:
   slack:
@@ -126,6 +139,8 @@ deploy:
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" ) && ( -f .PROVIDER.DISABLED.HACK )
 
+# XXX: travis respawns oddly, replace with a commit on a ci-$next_version branch
+
 - provider: script
   skip_cleanup: true
   on:
@@ -134,3 +149,5 @@ deploy:
     tags: false
     condition: ( -f $DEPLOYMENT_TOKEN_FILE ) && ( "$STATE" = "ci-run" )
   script: scripts/respawn.sh STATE=validate-dev PYPI="$TESTPYPI" QUARK_PACKAGE="datawire-quarkdev-bozzo"
+
+# XXX: hack above, QUARK_PACKAGE should be datawire-quark==$next_version
