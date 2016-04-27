@@ -35,11 +35,13 @@ class FilteredOutputFile(object):
         return "\n".join(res)
 
     @staticmethod
-    def normalize_end_of_file(text):
-        """Remove blank lines and ^C at the end"""
-        lines = text.split("\n")
+    def normalize_output(text):
+        """Remove blank lines and ^C at the end; clean up all line endings"""
+        lines = text.splitlines()  # Throw away end-of-line ^M characters
         while lines and (not lines[-1].strip() or lines[-1].strip() == "^C"):
             del lines[-1]
+        if lines[-1].strip().endswith("^C"):
+            lines[-1] = "".join(lines[-1].rsplit("^C", 1))
         return "\n".join(lines) + "\n"
 
     def __init__(self, filename, filters):
@@ -50,7 +52,7 @@ class FilteredOutputFile(object):
         except TypeError:
             self.filters = [self.filters]
         self.filters.append(FilteredOutputFile.python_threaded_exit_crash_filter)  # XXX HACK FIXME etc.
-        self.filters.append(FilteredOutputFile.normalize_end_of_file)
+        self.filters.append(FilteredOutputFile.normalize_output)
         self.captured = []
 
     def get_data(self):
