@@ -42,6 +42,7 @@ before_install:
   -in .respawn.token.enc -out .respawn.token -d
 
 install:
+- javac -version
 - java -version
 - java -version 2>&1 | grep -Fe 'java version "1.7.0'
 - python -c 'import sys; print sys.version; sys.exit(int(sys.version_info[:3] < (2,7,6)))'
