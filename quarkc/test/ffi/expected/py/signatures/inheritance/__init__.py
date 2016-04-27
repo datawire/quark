@@ -1,0 +1,232 @@
+from quark_runtime import *
+
+import quark.reflect
+import t1
+import t2
+import pets
+import super_
+import use_before_def
+import quark_ffi_signatures_md
+
+
+class Base(object):
+    def _init(self):
+        self.name = None
+
+    def __init__(self): self._init()
+
+    def _getClass(self):
+        return u"inheritance.Base"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+
+Base.inheritance_Base_ref = quark_ffi_signatures_md.Root.inheritance_Base_md
+class Test(Base):
+    def _init(self):
+        Base._init(self)
+        self.mumble = None
+        self.later = None
+
+    def __init__(self):
+        super(Test, self).__init__();
+
+    def _getClass(self):
+        return u"inheritance.Test"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        if ((name) == (u"mumble")):
+            return (self).mumble
+
+        if ((name) == (u"later")):
+            return (self).later
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+        if ((name) == (u"mumble")):
+            (self).mumble = value
+
+        if ((name) == (u"later")):
+            (self).later = value
+
+
+Test.inheritance_Test_ref = quark_ffi_signatures_md.Root.inheritance_Test_md
+class A(object):
+    def _init(self):
+        self.name = None
+
+    def __init__(self, name):
+        self._init()
+
+    def _getClass(self):
+        return u"inheritance.A"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+
+A.inheritance_A_ref = quark_ffi_signatures_md.Root.inheritance_A_md
+class B(A):
+    def _init(self):
+        A._init(self)
+
+    def __init__(self, name):
+        super(B, self).__init__(name);
+
+    def greet(self):
+        pass
+
+    def _getClass(self):
+        return u"inheritance.B"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+
+B.inheritance_B_ref = quark_ffi_signatures_md.Root.inheritance_B_md
+class C(A):
+    def _init(self):
+        A._init(self)
+
+    def __init__(self, name):
+        super(C, self).__init__((u"C") + (name));
+
+    def greet(self):
+        pass
+
+    def _getClass(self):
+        return u"inheritance.C"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+
+C.inheritance_C_ref = quark_ffi_signatures_md.Root.inheritance_C_md
+class X(object):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def _getClass(self):
+        return u"inheritance.X"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+X.inheritance_X_ref = quark_ffi_signatures_md.Root.inheritance_X_md
+class Y(X):
+    def _init(self):
+        X._init(self)
+        self.name = None
+
+    def __init__(self, name):
+        super(Y, self).__init__();
+
+    def test(self):
+        pass
+
+    def _getClass(self):
+        return u"inheritance.Y"
+
+    def _getField(self, name):
+        if ((name) == (u"name")):
+            return (self).name
+
+        return None
+
+    def _setField(self, name, value):
+        if ((name) == (u"name")):
+            (self).name = value
+
+
+Y.inheritance_Y_ref = quark_ffi_signatures_md.Root.inheritance_Y_md
+class Message(object):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def encode(self):
+        return None
+
+    def _getClass(self):
+        return u"inheritance.Message"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+Message.inheritance_Message_ref = quark_ffi_signatures_md.Root.inheritance_Message_md
+class Ping(Message):
+    def _init(self):
+        Message._init(self)
+
+    def __init__(self):
+        super(Ping, self).__init__();
+
+    def _getClass(self):
+        return u"inheritance.Ping"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+Ping.inheritance_Ping_ref = quark_ffi_signatures_md.Root.inheritance_Ping_md
+class Pong(Message):
+    def _init(self):
+        Message._init(self)
+
+    def __init__(self):
+        super(Pong, self).__init__();
+
+    def toString(self):
+        return None
+
+    def _getClass(self):
+        return u"inheritance.Pong"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+Pong.inheritance_Pong_ref = quark_ffi_signatures_md.Root.inheritance_Pong_md

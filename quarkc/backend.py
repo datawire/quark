@@ -15,7 +15,7 @@
 import os, types, java, python, javascript, ruby, tempfile, logging, inspect
 from collections import OrderedDict
 from .ast import *
-from .compiler import TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
+from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
 from .dispatch import *
 from .helpers import *
 from .environment import Environment
@@ -434,7 +434,7 @@ class Backend(object):
             name = self.name(cls.name)
 
         if cls.parameters:
-            params = [self.type(bindings[p]) for p in cls.parameters]
+            params = [self.type(texpr(bindings[p].type, bindings, bindings[p].bindings)) for p in cls.parameters]
         else:
             params = []
 

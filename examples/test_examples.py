@@ -17,6 +17,7 @@ import shutil
 import filecmp
 from glob import glob
 import re
+import time
 
 import pytest
 
@@ -24,7 +25,6 @@ from quarkc.test import capture_output, generate_docs
 from quarkc.test.util import get_git_top
 
 git_top = get_git_top()
-qc_files_found = True  # *.qc files break example tests and doc generation
 
 gtd = "gen-test"    # Name of directory where doc generation and test stuff is found
 pyf = "execute.py"  # Name of python file to be executed in the above directory
@@ -108,7 +108,8 @@ class Helpers(object):
 
 def run_python(py_file, session_name, cwd, output_dir):
     session = capture_output.Session(session_name, cwd, output_dir)
-    scope = dict(re=re, session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters,
+    scope = dict(re=re, sleep=time.sleep,
+                 session=session, capture=session.capture, capture_bg=session.capture_bg, filters=Filters,
                  helpers=Helpers(session.capture))
     exec(open(py_file, "U"), scope)
     return scope
@@ -122,27 +123,14 @@ def gen_docs(scope, src_dir, dest_dir):
             out.write(template.render(scope))
 
 
-def test_no_qc():
-    global qc_files_found
-    print "To delete *.qc files:"
-    print """find %s -type f -name "*.qc" -print0 | xargs -0 rm""" % git_top
-    for root, dirs, files in os.walk(git_top):
-        for filename in files:
-            assert not filename.endswith(".qc"), "Example tests will not pass when *.qc files are present"
-    qc_files_found = False
-
-
 def test_example(example):
-    if qc_files_found:
-        pytest.xfail("Example tests will not pass when *.qc files are present")
     cwd = os.path.join(directory, example)
     gen_dir = os.path.join(directory, example, gtd)
     ex_dir = os.path.join(gen_dir, exd)
     ac_dir = os.path.join(gen_dir, acd)
     py_file = os.path.join(gen_dir, pyf)
 
-    assert os.path.exists(ex_dir)
-    assert os.path.exists(py_file)
+    assert os.path.exists(py_file), "No test file found: %s" % py_file
 
     if os.path.exists(ac_dir):
         shutil.rmtree(ac_dir, ignore_errors=True)
@@ -151,5 +139,6 @@ def test_example(example):
     scope = run_python(py_file, example, cwd, ac_dir)
     gen_docs(scope, gen_dir, cwd)
 
-    diff = filecmp.dircmp(ex_dir, ac_dir, )
-    check_diff(diff)
+    if os.path.exists(ex_dir):
+        diff = filecmp.dircmp(ex_dir, ac_dir)
+        check_diff(diff)

@@ -29,7 +29,7 @@ def main():
     print "Request says %r" % request.text
 
     response = client.hello(request)
-    response.await(1.0)
+    response.await(3.0)
     if not response.isFinished():
         print "No response!"
     elif response.getError() is not None:

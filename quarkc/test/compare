@@ -22,7 +22,7 @@ Usage:
 
 CMPFILE are filenames that end with .cmp
 
-Use compare clear to remove the quarkc/test/emit/output directory, the
+Use compare clear to remove the quarkc/test/ffi/output directory, the
 output directories under examples/*/gen-test, and any .cmp files on
 the filesystem below the current directory.
 
@@ -117,7 +117,7 @@ def find_different_files(base):
     return result
 
 
-def find_different_emit_files(base):
+def find_different_ffi_files(base):
     output = os.path.join(base, "output")
     expected = os.path.join(base, "expected")
     result = []  # (expected file path, output file path), ...
@@ -129,6 +129,7 @@ def find_different_emit_files(base):
     for backend in backends:
         tests = os.listdir(os.path.join(output, backend))
         for test in tests:
+            if test == "quark": continue
             if not os.path.isdir(os.path.join(output, backend, test)):
                 continue
             obt = os.path.join(output, backend, test)
@@ -143,9 +144,9 @@ def find_different_emit_files(base):
 def main(options):
     opjoin = os.path.join
     git_top = get_git_top()
-    emit = opjoin(git_top, "quarkc/test/emit")
+    ffi = opjoin(git_top, "quarkc/test/ffi")
     example_dirs = glob(opjoin(git_top, "examples/*/gen-test"))
-    output_dirs = [opjoin(emit, "output")] + [opjoin(example_dir, "output") for example_dir in example_dirs]
+    output_dirs = [opjoin(ffi, "output")] + [opjoin(example_dir, "output") for example_dir in example_dirs]
 
     names = options["CMPFILE"]
     force = options["--force"]
@@ -179,7 +180,7 @@ def main(options):
             else:
                 print "Ignoring non-cmp-file:", path
     else:
-        to_compare = (find_cmp_files() + find_different_emit_files(emit) +
+        to_compare = (find_cmp_files() + find_different_ffi_files(ffi) +
                       sum((find_different_files(example_dir) for example_dir in example_dirs), []))
 
     # Pre-filter so len(to_compare) can be used for progress indicator

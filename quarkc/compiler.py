@@ -1026,6 +1026,7 @@ class Compiler(object):
             self.roots.add(root)
             if recurse:
                 for u in root.uses:
+                    assert u in self.CACHE, (url, u, self.CACHE.keys())
                     self.roots.add(self.CACHE[u])
             if not include: self.entries[url] = root.files[0]
             return root.files[0]
@@ -1041,6 +1042,7 @@ class Compiler(object):
                         end = pickle.load(fd)
                         if end == ARCHIVE_END:
                             for root in roots:
+                                self.CACHE[root.url] = root
                                 self.roots.add(root)
                             if not include: self.entries[url] = roots[0].files[0]
                             return roots[0].files[0]
@@ -1068,6 +1070,7 @@ class Compiler(object):
                 for u in file.uses.values():
                     qurl = join(url, u.url)
                     self.perform_use(qurl, u)
+                    assert qurl in self.CACHE, (url, qurl, self.CACHE.keys())
                 for inc in file.includes.values():
                     qurl = join(url, inc.url)
                     if qurl.endswith(".q"):

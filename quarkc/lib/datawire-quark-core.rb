@@ -843,7 +843,7 @@ module DatawireQuarkCore
     end
 
     def sendBinary (message)
-      @sock.write message.data  # .unpack("C*")
+      @sock.write message.data.unpack("C*")
     end
 
     def close
@@ -973,11 +973,12 @@ module DatawireQuarkCore
     end
 
     def respond(rq, action)
-      if rq.action == :wait
+      waiting = rq.action == :wait
+      rq.action = action
+      if waiting
         # condition is race-free only in the context of the originating actor
         rq.fut.signal
       end
-      rq.action = action
     end
   end
 

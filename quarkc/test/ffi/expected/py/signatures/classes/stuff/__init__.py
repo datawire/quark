@@ -1,0 +1,26 @@
+from quark_runtime import *
+
+import quark.reflect
+import quark_ffi_signatures_md
+
+
+class Test(object):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def foo(self, t):
+        return None
+
+    def test(self):
+        pass
+
+    def _getClass(self):
+        return u"classes.stuff.Test"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+Test.classes_stuff_Test_ref = quark_ffi_signatures_md.Root.classes_stuff_Test_md
