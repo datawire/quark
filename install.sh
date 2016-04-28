@@ -1,6 +1,28 @@
 #!/usr/bin/env sh
 set -e
 
+# check if stdout is a terminal...
+if [ -t 1 ]; then
+
+    # see if it supports colors...
+    ncolors=$(tput colors)
+
+    if [ -n "$ncolors" ] && [ $ncolors -ge 8 ]; then
+        bold="$(tput bold)"
+        underline="$(tput smul)"
+        standout="$(tput smso)"
+        normal="$(tput sgr0)"
+        black="$(tput setaf 0)"
+        red="$(tput setaf 1)"
+        green="$(tput setaf 2)"
+        yellow="$(tput setaf 3)"
+        blue="$(tput setaf 4)"
+        magenta="$(tput setaf 5)"
+        cyan="$(tput setaf 6)"
+        white="$(tput setaf 7)"
+    fi
+fi
+
 msg () {
     printf "$1"
     printf "\n"
@@ -18,7 +40,7 @@ step () {
 }
 
 die() {
-    printf "\e[31mFAIL\e[0m"
+    printf "${red}FAIL${normal}"
     printf "\n\n        "
     printf "$1"
     printf "\n\n"
@@ -26,7 +48,7 @@ die() {
 }
 
 ok() {
-    printf "\e[32mOK\e[0m\n"
+    printf "${green}OK${normal}\n"
 }
 
 if [ -n "$1" ]; then
