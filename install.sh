@@ -94,15 +94,20 @@ is_virtualenv_installed
 is_quark_installed
 
 step "Creating Datawire Quark installation directory..."
-virtualenv -q --python ${python_version} ${quark_install_root}
+virtualenv -q --python ${python_version} ${quark_install_root}/venv
 
 step "Installing Datawire Quark..."
-. ${quark_install_root}/bin/activate
+
+. ${quark_install_root}/venv/bin/activate
 pip --quiet install ${piparg}
 deactivate
+
+mkdir ${quark_install_root}/bin
+mv ${quark_install_root}/venv/bin/quark* ${quark_install_root}/bin
 
 step "Done!"
 
 msg
-msg "  Please add '${quark_install_root}/bin/quark' to your path."
+msg "  Quark has been installed into '${quark_install_root}'."
+msg "  Please add '${quark_install_root}/bin' to your PATH."
 msg
