@@ -149,6 +149,7 @@ def main(args):
     output = args["--output"]
 
     try:
+        shell.command_log.info("Checking environment")
         backends = []
         if java or all:
             if args["install"]: shell.check("mvn")
