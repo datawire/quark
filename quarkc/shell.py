@@ -22,14 +22,19 @@ from .exceptions import QuarkError
 PREREQS = {
     "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
     "pip": (["pip", "--version"], "pip is required in order to install python packages"),
-    "npm": (["npm", "--version"], "npm is required in order to install javascript packages")
+    "npm": (["npm", "--version"], "npm is required in order to install javascript packages"),
+    "gem": (["gem", "--version"], "gem is required in order to install ruby packages")
 }
 
+CHECKED = set()
+
 def check(cmd, cwd=None):
+    if cmd in CHECKED: return
     if cmd in PREREQS:
         check, msg = PREREQS[cmd]
         try:
             subprocess.check_output(check, cwd=cwd)
+            CHECKED.add(cmd)
         except (subprocess.CalledProcessError, OSError):
             raise QuarkError("unable to find %s: %s" % (cmd, msg))
 
@@ -53,6 +58,7 @@ class ShellError(QuarkError):
 def call(*command, **kwargs):
     cwd = kwargs.get("cwd")
     stage = kwargs.get("stage")
+    errok = kwargs.get("errok")
     command = user_override(command)
     check(command[0], cwd)
 
@@ -63,13 +69,17 @@ def call(*command, **kwargs):
         out = subprocess.check_output(command, cwd=cwd, stderr=subprocess.STDOUT)
         command_log.debug("%s: %s", stage, format_output(out))
     except subprocess.CalledProcessError as ex:
-        command_log.warning("%s: %s", stage, format_output(ex.output))
+        if errok:
+            log = command_log.debug
+        else:
+            log = command_log.warning
+        log("%s: %s", stage, format_output(ex.output))
         raise ShellError("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
     return out
 
 def get_pip_pkg(name, stage=None):
     try:
-        output = call("pip", "show", name, stage=stage)
+        output = call("pip", "show", name, stage=stage, errok=True)
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)

@@ -765,7 +765,7 @@ class JavaScript(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = shell.call("npm", "ll", "--depth", "0", "--json", name)
+            output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
             return json.loads(output)["dependencies"][name]["path"]
         except shell.ShellError, e:
             pass
@@ -786,7 +786,7 @@ class Ruby(Backend):
     def install_target(self):
         name, ver = namever(self.entry)
         try:
-            output = shell.call("gem", "which", name, stage="install")
+            output = shell.call("gem", "which", name, stage="install", errok=True)
             return output.strip()
         except shell.ShellError, e:
             pass
