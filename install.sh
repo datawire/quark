@@ -29,53 +29,27 @@ ok() {
     printf "\e[32mOK\e[0m\n"
 }
 
-piparg=datawire-quark
-
-download() {
+if [ -n "$1" ]; then
     branch=$1
     url="https://github.com/datawire/quark/archive/${branch}.zip"
-    msg "Installing from ${url}:"
-    work=$(mktemp -d)
-    curl -# -L ${url} > ${work}/quark-${branch}.zip
-    unzip -q ${work}/quark-${branch}.zip -d ${work}
-    piparg=${work}/quark-${branch}
-}
-
-if [ -n "$1" ]; then
-    download $1
+    msg "Installing from ${url}"
 else
-    msg "Installing from PyPI:"
+    msg "Installing from PyPI"
 fi
 
 python_version="python2.7"
-
 quark_install_root="${HOME}/.quark"
 
-is_python_installed () {
-    substep "Checking if python is installed: "
-    if command -v python > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install python on your system."
-    fi
-}
-
-is_pip_installed () {
-    substep "Checking if pip is installed: "
-    if command -v pip > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install python pip on your system."
-    fi
-}
-
-is_virtualenv_installed () {
-    substep "Checking if virtualenv is installed: "
-    if command -v virtualenv > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install virtualenv on your system."
-    fi
+required_commands () {
+    for cmd in $*; do
+        substep "Checking for ${cmd}: "
+        loc=$(command -v ${cmd} || true)
+        if [ -n "${loc}" ]; then
+            ok
+        else
+            die "Cannot find ${cmd}, please install and try again."
+        fi
+    done
 }
 
 is_quark_installed () {
@@ -88,10 +62,21 @@ is_quark_installed () {
 }
 
 step "Performing installation environment sanity checks..."
-is_python_installed 
-is_pip_installed
-is_virtualenv_installed
+required_commands curl unzip python pip virtualenv
 is_quark_installed
+
+if [ -n "${branch}" ]; then
+    msg "Downloading..."
+    work=$(mktemp -d)
+    curl -# -L ${url} > ${work}/quark-${branch}.zip
+    if unzip -q ${work}/quark-${branch}.zip -d ${work} >> ${work}/install.log 2>&1; then
+        piparg=${work}/quark-${branch}
+    else
+        die "Unable to download from ${url}\n        check in ${work}/install.log for details."
+    fi
+else
+    piparg=datawire-quark
+fi
 
 step "Creating Datawire Quark installation directory..."
 virtualenv -q --python ${python_version} ${quark_install_root}/venv
