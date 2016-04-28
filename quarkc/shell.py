@@ -16,27 +16,49 @@ import os
 import shlex
 import subprocess
 import logging
+from distutils.version import StrictVersion
 
 from .exceptions import QuarkError
 
+def noop(output): pass
+
+# Checks versions for commands with output like this: "Blah x.y.z"
+def check_version(cmd, output, min=None, max=None):
+    parts = output.split()
+    if len(parts) < 2:
+        raise QuarkError("unable to determine version")
+    version = parts[1]
+    if min and (StrictVersion(version) < StrictVersion(min)):
+        raise QuarkError("%s greater than %s required, found %s" % (cmd, min, version))
+    if max and (StrictVersion(version) >= StrictVersion(max)):
+        raise QuarkError("%s less than %s required, found %s" % (cmd, max, version))
+
+def validate_pip(output):
+    check_version("pip", output, "8.0.0")
+
+def validate_python(output):
+    check_version("python", output, "2.7.0", "3.0.0")
+
 PREREQS = {
-    "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
-    "pip": (["pip", "--version"], "pip is required in order to install python packages"),
-    "npm": (["npm", "--version"], "npm is required in order to install javascript packages"),
-    "gem": (["gem", "--version"], "gem is required in order to install ruby packages")
+    "mvn": (["mvn", "-v"], "maven is required in order to install java packages", noop),
+    "pip": (["pip", "--version"], "pip is required in order to install python packages", validate_pip),
+    "npm": (["npm", "--version"], "npm is required in order to install javascript packages", noop),
+    "gem": (["gem", "--version"], "gem is required in order to install ruby packages", noop),
+    "python": (["python", "-V"], "python 2.7 is required in order ot install python packages", validate_python)
 }
 
 CHECKED = set()
 
-def check(cmd, cwd=None):
+def check(role, cmd=None, cwd=None):
+    if cmd is None: cmd = role
     if cmd in CHECKED: return
-    if cmd in PREREQS:
-        check, msg = PREREQS[cmd]
-        try:
-            subprocess.check_output(check, cwd=cwd)
-            CHECKED.add(cmd)
-        except (subprocess.CalledProcessError, OSError):
-            raise QuarkError("unable to find %s: %s" % (cmd, msg))
+    check, msg, validate = PREREQS[role]
+    try:
+        out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT)
+        validate(out)
+        CHECKED.add(cmd)
+    except (subprocess.CalledProcessError, OSError):
+        raise QuarkError("unable to find %s: %s" % (cmd, msg))
 
 COMMAND_DEFAULTS = {
     "mvn": "mvn -q",
@@ -59,8 +81,9 @@ def call(*command, **kwargs):
     cwd = kwargs.get("cwd")
     stage = kwargs.get("stage")
     errok = kwargs.get("errok")
+    role = command[0]
     command = user_override(command)
-    check(command[0], cwd)
+    check(role, command[0], cwd)
 
     def format_output(out):
         return ("\n  %s: " % os.path.basename(command[0])).join(("\n" + out).splitlines())
