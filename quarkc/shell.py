@@ -31,7 +31,7 @@ def check(cmd, cwd=None):
         try:
             subprocess.check_output(check, cwd=cwd)
         except (subprocess.CalledProcessError, OSError):
-            raise compiler.QuarkError("unable to find %s: %s" % (cmd, msg))
+            raise QuarkError("unable to find %s: %s" % (cmd, msg))
 
 COMMAND_DEFAULTS = {
     "mvn": "mvn -q",
@@ -78,4 +78,4 @@ def get_pip_pkg(name, stage=None):
 
 def pipcheck(name, stage=None):
     if get_pip_pkg(name) is None:
-        raise compiler.QuarkError("unable to find required python package %s" % name)
+        raise QuarkError("unable to find required python package %s" % name)
