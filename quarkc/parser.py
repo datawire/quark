@@ -490,11 +490,19 @@ class Parser:
 
     @g.rule('number = _ NUMBER _')
     def visit_number(self, node, (pre, number, post)):
-        return Number(number)
+        return number
 
-    @g.rule(r'NUMBER = ~"[0-9]+(\.[0-9]+)?" "L"?')
-    def visit_NUMBER(self, node, children):
-        return node.text
+    @g.rule(r'NUMBER = BINARY / DECIMAL')
+    def visit_NUMBER(self, node, (number,)):
+        return number
+
+    @g.rule(r'DECIMAL = ~"[0-9]+(\.[0-9]+)?" "L"?')
+    def visit_DECIMAL(self, node, children):
+        return Number(node.text)
+
+    @g.rule(r'BINARY = ~"[+-]?0b[01]?[01_]*[01]"')
+    def visit_BINARY(self, node, children):
+        return Number(str(int(node.text.replace('_', ''), 2)))
 
     @g.rule('string = _ STRING _')
     def visit_string(self, node, (pre, string, post)):
