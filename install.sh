@@ -84,7 +84,7 @@ is_quark_installed () {
 }
 
 step "Performing installation environment sanity checks..."
-required_commands curl unzip python pip virtualenv
+required_commands curl unzip fgrep python pip virtualenv
 is_quark_installed
 
 if [ -n "${branch}" ]; then
@@ -112,9 +112,31 @@ deactivate
 mkdir ${quark_install_root}/bin
 mv ${quark_install_root}/venv/bin/quark* ${quark_install_root}/bin
 
+conf="${quark_install_root}/config.sh"
+
+cat > ${conf} <<EOF
+export PATH=\${PATH}:${quark_install_root}/bin
+EOF
+
 step "Done!"
 
 msg
-msg "  Quark has been installed into '${quark_install_root}'."
-msg "  Please add '${quark_install_root}/bin' to your PATH."
+msg "  Quark has been installed into '${quark_install_root}'. You may want to"
+msg "  add '${quark_install_root}/bin' to your PATH. You can do this by adding"
+msg "  '. ${conf}' to your .bashrc."
 msg
+
+read -p "Type YES to modify ~/.bashrc: " answer
+
+if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
+    if fgrep ${conf} ~/.bashrc; then
+        msg "Already modified, skipping."
+    else
+        cat >> ~/.bashrc <<EOF
+
+# Add quark to the path
+. ${conf}
+EOF
+        msg "Added '. ${conf}' to ~/.bashrc."
+    fi
+fi
