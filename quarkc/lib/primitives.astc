@@ -246,8 +246,29 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
    MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
     Call(Attr(Var(Name(self), $type=1.quark.integral<1.quark.integral.T>),
-      Name(toJSON), $type=1.quark.integral.toJSON),
-    $type=4.quark.JSONObject))),
+      Name(toJSON), $type=1.quark.integral.toJSON), $type=4.quark.JSONObject)),
+
+   MethodMacro(Type(Name(T)), Name(bitwise_or),
+    Param(Type(Name(T)), Name(other), $type=1.quark.integral.T),
+    Native(NativeCase(Fixed('(('), Var(Name(self),
+      $type=1.quark.integral<1.quark.integral.T>), Fixed(') | ('),
+      Var(Name(other), $type=1.quark.integral.T), Fixed('))')))),
+
+   MethodMacro(Type(Name(T)), Name(bitwise_xor),
+    Param(Type(Name(T)), Name(other), $type=1.quark.integral.T),
+    Native(NativeCase(Fixed('(('), Var(Name(self),
+      $type=1.quark.integral<1.quark.integral.T>), Fixed(') ^ ('),
+      Var(Name(other), $type=1.quark.integral.T), Fixed('))')))),
+
+   MethodMacro(Type(Name(T)), Name(bitwise_and),
+    Param(Type(Name(T)), Name(other), $type=1.quark.integral.T),
+    Native(NativeCase(Fixed('(('), Var(Name(self),
+      $type=1.quark.integral<1.quark.integral.T>), Fixed(') & ('),
+      Var(Name(other), $type=1.quark.integral.T), Fixed('))')))),
+
+   MethodMacro(Type(Name(T)), Name(bitwise_not),
+    Native(NativeCase(Fixed('(~('), Var(Name(self),
+      $type=1.quark.integral<1.quark.integral.T>), Fixed('))'))))),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Byte')),
      NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')),

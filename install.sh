@@ -1,6 +1,28 @@
 #!/usr/bin/env sh
 set -e
 
+# check if stdout is a terminal...
+if [ -t 1 ]; then
+
+    # see if it supports colors...
+    ncolors=$(tput colors)
+
+    if [ -n "$ncolors" ] && [ $ncolors -ge 8 ]; then
+        bold="$(tput bold)"
+        underline="$(tput smul)"
+        standout="$(tput smso)"
+        normal="$(tput sgr0)"
+        black="$(tput setaf 0)"
+        red="$(tput setaf 1)"
+        green="$(tput setaf 2)"
+        yellow="$(tput setaf 3)"
+        blue="$(tput setaf 4)"
+        magenta="$(tput setaf 5)"
+        cyan="$(tput setaf 6)"
+        white="$(tput setaf 7)"
+    fi
+fi
+
 msg () {
     printf "$1"
     printf "\n"
@@ -18,7 +40,7 @@ step () {
 }
 
 die() {
-    printf "\e[31mFAIL\e[0m"
+    printf "${red}FAIL${normal}"
     printf "\n\n        "
     printf "$1"
     printf "\n\n"
@@ -26,56 +48,30 @@ die() {
 }
 
 ok() {
-    printf "\e[32mOK\e[0m\n"
-}
-
-piparg=datawire-quark
-
-download() {
-    branch=$1
-    url="https://github.com/datawire/quark/archive/${branch}.zip"
-    msg "Installing from ${url}:"
-    work=$(mktemp -d)
-    curl -# -L ${url} > ${work}/quark-${branch}.zip
-    unzip -q ${work}/quark-${branch}.zip -d ${work}
-    piparg=${work}/quark-${branch}
+    printf "${green}OK${normal}\n"
 }
 
 if [ -n "$1" ]; then
-    download $1
+    branch=$1
+    url="https://github.com/datawire/quark/archive/${branch}.zip"
+    msg "Installing from ${url}"
 else
-    msg "Installing from PyPI:"
+    msg "Installing from PyPI"
 fi
 
 python_version="python2.7"
-
 quark_install_root="${HOME}/.quark"
 
-is_python_installed () {
-    substep "Checking if python is installed: "
-    if command -v python > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install python on your system."
-    fi
-}
-
-is_pip_installed () {
-    substep "Checking if pip is installed: "
-    if command -v pip > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install python pip on your system."
-    fi
-}
-
-is_virtualenv_installed () {
-    substep "Checking if virtualenv is installed: "
-    if command -v virtualenv > /dev/null 2>&1; then
-        ok
-    else
-        die "Not Installed. Please install virtualenv on your system."
-    fi
+required_commands () {
+    for cmd in $*; do
+        substep "Checking for ${cmd}: "
+        loc=$(command -v ${cmd} || true)
+        if [ -n "${loc}" ]; then
+            ok
+        else
+            die "Cannot find ${cmd}, please install and try again."
+        fi
+    done
 }
 
 is_quark_installed () {
@@ -88,10 +84,21 @@ is_quark_installed () {
 }
 
 step "Performing installation environment sanity checks..."
-is_python_installed 
-is_pip_installed
-is_virtualenv_installed
+required_commands curl unzip fgrep python pip virtualenv
 is_quark_installed
+
+if [ -n "${branch}" ]; then
+    msg "Downloading..."
+    work=$(mktemp -d)
+    curl -# -L ${url} > ${work}/quark-${branch}.zip
+    if unzip -q ${work}/quark-${branch}.zip -d ${work} >> ${work}/install.log 2>&1; then
+        piparg=${work}/quark-${branch}
+    else
+        die "Unable to download from ${url}\n        check in ${work}/install.log for details."
+    fi
+else
+    piparg=datawire-quark
+fi
 
 step "Creating Datawire Quark installation directory..."
 virtualenv -q --python ${python_version} ${quark_install_root}/venv
@@ -105,9 +112,31 @@ deactivate
 mkdir ${quark_install_root}/bin
 mv ${quark_install_root}/venv/bin/quark* ${quark_install_root}/bin
 
+conf="${quark_install_root}/config.sh"
+
+cat > ${conf} <<EOF
+export PATH=\${PATH}:${quark_install_root}/bin
+EOF
+
 step "Done!"
 
 msg
-msg "  Quark has been installed into '${quark_install_root}'."
-msg "  Please add '${quark_install_root}/bin' to your PATH."
+msg "  Quark has been installed into '${quark_install_root}'. You may want to"
+msg "  add '${quark_install_root}/bin' to your PATH. You can do this by adding"
+msg "  '. ${conf}' to your .bashrc."
 msg
+
+read -p "Type YES to modify ~/.bashrc: " answer
+
+if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
+    if fgrep ${conf} ~/.bashrc; then
+        msg "Already modified, skipping."
+    else
+        cat >> ~/.bashrc <<EOF
+
+# Add quark to the path
+. ${conf}
+EOF
+        msg "Added '. ${conf}' to ~/.bashrc."
+    fi
+fi
