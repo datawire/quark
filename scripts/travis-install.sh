@@ -17,7 +17,7 @@ case "${TRAVIS_OS_NAME}" in
         ;;
     osx)
         brew update
-        brew install python xz
+        brew install maven python xz
         hash -r
         pip install virtualenv
         ;;
@@ -37,12 +37,13 @@ python -c 'import sys; print(sys.version); sys.exit(int(sys.version_info[:3] < (
         (cd ~/.nvm &&
                 git checkout `git describe --abbrev=0 --tags`) &&
         source ~/.nvm/nvm.sh &&
-        nvm install 4.2.2
- )
-nvm alias default 4.2.2
+        nvm install 4.2.2 &&
+        nvm alias default 4.2.2
+)
+set +x && source ~/.nvm/nvm.sh && set -x
 node --version
 virtualenv quark-travis
-. quark-travis/bin/activate
+set +x && . quark-travis/bin/activate && set -x
 pip install --upgrade pip
 command rvm install 2.3.0
 command rvm --default use 2.3.0
