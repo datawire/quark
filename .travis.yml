@@ -53,6 +53,9 @@ before_install:
 # everything to a script but last pip install
 
 install:
+- update-java-alternatives -l
+- true | update-alternatives --config java
+- true | update-alternatives --config javac
 - javac -version
 - java -version
 - java -version 2>&1 | grep -Fe 'java version "1.7.0'
