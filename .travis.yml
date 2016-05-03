@@ -29,24 +29,6 @@ env:
   - PYPI=$REALPYPI
   - DEPLOYMENT_TOKEN_FILE=.i.am.the.master
 
-addons:
-  apt:
-    packages:
-    - libssl-dev
-    - swig
-    - python-dev
-    - curl
-    - python2.7
-    - python-pip
-    - tar
-    - gcc
-    - make
-    - python-dev
-    - libffi-dev
-    - python-virtualenv
-    - openjdk-7-jdk
-    - maven
-
 before_install:
 - openssl aes-256-cbc -K $encrypted_cdfbaa8bcf7f_key -iv $encrypted_cdfbaa8bcf7f_iv
   -in .respawn.token.enc -out .respawn.token -d
@@ -55,6 +37,7 @@ before_install:
 # everything to a script but last pip install
 
 install:
+- sudo apt-get -y install libssl-dev swig python-dev curl python2.7 python-pip tar gcc make python-dev libffi-dev python-virtualenv openjdk-7-jdk maven
 - sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
 - javac -version
 - java -version
@@ -65,8 +48,6 @@ install:
   install 4.2.2
 - nvm alias default 4.2.2
 - node --version
-- virtualenv quark-travis
-- ". quark-travis/bin/activate"
 - pip install --upgrade pip
 - command rvm install 2.3.0
 - rvm --default use 2.3.0
