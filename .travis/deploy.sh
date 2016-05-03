@@ -14,9 +14,6 @@ fi
 
 set -x
 
-py.test -v $TEST_SUITE --durations=10 --collect-only
-
-
 if [[ "$TRAVIS_REPO_SLUG" != "datawire/quark" ]]; then
     echo "Only CI for forks, skipping CD"
     exit 0

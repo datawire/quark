@@ -30,7 +30,10 @@ install:
 - .travis/install.sh
 
 script:
-- .travis/script.sh
+- .travis/test.sh
+
+after_script:
+- .travis/deploy.sh
 
 # TODO: travis is way too fragile to handle any of the stuff below,
 # move to shellscripts and call them at the end of script block inside
