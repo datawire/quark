@@ -178,6 +178,7 @@ if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
     if fgrep -q ${conf} ~/.bashrc; then
 	skip "(already modified)"
     else
+        touch ~/.bashrc
         cat >> ~/.bashrc <<EOF
 
 # Add quark to the path
