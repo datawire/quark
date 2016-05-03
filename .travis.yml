@@ -1,23 +1,23 @@
-language: python
-
-python:
-  - 2.7.6
-
+language: generic
 matrix:
   include:
     - os: linux
+      dist: trusty
       env: TEST_SUITE=quarkc
     - os: linux
+      dist: trusty
       env: TEST_SUITE=runtime
     - os: linux
+      dist: trusty
       env: TEST_SUITE=examples
 #   - os: osx
 #     env TEST_SUITE=examples
 #     language: generic
 
 sudo: required
-dist: trusty
 env:
+  matrix:
+    - TEST_SUITE=should-never-be-selected
   global:
   - secure: Ht+kRWkOtZl6i0RmWaKc4OJj2m4JG8ugWzweilaCH5xfxUEUeRhTvFSZNWeA1ZNxWmgSdS27HxAfdzDiZcp8lkZdLbeFBjcWIlFHVjB71hXV5ZV88v59TDZPcmULAFwp2SdZ5ZVjKU471CeBdVFhWupjSIxTfyULMk6/70vpLthioVMEGEUDtY190fNXr5NaBfEnIJ5+/XbVLnBC4knNQ6vjjO1I/KmJvjtpj7h2pBJDfK54fXL3I7x4N90tEOmU3mIJm1YoQO6CexOyz3CdlJRUvSPZVBF5Y0qDd3tPVqDE7F1DH+JSz7SJOn5HHASFFK0BXpscwSwskmGmiNSOEbWLHiFojCszs3GHUx/Lv9/bKRl6NbsZkcFfMzPnqXIg7+HQcaqF/wW7TN5rDmp1H9m2o0sD93Spk5gW9a/d4sUrRS1D+B4HPN9kZoBeKPah0gM6QelKOaLxZvQYcY4gJZOFHi+JPVGeomVpWVXPYuKrYbrCtzuDth1UdmslO6kM7s3joQKnSX2At5VekpAJd4eKNjojunwxHssUWjcQixkul3Wd2i0ap4yzDNsPo9I1KreMnopxANqPJCeIWW+PZ1uO5hNAFSML45fmlNcct7h/qLfSzazeujcPW7zwW4YhPxZFYAWdAwlD3/VrEI4JbVQQN0xkfmeyNQpXYIMl9Ak=
   - QUARK_PACKAGE=.
@@ -53,11 +53,11 @@ before_install:
 # everything to a script but last pip install
 
 install:
-- update-java-alternatives -s java-1.7.0-openjdk-amd64
+- sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
 - javac -version
 - java -version
 - java -version 2>&1 | grep -Fe 'java version "1.7.0'
-- python -c 'import sys; print sys.version; sys.exit(int(sys.version_info[:3] < (2,7,6)))'
+- python -c 'import sys; print(sys.version); sys.exit(sys.version_info[:3] < (2,7,6) or (3,0,0) > int(sys.version_info[:3]))'
 - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
   && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
   install 4.2.2
