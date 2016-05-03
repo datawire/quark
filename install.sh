@@ -5,7 +5,7 @@
 set -e
 
 # Get the script directory
-SCRIPT_SOURCE="${BASH_SOURCE[0]}"
+SCRIPT_SOURCE="${0}"
 while [ -h "$SCRIPT_SOURCE" ]; do # resolve $SCRIPT_SOURCE until the file is no longer a symlink
   SCRIPT_DIR="$( cd -P "$( dirname "$SCRIPT_SOURCE" )" && pwd )"
   SCRIPT_SOURCE="$(readlink "$SCRIPT_SOURCE")"
