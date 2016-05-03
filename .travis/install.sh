@@ -29,8 +29,10 @@ case "${TRAVIS_OS_NAME}" in
         ;;
     osx)
         brew update
-        brew outdated maven || brew upgrade maven
-        brew install python xz ruby node
+        brew install python xz ruby
+        for pkg in maven node; do
+            brew outdated $pkg || brew upgrade $pkg
+        done
         hash -r
         CELLAR=$(brew --cellar)
         RV=$(brew ls --versions ruby | fgrep ' 2.3.' | tr \  / | head -1)
