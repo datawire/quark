@@ -5,7 +5,7 @@ set -ex
 cwd=$(pwd)
 cd $(dirname "$0")/..
 
-scripts/env.sh install
+.travis/env.sh install
 
 case "${TRAVIS_OS_NAME}" in
     linux)
