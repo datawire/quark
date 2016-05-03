@@ -171,11 +171,13 @@ msg "  '. ${conf}' to your .bashrc."
 msg
 
 step "Configuring bash..."
-read -p "-->   Type YES to modify ~/.bashrc: " answer
+# The || true here is a workaround for osx, apparently when you are
+# piping to a shell, read will just fail
+read -p "-->   Type YES to modify ~/.bashrc: " answer || true
 
 if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
     substep "Modifying .bashrc: "
-    if [ -f ~/.bashrc ] && grep -q ${conf} ~/.bashrc; then
+    if [ -f ~/.bashrc ] && fgrep -q ${conf} ~/.bashrc; then
 	skip "(already modified)"
     else
         cat >> ~/.bashrc <<EOF
