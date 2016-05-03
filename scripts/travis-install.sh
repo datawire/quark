@@ -13,9 +13,13 @@ case "${TRAVIS_OS_NAME}" in
              python2.7 python-pip tar gcc make python-dev libffi-dev\
              python-virtualenv openjdk-7-jdk maven
         sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+        hash -r
         ;;
     osx)
-        sudo pip install virtualenv
+        brew update
+        brew install python
+        hash -r
+        pip install virtualenv
         ;;
     *)
         echo "Unsupported platform $TRAVIS_OS_NAME"
