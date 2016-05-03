@@ -98,7 +98,7 @@ if [ -n "$1" ]; then
 	    msg "Installing from ${url}"
 	    download() {
 		msg "Downloading..."
-		work=$(mktemp -d)
+		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
 		curl -# -L ${url} > ${work}/quark-${branch}.zip
 		if unzip -q ${work}/quark-${branch}.zip -d ${work} >> ${work}/install.log 2>&1; then
 		    piparg=${work}/quark-${branch}
