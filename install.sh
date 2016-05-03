@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+
+{ # this ensures the entire script is downloaded #
+
 set -e
 
 # Get the script directory
@@ -202,3 +205,5 @@ msg
 msg "    git clone${cloneargs} git@github.com:datawire/quark.git"
 msg "    cd quark/examples"
 msg
+
+} # this ensures the entire script is downloaded #
