@@ -8,7 +8,9 @@ cd $(dirname "$0")/..
 
 . quark-travis/bin/activate
 
-. ~/.nvm/nvm.sh
+if [[ -f ~/.nvm/nvm.sh ]]; then
+    . ~/.nvm/nvm.sh
+fi
 
 set -x
 
@@ -42,12 +44,14 @@ case "$TRAVIS_BRANCH" in
         exit 0;;
 esac
 
+npm install --save-dev travis-after-all
+gem install travis-yaml
+
 
 if $(npm bin)/travis-after-all ; then
     echo All tests in matrix passed, checking deployment conditions
-    echo "Master in STATE=$STATE.";
 else
-    echo "Failure or Not Master in STATE=$STATE.";
+    echo "test failure or not master.";
     exit 0
 fi
 
