@@ -4,12 +4,12 @@ matrix:
     - os: linux
       dist: trusty
       env: TEST_SUITE=quarkc
-    - os: linux
-      dist: trusty
-      env: TEST_SUITE=runtime
-    - os: linux
-      dist: trusty
-      env: TEST_SUITE=examples
+#    - os: linux
+#      dist: trusty
+#      env: TEST_SUITE=runtime
+#    - os: linux
+#      dist: trusty
+#      env: TEST_SUITE=examples
     - os: osx
       env: TEST_SUITE=examples
   exclude:
