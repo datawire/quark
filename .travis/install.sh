@@ -37,8 +37,8 @@ case "${TRAVIS_OS_NAME}" in
         CELLAR=$(brew --cellar)
         RV=$(brew ls --versions ruby | fgrep ' 2.3.' | tr \  / | head -1)
         if [[ "$RV" != "" ]]; then
-            rvm mount --name brew-ruby "$(brew --cellar)/$RV"
-            rvm use brew-ruby --default
+            rvm mount "$(brew --cellar)/$RV"  --name brew-ruby
+            rvm use ext-brew-ruby --default
         fi
         pip install virtualenv
         ;;
