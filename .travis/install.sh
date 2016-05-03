@@ -53,5 +53,22 @@ mvn --version
 npm install --save-dev travis-after-all
 gem install travis-yaml
 scripts/prepare-common.sh
-pip install --index-url $PYPI --extra-index-url $REALPYPI $QUARK_PACKAGE
+
+
+TESTPYPI=https://testpypi.python.org/pypi
+REALPYPI=https://pypi.python.org/pypi
+PYPI=$REALPYPI
+QUARK_PACKAGE=datawire-quarkdev-bozzo
+
+case "$TRAVIS_REPO_SLUG//$TRAVIS_BRANCH" in
+    datawire/quark//ci/develop/v*)
+        QUARK_PACKAGE="$QUARK_PACKAGE==${TRAVIS_BRANCH##ci/develop/v}"
+        pip install --index-url $TESTPYPI --extra-index-url $REALPYPI "$QUARK_PACKAGE"
+    ;;
+    *)
+        pip install .
+        ;;
+esac
+
+
 pip freeze

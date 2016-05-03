@@ -3,7 +3,7 @@ import logging
 import subprocess, re, os
 from semantic_version import Version
 
-dry_run = True
+dry_run = False
 
 class Subprocess(object):
     log = logging.getLogger("subprocess")
@@ -78,33 +78,48 @@ class metadata_version(object):
               "%r did not match in %s" % (self.version_re, self.metadata_file)
             self._before = "".join(before)
             self._after = "".join(after)
-            self.log.info("version of %s is %s" % (self.metadata_file, self._version))
+            self.log.info("version of %s is %s" % (
+                self.metadata_file, self._version))
         return self._version
 
     def update(self, current, next):
-        """Rewrite metadata file by replacing the current version with the next version"""
+        """Rewrite metadata file by replacing the current version with the
+next version"""
         current = Version(str(current))
         next = Version(str(next))
-        assert current == self.version, "Current version %s does not match file content %s of %s" % (current, self.version, self.metadata_file)
-        assert next > current, "next version %s must be greater than current version %s" % (next, current)
+        if next == self.version:
+            self.log.warn("Skipping update, found %s in %s, assuming due to re-run" % (
+                next, self.metadata_file))
+            return
+        assert current == self.version, "Current version %s does not match file content %s of %s" % (
+            current, self.version, self.metadata_file)
+        assert next > current, "next version %s must be greater than current version %s" % (
+            next, current)
         temp = "%s.tmp" % self.metadata_file
         with open(temp, "w") as metadata:
             metadata.write(self._before + str(next) + self._after)
 
         updated = self.__class__(temp, self.version_re).version
-        assert updated == next, "Updating version failed horriby in strange ways, expected %s found %s" % (next, updated)
+        assert updated == next, "Updating version failed horriby in strange ways, expected %s found %s" % (
+            next, updated)
         if dry_run:
-            self.log.info("[dry run] not renaming %s to %s" % (temp, self.metadata_file))
-            self.log.info("Updated version in %s from %s to %s" % (temp, current, next))
+            self.log.info("[dry run] not renaming %s to %s" % (
+                temp, self.metadata_file))
+            self.log.info("Updated version in %s from %s to %s" % (
+                temp, current, next))
+            self._version = next
         else:
             os.rename(temp, self.metadata_file)
-            self.log.info("Updated version in %s from %s to %s" % (self.metadata_file, current, next))
+            self.log.info("Updated version in %s from %s to %s" % (
+                self.metadata_file, current, next))
+            self._version = None
 
 class Change(object):
     def __init__(self, scale, xform, tag):
         self.scale = scale
         self.xform = xform
         self.tag = tag
+        self.delta = scale
 
 class change_impact(object):
     """ how new commits affect project version """
@@ -117,9 +132,11 @@ class change_impact(object):
         self.last_release = last_release
         self.develop = develop
         if self.last_release.version.major == 0:
-            self.log.info("While the project is in %s version, all changes are considered lesser impact" % self.last_release.version)
-            self.MINOR.xform = Version.next_patch
-            self.MAJOR.xform = Version.next_minor
+            self.log.info("While the project is in %s version, all changes have reduced impact" % self.last_release.version)
+            self.MAJOR.xform = self.MINOR.xform
+            self.MAJOR.delta = self.MINOR.delta
+            self.MINOR.xform = self.FIX.xform
+            self.MINOR.delta = self.FIX.delta
 
     def commits(self):
         for line in Subprocess.check_output(
@@ -147,13 +164,13 @@ class change_impact(object):
         current = (0,0,0)
         for s in self.commit_severities():
             if s > state.scale:
-                self.log.debug("Bigger change had %s now %s, dropping delta %s start with %s" % (state.tag, s.tag, current, s.scale))
+                self.log.debug("Bigger change had %s now %s, dropping delta %s start with %s" % (state.tag, s.tag, current, s.delta))
                 state = s
                 changes = [s]
-                curent = s.scale
+                curent = s.delta
             else:
                 changes.append(self.FIX)
-                current = tuple(map(sum, zip(current, self.FIX.scale)))
+                current = tuple(map(sum, zip(current, self.FIX.delta)))
         assert changes, "no changes found, no point in releasing"
 
         self.log.info("Version must be increased by %s in %s steps" % (current, len(changes)))
@@ -174,4 +191,6 @@ logging.basicConfig(level = logging.INFO)
 
 l = last_release()
 c = change_impact(l, "HEAD")
-m = metadata_version().update(l.version, c.next_version)
+m = metadata_version()
+m.update(l.version, c.next_version)
+print m.version
