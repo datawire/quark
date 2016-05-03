@@ -99,9 +99,10 @@ if [ -n "$1" ]; then
 	    download() {
 		msg "Downloading..."
 		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
-		curl -# -L ${url} > ${work}/quark-${branch}.zip
-		if unzip -q ${work}/quark-${branch}.zip -d ${work} >> ${work}/install.log 2>&1; then
-		    piparg=${work}/quark-${branch}
+		safename=$(echo "$branch" | tr '/' '-')
+		curl -# -L ${url} > ${work}/quark-${safename}.zip
+		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
+		    piparg=${work}/quark-${safename}
 		else
 		    die "Unable to download from ${url}\n        check in ${work}/install.log for details."
 		fi
