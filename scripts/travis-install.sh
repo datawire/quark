@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -ev
+set -ex
 
 cwd=$(pwd)
 cd $(dirname "$0")/..
@@ -31,12 +31,14 @@ javac -version
 java -version
 java -version 2>&1 | grep -Fe 'java version "1.7.0'
 python -c 'import sys; print(sys.version); sys.exit(int(sys.version_info[:3] < (2,7,6) or (3,0,0) < sys.version_info[:3]))'
-rm -rf ~/.nvm &&
-    git clone https://github.com/creationix/nvm.git ~/.nvm &&
-    (cd ~/.nvm &&
-            git checkout `git describe --abbrev=0 --tags`) &&
-    source ~/.nvm/nvm.sh &&
-    nvm install 4.2.2
+(set +x &&
+        rm -rf ~/.nvm &&
+        git clone https://github.com/creationix/nvm.git ~/.nvm &&
+        (cd ~/.nvm &&
+                git checkout `git describe --abbrev=0 --tags`) &&
+        source ~/.nvm/nvm.sh &&
+        nvm install 4.2.2
+ )
 nvm alias default 4.2.2
 node --version
 virtualenv quark-travis
@@ -45,9 +47,9 @@ pip install --upgrade pip
 command rvm install 2.3.0
 command rvm --default use 2.3.0
 ruby --version
-scripts/prepare-common.sh
 mvn --version
 npm install --save-dev travis-after-all
 gem install travis-yaml
+scripts/prepare-common.sh
 pip install --index-url $PYPI --extra-index-url $REALPYPI $QUARK_PACKAGE
 pip freeze
