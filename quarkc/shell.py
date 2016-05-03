@@ -34,7 +34,9 @@ def check_version(cmd, output, min=None, max=None):
         raise QuarkError("%s less than %s required, found %s" % (cmd, max, version))
 
 def validate_pip(output):
-    check_version("pip", output, "8.0.0")
+    # We used to require a really recent version, but no longer
+    #check_version("pip", output, "8.0.0")
+    pass
 
 def validate_python(output):
     check_version("python", output, "2.7.0", "3.0.0")

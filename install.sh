@@ -1,10 +1,22 @@
 #!/usr/bin/env sh
+
+{ # this ensures the entire script is downloaded #
+
 set -e
 
-# check if stdout is a terminal...
+# Get the script directory
+SCRIPT_SOURCE="${0}"
+while [ -h "$SCRIPT_SOURCE" ]; do # resolve $SCRIPT_SOURCE until the file is no longer a symlink
+  SCRIPT_DIR="$( cd -P "$( dirname "$SCRIPT_SOURCE" )" && pwd )"
+  SCRIPT_SOURCE="$(readlink "$SCRIPT_SOURCE")"
+  [[ $SCRIPT_SOURCE != /* ]] && SCRIPT_SOURCE="$SCRIPT_DIR/$SCRIPT_SOURCE" # if $SCRIPT_SOURCE was a relative symlink, we need to resolve it relative to the path where the symlink file was located
+done
+SCRIPT_DIR="$( cd -P "$( dirname "$SCRIPT_SOURCE" )" && pwd )"
+
+# Check if stdout is a terminal...
 if [ -t 1 ]; then
 
-    # see if it supports colors...
+    # See if it supports colors...
     ncolors=$(tput colors)
 
     if [ -n "$ncolors" ] && [ $ncolors -ge 8 ]; then
@@ -23,6 +35,7 @@ if [ -t 1 ]; then
     fi
 fi
 
+# Define a bunch of pretty output helpers
 msg () {
     printf "$1"
     printf "\n"
@@ -51,12 +64,55 @@ ok() {
     printf "${green}OK${normal}\n"
 }
 
+skip() {
+    printf "${yellow}SKIP${normal} $1\n"
+}
+
 if [ -n "$1" ]; then
-    branch=$1
-    url="https://github.com/datawire/quark/archive/${branch}.zip"
-    msg "Installing from ${url}"
+    case $1 in
+	-d)
+	    if [ -n "$2" ]; then
+		dir="$2"
+	    else
+		dir="${SCRIPT_DIR}"
+	    fi
+	    msg "Installing from ${dir}"
+	    download() {
+		piparg="${dir}"
+	    }
+	    ;;
+	-e)
+	    if [ -n "$2" ]; then
+		dir="$2"
+	    else
+		dir="${SCRIPT_DIR}"
+	    fi
+	    msg "Installing (in place) from ${dir}"
+	    download() {
+		piparg="-e ${dir}"
+	    }
+	    ;;
+	*)
+	    branch=$1
+	    url="https://github.com/datawire/quark/archive/${branch}.zip"
+	    msg "Installing from ${url}"
+	    download() {
+		msg "Downloading..."
+		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
+		safename=$(echo "$branch" | tr '/' '-')
+		curl -# -L ${url} > ${work}/quark-${safename}.zip
+		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
+		    piparg=${work}/quark-${safename}
+		else
+		    die "Unable to download from ${url}\n        check in ${work}/install.log for details."
+		fi
+	    }
+    esac
 else
     msg "Installing from PyPI"
+    download() {
+	piparg=datawire-quark
+    }
 fi
 
 python_version="python2.7"
@@ -84,21 +140,10 @@ is_quark_installed () {
 }
 
 step "Performing installation environment sanity checks..."
-required_commands curl unzip fgrep python pip virtualenv
+required_commands curl unzip fgrep python virtualenv
 is_quark_installed
 
-if [ -n "${branch}" ]; then
-    msg "Downloading..."
-    work=$(mktemp -d)
-    curl -# -L ${url} > ${work}/quark-${branch}.zip
-    if unzip -q ${work}/quark-${branch}.zip -d ${work} >> ${work}/install.log 2>&1; then
-        piparg=${work}/quark-${branch}
-    else
-        die "Unable to download from ${url}\n        check in ${work}/install.log for details."
-    fi
-else
-    piparg=datawire-quark
-fi
+download
 
 step "Creating Datawire Quark installation directory..."
 virtualenv -q --python ${python_version} ${quark_install_root}/venv
@@ -118,7 +163,7 @@ cat > ${conf} <<EOF
 export PATH=\${PATH}:${quark_install_root}/bin
 EOF
 
-step "Done!"
+step "Installed!"
 
 msg
 msg "  Quark has been installed into '${quark_install_root}'. You may want to"
@@ -126,17 +171,42 @@ msg "  add '${quark_install_root}/bin' to your PATH. You can do this by adding"
 msg "  '. ${conf}' to your .bashrc."
 msg
 
-read -p "Type YES to modify ~/.bashrc: " answer
+step "Configuring bash..."
+# The || true here is a workaround for osx, apparently when you are
+# piping to a shell, read will just fail
+read -p "-->   Type YES to modify ~/.bashrc: " answer || true
 
 if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
-    if fgrep ${conf} ~/.bashrc; then
-        msg "Already modified, skipping."
+    substep "Modifying .bashrc: "
+    if [ -f ~/.bashrc ] && fgrep -q ${conf} ~/.bashrc; then
+	skip "(already modified)"
     else
         cat >> ~/.bashrc <<EOF
 
 # Add quark to the path
 . ${conf}
 EOF
-        msg "Added '. ${conf}' to ~/.bashrc."
+	ok
     fi
+    step "Configured!"
+else
+    step "Opted out!"
 fi
+
+if [ -n "${branch}" ] && [ "${branch}" != "master" ]; then
+    cloneargs=" -b ${branch}"
+else
+    cloneargs=""
+fi
+
+msg
+msg "  Quark is now installed. You may want to run '. ${conf}'"
+msg "  in any existing shells."
+msg
+msg "  To get started, try:"
+msg
+msg "    git clone${cloneargs} git@github.com:datawire/quark.git"
+msg "    cd quark/examples"
+msg
+
+} # this ensures the entire script is downloaded #
