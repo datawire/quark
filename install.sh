@@ -139,7 +139,7 @@ is_quark_installed () {
 }
 
 step "Performing installation environment sanity checks..."
-required_commands curl unzip fgrep python pip virtualenv
+required_commands curl unzip fgrep python virtualenv
 is_quark_installed
 
 download
