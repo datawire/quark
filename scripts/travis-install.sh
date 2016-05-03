@@ -17,7 +17,8 @@ case "${TRAVIS_OS_NAME}" in
         ;;
     osx)
         brew update
-        brew install maven python xz
+        brew outdated maven || brew upgrade maven
+        brew install python xz
         hash -r
         pip install virtualenv
         ;;
