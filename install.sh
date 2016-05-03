@@ -175,10 +175,9 @@ read -p "-->   Type YES to modify ~/.bashrc: " answer
 
 if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
     substep "Modifying .bashrc: "
-    if fgrep -q ${conf} ~/.bashrc; then
+    if [ -f ~/.bashrc ] && grep -q ${conf} ~/.bashrc; then
 	skip "(already modified)"
     else
-        touch ~/.bashrc
         cat >> ~/.bashrc <<EOF
 
 # Add quark to the path
