@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Defining the Service Contract &mdash; Datawire Connect 0.5.2 documentation</title>
+    <title>Defining the Service Contract &mdash; Datawire Connect 0.5.81 documentation</title>
     
     <link rel="stylesheet" href="../../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.5.2',
+        VERSION:     '0.5.81',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.5.2 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.5.81 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Pick a Language" href="language.html" />
     <link rel="prev" title="Quickly Trying RPC" href="quicktry.html" />
@@ -71,7 +71,7 @@
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.5.81 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started with RPC Walkthrough</a> &raquo;</li> 
       </ul>
     </div>  
@@ -84,12 +84,12 @@
   <div class="section" id="defining-the-service-contract">
 <h1>Defining the Service Contract<a class="headerlink" href="#defining-the-service-contract" title="Permalink to this headline">¶</a></h1>
 <p>The first step when working with RPC is to define a contract in Quark. This contract defines the value classes, interfaces, and interaction patterns as well as how they can be used together.</p>
-<p>Note: If you don&#8217;t want step-by-step guidance about how to create the contract and just want to start from a completed contract, there is a <a class="reference internal" href="#fullexamplecontract"><span>link to the full contract file</span></a> at the bottom of this page.</p>
+<p>Note: If you don&#8217;t want step-by-step guidance about how to create the contract and just want to start from a completed contract, there is a <a class="reference internal" href="#fullexamplecontract"><span class="std std-ref">link to the full contract file</span></a> at the bottom of this page.</p>
 <div class="section" id="part-1-creating-the-framework">
 <span id="part1framework"></span><h2>Part 1: Creating the framework<a class="headerlink" href="#part-1-creating-the-framework" title="Permalink to this headline">¶</a></h2>
 <p>This section helps you define the necessary structure for your service contract.</p>
 <p>Relevant code:</p>
-<div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
+<div class="highlight-none"><div class="highlight"><pre><span></span>@version(&quot;0.1.0&quot;)
 <span class="hll">package hello {
 </span>
 <span class="hll">}
@@ -100,7 +100,7 @@
 <div class="section" id="part-2-adding-value-classes">
 <span id="part2classes"></span><h2>Part 2: Adding value classes<a class="headerlink" href="#part-2-adding-value-classes" title="Permalink to this headline">¶</a></h2>
 <p>This section defines the value classes needed by the Hello World RPC service. These classes hold the data that will be passed between the client and the server.</p>
-<div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
+<div class="highlight-none"><div class="highlight"><pre><span></span>@version(&quot;0.1.0&quot;)
 package hello {
 
 <span class="hll">   class Request {
@@ -118,7 +118,7 @@ package hello {
 <div class="section" id="part-3-interface">
 <span id="part3interface"></span><h2>Part 3: Interface<a class="headerlink" href="#part-3-interface" title="Permalink to this headline">¶</a></h2>
 <p>This section defines the interface needed by the Hello World RPC service. The interface contains the details of the interaction pattern being used, in this case a single request that generates a single response.</p>
-<div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
+<div class="highlight-none"><div class="highlight"><pre><span></span>@version(&quot;0.1.0&quot;)
 package hello {
 
    class Request {
@@ -146,7 +146,7 @@ package hello {
 <span id="part4client"></span><h2>Part 4: Client<a class="headerlink" href="#part-4-client" title="Permalink to this headline">¶</a></h2>
 <p>This section defines the client processing code in Quark. This definition will be used within the client code in each supported target language to perform the actual communications work of the client.</p>
 <p>Relevant code:</p>
-<div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
+<div class="highlight-none"><div class="highlight"><pre><span></span>@version(&quot;0.1.0&quot;)
 package hello {
 
    class Request {
@@ -173,7 +173,7 @@ package hello {
 <span id="part5server"></span><h2>Part 5: Server<a class="headerlink" href="#part-5-server" title="Permalink to this headline">¶</a></h2>
 <p>This section defines the server in Quark. This definition will be used within the server written in each supported language to access the code within Quark and the installed integration that accepts the client request and packages up the response to send back to the client.</p>
 <p id="fullexamplecontract">Relevant code:</p>
-<div class="highlight-none"><div class="highlight"><pre>@version(&quot;0.1.0&quot;)
+<div class="highlight-none"><div class="highlight"><pre><span></span>@version(&quot;0.1.0&quot;)
 package hello {
 
    class Request {
@@ -226,7 +226,7 @@ package hello {
 <li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction to RPC</a></li>
 <li class="toctree-l2"><a class="reference internal" href="setup.html">Datawire Connect RPC Support</a></li>
 <li class="toctree-l2"><a class="reference internal" href="quicktry.html">Quickly Trying RPC</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="">Defining the Service Contract</a><ul class="simple">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Defining the Service Contract</a><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="language.html">Supported Languages</a></li>
@@ -298,7 +298,7 @@ package hello {
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.5.2 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.5.81 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Getting Started with RPC Walkthrough</a> &raquo;</li> 
       </ul>
     </div>
