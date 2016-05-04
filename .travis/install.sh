@@ -60,6 +60,7 @@ mvn --version
 virtualenv quark-travis
 set +x && . quark-travis/bin/activate && set -x
 pip install --upgrade pip
+pip install --upgrade setuptools
 scripts/prepare-common.sh
 
 
