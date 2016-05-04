@@ -4,10 +4,10 @@ matrix:
   include:
     - os: linux
       env: TEST_SUITE=quarkc
-#    - os: linux
-#      env: TEST_SUITE=runtime
-#    - os: linux
-#      env: TEST_SUITE=examples
+    - os: linux
+      env: TEST_SUITE=runtime
+    - os: linux
+      env: TEST_SUITE=examples
     - os: osx
       env: TEST_SUITE=examples
   exclude:
