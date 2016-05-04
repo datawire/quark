@@ -9,13 +9,16 @@ cd $(dirname "$0")/..
 
 case "${TRAVIS_OS_NAME}" in
     linux)
+        sudo apt-get -y update
+        sudo apt-get -y install software-properties-common
+        sudo add-apt-repository -y ppa:brightbox/ruby-ng
+        sudo apt-get -y update
         sudo apt-get -y install libssl-dev swig python-dev curl\
              python2.7 python-pip tar gcc make python-dev libffi-dev\
-             python-virtualenv openjdk-7-jdk maven
+             python-virtualenv openjdk-7-jdk maven\
+             ruby2.3 ruby2.3-dev
         sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
         hash -r
-        rvm install $QUARK_RUBY_VERSION
-        rvm alias create quark-ruby $QUARK_RUBY_VERSION
         (set +x &&
                 rm -rf ~/.nvm &&
                 git clone https://github.com/creationix/nvm.git ~/.nvm &&
@@ -34,17 +37,6 @@ case "${TRAVIS_OS_NAME}" in
             brew outdated $pkg || brew upgrade $pkg
         done
         hash -r
-        # XXX: ruby install is a bit fragile and does not obey
-        # QUARK_RUBY_VERSION but much faster than rvm install
-        CELLAR=$(brew --cellar)
-        RV=$(brew ls --versions ruby | fgrep " 2.3." | tr \  / | head -1)
-        if [[ "$RV" != "" ]]; then
-            rvm mount "$(brew --cellar)/$RV"  --name brew-ruby
-            rvm alias create quark-ruby ext-brew-ruby
-        else
-            rvm install $QUARK_RUBY_VERSION
-            rvm alias create quark-ruby $QUARK_RUBY_VERSION
-        fi
         pip install virtualenv
         ;;
     *)
@@ -52,8 +44,6 @@ case "${TRAVIS_OS_NAME}" in
         exit 1
         ;;
 esac
-
-source $(rvm quark-ruby do rvm env --path)
 
 javac -version
 java -version
