@@ -191,6 +191,4 @@ logging.basicConfig(level = logging.INFO)
 
 l = last_release()
 c = change_impact(l, "HEAD")
-m = metadata_version()
-m.update(l.version, c.next_version)
-print m.version
+print c.next_version
