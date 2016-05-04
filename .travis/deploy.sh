@@ -13,7 +13,7 @@ fi
 
 set -x
 
-npm install --save-dev travis-after-all
+npm install travis-after-all
 if $(npm bin)/travis-after-all ; then
     SUCCESS="$?"
     echo "All tests in matrix passed, checking deployment conditions"
