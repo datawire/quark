@@ -10,7 +10,10 @@ cd $(dirname "$0")/..
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
     . ~/.nvm/nvm.sh
+    nvm alias
 fi
+
+source $(rvm quark-ruby do rvm env --path)
 
 set -x
 

@@ -14,8 +14,8 @@ case "${TRAVIS_OS_NAME}" in
              python-virtualenv openjdk-7-jdk maven
         sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
         hash -r
-        rvm install 2.3.0
-        rvm --default use 2.3.0
+        rvm install $QUARK_RUBY_VERSION
+        rvm alias create quark-ruby $QUARK_RUBY_VERSION
         (set +x &&
                 rm -rf ~/.nvm &&
                 git clone https://github.com/creationix/nvm.git ~/.nvm &&
@@ -34,11 +34,16 @@ case "${TRAVIS_OS_NAME}" in
             brew outdated $pkg || brew upgrade $pkg
         done
         hash -r
+        # XXX: ruby install is a bit fragile and does not obey
+        # QUARK_RUBY_VERSION but much faster than rvm install
         CELLAR=$(brew --cellar)
-        RV=$(brew ls --versions ruby | fgrep ' 2.3.' | tr \  / | head -1)
+        RV=$(brew ls --versions ruby | fgrep " 2.3." | tr \  / | head -1)
         if [[ "$RV" != "" ]]; then
             rvm mount "$(brew --cellar)/$RV"  --name brew-ruby
-            rvm use ext-brew-ruby --default
+            rvm alias create quark-ruby ext-brew-ruby
+        else
+            rvm install $QUARK_RUBY_VERSION
+            rvm alias create quark-ruby $QUARK_RUBY_VERSION
         fi
         pip install virtualenv
         ;;
@@ -47,6 +52,8 @@ case "${TRAVIS_OS_NAME}" in
         exit 1
         ;;
 esac
+
+source $(rvm quark-ruby do rvm env --path)
 
 javac -version
 java -version
@@ -58,9 +65,10 @@ mvn --version
 
 
 virtualenv quark-travis
-set +x && . quark-travis/bin/activate && set -x
+set +x && source quark-travis/bin/activate && set -x
 pip install --upgrade pip
 pip install --upgrade setuptools
+
 scripts/prepare-common.sh
 
 
