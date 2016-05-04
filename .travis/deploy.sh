@@ -73,12 +73,23 @@ esac
 
 
 if [[ "$CI" = "true" ]]; then
-    echo "Setting up write access for github"
+    echo "Setting up write access for github and pypi"
     git remote set-branches --add origin master && git fetch --unshallow
     git config --global credential.helper store
     git config --global user.email "automaton@datawire.io"
     git config --global user.name "Continuous Delivery"
+    git config --global push.default simple
     ( set +x; echo "https://$GITHUB_ACCESS_TOKEN:x-oauth-basic@github.com" > ~/.git-credentials )
+    ( set +x; cat <<EOF > ~/.pypirc
+[distutils]
+index-servers=pypi
+ 
+[pypi]
+repository = https://pypi.python.org/pypi
+username = $ENCRYPTED_PYPI_USERNAME
+password = $ENCRYPTED_PYPI_PASSWORD
+EOF
+      )
 fi
 
 case "$STAGE-$DEPLOY" in
