@@ -71,15 +71,21 @@ def pipcheck(*packages):
 def run(*command, **kwargs):
     """Execute the supplied command."""
     dry = kwargs.pop("dry", __dry__)
-    print " ".join(command), kwargs
-    if dry: return
+    cmd =  " ".join(command)
+    if dry:
+        print "# ", cmd, kwargs
+        return
+    print cmd, kwargs
     subprocess.check_call(command, **kwargs)
 
 def call(*command, **kwargs):
     """Execute the supplied command and return the output."""
     dry = kwargs.pop("dry", __dry__)
-    print " ".join(command), kwargs
-    if dry: return
+    cmd =  " ".join(command)
+    if dry:
+        print "# ", cmd, kwargs
+        return
+    print cmd, kwargs
     return subprocess.check_output(command, **kwargs)
 
 def update_json(name, **kwargs):
@@ -190,10 +196,11 @@ def version(args):
     docver = args["--doc"] or doc_default
 
     title, updated = quark_version(ver, docver, dev)
+    dry = __dry__ or dev
     for fname in updated:
-        run("git", "add", fname, cwd=base())
+        run("git", "add", fname, cwd=base(), dry=dry)
     run("git", "commit", "-m", "Changed version to %s, %s (doc %s)." % (title, ver, docver),
-        cwd=base())
+        cwd=base(), dry=dry)
 
 def randstr():
     result = ""
