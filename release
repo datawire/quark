@@ -282,16 +282,16 @@ def push_docs(args):
     if challenge():
         print "Pushing docs"
         dest = tempfile.mkdtemp()
-        run("git", "clone", call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
+        run("git", "clone", "-b", "gh-pages", "--depth", "5",
+            call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
             dest)
-        run("git", "checkout", "gh-pages", cwd=dest)
         run("touch", ".nojekyll", cwd=dest)
         run("git", "rm", "-r", "--ignore-unmatch", docdest, cwd=dest)
         run("sphinx-build", "-q", "docs", os.path.join(dest, docdest), cwd=base())
         run(base("docs/substitute.sh"), dest)
         run("git", "add", ".", cwd=dest)
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
-        run("git", "push", cwd=dest)
+        run("git", "push", "origin", "gh-pages", cwd=dest)
         print "Documentation is pushed."
     else:
         print "Canceled"
