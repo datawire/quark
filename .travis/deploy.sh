@@ -88,6 +88,7 @@ case "$STAGE-$DEPLOY" in
         ;;
 
     initial-develop)
+        pip install twine sphinx-better-theme
         NEXT_VERSION=$(scripts/compute-next-version)
         TAG="dev-$NEXT_VERSION"
         COMMIT=$(git rev-parse HEAD)
