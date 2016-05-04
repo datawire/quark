@@ -13,43 +13,57 @@ fi
 
 set -x
 
+npm install --save-dev travis-after-all
+if $(npm bin)/travis-after-all ; then
+    SUCCESS="$?"
+    echo "All tests in matrix passed, checking deployment conditions"
+    ;;
+else
+    SUCCESS="$?"
+    case "$SUCCESS" in
+        1)
+            echo "Some tests in matrix failed, checking deployment conditions";;
+        2)
+            echo "I am not the master, done"
+            exit 0;;
+        *)
+            echo "Trouble with travis-after-all ($SUCCESS)"
+            exit $SUCCESS
+    esac
+fi
+
 if [[ "$TRAVIS_REPO_SLUG" != "datawire/quark" ]]; then
     echo "Only CI for forks, skipping CD"
-    exit 0
+    exit $SUCCESS
 fi
 
 if [[ "$TRAVIS_PULL_REQUEST" != "false" ]]; then
     echo "Only CI for pull requests, skipping CD"
-    exit 0
+    exit $SUCCESS
 fi
 
 DEPLOY=false
 STAGE=undefined
 
-case "$TRAVIS_BRANCH" in
-    master)
+case "$SUCCESS-$TRAVIS_BRANCH" in
+    0-master)
         DEPLOY="master"
         STAGE="initial"
         ;;
-    develop | quarkdev-ci)
+    0-develop | 0-quarkdev-ci)
         DEPLOY="develop"
         STAGE="initial"
         ;;
+    1-develop | 1-quarkdev-ci)
+        DEPLOY="develop"
+        STAGE="failed"
+        ;;
     *)
         echo "Only CI for branch $TRAVIS_BRANCH, skipping CD"
-        exit 0;;
+        exit $SUCCESS;;
 esac
 
-npm install --save-dev travis-after-all
-gem install travis-yaml
 
-
-if $(npm bin)/travis-after-all ; then
-    echo All tests in matrix passed, checking deployment conditions
-else
-    echo "test failure or not master.";
-    exit 0
-fi
 
 if [[ "$CI" = "true" ]]; then
     echo "Setting up write access for github"
@@ -74,7 +88,11 @@ case "$STAGE-$DEPLOY" in
         ./release push-docs
         git tag -a -m "CI tests pass for $TAG" "$TAG" "$COMMIT"
         git push origin "$TAG"
-        exit 0;;
+        exit $SUCCESS;;
+
+    failed-develop)
+        echo "TODO: tag failed dev build?"
+        exit $SUCCESS;;
 
     *)
         echo "Unhandled deploy mode $STAGE-$DEPLOY"

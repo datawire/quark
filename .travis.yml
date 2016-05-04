@@ -30,8 +30,6 @@ install:
 
 script:
 - .travis/test.sh
-
-after_script:
 - .travis/deploy.sh
 
 notifications:
