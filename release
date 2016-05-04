@@ -8,11 +8,12 @@ utility captures all this in a single place.
 
 Usage:
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
-  release [--dry] push-pkgs
-  release [--dry] push-docs
+  release [--dry | --cicd] push-pkgs
+  release [--dry | --cicd] push-docs
 
   Options:
     --dry                  Dry run.
+    --cicd                 Do not ask for challenge.
 
     --dev                  Change to development packages.
     --prod                 Change to production packages.
@@ -26,6 +27,7 @@ from collections import OrderedDict
 
 __dir__ = os.path.dirname(__file__)
 __dry__ = False
+__cicd__ = False
 
 def base(name=None):
     if name:
@@ -200,6 +202,9 @@ def randstr():
     return result
 
 def challenge():
+    if __cicd__:
+        print "No confirmation required, --cicd was provided"
+        return True
     chal = randstr()
     text = raw_input('Please type "%s" to confirm: ' % chal)
     return text == chal
@@ -287,9 +292,10 @@ def push_docs(args):
 ## main
 
 def main(args):
-    global __dry__
+    global __dry__, __cicd__
     __dry__ = args["--dry"]
-    check("pip", "twine", "docker", "git")
+    __cicd__ = args["--cicd"]
+    check("pip", "twine", "git")
     pipcheck("wheel", "sphinx", "sphinx-better-theme")
     if args["version"]:
         version(args)
