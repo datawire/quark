@@ -5,17 +5,16 @@ set -e
 cwd=$(pwd)
 cd $(dirname "$0")/..
 
-
-. quark-travis/bin/activate
+set -x
+source quark-travis/bin/activate
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
-    . ~/.nvm/nvm.sh
+    source ~/.nvm/nvm.sh
     nvm alias
 fi
 
-source $(rvm quark-ruby do rvm env --path)
 
-set -x
+source $(rvm quark-ruby do rvm env --path)
 
 py.test -v $TEST_SUITE --durations=10
 
