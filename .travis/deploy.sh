@@ -17,18 +17,20 @@ npm install --save-dev travis-after-all
 if $(npm bin)/travis-after-all ; then
     SUCCESS="$?"
     echo "All tests in matrix passed, checking deployment conditions"
-    ;;
 else
     SUCCESS="$?"
     case "$SUCCESS" in
         1)
-            echo "Some tests in matrix failed, checking deployment conditions";;
+            echo "Some tests in matrix failed, checking deployment conditions"
+            ;;
         2)
             echo "I am not the master, done"
-            exit 0;;
+            exit 0
+            ;;
         *)
             echo "Trouble with travis-after-all ($SUCCESS)"
             exit $SUCCESS
+            ;;
     esac
 fi
 
@@ -50,6 +52,10 @@ case "$SUCCESS-$TRAVIS_BRANCH" in
         DEPLOY="master"
         STAGE="initial"
         ;;
+    1-master)
+        DEPLOY="master"
+        STAGE="failed"
+        ;;
     0-develop | 0-quarkdev-ci)
         DEPLOY="develop"
         STAGE="initial"
@@ -60,7 +66,8 @@ case "$SUCCESS-$TRAVIS_BRANCH" in
         ;;
     *)
         echo "Only CI for branch $TRAVIS_BRANCH, skipping CD"
-        exit $SUCCESS;;
+        exit $SUCCESS
+        ;;
 esac
 
 
@@ -77,7 +84,8 @@ fi
 case "$STAGE-$DEPLOY" in
     initial-master)
         echo "TODO MASTER DEPLOY"
-        exit 1;;
+        exit 1
+        ;;
 
     initial-develop)
         NEXT_VERSION=$(scripts/compute-next-version)
@@ -88,14 +96,22 @@ case "$STAGE-$DEPLOY" in
         ./release push-docs
         git tag -a -m "CI tests pass for $TAG" "$TAG" "$COMMIT"
         git push origin "$TAG"
-        exit $SUCCESS;;
+        exit $SUCCESS
+        ;;
+
+    failed-master)
+        echo "TODO: tag failed release build?"
+        exit $SUCCESS
+        ;;
 
     failed-develop)
         echo "TODO: tag failed dev build?"
-        exit $SUCCESS;;
+        exit $SUCCESS
+        ;;
 
     *)
         echo "Unhandled deploy mode $STAGE-$DEPLOY"
-        exit 1;;
+        exit 1
+        ;;
 esac
 
