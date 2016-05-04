@@ -93,8 +93,8 @@ case "$STAGE-$DEPLOY" in
         TAG="dev-$NEXT_VERSION"
         COMMIT=$(git rev-parse HEAD)
         ./release version --dev "$NEXT_VERSION"
-        ./release push-pkg
         ./release push-docs
+        ./release push-pkg
         git tag -a -m "CI tests pass for $TAG" "$TAG" "$COMMIT"
         git push origin "$TAG"
         exit $SUCCESS
