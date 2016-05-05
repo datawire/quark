@@ -49,7 +49,7 @@ case "${TRAVIS_OS_NAME}" in
         type pip
         python --version
         pip --version
-        pip install virtualenv
+        pip install --isolated --force-reinstall --ignore-installed -vvv virtualenv
         brew install xz ruby
         for pkg in maven node; do
             brew outdated $pkg || brew upgrade $pkg
