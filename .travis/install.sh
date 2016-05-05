@@ -21,6 +21,7 @@ case "${TRAVIS_OS_NAME}" in
         hash -r
         type ruby
         ruby --version
+        sanitize mid-install # recalculate PATH
         gem install bundler
         hash -r
         type bundle
@@ -58,6 +59,7 @@ case "${TRAVIS_OS_NAME}" in
         hash -r
         type ruby
         type gem
+        sanitize mid-install # recalculate PATH
         gem install --verbose --no-user-install bundler
         hash -r
         type bundle
