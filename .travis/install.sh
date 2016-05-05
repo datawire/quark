@@ -16,9 +16,10 @@ case "${TRAVIS_OS_NAME}" in
         sudo apt-get -y install ruby2.3 ruby2.3-dev
         sudo update-alternatives --set ruby /usr/bin/ruby2.3
         sudo update-alternatives --set gem /usr/bin/gem2.3
-        rvm reset
+        rm -fr ~/.rvm
         hash -r
         type ruby
+        ruby --version
         sudo apt-get -y install libssl-dev swig python-dev curl\
              python2.7 python-pip tar gcc make python-dev libffi-dev\
              python-virtualenv openjdk-7-jdk maven
