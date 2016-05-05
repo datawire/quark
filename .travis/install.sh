@@ -37,16 +37,23 @@ case "${TRAVIS_OS_NAME}" in
         set +x && source ~/.nvm/nvm.sh && set -x
         ;;
     osx)
+        PATH=$(echo "$PATH" | tr : \\n | grep -v -e /\\.local/ -e /\\.rvm/ | tr \\n :)
+        rm -fr ~/.rvm
+        rm -fr ~/.local
         brew update
-        brew install python xz ruby
-        for pkg in maven node; do
-            brew outdated $pkg || brew upgrade $pkg
-        done
+        brew install python
         hash -r
         echo $PATH
         type python
         type pip
+        python --version
+        pip --version
         pip install virtualenv
+        brew install xz ruby
+        for pkg in maven node; do
+            brew outdated $pkg || brew upgrade $pkg
+        done
+        hash -r
         ;;
     *)
         echo "Unsupported platform $TRAVIS_OS_NAME"
