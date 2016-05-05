@@ -67,8 +67,8 @@ case "${TRAVIS_OS_NAME}" in
         ;;
 esac
 
-
-virtualenv quark-travis
+type virtualenv
+virtualenv --verbose quark-travis
 set +x && source quark-travis/bin/activate && set -x
 pip install --upgrade pip
 pip install --upgrade setuptools
