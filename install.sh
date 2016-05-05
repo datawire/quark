@@ -68,55 +68,92 @@ skip() {
     printf "${yellow}SKIP${normal} $1\n"
 }
 
-if [ -n "$1" ]; then
-    case $1 in
-	-d)
-	    if [ -n "$2" ]; then
-		dir="$2"
-	    else
-		dir="${SCRIPT_DIR}"
-	    fi
-	    msg "Installing from ${dir}"
-	    download() {
-		piparg="${dir}"
-	    }
-	    ;;
-	-e)
-	    if [ -n "$2" ]; then
-		dir="$2"
-	    else
-		dir="${SCRIPT_DIR}"
-	    fi
-	    msg "Installing (in place) from ${dir}"
-	    download() {
-		piparg="-e ${dir}"
-	    }
-	    ;;
-	*)
-	    branch=$1
-	    url="https://github.com/datawire/quark/archive/${branch}.zip"
-	    msg "Installing from ${url}"
-	    download() {
-		msg "Downloading..."
-		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
-		safename=$(echo "$branch" | tr '/' '-')
-		curl -# -L ${url} > ${work}/quark-${safename}.zip
-		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
-		    piparg=${work}/quark-${safename}
-		else
-		    die "Unable to download from ${url}\n        check in ${work}/install.log for details."
-		fi
-	    }
-    esac
-else
-    msg "Installing from PyPI"
-    download() {
-	piparg=datawire-quark
-    }
-fi
-
 python_version="python2.7"
 quark_install_root="${HOME}/.quark"
+installation_source=
+
+install_from_dir () {
+    if [ -n "$installation_source" ]; then
+        echo "you can only install from one source at a time" >&2
+        exit 1
+    fi
+    
+    installation_source="$1"
+    extra="$2"
+    note="$3"
+
+    if [ "$installation_source" == "-" ]; then
+        installation_source="${SCRIPT_DIR}"
+    fi
+
+    text="Installing from ${installation_source}"
+
+    if [ -n "$note" ]; then
+        text="Installing ${note} from ${installation_source}"
+    fi
+
+    msg "$text"
+
+    if [ -n "$extra" ]; then
+        download () {
+            piparg="${extra} ${installation_source}"
+        }
+    else
+        download () {
+            piparg="${installation_source}"
+        }
+    fi
+}
+
+while getopts ':d:e:t:' opt; do
+    case $opt in
+        d)  install_from_dir "$OPTARG" "" ""
+            ;;
+
+        e)  install_from_dir "$OPTARG" "-e" "(in place)"
+            ;;
+
+        t)  quark_install_root="$OPTARG"
+            echo "Installing to ${quark_install_root}"
+            ;;
+
+
+        :)  echo "Option -$OPTARG requires an argument." >&2
+            exit 1
+            ;;
+
+        \?) echo "Invalid option: -$OPTARG" >&2
+            exit 1
+            ;;
+    esac
+done
+
+shift $((OPTIND-1))
+
+if [ -z "$installation_source" ]; then
+    if [ -n "$1" ]; then
+	    branch="$1"
+	    url="https://github.com/datawire/quark/archive/${branch}.zip"
+	    msg "Installing from ${url}"
+
+	    download() {
+    		msg "Downloading..."
+    		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
+    		safename=$(echo "$branch" | tr '/' '-')
+    		curl -# -L ${url} > ${work}/quark-${safename}.zip
+    		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
+    		    piparg=${work}/quark-${safename}
+    		else
+    		    die "Unable to download from ${url}\n        check in ${work}/install.log for details."
+    		fi
+	    }
+    else
+        msg "Installing from PyPI"
+        download() {
+        	piparg=datawire-quark
+        }
+    fi
+fi
 
 required_commands () {
     for cmd in $*; do
