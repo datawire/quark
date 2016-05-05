@@ -2,6 +2,7 @@ module DatawireQuarkCore
   require 'net/http'
   require 'uri'
   require 'json'
+  require 'thread'
 
   require 'concurrent'
   require 'celluloid/current'
