@@ -19,7 +19,7 @@ case "${TRAVIS_OS_NAME}" in
              ruby2.3 ruby2.3-dev
         sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
         sudo update-alternatives --set ruby /usr/bin/ruby2.3
-        sudo update-alternatives --set gem /usr/bin/gem/2.3
+        sudo update-alternatives --set gem /usr/bin/gem2.3
         hash -r
         (set +x &&
                 rm -rf ~/.nvm &&
