@@ -43,6 +43,9 @@ case "${TRAVIS_OS_NAME}" in
             brew outdated $pkg || brew upgrade $pkg
         done
         hash -r
+        echo $PATH
+        type python
+        type pip
         pip install virtualenv
         ;;
     *)
