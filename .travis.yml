@@ -15,10 +15,6 @@ matrix:
 
 sudo: required
 
-before_install:
-- openssl aes-256-cbc -K $encrypted_cdfbaa8bcf7f_key -iv $encrypted_cdfbaa8bcf7f_iv
-  -in .respawn.token.enc -out .respawn.token -d
-
 install:
 - .travis/install.sh
 
