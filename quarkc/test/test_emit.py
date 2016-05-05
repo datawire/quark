@@ -135,11 +135,14 @@ def run_tests(base, dirs, command, env=None):
             if expected != actual:
                 open(get_out(name) + ".cmp", "write").write(actual)
                 failed_expectations.append(name)
-                d = difflib.Differ()
-                delta = list(d.compare(expected.splitlines(True),
-                                       actual.splitlines(True)))
-                print("Expected and actual output dont match for '%s':\n%s" % (
-                    name, "".join(delta)))
+                if expected is None:
+                    print("FAILURE: Expected output not found for %r." % name)
+                else:
+                    d = difflib.Differ()
+                    delta = list(d.compare(expected.splitlines(True),
+                                           actual.splitlines(True)))
+                    print("FAILURE: Expected and actual output dont match for '%s':\n%s" % (
+                        name, "".join(delta)))
     print(failed_expectations)
     assert not failed_expectations
 
