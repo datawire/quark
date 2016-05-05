@@ -41,6 +41,7 @@ case "${TRAVIS_OS_NAME}" in
         set +x && source ~/.nvm/nvm.sh && set -x
         ;;
     osx)
+        sudo chown -R $USER /usr/local
         brew update
         brew install python
         hash -r
