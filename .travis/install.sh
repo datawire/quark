@@ -18,6 +18,8 @@ case "${TRAVIS_OS_NAME}" in
              python-virtualenv openjdk-7-jdk maven\
              ruby2.3 ruby2.3-dev
         sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+        sudo update-alternatives --set ruby /usr/bin/ruby2.3
+        sudo update-alternatives --set gem /usr/bin/gem/2.3
         hash -r
         (set +x &&
                 rm -rf ~/.nvm &&
@@ -51,7 +53,9 @@ java -version 2>&1 | grep -Fe 'java version "1.7.0'
 python -c 'import sys; print(sys.version); sys.exit(int(sys.version_info[:3] < (2,7,6) or (3,0,0) < sys.version_info[:3]))'
 node --version
 ruby --version
+ruby --version 2>&1 | grep -Fe 'ruby 2.3.'
 mvn --version
+mvn --version 2>&1 | grep -Fe 'Apache Maven 3.'
 
 
 virtualenv quark-travis
