@@ -5,7 +5,8 @@ set -ex
 cwd=$(pwd)
 cd $(dirname "$0")/..
 
-.travis/env.sh install
+source .travis/sanitize.sh
+sanitize install
 
 case "${TRAVIS_OS_NAME}" in
     linux)
@@ -37,10 +38,6 @@ case "${TRAVIS_OS_NAME}" in
         set +x && source ~/.nvm/nvm.sh && set -x
         ;;
     osx)
-        PATH=$(echo "$PATH" | tr : \\n | grep -v -e /\\.local/ -e /\\.rvm/ |
-                      tr \\n : | sed -e's/:$//' )
-        rm -fr ~/.rvm
-        rm -fr ~/.local
         brew update
         brew install python
         hash -r

@@ -16,6 +16,7 @@ matrix:
 sudo: required
 
 install:
+- .travis/env.sh initial
 - .travis/install.sh
 
 script:

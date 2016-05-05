@@ -5,6 +5,9 @@ set -e
 cwd=$(pwd)
 cd $(dirname "$0")/..
 
+source .travis/sanitize.sh
+sanitize deploy
+
 . quark-travis/bin/activate
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
