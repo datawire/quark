@@ -21,6 +21,9 @@ case "${TRAVIS_OS_NAME}" in
         hash -r
         type ruby
         ruby --version
+        sudo gem install bundler
+        hash -r
+        type bundle
         sudo apt-get -y install libssl-dev swig python-dev curl\
              python2.7 python-pip tar gcc make python-dev libffi-dev\
              python-virtualenv openjdk-7-jdk maven

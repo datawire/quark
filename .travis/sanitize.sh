@@ -6,5 +6,6 @@ function sanitize() {
     rm -fr ~/.rvm
     rm -fr ~/.local
     unset $(env | grep -Fe ~/.rvm | cut -d= -f1)
+    export BUNDLE_PATH=~/.gems
     .travis/env.sh $1
 }
