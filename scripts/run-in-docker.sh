@@ -3,12 +3,14 @@
 set -ex
 
 u_flag=no
+n_flag=
 image=""
 me=$(basename "$0")
 
-while getopts :ui: opt; do
+while getopts :uni: opt; do
     case $opt in
     u) u_flag=yes;;
+    n) n_flag=--no-develop;;
     i)
       image="$image $OPTARG"
     ;;
@@ -39,5 +41,5 @@ fi
 branch=$(git rev-parse --abbrev-ref --symbolic HEAD)
 
 for img in $image; do
-    docker run -it -v `pwd`:/quark  -w /home/dev/quark/ "$img" /bin/bash /quark/scripts/dockme.sh --dockered "$branch" "$@"
+    docker run -it -v `pwd`:/quark  -w /home/dev/quark/ "$img" /bin/bash /quark/scripts/dockme.sh --dockered $n_flag "$branch" "$@"
 done

@@ -8,11 +8,12 @@ utility captures all this in a single place.
 
 Usage:
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
-  release [--dry] push-pkgs
-  release [--dry] push-docs
+  release [--dry | --cicd] push-pkgs
+  release [--dry | --cicd] push-docs
 
   Options:
     --dry                  Dry run.
+    --cicd                 Do not ask for challenge.
 
     --dev                  Change to development packages.
     --prod                 Change to production packages.
@@ -26,6 +27,7 @@ from collections import OrderedDict
 
 __dir__ = os.path.dirname(__file__)
 __dry__ = False
+__cicd__ = False
 
 def base(name=None):
     if name:
@@ -69,15 +71,21 @@ def pipcheck(*packages):
 def run(*command, **kwargs):
     """Execute the supplied command."""
     dry = kwargs.pop("dry", __dry__)
-    print " ".join(command), kwargs
-    if dry: return
+    cmd =  " ".join(command)
+    if dry:
+        print "# ", cmd, kwargs
+        return
+    print cmd, kwargs
     subprocess.check_call(command, **kwargs)
 
 def call(*command, **kwargs):
     """Execute the supplied command and return the output."""
     dry = kwargs.pop("dry", __dry__)
-    print " ".join(command), kwargs
-    if dry: return
+    cmd =  " ".join(command)
+    if dry:
+        print "# ", cmd, kwargs
+        return
+    print cmd, kwargs
     return subprocess.check_output(command, **kwargs)
 
 def update_json(name, **kwargs):
@@ -188,10 +196,11 @@ def version(args):
     docver = args["--doc"] or doc_default
 
     title, updated = quark_version(ver, docver, dev)
+    dry = __dry__ or dev
     for fname in updated:
-        run("git", "add", fname, cwd=base())
+        run("git", "add", fname, cwd=base(), dry=dry)
     run("git", "commit", "-m", "Changed version to %s, %s (doc %s)." % (title, ver, docver),
-        cwd=base())
+        cwd=base(), dry=dry)
 
 def randstr():
     result = ""
@@ -200,6 +209,9 @@ def randstr():
     return result
 
 def challenge():
+    if __cicd__:
+        print "No confirmation required, --cicd was provided"
+        return True
     chal = randstr()
     text = raw_input('Please type "%s" to confirm: ' % chal)
     return text == chal
@@ -270,16 +282,16 @@ def push_docs(args):
     if challenge():
         print "Pushing docs"
         dest = tempfile.mkdtemp()
-        run("git", "clone", call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
+        run("git", "clone", "-b", "gh-pages", "--depth", "5",
+            call("git", "config", "--get", "remote.origin.url", dry=False).strip(),
             dest)
-        run("git", "checkout", "gh-pages", cwd=dest)
         run("touch", ".nojekyll", cwd=dest)
         run("git", "rm", "-r", "--ignore-unmatch", docdest, cwd=dest)
         run("sphinx-build", "-q", "docs", os.path.join(dest, docdest), cwd=base())
         run(base("docs/substitute.sh"), dest)
         run("git", "add", ".", cwd=dest)
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
-        run("git", "push", cwd=dest)
+        run("git", "push", "origin", "gh-pages", cwd=dest)
         print "Documentation is pushed."
     else:
         print "Canceled"
@@ -287,9 +299,10 @@ def push_docs(args):
 ## main
 
 def main(args):
-    global __dry__
+    global __dry__, __cicd__
     __dry__ = args["--dry"]
-    check("pip", "twine", "docker", "git")
+    __cicd__ = args["--cicd"]
+    check("pip", "twine", "git")
     pipcheck("wheel", "sphinx", "sphinx-better-theme")
     if args["version"]:
         version(args)
