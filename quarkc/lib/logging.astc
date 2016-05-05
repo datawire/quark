@@ -61,7 +61,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/Logger.java),
       Name(quark_logging_Config_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class)),
 
-   Macro(Type(Name(Config)), Name(config), Native(NativeCase(java,
+   Macro(Type(Name(Config)), Name(makeConfig), Native(NativeCase(java,
       Fixed('io.datawire.quark.runtime.LoggerConfig.config()')), NativeCase(py,
       Fixed('_LoggerConfig.config()')), NativeCase(rb,
       Fixed('::DatawireQuarkCore::LoggerConfig.config()')), NativeCase(js,

@@ -14,7 +14,7 @@ if not slack_token:
     if slack_token:
         with open(token_file, "wb") as out:
             out.write(slack_token + "\n")
-assert slack_token, "Could not find Slack token"
+assert slack_token, "Could not find Slack token. See examples/slack/README.md"
 
 # Install Quark file
 installations = {}

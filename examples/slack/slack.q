@@ -136,7 +136,7 @@ namespace slack {
             self.channel = channel;
         }
 
-        @do("Send a message to a channel.")
+        @doc("Send a message to a channel.")
         void send(String message) {
             int id = subscription.event_id;
             subscription.event_id = subscription.event_id + 1;

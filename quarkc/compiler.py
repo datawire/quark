@@ -14,11 +14,15 @@
 
 import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle
 from collections import OrderedDict
+
 from .ast import *
 from .exceptions import *
 from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
+from .environment import Environment
+import docmaker
+import errors
 import ast
 
 sys.setrecursionlimit(10000)
@@ -84,7 +88,7 @@ class Root(AST):
         self.id = ""
         self.index = 0
         self.count = 0
-        self.env = {}
+        self.env = Environment()
         self.imports = []
         self.included = OrderedDict()
         self.uses = OrderedDict()
@@ -187,10 +191,16 @@ class Crosswire:
         if name in p.root.env:
             p.env = p.root.env[name].env
         else:
-            p.env = {}
-            p.root.env[name] = p
+            p.env = Environment()
+            try:
+                p.root.env[name] = p
+            except Environment.NameCollisionError:
+                pass  # This error will be caught and reported in `Def` pass.
         if p.name.text not in p.parent.env:
-            p.parent.env[p.name.text] = p
+            try:
+                p.parent.env[p.name.text] = p
+            except Environment.NameCollisionError:
+                pass  # This error will be caught and reported in `Def` pass.
 
     def leave_Package(self, p):
         self.leave_AST(p)
@@ -203,7 +213,7 @@ class Crosswire:
     def visit_Class(self, c):
         self.visit_AST(c)
         self.clazz = c
-        c.env = {}
+        c.env = Environment()
 
     def leave_Class(self, c):
         self.leave_AST(c)
@@ -212,7 +222,7 @@ class Crosswire:
     def visit_Callable(self, c):
         self.visit_AST(c)
         self.callable = c
-        c.env = {}
+        c.env = Environment()
 
     def leave_Callable(self, c):
         self.leave_AST(c)
@@ -221,18 +231,35 @@ class Crosswire:
 class Def:
 
     def __init__(self):
-        self.duplicates = []
+        self.errors = []
 
-    def define(self, env, node, name=None, leaf=True, dup=lambda x: True):
+    def define(self, env, node, name=None, is_leaf=True, dup=lambda x: True):
+        error = None
         if name is None:
             name = node.name.text
         if name in env:
             if dup(env[name]):
-                self.duplicates.append((node, name, env[name]))
+                error = errors.DuplicateDefinition(
+                    location=lineinfo(node),
+                    id=name,
+                    previous_location=lineinfo(env[name]),
+                )
         else:
-            env[name] = node
-        if leaf:
+            try:
+                env[name] = node
+            except env.NameCollisionError:
+                if is_leaf:
+                    colliding_name = env.colliding_key(name)
+                    error = error or errors.NameCollision(
+                        id=name,
+                        location=lineinfo(node),
+                        id2=colliding_name,
+                        location2=lineinfo(env[colliding_name]),
+                    )
+        if is_leaf:
             node.resolved = texpr(node)
+        if error is not None:
+            self.errors.append(error)
 
     def visit_Package(self, p):
         self.define(p.parent.env, p, dup=lambda x: False)
@@ -262,7 +289,7 @@ class Def:
         self.define(mm.env, mm.parent, "self")
 
     def visit_Declaration(self, d):
-        self.define(d.env, d, leaf=False)
+        self.define(d.env, d, is_leaf=False)
 
 class TypeExpr(object):
 
@@ -1090,11 +1117,8 @@ class Compiler(object):
     def icompile(self, ast):
         def_ = Def()
         ast.traverse(def_)
-        if def_.duplicates:
-            dups = ["%s: duplicate definition of %s (first definition %s)" %
-                    (lineinfo(node), name, lineinfo(first))
-                    for node, name, first in def_.duplicates]
-            raise CompileError("\n".join(dups))
+        if def_.errors:
+            raise CompileError("\n".join(map(str, def_.errors)))
 
         use = Use()
         ast.traverse(use)
@@ -1245,3 +1269,17 @@ def run(url, args, *backends):
     for backend in backends:
         b = backend()
         b.run(name, ver, args)
+
+
+def make_docs(url, target):
+    # FIXME: These four lines are boilerplate
+    c = Compiler()
+    c.log.info("Parsing: %s", url)
+    c.urlparse(url)
+    c.compile()
+
+    dest = os.path.join(target, os.path.splitext(os.path.basename(url))[0])  # XXX Copy-pasted from compile(...)
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+
+    docmaker.make_docs_json(c, os.path.join(dest, "api.json"))
