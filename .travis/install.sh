@@ -13,13 +13,16 @@ case "${TRAVIS_OS_NAME}" in
         sudo apt-get -y install software-properties-common
         sudo add-apt-repository -y ppa:brightbox/ruby-ng
         sudo apt-get -y update
-        sudo apt-get -y install libssl-dev swig python-dev curl\
-             python2.7 python-pip tar gcc make python-dev libffi-dev\
-             python-virtualenv openjdk-7-jdk maven\
-             ruby2.3 ruby2.3-dev
-        sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
+        sudo apt-get -y install ruby2.3 ruby2.3-dev
         sudo update-alternatives --set ruby /usr/bin/ruby2.3
         sudo update-alternatives --set gem /usr/bin/gem2.3
+        rvm reset
+        hash -r
+        type ruby
+        sudo apt-get -y install libssl-dev swig python-dev curl\
+             python2.7 python-pip tar gcc make python-dev libffi-dev\
+             python-virtualenv openjdk-7-jdk maven
+        sudo update-java-alternatives -s java-1.7.0-openjdk-amd64
         hash -r
         (set +x &&
                 rm -rf ~/.nvm &&
