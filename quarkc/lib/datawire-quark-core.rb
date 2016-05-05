@@ -337,7 +337,7 @@ module DatawireQuarkCore
     UNDEFINED = Class.new
 
     def isUndefined
-      value == undefined
+      undefined.equal? value
     end
 
     def isDefined
@@ -1002,7 +1002,7 @@ module DatawireQuarkCore
     def onServletEnd(url)
     end
   end
-  
+
   class HTTPServlet < Servlet
     def onHTTPRequest(request, response)
     end
@@ -1198,4 +1198,3 @@ module DatawireQuarkCore
     end
   end
 end
-
