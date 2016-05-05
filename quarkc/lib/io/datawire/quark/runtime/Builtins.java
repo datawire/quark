@@ -11,12 +11,26 @@ import io.netty.util.CharsetUtil;
 
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.Map;
 import java.util.List;
 
 public class Builtins {
+    public static final Comparator<Object> COMPARATOR = new Comparator<Object>() {
+
+        @Override
+        public int compare(Object o1, Object o2) {
+            if (o1 instanceof Comparable<?>) {
+                Comparable<Object> c1 = (Comparable<Object>) o1;
+                return c1.compareTo(o2);
+            } else {
+                return System.identityHashCode(o1) - System.identityHashCode(o2);
+            }
+        }
+    };
+
     public static int modulo(int a, int b) {
         return a % b + (a*b < 0 ? b : 0);
     }
@@ -30,7 +44,7 @@ public class Builtins {
             try {
                 scanner = new Scanner(reader).useDelimiter("\\A");
                 return scanner.hasNext() ? scanner.next() : "";
-            } finally { 
+            } finally {
                 if (scanner != null) {
                     scanner.close();
                 }
