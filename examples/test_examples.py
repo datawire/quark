@@ -95,8 +95,9 @@ class Helpers(object):
     def __init__(self, capture):
         self.capture = capture
 
-    def quark_install(self, command):
-        res = self.capture("quark install " + command, filters=[Filters.repo, Filters.quark_install], nocmp=True)
+    def quark_install(self, command, timeout=180):
+        res = self.capture("quark install " + command, filters=[Filters.repo, Filters.quark_install],
+                           nocmp=True, timeout=timeout)
         assert res.output.splitlines()[-1] == "Done"
         return res
 
