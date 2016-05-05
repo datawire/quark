@@ -37,7 +37,8 @@ case "${TRAVIS_OS_NAME}" in
         set +x && source ~/.nvm/nvm.sh && set -x
         ;;
     osx)
-        PATH=$(echo "$PATH" | tr : \\n | grep -v -e /\\.local/ -e /\\.rvm/ | tr \\n :)
+        PATH=$(echo "$PATH" | tr -d \\n | tr : \\n |
+                      grep -v -e /\\.local/ -e /\\.rvm/ | tr \\n :)
         rm -fr ~/.rvm
         rm -fr ~/.local
         brew update
@@ -54,6 +55,11 @@ case "${TRAVIS_OS_NAME}" in
             brew outdated $pkg || brew upgrade $pkg
         done
         hash -r
+        type ruby
+        type gem
+        gem install --no-user-install bundler
+        hash -r
+        type bundle
         ;;
     *)
         echo "Unsupported platform $TRAVIS_OS_NAME"
