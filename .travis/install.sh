@@ -37,8 +37,8 @@ case "${TRAVIS_OS_NAME}" in
         set +x && source ~/.nvm/nvm.sh && set -x
         ;;
     osx)
-        PATH=$(echo "$PATH" | tr -d \\n | tr : \\n |
-                      grep -v -e /\\.local/ -e /\\.rvm/ | tr \\n :)
+        PATH=$(echo "$PATH" | tr : \\n | grep -v -e /\\.local/ -e /\\.rvm/ |
+                      tr \\n : | sed -e's/:$//' )
         rm -fr ~/.rvm
         rm -fr ~/.local
         brew update
@@ -57,7 +57,7 @@ case "${TRAVIS_OS_NAME}" in
         hash -r
         type ruby
         type gem
-        gem install --no-user-install bundler
+        gem install --verbose --no-user-install bundler
         hash -r
         type bundle
         ;;
