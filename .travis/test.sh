@@ -43,4 +43,4 @@ mvn --version 2>&1 | grep -Fe 'Apache Maven 3.'
 
 
 py.test -v $TEST_SUITE --durations=10
-
+./quarkc/test/compare
