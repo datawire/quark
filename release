@@ -27,10 +27,12 @@ Usage:
 import json, os, random, re, subprocess, tempfile, urllib2
 from docopt import docopt
 from collections import OrderedDict
+from semantic_version import Version as SemVer
 try:  # py3
     from shlex import quote
 except ImportError:  # py2
     from pipes import quote
+
 
 __dir__ = None
 __dry__ = False
@@ -331,11 +333,17 @@ def prepare_release(args):
         raise ReleaseError("Develop branch is not stable, got '%s' expected '%s'\n\n%s" % (
             actual_tag, expected_tag,
             "Aborting. Please wait for CI to catch up and retry later"));
-    run("git", "checkout", "-b", RELEASE_BRANCH)
     ver = args["<version>"]
     if not ver:
         print "No version override supplied, using automatic version %s" % next_ver
         ver = args["<version>"] = next_ver
+    else:
+        if SemVer(ver) < SemVer(next_ver):
+            raise ReleaseError("Supplied version %s < %s. Aborting" % (
+                ver, next_ver));
+        else:
+            print "Supplied version %s accepted" % ver
+    run("git", "checkout", "-b", RELEASE_BRANCH)
     version(args)
     release_tag = "v%s" % ver
     run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
