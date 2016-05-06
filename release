@@ -440,6 +440,58 @@ def cleanup(args):
     else:
         print "Cancelled";
 
+def push_release(args):
+    ensure_clean()
+    ensure_releasing()
+    branch = current_branch()
+    if branch != RELEASE_BRANCH:
+        raise ReleaseError("You are not on a %r branch, but %s. Aborting" % (
+            RELEASE_BRANCH, branch))
+    print "On branch", RELEASE_BRANCH
+    actual_tag = tag_at(RELEASE_BRANCH)
+    validate_release_tag(actual_tag)
+    ver = metadata["__version__"]
+    expected_tag = format_release_tag(ver)
+    if actual_tag != expected_tag:
+        raise ReleaseError("Release tag %r and metatada version %r disagree. Expected tag %r" % (
+            actual_tag, ver, expected_tag))
+    print "Tag %r agrees with metadata %r" % (actual_tag, ver)
+    dev_tag = tag_at("%s^" % actual_tag)
+    print
+    print "Pushing release", actual_tag, "based on tests stamped with", dev_tag, "to github"
+    print
+    if challenge():
+        try:
+            run("git", "push", "--atomic",
+                "%s:develop" % RELEASE_BRANCH,
+                "%s:master" % RELEASE_BRANCH)
+        except subprocess.CalledProcessError, e:
+            print
+            print "Push failed. This release most likely raced with activity"
+            print "on develop or master branches. Investigate and retry"
+            print "This instance of push can never succeed, you will need to run"
+            print
+            print "        ./release cleanup"
+            print
+            print "and re-do the release"
+            print
+            raise
+        
+        run("git", "checkout", "develop")
+        run("git", "pull")
+        run("git", "checkout", "master")
+        run("git", "pull")
+        doublecheck_tag = tag_at("master")
+        if actual_tag != doublecheck_tag:
+            raise ReleaseError("Master branch did not move to the correct tag.\n\nThis script is confused, do not touch anything, call for help")
+        run("git", "branch", "-d", RELEASE_BRANCH)
+        print
+        print "Push complete"
+        print
+        print "You can proceed to push-docs and push-pkgs"
+    else:
+        print "Cancelled"
+
 ## main
 
 def main(args):
