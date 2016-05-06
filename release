@@ -361,23 +361,28 @@ def enumerate_refspecs(revision_range):
                       *revision_range, dry=False).splitlines():
         for sref in refs.split(","):
             ref = sref.split()
-            assert 1 <= len(ref) <= 2, "unrecognized refspect format %r" % sref
+            assert 1 <= len(ref) <= 3, "unrecognized refspect format %r" % sref
             if len(ref) == 1:
-                branches.append(ref[0])
+                branch = ref[0]
+                if branch != "HEAD":
+                    branches.append(branch)
             elif len(ref) == 2:
                 assert ref[0] == "tag:", "Unrecognized ref annotation %r" % sref
                 tags.append(ref[1])
+            elif len(ref) == 3:
+                assert ref[0] == "HEAD" and ref[1] == "->", "Unrecognized ref annotation %r" % sref
+                branches.append(ref[2])
     return tags, branches
 
 def cleanup(args):
     ensure_clean()
-    print
-    print "Cleanup of in-progress release"
-    print
     releasing = in_release()
     if not releasing:
         print "Not in a release"
         return
+    print
+    print "Cleanup of in-progress release"
+    print
     revision_range = [RELEASE_BRANCH, "--not", "origin/develop", "origin/master"]
     tags, branches = enumerate_refspecs(revision_range)
     print
