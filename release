@@ -315,10 +315,35 @@ def in_release():
 def is_dirty():
     return call("git", "status", "--porcelain", "--untracked=no", dry=False).splitlines()
 
+def current_branch():
+    return call("git", "symbolic-ref", "--short", "HEAD", dry=False).strip()
+
+def tag_at(refspec):
+    return call("git", "describe", "--exact-match", refspec, dry=False).strip()
+
+def revparse(refspec):
+    return call("git", "rev-parse", refspec, dry=False).strip()
+
+def is_branch_at(branch, refspec):
+    return revparse(branch) == revparse(refspec)
+
 def ensure_clean():
     if is_dirty():
         run("git", "status", "--untracked=no", dry=False)
         raise ReleaseError("Aborted\n\nCannot release from a dirty worktree")
+
+def ensure_releasing():
+    releasing = in_release()
+    if not releasing:
+        print "Not in a release"
+        return
+
+def validate_release_tag(tag):
+        assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
+        try:
+            SemVer(tag[1:])
+        except:
+            assert False, "non-release tag %r found on release branch" % tag
 
 def format_release_tag(ver):
     return "v%s" % ver
@@ -382,34 +407,36 @@ def enumerate_refspecs(revision_range):
 
 def cleanup(args):
     ensure_clean()
-    releasing = in_release()
-    if not releasing:
-        print "Not in a release"
-        return
+    ensure_releasing()
     print
     print "Cleanup of in-progress release"
     print
     revision_range = [RELEASE_BRANCH, "--not", "origin/develop", "origin/master"]
     tags, branches = enumerate_refspecs(revision_range)
-    print
-    print "Branches to be removed:", branches
-    print "Tags to be removed:", tags
     for tag in tags:
-        assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
-        try:
-            SemVer(tag[1:])
-        except:
-            assert False, "non-release tag %r found on release branch" % tag
-    assert RELEASE_BRANCH in branches, "Confused script, expected to find %r amongst %r" % (RELEASE_BRANCH, branches)
-    print
-    print "This operation will drop the following commits:"
-    print
-    run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
+        validate_release_tag(tag)
+    if not branches and is_branch_at(RELEASE_BRANCH, "master"):
+        print "Release branch is still at master"
+        branches.append(RELEASE_BRANCH)
+        assert not tags, "Confused script, expected no tags in this case but found %s" % tags
+        print
+        print "Branches to be removed:", branches
+    else:
+        print
+        print "Branches to be removed:", branches
+        print "Tags to be removed:", tags
+        assert (RELEASE_BRANCH,) == tuple(branches), "Confused script, expected to find exactly %r amongst %r" % (RELEASE_BRANCH, branches)
+        assert len(tags) <= 1, "Confused script, expected to find at most one tag to remove, but found %s" % len(tags)
+        print
+        print "This operation will drop the following commits:"
+        print
+        run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
     print
     if challenge():
         run("git", "checkout", "develop")
         run("git", "branch", "-D", *branches)
-        run("git", "tag", "-d", *tags)
+        if tags:
+            run("git", "tag", "-d", *tags)
     else:
         print "Cancelled";
 
