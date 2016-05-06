@@ -7,6 +7,9 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
+  release [--dry] cleanup
+  release [--dry] prepare-release --prod [<version>] [--doc=<version>]
+  release [--dry] push-release
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
   release [--dry | --cicd] push-pkgs
   release [--dry | --cicd] push-docs
@@ -26,7 +29,7 @@ from docopt import docopt
 from collections import OrderedDict
 
 __dir__ = os.path.dirname(__file__)
-__dry__ = False
+__dry__ = True
 __cicd__ = False
 
 def base(name=None):
@@ -199,7 +202,7 @@ def version(args):
     dry = __dry__ or dev
     for fname in updated:
         run("git", "add", fname, cwd=base(), dry=dry)
-    run("git", "commit", "-m", "Changed version to %s, %s (doc %s)." % (title, ver, docver),
+    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [skip-ci]" % (title, ver, docver),
         cwd=base(), dry=dry)
 
 def randstr():
@@ -296,6 +299,36 @@ def push_docs(args):
     else:
         print "Canceled"
 
+
+RELEASE_BRANCH="release-in-progress"
+
+def in_release():
+    return call("git", "branch", "--list", RELEASE_BRANCH+"*", dry=False).splitlines()
+
+def prepare_release(args):
+    assert args["--prod"]
+    releasing = in_release()
+    if releasing:
+        raise ReleaseError("Release appears to be in progress, found %s\n\n%s" % (
+            releasing,"Investigate and run ./release cleanup"))
+    run("git", "checkout",  "develop")
+    run("git", "pull")
+    next_ver = call("scripts/compute-next-version", dry=False).strip()
+    actual_tag = call("git", "describe", dry=False).strip()
+    expected_tag = "dev-%s" % next_ver
+    if expected_tag != actual_tag:
+        raise ReleaseError("Develop branch is not stable, got '%s' expected '%s'\n\n%s" % (
+            actual_tag, expected_tag,
+            "Aborting. Please wait for CI to catch up and retry later"));
+    run("git", "checkout", "-b", RELEASE_BRANCH)
+    ver = args["<version>"]
+    if not ver:
+        print "No version override supplied, using automatic version %s" % next_ver
+        ver = args["<version>"] = next_ver
+    version(args)
+    release_tag = "v%s" % ver
+    run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
+
 ## main
 
 def main(args):
@@ -310,6 +343,12 @@ def main(args):
         push_pkgs(args)
     elif args["push-docs"]:
         push_docs(args)
+    elif args["prepare-release"]:
+        prepare_release(args)
+    elif args["cleanup"]:
+        cleanup(args)
+    elif args["push-release"]:
+        push_release(args)
     else:
         assert False
 
