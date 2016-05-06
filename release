@@ -310,7 +310,13 @@ RELEASE_BRANCH="release-in-progress"
 def in_release():
     return call("git", "branch", "--list", RELEASE_BRANCH+"*", dry=False).splitlines()
 
+def is_dirty():
+    return call("git", "status", "--porcelain", "--untracked=no", dry=False).splitlines()
+
 def prepare_release(args):
+    if is_dirty():
+        run("git", "status", "--untracked=no", dry=False)
+        raise ReleaseError("Release aborted\n\nCannot release from a dirty worktree")
     assert args["--prod"]
     releasing = in_release()
     if releasing:
