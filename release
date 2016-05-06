@@ -27,16 +27,41 @@ Usage:
 import json, os, random, re, subprocess, tempfile, urllib2
 from docopt import docopt
 from collections import OrderedDict
+try:  # py3
+    from shlex import quote
+except ImportError:  # py2
+    from pipes import quote
 
-__dir__ = os.path.dirname(__file__)
-__dry__ = True
+__dir__ = None
+__dry__ = False
 __cicd__ = False
 
 def base(name=None):
+    global __dir__
+    if __dir__ is None:
+        __dir__ = call("git", "rev-parse", "--show-toplevel", dry=False).strip()
     if name:
         return os.path.join(__dir__, name)
     else:
         return __dir__
+
+
+def _do(method, *command, **kwargs):
+    dry = kwargs.pop("dry", __dry__)
+    cmd =  " ".join(map(quote,command))
+    if dry:
+        print "$  #", cmd, kwargs
+        return
+    print "$   ", cmd, kwargs
+    return method(command, **kwargs)
+
+def call(*command, **kwargs):
+    """Execute the supplied command and return the output."""
+    return _do(subprocess.check_output, *command, **kwargs)
+
+def run(*command, **kwargs):
+    """Execute the supplied command."""
+    _do(subprocess.check_call, *command, **kwargs)
 
 metadata = {}
 with open(base("quarkc/_metadata.py")) as fp:
@@ -70,26 +95,6 @@ def pipcheck(*packages):
             missing.append(pkg)
     if missing:
         raise ReleaseError("Please install missing python packages: %s" % ", ".join(missing))
-
-def run(*command, **kwargs):
-    """Execute the supplied command."""
-    dry = kwargs.pop("dry", __dry__)
-    cmd =  " ".join(command)
-    if dry:
-        print "# ", cmd, kwargs
-        return
-    print cmd, kwargs
-    subprocess.check_call(command, **kwargs)
-
-def call(*command, **kwargs):
-    """Execute the supplied command and return the output."""
-    dry = kwargs.pop("dry", __dry__)
-    cmd =  " ".join(command)
-    if dry:
-        print "# ", cmd, kwargs
-        return
-    print cmd, kwargs
-    return subprocess.check_output(command, **kwargs)
 
 def update_json(name, **kwargs):
     """Update a json file with supplied overrides."""
