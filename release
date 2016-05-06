@@ -320,6 +320,9 @@ def ensure_clean():
         run("git", "status", "--untracked=no", dry=False)
         raise ReleaseError("Aborted\n\nCannot release from a dirty worktree")
 
+def format_release_tag(ver):
+    return "v%s" % ver
+
 def prepare_release(args):
     ensure_clean()
     releasing = in_release()
@@ -347,9 +350,12 @@ def prepare_release(args):
                 ver, next_ver));
         else:
             print "Supplied version %s accepted" % ver
+    run("git", "checkout",  "master")
+    run("git", "pull")
     run("git", "checkout", "-b", RELEASE_BRANCH)
+    run("git", "merge", "develop", "-m", "Merge branch develop into master")
     version(args)
-    release_tag = "v%s" % ver
+    release_tag = format_release_tag(ver)
     run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
 
 
