@@ -1,6 +1,20 @@
 #!/usr/bin/env python
+"""Quark release helper. Calculate next release version accounting
+for all commits from last-release to release-point
+
+Usage:
+  compute-next-version [-v] [--last-release=REF] [--release-point=REF]
+  compute-next-version -h
+
+  Options:
+  -v --verbose          be verbose
+  -h --help             Show this help and exit
+  --last-release=REF    last release [default: origin/master]
+  --release-point=REF   next release [default: HEAD]
+"""
 import logging
 import subprocess, re, os
+from docopt import docopt
 from semantic_version import Version
 
 dry_run = False
@@ -186,9 +200,15 @@ class change_impact(object):
         return version
 
 
+def main(args):
+    if args["--verbose"]:
+        level = logging.DEBUG
+    else:
+        level = logging.INFO
+    logging.basicConfig(level = level)
+    l = last_release(args["--last-release"])
+    c = change_impact(l, args["--release-point"])
+    print c.next_version
 
-logging.basicConfig(level = logging.INFO)
-
-l = last_release()
-c = change_impact(l, "HEAD")
-print c.next_version
+if __name__ == "__main__":
+    exit(main(docopt(__doc__)))
