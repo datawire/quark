@@ -27,3 +27,7 @@ with capture_bg("python -m SimpleHTTPServer 8000", nocmp=True) as server_bg:  # 
     javascript_client = capture("node get.js http://127.0.0.1:8001 http://127.0.0.1:8000")
     assert "Directory listing" in javascript_client.output
     server_bg.child.expect("200")
+
+    ruby_client = capture("ruby get.rb http://127.0.0.1:8001 http://127.0.0.1:8000")
+    assert "Directory listing" in ruby_client.output
+    server_bg.child.expect("200")
