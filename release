@@ -196,7 +196,7 @@ def version(args):
         dev = is_dev()
 
     ver = args["<version>"]
-    
+
     if ver:
         doc_default = "1"
     else:
@@ -315,15 +315,19 @@ def in_release():
 def is_dirty():
     return call("git", "status", "--porcelain", "--untracked=no", dry=False).splitlines()
 
-def prepare_release(args):
+def ensure_clean():
     if is_dirty():
         run("git", "status", "--untracked=no", dry=False)
-        raise ReleaseError("Release aborted\n\nCannot release from a dirty worktree")
-    assert args["--prod"]
+        raise ReleaseError("Aborted\n\nCannot release from a dirty worktree")
+
+def prepare_release(args):
+    ensure_clean()
     releasing = in_release()
     if releasing:
         raise ReleaseError("Release appears to be in progress, found %s\n\n%s" % (
             releasing,"Investigate and run ./release cleanup"))
+    if not args["--prod"]:
+        raise ReleaseError("only for production releases, missing --prod")
     run("git", "checkout",  "develop")
     run("git", "pull")
     next_ver = call("scripts/compute-next-version", dry=False).strip()
@@ -347,6 +351,56 @@ def prepare_release(args):
     version(args)
     release_tag = "v%s" % ver
     run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
+
+
+def enumerate_refspecs(revision_range):
+    """return tags, branches that point in the specified revision range"""
+    tags = []
+    branches = []
+    for refs in call("git", "log", "--pretty=%D",
+                      *revision_range, dry=False).splitlines():
+        for sref in refs.split(","):
+            ref = sref.split()
+            assert 1 <= len(ref) <= 2, "unrecognized refspect format %r" % sref
+            if len(ref) == 1:
+                branches.append(ref[0])
+            elif len(ref) == 2:
+                assert ref[0] == "tag:", "Unrecognized ref annotation %r" % sref
+                tags.append(ref[1])
+    return tags, branches
+
+def cleanup(args):
+    ensure_clean()
+    print
+    print "Cleanup of in-progress release"
+    print
+    releasing = in_release()
+    if not releasing:
+        print "Not in a release"
+        return
+    revision_range = [RELEASE_BRANCH, "--not", "origin/develop", "origin/master"]
+    tags, branches = enumerate_refspecs(revision_range)
+    print
+    print "Branches to be removed:", branches
+    print "Tags to be removed:", tags
+    for tag in tags:
+        assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
+        try:
+            SemVer(tag[1:])
+        except:
+            assert False, "non-release tag %r found on release branch" % tag
+    assert RELEASE_BRANCH in branches, "Confused script, expected to find %r amongst %r" % (RELEASE_BRANCH, branches)
+    print
+    print "This operation will drop the following commits:"
+    print
+    run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
+    print
+    if challenge():
+        run("git", "checkout", "develop")
+        run("git", "branch", "-D", *branches)
+        run("git", "tag", "-d", *tags)
+    else:
+        print "Cancelled";
 
 ## main
 
