@@ -32,6 +32,7 @@ Options:
   -s --summary       Don't offer actions; just list/summarize the comparisons
   -f --force         Assume "yes" for every comparison
   -y --yes           Use "yes" as the default instead of "no"
+  -b --batch         Don't offer actions; just display all comparisons
 """
 
 import os
@@ -149,6 +150,7 @@ def main(options):
 
     names = options["CMPFILE"]
     force = options["--force"]
+    batch = options["--batch"]
     pattern = options["--pattern"]
     summarize = options["--summary"]
 
@@ -185,6 +187,15 @@ def main(options):
     # Pre-filter so len(to_compare) can be used for progress indicator
     to_compare = [(expected, output) for expected, output in to_compare if fnmatch.fnmatch(output, pattern)]
 
+    if batch:
+        cls = ""
+        show_file = "cat %s"
+        diff = "git --no-pager diff --no-index %s %s"
+    else:
+        cls = ansi(CLS, "")
+        show_file = "less -F %s"
+        diff = "git diff --no-index %s %s"
+
     summary = collections.defaultdict(list)  # type -> names
     for idx, (expected, output) in enumerate(to_compare):
         if not os.path.exists(expected):
@@ -207,7 +218,7 @@ def main(options):
             assert False, ("both missing", expected, output)
         elif ex is None and op is file:           # New file in output
             name = output + " (new file)"
-            show_command = "less -F %s" % output
+            show_command = show_file % output
             question = "Add this file?"
             if output.endswith(".cmp"):
                 do_command = "mv %s %s" % (output, expected)
@@ -223,13 +234,13 @@ def main(options):
 
         elif ex is file and op is None:           # Expected file not present
             name = expected + " (missing file)"
-            show_command = "less -F %s" % expected
+            show_command = show_file % expected
             question = "Remove this file?"
             do_command = "rm %s" % expected
             summary["missing file"].append(output)
         elif ex is file and op is file:           # File has changed
             name = output
-            show_command = "git diff --no-index %s %s" % (expected, output)
+            show_command = diff % (expected, output)
             question = "Overwrite this file?"
             if output.endswith(".cmp"):
                 do_command = "mv %s %s" % (output, expected)
@@ -267,9 +278,10 @@ def main(options):
             pass
         else:
             counter = "%s/%s " % (idx + 1, len(to_compare))
-            print ansi(CLS, "") + counter + name, ansi(PURPLE, (columns - 2 - len(counter + name)) * "=")
+            print cls + counter + name, ansi(PURPLE, (columns - 2 - len(counter + name)) * "=")
             os.system(show_command)
             print
+            if batch: continue
             print "$ %s" % ansi(RED, do_command)
             valid = "ynq"
             while True:
