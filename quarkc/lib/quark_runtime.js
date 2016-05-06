@@ -653,34 +653,32 @@
 
     exports.TLS = TLS
 
-    var STDOUT = function (line) {
-        console.log(line);
-    };
+    function makeStreamAppender(stream) {
+        return function (line) {
+            stream.write(line);
+            stream.write("\n");
+        };
+    }
 
-    var STDERR = function (line) {
-        console.error(line);
-    };
+    function makeFileAppender(path) {
+        if (platform.isNode()) {
+            var fs = require("fs");
+            return makeStreamAppender(fs.createWriteStream(path));
+        } else {
+            return function (line) {
+                console.log(line);
+            };
+        }
+    }
+
+    var STDOUT, STDERR;
 
     if (platform.isNode()) {
-        function StreamAppender(stream) {
-            return function(line) {
-                stream.write(line);
-                stream.write("\n");
-            }
-        }
-
-        function FileAppender(path) {
-            var fs = require('fs');
-            return StreamAppender(fs.createWriteStream(path));
-        }
-
-        var STDOUT = StreamAppender(process.stdout);
-        var STDERR = StreamAppender(process.stderr);
-    }
-    else {
-        function FileAppender(path) {
-            return STDOUT;
-        }
+        STDOUT = makeStreamAppender(process.stdout);
+        STDERR = makeStreamAppender(process.stderr);
+    } else {
+        STDOUT = function (line) { console.log(line); };
+        STDERR = function (line) { console.err(line); };
     }
 
     var levels = {}
@@ -733,12 +731,12 @@
         return STDOUT;
     }
 
-    LoggerConfig.prototype.stderr = function stdout() {
+    LoggerConfig.prototype.stderr = function stderr() {
         return STDERR;
     }
 
     LoggerConfig.prototype.file = function file(path) {
-        return FileAppender(path);
+        return makeFileAppender(path);
     }
 
 
