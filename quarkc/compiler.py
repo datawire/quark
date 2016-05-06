@@ -21,6 +21,7 @@ from .parser import Parser, ParseError as GParseError
 from .dispatch import overload
 from .helpers import *
 from .environment import Environment
+import docmaker
 import errors
 import ast
 
@@ -1268,3 +1269,17 @@ def run(url, args, *backends):
     for backend in backends:
         b = backend()
         b.run(name, ver, args)
+
+
+def make_docs(url, target):
+    # FIXME: These four lines are boilerplate
+    c = Compiler()
+    c.log.info("Parsing: %s", url)
+    c.urlparse(url)
+    c.compile()
+
+    dest = os.path.join(target, os.path.splitext(os.path.basename(url))[0])  # XXX Copy-pasted from compile(...)
+    if not os.path.exists(dest):
+        os.makedirs(dest)
+
+    docmaker.make_docs_json(c, os.path.join(dest, "api.json"))

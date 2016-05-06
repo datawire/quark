@@ -98,7 +98,7 @@ public class JSONObject {
     public int size() {
         if (this.value instanceof List) {
             return ((List) this.value).size();
-        } else if (this.value instanceof Map) {
+        } else if (isObject()) {
             return ((Map) this.value).size();
         } else {
             return 1;
@@ -117,7 +117,7 @@ public class JSONObject {
     }
 
     public JSONObject setObjectItem(String key, JSONObject value) {
-        if (!(this.value instanceof Map)) {
+        if (!isObject()) {
             setObject();
         }
         @SuppressWarnings("unchecked")
@@ -127,7 +127,7 @@ public class JSONObject {
     }
 
     public JSONObject getObjectItem(String key) {
-        if (this.value instanceof Map) {
+        if (isObject()) {
             @SuppressWarnings("unchecked")
             Map<String,Object> m = (Map<String,Object>) this.value;
             if (m.containsKey(key)) {
@@ -137,8 +137,12 @@ public class JSONObject {
         return undefined();
     }
 
+    private boolean isObject() {
+        return this.value instanceof Map;
+    }
+
     public ArrayList<String> keys() {
-        if (!(this.value instanceof Map)) {
+        if (!isObject()) {
             return null;
         }
         @SuppressWarnings("unchecked")
@@ -201,4 +205,14 @@ public class JSONObject {
         @Override public JSONObject setObjectItem(String k, JSONObject v) { return this; }
     }
     private static JSONObject _undefined = new Undefined();
+
+    public String getType() {
+        if (isBool()) return "boolean";
+        if (isNumber()) return "number";
+        if (isString()) return "string";
+        if (isNull()) return "null";
+        if (isList()) return "list";
+        if (isObject()) return "object";
+        return "undefined";
+    }
 }

@@ -19,6 +19,7 @@ Usage:
   quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
+  quark [options] docs <file>...
   quark -h | --help | help
   quark --version
 
@@ -27,6 +28,7 @@ Commands:
   install               Compile, build, and install code in the target language(s).
   run                   Run the main() function from the package namespace; the quark
                         file must already be installed.
+  docs                  Output API documentation in HTML.
 
 Options:
   -h --help             Show this screen.
@@ -173,6 +175,8 @@ def main(args):
                 compiler.compile(url, output, *backends)
             elif args["run"]:
                 compiler.run(url, args["<args>"], *backends)
+            elif args["docs"]:
+                compiler.make_docs(url, output)
             else:
                 assert False
     except compiler.QuarkError as err:

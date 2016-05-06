@@ -332,7 +332,7 @@ namespace quark {
                          $py{len($self)}
                          $rb{($self).size}
                          $js{($self).length};
-        macro void sort() $java{java.util.Collections.sort($self, null)}
+        macro void sort() $java{java.util.Collections.sort($self, io.datawire.quark.runtime.Builtins.COMPARATOR)}
                           $py{($self).sort()}
                           $rb{($self).sort!}
                           $js{($self).sort()};

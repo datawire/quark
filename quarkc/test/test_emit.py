@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest, shutil, subprocess, filecmp
+import os, pytest, shutil, subprocess, filecmp, difflib
 from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, CompileError, compile
 from quarkc.helpers import namever
@@ -135,6 +135,14 @@ def run_tests(base, dirs, command, env=None):
             if expected != actual:
                 open(get_out(name) + ".cmp", "write").write(actual)
                 failed_expectations.append(name)
+                if expected is None:
+                    print("FAILURE: Expected output not found for %r." % name)
+                else:
+                    d = difflib.Differ()
+                    delta = list(d.compare(expected.splitlines(True),
+                                           actual.splitlines(True)))
+                    print("FAILURE: Expected and actual output dont match for '%s':\n%s" % (
+                        name, "".join(delta)))
     print(failed_expectations)
     assert not failed_expectations
 
