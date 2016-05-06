@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
-"""
-Quark release tool. Because quark involves a variety of different
+"""Quark release tool. Because quark involves a variety of different
 support packages for backend languages, the release process involves
 dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
   release [--dry] cleanup
-  release [--dry] prepare-release --prod [<version>] [--doc=<version>]
+  release [--dry] prepare-release --prod [<version>] [--doc=<version>] [--release-point=<tag>]
   release [--dry] push-release
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
   release [--dry | --cicd] push-pkgs
@@ -22,6 +21,10 @@ Usage:
     --prod                 Change to production packages.
 
     --doc <version>        Documentation version.
+
+    --release-point <tag>  Perform a partial release of develop if tip of
+                           develop is not stable
+
 """
 
 import json, os, random, re, subprocess, tempfile, urllib2
@@ -64,6 +67,10 @@ def call(*command, **kwargs):
 def run(*command, **kwargs):
     """Execute the supplied command."""
     _do(subprocess.check_call, *command, **kwargs)
+
+def retcode(*command, **kwargs):
+    """Execute the supplied command."""
+    return _do(subprocess.call, *command, **kwargs)
 
 metadata = {}
 with open(base("quarkc/_metadata.py")) as fp:
@@ -204,9 +211,10 @@ def version(args):
         doc_default = metadata["__doc_version__"]
 
     docver = args["--doc"] or doc_default
+    _version(dev, ver, docver, __dry__ or dev)
 
+def _version(dev, ver, docver, dry):
     title, updated = quark_version(ver, docver, dev)
-    dry = __dry__ or dev
     for fname in updated:
         run("git", "add", fname, cwd=base(), dry=dry)
     run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [skip-ci]" % (title, ver, docver),
@@ -318,8 +326,11 @@ def is_dirty():
 def current_branch():
     return call("git", "symbolic-ref", "--short", "HEAD", dry=False).strip()
 
-def tag_at(refspec):
-    return call("git", "describe", "--exact-match", refspec, dry=False).strip()
+def tag_at(refspec, match=None):
+    flags = []
+    if match:
+        flags.extend(["--match", match])
+    return call("git", "describe", "--exact-match", refspec, *flags, dry=False).strip()
 
 def revparse(refspec):
     return call("git", "rev-parse", refspec, dry=False).strip()
@@ -335,8 +346,7 @@ def ensure_clean():
 def ensure_releasing():
     releasing = in_release()
     if not releasing:
-        print "Not in a release"
-        return
+        raise ReleaseError("Not in a release")
 
 def validate_release_tag(tag):
         assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
@@ -348,6 +358,12 @@ def validate_release_tag(tag):
 def format_release_tag(ver):
     return "v%s" % ver
 
+def is_ancestor(tag, refspec):
+    rc = retcode("git", "merge-base", "--is-ancestor", tag, refspec, dry=False)
+    if rc > 1:
+        raise ReleaseError("merge-base failed")
+    return rc == 0
+
 def prepare_release(args):
     ensure_clean()
     releasing = in_release()
@@ -358,8 +374,21 @@ def prepare_release(args):
         raise ReleaseError("only for production releases, missing --prod")
     run("git", "checkout",  "develop")
     run("git", "pull")
-    next_ver = call("scripts/compute-next-version", dry=False).strip()
-    actual_tag = call("git", "describe", dry=False).strip()
+    if not args["--release-point"]:
+        release_point = "develop"
+        release_msg = "Merge branch %s into master"
+    else:
+        release_point = args["--release-point"]
+        release_msg = "Merge tag %s into master"
+        print "Partial release from %r requested." % release_point
+        if is_ancestor(release_point, "develop"):
+            print "develop ancestry confirmed"
+        else:
+            raise ReleaseError("cannot release from a point that is not ancestor of develop branch")
+        if is_ancestor(release_point, "master"):
+            raise ReleaseError("specified tag %r is already released on master" % release_point)
+    next_ver = call(os.path.join(os.path.dirname(__file__), "scripts/compute-next-version"), "--release-point", release_point, dry=False).strip()
+    actual_tag = call("git", "describe", release_point, dry=False).strip()
     expected_tag = "dev-%s" % next_ver
     if expected_tag != actual_tag:
         raise ReleaseError("Develop branch is not stable, got '%s' expected '%s'\n\n%s" % (
@@ -378,7 +407,7 @@ def prepare_release(args):
     run("git", "checkout",  "master")
     run("git", "pull")
     run("git", "checkout", "-b", RELEASE_BRANCH)
-    run("git", "merge", "develop", "-m", "Merge branch develop into master")
+    run("git", "merge", release_point, "-m", release_msg % release_point)
     version(args)
     release_tag = format_release_tag(ver)
     run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
@@ -456,15 +485,40 @@ def push_release(args):
         raise ReleaseError("Release tag %r and metatada version %r disagree. Expected tag %r" % (
             actual_tag, ver, expected_tag))
     print "Tag %r agrees with metadata %r" % (actual_tag, ver)
-    dev_tag = tag_at("%s^" % actual_tag)
+    to_push = [ "%s:master" % RELEASE_BRANCH ]
+    if is_ancestor("master", "develop"):
+        # if we had a fast-forward merge in prepare then it's one away
+        dev_tag = tag_at("%s^" % actual_tag, match="dev-*")
+    else:
+        # if we had a real merge in prepare then it's two away and to the side
+        dev_tag = tag_at("%s^^2" % actual_tag, match="dev-*")
+    print "Found dev tag %r" % dev_tag
+    if is_ancestor("develop", "master"):
+        # preserve fast-forward-ness
+        run("git", "checkout", "--detach", RELEASE_BRANCH)
+        _version(True, ver, "1", __dry__)
+        to_push.append("%s:develop" % revparse("HEAD"))
+        print
+        print "Pushing release", actual_tag, "to master based on tests stamped with", dev_tag, "to github"
+        print
+    else:
+        # develop and master will remain diverged for some more time
+        run("git", "checkout", "--detach", "develop")
+        run("git", "merge", "--no-commit", RELEASE_BRANCH)
+        _version(True, ver, "1", __dry__)
+        to_push.append("%s:develop" % revparse("HEAD"))
+        print
+        print "Pushing a partial release", actual_tag, "to master based on tests stamped with", dev_tag, "to github"
+        print "Inspect the commits remaining on develop with:"
+        print
+        print "     git log %s..develop" % dev_tag
+        print
     print
-    print "Pushing release", actual_tag, "based on tests stamped with", dev_tag, "to github"
+    print "About to push %s" % to_push
     print
     if challenge():
         try:
-            run("git", "push", "--atomic",
-                "%s:develop" % RELEASE_BRANCH,
-                "%s:master" % RELEASE_BRANCH)
+            run("git", "push", "--atomic", "origin", *to_push)
         except subprocess.CalledProcessError, e:
             print
             print "Push failed. This release most likely raced with activity"
@@ -475,8 +529,7 @@ def push_release(args):
             print
             print "and re-do the release"
             print
-            raise
-        
+            raise ReleaseError("Push aborted")
         run("git", "checkout", "develop")
         run("git", "pull")
         run("git", "checkout", "master")
