@@ -407,6 +407,7 @@ def prepare_release(args):
     run("git", "checkout",  "master")
     run("git", "pull")
     run("git", "checkout", "-b", RELEASE_BRANCH)
+    run("git", "config", "branch.%s.pushRemote" % RELEASE_BRANCH, "do not use 'git push' but 'release push-release' ")
     run("git", "merge", release_point, "-m", release_msg % release_point)
     version(args)
     release_tag = format_release_tag(ver)
@@ -421,6 +422,8 @@ def enumerate_refspecs(revision_range):
                       *revision_range, dry=False).splitlines():
         for sref in refs.split(","):
             ref = sref.split()
+            if not ref:
+                continue
             assert 1 <= len(ref) <= 3, "unrecognized refspect format %r" % sref
             if len(ref) == 1:
                 branch = ref[0]
@@ -477,6 +480,7 @@ def push_release(args):
         raise ReleaseError("You are not on a %r branch, but %s. Aborting" % (
             RELEASE_BRANCH, branch))
     print "On branch", RELEASE_BRANCH
+
     actual_tag = tag_at(RELEASE_BRANCH)
     validate_release_tag(actual_tag)
     ver = metadata["__version__"]
@@ -485,7 +489,7 @@ def push_release(args):
         raise ReleaseError("Release tag %r and metatada version %r disagree. Expected tag %r" % (
             actual_tag, ver, expected_tag))
     print "Tag %r agrees with metadata %r" % (actual_tag, ver)
-    to_push = [ "%s:master" % RELEASE_BRANCH ]
+
     if is_ancestor("master", "develop"):
         # if we had a fast-forward merge in prepare then it's one away
         dev_tag = tag_at("%s^" % actual_tag, match="dev-*")
@@ -493,6 +497,8 @@ def push_release(args):
         # if we had a real merge in prepare then it's two away and to the side
         dev_tag = tag_at("%s^^2" % actual_tag, match="dev-*")
     print "Found dev tag %r" % dev_tag
+
+    to_push = [ "%s:master" % RELEASE_BRANCH ]
     if is_ancestor("develop", "master"):
         # preserve fast-forward-ness
         run("git", "checkout", "--detach", RELEASE_BRANCH)
