@@ -8,7 +8,7 @@ utility captures all this in a single place.
 Usage:
   release [--dry] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
   release [--dry] cleanup
-  release [--dry] prepare-release --prod [<version>] [--doc=<version>] [--release-point=<tag>]
+  release [--dry] prepare-release (--dev | --prod) [<version>] [--doc=<version>] [--release-point=<tag>]
   release [--dry] push-release
   release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
   release [--dry | --cicd] push-pkgs
@@ -401,8 +401,6 @@ def prepare_release(args):
     if releasing:
         raise ReleaseError("Release appears to be in progress, found %s\n\n%s" % (
             releasing,"Investigate and run ./release cleanup"))
-    if not args["--prod"]:
-        raise ReleaseError("only for production releases, missing --prod")
     run("git", "checkout",  "develop")
     run("git", "pull")
     if not args["--release-point"]:
@@ -428,22 +426,35 @@ def prepare_release(args):
     ver = args["<version>"]
     if not ver:
         print "No version override supplied, using automatic version %s" % next_ver
-        ver = args["<version>"] = next_ver
+        ver = args["<version>"] = str(next_ver)
     else:
+        if args["--dev"]:
+            raise ReleaseError("Version forcing not allowed for dev releases")
         if SemVer(ver) < SemVer(next_ver):
             raise ReleaseError("Supplied version %s < %s. Aborting" % (
                 ver, next_ver));
         else:
             print "Supplied version %s accepted" % ver
-    run("git", "checkout",  "master")
-    run("git", "pull")
-    run("git", "checkout", "-b", RELEASE_BRANCH)
-    run("git", "config", "branch.%s.pushRemote" % RELEASE_BRANCH, "do not use 'git push' but 'release push-release' ")
-    run("git", "merge", release_point, "-m", release_msg % release_point)
-    version(args)
-    release_tag = format_release_tag(ver)
-    run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
-
+    if args["--prod"]:
+        run("git", "checkout",  "master")
+        run("git", "pull")
+        run("git", "checkout", "-b", RELEASE_BRANCH)
+        run("git", "config", "branch.%s.pushRemote" % RELEASE_BRANCH, "do not use 'git push' but 'release push-release' ")
+        run("git", "merge", release_point, "-m", release_msg % release_point)
+        version(args)
+        release_tag = format_release_tag(ver)
+        run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
+    elif args["--dev"]:
+        run("git", "checkout", "--detach", release_point)
+        version(args)
+        print
+        print "Do *NOT* commit the result."
+        print "Push release artefacts and documentation, then do:"
+        print
+        print "    git reset --hard; git checkout develop"
+        print
+    else:
+        raise ReleaseError("only for production releases, missing --prod")
 
 def enumerate_refspecs(revision_range):
     """return tags, branches that point in the specified revision range"""

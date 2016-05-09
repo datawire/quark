@@ -7,13 +7,20 @@ pypi.
 
 ## Sync Status of CI ##
 
+query new builds of the develop branch and tag the successful ones
+
     ./release poll-dev-status --tag-dev-builds
 
 ## Publish Development Artefacts ##
 
-    TODO
-    TODO
-    TODO
+Development artefacts are produced from a detached checkout, locally
+*Do not commit the result, do not merge the result to any branch.*
+
+    ./release prepare-release --dev
+    ./release push-docs
+    ./release push-pkgs
+    git reset --hard; git checkout develop
+
 
 ## Prepare Released State ##
 
@@ -73,3 +80,10 @@ the following:
     git pull
     ./release push-docs
     ./release push-pkgs
+
+# Required software #
+
+Tools required are `pip`, `twine`, and a not totally ancient `git`
+
+    pip install sphinx-better-theme wheel twine
+
