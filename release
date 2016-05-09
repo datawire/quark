@@ -6,6 +6,7 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
+  release [--dry] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
   release [--dry] cleanup
   release [--dry] prepare-release --prod [<version>] [--doc=<version>] [--release-point=<tag>]
   release [--dry] push-release
@@ -23,11 +24,15 @@ Usage:
     --doc <version>        Documentation version.
 
     --release-point <tag>  Perform a partial release of develop if tip of
-                           develop is not stable
+                           develop is not stable.
+
+    --tag-dev-builds       Apply dev-* tags to passing builds on develop.
+    --restart-at <tag>     Specify the starting point for search of the last tag
+                           applied [default: develop].
 
 """
 
-import json, os, random, re, subprocess, tempfile, urllib2
+import json, os, random, re, subprocess, tempfile, urllib2, pprint, urllib
 from docopt import docopt
 from collections import OrderedDict
 from semantic_version import Version as SemVer
@@ -316,6 +321,8 @@ def push_docs(args):
 
 
 RELEASE_BRANCH="release-in-progress"
+RELEASE_TAG_MATCH="v*"
+DEV_TAG_MATCH="dev-*"
 
 def in_release():
     return call("git", "branch", "--list", RELEASE_BRANCH+"*", dry=False).splitlines()
@@ -326,17 +333,32 @@ def is_dirty():
 def current_branch():
     return call("git", "symbolic-ref", "--short", "HEAD", dry=False).strip()
 
-def tag_at(refspec, match=None):
+def tag_at(refspec, match=None, exact=True, abbrev=None):
     flags = []
-    if match:
-        flags.extend(["--match", match])
-    return call("git", "describe", "--exact-match", refspec, *flags, dry=False).strip()
+    if match is not None:
+        flags.append("--match=%s" % match)
+    if exact:
+        flags.append("--exact-match")
+    if abbrev is not None:
+        flags.append("--abbrev=%s" % abbrev)
+    return call("git", "describe", refspec, *flags, dry=False).strip()
+
+def release_tag_at(refspec, **kwargs):
+    kwargs.setdefault("match", RELEASE_TAG_MATCH)
+    return tag_at(refspec, **kwargs)
+
+def dev_tag_at(refspec, **kwargs):
+    kwargs.setdefault("match", DEV_TAG_MATCH)
+    return tag_at(refspec, **kwargs)
 
 def revparse(refspec):
-    return call("git", "rev-parse", refspec, dry=False).strip()
+    return call("git", "rev-parse", "%s^0"%refspec, dry=False).strip()
 
 def is_branch_at(branch, refspec):
     return revparse(branch) == revparse(refspec)
+
+def compute_next_version(release_point):
+    return SemVer(call(os.path.join(os.path.dirname(__file__), "scripts/compute-next-version"), "--release-point", release_point, dry=False).strip())
 
 def ensure_clean():
     if is_dirty():
@@ -348,6 +370,12 @@ def ensure_releasing():
     if not releasing:
         raise ReleaseError("Not in a release")
 
+def ensure_branch(expected):
+    branch = current_branch()
+    if branch != expected:
+        raise ReleaseError("You are not on a %r branch, but %s. Aborting" % (
+            expected, branch))
+
 def validate_release_tag(tag):
         assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
         try:
@@ -357,6 +385,9 @@ def validate_release_tag(tag):
 
 def format_release_tag(ver):
     return "v%s" % ver
+
+def format_dev_tag(ver):
+    return "dev-%s" % ver
 
 def is_ancestor(tag, refspec):
     rc = retcode("git", "merge-base", "--is-ancestor", tag, refspec, dry=False)
@@ -387,9 +418,9 @@ def prepare_release(args):
             raise ReleaseError("cannot release from a point that is not ancestor of develop branch")
         if is_ancestor(release_point, "master"):
             raise ReleaseError("specified tag %r is already released on master" % release_point)
-    next_ver = call(os.path.join(os.path.dirname(__file__), "scripts/compute-next-version"), "--release-point", release_point, dry=False).strip()
+    next_ver = compute_next_version(release_point)
     actual_tag = call("git", "describe", release_point, dry=False).strip()
-    expected_tag = "dev-%s" % next_ver
+    expected_tag = format_dev_tag(next_ver)
     if expected_tag != actual_tag:
         raise ReleaseError("Develop branch is not stable, got '%s' expected '%s'\n\n%s" % (
             actual_tag, expected_tag,
@@ -475,13 +506,10 @@ def cleanup(args):
 def push_release(args):
     ensure_clean()
     ensure_releasing()
-    branch = current_branch()
-    if branch != RELEASE_BRANCH:
-        raise ReleaseError("You are not on a %r branch, but %s. Aborting" % (
-            RELEASE_BRANCH, branch))
+    ensure_branch(RELEASE_BRANCH)
     print "On branch", RELEASE_BRANCH
 
-    actual_tag = tag_at(RELEASE_BRANCH)
+    actual_tag = release_tag_at(RELEASE_BRANCH)
     validate_release_tag(actual_tag)
     ver = metadata["__version__"]
     expected_tag = format_release_tag(ver)
@@ -492,10 +520,10 @@ def push_release(args):
 
     if is_ancestor("master", "develop"):
         # if we had a fast-forward merge in prepare then it's one away
-        dev_tag = tag_at("%s^" % actual_tag, match="dev-*")
+        dev_tag = dev_tag_at("%s^" % actual_tag)
     else:
         # if we had a real merge in prepare then it's two away and to the side
-        dev_tag = tag_at("%s^^2" % actual_tag, match="dev-*")
+        dev_tag = dev_tag_at("%s^^2" % actual_tag)
     print "Found dev tag %r" % dev_tag
 
     to_push = [ "%s:master" % RELEASE_BRANCH ]
@@ -540,7 +568,7 @@ def push_release(args):
         run("git", "pull")
         run("git", "checkout", "master")
         run("git", "pull")
-        doublecheck_tag = tag_at("master")
+        doublecheck_tag = release_tag_at("master")
         if actual_tag != doublecheck_tag:
             raise ReleaseError("Master branch did not move to the correct tag.\n\nThis script is confused, do not touch anything, call for help")
         run("git", "branch", "-d", RELEASE_BRANCH)
@@ -550,6 +578,96 @@ def push_release(args):
         print "You can proceed to push-docs and push-pkgs"
     else:
         print "Cancelled"
+
+def call_travis(repo, api):
+    url = "https://api.travis-ci.org/repos/%s/%s" % (repo, api)
+    request = urllib2.Request(url)
+    request.add_header("User-Agent", "DatawireQuarkRelease/1.0.0")
+    request.add_header("Accept", "application/vnd.travis-ci.2+json")
+    print "#    curl ", url
+    response = urllib2.urlopen(request)
+    assert response.getcode() == 200
+    return json.load(response)
+
+def call_travis_builds(repo, stop_at = lambda x: True, drop_config=True, **kwargs):
+    pending = [kwargs]
+    while pending:
+        kwargs = pending.pop(0)
+        extra = urllib.urlencode(kwargs)
+        if extra:
+            extra = "?" + extra
+        data = call_travis(repo, "builds" + extra)
+        commits = dict((c["id"], c) for c in data["commits"])
+        last_build_number = None
+        for b in data["builds"]:
+            if drop_config:
+                b.pop("config", None)
+            b["commit"] = commits[b["commit_id"]]
+            yield b
+            if stop_at(b):
+                break
+            else:
+                last_build_number = b["number"]
+        else:
+            if last_build_number:
+                kwargs["after_number"] = last_build_number
+                pending.append(kwargs)
+
+def poll_dev_status(args):
+    ensure_clean()
+    ensure_branch("develop")
+
+    apply_tags = args["--tag-dev-builds"]
+    repair = args["--restart-at"] != "develop"
+    last_dev_tag = dev_tag_at(args["--restart-at"], exact=False, abbrev=0)
+    last_tagged_commit = revparse(last_dev_tag)
+    tags = call("git", "tag", "--list", RELEASE_TAG_MATCH, DEV_TAG_MATCH, dry=False).splitlines()
+    branch = "develop"
+    def needs_dev_tag(build):
+        return ((branch and build["commit"]["branch"] == branch) and
+                (not build["pull_request"])
+                )
+    def describe(build):
+        branch = build["commit"]["branch"]
+        sha = build["commit"]["sha"]
+        if branch in tags:
+            # tag notes are a bit weird as they are not shown by git log, but this way
+            ref = branch
+            kind = "tag"
+        else:
+            ref = sha
+            kind = "branch"
+        note = "%s #%s  %s:%s" % (build["state"], build["number"], kind, branch)
+        try:
+            err = call("git", "notes", "--ref=travis-ci", "add", "-m", note, ref, stderr=subprocess.STDOUT)
+
+        except subprocess.CalledProcessError, ex:
+            if ex.returncode == 1:
+                if not apply_tags and not repair:
+                    raise ReleaseError("Assuming previous notes are also up-to-date")
+                print "Assuming note at %s exists" % ref
+            else:
+                raise
+    def stop_at(build):
+        return build["commit"]["branch"] == last_dev_tag or (
+            needs_dev_tag(build) and build["commit"]["sha"] == last_tagged_commit
+            )
+
+    builds = call_travis_builds("datawire/quark", stop_at=stop_at)
+
+    for build in builds:
+        describe(build)
+        if not apply_tags:
+            continue
+        if needs_dev_tag(build):
+            if build["state"] == "passed":
+                sha = build["commit"]["sha"]
+                dev_ver = compute_next_version(sha)
+                dev_tag = format_dev_tag(dev_ver)
+                msg = "Build %s passed" % build["number"]
+                run("git", "tag", "-a", "-m", msg, dev_tag, sha)
+            else:
+                print "Not tagging failed dev build"
 
 ## main
 
@@ -571,6 +689,8 @@ def main(args):
         cleanup(args)
     elif args["push-release"]:
         push_release(args)
+    elif args["poll-dev-status"]:
+        poll_dev_status(args)
     else:
         assert False
 
