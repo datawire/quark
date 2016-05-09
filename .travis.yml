@@ -21,7 +21,6 @@ install:
 
 script:
 - .travis/test.sh
-- .travis/deploy.sh
 
 env:
   matrix:
