@@ -627,6 +627,8 @@ def poll_dev_status(args):
         return ((branch and build["commit"]["branch"] == branch) and
                 (not build["pull_request"])
                 )
+
+    new_tags = []
     def describe(build):
         branch = build["commit"]["branch"]
         sha = build["commit"]["sha"]
@@ -666,8 +668,12 @@ def poll_dev_status(args):
                 dev_tag = format_dev_tag(dev_ver)
                 msg = "Build %s passed" % build["number"]
                 run("git", "tag", "-a", "-m", msg, dev_tag, sha)
+                new_tags.append(dev_tag)
             else:
                 print "Not tagging failed dev build"
+
+    if new_tags:
+        run("git", "push", "origin", *new_tags)
 
 ## main
 
