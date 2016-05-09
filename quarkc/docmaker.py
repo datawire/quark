@@ -247,14 +247,10 @@ def make_doc_structure(node, doc, path):
     return res
 
 
-def make_docs_json(compiled, filename):
+def make_docs_json(root, filename):
     doc = Documenter()
-    for root in compiled.roots.sorted():
-        root.traverse(doc)
-
+    root.traverse(doc)
     res = sum([make_doc_structure(doc.namespaces[dotted], doc, dotted)
-               for dotted in doc.ns_order
-               if dotted.split(".")[0] != "quark"], [])
-
+               for dotted in doc.ns_order], [])
     with open(filename, "wb") as out:
         json.dump(res, out, indent=4)

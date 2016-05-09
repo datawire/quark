@@ -1272,14 +1272,14 @@ def run(url, args, *backends):
 
 
 def make_docs(url, target):
-    # FIXME: These four lines are boilerplate
+    # FIXME: Lots of boilderplate here...
     c = Compiler()
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
 
-    dest = os.path.join(target, os.path.splitext(os.path.basename(url))[0])  # XXX Copy-pasted from compile(...)
-    if not os.path.exists(dest):
-        os.makedirs(dest)
-
-    docmaker.make_docs_json(c, os.path.join(dest, "api.json"))
+    for root in c.roots.sorted():
+        dest = os.path.join(target, os.path.splitext(os.path.basename(root.url))[0])
+        if not os.path.exists(dest):
+            os.makedirs(dest)
+        docmaker.make_docs_json(root, os.path.join(dest, "api.json"))
