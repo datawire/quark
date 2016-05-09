@@ -26,17 +26,18 @@ java_compile = helpers.mvn("compile")
 
 # Run the clients and make a cursory examination of their outputs
 
+# Note: Cannot compare output for any of these because some of it
+# depends on the state of the current user's Slack, i.e. what has been
+# said recently. We cannot count on any of that being consistent.
+
 with capture_bg("mvn exec:java -Dexec.mainClass=bot.SlackBot", nocmp=True) as javabot_bg:
-    # Don't compare output because Maven inserts timestamps
     javabot_bg.child.expect("WebSocket Client connected!")
 
 with capture_bg("python bot.py", nocmp=True) as pybot_bg:
-    # Don't compare output because default str/repr includes memory addresses
-    # FIXME add proper str/repr support (in slack.q?) to avoid this problem
     pybot_bg.child.expect("slack.event.SlackEvent object at")
 
-with capture_bg("node bot.js") as jsbot_bg:
+with capture_bg("node bot.js", nocmp=True) as jsbot_bg:
     jsbot_bg.child.expect("Hello {")
 
-#with capture_bg("ruby bot.rb") as rbbot_bg:
+#with capture_bg("ruby bot.rb", nocmp=True) as rbbot_bg:
 #    rbbot_bg.child.expect("something ruby something")

@@ -1,1 +1,0 @@
-Hello { type: 'hello', user: null, channel: null, timestamp: null }
