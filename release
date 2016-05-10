@@ -326,6 +326,7 @@ RELEASE_BRANCH="release-in-progress"
 DEV_BRANCH="release-in-progress-dev"
 RELEASE_TAG_MATCH="v*"
 DEV_TAG_MATCH="dev-*"
+POLL_TAG="poll-dev-status-marker"
 
 def in_release():
     return [b[2:] for b in call("git", "branch", "--list",
@@ -384,11 +385,18 @@ def ensure_branch(expected):
             expected, branch))
 
 def validate_release_tag(tag):
-        assert tag.startswith("v"), "non-release tag %r found on release branch" % tag
-        try:
-            SemVer(tag[1:])
-        except:
-            assert False, "non-release tag %r found on release branch" % tag
+    assert tag.startswith("v"), "non-release tag %r found" % tag
+    try:
+        return SemVer(tag[1:])
+    except:
+        assert False, "non-release tag %r found" % tag
+
+def validate_dev_tag(tag):
+    assert tag.startswith("dev-"), "non-dev tag %r found" % tag
+    try:
+        return SemVer(tag[4:])
+    except:
+        assert False, "non-dev tag %r found" % tag
 
 def format_release_tag(ver):
     return "v%s" % ver
@@ -681,15 +689,29 @@ def call_travis_builds(repo, stop_at = lambda x: True, drop_config=True, **kwarg
                 kwargs["after_number"] = last_build_number
                 pending.append(kwargs)
 
+def list_tags(*patterns):
+    return call("git", "tag", "--list", *patterns, dry=False).splitlines()
+
 def poll_dev_status(args):
     ensure_clean()
     ensure_branch("develop")
-
+    run("git", "pull")
     apply_tags = args["--tag-dev-builds"]
     repair = args["--restart-at"] != "develop"
-    last_dev_tag = dev_tag_at(args["--restart-at"], exact=False, abbrev=0)
-    last_tagged_commit = revparse(last_dev_tag)
-    tags = call("git", "tag", "--list", RELEASE_TAG_MATCH, DEV_TAG_MATCH, dry=False).splitlines()
+    release_tags = list_tags(RELEASE_TAG_MATCH)
+    dev_tags = list_tags(DEV_TAG_MATCH)
+    poll_tags = list_tags(POLL_TAG)
+    tags = dev_tags + release_tags
+    if repair:
+        restart_point = args["--restart-at"]
+    elif POLL_TAG in poll_tags:
+        restart_point = POLL_TAG
+    elif dev_tags:
+        restart_point = sorted(dev_tags, key=validate_dev_tag)[0]
+    else:
+        restart_point = None
+    if restart_point is not None:
+        restart_point = revparse(restart_point)
     branch = "develop"
     def needs_dev_tag(build):
         return ((branch and build["commit"]["branch"] == branch) and
@@ -719,14 +741,16 @@ def poll_dev_status(args):
             else:
                 raise
     def stop_at(build):
-        return build["commit"]["branch"] == last_dev_tag or (
-            needs_dev_tag(build) and build["commit"]["sha"] == last_tagged_commit
-            )
+        return build["commit"]["sha"] == restart_point
 
     builds = call_travis_builds("datawire/quark", stop_at=stop_at)
 
+    first_build_seen = None
+
     for build in builds:
         describe(build)
+        if not first_build_seen:
+            first_build_seen = build
         if not apply_tags:
             continue
         if needs_dev_tag(build):
@@ -734,12 +758,21 @@ def poll_dev_status(args):
                 sha = build["commit"]["sha"]
                 dev_ver = compute_next_version(sha)
                 dev_tag = format_dev_tag(dev_ver)
-                msg = "Build %s passed" % build["number"]
-                run("git", "tag", "-a", "-m", msg, dev_tag, sha)
-                new_tags.append(dev_tag)
+                if dev_tag not in tags:
+                    msg = "Build %s passed" % build["number"]
+                    run("git", "tag", "-a", "-m", msg, dev_tag, sha)
+                    new_tags.append(dev_tag)
+                else:
+                    actual_sha = revparse(dev_tag)
+                    if revparse(dev_tag) == actual_sha:
+                        print "Already have tag %r at %s, skipping" % (dev_tag, sha)
+                    else:
+                        raise ReleaseError("Build number #%s places dev tag %r at %r, but found the tag pointing at %r" % (build["number"], dev_tag, sha, actual_sha))
             else:
                 print "Not tagging failed dev build"
 
+    if first_build_seen:
+        run("git", "tag", "-f", POLL_TAG, first_build_seen["commit"]["sha"])
     if new_tags:
         run("git", "push", "origin", *new_tags)
 
