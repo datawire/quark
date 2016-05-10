@@ -5,11 +5,21 @@ commands below take additional options, see `./release --help` for
 details.  Publishing artefacts to pypi requires write permission to
 pypi.
 
+## Release script ##
+
+Since the release script is part of the repository, and release
+involves switching branches, the release script may not be stable
+across the branches. The best approach is to use two clones of the
+repo, one to provide the script and one to be manipulated by the
+script.
+
+    # release = $(./release freeze)
+
 ## Sync Status of CI ##
 
 query new builds of the develop branch and tag the successful ones
 
-    # ./release poll-dev-status --tag-dev-builds
+    # $release poll-dev-status --tag-dev-builds
 
 ## Publish Development Artefacts ##
 
@@ -17,10 +27,10 @@ Development artefacts are produced on a reserved temporary branch
 `release-in-progress-dev` 
 *Do not* `git push` *the result, do not* `git merge` *the result to any branch.*
 
-    #  ./release prepare-release --dev
-    #  ./release push-docs
-    #  ./release push-pkgs
-    #  ./release cleanup
+    #  $release prepare-release --dev
+    #  $release push-docs
+    #  $release push-pkgs
+    #  $release cleanup
 
 
 ## Prepare Released State ##
@@ -29,7 +39,7 @@ Creation of release is done on a reserved temporary branch
 `release-in-progress` so that neither `develop` nor `master` need to
 move.
 
-    # ./release prepare-release --prod
+    # $release prepare-release --prod
 
 It is possible to also do a partial release of the
 develop branch in case the tip of develop is not stable, see help.
@@ -40,13 +50,13 @@ computed version. *This feature was not tested if it combines well with
 partial releases*.
 
 This command performs only local repo changes, so it is safe to run
-without `--dry`. In case of errors run `./release cleanup` after
+without `--dry`. In case of errors run `$release cleanup` after
 getting help with debugging what happened.
 
 
 ## Publish the Released State to GitHub ##
 
-    # ./release push-release --prod
+    # $release push-release --prod
 
 `push-release` uses atomic push (like a compare-and-set operation) to
 guarantee the following invariants:
@@ -62,7 +72,7 @@ release tag on develop
 if push fails it will not succeed later. Abort the release, throwing
 away local release state
 
-    # ./release cleanup
+    # $release cleanup
 
 The release procedure can be retried at this point.
 
@@ -79,8 +89,8 @@ the following:
 
     # git checkout master
     # git pull
-    # ./release push-docs
-    # ./release push-pkgs
+    # $release push-docs
+    # $release push-pkgs
 
 # Required software #
 

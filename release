@@ -6,6 +6,7 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
+  release [--dry] freeze
   release [--dry --cicd] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
   release [--dry --cicd] cleanup
   release [--dry --cicd] prepare-release (--dev | --prod) [<version>] [--doc=<version>] [--release-point=<tag>]
@@ -34,7 +35,7 @@ Usage:
 See RELEASE.md for guide on usage
 """
 
-import json, os, random, re, subprocess, tempfile, urllib2, pprint, urllib
+import json, os, sys, random, re, subprocess, tempfile, urllib2, pprint, urllib
 from docopt import docopt
 from collections import OrderedDict
 from semantic_version import Version as SemVer
@@ -62,9 +63,9 @@ def _do(method, *command, **kwargs):
     dry = kwargs.pop("dry", __dry__)
     cmd =  " ".join(map(quote,command))
     if dry:
-        print "$  #", cmd, kwargs
+        print >> sys.stderr, "#  #", cmd, kwargs
         return
-    print "$   ", cmd, kwargs
+    print >> sys.stderr, "#   ", cmd, kwargs
     return method(command, **kwargs)
 
 def call(*command, **kwargs):
@@ -776,6 +777,15 @@ def poll_dev_status(args):
     if new_tags:
         run("git", "push", "origin", *new_tags)
 
+
+def freeze(args):
+    dest = tempfile.mkdtemp()
+    run("git", "clone", ".", dest)
+    if __dry__:
+        print __file__, "--dry"
+    else:
+        print os.path.join(dest, os.path.basename(__file__))
+
 ## main
 
 def main(args):
@@ -798,6 +808,8 @@ def main(args):
         push_release(args)
     elif args["poll-dev-status"]:
         poll_dev_status(args)
+    elif args["freeze"]:
+        freeze(args)
     else:
         assert False
 
