@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle
+import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle, shutil
 from collections import OrderedDict
 
 from .ast import *
@@ -22,6 +22,7 @@ from .dispatch import overload
 from .helpers import *
 from .environment import Environment
 import docmaker
+import docrenderer
 import errors
 import ast
 
@@ -1280,6 +1281,8 @@ def make_docs(url, target):
 
     for root in c.roots.sorted():
         dest = os.path.join(target, os.path.splitext(os.path.basename(root.url))[0])
-        if not os.path.exists(dest):
-            os.makedirs(dest)
-        docmaker.make_docs_json(root, os.path.join(dest, "api.json"))
+        if os.path.exists(dest):
+            shutil.rmtree(dest)
+        os.makedirs(dest)
+        st = docmaker.make_docs_json(root, os.path.join(dest, "api.json"))
+        docrenderer.render(st, dest)

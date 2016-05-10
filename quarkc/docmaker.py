@@ -143,6 +143,8 @@ def make_doc_structure(node, path):
         # field / constructor / method / constructor_macro / method_macro
         if str(dfn.name) in "_getClass _getField _setField".split():
             continue
+        if str(dfn.name).endswith("_%s_ref" % node.name):
+            continue
         st = make_doc_structure(dfn, child_path)
         res["definitions"].append(st)
     return res
@@ -190,8 +192,10 @@ def make_docs_json(root, filename):
     root.traverse(doc)
     res = []
     for dotted, ns in doc.namespaces.items():
-        path = ".".join(dotted.split(".")[:-1])
-        structure = make_doc_structure(ns, path)
+        if "." in dotted:
+            continue
+        structure = make_doc_structure(ns, "")
         res.append(structure)
     with open(filename, "wb") as out:
         json.dump(res, out, indent=4)
+    return res
