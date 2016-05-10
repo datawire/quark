@@ -6,13 +6,13 @@ dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
-  release [--dry | --cicd] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
-  release [--dry | --cicd] cleanup
-  release [--dry | --cicd] prepare-release (--dev | --prod) [<version>] [--doc=<version>] [--release-point=<tag>]
-  release [--dry | --cicd] push-release
-  release [--dry | --cicd] version [--dev | --prod] [<version>] [--doc=<version>]
-  release [--dry | --cicd] push-pkgs
-  release [--dry | --cicd] push-docs
+  release [--dry --cicd] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
+  release [--dry --cicd] cleanup
+  release [--dry --cicd] prepare-release (--dev | --prod) [<version>] [--doc=<version>] [--release-point=<tag>]
+  release [--dry --cicd] push-release
+  release [--dry --cicd] version [--dev | --prod] [<version>] [--doc=<version>]
+  release [--dry --cicd] push-pkgs
+  release [--dry --cicd] push-docs
 
   Options:
     --dry                  Dry run.
@@ -497,9 +497,9 @@ def cleanup(args):
     release_branches = ensure_releasing(allow_many=True)
     for release_branch in release_branches:
         if release_branch == RELEASE_BRANCH:
-            cleanup_release()
+            cleanup_release(args)
         elif release_branch == DEV_BRANCH:
-            cleanup_dev()
+            cleanup_dev(args)
         else:
             raise ReleaseError("You have a branch %r that interferes with release process. Please remove or rename it" % release_branch)
 
