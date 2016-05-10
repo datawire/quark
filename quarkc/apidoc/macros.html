@@ -14,7 +14,7 @@
 
 
 {% macro render_namespace(node) -%}
-<div>
+<div><!-- namespace {{ get_name(node) }} -->
   {%- if node.kind != "namespace" %}
   {{ crash_fixme() }}
   {%- endif %}
@@ -25,12 +25,12 @@
   {{ render_subnode(child) }}
   {%- endfor %}
   <hr>
-</div>
+</div><!-- namespace {{ get_name(node) }} -->
 {%- endmacro %}
 
 
 {% macro render_subnode(node) -%}
-<div class="childindent">
+<div class="childindent"><!-- child node {{ get_name(node) }} -->
   <span class="anchor" id="{{ get_name(node) }}"></span>
   <div class="h3">{{ get_decorated_name(node) }}</div>
   <p>{{ node.description }}</p>
@@ -47,30 +47,30 @@
   {%- endfor %}
   {%- endif %}
   <hr>
-</div>
+</div><!-- child node {{ get_name(node) }} -->
 {%- endmacro %}
 
 
 {% macro render_class(node) -%}
 {%- if node.parameters %}
-<div class="class_param_list">
+<div class="class_param_list"><!-- {{ get_name(node) }} -->
   <strong>Type Parameters</strong>
   <ul>
     {%- for param in node.parameters %}
     <li><span class="class_param">{{ param }}</span></li>
     {%- endfor %}
   </ul>
-</div>
+</div><!-- class_param_list {{ get_name(node) }} -->
 {%- endif %}
 {%- if node.bases %}
-<div class="class_base_list">
+<div class="class_base_list"><!-- {{ get_name(node) }} -->
   <strong>Base Classes</strong>
   <ul>
     {%- for base in node.bases %}
     <li><span class="class_base">{{ base }}</span></li>
     {%- endfor %}
   </ul>
-</div>
+</div><!-- class_base_list {{ get_name(node) }} -->
 {%- endif %}
 {%- for child in node.definitions %}
 {{ render_subnode(child) }}
@@ -79,7 +79,7 @@
 
 
 {% macro render_callable(node) -%}
-<div class="callable_call">
+<div class="callable_call"><!-- {{ get_name(node) }} -->
 <span class="return_type">{{ render_type(node.type) }}</span> <span class="callable_call_name">{{ node.name }}</span>(
 {%- if node.parameters %}
 {%- for param in node.parameters %}
@@ -87,16 +87,16 @@
 {%- endfor %}
 {%- endif %}
 )
-</div>
+</div><!-- callable_call {{ get_name(node) }} -->
 {%- if node.parameters %}
-<div class="callable_param_list">
+<div class="callable_param_list"><!-- {{ get_name(node) }} -->
   <strong>Parameters</strong>
   <ul>
     {%- for param in node.parameters %}
     <li>{{ render_parameter_long(param) }}</li>
     {%- endfor %}
   </ul>
-</div>
+</div><!-- callable_param_list {{ get_name(node) }} -->
 {%- endif %}
 {%- endmacro %}
 
