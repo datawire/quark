@@ -37,7 +37,7 @@ namespace quark {
     primitive void {}
 
     // Ruby doesn't have a Boolean type, only TrueClass and FalseClass
-    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{Object})
+    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{::Object})
     primitive bool {
         macro bool __not__() $java{!($self)} $py{not ($self)} $rb{!($self)} $js{!($self)};
         macro bool __and__(bool other) $java{($self) && ($other)}
@@ -84,7 +84,7 @@ namespace quark {
         macro T __bitwise_not__() ${(~($self))};
     }
 
-    @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Byte} $py{int} $js{Number} $rb{::Integer})
     primitive byte extends integral<byte> {
         macro byte() $java{new Byte()}
                      $py{int()}
@@ -100,7 +100,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Short} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Short} $py{int} $js{Number} $rb{::Integer})
     primitive short extends integral<short> {
         macro short() $java{new Short()}
                       $py{int()}
@@ -116,7 +116,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Integer} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Integer} $py{int} $js{Number} $rb{::Integer})
     primitive int extends integral<int> {
         macro int() $java{new Integer()}
                     $py{int()}
@@ -141,7 +141,7 @@ namespace quark {
                                $js{($self)};
     }
 
-    @mapping($java{Long} $py{long} $js{Number} $rb{Integer})
+    @mapping($java{Long} $py{long} $js{Number} $rb{::Integer})
     primitive long extends integral<long> {
         macro long() $java{new Long()}
                      $py{int()}
@@ -158,7 +158,7 @@ namespace quark {
                              $js{($self)};
     }
 
-    @mapping($java{Double} $py{float} $js{Number} $rb{Float})
+    @mapping($java{Double} $py{float} $js{Number} $rb{::Float})
     primitive float extends numeric<float> {
         macro float __div__(float other) $java{($self) / ($other)}
                                          $py{float($self) / float($other)}
@@ -176,7 +176,7 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{String} $py{str} $js{String} $rb{String})
+    @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
         macro int size()                   $java{($self).length()}

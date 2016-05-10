@@ -388,8 +388,13 @@ def get_static_field(path, clazz, field):
     return full_ruby_name(path + [clazz]) + '.' + field
 
 def cast(type, expr):
+    if type == '':  # TODO why does this happen?
+        return expr
     assert expr
-    return expr
+    template = '::DatawireQuarkCore.cast({expr}) {{ {type} }}'.format
+    if not type.startswith('::'):
+        type = '::Quark.' + type
+    return template(expr=expr, type=type)
 
 ## Literals
 
