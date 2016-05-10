@@ -782,9 +782,10 @@ def freeze(args):
     dest = tempfile.mkdtemp()
     run("git", "clone", ".", dest)
     if __dry__:
-        print __file__, "--dry"
+        script = "%s --dry" % __file__
     else:
-        print os.path.join(dest, os.path.basename(__file__))
+        script = os.path.join(dest, os.path.basename(__file__))
+    print """function quark_release() { %s "$@"; }""" % script
 
 ## main
 

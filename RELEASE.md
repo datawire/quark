@@ -5,41 +5,60 @@ commands below take additional options, see `./release --help` for
 details.  Publishing artefacts to pypi requires write permission to
 pypi.
 
-## Release script ##
+## Prepping up the  workspace ##
 
-Since the release script is part of the repository, and release
-involves switching branches, the release script may not be stable
-across the branches. The best approach is to use two clones of the
-repo, one to provide the script and one to be manipulated by the
-script.
+Since the release script is part of the repository, and release process
+involves switching branches, the release script may change when
+branches are switched. The best approach is to clone the repo, and use
+the clone to provide the script.  The above approach is implemented by
+the `./release freeze` command, which does the equivalent of
 
-    # release = $(./release freeze)
+    TMP=$(mktemp -d)
+    git clone . $TMP
+    echo "function quark_release() { $TMP/release \"\$@\" }"
+
+and should be used as:
+
+    $ eval (./release freeze)
+
+which will define `quark_release` function in your shell
+
+Please note that this section is the only place in the document where
+`./release` script is invoked directly, all places below invoke the
+`quark_release` function defined by the `./release freeze`.
+
+Taking shortcuts is OK if you know what you're doing :)
 
 ## Sync Status of CI ##
 
-query new builds of the develop branch and tag the successful ones
+Successfully tested commits to develop are tagged with a `dev-`_1.2.3_
+tags. The tagging is not part of the CI process, but is currently done
+manually as part of the release process.
 
-    # $release poll-dev-status --tag-dev-builds
+To query the CI system for new builds of the develop branch and tag the successful ones
+
+    $ release poll-dev-status --tag-dev-builds
 
 ## Publish Development Artefacts ##
 
 Development artefacts are produced on a reserved temporary branch
-`release-in-progress-dev` 
+`release-in-progress-dev` so that `develop` does not need to move.
+
 *Do not* `git push` *the result, do not* `git merge` *the result to any branch.*
 
-    #  $release prepare-release --dev
-    #  $release push-docs
-    #  $release push-pkgs
-    #  $release cleanup
+    $  quark_release prepare-release --dev
+    $  quark_release push-docs
+    $  quark_release push-pkgs
+    $  quark_release cleanup
 
 
 ## Prepare Released State ##
 
-Creation of release is done on a reserved temporary branch
+Creation of production release is done on a reserved temporary branch
 `release-in-progress` so that neither `develop` nor `master` need to
 move.
 
-    # $release prepare-release --prod
+    $ quark_release prepare-release --prod
 
 It is possible to also do a partial release of the
 develop branch in case the tip of develop is not stable, see help.
@@ -50,13 +69,13 @@ computed version. *This feature was not tested if it combines well with
 partial releases*.
 
 This command performs only local repo changes, so it is safe to run
-without `--dry`. In case of errors run `$release cleanup` after
+without `--dry`. In case of errors run `quark_release cleanup` after
 getting help with debugging what happened.
 
 
 ## Publish the Released State to GitHub ##
 
-    # $release push-release --prod
+    $ quark_release push-release --prod
 
 `push-release` uses atomic push (like a compare-and-set operation) to
 guarantee the following invariants:
@@ -72,7 +91,7 @@ release tag on develop
 if push fails it will not succeed later. Abort the release, throwing
 away local release state
 
-    # $release cleanup
+    $ quark_release cleanup
 
 The release procedure can be retried at this point.
 
@@ -87,14 +106,14 @@ Publishing release artefacts requires write permission to pypi.
 Currently publishing of the release artefacts is not automated beyond
 the following:
 
-    # git checkout master
-    # git pull
-    # $release push-docs
-    # $release push-pkgs
+    $ git checkout master
+    $ git pull
+    $ quark_release push-docs
+    $ quark_release push-pkgs
 
 # Required software #
 
 Tools required are `pip`, `twine`, and a not totally ancient `git`
 
-    # pip install sphinx-better-theme wheel twine
+    $ pip install sphinx-better-theme wheel twine
 
