@@ -218,7 +218,7 @@ def version(args):
         doc_default = metadata["__doc_version__"]
 
     docver = args["--doc"] or doc_default
-    _version(dev, ver, docver, __dry__ or dev)
+    _version(dev, ver, docver, __dry__)
 
 def _version(dev, ver, docver, dry):
     title, updated = quark_version(ver, docver, dev)
@@ -323,11 +323,13 @@ def push_docs(args):
 
 
 RELEASE_BRANCH="release-in-progress"
+DEV_BRANCH="release-in-progress-dev"
 RELEASE_TAG_MATCH="v*"
 DEV_TAG_MATCH="dev-*"
 
 def in_release():
-    return call("git", "branch", "--list", RELEASE_BRANCH+"*", dry=False).splitlines()
+    return [b[2:] for b in call("git", "branch", "--list",
+                                RELEASE_BRANCH+"*", dry=False).splitlines()]
 
 def is_dirty():
     return call("git", "status", "--porcelain", "--untracked=no", dry=False).splitlines()
@@ -367,10 +369,13 @@ def ensure_clean():
         run("git", "status", "--untracked=no", dry=False)
         raise ReleaseError("Aborted\n\nCannot release from a dirty worktree")
 
-def ensure_releasing():
+def ensure_releasing(allow_many=False):
     releasing = in_release()
     if not releasing:
         raise ReleaseError("Not in a release")
+    if len(releasing) > 1 and not allow_many:
+        raise ReleaseError("More than one release branch is active, use 'cleanup' then retry")
+    return releasing
 
 def ensure_branch(expected):
     branch = current_branch()
@@ -396,6 +401,10 @@ def is_ancestor(tag, refspec):
     if rc > 1:
         raise ReleaseError("merge-base failed")
     return rc == 0
+
+def create_non_push_branch(branch, refspec, extra):
+    run("git", "checkout", "-b", branch, refspec)
+    run("git", "config", "branch.%s.pushRemote" % branch, "do not use 'git push' but '%s' " % extra)
 
 def prepare_release(args):
     ensure_clean()
@@ -440,23 +449,25 @@ def prepare_release(args):
     if args["--prod"]:
         run("git", "checkout",  "master")
         run("git", "pull")
-        run("git", "checkout", "-b", RELEASE_BRANCH)
-        run("git", "config", "branch.%s.pushRemote" % RELEASE_BRANCH, "do not use 'git push' but 'release push-release' ")
+        create_non_push_branch(RELEASE_BRANCH, "master", "release push-release")
         run("git", "merge", release_point, "-m", release_msg % release_point)
         version(args)
         release_tag = format_release_tag(ver)
         run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
     elif args["--dev"]:
-        run("git", "checkout", "--detach", release_point)
+        create_non_push_branch(DEV_BRANCH, release_point, "release cleanup")
         version(args)
         print
-        print "Do *NOT* commit the result."
+        print "Do *NOT* push the result."
         print "Push release artefacts and documentation, then do:"
         print
-        print "    git reset --hard; git checkout develop"
+        print "    ./release cleanup"
         print
     else:
         raise ReleaseError("only for production releases, missing --prod")
+
+def revlist(revision_range):
+    return call("git", "rev-list", *revision_range, dry=False).splitlines()
 
 def enumerate_refspecs(revision_range):
     """return tags, branches that point in the specified revision range"""
@@ -483,38 +494,82 @@ def enumerate_refspecs(revision_range):
 
 def cleanup(args):
     ensure_clean()
-    ensure_releasing()
+    release_branches = ensure_releasing(allow_many=True)
+    for release_branch in release_branches:
+        if release_branch == RELEASE_BRANCH:
+            cleanup_release()
+        elif release_branch == DEV_BRANCH:
+            cleanup_dev()
+        else:
+            raise ReleaseError("You have a branch %r that interferes with release process. Please remove or rename it" % release_branch)
+
+def cleanup_release(args):
     print
-    print "Cleanup of in-progress release"
+    print "Cleanup of in-progress release branch %r" % RELEASE_BRANCH
     print
     revision_range = [RELEASE_BRANCH, "--not", "origin/develop", "origin/master"]
+    commits = revlist(revision_range)
     tags, branches = enumerate_refspecs(revision_range)
     for tag in tags:
         validate_release_tag(tag)
-    if not branches and is_branch_at(RELEASE_BRANCH, "master"):
+    tags_to_remove = []
+    branches_to_remove = [RELEASE_BRANCH]
+    if not commits:
+        assert is_branch_at(RELEASE_BRANCH, "master"), "Confused script, %r branch points at unexpected commit %s" % (RELEASE_BRANCH, revparse(RELEASE_BRANCH))
         print "Release branch is still at master"
-        branches.append(RELEASE_BRANCH)
-        assert not tags, "Confused script, expected no tags in this case but found %s" % tags
+        assert not tags, "Confused script, expected no tags pointing at release in progress but found %s" % tags
+        assert not branches, "Confused script, expected no other branches pointing at release in progress but found %s" % branches
         print
-        print "Branches to be removed:", branches
     else:
-        print
-        print "Branches to be removed:", branches
-        print "Tags to be removed:", tags
         assert (RELEASE_BRANCH,) == tuple(branches), "Confused script, expected to find exactly %r amongst %r" % (RELEASE_BRANCH, branches)
         assert len(tags) <= 1, "Confused script, expected to find at most one tag to remove, but found %s" % len(tags)
+        tags_to_remove.extend(tags)
         print
-        print "This operation will drop the following commits:"
+        print "This operation will drop the following commits from %r:" % RELEASE_BRANCH
         print
         run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
     print
+    if branches_to_remove:
+        print "Branches to be removed:", branches_to_remove
+    if tags_to_remove:
+        print "Tags to be removed:", tags_to_remove
+    print
     if challenge():
         run("git", "checkout", "develop")
-        run("git", "branch", "-D", *branches)
-        if tags:
-            run("git", "tag", "-d", *tags)
+        run("git", "branch", "-D", *branches_to_remove)
+        if tags_to_remove:
+            run("git", "tag", "-d", *tags_to_remove)
     else:
-        print "Cancelled";
+        print "Cancelled"
+
+
+def cleanup_dev(args):
+    print
+    print "Cleanup of in-progress dev release branch %r" % DEV_BRANCH
+    print
+    revision_range = [DEV_BRANCH, "--not", "origin/develop", "origin/master"]
+    commits = revlist(revision_range)
+    tags, branches = enumerate_refspecs(revision_range)
+    assert not tags, "Confused script, expected no tags pointing at dev release in progress but found %s" % tags
+    branches_to_remove = [DEV_BRANCH]
+    if not commits:
+        assert not branches, "Confused script, expected no other branches pointing at dev release in progress but found %s" % branches
+    else:
+        print
+        assert (DEV_BRANCH,) == tuple(branches), "Confused script, expected to find exactly %r amongst %r" % (DEV_BRANCH, branches)
+        print
+        print "This operation will drop the following commits from %r:" % DEV_BRANCH
+        print
+        run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
+    print
+    if branches_to_remove:
+        print "Branches to be removed:", branches_to_remove
+    print
+    if challenge():
+        run("git", "checkout", "develop")
+        run("git", "branch", "-D", *branches_to_remove)
+    else:
+        print "Cancelled"
 
 def push_release(args):
     ensure_clean()

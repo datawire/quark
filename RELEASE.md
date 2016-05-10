@@ -9,17 +9,18 @@ pypi.
 
 query new builds of the develop branch and tag the successful ones
 
-    ./release poll-dev-status --tag-dev-builds
+    # ./release poll-dev-status --tag-dev-builds
 
 ## Publish Development Artefacts ##
 
-Development artefacts are produced from a detached checkout, locally
-*Do not commit the result, do not merge the result to any branch.*
+Development artefacts are produced on a reserved temporary branch
+`release-in-progress-dev` 
+*Do not* `git push` *the result, do not* `git merge` *the result to any branch.*
 
-    ./release prepare-release --dev
-    ./release push-docs
-    ./release push-pkgs
-    git reset --hard; git checkout develop
+    #  ./release prepare-release --dev
+    #  ./release push-docs
+    #  ./release push-pkgs
+    #  ./release cleanup
 
 
 ## Prepare Released State ##
@@ -28,7 +29,7 @@ Creation of release is done on a reserved temporary branch
 `release-in-progress` so that neither `develop` nor `master` need to
 move.
 
-    ./release prepare-release --prod
+    # ./release prepare-release --prod
 
 It is possible to also do a partial release of the
 develop branch in case the tip of develop is not stable, see help.
@@ -45,7 +46,7 @@ getting help with debugging what happened.
 
 ## Publish the Released State to GitHub ##
 
-    ./release push-release --prod
+    # ./release push-release --prod
 
 `push-release` uses atomic push (like a compare-and-set operation) to
 guarantee the following invariants:
@@ -61,29 +62,29 @@ release tag on develop
 if push fails it will not succeed later. Abort the release, throwing
 away local release state
 
-    ./release cleanup
+    # ./release cleanup
 
 The release procedure can be retried at this point.
 
-### Push Suceeds
+### Push Suceeds ###
 
 when push suceeds the `release-in-progress` branch is deleted automatically
 
-## Publish of the Release Artefacts
+## Publish of the Release Artefacts ##
 
 Publishing release artefacts requires write permission to pypi.
 
 Currently publishing of the release artefacts is not automated beyond
 the following:
 
-    git checkout master
-    git pull
-    ./release push-docs
-    ./release push-pkgs
+    # git checkout master
+    # git pull
+    # ./release push-docs
+    # ./release push-pkgs
 
 # Required software #
 
 Tools required are `pip`, `twine`, and a not totally ancient `git`
 
-    pip install sphinx-better-theme wheel twine
+    # pip install sphinx-better-theme wheel twine
 
