@@ -152,6 +152,7 @@ class change_impact(object):
         for commit, subject in self.commits():
             for t in [self.MAJOR, self.MINOR, self.FIX]:
                 if t.tag in subject:
+                    self.log.debug("Found %s in commit %s %s" % (t.tag, commit, subject))
                     yield t
                     break
             else:
@@ -163,11 +164,11 @@ class change_impact(object):
         state = self.FIX
         current = (0,0,0)
         for s in self.commit_severities():
-            if s > state.scale:
+            if s.delta > state.delta:
                 self.log.debug("Bigger change had %s now %s, dropping delta %s start with %s" % (state.tag, s.tag, current, s.delta))
                 state = s
                 changes = [s]
-                curent = s.delta
+                current = s.delta
             else:
                 changes.append(self.FIX)
                 current = tuple(map(sum, zip(current, self.FIX.delta)))
