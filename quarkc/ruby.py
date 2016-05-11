@@ -50,6 +50,9 @@ end
   spec.add_runtime_dependency '{module}', '= {version}'\
 """.format
 
+    not_implemented = """\
+raise NotImplementedError, '`{clazz}.{name}` is an abstract method'""".format
+
     class_ = """\
 def self.{alias}; {name}; end
 class {name} < {base}
@@ -258,7 +261,7 @@ def abstract_method(doc, clazz, type, name, parameters):
     return Templates.method(
         name=name,
         parameters=', '.join(parameters),
-        body='raise NotImplementedError, "this is an abstract method"',
+        body=Templates.not_implemented(clazz=clazz, name=name)
     )
 
 ## Interface definition
@@ -266,11 +269,13 @@ def abstract_method(doc, clazz, type, name, parameters):
 def interface(doc, iface, parameters, bases, static_fields, methods):
     return clazz(doc, False, iface, parameters, None, [], static_fields, [], [default_constructor(iface)], methods)
 
+
+
 def interface_method(doc, iface, type, name, parameters, body):
     return Templates.method(
         name=name,
         parameters=', '.join(parameters),
-        body=body or 'raise NotImplementedError, "this is an abstract method"',
+        body=body or Templates.not_implemented(clazz=iface, name=name)
     )
 
 ## Function definition
