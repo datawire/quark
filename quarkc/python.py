@@ -335,7 +335,9 @@ def get_field(expr, field):
     return "(%s).%s" % (expr, field)
 
 def cast(type, expr):
-    return expr
+    if type == '':
+        return expr
+    return '_cast({expr}, lambda: {type})'.format(expr=expr, type=type)
 
 ## Literals
 

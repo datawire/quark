@@ -20,8 +20,7 @@ import base64
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-             _LoggerConfig _get_file_contents""".split()
-
+             _LoggerConfig _cast _get_file_contents""".split()
 
 _Map = dict
 
@@ -53,6 +52,17 @@ def _url_get(url):
         return urllib2.urlopen(url).read()
     except Exception:
         return "error"
+
+def _cast(value, callback):
+    try:
+        type = callback()
+    except:
+        type = object
+    if isinstance(value, type) or value is None:
+        return value
+    else:
+        template = '`{value}` is not an instance of `{type}`'.format
+        raise TypeError(template(value=repr(value), type=type))
 
 class _JSONObject(object):
     _backend = json
