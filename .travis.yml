@@ -14,7 +14,6 @@ install:
 - .travis/install.sh
 
 script:
-- .travis/test.sh
 - .travis/deploy.sh
 
 env:
