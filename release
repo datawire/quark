@@ -225,7 +225,7 @@ def _version(dev, ver, docver, dry):
     title, updated = quark_version(ver, docver, dev)
     for fname in updated:
         run("git", "add", fname, cwd=base(), dry=dry)
-    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [skip-ci]" % (title, ver, docver),
+    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [ci skip]" % (title, ver, docver),
         cwd=base(), dry=dry)
 
 def randstr():
