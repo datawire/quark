@@ -1,0 +1,28 @@
+File(Use(url=quark.q), Import(Name(quark)),
+
+ Package(Name(baz)),
+
+ Package(Name(name_collisions),
+
+  Class(Name(baz),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("name_collisions.baz", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block()),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(name_collisions_baz_ref), Attr(Attr(Var(Name(name_collisions_md),
+      $type=1.name_collisions_md), Name(Root),
+     $type=1.name_collisions_md.Root), Name(name_collisions_baz_md),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
+  Function(Type(Name(void)), Name(test), Block()))
+)

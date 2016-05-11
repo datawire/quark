@@ -19,6 +19,7 @@ Usage:
   quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
+  quark [options] docs <file>...
   quark -h | --help | help
   quark --version
 
@@ -27,6 +28,7 @@ Commands:
   install               Compile, build, and install code in the target language(s).
   run                   Run the main() function from the package namespace; the quark
                         file must already be installed.
+  docs                  Output API documentation in HTML.
 
 Options:
   -h --help             Show this screen.
@@ -44,9 +46,6 @@ Options:
   --javascript          Install/emit JavaScript code.
 """
 
-import os
-import shlex
-import subprocess
 import sys
 import logging
 import datetime
@@ -57,50 +56,7 @@ import _metadata
 import compiler
 import backend
 import helpers
-
-PREREQS = {
-    "mvn": (["mvn", "-v"], "maven is required in order to install java packages"),
-    "pip": (["pip", "--version"], "pip is required in order to install python packages"),
-    "npm": (["npm", "--version"], "npm is required in order to install javascript packages")
-}
-
-
-def check(cmd, workdir):
-    if cmd in PREREQS:
-        check, msg = PREREQS[cmd]
-        try:
-            subprocess.check_output(check, cwd=workdir)
-        except (subprocess.CalledProcessError, OSError):
-            raise compiler.QuarkError("unable to find %s: %s" % (cmd, msg))
-
-COMMAND_DEFAULTS = {
-    "mvn": "mvn -q",
-}
-
-
-def user_override(command):
-    cmd = command[0]
-    override = os.environ.get("QUARK_%s_COMMAND" % cmd.upper(),
-                              COMMAND_DEFAULTS.get(cmd, cmd))
-    return shlex.split(override) + command[1:]
-
-command_log = logging.getLogger("quark.command")
-
-
-def call_and_show(stage, workdir, command):
-    command = user_override(command)
-    check(command[0], workdir)
-
-    def format_output(out):
-        return ("\n  %s: " % os.path.basename(command[0])).join(("\n" + out).splitlines())
-    command_log.debug("%s: cd %s && %s", stage, workdir, " ".join(command))
-    try:
-        out = subprocess.check_output(command, cwd=workdir, stderr=subprocess.STDOUT)
-        command_log.debug("%s: %s", stage, format_output(out))
-    except subprocess.CalledProcessError as ex:
-        command_log.warning("%s: %s", stage, format_output(ex.output))
-        raise Exception("quark (%s): FAILURE (%s)" % (stage, " ".join(command)))
-
+import shell
 
 class ProgressHandler(logging.Handler):
 
@@ -175,7 +131,7 @@ def main(args):
 
     if not args["run"]:
         if args["--verbose"]:
-            COMMAND_DEFAULTS["mvn"] = "mvn"
+            shell.COMMAND_DEFAULTS["mvn"] = "mvn"
         logging.basicConfig(level=logging.DEBUG)
         log = logging.getLogger("quark")
         log.propagate = False
@@ -195,17 +151,20 @@ def main(args):
     output = args["--output"]
 
     try:
+        shell.command_log.info("Checking environment")
         backends = []
         if java or all:
-            check("mvn", ".")
+            if args["install"]: shell.check("mvn")
             backends.append(backend.Java)
         if ruby or all:
             backends.append(backend.Ruby)
         if python or all:
-            check("python", ".")
+            if args["install"]:
+                shell.check("python")
+                shell.pipcheck("wheel")
             backends.append(backend.Python)
         if javascript or all:
-            check("npm", ".")
+            if args["install"]: shell.check("npm")
             backends.append(backend.JavaScript)
 
         filenames = args["<file>"]
@@ -216,13 +175,15 @@ def main(args):
                 compiler.compile(url, output, *backends)
             elif args["run"]:
                 compiler.run(url, args["<args>"], *backends)
+            elif args["docs"]:
+                compiler.make_docs(url, output)
             else:
                 assert False
     except compiler.QuarkError as err:
-        command_log.warn("")
+        shell.command_log.warn("")
         return err
 
-    command_log.warn("Done")
+    shell.command_log.warn("Done")
 
 
 def call_main():

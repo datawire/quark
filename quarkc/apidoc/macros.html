@@ -1,0 +1,126 @@
+{% macro get_decorated_name(node) -%}
+{%- if node.path -%}<small>{{ node.path }}.</small>{%- endif %}{{ node.name }}
+{%- endmacro %}
+
+
+{% macro get_name(node) -%}
+{%- if node.path -%}{{ node.path }}.{%- endif %}{{ node.name }}
+{%- endmacro %}
+
+
+{% macro get_namespace_filename(node) -%}
+{{ get_name(node) }}.html
+{%- endmacro %}
+
+
+{% macro render_namespace(node) -%}
+<div><!-- namespace {{ get_name(node) }} -->
+  {%- if node.kind != "namespace" %}
+  {{ crash_fixme() }}
+  {%- endif %}
+  <span class="anchor" id="{{ get_name(node) }}"></span>
+  <h2 class="page-header">{{ get_decorated_name(node) }}</h2>
+  <p>{{ node.description }}</p>
+  {%- for child in node.definitions %}
+  {{ render_subnode(child) }}
+  {%- endfor %}
+  <hr>
+</div><!-- namespace {{ get_name(node) }} -->
+{%- endmacro %}
+
+
+{% macro render_subnode(node) -%}
+<div class="childindent"><!-- child node {{ get_name(node) }} -->
+  <span class="anchor" id="{{ get_name(node) }}"></span>
+  <div class="h3">{{ get_decorated_name(node) }}</div>
+  <p>{{ node.description }}</p>
+  {%- if node.kind in ["function", "macro", "constructor", "instance method", "static method", "constructor macro", "method macro"] %}
+  {{ render_callable(node) }}
+  {%- elif node.kind in ["class", "interface", "primitive"] %}
+  {{ render_class(node) }}
+  {%- elif node.kind in ["instance field", "static field"] %}
+  {{ render_field(node) }}
+  {%- elif node.kind != "namespace" %}
+  {{ crash_subnode() }}
+  {%- for child in node.definitions %}
+  {{ render_subnode(child) }}
+  {%- endfor %}
+  {%- endif %}
+  <hr>
+</div><!-- child node {{ get_name(node) }} -->
+{%- endmacro %}
+
+
+{% macro render_class(node) -%}
+{%- if node.parameters %}
+<div class="class_param_list"><!-- {{ get_name(node) }} -->
+  <strong>Type Parameters</strong>
+  <ul>
+    {%- for param in node.parameters %}
+    <li><span class="class_param">{{ param }}</span></li>
+    {%- endfor %}
+  </ul>
+</div><!-- class_param_list {{ get_name(node) }} -->
+{%- endif %}
+{%- if node.bases %}
+<div class="class_base_list"><!-- {{ get_name(node) }} -->
+  <strong>Base Classes</strong>
+  <ul>
+    {%- for base in node.bases %}
+    <li><span class="class_base">{{ base }}</span></li>
+    {%- endfor %}
+  </ul>
+</div><!-- class_base_list {{ get_name(node) }} -->
+{%- endif %}
+{%- for child in node.definitions %}
+{{ render_subnode(child) }}
+{%- endfor %}
+{%- endmacro %}
+
+
+{% macro render_callable(node) -%}
+<div class="callable_call"><!-- {{ get_name(node) }} -->
+<span class="return_type">{{ render_type(node.type) }}</span> <span class="callable_call_name">{{ node.name }}</span>(
+{%- if node.parameters %}
+{%- for param in node.parameters %}
+{{ render_parameter_call(param) }},
+{%- endfor %}
+{%- endif %}
+)
+</div><!-- callable_call {{ get_name(node) }} -->
+{%- if node.parameters %}
+<div class="callable_param_list"><!-- {{ get_name(node) }} -->
+  <strong>Parameters</strong>
+  <ul>
+    {%- for param in node.parameters %}
+    <li>{{ render_parameter_long(param) }}</li>
+    {%- endfor %}
+  </ul>
+</div><!-- callable_param_list {{ get_name(node) }} -->
+{%- endif %}
+{%- endmacro %}
+
+
+
+{% macro render_parameter_call(node) -%}
+<span class="param_name_call">{{ node.name }}</span>
+{%- endmacro %}
+
+
+{% macro render_field(node) -%}
+{{ render_type(node.type) }} <span class="field_name_long">{{ node.name }}</span>: {{ node.description }}
+{%- endmacro %}
+
+
+{% macro render_parameter_long(node) -%}
+{{ render_type(node.type) }} <span class="param_name_long">{{ node.name }}</span>: {{ node.description }}
+{%- endmacro %}
+
+
+{% macro render_type(typestr) -%} {# Add cross-linking here #}
+{%- if not typestr %}
+<span class="new">new</span>
+{%- else %}
+<span class="type_name">{{- typestr }}</span>
+{%- endif %}
+{%- endmacro %}

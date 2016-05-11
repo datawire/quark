@@ -1,0 +1,11 @@
+
+{
+    "name": "overlapping_namespace",
+    "version": "0.1.0",
+    "main": "index.js",
+    "dependencies": {
+        "quark": "0.0.1",
+        "org_example_foo": "0.1.0"
+    }
+}
+        

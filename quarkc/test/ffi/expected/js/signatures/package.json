@@ -1,0 +1,10 @@
+
+{
+    "name": "quark_ffi_signatures",
+    "version": "1.0.0",
+    "main": "index.js",
+    "dependencies": {
+        "quark": "0.0.1"
+    }
+}
+        

@@ -28,7 +28,7 @@ public class HelloRPCClient {
         }
         System.out.println("Request says: " + request.text);
         Response response = client.hello(request);
-        response.await(1.0);
+        response.await(3.0);
         if (!response.isFinished()) { // Unless we wait indefinitely the response wait can time out so the synchronous caller should still check isFinished()
             System.out.println("No response!");
         } else if (response.getError() != null) {

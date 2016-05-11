@@ -2,6 +2,7 @@ module DatawireQuarkCore
   require 'net/http'
   require 'uri'
   require 'json'
+  require 'thread'
 
   require 'concurrent'
   require 'celluloid/current'
@@ -336,7 +337,7 @@ module DatawireQuarkCore
     UNDEFINED = Class.new
 
     def isUndefined
-      value == undefined
+      undefined.equal? value
     end
 
     def isDefined
@@ -662,7 +663,7 @@ module DatawireQuarkCore
     end
 
     def fail(message)
-      @log.fatal message
+      @log.error message
       exit! 1
     end
 
@@ -1001,7 +1002,7 @@ module DatawireQuarkCore
     def onServletEnd(url)
     end
   end
-  
+
   class HTTPServlet < Servlet
     def onHTTPRequest(request, response)
     end
@@ -1197,4 +1198,3 @@ module DatawireQuarkCore
     end
   end
 end
-

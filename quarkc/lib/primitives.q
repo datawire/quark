@@ -77,6 +77,11 @@ namespace quark {
         macro float toFloat() $java{Double.valueOf($self)} $py{float($self)} $rb{($self).to_f} $js{($self)};
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();
+
+        macro T bitwise_or(T other) ${(($self) | ($other))};
+        macro T bitwise_xor(T other) ${(($self) ^ ($other))};
+        macro T bitwise_and(T other) ${(($self) & ($other))};
+        macro T bitwise_not() ${(~($self))};
     }
 
     @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
@@ -327,7 +332,7 @@ namespace quark {
                          $py{len($self)}
                          $rb{($self).size}
                          $js{($self).length};
-        macro void sort() $java{java.util.Collections.sort($self, null)}
+        macro void sort() $java{java.util.Collections.sort($self, io.datawire.quark.runtime.Builtins.COMPARATOR)}
                           $py{($self).sort()}
                           $rb{($self).sort!}
                           $js{($self).sort()};

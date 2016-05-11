@@ -1,58 +1,41 @@
-os:
-- linux
-sudo: required
+language: generic
 dist: trusty
-env:
-- TEST_SUITE=quarkc
-- TEST_SUITE=runtime
-language:
-- java
-- python
-- ruby
-python:
-- 2.7.6
-jdk:
-- oraclejdk7
-rvm:
-- 2.3.0
-addons:
-  apt:
-    packages:
-    - libssl-dev
-    - swig
-    - python-dev
-    - curl
-    - python2.7
-    - python-pip
-    - tar
-    - gcc
-    - make
-    - python-dev
-    - libffi-dev
-    - python-virtualenv
+matrix:
+  include:
+    - os: linux
+      env: TEST_SUITE=quarkc
+    - os: linux
+      env: TEST_SUITE=runtime
+    - os: linux
+      env: TEST_SUITE=examples
+    - os: osx
+      env: TEST_SUITE=examples
+  exclude:
+    - env: TEST_SUITE=should-never-be-selected
+
+sudo: required
+
 install:
-- java -version
-- java -version 2>&1 | grep -Fe 'java version "1.7.0'
-- python -c 'import sys; print sys.version; sys.exit(int(sys.version_info[:3] < (2,7,6)))'
-- rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm
-  && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm
-  install 4.2.2
-- nvm alias default 4.2.2
-- node --version
-- virtualenv quark-travis
-- . quark-travis/bin/activate
-- pip install --upgrade pip
-- command rvm install 2.3.0
-- rvm --default use 2.3.0
-- ruby --version
-- scripts/develop.sh
-- pip freeze
-- mvn --version
+- .travis/env.sh initial
+- .travis/install.sh
+
 script:
-- py.test -v $TEST_SUITE --durations=10
+- .travis/test.sh
+- .travis/deploy.sh
+
+env:
+  matrix:
+    - TEST_SUITE=should-never-be-selected
+  global:
+  - QUARK_RUBY_VERSION=2.3.0
+  - secure: Ht+kRWkOtZl6i0RmWaKc4OJj2m4JG8ugWzweilaCH5xfxUEUeRhTvFSZNWeA1ZNxWmgSdS27HxAfdzDiZcp8lkZdLbeFBjcWIlFHVjB71hXV5ZV88v59TDZPcmULAFwp2SdZ5ZVjKU471CeBdVFhWupjSIxTfyULMk6/70vpLthioVMEGEUDtY190fNXr5NaBfEnIJ5+/XbVLnBC4knNQ6vjjO1I/KmJvjtpj7h2pBJDfK54fXL3I7x4N90tEOmU3mIJm1YoQO6CexOyz3CdlJRUvSPZVBF5Y0qDd3tPVqDE7F1DH+JSz7SJOn5HHASFFK0BXpscwSwskmGmiNSOEbWLHiFojCszs3GHUx/Lv9/bKRl6NbsZkcFfMzPnqXIg7+HQcaqF/wW7TN5rDmp1H9m2o0sD93Spk5gW9a/d4sUrRS1D+B4HPN9kZoBeKPah0gM6QelKOaLxZvQYcY4gJZOFHi+JPVGeomVpWVXPYuKrYbrCtzuDth1UdmslO6kM7s3joQKnSX2At5VekpAJd4eKNjojunwxHssUWjcQixkul3Wd2i0ap4yzDNsPo9I1KreMnopxANqPJCeIWW+PZ1uO5hNAFSML45fmlNcct7h/qLfSzazeujcPW7zwW4YhPxZFYAWdAwlD3/VrEI4JbVQQN0xkfmeyNQpXYIMl9Ak=
+  - secure: uRBpgYiXx9vBF/DEJsYJpqOthWCwbPsz3gSaVOpojfvvTA83MeBokjIIMAfyTO7oJxU73j6utVLZnuo86R8vPpH80pRmt0zgf0DtoC9eosytbd6HKab0iQPVOhQMnR/w03xi+LM6RBc/DPN4OjpQQPUKuYa1BUsgutXHedvEAVif3m4u+7zNrZEt3vP+/WZ+gQhnZnQjFcPJR7Z5eon2/ZRX0jF9JDZxsAR2aRsplAg1HQE5/0hsL5ZHLnFwt8/D6nDDFHO30Z49mZNCxCJj8xzIb0iSab8/WgAPz/xYgWTnz7k41po+8mkIy5EhDdB2nLyrMzQNNVaJPp90GUQqS3I29g+Tjmfzx0vNdU5k4+v51EUfltLw0J0OivBDOPdijKOQTlKOWL10ZhRsdqRagBo/M0VDG/B7JkFfB2hT/X2UKLCtmKOeWinvInOXPQsdPlWkRxf+E65gqwZ4qEojNxvAj7qANg7TT/LhmGsFTzQyGAm9rSU7gsniNsAzlDoCkG75aWnz3ZPZkcpd8U2AaiSx9oHesYiK6x+UDS1rBcarsIL1yaawANZd68KOEriR44eXilFsOUmN7zYH+JkXEsx1zUP5PTUPmrKavuBuP1WYL5qaUithgX7p8JD2285eCdSZuDPTbbq1/ypGHU7s6OhoNX0mGm2X/N/yVudxK2w=
+  - secure: POndrUoQLs4ahWNq2tGe5/YRWWqnuaZejgC1FdawGYBc1LmrJKuLULDP5AM9OqDxGOxH9G87Mbf3UVkl2ljKCb/WFOAlZ3FUqpmkraaSv5ZKFUGhK434FjvpvwMJqpUFvpudUtm8GIMCsup+NP44HJxgNXiuoj160PrPE7wXcs55VYIZzeRgklpG22Ezpn81iyF9NDixgQdZUsb8ic06dJeP3TdRyGcpkHD3DPSWgG0BoBrWSNPEdx4VDq3en+YA6KAr3fwsU1BckQkkJKlhQ+xq/Z36Bu+iL+gIqox5+B+T4c4he5xtkIjdZdxqNwONHbmfJDAEcG7391gE5b09k3Qd14BZ3STwcF6YrlonPJf48fn4uhEip3Jg2CZCfLzFxjS0UbQwCHcpLm3kZDVe+Nd8DxBsadbc7SPd5GBqGd4m8UVQGpkpBdKno9vXSeUnYntf5UDx8VRAqkEOkHTG2e+wP0/prs8DGaeu3V61HsJV03PDmVAy9ZsZ9IUuwcmvEefJpvbqAeYca/twWwDDm02wzMVmjqFVzA3UJIFjr4CwFdhh36D/hURQvMF3+8wropq4Fjs9d7Sk0dNLUpQJPUvNzvOdjuCjBcAq5fBrtnMYIdTEKSt4q6Iy6pBAYoNIXxxAHiiNKEoJ/j87rKIQcjHJF8R31VM6q33hM9FSqZk=
+  - secure: TEQiMHVChAci4KnyD2GPkJhNVt/X12v6bON6kxO0o21DoDrdKtrzRxabQl1FF3keXCvs2qiK4fLqBtl/VcSylWO0+t1byGYHJexIq/irt1t+8apr6lVRauRAentskVFNwPxU3c0nOEiMm0zwqMPnWHECRY/yDR/P/JrnaYsTzgTcX2Stq533e3oaSyoo4nYw2ApAzQ5hqLZ9wb6oaAy6/2AdJqBtcXsEthHLnHWfNe//IusFX/0YchQ4oF3f0si9zCC963JX/PR4MKENnN8sLdNhWGPwtXlzXX1gkfSxWYY5R5rwCXJl32z0jRDhIwDLlmcH+uJhuE6KRonJ1aqmbMwcKXyf2ods6L4c8Tt56iRwmzTaobmhCxl/qpTUeiA1VRXOUgyA80/H6vlDugqAsPTCihhpJxF/A9OMaS78duonwbSE6tIIqwnaxQJYZxIiDCM6+SEGm5GjrQEzK4Eu7RsLBok5Io919zc71/W0sgdB1V8MD+NGVsgNqFoAJfEv94wEmYATJbG3epO1BZpVqqMSg1ol4kRK/zXbWUP6/sEWconOt8vzcRnxX1g9RLjQByc1mqnhGdzg7IyAv7s3NkPjkjZjjtVgSsAgcvOYUzhp4mUCJf+UiUeC3reHCbxhsLNGQ5OLSidJKRLUdPgm+AsiJHjMZYhiLEnoDdJKs70=
+
 notifications:
   slack:
     rooms:
-      secure: kK5qUpRLVg90qPYaW3rumkhz8uDeHhMmurWb5mwFQMoxP8oROTlazyXpSatBvdVBGB2PVF/zc3FWMK7EQ62Qs4JcfXhukxhnQYmAsSENJVdnQJQXAtJZamtobmE9D7F/rbCXaxpY1sXGoMXRcYlwyU2bo0CneDve0Kh0cFlr700oBUvcSx/xhF/+6Prb0BLvqiq5kpLsZSsWkI4UAuxhDCRWOLmgATNcsPKdBfROmWO4GJ2yHx1USdIlm9ibaDS+I2gv2zJIpOttCAEYNbL/oYDHx7gZdmaIBui/Fq44RDGjcnrB0zdCasGUZs9VM+6AfjXmbUvCrkU3G5+htSreS6wyMtwSr/K/+DPvbzq4di1HullcxgP+jC7UTXHLjuejh9oxxIp7azDq9P/QjMKqZ4VyiF3MUKwGhok4DqMi35HQoXtqWoWf5BgvIa8EylUFBXSPKWEw5MhtPyzq8wD1/HfvJQzmZqovSab9HsNQr8ATzlXbg3DjlInEbeFgd0bjgQW+B/8/LvLUuBXVAqv5IgHSx/fMGl6Ol9cIwQUjyLBrvgtPMpqQtHIIw1qS88q+iR/AP0XhS44eUORkw8Bm0FVlD7qR4qDQFAreO143kbDJ3f+chriSp/LcgyxxmShLIZcpg1yli2zOFIY4ZF0qoVpOOzNc6d28X2+6P6L+SM8=
-    on_success: change
-    on_failure: change
+      secure: E67GlDOEiGoLHvvgmPOJD+B+JA5O9HNC29Hav5CzCCj5f22p4nLBB9p2rIj0wiJXXhe0EePtILRM4oNpWNKS+mbCREXZHQB/668sqoogaVx86vweR+8VOX/BmW2HBlbP3WyOIpxgWKTt7yNj/o+bBr0Ofplu0NDZIflp/QSRJyeL2Phnsx2vbS0XRhk0fp3eLO2O7zymcRMkr8JftbSTfCF6R1ckTjmJshqdEHBuo7DJfWjn47k0+DxP/tWeQCJkIcpNkAtBMLOlqJ73YokOQ5PQsrsDNU5RilLB+Dv5EcycWVDjOgJH9QpXoMcq7dChLZV/MkGegd3yb0ee8EZVPj4mdQpnO8RxWhgSKjLPdkIN3sqGc+31gomz+7Hijk66028BnQ2qsdSeBoEi+RVG7MBUln4lHOk9726Swof533oj+14oSqrO/P6Yzc7Z+9x2XfbeCGgAsiwjDpJXg7BMXVqoaLzqZkmhcL97+QWWpCii45krftWU4bH2An6eZY6fJenIuz7R3NABKkpY+nTCzcGJH12wrHYnJK9M7pe94c+Xek3VDw7qMb6W8P119L/voWUEB3Bf3mdrH0NoChi6PFJdDk1i3aKRO+XXQKYUBAWoQkMOLX0VxzViVLdbKgcxBex9E3++u9pp2Tr+rGMKyy9O7AixZDNV/EFsuMxe8mY=
+    on_success: always
+    on_failure: always

@@ -24,6 +24,25 @@ import pexpect
 
 
 class FilteredOutputFile(object):
+    @staticmethod
+    def python_threaded_exit_crash_filter(text):
+        lines = text.split("\n")
+        res = []
+        for line in lines:
+            if line.startswith("Exception in thread ") and "(most likely raised during interpreter shutdown)" in line:
+                break
+            res.append(line)
+        return "\n".join(res)
+
+    @staticmethod
+    def normalize_output(text):
+        """Remove blank lines and ^C at the end; clean up all line endings"""
+        lines = text.splitlines()  # Throw away end-of-line ^M characters
+        while lines and (not lines[-1].strip() or lines[-1].strip() == "^C"):
+            del lines[-1]
+        if lines[-1].strip().endswith("^C"):
+            lines[-1] = "".join(lines[-1].rsplit("^C", 1))
+        return "\n".join(lines) + "\n"
 
     def __init__(self, filename, filters):
         self.file = open(filename, "wb", 0)
@@ -32,6 +51,8 @@ class FilteredOutputFile(object):
             len(self.filters)
         except TypeError:
             self.filters = [self.filters]
+        self.filters.append(FilteredOutputFile.python_threaded_exit_crash_filter)  # XXX HACK FIXME etc.
+        self.filters.append(FilteredOutputFile.normalize_output)
         self.captured = []
 
     def get_data(self):
@@ -52,20 +73,26 @@ class FilteredOutputFile(object):
 
 class Captured(object):
 
-    def __init__(self, cwd, source_file, output_file, command, filters):
+    def __init__(self, cwd, source_file, output_file, command, filters, timeout):
         self.cwd = cwd
         self.source_file = source_file  # name of command file or none
         self.output_file = output_file  # name of output file for this command
         self.command = command          # command that was run
         self.filters = filters
+        self.timeout = timeout
         self.output = None              # output for this command, i.e. contents of output_file
 
     def spawn(self):
-        child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=90)
+        child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=self.timeout)
         child.logfile_read = FilteredOutputFile(self.output_file, self.filters)
         return child
 
-    def do_capture(self, child):
+    def update_capture(self, child):
+        if child.isalive():
+            child.expect(pexpect.TIMEOUT, timeout=0)
+        self.output = child.logfile_read.get_data()
+
+    def finish_capture(self, child):
         if child.isalive():
             child.expect(pexpect.EOF)
         self.output = child.logfile_read.get_data()
@@ -80,10 +107,11 @@ class BGProcess(object):
     def terminate(self):
         if self.child.isalive():
             self.child.sendintr()
+        self.child.expect([pexpect.EOF, pexpect.TIMEOUT], timeout=0)
         return self.child.close(force=True)
 
     def get_captured(self):
-        self.cap.do_capture(self.child)
+        self.cap.update_capture(self.child)
         return self.cap
 
     def noop(self):
@@ -123,25 +151,29 @@ class Session(object):
         for bg_process in self.bg_processes:
             bg_process.noop()
 
-    def capture(self, command, nocmp=False, filters=[]):
+    def capture(self, command, nocmp=False, filters=None, timeout=90):
         """
         Run the command synchronously and capture the output. Return an
         instance of Captured. Set option nocmp to True to tell the
         test driver not to compare this file with expected output. Pass
         filters to process the output before writing it to disk.
         """
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
+        if filters is None:
+            filters = []
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout)
         child = cap.spawn()
-        cap.do_capture(child)
+        cap.finish_capture(child)
         self.call_noop()
         return cap
 
-    def capture_bg(self, command, nocmp=False, filters=[]):
+    def capture_bg(self, command, nocmp=False, filters=None, timeout=90):
         """
         Run the command asynchronously, capturing the output. Return an
         instance of BGProcess. Use nocmp and filters as with capture.
         """
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters)
+        if filters is None:
+            filters = []
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout)
         res = BGProcess(cap)
         self.bg_processes.append(res)
         self.call_noop()

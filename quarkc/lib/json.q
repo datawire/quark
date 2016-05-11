@@ -109,8 +109,43 @@ namespace quark {
 
         if (cls.name == "quark.Map") {
             result.setObject();
-            Map<String,Object> map = ?obj;
-            // XXX: need more JSON APIs to actually finish this
+            Map<Object,Object> map = ?obj;
+            List<Object> keys = map.keys();
+            Object key;
+            String strKey;
+
+            Map<String, Object> keyMap = {};
+            List<String> strKeys = [];
+            while (idx < keys.size()) {
+                key = keys[idx];
+                strKey = key.toString();  // Only used for strKeys.sort()
+                strKey = toJSON(key, cls.getParameters()[0]).toString();
+                keyMap[strKey] = key;
+                strKeys.add(strKey);
+                idx = idx + 1;
+            }
+            strKeys.sort();
+
+            idx = 0;
+            JSONObject hash = null;
+            int hashIdx = 0;
+            while (idx < strKeys.size()) {
+                strKey = strKeys[idx];
+                key = keyMap[strKey];
+                Object value = map[key];
+                if (key.getClass().name == "quark.String") {
+                    result[?key] = toJSON(value, cls.getParameters()[1]);
+                } else {
+                    if (hash == null) {
+                        hash = new JSONObject().setList();
+                        result["$map"] = hash;
+                    }
+                    hash.setListItem(hashIdx, toJSON(key, cls.getParameters()[0]));
+                    hash.setListItem(hashIdx+1, toJSON(value, cls.getParameters()[1]));
+                    hashIdx = hashIdx + 2;
+                }
+                idx = idx + 1;
+            }
             return result;
         }
 
@@ -128,8 +163,38 @@ namespace quark {
 
     @doc("deserialize json into provided result object. Skip over fields starting with underscore")
     Object fromJSON(reflect.Class cls, Object result, JSONObject json) {
-        if (json == null || json.isNull()) { return null; }
+        if (json == null || json.isNull() || json.isUndefined()) { return null; }
         int idx = 0;
+
+        if (cls == null) {
+            String type = json.getType();
+            if (type == "boolean") {
+                cls = reflect.Class.BOOL;
+            }
+            if (type == "number") {
+                cls = reflect.Class.BOOL;
+            }
+            if (type == "string") {
+                cls = reflect.Class.STRING;
+            }
+            if (type == "list") {
+                if (result == null) {
+                    result = [];
+                }
+                cls = result.getClass();
+            }
+            if (type == "object") {
+                String klazz = json["$class"];
+                if (klazz != null) {
+                    cls = reflect.Class.get(klazz);
+                } else {
+                    if (result == null) {
+                        result = {};
+                    }
+                    cls = result.getClass();
+                }
+            }
+        }
 
         if (result == null) {
             if (cls.name == "quark.String") {
@@ -158,6 +223,27 @@ namespace quark {
                 idx = idx + 1;
             }
             return list;
+        }
+
+        if (cls.name == "quark.Map") {
+            Map<Object,Object> map = ?result;
+            List<String> keys = json.keys();
+            while (idx < keys.size()) {
+                String key = keys[idx];
+                JSONObject value = json[key];
+                if (key != "$map") {
+                    map[key] = fromJSON(cls.getParameters()[1], null, value);
+                } else {
+                    int hashIdx = 0;
+                    while (hashIdx < value.size()) {
+                        Object hkey = fromJSON(cls.getParameters()[0], null, value.getListItem(hashIdx));
+                        Object hvalue = fromJSON(cls.getParameters()[1], null, value.getListItem(hashIdx+1));
+                        map[hkey] = hvalue;
+                        hashIdx = hashIdx + 2;
+                    }
+                }
+                idx = idx + 1;
+            }
         }
 
         List<reflect.Field> fields = cls.getFields();

@@ -1,0 +1,10 @@
+
+{
+    "name": "testlib",
+    "version": "1.2.3",
+    "main": "index.js",
+    "dependencies": {
+        "quark": "0.0.1"
+    }
+}
+        

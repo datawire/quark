@@ -1,0 +1,40 @@
+Conf myOrg
+  orgs
+  id: org1
+    Org name1
+      service_tokens
+        svc1 : token1
+        svc2 : token2
+      fancy_tokens
+        Service fancy1
+        :
+        Token fancy11
+        Service fancy2
+        :
+        Token fancy22
+      orgchart
+        --
+        --
+        --
+        --
+        --
+          - ~
+          - ~
+          - 42
+  id: org2
+    Org name2
+      service_tokens
+        svc11 : token11
+        svc22 : token22
+      fancy_tokens
+      orgchart
+        --
+        --
+          - ~
+          - ~
+          - ~
+          - 13
+
+{"$class":"fancy_json_marshalling.Conf","org_id":"myOrg","orgs":{"org1":{"$class":"fancy_json_marshalling.Org","org_name":"name1","service_tokens":{"svc1":"token1","svc2":"token2"},"fancy_tokens":{"$map":[{"$class":"fancy_json_marshalling.Service","name":"fancy1"},{"$class":"fancy_json_marshalling.Token","token":"fancy11"},{"$class":"fancy_json_marshalling.Service","name":"fancy2"},{"$class":"fancy_json_marshalling.Token","token":"fancy22"}]},"orgchart":[[],[],[],[],[null,null,"42"]]},"org2":{"$class":"fancy_json_marshalling.Org","org_name":"name2","service_tokens":{"svc11":"token11","svc22":"token22"},"fancy_tokens":{},"orgchart":[[],[null,null,null,"13"]]}}}
+{"$class":"fancy_json_marshalling.Conf","org_id":"myOrg","orgs":{"org1":{"$class":"fancy_json_marshalling.Org","org_name":"name1","service_tokens":{"svc1":"token1","svc2":"token2"},"fancy_tokens":{"$map":[{"$class":"fancy_json_marshalling.Service","name":"fancy1"},{"$class":"fancy_json_marshalling.Token","token":"fancy11"},{"$class":"fancy_json_marshalling.Service","name":"fancy2"},{"$class":"fancy_json_marshalling.Token","token":"fancy22"}]},"orgchart":[[],[],[],[],[null,null,"42"]]},"org2":{"$class":"fancy_json_marshalling.Org","org_name":"name2","service_tokens":{"svc11":"token11","svc22":"token22"},"fancy_tokens":{},"orgchart":[[],[null,null,null,"13"]]}}}
+OK!
