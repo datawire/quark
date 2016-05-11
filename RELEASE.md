@@ -128,3 +128,11 @@ Tools required are `pip`, `twine`, and a not totally ancient `git`
   release.
 
 - Allow releasing of any tested feature branch (not just develop)
+
+- Explain what a 'release' is made of, like:
+  a release is a merge of develop to master + a version change
+  commit + signed tag + back-merge-to-develop-with-version-name-reset +
+  an atomic push of the result
+
+- add a link to the workflow, or better move the workflow to repo, too
+
