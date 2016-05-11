@@ -3,8 +3,14 @@ CHANGELOG
 
 Breaking changes are marked with (!)
 
-0.5.3 (upcoming)
------
+Latest
+------
+
+### Command line
+
+* New `quark docs` command generates a file containing JSON describing the API
+  of the specified Quark files. It also generates rudimentary API documentation
+  in HTML.
 
 ### Language
 
@@ -18,9 +24,13 @@ Breaking changes are marked with (!)
 
 * #129 New methods on `byte`, `short`, `int`, and `long`:
   `bitwise_not`, `bitwise_or`, `bitwise_xor`, `bitwise_and`
+* #128 Bug fixes in logging
 * (!) #127 Macro `quark.logging.config` renamed to `makeConfig` to avoid name
   collision with `Config` interface
+* Additional datatype support in Quark's JSON library
 
 ### Other
 
 * Changelog, with format inspired by OCaml compiler changelog
+* Automated testing using Travis
+* Automated testing of Quark examples
