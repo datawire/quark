@@ -3,7 +3,7 @@ dist: trusty
 matrix:
   include:
     - os: linux
-      env: TEST_SUITE=--collect-only
+      env: TEST_SUITE=.travis
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
@@ -14,7 +14,6 @@ install:
 - .travis/install.sh
 
 script:
-- .travis/test.sh
 - .travis/deploy.sh
 
 env:
