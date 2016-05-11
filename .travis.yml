@@ -3,7 +3,7 @@ dist: trusty
 matrix:
   include:
     - os: linux
-      env: TEST_SUITE=--collect-only
+      env: TEST_SUITE=.travis
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
