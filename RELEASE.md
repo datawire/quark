@@ -37,7 +37,7 @@ manually as part of the release process.
 
 To query the CI system for new builds of the develop branch and tag the successful ones
 
-    $ release poll-dev-status --tag-dev-builds
+    $ quark_release poll-dev-status --tag-dev-builds
 
 ## Publish Development Artefacts ##
 
@@ -117,3 +117,14 @@ Tools required are `pip`, `twine`, and a not totally ancient `git`
 
     $ pip install sphinx-better-theme wheel twine
 
+# Ideas and Improvements #
+
+- Move release area to a separate workspace and keep the release
+   script in the dev checkout. Kill `freeze`. Simplify `cleanup`
+
+- Drop the quarkdev and deploy (and test) the dev package from
+  testpypi. This will eliminate the mildly evil backmerge we need to
+  do now from master to develop to prevent merge conflict on next
+  release.
+
+- Allow releasing of any tested feature branch (not just develop)
