@@ -319,6 +319,7 @@ def push_docs(args):
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
         run("git", "push", "origin", "gh-pages", cwd=dest)
         print "Documentation is pushed."
+        run("git", "fetch")
     else:
         print "Canceled"
 
