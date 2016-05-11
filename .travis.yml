@@ -3,13 +3,7 @@ dist: trusty
 matrix:
   include:
     - os: linux
-      env: TEST_SUITE=quarkc
-    - os: linux
-      env: TEST_SUITE=runtime
-    - os: linux
-      env: TEST_SUITE=examples
-    - os: osx
-      env: TEST_SUITE=examples
+      env: TEST_SUITE=--collect-only
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
