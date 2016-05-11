@@ -8,3 +8,5 @@ virtualenv
 semantic-version==2.5.0
 twine
 sphinx-better-theme
+docopt
+sphinx

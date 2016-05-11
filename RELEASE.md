@@ -7,6 +7,8 @@ pypi.
 
 ## Prepping up the  workspace ##
 
+    pip install -r requirements.txt
+
 Since the release script is part of the repository, and release process
 involves switching branches, the release script may change when
 branches are switched. The best approach is to clone the repo, and use
