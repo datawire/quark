@@ -17,7 +17,7 @@ function Box__init_fields__() {
     this.contents = null;
 }
 Box.prototype.__init_fields__ = Box__init_fields__;
-Box.generics_constructors_Box_quark_Object__ref = quark_ffi_signatures_md.Root.generics_constructors_Box_quark_Object__md;
+Box.generics_constructors_Box_quark_Object__ref = null;
 function Box_get() {
     return null;
 }

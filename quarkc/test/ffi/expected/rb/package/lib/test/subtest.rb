@@ -21,7 +21,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :size
     extend ::DatawireQuarkCore::Static
 
-    static test_subtest_Test_ref: -> { ::Quark.package_md.Root.test_subtest_Test_md }
+    static test_subtest_Test_ref: -> { nil }
 
 
 

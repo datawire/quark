@@ -12,7 +12,7 @@ def self.Test; Test; end
 class Test < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static classes_stuff_Test_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_stuff_Test_md }
+    static classes_stuff_Test_ref: -> { nil }
 
 
 

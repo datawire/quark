@@ -12,7 +12,7 @@ class Foo(object):
     def get(self):
         assert False
 
-Foo.generics_pkg_Foo_quark_Object__ref = quark_ffi_signatures_md.Root.generics_pkg_Foo_quark_Object__md
+Foo.generics_pkg_Foo_quark_Object__ref = None
 class StringFoo(object):
     def _init(self):
         pass
@@ -33,7 +33,7 @@ class StringFoo(object):
     def foo(self):
         return None
 
-StringFoo.generics_pkg_StringFoo_ref = quark_ffi_signatures_md.Root.generics_pkg_StringFoo_md
+StringFoo.generics_pkg_StringFoo_ref = None
 class Box(object):
     def _init(self):
         self.contents = None
@@ -77,5 +77,5 @@ class StringBox(Box):
             (self).contents = value
 
 
-StringBox.generics_pkg_Box_quark_String__ref = quark_ffi_signatures_md.Root.generics_pkg_Box_quark_String__md
-StringBox.generics_pkg_StringBox_ref = quark_ffi_signatures_md.Root.generics_pkg_StringBox_md
+StringBox.generics_pkg_Box_quark_String__ref = None
+StringBox.generics_pkg_StringBox_ref = None

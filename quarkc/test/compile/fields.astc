@@ -41,8 +41,10 @@ File(Use(url=quark.q), Import(Name(quark)),
         $type=1.quark.String), Cast(Var(Name(value), $type=1.quark.Object),
         $type=1.quark.String)))))),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(fields_Test_ref),
-    Attr(Attr(Var(Name(fields_md), $type=1.fields_md), Name(Root),
-     $type=1.fields_md.Root), Name(fields_Test_md),
+    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(fields_md),
+       $type=1.fields_md), Name(Root), $type=1.fields_md.Root),
+      Name(fields_Test_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Function(Type(Name(void)), Name(f), Block(

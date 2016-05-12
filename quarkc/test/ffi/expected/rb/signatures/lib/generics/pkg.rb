@@ -12,7 +12,7 @@ def self.Foo; Foo; end
 class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static generics_pkg_Foo_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_pkg_Foo_quark_Object__md }
+    static generics_pkg_Foo_quark_Object__ref: -> { nil }
 
 
 
@@ -52,7 +52,7 @@ def self.StringFoo; StringFoo; end
 class StringFoo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static generics_pkg_StringFoo_ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_pkg_StringFoo_md }
+    static generics_pkg_StringFoo_ref: -> { nil }
 
 
 
@@ -166,8 +166,8 @@ def self.StringBox; StringBox; end
 class StringBox < ::Quark.generics.pkg.Box
     extend ::DatawireQuarkCore::Static
 
-    static generics_pkg_Box_quark_String__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_pkg_Box_quark_String__md }
-    static generics_pkg_StringBox_ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_pkg_StringBox_md }
+    static generics_pkg_Box_quark_String__ref: -> { nil }
+    static generics_pkg_StringBox_ref: -> { nil }
 
 
 

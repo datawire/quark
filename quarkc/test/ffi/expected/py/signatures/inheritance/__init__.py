@@ -29,7 +29,7 @@ class Base(object):
             (self).name = value
 
 
-Base.inheritance_Base_ref = quark_ffi_signatures_md.Root.inheritance_Base_md
+Base.inheritance_Base_ref = None
 class Test(Base):
     def _init(self):
         Base._init(self)
@@ -65,7 +65,7 @@ class Test(Base):
             (self).later = value
 
 
-Test.inheritance_Test_ref = quark_ffi_signatures_md.Root.inheritance_Test_md
+Test.inheritance_Test_ref = None
 class A(object):
     def _init(self):
         self.name = None
@@ -87,7 +87,7 @@ class A(object):
             (self).name = value
 
 
-A.inheritance_A_ref = quark_ffi_signatures_md.Root.inheritance_A_md
+A.inheritance_A_ref = None
 class B(A):
     def _init(self):
         A._init(self)
@@ -112,7 +112,7 @@ class B(A):
             (self).name = value
 
 
-B.inheritance_B_ref = quark_ffi_signatures_md.Root.inheritance_B_md
+B.inheritance_B_ref = None
 class C(A):
     def _init(self):
         A._init(self)
@@ -137,7 +137,7 @@ class C(A):
             (self).name = value
 
 
-C.inheritance_C_ref = quark_ffi_signatures_md.Root.inheritance_C_md
+C.inheritance_C_ref = None
 class X(object):
     def _init(self):
         pass
@@ -151,7 +151,7 @@ class X(object):
 
     def _setField(self, name, value):
         pass
-X.inheritance_X_ref = quark_ffi_signatures_md.Root.inheritance_X_md
+X.inheritance_X_ref = None
 class Y(X):
     def _init(self):
         X._init(self)
@@ -177,7 +177,7 @@ class Y(X):
             (self).name = value
 
 
-Y.inheritance_Y_ref = quark_ffi_signatures_md.Root.inheritance_Y_md
+Y.inheritance_Y_ref = None
 class Message(object):
     def _init(self):
         pass
@@ -194,7 +194,7 @@ class Message(object):
 
     def _setField(self, name, value):
         pass
-Message.inheritance_Message_ref = quark_ffi_signatures_md.Root.inheritance_Message_md
+Message.inheritance_Message_ref = None
 class Ping(Message):
     def _init(self):
         Message._init(self)
@@ -210,7 +210,7 @@ class Ping(Message):
 
     def _setField(self, name, value):
         pass
-Ping.inheritance_Ping_ref = quark_ffi_signatures_md.Root.inheritance_Ping_md
+Ping.inheritance_Ping_ref = None
 class Pong(Message):
     def _init(self):
         Message._init(self)
@@ -229,4 +229,4 @@ class Pong(Message):
 
     def _setField(self, name, value):
         pass
-Pong.inheritance_Pong_ref = quark_ffi_signatures_md.Root.inheritance_Pong_md
+Pong.inheritance_Pong_ref = None

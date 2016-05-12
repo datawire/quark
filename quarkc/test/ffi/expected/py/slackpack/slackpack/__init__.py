@@ -31,4 +31,4 @@ class Handler(object):
 
     def onMessage(self, message):
         pass
-Handler.slackpack_Handler_ref = slackpack_md.Root.slackpack_Handler_md
+Handler.slackpack_Handler_ref = None

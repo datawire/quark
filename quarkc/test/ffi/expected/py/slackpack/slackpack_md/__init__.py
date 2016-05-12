@@ -599,11 +599,11 @@ class slack_Client_onWSError_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(slack_Client_onWSError_Method, self).__init__(u"quark.void", u"onWSError", _List([u"quark.WebSocket"]));
+        super(slack_Client_onWSError_Method, self).__init__(u"quark.void", u"onWSError", _List([u"quark.WebSocket", u"quark.WSError"]));
 
     def invoke(self, object, args):
         obj = object;
-        (obj).onWSError((args)[0]);
+        (obj).onWSError((args)[0], (args)[1]);
         return None
 
     def _getClass(self):
@@ -787,7 +787,7 @@ class slack_Client_onHTTPError_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(slack_Client_onHTTPError_Method, self).__init__(u"quark.void", u"onHTTPError", _List([u"quark.HTTPRequest", u"quark.String"]));
+        super(slack_Client_onHTTPError_Method, self).__init__(u"quark.void", u"onHTTPError", _List([u"quark.HTTPRequest", u"quark.HTTPError"]));
 
     def invoke(self, object, args):
         obj = object;

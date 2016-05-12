@@ -28,7 +28,7 @@ class A(object):
             (self).name = value
 
 
-A.inheritance_super__A_ref = quark_ffi_signatures_md.Root.inheritance_super__A_md
+A.inheritance_super__A_ref = None
 class B(A):
     def _init(self):
         A._init(self)
@@ -53,4 +53,4 @@ class B(A):
             (self).name = value
 
 
-B.inheritance_super__B_ref = quark_ffi_signatures_md.Root.inheritance_super__B_md
+B.inheritance_super__B_ref = None

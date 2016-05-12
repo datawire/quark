@@ -9,6 +9,39 @@ File(Import(Name(quark)),
 
  Package(Name(quark),
 
+  Class(Name(HTTPError), Type(Name(Error)),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("quark.HTTPError", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Return(Attr(Var(Name(self), $type=7.quark.HTTPError), Name(message),
+        $type=1.quark.String)))),
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Assign(Attr(Var(Name(self), $type=7.quark.HTTPError), Name(message),
+        $type=1.quark.String), Cast(Var(Name(value), $type=1.quark.Object),
+        $type=1.quark.String)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(quark_HTTPError_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
+      Name(quark_HTTPError_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
   Interface(Name(HTTPHandler),
 
    Method(static=False, Type(Name(void)), Name(onHTTPInit),
@@ -23,17 +56,19 @@ File(Import(Name(quark)),
 
    Method(static=False, Type(Name(void)), Name(onHTTPError),
     Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
-    Param(Type(Name(String)), Name(message), $type=1.quark.String),
+    Param(Type(Name(HTTPError)), Name(message), $type=7.quark.HTTPError),
     Block()),
 
    Method(static=False, Type(Name(void)), Name(onHTTPFinal),
     Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_HTTPHandler_ref), Attr(Attr(Var(Name(quark_md),
-      $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
-     Name(quark_HTTPHandler_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)),
+    Name(quark_HTTPHandler_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
+      Name(quark_HTTPHandler_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Interface(Name(HTTPRequest),
 
@@ -71,10 +106,12 @@ File(Import(Name(quark)),
    Method(static=False, Type(Name(List), Type(Name(String))),
     Name(getHeaders)),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_HTTPRequest_ref), Attr(Attr(Var(Name(quark_md),
-      $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
-     Name(quark_HTTPRequest_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)),
+    Name(quark_HTTPRequest_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
+      Name(quark_HTTPRequest_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Interface(Name(HTTPResponse),
 
@@ -98,10 +135,12 @@ File(Import(Name(quark)),
    Method(static=False, Type(Name(List), Type(Name(String))),
     Name(getHeaders)),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_HTTPResponse_ref), Attr(Attr(Var(Name(quark_md),
-      $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
-     Name(quark_HTTPResponse_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)),
+    Name(quark_HTTPResponse_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
+      Name(quark_HTTPResponse_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Interface(Annotation(Name(doc), String("Http servlet",
     $type=1.quark.String)), Name(HTTPServlet), Type(Name(Servlet)),
@@ -125,8 +164,10 @@ File(Import(Name(quark)),
        $type=1.quark.String), Var(Name(self), $type=7.quark.HTTPServlet),
       $type=1.quark.void)))),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_HTTPServlet_ref), Attr(Attr(Var(Name(quark_md),
-      $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
-     Name(quark_HTTPServlet_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)))
+    Name(quark_HTTPServlet_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=14.quark_md), Name(Root), $type=14.quark_md.Root),
+      Name(quark_HTTPServlet_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
 )

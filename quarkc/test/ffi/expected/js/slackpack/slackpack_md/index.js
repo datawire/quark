@@ -922,7 +922,7 @@ slack_Client_onWSClose_Method.prototype._setField = slack_Client_onWSClose_Metho
 // CLASS slack_Client_onWSError_Method
 
 function slack_Client_onWSError_Method() {
-    slack_Client_onWSError_Method.super_.call(this, "quark.void", "onWSError", ["quark.WebSocket"]);
+    slack_Client_onWSError_Method.super_.call(this, "quark.void", "onWSError", ["quark.WebSocket", "quark.WSError"]);
 }
 exports.slack_Client_onWSError_Method = slack_Client_onWSError_Method;
 _qrt.util.inherits(slack_Client_onWSError_Method, quark.reflect.Method);
@@ -934,7 +934,7 @@ slack_Client_onWSError_Method.prototype.__init_fields__ = slack_Client_onWSError
 
 function slack_Client_onWSError_Method_invoke(object, args) {
     var obj = object;
-    (obj).onWSError((args)[0]);
+    (obj).onWSError((args)[0], (args)[1]);
     return null;
 }
 slack_Client_onWSError_Method.prototype.invoke = slack_Client_onWSError_Method_invoke;
@@ -1218,7 +1218,7 @@ slack_Client_onHTTPInit_Method.prototype._setField = slack_Client_onHTTPInit_Met
 // CLASS slack_Client_onHTTPError_Method
 
 function slack_Client_onHTTPError_Method() {
-    slack_Client_onHTTPError_Method.super_.call(this, "quark.void", "onHTTPError", ["quark.HTTPRequest", "quark.String"]);
+    slack_Client_onHTTPError_Method.super_.call(this, "quark.void", "onHTTPError", ["quark.HTTPRequest", "quark.HTTPError"]);
 }
 exports.slack_Client_onHTTPError_Method = slack_Client_onHTTPError_Method;
 _qrt.util.inherits(slack_Client_onHTTPError_Method, quark.reflect.Method);

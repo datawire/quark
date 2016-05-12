@@ -30,7 +30,7 @@ function Cat__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
 }
 Cat.prototype.__init_fields__ = Cat__init_fields__;
-Cat.inheritance_pets_Cat_ref = quark_ffi_signatures_md.Root.inheritance_pets_Cat_md;
+Cat.inheritance_pets_Cat_ref = null;
 function Cat_greet() {
     _qrt.print("meow!");
 }
@@ -61,7 +61,7 @@ function Dog__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
 }
 Dog.prototype.__init_fields__ = Dog__init_fields__;
-Dog.inheritance_pets_Dog_ref = quark_ffi_signatures_md.Root.inheritance_pets_Dog_md;
+Dog.inheritance_pets_Dog_ref = null;
 function Dog_greet() {
     _qrt.print("woof!");
 }

@@ -19,7 +19,7 @@ function Overload__init_fields__() {
     this.name = null;
 }
 Overload.prototype.__init_fields__ = Overload__init_fields__;
-Overload.classes_Overload_ref = quark_ffi_signatures_md.Root.classes_Overload_md;
+Overload.classes_Overload_ref = null;
 function Overload___add__(o) {
     return null;
 }
@@ -61,7 +61,7 @@ exports.Test = Test;
 
 function Test__init_fields__() {}
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.classes_Test_ref = quark_ffi_signatures_md.Root.classes_Test_md;
+Test.classes_Test_ref = null;
 function Test_test() {}
 Test.prototype.test = Test_test;
 
@@ -86,7 +86,7 @@ exports.string_test = string_test;
 
 function string_test__init_fields__() {}
 string_test.prototype.__init_fields__ = string_test__init_fields__;
-string_test.classes_string_test_ref = quark_ffi_signatures_md.Root.classes_string_test_md;
+string_test.classes_string_test_ref = null;
 function string_test_check(actual, expected, op, q) {}
 string_test.prototype.check = string_test_check;
 
@@ -116,7 +116,7 @@ function test_size__init_fields__() {
     this.what = null;
 }
 test_size.prototype.__init_fields__ = test_size__init_fields__;
-test_size.classes_test_size_ref = quark_ffi_signatures_md.Root.classes_test_size_md;
+test_size.classes_test_size_ref = null;
 function test_size_does(expected) {
     return null;
 }
@@ -156,7 +156,7 @@ function test_startsWith__init_fields__() {
     this._that = null;
 }
 test_startsWith.prototype.__init_fields__ = test_startsWith__init_fields__;
-test_startsWith.classes_test_startsWith_ref = quark_ffi_signatures_md.Root.classes_test_startsWith_md;
+test_startsWith.classes_test_startsWith_ref = null;
 function test_startsWith_that(_that) {
     return null;
 }
@@ -207,7 +207,7 @@ function test_endsWith__init_fields__() {
     this._that = null;
 }
 test_endsWith.prototype.__init_fields__ = test_endsWith__init_fields__;
-test_endsWith.classes_test_endsWith_ref = quark_ffi_signatures_md.Root.classes_test_endsWith_md;
+test_endsWith.classes_test_endsWith_ref = null;
 function test_endsWith_that(_that) {
     return null;
 }
@@ -258,7 +258,7 @@ function test_find__init_fields__() {
     this._that = null;
 }
 test_find.prototype.__init_fields__ = test_find__init_fields__;
-test_find.classes_test_find_ref = quark_ffi_signatures_md.Root.classes_test_find_md;
+test_find.classes_test_find_ref = null;
 function test_find_that(_that) {
     return null;
 }
@@ -310,7 +310,7 @@ function test_substring__init_fields__() {
     this.end = null;
 }
 test_substring.prototype.__init_fields__ = test_substring__init_fields__;
-test_substring.classes_test_substring_ref = quark_ffi_signatures_md.Root.classes_test_substring_md;
+test_substring.classes_test_substring_ref = null;
 function test_substring_that(start, end) {
     return null;
 }
@@ -368,7 +368,7 @@ function test_replace__init_fields__() {
     this.end = null;
 }
 test_replace.prototype.__init_fields__ = test_replace__init_fields__;
-test_replace.classes_test_replace_ref = quark_ffi_signatures_md.Root.classes_test_replace_md;
+test_replace.classes_test_replace_ref = null;
 function test_replace_that(start, end) {
     return null;
 }
@@ -427,7 +427,7 @@ function test_join__init_fields__() {
     this.sep = null;
 }
 test_join.prototype.__init_fields__ = test_join__init_fields__;
-test_join.classes_test_join_ref = quark_ffi_signatures_md.Root.classes_test_join_md;
+test_join.classes_test_join_ref = null;
 function test_join_that() {
     return null;
 }
@@ -496,7 +496,7 @@ function test_split__init_fields__() {
     this.altsep = null;
 }
 test_split.prototype.__init_fields__ = test_split__init_fields__;
-test_split.classes_test_split_ref = quark_ffi_signatures_md.Root.classes_test_split_md;
+test_split.classes_test_split_ref = null;
 function test_split_that(what) {
     return null;
 }

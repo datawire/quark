@@ -28,4 +28,4 @@ class Box(object):
             (self).contents = value
 
 
-Box.generics_constructors_Box_quark_Object__ref = quark_ffi_signatures_md.Root.generics_constructors_Box_quark_Object__md
+Box.generics_constructors_Box_quark_Object__ref = None

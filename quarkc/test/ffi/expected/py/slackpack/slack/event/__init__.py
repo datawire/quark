@@ -55,7 +55,7 @@ class SlackEvent(object):
             (self).timestamp = value
 
 
-SlackEvent.slack_event_SlackEvent_ref = slackpack_md.Root.slack_event_SlackEvent_md
+SlackEvent.slack_event_SlackEvent_ref = None
 class SlackError(SlackEvent):
     """
     The server has indicated an error has occurred.
@@ -118,7 +118,7 @@ class SlackError(SlackEvent):
             (self).text = value
 
 
-SlackError.slack_event_SlackError_ref = slackpack_md.Root.slack_event_SlackError_md
+SlackError.slack_event_SlackError_ref = None
 class Hello(SlackEvent):
     """
     The client successfully connected to the server.
@@ -164,7 +164,7 @@ class Hello(SlackEvent):
             (self).timestamp = value
 
 
-Hello.slack_event_Hello_ref = slackpack_md.Root.slack_event_Hello_md
+Hello.slack_event_Hello_ref = None
 class Message(SlackEvent):
     """
     A message was sent to a channel.
@@ -241,7 +241,7 @@ class Message(SlackEvent):
             (self).edited = value
 
 
-Message.slack_event_Message_ref = slackpack_md.Root.slack_event_Message_md
+Message.slack_event_Message_ref = None
 class Edited(object):
     """
     Metadata about an edit to a message.
@@ -272,4 +272,4 @@ class Edited(object):
             (self).timestamp = value
 
 
-Edited.slack_event_Edited_ref = slackpack_md.Root.slack_event_Edited_md
+Edited.slack_event_Edited_ref = None

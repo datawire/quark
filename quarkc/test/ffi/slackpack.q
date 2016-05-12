@@ -120,7 +120,7 @@ namespace slack {
 
         void onWSClose(WebSocket socket) {}
 
-        void onWSError(WebSocket socket) {}
+        void onWSError(WebSocket socket, WSError error) {}
 
         event.SlackEvent construct(String type) { return null; }
 

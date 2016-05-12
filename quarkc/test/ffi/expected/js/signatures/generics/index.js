@@ -62,9 +62,9 @@ function Crate__init_fields__() {
     this.ibox = null;
 }
 Crate.prototype.__init_fields__ = Crate__init_fields__;
-Crate.generics_Box_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Box_quark_Object__md;
-Crate.generics_Box_quark_int__ref = quark_ffi_signatures_md.Root.generics_Box_quark_int__md;
-Crate.generics_Crate_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Crate_quark_Object__md;
+Crate.generics_Box_quark_Object__ref = null;
+Crate.generics_Box_quark_int__ref = null;
+Crate.generics_Crate_quark_Object__ref = null;
 function Crate_set(stuff) {}
 Crate.prototype.set = Crate_set;
 
@@ -109,7 +109,7 @@ function Sack__init_fields__() {
     this.ints = null;
 }
 Sack.prototype.__init_fields__ = Sack__init_fields__;
-Sack.generics_Sack_ref = quark_ffi_signatures_md.Root.generics_Sack_md;
+Sack.generics_Sack_ref = null;
 function Sack__getClass() {
     return "generics.Sack";
 }
@@ -143,9 +143,9 @@ function Matrix__init_fields__() {
     this.columns = null;
 }
 Matrix.prototype.__init_fields__ = Matrix__init_fields__;
-Matrix.generics_Matrix_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Matrix_quark_Object__md;
-Matrix.quark_List_quark_List_quark_Object___ref = quark_ffi_signatures_md.Root.quark_List_quark_List_quark_Object___md;
-Matrix.quark_List_quark_Object__ref = quark_ffi_signatures_md.Root.quark_List_quark_Object__md;
+Matrix.generics_Matrix_quark_Object__ref = null;
+Matrix.quark_List_quark_List_quark_Object___ref = null;
+Matrix.quark_List_quark_Object__ref = null;
 function Matrix___get__(i, j) {
     return null;
 }

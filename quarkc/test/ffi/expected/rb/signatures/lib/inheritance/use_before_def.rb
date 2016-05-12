@@ -12,7 +12,7 @@ def self.Bar; Bar; end
 class Bar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_use_before_def_Bar_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_use_before_def_Bar_md }
+    static inheritance_use_before_def_Bar_ref: -> { nil }
 
 
 
@@ -68,7 +68,7 @@ class Foo < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_use_before_def_Foo_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_use_before_def_Foo_md }
+    static inheritance_use_before_def_Foo_ref: -> { nil }
 
 
 

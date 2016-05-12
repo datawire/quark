@@ -22,7 +22,7 @@ exports.SlackHandler = SlackHandler;
 
 function SlackHandler__init_fields__() {}
 SlackHandler.prototype.__init_fields__ = SlackHandler__init_fields__;
-SlackHandler.slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md;
+SlackHandler.slack_SlackHandler_ref = null;
 function SlackHandler_onSlackEvent(event) {}
 SlackHandler.prototype.onSlackEvent = SlackHandler_onSlackEvent;
 
@@ -50,7 +50,7 @@ function User__init_fields__() {
     this.user = null;
 }
 User.prototype.__init_fields__ = User__init_fields__;
-User.slack_User_ref = slackpack_md.Root.slack_User_md;
+User.slack_User_ref = null;
 function User__getClass() {
     return "slack.User";
 }
@@ -92,7 +92,7 @@ function Channel__init_fields__() {
     this.channel = null;
 }
 Channel.prototype.__init_fields__ = Channel__init_fields__;
-Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md;
+Channel.slack_Channel_ref = null;
 /**
  * Send a message to a channel.
  */
@@ -143,8 +143,8 @@ function Client__init_fields__() {
     this.socket = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
-Client.slack_Client_ref = slackpack_md.Root.slack_Client_md;
-Client.quark_Map_quark_String_quark_Object__ref = slackpack_md.Root.quark_Map_quark_String_quark_Object__md;
+Client.slack_Client_ref = null;
+Client.quark_Map_quark_String_quark_Object__ref = null;
 /**
  * Connect the client to the slack service.
  */
@@ -166,7 +166,7 @@ Client.prototype.onWSConnected = Client_onWSConnected;
 function Client_onWSClose(socket) {}
 Client.prototype.onWSClose = Client_onWSClose;
 
-function Client_onWSError(socket) {}
+function Client_onWSError(socket, error) {}
 Client.prototype.onWSError = Client_onWSError;
 
 function Client_construct(type) {

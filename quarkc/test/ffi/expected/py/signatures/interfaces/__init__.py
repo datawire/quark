@@ -12,19 +12,19 @@ class A(object):
     def bar(self):
         pass
 
-A.interfaces_A_ref = quark_ffi_signatures_md.Root.interfaces_A_md
+A.interfaces_A_ref = None
 class B(object):
 
     def bar(self):
         pass
 
-B.interfaces_B_ref = quark_ffi_signatures_md.Root.interfaces_B_md
+B.interfaces_B_ref = None
 class C(object):
 
     def foo(self):
         pass
 
-C.interfaces_C_ref = quark_ffi_signatures_md.Root.interfaces_C_md
+C.interfaces_C_ref = None
 class T1(object):
     def _init(self):
         pass
@@ -44,7 +44,7 @@ class T1(object):
 
     def bar(self):
         pass
-T1.interfaces_T1_ref = quark_ffi_signatures_md.Root.interfaces_T1_md
+T1.interfaces_T1_ref = None
 class T2(object):
     def _init(self):
         pass
@@ -64,7 +64,7 @@ class T2(object):
 
     def bar(self):
         pass
-T2.interfaces_T2_ref = quark_ffi_signatures_md.Root.interfaces_T2_md
+T2.interfaces_T2_ref = None
 class T3(object):
     def _init(self):
         pass
@@ -84,7 +84,7 @@ class T3(object):
 
     def bar(self):
         pass
-T3.interfaces_T3_ref = quark_ffi_signatures_md.Root.interfaces_T3_md
+T3.interfaces_T3_ref = None
 class T4(object):
     def _init(self):
         pass
@@ -104,7 +104,7 @@ class T4(object):
 
     def foo(self):
         pass
-T4.interfaces_T4_ref = quark_ffi_signatures_md.Root.interfaces_T4_md
+T4.interfaces_T4_ref = None
 class T5(object):
     def _init(self):
         pass
@@ -124,7 +124,7 @@ class T5(object):
 
     def bar(self):
         pass
-T5.interfaces_T5_ref = quark_ffi_signatures_md.Root.interfaces_T5_md
+T5.interfaces_T5_ref = None
 class Foo(object):
 
     def m1(self):
@@ -136,8 +136,8 @@ class Foo(object):
     def m3(self, args):
         assert False
 
-Foo.interfaces_Foo_ref = quark_ffi_signatures_md.Root.interfaces_Foo_md
-Foo.quark_List_quark_String__ref = quark_ffi_signatures_md.Root.quark_List_quark_String__md
+Foo.interfaces_Foo_ref = None
+Foo.quark_List_quark_String__ref = None
 class Bar(object):
 
     def m1(self):
@@ -149,7 +149,7 @@ class Bar(object):
     def m3(self, args):
         assert False
 
-Bar.interfaces_Bar_quark_Object__ref = quark_ffi_signatures_md.Root.interfaces_Bar_quark_Object__md
+Bar.interfaces_Bar_quark_Object__ref = None
 class Baz(object):
     def _init(self):
         pass
@@ -172,13 +172,13 @@ class Baz(object):
 
     def _setField(self, name, value):
         pass
-Baz.interfaces_Baz_ref = quark_ffi_signatures_md.Root.interfaces_Baz_md
+Baz.interfaces_Baz_ref = None
 class RazBar(object):
     pass
-RazBar.interfaces_RazBar_ref = quark_ffi_signatures_md.Root.interfaces_RazBar_md
+RazBar.interfaces_RazBar_ref = None
 class RazFaz(object):
     pass
-RazFaz.interfaces_RazFaz_quark_Object__ref = quark_ffi_signatures_md.Root.interfaces_RazFaz_quark_Object__md
+RazFaz.interfaces_RazFaz_quark_Object__ref = None
 class BazBar(object):
     def _init(self):
         pass
@@ -201,7 +201,7 @@ class BazBar(object):
 
     def _setField(self, name, value):
         pass
-BazBar.interfaces_BazBar_ref = quark_ffi_signatures_md.Root.interfaces_BazBar_md
+BazBar.interfaces_BazBar_ref = None
 class BazFaz(object):
     def _init(self):
         pass
@@ -224,4 +224,4 @@ class BazFaz(object):
 
     def _setField(self, name, value):
         pass
-BazFaz.interfaces_BazFaz_quark_Object__ref = quark_ffi_signatures_md.Root.interfaces_BazFaz_quark_Object__md
+BazFaz.interfaces_BazFaz_quark_Object__ref = None

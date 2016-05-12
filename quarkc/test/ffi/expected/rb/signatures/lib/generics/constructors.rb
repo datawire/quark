@@ -13,7 +13,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
     attr_accessor :contents
     extend ::DatawireQuarkCore::Static
 
-    static generics_constructors_Box_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_constructors_Box_quark_Object__md }
+    static generics_constructors_Box_quark_Object__ref: -> { nil }
 
 
 

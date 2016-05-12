@@ -10,7 +10,7 @@ def self.A; A; end
 class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_A_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_A_md }
+    static interfaces_A_ref: -> { nil }
 
 
 
@@ -50,7 +50,7 @@ def self.B; B; end
 class B < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_B_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_B_md }
+    static interfaces_B_ref: -> { nil }
 
 
 
@@ -84,7 +84,7 @@ def self.C; C; end
 class C < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_C_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_C_md }
+    static interfaces_C_ref: -> { nil }
 
 
 
@@ -118,7 +118,7 @@ def self.T1; T1; end
 class T1 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_T1_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_T1_md }
+    static interfaces_T1_ref: -> { nil }
 
 
 
@@ -180,7 +180,7 @@ def self.T2; T2; end
 class T2 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_T2_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_T2_md }
+    static interfaces_T2_ref: -> { nil }
 
 
 
@@ -242,7 +242,7 @@ def self.T3; T3; end
 class T3 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_T3_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_T3_md }
+    static interfaces_T3_ref: -> { nil }
 
 
 
@@ -304,7 +304,7 @@ def self.T4; T4; end
 class T4 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_T4_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_T4_md }
+    static interfaces_T4_ref: -> { nil }
 
 
 
@@ -366,7 +366,7 @@ def self.T5; T5; end
 class T5 < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_T5_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_T5_md }
+    static interfaces_T5_ref: -> { nil }
 
 
 
@@ -428,8 +428,8 @@ def self.Foo; Foo; end
 class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_Foo_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_Foo_md }
-    static quark_List_quark_String__ref: -> { ::Quark.quark_ffi_signatures_md.Root.quark_List_quark_String__md }
+    static interfaces_Foo_ref: -> { nil }
+    static quark_List_quark_String__ref: -> { nil }
 
 
 
@@ -474,7 +474,7 @@ def self.Bar; Bar; end
 class Bar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_Bar_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_Bar_quark_Object__md }
+    static interfaces_Bar_quark_Object__ref: -> { nil }
 
 
 
@@ -519,7 +519,7 @@ def self.Baz; Baz; end
 class Baz < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_Baz_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_Baz_md }
+    static interfaces_Baz_ref: -> { nil }
 
 
 
@@ -588,7 +588,7 @@ def self.RazBar; RazBar; end
 class RazBar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_RazBar_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_RazBar_md }
+    static interfaces_RazBar_ref: -> { nil }
 
 
 
@@ -615,7 +615,7 @@ def self.RazFaz; RazFaz; end
 class RazFaz < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_RazFaz_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_RazFaz_quark_Object__md }
+    static interfaces_RazFaz_quark_Object__ref: -> { nil }
 
 
 
@@ -642,7 +642,7 @@ def self.BazBar; BazBar; end
 class BazBar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_BazBar_ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_BazBar_md }
+    static interfaces_BazBar_ref: -> { nil }
 
 
 
@@ -711,7 +711,7 @@ def self.BazFaz; BazFaz; end
 class BazFaz < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static interfaces_BazFaz_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.interfaces_BazFaz_quark_Object__md }
+    static interfaces_BazFaz_quark_Object__ref: -> { nil }
 
 
 

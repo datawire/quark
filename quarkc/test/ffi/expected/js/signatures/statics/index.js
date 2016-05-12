@@ -16,7 +16,7 @@ exports.Foo = Foo;
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
 Foo.count = null;
-Foo.statics_Foo_ref = quark_ffi_signatures_md.Root.statics_Foo_md;
+Foo.statics_Foo_ref = null;
 function Foo_setCount(n) {}
 Foo.setCount = Foo_setCount;
 

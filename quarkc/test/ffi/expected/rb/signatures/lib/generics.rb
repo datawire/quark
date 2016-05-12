@@ -79,9 +79,9 @@ class Crate < ::DatawireQuarkCore::QuarkObject
     attr_accessor :box, :ibox
     extend ::DatawireQuarkCore::Static
 
-    static generics_Box_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_Box_quark_Object__md }
-    static generics_Box_quark_int__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_Box_quark_int__md }
-    static generics_Crate_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_Crate_quark_Object__md }
+    static generics_Box_quark_Object__ref: -> { nil }
+    static generics_Box_quark_int__ref: -> { nil }
+    static generics_Crate_quark_Object__ref: -> { nil }
 
 
 
@@ -157,7 +157,7 @@ class Sack < ::DatawireQuarkCore::QuarkObject
     attr_accessor :ints
     extend ::DatawireQuarkCore::Static
 
-    static generics_Sack_ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_Sack_md }
+    static generics_Sack_ref: -> { nil }
 
 
 
@@ -212,9 +212,9 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
     attr_accessor :width, :height, :columns
     extend ::DatawireQuarkCore::Static
 
-    static generics_Matrix_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_Matrix_quark_Object__md }
-    static quark_List_quark_List_quark_Object___ref: -> { ::Quark.quark_ffi_signatures_md.Root.quark_List_quark_List_quark_Object___md }
-    static quark_List_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.quark_List_quark_Object__md }
+    static generics_Matrix_quark_Object__ref: -> { nil }
+    static quark_List_quark_List_quark_Object___ref: -> { nil }
+    static quark_List_quark_Object__ref: -> { nil }
 
 
 

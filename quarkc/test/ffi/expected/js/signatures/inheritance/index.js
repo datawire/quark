@@ -26,7 +26,7 @@ function Base__init_fields__() {
     this.name = null;
 }
 Base.prototype.__init_fields__ = Base__init_fields__;
-Base.inheritance_Base_ref = quark_ffi_signatures_md.Root.inheritance_Base_md;
+Base.inheritance_Base_ref = null;
 function Base__getClass() {
     return "inheritance.Base";
 }
@@ -61,7 +61,7 @@ function Test__init_fields__() {
     this.later = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.inheritance_Test_ref = quark_ffi_signatures_md.Root.inheritance_Test_md;
+Test.inheritance_Test_ref = null;
 function Test__getClass() {
     return "inheritance.Test";
 }
@@ -105,7 +105,7 @@ function A__init_fields__() {
     this.name = null;
 }
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_A_ref = quark_ffi_signatures_md.Root.inheritance_A_md;
+A.inheritance_A_ref = null;
 function A__getClass() {
     return "inheritance.A";
 }
@@ -138,7 +138,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_B_ref = quark_ffi_signatures_md.Root.inheritance_B_md;
+B.inheritance_B_ref = null;
 function B_greet() {}
 B.prototype.greet = B_greet;
 
@@ -174,7 +174,7 @@ function C__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 C.prototype.__init_fields__ = C__init_fields__;
-C.inheritance_C_ref = quark_ffi_signatures_md.Root.inheritance_C_md;
+C.inheritance_C_ref = null;
 function C_greet() {}
 C.prototype.greet = C_greet;
 
@@ -206,7 +206,7 @@ exports.X = X;
 
 function X__init_fields__() {}
 X.prototype.__init_fields__ = X__init_fields__;
-X.inheritance_X_ref = quark_ffi_signatures_md.Root.inheritance_X_md;
+X.inheritance_X_ref = null;
 function X__getClass() {
     return "inheritance.X";
 }
@@ -233,7 +233,7 @@ function Y__init_fields__() {
     this.name = null;
 }
 Y.prototype.__init_fields__ = Y__init_fields__;
-Y.inheritance_Y_ref = quark_ffi_signatures_md.Root.inheritance_Y_md;
+Y.inheritance_Y_ref = null;
 function Y_test() {}
 Y.prototype.test = Y_test;
 
@@ -265,7 +265,7 @@ exports.Message = Message;
 
 function Message__init_fields__() {}
 Message.prototype.__init_fields__ = Message__init_fields__;
-Message.inheritance_Message_ref = quark_ffi_signatures_md.Root.inheritance_Message_md;
+Message.inheritance_Message_ref = null;
 function Message_encode() {
     return null;
 }
@@ -296,7 +296,7 @@ function Ping__init_fields__() {
     Message.prototype.__init_fields__.call(this);
 }
 Ping.prototype.__init_fields__ = Ping__init_fields__;
-Ping.inheritance_Ping_ref = quark_ffi_signatures_md.Root.inheritance_Ping_md;
+Ping.inheritance_Ping_ref = null;
 function Ping__getClass() {
     return "inheritance.Ping";
 }
@@ -322,7 +322,7 @@ function Pong__init_fields__() {
     Message.prototype.__init_fields__.call(this);
 }
 Pong.prototype.__init_fields__ = Pong__init_fields__;
-Pong.inheritance_Pong_ref = quark_ffi_signatures_md.Root.inheritance_Pong_md;
+Pong.inheritance_Pong_ref = null;
 function Pong_toString() {
     return null;
 }

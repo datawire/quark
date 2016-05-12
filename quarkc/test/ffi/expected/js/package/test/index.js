@@ -21,7 +21,7 @@ function Test__init_fields__() {
     this.name = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.test_Test_ref = package_md.Root.test_Test_md;
+Test.test_Test_ref = null;
 function Test_go() {}
 Test.prototype.go = Test_go;
 

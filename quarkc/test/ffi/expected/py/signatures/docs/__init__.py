@@ -35,4 +35,4 @@ class Test(object):
             (self).name = value
 
 
-Test.docs_Test_ref = quark_ffi_signatures_md.Root.docs_Test_md
+Test.docs_Test_ref = None

@@ -11,7 +11,7 @@ class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
     static count: -> { nil }
-    static statics_Foo_ref: -> { ::Quark.quark_ffi_signatures_md.Root.statics_Foo_md }
+    static statics_Foo_ref: -> { nil }
 
 
 

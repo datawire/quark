@@ -17,7 +17,7 @@ function A__init_fields__() {
     this.name = null;
 }
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_super__A_ref = quark_ffi_signatures_md.Root.inheritance_super__A_md;
+A.inheritance_super__A_ref = null;
 function A_greet() {}
 A.prototype.greet = A_greet;
 
@@ -53,7 +53,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_super__B_ref = quark_ffi_signatures_md.Root.inheritance_super__B_md;
+B.inheritance_super__B_ref = null;
 function B_greet() {}
 B.prototype.greet = B_greet;
 

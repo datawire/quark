@@ -24,7 +24,7 @@ class SlackHandler(object):
     def onMessage(self, message):
         pass
 
-SlackHandler.slack_SlackHandler_ref = slackpack_md.Root.slack_SlackHandler_md
+SlackHandler.slack_SlackHandler_ref = None
 class User(object):
     """
     A reference to a user.
@@ -56,7 +56,7 @@ class User(object):
             (self).user = value
 
 
-User.slack_User_ref = slackpack_md.Root.slack_User_md
+User.slack_User_ref = None
 class Channel(object):
     """
     A reference to a channel.
@@ -94,7 +94,7 @@ class Channel(object):
             (self).channel = value
 
 
-Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md
+Channel.slack_Channel_ref = None
 class Client(object):
     """
     Represents a persistent connection to the slack service.
@@ -130,7 +130,7 @@ class Client(object):
     def onWSClose(self, socket):
         pass
 
-    def onWSError(self, socket):
+    def onWSError(self, socket, error):
         pass
 
     def construct(self, type):
@@ -199,5 +199,5 @@ class Client(object):
 
     def onHTTPFinal(self, request):
         pass
-Client.slack_Client_ref = slackpack_md.Root.slack_Client_md
-Client.quark_Map_quark_String_quark_Object__ref = slackpack_md.Root.quark_Map_quark_String_quark_Object__md
+Client.slack_Client_ref = None
+Client.quark_Map_quark_String_quark_Object__ref = None

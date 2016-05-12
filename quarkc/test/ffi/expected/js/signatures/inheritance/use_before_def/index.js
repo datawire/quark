@@ -14,7 +14,7 @@ exports.Bar = Bar;
 
 function Bar__init_fields__() {}
 Bar.prototype.__init_fields__ = Bar__init_fields__;
-Bar.inheritance_use_before_def_Bar_ref = quark_ffi_signatures_md.Root.inheritance_use_before_def_Bar_md;
+Bar.inheritance_use_before_def_Bar_ref = null;
 function Bar_go() {}
 Bar.prototype.go = Bar_go;
 
@@ -41,7 +41,7 @@ function Foo__init_fields__() {
     this.name = null;
 }
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.inheritance_use_before_def_Foo_ref = quark_ffi_signatures_md.Root.inheritance_use_before_def_Foo_md;
+Foo.inheritance_use_before_def_Foo_ref = null;
 function Foo__getClass() {
     return "inheritance.use_before_def.Foo";
 }

@@ -45,4 +45,4 @@ class Foo(object):
 
 
 Foo.count = None
-Foo.statics_Foo_ref = quark_ffi_signatures_md.Root.statics_Foo_md
+Foo.statics_Foo_ref = None

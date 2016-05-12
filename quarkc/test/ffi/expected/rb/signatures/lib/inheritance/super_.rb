@@ -13,7 +13,7 @@ class A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_super__A_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_super__A_md }
+    static inheritance_super__A_ref: -> { nil }
 
 
 
@@ -75,7 +75,7 @@ def self.B; B; end
 class B < ::Quark.inheritance.super_.A
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_super__B_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_super__B_md }
+    static inheritance_super__B_ref: -> { nil }
 
 
 
