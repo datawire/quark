@@ -6,6 +6,16 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Other
+
+* New installation process
+
+
+0.6.40
+------
+
+Released on 2016-05-11
+
 ### Command line
 
 * New `quark docs` command generates a file containing JSON describing the API
