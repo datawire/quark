@@ -9,23 +9,37 @@ Core Concepts
 Language Structure
 ------------------
 
-{{{language}}} uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.
+{{{language}}} uses many of the standard elements of object-oriented programming languages including namespaces, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.
 
 {{{language}}} may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.
 
 Files
 ~~~~~
 
-{{{language}}} code is stored in text files with a {{{file_extension}}} file extension. Unlike some languages, {{{language}}} is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Packages may be defined across multiple files or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single {{{file_extension}}} file. However, the set of files comprising an application may only have one main() function declaration.
+{{{language}}} code is stored in text files with a {{{file_extension}}} file extension. Unlike some languages, {{{language}}} is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Namespaces may be defined across multiple files or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single {{{file_extension}}} file. However, the set of files comprising an application may only have one main() function declaration.
 
-Packages
-~~~~~~~~
+{{{language}}} distribution units, known as packages, are declared using the :ref:`package keyword <packageKeyword>`, which tells the compiler the name of the distribution unit being defined in the file.
 
-Packages are defined using the :ref:`package keyword <packageKeyword>` and provide namespaces for class and function definitions. Packages cannot directly contain variables or runnable code; only classes, functions, and other packages are allowed. Packages are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.
+The following table lists the terminology used by {{{language}}} and the supported target languages to describe distribution units, as above, and namespaces within code, as discussed next. Note that the terminology conflicts somewhat between languages.
 
-As mentioned above, packages can be nested. Classes and functions directly inside a top-level package must use nested package name when referencing classes or functions defined inside a nested package but the members of the nested package have direct access to classes and functions in the top-level package without needing to specify their package name.
+==============  ======================  =====================
+Language        Unit of distribution    Namespace within code
+==============  ======================  =====================
+{{{language}}}  package                 namespace
+Java            artifact                package
+Python          PyPI package/egg/wheel  package/module
+Javascript      NPM package             object/closure/etc.
+Ruby            gem                     module
+==============  ======================  =====================
 
-Classes and functions defined outside of a package belong to a default, unnamed root package. This package is logically identical to any named package. Named packages are nested inside this root package so classes and functions in the root package may be referenced inside any package directly without specifying a package name.
+Namespaces
+~~~~~~~~~~
+
+Namespaces are defined using the :ref:`namespace keyword <namespaceKeyword>` and provide namespaces for class and function definitions. Namespaces cannot directly contain variables or runnable code; only classes, functions, and other namespaces are allowed. Namespaces are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.
+
+As mentioned above, namespaces can be nested. Classes and functions directly inside a top-level namespace must use nested namespace name when referencing classes or functions defined inside a nested namespace but the members of the nested namespace have direct access to classes and functions in the top-level namespace without needing to specify their namespace name.
+
+Classes and functions defined outside of a namespace belong to a default, unnamed root namespace. This namespace is logically identical to any named namespace. Named namespaces are nested inside this root namespace so classes and functions in the root namespace may be referenced inside any namespace directly without specifying a namespace name.
 
 Classes
 ~~~~~~~
@@ -73,7 +87,7 @@ Constructors are methods called when an object is instantiated. Every instantiab
 Functions
 ~~~~~~~~~
 
-Functions typically define actions that can be taken outside of the context of a specific class. Functions may require input parameters (which are typed) and may return a value (also typed). Functions do not act on specific objects unless those objects are passed in as input parameters. Functions may belong to a package or be defined as part of the default unnamed package. They are defined as follows:
+Functions typically define actions that can be taken outside of the context of a specific class. Functions may require input parameters (which are typed) and may return a value (also typed). Functions do not act on specific objects unless those objects are passed in as input parameters. Functions may belong to a namespace or be defined as part of the default unnamed namespace. They are defined as follows:
 
 *returnType* *functionName* **(** *parameters* **) {**
     *codeToExecute*
@@ -108,13 +122,13 @@ Constants
 
 Naming and Other Conventions
 ----------------------------
-{{{language}}} names are case sensitive and may contain only alphanumeric characters or underscores (_). Names of elements must be unique within the scope of a package, library, or application (in the case of a library or application, fully-qualified names are considered so package1.name1 and package2.name1 are perfectly acceptable).
+{{{language}}} names are case sensitive and may contain only alphanumeric characters or underscores (_). Names of elements must be unique within the scope of a namespace, library, or application (in the case of a library or application, fully-qualified names are considered so namespace1.name1 and namespace2.name1 are perfectly acceptable).
 
-Package names are not tied to the location of files and are not expected to match directory structures. There are no global rules for naming conventions; if generating Java code this may result in unconventional package names and file locations within the resulting Java files.
+Namespace names are not tied to the location of files and are not expected to match directory structures. There are no global rules for naming conventions; if generating Java code this may result in unconventional package names and file locations within the resulting Java files.
 
 By convention, {{{language}}} expects the following casing rules:
 
-* Package names are lower case
+* Namespace names are lower case
 * Class names are upper case
 * variable, property, method, and function names are camel case
 * annotation names are lower case
