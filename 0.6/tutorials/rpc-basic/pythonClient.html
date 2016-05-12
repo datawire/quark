@@ -1,0 +1,320 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Creating the Python Client &mdash; Datawire Connect 0.6.5 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '0.6.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.6.5 documentation" href="../../index.html" />
+    <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
+    <link rel="next" title="Writing a Python Server" href="pythonServer.html" />
+    <link rel="prev" title="Compiling and Installing the Library in Python" href="pythonBuild.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../../index.html">
+                <img class="dw-logo" src="../../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="pythonServer.html"
+            title="Writing a Python Server"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="pythonBuild.html"
+            title="Compiling and Installing the Library in Python"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started with RPC Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="creating-the-python-client">
+<h1>Creating the Python Client<a class="headerlink" href="#creating-the-python-client" title="Permalink to this headline">¶</a></h1>
+<p>Let&#8217;s start by creating a simple Hello World client using the compiled Hello contract in Python.</p>
+<p>This walkthrough assumes that your client file is named pyclient.py but there is no requirement that you do so. Please substitute your file name for pyclient.py everywhere if you choose a different name.</p>
+<p>Note: If you don&#8217;t want step-by-step guidance about how to create the client and just want to start from a completed client, go directly to the <a class="reference internal" href="#fullexamplepythonclientlocal"><span class="std std-ref">full client code</span></a> displayed in the last step on this page (this client points to a local server) or to this <a class="reference internal" href="#fullexamplepythonclientcloud"><span class="std std-ref">link to the full Python client pointing to the cloud server</span></a>.</p>
+<div class="section" id="part-1-importing-the-product-pieces">
+<span id="part1pythonimport"></span><h2>Part 1: Importing the Datawire Connect Pieces<a class="headerlink" href="#part-1-importing-the-product-pieces" title="Permalink to this headline">¶</a></h2>
+<p>This section shows you how to import the Datawire Connect integration and the HelloRPC contract into your Python client.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># Python Hello Client example
+
+<span class="hll">from datawire_quark_threaded_runtime import get_runtime
+</span><span class="hll">import hello
+</span>
+
+def main():
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">from</span> <span class="pre">datawire_quark_threaded_runtime</span> <span class="pre">import</span> <span class="pre">get_runtime</span></code> imports the user-visible portions of the datawire-quark-threaded runtime integration into your client. Note that although the integration is called datawire-quark-threaded, the module name is datawire_quark_threaded_runtime.</p>
+<p>The line <code class="docutils literal"><span class="pre">import</span> <span class="pre">hello</span></code> imports the service contract library created and built in previous steps of the tutorial.</p>
+</div>
+<div class="section" id="part-2-initializing-the-client">
+<span id="part2pythonclientinstantiation"></span><h2>Part 2: Initializing the Client<a class="headerlink" href="#part-2-initializing-the-client" title="Permalink to this headline">¶</a></h2>
+<p>This section initializes the client so the client knows how to set up and send requests to the server.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># Python Hello Client example
+
+from datawire_quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+<span class="hll">   runtime = get_runtime()
+</span>
+<span class="hll">   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+</span>   request = hello.Request()
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">runtime=get_runtime()</span></code> instantiates an instance of the Datawire Connect runtime integration imported in the earlier step.</p>
+<p>The line <code class="docutils literal"><span class="pre">client</span> <span class="pre">=</span> <span class="pre">hello.HelloClient(runtime,</span> <span class="pre">&quot;http://127.0.0.1:8910/hello&quot;)</span></code> instantiates a HelloRPC client object (as defined in the service contract) and tells it to use the runtime instance created in the previous line and to send requests to a server instance running at <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>.</p>
+<p>If you want to point your client to the cloud server instead, just use <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> instead of the local URL above. For this walkthrough, though, you should use the local server (examined on the next page).</p>
+</div>
+<div class="section" id="part-3-setting-up-the-request">
+<span id="part3pythonrequest"></span><h2>Part 3: Setting Up the Request<a class="headerlink" href="#part-3-setting-up-the-request" title="Permalink to this headline">¶</a></h2>
+<p>This section sets up the request to the server.</p>
+<p>Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># Python Hello Client example
+
+from datawire_quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+   runtime = get_runtime()
+
+   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+<span class="hll">   request = hello.Request()
+</span><span class="hll">   request.text = &quot;Hello from Python!&quot;
+</span>   print &quot;Request says %r&quot; % request.text
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">request=hello.Request()</span></code> instantiates a Request object (as defined in the service contract).</p>
+<p>The line <code class="docutils literal"><span class="pre">request.text</span> <span class="pre">=</span> <span class="pre">&quot;Hello</span> <span class="pre">from</span> <span class="pre">Python!&quot;</span></code> sets the message to be sent to the server in the request.</p>
+<p>The print statement provides visual feedback within the client that the request was set. It is not essential to the interaction but helps illustrate the communications in the example.</p>
+</div>
+<div class="section" id="part-4-sending-the-request-and-processing-the-response">
+<span id="part4pythonsendrequest"></span><h2>Part 4: Sending the Request and Processing the Response<a class="headerlink" href="#part-4-sending-the-request-and-processing-the-response" title="Permalink to this headline">¶</a></h2>
+<p>This section sends the request to the server, receives the response, and displays it from the client.</p>
+<p id="fullexamplepythonclientlocal">Relevant code:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span># Python Hello Client example
+
+from datawire_quark_threaded_runtime import get_runtime
+import hello
+
+
+def main():
+   runtime = get_runtime()
+
+   client = hello.HelloClient(runtime, &quot;http://127.0.0.1:8910/hello&quot;)
+   request = hello.Request()
+   request.text = &quot;Hello from Python!&quot;
+   print &quot;Request says %r&quot; % request.text
+
+<span class="hll">   response = client.hello(request)
+</span>   print &quot;Response says %r&quot; % response.result
+
+
+if __name__ == &#39;__main__&#39;:
+   main()
+</pre></div>
+</div>
+<p>The line <code class="docutils literal"><span class="pre">response</span> <span class="pre">=</span> <span class="pre">client.hello(request)</span></code> uses the hello method of the Client object (as defined within the Hello interface in the service contract) to send the actual request. This method takes the request object as an input parameter and returns a response object (as defined in the Response value class in the service contract).</p>
+<p>The print statement below it provides visual feedback within the client that the request was sent to the server and a response was received. It is not essential to the interaction but helps illustrate the communications in the example.</p>
+<p id="fullexamplepythonclientcloud">That&#8217;s it! The Python client is fully defined now - the code above is all that&#8217;s needed to run the client and visually see the results sent back from the local server piece defined in the next stage of this walkthrough. Alternately, the complete client code set to run against the cloud server can be found in the Datawire Connect GitHub repository <a class="reference external" href="https://github.com/datawire/quark/blob/0.3.x/examples/helloRPC/pyclient.py">here</a>.</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    
+
+
+<h3><a href="../../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../language-reference/index.html">Quark Language Reference</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Getting Started with RPC Walkthrough</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction to RPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="setup.html">Datawire Connect RPC Support</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quicktry.html">Quickly Trying RPC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="contract.html">Defining the Service Contract</a></li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Supported Languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonSetup.html">Python: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonBuild.html">Python: Building the Example</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Python: Writing the Client</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="pythonServer.html">Python: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="pythonRun.html">Python: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaSetup.html">Java: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaBuild.html">Java: Building the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaClient.html">Java: Writing the Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaServer.html">Java: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javaRun.html">Java: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptSetup.html">Javascript: Requirements and Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptBuild.html">Javascript: Building the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptClient.html">Javascript: Writing the Client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptServer.html">Javascript: Writing the Server</a></li>
+<li class="toctree-l2"><a class="reference internal" href="javascriptRun.html">Javascript: Running the Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="try.html">Putting It All Together</a></li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Getting Started with RPC Walkthrough</a><ul>
+      <li>Previous: <a href="pythonBuild.html" title="previous chapter">Compiling and Installing the Library in Python</a></li>
+      <li>Next: <a href="pythonServer.html" title="next chapter">Writing a Python Server</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="pythonServer.html">Writing a Python Server</a></li>
+    </ul>
+
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="pythonBuild.html">Compiling and Installing the Library in Python</a></li>
+    </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="pythonServer.html"
+            title="Writing a Python Server"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="pythonBuild.html"
+            title="Compiling and Installing the Library in Python"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Getting Started with RPC Walkthrough</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../../_static/js/main.js" ></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

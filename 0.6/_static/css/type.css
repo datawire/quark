@@ -1,0 +1,104 @@
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size: 1.03rem;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+div.body {
+    color: #333;
+}
+
+div.body a.reference {
+    border: none;
+    color: #0AA0CA;
+}
+div.body a.reference:hover { }
+
+
+div.body p,
+div.body dd,
+div.body li {
+    line-height: 1.7rem;
+}
+
+div.body h1,
+div.body h2,
+div.body h3,
+div.body h4,
+div.body h5,
+div.body h6 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    color: #0b3b4c;
+}
+
+div.body h1 {
+    font-size: 2.6rem;
+}
+
+div.body h2 {
+   font-size: 2rem;
+}
+div.body h3 {
+    font-size: 1.45rem;
+}
+div.body h4 {
+    font-size: 1.15rem;
+}
+div.body strong {
+    color: #000;
+}
+
+div.sphinxsidebar {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+div.sphinxsidebar h3,
+div.sphinxsidebar h4 {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 400;
+    font-size: 1.35rem;
+    color: #fff;
+}
+
+div.sphinxsidebar h3,
+div.sphinxsidebar h3 a {
+    color: #fff;
+}
+
+input {
+    font-family: 'Source Sans Pro', sans-serif;
+    font-weight: 300;
+}
+
+div.sphinxsidebar li.current a.current {
+    color: #0AA0CA;
+}
+
+/* DESKTOP BREAKPOINT */
+@media screen and (min-width: 875px) {
+
+    div.sphinxsidebar h3,
+    div.sphinxsidebar h4 {
+        color: #0b3b4c;
+    }
+
+    div.sphinxsidebar h3,
+    div.sphinxsidebar h3 a {
+        color: #0b3b4c;
+    }
+
+}
+
+.dw-header .dw-search input[type=text] {
+    font-size: 1.4rem;
+}
+@media screen and (min-width: 875px) {
+    .dw-header .dw-search input[type=text] {
+        font-size: 2.1rem;
+    }
+}
+
