@@ -26,6 +26,11 @@ class Subprocess(object):
         cls.log.debug("invoking %s" % args[0])
         return subprocess.check_output(*args, **kwargs)
 
+    @classmethod
+    def call(cls, *args, **kwargs):
+        cls.log.debug("invoking %s" % args[0])
+        return subprocess.call(*args, **kwargs)
+
 class last_release(object):
     """Find last release tag for the given commit or master branch by default """
 
@@ -36,14 +41,35 @@ class last_release(object):
         self._tag = None
         self._version = None
 
+    def not_containing(self, commit):
+        """Find the most recent release that does not contain the specified
+        commit
+        """
+        out = Subprocess.check_output([
+            "git", "describe",
+            "--abbrev=0", "--match=v[0-9]*", "--always",
+            "--contains", commit ]).strip()
+
+        if out.startswith("v"):
+            next = out.split("~")[0].split("^")[0]
+            # we're looking at some ancient commit, make sure the
+            # release is on self.mastr
+            assert Subprocess.call(["git", "merge-base", "--is-ancestor", next, self.master]) ==0, "Found a release tag %r that is not ancestor of the %r" % (next, self.master)
+            previous = "%s^" % next
+            self.log.info("Commit %r is already contained in release %r. Moving last release from %r to %r" % (commit, next, self.master, previous))
+            return self.__class__(previous)
+        else:
+            self.log.debug("Commit %r is not released yet, keeping %s as last release" % ( commit, self.master))
+            return self
+
     @property
     def tag(self):
         """Name of last release tag"""
         if self._tag is None:
             out = Subprocess.check_output([
                 "git", "describe", "--abbrev=0", "--match=v[0-9]*", self.master
-                ])
-            self._tag = out.strip()
+                ]).strip()
+            self._tag = out
             self.log.debug("tag of %s was %s" % (self.master, self._tag))
         return self._tag
 
@@ -143,7 +169,7 @@ class change_impact(object):
     MAJOR = Change( (1,0,0), Version.next_major, "[MAJOR]")
 
     def __init__(self, last_release, develop = "origin/develop"):
-        self.last_release = last_release
+        self.last_release = last_release.not_containing(develop)
         self.develop = develop
         if self.last_release.version.major == 0:
             self.log.info("While the project is in %s version, all changes have reduced impact" % self.last_release.version)
