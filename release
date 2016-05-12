@@ -29,7 +29,7 @@ Usage:
 
     --tag-dev-builds       Apply dev-* tags to passing builds on develop.
     --restart-at <tag>     Specify the starting point for search of the last tag
-                           applied [default: develop].
+                           applied [default: origin/develop].
 
 
 See RELEASE.md for guide on usage
@@ -696,10 +696,9 @@ def list_tags(*patterns):
 
 def poll_dev_status(args):
     ensure_clean()
-    ensure_branch("develop")
-    run("git", "pull")
+    run("git", "fetch")
     apply_tags = args["--tag-dev-builds"]
-    repair = args["--restart-at"] != "develop"
+    repair = args["--restart-at"] != "origin/develop"
     release_tags = list_tags(RELEASE_TAG_MATCH)
     dev_tags = list_tags(DEV_TAG_MATCH)
     poll_tags = list_tags(POLL_TAG)
@@ -748,6 +747,7 @@ def poll_dev_status(args):
     builds = call_travis_builds("datawire/quark", stop_at=stop_at)
 
     first_build_seen = None
+    ancient = "v0.5.2"
 
     for build in builds:
         describe(build)
@@ -758,6 +758,12 @@ def poll_dev_status(args):
         if needs_dev_tag(build):
             if build["state"] == "passed":
                 sha = build["commit"]["sha"]
+                if is_ancestor(sha, ancient):
+                    print
+                    print "Stopping at the build #%s" % (build["number"],)
+                    print "Commit %s is already released as part of an ancient version %r" % (sha, ancient)
+                    print "History before this point used different versioning rules"
+                    break
                 dev_ver = compute_next_version(sha)
                 dev_tag = format_dev_tag(dev_ver)
                 if dev_tag not in tags:
@@ -773,10 +779,13 @@ def poll_dev_status(args):
             else:
                 print "Not tagging failed dev build"
 
+    print
     if first_build_seen:
         run("git", "tag", "-f", POLL_TAG, first_build_seen["commit"]["sha"])
     if new_tags:
         run("git", "push", "origin", *new_tags)
+    print
+    print "Done."
 
 
 def freeze(args):
