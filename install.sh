@@ -167,6 +167,28 @@ required_commands () {
     done
 }
 
+is_quark_on_path() {
+   substep "Checking for quark on \$PATH: "
+   if command -v quark >/dev/null 2>&1 ; then
+        die "Quark is already available on the \$PATH, please (re)move to proceed."
+   else
+        ok
+   fi
+}
+
+is_quarkc_importable() {
+    substep "Checking for 'quarkc' python module pollution: "
+    set +e
+    python -c "import quarkc" >/dev/null 2>&1
+    result=$?
+    set -e
+    if [ "$result" -eq 0 ]; then
+        die "Python module 'quarkc' is present, please remove to proceed."
+    else
+        ok
+    fi
+}
+
 is_quark_installed () {
     substep "Checking for old quark: "
     if [ -e ${quark_install_root} ]; then
@@ -178,6 +200,8 @@ is_quark_installed () {
 
 step "Performing installation environment sanity checks..."
 required_commands curl unzip fgrep python virtualenv
+is_quarkc_importable
+is_quark_on_path
 is_quark_installed
 
 download
