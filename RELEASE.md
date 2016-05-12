@@ -1,78 +1,138 @@
-# Releasing Quark
+# Releasing Quark #
 
-## Before releasing...
+The release workflow has the following steps, which are scripted.  All
+commands below take additional options, see `./release --help` for
+details.  Publishing artefacts to pypi requires write permission to
+pypi.
 
-Make sure the goals of the release are met. As an example, consider the goals for release 0.1.0.
+## Prepping up the  workspace ##
 
-> For a prospective user trying out Quark, we should make sure that
->
-> - they are pointed to the most interesting example we have (slack.q)
-> - prerequisites and install instructions are fully debugged
-> - the example itself works
-> - we have removed any non-working and/or distracting/cluttered examples
-> - the documentation we do provide is fully in sync with the code
->
-> The overall idea is to make sure the process of a) understanding class of problems quark solves, b) trying out the examples we provide, and c) adapting our examples to fit their own specific problems is as streamlined as possible for prospective users.
+Since the release script is part of the repository, and release process
+involves switching branches, the release script may change when
+branches are switched. The best approach is to clone the repo, and use
+the clone to provide the script.  The above approach is implemented by
+the `./release freeze` command, which does the equivalent of
 
-## Prerequisites for every release:
+    TMP=$(mktemp -d)
+    git clone . $TMP
+    echo "function quark_release() { $TMP/release \"\$@\" }"
 
-- Installation instructions and examples work on a clean OS (latest Fedora, Ubuntu, and Mac)
-- All tests pass (xfails are okay)
-- Documentation is in sync with code (correct but not necessarily complete)
+and should be used as:
 
-## Branching
+    $ eval (./release freeze)
 
-The goal is to have a stable set of features that are the target for what will be released, making the release easier to test and document. Create the branch when the right set of features is ready.
+which will define `quark_release` function in your shell
 
-1. Release branches should be named *major*.*minor*.x (with a literal "x" as the third component), e.g., `0.1.x`. This convention avoids a name conflict with tag names.
-2. Edit the branch's copy of README.md. The master branch version has a warning at the top pointing to the latest release branch; the release branch's version should not have this warning.
-3. Make sure all the appropriate version numbers are up-to-date. Refer to the section below.
-4. At this point, version-specific development, including documentation for the upcoming release, should occur on this release branch. Other work should proceed on the master branch.
+Please note that this section is the only place in the document where
+`./release` script is invoked directly, all places below invoke the
+`quark_release` function defined by the `./release freeze`.
+
+Taking shortcuts is OK if you know what you're doing :)
+
+## Sync Status of CI ##
+
+Successfully tested commits to develop are tagged with a `dev-`_1.2.3_
+tags. The tagging is not part of the CI process, but is currently done
+manually as part of the release process.
+
+To query the CI system for new builds of the develop branch and tag the successful ones
+
+    $ quark_release poll-dev-status --tag-dev-builds
+
+## Publish Development Artefacts ##
+
+Development artefacts are produced on a reserved temporary branch
+`release-in-progress-dev` so that `develop` does not need to move.
+
+*Do not* `git push` *the result, do not* `git merge` *the result to any branch.*
+
+    $  quark_release prepare-release --dev
+    $  quark_release push-docs
+    $  quark_release push-pkgs
+    $  quark_release cleanup
 
 
-## Releasing
+## Prepare Released State ##
 
-0. A release should only be performed after sufficient pre-release
-   testing has been performed. The process described here does not
-   involve testing, it merely provides a repeatable way to transform a
-   snapshot of the git repo into a set of published artifacts.
+Creation of production release is done on a reserved temporary branch
+`release-in-progress` so that neither `develop` nor `master` need to
+move.
 
-1. Review the current release metadata and determine the appropriate
-   version for the next release:
+    $ quark_release prepare-release --prod
 
-   ```
-   ./release version
-   ```
+It is possible to also do a partial release of the
+develop branch in case the tip of develop is not stable, see help.
 
-2. Set the appropriate version number(s) for the release. This will
-   automatically create a commit in your checkout with the appropriate
-   version related changes:
+NOTE: the release version can be adjusted upwards by manually
+supplying the version. The version MUST NOT be smaller than the
+computed version. *This feature was not tested if it combines well with
+partial releases*.
 
-   ```
-   ./release version 1.2.3
-   ```
+This command performs only local repo changes, so it is safe to run
+without `--dry`. In case of errors run `quark_release cleanup` after
+getting help with debugging what happened.
 
-3. To make a signed and annotated tag for the release:
 
-   ```
-   git tag -sm "Release 1.2.3" 1.2.3
-   ```
+## Publish the Released State to GitHub ##
 
-3. Push the release:
+    $ quark_release push-release --prod
 
-   ```
-   ./release push-pkgs
-   ./release push-docs
-   ```
+`push-release` uses atomic push (like a compare-and-set operation) to
+guarantee the following invariants:
+- merges to master SHOULD be a fast-forward (therefore we try to not
+merge master but just advance it)
+- develop MUST be a descendant of master (therefore we fail if there
+was a push to develop in the meantime)
+- last-released-version in metadata MUST correspond to the last
+release tag on develop
 
-4. Update the website
+### Push Fails ###
 
-5. Announce the release
+if push fails it will not succeed later. Abort the release, throwing
+away local release state
 
-The goal of the tag is to record exactly what source was used to build the released artifacts.
+    $ quark_release cleanup
 
-## Post-release
+The release procedure can be retried at this point.
 
-1. Merge the release branch changes into the master branch (if this hasn't already been done).
-2. Update master branch version numbers. (More info needed here.)
-3. Development can proceed on the master branch until it's appropriate to cut another release branch.
+### Push Suceeds ###
+
+when push suceeds the `release-in-progress` branch is deleted automatically
+
+## Publish of the Release Artefacts ##
+
+Publishing release artefacts requires write permission to pypi.
+
+Currently publishing of the release artefacts is not automated beyond
+the following:
+
+    $ git checkout master
+    $ git pull
+    $ quark_release push-docs
+    $ quark_release push-pkgs
+
+# Required software #
+
+Tools required are `pip`, `twine`, and a not totally ancient `git`
+
+    $ pip install sphinx-better-theme wheel twine
+
+# Ideas and Improvements #
+
+- Move release area to a separate workspace and keep the release
+   script in the dev checkout. Kill `freeze`. Simplify `cleanup`
+
+- Drop the quarkdev and deploy (and test) the dev package from
+  testpypi. This will eliminate the mildly evil backmerge we need to
+  do now from master to develop to prevent merge conflict on next
+  release.
+
+- Allow releasing of any tested feature branch (not just develop)
+
+- Explain what a 'release' is made of, like:
+  a release is a merge of develop to master + a version change
+  commit + signed tag + back-merge-to-develop-with-version-name-reset +
+  an atomic push of the result
+
+- add a link to the workflow, or better move the workflow to repo, too
+

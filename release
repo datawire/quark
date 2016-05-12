@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 
-"""
-Quark release tool. Because quark involves a variety of different
+"""Quark release tool. Because quark involves a variety of different
 support packages for backend languages, the release process involves
 dealing with a lot of different packaging tools and environments. This
 utility captures all this in a single place.
 
 Usage:
-  release [--dry] version [--dev | --prod] [<version>] [--doc=<version>]
-  release [--dry | --cicd] push-pkgs
-  release [--dry | --cicd] push-docs
+  release [--dry] freeze
+  release [--dry --cicd] poll-dev-status [--tag-dev-builds] [--restart-at=<tag>]
+  release [--dry --cicd] cleanup
+  release [--dry --cicd] prepare-release (--dev | --prod) [<version>] [--doc=<version>] [--release-point=<tag>]
+  release [--dry --cicd] push-release
+  release [--dry --cicd] version [--dev | --prod] [<version>] [--doc=<version>]
+  release [--dry --cicd] push-pkgs
+  release [--dry --cicd] push-docs
 
   Options:
     --dry                  Dry run.
@@ -19,21 +23,62 @@ Usage:
     --prod                 Change to production packages.
 
     --doc <version>        Documentation version.
+
+    --release-point <tag>  Perform a partial release of develop if tip of
+                           develop is not stable.
+
+    --tag-dev-builds       Apply dev-* tags to passing builds on develop.
+    --restart-at <tag>     Specify the starting point for search of the last tag
+                           applied [default: develop].
+
+
+See RELEASE.md for guide on usage
 """
 
-import json, os, random, re, subprocess, tempfile, urllib2
+import json, os, sys, random, re, subprocess, tempfile, urllib2, pprint, urllib
 from docopt import docopt
 from collections import OrderedDict
+from semantic_version import Version as SemVer
+try:  # py3
+    from shlex import quote
+except ImportError:  # py2
+    from pipes import quote
 
-__dir__ = os.path.dirname(__file__)
+
+__dir__ = None
 __dry__ = False
 __cicd__ = False
 
 def base(name=None):
+    global __dir__
+    if __dir__ is None:
+        __dir__ = call("git", "rev-parse", "--show-toplevel", dry=False).strip()
     if name:
         return os.path.join(__dir__, name)
     else:
         return __dir__
+
+
+def _do(method, *command, **kwargs):
+    dry = kwargs.pop("dry", __dry__)
+    cmd =  " ".join(map(quote,command))
+    if dry:
+        print >> sys.stderr, "#  #", cmd, kwargs
+        return
+    print >> sys.stderr, "#   ", cmd, kwargs
+    return method(command, **kwargs)
+
+def call(*command, **kwargs):
+    """Execute the supplied command and return the output."""
+    return _do(subprocess.check_output, *command, **kwargs)
+
+def run(*command, **kwargs):
+    """Execute the supplied command."""
+    _do(subprocess.check_call, *command, **kwargs)
+
+def retcode(*command, **kwargs):
+    """Execute the supplied command."""
+    return _do(subprocess.call, *command, **kwargs)
 
 metadata = {}
 with open(base("quarkc/_metadata.py")) as fp:
@@ -67,26 +112,6 @@ def pipcheck(*packages):
             missing.append(pkg)
     if missing:
         raise ReleaseError("Please install missing python packages: %s" % ", ".join(missing))
-
-def run(*command, **kwargs):
-    """Execute the supplied command."""
-    dry = kwargs.pop("dry", __dry__)
-    cmd =  " ".join(command)
-    if dry:
-        print "# ", cmd, kwargs
-        return
-    print cmd, kwargs
-    subprocess.check_call(command, **kwargs)
-
-def call(*command, **kwargs):
-    """Execute the supplied command and return the output."""
-    dry = kwargs.pop("dry", __dry__)
-    cmd =  " ".join(command)
-    if dry:
-        print "# ", cmd, kwargs
-        return
-    print cmd, kwargs
-    return subprocess.check_output(command, **kwargs)
 
 def update_json(name, **kwargs):
     """Update a json file with supplied overrides."""
@@ -186,7 +211,7 @@ def version(args):
         dev = is_dev()
 
     ver = args["<version>"]
-    
+
     if ver:
         doc_default = "1"
     else:
@@ -194,12 +219,13 @@ def version(args):
         doc_default = metadata["__doc_version__"]
 
     docver = args["--doc"] or doc_default
+    _version(dev, ver, docver, __dry__)
 
+def _version(dev, ver, docver, dry):
     title, updated = quark_version(ver, docver, dev)
-    dry = __dry__ or dev
     for fname in updated:
         run("git", "add", fname, cwd=base(), dry=dry)
-    run("git", "commit", "-m", "Changed version to %s, %s (doc %s)." % (title, ver, docver),
+    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [skip-ci]" % (title, ver, docver),
         cwd=base(), dry=dry)
 
 def randstr():
@@ -293,8 +319,474 @@ def push_docs(args):
         run("git", "commit", "-m", "Documentation update %s-%s." % (version, docver), cwd=dest)
         run("git", "push", "origin", "gh-pages", cwd=dest)
         print "Documentation is pushed."
+        run("git", "fetch")
     else:
         print "Canceled"
+
+
+RELEASE_BRANCH="release-in-progress"
+DEV_BRANCH="release-in-progress-dev"
+RELEASE_TAG_MATCH="v*"
+DEV_TAG_MATCH="dev-*"
+POLL_TAG="poll-dev-status-marker"
+
+def in_release():
+    return [b[2:] for b in call("git", "branch", "--list",
+                                RELEASE_BRANCH+"*", dry=False).splitlines()]
+
+def is_dirty():
+    return call("git", "status", "--porcelain", "--untracked=no", dry=False).splitlines()
+
+def current_branch():
+    return call("git", "symbolic-ref", "--short", "HEAD", dry=False).strip()
+
+def tag_at(refspec, match=None, exact=True, abbrev=None):
+    flags = []
+    if match is not None:
+        flags.append("--match=%s" % match)
+    if exact:
+        flags.append("--exact-match")
+    if abbrev is not None:
+        flags.append("--abbrev=%s" % abbrev)
+    return call("git", "describe", refspec, *flags, dry=False).strip()
+
+def release_tag_at(refspec, **kwargs):
+    kwargs.setdefault("match", RELEASE_TAG_MATCH)
+    return tag_at(refspec, **kwargs)
+
+def dev_tag_at(refspec, **kwargs):
+    kwargs.setdefault("match", DEV_TAG_MATCH)
+    return tag_at(refspec, **kwargs)
+
+def revparse(refspec):
+    return call("git", "rev-parse", "%s^0"%refspec, dry=False).strip()
+
+def is_branch_at(branch, refspec):
+    return revparse(branch) == revparse(refspec)
+
+def compute_next_version(release_point):
+    return SemVer(call(os.path.join(os.path.dirname(__file__), "scripts/compute-next-version"), "--release-point", release_point, dry=False).strip())
+
+def ensure_clean():
+    if is_dirty():
+        run("git", "status", "--untracked=no", dry=False)
+        raise ReleaseError("Aborted\n\nCannot release from a dirty worktree")
+
+def ensure_releasing(allow_many=False):
+    releasing = in_release()
+    if not releasing:
+        raise ReleaseError("Not in a release")
+    if len(releasing) > 1 and not allow_many:
+        raise ReleaseError("More than one release branch is active, use 'cleanup' then retry")
+    return releasing
+
+def ensure_branch(expected):
+    branch = current_branch()
+    if branch != expected:
+        raise ReleaseError("You are not on a %r branch, but %s. Aborting" % (
+            expected, branch))
+
+def validate_release_tag(tag):
+    assert tag.startswith("v"), "non-release tag %r found" % tag
+    try:
+        return SemVer(tag[1:])
+    except:
+        assert False, "non-release tag %r found" % tag
+
+def validate_dev_tag(tag):
+    assert tag.startswith("dev-"), "non-dev tag %r found" % tag
+    try:
+        return SemVer(tag[4:])
+    except:
+        assert False, "non-dev tag %r found" % tag
+
+def format_release_tag(ver):
+    return "v%s" % ver
+
+def format_dev_tag(ver):
+    return "dev-%s" % ver
+
+def is_ancestor(tag, refspec):
+    rc = retcode("git", "merge-base", "--is-ancestor", tag, refspec, dry=False)
+    if rc > 1:
+        raise ReleaseError("merge-base failed")
+    return rc == 0
+
+def create_non_push_branch(branch, refspec, extra):
+    run("git", "checkout", "-b", branch, refspec)
+    run("git", "config", "branch.%s.pushRemote" % branch, "do not use 'git push' but '%s' " % extra)
+
+def prepare_release(args):
+    ensure_clean()
+    releasing = in_release()
+    if releasing:
+        raise ReleaseError("Release appears to be in progress, found %s\n\n%s" % (
+            releasing,"Investigate and run ./release cleanup"))
+    run("git", "checkout",  "develop")
+    run("git", "pull")
+    if not args["--release-point"]:
+        release_point = "develop"
+        release_msg = "Merge branch %s into master"
+    else:
+        release_point = args["--release-point"]
+        release_msg = "Merge tag %s into master"
+        print "Partial release from %r requested." % release_point
+        if is_ancestor(release_point, "develop"):
+            print "develop ancestry confirmed"
+        else:
+            raise ReleaseError("cannot release from a point that is not ancestor of develop branch")
+        if is_ancestor(release_point, "master"):
+            raise ReleaseError("specified tag %r is already released on master" % release_point)
+    next_ver = compute_next_version(release_point)
+    actual_tag = call("git", "describe", release_point, dry=False).strip()
+    expected_tag = format_dev_tag(next_ver)
+    if expected_tag != actual_tag:
+        raise ReleaseError("Develop branch is not stable, got '%s' expected '%s'\n\n%s" % (
+            actual_tag, expected_tag,
+            "Aborting. Please wait for CI to catch up and retry later"));
+    ver = args["<version>"]
+    if not ver:
+        print "No version override supplied, using automatic version %s" % next_ver
+        ver = args["<version>"] = str(next_ver)
+    else:
+        if args["--dev"]:
+            raise ReleaseError("Version forcing not allowed for dev releases")
+        if SemVer(ver) < SemVer(next_ver):
+            raise ReleaseError("Supplied version %s < %s. Aborting" % (
+                ver, next_ver));
+        else:
+            print "Supplied version %s accepted" % ver
+    if args["--prod"]:
+        run("git", "checkout",  "master")
+        run("git", "pull")
+        create_non_push_branch(RELEASE_BRANCH, "master", "release push-release")
+        run("git", "merge", release_point, "-m", release_msg % release_point)
+        version(args)
+        release_tag = format_release_tag(ver)
+        run("git", "tag", "-s", "-m", "Release of %s" % (ver, ), release_tag)
+    elif args["--dev"]:
+        create_non_push_branch(DEV_BRANCH, release_point, "release cleanup")
+        version(args)
+        print
+        print "Do *NOT* push the result."
+        print "Push release artefacts and documentation, then do:"
+        print
+        print "    ./release cleanup"
+        print
+    else:
+        raise ReleaseError("only for production releases, missing --prod")
+
+def revlist(revision_range):
+    return call("git", "rev-list", *revision_range, dry=False).splitlines()
+
+def enumerate_refspecs(revision_range):
+    """return tags, branches that point in the specified revision range"""
+    tags = []
+    branches = []
+    for refs in call("git", "log", "--pretty=%D",
+                      *revision_range, dry=False).splitlines():
+        for sref in refs.split(","):
+            ref = sref.split()
+            if not ref:
+                continue
+            assert 1 <= len(ref) <= 3, "unrecognized refspect format %r" % sref
+            if len(ref) == 1:
+                branch = ref[0]
+                if branch != "HEAD":
+                    branches.append(branch)
+            elif len(ref) == 2:
+                assert ref[0] == "tag:", "Unrecognized ref annotation %r" % sref
+                tags.append(ref[1])
+            elif len(ref) == 3:
+                assert ref[0] == "HEAD" and ref[1] == "->", "Unrecognized ref annotation %r" % sref
+                branches.append(ref[2])
+    return tags, branches
+
+def cleanup(args):
+    ensure_clean()
+    release_branches = ensure_releasing(allow_many=True)
+    for release_branch in release_branches:
+        if release_branch == RELEASE_BRANCH:
+            cleanup_release(args)
+        elif release_branch == DEV_BRANCH:
+            cleanup_dev(args)
+        else:
+            raise ReleaseError("You have a branch %r that interferes with release process. Please remove or rename it" % release_branch)
+
+def cleanup_release(args):
+    print
+    print "Cleanup of in-progress release branch %r" % RELEASE_BRANCH
+    print
+    revision_range = [RELEASE_BRANCH, "--not", "origin/develop", "origin/master"]
+    commits = revlist(revision_range)
+    tags, branches = enumerate_refspecs(revision_range)
+    for tag in tags:
+        validate_release_tag(tag)
+    tags_to_remove = []
+    branches_to_remove = [RELEASE_BRANCH]
+    if not commits:
+        assert is_branch_at(RELEASE_BRANCH, "master"), "Confused script, %r branch points at unexpected commit %s" % (RELEASE_BRANCH, revparse(RELEASE_BRANCH))
+        print "Release branch is still at master"
+        assert not tags, "Confused script, expected no tags pointing at release in progress but found %s" % tags
+        assert not branches, "Confused script, expected no other branches pointing at release in progress but found %s" % branches
+        print
+    else:
+        assert (RELEASE_BRANCH,) == tuple(branches), "Confused script, expected to find exactly %r amongst %r" % (RELEASE_BRANCH, branches)
+        assert len(tags) <= 1, "Confused script, expected to find at most one tag to remove, but found %s" % len(tags)
+        tags_to_remove.extend(tags)
+        print
+        print "This operation will drop the following commits from %r:" % RELEASE_BRANCH
+        print
+        run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
+    print
+    if branches_to_remove:
+        print "Branches to be removed:", branches_to_remove
+    if tags_to_remove:
+        print "Tags to be removed:", tags_to_remove
+    print
+    if challenge():
+        run("git", "checkout", "develop")
+        run("git", "branch", "-D", *branches_to_remove)
+        if tags_to_remove:
+            run("git", "tag", "-d", *tags_to_remove)
+    else:
+        print "Cancelled"
+
+
+def cleanup_dev(args):
+    print
+    print "Cleanup of in-progress dev release branch %r" % DEV_BRANCH
+    print
+    revision_range = [DEV_BRANCH, "--not", "origin/develop", "origin/master"]
+    commits = revlist(revision_range)
+    tags, branches = enumerate_refspecs(revision_range)
+    assert not tags, "Confused script, expected no tags pointing at dev release in progress but found %s" % tags
+    branches_to_remove = [DEV_BRANCH]
+    if not commits:
+        assert not branches, "Confused script, expected no other branches pointing at dev release in progress but found %s" % branches
+    else:
+        print
+        assert (DEV_BRANCH,) == tuple(branches), "Confused script, expected to find exactly %r amongst %r" % (DEV_BRANCH, branches)
+        print
+        print "This operation will drop the following commits from %r:" % DEV_BRANCH
+        print
+        run("git", "log", "--decorate", "--oneline", *revision_range, dry=False)
+    print
+    if branches_to_remove:
+        print "Branches to be removed:", branches_to_remove
+    print
+    if challenge():
+        run("git", "checkout", "develop")
+        run("git", "branch", "-D", *branches_to_remove)
+    else:
+        print "Cancelled"
+
+def push_release(args):
+    ensure_clean()
+    ensure_releasing()
+    ensure_branch(RELEASE_BRANCH)
+    print "On branch", RELEASE_BRANCH
+
+    actual_tag = release_tag_at(RELEASE_BRANCH)
+    validate_release_tag(actual_tag)
+    ver = metadata["__version__"]
+    expected_tag = format_release_tag(ver)
+    if actual_tag != expected_tag:
+        raise ReleaseError("Release tag %r and metatada version %r disagree. Expected tag %r" % (
+            actual_tag, ver, expected_tag))
+    print "Tag %r agrees with metadata %r" % (actual_tag, ver)
+
+    if is_ancestor("master", "develop"):
+        # if we had a fast-forward merge in prepare then it's one away
+        dev_tag = dev_tag_at("%s^" % actual_tag)
+    else:
+        # if we had a real merge in prepare then it's two away and to the side
+        dev_tag = dev_tag_at("%s^^2" % actual_tag)
+    print "Found dev tag %r" % dev_tag
+
+    to_push = [ "%s:master" % RELEASE_BRANCH ]
+    if is_ancestor("develop", "master"):
+        # preserve fast-forward-ness
+        run("git", "checkout", "--detach", RELEASE_BRANCH)
+        _version(True, ver, "1", __dry__)
+        to_push.append("%s:develop" % revparse("HEAD"))
+        print
+        print "Pushing release", actual_tag, "to master based on tests stamped with", dev_tag, "to github"
+        print
+    else:
+        # develop and master will remain diverged for some more time
+        run("git", "checkout", "--detach", "develop")
+        run("git", "merge", "--no-commit", RELEASE_BRANCH)
+        _version(True, ver, "1", __dry__)
+        to_push.append("%s:develop" % revparse("HEAD"))
+        print
+        print "Pushing a partial release", actual_tag, "to master based on tests stamped with", dev_tag, "to github"
+        print "Inspect the commits remaining on develop with:"
+        print
+        print "     git log %s..develop" % dev_tag
+        print
+    print
+    print "About to push %s" % to_push
+    print
+    if challenge():
+        try:
+            run("git", "push", "--atomic", "origin", *to_push)
+        except subprocess.CalledProcessError, e:
+            print
+            print "Push failed. This release most likely raced with activity"
+            print "on develop or master branches. Investigate and retry"
+            print "This instance of push can never succeed, you will need to run"
+            print
+            print "        ./release cleanup"
+            print
+            print "and re-do the release"
+            print
+            raise ReleaseError("Push aborted")
+        run("git", "checkout", "develop")
+        run("git", "pull")
+        run("git", "checkout", "master")
+        run("git", "pull")
+        doublecheck_tag = release_tag_at("master")
+        if actual_tag != doublecheck_tag:
+            raise ReleaseError("Master branch did not move to the correct tag.\n\nThis script is confused, do not touch anything, call for help")
+        run("git", "branch", "-d", RELEASE_BRANCH)
+        print
+        print "Push complete"
+        print
+        print "You can proceed to push-docs and push-pkgs"
+    else:
+        print "Cancelled"
+
+def call_travis(repo, api):
+    url = "https://api.travis-ci.org/repos/%s/%s" % (repo, api)
+    request = urllib2.Request(url)
+    request.add_header("User-Agent", "DatawireQuarkRelease/1.0.0")
+    request.add_header("Accept", "application/vnd.travis-ci.2+json")
+    print "#    curl ", url
+    response = urllib2.urlopen(request)
+    assert response.getcode() == 200
+    return json.load(response)
+
+def call_travis_builds(repo, stop_at = lambda x: True, drop_config=True, **kwargs):
+    pending = [kwargs]
+    while pending:
+        kwargs = pending.pop(0)
+        extra = urllib.urlencode(kwargs)
+        if extra:
+            extra = "?" + extra
+        data = call_travis(repo, "builds" + extra)
+        commits = dict((c["id"], c) for c in data["commits"])
+        last_build_number = None
+        for b in data["builds"]:
+            if drop_config:
+                b.pop("config", None)
+            b["commit"] = commits[b["commit_id"]]
+            yield b
+            if stop_at(b):
+                break
+            else:
+                last_build_number = b["number"]
+        else:
+            if last_build_number:
+                kwargs["after_number"] = last_build_number
+                pending.append(kwargs)
+
+def list_tags(*patterns):
+    return call("git", "tag", "--list", *patterns, dry=False).splitlines()
+
+def poll_dev_status(args):
+    ensure_clean()
+    ensure_branch("develop")
+    run("git", "pull")
+    apply_tags = args["--tag-dev-builds"]
+    repair = args["--restart-at"] != "develop"
+    release_tags = list_tags(RELEASE_TAG_MATCH)
+    dev_tags = list_tags(DEV_TAG_MATCH)
+    poll_tags = list_tags(POLL_TAG)
+    tags = dev_tags + release_tags
+    if repair:
+        restart_point = args["--restart-at"]
+    elif POLL_TAG in poll_tags:
+        restart_point = POLL_TAG
+    elif dev_tags:
+        restart_point = sorted(dev_tags, key=validate_dev_tag)[0]
+    else:
+        restart_point = None
+    if restart_point is not None:
+        restart_point = revparse(restart_point)
+    branch = "develop"
+    def needs_dev_tag(build):
+        return ((branch and build["commit"]["branch"] == branch) and
+                (not build["pull_request"])
+                )
+
+    new_tags = []
+    def describe(build):
+        branch = build["commit"]["branch"]
+        sha = build["commit"]["sha"]
+        if branch in tags:
+            # tag notes are a bit weird as they are not shown by git log, but this way
+            ref = branch
+            kind = "tag"
+        else:
+            ref = sha
+            kind = "branch"
+        note = "%s #%s  %s:%s" % (build["state"], build["number"], kind, branch)
+        try:
+            err = call("git", "notes", "--ref=travis-ci", "add", "-m", note, ref, stderr=subprocess.STDOUT)
+
+        except subprocess.CalledProcessError, ex:
+            if ex.returncode == 1:
+                if not apply_tags and not repair:
+                    raise ReleaseError("Assuming previous notes are also up-to-date")
+                print "Assuming note at %s exists" % ref
+            else:
+                raise
+    def stop_at(build):
+        return build["commit"]["sha"] == restart_point
+
+    builds = call_travis_builds("datawire/quark", stop_at=stop_at)
+
+    first_build_seen = None
+
+    for build in builds:
+        describe(build)
+        if not first_build_seen:
+            first_build_seen = build
+        if not apply_tags:
+            continue
+        if needs_dev_tag(build):
+            if build["state"] == "passed":
+                sha = build["commit"]["sha"]
+                dev_ver = compute_next_version(sha)
+                dev_tag = format_dev_tag(dev_ver)
+                if dev_tag not in tags:
+                    msg = "Build %s passed" % build["number"]
+                    run("git", "tag", "-a", "-m", msg, dev_tag, sha)
+                    new_tags.append(dev_tag)
+                else:
+                    actual_sha = revparse(dev_tag)
+                    if revparse(dev_tag) == actual_sha:
+                        print "Already have tag %r at %s, skipping" % (dev_tag, sha)
+                    else:
+                        raise ReleaseError("Build number #%s places dev tag %r at %r, but found the tag pointing at %r" % (build["number"], dev_tag, sha, actual_sha))
+            else:
+                print "Not tagging failed dev build"
+
+    if first_build_seen:
+        run("git", "tag", "-f", POLL_TAG, first_build_seen["commit"]["sha"])
+    if new_tags:
+        run("git", "push", "origin", *new_tags)
+
+
+def freeze(args):
+    dest = tempfile.mkdtemp()
+    run("git", "clone", ".", dest)
+    if __dry__:
+        script = "%s --dry" % __file__
+    else:
+        script = os.path.join(dest, os.path.basename(__file__))
+    print """function quark_release() { %s "$@"; }""" % script
 
 ## main
 
@@ -310,6 +802,16 @@ def main(args):
         push_pkgs(args)
     elif args["push-docs"]:
         push_docs(args)
+    elif args["prepare-release"]:
+        prepare_release(args)
+    elif args["cleanup"]:
+        cleanup(args)
+    elif args["push-release"]:
+        push_release(args)
+    elif args["poll-dev-status"]:
+        poll_dev_status(args)
+    elif args["freeze"]:
+        freeze(args)
     else:
         assert False
 
