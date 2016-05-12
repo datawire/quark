@@ -3,7 +3,13 @@ dist: trusty
 matrix:
   include:
     - os: linux
-      env: TEST_SUITE=.travis
+      env: TEST_SUITE=quarkc
+    - os: linux
+      env: TEST_SUITE=runtime
+    - os: linux
+      env: TEST_SUITE=examples
+    - os: osx
+      env: TEST_SUITE=examples
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
@@ -14,6 +20,7 @@ install:
 - .travis/install.sh
 
 script:
+- .travis/test.sh
 - .travis/deploy.sh
 
 env:
