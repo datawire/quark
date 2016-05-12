@@ -1,0 +1,404 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Operators &mdash; Datawire Connect 0.6.5 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '0.6.5',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 0.6.5 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="Data Types" href="types.html" />
+    <link rel="prev" title="Keywords" href="keywords.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="types.html"
+            title="Data Types"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="keywords.html"
+            title="Keywords"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="operators">
+<h1>Operators<a class="headerlink" href="#operators" title="Permalink to this headline">¶</a></h1>
+<p>Quark defines the following operators:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="add">
+<span id="addoperator"></span><h2>Add<a class="headerlink" href="#add" title="Permalink to this headline">¶</a></h2>
+<p>The Add operator is a binary operator that adds the value on the left of the operator and the value on the right of the operator together.</p>
+<div class="section" id="syntax">
+<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p>The Add operator syntax is:</p>
+<p><em>A</em> <strong>+</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are the two values being added together. If the values are numbers, the addition is standard arithmetic addition. If the values are strings, the addition appends the string on the right side to the string on the left side.</p>
+</div>
+</div>
+<div class="section" id="and">
+<span id="andoperator"></span><h2>And<a class="headerlink" href="#and" title="Permalink to this headline">¶</a></h2>
+<p>The And operator is a binary operator that evaluates to true if both the value on the left side of the operator and the value on the right side of the operator evaluate to true. The And operator evaluates to false if only one of the two values evaluates to true or if they both evaluate to false.</p>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The And operator syntax is:</p>
+<p><em>A</em> <strong>&amp;&amp;</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are the two values being evaluated.</p>
+</div>
+</div>
+<div class="section" id="at">
+<span id="atoperator"></span><h2>At<a class="headerlink" href="#at" title="Permalink to this headline">¶</a></h2>
+<p>Documentation Coming Soon</p>
+</div>
+<div class="section" id="bitwise-complement">
+<span id="complementoperator"></span><h2>Bitwise Complement<a class="headerlink" href="#bitwise-complement" title="Permalink to this headline">¶</a></h2>
+<p>The Bitwise Complement operator is a unary operator that evaluates switches the bits of the supplied value.</p>
+<div class="section" id="id2">
+<h3>Syntax<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The Bitwise Complement operator syntax is:</p>
+<p><strong>~</strong> <em>A</em></p>
+<p>where <em>A</em> is the value to switch.</p>
+<p>The Bitwise Complement operator is only partially supported at the moment. See <a class="reference external" href="https://github.com/datawire/quark/issues/34">linkIssue34</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="cast">
+<span id="castoperator"></span><h2>Cast<a class="headerlink" href="#cast" title="Permalink to this headline">¶</a></h2>
+<p>Documentation Coming Soon</p>
+</div>
+<div class="section" id="divide">
+<span id="divideoperator"></span><h2>Divide<a class="headerlink" href="#divide" title="Permalink to this headline">¶</a></h2>
+<p>The Divide operator is a binary operator that divides the value on the right hand side (the denominator) into the value on the left hand side (the numerator).</p>
+<div class="section" id="id3">
+<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The Divide operator syntax is:</p>
+<p><em>A</em> <strong>/</strong> <em>B</em></p>
+<p>where <em>A</em> is any numerical value and <em>B</em> is any non-zero numerical value.</p>
+</div>
+</div>
+<div class="section" id="equals">
+<h2>Equals<a class="headerlink" href="#equals" title="Permalink to this headline">¶</a></h2>
+<p>The Equals operator is a binary operator that sets the value on the left hand side to the value on the right hand side.</p>
+<div class="section" id="id4">
+<h3>Syntax<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<p>The Equals operator syntax is:</p>
+<p><em>A</em> <strong>=</strong> <em>B</em></p>
+<p>where <em>A</em> is the value being set and <em>B</em> is the new value it is assigned.</p>
+</div>
+</div>
+<div class="section" id="equivalent">
+<span id="equivalentoperator"></span><h2>Equivalent<a class="headerlink" href="#equivalent" title="Permalink to this headline">¶</a></h2>
+<p>The Equivalent operator is a binary operator that evaluates to true if the value on the left side is equivalent to the value on the right hand side and evaluates to false if they are not equivalent.</p>
+<div class="section" id="id5">
+<h3>Syntax<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The Equivalent operator syntax is:</p>
+<p><em>A</em> <strong>==</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are the values being evaluated for equivalence.</p>
+</div>
+</div>
+<div class="section" id="greater-than">
+<span id="greaterthanoperator"></span><h2>Greater Than<a class="headerlink" href="#greater-than" title="Permalink to this headline">¶</a></h2>
+<p>The Greater Than operator is a binary operator that evaluates to true if the value on the left side is greater than the value on the right side. It evaluates to false if the value on the right side is greater than the value on the left side or if the two values are equal.</p>
+<div class="section" id="id6">
+<h3>Syntax<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>The Greater Than operator syntax is:</p>
+<p><em>A</em> <strong>&gt;</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are both numerical values.</p>
+</div>
+</div>
+<div class="section" id="greater-than-or-equal">
+<span id="greaterthanorequaloperator"></span><h2>Greater Than or Equal<a class="headerlink" href="#greater-than-or-equal" title="Permalink to this headline">¶</a></h2>
+<p>The Greater Than or Equal operator is a binary operator that evaluates to true if the value on the left side is greater than the value on the right side or if the two values are equal. It evaluates to false if the value on the right side is greater than the value on the left side.</p>
+<div class="section" id="id7">
+<h3>Syntax<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>The Greater Than or Equal operator syntax is:</p>
+<p><em>A</em> <strong>&gt;=</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are both numerical values.</p>
+</div>
+</div>
+<div class="section" id="less-than">
+<span id="lessthanoperator"></span><h2>Less Than<a class="headerlink" href="#less-than" title="Permalink to this headline">¶</a></h2>
+<p>The Less Than operator is a binary operator that evaluates to true if the value on the left side is less than the value on the right side. It evaluates to false if the value on the right side is less than the value on the left side or if the two values are equal.</p>
+<div class="section" id="id8">
+<h3>Syntax<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>The Less Than operator syntax is:</p>
+<p><em>A</em> <strong>&lt;</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are both numerical values.</p>
+</div>
+</div>
+<div class="section" id="less-than-or-equal">
+<span id="lessthanorequaloperator"></span><h2>Less Than or Equal<a class="headerlink" href="#less-than-or-equal" title="Permalink to this headline">¶</a></h2>
+<p>The Less Than or Equal operator is a binary operator that evaluates to true if the value on the left side is less than the value on the right side or if the two values are the equal. It evaluates to false if the value on the right side is less than the value on the left side.</p>
+<div class="section" id="id9">
+<h3>Syntax<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>The Less Than or Equal operator syntax is:</p>
+<p><em>A</em> <strong>&lt;=</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are both numerical values.</p>
+</div>
+</div>
+<div class="section" id="modulo">
+<span id="modulooperator"></span><h2>Modulo<a class="headerlink" href="#modulo" title="Permalink to this headline">¶</a></h2>
+<p>The Modulo operator is a binary operator that evaluates to the remainder when the value on the right hand side is divided into the value on the left hand side.</p>
+<div class="section" id="id10">
+<h3>Syntax<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>The Modulo operator syntax is:</p>
+<p><em>A</em> <strong>%</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are both integers.</p>
+</div>
+</div>
+<div class="section" id="multiply">
+<span id="multiplyoperator"></span><h2>Multiply<a class="headerlink" href="#multiply" title="Permalink to this headline">¶</a></h2>
+<p>The Multiply operator is a binary operator that multiplies the value on the left of the operator and the value on the right of the operator together.</p>
+<div class="section" id="id11">
+<h3>Syntax<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>The Multiply operator syntax is:</p>
+<p><em>A</em> <strong>*</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are the two numbers being multiplied together.</p>
+</div>
+</div>
+<div class="section" id="negate">
+<span id="negateoperator"></span><h2>Negate<a class="headerlink" href="#negate" title="Permalink to this headline">¶</a></h2>
+<p>The Negate operator is a unary operator that switches the sign of a signed number.</p>
+<div class="section" id="id12">
+<h3>Syntax<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>The Negate operator syntax is:</p>
+<p><strong>-</strong> <em>A</em></p>
+<p>where <em>A</em> is a number.</p>
+</div>
+</div>
+<div class="section" id="not">
+<span id="notoperator"></span><h2>Not<a class="headerlink" href="#not" title="Permalink to this headline">¶</a></h2>
+<p>The Not operator is a unary operator that inverts the truthfulness of an expression. If the expression evaluates to true on its own then it will evaluate to false when the Not operator is applied and vice versa.</p>
+<div class="section" id="id13">
+<h3>Syntax<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>The Not operator syntax is:</p>
+<p><strong>!</strong> <em>expression</em></p>
+<p>where <em>expression</em> is the expression being inverted.</p>
+</div>
+</div>
+<div class="section" id="not-equivalent">
+<span id="notequivalentoperator"></span><h2>Not Equivalent<a class="headerlink" href="#not-equivalent" title="Permalink to this headline">¶</a></h2>
+<p>The Not Equivalent operator is a binary operator that evaluates to true if the value on the left side of the operator is not equivalent to the value on the right side of the operator and evaluates to false if the two values are equivalent.</p>
+<div class="section" id="id14">
+<h3>Syntax<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>The Not Equivalent operator syntax is:</p>
+<p><em>expression1</em> <strong>!=</strong> <em>expression2</em></p>
+<p>where <em>expression1</em> and <em>expression2</em> are the expressions being compared.</p>
+</div>
+</div>
+<div class="section" id="or">
+<h2>Or<a class="headerlink" href="#or" title="Permalink to this headline">¶</a></h2>
+<p>The Or operator is a binary operator that evaluates to true if either or both of the values on the left side of the operator and the right side of the operator evaluate to true. The Or operator evaluates to false only if both of these values evaluate to false.</p>
+<div class="section" id="id15">
+<h3>Syntax<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>The Or operator syntax is:</p>
+<p><em>A</em> <strong>||</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are the two values being evaluated.</p>
+</div>
+</div>
+<div class="section" id="subtract">
+<span id="subtractoperator"></span><h2>Subtract<a class="headerlink" href="#subtract" title="Permalink to this headline">¶</a></h2>
+<p>The Subtract operator is a binary operator that subtracts the value on the right hand side of the operator from the value on the left hand side of the operator.</p>
+<div class="section" id="id16">
+<h3>Syntax<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>The Subtract operator syntax is:</p>
+<p><em>A</em> <strong>-</strong> <em>B</em></p>
+<p>where <em>A</em> and <em>B</em> are numerical values.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    
+
+
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Quark Language Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core Concepts</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="language.html">Language Elements</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html">Integration Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationInterfaces.html">Integration Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html">Annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rpc-basic/index.html">Getting Started with RPC Walkthrough</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Quark Language Reference</a><ul>
+  <li><a href="language.html">Language Elements</a><ul>
+      <li>Previous: <a href="keywords.html" title="previous chapter">Keywords</a></li>
+      <li>Next: <a href="types.html" title="next chapter">Data Types</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="types.html">Data Types</a></li>
+    </ul>
+
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="keywords.html">Keywords</a></li>
+    </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="types.html"
+            title="Data Types"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="keywords.html"
+            title="Keywords"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.5 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>
