@@ -40,6 +40,12 @@ if [ "$dirty" != "" ]; then
 fi
 branch=$(git rev-parse --abbrev-ref --symbolic HEAD)
 
+extra_args=""
+
+if [ -e ~/.slack.token ]; then
+    extra_args="-e SLACK_TOKEN=$(tr -cd a-zA-Z0-9- < ~/.slack.token) $extra_args"
+fi
+
 for img in $image; do
-    docker run -it -v `pwd`:/quark  -w /home/dev/quark/ "$img" /bin/bash /quark/scripts/dockme.sh --dockered $n_flag "$branch" "$@"
+    docker run -it -v `pwd`:/quark $extra_args -w /home/dev/quark/ "$img" /bin/bash /quark/scripts/dockme.sh --dockered $n_flag "$branch" "$@"
 done
