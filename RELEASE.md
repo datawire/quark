@@ -138,3 +138,11 @@ Tools required are `pip`, `twine`, and a not totally ancient `git`
 
 - add a link to the workflow, or better move the workflow to repo, too
 
+- generate nice github releases
+
+- generate nicer version number by learning to work with pre-release
+versions
+
+- decide how to handle CHANGELOG.md, incorporate it into the above
+
+- mention to move trello cards
