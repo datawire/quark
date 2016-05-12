@@ -35,21 +35,38 @@ if [ -t 1 ]; then
     fi
 fi
 
+# Assume pretty verbose output
+VERBOSITY=3
+
 # Define a bunch of pretty output helpers
-msg () {
-    printf "$1"
-    printf "\n"
+output () {
+    lvl="$1"
+    fmt="$2"
+    text="$3"
+
+    if [ $VERBOSITY -ge $lvl ]; then
+        printf -- "$fmt" "$text"
+    fi
 }
 
-substep () {
-    printf "%s" "-->   "
-    printf "$1"
+msg () {
+    output 1 "%s\n" "$1"
 }
 
 step () {
-    printf "%s" "--> "
-    printf "$1"
-    printf "\n"
+    output 2 "--> %s\n" "$1"
+}
+
+substep () {
+    output 3 "-->  %s" "$1"
+}
+
+substep_ok() {
+    output 3 "${green}OK${normal}\n" ""
+}
+
+substep_skip() {
+    output 3 "${yellow}OK${normal}\n" "$1"
 }
 
 die() {
@@ -58,14 +75,6 @@ die() {
     printf "$1"
     printf "\n\n"
     exit 1
-}
-
-ok() {
-    printf "${green}OK${normal}\n"
-}
-
-skip() {
-    printf "${yellow}SKIP${normal} $1\n"
 }
 
 python_version="python2.7"
@@ -105,7 +114,7 @@ install_from_dir () {
     fi
 }
 
-while getopts ':d:e:t:' opt; do
+while getopts ':d:e:t:qv' opt; do
     case $opt in
         d)  install_from_dir "$OPTARG" "" ""
             ;;
@@ -120,6 +129,13 @@ while getopts ':d:e:t:' opt; do
 
         :)  echo "Option -$OPTARG requires an argument." >&2
             exit 1
+            ;;
+
+        q)  VERBOSITY=$(( $VERBOSITY - 1 ))
+            if [ $VERBOSITY -lt 0 ]; then VERBOSITY=0; fi
+            ;;
+
+        v)  VERBOSITY=$(( $VERBOSITY + 1 ))
             ;;
 
         \?) echo "Invalid option: -$OPTARG" >&2
@@ -140,7 +156,17 @@ if [ -z "$installation_source" ]; then
     		msg "Downloading..."
     		work=$(mktemp -d ${TMPDIR:-/tmp}/quark-install.XXXXXXXX)
     		safename=$(echo "$branch" | tr '/' '-')
-    		curl -# -L ${url} > ${work}/quark-${safename}.zip
+
+            CURLVERBOSITY="-#"
+
+            if [ $VERBOSITY -lt 1 ]; then
+                CURLVERBOSITY="-s -S"
+            elif [ $VERBOSITY -gt 2 ]; then
+                CURLVERBOSITY=
+            fi
+
+    		curl $CURLVERBOSITY -L ${url} > ${work}/quark-${safename}.zip
+
     		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
     		    piparg=${work}/quark-${safename}
     		else
@@ -160,7 +186,7 @@ required_commands () {
         substep "Checking for ${cmd}: "
         loc=$(command -v ${cmd} || true)
         if [ -n "${loc}" ]; then
-            ok
+            substep_ok
         else
             die "Cannot find ${cmd}, please install and try again."
         fi
@@ -172,7 +198,7 @@ is_quark_on_path() {
    if command -v quark >/dev/null 2>&1 ; then
         die "Quark is already available on the \$PATH, please (re)move to proceed."
    else
-        ok
+        substep_ok
    fi
 }
 
@@ -185,7 +211,7 @@ is_quarkc_importable() {
     if [ "$result" -eq 0 ]; then
         die "Python module 'quarkc' is present, please remove to proceed."
     else
-        ok
+        substep_ok
     fi
 }
 
@@ -194,7 +220,7 @@ is_quark_installed () {
     if [ -e ${quark_install_root} ]; then
         die "Install directory exists at '${quark_install_root}', please (re)move to proceed."
     else
-        ok
+        substep_ok
     fi
 }
 
@@ -232,26 +258,28 @@ msg "  add '${quark_install_root}/bin' to your PATH. You can do this by adding"
 msg "  '. ${conf}' to your .bashrc."
 msg
 
-step "Configuring bash..."
-# The || true here is a workaround for osx, apparently when you are
-# piping to a shell, read will just fail
-read -p "-->   Type YES to modify ~/.bashrc: " answer || true
+if tty -s && [ $VERBOSITY -gt 0 ]; then
+    step "Configuring bash..."
+    # The || true here is a workaround for osx, apparently when you are
+    # piping to a shell, read will just fail
+    read -p "-->   Type YES to modify ~/.bashrc: " answer || true
 
-if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
-    substep "Modifying .bashrc: "
-    if [ -f ~/.bashrc ] && fgrep -q ${conf} ~/.bashrc; then
-	skip "(already modified)"
-    else
-        cat >> ~/.bashrc <<EOF
+    if [ -n "${answer}" ] && [ ${answer} == "YES" ]; then
+        substep "Modifying .bashrc: "
+        if [ -f ~/.bashrc ] && fgrep -q ${conf} ~/.bashrc; then
+    	substep_skip "(already modified)"
+        else
+            cat >> ~/.bashrc <<EOF
 
-# Add quark to the path
-. ${conf}
+    # Add quark to the path
+    . ${conf}
 EOF
-	ok
+    	substep_ok
+        fi
+        step "Configured!"
+    else
+        step "Opted out!"
     fi
-    step "Configured!"
-else
-    step "Opted out!"
 fi
 
 if [ -n "${branch}" ] && [ "${branch}" != "master" ]; then
