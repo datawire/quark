@@ -2,6 +2,9 @@ namespace quark {
 namespace spi_api_tracing {
 
     String quote(String str) { return str; }
+    String quote_error(Error error) {
+        return error.getClass().getName() + "('" + error.getMessage() + "')";
+    }
 
     class Identificator {
         concurrent.Lock lock = new concurrent.Lock();
@@ -41,10 +44,10 @@ namespace spi_api_tracing {
                            + ")");
             servlet_impl.onServletInit(url, real_runtime);
         }
-        void onServletError(String url, String error) {
+        void onServletError(String url, ServletError error) {
             self.log.debug(self.id + ".onServletError("
                            + quote(url) + ", "
-                           + quote(error)
+                           + quote_error(error)
                            + ")");
             servlet_impl.onServletError(url, error);
         }
@@ -239,12 +242,13 @@ namespace spi_api_tracing {
                            + ")");
             handler_impl.onWSClosed(wrapped_socket);
         }
-        void onWSError(WebSocket socket) {
+        void onWSError(WebSocket socket, WSError error) {
             WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSError("
                            + wrapped_socket.id
+                           + quote_error(error)
                            + ")");
-            handler_impl.onWSError(wrapped_socket);
+            handler_impl.onWSError(wrapped_socket, error);
         }
         void onWSFinal(WebSocket socket) {
             WebSocketProxy wrapped_socket = _wrap_socket(socket);
@@ -276,12 +280,12 @@ namespace spi_api_tracing {
                            + ")");
             self.handler_impl.onHTTPResponse(request, response);
         }
-        void onHTTPError(HTTPRequest request, String message) {
+        void onHTTPError(HTTPRequest request, HTTPError error) {
             self.log.debug(self.id + ".onHTTPError("
                            + wrapped_request.id + ", "
-                           + quote(message)
+                           + quote_error(error)
                            + ")");
-            self.handler_impl.onHTTPError(request, message);
+            self.handler_impl.onHTTPError(request, error);
         }
         void onHTTPFinal(HTTPRequest request) {
             self.log.debug(self.id + ".onHTTPFinal("

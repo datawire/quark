@@ -63,8 +63,8 @@ namespace slack {
             print("socket closed");
         }
 
-        void onWSError(WebSocket socket) {
-            print("socket error");
+        void onWSError(WebSocket socket, WSError error) {
+            print("socket error" + error.toString());
         }
 
         event.SlackEvent construct(String type) {

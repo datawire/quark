@@ -8,10 +8,12 @@ include io/datawire/quark/netty/Response.java;
 
 namespace quark {
 
+    class HTTPError extends Error {}
+
     interface HTTPHandler {
         void onHTTPInit(HTTPRequest request) {}
         void onHTTPResponse(HTTPRequest request, HTTPResponse response) {}
-        void onHTTPError(HTTPRequest request, String message) {}
+        void onHTTPError(HTTPRequest request, HTTPError message) {}
         void onHTTPFinal(HTTPRequest request) {}
     }
 

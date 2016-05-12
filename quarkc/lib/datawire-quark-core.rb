@@ -649,11 +649,10 @@ module DatawireQuarkCore
       end
       client.on_client(:error) do |wsevt|
         # puts self
-        events.event { handler.onWSError(sock) # , wsevt.message)
-        }
+        events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(wsevt.message)) }
       end
       client.issues.on(:start_failed) do |err|
-        events.event { handler.onWSError(sock, err.to_s) }
+        events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(err.to_s) }
         events.event(final:src) { handler.onWSFinal(sock) }
       end
       Thread.new { client.run }
@@ -880,8 +879,7 @@ module DatawireQuarkCore
           events.event(final:src) { handler.onWSFinal(sock) }
         end
         websocket.on_error do |wsevt|
-          events.event { handler.onWSError(sock) #, wsevt.message)
-          }
+          events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(wsevt.message)) }
         end
         Thread.new do
           while not websocket.closed?

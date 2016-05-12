@@ -43,10 +43,11 @@ namespace concurrent {
         Context getContext() { return self._context; }
     }
 
+
     @doc("The base class for value objects")
     class Future extends EventContext {
         bool _finished;
-        String _error;
+        Error _error;
         List<FutureCompletion> _callbacks;
         Lock _lock;
         Future() {
@@ -66,7 +67,7 @@ namespace concurrent {
             }
             self._lock.release();
         }
-        void finish(String error) {
+        void finish(Error error) {
             List<FutureCompletion> callbacks = null;
             self._lock.acquire();
             if (!self._finished) {
@@ -91,9 +92,9 @@ namespace concurrent {
             return finished;
         }
 
-        String getError() {
+        Error getError() {
             self._lock.acquire();
-            String error = self._error;
+            Error error = self._error;
             self._lock.release();
             return error;
         }

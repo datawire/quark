@@ -48,7 +48,7 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
             try {
                 handshaker.finishHandshake(ch, (FullHttpResponse) msg);
             } catch (WebSocketHandshakeException e) {
-                this.handler.onWSError(webSocket);
+                this.handler.onWSError(webSocket, new quark.WSError(e.toString()));
                 // XXX: this will fire onWSClosed, do we need to stop that?
                 ctx.channel().close();
                 return;

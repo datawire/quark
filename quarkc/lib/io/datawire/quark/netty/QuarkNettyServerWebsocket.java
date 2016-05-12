@@ -52,7 +52,7 @@ public class QuarkNettyServerWebsocket extends SimpleChannelInboundHandler<WebSo
         try {
             handshakeFuture = handshaker.handshake(ctx.channel(), rq);
         } catch (WebSocketHandshakeException e) {
-            handler.onWSError(webSocket);
+            handler.onWSError(webSocket, new quark.WSError(e.toString()));
             return false;
         }
         handshakeFuture.addListener(new ChannelFutureListener() {
@@ -63,7 +63,7 @@ public class QuarkNettyServerWebsocket extends SimpleChannelInboundHandler<WebSo
                         ch = future.channel();
                         handler.onWSConnected(webSocket);
                     } else {
-                        handler.onWSError(webSocket);
+                        handler.onWSError(webSocket, new quark.WSError(future.cause().toString()));
                         future.channel().close();
                     }
                 }

@@ -1,12 +1,14 @@
 
 namespace quark {
 
+    class ServletError extends Error {}
+
     @doc("A service addresable with an url")
     interface Servlet {
         @doc("called after the servlet is successfully installed. The url will be the actual url used, important especially if ephemeral port was requested")
         void onServletInit(String url, Runtime runtime) {}
         @doc("called if the servlet could not be installed")
-        void onServletError(String url, String error) {}
+        void onServletError(String url, ServletError error) {}
         @doc("called when the servlet is removed")
         void onServletEnd(String url) {}
     }
@@ -17,14 +19,14 @@ namespace quark {
 
     class ResponseHolder extends HTTPHandler {
         HTTPResponse response;
-        String failure = null;
+        HTTPError failure = null;
 
         void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
             self.response = response;
         }
 
-        void onHTTPError(HTTPRequest request, String message) {
-            failure = message;
+        void onHTTPError(HTTPRequest request, HTTPError error) {
+            failure = error;
         }
 
     }
@@ -199,7 +201,7 @@ namespace quark {
         }
 
         void onFuture(concurrent.Future result) {
-            String error = result.getError();
+            Error error = result.getError();
 
             if (error != null) {
                 response.setCode(404);
@@ -266,13 +268,15 @@ namespace quark {
             }
         }
 
-        void onServletError(String url, String message) {
-            concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + message);
+        void onServletError(String url, ServletError error) {
+            concurrent.Context.runtime().fail("RPC Server failed to register " + url + " due to: " + error.getMessage());
         }
 
     }
 
 namespace behaviors {
+
+    class RPCError extends Error {}
 
     // an instance of this could be the target of the @delegate annotation.
     class RPC {
@@ -320,7 +324,7 @@ namespace behaviors {
                 result = rpc.call(request);
             } else {
                 result = ?returned.construct([]);
-                result.finish("all services are down");
+                result.finish(RPCError("all services are down"));
             }
 
             concurrent.FutureWait.waitFor(result, 10.0);
@@ -367,7 +371,7 @@ namespace behaviors {
 
             if (response.getCode() != 200) {
                 info = self.rpc.toString() + " failed: Server returned error " + response.getCode().toString();
-                self.retval.finish(info);
+                self.retval.finish(RPCError(info));
                 self.rpc.fail(info);
                 return;
             }
@@ -378,7 +382,7 @@ namespace behaviors {
             String classname = obj["$class"];
             if (classname == null) {
                 info = self.rpc.toString() + " failed: Server returned unrecognizable content";
-                self.retval.finish(info);
+                self.retval.finish(RPCError(info));
                 self.rpc.fail(info);
                 return;
             } else {
@@ -389,7 +393,7 @@ namespace behaviors {
         }
 
         void onTimeout(concurrent.Timeout timeout) {
-            self.retval.finish("request timed out");
+            self.retval.finish(RPCError("request timed out"));
             self.rpc.fail("request timed out");
         }
     }

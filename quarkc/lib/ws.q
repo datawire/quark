@@ -4,13 +4,16 @@ include io/datawire/quark/netty/QuarkWebSocket.java;
 include io/datawire/quark/netty/QuarkNettyClientWebsocket.java;
 
 namespace quark {
+
+    class WSError extends Error {}
+
     interface WSHandler {
         void onWSInit(WebSocket socket) {}
         void onWSConnected(WebSocket socket) {}
         void onWSMessage(WebSocket socket, String message) {}
         void onWSBinary(WebSocket socket, Buffer message) {}
         void onWSClosed(WebSocket socket) {}
-        void onWSError(WebSocket socket) {}
+        void onWSError(WebSocket socket, WSError error) {}
         void onWSFinal(WebSocket socket) {}
     }
 
