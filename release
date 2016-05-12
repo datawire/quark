@@ -225,7 +225,7 @@ def _version(dev, ver, docver, dry):
     title, updated = quark_version(ver, docver, dev)
     for fname in updated:
         run("git", "add", fname, cwd=base(), dry=dry)
-    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [skip-ci]" % (title, ver, docver),
+    run("git", "commit", "-m", "Changed version to %s, %s (doc %s). [ci skip]" % (title, ver, docver),
         cwd=base(), dry=dry)
 
 def randstr():
@@ -604,7 +604,7 @@ def push_release(args):
         dev_tag = dev_tag_at("%s^^2" % actual_tag)
     print "Found dev tag %r" % dev_tag
 
-    to_push = [ "%s:master" % RELEASE_BRANCH ]
+    to_push = [ "%s:master" % RELEASE_BRANCH, actual_tag ]
     if is_ancestor("develop", "master"):
         # preserve fast-forward-ness
         run("git", "checkout", "--detach", RELEASE_BRANCH)
