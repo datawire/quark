@@ -54,7 +54,10 @@ class Parser:
                "AND": "&&",
                "OR": "||",
                "AT": "@",
-               "CAST": "?"}
+               "CAST": "?",
+               "BITWISE_OR": "|",
+               "BITWISE_XOR": "^",
+               "BITWISE_AND": "&"}
 
     aliases = {
         "+": "__add__",
@@ -69,12 +72,16 @@ class Parser:
         "<": "__lt__",
         ">": "__gt__",
         "==": "__eq__",
-        "!=": "__ne__"
+        "!=": "__ne__",
+        "|": "__bitwise_or__",
+        "^": "__bitwise_xor__",
+        "&": "__bitwise_and__",
     }
 
     unary_aliases = {
         "!": "__not__",
-        "-": "__neg__"
+        "-": "__neg__",
+        "~": "__bitwise_not__",
     }
 
     @g.rule('file = toplevel* _ ~"$"')
@@ -361,13 +368,33 @@ class Parser:
             result = Call(Attr(result, Name(self.aliases[op])), [rhs])
         return result
 
-    @g.rule("andoperand = NOT? notoperand")
-    def visit_andoperand(self, node, (not_, operand)):
+    @g.rule("andoperand = bitwise_or_operand (BITWISE_OR bitwise_or_operand)*")
+    def visit_andoperand(self, node, (result, remaining)):
+        while remaining:
+            op, rhs = remaining.pop(0)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
+        return result
+
+    @g.rule("bitwise_or_operand = bitwise_xor_operand (BITWISE_XOR bitwise_xor_operand)*")
+    def visit_bitwise_or_operand(self, node, (result, remaining)):
+        while remaining:
+            op, rhs = remaining.pop(0)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
+        return result
+
+    @g.rule("bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*")
+    def visit_bitwise_xor_operand(self, node, (result, remaining)):
+        while remaining:
+            op, rhs = remaining.pop(0)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
+        return result
+
+    @g.rule("bitwise_and_operand = NOT? notoperand")
+    def visit_bitwise_and_operand(self, node, (not_, operand)):
         if not_:
             return Call(Attr(operand, Name(self.unary_aliases[not_[0]])), [])
         else:
             return operand
-
 
     @g.rule("notoperand = cmpoperand (cmpop cmpoperand)*")
     def visit_notoperand(self, node, (result, remaining)):
