@@ -18,6 +18,17 @@ import grammar
 
 g = grammar.Grammar()
 
+
+def right_associative_infix_rule(grammar_rule):
+    """Semantic action for rules like 'A = B (C B)*'."""
+    def semantic_action(self, node, (result, remaining)):
+        while remaining:
+            op, rhs = remaining.pop(0)
+            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
+        return result
+    return g.rule(grammar_rule)(semantic_action)
+
+
 @g.parser
 class Parser:
 
@@ -354,40 +365,20 @@ class Parser:
     def visit_while(self, node, (kw, lp, expr, rp, body)):
         return While(expr, body)
 
-    @g.rule('expr = oroperand (OR oroperand)*')
-    def visit_expr(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
-        return result
+    visit_expr = right_associative_infix_rule(
+        'expr = oroperand (OR oroperand)*')
 
-    @g.rule("oroperand = andoperand (AND andoperand)*")
-    def visit_oroperand(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
-        return result
+    visit_oroperand = right_associative_infix_rule(
+        'oroperand = andoperand (AND andoperand)*')
 
-    @g.rule("andoperand = bitwise_or_operand (BITWISE_OR bitwise_or_operand)*")
-    def visit_andoperand(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
-        return result
+    visit_andoperand = right_associative_infix_rule(
+        'andoperand = bitwise_or_operand (BITWISE_OR bitwise_or_operand)*')
 
-    @g.rule("bitwise_or_operand = bitwise_xor_operand (BITWISE_XOR bitwise_xor_operand)*")
-    def visit_bitwise_or_operand(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
-        return result
+    visit_bitwise_or_operand = right_associative_infix_rule(
+        'bitwise_or_operand = bitwise_xor_operand (BITWISE_XOR bitwise_xor_operand)*')
 
-    @g.rule("bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*")
-    def visit_bitwise_xor_operand(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
-        return result
+    visit_bitwise_xor_operand = right_associative_infix_rule(
+        'bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*')
 
     @g.rule("bitwise_and_operand = NOT? notoperand")
     def visit_bitwise_and_operand(self, node, (not_, operand)):
@@ -396,42 +387,26 @@ class Parser:
         else:
             return operand
 
-    @g.rule("notoperand = cmpoperand (cmpop cmpoperand)*")
-    def visit_notoperand(self, node, (result, remaining)):
-        while remaining:
-            op, rhs = remaining.pop(0)
-            result = Call(Attr(result, op), [rhs])
-        return result
+    visit_notoperand = right_associative_infix_rule(
+        'notoperand = cmpoperand (cmpop cmpoperand)*')
 
     @g.rule('cmpop = GE / LE / LT / GT / EQL / NEQ')
     def visit_cmpop(self, node, (op,)):
-        return Name(self.aliases[op])
+        return op
 
-    @g.rule("cmpoperand = addoperand (addop addoperand)*")
-    def visit_cmpoperand(self, node, children):
-        result = children[0]
-        remaining = children[1]
-        while remaining:
-            result = Call(Attr(result, remaining[0][0]), [remaining[0][1]])
-            remaining.pop(0)
-        return result
+    visit_cmpoperand = right_associative_infix_rule(
+        'cmpoperand = addoperand (addop addoperand)*')
 
     @g.rule('addop = PLUS / MINUS')
     def visit_addop(self, node, (op,)):
-        return Name(self.aliases[op])
+        return op
 
-    @g.rule("addoperand = muloperand (mulop muloperand)*")
-    def visit_addoperand(self, node, children):
-        result = children[0]
-        remaining = children[1]
-        while remaining:
-            result = Call(Attr(result, remaining[0][0]), [remaining[0][1]])
-            remaining.pop(0)
-        return result
+    visit_addoperand = right_associative_infix_rule(
+        'addoperand = muloperand (mulop muloperand)*')
 
     @g.rule('mulop = MUL / DIV / MOD')
     def visit_mulop(self, node, (op,)):
-        return Name(self.aliases[op])
+        return op
 
     @g.rule("muloperand = uop? prim")
     def visit_muloperand(self, node, (uop, expr)):
