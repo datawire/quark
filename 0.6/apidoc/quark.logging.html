@@ -1,0 +1,235 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Mostly ripped off from http://getbootstrap.com/examples/dashboard/ -->
+
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="apidoc.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-4 col-md-3 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="quark.html">quark</a></li>
+            <li class="active"><a href="#quark.logging"><small>quark.</small>logging</a></li>
+            <li><a href="quark.reflect.html"><small>quark.</small>reflect</a></li>
+            <li><a href="quark.behaviors.html"><small>quark.</small>behaviors</a></li>
+            <li><a href="quark.concurrent.html"><small>quark.</small>concurrent</a></li>
+            <li><a href="quark.test.html"><small>quark.</small>test</a></li>
+            <li><a href="quark.spi.html"><small>quark.</small>spi</a></li>
+            <li><a href="quark.spi_api.html"><small>quark.</small>spi_api</a></li>
+            <li><a href="quark.spi_api_tracing.html"><small>quark.</small>spi_api_tracing</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#quark.logging.Appender"><small>quark.logging.</small>Appender</a></li>
+            
+            <li><a href="#quark.logging.stdout"><small>quark.logging.</small>stdout</a></li>
+            
+            <li><a href="#quark.logging.stderr"><small>quark.logging.</small>stderr</a></li>
+            
+            <li><a href="#quark.logging.file"><small>quark.logging.</small>file</a></li>
+            
+            <li><a href="#quark.logging.Config"><small>quark.logging.</small>Config</a></li>
+            
+            <li><a href="#quark.logging.Config.setAppender"><small>quark.logging.Config.</small>setAppender</a></li>
+            
+            <li><a href="#quark.logging.Config.setLevel"><small>quark.logging.Config.</small>setLevel</a></li>
+            
+            <li><a href="#quark.logging.Config.configure"><small>quark.logging.Config.</small>configure</a></li>
+            
+            <li><a href="#quark.logging.makeConfig"><small>quark.logging.</small>makeConfig</a></li>
+            
+          </ul>
+        </div><!-- sidebar -->
+
+        <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+
+          <div><!-- namespace quark.logging -->
+  <span class="anchor" id="quark.logging"></span>
+  <h2 class="page-header"><small>quark.</small>logging</h2>
+  <p>(package)</p>
+  <div class="childindent"><!-- child node quark.logging.Appender -->
+  <span class="anchor" id="quark.logging.Appender"></span>
+  <div class="h3"><small>quark.logging.</small>Appender</div>
+  <p>Destination for logging, just a marker interface for now</p>
+  
+  <hr>
+</div><!-- child node quark.logging.Appender -->
+  <div class="childindent"><!-- child node quark.logging.stdout -->
+  <span class="anchor" id="quark.logging.stdout"></span>
+  <div class="h3"><small>quark.logging.</small>stdout</div>
+  <p>(macro)</p>
+  <div class="callable_call"><!-- quark.logging.stdout -->
+<span class="return_type">
+<span class="type_name">Appender</span></span> <span class="callable_call_name">stdout</span>(
+)
+</div><!-- callable_call quark.logging.stdout -->
+  <hr>
+</div><!-- child node quark.logging.stdout -->
+  <div class="childindent"><!-- child node quark.logging.stderr -->
+  <span class="anchor" id="quark.logging.stderr"></span>
+  <div class="h3"><small>quark.logging.</small>stderr</div>
+  <p>(macro)</p>
+  <div class="callable_call"><!-- quark.logging.stderr -->
+<span class="return_type">
+<span class="type_name">Appender</span></span> <span class="callable_call_name">stderr</span>(
+)
+</div><!-- callable_call quark.logging.stderr -->
+  <hr>
+</div><!-- child node quark.logging.stderr -->
+  <div class="childindent"><!-- child node quark.logging.file -->
+  <span class="anchor" id="quark.logging.file"></span>
+  <div class="h3"><small>quark.logging.</small>file</div>
+  <p>(macro)</p>
+  <div class="callable_call"><!-- quark.logging.file -->
+<span class="return_type">
+<span class="type_name">Appender</span></span> <span class="callable_call_name">file</span>(
+<span class="param_name_call">path</span>,
+)
+</div><!-- callable_call quark.logging.file -->
+<div class="callable_param_list"><!-- quark.logging.file -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">path</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.logging.file -->
+  <hr>
+</div><!-- child node quark.logging.file -->
+  <div class="childindent"><!-- child node quark.logging.Config -->
+  <span class="anchor" id="quark.logging.Config"></span>
+  <div class="h3"><small>quark.logging.</small>Config</div>
+  <p>Logging configurator</p>
+  
+<div class="childindent"><!-- child node quark.logging.Config.setAppender -->
+  <span class="anchor" id="quark.logging.Config.setAppender"></span>
+  <div class="h3"><small>quark.logging.Config.</small>setAppender</div>
+  <p>Set the destination for logging, default stderr()</p>
+  <div class="callable_call"><!-- quark.logging.Config.setAppender -->
+<span class="return_type">
+<span class="type_name">Config</span></span> <span class="callable_call_name">setAppender</span>(
+<span class="param_name_call">appender</span>,
+)
+</div><!-- callable_call quark.logging.Config.setAppender -->
+<div class="callable_param_list"><!-- quark.logging.Config.setAppender -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Appender</span> <span class="param_name_long">appender</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.logging.Config.setAppender -->
+  <hr>
+</div><!-- child node quark.logging.Config.setAppender -->
+<div class="childindent"><!-- child node quark.logging.Config.setLevel -->
+  <span class="anchor" id="quark.logging.Config.setLevel"></span>
+  <div class="h3"><small>quark.logging.Config.</small>setLevel</div>
+  <p>set the logging level [trace|debug|info|warn|error], default 'info'</p>
+  <div class="callable_call"><!-- quark.logging.Config.setLevel -->
+<span class="return_type">
+<span class="type_name">Config</span></span> <span class="callable_call_name">setLevel</span>(
+<span class="param_name_call">level</span>,
+)
+</div><!-- callable_call quark.logging.Config.setLevel -->
+<div class="callable_param_list"><!-- quark.logging.Config.setLevel -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">level</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.logging.Config.setLevel -->
+  <hr>
+</div><!-- child node quark.logging.Config.setLevel -->
+<div class="childindent"><!-- child node quark.logging.Config.configure -->
+  <span class="anchor" id="quark.logging.Config.configure"></span>
+  <div class="h3"><small>quark.logging.Config.</small>configure</div>
+  <p>Configure the logging</p>
+  <div class="callable_call"><!-- quark.logging.Config.configure -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">configure</span>(
+)
+</div><!-- callable_call quark.logging.Config.configure -->
+  <hr>
+</div><!-- child node quark.logging.Config.configure -->
+  <hr>
+</div><!-- child node quark.logging.Config -->
+  <div class="childindent"><!-- child node quark.logging.makeConfig -->
+  <span class="anchor" id="quark.logging.makeConfig"></span>
+  <div class="h3"><small>quark.logging.</small>makeConfig</div>
+  <p>(macro)</p>
+  <div class="callable_call"><!-- quark.logging.makeConfig -->
+<span class="return_type">
+<span class="type_name">Config</span></span> <span class="callable_call_name">makeConfig</span>(
+)
+</div><!-- callable_call quark.logging.makeConfig -->
+  <hr>
+</div><!-- child node quark.logging.makeConfig -->
+  <hr>
+</div><!-- namespace quark.logging -->
+
+        </div><!-- main -->
+
+      </div><!-- row -->
+    </div><!-- container-fluid -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+  </body>
+</html>

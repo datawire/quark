@@ -1,0 +1,1505 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Mostly ripped off from http://getbootstrap.com/examples/dashboard/ -->
+
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="apidoc.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-4 col-md-3 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="quark.html">quark</a></li>
+            <li><a href="quark.logging.html"><small>quark.</small>logging</a></li>
+            <li><a href="quark.reflect.html"><small>quark.</small>reflect</a></li>
+            <li><a href="quark.behaviors.html"><small>quark.</small>behaviors</a></li>
+            <li class="active"><a href="#quark.concurrent"><small>quark.</small>concurrent</a></li>
+            <li><a href="quark.test.html"><small>quark.</small>test</a></li>
+            <li><a href="quark.spi.html"><small>quark.</small>spi</a></li>
+            <li><a href="quark.spi_api.html"><small>quark.</small>spi_api</a></li>
+            <li><a href="quark.spi_api_tracing.html"><small>quark.</small>spi_api_tracing</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#quark.concurrent.Event"><small>quark.concurrent.</small>Event</a></li>
+            
+            <li><a href="#quark.concurrent.Event.getContext"><small>quark.concurrent.Event.</small>getContext</a></li>
+            
+            <li><a href="#quark.concurrent.Event.fireEvent"><small>quark.concurrent.Event.</small>fireEvent</a></li>
+            
+            <li><a href="#quark.concurrent.FutureListener"><small>quark.concurrent.</small>FutureListener</a></li>
+            
+            <li><a href="#quark.concurrent.FutureListener.onFuture"><small>quark.concurrent.FutureListener.</small>onFuture</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion"><small>quark.concurrent.</small>FutureCompletion</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion.future"><small>quark.concurrent.FutureCompletion.</small>future</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion.listener"><small>quark.concurrent.FutureCompletion.</small>listener</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion.FutureCompletion"><small>quark.concurrent.FutureCompletion.</small>FutureCompletion</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion.getContext"><small>quark.concurrent.FutureCompletion.</small>getContext</a></li>
+            
+            <li><a href="#quark.concurrent.FutureCompletion.fireEvent"><small>quark.concurrent.FutureCompletion.</small>fireEvent</a></li>
+            
+            <li><a href="#quark.concurrent.EventContext"><small>quark.concurrent.</small>EventContext</a></li>
+            
+            <li><a href="#quark.concurrent.EventContext._context"><small>quark.concurrent.EventContext.</small>_context</a></li>
+            
+            <li><a href="#quark.concurrent.EventContext.EventContext"><small>quark.concurrent.EventContext.</small>EventContext</a></li>
+            
+            <li><a href="#quark.concurrent.EventContext.getContext"><small>quark.concurrent.EventContext.</small>getContext</a></li>
+            
+            <li><a href="#quark.concurrent.Future"><small>quark.concurrent.</small>Future</a></li>
+            
+            <li><a href="#quark.concurrent.Future._finished"><small>quark.concurrent.Future.</small>_finished</a></li>
+            
+            <li><a href="#quark.concurrent.Future._error"><small>quark.concurrent.Future.</small>_error</a></li>
+            
+            <li><a href="#quark.concurrent.Future._callbacks"><small>quark.concurrent.Future.</small>_callbacks</a></li>
+            
+            <li><a href="#quark.concurrent.Future._lock"><small>quark.concurrent.Future.</small>_lock</a></li>
+            
+            <li><a href="#quark.concurrent.Future.Future"><small>quark.concurrent.Future.</small>Future</a></li>
+            
+            <li><a href="#quark.concurrent.Future.onFinished"><small>quark.concurrent.Future.</small>onFinished</a></li>
+            
+            <li><a href="#quark.concurrent.Future.finish"><small>quark.concurrent.Future.</small>finish</a></li>
+            
+            <li><a href="#quark.concurrent.Future.isFinished"><small>quark.concurrent.Future.</small>isFinished</a></li>
+            
+            <li><a href="#quark.concurrent.Future.getError"><small>quark.concurrent.Future.</small>getError</a></li>
+            
+            <li><a href="#quark.concurrent.Future.await"><small>quark.concurrent.Future.</small>await</a></li>
+            
+            <li><a href="#quark.concurrent.Future.quark_List_quark_concurrent_FutureCompletion__ref"><small>quark.concurrent.Future.</small>quark_List_quark_concurrent_FutureCompletion__ref</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait"><small>quark.concurrent.</small>FutureWait</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait._lock"><small>quark.concurrent.FutureWait.</small>_lock</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait._future"><small>quark.concurrent.FutureWait.</small>_future</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait.FutureWait"><small>quark.concurrent.FutureWait.</small>FutureWait</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait.wait"><small>quark.concurrent.FutureWait.</small>wait</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait.onFuture"><small>quark.concurrent.FutureWait.</small>onFuture</a></li>
+            
+            <li><a href="#quark.concurrent.FutureWait.waitFor"><small>quark.concurrent.FutureWait.</small>waitFor</a></li>
+            
+            <li><a href="#quark.concurrent.Queue"><small>quark.concurrent.</small>Queue</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.items"><small>quark.concurrent.Queue.</small>items</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.head"><small>quark.concurrent.Queue.</small>head</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.tail"><small>quark.concurrent.Queue.</small>tail</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.Queue"><small>quark.concurrent.Queue.</small>Queue</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.put"><small>quark.concurrent.Queue.</small>put</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.get"><small>quark.concurrent.Queue.</small>get</a></li>
+            
+            <li><a href="#quark.concurrent.Queue.size"><small>quark.concurrent.Queue.</small>size</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor"><small>quark.concurrent.</small>CollectorExecutor</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor.events"><small>quark.concurrent.CollectorExecutor.</small>events</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor.collector"><small>quark.concurrent.CollectorExecutor.</small>collector</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor.CollectorExecutor"><small>quark.concurrent.CollectorExecutor.</small>CollectorExecutor</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor._start"><small>quark.concurrent.CollectorExecutor.</small>_start</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor.onExecute"><small>quark.concurrent.CollectorExecutor.</small>onExecute</a></li>
+            
+            <li><a href="#quark.concurrent.CollectorExecutor.quark_concurrent_Queue_quark_concurrent_Event__ref"><small>quark.concurrent.CollectorExecutor.</small>quark_concurrent_Queue_quark_concurrent_Event__ref</a></li>
+            
+            <li><a href="#quark.concurrent.Collector"><small>quark.concurrent.</small>Collector</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.lock"><small>quark.concurrent.Collector.</small>lock</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.pending"><small>quark.concurrent.Collector.</small>pending</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.executor"><small>quark.concurrent.Collector.</small>executor</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.idle"><small>quark.concurrent.Collector.</small>idle</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.Collector"><small>quark.concurrent.Collector.</small>Collector</a></li>
+            
+            <li><a href="#quark.concurrent.Collector.put"><small>quark.concurrent.Collector.</small>put</a></li>
+            
+            <li><a href="#quark.concurrent.Collector._swap"><small>quark.concurrent.Collector.</small>_swap</a></li>
+            
+            <li><a href="#quark.concurrent.Collector._poll"><small>quark.concurrent.Collector.</small>_poll</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutListener"><small>quark.concurrent.</small>TimeoutListener</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutListener.onTimeout"><small>quark.concurrent.TimeoutListener.</small>onTimeout</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry"><small>quark.concurrent.</small>TimeoutExpiry</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry.timeout"><small>quark.concurrent.TimeoutExpiry.</small>timeout</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry.listener"><small>quark.concurrent.TimeoutExpiry.</small>listener</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry.TimeoutExpiry"><small>quark.concurrent.TimeoutExpiry.</small>TimeoutExpiry</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry.getContext"><small>quark.concurrent.TimeoutExpiry.</small>getContext</a></li>
+            
+            <li><a href="#quark.concurrent.TimeoutExpiry.fireEvent"><small>quark.concurrent.TimeoutExpiry.</small>fireEvent</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout"><small>quark.concurrent.</small>Timeout</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.timeout"><small>quark.concurrent.Timeout.</small>timeout</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.lock"><small>quark.concurrent.Timeout.</small>lock</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.listener"><small>quark.concurrent.Timeout.</small>listener</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.Timeout"><small>quark.concurrent.Timeout.</small>Timeout</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.start"><small>quark.concurrent.Timeout.</small>start</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.cancel"><small>quark.concurrent.Timeout.</small>cancel</a></li>
+            
+            <li><a href="#quark.concurrent.Timeout.onExecute"><small>quark.concurrent.Timeout.</small>onExecute</a></li>
+            
+            <li><a href="#quark.concurrent.TLSContextInitializer"><small>quark.concurrent.</small>TLSContextInitializer</a></li>
+            
+            <li><a href="#quark.concurrent.TLSContextInitializer.getValue"><small>quark.concurrent.TLSContextInitializer.</small>getValue</a></li>
+            
+            <li><a href="#quark.concurrent.Context"><small>quark.concurrent.</small>Context</a></li>
+            
+            <li><a href="#quark.concurrent.Context._global"><small>quark.concurrent.Context.</small>_global</a></li>
+            
+            <li><a href="#quark.concurrent.Context._current"><small>quark.concurrent.Context.</small>_current</a></li>
+            
+            <li><a href="#quark.concurrent.Context.current"><small>quark.concurrent.Context.</small>current</a></li>
+            
+            <li><a href="#quark.concurrent.Context.global"><small>quark.concurrent.Context.</small>global</a></li>
+            
+            <li><a href="#quark.concurrent.Context.runtime"><small>quark.concurrent.Context.</small>runtime</a></li>
+            
+            <li><a href="#quark.concurrent.Context.swap"><small>quark.concurrent.Context.</small>swap</a></li>
+            
+            <li><a href="#quark.concurrent.Context.Context"><small>quark.concurrent.Context.</small>Context</a></li>
+            
+            <li><a href="#quark.concurrent.Context._parent"><small>quark.concurrent.Context.</small>_parent</a></li>
+            
+            <li><a href="#quark.concurrent.Context._runtime"><small>quark.concurrent.Context.</small>_runtime</a></li>
+            
+            <li><a href="#quark.concurrent.Context.collector"><small>quark.concurrent.Context.</small>collector</a></li>
+            
+            <li><a href="#quark.concurrent.TLSInitializer"><small>quark.concurrent.</small>TLSInitializer</a></li>
+            
+            <li><a href="#quark.concurrent.TLSInitializer.getValue"><small>quark.concurrent.TLSInitializer.</small>getValue</a></li>
+            
+            <li><a href="#quark.concurrent.TLS"><small>quark.concurrent.</small>TLS</a></li>
+            
+            <li><a href="#quark.concurrent.TLS.TLS"><small>quark.concurrent.TLS.</small>TLS</a></li>
+            
+            <li><a href="#quark.concurrent.TLS.getValue"><small>quark.concurrent.TLS.</small>getValue</a></li>
+            
+            <li><a href="#quark.concurrent.TLS.setValue"><small>quark.concurrent.TLS.</small>setValue</a></li>
+            
+            <li><a href="#quark.concurrent.Mutex"><small>quark.concurrent.</small>Mutex</a></li>
+            
+            <li><a href="#quark.concurrent.Mutex.acquire"><small>quark.concurrent.Mutex.</small>acquire</a></li>
+            
+            <li><a href="#quark.concurrent.Mutex.release"><small>quark.concurrent.Mutex.</small>release</a></li>
+            
+            <li><a href="#quark.concurrent.Lock"><small>quark.concurrent.</small>Lock</a></li>
+            
+            <li><a href="#quark.concurrent.Condition"><small>quark.concurrent.</small>Condition</a></li>
+            
+            <li><a href="#quark.concurrent.Condition.waitWakeup"><small>quark.concurrent.Condition.</small>waitWakeup</a></li>
+            
+            <li><a href="#quark.concurrent.Condition.wakeup"><small>quark.concurrent.Condition.</small>wakeup</a></li>
+            
+          </ul>
+        </div><!-- sidebar -->
+
+        <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+
+          <div><!-- namespace quark.concurrent -->
+  <span class="anchor" id="quark.concurrent"></span>
+  <h2 class="page-header"><small>quark.</small>concurrent</h2>
+  <p>(package)</p>
+  <div class="childindent"><!-- child node quark.concurrent.Event -->
+  <span class="anchor" id="quark.concurrent.Event"></span>
+  <div class="h3"><small>quark.concurrent.</small>Event</div>
+  <p>The contract between event implementations and Collector</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.Event.getContext -->
+  <span class="anchor" id="quark.concurrent.Event.getContext"></span>
+  <div class="h3"><small>quark.concurrent.Event.</small>getContext</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Event.getContext -->
+<span class="return_type">
+<span class="type_name">EventContext</span></span> <span class="callable_call_name">getContext</span>(
+)
+</div><!-- callable_call quark.concurrent.Event.getContext -->
+  <hr>
+</div><!-- child node quark.concurrent.Event.getContext -->
+<div class="childindent"><!-- child node quark.concurrent.Event.fireEvent -->
+  <span class="anchor" id="quark.concurrent.Event.fireEvent"></span>
+  <div class="h3"><small>quark.concurrent.Event.</small>fireEvent</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Event.fireEvent -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">fireEvent</span>(
+)
+</div><!-- callable_call quark.concurrent.Event.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.Event.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.Event -->
+  <div class="childindent"><!-- child node quark.concurrent.FutureListener -->
+  <span class="anchor" id="quark.concurrent.FutureListener"></span>
+  <div class="h3"><small>quark.concurrent.</small>FutureListener</div>
+  <p>event handler for a future completion</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.FutureListener.onFuture -->
+  <span class="anchor" id="quark.concurrent.FutureListener.onFuture"></span>
+  <div class="h3"><small>quark.concurrent.FutureListener.</small>onFuture</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureListener.onFuture -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onFuture</span>(
+<span class="param_name_call">future</span>,
+)
+</div><!-- callable_call quark.concurrent.FutureListener.onFuture -->
+<div class="callable_param_list"><!-- quark.concurrent.FutureListener.onFuture -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Future</span> <span class="param_name_long">future</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.FutureListener.onFuture -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureListener.onFuture -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureListener -->
+  <div class="childindent"><!-- child node quark.concurrent.FutureCompletion -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion"></span>
+  <div class="h3"><small>quark.concurrent.</small>FutureCompletion</div>
+  <p>internal class that binds a listener to a future</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.FutureCompletion -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Event</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.FutureCompletion -->
+<div class="childindent"><!-- child node quark.concurrent.FutureCompletion.future -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion.future"></span>
+  <div class="h3"><small>quark.concurrent.FutureCompletion.</small>future</div>
+  <p>(field)</p>
+  
+<span class="type_name">Future</span> <span class="field_name_long">future</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion.future -->
+<div class="childindent"><!-- child node quark.concurrent.FutureCompletion.listener -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion.listener"></span>
+  <div class="h3"><small>quark.concurrent.FutureCompletion.</small>listener</div>
+  <p>(field)</p>
+  
+<span class="type_name">FutureListener</span> <span class="field_name_long">listener</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion.listener -->
+<div class="childindent"><!-- child node quark.concurrent.FutureCompletion.FutureCompletion -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion.FutureCompletion"></span>
+  <div class="h3"><small>quark.concurrent.FutureCompletion.</small>FutureCompletion</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureCompletion.FutureCompletion -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">FutureCompletion</span>(
+<span class="param_name_call">future</span>,
+<span class="param_name_call">listener</span>,
+)
+</div><!-- callable_call quark.concurrent.FutureCompletion.FutureCompletion -->
+<div class="callable_param_list"><!-- quark.concurrent.FutureCompletion.FutureCompletion -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Future</span> <span class="param_name_long">future</span>: (param)</li>
+    <li>
+<span class="type_name">FutureListener</span> <span class="param_name_long">listener</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.FutureCompletion.FutureCompletion -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion.FutureCompletion -->
+<div class="childindent"><!-- child node quark.concurrent.FutureCompletion.getContext -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion.getContext"></span>
+  <div class="h3"><small>quark.concurrent.FutureCompletion.</small>getContext</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureCompletion.getContext -->
+<span class="return_type">
+<span class="type_name">EventContext</span></span> <span class="callable_call_name">getContext</span>(
+)
+</div><!-- callable_call quark.concurrent.FutureCompletion.getContext -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion.getContext -->
+<div class="childindent"><!-- child node quark.concurrent.FutureCompletion.fireEvent -->
+  <span class="anchor" id="quark.concurrent.FutureCompletion.fireEvent"></span>
+  <div class="h3"><small>quark.concurrent.FutureCompletion.</small>fireEvent</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureCompletion.fireEvent -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">fireEvent</span>(
+)
+</div><!-- callable_call quark.concurrent.FutureCompletion.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureCompletion -->
+  <div class="childindent"><!-- child node quark.concurrent.EventContext -->
+  <span class="anchor" id="quark.concurrent.EventContext"></span>
+  <div class="h3"><small>quark.concurrent.</small>EventContext</div>
+  <p>Captures the current context, base class for all event source implementations</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.EventContext._context -->
+  <span class="anchor" id="quark.concurrent.EventContext._context"></span>
+  <div class="h3"><small>quark.concurrent.EventContext.</small>_context</div>
+  <p>(field)</p>
+  
+<span class="type_name">Context</span> <span class="field_name_long">_context</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.EventContext._context -->
+<div class="childindent"><!-- child node quark.concurrent.EventContext.EventContext -->
+  <span class="anchor" id="quark.concurrent.EventContext.EventContext"></span>
+  <div class="h3"><small>quark.concurrent.EventContext.</small>EventContext</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.EventContext.EventContext -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">EventContext</span>(
+)
+</div><!-- callable_call quark.concurrent.EventContext.EventContext -->
+  <hr>
+</div><!-- child node quark.concurrent.EventContext.EventContext -->
+<div class="childindent"><!-- child node quark.concurrent.EventContext.getContext -->
+  <span class="anchor" id="quark.concurrent.EventContext.getContext"></span>
+  <div class="h3"><small>quark.concurrent.EventContext.</small>getContext</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.EventContext.getContext -->
+<span class="return_type">
+<span class="type_name">Context</span></span> <span class="callable_call_name">getContext</span>(
+)
+</div><!-- callable_call quark.concurrent.EventContext.getContext -->
+  <hr>
+</div><!-- child node quark.concurrent.EventContext.getContext -->
+  <hr>
+</div><!-- child node quark.concurrent.EventContext -->
+  <div class="childindent"><!-- child node quark.concurrent.Future -->
+  <span class="anchor" id="quark.concurrent.Future"></span>
+  <div class="h3"><small>quark.concurrent.</small>Future</div>
+  <p>The base class for value objects</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.Future -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">EventContext</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.Future -->
+<div class="childindent"><!-- child node quark.concurrent.Future._finished -->
+  <span class="anchor" id="quark.concurrent.Future._finished"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>_finished</div>
+  <p>(field)</p>
+  
+<span class="type_name">bool</span> <span class="field_name_long">_finished</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Future._finished -->
+<div class="childindent"><!-- child node quark.concurrent.Future._error -->
+  <span class="anchor" id="quark.concurrent.Future._error"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>_error</div>
+  <p>(field)</p>
+  
+<span class="type_name">String</span> <span class="field_name_long">_error</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Future._error -->
+<div class="childindent"><!-- child node quark.concurrent.Future._callbacks -->
+  <span class="anchor" id="quark.concurrent.Future._callbacks"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>_callbacks</div>
+  <p>(field)</p>
+  
+<span class="type_name">List&lt;FutureCompletion&gt;</span> <span class="field_name_long">_callbacks</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Future._callbacks -->
+<div class="childindent"><!-- child node quark.concurrent.Future._lock -->
+  <span class="anchor" id="quark.concurrent.Future._lock"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>_lock</div>
+  <p>(field)</p>
+  
+<span class="type_name">Lock</span> <span class="field_name_long">_lock</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Future._lock -->
+<div class="childindent"><!-- child node quark.concurrent.Future.Future -->
+  <span class="anchor" id="quark.concurrent.Future.Future"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>Future</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.Future -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Future</span>(
+)
+</div><!-- callable_call quark.concurrent.Future.Future -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.Future -->
+<div class="childindent"><!-- child node quark.concurrent.Future.onFinished -->
+  <span class="anchor" id="quark.concurrent.Future.onFinished"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>onFinished</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.onFinished -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onFinished</span>(
+<span class="param_name_call">callback</span>,
+)
+</div><!-- callable_call quark.concurrent.Future.onFinished -->
+<div class="callable_param_list"><!-- quark.concurrent.Future.onFinished -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">FutureListener</span> <span class="param_name_long">callback</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Future.onFinished -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.onFinished -->
+<div class="childindent"><!-- child node quark.concurrent.Future.finish -->
+  <span class="anchor" id="quark.concurrent.Future.finish"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>finish</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.finish -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">finish</span>(
+<span class="param_name_call">error</span>,
+)
+</div><!-- callable_call quark.concurrent.Future.finish -->
+<div class="callable_param_list"><!-- quark.concurrent.Future.finish -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">error</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Future.finish -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.finish -->
+<div class="childindent"><!-- child node quark.concurrent.Future.isFinished -->
+  <span class="anchor" id="quark.concurrent.Future.isFinished"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>isFinished</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.isFinished -->
+<span class="return_type">
+<span class="type_name">bool</span></span> <span class="callable_call_name">isFinished</span>(
+)
+</div><!-- callable_call quark.concurrent.Future.isFinished -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.isFinished -->
+<div class="childindent"><!-- child node quark.concurrent.Future.getError -->
+  <span class="anchor" id="quark.concurrent.Future.getError"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>getError</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.getError -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getError</span>(
+)
+</div><!-- callable_call quark.concurrent.Future.getError -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.getError -->
+<div class="childindent"><!-- child node quark.concurrent.Future.await -->
+  <span class="anchor" id="quark.concurrent.Future.await"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>await</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Future.await -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">await</span>(
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.Future.await -->
+<div class="callable_param_list"><!-- quark.concurrent.Future.await -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">float</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Future.await -->
+  <hr>
+</div><!-- child node quark.concurrent.Future.await -->
+<div class="childindent"><!-- child node quark.concurrent.Future.quark_List_quark_concurrent_FutureCompletion__ref -->
+  <span class="anchor" id="quark.concurrent.Future.quark_List_quark_concurrent_FutureCompletion__ref"></span>
+  <div class="h3"><small>quark.concurrent.Future.</small>quark_List_quark_concurrent_FutureCompletion__ref</div>
+  <p>(field)</p>
+  
+<span class="type_name">reflect.Class</span> <span class="field_name_long">quark_List_quark_concurrent_FutureCompletion__ref</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Future.quark_List_quark_concurrent_FutureCompletion__ref -->
+  <hr>
+</div><!-- child node quark.concurrent.Future -->
+  <div class="childindent"><!-- child node quark.concurrent.FutureWait -->
+  <span class="anchor" id="quark.concurrent.FutureWait"></span>
+  <div class="h3"><small>quark.concurrent.</small>FutureWait</div>
+  <p>Synchronization point for a Future.)</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.FutureWait -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">FutureListener</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.FutureWait -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait._lock -->
+  <span class="anchor" id="quark.concurrent.FutureWait._lock"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>_lock</div>
+  <p>(field)</p>
+  
+<span class="type_name">Condition</span> <span class="field_name_long">_lock</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait._lock -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait._future -->
+  <span class="anchor" id="quark.concurrent.FutureWait._future"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>_future</div>
+  <p>(field)</p>
+  
+<span class="type_name">Future</span> <span class="field_name_long">_future</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait._future -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait.FutureWait -->
+  <span class="anchor" id="quark.concurrent.FutureWait.FutureWait"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>FutureWait</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureWait.FutureWait -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">FutureWait</span>(
+)
+</div><!-- callable_call quark.concurrent.FutureWait.FutureWait -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait.FutureWait -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait.wait -->
+  <span class="anchor" id="quark.concurrent.FutureWait.wait"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>wait</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureWait.wait -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">wait</span>(
+<span class="param_name_call">future</span>,
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.FutureWait.wait -->
+<div class="callable_param_list"><!-- quark.concurrent.FutureWait.wait -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Future</span> <span class="param_name_long">future</span>: (param)</li>
+    <li>
+<span class="type_name">float</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.FutureWait.wait -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait.wait -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait.onFuture -->
+  <span class="anchor" id="quark.concurrent.FutureWait.onFuture"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>onFuture</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureWait.onFuture -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onFuture</span>(
+<span class="param_name_call">future</span>,
+)
+</div><!-- callable_call quark.concurrent.FutureWait.onFuture -->
+<div class="callable_param_list"><!-- quark.concurrent.FutureWait.onFuture -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Future</span> <span class="param_name_long">future</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.FutureWait.onFuture -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait.onFuture -->
+<div class="childindent"><!-- child node quark.concurrent.FutureWait.waitFor -->
+  <span class="anchor" id="quark.concurrent.FutureWait.waitFor"></span>
+  <div class="h3"><small>quark.concurrent.FutureWait.</small>waitFor</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.FutureWait.waitFor -->
+<span class="return_type">
+<span class="type_name">Future</span></span> <span class="callable_call_name">waitFor</span>(
+<span class="param_name_call">future</span>,
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.FutureWait.waitFor -->
+<div class="callable_param_list"><!-- quark.concurrent.FutureWait.waitFor -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Future</span> <span class="param_name_long">future</span>: (param)</li>
+    <li>
+<span class="type_name">float</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.FutureWait.waitFor -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait.waitFor -->
+  <hr>
+</div><!-- child node quark.concurrent.FutureWait -->
+  <div class="childindent"><!-- child node quark.concurrent.Queue -->
+  <span class="anchor" id="quark.concurrent.Queue"></span>
+  <div class="h3"><small>quark.concurrent.</small>Queue</div>
+  <p>A simple FIFO</p>
+  
+<div class="class_param_list"><!-- quark.concurrent.Queue -->
+  <strong>Type Parameters</strong>
+  <ul>
+    <li><span class="class_param">T</span></li>
+  </ul>
+</div><!-- class_param_list quark.concurrent.Queue -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.items -->
+  <span class="anchor" id="quark.concurrent.Queue.items"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>items</div>
+  <p>(field)</p>
+  
+<span class="type_name">List&lt;T&gt;</span> <span class="field_name_long">items</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Queue.items -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.head -->
+  <span class="anchor" id="quark.concurrent.Queue.head"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>head</div>
+  <p>(field)</p>
+  
+<span class="type_name">int</span> <span class="field_name_long">head</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Queue.head -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.tail -->
+  <span class="anchor" id="quark.concurrent.Queue.tail"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>tail</div>
+  <p>(field)</p>
+  
+<span class="type_name">int</span> <span class="field_name_long">tail</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Queue.tail -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.Queue -->
+  <span class="anchor" id="quark.concurrent.Queue.Queue"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>Queue</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.Queue.Queue -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Queue</span>(
+)
+</div><!-- callable_call quark.concurrent.Queue.Queue -->
+  <hr>
+</div><!-- child node quark.concurrent.Queue.Queue -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.put -->
+  <span class="anchor" id="quark.concurrent.Queue.put"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>put</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Queue.put -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">put</span>(
+<span class="param_name_call">item</span>,
+)
+</div><!-- callable_call quark.concurrent.Queue.put -->
+<div class="callable_param_list"><!-- quark.concurrent.Queue.put -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">T</span> <span class="param_name_long">item</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Queue.put -->
+  <hr>
+</div><!-- child node quark.concurrent.Queue.put -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.get -->
+  <span class="anchor" id="quark.concurrent.Queue.get"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>get</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Queue.get -->
+<span class="return_type">
+<span class="type_name">T</span></span> <span class="callable_call_name">get</span>(
+)
+</div><!-- callable_call quark.concurrent.Queue.get -->
+  <hr>
+</div><!-- child node quark.concurrent.Queue.get -->
+<div class="childindent"><!-- child node quark.concurrent.Queue.size -->
+  <span class="anchor" id="quark.concurrent.Queue.size"></span>
+  <div class="h3"><small>quark.concurrent.Queue.</small>size</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Queue.size -->
+<span class="return_type">
+<span class="type_name">int</span></span> <span class="callable_call_name">size</span>(
+)
+</div><!-- callable_call quark.concurrent.Queue.size -->
+  <hr>
+</div><!-- child node quark.concurrent.Queue.size -->
+  <hr>
+</div><!-- child node quark.concurrent.Queue -->
+  <div class="childindent"><!-- child node quark.concurrent.CollectorExecutor -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor"></span>
+  <div class="h3"><small>quark.concurrent.</small>CollectorExecutor</div>
+  <p>Fire events one by one with no locks held</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.CollectorExecutor -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Task</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.CollectorExecutor -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor.events -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor.events"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>events</div>
+  <p>(field)</p>
+  
+<span class="type_name">Queue&lt;Event&gt;</span> <span class="field_name_long">events</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor.events -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor.collector -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor.collector"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>collector</div>
+  <p>(field)</p>
+  
+<span class="type_name">Collector</span> <span class="field_name_long">collector</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor.collector -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor.CollectorExecutor -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor.CollectorExecutor"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>CollectorExecutor</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.CollectorExecutor.CollectorExecutor -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">CollectorExecutor</span>(
+<span class="param_name_call">collector</span>,
+)
+</div><!-- callable_call quark.concurrent.CollectorExecutor.CollectorExecutor -->
+<div class="callable_param_list"><!-- quark.concurrent.CollectorExecutor.CollectorExecutor -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Collector</span> <span class="param_name_long">collector</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.CollectorExecutor.CollectorExecutor -->
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor.CollectorExecutor -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor._start -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor._start"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>_start</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.CollectorExecutor._start -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">_start</span>(
+)
+</div><!-- callable_call quark.concurrent.CollectorExecutor._start -->
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor._start -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor.onExecute -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor.onExecute"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>onExecute</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.CollectorExecutor.onExecute -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onExecute</span>(
+<span class="param_name_call">runtime</span>,
+)
+</div><!-- callable_call quark.concurrent.CollectorExecutor.onExecute -->
+<div class="callable_param_list"><!-- quark.concurrent.CollectorExecutor.onExecute -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Runtime</span> <span class="param_name_long">runtime</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.CollectorExecutor.onExecute -->
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor.onExecute -->
+<div class="childindent"><!-- child node quark.concurrent.CollectorExecutor.quark_concurrent_Queue_quark_concurrent_Event__ref -->
+  <span class="anchor" id="quark.concurrent.CollectorExecutor.quark_concurrent_Queue_quark_concurrent_Event__ref"></span>
+  <div class="h3"><small>quark.concurrent.CollectorExecutor.</small>quark_concurrent_Queue_quark_concurrent_Event__ref</div>
+  <p>(field)</p>
+  
+<span class="type_name">reflect.Class</span> <span class="field_name_long">quark_concurrent_Queue_quark_concurrent_Event__ref</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor.quark_concurrent_Queue_quark_concurrent_Event__ref -->
+  <hr>
+</div><!-- child node quark.concurrent.CollectorExecutor -->
+  <div class="childindent"><!-- child node quark.concurrent.Collector -->
+  <span class="anchor" id="quark.concurrent.Collector"></span>
+  <div class="h3"><small>quark.concurrent.</small>Collector</div>
+  <p>An active queue of events. Each event will fire sequentially, one by one. Multiple instances of Collector are not serialized with eachother and may run in parallel.</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.Collector.lock -->
+  <span class="anchor" id="quark.concurrent.Collector.lock"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>lock</div>
+  <p>(field)</p>
+  
+<span class="type_name">Lock</span> <span class="field_name_long">lock</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Collector.lock -->
+<div class="childindent"><!-- child node quark.concurrent.Collector.pending -->
+  <span class="anchor" id="quark.concurrent.Collector.pending"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>pending</div>
+  <p>(field)</p>
+  
+<span class="type_name">Queue&lt;Event&gt;</span> <span class="field_name_long">pending</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Collector.pending -->
+<div class="childindent"><!-- child node quark.concurrent.Collector.executor -->
+  <span class="anchor" id="quark.concurrent.Collector.executor"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>executor</div>
+  <p>(field)</p>
+  
+<span class="type_name">CollectorExecutor</span> <span class="field_name_long">executor</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Collector.executor -->
+<div class="childindent"><!-- child node quark.concurrent.Collector.idle -->
+  <span class="anchor" id="quark.concurrent.Collector.idle"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>idle</div>
+  <p>(field)</p>
+  
+<span class="type_name">bool</span> <span class="field_name_long">idle</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Collector.idle -->
+<div class="childindent"><!-- child node quark.concurrent.Collector.Collector -->
+  <span class="anchor" id="quark.concurrent.Collector.Collector"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>Collector</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.Collector.Collector -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Collector</span>(
+)
+</div><!-- callable_call quark.concurrent.Collector.Collector -->
+  <hr>
+</div><!-- child node quark.concurrent.Collector.Collector -->
+<div class="childindent"><!-- child node quark.concurrent.Collector.put -->
+  <span class="anchor" id="quark.concurrent.Collector.put"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>put</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Collector.put -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">put</span>(
+<span class="param_name_call">event</span>,
+)
+</div><!-- callable_call quark.concurrent.Collector.put -->
+<div class="callable_param_list"><!-- quark.concurrent.Collector.put -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Event</span> <span class="param_name_long">event</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Collector.put -->
+  <hr>
+</div><!-- child node quark.concurrent.Collector.put -->
+<div class="childindent"><!-- child node quark.concurrent.Collector._swap -->
+  <span class="anchor" id="quark.concurrent.Collector._swap"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>_swap</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Collector._swap -->
+<span class="return_type">
+<span class="type_name">Queue&lt;Event&gt;</span></span> <span class="callable_call_name">_swap</span>(
+<span class="param_name_call">drained</span>,
+)
+</div><!-- callable_call quark.concurrent.Collector._swap -->
+<div class="callable_param_list"><!-- quark.concurrent.Collector._swap -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Queue&lt;Event&gt;</span> <span class="param_name_long">drained</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Collector._swap -->
+  <hr>
+</div><!-- child node quark.concurrent.Collector._swap -->
+<div class="childindent"><!-- child node quark.concurrent.Collector._poll -->
+  <span class="anchor" id="quark.concurrent.Collector._poll"></span>
+  <div class="h3"><small>quark.concurrent.Collector.</small>_poll</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Collector._poll -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">_poll</span>(
+)
+</div><!-- callable_call quark.concurrent.Collector._poll -->
+  <hr>
+</div><!-- child node quark.concurrent.Collector._poll -->
+  <hr>
+</div><!-- child node quark.concurrent.Collector -->
+  <div class="childindent"><!-- child node quark.concurrent.TimeoutListener -->
+  <span class="anchor" id="quark.concurrent.TimeoutListener"></span>
+  <div class="h3"><small>quark.concurrent.</small>TimeoutListener</div>
+  <p>Timeout expiry handler</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.TimeoutListener.onTimeout -->
+  <span class="anchor" id="quark.concurrent.TimeoutListener.onTimeout"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutListener.</small>onTimeout</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TimeoutListener.onTimeout -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onTimeout</span>(
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.TimeoutListener.onTimeout -->
+<div class="callable_param_list"><!-- quark.concurrent.TimeoutListener.onTimeout -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Timeout</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.TimeoutListener.onTimeout -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutListener.onTimeout -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutListener -->
+  <div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry"></span>
+  <div class="h3"><small>quark.concurrent.</small>TimeoutExpiry</div>
+  <p>Timeout expiry event</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.TimeoutExpiry -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Event</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.TimeoutExpiry -->
+<div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry.timeout -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry.timeout"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutExpiry.</small>timeout</div>
+  <p>(field)</p>
+  
+<span class="type_name">Timeout</span> <span class="field_name_long">timeout</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry.timeout -->
+<div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry.listener -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry.listener"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutExpiry.</small>listener</div>
+  <p>(field)</p>
+  
+<span class="type_name">TimeoutListener</span> <span class="field_name_long">listener</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry.listener -->
+<div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry.TimeoutExpiry"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutExpiry.</small>TimeoutExpiry</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">TimeoutExpiry</span>(
+<span class="param_name_call">timeout</span>,
+<span class="param_name_call">listener</span>,
+)
+</div><!-- callable_call quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+<div class="callable_param_list"><!-- quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Timeout</span> <span class="param_name_long">timeout</span>: (param)</li>
+    <li>
+<span class="type_name">TimeoutListener</span> <span class="param_name_long">listener</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry.TimeoutExpiry -->
+<div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry.getContext -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry.getContext"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutExpiry.</small>getContext</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TimeoutExpiry.getContext -->
+<span class="return_type">
+<span class="type_name">EventContext</span></span> <span class="callable_call_name">getContext</span>(
+)
+</div><!-- callable_call quark.concurrent.TimeoutExpiry.getContext -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry.getContext -->
+<div class="childindent"><!-- child node quark.concurrent.TimeoutExpiry.fireEvent -->
+  <span class="anchor" id="quark.concurrent.TimeoutExpiry.fireEvent"></span>
+  <div class="h3"><small>quark.concurrent.TimeoutExpiry.</small>fireEvent</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TimeoutExpiry.fireEvent -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">fireEvent</span>(
+)
+</div><!-- callable_call quark.concurrent.TimeoutExpiry.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry.fireEvent -->
+  <hr>
+</div><!-- child node quark.concurrent.TimeoutExpiry -->
+  <div class="childindent"><!-- child node quark.concurrent.Timeout -->
+  <span class="anchor" id="quark.concurrent.Timeout"></span>
+  <div class="h3"><small>quark.concurrent.</small>Timeout</div>
+  <p>Timeout</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.Timeout -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">EventContext</span></li>
+    <li><span class="class_base">Task</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.Timeout -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.timeout -->
+  <span class="anchor" id="quark.concurrent.Timeout.timeout"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>timeout</div>
+  <p>(field)</p>
+  
+<span class="type_name">float</span> <span class="field_name_long">timeout</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.timeout -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.lock -->
+  <span class="anchor" id="quark.concurrent.Timeout.lock"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>lock</div>
+  <p>(field)</p>
+  
+<span class="type_name">Lock</span> <span class="field_name_long">lock</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.lock -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.listener -->
+  <span class="anchor" id="quark.concurrent.Timeout.listener"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>listener</div>
+  <p>(field)</p>
+  
+<span class="type_name">TimeoutListener</span> <span class="field_name_long">listener</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.listener -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.Timeout -->
+  <span class="anchor" id="quark.concurrent.Timeout.Timeout"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>Timeout</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.Timeout.Timeout -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Timeout</span>(
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.Timeout.Timeout -->
+<div class="callable_param_list"><!-- quark.concurrent.Timeout.Timeout -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">float</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Timeout.Timeout -->
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.Timeout -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.start -->
+  <span class="anchor" id="quark.concurrent.Timeout.start"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>start</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Timeout.start -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">start</span>(
+<span class="param_name_call">listener</span>,
+)
+</div><!-- callable_call quark.concurrent.Timeout.start -->
+<div class="callable_param_list"><!-- quark.concurrent.Timeout.start -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">TimeoutListener</span> <span class="param_name_long">listener</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Timeout.start -->
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.start -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.cancel -->
+  <span class="anchor" id="quark.concurrent.Timeout.cancel"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>cancel</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Timeout.cancel -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">cancel</span>(
+)
+</div><!-- callable_call quark.concurrent.Timeout.cancel -->
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.cancel -->
+<div class="childindent"><!-- child node quark.concurrent.Timeout.onExecute -->
+  <span class="anchor" id="quark.concurrent.Timeout.onExecute"></span>
+  <div class="h3"><small>quark.concurrent.Timeout.</small>onExecute</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Timeout.onExecute -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onExecute</span>(
+<span class="param_name_call">runtime</span>,
+)
+</div><!-- callable_call quark.concurrent.Timeout.onExecute -->
+<div class="callable_param_list"><!-- quark.concurrent.Timeout.onExecute -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Runtime</span> <span class="param_name_long">runtime</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Timeout.onExecute -->
+  <hr>
+</div><!-- child node quark.concurrent.Timeout.onExecute -->
+  <hr>
+</div><!-- child node quark.concurrent.Timeout -->
+  <div class="childindent"><!-- child node quark.concurrent.TLSContextInitializer -->
+  <span class="anchor" id="quark.concurrent.TLSContextInitializer"></span>
+  <div class="h3"><small>quark.concurrent.</small>TLSContextInitializer</div>
+  <p>internal</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.TLSContextInitializer -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">TLSInitializer&lt;Context&gt;</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.TLSContextInitializer -->
+<div class="childindent"><!-- child node quark.concurrent.TLSContextInitializer.getValue -->
+  <span class="anchor" id="quark.concurrent.TLSContextInitializer.getValue"></span>
+  <div class="h3"><small>quark.concurrent.TLSContextInitializer.</small>getValue</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TLSContextInitializer.getValue -->
+<span class="return_type">
+<span class="type_name">Context</span></span> <span class="callable_call_name">getValue</span>(
+)
+</div><!-- callable_call quark.concurrent.TLSContextInitializer.getValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLSContextInitializer.getValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLSContextInitializer -->
+  <div class="childindent"><!-- child node quark.concurrent.Context -->
+  <span class="anchor" id="quark.concurrent.Context"></span>
+  <div class="h3"><small>quark.concurrent.</small>Context</div>
+  <p>The logical stack for async stuff.</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.Context._global -->
+  <span class="anchor" id="quark.concurrent.Context._global"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>_global</div>
+  <p>(field)</p>
+  
+<span class="type_name">Context</span> <span class="field_name_long">_global</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Context._global -->
+<div class="childindent"><!-- child node quark.concurrent.Context._current -->
+  <span class="anchor" id="quark.concurrent.Context._current"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>_current</div>
+  <p>(field)</p>
+  
+<span class="type_name">TLS&lt;Context&gt;</span> <span class="field_name_long">_current</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Context._current -->
+<div class="childindent"><!-- child node quark.concurrent.Context.current -->
+  <span class="anchor" id="quark.concurrent.Context.current"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>current</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Context.current -->
+<span class="return_type">
+<span class="type_name">Context</span></span> <span class="callable_call_name">current</span>(
+)
+</div><!-- callable_call quark.concurrent.Context.current -->
+  <hr>
+</div><!-- child node quark.concurrent.Context.current -->
+<div class="childindent"><!-- child node quark.concurrent.Context.global -->
+  <span class="anchor" id="quark.concurrent.Context.global"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>global</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Context.global -->
+<span class="return_type">
+<span class="type_name">Context</span></span> <span class="callable_call_name">global</span>(
+)
+</div><!-- callable_call quark.concurrent.Context.global -->
+  <hr>
+</div><!-- child node quark.concurrent.Context.global -->
+<div class="childindent"><!-- child node quark.concurrent.Context.runtime -->
+  <span class="anchor" id="quark.concurrent.Context.runtime"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>runtime</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Context.runtime -->
+<span class="return_type">
+<span class="type_name">Runtime</span></span> <span class="callable_call_name">runtime</span>(
+)
+</div><!-- callable_call quark.concurrent.Context.runtime -->
+  <hr>
+</div><!-- child node quark.concurrent.Context.runtime -->
+<div class="childindent"><!-- child node quark.concurrent.Context.swap -->
+  <span class="anchor" id="quark.concurrent.Context.swap"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>swap</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Context.swap -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">swap</span>(
+<span class="param_name_call">c</span>,
+)
+</div><!-- callable_call quark.concurrent.Context.swap -->
+<div class="callable_param_list"><!-- quark.concurrent.Context.swap -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Context</span> <span class="param_name_long">c</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Context.swap -->
+  <hr>
+</div><!-- child node quark.concurrent.Context.swap -->
+<div class="childindent"><!-- child node quark.concurrent.Context.Context -->
+  <span class="anchor" id="quark.concurrent.Context.Context"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>Context</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.concurrent.Context.Context -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Context</span>(
+<span class="param_name_call">parent</span>,
+)
+</div><!-- callable_call quark.concurrent.Context.Context -->
+<div class="callable_param_list"><!-- quark.concurrent.Context.Context -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Context</span> <span class="param_name_long">parent</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Context.Context -->
+  <hr>
+</div><!-- child node quark.concurrent.Context.Context -->
+<div class="childindent"><!-- child node quark.concurrent.Context._parent -->
+  <span class="anchor" id="quark.concurrent.Context._parent"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>_parent</div>
+  <p>(field)</p>
+  
+<span class="type_name">Context</span> <span class="field_name_long">_parent</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Context._parent -->
+<div class="childindent"><!-- child node quark.concurrent.Context._runtime -->
+  <span class="anchor" id="quark.concurrent.Context._runtime"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>_runtime</div>
+  <p>(field)</p>
+  
+<span class="type_name">Runtime</span> <span class="field_name_long">_runtime</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Context._runtime -->
+<div class="childindent"><!-- child node quark.concurrent.Context.collector -->
+  <span class="anchor" id="quark.concurrent.Context.collector"></span>
+  <div class="h3"><small>quark.concurrent.Context.</small>collector</div>
+  <p>(field)</p>
+  
+<span class="type_name">Collector</span> <span class="field_name_long">collector</span>: (field)
+  <hr>
+</div><!-- child node quark.concurrent.Context.collector -->
+  <hr>
+</div><!-- child node quark.concurrent.Context -->
+  <div class="childindent"><!-- child node quark.concurrent.TLSInitializer -->
+  <span class="anchor" id="quark.concurrent.TLSInitializer"></span>
+  <div class="h3"><small>quark.concurrent.</small>TLSInitializer</div>
+  <p>(primitive)</p>
+  
+<div class="class_param_list"><!-- quark.concurrent.TLSInitializer -->
+  <strong>Type Parameters</strong>
+  <ul>
+    <li><span class="class_param">T</span></li>
+  </ul>
+</div><!-- class_param_list quark.concurrent.TLSInitializer -->
+<div class="childindent"><!-- child node quark.concurrent.TLSInitializer.getValue -->
+  <span class="anchor" id="quark.concurrent.TLSInitializer.getValue"></span>
+  <div class="h3"><small>quark.concurrent.TLSInitializer.</small>getValue</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TLSInitializer.getValue -->
+<span class="return_type">
+<span class="type_name">T</span></span> <span class="callable_call_name">getValue</span>(
+)
+</div><!-- callable_call quark.concurrent.TLSInitializer.getValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLSInitializer.getValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLSInitializer -->
+  <div class="childindent"><!-- child node quark.concurrent.TLS -->
+  <span class="anchor" id="quark.concurrent.TLS"></span>
+  <div class="h3"><small>quark.concurrent.</small>TLS</div>
+  <p>(primitive)</p>
+  
+<div class="class_param_list"><!-- quark.concurrent.TLS -->
+  <strong>Type Parameters</strong>
+  <ul>
+    <li><span class="class_param">Context</span></li>
+  </ul>
+</div><!-- class_param_list quark.concurrent.TLS -->
+<div class="childindent"><!-- child node quark.concurrent.TLS.TLS -->
+  <span class="anchor" id="quark.concurrent.TLS.TLS"></span>
+  <div class="h3"><small>quark.concurrent.TLS.</small>TLS</div>
+  <p>(constructormacro)</p>
+  <div class="callable_call"><!-- quark.concurrent.TLS.TLS -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">TLS</span>(
+<span class="param_name_call">initializer</span>,
+)
+</div><!-- callable_call quark.concurrent.TLS.TLS -->
+<div class="callable_param_list"><!-- quark.concurrent.TLS.TLS -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">TLSInitializer&lt;Context&gt;</span> <span class="param_name_long">initializer</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.TLS.TLS -->
+  <hr>
+</div><!-- child node quark.concurrent.TLS.TLS -->
+<div class="childindent"><!-- child node quark.concurrent.TLS.getValue -->
+  <span class="anchor" id="quark.concurrent.TLS.getValue"></span>
+  <div class="h3"><small>quark.concurrent.TLS.</small>getValue</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TLS.getValue -->
+<span class="return_type">
+<span class="type_name">Context</span></span> <span class="callable_call_name">getValue</span>(
+)
+</div><!-- callable_call quark.concurrent.TLS.getValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLS.getValue -->
+<div class="childindent"><!-- child node quark.concurrent.TLS.setValue -->
+  <span class="anchor" id="quark.concurrent.TLS.setValue"></span>
+  <div class="h3"><small>quark.concurrent.TLS.</small>setValue</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.TLS.setValue -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setValue</span>(
+<span class="param_name_call">c</span>,
+)
+</div><!-- callable_call quark.concurrent.TLS.setValue -->
+<div class="callable_param_list"><!-- quark.concurrent.TLS.setValue -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Context</span> <span class="param_name_long">c</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.TLS.setValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLS.setValue -->
+  <hr>
+</div><!-- child node quark.concurrent.TLS -->
+  <div class="childindent"><!-- child node quark.concurrent.Mutex -->
+  <span class="anchor" id="quark.concurrent.Mutex"></span>
+  <div class="h3"><small>quark.concurrent.</small>Mutex</div>
+  <p>(primitive)</p>
+  
+<div class="childindent"><!-- child node quark.concurrent.Mutex.acquire -->
+  <span class="anchor" id="quark.concurrent.Mutex.acquire"></span>
+  <div class="h3"><small>quark.concurrent.Mutex.</small>acquire</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Mutex.acquire -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">acquire</span>(
+)
+</div><!-- callable_call quark.concurrent.Mutex.acquire -->
+  <hr>
+</div><!-- child node quark.concurrent.Mutex.acquire -->
+<div class="childindent"><!-- child node quark.concurrent.Mutex.release -->
+  <span class="anchor" id="quark.concurrent.Mutex.release"></span>
+  <div class="h3"><small>quark.concurrent.Mutex.</small>release</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Mutex.release -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">release</span>(
+)
+</div><!-- callable_call quark.concurrent.Mutex.release -->
+  <hr>
+</div><!-- child node quark.concurrent.Mutex.release -->
+  <hr>
+</div><!-- child node quark.concurrent.Mutex -->
+  <div class="childindent"><!-- child node quark.concurrent.Lock -->
+  <span class="anchor" id="quark.concurrent.Lock"></span>
+  <div class="h3"><small>quark.concurrent.</small>Lock</div>
+  <p>(primitive)</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.Lock -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Mutex</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.Lock -->
+  <hr>
+</div><!-- child node quark.concurrent.Lock -->
+  <div class="childindent"><!-- child node quark.concurrent.Condition -->
+  <span class="anchor" id="quark.concurrent.Condition"></span>
+  <div class="h3"><small>quark.concurrent.</small>Condition</div>
+  <p>(primitive)</p>
+  
+<div class="class_base_list"><!-- quark.concurrent.Condition -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Mutex</span></li>
+  </ul>
+</div><!-- class_base_list quark.concurrent.Condition -->
+<div class="childindent"><!-- child node quark.concurrent.Condition.waitWakeup -->
+  <span class="anchor" id="quark.concurrent.Condition.waitWakeup"></span>
+  <div class="h3"><small>quark.concurrent.Condition.</small>waitWakeup</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Condition.waitWakeup -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">waitWakeup</span>(
+<span class="param_name_call">timeout</span>,
+)
+</div><!-- callable_call quark.concurrent.Condition.waitWakeup -->
+<div class="callable_param_list"><!-- quark.concurrent.Condition.waitWakeup -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">long</span> <span class="param_name_long">timeout</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.concurrent.Condition.waitWakeup -->
+  <hr>
+</div><!-- child node quark.concurrent.Condition.waitWakeup -->
+<div class="childindent"><!-- child node quark.concurrent.Condition.wakeup -->
+  <span class="anchor" id="quark.concurrent.Condition.wakeup"></span>
+  <div class="h3"><small>quark.concurrent.Condition.</small>wakeup</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.concurrent.Condition.wakeup -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">wakeup</span>(
+)
+</div><!-- callable_call quark.concurrent.Condition.wakeup -->
+  <hr>
+</div><!-- child node quark.concurrent.Condition.wakeup -->
+  <hr>
+</div><!-- child node quark.concurrent.Condition -->
+  <hr>
+</div><!-- namespace quark.concurrent -->
+
+        </div><!-- main -->
+
+      </div><!-- row -->
+    </div><!-- container-fluid -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+  </body>
+</html>

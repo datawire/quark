@@ -1,0 +1,1709 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Mostly ripped off from http://getbootstrap.com/examples/dashboard/ -->
+
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Latest compiled and minified CSS -->
+
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+          crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+          crossorigin="anonymous">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="apidoc.css">
+  </head>
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Project name</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Dashboard</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Help</a></li>
+          </ul>
+          <form class="navbar-form navbar-right">
+            <input type="text" class="form-control" placeholder="Search...">
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <div class="col-sm-4 col-md-3 sidebar">
+          <ul class="nav nav-sidebar">
+            <li><a href="quark.html">quark</a></li>
+            <li><a href="quark.logging.html"><small>quark.</small>logging</a></li>
+            <li><a href="quark.reflect.html"><small>quark.</small>reflect</a></li>
+            <li><a href="quark.behaviors.html"><small>quark.</small>behaviors</a></li>
+            <li><a href="quark.concurrent.html"><small>quark.</small>concurrent</a></li>
+            <li><a href="quark.test.html"><small>quark.</small>test</a></li>
+            <li><a href="quark.spi.html"><small>quark.</small>spi</a></li>
+            <li><a href="quark.spi_api.html"><small>quark.</small>spi_api</a></li>
+            <li class="active"><a href="#quark.spi_api_tracing"><small>quark.</small>spi_api_tracing</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li><a href="#quark.spi_api_tracing.quote"><small>quark.spi_api_tracing.</small>quote</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identificator"><small>quark.spi_api_tracing.</small>Identificator</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identificator.lock"><small>quark.spi_api_tracing.Identificator.</small>lock</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identificator.seq"><small>quark.spi_api_tracing.Identificator.</small>seq</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identificator.next"><small>quark.spi_api_tracing.Identificator.</small>next</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identifiable"><small>quark.spi_api_tracing.</small>Identifiable</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identifiable.namer"><small>quark.spi_api_tracing.Identifiable.</small>namer</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identifiable.id"><small>quark.spi_api_tracing.Identifiable.</small>id</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identifiable.log"><small>quark.spi_api_tracing.Identifiable.</small>log</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.Identifiable.Identifiable"><small>quark.spi_api_tracing.Identifiable.</small>Identifiable</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy"><small>quark.spi_api_tracing.</small>ServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.servlet_impl"><small>quark.spi_api_tracing.ServletProxy.</small>servlet_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.real_runtime"><small>quark.spi_api_tracing.ServletProxy.</small>real_runtime</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.ServletProxy"><small>quark.spi_api_tracing.ServletProxy.</small>ServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.onServletInit"><small>quark.spi_api_tracing.ServletProxy.</small>onServletInit</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.onServletError"><small>quark.spi_api_tracing.ServletProxy.</small>onServletError</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.ServletProxy.onServletEnd"><small>quark.spi_api_tracing.ServletProxy.</small>onServletEnd</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy"><small>quark.spi_api_tracing.</small>HTTPRequestProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.request_impl"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>request_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>HTTPRequestProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.getUrl"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getUrl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.setMethod"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setMethod</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.getMethod"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getMethod</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.setBody"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setBody</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.getBody"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getBody</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.setHeader"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setHeader</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.getHeader"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getHeader</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPRequestProxy.getHeaders"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getHeaders</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy"><small>quark.spi_api_tracing.</small>HTTPResponseProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.response_impl"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>response_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>HTTPResponseProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.getCode"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getCode</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.setCode"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setCode</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.setBody"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setBody</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.getBody"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getBody</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.setHeader"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setHeader</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.getHeader"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getHeader</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPResponseProxy.getHeaders"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getHeaders</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPServletProxy"><small>quark.spi_api_tracing.</small>HTTPServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPServletProxy.http_servlet_impl"><small>quark.spi_api_tracing.HTTPServletProxy.</small>http_servlet_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy"><small>quark.spi_api_tracing.HTTPServletProxy.</small>HTTPServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest"><small>quark.spi_api_tracing.HTTPServletProxy.</small>onHTTPRequest</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSServletProxy"><small>quark.spi_api_tracing.</small>WSServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSServletProxy.ws_servlet_impl"><small>quark.spi_api_tracing.WSServletProxy.</small>ws_servlet_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSServletProxy.WSServletProxy"><small>quark.spi_api_tracing.WSServletProxy.</small>WSServletProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSServletProxy.onWSConnect"><small>quark.spi_api_tracing.WSServletProxy.</small>onWSConnect</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.TaskProxy"><small>quark.spi_api_tracing.</small>TaskProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.TaskProxy.task_impl"><small>quark.spi_api_tracing.TaskProxy.</small>task_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.TaskProxy.real_runtime"><small>quark.spi_api_tracing.TaskProxy.</small>real_runtime</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.TaskProxy.TaskProxy"><small>quark.spi_api_tracing.TaskProxy.</small>TaskProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.TaskProxy.onExecute"><small>quark.spi_api_tracing.TaskProxy.</small>onExecute</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy"><small>quark.spi_api_tracing.</small>WebSocketProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy.socket_impl"><small>quark.spi_api_tracing.WebSocketProxy.</small>socket_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy.WebSocketProxy"><small>quark.spi_api_tracing.WebSocketProxy.</small>WebSocketProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy.send"><small>quark.spi_api_tracing.WebSocketProxy.</small>send</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy.sendBinary"><small>quark.spi_api_tracing.WebSocketProxy.</small>sendBinary</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WebSocketProxy.close"><small>quark.spi_api_tracing.WebSocketProxy.</small>close</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy"><small>quark.spi_api_tracing.</small>WSHandlerProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.handler_impl"><small>quark.spi_api_tracing.WSHandlerProxy.</small>handler_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy._wrapped_socket"><small>quark.spi_api_tracing.WSHandlerProxy.</small>_wrapped_socket</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy"><small>quark.spi_api_tracing.WSHandlerProxy.</small>WSHandlerProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy._wrap_socket"><small>quark.spi_api_tracing.WSHandlerProxy.</small>_wrap_socket</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSInit"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSInit</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSConnected"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSConnected</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSMessage"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSMessage</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSBinary"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSBinary</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSClosed"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSClosed</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSError"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSError</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.WSHandlerProxy.onWSFinal"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSFinal</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy"><small>quark.spi_api_tracing.</small>HTTPHandlerProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.handler_impl"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>handler_impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.wrapped_request"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>wrapped_request</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>HTTPHandlerProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPInit</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPResponse</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPError</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPFinal</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy"><small>quark.spi_api_tracing.</small>RuntimeProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.impl"><small>quark.spi_api_tracing.RuntimeProxy.</small>impl</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.RuntimeProxy"><small>quark.spi_api_tracing.RuntimeProxy.</small>RuntimeProxy</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.open"><small>quark.spi_api_tracing.RuntimeProxy.</small>open</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.request"><small>quark.spi_api_tracing.RuntimeProxy.</small>request</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.schedule"><small>quark.spi_api_tracing.RuntimeProxy.</small>schedule</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.codec"><small>quark.spi_api_tracing.RuntimeProxy.</small>codec</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.serveHTTP"><small>quark.spi_api_tracing.RuntimeProxy.</small>serveHTTP</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.serveWS"><small>quark.spi_api_tracing.RuntimeProxy.</small>serveWS</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.respond"><small>quark.spi_api_tracing.RuntimeProxy.</small>respond</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.fail"><small>quark.spi_api_tracing.RuntimeProxy.</small>fail</a></li>
+            
+            <li><a href="#quark.spi_api_tracing.RuntimeProxy.logger"><small>quark.spi_api_tracing.RuntimeProxy.</small>logger</a></li>
+            
+          </ul>
+        </div><!-- sidebar -->
+
+        <div class="col-sm-8 col-sm-offset-4 col-md-9 col-md-offset-3 main">
+
+          <div><!-- namespace quark.spi_api_tracing -->
+  <span class="anchor" id="quark.spi_api_tracing"></span>
+  <h2 class="page-header"><small>quark.</small>spi_api_tracing</h2>
+  <p>(package)</p>
+  <div class="childindent"><!-- child node quark.spi_api_tracing.quote -->
+  <span class="anchor" id="quark.spi_api_tracing.quote"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>quote</div>
+  <p>(function)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.quote -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">quote</span>(
+<span class="param_name_call">str</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.quote -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.quote -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">str</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.quote -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.quote -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.Identificator -->
+  <span class="anchor" id="quark.spi_api_tracing.Identificator"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>Identificator</div>
+  <p>(class)</p>
+  
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identificator.lock -->
+  <span class="anchor" id="quark.spi_api_tracing.Identificator.lock"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identificator.</small>lock</div>
+  <p>(field)</p>
+  
+<span class="type_name">concurrent.Lock</span> <span class="field_name_long">lock</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identificator.lock -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identificator.seq -->
+  <span class="anchor" id="quark.spi_api_tracing.Identificator.seq"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identificator.</small>seq</div>
+  <p>(field)</p>
+  
+<span class="type_name">int</span> <span class="field_name_long">seq</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identificator.seq -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identificator.next -->
+  <span class="anchor" id="quark.spi_api_tracing.Identificator.next"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identificator.</small>next</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.Identificator.next -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">next</span>(
+<span class="param_name_call">basename</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.Identificator.next -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.Identificator.next -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">basename</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.Identificator.next -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identificator.next -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identificator -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.Identifiable -->
+  <span class="anchor" id="quark.spi_api_tracing.Identifiable"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>Identifiable</div>
+  <p>(class)</p>
+  
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identifiable.namer -->
+  <span class="anchor" id="quark.spi_api_tracing.Identifiable.namer"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identifiable.</small>namer</div>
+  <p>(field)</p>
+  
+<span class="type_name">Identificator</span> <span class="field_name_long">namer</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identifiable.namer -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identifiable.id -->
+  <span class="anchor" id="quark.spi_api_tracing.Identifiable.id"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identifiable.</small>id</div>
+  <p>(field)</p>
+  
+<span class="type_name">String</span> <span class="field_name_long">id</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identifiable.id -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identifiable.log -->
+  <span class="anchor" id="quark.spi_api_tracing.Identifiable.log"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identifiable.</small>log</div>
+  <p>(field)</p>
+  
+<span class="type_name">Logger</span> <span class="field_name_long">log</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identifiable.log -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.Identifiable.Identifiable -->
+  <span class="anchor" id="quark.spi_api_tracing.Identifiable.Identifiable"></span>
+  <div class="h3"><small>quark.spi_api_tracing.Identifiable.</small>Identifiable</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.Identifiable.Identifiable -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">Identifiable</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">basename</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.Identifiable.Identifiable -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.Identifiable.Identifiable -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">basename</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.Identifiable.Identifiable -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identifiable.Identifiable -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.Identifiable -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>ServletProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.ServletProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">Servlet</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.ServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.servlet_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.servlet_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>servlet_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">Servlet</span> <span class="field_name_long">servlet_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.servlet_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.real_runtime -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.real_runtime"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>real_runtime</div>
+  <p>(field)</p>
+  
+<span class="type_name">RuntimeProxy</span> <span class="field_name_long">real_runtime</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.real_runtime -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.ServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.ServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>ServletProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.ServletProxy.ServletProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">ServletProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">basename</span>,
+<span class="param_name_call">real_runtime</span>,
+<span class="param_name_call">servlet_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.ServletProxy.ServletProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.ServletProxy.ServletProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">basename</span>: (param)</li>
+    <li>
+<span class="type_name">RuntimeProxy</span> <span class="param_name_long">real_runtime</span>: (param)</li>
+    <li>
+<span class="type_name">Servlet</span> <span class="param_name_long">servlet_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.ServletProxy.ServletProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.ServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.onServletInit -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.onServletInit"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>onServletInit</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.ServletProxy.onServletInit -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onServletInit</span>(
+<span class="param_name_call">url</span>,
+<span class="param_name_call">runtime</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.ServletProxy.onServletInit -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.ServletProxy.onServletInit -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+    <li>
+<span class="type_name">Runtime</span> <span class="param_name_long">runtime</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.ServletProxy.onServletInit -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.onServletInit -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.onServletError -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.onServletError"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>onServletError</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.ServletProxy.onServletError -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onServletError</span>(
+<span class="param_name_call">url</span>,
+<span class="param_name_call">error</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.ServletProxy.onServletError -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.ServletProxy.onServletError -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">error</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.ServletProxy.onServletError -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.onServletError -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.ServletProxy.onServletEnd -->
+  <span class="anchor" id="quark.spi_api_tracing.ServletProxy.onServletEnd"></span>
+  <div class="h3"><small>quark.spi_api_tracing.ServletProxy.</small>onServletEnd</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.ServletProxy.onServletEnd -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onServletEnd</span>(
+<span class="param_name_call">url</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.ServletProxy.onServletEnd -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.ServletProxy.onServletEnd -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.ServletProxy.onServletEnd -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy.onServletEnd -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.ServletProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>HTTPRequestProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.HTTPRequestProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">HTTPRequest</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.HTTPRequestProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.request_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.request_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>request_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">HTTPRequest</span> <span class="field_name_long">request_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.request_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>HTTPRequestProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">HTTPRequestProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">request_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.HTTPRequestProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getUrl -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.getUrl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getUrl</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.getUrl -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getUrl</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.getUrl -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getUrl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.setMethod"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setMethod</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setMethod</span>(
+<span class="param_name_call">method</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">method</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setMethod -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getMethod -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.getMethod"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getMethod</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.getMethod -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getMethod</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.getMethod -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getMethod -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.setBody"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setBody</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setBody</span>(
+<span class="param_name_call">data</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">data</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setBody -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getBody -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.getBody"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getBody</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.getBody -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getBody</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.getBody -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getBody -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.setHeader"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>setHeader</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setHeader</span>(
+<span class="param_name_call">key</span>,
+<span class="param_name_call">value</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">key</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">value</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.setHeader -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.getHeader"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getHeader</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getHeader</span>(
+<span class="param_name_call">key</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">key</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getHeader -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getHeaders -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPRequestProxy.getHeaders"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPRequestProxy.</small>getHeaders</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPRequestProxy.getHeaders -->
+<span class="return_type">
+<span class="type_name">List&lt;String&gt;</span></span> <span class="callable_call_name">getHeaders</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPRequestProxy.getHeaders -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy.getHeaders -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPRequestProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>HTTPResponseProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.HTTPResponseProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">HTTPResponse</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.HTTPResponseProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.response_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.response_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>response_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">HTTPResponse</span> <span class="field_name_long">response_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.response_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>HTTPResponseProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">HTTPResponseProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">response_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPResponse</span> <span class="param_name_long">response_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.HTTPResponseProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getCode -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.getCode"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getCode</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.getCode -->
+<span class="return_type">
+<span class="type_name">int</span></span> <span class="callable_call_name">getCode</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.getCode -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getCode -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.setCode"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setCode</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setCode</span>(
+<span class="param_name_call">code</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">int</span> <span class="param_name_long">code</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setCode -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.setBody"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setBody</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setBody</span>(
+<span class="param_name_call">data</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">data</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setBody -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getBody -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.getBody"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getBody</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.getBody -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getBody</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.getBody -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getBody -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.setHeader"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>setHeader</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">setHeader</span>(
+<span class="param_name_call">key</span>,
+<span class="param_name_call">value</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">key</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">value</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.setHeader -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.getHeader"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getHeader</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+<span class="return_type">
+<span class="type_name">String</span></span> <span class="callable_call_name">getHeader</span>(
+<span class="param_name_call">key</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">key</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getHeader -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getHeaders -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPResponseProxy.getHeaders"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPResponseProxy.</small>getHeaders</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPResponseProxy.getHeaders -->
+<span class="return_type">
+<span class="type_name">List&lt;String&gt;</span></span> <span class="callable_call_name">getHeaders</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPResponseProxy.getHeaders -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy.getHeaders -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPResponseProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.HTTPServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>HTTPServletProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.HTTPServletProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">ServletProxy</span></li>
+    <li><span class="class_base">HTTPServlet</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.HTTPServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPServletProxy.http_servlet_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPServletProxy.http_servlet_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPServletProxy.</small>http_servlet_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">HTTPServlet</span> <span class="field_name_long">http_servlet_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPServletProxy.http_servlet_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPServletProxy.</small>HTTPServletProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">HTTPServletProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">real_runtime</span>,
+<span class="param_name_call">http_servlet_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">RuntimeProxy</span> <span class="param_name_long">real_runtime</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPServlet</span> <span class="param_name_long">http_servlet_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPServletProxy.HTTPServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPServletProxy.</small>onHTTPRequest</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onHTTPRequest</span>(
+<span class="param_name_call">request</span>,
+<span class="param_name_call">response</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPResponse</span> <span class="param_name_long">response</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPServletProxy.onHTTPRequest -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPServletProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.WSServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WSServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>WSServletProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.WSServletProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">ServletProxy</span></li>
+    <li><span class="class_base">WSServlet</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.WSServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSServletProxy.ws_servlet_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.WSServletProxy.ws_servlet_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSServletProxy.</small>ws_servlet_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">WSServlet</span> <span class="field_name_long">ws_servlet_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSServletProxy.ws_servlet_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WSServletProxy.WSServletProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSServletProxy.</small>WSServletProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">WSServletProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">real_runtime</span>,
+<span class="param_name_call">ws_servlet_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">RuntimeProxy</span> <span class="param_name_long">real_runtime</span>: (param)</li>
+    <li>
+<span class="type_name">WSServlet</span> <span class="param_name_long">ws_servlet_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSServletProxy.WSServletProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+  <span class="anchor" id="quark.spi_api_tracing.WSServletProxy.onWSConnect"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSServletProxy.</small>onWSConnect</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+<span class="return_type">
+<span class="type_name">WSHandler</span></span> <span class="callable_call_name">onWSConnect</span>(
+<span class="param_name_call">request</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSServletProxy.onWSConnect -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSServletProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.TaskProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.TaskProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>TaskProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.TaskProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">Task</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.TaskProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.TaskProxy.task_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.TaskProxy.task_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.TaskProxy.</small>task_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">Task</span> <span class="field_name_long">task_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.TaskProxy.task_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.TaskProxy.real_runtime -->
+  <span class="anchor" id="quark.spi_api_tracing.TaskProxy.real_runtime"></span>
+  <div class="h3"><small>quark.spi_api_tracing.TaskProxy.</small>real_runtime</div>
+  <p>(field)</p>
+  
+<span class="type_name">RuntimeProxy</span> <span class="field_name_long">real_runtime</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.TaskProxy.real_runtime -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.TaskProxy.TaskProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.TaskProxy.TaskProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.TaskProxy.</small>TaskProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.TaskProxy.TaskProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">TaskProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">real_runtime</span>,
+<span class="param_name_call">task_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.TaskProxy.TaskProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.TaskProxy.TaskProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">RuntimeProxy</span> <span class="param_name_long">real_runtime</span>: (param)</li>
+    <li>
+<span class="type_name">Task</span> <span class="param_name_long">task_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.TaskProxy.TaskProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.TaskProxy.TaskProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.TaskProxy.onExecute -->
+  <span class="anchor" id="quark.spi_api_tracing.TaskProxy.onExecute"></span>
+  <div class="h3"><small>quark.spi_api_tracing.TaskProxy.</small>onExecute</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.TaskProxy.onExecute -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onExecute</span>(
+<span class="param_name_call">runtime</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.TaskProxy.onExecute -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.TaskProxy.onExecute -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Runtime</span> <span class="param_name_long">runtime</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.TaskProxy.onExecute -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.TaskProxy.onExecute -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.TaskProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>WebSocketProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.WebSocketProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">WebSocket</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.WebSocketProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy.socket_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy.socket_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WebSocketProxy.</small>socket_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">WebSocket</span> <span class="field_name_long">socket_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy.socket_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy.WebSocketProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WebSocketProxy.</small>WebSocketProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">WebSocketProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">socket_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy.WebSocketProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy.send -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy.send"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WebSocketProxy.</small>send</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WebSocketProxy.send -->
+<span class="return_type">
+<span class="type_name">bool</span></span> <span class="callable_call_name">send</span>(
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WebSocketProxy.send -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WebSocketProxy.send -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WebSocketProxy.send -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy.send -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy.sendBinary"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WebSocketProxy.</small>sendBinary</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+<span class="return_type">
+<span class="type_name">bool</span></span> <span class="callable_call_name">sendBinary</span>(
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Buffer</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy.sendBinary -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WebSocketProxy.close -->
+  <span class="anchor" id="quark.spi_api_tracing.WebSocketProxy.close"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WebSocketProxy.</small>close</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WebSocketProxy.close -->
+<span class="return_type">
+<span class="type_name">bool</span></span> <span class="callable_call_name">close</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.WebSocketProxy.close -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy.close -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WebSocketProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>WSHandlerProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.WSHandlerProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">WSHandler</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.WSHandlerProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.handler_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.handler_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>handler_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">WSHandler</span> <span class="field_name_long">handler_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.handler_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy._wrapped_socket -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy._wrapped_socket"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>_wrapped_socket</div>
+  <p>(field)</p>
+  
+<span class="type_name">WebSocketProxy</span> <span class="field_name_long">_wrapped_socket</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy._wrapped_socket -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>WSHandlerProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">WSHandlerProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">handler_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">WSHandler</span> <span class="param_name_long">handler_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.WSHandlerProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy._wrap_socket"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>_wrap_socket</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+<span class="return_type">
+<span class="type_name">WebSocketProxy</span></span> <span class="callable_call_name">_wrap_socket</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy._wrap_socket -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSInit"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSInit</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSInit</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSInit -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSConnected"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSConnected</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSConnected</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSConnected -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSMessage"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSMessage</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSMessage</span>(
+<span class="param_name_call">socket</span>,
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSMessage -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSBinary"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSBinary</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSBinary</span>(
+<span class="param_name_call">socket</span>,
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+    <li>
+<span class="type_name">Buffer</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSBinary -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSClosed"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSClosed</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSClosed</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSClosed -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSError"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSError</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSError</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSError -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+  <span class="anchor" id="quark.spi_api_tracing.WSHandlerProxy.onWSFinal"></span>
+  <div class="h3"><small>quark.spi_api_tracing.WSHandlerProxy.</small>onWSFinal</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onWSFinal</span>(
+<span class="param_name_call">socket</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">WebSocket</span> <span class="param_name_long">socket</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy.onWSFinal -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.WSHandlerProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>HTTPHandlerProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">HTTPHandler</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.HTTPHandlerProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.handler_impl -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.handler_impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>handler_impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">HTTPHandler</span> <span class="field_name_long">handler_impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.handler_impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.wrapped_request -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.wrapped_request"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>wrapped_request</div>
+  <p>(field)</p>
+  
+<span class="type_name">HTTPRequestProxy</span> <span class="field_name_long">wrapped_request</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.wrapped_request -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>HTTPHandlerProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">HTTPHandlerProxy</span>(
+<span class="param_name_call">log</span>,
+<span class="param_name_call">wrapped_request</span>,
+<span class="param_name_call">handler_impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Logger</span> <span class="param_name_long">log</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPRequestProxy</span> <span class="param_name_long">wrapped_request</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPHandler</span> <span class="param_name_long">handler_impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.HTTPHandlerProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPInit</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onHTTPInit</span>(
+<span class="param_name_call">request</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPInit -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPResponse</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onHTTPResponse</span>(
+<span class="param_name_call">request</span>,
+<span class="param_name_call">response</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPResponse</span> <span class="param_name_long">response</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPResponse -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPError</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onHTTPError</span>(
+<span class="param_name_call">request</span>,
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPError -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+  <span class="anchor" id="quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal"></span>
+  <div class="h3"><small>quark.spi_api_tracing.HTTPHandlerProxy.</small>onHTTPFinal</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">onHTTPFinal</span>(
+<span class="param_name_call">request</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy.onHTTPFinal -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.HTTPHandlerProxy -->
+  <div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.</small>RuntimeProxy</div>
+  <p>(class)</p>
+  
+<div class="class_base_list"><!-- quark.spi_api_tracing.RuntimeProxy -->
+  <strong>Base Classes</strong>
+  <ul>
+    <li><span class="class_base">Identifiable</span></li>
+    <li><span class="class_base">Runtime</span></li>
+  </ul>
+</div><!-- class_base_list quark.spi_api_tracing.RuntimeProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.impl -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.impl"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>impl</div>
+  <p>(field)</p>
+  
+<span class="type_name">Runtime</span> <span class="field_name_long">impl</span>: (field)
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.impl -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.RuntimeProxy"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>RuntimeProxy</div>
+  <p>(constructor)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+<span class="return_type">
+<span class="new">new</span></span> <span class="callable_call_name">RuntimeProxy</span>(
+<span class="param_name_call">impl</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Runtime</span> <span class="param_name_long">impl</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.RuntimeProxy -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.open -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.open"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>open</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.open -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">open</span>(
+<span class="param_name_call">url</span>,
+<span class="param_name_call">handler</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.open -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.open -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+    <li>
+<span class="type_name">WSHandler</span> <span class="param_name_long">handler</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.open -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.open -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.request -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.request"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>request</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.request -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">request</span>(
+<span class="param_name_call">request</span>,
+<span class="param_name_call">handler</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.request -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.request -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPHandler</span> <span class="param_name_long">handler</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.request -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.request -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.schedule -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.schedule"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>schedule</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.schedule -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">schedule</span>(
+<span class="param_name_call">handler</span>,
+<span class="param_name_call">delayInSeconds</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.schedule -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.schedule -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">Task</span> <span class="param_name_long">handler</span>: (param)</li>
+    <li>
+<span class="type_name">float</span> <span class="param_name_long">delayInSeconds</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.schedule -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.schedule -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.codec -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.codec"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>codec</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.codec -->
+<span class="return_type">
+<span class="type_name">Codec</span></span> <span class="callable_call_name">codec</span>(
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.codec -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.codec -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.serveHTTP"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>serveHTTP</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">serveHTTP</span>(
+<span class="param_name_call">url</span>,
+<span class="param_name_call">servlet</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPServlet</span> <span class="param_name_long">servlet</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.serveHTTP -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.serveWS -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.serveWS"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>serveWS</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.serveWS -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">serveWS</span>(
+<span class="param_name_call">url</span>,
+<span class="param_name_call">servlet</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.serveWS -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.serveWS -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">url</span>: (param)</li>
+    <li>
+<span class="type_name">WSServlet</span> <span class="param_name_long">servlet</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.serveWS -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.serveWS -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.respond -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.respond"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>respond</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.respond -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">respond</span>(
+<span class="param_name_call">request</span>,
+<span class="param_name_call">response</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.respond -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.respond -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">HTTPRequest</span> <span class="param_name_long">request</span>: (param)</li>
+    <li>
+<span class="type_name">HTTPResponse</span> <span class="param_name_long">response</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.respond -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.respond -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.fail -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.fail"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>fail</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.fail -->
+<span class="return_type">
+<span class="type_name">void</span></span> <span class="callable_call_name">fail</span>(
+<span class="param_name_call">message</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.fail -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.fail -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">message</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.fail -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.fail -->
+<div class="childindent"><!-- child node quark.spi_api_tracing.RuntimeProxy.logger -->
+  <span class="anchor" id="quark.spi_api_tracing.RuntimeProxy.logger"></span>
+  <div class="h3"><small>quark.spi_api_tracing.RuntimeProxy.</small>logger</div>
+  <p>(method)</p>
+  <div class="callable_call"><!-- quark.spi_api_tracing.RuntimeProxy.logger -->
+<span class="return_type">
+<span class="type_name">Logger</span></span> <span class="callable_call_name">logger</span>(
+<span class="param_name_call">topic</span>,
+)
+</div><!-- callable_call quark.spi_api_tracing.RuntimeProxy.logger -->
+<div class="callable_param_list"><!-- quark.spi_api_tracing.RuntimeProxy.logger -->
+  <strong>Parameters</strong>
+  <ul>
+    <li>
+<span class="type_name">String</span> <span class="param_name_long">topic</span>: (param)</li>
+  </ul>
+</div><!-- callable_param_list quark.spi_api_tracing.RuntimeProxy.logger -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy.logger -->
+  <hr>
+</div><!-- child node quark.spi_api_tracing.RuntimeProxy -->
+  <hr>
+</div><!-- namespace quark.spi_api_tracing -->
+
+        </div><!-- main -->
+
+      </div><!-- row -->
+    </div><!-- container-fluid -->
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+            integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+            crossorigin="anonymous"></script>
+  </body>
+</html>
