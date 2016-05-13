@@ -78,10 +78,10 @@ namespace quark {
         macro JSONObject toJSON() new JSONObject().setNumber(self);
         macro JSONObject __to_JSONObject() self.toJSON();
 
-        macro T bitwise_or(T other) ${(($self) | ($other))};
-        macro T bitwise_xor(T other) ${(($self) ^ ($other))};
-        macro T bitwise_and(T other) ${(($self) & ($other))};
-        macro T bitwise_not() ${(~($self))};
+        macro T __bitwise_or__(T other) ${(($self) | ($other))};
+        macro T __bitwise_xor__(T other) ${(($self) ^ ($other))};
+        macro T __bitwise_and__(T other) ${(($self) & ($other))};
+        macro T __bitwise_not__() ${(~($self))};
     }
 
     @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
