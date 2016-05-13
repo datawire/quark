@@ -1165,7 +1165,7 @@ class Compiler(object):
                 self.icompile(method)
         for cls, deps in ref.metadata.items():
             for dep in deps:
-                field = Parser().rule("field", "static reflect.Class %s_ref = %s;" % (dep, deps[dep]))
+                field = Parser().rule("field", "static reflect.Class %s_ref = reflect.__register__(%s);" % (dep, deps[dep]))
                 cls.definitions.append(field)
                 field.traverse(Crosswire(cls))
                 self.icompile(field)

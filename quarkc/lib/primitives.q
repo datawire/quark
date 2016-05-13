@@ -370,6 +370,7 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
+namespace error {
     class Error {
         String message;
         Error(String message) {
@@ -382,6 +383,6 @@ namespace quark {
             return "Error("+self.message+")";
         }
     }
-
+}
 
 }
