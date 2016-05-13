@@ -127,6 +127,23 @@ void fail(String message) {
     Test.current().check(false, message);
 }
 
+bool checkOneOf(List<Object> expected, Object actual) {
+    String message = "Expected one of [";
+    int idx = 0;
+    while (idx < expected.size()) {
+        if (idx != 0) {
+            message = message + ", ";
+        }
+        message = message + expected[idx].toString();
+        if (expected[idx] == actual) {
+            return check(true, "");
+        }
+        idx = idx + 1;
+    }
+    fail(message + "] got " + actual.toString());
+    return false;
+}
+
 class Harness {
 
     String pkg;
