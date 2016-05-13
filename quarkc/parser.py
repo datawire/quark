@@ -380,15 +380,8 @@ class Parser:
     visit_bitwise_xor_operand = right_associative_infix_rule(
         'bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*')
 
-    @g.rule("bitwise_and_operand = NOT? notoperand")
-    def visit_bitwise_and_operand(self, node, (not_, operand)):
-        if not_:
-            return Call(Attr(operand, Name(self.unary_aliases[not_[0]])), [])
-        else:
-            return operand
-
-    visit_notoperand = right_associative_infix_rule(
-        'notoperand = cmpoperand (cmpop cmpoperand)*')
+    visit_bitwise_and_operand = right_associative_infix_rule(
+        'bitwise_and_operand = cmpoperand (cmpop cmpoperand)*')
 
     @g.rule('cmpop = GE / LE / LT / GT / EQL / NEQ')
     def visit_cmpop(self, node, (op,)):
@@ -415,7 +408,7 @@ class Parser:
         else:
             return expr
 
-    @g.rule('uop = MINUS / TWIDDLE / CAST')
+    @g.rule('uop = NOT / MINUS / TWIDDLE / CAST')
     def visit_uop(self, node, (op,)):
         if op == "?":
             return lambda e: Cast(e)
