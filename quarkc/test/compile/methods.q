@@ -1,5 +1,5 @@
 class Test {
-    int foo() {}
+    int foo() { return 3; }
 }
 
 void bar() {

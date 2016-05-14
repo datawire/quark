@@ -672,6 +672,11 @@ class Check:
             return
         self.errors.append("%s: super can only be used for constructor or method invocation" % lineinfo(s))
 
+    def visit_Callable(self, c):
+        if (not isinstance(c, Macro) and c.body and c.type
+            and c.type.code() != "void" and not has_return(c)):
+            self.errors.append("%s: missing return (%s)" % (lineinfo(c), c.type.code()))
+
 def lineinfo(node):
     trace = getattr(node, "_trace", None)
     stack = [getattr(node, "filename", "<none>")]

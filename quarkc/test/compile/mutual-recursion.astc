@@ -4,9 +4,11 @@ File(Use(url=quark.q), Import(Name(quark)),
 
   Function(Type(Name(int)), Name(foo), Block(
     ExprStmt(Call(Var(Name(bar), $type=0.mutual_recursion.bar),
-     $type=1.quark.String)))),
+     $type=1.quark.String)),
+    Return(Number(3, $type=1.quark.int)))),
 
   Function(Type(Name(String)), Name(bar), Block(
     ExprStmt(Call(Var(Name(foo), $type=0.mutual_recursion.foo),
-     $type=1.quark.int)))))
+     $type=1.quark.int)),
+    Return(String("pi", $type=1.quark.String)))))
 )

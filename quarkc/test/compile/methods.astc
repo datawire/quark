@@ -4,7 +4,8 @@ File(Use(url=quark.q), Import(Name(quark)),
 
   Class(Name(Test),
 
-   Method(static=False, Type(Name(int)), Name(foo), Block()),
+   Method(static=False, Type(Name(int)), Name(foo), Block(
+     Return(Number(3, $type=1.quark.int)))),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
      Return(String("methods.Test", $type=1.quark.String)))),

@@ -66,6 +66,46 @@ def get_fields(cls):
     get_fields_r(cls, result)
     return result
 
+@dispatch(Callable)
+def has_return(fun):
+    return has_return(fun.body)
+
+@dispatch(Local)
+def has_return(l): False
+
+@dispatch(If)
+def has_return(iff):
+    return has_return(iff.consequence) and has_return(iff.alternative)
+
+@dispatch(Block)
+def has_return(b):
+    return has_return(b.statements)
+
+@dispatch(list)
+def has_return(stmts):
+    for stmt in stmts:
+        if has_return(stmt):
+            return True
+    return False
+
+@dispatch(Assign)
+def has_return(assgn): return False
+
+@dispatch(While)
+def has_return(wh): return False
+
+@dispatch(Return)
+def has_return(r): return True
+
+@dispatch(ExprStmt)
+def has_return(e): return False
+
+@dispatch(type(None))
+def has_return(e): return False
+
+@dispatch(Native)
+def has_return(e): return False
+
 def has_super(fun):
     for stmt in fun.body.statements:
         if is_super(stmt):

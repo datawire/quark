@@ -2,7 +2,8 @@ File(Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(return_types),
 
-  Function(Type(Name(int)), Name(f), Block()),
+  Function(Type(Name(int)), Name(f), Block(
+    Return(Number(3, $type=1.quark.int)))),
 
   Function(Type(Name(void)), Name(g), Block(
     Local(
