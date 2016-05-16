@@ -23,8 +23,8 @@ namespace interop { // package interop is mandatory
             print("WSServlet.onServletInit " + url);
         }
 
-        void onServletError(String url, String error) {
-            print("WSServlet.onServletError " + url + " : " + error);
+        void onServletError(String url, ServletError error) {
+            print("WSServlet.onServletError " + url + " : " + error.getMessage());
         }
 
         void onServletEnd(String url) {
@@ -57,8 +57,8 @@ namespace interop { // package interop is mandatory
         void onWSClosed(WebSocket socket) {
             print("onWSClosed");
         }
-        void onWSError(WebSocket socket) {
-            print("onWSError");
+        void onWSError(WebSocket socket, WSError error) {
+            print("onWSError " + error.getMessage());
         }
         void onWSFinal(WebSocket socket) {
             print("onWSFinal");

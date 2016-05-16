@@ -20,8 +20,8 @@
             concurrent.Context.runtime().respond(rq, rs);
         }
 
-        void onServletError(String url, String reason) {
-            print("Hello Trouble with registering at " + url + "   reason: " + reason);
+        void onServletError(String url, ServletError reason) {
+            print("Hello Trouble with registering at " + url + "   reason: " + reason.getMessage());
         }
 
         void onServletEnd(String url) {

@@ -246,13 +246,13 @@ long slow_round(float v) {
         void onHTTPInit(HTTPRequest request) {
             print("onHTTPInit " + request.getUrl());
         }
-        void onHTTPError(HTTPRequest request, String error) {
+        void onHTTPError(HTTPRequest request, HTTPError error) {
             self.timeout.cancel();
             if (self.timeout.timedOut) {
                 print ("FAIL: too late error");
                 return;
             }
-            print("onHTTPError " + request.getUrl() + " : " + error);
+            print("onHTTPError " + request.getUrl() + " : " + error.getMessage());
         }
         void onHTTPFinal(HTTPRequest request) {
             print("onHTTPFinal " + request.getUrl());
