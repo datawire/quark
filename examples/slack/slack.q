@@ -64,7 +64,7 @@ namespace slack {
         }
 
         void onWSError(WebSocket socket, WSError error) {
-            print("socket error" + error.toString());
+            print("socket error" + error.getMessage());
         }
 
         event.SlackEvent construct(String type) {
