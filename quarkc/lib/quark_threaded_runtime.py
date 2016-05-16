@@ -13,6 +13,7 @@ import urllib2
 import urlparse
 from wsgiref import util
 from Queue import Queue, Empty
+import quark
 
 import ws4py
 if ws4py.__version__ != "0.3.4":
@@ -126,7 +127,7 @@ class _QuarkRequest(object):
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError as exc:
-            self.runtime.events.put((self.handler.onHTTPError, (self.request, str(exc.reason)), {}))
+            self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc.reason))), {}))
         else:
             response = _HTTPResponse()
             response.setCode(handle.getcode())
@@ -173,7 +174,7 @@ class _QuarkWSMixin(object):
             self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
             self.runtime.log.debug("websocket closed with error %s %s" % (code, reason))
-            self.runtime.events.put((self.handler.onWSError, (self.ws,), {}))
+            self.runtime.events.put((self.handler.onWSError, (self.ws, quark.WSError("%s %s" % (code, reason))), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
         self.ws.ws = None
         self.ws = None
@@ -342,7 +343,7 @@ class _NoApplication(object):
 
     def add(self, servlet):
         self.runtime.events.put((servlet.servlet.onServletError,
-                (servlet.url.url, "Failed to bind to %s:%s (%s)" % (self.url.host, self.url.port, self.exc)), {}))
+                (servlet.url.url, quark.ServletError("Failed to bind to %s:%s (%s)" % (self.url.host, self.url.port, self.exc))), {}))
 
 class Url(object):
     def __init__(self, url):
@@ -408,7 +409,7 @@ class ThreadedRuntime(object):
                 ws.run_forever()
             except Exception as ex:
                 runtime.log.debug("websocket pump exception: %s" % ex);
-                runtime.events.put((handler.onWSError, (ws,), {}))
+                runtime.events.put((handler.onWSError, (ws, quark.WSError(str(ex))), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
         try:
             self.acquire()
@@ -443,10 +444,10 @@ class ThreadedRuntime(object):
     def serveHTTP(self, url, servlet):
         url = Url(url)
         if url.scheme not in ["http", "https"]:
-            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported"), {}))
+            self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported")), {}))
             return
         if url.scheme in ["https"]:
-            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported yet"), {}))
+            self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported yet")), {}))
             return
         container = self._make_container(url)
         container.add(HttpServletAdapter(self, url, servlet))
@@ -454,10 +455,10 @@ class ThreadedRuntime(object):
     def serveWS(self, url, servlet):
         url = Url(url)
         if url.scheme not in ["ws", "wss"]:
-            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported"), {}))
+            self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported")), {}))
             return
         if url.scheme in ["wss"]:
-            self.events.put((servlet.onServletError, (url.url, url.scheme + " is not supported yet"), {}))
+            self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported yet")), {}))
             return
         container = self._make_container(url)
         container.add(WSServletAdapter(self, url, servlet))

@@ -598,7 +598,7 @@ module DatawireQuarkCore
         rescue Exception => e
           @log.warn "EXCEPTION: #{e.inspect}"
           @log.warn "MESSAGE: #{e.message}"
-          @events.event { handler.onHTTPError request, e.message }
+          @events.event { handler.onHTTPError request, ::Quark.quark.HTTPError.new(e.message) }
         ensure
           @events.event(final:src) { handler.onHTTPFinal request }
         end
@@ -766,12 +766,12 @@ module DatawireQuarkCore
     def add(adapter)
       if not adapter.scheme_supported?
         error = "${adapter.uri.scheme} is not supported"
-        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        @events.event { adapter.servlet.onServletError(adapter.url, ::Quark.quark.ServletError.new(error)) }
         return
       end
       if adapter.secure?
         error = "${adapter.uri.scheme} is not yet supported"
-        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        @events.event { adapter.servlet.onServletError(adapter.url, ::Quark.quark.ServletError.new(error)) }
         return
       end
       server = @servers[adapter.key]
