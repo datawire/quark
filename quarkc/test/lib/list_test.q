@@ -41,4 +41,17 @@ class ListTest {
         checkEqual([4], l.slice(-1, 10));
     }
 
+    void testInsert() {
+        List<int> l = [1, 2, 3, 4];
+
+        l.insert(0, 0);
+        checkEqual([0, 1, 2, 3, 4], l);
+
+        l.insert(3, 300);
+        checkEqual([0, 1, 2, 300, 3, 4], l);
+        
+        l.insert(6, 999);
+        checkEqual([0, 1, 2, 300, 3, 4, 999], l);
+    }
+
 }

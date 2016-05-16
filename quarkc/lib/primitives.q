@@ -319,6 +319,10 @@ namespace quark {
                                   $py{($self).append($element)}
                                   $rb{($self) << ($element)}
                                   $js{($self).push($element)};
+        macro void insert(int index, T element) $java{($self).add(($index), ($element))}
+                                                $py{($self).insert(($index), ($element))}
+                                                $rb{($self).insert(($index), ($element))}
+                                                $js{($self).splice(($index), 0, ($element))};
         macro T __get__(int index) $java{($self).get($index)}
                                    $py{($self)[$index]}
                                    $rb{($self)[$index]}
