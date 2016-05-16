@@ -1184,7 +1184,7 @@ class Compiler(object):
 
     @overload(AST, AST)
     def merge_one(self, n1, n2):
-        raise CompileError("can't merge %r and %r" % (n1, n2))
+        raise CompileError("Cannot merge %r @ %s with %r @ %s" % (n1, lineinfo(n1), n2, lineinfo(n2)))
 
     def trans_roots(self, root):
         result = [root]
