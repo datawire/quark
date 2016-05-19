@@ -113,4 +113,4 @@ def get_pip_pkg(name, stage=None):
 
 def pipcheck(name, stage=None):
     if get_pip_pkg(name) is None:
-        raise QuarkError("unable to find required python package %s" % name)
+        raise QuarkError("Please install python package %s with 'pip install %s' to run this command." % (name, name))
