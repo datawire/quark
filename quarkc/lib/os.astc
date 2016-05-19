@@ -1,0 +1,59 @@
+File(Import(Name(quark)),
+
+ Package(Name(quark),
+
+  Package(Name(os),
+
+   Macro(Type(Name(String)), Name(_env_get),
+    Param(Type(Name(String)), Name(varname), $type=1.quark.String),
+    Native(NativeCase(java,
+      Fixed('System.getenv('), Var(Name(varname), $type=1.quark.String),
+      Fixed(')')), NativeCase(py, Fixed('os.environ.get('), Var(Name(varname),
+      $type=1.quark.String), Fixed(')')), NativeCase(js,
+      Fixed('_qrt.env_get('), Var(Name(varname), $type=1.quark.String),
+      Fixed(')')), NativeCase(rb, Fixed('ENV['), Var(Name(varname),
+      $type=1.quark.String), Fixed(']')))),
+
+   Class(Annotation(Name(doc),
+     String("Class for interacting with the process environment",
+     $type=1.quark.String)), Name(Env),
+
+    Method(static=True, Annotation(Name(doc),
+      String("Fetch the value of an environment variable.",
+      $type=1.quark.String)), Annotation(Name(doc),
+      String("Returns null if the variable is not set.",
+      $type=1.quark.String)), Type(Name(String)), Name(get),
+     Param(Type(Name(String)), Name(varname), $type=1.quark.String),
+     Block(
+      Return(Call(Var(Name(_env_get), $type=4.quark.os._env_get),
+        Var(Name(varname), $type=1.quark.String), $type=1.quark.String)))),
+
+    Method(static=True, Annotation(Name(doc),
+      String("Fetch the value of $USER", $type=1.quark.String)),
+     Type(Name(String)), Name(getUser), Block(
+      Return(Call(Var(Name(get), $type=4.quark.os.Env.get), String("USER",
+        $type=1.quark.String), $type=1.quark.String)))),
+
+    Method(static=True, Annotation(Name(doc),
+      String("Fetch the value of $HOME", $type=1.quark.String)),
+     Type(Name(String)), Name(getHome), Block(
+      Return(Call(Var(Name(get), $type=4.quark.os.Env.get), String("HOME",
+        $type=1.quark.String), $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("quark.os.Env", $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Block(
+      Return(Null(null, $type=1.quark.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+     Block()),
+    Field(static=True, Type(Name(reflect), Name(Class)),
+     Name(quark_os_Env_ref), Attr(Attr(Var(Name(quark_md), $type=15.quark_md),
+       Name(Root), $type=15.quark_md.Root), Name(quark_os_Env_md),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class))))
+)

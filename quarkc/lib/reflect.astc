@@ -180,14 +180,14 @@ File(Import(Name(quark)),
       Return(Null(null, $type=1.quark.Object)))),
 
     MethodMacro(Type(Name(JSONObject)), Name(toJSON),
-     Call(Attr(Call(Type(Name(JSONObject)), $type=4.quark.JSONObject),
-       Name(setString), $type=4.quark.JSONObject.setString),
+     Call(Attr(Call(Type(Name(JSONObject)), $type=5.quark.JSONObject),
+       Name(setString), $type=5.quark.JSONObject.setString),
       Attr(Var(Name(self), $type=3.quark.reflect.Class), Name(id),
-      $type=1.quark.String), $type=4.quark.JSONObject)),
+      $type=1.quark.String), $type=5.quark.JSONObject)),
 
     MethodMacro(Type(Name(JSONObject)), Name(__to_JSONObject),
      Call(Attr(Var(Name(self), $type=3.quark.reflect.Class), Name(toJSON),
-      $type=3.quark.reflect.Class.toJSON), $type=4.quark.JSONObject)),
+      $type=3.quark.reflect.Class.toJSON), $type=5.quark.JSONObject)),
 
     Method(static=False, Type(Name(String)), Name(_getClass), Block(
       Return(String("quark.reflect.Class", $type=1.quark.String)))),
