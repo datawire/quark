@@ -16,6 +16,8 @@ Latest
 
 * Support for read-only interaction with the process environment using
   `quark.os.Env.get(...)` and friends.
+* Support for reading an entire UTF-8-encoded file into a string in
+  `quark.os.FS.fileContents(...)`.
 
 ### Other
 
