@@ -71,6 +71,15 @@
     }
     exports.map_get = map_get;
 
+    function env_get(key) {
+        var res = process.env[key];
+        if (typeof res != "undefined") {
+            return res;
+        }
+        return null;
+    }
+    exports.env_get = env_get;
+
     var execSync = require("child_process").execSync;
 
     function url_get(url) {

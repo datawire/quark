@@ -29,6 +29,7 @@ package quark 0.0.1;
 include primitives.q;
 include logging.q;
 include reflect.q;
+include os.q;
 include json.q;
 include service.q;
 include concurrent.q;

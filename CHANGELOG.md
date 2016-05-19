@@ -6,10 +6,16 @@ Breaking changes are marked with (!)
 Latest
 ------
 
-### Langauge
+### Language
+
 * (!) #141 Bitwise methods are removed in favor of operators `~&^|` with same
   precedence as in C
 * (!) #141 Precedence of `!` operator is raised to match that of C
+
+### Standard Library
+
+* Support for read-only interaction with the process environment using
+  `quark.os.Env.get(...)` and friends.
 
 ### Other
 

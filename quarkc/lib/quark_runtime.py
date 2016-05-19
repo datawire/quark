@@ -5,7 +5,7 @@
 
 __version__ = '0.4.2'
 
-import os    # unused?
+import os    # used by the quark.OS.Env stuff
 import sys
 import time  # used by the builtin now() macro
 import urllib2
