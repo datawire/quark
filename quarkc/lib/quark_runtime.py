@@ -20,7 +20,7 @@ import base64
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-             _LoggerConfig""".split()
+             _LoggerConfig _get_file_contents""".split()
 
 
 _Map = dict
@@ -484,3 +484,12 @@ class _TLS(threading.local):
 
     def setValue(self, value):
         self._value = value
+
+
+def _get_file_contents(path, result):
+    try:
+        with open(path, "rb") as inf:
+            result.value = inf.read()
+            result.finish(None)
+    except IOError as exc:
+        result.finish(str(exc))

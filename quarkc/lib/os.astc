@@ -1,8 +1,171 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/Os.java),
 
  Package(Name(quark),
 
   Package(Name(os),
+
+   Class(Name(FileContents), Type(Name(concurrent), Name(Future)),
+    Field(static=False, Type(Name(String)), Name(value), $type=1.quark.String),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("quark.os.FileContents", $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_context", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_context), $type=6.quark.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_finished",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_finished), $type=1.quark.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_error", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_error), $type=1.quark.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_callbacks",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_callbacks),
+         $type=1.quark.List<6.quark.concurrent.FutureCompletion>)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_lock", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_lock), $type=6.quark.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("value", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(value), $type=1.quark.String)))),
+      Return(Null(null, $type=1.quark.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_context", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_context), $type=6.quark.concurrent.Context),
+         Cast(Var(Name(value), $type=1.quark.Object),
+         $type=6.quark.concurrent.Context)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_finished",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_finished), $type=1.quark.bool), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=1.quark.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_error", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_error), $type=1.quark.String), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=1.quark.String)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_callbacks",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_callbacks),
+         $type=1.quark.List<6.quark.concurrent.FutureCompletion>),
+         Cast(Var(Name(value), $type=1.quark.Object),
+         $type=1.quark.List<6.quark.concurrent.FutureCompletion>)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("_lock", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(_lock), $type=6.quark.concurrent.Lock), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=6.quark.concurrent.Lock)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("value", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
+          Name(value), $type=1.quark.String), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=1.quark.String)))))),
+    Field(static=True, Type(Name(reflect), Name(Class)),
+     Name(quark_os_FileContents_ref), Attr(Attr(Var(Name(quark_md),
+       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+      Name(quark_os_FileContents_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class)),
+
+   Macro(Type(Name(void)), Name(_get_file_contents),
+    Param(Type(Name(String)), Name(path), $type=1.quark.String),
+    Param(Type(Name(FileContents)), Name(result),
+    $type=14.quark.os.FileContents),
+    Native(NativeCase(java,
+      Fixed('io.datawire.quark.runtime.Os.getFileContents(('), Var(Name(path),
+      $type=1.quark.String), Fixed('), ('), Var(Name(result),
+      $type=14.quark.os.FileContents), Fixed('))')), NativeCase(py,
+      Fixed('_get_file_contents(('), Var(Name(path), $type=1.quark.String),
+      Fixed('), ('), Var(Name(result), $type=14.quark.os.FileContents),
+      Fixed('))')), NativeCase(js, Fixed('_qrt.getFileContents(('),
+      Var(Name(path), $type=1.quark.String), Fixed('), ('), Var(Name(result),
+      $type=14.quark.os.FileContents), Fixed('))')), NativeCase(rb,
+      Fixed('::DatawireQuarkCore.getFileContents(('), Var(Name(path),
+      $type=1.quark.String), Fixed('), ('), Var(Name(result),
+      $type=14.quark.os.FileContents), Fixed('))')))),
+
+   Macro(Type(Name(String)), Name(_user_homedir), Native(NativeCase(java,
+      Fixed('System.getProperty("user.home")')), NativeCase(py,
+      Fixed('os.path.expanduser("~")')), NativeCase(js,
+      Fixed('_qrt.userHomeDir()')), NativeCase(rb, Fixed('Dir.home()')))),
+
+   Class(Annotation(Name(doc),
+     String("Class for interacting with the filesystem",
+     $type=1.quark.String)), Name(FS),
+
+    Method(static=True, Annotation(Name(doc),
+      String("Read the entire contents of a file into a String. Assume UTF-8 encoding.",
+      $type=1.quark.String)), Annotation(Name(doc),
+      String("Returns a FileContents Future instance.", $type=1.quark.String)),
+     Annotation(Name(doc),
+      String("if result.getError() is null then result.value has the file contents.",
+      $type=1.quark.String)), Annotation(Name(doc),
+      String("NOTE WELL: all the typical memory constraints you might",
+      $type=1.quark.String)), Annotation(Name(doc),
+      String("expect to come into play do, in fact, come into play.",
+      $type=1.quark.String)), Type(Name(FileContents)), Name(fileContents),
+     Param(Type(Name(String)), Name(path), $type=1.quark.String),
+     Block(
+      Local(
+       Declaration(Type(Name(FileContents)), Name(result),
+        Call(Type(Name(FileContents)), $type=14.quark.os.FileContents),
+       $type=14.quark.os.FileContents)),
+      ExprStmt(Call(Var(Name(_get_file_contents),
+        $type=14.quark.os._get_file_contents), Var(Name(path),
+        $type=1.quark.String), Var(Name(result),
+        $type=14.quark.os.FileContents), $type=1.quark.void)),
+      Return(Var(Name(result), $type=14.quark.os.FileContents)))),
+
+    Method(static=True, Annotation(Name(doc),
+      String("Return the path to the current user's home directory",
+      $type=1.quark.String)), Type(Name(String)), Name(userHomeDir), Block(
+      Return(Call(Var(Name(_user_homedir), $type=14.quark.os._user_homedir),
+       $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("quark.os.FS", $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Block(
+      Return(Null(null, $type=1.quark.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+     Block()),
+    Field(static=True, Type(Name(reflect), Name(Class)), Name(quark_os_FS_ref),
+     Attr(Attr(Var(Name(quark_md), $type=15.quark_md), Name(Root),
+      $type=15.quark_md.Root), Name(quark_os_FS_md),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
    Macro(Type(Name(String)), Name(_env_get),
     Param(Type(Name(String)), Name(varname), $type=1.quark.String),
@@ -25,19 +188,13 @@ File(Import(Name(quark)),
       $type=1.quark.String)), Type(Name(String)), Name(get),
      Param(Type(Name(String)), Name(varname), $type=1.quark.String),
      Block(
-      Return(Call(Var(Name(_env_get), $type=4.quark.os._env_get),
+      Return(Call(Var(Name(_env_get), $type=14.quark.os._env_get),
         Var(Name(varname), $type=1.quark.String), $type=1.quark.String)))),
 
     Method(static=True, Annotation(Name(doc),
       String("Fetch the value of $USER", $type=1.quark.String)),
      Type(Name(String)), Name(getUser), Block(
-      Return(Call(Var(Name(get), $type=4.quark.os.Env.get), String("USER",
-        $type=1.quark.String), $type=1.quark.String)))),
-
-    Method(static=True, Annotation(Name(doc),
-      String("Fetch the value of $HOME", $type=1.quark.String)),
-     Type(Name(String)), Name(getHome), Block(
-      Return(Call(Var(Name(get), $type=4.quark.os.Env.get), String("HOME",
+      Return(Call(Var(Name(get), $type=14.quark.os.Env.get), String("USER",
         $type=1.quark.String), $type=1.quark.String)))),
 
     Method(static=False, Type(Name(String)), Name(_getClass), Block(

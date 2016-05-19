@@ -80,6 +80,23 @@
     }
     exports.env_get = env_get;
 
+    var os = require("os");
+    function userHomeDir() {
+        return os.homedir();
+    }
+    exports.userHomeDir = userHomeDir;
+
+    var fs = require("fs");
+    function getFileContents(path, result) {
+        try {
+            result.value = fs.readFileSync(path, { encoding: "UTF-8" });
+            result.finish(null);
+        } catch (exc) {
+            result.finish(exc.toString());
+        }
+    }
+    exports.getFileContents = getFileContents;
+
     var execSync = require("child_process").execSync;
 
     function url_get(url) {

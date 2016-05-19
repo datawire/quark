@@ -29,7 +29,6 @@ package quark 0.0.1;
 include primitives.q;
 include logging.q;
 include reflect.q;
-include os.q;
 include json.q;
 include service.q;
 include concurrent.q;
@@ -40,6 +39,7 @@ include url.q;
 include spi.q;
 include spi_api.q;
 include spi_api_tracing.q;
+include os.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
