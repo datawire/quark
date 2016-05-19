@@ -6,6 +6,12 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Command line
+
+* `quark run` now advises `quark install` if the target is not installed
+* A more helpful message for `quark install --python` when `wheel`
+  package is missing
+
 ### Langauge
 * (!) #141 Bitwise methods are removed in favor of operators `~&^|` with same
   precedence as in C

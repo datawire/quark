@@ -726,7 +726,13 @@ class Java(Backend):
 
     def install_target(self):
         name, ver = namever(self.entry)
-        return os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
+        jar = os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
+        if os.path.exists(jar):
+            return jar
+        return None
 
     def install_command(self, dir):
         shell.call("mvn", "install", cwd=dir, stage="install")
@@ -743,6 +749,9 @@ class Python(Backend):
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         return shell.get_pip_pkg(name, stage="install")
 
     def install_command(self, dir):
@@ -764,6 +773,9 @@ class JavaScript(Backend):
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
             return json.loads(output)["dependencies"][name]["path"]
@@ -785,6 +797,9 @@ class Ruby(Backend):
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         try:
             output = shell.call("gem", "which", name, stage="install", errok=True)
             return output.strip()

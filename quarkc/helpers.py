@@ -19,6 +19,12 @@ from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
 
+try:  # py3
+    from shlex import quote as sh_quote
+except ImportError:  # py2
+    from pipes import quote as sh_quote
+
+
 DEFAULT = object()
 
 @dispatch(Class, Field)
