@@ -3,7 +3,7 @@
 Keywords
 --------
 
-Keywords are reserved words that have a specific meaning within {{{language}}}. They cannot be used as names of user-generated content (packages, classes, functions, etc).
+Keywords are reserved words that have a specific meaning within {{{language}}}. They cannot be used as names of user-generated content (namespaces, classes, functions, etc).
 
 {{{language}}} defines the following keywords:
 
@@ -33,7 +33,7 @@ The class keyword syntax is:
 *definition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined) and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace and *definition* is the list of properties and methods within the class and their definitions.
 
 .. _continueKeyword:
 
@@ -91,7 +91,7 @@ The extends keyword syntax is:
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -99,7 +99,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -107,7 +107,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the package (if one is defined) or the set of {{{language}}} files being compiled together (if no package is defined), *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 .. _falseKeyword:
 
@@ -143,6 +143,70 @@ where *condition* is the code being evaluated and *executeIfConditionTrue* is ru
 
 See the :ref:`else keyword syntax section <ifElseSyntax>` for the syntax of if-else statements.
 
+.. _importKeyword:
+
+import
+~~~~~~~
+
+The import keyword is used to add names to the current scope that are defined in a namespace. It lets you avoid always typing out fully-qualified names.
+
+Syntax
+++++++
+
+The import keyword syntax is:
+
+**import** *namespaceName* **;**
+
+where *namespaceName* is the name of the namespace from which names will be added to the current scope.
+
+or
+
+**import** *namespaceName* as *alias* **;**
+
+where *namespaceName* is the original/full name of a namespace and *alias* is the name that can be used to refer to that namespace in the current scope.
+
+For instance, to make all names from the foo namespace accessible without excess typing:
+
+``import foo;``
+
+The import statement can also do aliasing if necessary:
+
+``import foo as bar;``
+
+.. _includeKeyword:
+
+include
+~~~~~~~
+
+The include keyword is used to split up code into multiple files, but these files are all part of the same
+distribution unit. Effectively, it performs a textual include that is smart about circular dependencies.
+
+Syntax
+++++++
+
+The include keyword syntax is:
+
+**include** *url{{{file_extension}}}* **;**
+
+where *url{{{file_extension}}}* is the absolute or relative URL or filesystem path to another {{{file_extension}}} file.
+
+Given foo{{{file_extension}}}:
+
+.. code-block:: none
+
+   include bar{{{file_extension}}};
+   // some code
+
+and bar{{{file_extension}}}:
+
+.. code-block:: none
+
+   // some other code
+
+then the compiler will produce a single distribution unit per target language containing all the code in foo{{{file_extension}}} and bar{{{file_extension}}}.
+
+See also: :ref:`use statement<useKeyword>`
+
 .. _interfaceKeyword:
 
 interface
@@ -166,7 +230,9 @@ where *interfaceName* is the name of the interface, used to include it in class 
 macro
 ~~~~~
 
-The macro keyword is used to define a top-level function available to use within any {{{language}}} program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any package, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by {{{language}}}.
+The macro keyword is used to define a top-level function available to use within any {{{language}}} program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any namespace, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by {{{language}}}.
+
+**FIXME**: The above appears to be incorrect.
 
 Syntax
 ++++++
@@ -184,6 +250,27 @@ where *type* is the expected type of the macro results, *parameters* is a comma-
 The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See `linkIssue27`_ for more information.
 
 .. _linkIssue27: https://github.com/datawire/{{{github_directory}}}/issues/27
+
+.. _namespaceKeyword:
+
+namespace
+~~~~~~~~~
+
+The namespace keyword is used to indicate a namespace containing groups of similar or related classes. Namespaces are automatically available to any {{{language}}} files compiled at the same time as the file or files with the namespace definition.
+
+Syntax
+++++++
+
+The namespace keyword syntax is:
+
+**namespace** *namespaceName* **{**
+    *definition*
+
+**}**
+
+where *definition* is the content of the namespace and *namespaceName* is the name of the namespace. Namespace names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same namespace name is used multiple times, the contents of each definition section are combined and treated as a single namespace.
+
+The default namespace has the same name as the package being defined. It is the containing namespace for any classes and functions defined without an explicit containing namespace. The default namespace is logically equivalent to the explicitly-named namespace with the same name.
 
 .. _newKeyword:
 
@@ -221,22 +308,16 @@ where *variable* is the handle to the value you want to set to null.
 package
 ~~~~~~~
 
-The package keyword is used to indicate a namespace containing groups of similar or related classes. Packages are automatically available to any {{{language}}} files compiled at the same time as the file or files with the package definition.
+The package keyword is used to declare the name and version of the distribution unit being defined in the current file.
 
 Syntax
 ++++++
 
 The package keyword syntax is:
 
-**package** *packageName* **{**
-    *definition*
+**package** *packageName* *version* **;**
 
-**}**
-
-where *definition* is the content of the package and *packageName* is the name of the package. Package names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same package name is used multiple times, the contents of each definition section are combined and treated as a single package. {{{language}}} packages cannot be the same as the name of the file they are defined within. See `linkIssue6`_ for more information.
-
-.. _linkIssue6: https://github.com/datawire/{{{github_directory}}}/issues/6
-
+where *packageName* is the name of the distribution unit to be generated or installed by the compiler from this file. If not specified, the default package name is the name of the source file without the {{{file_extension}}} extension.
 
 .. _primitiveKeyword:
 
@@ -331,7 +412,33 @@ The true keyword does not have specific syntax, per se. Rather it can be used as
 use
 ~~~
 
-Documentation Coming Soon
+The use keyword is used to allow code within this distribution unit to use code within another distribution unit. The compiler will output both this distribution unit and a separate distribution unit for the code being used.
+
+Syntax
+++++++
+
+The use keyword syntax is:
+
+**use** *url{{{file_extension}}}* **;**
+
+where *url{{{file_extension}}}* is the absolute or relative URL or filesystem path to another {{{file_extension}}} file.
+
+Given foo{{{file_extension}}}:
+
+.. code-block:: none
+
+   use bar{{{file_extension}}};
+   // some code
+
+and bar{{{file_extension}}}:
+
+.. code-block:: none
+
+   // some common code
+
+then the compiler will produce two distribution units per target language. For Python this means you will get two things you can pip install. For Node you will get two NPM modules, for Java you will get two artifacts, for Ruby two gems, etc.
+
+See also: :ref:`include statement<includeKeyword>`
 
 .. _whileKeyword:
 
