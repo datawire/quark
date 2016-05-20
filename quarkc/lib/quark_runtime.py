@@ -58,6 +58,8 @@ def _cast(value, callback):
         type = callback()
     except:
         type = object
+    if type is unicode:
+        type = (unicode, str)
     if isinstance(value, type) or value is None:
         return value
     else:
