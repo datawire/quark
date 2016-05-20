@@ -721,6 +721,7 @@ def is_user():
 
 class Java(Backend):
     PRETTY_INSTALL = "Maven"
+    argswitch = "--java"
     ext = "java"
     gen = java
 
@@ -744,6 +745,7 @@ class Java(Backend):
 
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
+    argswitch = "--python"
     ext = "py"
     gen = python
 
@@ -768,6 +770,7 @@ class Python(Backend):
 
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"
+    argswitch = "--javascript"
     ext = "js"
     gen = javascript
 
@@ -792,6 +795,7 @@ class JavaScript(Backend):
 
 class Ruby(Backend):
     PRETTY_INSTALL = "GEM"
+    argswitch = "--ruby"
     ext = "rb"
     gen = ruby
 
