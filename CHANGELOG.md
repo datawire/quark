@@ -6,6 +6,15 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* (!) Revised `quark.os` APIs for future expansion.
+  * `quark.os.Env.get(...)` is now `quark.os.Environment.ENV[...]`.
+  * `quark.os.FS.fileContents(...)` is now `quark.os.readFileAsString(...)`.
+  * `quark.os.FS.userHomeDir()` is now `quark.os.getUserHomeDir()`.
+  * `quark.os.Environment.ENV.get(key, default_value)` added.
+
+
 0.6.74
 ------
 
