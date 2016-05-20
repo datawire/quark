@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Running the Python Client and Server &mdash; Datawire Connect 0.6.40 documentation</title>
+    <title>Running the Python Client and Server &mdash; Datawire Connect 0.6.74 documentation</title>
     
     <link rel="stylesheet" href="../../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../../',
-        VERSION:     '0.6.40',
+        VERSION:     '0.6.74',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.6.40 documentation" href="../../index.html" />
+    <link rel="top" title="Datawire Connect 0.6.74 documentation" href="../../index.html" />
     <link rel="up" title="Getting Started with RPC Walkthrough" href="index.html" />
     <link rel="next" title="Java Requirements and Setup" href="javaSetup.html" />
     <link rel="prev" title="Writing a Python Server" href="pythonServer.html" />
@@ -71,7 +71,7 @@
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.40 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.74 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Getting Started with RPC Walkthrough</a> &raquo;</li> 
       </ul>
     </div>  
@@ -83,7 +83,7 @@
             
   <div class="section" id="running-the-python-client-and-server">
 <h1>Running the Python Client and Server<a class="headerlink" href="#running-the-python-client-and-server" title="Permalink to this headline">¶</a></h1>
-<p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python as outlined on the <a class="reference internal" href="pythonBuild.html"><span class="doc">Compiling and Installing the Library page</span></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
+<p>We now have all of the pieces needed for a simple working RPC example. The instructions on this page assume you have already followed the directives for building and installing the HelloRPC service contract in Python as outlined on the <a class="reference internal" href="pythonBuild.html"><em>Compiling and Installing the Library page</em></a> earlier in the tutorial. If you have not done this, please do so now before trying the steps below.</p>
 <div class="section" id="python-client-and-local-python-server">
 <h2>Python Client and Local Python Server<a class="headerlink" href="#python-client-and-local-python-server" title="Permalink to this headline">¶</a></h2>
 <p>To run the HelloRPC example with a Python client against a local Python Server do the following:</p>
@@ -91,7 +91,7 @@
 <p>Step 2: Run the server by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyserver.py</span></code>. This will result in a blocking wait state - there is no direct output to stdout from the Python server.</p>
 <p>Step 3: Open a second terminal window</p>
 <p>Step 4: Move to the location where you saved the Python client you wrote earlier in the tutorial. Alternately, move to the HelloRPC directory within your local Datawire Connect git repository. If you use the default location, do the following: <code class="docutils literal"><span class="pre">cd</span> <span class="pre">~/quark/examples/helloRPC</span></code></p>
-<p>Note: If you use the supplied client file from the GitHub repository (pyclient.py), you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> to <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>. For more information, refer to the <a class="reference internal" href="pythonClient.html#part2pythonclientinstantiation"><span class="std std-ref">client instantiation section of the walkthrough</span></a>.</p>
+<p>Note: If you use the supplied client file from the GitHub repository (pyclient.py), you must edit it to point to the local helloRPC server instead of the helloRPC server in the Datawire cloud. To do this, change the URL passed when instantiating the client object from <code class="docutils literal"><span class="pre">http://hello.datawire.io</span></code> to <code class="docutils literal"><span class="pre">http://127.0.0.1:8910/hello</span></code>. For more information, refer to the <a class="reference internal" href="pythonClient.html#part2pythonclientinstantiation"><span>client instantiation section of the walkthrough</span></a>.</p>
 <p>Step 5: Run the client by executing the following command: <code class="docutils literal"><span class="pre">python</span> <span class="pre">pyclient.py</span></code></p>
 <p>You should see the following in your terminal window (stdout):</p>
 <div class="highlight-none"><div class="highlight"><pre><span></span>Request says &#39;Hello from Python!&#39;
@@ -120,7 +120,7 @@ print &quot;Request says %r&quot; % request.text
 </div>
 <div class="section" id="next-steps">
 <h2>Next Steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
-<p>Now that you understand the basics, you can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><span class="doc">here</span></a> - you may want to revert any edits you made to run your client against the server in the Datawire cloud first - or just experiment some more on your own with Python!</p>
+<p>Now that you understand the basics, you can see the clients and servers running in multiple languages <a class="reference internal" href="try.html"><em>here</em></a> - you may want to revert any edits you made to run your client against the server in the Datawire cloud first - or just experiment some more on your own with Python!</p>
 </div>
 </div>
 
@@ -155,7 +155,7 @@ print &quot;Request says %r&quot; % request.text
 <li class="toctree-l2"><a class="reference internal" href="pythonBuild.html">Python: Building the Example</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonClient.html">Python: Writing the Client</a></li>
 <li class="toctree-l2"><a class="reference internal" href="pythonServer.html">Python: Writing the Server</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Python: Running the Example</a><ul class="simple">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Python: Running the Example</a><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="javaSetup.html">Java: Requirements and Setup</a></li>
@@ -221,7 +221,7 @@ print &quot;Request says %r&quot; % request.text
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.40 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Datawire Connect 0.6.74 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Getting Started with RPC Walkthrough</a> &raquo;</li> 
       </ul>
     </div>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Core Concepts &mdash; Datawire Connect 0.6.40 documentation</title>
+    <title>Core Concepts &mdash; Datawire Connect 0.6.74 documentation</title>
     
     <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -14,7 +14,7 @@
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '../',
-        VERSION:     '0.6.40',
+        VERSION:     '0.6.74',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <link rel="top" title="Datawire Connect 0.6.40 documentation" href="../index.html" />
+    <link rel="top" title="Datawire Connect 0.6.74 documentation" href="../index.html" />
     <link rel="up" title="Quark Language Reference" href="index.html" />
     <link rel="next" title="Language Elements" href="language.html" />
     <link rel="prev" title="Introduction" href="intro.html" />
@@ -71,7 +71,7 @@
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.40 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.74 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Quark Language Reference</a> &raquo;</li> 
       </ul>
     </div>  
@@ -90,21 +90,58 @@
 </div>
 <div class="section" id="language-structure">
 <h2>Language Structure<a class="headerlink" href="#language-structure" title="Permalink to this headline">¶</a></h2>
-<p>Quark uses many of the standard elements of object-oriented programming languages including packages, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.</p>
+<p>Quark uses many of the standard elements of object-oriented programming languages including namespaces, interfaces, classes, methods, properties, functions, variables, annotations, operators, and keywords. It includes inheritance, operator overloading, and method overriding capabilities.</p>
 <p>Quark may be used to write libraries or applications. Applications must contain a single top-level main() function containing the executions structure for the application; this function may reference code from any defined class or package within the application.</p>
 <div class="section" id="files">
 <h3>Files<a class="headerlink" href="#files" title="Permalink to this headline">¶</a></h3>
-<p>Quark code is stored in text files with a .q file extension. Unlike some languages, Quark is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Packages may be defined across multiple files or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single .q file. However, the set of files comprising an application may only have one main() function declaration.</p>
+<p>Quark code is stored in text files with a .q file extension. Unlike some languages, Quark is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Namespaces may be defined across multiple files (within the same distribution unit) or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single .q file. However, the set of files comprising an application may only have one main() function declaration.</p>
+<p>Quark distribution units, known as packages, are declared using the <a class="reference internal" href="keywords.html#packagekeyword"><span>package keyword</span></a>, which tells the compiler the name of the distribution unit being defined in the file. If not specified, the default package name is the name of the source file without the .q extension.</p>
+<p>The following table lists the terminology used by Quark and the supported target languages to describe distribution units, as above, and namespaces within code, as discussed next. Note that the terminology conflicts somewhat between languages.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="39%" />
+<col width="37%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Language</th>
+<th class="head">Unit of distribution</th>
+<th class="head">Namespace within code</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Quark</td>
+<td>package</td>
+<td>namespace</td>
+</tr>
+<tr class="row-odd"><td>Java</td>
+<td>artifact</td>
+<td>package</td>
+</tr>
+<tr class="row-even"><td>Python</td>
+<td>PyPI package/egg/wheel</td>
+<td>package/module</td>
+</tr>
+<tr class="row-odd"><td>Javascript</td>
+<td>NPM package</td>
+<td>object/closure/etc.</td>
+</tr>
+<tr class="row-even"><td>Ruby</td>
+<td>gem</td>
+<td>module</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div class="section" id="packages">
-<h3>Packages<a class="headerlink" href="#packages" title="Permalink to this headline">¶</a></h3>
-<p>Packages are defined using the <a class="reference internal" href="keywords.html#packagekeyword"><span class="std std-ref">package keyword</span></a> and provide namespaces for class and function definitions. Packages cannot directly contain variables or runnable code; only classes, functions, and other packages are allowed. Packages are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.</p>
-<p>As mentioned above, packages can be nested. Classes and functions directly inside a top-level package must use nested package name when referencing classes or functions defined inside a nested package but the members of the nested package have direct access to classes and functions in the top-level package without needing to specify their package name.</p>
-<p>Classes and functions defined outside of a package belong to a default, unnamed root package. This package is logically identical to any named package. Named packages are nested inside this root package so classes and functions in the root package may be referenced inside any package directly without specifying a package name.</p>
+<div class="section" id="namespaces">
+<h3>Namespaces<a class="headerlink" href="#namespaces" title="Permalink to this headline">¶</a></h3>
+<p>Namespaces are defined using the <a class="reference internal" href="keywords.html#namespacekeyword"><span>namespace keyword</span></a> and provide namespaces for class and function definitions. Namespaces cannot directly contain variables or runnable code; only classes, functions, and other namespaces are allowed. Namespaces are optional, but provide an easy mechanism for organizing code so that related elements can be grouped together. They also allow code to be referenced from anywhere within a library or application.</p>
+<p>As mentioned above, namespaces can be nested. Classes and functions directly inside a top-level namespace must use nested namespace name when referencing classes or functions defined inside a nested namespace but the members of the nested namespace have direct access to classes and functions in the top-level namespace without needing to specify their namespace name.</p>
+<p>Classes and functions defined outside of a namespace belong to the default namespace, which has the same name as the package (distribution unit) being defined. This namespace is logically identical to the explicitly-named namespace with the same name.</p>
 </div>
 <div class="section" id="classes">
 <h3>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h3>
-<p>Classes are defined using the <a class="reference internal" href="keywords.html#classkeyword"><span class="std std-ref">class keyword</span></a> and provide a template for a specific type of object. Classes can contain properties to store data and methods to provide actions that can be performed on that data. Quark classes cannot be nested and do not support static properties or methods.</p>
+<p>Classes are defined using the <a class="reference internal" href="keywords.html#classkeyword"><span>class keyword</span></a> and provide a template for a specific type of object. Classes can contain properties to store data and methods to provide actions that can be performed on that data. Quark classes cannot be nested and do not support static properties or methods.</p>
 <div class="section" id="properties">
 <h4>Properties<a class="headerlink" href="#properties" title="Permalink to this headline">¶</a></h4>
 <p>Properties are typed variables meant to store a specific piece of data within an object. Properties are declared within the class definition and may be given default values. Properties defined within a specific class may be accessed and manipulated within the methods of that class.</p>
@@ -136,7 +173,7 @@
 </div>
 <div class="section" id="functions">
 <h3>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h3>
-<p>Functions typically define actions that can be taken outside of the context of a specific class. Functions may require input parameters (which are typed) and may return a value (also typed). Functions do not act on specific objects unless those objects are passed in as input parameters. Functions may belong to a package or be defined as part of the default unnamed package. They are defined as follows:</p>
+<p>Functions typically define actions that can be taken outside of the context of a specific class. Functions may require input parameters (which are typed) and may return a value (also typed). Functions do not act on specific objects unless those objects are passed in as input parameters. Functions may belong to a namespace or be defined as part of the default unnamed namespace. They are defined as follows:</p>
 <dl class="docutils">
 <dt><em>returnType</em> <em>functionName</em> <strong>(</strong> <em>parameters</em> <strong>) {</strong></dt>
 <dd><em>codeToExecute</em></dd>
@@ -159,19 +196,20 @@
 </div>
 <div class="section" id="naming-and-other-conventions">
 <h2>Naming and Other Conventions<a class="headerlink" href="#naming-and-other-conventions" title="Permalink to this headline">¶</a></h2>
-<p>Quark names are case sensitive and may contain only alphanumeric characters or underscores (_). Names of elements must be unique within the scope of a package, library, or application (in the case of a library or application, fully-qualified names are considered so package1.name1 and package2.name1 are perfectly acceptable).</p>
-<p>Package names are not tied to the location of files and are not expected to match directory structures. There are no global rules for naming conventions; if generating Java code this may result in unconventional package names and file locations within the resulting Java files.</p>
+<p>Quark names are case sensitive and may contain only alphanumeric characters or underscores (_). Names of elements must be unique within the scope of a namespace, library, or application (in the case of a library or application, fully-qualified names are considered so namespace1.name1 and namespace2.name1 are perfectly acceptable).</p>
+<p>Namespace names are not tied to the location of files and are not expected to match directory structures. There are no global rules for naming conventions; if generating Java code this may result in unconventional package names and file locations within the resulting Java files.</p>
 <p>By convention, Quark expects the following casing rules:</p>
 <ul class="simple">
 <li>Package names are lower case</li>
-<li>Class names are upper case</li>
+<li>Namespace names are lower case</li>
+<li>Class names are capitalized</li>
 <li>variable, property, method, and function names are camel case</li>
 <li>annotation names are lower case</li>
 </ul>
 </div>
 <div class="section" id="inheritance">
 <h2>Inheritance<a class="headerlink" href="#inheritance" title="Permalink to this headline">¶</a></h2>
-<p>Quark supports single inheritance of classes using the <a class="reference internal" href="keywords.html#extendskeyword"><span class="std std-ref">extends keyword</span></a>. Multiple inheritance is not supported. However, all types within Quark automatically inherit from the Object type and contain all properties and methods defined therein.</p>
+<p>Quark supports single inheritance of classes using the <a class="reference internal" href="keywords.html#extendskeyword"><span>extends keyword</span></a>. Multiple inheritance is not supported. However, all types within Quark automatically inherit from the Object type and contain all properties and methods defined therein.</p>
 <p>Properties are inherited but their definition may not be overridden. In particular, you cannot add or change the default value directly. Properties defined in the superclass may be referenced directly using self.propertyName within methods of the subclass.</p>
 <p>Methods are inherited and may be overridden in the subclass. The superclass constructor is called automatically for all subclasses. A subclass may define its own constructor with fewer input parameters than its superclass so long as default values are provided for all of the other parameters in a super() call at the top of the constructor. If the superclass uses a constructor with no parameters defined then the subclass may define its own constructor with however many parameters are appropriate.</p>
 </div>
@@ -181,7 +219,7 @@
 </div>
 <div class="section" id="object-instantiation">
 <h2>Object Instantiation<a class="headerlink" href="#object-instantiation" title="Permalink to this headline">¶</a></h2>
-<p>Quark objects must be explicitly instantiated in all cases. This is done using the <a class="reference internal" href="keywords.html#newkeyword"><span class="std std-ref">new keyword</span></a>.</p>
+<p>Quark objects must be explicitly instantiated in all cases. This is done using the <a class="reference internal" href="keywords.html#newkeyword"><span>new keyword</span></a>.</p>
 </div>
 <div class="section" id="typing">
 <h2>Typing<a class="headerlink" href="#typing" title="Permalink to this headline">¶</a></h2>
@@ -228,7 +266,7 @@
 <li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Quark Language Reference</a><ul class="current">
 <li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Core Concepts</a><ul class="simple">
+<li class="toctree-l2 current"><a class="current reference internal" href="">Core Concepts</a><ul class="simple">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="language.html">Language Elements</a></li>
@@ -287,7 +325,7 @@
               previous
               
           </a> |</li>
-        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.40 documentation</a> &raquo;</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 0.6.74 documentation</a> &raquo;</li>
           <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li> 
       </ul>
     </div>
