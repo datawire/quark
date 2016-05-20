@@ -24,10 +24,12 @@ Latest
   `quark.os.Env.get(...)` and friends.
 * Support for reading an entire UTF-8-encoded file into a string in
   `quark.os.FS.fileContents(...)`.
+* Support for adding an element to a list, `List.insert(idx, elt)`
 
 ### Other
 
 * New installation process
+* new document TESTING.md
 
 0.6.40
 ------

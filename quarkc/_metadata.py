@@ -19,8 +19,8 @@ __all__ = [
     "__license__", "__copyright__",
 ]
 
-__title__ = 'datawire-quarkdev'
-__version__ = '0.6.40'
+__title__ = 'datawire-quark'
+__version__ = '0.6.74'
 
 __summary__ = "Quark: an IDL for high level (micro)service interfaces"
 __uri__ = "http://datawire.github.io/quark/"
