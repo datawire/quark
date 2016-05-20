@@ -147,6 +147,9 @@ def main(path, name):
 
 SUBS = {"print": "print_",
         "global": "global_",
+        "__get__": "_q__get__",
+        "__set__": "_q__set__",
+        "__delete__": "_q__delete__"
         }
 def name(n):
     return SUBS.get(n, n).replace("-", "_")

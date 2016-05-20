@@ -231,7 +231,7 @@ class generics_Matrix_quark_Object____get___Method(quark.reflect.Method):
 
     def invoke(self, object, args):
         obj = object;
-        return (obj).__get__((args)[0], (args)[1])
+        return (obj)._q__get__((args)[0], (args)[1])
 
     def _getClass(self):
         return None
@@ -251,7 +251,7 @@ class generics_Matrix_quark_Object____set___Method(quark.reflect.Method):
 
     def invoke(self, object, args):
         obj = object;
-        (obj).__set__((args)[0], (args)[1], (args)[2]);
+        (obj)._q__set__((args)[0], (args)[1], (args)[2]);
         return None
 
     def _getClass(self):

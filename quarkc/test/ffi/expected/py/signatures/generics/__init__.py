@@ -100,10 +100,10 @@ class Matrix(object):
     def __init__(self, width, height):
         self._init()
 
-    def __get__(self, i, j):
+    def _q__get__(self, i, j):
         return None
 
-    def __set__(self, i, j, value):
+    def _q__set__(self, i, j, value):
         pass
 
     def _getClass(self):
