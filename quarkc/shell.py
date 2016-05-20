@@ -16,6 +16,7 @@ import os
 import shlex
 import subprocess
 import logging
+import pkg_resources
 from distutils.version import StrictVersion
 
 from .exceptions import QuarkError
@@ -104,7 +105,7 @@ def call(*command, **kwargs):
 
 def get_pip_pkg(name, stage=None):
     try:
-        output = call("pip", "show", name, stage=stage, errok=True)
+        output = call("pip", "show", pkg_resources.safe_name(name), stage=stage, errok=True)
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)
