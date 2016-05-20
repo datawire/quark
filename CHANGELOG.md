@@ -6,6 +6,11 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+0.6.74
+------
+
+Released on 2016-05-20
+
 ### Command line
 
 * `quark run` now advises `quark install` if the target is not installed
