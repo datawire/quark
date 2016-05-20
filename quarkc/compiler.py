@@ -1274,6 +1274,9 @@ def run(url, args, *backends):
     name, ver = namever(file)
     for backend in backends:
         b = backend()
+        tgt = b._install_target(name, ver)
+        if tgt is None:
+            raise CompileError("Cannot find the target to run. Did you forget to\n\n    quark install %s %s\n" % (b.argswitch, sh_quote(url)))
         b.run(name, ver, args)
 
 

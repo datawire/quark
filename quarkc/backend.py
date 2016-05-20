@@ -721,12 +721,19 @@ def is_user():
 
 class Java(Backend):
     PRETTY_INSTALL = "Maven"
+    argswitch = "--java"
     ext = "java"
     gen = java
 
     def install_target(self):
         name, ver = namever(self.entry)
-        return os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
+        jar = os.path.join(os.environ["HOME"], ".m2/repository", name, name, ver, "%s-%s.jar" % (name, ver))
+        if os.path.exists(jar):
+            return jar
+        return None
 
     def install_command(self, dir):
         shell.call("mvn", "install", cwd=dir, stage="install")
@@ -738,11 +745,15 @@ class Java(Backend):
 
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
+    argswitch = "--python"
     ext = "py"
     gen = python
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         return shell.get_pip_pkg(name, stage="install")
 
     def install_command(self, dir):
@@ -759,11 +770,15 @@ class Python(Backend):
 
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"
+    argswitch = "--javascript"
     ext = "js"
     gen = javascript
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
             return json.loads(output)["dependencies"][name]["path"]
@@ -780,11 +795,15 @@ class JavaScript(Backend):
 
 class Ruby(Backend):
     PRETTY_INSTALL = "GEM"
+    argswitch = "--ruby"
     ext = "rb"
     gen = ruby
 
     def install_target(self):
         name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
         try:
             output = shell.call("gem", "which", name, stage="install", errok=True)
             return output.strip()
