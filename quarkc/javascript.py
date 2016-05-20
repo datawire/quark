@@ -279,7 +279,11 @@ def get_field(expr, field):
     return "(%s).%s" % (expr, field)
 
 def cast(type, expr):
-    return expr
+    if type == '':  # TODO why does this happen?
+        return expr
+    assert expr
+    template = '_qrt.cast({expr}, function () {{ return {type}; }})'.format
+    return template(expr=expr, type=type)
 
 ## Literals
 
