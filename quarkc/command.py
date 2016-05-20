@@ -180,7 +180,8 @@ def main(args):
             else:
                 assert False
     except compiler.QuarkError as err:
-        shell.command_log.warn("")
+        if not args["run"]:
+            shell.command_log.warn("")
         return err
 
     shell.command_log.warn("Done")
