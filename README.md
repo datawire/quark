@@ -43,7 +43,7 @@ which embeds Quark.
 If you're interested in using Quark directly to develop a protocol,
 just install Quark:
 
-        pip install datawire-quark
+        curl -sL https://raw.githubusercontent.com/datawire/quark/master/install.sh | sh
 
 ## Examples
 

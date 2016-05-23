@@ -15,6 +15,10 @@ Latest
   * `quark.os.Environment.ENV.get(key, default_value)` added.
 
 
+### Other
+
+* document the preferred install method using install.sh
+
 0.6.74
 ------
 
