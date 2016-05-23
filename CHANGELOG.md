@@ -14,6 +14,10 @@ Latest
   * `quark.os.FS.userHomeDir()` is now `quark.os.getUserHomeDir()`.
   * `quark.os.Environment.ENV.get(key, default_value)` added.
 
+### Other
+
+* New documents CONTRIBUTING.md and CODE_OF_CONDUCT.md
+* README.md points to the latest (0.6) documentation
 
 0.6.74
 ------
