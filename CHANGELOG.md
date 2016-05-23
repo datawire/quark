@@ -6,7 +6,24 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard library
+
+* (!) Add Error class and subclasses for various quark subsystems
+
+  BREAKING CHANGE
+
+  This is a breaking change as signatures of existing methods are changed.
+  Affected classes are:
+
+ *  `HTTPHandler#onHTTPError` changed second parameter type from `String to `HTTPError`
+ *  `WSHandler#onWSError` added second parameter of type `WSError`
+ *  `HTTPServlet#onServletError` and `WSServlet#onServletError` changed second parameter type from `String` to `ServletError`
+ *  `Future#getError` changed return type from `String` to `Error`
+
+  The original `String` is now accessible as `Error#getMessage()`
+
 ### Langauge
+
 * (!) #141 Bitwise methods are removed in favor of operators `~&^|` with same
   precedence as in C
 * (!) #141 Precedence of `!` operator is raised to match that of C
