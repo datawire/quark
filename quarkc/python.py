@@ -27,6 +27,7 @@ from setuptools import setup
 setup(name="%(name)s",
       version="%(version)s",
       install_requires=[%(dependencies)s],
+      setup_requires=["wheel"],
       py_modules=[%(py_modules)s],
       packages=%(pkg_list)s)
 """
@@ -98,7 +99,7 @@ def package(name, version, packages, srcs, deps):
                 "underline" : "=" * len(name + version),
                 "pkg_list": repr([".".join(p) for p in packages]),
                 "py_modules": ", ".join(repr(name[:-3]) for name in srcs if os.path.basename(name) == name),
-                "dependencies": ", ".join(['"%s==%s"' % d[1:] for d in deps])}
+                "dependencies": ", ".join(['"wheel"'] + ['"%s==%s"' % d[1:] for d in deps])}
     files = OrderedDict()
     files.update(srcs)
     files["setup.py"] = setup_py % fmt_dict

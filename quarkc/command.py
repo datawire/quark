@@ -161,7 +161,6 @@ def main(args):
         if python or all:
             if args["install"]:
                 shell.check("python")
-                shell.pipcheck("wheel")
             backends.append(backend.Python)
         if javascript or all:
             if args["install"]: shell.check("npm")
