@@ -70,16 +70,16 @@ class SlackEvent < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("type"))
-            (self).type = value
+            (self).type = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::Quark.slack.User }
         end
         if ((name) == ("channel"))
-            (self).channel = value
+            (self).channel = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Channel }
         end
         if ((name) == ("timestamp"))
-            (self).timestamp = value
+            (self).timestamp = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -167,22 +167,22 @@ class SlackError < ::Quark.slack.event.SlackEvent
     def _setField(name, value)
         
         if ((name) == ("type"))
-            (self).type = value
+            (self).type = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::Quark.slack.User }
         end
         if ((name) == ("channel"))
-            (self).channel = value
+            (self).channel = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Channel }
         end
         if ((name) == ("timestamp"))
-            (self).timestamp = value
+            (self).timestamp = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("code"))
-            (self).code = value
+            (self).code = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
         if ((name) == ("text"))
-            (self).text = value
+            (self).text = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -255,16 +255,16 @@ class Hello < ::Quark.slack.event.SlackEvent
     def _setField(name, value)
         
         if ((name) == ("type"))
-            (self).type = value
+            (self).type = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::Quark.slack.User }
         end
         if ((name) == ("channel"))
-            (self).channel = value
+            (self).channel = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Channel }
         end
         if ((name) == ("timestamp"))
-            (self).timestamp = value
+            (self).timestamp = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -355,28 +355,28 @@ class Message < ::Quark.slack.event.SlackEvent
     def _setField(name, value)
         
         if ((name) == ("type"))
-            (self).type = value
+            (self).type = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::Quark.slack.User }
         end
         if ((name) == ("channel"))
-            (self).channel = value
+            (self).channel = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Channel }
         end
         if ((name) == ("timestamp"))
-            (self).timestamp = value
+            (self).timestamp = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("subtype"))
-            (self).subtype = value
+            (self).subtype = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("hidden"))
-            (self).hidden = value
+            (self).hidden = ::DatawireQuarkCore.cast(value) { ::Object }
         end
         if ((name) == ("text"))
-            (self).text = value
+            (self).text = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("edited"))
-            (self).edited = value
+            (self).edited = ::DatawireQuarkCore.cast(value) { ::Quark.slack.event.Edited }
         end
 
         nil
@@ -438,10 +438,10 @@ class Edited < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::Quark.slack.User }
         end
         if ((name) == ("timestamp"))
-            (self).timestamp = value
+            (self).timestamp = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil

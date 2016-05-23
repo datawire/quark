@@ -11,12 +11,12 @@ class org_example_foo_Foo_test_Method(quark.reflect.Method):
         super(org_example_foo_Foo_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: org.example.foo.Foo);
         (obj).test();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -39,7 +39,7 @@ class org_example_foo_Foo(quark.reflect.Class):
         return org.example.foo.Foo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -54,7 +54,7 @@ class Root(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None

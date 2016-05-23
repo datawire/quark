@@ -15,7 +15,7 @@ exports.A = A;
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
 A.interfaces_A_ref = quark_ffi_signatures_md.Root.interfaces_A_md;
-function A_foo() { /* interface */ }
+function A_foo() { throw TypeError, '`A.foo` is an abstract method'; }
 A.prototype.foo = A_foo;
 
 function A_bar() {}
@@ -195,13 +195,13 @@ function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
 Foo.interfaces_Foo_ref = quark_ffi_signatures_md.Root.interfaces_Foo_md;
 Foo.quark_List_quark_String__ref = quark_ffi_signatures_md.Root.quark_List_quark_String__md;
-function Foo_m1() { /* interface */ }
+function Foo_m1() { throw TypeError, '`Foo.m1` is an abstract method'; }
 Foo.prototype.m1 = Foo_m1;
 
-function Foo_m2(arg) { /* interface */ }
+function Foo_m2(arg) { throw TypeError, '`Foo.m2` is an abstract method'; }
 Foo.prototype.m2 = Foo_m2;
 
-function Foo_m3(args) { /* interface */ }
+function Foo_m3(args) { throw TypeError, '`Foo.m3` is an abstract method'; }
 Foo.prototype.m3 = Foo_m3;
 
 // CLASS Bar
@@ -213,13 +213,13 @@ exports.Bar = Bar;
 function Bar__init_fields__() {}
 Bar.prototype.__init_fields__ = Bar__init_fields__;
 Bar.interfaces_Bar_quark_Object__ref = quark_ffi_signatures_md.Root.interfaces_Bar_quark_Object__md;
-function Bar_m1() { /* interface */ }
+function Bar_m1() { throw TypeError, '`Bar.m1` is an abstract method'; }
 Bar.prototype.m1 = Bar_m1;
 
-function Bar_m2(arg) { /* interface */ }
+function Bar_m2(arg) { throw TypeError, '`Bar.m2` is an abstract method'; }
 Bar.prototype.m2 = Bar_m2;
 
-function Bar_m3(args) { /* interface */ }
+function Bar_m3(args) { throw TypeError, '`Bar.m3` is an abstract method'; }
 Bar.prototype.m3 = Bar_m3;
 
 // CLASS Baz

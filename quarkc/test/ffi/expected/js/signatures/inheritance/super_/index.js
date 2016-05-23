@@ -36,7 +36,7 @@ A.prototype._getField = A__getField;
 
 function A__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 A.prototype._setField = A__setField;
@@ -72,7 +72,7 @@ B.prototype._getField = B__getField;
 
 function B__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 B.prototype._setField = B__setField;

@@ -50,10 +50,10 @@ class User(object):
 
     def _setField(self, name, value):
         if ((name) == (u"client")):
-            (self).client = value
+            (self).client = _cast(value, lambda: Client)
 
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: unicode)
 
 
 User.slack_User_ref = slackpack_md.Root.slack_User_md
@@ -88,10 +88,10 @@ class Channel(object):
 
     def _setField(self, name, value):
         if ((name) == (u"client")):
-            (self).client = value
+            (self).client = _cast(value, lambda: Client)
 
         if ((name) == (u"channel")):
-            (self).channel = value
+            (self).channel = _cast(value, lambda: unicode)
 
 
 Channel.slack_Channel_ref = slackpack_md.Root.slack_Channel_md
@@ -134,7 +134,7 @@ class Client(object):
         pass
 
     def construct(self, type):
-        return None
+        return _cast(None, lambda: event.SlackEvent)
 
     def onWSMessage(self, socket, message):
         pass
@@ -165,19 +165,19 @@ class Client(object):
 
     def _setField(self, name, value):
         if ((name) == (u"runtime")):
-            (self).runtime = value
+            (self).runtime = _cast(value, lambda: quark.Runtime)
 
         if ((name) == (u"token")):
-            (self).token = value
+            (self).token = _cast(value, lambda: unicode)
 
         if ((name) == (u"handler")):
-            (self).handler = value
+            (self).handler = _cast(value, lambda: SlackHandler)
 
         if ((name) == (u"event_id")):
-            (self).event_id = value
+            (self).event_id = _cast(value, lambda: int)
 
         if ((name) == (u"socket")):
-            (self).socket = value
+            (self).socket = _cast(value, lambda: quark.WebSocket)
 
     def onWSInit(self, socket):
         pass

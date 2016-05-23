@@ -16,11 +16,11 @@ function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
 Foo.generics_pkg_Foo_quark_Object__ref = quark_ffi_signatures_md.Root.generics_pkg_Foo_quark_Object__md;
 function Foo_foo() {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 Foo.prototype.foo = Foo_foo;
 
-function Foo_get() { /* interface */ }
+function Foo_get() { throw TypeError, '`Foo.get` is an abstract method'; }
 Foo.prototype.get = Foo_get;
 
 // CLASS StringFoo
@@ -33,7 +33,7 @@ function StringFoo__init_fields__() {}
 StringFoo.prototype.__init_fields__ = StringFoo__init_fields__;
 StringFoo.generics_pkg_StringFoo_ref = quark_ffi_signatures_md.Root.generics_pkg_StringFoo_md;
 function StringFoo_get() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 StringFoo.prototype.get = StringFoo_get;
 
@@ -51,7 +51,7 @@ function StringFoo__setField(name, value) {}
 StringFoo.prototype._setField = StringFoo__setField;
 
 function StringFoo_foo() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 StringFoo.prototype.foo = StringFoo_foo;
 
@@ -82,7 +82,7 @@ Box.prototype._getField = Box__getField;
 
 function Box__setField(name, value) {
     if (_qrt.equals((name), ("contents"))) {
-        (this).contents = value;
+        (this).contents = _qrt.cast(value, function () { return T; });
     }
 }
 Box.prototype._setField = Box__setField;
@@ -116,7 +116,7 @@ StringBox.prototype._getField = StringBox__getField;
 
 function StringBox__setField(name, value) {
     if (_qrt.equals((name), ("contents"))) {
-        (this).contents = value;
+        (this).contents = _qrt.cast(value, function () { return String; });
     }
 }
 StringBox.prototype._setField = StringBox__setField;

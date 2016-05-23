@@ -28,14 +28,14 @@ class Overload < ::DatawireQuarkCore::QuarkObject
 
     def __add__(o)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.Overload }
 
         nil
     end
 
     def __mul__(o)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.Overload }
 
         nil
     end
@@ -67,7 +67,7 @@ class Overload < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -215,7 +215,7 @@ class TestSize < ::Quark.classes.string_test
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_size }
 
         nil
     end
@@ -240,7 +240,7 @@ class TestSize < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -279,14 +279,14 @@ class TestStartsWith < ::Quark.classes.string_test
 
     def that(_that)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_startsWith }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_startsWith }
 
         nil
     end
@@ -314,10 +314,10 @@ class TestStartsWith < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("_that"))
-            (self)._that = value
+            (self)._that = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -357,14 +357,14 @@ class TestEndsWith < ::Quark.classes.string_test
 
     def that(_that)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_endsWith }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_endsWith }
 
         nil
     end
@@ -392,10 +392,10 @@ class TestEndsWith < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("_that"))
-            (self)._that = value
+            (self)._that = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -435,14 +435,14 @@ class TestFind < ::Quark.classes.string_test
 
     def that(_that)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_find }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_find }
 
         nil
     end
@@ -470,10 +470,10 @@ class TestFind < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("_that"))
-            (self)._that = value
+            (self)._that = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -513,14 +513,14 @@ class TestSubstring < ::Quark.classes.string_test
 
     def that(start, end_)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_substring }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_substring }
 
         nil
     end
@@ -551,13 +551,13 @@ class TestSubstring < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("start"))
-            (self).start = value
+            (self).start = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
         if ((name) == ("end"))
-            (self).end_ = value
+            (self).end_ = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
 
         nil
@@ -598,14 +598,14 @@ class TestReplace < ::Quark.classes.string_test
 
     def that(start, end_)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_replace }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_replace }
 
         nil
     end
@@ -636,13 +636,13 @@ class TestReplace < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("start"))
-            (self).start = value
+            (self).start = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("end"))
-            (self).end_ = value
+            (self).end_ = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -683,21 +683,21 @@ class TestJoin < ::Quark.classes.string_test
 
     def that()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_join }
 
         nil
     end
 
     def a(part)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_join }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_join }
 
         nil
     end
@@ -731,16 +731,16 @@ class TestJoin < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("parts"))
-            (self).parts = value
+            (self).parts = ::DatawireQuarkCore.cast(value) { ::DatawireQuarkCore::List }
         end
         if ((name) == ("strparts"))
-            (self).strparts = value
+            (self).strparts = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("sep"))
-            (self).sep = value
+            (self).sep = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -782,14 +782,14 @@ class TestSplit < ::Quark.classes.string_test
 
     def that(what)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_split }
 
         nil
     end
 
     def does(expected)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.test_split }
 
         nil
     end
@@ -820,13 +820,13 @@ class TestSplit < ::Quark.classes.string_test
     def _setField(name, value)
         
         if ((name) == ("what"))
-            (self).what = value
+            (self).what = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("sep"))
-            (self).sep = value
+            (self).sep = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("altsep"))
-            (self).altsep = value
+            (self).altsep = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil

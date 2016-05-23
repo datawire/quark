@@ -24,7 +24,7 @@ class A < ::DatawireQuarkCore::QuarkObject
 
 
     def foo()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`A.foo` is an abstract method'
 
         nil
     end
@@ -443,19 +443,19 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 
 
     def m1()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Foo.m1` is an abstract method'
 
         nil
     end
 
     def m2(arg)
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Foo.m2` is an abstract method'
 
         nil
     end
 
     def m3(args)
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Foo.m3` is an abstract method'
 
         nil
     end
@@ -488,19 +488,19 @@ class Bar < ::DatawireQuarkCore::QuarkObject
 
 
     def m1()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Bar.m1` is an abstract method'
 
         nil
     end
 
     def m2(arg)
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Bar.m2` is an abstract method'
 
         nil
     end
 
     def m3(args)
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Bar.m3` is an abstract method'
 
         nil
     end

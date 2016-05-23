@@ -5,7 +5,7 @@ module Testlib
 
 def self.atest()
     
-    return nil
+    return ::DatawireQuarkCore.cast(nil) { ::String }
 
 
     nil
@@ -13,7 +13,7 @@ end
 
 def self.foo()
     
-    return nil
+    return ::DatawireQuarkCore.cast(nil) { ::String }
 
 
     nil

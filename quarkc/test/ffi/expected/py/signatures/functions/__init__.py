@@ -3,4 +3,4 @@ from quark_runtime import *
 
 
 def factorial(n):
-    return None
+    return _cast(None, lambda: int)

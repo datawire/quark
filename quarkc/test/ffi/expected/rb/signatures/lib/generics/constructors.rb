@@ -29,7 +29,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
 
     def get()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
@@ -54,7 +54,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("contents"))
-            (self).contents = value
+            (self).contents = ::DatawireQuarkCore.cast(value) { ::Quark.T }
         end
 
         nil

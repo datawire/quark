@@ -38,7 +38,7 @@ Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
     if (_qrt.equals((name), ("size"))) {
-        (this).size = value;
+        (this).size = _qrt.cast(value, function () { return Number; });
     }
 }
 Test.prototype._setField = Test__setField;

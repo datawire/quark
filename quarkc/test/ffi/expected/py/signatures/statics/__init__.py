@@ -41,7 +41,7 @@ class Foo(object):
 
     def _setField(self, name, value):
         if ((name) == (u"count")):
-            Foo.count = value
+            Foo.count = _cast(value, lambda: int)
 
 
 Foo.count = None

@@ -95,7 +95,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java,
       Fixed('Boolean')), NativeCase(py, Fixed('bool')), NativeCase(js,
-      Fixed('Boolean')), NativeCase(rb, Fixed('Object')))), Name(bool),
+      Fixed('Boolean')), NativeCase(rb, Fixed('::Object')))), Name(bool),
 
    MethodMacro(Type(Name(bool)), Name(__not__), Native(NativeCase(java,
       Fixed('!('), Var(Name(self), $type=1.quark.bool), Fixed(')')),
@@ -272,7 +272,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Byte')),
      NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')),
-     NativeCase(rb, Fixed('Integer')))), Name(byte), Type(Name(integral),
+     NativeCase(rb, Fixed('::Integer')))), Name(byte), Type(Name(integral),
     Type(Name(byte))),
 
    ConstructorMacro(Name(byte), Native(NativeCase(java, Fixed('new Byte()')),
@@ -295,7 +295,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Short')),
      NativeCase(py, Fixed('int')), NativeCase(js, Fixed('Number')),
-     NativeCase(rb, Fixed('Integer')))), Name(short), Type(Name(integral),
+     NativeCase(rb, Fixed('::Integer')))), Name(short), Type(Name(integral),
     Type(Name(short))),
 
    ConstructorMacro(Name(short), Native(NativeCase(java, Fixed('new Short()')),
@@ -318,7 +318,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java,
       Fixed('Integer')), NativeCase(py, Fixed('int')), NativeCase(js,
-      Fixed('Number')), NativeCase(rb, Fixed('Integer')))), Name(int),
+      Fixed('Number')), NativeCase(rb, Fixed('::Integer')))), Name(int),
    Type(Name(integral), Type(Name(int))),
 
    ConstructorMacro(Name(int), Native(NativeCase(java, Fixed('new Integer()')),
@@ -356,7 +356,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Long')),
      NativeCase(py, Fixed('long')), NativeCase(js, Fixed('Number')),
-     NativeCase(rb, Fixed('Integer')))), Name(long), Type(Name(integral),
+     NativeCase(rb, Fixed('::Integer')))), Name(long), Type(Name(integral),
     Type(Name(long))),
 
    ConstructorMacro(Name(long), Native(NativeCase(java, Fixed('new Long()')),
@@ -380,7 +380,7 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('Double')),
      NativeCase(py, Fixed('float')), NativeCase(js, Fixed('Number')),
-     NativeCase(rb, Fixed('Float')))), Name(float), Type(Name(numeric),
+     NativeCase(rb, Fixed('::Float')))), Name(float), Type(Name(numeric),
     Type(Name(float))),
 
    MethodMacro(Type(Name(float)), Name(__div__),
@@ -421,8 +421,8 @@ File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
      $type=1.quark.float.toJSON), $type=4.quark.JSONObject))),
 
   Primitive(Annotation(Name(mapping), Native(NativeCase(java, Fixed('String')),
-     NativeCase(py, Fixed('str')), NativeCase(js, Fixed('String')),
-     NativeCase(rb, Fixed('String')))), Name(String),
+     NativeCase(py, Fixed('unicode')), NativeCase(js, Fixed('String')),
+     NativeCase(rb, Fixed('::String')))), Name(String),
 
    MethodMacro(Type(Name(String)), Name(__add__),
     Param(Type(Name(String)), Name(other), $type=1.quark.String),

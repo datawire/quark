@@ -57,7 +57,7 @@ Foo.prototype._getField = Foo__getField;
 
 function Foo__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 Foo.prototype._setField = Foo__setField;

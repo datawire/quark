@@ -11,7 +11,7 @@ function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
 
 function Root__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Root.prototype._getClass = Root__getClass;
 

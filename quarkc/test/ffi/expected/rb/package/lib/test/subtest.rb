@@ -61,7 +61,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("size"))
-            (self).size = value
+            (self).size = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
 
         nil

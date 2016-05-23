@@ -18,14 +18,14 @@ function test_Test_go_Method__init_fields__() {
 test_Test_go_Method.prototype.__init_fields__ = test_Test_go_Method__init_fields__;
 
 function test_Test_go_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return test.Test; });
     (obj).go();
     return null;
 }
 test_Test_go_Method.prototype.invoke = test_Test_go_Method_invoke;
 
 function test_Test_go_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 test_Test_go_Method.prototype._getClass = test_Test_go_Method__getClass;
 
@@ -60,7 +60,7 @@ function test_Test_construct(args) {
 test_Test.prototype.construct = test_Test_construct;
 
 function test_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 test_Test.prototype._getClass = test_Test__getClass;
 
@@ -87,14 +87,14 @@ function test_subtest_Test_go_Method__init_fields__() {
 test_subtest_Test_go_Method.prototype.__init_fields__ = test_subtest_Test_go_Method__init_fields__;
 
 function test_subtest_Test_go_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return test.subtest.Test; });
     (obj).go();
     return null;
 }
 test_subtest_Test_go_Method.prototype.invoke = test_subtest_Test_go_Method_invoke;
 
 function test_subtest_Test_go_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 test_subtest_Test_go_Method.prototype._getClass = test_subtest_Test_go_Method__getClass;
 
@@ -129,7 +129,7 @@ function test_subtest_Test_construct(args) {
 test_subtest_Test.prototype.construct = test_subtest_Test_construct;
 
 function test_subtest_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 test_subtest_Test.prototype._getClass = test_subtest_Test__getClass;
 
@@ -153,7 +153,7 @@ Root.prototype.__init_fields__ = Root__init_fields__;
 Root.test_Test_md = test_Test.singleton;
 Root.test_subtest_Test_md = test_subtest_Test.singleton;
 function Root__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Root.prototype._getClass = Root__getClass;
 

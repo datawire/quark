@@ -10,7 +10,7 @@ class Pet(object):
     def __init__(self): self._init()
 
     def greet(self):
-        assert False
+        raise NotImplementedError('`Pet.greet` is an abstract method')
 
 class Cat(Pet):
     def _init(self):

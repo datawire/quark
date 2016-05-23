@@ -5,7 +5,7 @@ module Functions
 
 def self.factorial(n)
     
-    return nil
+    return ::DatawireQuarkCore.cast(nil) { ::Integer }
 
 
     nil

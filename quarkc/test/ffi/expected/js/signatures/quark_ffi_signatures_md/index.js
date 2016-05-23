@@ -18,14 +18,14 @@ function generics_Box_quark_Object__set_Method__init_fields__() {
 generics_Box_quark_Object__set_Method.prototype.__init_fields__ = generics_Box_quark_Object__set_Method__init_fields__;
 
 function generics_Box_quark_Object__set_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.Box; });
     (obj).set((args)[0]);
     return null;
 }
 generics_Box_quark_Object__set_Method.prototype.invoke = generics_Box_quark_Object__set_Method_invoke;
 
 function generics_Box_quark_Object__set_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_Object__set_Method.prototype._getClass = generics_Box_quark_Object__set_Method__getClass;
 
@@ -51,13 +51,13 @@ function generics_Box_quark_Object__get_Method__init_fields__() {
 generics_Box_quark_Object__get_Method.prototype.__init_fields__ = generics_Box_quark_Object__get_Method__init_fields__;
 
 function generics_Box_quark_Object__get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.Box; });
     return (obj).get();
 }
 generics_Box_quark_Object__get_Method.prototype.invoke = generics_Box_quark_Object__get_Method_invoke;
 
 function generics_Box_quark_Object__get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_Object__get_Method.prototype._getClass = generics_Box_quark_Object__get_Method__getClass;
 
@@ -92,7 +92,7 @@ function generics_Box_quark_Object__construct(args) {
 generics_Box_quark_Object_.prototype.construct = generics_Box_quark_Object__construct;
 
 function generics_Box_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_Object_.prototype._getClass = generics_Box_quark_Object___getClass;
 
@@ -119,14 +119,14 @@ function generics_Box_quark_int__set_Method__init_fields__() {
 generics_Box_quark_int__set_Method.prototype.__init_fields__ = generics_Box_quark_int__set_Method__init_fields__;
 
 function generics_Box_quark_int__set_Method_invoke(object, args) {
-    var obj = object;
-    (obj).set((args)[0]);
+    var obj = _qrt.cast(object, function () { return generics.Box; });
+    (obj).set(_qrt.cast((args)[0], function () { return Number; }));
     return null;
 }
 generics_Box_quark_int__set_Method.prototype.invoke = generics_Box_quark_int__set_Method_invoke;
 
 function generics_Box_quark_int__set_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_int__set_Method.prototype._getClass = generics_Box_quark_int__set_Method__getClass;
 
@@ -152,13 +152,13 @@ function generics_Box_quark_int__get_Method__init_fields__() {
 generics_Box_quark_int__get_Method.prototype.__init_fields__ = generics_Box_quark_int__get_Method__init_fields__;
 
 function generics_Box_quark_int__get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.Box; });
     return (obj).get();
 }
 generics_Box_quark_int__get_Method.prototype.invoke = generics_Box_quark_int__get_Method_invoke;
 
 function generics_Box_quark_int__get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_int__get_Method.prototype._getClass = generics_Box_quark_int__get_Method__getClass;
 
@@ -193,7 +193,7 @@ function generics_Box_quark_int__construct(args) {
 generics_Box_quark_int_.prototype.construct = generics_Box_quark_int__construct;
 
 function generics_Box_quark_int___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Box_quark_int_.prototype._getClass = generics_Box_quark_int___getClass;
 
@@ -220,14 +220,14 @@ function generics_Crate_quark_Object__set_Method__init_fields__() {
 generics_Crate_quark_Object__set_Method.prototype.__init_fields__ = generics_Crate_quark_Object__set_Method__init_fields__;
 
 function generics_Crate_quark_Object__set_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.Crate; });
     (obj).set((args)[0]);
     return null;
 }
 generics_Crate_quark_Object__set_Method.prototype.invoke = generics_Crate_quark_Object__set_Method_invoke;
 
 function generics_Crate_quark_Object__set_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Crate_quark_Object__set_Method.prototype._getClass = generics_Crate_quark_Object__set_Method__getClass;
 
@@ -253,13 +253,13 @@ function generics_Crate_quark_Object__get_Method__init_fields__() {
 generics_Crate_quark_Object__get_Method.prototype.__init_fields__ = generics_Crate_quark_Object__get_Method__init_fields__;
 
 function generics_Crate_quark_Object__get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.Crate; });
     return (obj).get();
 }
 generics_Crate_quark_Object__get_Method.prototype.invoke = generics_Crate_quark_Object__get_Method_invoke;
 
 function generics_Crate_quark_Object__get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Crate_quark_Object__get_Method.prototype._getClass = generics_Crate_quark_Object__get_Method__getClass;
 
@@ -294,7 +294,7 @@ function generics_Crate_quark_Object__construct(args) {
 generics_Crate_quark_Object_.prototype.construct = generics_Crate_quark_Object__construct;
 
 function generics_Crate_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Crate_quark_Object_.prototype._getClass = generics_Crate_quark_Object___getClass;
 
@@ -330,7 +330,7 @@ function generics_Sack_construct(args) {
 generics_Sack.prototype.construct = generics_Sack_construct;
 
 function generics_Sack__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Sack.prototype._getClass = generics_Sack__getClass;
 
@@ -357,13 +357,13 @@ function generics_Matrix_quark_Object____get___Method__init_fields__() {
 generics_Matrix_quark_Object____get___Method.prototype.__init_fields__ = generics_Matrix_quark_Object____get___Method__init_fields__;
 
 function generics_Matrix_quark_Object____get___Method_invoke(object, args) {
-    var obj = object;
-    return (obj).__get__((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return generics.Matrix; });
+    return (obj).__get__(_qrt.cast((args)[0], function () { return Number; }), _qrt.cast((args)[1], function () { return Number; }));
 }
 generics_Matrix_quark_Object____get___Method.prototype.invoke = generics_Matrix_quark_Object____get___Method_invoke;
 
 function generics_Matrix_quark_Object____get___Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Matrix_quark_Object____get___Method.prototype._getClass = generics_Matrix_quark_Object____get___Method__getClass;
 
@@ -389,14 +389,14 @@ function generics_Matrix_quark_Object____set___Method__init_fields__() {
 generics_Matrix_quark_Object____set___Method.prototype.__init_fields__ = generics_Matrix_quark_Object____set___Method__init_fields__;
 
 function generics_Matrix_quark_Object____set___Method_invoke(object, args) {
-    var obj = object;
-    (obj).__set__((args)[0], (args)[1], (args)[2]);
+    var obj = _qrt.cast(object, function () { return generics.Matrix; });
+    (obj).__set__(_qrt.cast((args)[0], function () { return Number; }), _qrt.cast((args)[1], function () { return Number; }), (args)[2]);
     return null;
 }
 generics_Matrix_quark_Object____set___Method.prototype.invoke = generics_Matrix_quark_Object____set___Method_invoke;
 
 function generics_Matrix_quark_Object____set___Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Matrix_quark_Object____set___Method.prototype._getClass = generics_Matrix_quark_Object____set___Method__getClass;
 
@@ -426,12 +426,12 @@ function generics_Matrix_quark_Object___init_fields__() {
 generics_Matrix_quark_Object_.prototype.__init_fields__ = generics_Matrix_quark_Object___init_fields__;
 generics_Matrix_quark_Object_.singleton = new generics_Matrix_quark_Object_();
 function generics_Matrix_quark_Object__construct(args) {
-    return new generics.Matrix((args)[0], (args)[1]);
+    return new generics.Matrix(_qrt.cast((args)[0], function () { return Number; }), _qrt.cast((args)[1], function () { return Number; }));
 }
 generics_Matrix_quark_Object_.prototype.construct = generics_Matrix_quark_Object__construct;
 
 function generics_Matrix_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_Matrix_quark_Object_.prototype._getClass = generics_Matrix_quark_Object___getClass;
 
@@ -458,13 +458,13 @@ function generics_constructors_Box_quark_Object__get_Method__init_fields__() {
 generics_constructors_Box_quark_Object__get_Method.prototype.__init_fields__ = generics_constructors_Box_quark_Object__get_Method__init_fields__;
 
 function generics_constructors_Box_quark_Object__get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.constructors.Box; });
     return (obj).get();
 }
 generics_constructors_Box_quark_Object__get_Method.prototype.invoke = generics_constructors_Box_quark_Object__get_Method_invoke;
 
 function generics_constructors_Box_quark_Object__get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_constructors_Box_quark_Object__get_Method.prototype._getClass = generics_constructors_Box_quark_Object__get_Method__getClass;
 
@@ -499,7 +499,7 @@ function generics_constructors_Box_quark_Object__construct(args) {
 generics_constructors_Box_quark_Object_.prototype.construct = generics_constructors_Box_quark_Object__construct;
 
 function generics_constructors_Box_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_constructors_Box_quark_Object_.prototype._getClass = generics_constructors_Box_quark_Object___getClass;
 
@@ -526,13 +526,13 @@ function generics_pkg_Foo_quark_Object__foo_Method__init_fields__() {
 generics_pkg_Foo_quark_Object__foo_Method.prototype.__init_fields__ = generics_pkg_Foo_quark_Object__foo_Method__init_fields__;
 
 function generics_pkg_Foo_quark_Object__foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.pkg.Foo; });
     return (obj).foo();
 }
 generics_pkg_Foo_quark_Object__foo_Method.prototype.invoke = generics_pkg_Foo_quark_Object__foo_Method_invoke;
 
 function generics_pkg_Foo_quark_Object__foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_Foo_quark_Object__foo_Method.prototype._getClass = generics_pkg_Foo_quark_Object__foo_Method__getClass;
 
@@ -558,13 +558,13 @@ function generics_pkg_Foo_quark_Object__get_Method__init_fields__() {
 generics_pkg_Foo_quark_Object__get_Method.prototype.__init_fields__ = generics_pkg_Foo_quark_Object__get_Method__init_fields__;
 
 function generics_pkg_Foo_quark_Object__get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.pkg.Foo; });
     return (obj).get();
 }
 generics_pkg_Foo_quark_Object__get_Method.prototype.invoke = generics_pkg_Foo_quark_Object__get_Method_invoke;
 
 function generics_pkg_Foo_quark_Object__get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_Foo_quark_Object__get_Method.prototype._getClass = generics_pkg_Foo_quark_Object__get_Method__getClass;
 
@@ -599,7 +599,7 @@ function generics_pkg_Foo_quark_Object__construct(args) {
 generics_pkg_Foo_quark_Object_.prototype.construct = generics_pkg_Foo_quark_Object__construct;
 
 function generics_pkg_Foo_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_Foo_quark_Object_.prototype._getClass = generics_pkg_Foo_quark_Object___getClass;
 
@@ -626,13 +626,13 @@ function generics_pkg_StringFoo_get_Method__init_fields__() {
 generics_pkg_StringFoo_get_Method.prototype.__init_fields__ = generics_pkg_StringFoo_get_Method__init_fields__;
 
 function generics_pkg_StringFoo_get_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.pkg.StringFoo; });
     return (obj).get();
 }
 generics_pkg_StringFoo_get_Method.prototype.invoke = generics_pkg_StringFoo_get_Method_invoke;
 
 function generics_pkg_StringFoo_get_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_StringFoo_get_Method.prototype._getClass = generics_pkg_StringFoo_get_Method__getClass;
 
@@ -658,13 +658,13 @@ function generics_pkg_StringFoo_foo_Method__init_fields__() {
 generics_pkg_StringFoo_foo_Method.prototype.__init_fields__ = generics_pkg_StringFoo_foo_Method__init_fields__;
 
 function generics_pkg_StringFoo_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.pkg.StringFoo; });
     return (obj).foo();
 }
 generics_pkg_StringFoo_foo_Method.prototype.invoke = generics_pkg_StringFoo_foo_Method_invoke;
 
 function generics_pkg_StringFoo_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_StringFoo_foo_Method.prototype._getClass = generics_pkg_StringFoo_foo_Method__getClass;
 
@@ -699,7 +699,7 @@ function generics_pkg_StringFoo_construct(args) {
 generics_pkg_StringFoo.prototype.construct = generics_pkg_StringFoo_construct;
 
 function generics_pkg_StringFoo__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_StringFoo.prototype._getClass = generics_pkg_StringFoo__getClass;
 
@@ -730,12 +730,12 @@ function generics_pkg_Box_quark_String___init_fields__() {
 generics_pkg_Box_quark_String_.prototype.__init_fields__ = generics_pkg_Box_quark_String___init_fields__;
 generics_pkg_Box_quark_String_.singleton = new generics_pkg_Box_quark_String_();
 function generics_pkg_Box_quark_String__construct(args) {
-    return new generics.pkg.Box((args)[0]);
+    return new generics.pkg.Box(_qrt.cast((args)[0], function () { return String; }));
 }
 generics_pkg_Box_quark_String_.prototype.construct = generics_pkg_Box_quark_String__construct;
 
 function generics_pkg_Box_quark_String___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_Box_quark_String_.prototype._getClass = generics_pkg_Box_quark_String___getClass;
 
@@ -766,12 +766,12 @@ function generics_pkg_StringBox__init_fields__() {
 generics_pkg_StringBox.prototype.__init_fields__ = generics_pkg_StringBox__init_fields__;
 generics_pkg_StringBox.singleton = new generics_pkg_StringBox();
 function generics_pkg_StringBox_construct(args) {
-    return new generics.pkg.StringBox((args)[0]);
+    return new generics.pkg.StringBox(_qrt.cast((args)[0], function () { return String; }));
 }
 generics_pkg_StringBox.prototype.construct = generics_pkg_StringBox_construct;
 
 function generics_pkg_StringBox__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_pkg_StringBox.prototype._getClass = generics_pkg_StringBox__getClass;
 
@@ -798,13 +798,13 @@ function generics_ccc_TLSContextInitializer_getValue_Method__init_fields__() {
 generics_ccc_TLSContextInitializer_getValue_Method.prototype.__init_fields__ = generics_ccc_TLSContextInitializer_getValue_Method__init_fields__;
 
 function generics_ccc_TLSContextInitializer_getValue_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.ccc.TLSContextInitializer; });
     return (obj).getValue();
 }
 generics_ccc_TLSContextInitializer_getValue_Method.prototype.invoke = generics_ccc_TLSContextInitializer_getValue_Method_invoke;
 
 function generics_ccc_TLSContextInitializer_getValue_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLSContextInitializer_getValue_Method.prototype._getClass = generics_ccc_TLSContextInitializer_getValue_Method__getClass;
 
@@ -839,7 +839,7 @@ function generics_ccc_TLSContextInitializer_construct(args) {
 generics_ccc_TLSContextInitializer.prototype.construct = generics_ccc_TLSContextInitializer_construct;
 
 function generics_ccc_TLSContextInitializer__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLSContextInitializer.prototype._getClass = generics_ccc_TLSContextInitializer__getClass;
 
@@ -866,13 +866,13 @@ function generics_ccc_Context_current_Method__init_fields__() {
 generics_ccc_Context_current_Method.prototype.__init_fields__ = generics_ccc_Context_current_Method__init_fields__;
 
 function generics_ccc_Context_current_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.ccc.Context; });
     return generics.ccc.Context.current();
 }
 generics_ccc_Context_current_Method.prototype.invoke = generics_ccc_Context_current_Method_invoke;
 
 function generics_ccc_Context_current_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_Context_current_Method.prototype._getClass = generics_ccc_Context_current_Method__getClass;
 
@@ -898,13 +898,13 @@ function generics_ccc_Context_global_Method__init_fields__() {
 generics_ccc_Context_global_Method.prototype.__init_fields__ = generics_ccc_Context_global_Method__init_fields__;
 
 function generics_ccc_Context_global_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.ccc.Context; });
     return generics.ccc.Context.global();
 }
 generics_ccc_Context_global_Method.prototype.invoke = generics_ccc_Context_global_Method_invoke;
 
 function generics_ccc_Context_global_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_Context_global_Method.prototype._getClass = generics_ccc_Context_global_Method__getClass;
 
@@ -934,12 +934,12 @@ function generics_ccc_Context__init_fields__() {
 generics_ccc_Context.prototype.__init_fields__ = generics_ccc_Context__init_fields__;
 generics_ccc_Context.singleton = new generics_ccc_Context();
 function generics_ccc_Context_construct(args) {
-    return new generics.ccc.Context((args)[0]);
+    return new generics.ccc.Context(_qrt.cast((args)[0], function () { return generics.ccc.Context; }));
 }
 generics_ccc_Context.prototype.construct = generics_ccc_Context_construct;
 
 function generics_ccc_Context__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_Context.prototype._getClass = generics_ccc_Context__getClass;
 
@@ -966,13 +966,13 @@ function generics_ccc_TLSInitializer_quark_Object__getValue_Method__init_fields_
 generics_ccc_TLSInitializer_quark_Object__getValue_Method.prototype.__init_fields__ = generics_ccc_TLSInitializer_quark_Object__getValue_Method__init_fields__;
 
 function generics_ccc_TLSInitializer_quark_Object__getValue_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.ccc.TLSInitializer; });
     return (obj).getValue();
 }
 generics_ccc_TLSInitializer_quark_Object__getValue_Method.prototype.invoke = generics_ccc_TLSInitializer_quark_Object__getValue_Method_invoke;
 
 function generics_ccc_TLSInitializer_quark_Object__getValue_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLSInitializer_quark_Object__getValue_Method.prototype._getClass = generics_ccc_TLSInitializer_quark_Object__getValue_Method__getClass;
 
@@ -1007,7 +1007,7 @@ function generics_ccc_TLSInitializer_quark_Object__construct(args) {
 generics_ccc_TLSInitializer_quark_Object_.prototype.construct = generics_ccc_TLSInitializer_quark_Object__construct;
 
 function generics_ccc_TLSInitializer_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLSInitializer_quark_Object_.prototype._getClass = generics_ccc_TLSInitializer_quark_Object___getClass;
 
@@ -1034,13 +1034,13 @@ function generics_ccc_TLS_generics_ccc_Context__getValue_Method__init_fields__()
 generics_ccc_TLS_generics_ccc_Context__getValue_Method.prototype.__init_fields__ = generics_ccc_TLS_generics_ccc_Context__getValue_Method__init_fields__;
 
 function generics_ccc_TLS_generics_ccc_Context__getValue_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return generics.ccc.TLS; });
     return (obj).getValue();
 }
 generics_ccc_TLS_generics_ccc_Context__getValue_Method.prototype.invoke = generics_ccc_TLS_generics_ccc_Context__getValue_Method_invoke;
 
 function generics_ccc_TLS_generics_ccc_Context__getValue_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLS_generics_ccc_Context__getValue_Method.prototype._getClass = generics_ccc_TLS_generics_ccc_Context__getValue_Method__getClass;
 
@@ -1070,12 +1070,12 @@ function generics_ccc_TLS_generics_ccc_Context___init_fields__() {
 generics_ccc_TLS_generics_ccc_Context_.prototype.__init_fields__ = generics_ccc_TLS_generics_ccc_Context___init_fields__;
 generics_ccc_TLS_generics_ccc_Context_.singleton = new generics_ccc_TLS_generics_ccc_Context_();
 function generics_ccc_TLS_generics_ccc_Context__construct(args) {
-    return new generics.ccc.TLS((args)[0]);
+    return new generics.ccc.TLS(_qrt.cast((args)[0], function () { return generics.ccc.TLSInitializer; }));
 }
 generics_ccc_TLS_generics_ccc_Context_.prototype.construct = generics_ccc_TLS_generics_ccc_Context__construct;
 
 function generics_ccc_TLS_generics_ccc_Context___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 generics_ccc_TLS_generics_ccc_Context_.prototype._getClass = generics_ccc_TLS_generics_ccc_Context___getClass;
 
@@ -1111,7 +1111,7 @@ function inheritance_Base_construct(args) {
 inheritance_Base.prototype.construct = inheritance_Base_construct;
 
 function inheritance_Base__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Base.prototype._getClass = inheritance_Base__getClass;
 
@@ -1147,7 +1147,7 @@ function inheritance_Test_construct(args) {
 inheritance_Test.prototype.construct = inheritance_Test_construct;
 
 function inheritance_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Test.prototype._getClass = inheritance_Test__getClass;
 
@@ -1178,12 +1178,12 @@ function inheritance_A__init_fields__() {
 inheritance_A.prototype.__init_fields__ = inheritance_A__init_fields__;
 inheritance_A.singleton = new inheritance_A();
 function inheritance_A_construct(args) {
-    return new inheritance.A((args)[0]);
+    return new inheritance.A(_qrt.cast((args)[0], function () { return String; }));
 }
 inheritance_A.prototype.construct = inheritance_A_construct;
 
 function inheritance_A__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_A.prototype._getClass = inheritance_A__getClass;
 
@@ -1210,14 +1210,14 @@ function inheritance_B_greet_Method__init_fields__() {
 inheritance_B_greet_Method.prototype.__init_fields__ = inheritance_B_greet_Method__init_fields__;
 
 function inheritance_B_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.B; });
     (obj).greet();
     return null;
 }
 inheritance_B_greet_Method.prototype.invoke = inheritance_B_greet_Method_invoke;
 
 function inheritance_B_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_B_greet_Method.prototype._getClass = inheritance_B_greet_Method__getClass;
 
@@ -1247,12 +1247,12 @@ function inheritance_B__init_fields__() {
 inheritance_B.prototype.__init_fields__ = inheritance_B__init_fields__;
 inheritance_B.singleton = new inheritance_B();
 function inheritance_B_construct(args) {
-    return new inheritance.B((args)[0]);
+    return new inheritance.B(_qrt.cast((args)[0], function () { return String; }));
 }
 inheritance_B.prototype.construct = inheritance_B_construct;
 
 function inheritance_B__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_B.prototype._getClass = inheritance_B__getClass;
 
@@ -1279,14 +1279,14 @@ function inheritance_C_greet_Method__init_fields__() {
 inheritance_C_greet_Method.prototype.__init_fields__ = inheritance_C_greet_Method__init_fields__;
 
 function inheritance_C_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.C; });
     (obj).greet();
     return null;
 }
 inheritance_C_greet_Method.prototype.invoke = inheritance_C_greet_Method_invoke;
 
 function inheritance_C_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_C_greet_Method.prototype._getClass = inheritance_C_greet_Method__getClass;
 
@@ -1316,12 +1316,12 @@ function inheritance_C__init_fields__() {
 inheritance_C.prototype.__init_fields__ = inheritance_C__init_fields__;
 inheritance_C.singleton = new inheritance_C();
 function inheritance_C_construct(args) {
-    return new inheritance.C((args)[0]);
+    return new inheritance.C(_qrt.cast((args)[0], function () { return String; }));
 }
 inheritance_C.prototype.construct = inheritance_C_construct;
 
 function inheritance_C__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_C.prototype._getClass = inheritance_C__getClass;
 
@@ -1357,7 +1357,7 @@ function inheritance_X_construct(args) {
 inheritance_X.prototype.construct = inheritance_X_construct;
 
 function inheritance_X__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_X.prototype._getClass = inheritance_X__getClass;
 
@@ -1384,14 +1384,14 @@ function inheritance_Y_test_Method__init_fields__() {
 inheritance_Y_test_Method.prototype.__init_fields__ = inheritance_Y_test_Method__init_fields__;
 
 function inheritance_Y_test_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.Y; });
     (obj).test();
     return null;
 }
 inheritance_Y_test_Method.prototype.invoke = inheritance_Y_test_Method_invoke;
 
 function inheritance_Y_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Y_test_Method.prototype._getClass = inheritance_Y_test_Method__getClass;
 
@@ -1421,12 +1421,12 @@ function inheritance_Y__init_fields__() {
 inheritance_Y.prototype.__init_fields__ = inheritance_Y__init_fields__;
 inheritance_Y.singleton = new inheritance_Y();
 function inheritance_Y_construct(args) {
-    return new inheritance.Y((args)[0]);
+    return new inheritance.Y(_qrt.cast((args)[0], function () { return String; }));
 }
 inheritance_Y.prototype.construct = inheritance_Y_construct;
 
 function inheritance_Y__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Y.prototype._getClass = inheritance_Y__getClass;
 
@@ -1453,14 +1453,14 @@ function inheritance_t1_A_foo_Method__init_fields__() {
 inheritance_t1_A_foo_Method.prototype.__init_fields__ = inheritance_t1_A_foo_Method__init_fields__;
 
 function inheritance_t1_A_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.t1.A; });
     (obj).foo();
     return null;
 }
 inheritance_t1_A_foo_Method.prototype.invoke = inheritance_t1_A_foo_Method_invoke;
 
 function inheritance_t1_A_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_A_foo_Method.prototype._getClass = inheritance_t1_A_foo_Method__getClass;
 
@@ -1495,7 +1495,7 @@ function inheritance_t1_A_construct(args) {
 inheritance_t1_A.prototype.construct = inheritance_t1_A_construct;
 
 function inheritance_t1_A__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_A.prototype._getClass = inheritance_t1_A__getClass;
 
@@ -1522,14 +1522,14 @@ function inheritance_t1_B_foo_Method__init_fields__() {
 inheritance_t1_B_foo_Method.prototype.__init_fields__ = inheritance_t1_B_foo_Method__init_fields__;
 
 function inheritance_t1_B_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.t1.B; });
     (obj).foo();
     return null;
 }
 inheritance_t1_B_foo_Method.prototype.invoke = inheritance_t1_B_foo_Method_invoke;
 
 function inheritance_t1_B_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_B_foo_Method.prototype._getClass = inheritance_t1_B_foo_Method__getClass;
 
@@ -1564,7 +1564,7 @@ function inheritance_t1_B_construct(args) {
 inheritance_t1_B.prototype.construct = inheritance_t1_B_construct;
 
 function inheritance_t1_B__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_B.prototype._getClass = inheritance_t1_B__getClass;
 
@@ -1591,14 +1591,14 @@ function inheritance_t1_C_foo_Method__init_fields__() {
 inheritance_t1_C_foo_Method.prototype.__init_fields__ = inheritance_t1_C_foo_Method__init_fields__;
 
 function inheritance_t1_C_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.t1.C; });
     (obj).foo();
     return null;
 }
 inheritance_t1_C_foo_Method.prototype.invoke = inheritance_t1_C_foo_Method_invoke;
 
 function inheritance_t1_C_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_C_foo_Method.prototype._getClass = inheritance_t1_C_foo_Method__getClass;
 
@@ -1633,7 +1633,7 @@ function inheritance_t1_C_construct(args) {
 inheritance_t1_C.prototype.construct = inheritance_t1_C_construct;
 
 function inheritance_t1_C__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t1_C.prototype._getClass = inheritance_t1_C__getClass;
 
@@ -1669,7 +1669,7 @@ function inheritance_t2_A_construct(args) {
 inheritance_t2_A.prototype.construct = inheritance_t2_A_construct;
 
 function inheritance_t2_A__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t2_A.prototype._getClass = inheritance_t2_A__getClass;
 
@@ -1705,7 +1705,7 @@ function inheritance_t2_B_construct(args) {
 inheritance_t2_B.prototype.construct = inheritance_t2_B_construct;
 
 function inheritance_t2_B__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t2_B.prototype._getClass = inheritance_t2_B__getClass;
 
@@ -1741,7 +1741,7 @@ function inheritance_t2_X_quark_int__construct(args) {
 inheritance_t2_X_quark_int_.prototype.construct = inheritance_t2_X_quark_int__construct;
 
 function inheritance_t2_X_quark_int___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t2_X_quark_int_.prototype._getClass = inheritance_t2_X_quark_int___getClass;
 
@@ -1777,7 +1777,7 @@ function inheritance_t2_Y_construct(args) {
 inheritance_t2_Y.prototype.construct = inheritance_t2_Y_construct;
 
 function inheritance_t2_Y__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_t2_Y.prototype._getClass = inheritance_t2_Y__getClass;
 
@@ -1804,14 +1804,14 @@ function inheritance_pets_Cat_greet_Method__init_fields__() {
 inheritance_pets_Cat_greet_Method.prototype.__init_fields__ = inheritance_pets_Cat_greet_Method__init_fields__;
 
 function inheritance_pets_Cat_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.pets.Cat; });
     (obj).greet();
     return null;
 }
 inheritance_pets_Cat_greet_Method.prototype.invoke = inheritance_pets_Cat_greet_Method_invoke;
 
 function inheritance_pets_Cat_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_pets_Cat_greet_Method.prototype._getClass = inheritance_pets_Cat_greet_Method__getClass;
 
@@ -1846,7 +1846,7 @@ function inheritance_pets_Cat_construct(args) {
 inheritance_pets_Cat.prototype.construct = inheritance_pets_Cat_construct;
 
 function inheritance_pets_Cat__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_pets_Cat.prototype._getClass = inheritance_pets_Cat__getClass;
 
@@ -1873,14 +1873,14 @@ function inheritance_pets_Dog_greet_Method__init_fields__() {
 inheritance_pets_Dog_greet_Method.prototype.__init_fields__ = inheritance_pets_Dog_greet_Method__init_fields__;
 
 function inheritance_pets_Dog_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.pets.Dog; });
     (obj).greet();
     return null;
 }
 inheritance_pets_Dog_greet_Method.prototype.invoke = inheritance_pets_Dog_greet_Method_invoke;
 
 function inheritance_pets_Dog_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_pets_Dog_greet_Method.prototype._getClass = inheritance_pets_Dog_greet_Method__getClass;
 
@@ -1915,7 +1915,7 @@ function inheritance_pets_Dog_construct(args) {
 inheritance_pets_Dog.prototype.construct = inheritance_pets_Dog_construct;
 
 function inheritance_pets_Dog__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_pets_Dog.prototype._getClass = inheritance_pets_Dog__getClass;
 
@@ -1942,13 +1942,13 @@ function inheritance_Message_encode_Method__init_fields__() {
 inheritance_Message_encode_Method.prototype.__init_fields__ = inheritance_Message_encode_Method__init_fields__;
 
 function inheritance_Message_encode_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.Message; });
     return (obj).encode();
 }
 inheritance_Message_encode_Method.prototype.invoke = inheritance_Message_encode_Method_invoke;
 
 function inheritance_Message_encode_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Message_encode_Method.prototype._getClass = inheritance_Message_encode_Method__getClass;
 
@@ -1983,7 +1983,7 @@ function inheritance_Message_construct(args) {
 inheritance_Message.prototype.construct = inheritance_Message_construct;
 
 function inheritance_Message__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Message.prototype._getClass = inheritance_Message__getClass;
 
@@ -2010,13 +2010,13 @@ function inheritance_Ping_encode_Method__init_fields__() {
 inheritance_Ping_encode_Method.prototype.__init_fields__ = inheritance_Ping_encode_Method__init_fields__;
 
 function inheritance_Ping_encode_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.Ping; });
     return (obj).encode();
 }
 inheritance_Ping_encode_Method.prototype.invoke = inheritance_Ping_encode_Method_invoke;
 
 function inheritance_Ping_encode_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Ping_encode_Method.prototype._getClass = inheritance_Ping_encode_Method__getClass;
 
@@ -2051,7 +2051,7 @@ function inheritance_Ping_construct(args) {
 inheritance_Ping.prototype.construct = inheritance_Ping_construct;
 
 function inheritance_Ping__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Ping.prototype._getClass = inheritance_Ping__getClass;
 
@@ -2078,13 +2078,13 @@ function inheritance_Pong_toString_Method__init_fields__() {
 inheritance_Pong_toString_Method.prototype.__init_fields__ = inheritance_Pong_toString_Method__init_fields__;
 
 function inheritance_Pong_toString_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.Pong; });
     return (obj).toString();
 }
 inheritance_Pong_toString_Method.prototype.invoke = inheritance_Pong_toString_Method_invoke;
 
 function inheritance_Pong_toString_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Pong_toString_Method.prototype._getClass = inheritance_Pong_toString_Method__getClass;
 
@@ -2110,13 +2110,13 @@ function inheritance_Pong_encode_Method__init_fields__() {
 inheritance_Pong_encode_Method.prototype.__init_fields__ = inheritance_Pong_encode_Method__init_fields__;
 
 function inheritance_Pong_encode_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.Pong; });
     return (obj).encode();
 }
 inheritance_Pong_encode_Method.prototype.invoke = inheritance_Pong_encode_Method_invoke;
 
 function inheritance_Pong_encode_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Pong_encode_Method.prototype._getClass = inheritance_Pong_encode_Method__getClass;
 
@@ -2151,7 +2151,7 @@ function inheritance_Pong_construct(args) {
 inheritance_Pong.prototype.construct = inheritance_Pong_construct;
 
 function inheritance_Pong__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_Pong.prototype._getClass = inheritance_Pong__getClass;
 
@@ -2178,14 +2178,14 @@ function inheritance_super__A_greet_Method__init_fields__() {
 inheritance_super__A_greet_Method.prototype.__init_fields__ = inheritance_super__A_greet_Method__init_fields__;
 
 function inheritance_super__A_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.super_.A; });
     (obj).greet();
     return null;
 }
 inheritance_super__A_greet_Method.prototype.invoke = inheritance_super__A_greet_Method_invoke;
 
 function inheritance_super__A_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_super__A_greet_Method.prototype._getClass = inheritance_super__A_greet_Method__getClass;
 
@@ -2215,12 +2215,12 @@ function inheritance_super__A__init_fields__() {
 inheritance_super__A.prototype.__init_fields__ = inheritance_super__A__init_fields__;
 inheritance_super__A.singleton = new inheritance_super__A();
 function inheritance_super__A_construct(args) {
-    return new inheritance.super_.A((args)[0]);
+    return new inheritance.super_.A(_qrt.cast((args)[0], function () { return String; }));
 }
 inheritance_super__A.prototype.construct = inheritance_super__A_construct;
 
 function inheritance_super__A__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_super__A.prototype._getClass = inheritance_super__A__getClass;
 
@@ -2247,14 +2247,14 @@ function inheritance_super__B_greet_Method__init_fields__() {
 inheritance_super__B_greet_Method.prototype.__init_fields__ = inheritance_super__B_greet_Method__init_fields__;
 
 function inheritance_super__B_greet_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.super_.B; });
     (obj).greet();
     return null;
 }
 inheritance_super__B_greet_Method.prototype.invoke = inheritance_super__B_greet_Method_invoke;
 
 function inheritance_super__B_greet_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_super__B_greet_Method.prototype._getClass = inheritance_super__B_greet_Method__getClass;
 
@@ -2289,7 +2289,7 @@ function inheritance_super__B_construct(args) {
 inheritance_super__B.prototype.construct = inheritance_super__B_construct;
 
 function inheritance_super__B__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_super__B.prototype._getClass = inheritance_super__B__getClass;
 
@@ -2316,14 +2316,14 @@ function inheritance_use_before_def_Bar_go_Method__init_fields__() {
 inheritance_use_before_def_Bar_go_Method.prototype.__init_fields__ = inheritance_use_before_def_Bar_go_Method__init_fields__;
 
 function inheritance_use_before_def_Bar_go_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return inheritance.use_before_def.Bar; });
     (obj).go();
     return null;
 }
 inheritance_use_before_def_Bar_go_Method.prototype.invoke = inheritance_use_before_def_Bar_go_Method_invoke;
 
 function inheritance_use_before_def_Bar_go_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_use_before_def_Bar_go_Method.prototype._getClass = inheritance_use_before_def_Bar_go_Method__getClass;
 
@@ -2358,7 +2358,7 @@ function inheritance_use_before_def_Bar_construct(args) {
 inheritance_use_before_def_Bar.prototype.construct = inheritance_use_before_def_Bar_construct;
 
 function inheritance_use_before_def_Bar__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_use_before_def_Bar.prototype._getClass = inheritance_use_before_def_Bar__getClass;
 
@@ -2394,7 +2394,7 @@ function inheritance_use_before_def_Foo_construct(args) {
 inheritance_use_before_def_Foo.prototype.construct = inheritance_use_before_def_Foo_construct;
 
 function inheritance_use_before_def_Foo__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 inheritance_use_before_def_Foo.prototype._getClass = inheritance_use_before_def_Foo__getClass;
 
@@ -2421,14 +2421,14 @@ function interfaces_A_foo_Method__init_fields__() {
 interfaces_A_foo_Method.prototype.__init_fields__ = interfaces_A_foo_Method__init_fields__;
 
 function interfaces_A_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.A; });
     (obj).foo();
     return null;
 }
 interfaces_A_foo_Method.prototype.invoke = interfaces_A_foo_Method_invoke;
 
 function interfaces_A_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_A_foo_Method.prototype._getClass = interfaces_A_foo_Method__getClass;
 
@@ -2454,14 +2454,14 @@ function interfaces_A_bar_Method__init_fields__() {
 interfaces_A_bar_Method.prototype.__init_fields__ = interfaces_A_bar_Method__init_fields__;
 
 function interfaces_A_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.A; });
     (obj).bar();
     return null;
 }
 interfaces_A_bar_Method.prototype.invoke = interfaces_A_bar_Method_invoke;
 
 function interfaces_A_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_A_bar_Method.prototype._getClass = interfaces_A_bar_Method__getClass;
 
@@ -2496,7 +2496,7 @@ function interfaces_A_construct(args) {
 interfaces_A.prototype.construct = interfaces_A_construct;
 
 function interfaces_A__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_A.prototype._getClass = interfaces_A__getClass;
 
@@ -2523,14 +2523,14 @@ function interfaces_B_bar_Method__init_fields__() {
 interfaces_B_bar_Method.prototype.__init_fields__ = interfaces_B_bar_Method__init_fields__;
 
 function interfaces_B_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.B; });
     (obj).bar();
     return null;
 }
 interfaces_B_bar_Method.prototype.invoke = interfaces_B_bar_Method_invoke;
 
 function interfaces_B_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_B_bar_Method.prototype._getClass = interfaces_B_bar_Method__getClass;
 
@@ -2565,7 +2565,7 @@ function interfaces_B_construct(args) {
 interfaces_B.prototype.construct = interfaces_B_construct;
 
 function interfaces_B__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_B.prototype._getClass = interfaces_B__getClass;
 
@@ -2592,14 +2592,14 @@ function interfaces_C_foo_Method__init_fields__() {
 interfaces_C_foo_Method.prototype.__init_fields__ = interfaces_C_foo_Method__init_fields__;
 
 function interfaces_C_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.C; });
     (obj).foo();
     return null;
 }
 interfaces_C_foo_Method.prototype.invoke = interfaces_C_foo_Method_invoke;
 
 function interfaces_C_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_C_foo_Method.prototype._getClass = interfaces_C_foo_Method__getClass;
 
@@ -2634,7 +2634,7 @@ function interfaces_C_construct(args) {
 interfaces_C.prototype.construct = interfaces_C_construct;
 
 function interfaces_C__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_C.prototype._getClass = interfaces_C__getClass;
 
@@ -2661,14 +2661,14 @@ function interfaces_T1_foo_Method__init_fields__() {
 interfaces_T1_foo_Method.prototype.__init_fields__ = interfaces_T1_foo_Method__init_fields__;
 
 function interfaces_T1_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T1; });
     (obj).foo();
     return null;
 }
 interfaces_T1_foo_Method.prototype.invoke = interfaces_T1_foo_Method_invoke;
 
 function interfaces_T1_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T1_foo_Method.prototype._getClass = interfaces_T1_foo_Method__getClass;
 
@@ -2694,14 +2694,14 @@ function interfaces_T1_bar_Method__init_fields__() {
 interfaces_T1_bar_Method.prototype.__init_fields__ = interfaces_T1_bar_Method__init_fields__;
 
 function interfaces_T1_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T1; });
     (obj).bar();
     return null;
 }
 interfaces_T1_bar_Method.prototype.invoke = interfaces_T1_bar_Method_invoke;
 
 function interfaces_T1_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T1_bar_Method.prototype._getClass = interfaces_T1_bar_Method__getClass;
 
@@ -2736,7 +2736,7 @@ function interfaces_T1_construct(args) {
 interfaces_T1.prototype.construct = interfaces_T1_construct;
 
 function interfaces_T1__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T1.prototype._getClass = interfaces_T1__getClass;
 
@@ -2763,14 +2763,14 @@ function interfaces_T2_foo_Method__init_fields__() {
 interfaces_T2_foo_Method.prototype.__init_fields__ = interfaces_T2_foo_Method__init_fields__;
 
 function interfaces_T2_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T2; });
     (obj).foo();
     return null;
 }
 interfaces_T2_foo_Method.prototype.invoke = interfaces_T2_foo_Method_invoke;
 
 function interfaces_T2_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T2_foo_Method.prototype._getClass = interfaces_T2_foo_Method__getClass;
 
@@ -2796,14 +2796,14 @@ function interfaces_T2_bar_Method__init_fields__() {
 interfaces_T2_bar_Method.prototype.__init_fields__ = interfaces_T2_bar_Method__init_fields__;
 
 function interfaces_T2_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T2; });
     (obj).bar();
     return null;
 }
 interfaces_T2_bar_Method.prototype.invoke = interfaces_T2_bar_Method_invoke;
 
 function interfaces_T2_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T2_bar_Method.prototype._getClass = interfaces_T2_bar_Method__getClass;
 
@@ -2838,7 +2838,7 @@ function interfaces_T2_construct(args) {
 interfaces_T2.prototype.construct = interfaces_T2_construct;
 
 function interfaces_T2__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T2.prototype._getClass = interfaces_T2__getClass;
 
@@ -2865,14 +2865,14 @@ function interfaces_T3_foo_Method__init_fields__() {
 interfaces_T3_foo_Method.prototype.__init_fields__ = interfaces_T3_foo_Method__init_fields__;
 
 function interfaces_T3_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T3; });
     (obj).foo();
     return null;
 }
 interfaces_T3_foo_Method.prototype.invoke = interfaces_T3_foo_Method_invoke;
 
 function interfaces_T3_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T3_foo_Method.prototype._getClass = interfaces_T3_foo_Method__getClass;
 
@@ -2898,14 +2898,14 @@ function interfaces_T3_bar_Method__init_fields__() {
 interfaces_T3_bar_Method.prototype.__init_fields__ = interfaces_T3_bar_Method__init_fields__;
 
 function interfaces_T3_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T3; });
     (obj).bar();
     return null;
 }
 interfaces_T3_bar_Method.prototype.invoke = interfaces_T3_bar_Method_invoke;
 
 function interfaces_T3_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T3_bar_Method.prototype._getClass = interfaces_T3_bar_Method__getClass;
 
@@ -2940,7 +2940,7 @@ function interfaces_T3_construct(args) {
 interfaces_T3.prototype.construct = interfaces_T3_construct;
 
 function interfaces_T3__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T3.prototype._getClass = interfaces_T3__getClass;
 
@@ -2967,14 +2967,14 @@ function interfaces_T4_foo_Method__init_fields__() {
 interfaces_T4_foo_Method.prototype.__init_fields__ = interfaces_T4_foo_Method__init_fields__;
 
 function interfaces_T4_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T4; });
     (obj).foo();
     return null;
 }
 interfaces_T4_foo_Method.prototype.invoke = interfaces_T4_foo_Method_invoke;
 
 function interfaces_T4_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T4_foo_Method.prototype._getClass = interfaces_T4_foo_Method__getClass;
 
@@ -3000,14 +3000,14 @@ function interfaces_T4_bar_Method__init_fields__() {
 interfaces_T4_bar_Method.prototype.__init_fields__ = interfaces_T4_bar_Method__init_fields__;
 
 function interfaces_T4_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T4; });
     (obj).bar();
     return null;
 }
 interfaces_T4_bar_Method.prototype.invoke = interfaces_T4_bar_Method_invoke;
 
 function interfaces_T4_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T4_bar_Method.prototype._getClass = interfaces_T4_bar_Method__getClass;
 
@@ -3042,7 +3042,7 @@ function interfaces_T4_construct(args) {
 interfaces_T4.prototype.construct = interfaces_T4_construct;
 
 function interfaces_T4__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T4.prototype._getClass = interfaces_T4__getClass;
 
@@ -3069,14 +3069,14 @@ function interfaces_T5_foo_Method__init_fields__() {
 interfaces_T5_foo_Method.prototype.__init_fields__ = interfaces_T5_foo_Method__init_fields__;
 
 function interfaces_T5_foo_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T5; });
     (obj).foo();
     return null;
 }
 interfaces_T5_foo_Method.prototype.invoke = interfaces_T5_foo_Method_invoke;
 
 function interfaces_T5_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T5_foo_Method.prototype._getClass = interfaces_T5_foo_Method__getClass;
 
@@ -3102,14 +3102,14 @@ function interfaces_T5_bar_Method__init_fields__() {
 interfaces_T5_bar_Method.prototype.__init_fields__ = interfaces_T5_bar_Method__init_fields__;
 
 function interfaces_T5_bar_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.T5; });
     (obj).bar();
     return null;
 }
 interfaces_T5_bar_Method.prototype.invoke = interfaces_T5_bar_Method_invoke;
 
 function interfaces_T5_bar_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T5_bar_Method.prototype._getClass = interfaces_T5_bar_Method__getClass;
 
@@ -3144,7 +3144,7 @@ function interfaces_T5_construct(args) {
 interfaces_T5.prototype.construct = interfaces_T5_construct;
 
 function interfaces_T5__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_T5.prototype._getClass = interfaces_T5__getClass;
 
@@ -3171,14 +3171,14 @@ function interfaces_Foo_m1_Method__init_fields__() {
 interfaces_Foo_m1_Method.prototype.__init_fields__ = interfaces_Foo_m1_Method__init_fields__;
 
 function interfaces_Foo_m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.Foo; });
     (obj).m1();
     return null;
 }
 interfaces_Foo_m1_Method.prototype.invoke = interfaces_Foo_m1_Method_invoke;
 
 function interfaces_Foo_m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Foo_m1_Method.prototype._getClass = interfaces_Foo_m1_Method__getClass;
 
@@ -3204,14 +3204,14 @@ function interfaces_Foo_m2_Method__init_fields__() {
 interfaces_Foo_m2_Method.prototype.__init_fields__ = interfaces_Foo_m2_Method__init_fields__;
 
 function interfaces_Foo_m2_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m2((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.Foo; });
+    (obj).m2(_qrt.cast((args)[0], function () { return Number; }));
     return null;
 }
 interfaces_Foo_m2_Method.prototype.invoke = interfaces_Foo_m2_Method_invoke;
 
 function interfaces_Foo_m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Foo_m2_Method.prototype._getClass = interfaces_Foo_m2_Method__getClass;
 
@@ -3237,14 +3237,14 @@ function interfaces_Foo_m3_Method__init_fields__() {
 interfaces_Foo_m3_Method.prototype.__init_fields__ = interfaces_Foo_m3_Method__init_fields__;
 
 function interfaces_Foo_m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.Foo; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_Foo_m3_Method.prototype.invoke = interfaces_Foo_m3_Method_invoke;
 
 function interfaces_Foo_m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Foo_m3_Method.prototype._getClass = interfaces_Foo_m3_Method__getClass;
 
@@ -3279,7 +3279,7 @@ function interfaces_Foo_construct(args) {
 interfaces_Foo.prototype.construct = interfaces_Foo_construct;
 
 function interfaces_Foo__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Foo.prototype._getClass = interfaces_Foo__getClass;
 
@@ -3306,14 +3306,14 @@ function interfaces_Bar_quark_Object__m1_Method__init_fields__() {
 interfaces_Bar_quark_Object__m1_Method.prototype.__init_fields__ = interfaces_Bar_quark_Object__m1_Method__init_fields__;
 
 function interfaces_Bar_quark_Object__m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.Bar; });
     (obj).m1();
     return null;
 }
 interfaces_Bar_quark_Object__m1_Method.prototype.invoke = interfaces_Bar_quark_Object__m1_Method_invoke;
 
 function interfaces_Bar_quark_Object__m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Bar_quark_Object__m1_Method.prototype._getClass = interfaces_Bar_quark_Object__m1_Method__getClass;
 
@@ -3339,14 +3339,14 @@ function interfaces_Bar_quark_Object__m2_Method__init_fields__() {
 interfaces_Bar_quark_Object__m2_Method.prototype.__init_fields__ = interfaces_Bar_quark_Object__m2_Method__init_fields__;
 
 function interfaces_Bar_quark_Object__m2_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.Bar; });
     (obj).m2((args)[0]);
     return null;
 }
 interfaces_Bar_quark_Object__m2_Method.prototype.invoke = interfaces_Bar_quark_Object__m2_Method_invoke;
 
 function interfaces_Bar_quark_Object__m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Bar_quark_Object__m2_Method.prototype._getClass = interfaces_Bar_quark_Object__m2_Method__getClass;
 
@@ -3372,14 +3372,14 @@ function interfaces_Bar_quark_Object__m3_Method__init_fields__() {
 interfaces_Bar_quark_Object__m3_Method.prototype.__init_fields__ = interfaces_Bar_quark_Object__m3_Method__init_fields__;
 
 function interfaces_Bar_quark_Object__m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.Bar; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_Bar_quark_Object__m3_Method.prototype.invoke = interfaces_Bar_quark_Object__m3_Method_invoke;
 
 function interfaces_Bar_quark_Object__m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Bar_quark_Object__m3_Method.prototype._getClass = interfaces_Bar_quark_Object__m3_Method__getClass;
 
@@ -3414,7 +3414,7 @@ function interfaces_Bar_quark_Object__construct(args) {
 interfaces_Bar_quark_Object_.prototype.construct = interfaces_Bar_quark_Object__construct;
 
 function interfaces_Bar_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Bar_quark_Object_.prototype._getClass = interfaces_Bar_quark_Object___getClass;
 
@@ -3441,14 +3441,14 @@ function interfaces_Baz_m2_Method__init_fields__() {
 interfaces_Baz_m2_Method.prototype.__init_fields__ = interfaces_Baz_m2_Method__init_fields__;
 
 function interfaces_Baz_m2_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m2((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.Baz; });
+    (obj).m2(_qrt.cast((args)[0], function () { return Number; }));
     return null;
 }
 interfaces_Baz_m2_Method.prototype.invoke = interfaces_Baz_m2_Method_invoke;
 
 function interfaces_Baz_m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Baz_m2_Method.prototype._getClass = interfaces_Baz_m2_Method__getClass;
 
@@ -3474,14 +3474,14 @@ function interfaces_Baz_m1_Method__init_fields__() {
 interfaces_Baz_m1_Method.prototype.__init_fields__ = interfaces_Baz_m1_Method__init_fields__;
 
 function interfaces_Baz_m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.Baz; });
     (obj).m1();
     return null;
 }
 interfaces_Baz_m1_Method.prototype.invoke = interfaces_Baz_m1_Method_invoke;
 
 function interfaces_Baz_m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Baz_m1_Method.prototype._getClass = interfaces_Baz_m1_Method__getClass;
 
@@ -3507,14 +3507,14 @@ function interfaces_Baz_m3_Method__init_fields__() {
 interfaces_Baz_m3_Method.prototype.__init_fields__ = interfaces_Baz_m3_Method__init_fields__;
 
 function interfaces_Baz_m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.Baz; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_Baz_m3_Method.prototype.invoke = interfaces_Baz_m3_Method_invoke;
 
 function interfaces_Baz_m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Baz_m3_Method.prototype._getClass = interfaces_Baz_m3_Method__getClass;
 
@@ -3549,7 +3549,7 @@ function interfaces_Baz_construct(args) {
 interfaces_Baz.prototype.construct = interfaces_Baz_construct;
 
 function interfaces_Baz__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_Baz.prototype._getClass = interfaces_Baz__getClass;
 
@@ -3576,14 +3576,14 @@ function interfaces_RazBar_m1_Method__init_fields__() {
 interfaces_RazBar_m1_Method.prototype.__init_fields__ = interfaces_RazBar_m1_Method__init_fields__;
 
 function interfaces_RazBar_m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.RazBar; });
     (obj).m1();
     return null;
 }
 interfaces_RazBar_m1_Method.prototype.invoke = interfaces_RazBar_m1_Method_invoke;
 
 function interfaces_RazBar_m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazBar_m1_Method.prototype._getClass = interfaces_RazBar_m1_Method__getClass;
 
@@ -3609,14 +3609,14 @@ function interfaces_RazBar_m2_Method__init_fields__() {
 interfaces_RazBar_m2_Method.prototype.__init_fields__ = interfaces_RazBar_m2_Method__init_fields__;
 
 function interfaces_RazBar_m2_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m2((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.RazBar; });
+    (obj).m2(_qrt.cast((args)[0], function () { return String; }));
     return null;
 }
 interfaces_RazBar_m2_Method.prototype.invoke = interfaces_RazBar_m2_Method_invoke;
 
 function interfaces_RazBar_m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazBar_m2_Method.prototype._getClass = interfaces_RazBar_m2_Method__getClass;
 
@@ -3642,14 +3642,14 @@ function interfaces_RazBar_m3_Method__init_fields__() {
 interfaces_RazBar_m3_Method.prototype.__init_fields__ = interfaces_RazBar_m3_Method__init_fields__;
 
 function interfaces_RazBar_m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.RazBar; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_RazBar_m3_Method.prototype.invoke = interfaces_RazBar_m3_Method_invoke;
 
 function interfaces_RazBar_m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazBar_m3_Method.prototype._getClass = interfaces_RazBar_m3_Method__getClass;
 
@@ -3684,7 +3684,7 @@ function interfaces_RazBar_construct(args) {
 interfaces_RazBar.prototype.construct = interfaces_RazBar_construct;
 
 function interfaces_RazBar__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazBar.prototype._getClass = interfaces_RazBar__getClass;
 
@@ -3711,14 +3711,14 @@ function interfaces_RazFaz_quark_Object__m1_Method__init_fields__() {
 interfaces_RazFaz_quark_Object__m1_Method.prototype.__init_fields__ = interfaces_RazFaz_quark_Object__m1_Method__init_fields__;
 
 function interfaces_RazFaz_quark_Object__m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.RazFaz; });
     (obj).m1();
     return null;
 }
 interfaces_RazFaz_quark_Object__m1_Method.prototype.invoke = interfaces_RazFaz_quark_Object__m1_Method_invoke;
 
 function interfaces_RazFaz_quark_Object__m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazFaz_quark_Object__m1_Method.prototype._getClass = interfaces_RazFaz_quark_Object__m1_Method__getClass;
 
@@ -3744,14 +3744,14 @@ function interfaces_RazFaz_quark_Object__m2_Method__init_fields__() {
 interfaces_RazFaz_quark_Object__m2_Method.prototype.__init_fields__ = interfaces_RazFaz_quark_Object__m2_Method__init_fields__;
 
 function interfaces_RazFaz_quark_Object__m2_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.RazFaz; });
     (obj).m2((args)[0]);
     return null;
 }
 interfaces_RazFaz_quark_Object__m2_Method.prototype.invoke = interfaces_RazFaz_quark_Object__m2_Method_invoke;
 
 function interfaces_RazFaz_quark_Object__m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazFaz_quark_Object__m2_Method.prototype._getClass = interfaces_RazFaz_quark_Object__m2_Method__getClass;
 
@@ -3777,14 +3777,14 @@ function interfaces_RazFaz_quark_Object__m3_Method__init_fields__() {
 interfaces_RazFaz_quark_Object__m3_Method.prototype.__init_fields__ = interfaces_RazFaz_quark_Object__m3_Method__init_fields__;
 
 function interfaces_RazFaz_quark_Object__m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.RazFaz; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_RazFaz_quark_Object__m3_Method.prototype.invoke = interfaces_RazFaz_quark_Object__m3_Method_invoke;
 
 function interfaces_RazFaz_quark_Object__m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazFaz_quark_Object__m3_Method.prototype._getClass = interfaces_RazFaz_quark_Object__m3_Method__getClass;
 
@@ -3819,7 +3819,7 @@ function interfaces_RazFaz_quark_Object__construct(args) {
 interfaces_RazFaz_quark_Object_.prototype.construct = interfaces_RazFaz_quark_Object__construct;
 
 function interfaces_RazFaz_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_RazFaz_quark_Object_.prototype._getClass = interfaces_RazFaz_quark_Object___getClass;
 
@@ -3846,14 +3846,14 @@ function interfaces_BazBar_m1_Method__init_fields__() {
 interfaces_BazBar_m1_Method.prototype.__init_fields__ = interfaces_BazBar_m1_Method__init_fields__;
 
 function interfaces_BazBar_m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.BazBar; });
     (obj).m1();
     return null;
 }
 interfaces_BazBar_m1_Method.prototype.invoke = interfaces_BazBar_m1_Method_invoke;
 
 function interfaces_BazBar_m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazBar_m1_Method.prototype._getClass = interfaces_BazBar_m1_Method__getClass;
 
@@ -3879,14 +3879,14 @@ function interfaces_BazBar_m2_Method__init_fields__() {
 interfaces_BazBar_m2_Method.prototype.__init_fields__ = interfaces_BazBar_m2_Method__init_fields__;
 
 function interfaces_BazBar_m2_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m2((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.BazBar; });
+    (obj).m2(_qrt.cast((args)[0], function () { return String; }));
     return null;
 }
 interfaces_BazBar_m2_Method.prototype.invoke = interfaces_BazBar_m2_Method_invoke;
 
 function interfaces_BazBar_m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazBar_m2_Method.prototype._getClass = interfaces_BazBar_m2_Method__getClass;
 
@@ -3912,14 +3912,14 @@ function interfaces_BazBar_m3_Method__init_fields__() {
 interfaces_BazBar_m3_Method.prototype.__init_fields__ = interfaces_BazBar_m3_Method__init_fields__;
 
 function interfaces_BazBar_m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.BazBar; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_BazBar_m3_Method.prototype.invoke = interfaces_BazBar_m3_Method_invoke;
 
 function interfaces_BazBar_m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazBar_m3_Method.prototype._getClass = interfaces_BazBar_m3_Method__getClass;
 
@@ -3954,7 +3954,7 @@ function interfaces_BazBar_construct(args) {
 interfaces_BazBar.prototype.construct = interfaces_BazBar_construct;
 
 function interfaces_BazBar__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazBar.prototype._getClass = interfaces_BazBar__getClass;
 
@@ -3981,14 +3981,14 @@ function interfaces_BazFaz_quark_Object__m1_Method__init_fields__() {
 interfaces_BazFaz_quark_Object__m1_Method.prototype.__init_fields__ = interfaces_BazFaz_quark_Object__m1_Method__init_fields__;
 
 function interfaces_BazFaz_quark_Object__m1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.BazFaz; });
     (obj).m1();
     return null;
 }
 interfaces_BazFaz_quark_Object__m1_Method.prototype.invoke = interfaces_BazFaz_quark_Object__m1_Method_invoke;
 
 function interfaces_BazFaz_quark_Object__m1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazFaz_quark_Object__m1_Method.prototype._getClass = interfaces_BazFaz_quark_Object__m1_Method__getClass;
 
@@ -4014,14 +4014,14 @@ function interfaces_BazFaz_quark_Object__m2_Method__init_fields__() {
 interfaces_BazFaz_quark_Object__m2_Method.prototype.__init_fields__ = interfaces_BazFaz_quark_Object__m2_Method__init_fields__;
 
 function interfaces_BazFaz_quark_Object__m2_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return interfaces.BazFaz; });
     (obj).m2((args)[0]);
     return null;
 }
 interfaces_BazFaz_quark_Object__m2_Method.prototype.invoke = interfaces_BazFaz_quark_Object__m2_Method_invoke;
 
 function interfaces_BazFaz_quark_Object__m2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazFaz_quark_Object__m2_Method.prototype._getClass = interfaces_BazFaz_quark_Object__m2_Method__getClass;
 
@@ -4047,14 +4047,14 @@ function interfaces_BazFaz_quark_Object__m3_Method__init_fields__() {
 interfaces_BazFaz_quark_Object__m3_Method.prototype.__init_fields__ = interfaces_BazFaz_quark_Object__m3_Method__init_fields__;
 
 function interfaces_BazFaz_quark_Object__m3_Method_invoke(object, args) {
-    var obj = object;
-    (obj).m3((args)[0]);
+    var obj = _qrt.cast(object, function () { return interfaces.BazFaz; });
+    (obj).m3(_qrt.cast((args)[0], function () { return Array; }));
     return null;
 }
 interfaces_BazFaz_quark_Object__m3_Method.prototype.invoke = interfaces_BazFaz_quark_Object__m3_Method_invoke;
 
 function interfaces_BazFaz_quark_Object__m3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazFaz_quark_Object__m3_Method.prototype._getClass = interfaces_BazFaz_quark_Object__m3_Method__getClass;
 
@@ -4089,7 +4089,7 @@ function interfaces_BazFaz_quark_Object__construct(args) {
 interfaces_BazFaz_quark_Object_.prototype.construct = interfaces_BazFaz_quark_Object__construct;
 
 function interfaces_BazFaz_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 interfaces_BazFaz_quark_Object_.prototype._getClass = interfaces_BazFaz_quark_Object___getClass;
 
@@ -4116,13 +4116,13 @@ function classes_Overload___add___Method__init_fields__() {
 classes_Overload___add___Method.prototype.__init_fields__ = classes_Overload___add___Method__init_fields__;
 
 function classes_Overload___add___Method_invoke(object, args) {
-    var obj = object;
-    return (obj).__add__((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.Overload; });
+    return (obj).__add__(_qrt.cast((args)[0], function () { return classes.Overload; }));
 }
 classes_Overload___add___Method.prototype.invoke = classes_Overload___add___Method_invoke;
 
 function classes_Overload___add___Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Overload___add___Method.prototype._getClass = classes_Overload___add___Method__getClass;
 
@@ -4148,13 +4148,13 @@ function classes_Overload___mul___Method__init_fields__() {
 classes_Overload___mul___Method.prototype.__init_fields__ = classes_Overload___mul___Method__init_fields__;
 
 function classes_Overload___mul___Method_invoke(object, args) {
-    var obj = object;
-    return (obj).__mul__((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.Overload; });
+    return (obj).__mul__(_qrt.cast((args)[0], function () { return classes.Overload; }));
 }
 classes_Overload___mul___Method.prototype.invoke = classes_Overload___mul___Method_invoke;
 
 function classes_Overload___mul___Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Overload___mul___Method.prototype._getClass = classes_Overload___mul___Method__getClass;
 
@@ -4180,14 +4180,14 @@ function classes_Overload_test_Method__init_fields__() {
 classes_Overload_test_Method.prototype.__init_fields__ = classes_Overload_test_Method__init_fields__;
 
 function classes_Overload_test_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return classes.Overload; });
     (obj).test();
     return null;
 }
 classes_Overload_test_Method.prototype.invoke = classes_Overload_test_Method_invoke;
 
 function classes_Overload_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Overload_test_Method.prototype._getClass = classes_Overload_test_Method__getClass;
 
@@ -4217,12 +4217,12 @@ function classes_Overload__init_fields__() {
 classes_Overload.prototype.__init_fields__ = classes_Overload__init_fields__;
 classes_Overload.singleton = new classes_Overload();
 function classes_Overload_construct(args) {
-    return new classes.Overload((args)[0]);
+    return new classes.Overload(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_Overload.prototype.construct = classes_Overload_construct;
 
 function classes_Overload__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Overload.prototype._getClass = classes_Overload__getClass;
 
@@ -4249,14 +4249,14 @@ function classes_Test_test_Method__init_fields__() {
 classes_Test_test_Method.prototype.__init_fields__ = classes_Test_test_Method__init_fields__;
 
 function classes_Test_test_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return classes.Test; });
     (obj).test();
     return null;
 }
 classes_Test_test_Method.prototype.invoke = classes_Test_test_Method_invoke;
 
 function classes_Test_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Test_test_Method.prototype._getClass = classes_Test_test_Method__getClass;
 
@@ -4291,7 +4291,7 @@ function classes_Test_construct(args) {
 classes_Test.prototype.construct = classes_Test_construct;
 
 function classes_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_Test.prototype._getClass = classes_Test__getClass;
 
@@ -4318,14 +4318,14 @@ function classes_string_test_check_Method__init_fields__() {
 classes_string_test_check_Method.prototype.__init_fields__ = classes_string_test_check_Method__init_fields__;
 
 function classes_string_test_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.string_test; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_string_test_check_Method.prototype.invoke = classes_string_test_check_Method_invoke;
 
 function classes_string_test_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_string_test_check_Method.prototype._getClass = classes_string_test_check_Method__getClass;
 
@@ -4360,7 +4360,7 @@ function classes_string_test_construct(args) {
 classes_string_test.prototype.construct = classes_string_test_construct;
 
 function classes_string_test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_string_test.prototype._getClass = classes_string_test__getClass;
 
@@ -4387,13 +4387,13 @@ function classes_test_size_does_Method__init_fields__() {
 classes_test_size_does_Method.prototype.__init_fields__ = classes_test_size_does_Method__init_fields__;
 
 function classes_test_size_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_size; });
+    return (obj).does(_qrt.cast((args)[0], function () { return Number; }));
 }
 classes_test_size_does_Method.prototype.invoke = classes_test_size_does_Method_invoke;
 
 function classes_test_size_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_size_does_Method.prototype._getClass = classes_test_size_does_Method__getClass;
 
@@ -4419,14 +4419,14 @@ function classes_test_size_check_Method__init_fields__() {
 classes_test_size_check_Method.prototype.__init_fields__ = classes_test_size_check_Method__init_fields__;
 
 function classes_test_size_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_size; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_size_check_Method.prototype.invoke = classes_test_size_check_Method_invoke;
 
 function classes_test_size_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_size_check_Method.prototype._getClass = classes_test_size_check_Method__getClass;
 
@@ -4456,12 +4456,12 @@ function classes_test_size__init_fields__() {
 classes_test_size.prototype.__init_fields__ = classes_test_size__init_fields__;
 classes_test_size.singleton = new classes_test_size();
 function classes_test_size_construct(args) {
-    return new classes.test_size((args)[0]);
+    return new classes.test_size(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_size.prototype.construct = classes_test_size_construct;
 
 function classes_test_size__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_size.prototype._getClass = classes_test_size__getClass;
 
@@ -4488,13 +4488,13 @@ function classes_test_startsWith_that_Method__init_fields__() {
 classes_test_startsWith_that_Method.prototype.__init_fields__ = classes_test_startsWith_that_Method__init_fields__;
 
 function classes_test_startsWith_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_startsWith; });
+    return (obj).that(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_startsWith_that_Method.prototype.invoke = classes_test_startsWith_that_Method_invoke;
 
 function classes_test_startsWith_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_startsWith_that_Method.prototype._getClass = classes_test_startsWith_that_Method__getClass;
 
@@ -4520,13 +4520,13 @@ function classes_test_startsWith_does_Method__init_fields__() {
 classes_test_startsWith_does_Method.prototype.__init_fields__ = classes_test_startsWith_does_Method__init_fields__;
 
 function classes_test_startsWith_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_startsWith; });
+    return (obj).does(_qrt.cast((args)[0], function () { return Boolean; }));
 }
 classes_test_startsWith_does_Method.prototype.invoke = classes_test_startsWith_does_Method_invoke;
 
 function classes_test_startsWith_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_startsWith_does_Method.prototype._getClass = classes_test_startsWith_does_Method__getClass;
 
@@ -4552,14 +4552,14 @@ function classes_test_startsWith_check_Method__init_fields__() {
 classes_test_startsWith_check_Method.prototype.__init_fields__ = classes_test_startsWith_check_Method__init_fields__;
 
 function classes_test_startsWith_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_startsWith; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_startsWith_check_Method.prototype.invoke = classes_test_startsWith_check_Method_invoke;
 
 function classes_test_startsWith_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_startsWith_check_Method.prototype._getClass = classes_test_startsWith_check_Method__getClass;
 
@@ -4589,12 +4589,12 @@ function classes_test_startsWith__init_fields__() {
 classes_test_startsWith.prototype.__init_fields__ = classes_test_startsWith__init_fields__;
 classes_test_startsWith.singleton = new classes_test_startsWith();
 function classes_test_startsWith_construct(args) {
-    return new classes.test_startsWith((args)[0]);
+    return new classes.test_startsWith(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_startsWith.prototype.construct = classes_test_startsWith_construct;
 
 function classes_test_startsWith__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_startsWith.prototype._getClass = classes_test_startsWith__getClass;
 
@@ -4621,13 +4621,13 @@ function classes_test_endsWith_that_Method__init_fields__() {
 classes_test_endsWith_that_Method.prototype.__init_fields__ = classes_test_endsWith_that_Method__init_fields__;
 
 function classes_test_endsWith_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_endsWith; });
+    return (obj).that(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_endsWith_that_Method.prototype.invoke = classes_test_endsWith_that_Method_invoke;
 
 function classes_test_endsWith_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_endsWith_that_Method.prototype._getClass = classes_test_endsWith_that_Method__getClass;
 
@@ -4653,13 +4653,13 @@ function classes_test_endsWith_does_Method__init_fields__() {
 classes_test_endsWith_does_Method.prototype.__init_fields__ = classes_test_endsWith_does_Method__init_fields__;
 
 function classes_test_endsWith_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_endsWith; });
+    return (obj).does(_qrt.cast((args)[0], function () { return Boolean; }));
 }
 classes_test_endsWith_does_Method.prototype.invoke = classes_test_endsWith_does_Method_invoke;
 
 function classes_test_endsWith_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_endsWith_does_Method.prototype._getClass = classes_test_endsWith_does_Method__getClass;
 
@@ -4685,14 +4685,14 @@ function classes_test_endsWith_check_Method__init_fields__() {
 classes_test_endsWith_check_Method.prototype.__init_fields__ = classes_test_endsWith_check_Method__init_fields__;
 
 function classes_test_endsWith_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_endsWith; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_endsWith_check_Method.prototype.invoke = classes_test_endsWith_check_Method_invoke;
 
 function classes_test_endsWith_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_endsWith_check_Method.prototype._getClass = classes_test_endsWith_check_Method__getClass;
 
@@ -4722,12 +4722,12 @@ function classes_test_endsWith__init_fields__() {
 classes_test_endsWith.prototype.__init_fields__ = classes_test_endsWith__init_fields__;
 classes_test_endsWith.singleton = new classes_test_endsWith();
 function classes_test_endsWith_construct(args) {
-    return new classes.test_endsWith((args)[0]);
+    return new classes.test_endsWith(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_endsWith.prototype.construct = classes_test_endsWith_construct;
 
 function classes_test_endsWith__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_endsWith.prototype._getClass = classes_test_endsWith__getClass;
 
@@ -4754,13 +4754,13 @@ function classes_test_find_that_Method__init_fields__() {
 classes_test_find_that_Method.prototype.__init_fields__ = classes_test_find_that_Method__init_fields__;
 
 function classes_test_find_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_find; });
+    return (obj).that(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_find_that_Method.prototype.invoke = classes_test_find_that_Method_invoke;
 
 function classes_test_find_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_find_that_Method.prototype._getClass = classes_test_find_that_Method__getClass;
 
@@ -4786,13 +4786,13 @@ function classes_test_find_does_Method__init_fields__() {
 classes_test_find_does_Method.prototype.__init_fields__ = classes_test_find_does_Method__init_fields__;
 
 function classes_test_find_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_find; });
+    return (obj).does(_qrt.cast((args)[0], function () { return Number; }));
 }
 classes_test_find_does_Method.prototype.invoke = classes_test_find_does_Method_invoke;
 
 function classes_test_find_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_find_does_Method.prototype._getClass = classes_test_find_does_Method__getClass;
 
@@ -4818,14 +4818,14 @@ function classes_test_find_check_Method__init_fields__() {
 classes_test_find_check_Method.prototype.__init_fields__ = classes_test_find_check_Method__init_fields__;
 
 function classes_test_find_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_find; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_find_check_Method.prototype.invoke = classes_test_find_check_Method_invoke;
 
 function classes_test_find_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_find_check_Method.prototype._getClass = classes_test_find_check_Method__getClass;
 
@@ -4855,12 +4855,12 @@ function classes_test_find__init_fields__() {
 classes_test_find.prototype.__init_fields__ = classes_test_find__init_fields__;
 classes_test_find.singleton = new classes_test_find();
 function classes_test_find_construct(args) {
-    return new classes.test_find((args)[0]);
+    return new classes.test_find(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_find.prototype.construct = classes_test_find_construct;
 
 function classes_test_find__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_find.prototype._getClass = classes_test_find__getClass;
 
@@ -4887,13 +4887,13 @@ function classes_test_substring_that_Method__init_fields__() {
 classes_test_substring_that_Method.prototype.__init_fields__ = classes_test_substring_that_Method__init_fields__;
 
 function classes_test_substring_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return classes.test_substring; });
+    return (obj).that(_qrt.cast((args)[0], function () { return Number; }), _qrt.cast((args)[1], function () { return Number; }));
 }
 classes_test_substring_that_Method.prototype.invoke = classes_test_substring_that_Method_invoke;
 
 function classes_test_substring_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_substring_that_Method.prototype._getClass = classes_test_substring_that_Method__getClass;
 
@@ -4919,13 +4919,13 @@ function classes_test_substring_does_Method__init_fields__() {
 classes_test_substring_does_Method.prototype.__init_fields__ = classes_test_substring_does_Method__init_fields__;
 
 function classes_test_substring_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_substring; });
+    return (obj).does(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_substring_does_Method.prototype.invoke = classes_test_substring_does_Method_invoke;
 
 function classes_test_substring_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_substring_does_Method.prototype._getClass = classes_test_substring_does_Method__getClass;
 
@@ -4951,14 +4951,14 @@ function classes_test_substring_check_Method__init_fields__() {
 classes_test_substring_check_Method.prototype.__init_fields__ = classes_test_substring_check_Method__init_fields__;
 
 function classes_test_substring_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_substring; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_substring_check_Method.prototype.invoke = classes_test_substring_check_Method_invoke;
 
 function classes_test_substring_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_substring_check_Method.prototype._getClass = classes_test_substring_check_Method__getClass;
 
@@ -4988,12 +4988,12 @@ function classes_test_substring__init_fields__() {
 classes_test_substring.prototype.__init_fields__ = classes_test_substring__init_fields__;
 classes_test_substring.singleton = new classes_test_substring();
 function classes_test_substring_construct(args) {
-    return new classes.test_substring((args)[0]);
+    return new classes.test_substring(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_substring.prototype.construct = classes_test_substring_construct;
 
 function classes_test_substring__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_substring.prototype._getClass = classes_test_substring__getClass;
 
@@ -5020,13 +5020,13 @@ function classes_test_replace_that_Method__init_fields__() {
 classes_test_replace_that_Method.prototype.__init_fields__ = classes_test_replace_that_Method__init_fields__;
 
 function classes_test_replace_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return classes.test_replace; });
+    return (obj).that(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }));
 }
 classes_test_replace_that_Method.prototype.invoke = classes_test_replace_that_Method_invoke;
 
 function classes_test_replace_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_replace_that_Method.prototype._getClass = classes_test_replace_that_Method__getClass;
 
@@ -5052,13 +5052,13 @@ function classes_test_replace_does_Method__init_fields__() {
 classes_test_replace_does_Method.prototype.__init_fields__ = classes_test_replace_does_Method__init_fields__;
 
 function classes_test_replace_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_replace; });
+    return (obj).does(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_replace_does_Method.prototype.invoke = classes_test_replace_does_Method_invoke;
 
 function classes_test_replace_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_replace_does_Method.prototype._getClass = classes_test_replace_does_Method__getClass;
 
@@ -5084,14 +5084,14 @@ function classes_test_replace_check_Method__init_fields__() {
 classes_test_replace_check_Method.prototype.__init_fields__ = classes_test_replace_check_Method__init_fields__;
 
 function classes_test_replace_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_replace; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_replace_check_Method.prototype.invoke = classes_test_replace_check_Method_invoke;
 
 function classes_test_replace_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_replace_check_Method.prototype._getClass = classes_test_replace_check_Method__getClass;
 
@@ -5121,12 +5121,12 @@ function classes_test_replace__init_fields__() {
 classes_test_replace.prototype.__init_fields__ = classes_test_replace__init_fields__;
 classes_test_replace.singleton = new classes_test_replace();
 function classes_test_replace_construct(args) {
-    return new classes.test_replace((args)[0]);
+    return new classes.test_replace(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_replace.prototype.construct = classes_test_replace_construct;
 
 function classes_test_replace__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_replace.prototype._getClass = classes_test_replace__getClass;
 
@@ -5153,13 +5153,13 @@ function classes_test_join_that_Method__init_fields__() {
 classes_test_join_that_Method.prototype.__init_fields__ = classes_test_join_that_Method__init_fields__;
 
 function classes_test_join_that_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return classes.test_join; });
     return (obj).that();
 }
 classes_test_join_that_Method.prototype.invoke = classes_test_join_that_Method_invoke;
 
 function classes_test_join_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_join_that_Method.prototype._getClass = classes_test_join_that_Method__getClass;
 
@@ -5185,13 +5185,13 @@ function classes_test_join_a_Method__init_fields__() {
 classes_test_join_a_Method.prototype.__init_fields__ = classes_test_join_a_Method__init_fields__;
 
 function classes_test_join_a_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).a((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_join; });
+    return (obj).a(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_join_a_Method.prototype.invoke = classes_test_join_a_Method_invoke;
 
 function classes_test_join_a_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_join_a_Method.prototype._getClass = classes_test_join_a_Method__getClass;
 
@@ -5217,13 +5217,13 @@ function classes_test_join_does_Method__init_fields__() {
 classes_test_join_does_Method.prototype.__init_fields__ = classes_test_join_does_Method__init_fields__;
 
 function classes_test_join_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_join; });
+    return (obj).does(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_join_does_Method.prototype.invoke = classes_test_join_does_Method_invoke;
 
 function classes_test_join_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_join_does_Method.prototype._getClass = classes_test_join_does_Method__getClass;
 
@@ -5249,14 +5249,14 @@ function classes_test_join_check_Method__init_fields__() {
 classes_test_join_check_Method.prototype.__init_fields__ = classes_test_join_check_Method__init_fields__;
 
 function classes_test_join_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_join; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_join_check_Method.prototype.invoke = classes_test_join_check_Method_invoke;
 
 function classes_test_join_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_join_check_Method.prototype._getClass = classes_test_join_check_Method__getClass;
 
@@ -5286,12 +5286,12 @@ function classes_test_join__init_fields__() {
 classes_test_join.prototype.__init_fields__ = classes_test_join__init_fields__;
 classes_test_join.singleton = new classes_test_join();
 function classes_test_join_construct(args) {
-    return new classes.test_join((args)[0]);
+    return new classes.test_join(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_join.prototype.construct = classes_test_join_construct;
 
 function classes_test_join__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_join.prototype._getClass = classes_test_join__getClass;
 
@@ -5318,13 +5318,13 @@ function classes_test_split_that_Method__init_fields__() {
 classes_test_split_that_Method.prototype.__init_fields__ = classes_test_split_that_Method__init_fields__;
 
 function classes_test_split_that_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).that((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_split; });
+    return (obj).that(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_split_that_Method.prototype.invoke = classes_test_split_that_Method_invoke;
 
 function classes_test_split_that_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_split_that_Method.prototype._getClass = classes_test_split_that_Method__getClass;
 
@@ -5350,13 +5350,13 @@ function classes_test_split_does_Method__init_fields__() {
 classes_test_split_does_Method.prototype.__init_fields__ = classes_test_split_does_Method__init_fields__;
 
 function classes_test_split_does_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).does((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.test_split; });
+    return (obj).does(_qrt.cast((args)[0], function () { return String; }));
 }
 classes_test_split_does_Method.prototype.invoke = classes_test_split_does_Method_invoke;
 
 function classes_test_split_does_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_split_does_Method.prototype._getClass = classes_test_split_does_Method__getClass;
 
@@ -5382,14 +5382,14 @@ function classes_test_split_check_Method__init_fields__() {
 classes_test_split_check_Method.prototype.__init_fields__ = classes_test_split_check_Method__init_fields__;
 
 function classes_test_split_check_Method_invoke(object, args) {
-    var obj = object;
-    (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+    var obj = _qrt.cast(object, function () { return classes.test_split; });
+    (obj).check(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return String; }), _qrt.cast((args)[3], function () { return String; }));
     return null;
 }
 classes_test_split_check_Method.prototype.invoke = classes_test_split_check_Method_invoke;
 
 function classes_test_split_check_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_split_check_Method.prototype._getClass = classes_test_split_check_Method__getClass;
 
@@ -5419,12 +5419,12 @@ function classes_test_split__init_fields__() {
 classes_test_split.prototype.__init_fields__ = classes_test_split__init_fields__;
 classes_test_split.singleton = new classes_test_split();
 function classes_test_split_construct(args) {
-    return new classes.test_split((args)[0], (args)[1]);
+    return new classes.test_split(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }));
 }
 classes_test_split.prototype.construct = classes_test_split_construct;
 
 function classes_test_split__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_test_split.prototype._getClass = classes_test_split__getClass;
 
@@ -5451,13 +5451,13 @@ function classes_stuff_Test_foo_Method__init_fields__() {
 classes_stuff_Test_foo_Method.prototype.__init_fields__ = classes_stuff_Test_foo_Method__init_fields__;
 
 function classes_stuff_Test_foo_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).foo((args)[0]);
+    var obj = _qrt.cast(object, function () { return classes.stuff.Test; });
+    return (obj).foo(_qrt.cast((args)[0], function () { return classes.stuff.Test; }));
 }
 classes_stuff_Test_foo_Method.prototype.invoke = classes_stuff_Test_foo_Method_invoke;
 
 function classes_stuff_Test_foo_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_stuff_Test_foo_Method.prototype._getClass = classes_stuff_Test_foo_Method__getClass;
 
@@ -5483,14 +5483,14 @@ function classes_stuff_Test_test_Method__init_fields__() {
 classes_stuff_Test_test_Method.prototype.__init_fields__ = classes_stuff_Test_test_Method__init_fields__;
 
 function classes_stuff_Test_test_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return classes.stuff.Test; });
     (obj).test();
     return null;
 }
 classes_stuff_Test_test_Method.prototype.invoke = classes_stuff_Test_test_Method_invoke;
 
 function classes_stuff_Test_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_stuff_Test_test_Method.prototype._getClass = classes_stuff_Test_test_Method__getClass;
 
@@ -5525,7 +5525,7 @@ function classes_stuff_Test_construct(args) {
 classes_stuff_Test.prototype.construct = classes_stuff_Test_construct;
 
 function classes_stuff_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 classes_stuff_Test.prototype._getClass = classes_stuff_Test__getClass;
 
@@ -5552,14 +5552,14 @@ function statics_Foo_setCount_Method__init_fields__() {
 statics_Foo_setCount_Method.prototype.__init_fields__ = statics_Foo_setCount_Method__init_fields__;
 
 function statics_Foo_setCount_Method_invoke(object, args) {
-    var obj = object;
-    statics.Foo.setCount((args)[0]);
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
+    statics.Foo.setCount(_qrt.cast((args)[0], function () { return Number; }));
     return null;
 }
 statics_Foo_setCount_Method.prototype.invoke = statics_Foo_setCount_Method_invoke;
 
 function statics_Foo_setCount_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_setCount_Method.prototype._getClass = statics_Foo_setCount_Method__getClass;
 
@@ -5585,13 +5585,13 @@ function statics_Foo_getCount_Method__init_fields__() {
 statics_Foo_getCount_Method.prototype.__init_fields__ = statics_Foo_getCount_Method__init_fields__;
 
 function statics_Foo_getCount_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
     return statics.Foo.getCount();
 }
 statics_Foo_getCount_Method.prototype.invoke = statics_Foo_getCount_Method_invoke;
 
 function statics_Foo_getCount_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_getCount_Method.prototype._getClass = statics_Foo_getCount_Method__getClass;
 
@@ -5617,14 +5617,14 @@ function statics_Foo_test1_Method__init_fields__() {
 statics_Foo_test1_Method.prototype.__init_fields__ = statics_Foo_test1_Method__init_fields__;
 
 function statics_Foo_test1_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
     (obj).test1();
     return null;
 }
 statics_Foo_test1_Method.prototype.invoke = statics_Foo_test1_Method_invoke;
 
 function statics_Foo_test1_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_test1_Method.prototype._getClass = statics_Foo_test1_Method__getClass;
 
@@ -5650,14 +5650,14 @@ function statics_Foo_test2_Method__init_fields__() {
 statics_Foo_test2_Method.prototype.__init_fields__ = statics_Foo_test2_Method__init_fields__;
 
 function statics_Foo_test2_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
     (obj).test2();
     return null;
 }
 statics_Foo_test2_Method.prototype.invoke = statics_Foo_test2_Method_invoke;
 
 function statics_Foo_test2_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_test2_Method.prototype._getClass = statics_Foo_test2_Method__getClass;
 
@@ -5683,14 +5683,14 @@ function statics_Foo_test3_Method__init_fields__() {
 statics_Foo_test3_Method.prototype.__init_fields__ = statics_Foo_test3_Method__init_fields__;
 
 function statics_Foo_test3_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
     (obj).test3();
     return null;
 }
 statics_Foo_test3_Method.prototype.invoke = statics_Foo_test3_Method_invoke;
 
 function statics_Foo_test3_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_test3_Method.prototype._getClass = statics_Foo_test3_Method__getClass;
 
@@ -5716,14 +5716,14 @@ function statics_Foo_test4_Method__init_fields__() {
 statics_Foo_test4_Method.prototype.__init_fields__ = statics_Foo_test4_Method__init_fields__;
 
 function statics_Foo_test4_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return statics.Foo; });
     (obj).test4();
     return null;
 }
 statics_Foo_test4_Method.prototype.invoke = statics_Foo_test4_Method_invoke;
 
 function statics_Foo_test4_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo_test4_Method.prototype._getClass = statics_Foo_test4_Method__getClass;
 
@@ -5758,7 +5758,7 @@ function statics_Foo_construct(args) {
 statics_Foo.prototype.construct = statics_Foo_construct;
 
 function statics_Foo__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 statics_Foo.prototype._getClass = statics_Foo__getClass;
 
@@ -5785,13 +5785,13 @@ function docs_Test_test_Method__init_fields__() {
 docs_Test_test_Method.prototype.__init_fields__ = docs_Test_test_Method__init_fields__;
 
 function docs_Test_test_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).test((args)[0]);
+    var obj = _qrt.cast(object, function () { return docs.Test; });
+    return (obj).test(_qrt.cast((args)[0], function () { return String; }));
 }
 docs_Test_test_Method.prototype.invoke = docs_Test_test_Method_invoke;
 
 function docs_Test_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 docs_Test_test_Method.prototype._getClass = docs_Test_test_Method__getClass;
 
@@ -5826,7 +5826,7 @@ function docs_Test_construct(args) {
 docs_Test.prototype.construct = docs_Test_construct;
 
 function docs_Test__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 docs_Test.prototype._getClass = docs_Test__getClass;
 
@@ -5862,7 +5862,7 @@ function quark_List_quark_List_quark_Object___construct(args) {
 quark_List_quark_List_quark_Object__.prototype.construct = quark_List_quark_List_quark_Object___construct;
 
 function quark_List_quark_List_quark_Object____getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 quark_List_quark_List_quark_Object__.prototype._getClass = quark_List_quark_List_quark_Object____getClass;
 
@@ -5898,7 +5898,7 @@ function quark_List_quark_Object__construct(args) {
 quark_List_quark_Object_.prototype.construct = quark_List_quark_Object__construct;
 
 function quark_List_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 quark_List_quark_Object_.prototype._getClass = quark_List_quark_Object___getClass;
 
@@ -5934,7 +5934,7 @@ function quark_List_quark_String__construct(args) {
 quark_List_quark_String_.prototype.construct = quark_List_quark_String__construct;
 
 function quark_List_quark_String___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 quark_List_quark_String_.prototype._getClass = quark_List_quark_String___getClass;
 
@@ -6025,7 +6025,7 @@ Root.quark_List_quark_List_quark_Object___md = quark_List_quark_List_quark_Objec
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
 function Root__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Root.prototype._getClass = Root__getClass;
 

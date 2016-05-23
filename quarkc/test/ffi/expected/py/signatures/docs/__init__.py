@@ -32,7 +32,7 @@ class Test(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Test.docs_Test_ref = quark_ffi_signatures_md.Root.docs_Test_md

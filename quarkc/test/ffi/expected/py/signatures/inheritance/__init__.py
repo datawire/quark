@@ -26,7 +26,7 @@ class Base(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Base.inheritance_Base_ref = quark_ffi_signatures_md.Root.inheritance_Base_md
@@ -56,13 +56,13 @@ class Test(Base):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
         if ((name) == (u"mumble")):
-            (self).mumble = value
+            (self).mumble = _cast(value, lambda: unicode)
 
         if ((name) == (u"later")):
-            (self).later = value
+            (self).later = _cast(value, lambda: unicode)
 
 
 Test.inheritance_Test_ref = quark_ffi_signatures_md.Root.inheritance_Test_md
@@ -84,7 +84,7 @@ class A(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 A.inheritance_A_ref = quark_ffi_signatures_md.Root.inheritance_A_md
@@ -109,7 +109,7 @@ class B(A):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 B.inheritance_B_ref = quark_ffi_signatures_md.Root.inheritance_B_md
@@ -134,7 +134,7 @@ class C(A):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 C.inheritance_C_ref = quark_ffi_signatures_md.Root.inheritance_C_md
@@ -174,7 +174,7 @@ class Y(X):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Y.inheritance_Y_ref = quark_ffi_signatures_md.Root.inheritance_Y_md
@@ -184,7 +184,7 @@ class Message(object):
     def __init__(self): self._init()
 
     def encode(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getClass(self):
         return u"inheritance.Message"
@@ -219,7 +219,7 @@ class Pong(Message):
         super(Pong, self).__init__();
 
     def toString(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getClass(self):
         return u"inheritance.Pong"

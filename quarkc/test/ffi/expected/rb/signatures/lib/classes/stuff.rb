@@ -27,7 +27,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
     def foo(t)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.classes.stuff.Test }
 
         nil
     end

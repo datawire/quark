@@ -87,7 +87,7 @@ class Foo < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("count"))
-            ::Quark.statics.Foo.count = value
+            ::Quark.statics.Foo.count = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
 
         nil

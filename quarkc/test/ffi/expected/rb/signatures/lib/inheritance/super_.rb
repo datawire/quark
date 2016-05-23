@@ -54,7 +54,7 @@ class A < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -116,7 +116,7 @@ class B < ::Quark.inheritance.super_.A
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
