@@ -30,6 +30,10 @@ Latest
 * New documents CONTRIBUTING.md and CODE_OF_CONDUCT.md
 * README.md points to the latest (0.6) documentation
 
+### Other
+
+* document the preferred install method using install.sh
+
 0.6.74
 ------
 
