@@ -18,7 +18,7 @@ import threading
 import base64
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
-             _HTTPRequest _HTTPResponse _default_codec _getClass
+             _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
              _LoggerConfig _cast _get_file_contents""".split()
 
@@ -52,6 +52,12 @@ def _url_get(url):
         return urllib2.urlopen(url).read()
     except Exception:
         return "error"
+
+def _map_remove(m, key):
+    try:
+        return m.pop(key)
+    except KeyError:
+        return None
 
 def _cast(value, callback):
     try:

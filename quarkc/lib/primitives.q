@@ -331,6 +331,13 @@ namespace quark {
                                                $py{($self)[$index] = ($value)}
                                                $rb{($self)[$index] = ($value)}
                                                $js{($self)[$index] = ($value)};
+        @doc("Mutates the list, removing the element at the specified position.")
+        @doc("Shifts any subsequent elements to the left (subtracts one from their indices).")
+        @doc("Returns the element that was removed.")
+        macro T remove(int index) $java{($self).remove($index)}
+                                  $py{($self).pop($index)}
+                                  $rb{($self).delete_at($index)}
+                                  $js{_qrt.list_remove(($self), ($index))};
         macro List<T> slice(int start, int stop) new ListUtil<T>().slice(self, start, stop);
         macro int size() $java{($self).size()}
                          $py{len($self)}
@@ -354,6 +361,12 @@ namespace quark {
                                $py{($self).get($key)}
                                $rb{($self)[$key]}
                                $js{_qrt.map_get(($self), ($key))};
+        @doc("Mutates the map, removing the specified key.")
+        @doc("Returns the previous value associated with key, or null.")
+        macro V remove(K key) $java{($self).remove($key)}
+                              $py{_map_remove(($self), ($key))}
+                              $rb{($self).delete($key)}
+                              $js{_qrt.map_remove(($self), ($key))};
         macro bool contains(K key) $java{($self).containsKey($key)}
                                    $py{($key) in ($self)}
                                    $rb{($self).key?($key)}

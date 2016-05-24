@@ -101,6 +101,20 @@
     }
     exports.map_get = map_get;
 
+    function map_remove(m, key) {
+        var res = map_get(m, key);
+        m.delete(key);
+        return res;
+    }
+    exports.map_remove = map_remove;
+
+    function list_remove(l, idx) {
+        var res = l[idx];
+        l.splice(idx, 1);
+        return res;
+    }
+    exports.list_remove = list_remove;
+
     function env_get(key) {
         var res = process.env[key];
         if (typeof res != "undefined") {

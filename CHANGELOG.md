@@ -13,6 +13,7 @@ Latest
   * `quark.os.FS.fileContents(...)` is now `quark.os.readFileAsString(...)`.
   * `quark.os.FS.userHomeDir()` is now `quark.os.getUserHomeDir()`.
   * `quark.os.Environment.ENV.get(key, default_value)` added.
+* New `remove(...)` method to remove items from Maps and Lists
 
 ### Foreign-function interface
 

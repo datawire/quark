@@ -58,6 +58,20 @@ class MapTest {
         checkEqual(null, theMap["three"]);
     }
 
+    void test_set() {
+        checkEqual(null, theMap["new_key"]);
+        theMap["new_key"] = 123;
+        checkEqual(123, theMap["new_key"]);
+    }
+
+    void test_remove() {
+        checkEqual(null, theMap.remove("not_present"));
+        checkEqual(1, theMap.remove("one"));
+        checkEqual(null, theMap.remove("one"));
+        checkEqual(2, theMap.remove("two"));
+        checkEqual(0, theMap.keys().size());
+    }
+
     void test_update() {
         Map<String, int> target = new Map<String, int>();
         checkEqual(0, target.keys().size());
