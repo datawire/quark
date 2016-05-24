@@ -361,3 +361,14 @@ def is_newer(target, *deps):
 
 def compiled_quark(url):
     return "%sc" % url
+
+def lineinfo(node):
+    trace = getattr(node, "_trace", None)
+    stack = [getattr(node, "filename", "<none>")]
+    while trace:
+        stack.append("%s:%s:" % (inspect.getfile(trace.annotator), trace.annotator.__name__))
+        stack.append(trace.text)
+        stack.append("<generated>")
+        trace = trace.prev
+    stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
+    return "\n".join(stack)
