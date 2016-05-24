@@ -93,6 +93,10 @@ Indices and tables
 * :ref:`search`
 """
 
+not_implemented_template = """\
+raise NotImplementedError('`{clazz}.{name}` is an abstract method')""".format
+
+
 def package(name, version, packages, srcs, deps):
     fmt_dict = {"name": name,
                 "version": version,
@@ -221,7 +225,8 @@ def static_method(doc, clazz, type, name, parameters, body):
     return "\n@staticmethod\ndef %s(%s)%s" % (name, ", ".join(parameters), body_with_doc)
 
 def abstract_method(doc, clazz, type, name, parameters):
-    return "\ndef %s(%s):%s\n    assert False" % (name, ", ".join(["self"] + parameters), doc)
+    body = not_implemented_template(clazz=clazz, name=name)
+    return ("\ndef %s(%s):%s\n    " + body) % (name, ", ".join(["self"] + parameters), doc)
 
 ## Interface definition
 
@@ -234,7 +239,8 @@ def interface(doc, iface, parameters, bases, static_fields, methods):
     return result
 
 def interface_method(doc, iface, type, name, parameters, body):
-    if body is None: body = ":\n    assert False"
+    if body is None:
+        body = ":\n    " + not_implemented_template(clazz=iface, name=name)
     body_with_doc = ":" + doc + body[1:]
     return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
 
@@ -335,7 +341,9 @@ def get_field(expr, field):
     return "(%s).%s" % (expr, field)
 
 def cast(type, expr):
-    return expr
+    if type == '':
+        return expr
+    return '_cast({expr}, lambda: {type})'.format(expr=expr, type=type)
 
 ## Literals
 

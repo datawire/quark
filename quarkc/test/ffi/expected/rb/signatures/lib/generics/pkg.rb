@@ -27,13 +27,13 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 
     def foo()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
 
     def get()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Foo.get` is an abstract method'
 
         nil
     end
@@ -67,7 +67,7 @@ class StringFoo < ::DatawireQuarkCore::QuarkObject
 
     def get()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -95,7 +95,7 @@ class StringFoo < ::DatawireQuarkCore::QuarkObject
 
     def foo()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -146,7 +146,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("contents"))
-            (self).contents = value
+            (self).contents = ::DatawireQuarkCore.cast(value) { ::Quark.T }
         end
 
         nil
@@ -201,7 +201,7 @@ class StringBox < ::Quark.generics.pkg.Box
     def _setField(name, value)
         
         if ((name) == ("contents"))
-            (self).contents = value
+            (self).contents = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil

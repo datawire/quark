@@ -7,7 +7,7 @@ import quark_ffi_signatures_md
 class A(object):
 
     def foo(self):
-        assert False
+        raise NotImplementedError('`A.foo` is an abstract method')
 
     def bar(self):
         pass
@@ -128,26 +128,26 @@ T5.interfaces_T5_ref = quark_ffi_signatures_md.Root.interfaces_T5_md
 class Foo(object):
 
     def m1(self):
-        assert False
+        raise NotImplementedError('`Foo.m1` is an abstract method')
 
     def m2(self, arg):
-        assert False
+        raise NotImplementedError('`Foo.m2` is an abstract method')
 
     def m3(self, args):
-        assert False
+        raise NotImplementedError('`Foo.m3` is an abstract method')
 
 Foo.interfaces_Foo_ref = quark_ffi_signatures_md.Root.interfaces_Foo_md
 Foo.quark_List_quark_String__ref = quark_ffi_signatures_md.Root.quark_List_quark_String__md
 class Bar(object):
 
     def m1(self):
-        assert False
+        raise NotImplementedError('`Bar.m1` is an abstract method')
 
     def m2(self, arg):
-        assert False
+        raise NotImplementedError('`Bar.m2` is an abstract method')
 
     def m3(self, args):
-        assert False
+        raise NotImplementedError('`Bar.m3` is an abstract method')
 
 Bar.interfaces_Bar_quark_Object__ref = quark_ffi_signatures_md.Root.interfaces_Bar_quark_Object__md
 class Baz(object):

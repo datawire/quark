@@ -18,7 +18,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end

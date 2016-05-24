@@ -25,7 +25,7 @@ class A(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 A.inheritance_super__A_ref = quark_ffi_signatures_md.Root.inheritance_super__A_md
@@ -50,7 +50,7 @@ class B(A):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 B.inheritance_super__B_ref = quark_ffi_signatures_md.Root.inheritance_super__B_md

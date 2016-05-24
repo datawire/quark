@@ -25,8 +25,8 @@ class SlackEventSlackEventLoadMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.load((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.SlackEvent }
+        obj.load(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::DatawireQuarkCore::JSONObject })
         return nil
 
         nil
@@ -34,7 +34,7 @@ class SlackEventSlackEventLoadMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -80,8 +80,8 @@ class SlackEventSlackEventDispatchMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.dispatch((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.SlackEvent }
+        obj.dispatch(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.SlackHandler })
         return nil
 
         nil
@@ -89,7 +89,7 @@ class SlackEventSlackEventDispatchMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -149,7 +149,7 @@ class SlackEventSlackEvent < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -197,8 +197,8 @@ class SlackEventSlackErrorLoadMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.load((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.SlackError }
+        obj.load(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::DatawireQuarkCore::JSONObject })
         return nil
 
         nil
@@ -206,7 +206,7 @@ class SlackEventSlackErrorLoadMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -252,8 +252,8 @@ class SlackEventSlackErrorDispatchMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.dispatch((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.SlackError }
+        obj.dispatch(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.SlackHandler })
         return nil
 
         nil
@@ -261,7 +261,7 @@ class SlackEventSlackErrorDispatchMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -321,7 +321,7 @@ class SlackEventSlackError < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -369,8 +369,8 @@ class SlackEventHelloDispatchMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.dispatch((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.Hello }
+        obj.dispatch(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.SlackHandler })
         return nil
 
         nil
@@ -378,7 +378,7 @@ class SlackEventHelloDispatchMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -424,8 +424,8 @@ class SlackEventHelloLoadMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.load((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.Hello }
+        obj.load(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::DatawireQuarkCore::JSONObject })
         return nil
 
         nil
@@ -433,7 +433,7 @@ class SlackEventHelloLoadMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -493,7 +493,7 @@ class SlackEventHello < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -541,8 +541,8 @@ class SlackEventMessageLoadMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.load((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.Message }
+        obj.load(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::DatawireQuarkCore::JSONObject })
         return nil
 
         nil
@@ -550,7 +550,7 @@ class SlackEventMessageLoadMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -596,8 +596,8 @@ class SlackEventMessageDispatchMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.dispatch((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.event.Message }
+        obj.dispatch(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.SlackHandler })
         return nil
 
         nil
@@ -605,7 +605,7 @@ class SlackEventMessageDispatchMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -665,7 +665,7 @@ class SlackEventMessage < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -727,7 +727,7 @@ class SlackEventEdited < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -775,8 +775,8 @@ class SlackSlackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onSlackEvent((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.SlackHandler }
+        obj.onSlackEvent(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.SlackEvent })
         return nil
 
         nil
@@ -784,7 +784,7 @@ class SlackSlackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -830,8 +830,8 @@ class SlackSlackHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHello((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.SlackHandler }
+        obj.onHello(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.Hello })
         return nil
 
         nil
@@ -839,7 +839,7 @@ class SlackSlackHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -885,8 +885,8 @@ class SlackSlackHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onSlackError((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.SlackHandler }
+        obj.onSlackError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.SlackError })
         return nil
 
         nil
@@ -894,7 +894,7 @@ class SlackSlackHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -940,8 +940,8 @@ class SlackSlackHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onMessage((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.SlackHandler }
+        obj.onMessage(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.Message })
         return nil
 
         nil
@@ -949,7 +949,7 @@ class SlackSlackHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1009,7 +1009,7 @@ class SlackSlackHandler < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1064,14 +1064,14 @@ class SlackUser < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.slack.User.new((args)[0], (args)[1])
+        return ::Quark.slack.User.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1119,8 +1119,8 @@ class SlackChannelSendMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.send((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Channel }
+        obj.send(::DatawireQuarkCore.cast((args)[0]) { ::String })
         return nil
 
         nil
@@ -1128,7 +1128,7 @@ class SlackChannelSendMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1181,14 +1181,14 @@ class SlackChannel < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.slack.Channel.new((args)[0], (args)[1])
+        return ::Quark.slack.Channel.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.Client }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1236,7 +1236,7 @@ class SlackClientConnectMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
         obj.connect()
         return nil
 
@@ -1245,7 +1245,7 @@ class SlackClientConnectMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1291,8 +1291,8 @@ class SlackClientRequestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.request((args)[0], (args)[1], (args)[2])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.request(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::Hash }, ::DatawireQuarkCore.cast((args)[2]) { ::Quark.quark.HTTPHandler })
         return nil
 
         nil
@@ -1300,7 +1300,7 @@ class SlackClientRequestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1346,8 +1346,8 @@ class SlackClientWsConnectMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.ws_connect((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.ws_connect(::DatawireQuarkCore.cast((args)[0]) { ::String })
         return nil
 
         nil
@@ -1355,7 +1355,7 @@ class SlackClientWsConnectMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1401,8 +1401,8 @@ class SlackClientWsSendMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.ws_send((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.ws_send(::DatawireQuarkCore.cast((args)[0]) { ::String })
         return nil
 
         nil
@@ -1410,7 +1410,7 @@ class SlackClientWsSendMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1456,8 +1456,8 @@ class SlackClientOnWSConnectedMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSConnected((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSConnected(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1465,7 +1465,7 @@ class SlackClientOnWSConnectedMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1511,8 +1511,8 @@ class SlackClientOnWSCloseMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSClose((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSClose(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1520,7 +1520,7 @@ class SlackClientOnWSCloseMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1566,8 +1566,8 @@ class SlackClientOnWSErrorMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSError((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1575,7 +1575,7 @@ class SlackClientOnWSErrorMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1621,15 +1621,15 @@ class SlackClientConstructMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.construct((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        return obj.construct(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1675,8 +1675,8 @@ class SlackClientOnWSMessageMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSMessage((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSMessage(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
         return nil
 
         nil
@@ -1684,7 +1684,7 @@ class SlackClientOnWSMessageMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1730,8 +1730,8 @@ class SlackClientOnHTTPResponseMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHTTPResponse((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onHTTPResponse(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest }, ::DatawireQuarkCore.cast((args)[1]) { ::Quark.quark.HTTPResponse })
         return nil
 
         nil
@@ -1739,7 +1739,7 @@ class SlackClientOnHTTPResponseMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1785,8 +1785,8 @@ class SlackClientOnWSInitMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSInit((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSInit(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1794,7 +1794,7 @@ class SlackClientOnWSInitMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1840,8 +1840,8 @@ class SlackClientOnWSBinaryMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSBinary((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSBinary(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket }, (args)[1])
         return nil
 
         nil
@@ -1849,7 +1849,7 @@ class SlackClientOnWSBinaryMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1895,8 +1895,8 @@ class SlackClientOnWSClosedMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSClosed((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSClosed(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1904,7 +1904,7 @@ class SlackClientOnWSClosedMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1950,8 +1950,8 @@ class SlackClientOnWSFinalMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onWSFinal((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onWSFinal(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
         return nil
 
         nil
@@ -1959,7 +1959,7 @@ class SlackClientOnWSFinalMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2005,8 +2005,8 @@ class SlackClientOnHTTPInitMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHTTPInit((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onHTTPInit(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest })
         return nil
 
         nil
@@ -2014,7 +2014,7 @@ class SlackClientOnHTTPInitMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2060,8 +2060,8 @@ class SlackClientOnHTTPErrorMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHTTPError((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onHTTPError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
         return nil
 
         nil
@@ -2069,7 +2069,7 @@ class SlackClientOnHTTPErrorMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2115,8 +2115,8 @@ class SlackClientOnHTTPFinalMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHTTPFinal((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
+        obj.onHTTPFinal(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest })
         return nil
 
         nil
@@ -2124,7 +2124,7 @@ class SlackClientOnHTTPFinalMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2177,14 +2177,14 @@ class SlackClient < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.slack.Client.new((args)[0], (args)[1], (args)[2])
+        return ::Quark.slack.Client.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.Runtime }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::Quark.slack.SlackHandler })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2232,8 +2232,8 @@ class SlackpackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onSlackEvent((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slackpack.Handler }
+        obj.onSlackEvent(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.SlackEvent })
         return nil
 
         nil
@@ -2241,7 +2241,7 @@ class SlackpackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2287,8 +2287,8 @@ class SlackpackHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onHello((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slackpack.Handler }
+        obj.onHello(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.Hello })
         return nil
 
         nil
@@ -2296,7 +2296,7 @@ class SlackpackHandlerOnHelloMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2342,8 +2342,8 @@ class SlackpackHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onSlackError((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slackpack.Handler }
+        obj.onSlackError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.SlackError })
         return nil
 
         nil
@@ -2351,7 +2351,7 @@ class SlackpackHandlerOnSlackErrorMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2397,8 +2397,8 @@ class SlackpackHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.onMessage((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.slackpack.Handler }
+        obj.onMessage(::DatawireQuarkCore.cast((args)[0]) { ::Quark.slack.event.Message })
         return nil
 
         nil
@@ -2406,7 +2406,7 @@ class SlackpackHandlerOnMessageMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2466,7 +2466,7 @@ class SlackpackHandler < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2528,7 +2528,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2588,7 +2588,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end

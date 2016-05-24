@@ -58,6 +58,36 @@
     }
     exports.print = print;
 
+    /*
+     * Like instanceof operator, but robust against primitive types.
+     * Note, this is not robust against passing objects between iframes.
+     */
+    function is_instance_of(value, type) {
+        return ((value instanceof type)
+            || (type === String && typeof value === 'string')
+            || (type === Number && typeof value === 'number')
+            || (type === Boolean && typeof value === 'boolean')
+        );
+    }
+
+    function cast(value, callback) {
+        try {
+            var type = callback();
+            if (value == null || is_instance_of(value, type)) {
+                return value;
+            } else {
+                throw TypeError,
+                    '`' + value + '` is not an instance of `' + type + '`';
+            }
+        } catch (error) {
+            if (error instanceof ReferenceError) {
+                return value;
+            }
+            throw error;
+        }
+    }
+    exports.cast = cast;
+
     function modulo(a, b) {
         return (a % b + b) % b;
     }

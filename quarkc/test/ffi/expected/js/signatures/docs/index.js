@@ -48,7 +48,7 @@ Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 Test.prototype._setField = Test__setField;

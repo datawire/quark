@@ -11,12 +11,12 @@ class test_Test_go_Method(quark.reflect.Method):
         super(test_Test_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: test.Test);
         (obj).go();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -39,7 +39,7 @@ class test_Test(quark.reflect.Class):
         return test.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -56,12 +56,12 @@ class test_subtest_Test_go_Method(quark.reflect.Method):
         super(test_subtest_Test_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: test.subtest.Test);
         (obj).go();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -84,7 +84,7 @@ class test_subtest_Test(quark.reflect.Class):
         return test.subtest.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -99,7 +99,7 @@ class Root(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None

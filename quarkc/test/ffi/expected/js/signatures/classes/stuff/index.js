@@ -16,7 +16,7 @@ function Test__init_fields__() {}
 Test.prototype.__init_fields__ = Test__init_fields__;
 Test.classes_stuff_Test_ref = quark_ffi_signatures_md.Root.classes_stuff_Test_md;
 function Test_foo(t) {
-    return null;
+    return _qrt.cast(null, function () { return Test; });
 }
 Test.prototype.foo = Test_foo;
 

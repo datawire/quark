@@ -7,7 +7,7 @@ class Root(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None

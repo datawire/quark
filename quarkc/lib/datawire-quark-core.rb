@@ -1030,6 +1030,16 @@ module DatawireQuarkCore
     Codec.new
   end
 
+  def self.cast(value, &block)
+    type = begin block.call rescue Object end
+
+    unless value.is_a?(type) || value.nil?
+      raise TypeError, "`#{value.inspect}` is not an instance of `#{type}`"
+    end
+
+    value
+  end
+
   class Mutex
   end
 

@@ -19,7 +19,7 @@ function Box__init_fields__() {
 Box.prototype.__init_fields__ = Box__init_fields__;
 Box.generics_constructors_Box_quark_Object__ref = quark_ffi_signatures_md.Root.generics_constructors_Box_quark_Object__md;
 function Box_get() {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 Box.prototype.get = Box_get;
 
@@ -38,7 +38,7 @@ Box.prototype._getField = Box__getField;
 
 function Box__setField(name, value) {
     if (_qrt.equals((name), ("contents"))) {
-        (this).contents = value;
+        (this).contents = _qrt.cast(value, function () { return T; });
     }
 }
 Box.prototype._setField = Box__setField;

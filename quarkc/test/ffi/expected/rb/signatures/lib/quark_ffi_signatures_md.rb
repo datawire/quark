@@ -36,7 +36,7 @@ class GenericsBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Box }
         obj.set((args)[0])
         return nil
 
@@ -45,7 +45,7 @@ class GenericsBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -91,7 +91,7 @@ class GenericsBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Box }
         return obj.get()
 
         nil
@@ -99,7 +99,7 @@ class GenericsBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -159,7 +159,7 @@ class GenericsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -207,8 +207,8 @@ class GenericsBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.set((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Box }
+        obj.set(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
         return nil
 
         nil
@@ -216,7 +216,7 @@ class GenericsBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -262,7 +262,7 @@ class GenericsBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Box }
         return obj.get()
 
         nil
@@ -270,7 +270,7 @@ class GenericsBoxQuarkIntGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -330,7 +330,7 @@ class GenericsBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -378,7 +378,7 @@ class GenericsCrateQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Crate }
         obj.set((args)[0])
         return nil
 
@@ -387,7 +387,7 @@ class GenericsCrateQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -433,7 +433,7 @@ class GenericsCrateQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Crate }
         return obj.get()
 
         nil
@@ -441,7 +441,7 @@ class GenericsCrateQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -501,7 +501,7 @@ class GenericsCrateQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -563,7 +563,7 @@ class GenericsSack < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -611,15 +611,15 @@ class GenericsMatrixQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.__get__((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Matrix }
+        return obj.__get__(::DatawireQuarkCore.cast((args)[0]) { ::Integer }, ::DatawireQuarkCore.cast((args)[1]) { ::Integer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -665,8 +665,8 @@ class GenericsMatrixQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.__set__((args)[0], (args)[1], (args)[2])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.Matrix }
+        obj.__set__(::DatawireQuarkCore.cast((args)[0]) { ::Integer }, ::DatawireQuarkCore.cast((args)[1]) { ::Integer }, (args)[2])
         return nil
 
         nil
@@ -674,7 +674,7 @@ class GenericsMatrixQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -727,14 +727,14 @@ class GenericsMatrixQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.generics.Matrix.new((args)[0], (args)[1])
+        return ::Quark.generics.Matrix.new(::DatawireQuarkCore.cast((args)[0]) { ::Integer }, ::DatawireQuarkCore.cast((args)[1]) { ::Integer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -782,7 +782,7 @@ class GenericsConstructorsBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.constructors.Box }
         return obj.get()
 
         nil
@@ -790,7 +790,7 @@ class GenericsConstructorsBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -850,7 +850,7 @@ class GenericsConstructorsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -898,7 +898,7 @@ class GenericsPkgFooQuarkObjectFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.pkg.Foo }
         return obj.foo()
 
         nil
@@ -906,7 +906,7 @@ class GenericsPkgFooQuarkObjectFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -952,7 +952,7 @@ class GenericsPkgFooQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.pkg.Foo }
         return obj.get()
 
         nil
@@ -960,7 +960,7 @@ class GenericsPkgFooQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1020,7 +1020,7 @@ class GenericsPkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1068,7 +1068,7 @@ class GenericsPkgStringFooGetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.pkg.StringFoo }
         return obj.get()
 
         nil
@@ -1076,7 +1076,7 @@ class GenericsPkgStringFooGetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1122,7 +1122,7 @@ class GenericsPkgStringFooFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.pkg.StringFoo }
         return obj.foo()
 
         nil
@@ -1130,7 +1130,7 @@ class GenericsPkgStringFooFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1190,7 +1190,7 @@ class GenericsPkgStringFoo < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1245,14 +1245,14 @@ class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.generics.pkg.Box.new((args)[0])
+        return ::Quark.generics.pkg.Box.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1307,14 +1307,14 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.generics.pkg.StringBox.new((args)[0])
+        return ::Quark.generics.pkg.StringBox.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1362,7 +1362,7 @@ class GenericsCccTLSContextInitializerGetValueMethod < ::Quark.quark.reflect.Met
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.ccc.TLSContextInitializer }
         return obj.getValue()
 
         nil
@@ -1370,7 +1370,7 @@ class GenericsCccTLSContextInitializerGetValueMethod < ::Quark.quark.reflect.Met
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1430,7 +1430,7 @@ class GenericsCccTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1478,7 +1478,7 @@ class GenericsCccContextCurrentMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.ccc.Context }
         return ::Quark.generics.ccc.Context.current()
 
         nil
@@ -1486,7 +1486,7 @@ class GenericsCccContextCurrentMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1532,7 +1532,7 @@ class GenericsCccContextGlobalMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.ccc.Context }
         return ::Quark.generics.ccc.Context.global()
 
         nil
@@ -1540,7 +1540,7 @@ class GenericsCccContextGlobalMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1593,14 +1593,14 @@ class GenericsCccContext < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.generics.ccc.Context.new((args)[0])
+        return ::Quark.generics.ccc.Context.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.generics.ccc.Context })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1648,7 +1648,7 @@ class GenericsCccTLSInitializerQuarkObjectGetValueMethod < ::Quark.quark.reflect
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.ccc.TLSInitializer }
         return obj.getValue()
 
         nil
@@ -1656,7 +1656,7 @@ class GenericsCccTLSInitializerQuarkObjectGetValueMethod < ::Quark.quark.reflect
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1716,7 +1716,7 @@ class GenericsCccTLSInitializerQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1764,7 +1764,7 @@ class GenericsCccTLSGenericsCccContextGetValueMethod < ::Quark.quark.reflect.Met
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.generics.ccc.TLS }
         return obj.getValue()
 
         nil
@@ -1772,7 +1772,7 @@ class GenericsCccTLSGenericsCccContextGetValueMethod < ::Quark.quark.reflect.Met
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1825,14 +1825,14 @@ class GenericsCccTLSGenericsCccContext < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.generics.ccc.TLS.new((args)[0])
+        return ::Quark.generics.ccc.TLS.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.generics.ccc.TLSInitializer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1894,7 +1894,7 @@ class InheritanceBase < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -1956,7 +1956,7 @@ class InheritanceTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2011,14 +2011,14 @@ class InheritanceA < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.inheritance.A.new((args)[0])
+        return ::Quark.inheritance.A.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2066,7 +2066,7 @@ class InheritanceBGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.B }
         obj.greet()
         return nil
 
@@ -2075,7 +2075,7 @@ class InheritanceBGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2128,14 +2128,14 @@ class InheritanceB < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.inheritance.B.new((args)[0])
+        return ::Quark.inheritance.B.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2183,7 +2183,7 @@ class InheritanceCGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.C }
         obj.greet()
         return nil
 
@@ -2192,7 +2192,7 @@ class InheritanceCGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2245,14 +2245,14 @@ class InheritanceC < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.inheritance.C.new((args)[0])
+        return ::Quark.inheritance.C.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2314,7 +2314,7 @@ class InheritanceX < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2362,7 +2362,7 @@ class InheritanceYTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.Y }
         obj.test()
         return nil
 
@@ -2371,7 +2371,7 @@ class InheritanceYTestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2424,14 +2424,14 @@ class InheritanceY < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.inheritance.Y.new((args)[0])
+        return ::Quark.inheritance.Y.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2479,7 +2479,7 @@ class InheritanceT1AFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.t1.A }
         obj.foo()
         return nil
 
@@ -2488,7 +2488,7 @@ class InheritanceT1AFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2548,7 +2548,7 @@ class InheritanceT1A < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2596,7 +2596,7 @@ class InheritanceT1BFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.t1.B }
         obj.foo()
         return nil
 
@@ -2605,7 +2605,7 @@ class InheritanceT1BFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2665,7 +2665,7 @@ class InheritanceT1B < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2713,7 +2713,7 @@ class InheritanceT1CFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.t1.C }
         obj.foo()
         return nil
 
@@ -2722,7 +2722,7 @@ class InheritanceT1CFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2782,7 +2782,7 @@ class InheritanceT1C < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2844,7 +2844,7 @@ class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2906,7 +2906,7 @@ class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -2968,7 +2968,7 @@ class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3030,7 +3030,7 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3078,7 +3078,7 @@ class InheritancePetsCatGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.pets.Cat }
         obj.greet()
         return nil
 
@@ -3087,7 +3087,7 @@ class InheritancePetsCatGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3147,7 +3147,7 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3195,7 +3195,7 @@ class InheritancePetsDogGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.pets.Dog }
         obj.greet()
         return nil
 
@@ -3204,7 +3204,7 @@ class InheritancePetsDogGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3264,7 +3264,7 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3312,7 +3312,7 @@ class InheritanceMessageEncodeMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.Message }
         return obj.encode()
 
         nil
@@ -3320,7 +3320,7 @@ class InheritanceMessageEncodeMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3380,7 +3380,7 @@ class InheritanceMessage < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3428,7 +3428,7 @@ class InheritancePingEncodeMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.Ping }
         return obj.encode()
 
         nil
@@ -3436,7 +3436,7 @@ class InheritancePingEncodeMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3496,7 +3496,7 @@ class InheritancePing < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3544,7 +3544,7 @@ class InheritancePongToStringMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.Pong }
         return obj.toString()
 
         nil
@@ -3552,7 +3552,7 @@ class InheritancePongToStringMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3598,7 +3598,7 @@ class InheritancePongEncodeMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.Pong }
         return obj.encode()
 
         nil
@@ -3606,7 +3606,7 @@ class InheritancePongEncodeMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3666,7 +3666,7 @@ class InheritancePong < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3714,7 +3714,7 @@ class InheritanceSuperAGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.super_.A }
         obj.greet()
         return nil
 
@@ -3723,7 +3723,7 @@ class InheritanceSuperAGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3776,14 +3776,14 @@ class InheritanceSuperA < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.inheritance.super_.A.new((args)[0])
+        return ::Quark.inheritance.super_.A.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3831,7 +3831,7 @@ class InheritanceSuperBGreetMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.super_.B }
         obj.greet()
         return nil
 
@@ -3840,7 +3840,7 @@ class InheritanceSuperBGreetMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3900,7 +3900,7 @@ class InheritanceSuperB < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -3948,7 +3948,7 @@ class InheritanceUseBeforeDefBarGoMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.use_before_def.Bar }
         obj.go()
         return nil
 
@@ -3957,7 +3957,7 @@ class InheritanceUseBeforeDefBarGoMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4017,7 +4017,7 @@ class InheritanceUseBeforeDefBar < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4079,7 +4079,7 @@ class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4127,7 +4127,7 @@ class InterfacesAFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.A }
         obj.foo()
         return nil
 
@@ -4136,7 +4136,7 @@ class InterfacesAFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4182,7 +4182,7 @@ class InterfacesABarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.A }
         obj.bar()
         return nil
 
@@ -4191,7 +4191,7 @@ class InterfacesABarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4251,7 +4251,7 @@ class InterfacesA < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4299,7 +4299,7 @@ class InterfacesBBarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.B }
         obj.bar()
         return nil
 
@@ -4308,7 +4308,7 @@ class InterfacesBBarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4368,7 +4368,7 @@ class InterfacesB < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4416,7 +4416,7 @@ class InterfacesCFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.C }
         obj.foo()
         return nil
 
@@ -4425,7 +4425,7 @@ class InterfacesCFooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4485,7 +4485,7 @@ class InterfacesC < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4533,7 +4533,7 @@ class InterfacesT1FooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T1 }
         obj.foo()
         return nil
 
@@ -4542,7 +4542,7 @@ class InterfacesT1FooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4588,7 +4588,7 @@ class InterfacesT1BarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T1 }
         obj.bar()
         return nil
 
@@ -4597,7 +4597,7 @@ class InterfacesT1BarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4657,7 +4657,7 @@ class InterfacesT1 < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4705,7 +4705,7 @@ class InterfacesT2FooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T2 }
         obj.foo()
         return nil
 
@@ -4714,7 +4714,7 @@ class InterfacesT2FooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4760,7 +4760,7 @@ class InterfacesT2BarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T2 }
         obj.bar()
         return nil
 
@@ -4769,7 +4769,7 @@ class InterfacesT2BarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4829,7 +4829,7 @@ class InterfacesT2 < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4877,7 +4877,7 @@ class InterfacesT3FooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T3 }
         obj.foo()
         return nil
 
@@ -4886,7 +4886,7 @@ class InterfacesT3FooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -4932,7 +4932,7 @@ class InterfacesT3BarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T3 }
         obj.bar()
         return nil
 
@@ -4941,7 +4941,7 @@ class InterfacesT3BarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5001,7 +5001,7 @@ class InterfacesT3 < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5049,7 +5049,7 @@ class InterfacesT4FooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T4 }
         obj.foo()
         return nil
 
@@ -5058,7 +5058,7 @@ class InterfacesT4FooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5104,7 +5104,7 @@ class InterfacesT4BarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T4 }
         obj.bar()
         return nil
 
@@ -5113,7 +5113,7 @@ class InterfacesT4BarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5173,7 +5173,7 @@ class InterfacesT4 < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5221,7 +5221,7 @@ class InterfacesT5FooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T5 }
         obj.foo()
         return nil
 
@@ -5230,7 +5230,7 @@ class InterfacesT5FooMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5276,7 +5276,7 @@ class InterfacesT5BarMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.T5 }
         obj.bar()
         return nil
 
@@ -5285,7 +5285,7 @@ class InterfacesT5BarMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5345,7 +5345,7 @@ class InterfacesT5 < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5393,7 +5393,7 @@ class InterfacesFooM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Foo }
         obj.m1()
         return nil
 
@@ -5402,7 +5402,7 @@ class InterfacesFooM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5448,8 +5448,8 @@ class InterfacesFooM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m2((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Foo }
+        obj.m2(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
         return nil
 
         nil
@@ -5457,7 +5457,7 @@ class InterfacesFooM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5503,8 +5503,8 @@ class InterfacesFooM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Foo }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -5512,7 +5512,7 @@ class InterfacesFooM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5572,7 +5572,7 @@ class InterfacesFoo < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5620,7 +5620,7 @@ class InterfacesBarQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Bar }
         obj.m1()
         return nil
 
@@ -5629,7 +5629,7 @@ class InterfacesBarQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5675,7 +5675,7 @@ class InterfacesBarQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Bar }
         obj.m2((args)[0])
         return nil
 
@@ -5684,7 +5684,7 @@ class InterfacesBarQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5730,8 +5730,8 @@ class InterfacesBarQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Bar }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -5739,7 +5739,7 @@ class InterfacesBarQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5799,7 +5799,7 @@ class InterfacesBarQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5847,8 +5847,8 @@ class InterfacesBazM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m2((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Baz }
+        obj.m2(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
         return nil
 
         nil
@@ -5856,7 +5856,7 @@ class InterfacesBazM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5902,7 +5902,7 @@ class InterfacesBazM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Baz }
         obj.m1()
         return nil
 
@@ -5911,7 +5911,7 @@ class InterfacesBazM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -5957,8 +5957,8 @@ class InterfacesBazM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.Baz }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -5966,7 +5966,7 @@ class InterfacesBazM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6026,7 +6026,7 @@ class InterfacesBaz < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6074,7 +6074,7 @@ class InterfacesRazBarM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazBar }
         obj.m1()
         return nil
 
@@ -6083,7 +6083,7 @@ class InterfacesRazBarM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6129,8 +6129,8 @@ class InterfacesRazBarM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m2((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazBar }
+        obj.m2(::DatawireQuarkCore.cast((args)[0]) { ::String })
         return nil
 
         nil
@@ -6138,7 +6138,7 @@ class InterfacesRazBarM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6184,8 +6184,8 @@ class InterfacesRazBarM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazBar }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -6193,7 +6193,7 @@ class InterfacesRazBarM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6253,7 +6253,7 @@ class InterfacesRazBar < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6301,7 +6301,7 @@ class InterfacesRazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazFaz }
         obj.m1()
         return nil
 
@@ -6310,7 +6310,7 @@ class InterfacesRazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6356,7 +6356,7 @@ class InterfacesRazFazQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazFaz }
         obj.m2((args)[0])
         return nil
 
@@ -6365,7 +6365,7 @@ class InterfacesRazFazQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6411,8 +6411,8 @@ class InterfacesRazFazQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.RazFaz }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -6420,7 +6420,7 @@ class InterfacesRazFazQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6480,7 +6480,7 @@ class InterfacesRazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6528,7 +6528,7 @@ class InterfacesBazBarM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazBar }
         obj.m1()
         return nil
 
@@ -6537,7 +6537,7 @@ class InterfacesBazBarM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6583,8 +6583,8 @@ class InterfacesBazBarM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m2((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazBar }
+        obj.m2(::DatawireQuarkCore.cast((args)[0]) { ::String })
         return nil
 
         nil
@@ -6592,7 +6592,7 @@ class InterfacesBazBarM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6638,8 +6638,8 @@ class InterfacesBazBarM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazBar }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -6647,7 +6647,7 @@ class InterfacesBazBarM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6707,7 +6707,7 @@ class InterfacesBazBar < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6755,7 +6755,7 @@ class InterfacesBazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazFaz }
         obj.m1()
         return nil
 
@@ -6764,7 +6764,7 @@ class InterfacesBazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6810,7 +6810,7 @@ class InterfacesBazFazQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazFaz }
         obj.m2((args)[0])
         return nil
 
@@ -6819,7 +6819,7 @@ class InterfacesBazFazQuarkObjectM2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6865,8 +6865,8 @@ class InterfacesBazFazQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.m3((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.interfaces.BazFaz }
+        obj.m3(::DatawireQuarkCore.cast((args)[0]) { ::DatawireQuarkCore::List })
         return nil
 
         nil
@@ -6874,7 +6874,7 @@ class InterfacesBazFazQuarkObjectM3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6934,7 +6934,7 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -6982,15 +6982,15 @@ class ClassesOverloadAddMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.__add__((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.Overload }
+        return obj.__add__(::DatawireQuarkCore.cast((args)[0]) { ::Quark.classes.Overload })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7036,15 +7036,15 @@ class ClassesOverloadMulMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.__mul__((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.Overload }
+        return obj.__mul__(::DatawireQuarkCore.cast((args)[0]) { ::Quark.classes.Overload })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7090,7 +7090,7 @@ class ClassesOverloadTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.Overload }
         obj.test()
         return nil
 
@@ -7099,7 +7099,7 @@ class ClassesOverloadTestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7152,14 +7152,14 @@ class ClassesOverload < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.Overload.new((args)[0])
+        return ::Quark.classes.Overload.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7207,7 +7207,7 @@ class ClassesTestTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.Test }
         obj.test()
         return nil
 
@@ -7216,7 +7216,7 @@ class ClassesTestTestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7276,7 +7276,7 @@ class ClassesTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7324,8 +7324,8 @@ class ClassesStringTestCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.string_test }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -7333,7 +7333,7 @@ class ClassesStringTestCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7393,7 +7393,7 @@ class ClassesStringTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7441,15 +7441,15 @@ class ClassesTestSizeDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_size }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7495,8 +7495,8 @@ class ClassesTestSizeCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_size }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -7504,7 +7504,7 @@ class ClassesTestSizeCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7557,14 +7557,14 @@ class ClassesTestSize < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_size.new((args)[0])
+        return ::Quark.classes.test_size.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7612,15 +7612,15 @@ class ClassesTestStartsWithThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_startsWith }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7666,15 +7666,15 @@ class ClassesTestStartsWithDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_startsWith }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::Object })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7720,8 +7720,8 @@ class ClassesTestStartsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_startsWith }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -7729,7 +7729,7 @@ class ClassesTestStartsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7782,14 +7782,14 @@ class ClassesTestStartsWith < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_startsWith.new((args)[0])
+        return ::Quark.classes.test_startsWith.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7837,15 +7837,15 @@ class ClassesTestEndsWithThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_endsWith }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7891,15 +7891,15 @@ class ClassesTestEndsWithDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_endsWith }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::Object })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -7945,8 +7945,8 @@ class ClassesTestEndsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_endsWith }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -7954,7 +7954,7 @@ class ClassesTestEndsWithCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8007,14 +8007,14 @@ class ClassesTestEndsWith < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_endsWith.new((args)[0])
+        return ::Quark.classes.test_endsWith.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8062,15 +8062,15 @@ class ClassesTestFindThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_find }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8116,15 +8116,15 @@ class ClassesTestFindDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_find }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8170,8 +8170,8 @@ class ClassesTestFindCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_find }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -8179,7 +8179,7 @@ class ClassesTestFindCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8232,14 +8232,14 @@ class ClassesTestFind < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_find.new((args)[0])
+        return ::Quark.classes.test_find.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8287,15 +8287,15 @@ class ClassesTestSubstringThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_substring }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::Integer }, ::DatawireQuarkCore.cast((args)[1]) { ::Integer })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8341,15 +8341,15 @@ class ClassesTestSubstringDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_substring }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8395,8 +8395,8 @@ class ClassesTestSubstringCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_substring }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -8404,7 +8404,7 @@ class ClassesTestSubstringCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8457,14 +8457,14 @@ class ClassesTestSubstring < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_substring.new((args)[0])
+        return ::Quark.classes.test_substring.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8512,15 +8512,15 @@ class ClassesTestReplaceThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0], (args)[1])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_replace }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8566,15 +8566,15 @@ class ClassesTestReplaceDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_replace }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8620,8 +8620,8 @@ class ClassesTestReplaceCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_replace }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -8629,7 +8629,7 @@ class ClassesTestReplaceCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8682,14 +8682,14 @@ class ClassesTestReplace < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_replace.new((args)[0])
+        return ::Quark.classes.test_replace.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8737,7 +8737,7 @@ class ClassesTestJoinThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_join }
         return obj.that()
 
         nil
@@ -8745,7 +8745,7 @@ class ClassesTestJoinThatMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8791,15 +8791,15 @@ class ClassesTestJoinAMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.a((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_join }
+        return obj.a(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8845,15 +8845,15 @@ class ClassesTestJoinDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_join }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8899,8 +8899,8 @@ class ClassesTestJoinCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_join }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -8908,7 +8908,7 @@ class ClassesTestJoinCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -8961,14 +8961,14 @@ class ClassesTestJoin < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_join.new((args)[0])
+        return ::Quark.classes.test_join.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9016,15 +9016,15 @@ class ClassesTestSplitThatMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.that((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_split }
+        return obj.that(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9070,15 +9070,15 @@ class ClassesTestSplitDoesMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.does((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_split }
+        return obj.does(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9124,8 +9124,8 @@ class ClassesTestSplitCheckMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        obj.check((args)[0], (args)[1], (args)[2], (args)[3])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.test_split }
+        obj.check(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String }, ::DatawireQuarkCore.cast((args)[2]) { ::String }, ::DatawireQuarkCore.cast((args)[3]) { ::String })
         return nil
 
         nil
@@ -9133,7 +9133,7 @@ class ClassesTestSplitCheckMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9186,14 +9186,14 @@ class ClassesTestSplit < ::Quark.quark.reflect.QuarkClass
 
     def construct(args)
         
-        return ::Quark.classes.test_split.new((args)[0], (args)[1])
+        return ::Quark.classes.test_split.new(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9241,15 +9241,15 @@ class ClassesStuffTestFooMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.foo((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.stuff.Test }
+        return obj.foo(::DatawireQuarkCore.cast((args)[0]) { ::Quark.classes.stuff.Test })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9295,7 +9295,7 @@ class ClassesStuffTestTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.classes.stuff.Test }
         obj.test()
         return nil
 
@@ -9304,7 +9304,7 @@ class ClassesStuffTestTestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9364,7 +9364,7 @@ class ClassesStuffTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9412,8 +9412,8 @@ class StaticsFooSetCountMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        ::Quark.statics.Foo.setCount((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
+        ::Quark.statics.Foo.setCount(::DatawireQuarkCore.cast((args)[0]) { ::Integer })
         return nil
 
         nil
@@ -9421,7 +9421,7 @@ class StaticsFooSetCountMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9467,7 +9467,7 @@ class StaticsFooGetCountMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
         return ::Quark.statics.Foo.getCount()
 
         nil
@@ -9475,7 +9475,7 @@ class StaticsFooGetCountMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9521,7 +9521,7 @@ class StaticsFooTest1Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
         obj.test1()
         return nil
 
@@ -9530,7 +9530,7 @@ class StaticsFooTest1Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9576,7 +9576,7 @@ class StaticsFooTest2Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
         obj.test2()
         return nil
 
@@ -9585,7 +9585,7 @@ class StaticsFooTest2Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9631,7 +9631,7 @@ class StaticsFooTest3Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
         obj.test3()
         return nil
 
@@ -9640,7 +9640,7 @@ class StaticsFooTest3Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9686,7 +9686,7 @@ class StaticsFooTest4Method < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.statics.Foo }
         obj.test4()
         return nil
 
@@ -9695,7 +9695,7 @@ class StaticsFooTest4Method < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9755,7 +9755,7 @@ class StaticsFoo < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9803,15 +9803,15 @@ class DocsTestTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
-        return obj.test((args)[0])
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.docs.Test }
+        return obj.test(::DatawireQuarkCore.cast((args)[0]) { ::String })
 
         nil
     end
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9871,7 +9871,7 @@ class DocsTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9933,7 +9933,7 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -9995,7 +9995,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -10057,7 +10057,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -10175,7 +10175,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end

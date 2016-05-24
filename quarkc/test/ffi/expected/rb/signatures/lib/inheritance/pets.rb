@@ -23,7 +23,7 @@ class Pet < ::DatawireQuarkCore::QuarkObject
 
 
     def greet()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`Pet.greet` is an abstract method'
 
         nil
     end

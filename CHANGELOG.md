@@ -14,6 +14,17 @@ Latest
   * `quark.os.FS.userHomeDir()` is now `quark.os.getUserHomeDir()`.
   * `quark.os.Environment.ENV.get(key, default_value)` added.
 
+### Foreign-function interface
+
+* (!) Change how cast operator (`?`) works on dynamically-typed back-ends
+  (Python, Ruby, JavaScript). Previously casting on dynamically-typed back-ends
+  had no effect, now it is translated into an assertion that the value is
+  of that type which it is being cast into. The effect on FFI is that now,
+  you are required to subclass classes/interfaces if you implement them,
+  instead of relying on duck-typing.
+* Calling abstract/interface methods produces a readable error message,
+  instead of a simple assertion failure.
+
 ### Other
 
 * New documents CONTRIBUTING.md and CODE_OF_CONDUCT.md

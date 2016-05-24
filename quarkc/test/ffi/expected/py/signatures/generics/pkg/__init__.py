@@ -7,10 +7,10 @@ import quark_ffi_signatures_md
 class Foo(object):
 
     def foo(self):
-        return None
+        return _cast(None, lambda: T)
 
     def get(self):
-        assert False
+        raise NotImplementedError('`Foo.get` is an abstract method')
 
 Foo.generics_pkg_Foo_quark_Object__ref = quark_ffi_signatures_md.Root.generics_pkg_Foo_quark_Object__md
 class StringFoo(object):
@@ -19,7 +19,7 @@ class StringFoo(object):
     def __init__(self): self._init()
 
     def get(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getClass(self):
         return u"generics.pkg.StringFoo"
@@ -31,7 +31,7 @@ class StringFoo(object):
         pass
 
     def foo(self):
-        return None
+        return _cast(None, lambda: unicode)
 
 StringFoo.generics_pkg_StringFoo_ref = quark_ffi_signatures_md.Root.generics_pkg_StringFoo_md
 class Box(object):
@@ -52,7 +52,7 @@ class Box(object):
 
     def _setField(self, name, value):
         if ((name) == (u"contents")):
-            (self).contents = value
+            (self).contents = _cast(value, lambda: T)
 
 
 
@@ -74,7 +74,7 @@ class StringBox(Box):
 
     def _setField(self, name, value):
         if ((name) == (u"contents")):
-            (self).contents = value
+            (self).contents = _cast(value, lambda: unicode)
 
 
 StringBox.generics_pkg_Box_quark_String__ref = quark_ffi_signatures_md.Root.generics_pkg_Box_quark_String__md

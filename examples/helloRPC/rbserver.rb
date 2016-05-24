@@ -4,7 +4,7 @@ require 'hello'
 Hello = ::Quark::Hello
 
 
-class HelloImpl
+class HelloImpl < Hello::Hello
 
     def hello(request)
         res = Hello::Response.new

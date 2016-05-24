@@ -22,7 +22,7 @@ class OrgExampleBarBarTestMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.org.example.bar.Bar }
         obj.test()
         return nil
 
@@ -31,7 +31,7 @@ class OrgExampleBarBarTestMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -91,7 +91,7 @@ class OrgExampleBarBar < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -141,7 +141,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
