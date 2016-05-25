@@ -77,7 +77,8 @@ namespace quark {
             return result;
         }
 
-        if (cls == null) {
+        // XXX: work around broken reflection for templated primitives (Map, List)
+        if (cls == null || cls.name == "quark.Object") {
             cls = obj.getClass();
         }
 
@@ -118,7 +119,6 @@ namespace quark {
             List<String> strKeys = [];
             while (idx < keys.size()) {
                 key = keys[idx];
-                strKey = key.toString();  // Only used for strKeys.sort()
                 strKey = toJSON(key, cls.getParameters()[0]).toString();
                 keyMap[strKey] = key;
                 strKeys.add(strKey);
@@ -166,13 +166,14 @@ namespace quark {
         if (json == null || json.isNull() || json.isUndefined()) { return null; }
         int idx = 0;
 
-        if (cls == null) {
+        // XXX: work around broken reflection for templated primitives (Map, List)
+        if (cls == null || cls.name == "quark.Object") {
             String type = json.getType();
             if (type == "boolean") {
                 cls = reflect.Class.BOOL;
             }
             if (type == "number") {
-                cls = reflect.Class.BOOL;
+                cls = reflect.Class.FLOAT;
             }
             if (type == "string") {
                 cls = reflect.Class.STRING;
