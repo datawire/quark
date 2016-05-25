@@ -3,6 +3,14 @@ CHANGELOG
 
 Breaking changes are marked with (!)
 
+Latest
+------
+
+* (!) The following keywords become reserved identifiers:
+  `as break class continue else extends false if import include interface macro
+   namespace new null package primitive quark return static super true use
+   while`
+
 0.6.100
 -------
 

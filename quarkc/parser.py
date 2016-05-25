@@ -274,7 +274,7 @@ class Parser:
     def visit_name_re(self, node, children):
         return node.text
 
-    @g.rule('name = _ name_re  _')
+    @g.rule('name = _ (!(keyword !~"[_a-zA-Z0-9]") name_re)  _')
     def visit_name(self, node, (pre, name, post)):
         return Name(name)
 

@@ -18,6 +18,7 @@ import _metadata
 from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
+from .parser import Parser
 
 try:  # py3
     from shlex import quote as sh_quote
@@ -191,6 +192,7 @@ def get_package_version(pkg):
     return "0.0.1"
 
 def sanitize(name):
+    name = name + '_' if name in Parser.keywords else name
     return name.replace('-', '_').replace('.', '_')
 
 def filebase(name):
