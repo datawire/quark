@@ -1,6 +1,6 @@
 File(Use(url=quark.q), Import(Name(quark)),
 
- Package(Name(macro),
+ Package(Name(macro_),
 
   Macro(Type(Name(int)), Name(pi), Number(3)),
 

@@ -2,7 +2,7 @@ from quark_runtime import *
 
 import quark.reflect
 import subtest
-import package_md
+import package__md
 
 
 
@@ -31,4 +31,4 @@ class Test(object):
             (self).name = _cast(value, lambda: unicode)
 
 
-Test.test_Test_ref = package_md.Root.test_Test_md
+Test.test_Test_ref = package__md.Root.test_Test_md

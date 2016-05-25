@@ -1,6 +1,6 @@
 File(Use(url=quark.q), Import(Name(quark)),
 
- Package(Name(interface),
+ Package(Name(interface_),
 
   Interface(Name(Foo),
 

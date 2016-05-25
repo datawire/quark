@@ -1,11 +1,11 @@
-package package_md;
+package package__md;
 
-public class test_Test_go_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
-    public test_Test_go_Method() {
+public class test_subtest_Test_go_Method extends quark.reflect.Method implements io.datawire.quark.runtime.QObject {
+    public test_subtest_Test_go_Method() {
         super("quark.void", "go", new java.util.ArrayList(java.util.Arrays.asList(new Object[]{})));
     }
     public Object invoke(Object object, java.util.ArrayList<Object> args) {
-        test.Test obj = (test.Test) (object);
+        test.subtest.Test obj = (test.subtest.Test) (object);
         (obj).go();
         return null;
     }

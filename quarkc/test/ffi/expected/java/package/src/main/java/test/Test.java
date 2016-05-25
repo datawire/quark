@@ -1,7 +1,7 @@
 package test;
 
 public class Test implements io.datawire.quark.runtime.QObject {
-    public static quark.reflect.Class test_Test_ref = package_md.Root.test_Test_md;
+    public static quark.reflect.Class test_Test_ref = package__md.Root.test_Test_md;
     public String name;
     public Test() {}
     public void go() {}

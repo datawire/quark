@@ -1,6 +1,6 @@
 
 
-package static {
+package static_ {
     class Foo {
         static reflect.Class builtin_ResponseHolder_ref = ((super_md).Root).builtin_ResponseHolder_md;
         static String foo = "foo";

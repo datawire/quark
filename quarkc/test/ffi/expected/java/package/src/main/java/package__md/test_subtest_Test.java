@@ -1,4 +1,4 @@
-package package_md;
+package package__md;
 
 public class test_subtest_Test extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class singleton = new test_subtest_Test();

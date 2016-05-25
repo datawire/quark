@@ -1,6 +1,6 @@
 
 {
-    "name": "package",
+    "name": "package_",
     "version": "0.0.1",
     "main": "index.js",
     "dependencies": {

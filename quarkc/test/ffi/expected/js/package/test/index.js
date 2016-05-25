@@ -3,8 +3,8 @@ var quark = require('quark').quark;
 exports.quark = quark;
 var subtest = require('./subtest/index.js');
 exports.subtest = subtest;
-var package_md = require('../package_md/index.js');
-exports.package_md = package_md;
+var package__md = require('../package__md/index.js');
+exports.package__md = package__md;
 
 
 
@@ -21,7 +21,7 @@ function Test__init_fields__() {
     this.name = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.test_Test_ref = package_md.Root.test_Test_md;
+Test.test_Test_ref = package__md.Root.test_Test_md;
 function Test_go() {}
 Test.prototype.go = Test_go;
 

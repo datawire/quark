@@ -1,9 +1,9 @@
 module Quark
-def self.package_md; PackageMd; end
+def self.package__md; PackageMd; end
 module PackageMd
 require 'quark' # .../reflect
-# for ('package_md',): require_relative 'test' # 0 () ()
-# for ('package_md',): require_relative 'test/subtest' # 0 ('test',) ()
+# for ('package__md',): require_relative 'test' # 0 () ()
+# for ('package__md',): require_relative 'test/subtest' # 0 ('test',) ()
 
 
 def self.test_Test_go_Method; TestTestGoMethod; end
@@ -65,7 +65,7 @@ def self.test_Test; TestTest; end
 class TestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
-    static singleton: -> { ::Quark.package_md.test_Test.new() }
+    static singleton: -> { ::Quark.package__md.test_Test.new() }
 
 
 
@@ -75,7 +75,7 @@ class TestTest < ::Quark.quark.reflect.QuarkClass
         (self).name = "test.Test"
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.package_md.test_Test_go_Method.new()])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.package__md.test_Test_go_Method.new()])
 
         nil
     end
@@ -182,7 +182,7 @@ def self.test_subtest_Test; TestSubtestTest; end
 class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
 
-    static singleton: -> { ::Quark.package_md.test_subtest_Test.new() }
+    static singleton: -> { ::Quark.package__md.test_subtest_Test.new() }
 
 
 
@@ -192,7 +192,7 @@ class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
         (self).name = "test.subtest.Test"
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "size")])
-        (self).methods = ::DatawireQuarkCore::List.new([::Quark.package_md.test_subtest_Test_go_Method.new()])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.package__md.test_subtest_Test_go_Method.new()])
 
         nil
     end
@@ -244,8 +244,8 @@ def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static test_Test_md: -> { ::Quark.package_md.test_Test.singleton }
-    static test_subtest_Test_md: -> { ::Quark.package_md.test_subtest_Test.singleton }
+    static test_Test_md: -> { ::Quark.package__md.test_Test.singleton }
+    static test_subtest_Test_md: -> { ::Quark.package__md.test_subtest_Test.singleton }
 
 
 

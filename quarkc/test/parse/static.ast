@@ -1,6 +1,6 @@
 File(Use(url=quark.q), Import(Name(quark)),
 
- Package(Name(static),
+ Package(Name(static_),
 
   Class(Name(Foo),
    Field(static=True, Type(Name(reflect), Name(Class)),

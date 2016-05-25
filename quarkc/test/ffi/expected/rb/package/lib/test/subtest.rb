@@ -5,7 +5,7 @@ module Test
 def self.subtest; Subtest; end
 module Subtest
 require 'quark' # .../reflect test/subtest
-require_relative '../package_md' # 0 () ('test',)
+require_relative '../package__md' # 0 () ('test',)
 
 
 def self.go()
@@ -21,7 +21,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :size
     extend ::DatawireQuarkCore::Static
 
-    static test_subtest_Test_ref: -> { ::Quark.package_md.Root.test_subtest_Test_md }
+    static test_subtest_Test_ref: -> { ::Quark.package__md.Root.test_subtest_Test_md }
 
 
 
