@@ -1,27 +1,31 @@
 FROM ubuntu:16.04
-COPY requirements.txt /tmp
-COPY install-requirements.txt /tmp
-COPY Gemfile /tmp
+
+# Install requirements as root:
 RUN apt-get -y update
 RUN apt-get -y install language-pack-en
 ENV LANG=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
-RUN apt-get -y install curl python-pip tar gcc make git python-dev libffi-dev libssl-dev
+RUN apt-get -y install curl python2.7 tar gcc make git python2.7-dev libffi-dev libssl-dev
 RUN apt-get -y install nodejs openjdk-8-jdk-headless ruby2.3 ruby2.3-dev
 RUN apt-get -y install npm
 RUN gem2.3 install bundler
 RUN apt-get install -y python-virtualenv
 RUN apt-get install -y maven
+
+# Copy over the files we need:
+COPY requirements.txt /tmp
+COPY install-requirements.txt /tmp
+COPY Gemfile /tmp
 COPY scripts/_in-docker.sh /tmp
 RUN chmod +x /tmp/_in-docker.sh
-ARG userid
-RUN adduser --home /tmp/home --uid $userid --disabled-password --gecos "" docker
 
-# We're using Ubuntu 16.04 where Ruby 2.3's gem is called gem2.3:
+# We're using Ubuntu 16.04 where Ruby 2.3's gem is called gem2.3, so make an alias:
 RUN echo "#!/bin/bash\ngem2.3 \"\$@\"" > /usr/bin/gem
 RUN chmod +x /usr/bin/gem
 
 # Run as user that owns the files:
+ARG userid
+RUN adduser --home /tmp/home --uid $userid --disabled-password --gecos "" docker
 USER $userid
 WORKDIR /tmp/home
 
