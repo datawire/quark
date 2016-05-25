@@ -52,6 +52,18 @@ Check out the examples in the [Quark Examples repository](examples):
         git clone git@github.com:datawire/quark.git
         cd quark/examples
 
+## Running tests
+
+If you want to quickly run tests in a git checkout of Quark, you can easily do so if you have Docker 1.11 or later installed:
+
+        scrips/run-in-docker.py py.test
+
+Or if you want to run just some of the tests:
+
+        scripts/run-in-docker.py py.test -k "lib"
+
+This will use your local checkout, so you can test changes you've made locally in the current checkout.
+
 ## Next Steps
 
 The [Quark Quick Start](http://datawire.github.io/quark/0.6/quick-start/index.html)

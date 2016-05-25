@@ -1,0 +1,15 @@
+FROM ubuntu-pip-java-node-ruby
+COPY requirements.txt /tmp
+COPY install-requirements.txt /tmp
+RUN apt-get -y install language-pack-en
+ENV LANG en_US.UTF-8
+ENV LC_ALL en_US.UTF-8
+RUN pip install -r /tmp/install-requirements.txt
+RUN pip install -r /tmp/requirements.txt
+COPY scripts/_in-docker.sh /tmp
+RUN chmod +x /tmp/_in-docker.sh
+ARG userid
+USER $userid
+RUN virtualenv --python=python2.7 /tmp/run
+CMD /bin/bash
+ENTRYPOINT ["/tmp/_in-docker.sh"]
