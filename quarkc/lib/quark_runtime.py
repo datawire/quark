@@ -432,8 +432,14 @@ class Buffer(object):
 
 def _getClass(obj):
     if obj is None: return None
+    if type(obj) is object:
+        # XXX: is this a good idea? discuss in context of test/lib/reflection_test.q
+        return "quark.Object"
     if isinstance(obj, basestring):
         return "quark.String"
+    if isinstance(obj, bool):
+        # check bool before int!
+        return "quark.bool"
     if isinstance(obj, int):
         return "quark.int"
     if isinstance(obj, float):

@@ -6,6 +6,7 @@ namespace reflect {
         static Map<String,Class> classes = {};
 
         static Class VOID = new Class("quark.void");
+        static Class OBJECT = new Class("quark.Object");
         static Class BOOL = new Class("quark.bool");
         static Class INT = new Class("quark.int");
         static Class LONG = new Class("quark.long");

@@ -1,7 +1,14 @@
 CHANGELOG
 =========
 
+Latest
+------
+
 Breaking changes are marked with (!)
+
+### Standard Library
+
+* Fixed `Object#getClass()` method for `Object` and `bool`
 
 0.6.100
 -------
