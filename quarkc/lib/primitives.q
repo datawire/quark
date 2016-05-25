@@ -211,6 +211,14 @@ namespace quark {
                                               $py{($self).join($parts)}
                                               $rb{($parts).join($self)}
                                               $js{($parts).join($self)};
+        macro String toUpper() $java{($self).toUpperCase()}
+                               $py{($self).upper()}
+                               $rb{($self).upcase}
+                               $js{($self).toUpperCase()};
+        macro String toLower() $java{($self).toLowerCase()}
+                               $py{($self).lower()}
+                               $rb{($self).downcase}
+                               $js{($self).toLowerCase()};
         macro JSONObject toJSON() new JSONObject().setString(self);
         macro JSONObject __to_JSONObject() self.toJSON();
         macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}

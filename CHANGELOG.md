@@ -6,6 +6,11 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* Quark String objects have `toUpper()` and `toLower()` methods.
+
+
 ### Other
 
 * Internal compile errors now report which part of the source file
