@@ -3,6 +3,14 @@ CHANGELOG
 
 Breaking changes are marked with (!)
 
+Latest
+------
+
+### Other
+
+* Internal compile errors now report which part of the source file
+  confused the compiler
+
 0.6.100
 -------
 
