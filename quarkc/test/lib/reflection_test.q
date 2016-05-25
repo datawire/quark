@@ -15,8 +15,11 @@ class ReflectionTest {
     void test_String() {
         checkThereIsA("quark.String", "foo");
     }
-    void test_Map() {
+    void test_MapObjectObject() {
         checkThereIsA("quark.Map<quark.Object,quark.Object>", new Map<Object,Object>());
+    }
+    void test_MapStringInt() {
+        checkThereIsA("quark.Map<quark.String,quark.int>", new Map<String,int>());
     }
     void test_List() {
         checkThereIsA("quark.List<quark.Object>", new List<Object>());
