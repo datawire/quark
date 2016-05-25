@@ -29,7 +29,7 @@ Installation
 
 To install {{{product}}}, run the following command:
 
-        pip install {{{main_module}}} 
+``curl -sL https://raw.githubusercontent.com/datawire/quark/master/install.sh | sh``
 
 Compiling {{{language}}} Files
 ------------------------------
