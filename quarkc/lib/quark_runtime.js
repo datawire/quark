@@ -16,6 +16,7 @@
 
 // Quark Runtime
 /* jshint node: true */
+/* global Map */
 
 (function () {
     "use strict";
@@ -29,12 +30,12 @@
     }
 
     Platform.prototype.isNode = function () {
-        return (typeof(window) == 'undefined') || (typeof(window.WebSocket) == 'undefined')
-    }
+        return (typeof(window) === "undefined") || (typeof(window.WebSocket) === "undefined");
+    };
 
     Platform.prototype.isBrowser = function () {
-        return (typeof(window) == "object") && (typeof(window.WebSocket) == 'function');
-    }
+        return (typeof(window) === "object") && (typeof(window.WebSocket) === "function");
+    };
 
     var platform = new Platform();
     exports.platform = platform;
@@ -65,20 +66,40 @@
      * Note, this is not robust against passing objects between iframes.
      */
     function is_instance_of(value, type) {
-        return ((value instanceof type)
-            || (type === String && typeof value === 'string')
-            || (type === Number && typeof value === 'number')
-            || (type === Boolean && typeof value === 'boolean')
-        );
+        return ((value instanceof type) ||
+                (type === String && typeof value === "string") ||
+                (type === Number && typeof value === "number") ||
+                (type === Boolean && typeof value === "boolean"));
     }
 
     function cast(value, callback) {
+<<<<<<< e3bd7070e1e34662d5837799d95e480a073eaf80
         // For now there is no easy way to check in Javascript that Quark class
         // C is subclass of of Quark class B, so don't check anything until
         // that's fixed. The correct way to do so would be via
         // reflect.Class.hasInstance, probably, but that doesn't support
         // interfaces yet.
         return value;
+=======
+        // jshint -W035
+        try {
+            var type = callback();
+            if (value === null || is_instance_of(value, type)) {
+                return value;
+            } else {
+                // Is this valid JavaScript (ES5)?
+                // jshint ignore:start
+                throw TypeError,
+                    '`' + value + '` is not an instance of `' + type + '`';
+                // jshint ignore:end
+            }
+        } catch (error) {
+            if (error instanceof ReferenceError) {
+                return value;
+            }
+            throw error;
+        }
+>>>>>>> Inflict jshint compliance on quark_runtime.js
     }
     exports.cast = cast;
 
@@ -111,7 +132,7 @@
 
     function env_get(key) {
         var res = process.env[key];
-        if (typeof res != "undefined") {
+        if (typeof res !== "undefined") {
             return res;
         }
         return null;
@@ -138,7 +159,7 @@
     var execSync = require("child_process").execSync;
 
     function url_get(url) {
-        var resBuffer = execSync('curl -s -w "\n\n%{http_code}" ' + url);
+        var resBuffer = execSync('curl -s -w "\n\n%{http_code}" ' + url);  // jshint ignore:line
         var res = resBuffer.toString("UTF-8");
         if (res.substr(-5) === "\n\n200") {
             return res.substr(0, res.length - 5);
@@ -429,7 +450,7 @@
         if (Buffer.isBuffer(arg)) {
             this.data = arg;
         } else if (Number.isInteger(arg)) {
-            this.data = new Buffer(Array(arg));
+            this.data = new Buffer(new Array(arg));
         } else {
             this.data = new Buffer(arg);
         }
@@ -635,13 +656,13 @@
     exports._getClass = _getClass;
 
     function _RuntimeFactory() {
-        this.runtimeName = "quark/quark_node_runtime";
+        this.runtimeName = "quark/quark_node_runtime";  // jshint ignore:line
     }
     _RuntimeFactory.prototype.create = function() {
         return require(this.runtimeName);
-    }
+    };
 
-    exports.RuntimeFactory = new _RuntimeFactory();
+    exports.RuntimeFactory = new _RuntimeFactory();  // jshint ignore:line
 
     function Lock() {
         this.locked = false;
@@ -664,25 +685,25 @@
     Lock.prototype.release = Lock_Release;
 
     Lock.prototype._fail = function(msg) {
-        var obj = {}
-        Error.captureStackTrace(obj)
-        console.error(msg, obj.stack)
-        process.exit(1)
-    }
+        var obj = {};
+        Error.captureStackTrace(obj);
+        console.error(msg, obj.stack);
+        process.exit(1);
+    };
 
-    exports.Lock = Lock
+    exports.Lock = Lock;
 
     function Condition() {
         Condition.super_.call(this);
     }
-    exports.util.inherits(Condition, Lock)
+    exports.util.inherits(Condition, Lock);
 
-    function Condition_waitWakeup(timeout) {
+    function Condition_waitWakeup(/* timeout */) {
         this._fail("waiting on quark Condition is not allowed in Javascript");
     }
     Condition.prototype.waitWakeup = Condition_waitWakeup;
 
-    function Condition_wakeup(timeout) {
+    function Condition_wakeup(/* timeout */) {
         this._fail("waking up a quark Condition is not allowed in Javascript");
     }
     Condition.prototype.wakeup = Condition_wakeup;
@@ -715,7 +736,7 @@
     }
     TLS.prototype.setValue = TLS_setValue;
 
-    exports.TLS = TLS
+    exports.TLS = TLS;
 
     function makeStreamAppender(stream) {
         return function (line) {
@@ -745,7 +766,7 @@
         STDERR = function (line) { console.err(line); };
     }
 
-    var levels = {}
+    var levels = {};
 
     function Level(name, num) {
         this.name = name;
@@ -772,65 +793,65 @@
     LogConfigurator.prototype.setAppender = function setAppender(appender) {
         this.appender = appender;
         return this;
-    }
+    };
     LogConfigurator.prototype.setLevel = function setLevel(level) {
-        if (typeof(level)=='string') {
+        if (typeof(level) === "string") {
             level = level.toUpperCase();
         }
         if (level in levels) {
             this.level = levels[level];
         }
         return this;
-    }
+    };
     LogConfigurator.prototype.configure = function configure() {
         this.cfg.appender = this.appender;
         this.cfg.level = this.level;
-    }
+    };
 
     LoggerConfig.prototype.config = function config() {
         return new LogConfigurator(this);
-    }
+    };
 
     LoggerConfig.prototype.stdout = function stdout() {
         return STDOUT;
-    }
+    };
 
     LoggerConfig.prototype.stderr = function stderr() {
         return STDERR;
-    }
+    };
 
     LoggerConfig.prototype.file = function file(path) {
         return makeFileAppender(path);
-    }
+    };
 
 
     var config = new LoggerConfig();
     exports.LoggerConfig = config;
 
-    var loggers = {}
+    var loggers = {};
 
     function Logger(topic) {
         this.topic = "quark." + topic;
     }
 
-    Logger.prototype.trace = function (msg) { this.log(TRACE, msg); }
-    Logger.prototype.debug = function (msg) { this.log(DEBUG, msg); }
-    Logger.prototype.info = function (msg)  { this.log(INFO,  msg); }
-    Logger.prototype.warn = function (msg)  { this.log(WARN,  msg); }
-    Logger.prototype.error = function (msg) { this.log(ERROR, msg); }
+    Logger.prototype.trace = function (msg) { this.log(TRACE, msg); };
+    Logger.prototype.debug = function (msg) { this.log(DEBUG, msg); };
+    Logger.prototype.info = function (msg)  { this.log(INFO,  msg); };
+    Logger.prototype.warn = function (msg)  { this.log(WARN,  msg); };
+    Logger.prototype.error = function (msg) { this.log(ERROR, msg); };
     Logger.prototype.log = function(level, msg) {
         if (config.level.num <= level.num) {
             var line = level.name + " " + this.topic + " " + msg;
             config.appender(line);
         }
-    }
+    };
 
     exports.logger = function(topic) {
         if (!(topic in loggers)) {
             loggers[topic] = new Logger(topic);
         }
         return loggers[topic];
-    }
+    };
 
     quark = require("quark");
 
