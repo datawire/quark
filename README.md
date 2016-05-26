@@ -54,15 +54,17 @@ Check out the examples in the [Quark Examples repository](examples):
 
 ## Running tests
 
-If you want to quickly run tests in a git checkout of Quark, you can easily do so if you have Docker 1.11 or later installed:
+If you want to easily run tests in a git checkout of Quark, you can do
+so easily if you have Docker 1.11 or later installed:
 
-        scrips/run-in-docker.py py.test
+        scrips/with-docker.py py.test
 
 Or if you want to run just some of the tests:
 
-        scripts/run-in-docker.py py.test -k "lib"
+        scripts/with-docker.py py.test -k "lib"
 
-This will use your local checkout, so you can test changes you've made locally in the current checkout.
+This will use your local checkout, so you can test changes (committed
+or uncommited) that you've made locally in the current checkout.
 
 ## Next Steps
 

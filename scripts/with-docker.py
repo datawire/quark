@@ -5,8 +5,10 @@ Run the given arguments within a Docker container fully configured with Quark's 
 
 In order to be as transparent as possible:
 * The root of the git checkout will be bind-mounted in as Docker volume.
-* The root of the git checkout will be working directory.
+* The root of the git checkout will be the working directory.
 * The given commands will be run as the current user's uid and gid.
+
+Unlike run-in-docker.sh, therefore, you don't need to commit changes for them to show up in Docker.
 """
 
 import os
@@ -29,7 +31,7 @@ def main():
                            # Pass in appropriate UID:
                            "--build-arg", "userid={}".format(uid),
                            # Dockerfile to use:
-                           "-f",  "images/run-transparently", "."],
+                           "-f",  "Dockerfile.dev", "."],
                           cwd=ROOT_DIR)
     subprocess.call(["docker", "run",
                      # Interactive:

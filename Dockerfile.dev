@@ -1,5 +1,9 @@
 FROM ubuntu:16.04
 
+# This requires a build argument 'userid', the UID owner of the files
+# in the current checkout.  Typically this Dockerfile should be used
+# via with-docker.py
+
 # Install requirements as root:
 RUN apt-get -y update
 RUN apt-get -y install language-pack-en
@@ -17,6 +21,7 @@ COPY requirements.txt /tmp
 COPY install-requirements.txt /tmp
 COPY Gemfile /tmp
 COPY scripts/_in-docker.sh /tmp
+COPY scripts/prepare-npm.sh /tmp
 RUN chmod +x /tmp/_in-docker.sh
 
 # We're using Ubuntu 16.04 where Ruby 2.3's gem is called gem2.3, so make an alias:
@@ -32,7 +37,7 @@ WORKDIR /tmp/home
 # Install user-specific packages:
 ENV GEM_HOME=/tmp/run/gems
 RUN bundle install --gemfile /tmp/Gemfile
-RUN npm install ws request timers lodash
+RUN /tmp/prepare-npm.sh
 RUN virtualenv --python=python2.7 /tmp/run
 RUN /tmp/run/bin/pip install -r /tmp/install-requirements.txt
 RUN /tmp/run/bin/pip install -r /tmp/requirements.txt
