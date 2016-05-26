@@ -60,8 +60,11 @@ def check(role, cmd=None, cwd=None):
         out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT)
         validate(out)
         CHECKED.add(cmd)
-    except (subprocess.CalledProcessError, OSError):
+    except OSError:
         raise QuarkError("unable to find %s: %s" % (cmd, msg))
+    except subprocess.CalledProcessError as exc:
+        raise QuarkError("Checking for %s failed:\n    $ %s\n    %s\n\n%s" %
+                         (role, " ".join(check), "\n    ".join(exc.output.splitlines()), msg))
 
 COMMAND_DEFAULTS = {
     "mvn": "mvn -q",
