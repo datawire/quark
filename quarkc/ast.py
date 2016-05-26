@@ -12,9 +12,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
 from .coder import Coder
-from .exceptions import *
+from .exceptions import ParseError
 from pprinter import PPrinter as _PPrinter
 
 def copy(node):
