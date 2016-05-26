@@ -2,6 +2,17 @@
 
 Quark has many layers; testing the different layers uses different machinery. However, all of Quarks tests can be launched using pytest.
 
+## Easy testing
+
+If you want to easily run tests in a git checkout of Quark without setting up dependencies locally, you can do so easily if you have Docker 1.11 or later installed:
+
+        scrips/with-docker.py py.test
+
+Or if you want to run just some of the tests (see the rest of the document for details):
+
+        scripts/with-docker.py py.test -k "lib"
+
+This will use your local checkout, so you can test changes (committed or uncommited) that you've made locally in the current checkout.
 
 ## Testing the compiler
 

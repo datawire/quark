@@ -52,20 +52,6 @@ Check out the examples in the [Quark Examples repository](examples):
         git clone git@github.com:datawire/quark.git
         cd quark/examples
 
-## Running tests
-
-If you want to easily run tests in a git checkout of Quark, you can do
-so easily if you have Docker 1.11 or later installed:
-
-        scrips/with-docker.py py.test
-
-Or if you want to run just some of the tests:
-
-        scripts/with-docker.py py.test -k "lib"
-
-This will use your local checkout, so you can test changes (committed
-or uncommited) that you've made locally in the current checkout.
-
 ## Next Steps
 
 The [Quark Quick Start](http://datawire.github.io/quark/0.6/quick-start/index.html)
@@ -88,3 +74,6 @@ The [Quark Issues list](https://github.com/datawire/quark/issues)
 provides a list of known issues - please feel free to add new issues
 or feature requests as you start to use Quark. You can also join
 our public Slack [support channel](https://datawire-quark.herokuapp.com).
+
+If you want to contribute to Quark see the [contributing documentation](CONTRIBUTING.md) and
+[testing documentation](TESTING.md).
