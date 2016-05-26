@@ -168,10 +168,12 @@ def main(args):
             if args["install"]: shell.check("mvn")
             backends.append(backend.Java)
         if ruby or all:
+            if args["install"]: shell.check("gem")
             backends.append(backend.Ruby)
         if python or all:
             if args["install"]:
                 shell.check("python")
+                shell.check("pip")
             backends.append(backend.Python)
         if javascript or all:
             if args["install"]: shell.check("npm")
