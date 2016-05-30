@@ -630,6 +630,7 @@ module DatawireQuarkCore
       events.event { handler.onWSInit(sock) }
       client.on_client(:open) do |wsevt|
         # puts "open"
+        sock.opened = true
         events.event { handler.onWSConnected(sock) }
       end
       client.on_client(:message) do |wsevt|
@@ -644,7 +645,9 @@ module DatawireQuarkCore
       end
       client.on_client(:close) do |wsevt|
         # puts "close"
-        events.event { handler.onWSClosed(sock) }
+        if sock.opened
+          events.event { handler.onWSClosed(sock) }
+        end
         events.event(final:src) { handler.onWSFinal(sock) }
       end
       client.on_client(:error) do |wsevt|
@@ -676,8 +679,10 @@ module DatawireQuarkCore
   end
 
   class WebsocketAdapter
+    attr_accessor :opened
     def initialize(client)
       @client = client
+      @opened = false
     end
 
     def send (message)
