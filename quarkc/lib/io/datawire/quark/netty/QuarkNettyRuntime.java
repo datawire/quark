@@ -262,11 +262,6 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                     @Override
                     public void operationComplete(ChannelFuture future) throws Exception {
                         if (future.isDone()) {
-                            if (future.isSuccess()) {
-                                ws_handler.onWSClosed(ws.getWebSocket());
-                            } else {
-                                ws_handler.onWSError(ws.getWebSocket(), new quark.WSError(future.cause().toString()));
-                            }
                             ws_handler.onWSFinal(ws.getWebSocket());
                         }
                     }

@@ -3,6 +3,8 @@ package io.datawire.quark.netty;
 import quark.WSHandler;
 import quark.WebSocket;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpResponse;
@@ -49,12 +51,24 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
                 handshaker.finishHandshake(ch, (FullHttpResponse) msg);
             } catch (WebSocketHandshakeException e) {
                 this.handler.onWSError(webSocket, new quark.WSError(e.toString()));
-                // XXX: this will fire onWSClosed, do we need to stop that?
                 ctx.channel().close();
                 return;
             }
             System.out.println("WebSocket Client connected!");
             this.ch = ch;
+            ch.closeFuture().addListener(new ChannelFutureListener() {
+                @Override
+                public void operationComplete(ChannelFuture future) throws Exception {
+                    if (future.isDone()) {
+                        if (future.isSuccess()) {
+                            handler.onWSClosed(getWebSocket());
+                        } else {
+                            handler.onWSError(getWebSocket(), new quark.WSError(future.cause().toString()));
+                        }
+                    }
+                }
+            });
+
             this.handler.onWSConnected(webSocket);
             return;
         }
