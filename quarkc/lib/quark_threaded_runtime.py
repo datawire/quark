@@ -158,9 +158,9 @@ class _QuarkWSMixin(object):
         self.runtime = runtime
         self.handler = handler
         self.ws = _QuarkWSAdapter(self)
+        self.runtime.events.put((self.handler.onWSInit, (self.ws,), {}))
 
     def opened(self):
-        self.runtime.events.put((self.handler.onWSInit, (self.ws,), {}))
         self.runtime.events.put((self.handler.onWSConnected, (self.ws,), {}))
 
     def received_message(self, message):
