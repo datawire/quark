@@ -4,7 +4,7 @@ pip>=8
 ws4py==0.3.4
 pytest
 pexpect
-virtualenv
+virtualenv>=13
 semantic-version==2.5.0
 twine
 sphinx-better-theme
