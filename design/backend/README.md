@@ -96,3 +96,39 @@ Problems:
  - Backend permits differences where none should be allowed, and
    enforces/encourages similarity where differences would be
    preferred.
+
+IR:
+---
+
+Idioms:
+
+ - optional args/overloading
+ - getters/setters
+ - errors/exceptions
+ - callables/lambdas/whatever
+
+Crust:
+
+ - static variables (constant immutable, or initialized to null and mutated later)
+ - static fields (constant immutable, or initialized to null and mutated later)
+ - static methods
+ - functions
+ - interfaces
+ - classes
+ - namespaces
+
+Literals:
+
+ - int
+ - float
+ - string
+ - list
+ - map
+
+Computation:
+
+ - if/else
+ - while
+ - invoke
+ - call
+ - try/finally
