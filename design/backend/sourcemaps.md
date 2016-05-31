@@ -26,3 +26,7 @@ number of targets since there ways to intercept uncaught exceptions on
 several (possibly all) of our targets and transform them prior to
 displaying the result. Javascript and Java both support sourcemaps
 natively, not sure what the story is for Ruby.
+
+An even more basic fallback that would be good would be to simply
+include comments at the end of each generated line of code that
+references the originating line of quark.
