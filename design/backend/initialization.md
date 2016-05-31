@@ -72,8 +72,8 @@ two distinct phases.
         pkg1.A.init()
         pkg2.B.init()
 
-Proposed Solution
-=================
+Proposals
+---------
 
 Replace the simplistic mapping of input code to output code with a
 slightly more sophisticated model that formally distinguishes between
