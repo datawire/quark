@@ -1,4 +1,5 @@
-==The Problem==
+The Problem
+===========
 
 Different languages have different bootstrapping semantics. Quark is
 trying to provide a single consistent set of semantics across these
@@ -11,24 +12,24 @@ circular references are used.
 The simplest example of this is two mutually dependent class
 definitions:
 
-  class A {
-      static A foo = new A();
-  }
+    class A {
+        static A foo = new A();
+    }
 
-  class B {
-      static B foo = new B();
-  } 
+    class B {
+        static B foo = new B();
+    } 
 
 In a dynamic language (or at least the ones I'm aware of), the input
 source for these two class definitions cannot ever map in a simple one
 to one way to output sources. Consider what happens if we attempt this
 in python:
 
-  class A:
-      foo = B()
+    class A:
+        foo = B()
 
-  class B:
-      foo = A()
+    class B:
+        foo = A()
 
 Whichever definition we try to evaluate first will blow up because it
 requires the other class to exist first in order to successfully
@@ -45,6 +46,7 @@ two distinct phases.
            tripping over each other.
 
     pkg1:
+
         class A:
             foo = None
 
@@ -53,6 +55,7 @@ two distinct phases.
               A.foo = B()
 
     pkg2:
+
         class B:
             bar = None
 
@@ -69,7 +72,8 @@ two distinct phases.
         pkg1.A.init()
         pkg2.B.init()
 
-==Proposed Solution==
+Proposed Solution
+=================
 
 Replace the simplistic mapping of input code to output code with a
 slightly more sophisticated model that formally distinguishes between
@@ -83,7 +87,10 @@ The second output is an entry point function that initializes the
 quark compilation unit (library) by running code to fill in any
 dynamically computed static variables.
 
-==Unorganized Notes==
+-----------
+
+Unorganized Notes
+-----------------
 
 Hypothesis:
 
@@ -97,7 +104,6 @@ Hypothesis:
   entry point.
 
 
------------
 
 
 Java:
