@@ -40,6 +40,9 @@ def validate_pip(output):
     pass
 
 def validate_python(output):
+    # On Ubuntu 16.04 version can be e.g. "2.7.11+":
+    if output.endswith("+"):
+        output = output[:-1]
     check_version("python", output, "2.7.0", "3.0.0")
 
 PREREQS = {
@@ -57,7 +60,7 @@ def check(role, cmd=None, cwd=None):
     if cmd in CHECKED: return
     check, msg, validate = PREREQS[role]
     try:
-        out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT)
+        out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT).strip()
         validate(out)
         CHECKED.add(cmd)
     except OSError:
