@@ -12,7 +12,7 @@ context of the test-case and so the harness cannot associate results
 of `check` and `checkEquals` invoked in the callbacks with the
 test-case that asynchronously triggered them.
 
-For an example of the issue see [../../quarkc/test/lib/ws_error_test.q]
+For an example of the issue see [`ws_error_test.q`][testcase].
 
 
 Proposals
@@ -35,7 +35,7 @@ test.
 
 ## option 2: Wait until there are no more active or pending event emitters ##
 
-For definition of *event emitter* see [../concurrency.md][].
+For definition of *event emitter* see [`../concurrency.md`][concurrency].
 
 The only way for the test-case to do work beyond end of the test
 function is if it (directly or indirectly) asked the Runtime to call
@@ -55,4 +55,5 @@ test was started.
 
 ----
 
-[../concurrency.md]: ../concurrency.md
+[testcase]: https://github.com/datawire/quark/blob/websocket-errors/quarkc/test/lib/ws_error_test.q
+[concurrency]: ../concurrency.md
