@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace foo {
 
     @doc("Essential information about a pet.")

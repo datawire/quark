@@ -1,4 +1,4 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), CompilerVersionDeclaration(),
  Include(url=io/datawire/quark/runtime/AbstractWSHandler.java),
  Include(url=io/datawire/quark/netty/QuarkNettyServerWebsocket.java),
  Include(url=io/datawire/quark/netty/QuarkWebSocket.java),

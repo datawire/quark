@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Test {
     void test() {
         int x = 1;

@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace test1 {
     class Test {
         String name;

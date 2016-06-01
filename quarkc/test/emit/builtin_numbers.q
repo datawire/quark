@@ -1,3 +1,4 @@
+quark 0.6.100;
 class TestByte {
     void run() {
         Map<byte,byte> map = new Map<byte,byte>();

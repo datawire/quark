@@ -1,3 +1,4 @@
+quark 0.6.100;
 import testlib;
 
 @version("1.2.3")

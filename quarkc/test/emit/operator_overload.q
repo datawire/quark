@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Overload {
 
     String name;

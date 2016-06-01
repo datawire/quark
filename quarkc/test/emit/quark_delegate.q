@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Message {
     String encode() {
         return "ENCODED";

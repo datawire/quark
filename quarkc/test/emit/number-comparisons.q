@@ -1,3 +1,4 @@
+quark 0.6.100;
 String strBool(bool b) {
     return b.toString();
 }

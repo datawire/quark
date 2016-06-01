@@ -1,3 +1,4 @@
+quark 0.6.100;
 include io/datawire/quark/runtime/Condition.java;
 include io/datawire/quark/runtime/Lock.java;
 include io/datawire/quark/runtime/Mutex.java;

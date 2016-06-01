@@ -1,3 +1,4 @@
+quark 0.6.100;
 package quark_ffi_signatures 1.0.0;
 
 namespace functions {
@@ -172,7 +173,7 @@ namespace inheritance {
            }
         }
 
-    }   
+    }
 
     class Message {
         String encode() { return null; }
@@ -279,7 +280,7 @@ namespace interfaces {
         void m1() {}
         void m2(T arg) {}
         void m3(List<T> args) {}
-    }   
+    }
 
 }
 

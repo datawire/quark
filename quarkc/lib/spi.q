@@ -1,3 +1,4 @@
+quark 0.6.100;
 include io/datawire/quark/runtime/RuntimeSpi.java;
 
 namespace quark {

@@ -1,3 +1,4 @@
+quark 0.6.100;
 include io/datawire/quark/runtime/Os.java;
 
 namespace quark {

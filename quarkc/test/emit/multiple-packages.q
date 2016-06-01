@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace p1 {
     namespace p2 {
         void a() {

@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Box<T> {
     T contents;
     void set(T contents) {

@@ -1,3 +1,4 @@
+quark 0.6.100;
 package hello 1.0.0;
 import quark.concurrent;
 

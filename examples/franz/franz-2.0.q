@@ -1,3 +1,4 @@
+quark 0.6.100;
 package franz 2.0.0;
 
 namespace franz {

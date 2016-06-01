@@ -1,3 +1,4 @@
+quark 0.6.100;
 use js ws 1.0;
 use js request 2.69.0;
 use js timers 0.1.1;

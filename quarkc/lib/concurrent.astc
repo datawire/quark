@@ -1,4 +1,4 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), CompilerVersionDeclaration(),
  Include(url=io/datawire/quark/runtime/Condition.java),
  Include(url=io/datawire/quark/runtime/Lock.java),
  Include(url=io/datawire/quark/runtime/Mutex.java),

@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace m {
 class Inner {
     int inner_int;

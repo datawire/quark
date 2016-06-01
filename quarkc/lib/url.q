@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace quark {
 
     @doc("A URL class.")

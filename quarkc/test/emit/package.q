@@ -1,3 +1,4 @@
+quark 0.6.100;
 // xfail:rb
 // Ruby back-end upper-cases `test` namespace to `Test`,
 // so it collides with `Test` class. The solution to that

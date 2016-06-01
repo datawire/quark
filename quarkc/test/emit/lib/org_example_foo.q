@@ -1,3 +1,4 @@
+quark 0.6.100;
 package org_example_foo 0.1.0;
 
 namespace org {

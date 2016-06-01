@@ -1,3 +1,4 @@
+quark 0.6.100;
 include io/datawire/quark/runtime/Logger.java;
 include io/datawire/quark/runtime/QuarkJavaLogger.java;
 include io/datawire/quark/runtime/LoggerConfig.java;

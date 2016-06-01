@@ -1,3 +1,4 @@
+quark 0.6.100;
 import quark.test;
 
 void main(List<String> args) {

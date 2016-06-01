@@ -1,3 +1,4 @@
+quark 0.6.100;
 void main(List<String> args) {
     logging.makeConfig().setAppender(logging.stdout()).setLevel("DEBUG").configure();
     Logger l = new Logger("hello");

@@ -1,3 +1,4 @@
+quark 0.6.100;
 // xfail:java   default layout is too verbose
 // xfail:py     logging is not initialized
 

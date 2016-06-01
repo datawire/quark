@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Test<T> {
     void run() {
         Map<T,T> map = new Map<T,T>();

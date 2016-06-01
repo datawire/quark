@@ -1,3 +1,4 @@
+quark 0.6.100;
 void test() {
     x = ${this is directly emitted};
     y = ${this is directly emitted with $substitution};

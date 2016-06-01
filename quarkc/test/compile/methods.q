@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Test {
     int foo() { return 3; }
 }

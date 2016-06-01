@@ -1,4 +1,4 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), CompilerVersionDeclaration(),
  Include(url=io/datawire/quark/runtime/RuntimeSpi.java),
 
  Package(Name(quark),

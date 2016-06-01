@@ -1,3 +1,4 @@
+quark 0.6.100;
 namespace ccc {
 class TLSContextInitializer extends TLSInitializer<Context> {
         Context getValue() {
@@ -9,7 +10,7 @@ class TLSContextInitializer extends TLSInitializer<Context> {
         static Context _global = new Context(null);
          // xfail:java wrong reflection metadata created for ccc_TLS_ccc_Context construct method does not expand the <T> in the cast
         static TLS<Context> _current = new TLS<Context>(new TLSContextInitializer());
-        static Context current() { 
+        static Context current() {
             return _current.getValue();
         }
         // xfail:py keyword clash probably also forward reference issue

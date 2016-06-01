@@ -1,3 +1,4 @@
+quark 0.6.100;
 package testlib 1.2.3;
 
 namespace testlib {

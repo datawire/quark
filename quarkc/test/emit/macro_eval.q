@@ -1,3 +1,4 @@
+quark 0.6.100;
 // xfail
 class side_effects {
     String trace;
@@ -17,7 +18,7 @@ String triop(bool a, String b, String c) {
     if (a) { return b; } else { return c; }
 }
 
-macro String plus(String x, String y) 
+macro String plus(String x, String y)
     (triop(((x) != "a"),
            (x),
            "null")

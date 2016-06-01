@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Test {
     Test foo(Test t) {
          return Test();

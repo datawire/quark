@@ -1,3 +1,4 @@
+quark 0.6.100;
 class Pie {
     macro int slice() 3;
     void test() {

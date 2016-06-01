@@ -1,3 +1,4 @@
+quark 0.6.100;
 @version("0.1.0")
 @doc("An example of a binary websockets protocol.")
 namespace binary {
