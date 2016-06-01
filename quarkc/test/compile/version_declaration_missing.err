@@ -1,0 +1,24 @@
+version_declaration_missing.q:1:1: Version declaration is missing.
+
+    Note: Your file should start with Quark compiler version
+    declaration, like this:
+
+        quark 0.6.100;
+
+    Details: version declarations were introduced in Quark 0.7.0
+    in order to quickly detect breaking changes. If this file
+    is written against prior version of Quark, you can either:
+
+     * Downgrade Quark compiler to that version, or
+
+     * Upgrade this source file to work with currenct compiler
+       version (0.6.100). This requires:
+
+        * Declaring compiler version as first line of your file:
+
+              quark 0.6.100;
+
+        * Fixing any incompatibilities, by following the change
+          log for version 0.6.100
+
+              https://github.com/datawire/quark/blob/v0.6.100/CHANGELOG.md

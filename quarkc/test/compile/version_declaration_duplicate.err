@@ -1,0 +1,10 @@
+version_declaration_duplicate.q:5:1: There should be only one compiler version declaration,
+    at the very first line in the file, however, two were found:
+
+     * version_declaration_duplicate.q:1:1
+     * version_declaration_duplicate.q:5:1
+
+version_declaration_duplicate.q:5:1: This compiler version declaration is malformed. It should be
+    located on the first line of your file, like this:
+
+        quark 0.6.100;

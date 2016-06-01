@@ -1,0 +1,6 @@
+version_declaration_invalid_version.q:1:1: Compiler version of this source file is declared as following:
+     1.0
+   However, this is not a valid compiler version. Quark compiler follows
+   Semantic Versioning 2.0.0: http://semver.org
+   Did you, maybe, mean the following version:
+     1.0.0

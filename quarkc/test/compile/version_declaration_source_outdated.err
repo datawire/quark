@@ -1,0 +1,13 @@
+version_declaration_source_outdated.q:1:1: The source file declares the following version of the compiler:
+      0.0.1
+    However, the compiler you are running has the following:
+      0.6.100
+    The two versions are incompatible. You need to either:
+
+      * Downgrade your compiler to 0.0.1, or
+
+      * Updated your source to 0.6.100 by changing the
+        version declaration to 0.6.100, as well as by
+        following the change log for version 0.6.100
+
+            https://github.com/datawire/quark/blob/v0.6.100/CHANGELOG.md
