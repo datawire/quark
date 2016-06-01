@@ -3,6 +3,16 @@ CHANGELOG
 
 Breaking changes are marked with (!)
 
+Latest
+------
+
+### Language
+
+* (!) Quark files now require compiler version declaration, e.g.
+  `quark 0.7.0;`. Compiler will decide if it is compatible with the source
+  file based on the rules of [semantic versioning](http://semver.org).
+  Programs missing this declaration are rejected.
+
 0.6.100
 -------
 
