@@ -347,6 +347,10 @@ def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
 
+@dispatch(CompilerVersionDeclaration)
+def readme(cls, lines):
+    pass
+
 def is_newer(target, *deps):
     if target is None: return False
     if not os.path.exists(target): return False
@@ -361,3 +365,14 @@ def is_newer(target, *deps):
 
 def compiled_quark(url):
     return "%sc" % url
+
+def lineinfo(node):
+    trace = getattr(node, "_trace", None)
+    stack = [getattr(node, "filename", "<none>")]
+    while trace:
+        stack.append("%s:%s:" % (inspect.getfile(trace.annotator), trace.annotator.__name__))
+        stack.append(trace.text)
+        stack.append("<generated>")
+        trace = trace.prev
+    stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
+    return "\n".join(stack)
