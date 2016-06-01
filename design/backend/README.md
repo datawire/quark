@@ -70,16 +70,39 @@ that dispatch to target-specific functions. The traversals are fixed
 across all backends. Only the target-specific functions are currently
 customized with target-specific behavior.
 
-There are a number of reasons this design is cumborsome:
+Although this design has a number of deficiencies, it actually works
+pretty well in some areas. Namely, expressing computation: basic
+blocks, if/else, while, break/continue, function calls, method
+invocation, number/string literals, etc. These are all alreas where
+the input is structurally very similar to the output across our
+current set of targets, and for that reason the simplistic rendering
+model works pretty well. Support for a target language proceeds pretty
+quickly through these areas as it is mostly just plug and chug for how
+to spell semantically similar constructs in different languages. In
+other words if you ignore things like namespaces and statics, it is
+pretty easy to build a backend that supports basic computation,
+e.g. defining the "factorial" function.
 
- - The Annotated AST is structurally very close to the input
-   source. If the structure of the code produced for a given target
-   needs to differ significantly from the structure of the input
-   source, then it is difficult to acheive within this design.
+Where the implementation becomes significantly more opaque is when it
+comes to [namespaces](namespaces.md) and [static
+initialization](initialization.md). In these cases the input and
+output structures may differ somewhat significantly. The current
+target implementations attempt to apply a minimal structural transform
+from input to output and consequently result in inconsistent semantics
+in a number of cases. This is largely because each target was written
+independently and in the absense of a well defined model for how
+static initialization is supposed to work in a consistent way across
+each backend. This points to two separate problems in this area:
 
- - If the structure of the code produced for different target
-   languages needs to differ signficantly from each other, it is also
-   difficult to accomodate with this design.
+ 1. Lack of well defined static initialization semantics for quark
+    itself, and the implicit semantics don't necessarily map well to
+    the lowest common denominator semantics available across our
+    target languages.
+
+ 2. The design of the backend itself makes it difficult to formally
+    capture the lowest common denominator semantics. Put another way,
+    we weren't encouraged to define/evolve a lowest common denominator
+    set of semantics as we expanded the number of backends.
 
 ---------------------
 
@@ -87,6 +110,10 @@ Unorganized Notes
 =================
 
 Problems:
+
+ - If the structure of the code produced for different target
+   languages needs to differ signficantly from each other, it is also
+   difficult to accomodate with this design.
 
  - Backend functions as a simple rendering of the annotated AST, but
    there are lots of reasons that target code needs to be structurally
@@ -96,6 +123,15 @@ Problems:
  - Backend permits differences where none should be allowed, and
    enforces/encourages similarity where differences would be
    preferred.
+
+ - Clearly the lack of structured types, i.e. using strings to build
+   up target code instead of a more formal representation is a
+   problem. It makes it harder to do things like sourcemaps and to do
+   further transformations if necessary to reach a given target. The
+   interesting question though is what should a formal representation
+   look like. Maybe we should just start with a formal representation
+   for what is already implicitly defined via the gen family of
+   functions?
 
 IR:
 ---
