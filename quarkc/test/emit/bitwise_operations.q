@@ -1,3 +1,4 @@
+quark *;
 void check(bool condition) {
     if (condition) { print("."); } else { print("F"); }
 }

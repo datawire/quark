@@ -1,3 +1,4 @@
+quark *;
 class Foo {
     void next() {
     }

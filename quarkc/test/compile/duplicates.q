@@ -1,3 +1,4 @@
+quark *;
 class Test {}
 class Test {}
 void foo_(int a, int a) {}

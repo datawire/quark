@@ -1,4 +1,5 @@
-File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/QObject.java),
+File(Import(Name(quark)), CompilerVersionSpec(),
+ Include(url=io/datawire/quark/runtime/QObject.java),
  Include(url=io/datawire/quark/runtime/Buffer.java),
  Include(url=io/datawire/quark/runtime/BufferImpl.java),
  Include(url=io/datawire/quark/runtime/Codec.java),

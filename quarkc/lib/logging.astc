@@ -1,4 +1,5 @@
-File(Import(Name(quark)), Include(url=io/datawire/quark/runtime/Logger.java),
+File(Import(Name(quark)), CompilerVersionSpec(),
+ Include(url=io/datawire/quark/runtime/Logger.java),
  Include(url=io/datawire/quark/runtime/QuarkJavaLogger.java),
  Include(url=io/datawire/quark/runtime/LoggerConfig.java),
 

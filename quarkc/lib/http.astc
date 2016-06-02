@@ -1,4 +1,4 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), CompilerVersionSpec(),
  Include(url=io/datawire/quark/runtime/AbstractHTTPHandler.java),
  Include(url=io/datawire/quark/runtime/ClientHTTPRequest.java),
  Include(url=io/datawire/quark/netty/DatawireNettyHttpContainer.java),

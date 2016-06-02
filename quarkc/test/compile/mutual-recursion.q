@@ -1,3 +1,4 @@
+quark *;
 int foo() {
     bar();
     return 3;

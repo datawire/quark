@@ -1,3 +1,4 @@
+quark *;
 void main(List<String> args) {
     logging.makeConfig().setAppender(logging.stdout()).setLevel("DEBUG").configure();
     Logger l = new Logger("hello");

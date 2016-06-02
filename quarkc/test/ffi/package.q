@@ -1,3 +1,4 @@
+quark *;
 namespace test {
     void go() {}
 

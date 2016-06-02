@@ -1,3 +1,4 @@
+quark *;
 /* This is a multiline
    comment */
 

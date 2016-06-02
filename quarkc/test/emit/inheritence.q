@@ -1,3 +1,4 @@
+quark *;
 class A {
     void foo() {
         print("A");

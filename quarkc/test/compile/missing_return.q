@@ -1,3 +1,4 @@
+quark *;
 int foo() {}
 
 String bar() {

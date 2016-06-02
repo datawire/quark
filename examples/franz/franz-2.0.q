@@ -1,3 +1,4 @@
+quark *;
 package franz 2.0.0;
 
 namespace franz {

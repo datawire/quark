@@ -1,3 +1,4 @@
+quark *;
  // xfail circular import in py, works in java, js, rb
 namespace abba2 {
     namespace c {

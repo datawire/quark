@@ -1,3 +1,4 @@
+quark *;
 class Overload {
 
     String name;

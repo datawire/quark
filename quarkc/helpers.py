@@ -347,6 +347,10 @@ def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
 
+@dispatch(CompilerVersionSpec)
+def readme(cls, lines):
+    pass
+
 def is_newer(target, *deps):
     if target is None: return False
     if not os.path.exists(target): return False
@@ -405,4 +409,3 @@ def format_ast_stack(frames):
             backtrace.append("  %s %s %s" % (
                 lineinfo(node), type(node).__name__, getattr(node, "name", "")))
     return "\n".join(backtrace)
-

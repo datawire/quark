@@ -1,3 +1,4 @@
+quark *;
 namespace pets {
 
     class Pet {

@@ -1,3 +1,4 @@
+quark *;
 class Test<T> {
     void run() {
         Map<T,T> map = new Map<T,T>();

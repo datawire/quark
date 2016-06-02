@@ -1,3 +1,4 @@
 
 
+quark *;
 package Foo {}

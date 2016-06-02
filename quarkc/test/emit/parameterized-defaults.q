@@ -1,3 +1,4 @@
+quark *;
 namespace pkg {
 
     interface Foo<T> {

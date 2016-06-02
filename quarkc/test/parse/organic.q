@@ -1,3 +1,4 @@
+quark *;
 namespace foo {
   void f(int a, int b, int c, int d) {
     x*a*b*c + b + c*d <= t;

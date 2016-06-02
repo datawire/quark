@@ -1,1 +1,2 @@
+quark *;
 void foo() { return; }

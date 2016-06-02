@@ -1,0 +1,8 @@
+version_declaration_compiler_outdated.q:1:1: Compiler version is incompatible with source
+
+    The source file declares the following compiler version spec:
+      ==999.0.0
+    However, the compiler you are running has the following version:
+      0.6.100
+    Which does not match the spec. You need to either update your source
+    or switch to a compiler version that matches the spec.
