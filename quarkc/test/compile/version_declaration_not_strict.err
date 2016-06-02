@@ -1,4 +1,6 @@
-version_declaration_not_strict.q:1:1: This compiler version declaration is malformed. It should be
+version_declaration_not_strict.q:1:1: Compiler version spec malformed
+
+    This compiler version spec is malformed. It should be
     located on the first line of your file, like this:
 
-        quark 0.6.100;
+        quark ==0.6.100;
