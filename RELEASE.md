@@ -21,7 +21,7 @@ the `./release freeze` command, which does the equivalent of
 
 and should be used as:
 
-    $ eval (./release freeze)
+    $ eval $(./release freeze)
 
 which will define `quark_release` function in your shell
 
@@ -77,7 +77,7 @@ getting help with debugging what happened.
 
 ## Publish the Released State to GitHub ##
 
-    $ quark_release push-release --prod
+    $ quark_release push-release
 
 `push-release` uses atomic push (like a compare-and-set operation) to
 guarantee the following invariants:

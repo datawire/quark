@@ -74,3 +74,6 @@ The [Quark Issues list](https://github.com/datawire/quark/issues)
 provides a list of known issues - please feel free to add new issues
 or feature requests as you start to use Quark. You can also join
 our public Slack [support channel](https://datawire-quark.herokuapp.com).
+
+If you want to contribute to Quark see the [contributing documentation](CONTRIBUTING.md) and
+[testing documentation](TESTING.md).
