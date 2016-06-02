@@ -347,7 +347,7 @@ def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
 
-@dispatch(CompilerVersionDeclaration)
+@dispatch(CompilerVersionSpec)
 def readme(cls, lines):
     pass
 

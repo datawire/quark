@@ -31,11 +31,11 @@ def right_associative_infix_rule(grammar_rule):
     return g.rule(grammar_rule)(semantic_action)
 
 
-re_strict_compiler_version_declaration = '^(.+\n)?quark (.+?)(;|\n|\r\n)'
+re_strict_compiler_version_spec = '^(.+\n)?quark (.+?)(;|\n|\r\n)'
 
 
-def parse_strict_compiler_version_declaration(source):
-    match = re.match(re_strict_compiler_version_declaration, source)
+def parse_strict_compiler_version_spec(source):
+    match = re.match(re_strict_compiler_version_spec, source)
     return match.group(2) if match else None
 
 
@@ -105,18 +105,18 @@ class Parser:
         "~": "__bitwise_not__",
     }
 
-    @g.rule('file = strict_compiler_version_declaration? toplevel* _ ~"$"')
+    @g.rule('file = strict_compiler_version_spec? toplevel* _ ~"$"')
     def visit_file(self, node,
-                   (strict_compiler_version_declaration, toplevels, _, eof)):
-        toplevels = strict_compiler_version_declaration + toplevels
+                   (strict_compiler_version_spec, toplevels, _, eof)):
+        toplevels = strict_compiler_version_spec + toplevels
         return File(self._filename, toplevels)
 
-    @g.rule(r'strict_compiler_version_declaration = ~%r' %
-            re_strict_compiler_version_declaration)
-    def visit_strict_compiler_version_declaration(self, node, _):
+    @g.rule(r'strict_compiler_version_spec = ~%r' %
+            re_strict_compiler_version_spec)
+    def visit_strict_compiler_version_spec(self, node, _):
         # Guarantees to match, since the parser just succedded on the same re.
-        version_string = parse_strict_compiler_version_declaration(node.text)
-        return CompilerVersionDeclaration(version_string, strict=True)
+        spec_string = parse_strict_compiler_version_spec(node.text)
+        return CompilerVersionSpec(spec_string, strict=True)
 
     @g.rule('''
         toplevel = relaxed_compiler_version_declaration
@@ -132,9 +132,9 @@ class Parser:
 
     @g.rule('relaxed_compiler_version_declaration = QUARK url SEMI')
     def visit_relaxed_compiler_version_declaration(self, node,
-                                                   (_, version_string, __)):
+                                                   (_, spec_string, __)):
         """Relaxed quark version declaration for better error reporting."""
-        return CompilerVersionDeclaration(version_string, strict=False)
+        return CompilerVersionSpec(spec_string, strict=False)
 
     @g.rule('dist_unit = PACKAGE name version SEMI')
     def visit_dist_unit(self, node, (p, name, version, s)):

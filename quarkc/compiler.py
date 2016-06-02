@@ -20,7 +20,7 @@ from .exceptions import *
 from .parser import (
     Parser,
     ParseError as GParseError,
-    parse_strict_compiler_version_declaration,
+    parse_strict_compiler_version_spec,
 )
 from .dispatch import overload
 from .helpers import *
@@ -29,10 +29,7 @@ import docmaker
 import docrenderer
 import errors
 import ast
-from versioning import (
-    compiler_version_declaration_errors,
-    version_string_errors,
-)
+from versioning import compiler_version_spec_errors, version_spec_string_errors
 
 sys.setrecursionlimit(10000)
 
@@ -998,10 +995,10 @@ class Compiler(object):
             file = self.parser.parse(text)
         except GParseError as e:
             location = '%s:%s:%s: ' % (name, e.line(), e.column())
-            version_string = parse_strict_compiler_version_declaration(text)
+            version_string = parse_strict_compiler_version_spec(text)
             if version_string:
                 CompileError.raise_if_any(
-                    version_string_errors(version_string, location))
+                    version_spec_string_errors(version_string, location))
             raise ParseError("%s%s" % (location, e))
 
         imp = Import([Name(BUILTIN)])
@@ -1126,8 +1123,7 @@ class Compiler(object):
     def icompile(self, ast):
 
         if isinstance(ast, Root):
-            CompileError.raise_if_any(
-                compiler_version_declaration_errors(ast.files))
+            CompileError.raise_if_any(compiler_version_spec_errors(ast.files))
 
         def_ = Def()
         ast.traverse(def_)

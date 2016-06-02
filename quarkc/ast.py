@@ -151,7 +151,8 @@ class File(AST):
                 name = dfn.name
                 namespaced = []
 
-            if isinstance(dfn, (CompilerVersionDeclaration, DistUnit, Dependency, Use, Include, Import, Package)):
+            if isinstance(dfn, (CompilerVersionSpec, DistUnit, Dependency, Use,
+                                Include, Import, Package)):
                 self.definitions.append(dfn)
             else:
                 namespaced.append(dfn)
@@ -285,20 +286,20 @@ class DistUnit(Definition):
     def copy(self):
         return DistUnit(copy(self.name), self.version)
 
-class CompilerVersionDeclaration(AST):
+class CompilerVersionSpec(AST):
 
-    def __init__(self, version_string, strict):
-        self.version_string = version_string
+    def __init__(self, spec_string, strict):
+        self.spec_string = spec_string
         self.strict = strict
 
     children = ()
 
     @coder
     def code(self, coder):
-        return "quark {version};".format(version=self.version_string)
+        return "quark {spec_string};".format(spec_string=self.spec_string)
 
     def copy(self):
-        return self.__class__(self.version_string, self.strict)
+        return self.__class__(self.spec_string, self.strict)
 
 class Package(Definition):
 
