@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 include io/datawire/quark/runtime/JSONObject.java;
 
 namespace quark {

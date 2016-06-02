@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class Macro {
     macro Macro me() self;
     macro Macro first(Macro o) self;

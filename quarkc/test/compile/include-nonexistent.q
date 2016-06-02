@@ -1,2 +1,2 @@
-quark 0.6.100;
+quark *;
 include nonexistent-file.q;

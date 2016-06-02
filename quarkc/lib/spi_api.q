@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 namespace quark {
 namespace spi_api {
 

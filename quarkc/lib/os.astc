@@ -1,4 +1,4 @@
-File(Import(Name(quark)), CompilerVersionDeclaration(),
+File(Import(Name(quark)), CompilerVersionSpec(),
  Include(url=io/datawire/quark/runtime/Os.java),
 
  Package(Name(quark),

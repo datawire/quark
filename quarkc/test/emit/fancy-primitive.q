@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 namespace fancyprim {
     @mapping($java{java.util.LinkedList} $py{_List} $js{Array} $rb{DatawireQuarkCore::List})
     primitive LinkedList<T> {

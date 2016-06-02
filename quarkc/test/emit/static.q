@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class Foo {
     static int count = 0;
 

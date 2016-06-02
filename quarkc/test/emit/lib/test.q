@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 import testlib;
 
 @version("1.2.3")

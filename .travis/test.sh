@@ -19,7 +19,7 @@ case "$TEST_SUITE" in
         # First example test sometimes times out due to quark install taking too long
         # Seems like an empty maven cache issue
         q=/tmp/maven_cache_warmup.q
-        echo 'quark 0.6.100; void main(List<String> args) {}' > $q
+        echo 'quark *; void main(List<String> args) {}' > $q
         quark install --java $q
         quark run --java $q
         ;;

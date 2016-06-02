@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class Conf {
     String org_id;
     Map<String, Org> orgs;

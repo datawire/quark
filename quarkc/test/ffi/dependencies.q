@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 // Quark file dependency (same as use.q test)
 use lib/test.q;
 

@@ -1,2 +1,2 @@
-quark 0.6.100;
+quark *;
 void f(int a, int b, int c) {}

@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 package petstore 1.2.3;
 import quark.concurrent;
 

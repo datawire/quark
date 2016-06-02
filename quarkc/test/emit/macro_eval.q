@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 // xfail
 class side_effects {
     String trace;

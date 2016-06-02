@@ -1,6 +1,6 @@
 
 
-quark 0.6.100;
+quark *;
 include foo.q;
 include native.js;
 include native.py;

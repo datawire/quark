@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class string_test {
     void check(String actual, String expected, String op, String q) {
         if ( actual == expected ) {

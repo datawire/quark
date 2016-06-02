@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 /* This is a multiline
    comment */
 

@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 package testlib 1.2.3;
 
 namespace testlib {

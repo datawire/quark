@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 // Top-level items other than file_definitions
 
 include foo.q;

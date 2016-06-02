@@ -1,2 +1,2 @@
-quark 0.6.100;
+quark *;
 use nonexistent-file.q;

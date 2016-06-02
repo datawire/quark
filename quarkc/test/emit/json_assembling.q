@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 void test_assembling() {
     JSONObject innerObject = new JSONObject();
 

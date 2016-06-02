@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 namespace test1 {
     class Test {
         String name;

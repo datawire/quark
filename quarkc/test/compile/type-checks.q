@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class C {
     C(int x, float f, String s) {}
 }

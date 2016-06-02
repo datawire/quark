@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 package quark_ffi_signatures 1.0.0;
 
 namespace functions {

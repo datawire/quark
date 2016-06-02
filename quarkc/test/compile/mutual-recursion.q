@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 int foo() {
     bar();
     return 3;

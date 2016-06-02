@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 package slackpack 1.0.0;
 
 @doc("A high level API for accessing all aspects of the the slack web service.")

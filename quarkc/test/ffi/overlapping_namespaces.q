@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 package overlapping_namespace 0.1.0;
 
 use lib/org_example_foo.q;

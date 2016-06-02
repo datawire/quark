@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 void foo(String s) {
     print(s);
 }

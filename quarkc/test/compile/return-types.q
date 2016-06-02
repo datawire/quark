@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 int f() { return 3; }
 void g() {
     int x = f();

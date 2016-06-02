@@ -1,4 +1,4 @@
-File(Import(Name(quark)), CompilerVersionDeclaration(),
+File(Import(Name(quark)), CompilerVersionSpec(),
  Dependency(lang=jsgroup=Noneartifact=wsversion=1.0),
  Dependency(lang=jsgroup=Noneartifact=requestversion=2.69.0),
  Dependency(lang=jsgroup=Noneartifact=timersversion=0.1.1),

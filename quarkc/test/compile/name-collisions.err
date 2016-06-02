@@ -1,2 +1,2 @@
-name-collisions.q:4:1: `FOO` may collide with `foo` (name-collisions.q:1:14) for target languages that are case-insensitive, thus it is forbidden
+name-collisions.q:4:1: `FOO` may collide with `foo` (name-collisions.q:1:8) for target languages that are case-insensitive, thus it is forbidden
 name-collisions.q:12:1: `BAR` may collide with `bar` (name-collisions.q:11:1) for target languages that are case-insensitive, thus it is forbidden

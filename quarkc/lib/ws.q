@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 include io/datawire/quark/runtime/AbstractWSHandler.java;
 include io/datawire/quark/netty/QuarkNettyServerWebsocket.java;
 include io/datawire/quark/netty/QuarkWebSocket.java;

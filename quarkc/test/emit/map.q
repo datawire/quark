@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 void test1() {
     Map<String,int> map = new Map<String,int>();
     map["pi"] = 3;

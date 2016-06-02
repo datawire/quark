@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class A {}
 
 class B extends A {}

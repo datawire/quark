@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 use lib/test.q;
 import testlib;
 import testlib.foo as bar;

@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 // xfail this file dies with
 // AttributeError: 'TypeParam' object has no attribute 'bases'
 class Base<T> extends T {

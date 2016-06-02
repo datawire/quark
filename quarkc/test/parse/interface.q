@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 interface Foo {
    void m1();
    void m2(int arg);

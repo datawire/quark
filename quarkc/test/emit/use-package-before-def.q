@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 void main(List<String> args) {
     test.go();
 }

@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 void test() {
     List<int> list = new List<int>();
     list.add(3);

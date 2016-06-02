@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 class Test {}
 class Test {}
 void foo_(int a, int a) {}

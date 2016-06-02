@@ -1,4 +1,4 @@
-quark 0.6.100;
+quark *;
 macro int pi() 3;
 
 void test() {
