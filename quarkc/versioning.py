@@ -22,7 +22,7 @@ def version_spec_string_errors(spec_string, location):
             yield messages.compiler_version_incompatible_with_source(
                 location=location,
                 compiler_version=COMPILER_VERSION,
-                source_version_spec=spec,
+                source_version_spec=spec_string,
             )
 
 
@@ -33,7 +33,7 @@ def compiler_version_spec_errors(file_nodes):
             node for node in file.children
             if isinstance(node, ast.CompilerVersionSpec)
         ]
-        if compiler_version_spec_nodes == []:
+        if file.dist and compiler_version_spec_nodes == []:
             yield messages.version_spec_missing(
                 location=lineinfo(file),
                 compiler_version=COMPILER_VERSION,

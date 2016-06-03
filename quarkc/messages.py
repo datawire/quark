@@ -1,58 +1,74 @@
 version_spec_missing = '''\
-{location}: Version spec is missing.
+{location}: Source code version declaration is missing.
 
-    Note: Your file should start with Quark compiler version
-    spec, like one this:
+    As of quark version 0.7.0, your source code must indicate what
+    version of the quark toolchain (language/library) it uses by
+    declaring the quark version at the beginning of each top level
+    file:
 
-        quark =={compiler_version};
-        quark >=0.6.100,<0.7.0;
+        quark {compiler_version};
+
+    To explicitly override this check, use:
+
         quark *;
 
-    Details: version specs were introduced in Quark 0.7.0
-    in order to quickly detect breaking changes. If this file
-    is written against prior version of Quark, you can either:
+    Source code version declarations were introduced in Quark 0.7.0 in
+    order to:
 
-     * Downgrade Quark compiler to that version, or
+      a) quickly detect incompatibilities between quark source code
+         and the quark toolchain in use
 
-     * Upgrade this source file to work with currenct compiler
-       version ({compiler_version}). This requires:
+      b) make it as easy as possible to update to the latest version
+         of the toolchain
 
-        * Declaring compiler version as first line of your file:
+    If this file is written against a prior version of the quark
+    toolchain, you can either downgrade to that version, or upgrade
+    this source file to work with currenct compiler version
+    ({compiler_version}). This requires declaring compiler version as
+    the first line of any top level file (files that have a package
+    declaration):
 
-              quark =={compiler_version};
+        quark {compiler_version};
 
-        * Fixing any incompatibilities, by following the change
-          log for version {compiler_version}
+    For info about any fixes and improvements, as well as info on how
+    to upgrade your source code if there have been breaking changes in
+    the library, please review the CHANGELOG:
 
-              https://github.com/datawire/quark/blob/v{compiler_version}/CHANGELOG.md
+        https://github.com/datawire/quark/blob/v{compiler_version}/CHANGELOG.md
 '''.format
 
 too_many_version_specs = '''\
-{second_location}: Too many compiler version specs
+{second_location}: Too many quark version declarations
 
-    There should be only one compiler version spec declared,
-    at the very first line in the file, however, two were found:
+    There should be only one quark version declared, at the very first
+    line in the file, however, two were found:
 
      * {first_location}
      * {second_location}
 '''.format
 
 version_spec_malformed = '''\
-{location}: Compiler version spec malformed
+{location}: Quark version spec malformed
 
-    This compiler version spec is malformed. It should be
-    located on the first line of your file, like this:
+    The quark version spec is malformed. It should be located on the
+    first line of your file, like this:
 
-        quark =={compiler_version};
+        quark {compiler_version};
 '''.format
 
 compiler_version_incompatible_with_source = '''\
-{location}: Compiler version is incompatible with source
+{location}: The quark version is incompatible with the source version.
 
-    The source file declares the following compiler version spec:
-      {source_version_spec}
-    However, the compiler you are running has the following version:
-      {compiler_version}
-    Which does not match the spec. You need to either update your source
-    or switch to a compiler version that matches the spec.
+    Your source code declares the following quark version:
+
+        quark {source_version_spec};
+
+    However, you are running version {compiler_version}. You need to
+    either update your source or install the correct version of quark.
+
+    For info about any fixes and improvements, as well as info on how
+    to upgrade your source code if there have been breaking changes in
+    the library, please review the CHANGELOG:
+
+        https://github.com/datawire/quark/blob/v{compiler_version}/CHANGELOG.md
 '''.format
