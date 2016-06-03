@@ -20,6 +20,8 @@ Latest
 
 ### Other
 
+* Quark compiler generates an error when a type parameter is missing
+
 * Internal compile errors now report which part of the source file
   confused the compiler
 

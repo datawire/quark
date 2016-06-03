@@ -462,6 +462,7 @@ class Use(object):
 
     def __init__(self):
         self.unresolved = []
+        self.errors = []
 
     @overload(AST, str)
     def lookup(self, node, name, imported=None):
@@ -517,6 +518,17 @@ class Use(object):
         bindings = {}
         if type and t.parameters:
             idx = 0
+            if len(t.parameters) != len(type.parameters):
+                if len(t.parameters) > len(type.parameters):
+                    ne = "many"
+                else:
+                    ne = "few"
+                self.errors.append(
+                    "%s: too %s template parameters to %s<%s>, got %s" % (
+                        lineinfo(t), ne,
+                        type.name, ", ".join(map(str,type.parameters)),
+                        str(t)))
+                return
             for p in type.parameters:
                 bindings[p] = t.parameters[idx].resolved
                 idx += 1
@@ -1133,9 +1145,10 @@ class Compiler(object):
         use = Use()
         ast.traverse(use)
         if use.unresolved:
-            vars = ["%s: unresolved variable: %s" % (lineinfo(node), name)
-                    for node, name in use.unresolved]
-            raise CompileError("\n".join(vars))
+            use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
+                    for node, name in use.unresolved])
+        if use.errors:
+            raise CompileError("\n".join(use.errors))
 
         res = Resolver()
         ast.traverse(res)
