@@ -16,7 +16,7 @@ import sys
 import os
 import shlex
 
-__version__ = '0.7.0'
+__version__ = '0.7.3'
 __doc_version__ = '1'
 #__branch__ = 'master'
 #__doc_product_version__ = '0.4'
