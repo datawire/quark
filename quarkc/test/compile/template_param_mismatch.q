@@ -1,3 +1,4 @@
+quark *;
 class X<A,B,C> {}
 class NeedMore extends X<String,int> {}
 class TooMuch extends X<String, List<int>, Map<bool, float>, byte> {}

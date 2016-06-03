@@ -1,12 +1,12 @@
-template_param_mismatch.q:2:24: too few template parameters to X<A, B, C>, got X<String, int>
-template_param_mismatch.q:3:23: too many template parameters to X<A, B, C>, got X<String, List<int>, Map<bool, float>, byte>
-template_param_mismatch.q:4:40: too many template parameters to X<A, B, C>, got X<A, B, C, D>
-template_param_mismatch.q:5:37: too few template parameters to X<A, B, C>, got X<A, B>
-template_param_mismatch.q:7:9: too many template parameters to List<T>, got List<String, int>
-template_param_mismatch.q:8:9: too few template parameters to Map<K, V>, got Map<String>
-template_param_mismatch.q:9:13: too many template parameters to List<T>, got List<String, int>
-template_param_mismatch.q:9:9: too few template parameters to Map<K, V>, got Map<List<String, int>>
-template_param_mismatch.q:10:9: too many template parameters to Map<K, V>, got Map<String, int, List<String>>
-template_param_mismatch.q:11:9: too few template parameters to Map<K, V>, got Map<Map<String, int>>
-template_param_mismatch.q:13:9: too many template parameters to X<A, B, C>, got X<void, void, void, void, void, void>
-template_param_mismatch.q:14:9: too few template parameters to X<A, B, C>, got X<void>
+template_param_mismatch.q:3:24: too few template parameters to X<A, B, C>, got X<String, int>
+template_param_mismatch.q:4:23: too many template parameters to X<A, B, C>, got X<String, List<int>, Map<bool, float>, byte>
+template_param_mismatch.q:5:40: too many template parameters to X<A, B, C>, got X<A, B, C, D>
+template_param_mismatch.q:6:37: too few template parameters to X<A, B, C>, got X<A, B>
+template_param_mismatch.q:8:9: too many template parameters to List<T>, got List<String, int>
+template_param_mismatch.q:9:9: too few template parameters to Map<K, V>, got Map<String>
+template_param_mismatch.q:10:13: too many template parameters to List<T>, got List<String, int>
+template_param_mismatch.q:10:9: too few template parameters to Map<K, V>, got Map<List<String, int>>
+template_param_mismatch.q:11:9: too many template parameters to Map<K, V>, got Map<String, int, List<String>>
+template_param_mismatch.q:12:9: too few template parameters to Map<K, V>, got Map<Map<String, int>>
+template_param_mismatch.q:14:9: too many template parameters to X<A, B, C>, got X<void, void, void, void, void, void>
+template_param_mismatch.q:15:9: too few template parameters to X<A, B, C>, got X<void>
