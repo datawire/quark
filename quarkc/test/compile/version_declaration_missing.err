@@ -1,26 +1,36 @@
-version_declaration_missing.q:1:1: Version spec is missing.
+version_declaration_missing.q:1:1: Source code version declaration is missing.
 
-    Note: Your file should start with Quark compiler version
-    spec, like one this:
+    As of quark version 0.7.0, your source code must indicate what
+    version of the quark toolchain (language/library) it uses by
+    declaring the quark version at the beginning of each top level
+    file:
 
-        quark ==0.6.100;
-        quark >=0.6.100,<0.7.0;
+        quark 0.7.0;
+
+    To explicitly override this check, use:
+
         quark *;
 
-    Details: version specs were introduced in Quark 0.7.0
-    in order to quickly detect breaking changes. If this file
-    is written against prior version of Quark, you can either:
+    Source code version declarations were introduced in Quark 0.7.0 in
+    order to:
 
-     * Downgrade Quark compiler to that version, or
+      a) quickly detect incompatibilities between quark source code
+         and the quark toolchain in use
 
-     * Upgrade this source file to work with currenct compiler
-       version (0.6.100). This requires:
+      b) make it as easy as possible to update to the latest version
+         of the toolchain
 
-        * Declaring compiler version as first line of your file:
+    If this file is written against a prior version of the quark
+    toolchain, you can either downgrade to that version, or upgrade
+    this source file to work with currenct compiler version
+    (0.7.0). This requires declaring compiler version as
+    the first line of any top level file (files that have a package
+    declaration):
 
-              quark ==0.6.100;
+        quark 0.7.0;
 
-        * Fixing any incompatibilities, by following the change
-          log for version 0.6.100
+    For info about any fixes and improvements, as well as info on how
+    to upgrade your source code if there have been breaking changes in
+    the library, please review the CHANGELOG:
 
-              https://github.com/datawire/quark/blob/v0.6.100/CHANGELOG.md
+        https://github.com/datawire/quark/blob/v0.7.0/CHANGELOG.md

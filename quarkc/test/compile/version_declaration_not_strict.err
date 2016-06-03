@@ -1,6 +1,21 @@
-version_declaration_not_strict.q:1:1: Compiler version spec malformed
+version_declaration_not_strict.q:1:1: Quark version spec malformed
 
-    This compiler version spec is malformed. It should be
-    located on the first line of your file, like this:
+    The quark version spec is malformed. It should be located on the
+    first line of your file, like this:
 
-        quark ==0.6.100;
+        quark 0.7.0;
+
+version_declaration_not_strict.q:1:1: The quark version is incompatible with the source version.
+
+    Your source code declares the following quark version:
+
+        quark 0.6.100;
+
+    However, you are running version 0.7.0. You need to
+    either update your source or install the correct version of quark.
+
+    For info about any fixes and improvements, as well as info on how
+    to upgrade your source code if there have been breaking changes in
+    the library, please review the CHANGELOG:
+
+        https://github.com/datawire/quark/blob/v0.7.0/CHANGELOG.md
