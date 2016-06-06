@@ -1,3 +1,4 @@
+quark *;
 void test() {
     !!!!!
 }

@@ -18,14 +18,14 @@ function org_example_foo_Foo_test_Method__init_fields__() {
 org_example_foo_Foo_test_Method.prototype.__init_fields__ = org_example_foo_Foo_test_Method__init_fields__;
 
 function org_example_foo_Foo_test_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return org.example.foo.Foo; });
     (obj).test();
     return null;
 }
 org_example_foo_Foo_test_Method.prototype.invoke = org_example_foo_Foo_test_Method_invoke;
 
 function org_example_foo_Foo_test_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 org_example_foo_Foo_test_Method.prototype._getClass = org_example_foo_Foo_test_Method__getClass;
 
@@ -60,7 +60,7 @@ function org_example_foo_Foo_construct(args) {
 org_example_foo_Foo.prototype.construct = org_example_foo_Foo_construct;
 
 function org_example_foo_Foo__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 org_example_foo_Foo.prototype._getClass = org_example_foo_Foo__getClass;
 
@@ -83,7 +83,7 @@ function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
 Root.org_example_foo_Foo_md = org_example_foo_Foo.singleton;
 function Root__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Root.prototype._getClass = Root__getClass;
 

@@ -16,9 +16,9 @@ Language Structure
 Files
 ~~~~~
 
-{{{language}}} code is stored in text files with a {{{file_extension}}} file extension. Unlike some languages, {{{language}}} is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Namespaces may be defined across multiple files or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single {{{file_extension}}} file. However, the set of files comprising an application may only have one main() function declaration.
+{{{language}}} code is stored in text files with a {{{file_extension}}} file extension. Unlike some languages, {{{language}}} is not tied to any specific file structure and code may be split among as many files as desired provided an entire library or application is compiled together. Namespaces may be defined across multiple files (within the same distribution unit) or in multiple locations across the same file and, if desired, an entire library or application could be defined in a single {{{file_extension}}} file. However, the set of files comprising an application may only have one main() function declaration.
 
-{{{language}}} distribution units, known as packages, are declared using the :ref:`package keyword <packageKeyword>`, which tells the compiler the name of the distribution unit being defined in the file.
+{{{language}}} distribution units, known as packages, are declared using the :ref:`package keyword <packageKeyword>`, which tells the compiler the name of the distribution unit being defined in the file. If not specified, the default package name is the name of the source file without the {{{file_extension}}} extension.
 
 The following table lists the terminology used by {{{language}}} and the supported target languages to describe distribution units, as above, and namespaces within code, as discussed next. Note that the terminology conflicts somewhat between languages.
 
@@ -39,7 +39,7 @@ Namespaces are defined using the :ref:`namespace keyword <namespaceKeyword>` and
 
 As mentioned above, namespaces can be nested. Classes and functions directly inside a top-level namespace must use nested namespace name when referencing classes or functions defined inside a nested namespace but the members of the nested namespace have direct access to classes and functions in the top-level namespace without needing to specify their namespace name.
 
-Classes and functions defined outside of a namespace belong to a default, unnamed root namespace. This namespace is logically identical to any named namespace. Named namespaces are nested inside this root namespace so classes and functions in the root namespace may be referenced inside any namespace directly without specifying a namespace name.
+Classes and functions defined outside of a namespace belong to the default namespace, which has the same name as the package (distribution unit) being defined. This namespace is logically identical to the explicitly-named namespace with the same name.
 
 Classes
 ~~~~~~~
@@ -128,8 +128,9 @@ Namespace names are not tied to the location of files and are not expected to ma
 
 By convention, {{{language}}} expects the following casing rules:
 
+* Package names are lower case
 * Namespace names are lower case
-* Class names are upper case
+* Class names are capitalized
 * variable, property, method, and function names are camel case
 * annotation names are lower case
 

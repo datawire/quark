@@ -105,10 +105,10 @@ class User < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("client"))
-            (self).client = value
+            (self).client = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Client }
         end
         if ((name) == ("user"))
-            (self).user = value
+            (self).user = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -175,10 +175,10 @@ class Channel < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("client"))
-            (self).client = value
+            (self).client = ::DatawireQuarkCore.cast(value) { ::Quark.slack.Client }
         end
         if ((name) == ("channel"))
-            (self).channel = value
+            (self).channel = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -267,7 +267,7 @@ class Client < ::DatawireQuarkCore::QuarkObject
 
     def construct(type)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.slack.event.SlackEvent }
 
         nil
     end
@@ -318,19 +318,19 @@ class Client < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("runtime"))
-            (self).runtime = value
+            (self).runtime = ::DatawireQuarkCore.cast(value) { ::Quark.quark.Runtime }
         end
         if ((name) == ("token"))
-            (self).token = value
+            (self).token = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("handler"))
-            (self).handler = value
+            (self).handler = ::DatawireQuarkCore.cast(value) { ::Quark.slack.SlackHandler }
         end
         if ((name) == ("event_id"))
-            (self).event_id = value
+            (self).event_id = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
         if ((name) == ("socket"))
-            (self).socket = value
+            (self).socket = ::DatawireQuarkCore.cast(value) { ::Quark.quark.WebSocket }
         end
 
         nil

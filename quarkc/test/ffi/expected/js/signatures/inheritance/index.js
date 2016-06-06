@@ -42,7 +42,7 @@ Base.prototype._getField = Base__getField;
 
 function Base__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 Base.prototype._setField = Base__setField;
@@ -83,13 +83,13 @@ Test.prototype._getField = Test__getField;
 
 function Test__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("mumble"))) {
-        (this).mumble = value;
+        (this).mumble = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("later"))) {
-        (this).later = value;
+        (this).later = _qrt.cast(value, function () { return String; });
     }
 }
 Test.prototype._setField = Test__setField;
@@ -121,7 +121,7 @@ A.prototype._getField = A__getField;
 
 function A__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 A.prototype._setField = A__setField;
@@ -157,7 +157,7 @@ B.prototype._getField = B__getField;
 
 function B__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 B.prototype._setField = B__setField;
@@ -193,7 +193,7 @@ C.prototype._getField = C__getField;
 
 function C__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 C.prototype._setField = C__setField;
@@ -252,7 +252,7 @@ Y.prototype._getField = Y__getField;
 
 function Y__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 Y.prototype._setField = Y__setField;
@@ -267,7 +267,7 @@ function Message__init_fields__() {}
 Message.prototype.__init_fields__ = Message__init_fields__;
 Message.inheritance_Message_ref = null;
 function Message_encode() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Message.prototype.encode = Message_encode;
 
@@ -324,7 +324,7 @@ function Pong__init_fields__() {
 Pong.prototype.__init_fields__ = Pong__init_fields__;
 Pong.inheritance_Pong_ref = null;
 function Pong_toString() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Pong.prototype.toString = Pong_toString;
 

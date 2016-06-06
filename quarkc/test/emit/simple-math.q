@@ -1,3 +1,4 @@
+quark *;
 void main(List<String> args) {
     int four = 2 + 2;
     print(four.toString());

@@ -12,11 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+import os
+
+ROOT_DIR = os.path.dirname(__file__)
+
+
 from setuptools import setup
 
 metadata = {}
-with open("quarkc/_metadata.py") as fp:
+with open(os.path.join(ROOT_DIR, "quarkc/_metadata.py")) as fp:
     exec(fp.read(), metadata)
+
+with open(os.path.join(ROOT_DIR, "install-requirements.txt")) as fp:
+    install_requirements = [i.strip() for i in list(fp)
+                            if i.strip() and not i.strip().startswith("#")]
+
 
 setup(name=metadata["__title__"],
       version=metadata["__version__"],
@@ -31,14 +41,7 @@ setup(name=metadata["__title__"],
                          "lib/io/datawire/quark/runtime/*.java",
                          "apidoc/*.css", "apidoc/*.html", "apidoc/*.js"]},
       include_package_data=True,
-      install_requires=["docopt==0.6.2",
-                        "parsimonious==0.6.2",
-                        "sphinx>=1.3.1",
-                        "setuptools>=18",
-                        "pip>=8",
-                        "wheel",
-                        "markdown",
-                        "Jinja2>=2.8"],
+      install_requires=install_requirements,
       entry_points={"console_scripts": ["quark = quarkc.command:call_main",
                                         "quark-grammar = quarkc.parser:rules"]},
       keywords=['IDL', 'service', 'microservice', 'RPC', 'async'],

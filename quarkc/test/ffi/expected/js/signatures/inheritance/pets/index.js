@@ -15,7 +15,7 @@ exports.Pet = Pet;
 function Pet__init_fields__() {}
 Pet.prototype.__init_fields__ = Pet__init_fields__;
 
-function Pet_greet() { /* abstract */ }
+function Pet_greet() { throw TypeError, '`Pet.greet` is an abstract method'; }
 Pet.prototype.greet = Pet_greet;
 
 // CLASS Cat

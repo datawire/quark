@@ -23,7 +23,7 @@ class TestTestGoMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.test.Test }
         obj.go()
         return nil
 
@@ -32,7 +32,7 @@ class TestTestGoMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -92,7 +92,7 @@ class TestTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -140,7 +140,7 @@ class TestSubtestTestGoMethod < ::Quark.quark.reflect.Method
 
     def invoke(object, args)
         
-        obj = object
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.test.subtest.Test }
         obj.go()
         return nil
 
@@ -149,7 +149,7 @@ class TestSubtestTestGoMethod < ::Quark.quark.reflect.Method
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -209,7 +209,7 @@ class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -260,7 +260,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
 
     def _getClass()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end

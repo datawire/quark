@@ -17,6 +17,9 @@ from collections import OrderedDict
 from .compiler import BUILTIN
 from .helpers import *
 
+not_implemented_template = """\
+throw TypeError, '`{clazz}.{name}` is an abstract method';""".format
+
 ## Packaging
 
 def package(name, version, packages, srcs, deps):
@@ -170,7 +173,8 @@ def abstract_method(doc, clazz, type, name, parameters):
     params = ", ".join(parameters)
     full_name = "%s_%s" % (clazz, name)
     trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
-    return "\n%sfunction %s(%s) { /* abstract */ }\n" % (doc, full_name, params) + trailer
+    body = not_implemented_template(clazz=clazz, name=name)
+    return "\n%sfunction %s(%s) { %s }\n" % (doc, full_name, params, body) + trailer
 
 ## Interface definition
 
@@ -182,7 +186,7 @@ def interface_method(doc, iface, type, name, parameters, body):
     full_name = "%s_%s" % (iface, name)
     trailer = "%s.prototype.%s = %s;" % (iface, name, full_name)
     if body is None:
-        body = " { /* interface */ }"
+        body = " { %s }" % not_implemented_template(clazz=iface, name=name)
 
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
@@ -279,7 +283,11 @@ def get_field(expr, field):
     return "(%s).%s" % (expr, field)
 
 def cast(type, expr):
-    return expr
+    if type == '':  # TODO why does this happen?
+        return expr
+    assert expr
+    template = '_qrt.cast({expr}, function () {{ return {type}; }})'.format
+    return template(expr=expr, type=type)
 
 ## Literals
 

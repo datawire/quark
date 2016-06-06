@@ -28,7 +28,7 @@ class Test(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Test.test_Test_ref = None

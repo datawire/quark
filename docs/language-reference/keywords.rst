@@ -33,7 +33,7 @@ The class keyword syntax is:
 *definition*
 **}**
 
-where *className* is a unique name within the scope of the namespace (if one is defined) or the set of {{{language}}} files being compiled together (if no namespace is defined) and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace and *definition* is the list of properties and methods within the class and their definitions.
 
 .. _continueKeyword:
 
@@ -91,7 +91,7 @@ The extends keyword syntax is:
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the namespace (if one is defined) or the set of {{{language}}} files being compiled together (if no namespace is defined), *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *superClassName* is the unique name of the chosen superclass, and *definition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -99,7 +99,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the namespace (if one is defined) or the set of {{{language}}} files being compiled together (if no namespace is defined), *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 or
 
@@ -107,7 +107,7 @@ or
 *additionalClassDefinition*
 **}**
 
-where *className* is a unique name within the scope of the namespace (if one is defined) or the set of {{{language}}} files being compiled together (if no namespace is defined), *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
+where *className* is a unique name within the scope of the namespace, *superClassName* is the unique name of the chosen superclass, *interfaces* is a comma-separated list of interfaces used by this class, and *additionalClassDefinition* is the list of properties and methods within the class and their definitions.
 
 .. _falseKeyword:
 
@@ -232,6 +232,8 @@ macro
 
 The macro keyword is used to define a top-level function available to use within any {{{language}}} program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any namespace, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by {{{language}}}.
 
+**FIXME**: The above appears to be incorrect.
+
 Syntax
 ++++++
 
@@ -266,9 +268,9 @@ The namespace keyword syntax is:
 
 **}**
 
-where *definition* is the content of the namespace and *namespaceName* is the name of the namespace. Namespace names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same namespace name is used multiple times, the contents of each definition section are combined and treated as a single namespace. {{{language}}} namespaces cannot be the same as the name of the file they are defined within. See `linkIssue6`_ for more information.
+where *definition* is the content of the namespace and *namespaceName* is the name of the namespace. Namespace names are treated as unique within the scope of the {{{language}}} files being compiled together. If the same namespace name is used multiple times, the contents of each definition section are combined and treated as a single namespace.
 
-.. _linkIssue6: https://github.com/datawire/{{{github_directory}}}/issues/6
+The default namespace has the same name as the package being defined. It is the containing namespace for any classes and functions defined without an explicit containing namespace. The default namespace is logically equivalent to the explicitly-named namespace with the same name.
 
 .. _newKeyword:
 
@@ -315,7 +317,7 @@ The package keyword syntax is:
 
 **package** *packageName* *version* **;**
 
-where *packageName* is the name of the distribution unit to be generated or installed by the compiler from this file.
+where *packageName* is the name of the distribution unit to be generated or installed by the compiler from this file. If not specified, the default package name is the name of the source file without the {{{file_extension}}} extension.
 
 .. _primitiveKeyword:
 

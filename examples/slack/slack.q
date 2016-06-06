@@ -1,3 +1,4 @@
+quark *;
 package slack 0.1.0;
 
 @doc("A high level API for accessing all aspects of the the slack web service.")

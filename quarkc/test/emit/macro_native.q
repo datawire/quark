@@ -1,3 +1,4 @@
+quark *;
 class Native {
     macro Native add(Native other) ${$self$other};
     void test() {

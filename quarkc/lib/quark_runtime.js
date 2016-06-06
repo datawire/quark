@@ -58,6 +58,36 @@
     }
     exports.print = print;
 
+    /*
+     * Like instanceof operator, but robust against primitive types.
+     * Note, this is not robust against passing objects between iframes.
+     */
+    function is_instance_of(value, type) {
+        return ((value instanceof type)
+            || (type === String && typeof value === 'string')
+            || (type === Number && typeof value === 'number')
+            || (type === Boolean && typeof value === 'boolean')
+        );
+    }
+
+    function cast(value, callback) {
+        try {
+            var type = callback();
+            if (value == null || is_instance_of(value, type)) {
+                return value;
+            } else {
+                throw TypeError,
+                    '`' + value + '` is not an instance of `' + type + '`';
+            }
+        } catch (error) {
+            if (error instanceof ReferenceError) {
+                return value;
+            }
+            throw error;
+        }
+    }
+    exports.cast = cast;
+
     function modulo(a, b) {
         return (a % b + b) % b;
     }
@@ -70,6 +100,46 @@
         return null;
     }
     exports.map_get = map_get;
+
+    function map_remove(m, key) {
+        var res = map_get(m, key);
+        m.delete(key);
+        return res;
+    }
+    exports.map_remove = map_remove;
+
+    function list_remove(l, idx) {
+        var res = l[idx];
+        l.splice(idx, 1);
+        return res;
+    }
+    exports.list_remove = list_remove;
+
+    function env_get(key) {
+        var res = process.env[key];
+        if (typeof res != "undefined") {
+            return res;
+        }
+        return null;
+    }
+    exports.env_get = env_get;
+
+    var os = require("os");
+    function userHomeDir() {
+        return os.homedir();
+    }
+    exports.userHomeDir = userHomeDir;
+
+    var fs = require("fs");
+    function getFileContents(path, result) {
+        try {
+            result.value = fs.readFileSync(path, { encoding: "UTF-8" });
+            result.finish(null);
+        } catch (exc) {
+            result.finish(exc.toString());
+        }
+    }
+    exports.getFileContents = getFileContents;
 
     var execSync = require("child_process").execSync;
 

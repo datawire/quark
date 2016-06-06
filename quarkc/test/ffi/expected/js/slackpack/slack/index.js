@@ -69,10 +69,10 @@ User.prototype._getField = User__getField;
 
 function User__setField(name, value) {
     if (_qrt.equals((name), ("client"))) {
-        (this).client = value;
+        (this).client = _qrt.cast(value, function () { return Client; });
     }
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return String; });
     }
 }
 User.prototype._setField = User__setField;
@@ -117,10 +117,10 @@ Channel.prototype._getField = Channel__getField;
 
 function Channel__setField(name, value) {
     if (_qrt.equals((name), ("client"))) {
-        (this).client = value;
+        (this).client = _qrt.cast(value, function () { return Client; });
     }
     if (_qrt.equals((name), ("channel"))) {
-        (this).channel = value;
+        (this).channel = _qrt.cast(value, function () { return String; });
     }
 }
 Channel.prototype._setField = Channel__setField;
@@ -170,7 +170,7 @@ function Client_onWSError(socket, error) {}
 Client.prototype.onWSError = Client_onWSError;
 
 function Client_construct(type) {
-    return null;
+    return _qrt.cast(null, function () { return event.SlackEvent; });
 }
 Client.prototype.construct = Client_construct;
 
@@ -207,19 +207,19 @@ Client.prototype._getField = Client__getField;
 
 function Client__setField(name, value) {
     if (_qrt.equals((name), ("runtime"))) {
-        (this).runtime = value;
+        (this).runtime = _qrt.cast(value, function () { return quark.Runtime; });
     }
     if (_qrt.equals((name), ("token"))) {
-        (this).token = value;
+        (this).token = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("handler"))) {
-        (this).handler = value;
+        (this).handler = _qrt.cast(value, function () { return SlackHandler; });
     }
     if (_qrt.equals((name), ("event_id"))) {
-        (this).event_id = value;
+        (this).event_id = _qrt.cast(value, function () { return Number; });
     }
     if (_qrt.equals((name), ("socket"))) {
-        (this).socket = value;
+        (this).socket = _qrt.cast(value, function () { return quark.WebSocket; });
     }
 }
 Client.prototype._setField = Client__setField;

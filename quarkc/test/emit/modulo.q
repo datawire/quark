@@ -1,3 +1,4 @@
+quark *;
 void test_modulo(int a, int b) {
     print(a.toString() + " % " + b.toString() + " = " + (a%b).toString());
 }

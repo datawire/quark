@@ -17,7 +17,11 @@ from collections import OrderedDict
 
 from .ast import *
 from .exceptions import *
-from .parser import Parser, ParseError as GParseError
+from .parser import (
+    Parser,
+    ParseError as GParseError,
+    parse_strict_compiler_version_spec,
+)
 from .dispatch import overload
 from .helpers import *
 from .environment import Environment
@@ -25,6 +29,7 @@ import docmaker
 import docrenderer
 import errors
 import ast
+from versioning import compiler_version_spec_errors, version_spec_string_errors
 
 sys.setrecursionlimit(10000)
 
@@ -457,6 +462,7 @@ class Use(object):
 
     def __init__(self):
         self.unresolved = []
+        self.errors = []
 
     @overload(AST, str)
     def lookup(self, node, name, imported=None):
@@ -512,6 +518,17 @@ class Use(object):
         bindings = {}
         if type and t.parameters:
             idx = 0
+            if len(t.parameters) != len(type.parameters):
+                if len(t.parameters) > len(type.parameters):
+                    ne = "many"
+                else:
+                    ne = "few"
+                self.errors.append(
+                    "%s: too %s template parameters to %s<%s>, got %s" % (
+                        lineinfo(t), ne,
+                        type.name, ", ".join(map(str,type.parameters)),
+                        str(t)))
+                return
             for p in type.parameters:
                 bindings[p] = t.parameters[idx].resolved
                 idx += 1
@@ -676,17 +693,6 @@ class Check:
         if (not isinstance(c, Macro) and c.body and c.type
             and c.type.code() != "void" and not has_return(c)):
             self.errors.append("%s: missing return (%s)" % (lineinfo(c), c.type.code()))
-
-def lineinfo(node):
-    trace = getattr(node, "_trace", None)
-    stack = [getattr(node, "filename", "<none>")]
-    while trace:
-        stack.append("%s:%s:" % (inspect.getfile(trace.annotator), trace.annotator.__name__))
-        stack.append(trace.text)
-        stack.append("<generated>")
-        trace = trace.prev
-    stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
-    return "\n".join(stack)
 
 class SetTrace:
 
@@ -999,8 +1005,14 @@ class Compiler(object):
         try:
             self.parser._filename = name
             file = self.parser.parse(text)
-        except GParseError, e:
-            raise ParseError("%s:%s:%s: %s" % (name, e.line(), e.column(), e))
+        except GParseError as e:
+            location = '%s:%s:%s: ' % (name, e.line(), e.column())
+            version_string = parse_strict_compiler_version_spec(text)
+            if version_string:
+                CompileError.raise_if_any(
+                    version_spec_string_errors(version_string, location))
+            raise ParseError("%s%s" % (location, e))
+
         imp = Import([Name(BUILTIN)])
         imp.line = -1
         imp.column = -1
@@ -1121,6 +1133,10 @@ class Compiler(object):
             fd.close()
 
     def icompile(self, ast):
+
+        if isinstance(ast, Root):
+            CompileError.raise_if_any(compiler_version_spec_errors(ast.files))
+
         def_ = Def()
         ast.traverse(def_)
         if def_.errors:
@@ -1129,9 +1145,10 @@ class Compiler(object):
         use = Use()
         ast.traverse(use)
         if use.unresolved:
-            vars = ["%s: unresolved variable: %s" % (lineinfo(node), name)
-                    for node, name in use.unresolved]
-            raise CompileError("\n".join(vars))
+            use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
+                    for node, name in use.unresolved])
+        if use.errors:
+            raise CompileError("\n".join(use.errors))
 
         res = Resolver()
         ast.traverse(res)
@@ -1184,7 +1201,7 @@ class Compiler(object):
 
     @overload(AST, AST)
     def merge_one(self, n1, n2):
-        raise CompileError("can't merge %r and %r" % (n1, n2))
+        raise CompileError("Cannot merge %r @ %s with %r @ %s" % (n1, lineinfo(n1), n2, lineinfo(n2)))
 
     def trans_roots(self, root):
         result = [root]
@@ -1274,6 +1291,9 @@ def run(url, args, *backends):
     name, ver = namever(file)
     for backend in backends:
         b = backend()
+        tgt = b._install_target(name, ver)
+        if tgt is None:
+            raise CompileError("Cannot find the target to run. Did you forget to\n\n    quark install %s %s\n" % (b.argswitch, sh_quote(url)))
         b.run(name, ver, args)
 
 

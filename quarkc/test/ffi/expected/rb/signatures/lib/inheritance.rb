@@ -49,7 +49,7 @@ class Base < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -111,13 +111,13 @@ class Test < ::Quark.inheritance.Base
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("mumble"))
-            (self).mumble = value
+            (self).mumble = ::DatawireQuarkCore.cast(value) { ::String }
         end
         if ((name) == ("later"))
-            (self).later = value
+            (self).later = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -175,7 +175,7 @@ class A < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -237,7 +237,7 @@ class B < ::Quark.inheritance.A
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -299,7 +299,7 @@ class C < ::Quark.inheritance.A
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -410,7 +410,7 @@ class Y < ::Quark.inheritance.X
     def _setField(name, value)
         
         if ((name) == ("name"))
-            (self).name = value
+            (self).name = ::DatawireQuarkCore.cast(value) { ::String }
         end
 
         nil
@@ -447,7 +447,7 @@ class Message < ::DatawireQuarkCore::QuarkObject
 
     def encode()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end
@@ -553,7 +553,7 @@ class Pong < ::Quark.inheritance.Message
 
     def toString()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::String }
 
         nil
     end

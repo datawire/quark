@@ -1,3 +1,4 @@
+quark *;
 void test1() {
     List<int> zero = [];
     List<int> one = [1];

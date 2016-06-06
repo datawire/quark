@@ -52,7 +52,7 @@ Foo.prototype._getField = Foo__getField;
 
 function Foo__setField(name, value) {
     if (_qrt.equals((name), ("count"))) {
-        Foo.count = value;
+        Foo.count = _qrt.cast(value, function () { return Number; });
     }
 }
 Foo.prototype._setField = Foo__setField;

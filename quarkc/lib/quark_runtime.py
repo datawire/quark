@@ -5,7 +5,7 @@
 
 __version__ = '0.4.2'
 
-import os    # unused?
+import os    # used by the quark.OS.Env stuff
 import sys
 import time  # used by the builtin now() macro
 import urllib2
@@ -18,10 +18,9 @@ import threading
 import base64
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
-             _HTTPRequest _HTTPResponse _default_codec _getClass
+             _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-             _LoggerConfig""".split()
-
+             _LoggerConfig _cast _get_file_contents""".split()
 
 _Map = dict
 
@@ -53,6 +52,25 @@ def _url_get(url):
         return urllib2.urlopen(url).read()
     except Exception:
         return "error"
+
+def _map_remove(m, key):
+    try:
+        return m.pop(key)
+    except KeyError:
+        return None
+
+def _cast(value, callback):
+    try:
+        type = callback()
+    except:
+        type = object
+    if type is unicode:
+        type = (unicode, str)
+    if isinstance(value, type) or value is None:
+        return value
+    else:
+        template = '`{value}` is not an instance of `{type}`'.format
+        raise TypeError(template(value=repr(value), type=type))
 
 class _JSONObject(object):
     _backend = json
@@ -484,3 +502,12 @@ class _TLS(threading.local):
 
     def setValue(self, value):
         self._value = value
+
+
+def _get_file_contents(path, result):
+    try:
+        with open(path, "rb") as inf:
+            result.value = inf.read()
+            result.finish(None)
+    except IOError as exc:
+        result.finish(str(exc))

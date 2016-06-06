@@ -1,1 +1,2 @@
+quark *;
 import nonexistent;

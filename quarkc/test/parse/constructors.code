@@ -1,5 +1,6 @@
 
 
+quark *;
 package test1 {
     class Test {
         String name;

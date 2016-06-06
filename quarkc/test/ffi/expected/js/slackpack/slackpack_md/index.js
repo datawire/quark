@@ -18,14 +18,14 @@ function slack_event_SlackEvent_load_Method__init_fields__() {
 slack_event_SlackEvent_load_Method.prototype.__init_fields__ = slack_event_SlackEvent_load_Method__init_fields__;
 
 function slack_event_SlackEvent_load_Method_invoke(object, args) {
-    var obj = object;
-    (obj).load((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.event.SlackEvent; });
+    (obj).load(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return _qrt.JSONObject; }));
     return null;
 }
 slack_event_SlackEvent_load_Method.prototype.invoke = slack_event_SlackEvent_load_Method_invoke;
 
 function slack_event_SlackEvent_load_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackEvent_load_Method.prototype._getClass = slack_event_SlackEvent_load_Method__getClass;
 
@@ -51,14 +51,14 @@ function slack_event_SlackEvent_dispatch_Method__init_fields__() {
 slack_event_SlackEvent_dispatch_Method.prototype.__init_fields__ = slack_event_SlackEvent_dispatch_Method__init_fields__;
 
 function slack_event_SlackEvent_dispatch_Method_invoke(object, args) {
-    var obj = object;
-    (obj).dispatch((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.event.SlackEvent; });
+    (obj).dispatch(_qrt.cast((args)[0], function () { return slack.SlackHandler; }));
     return null;
 }
 slack_event_SlackEvent_dispatch_Method.prototype.invoke = slack_event_SlackEvent_dispatch_Method_invoke;
 
 function slack_event_SlackEvent_dispatch_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackEvent_dispatch_Method.prototype._getClass = slack_event_SlackEvent_dispatch_Method__getClass;
 
@@ -93,7 +93,7 @@ function slack_event_SlackEvent_construct(args) {
 slack_event_SlackEvent.prototype.construct = slack_event_SlackEvent_construct;
 
 function slack_event_SlackEvent__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackEvent.prototype._getClass = slack_event_SlackEvent__getClass;
 
@@ -120,14 +120,14 @@ function slack_event_SlackError_load_Method__init_fields__() {
 slack_event_SlackError_load_Method.prototype.__init_fields__ = slack_event_SlackError_load_Method__init_fields__;
 
 function slack_event_SlackError_load_Method_invoke(object, args) {
-    var obj = object;
-    (obj).load((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.event.SlackError; });
+    (obj).load(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return _qrt.JSONObject; }));
     return null;
 }
 slack_event_SlackError_load_Method.prototype.invoke = slack_event_SlackError_load_Method_invoke;
 
 function slack_event_SlackError_load_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackError_load_Method.prototype._getClass = slack_event_SlackError_load_Method__getClass;
 
@@ -153,14 +153,14 @@ function slack_event_SlackError_dispatch_Method__init_fields__() {
 slack_event_SlackError_dispatch_Method.prototype.__init_fields__ = slack_event_SlackError_dispatch_Method__init_fields__;
 
 function slack_event_SlackError_dispatch_Method_invoke(object, args) {
-    var obj = object;
-    (obj).dispatch((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.event.SlackError; });
+    (obj).dispatch(_qrt.cast((args)[0], function () { return slack.SlackHandler; }));
     return null;
 }
 slack_event_SlackError_dispatch_Method.prototype.invoke = slack_event_SlackError_dispatch_Method_invoke;
 
 function slack_event_SlackError_dispatch_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackError_dispatch_Method.prototype._getClass = slack_event_SlackError_dispatch_Method__getClass;
 
@@ -195,7 +195,7 @@ function slack_event_SlackError_construct(args) {
 slack_event_SlackError.prototype.construct = slack_event_SlackError_construct;
 
 function slack_event_SlackError__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_SlackError.prototype._getClass = slack_event_SlackError__getClass;
 
@@ -222,14 +222,14 @@ function slack_event_Hello_dispatch_Method__init_fields__() {
 slack_event_Hello_dispatch_Method.prototype.__init_fields__ = slack_event_Hello_dispatch_Method__init_fields__;
 
 function slack_event_Hello_dispatch_Method_invoke(object, args) {
-    var obj = object;
-    (obj).dispatch((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.event.Hello; });
+    (obj).dispatch(_qrt.cast((args)[0], function () { return slack.SlackHandler; }));
     return null;
 }
 slack_event_Hello_dispatch_Method.prototype.invoke = slack_event_Hello_dispatch_Method_invoke;
 
 function slack_event_Hello_dispatch_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Hello_dispatch_Method.prototype._getClass = slack_event_Hello_dispatch_Method__getClass;
 
@@ -255,14 +255,14 @@ function slack_event_Hello_load_Method__init_fields__() {
 slack_event_Hello_load_Method.prototype.__init_fields__ = slack_event_Hello_load_Method__init_fields__;
 
 function slack_event_Hello_load_Method_invoke(object, args) {
-    var obj = object;
-    (obj).load((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.event.Hello; });
+    (obj).load(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return _qrt.JSONObject; }));
     return null;
 }
 slack_event_Hello_load_Method.prototype.invoke = slack_event_Hello_load_Method_invoke;
 
 function slack_event_Hello_load_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Hello_load_Method.prototype._getClass = slack_event_Hello_load_Method__getClass;
 
@@ -297,7 +297,7 @@ function slack_event_Hello_construct(args) {
 slack_event_Hello.prototype.construct = slack_event_Hello_construct;
 
 function slack_event_Hello__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Hello.prototype._getClass = slack_event_Hello__getClass;
 
@@ -324,14 +324,14 @@ function slack_event_Message_load_Method__init_fields__() {
 slack_event_Message_load_Method.prototype.__init_fields__ = slack_event_Message_load_Method__init_fields__;
 
 function slack_event_Message_load_Method_invoke(object, args) {
-    var obj = object;
-    (obj).load((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.event.Message; });
+    (obj).load(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return _qrt.JSONObject; }));
     return null;
 }
 slack_event_Message_load_Method.prototype.invoke = slack_event_Message_load_Method_invoke;
 
 function slack_event_Message_load_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Message_load_Method.prototype._getClass = slack_event_Message_load_Method__getClass;
 
@@ -357,14 +357,14 @@ function slack_event_Message_dispatch_Method__init_fields__() {
 slack_event_Message_dispatch_Method.prototype.__init_fields__ = slack_event_Message_dispatch_Method__init_fields__;
 
 function slack_event_Message_dispatch_Method_invoke(object, args) {
-    var obj = object;
-    (obj).dispatch((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.event.Message; });
+    (obj).dispatch(_qrt.cast((args)[0], function () { return slack.SlackHandler; }));
     return null;
 }
 slack_event_Message_dispatch_Method.prototype.invoke = slack_event_Message_dispatch_Method_invoke;
 
 function slack_event_Message_dispatch_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Message_dispatch_Method.prototype._getClass = slack_event_Message_dispatch_Method__getClass;
 
@@ -399,7 +399,7 @@ function slack_event_Message_construct(args) {
 slack_event_Message.prototype.construct = slack_event_Message_construct;
 
 function slack_event_Message__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Message.prototype._getClass = slack_event_Message__getClass;
 
@@ -435,7 +435,7 @@ function slack_event_Edited_construct(args) {
 slack_event_Edited.prototype.construct = slack_event_Edited_construct;
 
 function slack_event_Edited__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_event_Edited.prototype._getClass = slack_event_Edited__getClass;
 
@@ -462,14 +462,14 @@ function slack_SlackHandler_onSlackEvent_Method__init_fields__() {
 slack_SlackHandler_onSlackEvent_Method.prototype.__init_fields__ = slack_SlackHandler_onSlackEvent_Method__init_fields__;
 
 function slack_SlackHandler_onSlackEvent_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onSlackEvent((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.SlackHandler; });
+    (obj).onSlackEvent(_qrt.cast((args)[0], function () { return slack.event.SlackEvent; }));
     return null;
 }
 slack_SlackHandler_onSlackEvent_Method.prototype.invoke = slack_SlackHandler_onSlackEvent_Method_invoke;
 
 function slack_SlackHandler_onSlackEvent_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_SlackHandler_onSlackEvent_Method.prototype._getClass = slack_SlackHandler_onSlackEvent_Method__getClass;
 
@@ -495,14 +495,14 @@ function slack_SlackHandler_onHello_Method__init_fields__() {
 slack_SlackHandler_onHello_Method.prototype.__init_fields__ = slack_SlackHandler_onHello_Method__init_fields__;
 
 function slack_SlackHandler_onHello_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHello((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.SlackHandler; });
+    (obj).onHello(_qrt.cast((args)[0], function () { return slack.event.Hello; }));
     return null;
 }
 slack_SlackHandler_onHello_Method.prototype.invoke = slack_SlackHandler_onHello_Method_invoke;
 
 function slack_SlackHandler_onHello_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_SlackHandler_onHello_Method.prototype._getClass = slack_SlackHandler_onHello_Method__getClass;
 
@@ -528,14 +528,14 @@ function slack_SlackHandler_onSlackError_Method__init_fields__() {
 slack_SlackHandler_onSlackError_Method.prototype.__init_fields__ = slack_SlackHandler_onSlackError_Method__init_fields__;
 
 function slack_SlackHandler_onSlackError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onSlackError((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.SlackHandler; });
+    (obj).onSlackError(_qrt.cast((args)[0], function () { return slack.event.SlackError; }));
     return null;
 }
 slack_SlackHandler_onSlackError_Method.prototype.invoke = slack_SlackHandler_onSlackError_Method_invoke;
 
 function slack_SlackHandler_onSlackError_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_SlackHandler_onSlackError_Method.prototype._getClass = slack_SlackHandler_onSlackError_Method__getClass;
 
@@ -561,14 +561,14 @@ function slack_SlackHandler_onMessage_Method__init_fields__() {
 slack_SlackHandler_onMessage_Method.prototype.__init_fields__ = slack_SlackHandler_onMessage_Method__init_fields__;
 
 function slack_SlackHandler_onMessage_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onMessage((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.SlackHandler; });
+    (obj).onMessage(_qrt.cast((args)[0], function () { return slack.event.Message; }));
     return null;
 }
 slack_SlackHandler_onMessage_Method.prototype.invoke = slack_SlackHandler_onMessage_Method_invoke;
 
 function slack_SlackHandler_onMessage_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_SlackHandler_onMessage_Method.prototype._getClass = slack_SlackHandler_onMessage_Method__getClass;
 
@@ -603,7 +603,7 @@ function slack_SlackHandler_construct(args) {
 slack_SlackHandler.prototype.construct = slack_SlackHandler_construct;
 
 function slack_SlackHandler__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_SlackHandler.prototype._getClass = slack_SlackHandler__getClass;
 
@@ -634,12 +634,12 @@ function slack_User__init_fields__() {
 slack_User.prototype.__init_fields__ = slack_User__init_fields__;
 slack_User.singleton = new slack_User();
 function slack_User_construct(args) {
-    return new slack.User((args)[0], (args)[1]);
+    return new slack.User(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return String; }));
 }
 slack_User.prototype.construct = slack_User_construct;
 
 function slack_User__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_User.prototype._getClass = slack_User__getClass;
 
@@ -666,14 +666,14 @@ function slack_Channel_send_Method__init_fields__() {
 slack_Channel_send_Method.prototype.__init_fields__ = slack_Channel_send_Method__init_fields__;
 
 function slack_Channel_send_Method_invoke(object, args) {
-    var obj = object;
-    (obj).send((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Channel; });
+    (obj).send(_qrt.cast((args)[0], function () { return String; }));
     return null;
 }
 slack_Channel_send_Method.prototype.invoke = slack_Channel_send_Method_invoke;
 
 function slack_Channel_send_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Channel_send_Method.prototype._getClass = slack_Channel_send_Method__getClass;
 
@@ -703,12 +703,12 @@ function slack_Channel__init_fields__() {
 slack_Channel.prototype.__init_fields__ = slack_Channel__init_fields__;
 slack_Channel.singleton = new slack_Channel();
 function slack_Channel_construct(args) {
-    return new slack.Channel((args)[0], (args)[1]);
+    return new slack.Channel(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return String; }));
 }
 slack_Channel.prototype.construct = slack_Channel_construct;
 
 function slack_Channel__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Channel.prototype._getClass = slack_Channel__getClass;
 
@@ -735,14 +735,14 @@ function slack_Client_connect_Method__init_fields__() {
 slack_Client_connect_Method.prototype.__init_fields__ = slack_Client_connect_Method__init_fields__;
 
 function slack_Client_connect_Method_invoke(object, args) {
-    var obj = object;
+    var obj = _qrt.cast(object, function () { return slack.Client; });
     (obj).connect();
     return null;
 }
 slack_Client_connect_Method.prototype.invoke = slack_Client_connect_Method_invoke;
 
 function slack_Client_connect_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_connect_Method.prototype._getClass = slack_Client_connect_Method__getClass;
 
@@ -768,14 +768,14 @@ function slack_Client_request_Method__init_fields__() {
 slack_Client_request_Method.prototype.__init_fields__ = slack_Client_request_Method__init_fields__;
 
 function slack_Client_request_Method_invoke(object, args) {
-    var obj = object;
-    (obj).request((args)[0], (args)[1], (args)[2]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).request(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return Map; }), _qrt.cast((args)[2], function () { return quark.HTTPHandler; }));
     return null;
 }
 slack_Client_request_Method.prototype.invoke = slack_Client_request_Method_invoke;
 
 function slack_Client_request_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_request_Method.prototype._getClass = slack_Client_request_Method__getClass;
 
@@ -801,14 +801,14 @@ function slack_Client_ws_connect_Method__init_fields__() {
 slack_Client_ws_connect_Method.prototype.__init_fields__ = slack_Client_ws_connect_Method__init_fields__;
 
 function slack_Client_ws_connect_Method_invoke(object, args) {
-    var obj = object;
-    (obj).ws_connect((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).ws_connect(_qrt.cast((args)[0], function () { return String; }));
     return null;
 }
 slack_Client_ws_connect_Method.prototype.invoke = slack_Client_ws_connect_Method_invoke;
 
 function slack_Client_ws_connect_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_ws_connect_Method.prototype._getClass = slack_Client_ws_connect_Method__getClass;
 
@@ -834,14 +834,14 @@ function slack_Client_ws_send_Method__init_fields__() {
 slack_Client_ws_send_Method.prototype.__init_fields__ = slack_Client_ws_send_Method__init_fields__;
 
 function slack_Client_ws_send_Method_invoke(object, args) {
-    var obj = object;
-    (obj).ws_send((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).ws_send(_qrt.cast((args)[0], function () { return String; }));
     return null;
 }
 slack_Client_ws_send_Method.prototype.invoke = slack_Client_ws_send_Method_invoke;
 
 function slack_Client_ws_send_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_ws_send_Method.prototype._getClass = slack_Client_ws_send_Method__getClass;
 
@@ -867,14 +867,14 @@ function slack_Client_onWSConnected_Method__init_fields__() {
 slack_Client_onWSConnected_Method.prototype.__init_fields__ = slack_Client_onWSConnected_Method__init_fields__;
 
 function slack_Client_onWSConnected_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSConnected((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSConnected(_qrt.cast((args)[0], function () { return quark.WebSocket; }));
     return null;
 }
 slack_Client_onWSConnected_Method.prototype.invoke = slack_Client_onWSConnected_Method_invoke;
 
 function slack_Client_onWSConnected_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSConnected_Method.prototype._getClass = slack_Client_onWSConnected_Method__getClass;
 
@@ -900,14 +900,14 @@ function slack_Client_onWSClose_Method__init_fields__() {
 slack_Client_onWSClose_Method.prototype.__init_fields__ = slack_Client_onWSClose_Method__init_fields__;
 
 function slack_Client_onWSClose_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSClose((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSClose(_qrt.cast((args)[0], function () { return quark.WebSocket; }));
     return null;
 }
 slack_Client_onWSClose_Method.prototype.invoke = slack_Client_onWSClose_Method_invoke;
 
 function slack_Client_onWSClose_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSClose_Method.prototype._getClass = slack_Client_onWSClose_Method__getClass;
 
@@ -933,14 +933,14 @@ function slack_Client_onWSError_Method__init_fields__() {
 slack_Client_onWSError_Method.prototype.__init_fields__ = slack_Client_onWSError_Method__init_fields__;
 
 function slack_Client_onWSError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSError((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSError(_qrt.cast((args)[0], function () { return quark.WebSocket; }), _qrt.cast((args)[1], function () { return quark.WSError; }));
     return null;
 }
 slack_Client_onWSError_Method.prototype.invoke = slack_Client_onWSError_Method_invoke;
 
 function slack_Client_onWSError_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSError_Method.prototype._getClass = slack_Client_onWSError_Method__getClass;
 
@@ -966,13 +966,13 @@ function slack_Client_construct_Method__init_fields__() {
 slack_Client_construct_Method.prototype.__init_fields__ = slack_Client_construct_Method__init_fields__;
 
 function slack_Client_construct_Method_invoke(object, args) {
-    var obj = object;
-    return (obj).construct((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    return (obj).construct(_qrt.cast((args)[0], function () { return String; }));
 }
 slack_Client_construct_Method.prototype.invoke = slack_Client_construct_Method_invoke;
 
 function slack_Client_construct_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_construct_Method.prototype._getClass = slack_Client_construct_Method__getClass;
 
@@ -998,14 +998,14 @@ function slack_Client_onWSMessage_Method__init_fields__() {
 slack_Client_onWSMessage_Method.prototype.__init_fields__ = slack_Client_onWSMessage_Method__init_fields__;
 
 function slack_Client_onWSMessage_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSMessage((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSMessage(_qrt.cast((args)[0], function () { return quark.WebSocket; }), _qrt.cast((args)[1], function () { return String; }));
     return null;
 }
 slack_Client_onWSMessage_Method.prototype.invoke = slack_Client_onWSMessage_Method_invoke;
 
 function slack_Client_onWSMessage_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSMessage_Method.prototype._getClass = slack_Client_onWSMessage_Method__getClass;
 
@@ -1031,14 +1031,14 @@ function slack_Client_onHTTPResponse_Method__init_fields__() {
 slack_Client_onHTTPResponse_Method.prototype.__init_fields__ = slack_Client_onHTTPResponse_Method__init_fields__;
 
 function slack_Client_onHTTPResponse_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPResponse((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onHTTPResponse(_qrt.cast((args)[0], function () { return quark.HTTPRequest; }), _qrt.cast((args)[1], function () { return quark.HTTPResponse; }));
     return null;
 }
 slack_Client_onHTTPResponse_Method.prototype.invoke = slack_Client_onHTTPResponse_Method_invoke;
 
 function slack_Client_onHTTPResponse_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onHTTPResponse_Method.prototype._getClass = slack_Client_onHTTPResponse_Method__getClass;
 
@@ -1064,14 +1064,14 @@ function slack_Client_onWSInit_Method__init_fields__() {
 slack_Client_onWSInit_Method.prototype.__init_fields__ = slack_Client_onWSInit_Method__init_fields__;
 
 function slack_Client_onWSInit_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSInit((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSInit(_qrt.cast((args)[0], function () { return quark.WebSocket; }));
     return null;
 }
 slack_Client_onWSInit_Method.prototype.invoke = slack_Client_onWSInit_Method_invoke;
 
 function slack_Client_onWSInit_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSInit_Method.prototype._getClass = slack_Client_onWSInit_Method__getClass;
 
@@ -1097,14 +1097,14 @@ function slack_Client_onWSBinary_Method__init_fields__() {
 slack_Client_onWSBinary_Method.prototype.__init_fields__ = slack_Client_onWSBinary_Method__init_fields__;
 
 function slack_Client_onWSBinary_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSBinary((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSBinary(_qrt.cast((args)[0], function () { return quark.WebSocket; }), (args)[1]);
     return null;
 }
 slack_Client_onWSBinary_Method.prototype.invoke = slack_Client_onWSBinary_Method_invoke;
 
 function slack_Client_onWSBinary_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSBinary_Method.prototype._getClass = slack_Client_onWSBinary_Method__getClass;
 
@@ -1130,14 +1130,14 @@ function slack_Client_onWSClosed_Method__init_fields__() {
 slack_Client_onWSClosed_Method.prototype.__init_fields__ = slack_Client_onWSClosed_Method__init_fields__;
 
 function slack_Client_onWSClosed_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSClosed((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSClosed(_qrt.cast((args)[0], function () { return quark.WebSocket; }));
     return null;
 }
 slack_Client_onWSClosed_Method.prototype.invoke = slack_Client_onWSClosed_Method_invoke;
 
 function slack_Client_onWSClosed_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSClosed_Method.prototype._getClass = slack_Client_onWSClosed_Method__getClass;
 
@@ -1163,14 +1163,14 @@ function slack_Client_onWSFinal_Method__init_fields__() {
 slack_Client_onWSFinal_Method.prototype.__init_fields__ = slack_Client_onWSFinal_Method__init_fields__;
 
 function slack_Client_onWSFinal_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onWSFinal((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onWSFinal(_qrt.cast((args)[0], function () { return quark.WebSocket; }));
     return null;
 }
 slack_Client_onWSFinal_Method.prototype.invoke = slack_Client_onWSFinal_Method_invoke;
 
 function slack_Client_onWSFinal_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onWSFinal_Method.prototype._getClass = slack_Client_onWSFinal_Method__getClass;
 
@@ -1196,14 +1196,14 @@ function slack_Client_onHTTPInit_Method__init_fields__() {
 slack_Client_onHTTPInit_Method.prototype.__init_fields__ = slack_Client_onHTTPInit_Method__init_fields__;
 
 function slack_Client_onHTTPInit_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPInit((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onHTTPInit(_qrt.cast((args)[0], function () { return quark.HTTPRequest; }));
     return null;
 }
 slack_Client_onHTTPInit_Method.prototype.invoke = slack_Client_onHTTPInit_Method_invoke;
 
 function slack_Client_onHTTPInit_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onHTTPInit_Method.prototype._getClass = slack_Client_onHTTPInit_Method__getClass;
 
@@ -1229,14 +1229,14 @@ function slack_Client_onHTTPError_Method__init_fields__() {
 slack_Client_onHTTPError_Method.prototype.__init_fields__ = slack_Client_onHTTPError_Method__init_fields__;
 
 function slack_Client_onHTTPError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPError((args)[0], (args)[1]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onHTTPError(_qrt.cast((args)[0], function () { return quark.HTTPRequest; }), _qrt.cast((args)[1], function () { return quark.HTTPError; }));
     return null;
 }
 slack_Client_onHTTPError_Method.prototype.invoke = slack_Client_onHTTPError_Method_invoke;
 
 function slack_Client_onHTTPError_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onHTTPError_Method.prototype._getClass = slack_Client_onHTTPError_Method__getClass;
 
@@ -1262,14 +1262,14 @@ function slack_Client_onHTTPFinal_Method__init_fields__() {
 slack_Client_onHTTPFinal_Method.prototype.__init_fields__ = slack_Client_onHTTPFinal_Method__init_fields__;
 
 function slack_Client_onHTTPFinal_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHTTPFinal((args)[0]);
+    var obj = _qrt.cast(object, function () { return slack.Client; });
+    (obj).onHTTPFinal(_qrt.cast((args)[0], function () { return quark.HTTPRequest; }));
     return null;
 }
 slack_Client_onHTTPFinal_Method.prototype.invoke = slack_Client_onHTTPFinal_Method_invoke;
 
 function slack_Client_onHTTPFinal_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client_onHTTPFinal_Method.prototype._getClass = slack_Client_onHTTPFinal_Method__getClass;
 
@@ -1299,12 +1299,12 @@ function slack_Client__init_fields__() {
 slack_Client.prototype.__init_fields__ = slack_Client__init_fields__;
 slack_Client.singleton = new slack_Client();
 function slack_Client_construct(args) {
-    return new slack.Client((args)[0], (args)[1], (args)[2]);
+    return new slack.Client(_qrt.cast((args)[0], function () { return quark.Runtime; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return slack.SlackHandler; }));
 }
 slack_Client.prototype.construct = slack_Client_construct;
 
 function slack_Client__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slack_Client.prototype._getClass = slack_Client__getClass;
 
@@ -1331,14 +1331,14 @@ function slackpack_Handler_onSlackEvent_Method__init_fields__() {
 slackpack_Handler_onSlackEvent_Method.prototype.__init_fields__ = slackpack_Handler_onSlackEvent_Method__init_fields__;
 
 function slackpack_Handler_onSlackEvent_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onSlackEvent((args)[0]);
+    var obj = _qrt.cast(object, function () { return slackpack.Handler; });
+    (obj).onSlackEvent(_qrt.cast((args)[0], function () { return slack.event.SlackEvent; }));
     return null;
 }
 slackpack_Handler_onSlackEvent_Method.prototype.invoke = slackpack_Handler_onSlackEvent_Method_invoke;
 
 function slackpack_Handler_onSlackEvent_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slackpack_Handler_onSlackEvent_Method.prototype._getClass = slackpack_Handler_onSlackEvent_Method__getClass;
 
@@ -1364,14 +1364,14 @@ function slackpack_Handler_onHello_Method__init_fields__() {
 slackpack_Handler_onHello_Method.prototype.__init_fields__ = slackpack_Handler_onHello_Method__init_fields__;
 
 function slackpack_Handler_onHello_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onHello((args)[0]);
+    var obj = _qrt.cast(object, function () { return slackpack.Handler; });
+    (obj).onHello(_qrt.cast((args)[0], function () { return slack.event.Hello; }));
     return null;
 }
 slackpack_Handler_onHello_Method.prototype.invoke = slackpack_Handler_onHello_Method_invoke;
 
 function slackpack_Handler_onHello_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slackpack_Handler_onHello_Method.prototype._getClass = slackpack_Handler_onHello_Method__getClass;
 
@@ -1397,14 +1397,14 @@ function slackpack_Handler_onSlackError_Method__init_fields__() {
 slackpack_Handler_onSlackError_Method.prototype.__init_fields__ = slackpack_Handler_onSlackError_Method__init_fields__;
 
 function slackpack_Handler_onSlackError_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onSlackError((args)[0]);
+    var obj = _qrt.cast(object, function () { return slackpack.Handler; });
+    (obj).onSlackError(_qrt.cast((args)[0], function () { return slack.event.SlackError; }));
     return null;
 }
 slackpack_Handler_onSlackError_Method.prototype.invoke = slackpack_Handler_onSlackError_Method_invoke;
 
 function slackpack_Handler_onSlackError_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slackpack_Handler_onSlackError_Method.prototype._getClass = slackpack_Handler_onSlackError_Method__getClass;
 
@@ -1430,14 +1430,14 @@ function slackpack_Handler_onMessage_Method__init_fields__() {
 slackpack_Handler_onMessage_Method.prototype.__init_fields__ = slackpack_Handler_onMessage_Method__init_fields__;
 
 function slackpack_Handler_onMessage_Method_invoke(object, args) {
-    var obj = object;
-    (obj).onMessage((args)[0]);
+    var obj = _qrt.cast(object, function () { return slackpack.Handler; });
+    (obj).onMessage(_qrt.cast((args)[0], function () { return slack.event.Message; }));
     return null;
 }
 slackpack_Handler_onMessage_Method.prototype.invoke = slackpack_Handler_onMessage_Method_invoke;
 
 function slackpack_Handler_onMessage_Method__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slackpack_Handler_onMessage_Method.prototype._getClass = slackpack_Handler_onMessage_Method__getClass;
 
@@ -1472,7 +1472,7 @@ function slackpack_Handler_construct(args) {
 slackpack_Handler.prototype.construct = slackpack_Handler_construct;
 
 function slackpack_Handler__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 slackpack_Handler.prototype._getClass = slackpack_Handler__getClass;
 
@@ -1508,7 +1508,7 @@ function quark_Map_quark_String_quark_Object__construct(args) {
 quark_Map_quark_String_quark_Object_.prototype.construct = quark_Map_quark_String_quark_Object__construct;
 
 function quark_Map_quark_String_quark_Object___getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 quark_Map_quark_String_quark_Object_.prototype._getClass = quark_Map_quark_String_quark_Object___getClass;
 
@@ -1541,7 +1541,7 @@ Root.slack_Client_md = slack_Client.singleton;
 Root.slackpack_Handler_md = slackpack_Handler.singleton;
 Root.quark_Map_quark_String_quark_Object__md = quark_Map_quark_String_quark_Object_.singleton;
 function Root__getClass() {
-    return null;
+    return _qrt.cast(null, function () { return String; });
 }
 Root.prototype._getClass = Root__getClass;
 

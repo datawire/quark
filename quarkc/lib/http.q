@@ -1,3 +1,4 @@
+quark *;
 include io/datawire/quark/runtime/AbstractHTTPHandler.java;
 include io/datawire/quark/runtime/ClientHTTPRequest.java;
 include io/datawire/quark/netty/DatawireNettyHttpContainer.java;

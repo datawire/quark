@@ -1,3 +1,4 @@
+quark *;
 class Test {}
 
 void test_nonexistent_attributes() {

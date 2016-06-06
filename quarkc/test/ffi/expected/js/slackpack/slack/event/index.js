@@ -67,16 +67,16 @@ SlackEvent.prototype._getField = SlackEvent__getField;
 
 function SlackEvent__setField(name, value) {
     if (_qrt.equals((name), ("type"))) {
-        (this).type = value;
+        (this).type = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return slack.User; });
     }
     if (_qrt.equals((name), ("channel"))) {
-        (this).channel = value;
+        (this).channel = _qrt.cast(value, function () { return slack.Channel; });
     }
     if (_qrt.equals((name), ("timestamp"))) {
-        (this).timestamp = value;
+        (this).timestamp = _qrt.cast(value, function () { return String; });
     }
 }
 SlackEvent.prototype._setField = SlackEvent__setField;
@@ -141,22 +141,22 @@ SlackError.prototype._getField = SlackError__getField;
 
 function SlackError__setField(name, value) {
     if (_qrt.equals((name), ("type"))) {
-        (this).type = value;
+        (this).type = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return slack.User; });
     }
     if (_qrt.equals((name), ("channel"))) {
-        (this).channel = value;
+        (this).channel = _qrt.cast(value, function () { return slack.Channel; });
     }
     if (_qrt.equals((name), ("timestamp"))) {
-        (this).timestamp = value;
+        (this).timestamp = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("code"))) {
-        (this).code = value;
+        (this).code = _qrt.cast(value, function () { return Number; });
     }
     if (_qrt.equals((name), ("text"))) {
-        (this).text = value;
+        (this).text = _qrt.cast(value, function () { return String; });
     }
 }
 SlackError.prototype._setField = SlackError__setField;
@@ -204,16 +204,16 @@ Hello.prototype._getField = Hello__getField;
 
 function Hello__setField(name, value) {
     if (_qrt.equals((name), ("type"))) {
-        (this).type = value;
+        (this).type = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return slack.User; });
     }
     if (_qrt.equals((name), ("channel"))) {
-        (this).channel = value;
+        (this).channel = _qrt.cast(value, function () { return slack.Channel; });
     }
     if (_qrt.equals((name), ("timestamp"))) {
-        (this).timestamp = value;
+        (this).timestamp = _qrt.cast(value, function () { return String; });
     }
 }
 Hello.prototype._setField = Hello__setField;
@@ -283,28 +283,28 @@ Message.prototype._getField = Message__getField;
 
 function Message__setField(name, value) {
     if (_qrt.equals((name), ("type"))) {
-        (this).type = value;
+        (this).type = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return slack.User; });
     }
     if (_qrt.equals((name), ("channel"))) {
-        (this).channel = value;
+        (this).channel = _qrt.cast(value, function () { return slack.Channel; });
     }
     if (_qrt.equals((name), ("timestamp"))) {
-        (this).timestamp = value;
+        (this).timestamp = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("subtype"))) {
-        (this).subtype = value;
+        (this).subtype = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("hidden"))) {
-        (this).hidden = value;
+        (this).hidden = _qrt.cast(value, function () { return Boolean; });
     }
     if (_qrt.equals((name), ("text"))) {
-        (this).text = value;
+        (this).text = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("edited"))) {
-        (this).edited = value;
+        (this).edited = _qrt.cast(value, function () { return Edited; });
     }
 }
 Message.prototype._setField = Message__setField;
@@ -342,10 +342,10 @@ Edited.prototype._getField = Edited__getField;
 
 function Edited__setField(name, value) {
     if (_qrt.equals((name), ("user"))) {
-        (this).user = value;
+        (this).user = _qrt.cast(value, function () { return slack.User; });
     }
     if (_qrt.equals((name), ("timestamp"))) {
-        (this).timestamp = value;
+        (this).timestamp = _qrt.cast(value, function () { return String; });
     }
 }
 Edited.prototype._setField = Edited__setField;

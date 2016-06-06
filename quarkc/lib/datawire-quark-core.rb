@@ -144,6 +144,15 @@ module DatawireQuarkCore
     (Time.now.to_f * 1000).round
   end
 
+  def self.getFileContents(path, result)
+    begin
+      result.value = File.read(path, {"encoding": "UTF-8"})
+      result.finish(nil)
+    rescue => ex
+      result.finish(ex.message)
+    end
+  end
+
   def self._getClass obj
     clz = __getClass obj
     # puts "runtime _getClass for #{obj} is #{clz}"
@@ -1022,6 +1031,16 @@ module DatawireQuarkCore
 
   def self.default_codec
     Codec.new
+  end
+
+  def self.cast(value, &block)
+    type = begin block.call rescue Object end
+
+    unless value.is_a?(type) || value.nil?
+      raise TypeError, "`#{value.inspect}` is not an instance of `#{type}`"
+    end
+
+    value
   end
 
   class Mutex

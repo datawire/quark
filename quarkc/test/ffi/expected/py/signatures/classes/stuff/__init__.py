@@ -10,7 +10,7 @@ class Test(object):
     def __init__(self): self._init()
 
     def foo(self, t):
-        return None
+        return _cast(None, lambda: Test)
 
     def test(self):
         pass

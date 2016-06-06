@@ -1,3 +1,4 @@
+quark *;
 void expressions() {
     a;
     a.b;

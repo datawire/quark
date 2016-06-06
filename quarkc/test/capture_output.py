@@ -94,7 +94,7 @@ class Captured(object):
 
     def finish_capture(self, child):
         if child.isalive():
-            child.expect(pexpect.EOF)
+            child.expect(pexpect.EOF, timeout=self.timeout)
         self.output = child.logfile_read.get_data()
 
 

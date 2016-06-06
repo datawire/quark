@@ -1,3 +1,4 @@
+quark *;
 void literals() {
     3;
     "three";

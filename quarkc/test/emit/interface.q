@@ -1,3 +1,4 @@
+quark *;
 interface Foo {
    void m1();
    void m2(int arg);

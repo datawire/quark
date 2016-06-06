@@ -1,3 +1,4 @@
+quark *;
 import quark.test;
 
 void main(List<String> args) {
@@ -39,6 +40,32 @@ class ListTest {
     void testSlice7() {
         List<int> l = [1, 2, 3, 4];
         checkEqual([4], l.slice(-1, 10));
+    }
+
+    void testInsert() {
+        List<int> l = [1, 2, 3, 4];
+
+        l.insert(0, 0);
+        checkEqual([0, 1, 2, 3, 4], l);
+
+        l.insert(3, 300);
+        checkEqual([0, 1, 2, 300, 3, 4], l);
+
+        l.insert(6, 999);
+        checkEqual([0, 1, 2, 300, 3, 4, 999], l);
+    }
+
+    void testRemove() {
+        List<int> l = [0, 1, 2, 3, 4, 5];
+
+        checkEqual(0, l.remove(0));
+        checkEqual([1, 2, 3, 4, 5], l);
+
+        checkEqual(5, l.remove(4));
+        checkEqual([1, 2, 3, 4], l);
+
+        checkEqual(3, l.remove(2));
+        checkEqual([1, 2, 4], l);
     }
 
 }

@@ -23,6 +23,8 @@ function HelloImpl() {
     };
 }
 
+HelloImpl.prototype = new hello.Hello()
+
 var implementation = new HelloImpl();
 var server = new hello.HelloServer(implementation);
 server.sendCORS(true);

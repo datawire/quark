@@ -1,3 +1,4 @@
+quark *;
 // Collision
 namespace foo {}
 namespace FOO {}

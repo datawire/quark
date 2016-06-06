@@ -11,12 +11,12 @@ class generics_Box_quark_Object__set_Method(quark.reflect.Method):
         super(generics_Box_quark_Object__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.Box);
         (obj).set((args)[0]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -32,11 +32,11 @@ class generics_Box_quark_Object__get_Method(quark.reflect.Method):
         super(generics_Box_quark_Object__get_Method, self).__init__(u"quark.Object", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.Box);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -59,7 +59,7 @@ class generics_Box_quark_Object_(quark.reflect.Class):
         return generics.Box()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -76,12 +76,12 @@ class generics_Box_quark_int__set_Method(quark.reflect.Method):
         super(generics_Box_quark_int__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).set((args)[0]);
+        obj = _cast(object, lambda: generics.Box);
+        (obj).set(_cast((args)[0], lambda: int));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -97,11 +97,11 @@ class generics_Box_quark_int__get_Method(quark.reflect.Method):
         super(generics_Box_quark_int__get_Method, self).__init__(u"quark.int", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.Box);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -124,7 +124,7 @@ class generics_Box_quark_int_(quark.reflect.Class):
         return generics.Box()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -141,12 +141,12 @@ class generics_Crate_quark_Object__set_Method(quark.reflect.Method):
         super(generics_Crate_quark_Object__set_Method, self).__init__(u"quark.void", u"set", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.Crate);
         (obj).set((args)[0]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -162,11 +162,11 @@ class generics_Crate_quark_Object__get_Method(quark.reflect.Method):
         super(generics_Crate_quark_Object__get_Method, self).__init__(u"quark.Object", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.Crate);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -189,7 +189,7 @@ class generics_Crate_quark_Object_(quark.reflect.Class):
         return generics.Crate()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -213,7 +213,7 @@ class generics_Sack(quark.reflect.Class):
         return generics.Sack()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -230,11 +230,11 @@ class generics_Matrix_quark_Object____get___Method(quark.reflect.Method):
         super(generics_Matrix_quark_Object____get___Method, self).__init__(u"quark.Object", u"__get__", _List([u"quark.int", u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).__get__((args)[0], (args)[1])
+        obj = _cast(object, lambda: generics.Matrix);
+        return (obj)._q__get__(_cast((args)[0], lambda: int), _cast((args)[1], lambda: int))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -250,12 +250,12 @@ class generics_Matrix_quark_Object____set___Method(quark.reflect.Method):
         super(generics_Matrix_quark_Object____set___Method, self).__init__(u"quark.void", u"__set__", _List([u"quark.int", u"quark.int", u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).__set__((args)[0], (args)[1], (args)[2]);
+        obj = _cast(object, lambda: generics.Matrix);
+        (obj)._q__set__(_cast((args)[0], lambda: int), _cast((args)[1], lambda: int), (args)[2]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -275,10 +275,10 @@ class generics_Matrix_quark_Object_(quark.reflect.Class):
         (self).methods = _List([generics_Matrix_quark_Object____get___Method(), generics_Matrix_quark_Object____set___Method()])
 
     def construct(self, args):
-        return generics.Matrix((args)[0], (args)[1])
+        return generics.Matrix(_cast((args)[0], lambda: int), _cast((args)[1], lambda: int))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -295,11 +295,11 @@ class generics_constructors_Box_quark_Object__get_Method(quark.reflect.Method):
         super(generics_constructors_Box_quark_Object__get_Method, self).__init__(u"quark.Object", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.constructors.Box);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -322,7 +322,7 @@ class generics_constructors_Box_quark_Object_(quark.reflect.Class):
         return generics.constructors.Box((args)[0])
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -339,11 +339,11 @@ class generics_pkg_Foo_quark_Object__foo_Method(quark.reflect.Method):
         super(generics_pkg_Foo_quark_Object__foo_Method, self).__init__(u"quark.Object", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.pkg.Foo);
         return (obj).foo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -359,11 +359,11 @@ class generics_pkg_Foo_quark_Object__get_Method(quark.reflect.Method):
         super(generics_pkg_Foo_quark_Object__get_Method, self).__init__(u"quark.Object", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.pkg.Foo);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -386,7 +386,7 @@ class generics_pkg_Foo_quark_Object_(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -403,11 +403,11 @@ class generics_pkg_StringFoo_get_Method(quark.reflect.Method):
         super(generics_pkg_StringFoo_get_Method, self).__init__(u"quark.String", u"get", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.pkg.StringFoo);
         return (obj).get()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -423,11 +423,11 @@ class generics_pkg_StringFoo_foo_Method(quark.reflect.Method):
         super(generics_pkg_StringFoo_foo_Method, self).__init__(u"quark.String", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.pkg.StringFoo);
         return (obj).foo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -450,7 +450,7 @@ class generics_pkg_StringFoo(quark.reflect.Class):
         return generics.pkg.StringFoo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -471,10 +471,10 @@ class generics_pkg_Box_quark_String_(quark.reflect.Class):
         (self).methods = _List([])
 
     def construct(self, args):
-        return generics.pkg.Box((args)[0])
+        return generics.pkg.Box(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -495,10 +495,10 @@ class generics_pkg_StringBox(quark.reflect.Class):
         (self).methods = _List([])
 
     def construct(self, args):
-        return generics.pkg.StringBox((args)[0])
+        return generics.pkg.StringBox(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -515,11 +515,11 @@ class generics_ccc_TLSContextInitializer_getValue_Method(quark.reflect.Method):
         super(generics_ccc_TLSContextInitializer_getValue_Method, self).__init__(u"generics.ccc.Context", u"getValue", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.ccc.TLSContextInitializer);
         return (obj).getValue()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -542,7 +542,7 @@ class generics_ccc_TLSContextInitializer(quark.reflect.Class):
         return generics.ccc.TLSContextInitializer()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -559,11 +559,11 @@ class generics_ccc_Context_current_Method(quark.reflect.Method):
         super(generics_ccc_Context_current_Method, self).__init__(u"generics.ccc.Context", u"current", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.ccc.Context);
         return generics.ccc.Context.current()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -579,11 +579,11 @@ class generics_ccc_Context_global_Method(quark.reflect.Method):
         super(generics_ccc_Context_global_Method, self).__init__(u"generics.ccc.Context", u"global", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.ccc.Context);
         return generics.ccc.Context.global_()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -603,10 +603,10 @@ class generics_ccc_Context(quark.reflect.Class):
         (self).methods = _List([generics_ccc_Context_current_Method(), generics_ccc_Context_global_Method()])
 
     def construct(self, args):
-        return generics.ccc.Context((args)[0])
+        return generics.ccc.Context(_cast((args)[0], lambda: generics.ccc.Context))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -623,11 +623,11 @@ class generics_ccc_TLSInitializer_quark_Object__getValue_Method(quark.reflect.Me
         super(generics_ccc_TLSInitializer_quark_Object__getValue_Method, self).__init__(u"quark.Object", u"getValue", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.ccc.TLSInitializer);
         return (obj).getValue()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -650,7 +650,7 @@ class generics_ccc_TLSInitializer_quark_Object_(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -667,11 +667,11 @@ class generics_ccc_TLS_generics_ccc_Context__getValue_Method(quark.reflect.Metho
         super(generics_ccc_TLS_generics_ccc_Context__getValue_Method, self).__init__(u"generics.ccc.Context", u"getValue", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: generics.ccc.TLS);
         return (obj).getValue()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -691,10 +691,10 @@ class generics_ccc_TLS_generics_ccc_Context_(quark.reflect.Class):
         (self).methods = _List([generics_ccc_TLS_generics_ccc_Context__getValue_Method()])
 
     def construct(self, args):
-        return generics.ccc.TLS((args)[0])
+        return generics.ccc.TLS(_cast((args)[0], lambda: generics.ccc.TLSInitializer))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -718,7 +718,7 @@ class inheritance_Base(quark.reflect.Class):
         return inheritance.Base()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -742,7 +742,7 @@ class inheritance_Test(quark.reflect.Class):
         return inheritance.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -763,10 +763,10 @@ class inheritance_A(quark.reflect.Class):
         (self).methods = _List([])
 
     def construct(self, args):
-        return inheritance.A((args)[0])
+        return inheritance.A(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -783,12 +783,12 @@ class inheritance_B_greet_Method(quark.reflect.Method):
         super(inheritance_B_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.B);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -808,10 +808,10 @@ class inheritance_B(quark.reflect.Class):
         (self).methods = _List([inheritance_B_greet_Method()])
 
     def construct(self, args):
-        return inheritance.B((args)[0])
+        return inheritance.B(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -828,12 +828,12 @@ class inheritance_C_greet_Method(quark.reflect.Method):
         super(inheritance_C_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.C);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -853,10 +853,10 @@ class inheritance_C(quark.reflect.Class):
         (self).methods = _List([inheritance_C_greet_Method()])
 
     def construct(self, args):
-        return inheritance.C((args)[0])
+        return inheritance.C(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -880,7 +880,7 @@ class inheritance_X(quark.reflect.Class):
         return inheritance.X()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -897,12 +897,12 @@ class inheritance_Y_test_Method(quark.reflect.Method):
         super(inheritance_Y_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.Y);
         (obj).test();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -922,10 +922,10 @@ class inheritance_Y(quark.reflect.Class):
         (self).methods = _List([inheritance_Y_test_Method()])
 
     def construct(self, args):
-        return inheritance.Y((args)[0])
+        return inheritance.Y(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -942,12 +942,12 @@ class inheritance_t1_A_foo_Method(quark.reflect.Method):
         super(inheritance_t1_A_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.t1.A);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -970,7 +970,7 @@ class inheritance_t1_A(quark.reflect.Class):
         return inheritance.t1.A()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -987,12 +987,12 @@ class inheritance_t1_B_foo_Method(quark.reflect.Method):
         super(inheritance_t1_B_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.t1.B);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1015,7 +1015,7 @@ class inheritance_t1_B(quark.reflect.Class):
         return inheritance.t1.B()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1032,12 +1032,12 @@ class inheritance_t1_C_foo_Method(quark.reflect.Method):
         super(inheritance_t1_C_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.t1.C);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1060,7 +1060,7 @@ class inheritance_t1_C(quark.reflect.Class):
         return inheritance.t1.C()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1084,7 +1084,7 @@ class inheritance_t2_A(quark.reflect.Class):
         return inheritance.t2.A()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1108,7 +1108,7 @@ class inheritance_t2_B(quark.reflect.Class):
         return inheritance.t2.B()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1132,7 +1132,7 @@ class inheritance_t2_X_quark_int_(quark.reflect.Class):
         return inheritance.t2.X()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1156,7 +1156,7 @@ class inheritance_t2_Y(quark.reflect.Class):
         return inheritance.t2.Y()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1173,12 +1173,12 @@ class inheritance_pets_Cat_greet_Method(quark.reflect.Method):
         super(inheritance_pets_Cat_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.pets.Cat);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1201,7 +1201,7 @@ class inheritance_pets_Cat(quark.reflect.Class):
         return inheritance.pets.Cat()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1218,12 +1218,12 @@ class inheritance_pets_Dog_greet_Method(quark.reflect.Method):
         super(inheritance_pets_Dog_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.pets.Dog);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1246,7 +1246,7 @@ class inheritance_pets_Dog(quark.reflect.Class):
         return inheritance.pets.Dog()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1263,11 +1263,11 @@ class inheritance_Message_encode_Method(quark.reflect.Method):
         super(inheritance_Message_encode_Method, self).__init__(u"quark.String", u"encode", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.Message);
         return (obj).encode()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1290,7 +1290,7 @@ class inheritance_Message(quark.reflect.Class):
         return inheritance.Message()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1307,11 +1307,11 @@ class inheritance_Ping_encode_Method(quark.reflect.Method):
         super(inheritance_Ping_encode_Method, self).__init__(u"quark.String", u"encode", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.Ping);
         return (obj).encode()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1334,7 +1334,7 @@ class inheritance_Ping(quark.reflect.Class):
         return inheritance.Ping()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1351,11 +1351,11 @@ class inheritance_Pong_toString_Method(quark.reflect.Method):
         super(inheritance_Pong_toString_Method, self).__init__(u"quark.String", u"toString", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.Pong);
         return (obj).toString()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1371,11 +1371,11 @@ class inheritance_Pong_encode_Method(quark.reflect.Method):
         super(inheritance_Pong_encode_Method, self).__init__(u"quark.String", u"encode", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.Pong);
         return (obj).encode()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1398,7 +1398,7 @@ class inheritance_Pong(quark.reflect.Class):
         return inheritance.Pong()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1415,12 +1415,12 @@ class inheritance_super__A_greet_Method(quark.reflect.Method):
         super(inheritance_super__A_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.super_.A);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1440,10 +1440,10 @@ class inheritance_super__A(quark.reflect.Class):
         (self).methods = _List([inheritance_super__A_greet_Method()])
 
     def construct(self, args):
-        return inheritance.super_.A((args)[0])
+        return inheritance.super_.A(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1460,12 +1460,12 @@ class inheritance_super__B_greet_Method(quark.reflect.Method):
         super(inheritance_super__B_greet_Method, self).__init__(u"quark.void", u"greet", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.super_.B);
         (obj).greet();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1488,7 +1488,7 @@ class inheritance_super__B(quark.reflect.Class):
         return inheritance.super_.B()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1505,12 +1505,12 @@ class inheritance_use_before_def_Bar_go_Method(quark.reflect.Method):
         super(inheritance_use_before_def_Bar_go_Method, self).__init__(u"quark.void", u"go", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: inheritance.use_before_def.Bar);
         (obj).go();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1533,7 +1533,7 @@ class inheritance_use_before_def_Bar(quark.reflect.Class):
         return inheritance.use_before_def.Bar()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1557,7 +1557,7 @@ class inheritance_use_before_def_Foo(quark.reflect.Class):
         return inheritance.use_before_def.Foo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1574,12 +1574,12 @@ class interfaces_A_foo_Method(quark.reflect.Method):
         super(interfaces_A_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.A);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1595,12 +1595,12 @@ class interfaces_A_bar_Method(quark.reflect.Method):
         super(interfaces_A_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.A);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1623,7 +1623,7 @@ class interfaces_A(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1640,12 +1640,12 @@ class interfaces_B_bar_Method(quark.reflect.Method):
         super(interfaces_B_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.B);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1668,7 +1668,7 @@ class interfaces_B(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1685,12 +1685,12 @@ class interfaces_C_foo_Method(quark.reflect.Method):
         super(interfaces_C_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.C);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1713,7 +1713,7 @@ class interfaces_C(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1730,12 +1730,12 @@ class interfaces_T1_foo_Method(quark.reflect.Method):
         super(interfaces_T1_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T1);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1751,12 +1751,12 @@ class interfaces_T1_bar_Method(quark.reflect.Method):
         super(interfaces_T1_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T1);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1779,7 +1779,7 @@ class interfaces_T1(quark.reflect.Class):
         return interfaces.T1()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1796,12 +1796,12 @@ class interfaces_T2_foo_Method(quark.reflect.Method):
         super(interfaces_T2_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T2);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1817,12 +1817,12 @@ class interfaces_T2_bar_Method(quark.reflect.Method):
         super(interfaces_T2_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T2);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1845,7 +1845,7 @@ class interfaces_T2(quark.reflect.Class):
         return interfaces.T2()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1862,12 +1862,12 @@ class interfaces_T3_foo_Method(quark.reflect.Method):
         super(interfaces_T3_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T3);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1883,12 +1883,12 @@ class interfaces_T3_bar_Method(quark.reflect.Method):
         super(interfaces_T3_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T3);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1911,7 +1911,7 @@ class interfaces_T3(quark.reflect.Class):
         return interfaces.T3()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1928,12 +1928,12 @@ class interfaces_T4_foo_Method(quark.reflect.Method):
         super(interfaces_T4_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T4);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1949,12 +1949,12 @@ class interfaces_T4_bar_Method(quark.reflect.Method):
         super(interfaces_T4_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T4);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1977,7 +1977,7 @@ class interfaces_T4(quark.reflect.Class):
         return interfaces.T4()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -1994,12 +1994,12 @@ class interfaces_T5_foo_Method(quark.reflect.Method):
         super(interfaces_T5_foo_Method, self).__init__(u"quark.void", u"foo", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T5);
         (obj).foo();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2015,12 +2015,12 @@ class interfaces_T5_bar_Method(quark.reflect.Method):
         super(interfaces_T5_bar_Method, self).__init__(u"quark.void", u"bar", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.T5);
         (obj).bar();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2043,7 +2043,7 @@ class interfaces_T5(quark.reflect.Class):
         return interfaces.T5()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2060,12 +2060,12 @@ class interfaces_Foo_m1_Method(quark.reflect.Method):
         super(interfaces_Foo_m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.Foo);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2081,12 +2081,12 @@ class interfaces_Foo_m2_Method(quark.reflect.Method):
         super(interfaces_Foo_m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m2((args)[0]);
+        obj = _cast(object, lambda: interfaces.Foo);
+        (obj).m2(_cast((args)[0], lambda: int));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2102,12 +2102,12 @@ class interfaces_Foo_m3_Method(quark.reflect.Method):
         super(interfaces_Foo_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.String>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.Foo);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2130,7 +2130,7 @@ class interfaces_Foo(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2147,12 +2147,12 @@ class interfaces_Bar_quark_Object__m1_Method(quark.reflect.Method):
         super(interfaces_Bar_quark_Object__m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.Bar);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2168,12 +2168,12 @@ class interfaces_Bar_quark_Object__m2_Method(quark.reflect.Method):
         super(interfaces_Bar_quark_Object__m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.Bar);
         (obj).m2((args)[0]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2189,12 +2189,12 @@ class interfaces_Bar_quark_Object__m3_Method(quark.reflect.Method):
         super(interfaces_Bar_quark_Object__m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.Object>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.Bar);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2217,7 +2217,7 @@ class interfaces_Bar_quark_Object_(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2234,12 +2234,12 @@ class interfaces_Baz_m2_Method(quark.reflect.Method):
         super(interfaces_Baz_m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m2((args)[0]);
+        obj = _cast(object, lambda: interfaces.Baz);
+        (obj).m2(_cast((args)[0], lambda: int));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2255,12 +2255,12 @@ class interfaces_Baz_m1_Method(quark.reflect.Method):
         super(interfaces_Baz_m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.Baz);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2276,12 +2276,12 @@ class interfaces_Baz_m3_Method(quark.reflect.Method):
         super(interfaces_Baz_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.String>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.Baz);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2304,7 +2304,7 @@ class interfaces_Baz(quark.reflect.Class):
         return interfaces.Baz()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2321,12 +2321,12 @@ class interfaces_RazBar_m1_Method(quark.reflect.Method):
         super(interfaces_RazBar_m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.RazBar);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2342,12 +2342,12 @@ class interfaces_RazBar_m2_Method(quark.reflect.Method):
         super(interfaces_RazBar_m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m2((args)[0]);
+        obj = _cast(object, lambda: interfaces.RazBar);
+        (obj).m2(_cast((args)[0], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2363,12 +2363,12 @@ class interfaces_RazBar_m3_Method(quark.reflect.Method):
         super(interfaces_RazBar_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.Object>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.RazBar);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2391,7 +2391,7 @@ class interfaces_RazBar(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2408,12 +2408,12 @@ class interfaces_RazFaz_quark_Object__m1_Method(quark.reflect.Method):
         super(interfaces_RazFaz_quark_Object__m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.RazFaz);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2429,12 +2429,12 @@ class interfaces_RazFaz_quark_Object__m2_Method(quark.reflect.Method):
         super(interfaces_RazFaz_quark_Object__m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.RazFaz);
         (obj).m2((args)[0]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2450,12 +2450,12 @@ class interfaces_RazFaz_quark_Object__m3_Method(quark.reflect.Method):
         super(interfaces_RazFaz_quark_Object__m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.Object>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.RazFaz);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2478,7 +2478,7 @@ class interfaces_RazFaz_quark_Object_(quark.reflect.Class):
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2495,12 +2495,12 @@ class interfaces_BazBar_m1_Method(quark.reflect.Method):
         super(interfaces_BazBar_m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.BazBar);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2516,12 +2516,12 @@ class interfaces_BazBar_m2_Method(quark.reflect.Method):
         super(interfaces_BazBar_m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m2((args)[0]);
+        obj = _cast(object, lambda: interfaces.BazBar);
+        (obj).m2(_cast((args)[0], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2537,12 +2537,12 @@ class interfaces_BazBar_m3_Method(quark.reflect.Method):
         super(interfaces_BazBar_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.String>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.BazBar);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2565,7 +2565,7 @@ class interfaces_BazBar(quark.reflect.Class):
         return interfaces.BazBar()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2582,12 +2582,12 @@ class interfaces_BazFaz_quark_Object__m1_Method(quark.reflect.Method):
         super(interfaces_BazFaz_quark_Object__m1_Method, self).__init__(u"quark.void", u"m1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.BazFaz);
         (obj).m1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2603,12 +2603,12 @@ class interfaces_BazFaz_quark_Object__m2_Method(quark.reflect.Method):
         super(interfaces_BazFaz_quark_Object__m2_Method, self).__init__(u"quark.void", u"m2", _List([u"quark.Object"]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: interfaces.BazFaz);
         (obj).m2((args)[0]);
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2624,12 +2624,12 @@ class interfaces_BazFaz_quark_Object__m3_Method(quark.reflect.Method):
         super(interfaces_BazFaz_quark_Object__m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.Object>"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).m3((args)[0]);
+        obj = _cast(object, lambda: interfaces.BazFaz);
+        (obj).m3(_cast((args)[0], lambda: _List));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2652,7 +2652,7 @@ class interfaces_BazFaz_quark_Object_(quark.reflect.Class):
         return interfaces.BazFaz()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2669,11 +2669,11 @@ class classes_Overload___add___Method(quark.reflect.Method):
         super(classes_Overload___add___Method, self).__init__(u"classes.Overload", u"__add__", _List([u"classes.Overload"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).__add__((args)[0])
+        obj = _cast(object, lambda: classes.Overload);
+        return (obj).__add__(_cast((args)[0], lambda: classes.Overload))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2689,11 +2689,11 @@ class classes_Overload___mul___Method(quark.reflect.Method):
         super(classes_Overload___mul___Method, self).__init__(u"classes.Overload", u"__mul__", _List([u"classes.Overload"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).__mul__((args)[0])
+        obj = _cast(object, lambda: classes.Overload);
+        return (obj).__mul__(_cast((args)[0], lambda: classes.Overload))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2709,12 +2709,12 @@ class classes_Overload_test_Method(quark.reflect.Method):
         super(classes_Overload_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: classes.Overload);
         (obj).test();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2734,10 +2734,10 @@ class classes_Overload(quark.reflect.Class):
         (self).methods = _List([classes_Overload___add___Method(), classes_Overload___mul___Method(), classes_Overload_test_Method()])
 
     def construct(self, args):
-        return classes.Overload((args)[0])
+        return classes.Overload(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2754,12 +2754,12 @@ class classes_Test_test_Method(quark.reflect.Method):
         super(classes_Test_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: classes.Test);
         (obj).test();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2782,7 +2782,7 @@ class classes_Test(quark.reflect.Class):
         return classes.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2799,12 +2799,12 @@ class classes_string_test_check_Method(quark.reflect.Method):
         super(classes_string_test_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.string_test);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2827,7 +2827,7 @@ class classes_string_test(quark.reflect.Class):
         return classes.string_test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2844,11 +2844,11 @@ class classes_test_size_does_Method(quark.reflect.Method):
         super(classes_test_size_does_Method, self).__init__(u"classes.test_size", u"does", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_size);
+        return (obj).does(_cast((args)[0], lambda: int))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2864,12 +2864,12 @@ class classes_test_size_check_Method(quark.reflect.Method):
         super(classes_test_size_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_size);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2889,10 +2889,10 @@ class classes_test_size(quark.reflect.Class):
         (self).methods = _List([classes_test_size_does_Method(), classes_test_size_check_Method()])
 
     def construct(self, args):
-        return classes.test_size((args)[0])
+        return classes.test_size(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2909,11 +2909,11 @@ class classes_test_startsWith_that_Method(quark.reflect.Method):
         super(classes_test_startsWith_that_Method, self).__init__(u"classes.test_startsWith", u"that", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0])
+        obj = _cast(object, lambda: classes.test_startsWith);
+        return (obj).that(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2929,11 +2929,11 @@ class classes_test_startsWith_does_Method(quark.reflect.Method):
         super(classes_test_startsWith_does_Method, self).__init__(u"classes.test_startsWith", u"does", _List([u"quark.bool"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_startsWith);
+        return (obj).does(_cast((args)[0], lambda: bool))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2949,12 +2949,12 @@ class classes_test_startsWith_check_Method(quark.reflect.Method):
         super(classes_test_startsWith_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_startsWith);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2974,10 +2974,10 @@ class classes_test_startsWith(quark.reflect.Class):
         (self).methods = _List([classes_test_startsWith_that_Method(), classes_test_startsWith_does_Method(), classes_test_startsWith_check_Method()])
 
     def construct(self, args):
-        return classes.test_startsWith((args)[0])
+        return classes.test_startsWith(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -2994,11 +2994,11 @@ class classes_test_endsWith_that_Method(quark.reflect.Method):
         super(classes_test_endsWith_that_Method, self).__init__(u"classes.test_endsWith", u"that", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0])
+        obj = _cast(object, lambda: classes.test_endsWith);
+        return (obj).that(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3014,11 +3014,11 @@ class classes_test_endsWith_does_Method(quark.reflect.Method):
         super(classes_test_endsWith_does_Method, self).__init__(u"classes.test_endsWith", u"does", _List([u"quark.bool"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_endsWith);
+        return (obj).does(_cast((args)[0], lambda: bool))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3034,12 +3034,12 @@ class classes_test_endsWith_check_Method(quark.reflect.Method):
         super(classes_test_endsWith_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_endsWith);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3059,10 +3059,10 @@ class classes_test_endsWith(quark.reflect.Class):
         (self).methods = _List([classes_test_endsWith_that_Method(), classes_test_endsWith_does_Method(), classes_test_endsWith_check_Method()])
 
     def construct(self, args):
-        return classes.test_endsWith((args)[0])
+        return classes.test_endsWith(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3079,11 +3079,11 @@ class classes_test_find_that_Method(quark.reflect.Method):
         super(classes_test_find_that_Method, self).__init__(u"classes.test_find", u"that", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0])
+        obj = _cast(object, lambda: classes.test_find);
+        return (obj).that(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3099,11 +3099,11 @@ class classes_test_find_does_Method(quark.reflect.Method):
         super(classes_test_find_does_Method, self).__init__(u"classes.test_find", u"does", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_find);
+        return (obj).does(_cast((args)[0], lambda: int))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3119,12 +3119,12 @@ class classes_test_find_check_Method(quark.reflect.Method):
         super(classes_test_find_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_find);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3144,10 +3144,10 @@ class classes_test_find(quark.reflect.Class):
         (self).methods = _List([classes_test_find_that_Method(), classes_test_find_does_Method(), classes_test_find_check_Method()])
 
     def construct(self, args):
-        return classes.test_find((args)[0])
+        return classes.test_find(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3164,11 +3164,11 @@ class classes_test_substring_that_Method(quark.reflect.Method):
         super(classes_test_substring_that_Method, self).__init__(u"classes.test_substring", u"that", _List([u"quark.int", u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0], (args)[1])
+        obj = _cast(object, lambda: classes.test_substring);
+        return (obj).that(_cast((args)[0], lambda: int), _cast((args)[1], lambda: int))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3184,11 +3184,11 @@ class classes_test_substring_does_Method(quark.reflect.Method):
         super(classes_test_substring_does_Method, self).__init__(u"classes.test_substring", u"does", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_substring);
+        return (obj).does(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3204,12 +3204,12 @@ class classes_test_substring_check_Method(quark.reflect.Method):
         super(classes_test_substring_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_substring);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3229,10 +3229,10 @@ class classes_test_substring(quark.reflect.Class):
         (self).methods = _List([classes_test_substring_that_Method(), classes_test_substring_does_Method(), classes_test_substring_check_Method()])
 
     def construct(self, args):
-        return classes.test_substring((args)[0])
+        return classes.test_substring(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3249,11 +3249,11 @@ class classes_test_replace_that_Method(quark.reflect.Method):
         super(classes_test_replace_that_Method, self).__init__(u"classes.test_replace", u"that", _List([u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0], (args)[1])
+        obj = _cast(object, lambda: classes.test_replace);
+        return (obj).that(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3269,11 +3269,11 @@ class classes_test_replace_does_Method(quark.reflect.Method):
         super(classes_test_replace_does_Method, self).__init__(u"classes.test_replace", u"does", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_replace);
+        return (obj).does(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3289,12 +3289,12 @@ class classes_test_replace_check_Method(quark.reflect.Method):
         super(classes_test_replace_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_replace);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3314,10 +3314,10 @@ class classes_test_replace(quark.reflect.Class):
         (self).methods = _List([classes_test_replace_that_Method(), classes_test_replace_does_Method(), classes_test_replace_check_Method()])
 
     def construct(self, args):
-        return classes.test_replace((args)[0])
+        return classes.test_replace(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3334,11 +3334,11 @@ class classes_test_join_that_Method(quark.reflect.Method):
         super(classes_test_join_that_Method, self).__init__(u"classes.test_join", u"that", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: classes.test_join);
         return (obj).that()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3354,11 +3354,11 @@ class classes_test_join_a_Method(quark.reflect.Method):
         super(classes_test_join_a_Method, self).__init__(u"classes.test_join", u"a", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).a((args)[0])
+        obj = _cast(object, lambda: classes.test_join);
+        return (obj).a(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3374,11 +3374,11 @@ class classes_test_join_does_Method(quark.reflect.Method):
         super(classes_test_join_does_Method, self).__init__(u"classes.test_join", u"does", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_join);
+        return (obj).does(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3394,12 +3394,12 @@ class classes_test_join_check_Method(quark.reflect.Method):
         super(classes_test_join_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_join);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3419,10 +3419,10 @@ class classes_test_join(quark.reflect.Class):
         (self).methods = _List([classes_test_join_that_Method(), classes_test_join_a_Method(), classes_test_join_does_Method(), classes_test_join_check_Method()])
 
     def construct(self, args):
-        return classes.test_join((args)[0])
+        return classes.test_join(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3439,11 +3439,11 @@ class classes_test_split_that_Method(quark.reflect.Method):
         super(classes_test_split_that_Method, self).__init__(u"classes.test_split", u"that", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).that((args)[0])
+        obj = _cast(object, lambda: classes.test_split);
+        return (obj).that(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3459,11 +3459,11 @@ class classes_test_split_does_Method(quark.reflect.Method):
         super(classes_test_split_does_Method, self).__init__(u"classes.test_split", u"does", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).does((args)[0])
+        obj = _cast(object, lambda: classes.test_split);
+        return (obj).does(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3479,12 +3479,12 @@ class classes_test_split_check_Method(quark.reflect.Method):
         super(classes_test_split_check_Method, self).__init__(u"quark.void", u"check", _List([u"quark.String", u"quark.String", u"quark.String", u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        (obj).check((args)[0], (args)[1], (args)[2], (args)[3]);
+        obj = _cast(object, lambda: classes.test_split);
+        (obj).check(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: unicode), _cast((args)[3], lambda: unicode));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3504,10 +3504,10 @@ class classes_test_split(quark.reflect.Class):
         (self).methods = _List([classes_test_split_that_Method(), classes_test_split_does_Method(), classes_test_split_check_Method()])
 
     def construct(self, args):
-        return classes.test_split((args)[0], (args)[1])
+        return classes.test_split(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3524,11 +3524,11 @@ class classes_stuff_Test_foo_Method(quark.reflect.Method):
         super(classes_stuff_Test_foo_Method, self).__init__(u"classes.stuff.Test", u"foo", _List([u"classes.stuff.Test"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).foo((args)[0])
+        obj = _cast(object, lambda: classes.stuff.Test);
+        return (obj).foo(_cast((args)[0], lambda: classes.stuff.Test))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3544,12 +3544,12 @@ class classes_stuff_Test_test_Method(quark.reflect.Method):
         super(classes_stuff_Test_test_Method, self).__init__(u"quark.void", u"test", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: classes.stuff.Test);
         (obj).test();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3572,7 +3572,7 @@ class classes_stuff_Test(quark.reflect.Class):
         return classes.stuff.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3589,12 +3589,12 @@ class statics_Foo_setCount_Method(quark.reflect.Method):
         super(statics_Foo_setCount_Method, self).__init__(u"quark.void", u"setCount", _List([u"quark.int"]));
 
     def invoke(self, object, args):
-        obj = object;
-        statics.Foo.setCount((args)[0]);
+        obj = _cast(object, lambda: statics.Foo);
+        statics.Foo.setCount(_cast((args)[0], lambda: int));
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3610,11 +3610,11 @@ class statics_Foo_getCount_Method(quark.reflect.Method):
         super(statics_Foo_getCount_Method, self).__init__(u"quark.int", u"getCount", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: statics.Foo);
         return statics.Foo.getCount()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3630,12 +3630,12 @@ class statics_Foo_test1_Method(quark.reflect.Method):
         super(statics_Foo_test1_Method, self).__init__(u"quark.void", u"test1", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: statics.Foo);
         (obj).test1();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3651,12 +3651,12 @@ class statics_Foo_test2_Method(quark.reflect.Method):
         super(statics_Foo_test2_Method, self).__init__(u"quark.void", u"test2", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: statics.Foo);
         (obj).test2();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3672,12 +3672,12 @@ class statics_Foo_test3_Method(quark.reflect.Method):
         super(statics_Foo_test3_Method, self).__init__(u"quark.void", u"test3", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: statics.Foo);
         (obj).test3();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3693,12 +3693,12 @@ class statics_Foo_test4_Method(quark.reflect.Method):
         super(statics_Foo_test4_Method, self).__init__(u"quark.void", u"test4", _List([]));
 
     def invoke(self, object, args):
-        obj = object;
+        obj = _cast(object, lambda: statics.Foo);
         (obj).test4();
         return None
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3721,7 +3721,7 @@ class statics_Foo(quark.reflect.Class):
         return statics.Foo()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3738,11 +3738,11 @@ class docs_Test_test_Method(quark.reflect.Method):
         super(docs_Test_test_Method, self).__init__(u"quark.int", u"test", _List([u"quark.String"]));
 
     def invoke(self, object, args):
-        obj = object;
-        return (obj).test((args)[0])
+        obj = _cast(object, lambda: docs.Test);
+        return (obj).test(_cast((args)[0], lambda: unicode))
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3765,7 +3765,7 @@ class docs_Test(quark.reflect.Class):
         return docs.Test()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3789,7 +3789,7 @@ class quark_List_quark_List_quark_Object__(quark.reflect.Class):
         return _List()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3813,7 +3813,7 @@ class quark_List_quark_Object_(quark.reflect.Class):
         return _List()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3837,7 +3837,7 @@ class quark_List_quark_String_(quark.reflect.Class):
         return _List()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None
@@ -3852,7 +3852,7 @@ class Root(object):
     def __init__(self): self._init()
 
     def _getClass(self):
-        return None
+        return _cast(None, lambda: unicode)
 
     def _getField(self, name):
         return None

@@ -16,6 +16,7 @@ import os
 import shlex
 import subprocess
 import logging
+import pkg_resources
 from distutils.version import StrictVersion
 
 from .exceptions import QuarkError
@@ -39,6 +40,9 @@ def validate_pip(output):
     pass
 
 def validate_python(output):
+    # On Ubuntu 16.04 version can be e.g. "2.7.11+":
+    if output.endswith("+"):
+        output = output[:-1]
     check_version("python", output, "2.7.0", "3.0.0")
 
 PREREQS = {
@@ -56,11 +60,14 @@ def check(role, cmd=None, cwd=None):
     if cmd in CHECKED: return
     check, msg, validate = PREREQS[role]
     try:
-        out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT)
+        out = subprocess.check_output(check, cwd=cwd, stderr=subprocess.STDOUT).strip()
         validate(out)
         CHECKED.add(cmd)
-    except (subprocess.CalledProcessError, OSError):
+    except OSError:
         raise QuarkError("unable to find %s: %s" % (cmd, msg))
+    except subprocess.CalledProcessError as exc:
+        raise QuarkError("Checking for %s failed:\n    $ %s\n    %s\n\n%s" %
+                         (role, " ".join(check), "\n    ".join(exc.output.splitlines()), msg))
 
 COMMAND_DEFAULTS = {
     "mvn": "mvn -q",
@@ -104,7 +111,7 @@ def call(*command, **kwargs):
 
 def get_pip_pkg(name, stage=None):
     try:
-        output = call("pip", "show", name, stage=stage, errok=True)
+        output = call("pip", "show", pkg_resources.safe_name(name), stage=stage, errok=True)
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)
@@ -113,4 +120,4 @@ def get_pip_pkg(name, stage=None):
 
 def pipcheck(name, stage=None):
     if get_pip_pkg(name) is None:
-        raise QuarkError("unable to find required python package %s" % name)
+        raise QuarkError("Please install python package %s with 'pip install %s' to run this command." % (name, name))

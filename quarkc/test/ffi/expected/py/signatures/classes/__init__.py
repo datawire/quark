@@ -13,10 +13,10 @@ class Overload(object):
         self._init()
 
     def __add__(self, o):
-        return None
+        return _cast(None, lambda: Overload)
 
     def __mul__(self, o):
-        return None
+        return _cast(None, lambda: Overload)
 
     def test(self):
         pass
@@ -32,7 +32,7 @@ class Overload(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Overload.classes_Overload_ref = None
@@ -79,7 +79,7 @@ class test_size(string_test):
         super(test_size, self).__init__();
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_size)
 
     def _getClass(self):
         return u"classes.test_size"
@@ -92,7 +92,7 @@ class test_size(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
 
 test_size.classes_test_size_ref = None
@@ -106,10 +106,10 @@ class test_startsWith(string_test):
         super(test_startsWith, self).__init__();
 
     def that(self, _that):
-        return None
+        return _cast(None, lambda: test_startsWith)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_startsWith)
 
     def _getClass(self):
         return u"classes.test_startsWith"
@@ -125,10 +125,10 @@ class test_startsWith(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"_that")):
-            (self)._that = value
+            (self)._that = _cast(value, lambda: unicode)
 
 
 test_startsWith.classes_test_startsWith_ref = None
@@ -142,10 +142,10 @@ class test_endsWith(string_test):
         super(test_endsWith, self).__init__();
 
     def that(self, _that):
-        return None
+        return _cast(None, lambda: test_endsWith)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_endsWith)
 
     def _getClass(self):
         return u"classes.test_endsWith"
@@ -161,10 +161,10 @@ class test_endsWith(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"_that")):
-            (self)._that = value
+            (self)._that = _cast(value, lambda: unicode)
 
 
 test_endsWith.classes_test_endsWith_ref = None
@@ -178,10 +178,10 @@ class test_find(string_test):
         super(test_find, self).__init__();
 
     def that(self, _that):
-        return None
+        return _cast(None, lambda: test_find)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_find)
 
     def _getClass(self):
         return u"classes.test_find"
@@ -197,10 +197,10 @@ class test_find(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"_that")):
-            (self)._that = value
+            (self)._that = _cast(value, lambda: unicode)
 
 
 test_find.classes_test_find_ref = None
@@ -215,10 +215,10 @@ class test_substring(string_test):
         super(test_substring, self).__init__();
 
     def that(self, start, end):
-        return None
+        return _cast(None, lambda: test_substring)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_substring)
 
     def _getClass(self):
         return u"classes.test_substring"
@@ -237,13 +237,13 @@ class test_substring(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"start")):
-            (self).start = value
+            (self).start = _cast(value, lambda: int)
 
         if ((name) == (u"end")):
-            (self).end = value
+            (self).end = _cast(value, lambda: int)
 
 
 test_substring.classes_test_substring_ref = None
@@ -258,10 +258,10 @@ class test_replace(string_test):
         super(test_replace, self).__init__();
 
     def that(self, start, end):
-        return None
+        return _cast(None, lambda: test_replace)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_replace)
 
     def _getClass(self):
         return u"classes.test_replace"
@@ -280,13 +280,13 @@ class test_replace(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"start")):
-            (self).start = value
+            (self).start = _cast(value, lambda: unicode)
 
         if ((name) == (u"end")):
-            (self).end = value
+            (self).end = _cast(value, lambda: unicode)
 
 
 test_replace.classes_test_replace_ref = None
@@ -302,13 +302,13 @@ class test_join(string_test):
         super(test_join, self).__init__();
 
     def that(self):
-        return None
+        return _cast(None, lambda: test_join)
 
     def a(self, part):
-        return None
+        return _cast(None, lambda: test_join)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_join)
 
     def _getClass(self):
         return u"classes.test_join"
@@ -330,16 +330,16 @@ class test_join(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"parts")):
-            (self).parts = value
+            (self).parts = _cast(value, lambda: _List)
 
         if ((name) == (u"strparts")):
-            (self).strparts = value
+            (self).strparts = _cast(value, lambda: unicode)
 
         if ((name) == (u"sep")):
-            (self).sep = value
+            (self).sep = _cast(value, lambda: unicode)
 
 
 test_join.classes_test_join_ref = None
@@ -354,10 +354,10 @@ class test_split(string_test):
         super(test_split, self).__init__();
 
     def that(self, what):
-        return None
+        return _cast(None, lambda: test_split)
 
     def does(self, expected):
-        return None
+        return _cast(None, lambda: test_split)
 
     def _getClass(self):
         return u"classes.test_split"
@@ -376,13 +376,13 @@ class test_split(string_test):
 
     def _setField(self, name, value):
         if ((name) == (u"what")):
-            (self).what = value
+            (self).what = _cast(value, lambda: unicode)
 
         if ((name) == (u"sep")):
-            (self).sep = value
+            (self).sep = _cast(value, lambda: unicode)
 
         if ((name) == (u"altsep")):
-            (self).altsep = value
+            (self).altsep = _cast(value, lambda: unicode)
 
 
 test_split.classes_test_split_ref = None

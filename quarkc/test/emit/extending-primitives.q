@@ -1,3 +1,4 @@
+quark *;
 namespace pkg {
 
     @mapping($java{java.lang.Runnable})

@@ -33,7 +33,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
 
     def get()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
@@ -58,7 +58,7 @@ class Box < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("contents"))
-            (self).contents = value
+            (self).contents = ::DatawireQuarkCore.cast(value) { ::Quark.T }
         end
 
         nil
@@ -103,7 +103,7 @@ class Crate < ::DatawireQuarkCore::QuarkObject
 
     def get()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
@@ -131,10 +131,10 @@ class Crate < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("box"))
-            (self).box = value
+            (self).box = ::DatawireQuarkCore.cast(value) { ::Quark.generics.Box }
         end
         if ((name) == ("ibox"))
-            (self).ibox = value
+            (self).ibox = ::DatawireQuarkCore.cast(value) { ::Quark.generics.Box }
         end
 
         nil
@@ -190,7 +190,7 @@ class Sack < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("ints"))
-            (self).ints = value
+            (self).ints = ::DatawireQuarkCore.cast(value) { ::Quark.generics.Box }
         end
 
         nil
@@ -230,7 +230,7 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
 
     def __get__(i, j)
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
@@ -268,13 +268,13 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("width"))
-            (self).width = value
+            (self).width = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
         if ((name) == ("height"))
-            (self).height = value
+            (self).height = ::DatawireQuarkCore.cast(value) { ::Integer }
         end
         if ((name) == ("columns"))
-            (self).columns = value
+            (self).columns = ::DatawireQuarkCore.cast(value) { ::DatawireQuarkCore::List }
         end
 
         nil

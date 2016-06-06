@@ -1,3 +1,4 @@
+quark *;
 use js ws 1.0;
 use js request 2.69.0;
 use js timers 0.1.1;
@@ -41,6 +42,7 @@ include url.q;
 include spi.q;
 include spi_api.q;
 include spi_api_tracing.q;
+include os.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}

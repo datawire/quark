@@ -19,6 +19,12 @@ from collections import OrderedDict
 from .dispatch import dispatch
 from .ast import *
 
+try:  # py3
+    from shlex import quote as sh_quote
+except ImportError:  # py2
+    from pipes import quote as sh_quote
+
+
 DEFAULT = object()
 
 @dispatch(Class, Field)
@@ -341,6 +347,10 @@ def readme(cls, lines):
     lines.append("## %s" % cls.name)
     lines.append(doc_helper(doc(cls)))
 
+@dispatch(CompilerVersionSpec)
+def readme(cls, lines):
+    pass
+
 def is_newer(target, *deps):
     if target is None: return False
     if not os.path.exists(target): return False
@@ -355,3 +365,47 @@ def is_newer(target, *deps):
 
 def compiled_quark(url):
     return "%sc" % url
+
+def lineinfo(node):
+    trace = getattr(node, "_trace", None)
+    stack = [getattr(node, "filename", "<none>")]
+    while trace:
+        stack.append("%s:%s:" % (inspect.getfile(trace.annotator), trace.annotator.__name__))
+        stack.append(trace.text)
+        stack.append("<generated>")
+        trace = trace.prev
+    stack[-1] = stack[-1] + (":%s:%s" % (node.line, node.column))
+    return "\n".join(stack)
+
+def extract_ast_stack(frames):
+    import inspect
+    ast_stack = []
+    ast_seen = []
+    for frame in frames:
+        ast_frame = []
+        a = inspect.getargvalues(frame[0])
+        args = map(a.locals.get, a.args)
+        if a.varargs:
+            args.extend(a.locals[a.varargs])
+        if a.keywords:
+            args.extend(v for k,v in sorted(a.locals[a.keywords].items()))
+        for arg in args:
+            if isinstance(arg, AST) and arg not in ast_seen:
+                ast_seen.append(arg)
+                ast_frame.append(arg)
+        if ast_frame:
+            ast_stack.append(ast_frame)
+
+    return ast_stack
+
+def format_ast_stack(frames):
+    backtrace = []
+    from quarkc.compiler import Roots, Root
+    boring = frozenset((Roots, Root, File))
+    for frame in reversed(extract_ast_stack(frames)):
+        for node in frame:
+            if type(node) in boring:
+                break
+            backtrace.append("  %s %s %s" % (
+                lineinfo(node), type(node).__name__, getattr(node, "name", "")))
+    return "\n".join(backtrace)

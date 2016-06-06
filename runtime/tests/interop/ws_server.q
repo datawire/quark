@@ -1,3 +1,4 @@
+quark *;
 @version("1.2.3") // version is mandatory
 namespace interop { // package interop is mandatory
 ////include common.qinc

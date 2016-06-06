@@ -27,7 +27,7 @@ class TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
 
     def getValue()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.generics.ccc.Context }
 
         nil
     end
@@ -87,14 +87,14 @@ class Context < ::DatawireQuarkCore::QuarkObject
 
     def self.current()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.generics.ccc.Context }
 
         nil
     end
 
     def self.global()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.generics.ccc.Context }
 
         nil
     end
@@ -125,13 +125,13 @@ class Context < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("_global"))
-            ::Quark.generics.ccc.Context._global = value
+            ::Quark.generics.ccc.Context._global = ::DatawireQuarkCore.cast(value) { ::Quark.generics.ccc.Context }
         end
         if ((name) == ("_current"))
-            ::Quark.generics.ccc.Context._current = value
+            ::Quark.generics.ccc.Context._current = ::DatawireQuarkCore.cast(value) { ::Quark.generics.ccc.TLS }
         end
         if ((name) == ("parent"))
-            (self).parent = value
+            (self).parent = ::DatawireQuarkCore.cast(value) { ::Quark.generics.ccc.Context }
         end
 
         nil
@@ -166,7 +166,7 @@ class TLSInitializer < ::DatawireQuarkCore::QuarkObject
 
 
     def getValue()
-        raise NotImplementedError, "this is an abstract method"
+        raise NotImplementedError, '`TLSInitializer.getValue` is an abstract method'
 
         nil
     end
@@ -199,7 +199,7 @@ class TLS < ::DatawireQuarkCore::QuarkObject
 
     def getValue()
         
-        return nil
+        return ::DatawireQuarkCore.cast(nil) { ::Quark.T }
 
         nil
     end
@@ -224,7 +224,7 @@ class TLS < ::DatawireQuarkCore::QuarkObject
     def _setField(name, value)
         
         if ((name) == ("_value"))
-            (self)._value = value
+            (self)._value = ::DatawireQuarkCore.cast(value) { ::Quark.T }
         end
 
         nil

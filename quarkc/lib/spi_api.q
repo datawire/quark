@@ -1,3 +1,4 @@
+quark *;
 namespace quark {
 namespace spi_api {
 

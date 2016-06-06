@@ -1,3 +1,4 @@
+quark *;
 void main(List<String> args) {
     test.go();
 }

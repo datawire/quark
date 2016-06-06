@@ -49,6 +49,7 @@ Options:
 import sys
 import logging
 import datetime
+import textwrap
 
 from docopt import docopt
 
@@ -108,7 +109,7 @@ class ProgressHandler(logging.Handler):
                 prefix = " done.\n"
                 dbg = " (i->i) "
                 postfix = " ..."
-        else:
+        elif record.levelno == logging.WARNING:
             if self.last < logging.INFO:
                 prefix = "\n"
                 dbg = " (d->w) "
@@ -116,6 +117,15 @@ class ProgressHandler(logging.Handler):
             else:
                 prefix = " done.\n"
                 dbg = " (i->w) "
+                postfix = "\n"
+        else:
+            if self.last < logging.INFO:
+                prefix = "\n"
+                dbg = " (d->e) "
+                postfix = "\n"
+            else:
+                prefix = "\n"
+                dbg = " (i->e) "
                 postfix = "\n"
         self.last = record.levelno
         if self.do_debug:
@@ -129,7 +139,8 @@ def main(args):
         print __doc__.rstrip()
         return None
 
-    if not args["run"]:
+    do_log = not args["run"] or args["--verbose"]
+    if do_log:
         if args["--verbose"]:
             shell.COMMAND_DEFAULTS["mvn"] = "mvn"
         logging.basicConfig(level=logging.DEBUG)
@@ -157,11 +168,12 @@ def main(args):
             if args["install"]: shell.check("mvn")
             backends.append(backend.Java)
         if ruby or all:
+            if args["install"]: shell.check("gem")
             backends.append(backend.Ruby)
         if python or all:
             if args["install"]:
                 shell.check("python")
-                shell.pipcheck("wheel")
+                shell.check("pip")
             backends.append(backend.Python)
         if javascript or all:
             if args["install"]: shell.check("npm")
@@ -179,9 +191,34 @@ def main(args):
                 compiler.make_docs(url, output)
             else:
                 assert False
-    except compiler.QuarkError as err:
-        shell.command_log.warn("")
+    except (KeyboardInterrupt, compiler.QuarkError) as err:
+        if not args["run"]:
+            shell.command_log.error("")
         return err
+    except:
+        if do_log:
+            import inspect
+            ast_stack = helpers.format_ast_stack(inspect.trace())
+            shell.command_log.error("\n -- snip --\nInternal compiler error", exc_info=True)
+            shell.command_log.error("\nCompiler was looking at:\n%s\n" % ast_stack)
+        instructions = textwrap.dedent("""\
+
+        Your code triggered an internal compiler error.
+
+        Please report the issue at https://github.com/datawire/quark/issues
+        """)
+        if do_log:
+            instructions += textwrap.dedent("""\
+
+            Please attach the above report up until the -- snip -- line with the issue.
+            If at all possible also attach the quark file that caused the error.
+            """)
+        else:
+            instructions += textwrap.dedent("""\
+
+            Please re-run the quark command with --verbose flag to get the full report.
+            """)
+        return instructions
 
     shell.command_log.warn("Done")
 

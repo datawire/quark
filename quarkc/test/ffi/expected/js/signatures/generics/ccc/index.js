@@ -16,7 +16,7 @@ function TLSContextInitializer__init_fields__() {}
 TLSContextInitializer.prototype.__init_fields__ = TLSContextInitializer__init_fields__;
 TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = null;
 function TLSContextInitializer_getValue() {
-    return null;
+    return _qrt.cast(null, function () { return Context; });
 }
 TLSContextInitializer.prototype.getValue = TLSContextInitializer_getValue;
 
@@ -49,12 +49,12 @@ Context._current = null;
 Context.generics_ccc_Context_ref = null;
 Context.generics_ccc_TLS_generics_ccc_Context__ref = null;
 function Context_current() {
-    return null;
+    return _qrt.cast(null, function () { return Context; });
 }
 Context.current = Context_current;
 
 function Context_global() {
-    return null;
+    return _qrt.cast(null, function () { return Context; });
 }
 Context.global = Context_global;
 
@@ -79,13 +79,13 @@ Context.prototype._getField = Context__getField;
 
 function Context__setField(name, value) {
     if (_qrt.equals((name), ("_global"))) {
-        Context._global = value;
+        Context._global = _qrt.cast(value, function () { return Context; });
     }
     if (_qrt.equals((name), ("_current"))) {
-        Context._current = value;
+        Context._current = _qrt.cast(value, function () { return TLS; });
     }
     if (_qrt.equals((name), ("parent"))) {
-        (this).parent = value;
+        (this).parent = _qrt.cast(value, function () { return Context; });
     }
 }
 Context.prototype._setField = Context__setField;
@@ -99,7 +99,7 @@ exports.TLSInitializer = TLSInitializer;
 function TLSInitializer__init_fields__() {}
 TLSInitializer.prototype.__init_fields__ = TLSInitializer__init_fields__;
 TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = null;
-function TLSInitializer_getValue() { /* interface */ }
+function TLSInitializer_getValue() { throw TypeError, '`TLSInitializer.getValue` is an abstract method'; }
 TLSInitializer.prototype.getValue = TLSInitializer_getValue;
 
 // CLASS TLS
@@ -115,7 +115,7 @@ function TLS__init_fields__() {
 TLS.prototype.__init_fields__ = TLS__init_fields__;
 
 function TLS_getValue() {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 TLS.prototype.getValue = TLS_getValue;
 
@@ -134,7 +134,7 @@ TLS.prototype._getField = TLS__getField;
 
 function TLS__setField(name, value) {
     if (_qrt.equals((name), ("_value"))) {
-        (this)._value = value;
+        (this)._value = _qrt.cast(value, function () { return T; });
     }
 }
 TLS.prototype._setField = TLS__setField;

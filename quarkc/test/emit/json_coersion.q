@@ -1,3 +1,4 @@
+quark *;
 void main(List<String> args) {
     JSONObject json = new JSONObject();
     json["string"] = "this is a string";

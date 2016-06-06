@@ -1,3 +1,4 @@
+quark *;
 namespace quark {
 
     @doc("A URL class.")

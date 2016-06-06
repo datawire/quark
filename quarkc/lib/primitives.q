@@ -1,3 +1,4 @@
+quark *;
 include io/datawire/quark/runtime/QObject.java;
 include io/datawire/quark/runtime/Buffer.java;
 include io/datawire/quark/runtime/BufferImpl.java;
@@ -37,7 +38,7 @@ namespace quark {
     primitive void {}
 
     // Ruby doesn't have a Boolean type, only TrueClass and FalseClass
-    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{Object})
+    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{::Object})
     primitive bool {
         macro bool __not__() $java{!($self)} $py{not ($self)} $rb{!($self)} $js{!($self)};
         macro bool __and__(bool other) $java{($self) && ($other)}
@@ -84,7 +85,7 @@ namespace quark {
         macro T __bitwise_not__() ${(~($self))};
     }
 
-    @mapping($java{Byte} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Byte} $py{int} $js{Number} $rb{::Integer})
     primitive byte extends integral<byte> {
         macro byte() $java{new Byte()}
                      $py{int()}
@@ -100,7 +101,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Short} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Short} $py{int} $js{Number} $rb{::Integer})
     primitive short extends integral<short> {
         macro short() $java{new Short()}
                       $py{int()}
@@ -116,7 +117,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Integer} $py{int} $js{Number} $rb{Integer})
+    @mapping($java{Integer} $py{int} $js{Number} $rb{::Integer})
     primitive int extends integral<int> {
         macro int() $java{new Integer()}
                     $py{int()}
@@ -141,7 +142,7 @@ namespace quark {
                                $js{($self)};
     }
 
-    @mapping($java{Long} $py{long} $js{Number} $rb{Integer})
+    @mapping($java{Long} $py{long} $js{Number} $rb{::Integer})
     primitive long extends integral<long> {
         macro long() $java{new Long()}
                      $py{int()}
@@ -158,7 +159,7 @@ namespace quark {
                              $js{($self)};
     }
 
-    @mapping($java{Double} $py{float} $js{Number} $rb{Float})
+    @mapping($java{Double} $py{float} $js{Number} $rb{::Float})
     primitive float extends numeric<float> {
         macro float __div__(float other) $java{($self) / ($other)}
                                          $py{float($self) / float($other)}
@@ -176,7 +177,7 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{String} $py{str} $js{String} $rb{String})
+    @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
         macro int size()                   $java{($self).length()}
@@ -211,6 +212,14 @@ namespace quark {
                                               $py{($self).join($parts)}
                                               $rb{($parts).join($self)}
                                               $js{($parts).join($self)};
+        macro String toUpper() $java{($self).toUpperCase()}
+                               $py{($self).upper()}
+                               $rb{($self).upcase}
+                               $js{($self).toUpperCase()};
+        macro String toLower() $java{($self).toLowerCase()}
+                               $py{($self).lower()}
+                               $rb{($self).downcase}
+                               $js{($self).toLowerCase()};
         macro JSONObject toJSON() new JSONObject().setString(self);
         macro JSONObject __to_JSONObject() self.toJSON();
         macro JSONObject parseJSON() $java{io.datawire.quark.runtime.JSONObject.parse($self)}
@@ -319,6 +328,10 @@ namespace quark {
                                   $py{($self).append($element)}
                                   $rb{($self) << ($element)}
                                   $js{($self).push($element)};
+        macro void insert(int index, T element) $java{($self).add(($index), ($element))}
+                                                $py{($self).insert(($index), ($element))}
+                                                $rb{($self).insert(($index), ($element))}
+                                                $js{($self).splice(($index), 0, ($element))};
         macro T __get__(int index) $java{($self).get($index)}
                                    $py{($self)[$index]}
                                    $rb{($self)[$index]}
@@ -327,6 +340,13 @@ namespace quark {
                                                $py{($self)[$index] = ($value)}
                                                $rb{($self)[$index] = ($value)}
                                                $js{($self)[$index] = ($value)};
+        @doc("Mutates the list, removing the element at the specified position.")
+        @doc("Shifts any subsequent elements to the left (subtracts one from their indices).")
+        @doc("Returns the element that was removed.")
+        macro T remove(int index) $java{($self).remove($index)}
+                                  $py{($self).pop($index)}
+                                  $rb{($self).delete_at($index)}
+                                  $js{_qrt.list_remove(($self), ($index))};
         macro List<T> slice(int start, int stop) new ListUtil<T>().slice(self, start, stop);
         macro int size() $java{($self).size()}
                          $py{len($self)}
@@ -350,6 +370,12 @@ namespace quark {
                                $py{($self).get($key)}
                                $rb{($self)[$key]}
                                $js{_qrt.map_get(($self), ($key))};
+        @doc("Mutates the map, removing the specified key.")
+        @doc("Returns the previous value associated with key, or null.")
+        macro V remove(K key) $java{($self).remove($key)}
+                              $py{_map_remove(($self), ($key))}
+                              $rb{($self).delete($key)}
+                              $js{_qrt.map_remove(($self), ($key))};
         macro bool contains(K key) $java{($self).containsKey($key)}
                                    $py{($key) in ($self)}
                                    $rb{($self).key?($key)}

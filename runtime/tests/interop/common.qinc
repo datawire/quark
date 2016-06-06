@@ -152,7 +152,7 @@
         }
     }
 
-    class CheckResponseHeader extends CheckHeader<HTTPResponse>, ResponseCheck {
+    class CheckResponseHeader extends CheckHeader, ResponseCheck {
         void checkResponse(HTTPResponse response) {
             self.checkHeader(ResponseHeaders(response), "response");
         }

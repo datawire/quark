@@ -17,7 +17,7 @@ class Box(object):
         pass
 
     def get(self):
-        return None
+        return _cast(None, lambda: T)
 
     def _getClass(self):
         return u"generics.Box<quark.Object>"
@@ -30,7 +30,7 @@ class Box(object):
 
     def _setField(self, name, value):
         if ((name) == (u"contents")):
-            (self).contents = value
+            (self).contents = _cast(value, lambda: T)
 
 
 
@@ -45,7 +45,7 @@ class Crate(object):
         pass
 
     def get(self):
-        return None
+        return _cast(None, lambda: T)
 
     def _getClass(self):
         return u"generics.Crate<quark.Object>"
@@ -61,10 +61,10 @@ class Crate(object):
 
     def _setField(self, name, value):
         if ((name) == (u"box")):
-            (self).box = value
+            (self).box = _cast(value, lambda: Box)
 
         if ((name) == (u"ibox")):
-            (self).ibox = value
+            (self).ibox = _cast(value, lambda: Box)
 
 
 Crate.generics_Box_quark_Object__ref = None
@@ -87,7 +87,7 @@ class Sack(object):
 
     def _setField(self, name, value):
         if ((name) == (u"ints")):
-            (self).ints = value
+            (self).ints = _cast(value, lambda: Box)
 
 
 Sack.generics_Sack_ref = None
@@ -100,10 +100,10 @@ class Matrix(object):
     def __init__(self, width, height):
         self._init()
 
-    def __get__(self, i, j):
-        return None
+    def _q__get__(self, i, j):
+        return _cast(None, lambda: T)
 
-    def __set__(self, i, j, value):
+    def _q__set__(self, i, j, value):
         pass
 
     def _getClass(self):
@@ -123,13 +123,13 @@ class Matrix(object):
 
     def _setField(self, name, value):
         if ((name) == (u"width")):
-            (self).width = value
+            (self).width = _cast(value, lambda: int)
 
         if ((name) == (u"height")):
-            (self).height = value
+            (self).height = _cast(value, lambda: int)
 
         if ((name) == (u"columns")):
-            (self).columns = value
+            (self).columns = _cast(value, lambda: _List)
 
 
 Matrix.generics_Matrix_quark_Object__ref = None

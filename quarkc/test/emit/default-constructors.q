@@ -1,3 +1,4 @@
+quark *;
 class A {
     String name;
     A(String name) {

@@ -1,3 +1,4 @@
+quark *;
 
 package prtest 1.0.0;
 

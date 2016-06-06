@@ -451,7 +451,7 @@ def prepare_release(args):
     else:
         if args["--dev"]:
             raise ReleaseError("Version forcing not allowed for dev releases")
-        if SemVer(ver) < SemVer(next_ver):
+        if SemVer(ver) < next_ver:
             raise ReleaseError("Supplied version %s < %s. Aborting" % (
                 ver, next_ver));
         else:

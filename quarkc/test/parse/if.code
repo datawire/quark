@@ -1,5 +1,6 @@
 
 
+quark *;
 package if {
     void test() {
         if (x) {

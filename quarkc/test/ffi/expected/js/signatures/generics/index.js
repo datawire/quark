@@ -27,7 +27,7 @@ function Box_set(contents) {}
 Box.prototype.set = Box_set;
 
 function Box_get() {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 Box.prototype.get = Box_get;
 
@@ -46,7 +46,7 @@ Box.prototype._getField = Box__getField;
 
 function Box__setField(name, value) {
     if (_qrt.equals((name), ("contents"))) {
-        (this).contents = value;
+        (this).contents = _qrt.cast(value, function () { return T; });
     }
 }
 Box.prototype._setField = Box__setField;
@@ -69,7 +69,7 @@ function Crate_set(stuff) {}
 Crate.prototype.set = Crate_set;
 
 function Crate_get() {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 Crate.prototype.get = Crate_get;
 
@@ -91,10 +91,10 @@ Crate.prototype._getField = Crate__getField;
 
 function Crate__setField(name, value) {
     if (_qrt.equals((name), ("box"))) {
-        (this).box = value;
+        (this).box = _qrt.cast(value, function () { return Box; });
     }
     if (_qrt.equals((name), ("ibox"))) {
-        (this).ibox = value;
+        (this).ibox = _qrt.cast(value, function () { return Box; });
     }
 }
 Crate.prototype._setField = Crate__setField;
@@ -125,7 +125,7 @@ Sack.prototype._getField = Sack__getField;
 
 function Sack__setField(name, value) {
     if (_qrt.equals((name), ("ints"))) {
-        (this).ints = value;
+        (this).ints = _qrt.cast(value, function () { return Box; });
     }
 }
 Sack.prototype._setField = Sack__setField;
@@ -147,7 +147,7 @@ Matrix.generics_Matrix_quark_Object__ref = null;
 Matrix.quark_List_quark_List_quark_Object___ref = null;
 Matrix.quark_List_quark_Object__ref = null;
 function Matrix___get__(i, j) {
-    return null;
+    return _qrt.cast(null, function () { return T; });
 }
 Matrix.prototype.__get__ = Matrix___get__;
 
@@ -175,13 +175,13 @@ Matrix.prototype._getField = Matrix__getField;
 
 function Matrix__setField(name, value) {
     if (_qrt.equals((name), ("width"))) {
-        (this).width = value;
+        (this).width = _qrt.cast(value, function () { return Number; });
     }
     if (_qrt.equals((name), ("height"))) {
-        (this).height = value;
+        (this).height = _qrt.cast(value, function () { return Number; });
     }
     if (_qrt.equals((name), ("columns"))) {
-        (this).columns = value;
+        (this).columns = _qrt.cast(value, function () { return Array; });
     }
 }
 Matrix.prototype._setField = Matrix__setField;

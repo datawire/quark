@@ -1,5 +1,6 @@
 
 
+quark *;
 package comparisons {
     void test() {
         ((a).__lt__)(b);

@@ -27,7 +27,7 @@ class Test(object):
 
     def _setField(self, name, value):
         if ((name) == (u"size")):
-            (self).size = value
+            (self).size = _cast(value, lambda: int)
 
 
 Test.test_subtest_Test_ref = None

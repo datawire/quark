@@ -43,16 +43,16 @@ class SlackEvent(object):
 
     def _setField(self, name, value):
         if ((name) == (u"type")):
-            (self).type = value
+            (self).type = _cast(value, lambda: unicode)
 
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: slack.User)
 
         if ((name) == (u"channel")):
-            (self).channel = value
+            (self).channel = _cast(value, lambda: slack.Channel)
 
         if ((name) == (u"timestamp")):
-            (self).timestamp = value
+            (self).timestamp = _cast(value, lambda: unicode)
 
 
 SlackEvent.slack_event_SlackEvent_ref = None
@@ -100,22 +100,22 @@ class SlackError(SlackEvent):
 
     def _setField(self, name, value):
         if ((name) == (u"type")):
-            (self).type = value
+            (self).type = _cast(value, lambda: unicode)
 
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: slack.User)
 
         if ((name) == (u"channel")):
-            (self).channel = value
+            (self).channel = _cast(value, lambda: slack.Channel)
 
         if ((name) == (u"timestamp")):
-            (self).timestamp = value
+            (self).timestamp = _cast(value, lambda: unicode)
 
         if ((name) == (u"code")):
-            (self).code = value
+            (self).code = _cast(value, lambda: int)
 
         if ((name) == (u"text")):
-            (self).text = value
+            (self).text = _cast(value, lambda: unicode)
 
 
 SlackError.slack_event_SlackError_ref = None
@@ -152,16 +152,16 @@ class Hello(SlackEvent):
 
     def _setField(self, name, value):
         if ((name) == (u"type")):
-            (self).type = value
+            (self).type = _cast(value, lambda: unicode)
 
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: slack.User)
 
         if ((name) == (u"channel")):
-            (self).channel = value
+            (self).channel = _cast(value, lambda: slack.Channel)
 
         if ((name) == (u"timestamp")):
-            (self).timestamp = value
+            (self).timestamp = _cast(value, lambda: unicode)
 
 
 Hello.slack_event_Hello_ref = None
@@ -217,28 +217,28 @@ class Message(SlackEvent):
 
     def _setField(self, name, value):
         if ((name) == (u"type")):
-            (self).type = value
+            (self).type = _cast(value, lambda: unicode)
 
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: slack.User)
 
         if ((name) == (u"channel")):
-            (self).channel = value
+            (self).channel = _cast(value, lambda: slack.Channel)
 
         if ((name) == (u"timestamp")):
-            (self).timestamp = value
+            (self).timestamp = _cast(value, lambda: unicode)
 
         if ((name) == (u"subtype")):
-            (self).subtype = value
+            (self).subtype = _cast(value, lambda: unicode)
 
         if ((name) == (u"hidden")):
-            (self).hidden = value
+            (self).hidden = _cast(value, lambda: bool)
 
         if ((name) == (u"text")):
-            (self).text = value
+            (self).text = _cast(value, lambda: unicode)
 
         if ((name) == (u"edited")):
-            (self).edited = value
+            (self).edited = _cast(value, lambda: Edited)
 
 
 Message.slack_event_Message_ref = None
@@ -266,10 +266,10 @@ class Edited(object):
 
     def _setField(self, name, value):
         if ((name) == (u"user")):
-            (self).user = value
+            (self).user = _cast(value, lambda: slack.User)
 
         if ((name) == (u"timestamp")):
-            (self).timestamp = value
+            (self).timestamp = _cast(value, lambda: unicode)
 
 
 Edited.slack_event_Edited_ref = None

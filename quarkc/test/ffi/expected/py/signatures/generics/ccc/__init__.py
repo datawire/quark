@@ -10,7 +10,7 @@ class TLSContextInitializer(object):
     def __init__(self): self._init()
 
     def getValue(self):
-        return None
+        return _cast(None, lambda: Context)
 
     def _getClass(self):
         return u"generics.ccc.TLSContextInitializer"
@@ -30,11 +30,11 @@ class Context(object):
 
     @staticmethod
     def current():
-        return None
+        return _cast(None, lambda: Context)
 
     @staticmethod
     def global_():
-        return None
+        return _cast(None, lambda: Context)
 
     def _getClass(self):
         return u"generics.ccc.Context"
@@ -53,13 +53,13 @@ class Context(object):
 
     def _setField(self, name, value):
         if ((name) == (u"_global")):
-            Context._global = value
+            Context._global = _cast(value, lambda: Context)
 
         if ((name) == (u"_current")):
-            Context._current = value
+            Context._current = _cast(value, lambda: TLS)
 
         if ((name) == (u"parent")):
-            (self).parent = value
+            (self).parent = _cast(value, lambda: Context)
 
 
 Context._global = None
@@ -69,7 +69,7 @@ Context.generics_ccc_TLS_generics_ccc_Context__ref = None
 class TLSInitializer(object):
 
     def getValue(self):
-        assert False
+        raise NotImplementedError('`TLSInitializer.getValue` is an abstract method')
 
 TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = None
 class TLS(object):
@@ -80,7 +80,7 @@ class TLS(object):
         self._init()
 
     def getValue(self):
-        return None
+        return _cast(None, lambda: T)
 
     def _getClass(self):
         return u"generics.ccc.TLS<quark.Object>"
@@ -93,6 +93,6 @@ class TLS(object):
 
     def _setField(self, name, value):
         if ((name) == (u"_value")):
-            (self)._value = value
+            (self)._value = _cast(value, lambda: T)
 
 

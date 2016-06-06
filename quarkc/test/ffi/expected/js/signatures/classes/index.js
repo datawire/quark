@@ -21,12 +21,12 @@ function Overload__init_fields__() {
 Overload.prototype.__init_fields__ = Overload__init_fields__;
 Overload.classes_Overload_ref = null;
 function Overload___add__(o) {
-    return null;
+    return _qrt.cast(null, function () { return Overload; });
 }
 Overload.prototype.__add__ = Overload___add__;
 
 function Overload___mul__(o) {
-    return null;
+    return _qrt.cast(null, function () { return Overload; });
 }
 Overload.prototype.__mul__ = Overload___mul__;
 
@@ -48,7 +48,7 @@ Overload.prototype._getField = Overload__getField;
 
 function Overload__setField(name, value) {
     if (_qrt.equals((name), ("name"))) {
-        (this).name = value;
+        (this).name = _qrt.cast(value, function () { return String; });
     }
 }
 Overload.prototype._setField = Overload__setField;
@@ -118,7 +118,7 @@ function test_size__init_fields__() {
 test_size.prototype.__init_fields__ = test_size__init_fields__;
 test_size.classes_test_size_ref = null;
 function test_size_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_size; });
 }
 test_size.prototype.does = test_size_does;
 
@@ -137,7 +137,7 @@ test_size.prototype._getField = test_size__getField;
 
 function test_size__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
 }
 test_size.prototype._setField = test_size__setField;
@@ -158,12 +158,12 @@ function test_startsWith__init_fields__() {
 test_startsWith.prototype.__init_fields__ = test_startsWith__init_fields__;
 test_startsWith.classes_test_startsWith_ref = null;
 function test_startsWith_that(_that) {
-    return null;
+    return _qrt.cast(null, function () { return test_startsWith; });
 }
 test_startsWith.prototype.that = test_startsWith_that;
 
 function test_startsWith_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_startsWith; });
 }
 test_startsWith.prototype.does = test_startsWith_does;
 
@@ -185,10 +185,10 @@ test_startsWith.prototype._getField = test_startsWith__getField;
 
 function test_startsWith__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("_that"))) {
-        (this)._that = value;
+        (this)._that = _qrt.cast(value, function () { return String; });
     }
 }
 test_startsWith.prototype._setField = test_startsWith__setField;
@@ -209,12 +209,12 @@ function test_endsWith__init_fields__() {
 test_endsWith.prototype.__init_fields__ = test_endsWith__init_fields__;
 test_endsWith.classes_test_endsWith_ref = null;
 function test_endsWith_that(_that) {
-    return null;
+    return _qrt.cast(null, function () { return test_endsWith; });
 }
 test_endsWith.prototype.that = test_endsWith_that;
 
 function test_endsWith_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_endsWith; });
 }
 test_endsWith.prototype.does = test_endsWith_does;
 
@@ -236,10 +236,10 @@ test_endsWith.prototype._getField = test_endsWith__getField;
 
 function test_endsWith__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("_that"))) {
-        (this)._that = value;
+        (this)._that = _qrt.cast(value, function () { return String; });
     }
 }
 test_endsWith.prototype._setField = test_endsWith__setField;
@@ -260,12 +260,12 @@ function test_find__init_fields__() {
 test_find.prototype.__init_fields__ = test_find__init_fields__;
 test_find.classes_test_find_ref = null;
 function test_find_that(_that) {
-    return null;
+    return _qrt.cast(null, function () { return test_find; });
 }
 test_find.prototype.that = test_find_that;
 
 function test_find_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_find; });
 }
 test_find.prototype.does = test_find_does;
 
@@ -287,10 +287,10 @@ test_find.prototype._getField = test_find__getField;
 
 function test_find__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("_that"))) {
-        (this)._that = value;
+        (this)._that = _qrt.cast(value, function () { return String; });
     }
 }
 test_find.prototype._setField = test_find__setField;
@@ -312,12 +312,12 @@ function test_substring__init_fields__() {
 test_substring.prototype.__init_fields__ = test_substring__init_fields__;
 test_substring.classes_test_substring_ref = null;
 function test_substring_that(start, end) {
-    return null;
+    return _qrt.cast(null, function () { return test_substring; });
 }
 test_substring.prototype.that = test_substring_that;
 
 function test_substring_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_substring; });
 }
 test_substring.prototype.does = test_substring_does;
 
@@ -342,13 +342,13 @@ test_substring.prototype._getField = test_substring__getField;
 
 function test_substring__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("start"))) {
-        (this).start = value;
+        (this).start = _qrt.cast(value, function () { return Number; });
     }
     if (_qrt.equals((name), ("end"))) {
-        (this).end = value;
+        (this).end = _qrt.cast(value, function () { return Number; });
     }
 }
 test_substring.prototype._setField = test_substring__setField;
@@ -370,12 +370,12 @@ function test_replace__init_fields__() {
 test_replace.prototype.__init_fields__ = test_replace__init_fields__;
 test_replace.classes_test_replace_ref = null;
 function test_replace_that(start, end) {
-    return null;
+    return _qrt.cast(null, function () { return test_replace; });
 }
 test_replace.prototype.that = test_replace_that;
 
 function test_replace_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_replace; });
 }
 test_replace.prototype.does = test_replace_does;
 
@@ -400,13 +400,13 @@ test_replace.prototype._getField = test_replace__getField;
 
 function test_replace__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("start"))) {
-        (this).start = value;
+        (this).start = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("end"))) {
-        (this).end = value;
+        (this).end = _qrt.cast(value, function () { return String; });
     }
 }
 test_replace.prototype._setField = test_replace__setField;
@@ -429,17 +429,17 @@ function test_join__init_fields__() {
 test_join.prototype.__init_fields__ = test_join__init_fields__;
 test_join.classes_test_join_ref = null;
 function test_join_that() {
-    return null;
+    return _qrt.cast(null, function () { return test_join; });
 }
 test_join.prototype.that = test_join_that;
 
 function test_join_a(part) {
-    return null;
+    return _qrt.cast(null, function () { return test_join; });
 }
 test_join.prototype.a = test_join_a;
 
 function test_join_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_join; });
 }
 test_join.prototype.does = test_join_does;
 
@@ -467,16 +467,16 @@ test_join.prototype._getField = test_join__getField;
 
 function test_join__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("parts"))) {
-        (this).parts = value;
+        (this).parts = _qrt.cast(value, function () { return Array; });
     }
     if (_qrt.equals((name), ("strparts"))) {
-        (this).strparts = value;
+        (this).strparts = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("sep"))) {
-        (this).sep = value;
+        (this).sep = _qrt.cast(value, function () { return String; });
     }
 }
 test_join.prototype._setField = test_join__setField;
@@ -498,12 +498,12 @@ function test_split__init_fields__() {
 test_split.prototype.__init_fields__ = test_split__init_fields__;
 test_split.classes_test_split_ref = null;
 function test_split_that(what) {
-    return null;
+    return _qrt.cast(null, function () { return test_split; });
 }
 test_split.prototype.that = test_split_that;
 
 function test_split_does(expected) {
-    return null;
+    return _qrt.cast(null, function () { return test_split; });
 }
 test_split.prototype.does = test_split_does;
 
@@ -528,13 +528,13 @@ test_split.prototype._getField = test_split__getField;
 
 function test_split__setField(name, value) {
     if (_qrt.equals((name), ("what"))) {
-        (this).what = value;
+        (this).what = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("sep"))) {
-        (this).sep = value;
+        (this).sep = _qrt.cast(value, function () { return String; });
     }
     if (_qrt.equals((name), ("altsep"))) {
-        (this).altsep = value;
+        (this).altsep = _qrt.cast(value, function () { return String; });
     }
 }
 test_split.prototype._setField = test_split__setField;

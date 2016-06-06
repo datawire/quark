@@ -3,7 +3,7 @@
 import hello
 
 
-class HelloImpl(object):
+class HelloImpl(hello.Hello):
 
     def hello(self, request):
         res = hello.Response()

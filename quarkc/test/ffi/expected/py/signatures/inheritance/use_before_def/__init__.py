@@ -38,7 +38,7 @@ class Foo(object):
 
     def _setField(self, name, value):
         if ((name) == (u"name")):
-            (self).name = value
+            (self).name = _cast(value, lambda: unicode)
 
 
 Foo.inheritance_use_before_def_Foo_ref = None

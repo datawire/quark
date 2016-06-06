@@ -14,7 +14,7 @@ We expect you to have the following tools installed as prerequisites:
 
 If you haven't already done so, run the following command to install {{{product}}}:
 
-``pip install {{{main_module}}}``
+``curl -sL https://raw.githubusercontent.com/datawire/quark/master/install.sh | sh``
 
 You will also need to clone a local copy of the {{{product}}} examples repository. This tutorial will generally point to the remote GitHub repository when providing links to example files stored there, but you will need local copies to run the final stages of the tutorial. You can clone the repository using the following command:
 

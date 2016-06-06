@@ -3,8 +3,8 @@ from quark_runtime import *
 
 
 def atest():
-    return None
+    return _cast(None, lambda: unicode)
 
 
 def foo():
-    return None
+    return _cast(None, lambda: unicode)

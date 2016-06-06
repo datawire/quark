@@ -1,3 +1,4 @@
+quark *;
 class Pie {
     macro int slice() 3;
     void test() {

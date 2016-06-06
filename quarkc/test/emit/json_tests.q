@@ -1,3 +1,4 @@
+quark *;
 
 void test_roundtrip() {
     print(new JSONObject().setObject().toString().parseJSON().toString());
