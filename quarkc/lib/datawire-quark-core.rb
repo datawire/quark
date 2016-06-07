@@ -597,7 +597,8 @@ module DatawireQuarkCore
           uri = URI(url)
           req = Net::HTTPGenericRequest.new(request.getMethod.upcase, 1, 1, uri, headers)
           req.body = request.getBody
-          res = Net::HTTP.start(uri.host, uri.port) do | http |
+          res = Net::HTTP.start(uri.host, uri.port,
+                                :use_ssl => uri.scheme == 'https') do | http |
             http.request(req)
           end
           response = HTTP::Response.new
