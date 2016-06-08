@@ -17,8 +17,7 @@ from __future__ import absolute_import
 import os
 from collections import OrderedDict
 
-from .ast import Code
-from .helpers import doc_helper, indent
+from .helpers import doc_helper, indent, Code
 
 
 ## Packaging

@@ -17,8 +17,7 @@ from __future__ import absolute_import
 from collections import OrderedDict
 
 from .compiler import BUILTIN
-from .ast import Code
-from .helpers import doc_helper, indent
+from .helpers import doc_helper, indent, Code
 
 
 not_implemented_template = """\

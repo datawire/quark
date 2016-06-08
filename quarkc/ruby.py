@@ -17,8 +17,7 @@ from __future__ import absolute_import
 import itertools
 from collections import OrderedDict
 
-from .ast import Code
-from .helpers import indent, doc_helper
+from .helpers import indent, doc_helper, Code
 
 
 lower = lambda name: name[0].lower() + name[1:]
