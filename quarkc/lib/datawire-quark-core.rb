@@ -149,7 +149,7 @@ module DatawireQuarkCore
       result.value = File.read(path, {"encoding": "UTF-8"})
       result.finish(nil)
     rescue => ex
-      result.finish(ex.message)
+      result.finish(::Quark.quark.os.OSError.new(ex.message))
     end
   end
 
