@@ -2,6 +2,7 @@ import quark.test;
 
 
 void main(List<String> args) {
+    logging.makeConfig().setLevel("DEBUG").configure();
     test.run(args);
 }
 
@@ -137,7 +138,9 @@ class WSErrorTest {
     void testHttp404() { checkWSError("ws://httpstat.us/404"); }
     void testHttp500() { checkWSError("ws://httpstat.us/500"); }
     void testSillyPort() { checkWSError("ws://localhost:99/anybody/there/?"); }
-    void testSillyHost() { checkWSError("ws://10.255.255.1/anybody/there/?"); }
+    
+    // Disabled because it takes over 30 seconds to time out
+    //void testSillyHost() { checkWSError("ws://10.255.255.1/anybody/there/?"); }
 
     void checkWSError(String url) {
         if (isJavascript()) {
@@ -150,5 +153,38 @@ class WSErrorTest {
         (new concurrent.FutureWait()).wait(trace.fut, 90.0);
         check(trace.fut.isFinished(), "Timed out: " + trace.sequence());
         checkEqual("onWSInit, onWSError('...'), onWSFinal", trace.sequence());
+    }
+}
+
+class Echoer extends WSHandler {
+    String message = "Echo me!\n(\"specially\")";
+    void onWSConnected(WebSocket socket) {
+        socket.send(message);
+    }
+    void onWSMessage(WebSocket socket, String message) {
+        socket.close();
+    }
+}
+class WSEchoTest {
+
+    // TODO: Start carrying own web servers for the library tests
+    // void testWSLocalhost() {checkWSEcho("ws://localhost:8081/ws");}
+    // void testWSSLocalhost() {checkWSEcho("wss://localhost:8080/ws");}
+
+    void testWSWebsocketOrg() {checkWSEcho("ws://echo.websocket.org/");}
+    void testWSSWebsocketOrg() {checkWSEcho("wss://echo.websocket.org/");}
+
+    void checkWSEcho(String url) {
+        if (isJavascript()) {
+            print("This test cannot be run on javascript!");
+            check(true, "Ignored");
+            return;
+        }
+        Echoer echoer = new Echoer();
+        WSHandlerTrace trace = new WSHandlerTrace(echoer);
+        concurrent.Context.runtime().open(url, trace);
+        (new concurrent.FutureWait()).wait(trace.fut, 90.0);
+        check(trace.fut.isFinished(), "Timed out: " + trace.sequence());
+        checkEqual("onWSInit, onWSConnected, onWSMessage('"+echoer.message+"'), onWSClosed, onWSFinal", trace.sequence());
     }
 }
