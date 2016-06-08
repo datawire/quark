@@ -138,7 +138,7 @@ class WSErrorTest {
     void testHttp404() { checkWSError("ws://httpstat.us/404"); }
     void testHttp500() { checkWSError("ws://httpstat.us/500"); }
     void testSillyPort() { checkWSError("ws://localhost:99/anybody/there/?"); }
-    
+
     // Disabled because it takes over 30 seconds to time out
     //void testSillyHost() { checkWSError("ws://10.255.255.1/anybody/there/?"); }
 
