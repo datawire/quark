@@ -729,7 +729,13 @@ module DatawireQuarkCore
       begin
         uri = URI(url)
         port = uri.port || (uri.scheme == "ws" ? 80 : 443)
-        @socket = Celluloid::IO::TCPSocket.new(uri.host, port)
+        tcp = Celluloid::IO::TCPSocket.new(uri.host, port)
+        if uri.scheme == "wss"
+          @socket = Celluloid::IO::SSLSocket.new(tcp)
+          @socket.connect
+        else
+          @socket = tcp
+        end
         @client.start
       rescue ::Exception => err
         @issues.emit(:start_failed, err)
