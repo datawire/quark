@@ -291,10 +291,12 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     public void request(final HTTPRequest request, HTTPHandler handler) {
         final HTTPHandler ht_handler = wrap(handler);
         final URI uri;
+        ht_handler.onHTTPInit(request);
         try {
             uri = new URI(request.getUrl());
         } catch (URISyntaxException e) {
             ht_handler.onHTTPError(request, new HTTPError("" + e));
+            ht_handler.onHTTPFinal(request);
             return;
         }
         String scheme = uri.getScheme() == null? "http" : uri.getScheme();
@@ -311,6 +313,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
             System.err.println("Only HTTP(S) is supported.");
             ht_handler.onHTTPError(request, new HTTPError("Only HTTP(S) is supported."));
+            ht_handler.onHTTPFinal(request);
             return;
         }
 
@@ -323,6 +326,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                         .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             } catch (SSLException e) {
                 ht_handler.onHTTPError(null, new HTTPError("" + e));
+                ht_handler.onHTTPFinal(request);
                 return;
             }
         } else {

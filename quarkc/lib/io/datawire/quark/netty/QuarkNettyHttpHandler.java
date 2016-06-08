@@ -23,7 +23,6 @@ public class QuarkNettyHttpHandler extends SimpleChannelInboundHandler<Object> {
             HTTPHandler handler) {
         this.request = request;
         this.handler = handler;
-        handler.onHTTPInit(request);
     }
 
     @Override

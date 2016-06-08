@@ -105,7 +105,7 @@ class HTTPErrorTest {
     void testSillyPortHTTP() { checkHTTPError("http://localhost:99/anybody/there/?"); }
     void testSillyPortHTTPS() { checkHTTPError("https://localhost:99/anybody/there/?"); }
 
-    void testGarbageUrl() { checkHTTPError("///////"); }
+    void testGarbageUrl() { checkHTTPError("///////%"); }
 
     void checkHTTPError(String url) {
         if (isJavascript()) {
