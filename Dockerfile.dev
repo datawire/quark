@@ -27,6 +27,8 @@ RUN chmod +x /tmp/_in-docker.sh
 # We're using Ubuntu 16.04 where Ruby 2.3's gem is called gem2.3, so make an alias:
 RUN echo "#!/bin/bash\ngem2.3 \"\$@\"" > /usr/bin/gem
 RUN chmod +x /usr/bin/gem
+RUN echo "#!/bin/bash\nruby2.3 \"\$@\"" > /usr/bin/ruby
+RUN chmod +x /usr/bin/ruby
 
 # Run as user that owns the files:
 ARG userid
