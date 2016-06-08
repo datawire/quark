@@ -2,9 +2,20 @@ quark *;
 namespace quark {
 namespace spi_api_tracing {
 
-    String quote(String str) { return str; }
+    String quote(String str) {
+        if (str.find("\\") >= 0) {
+            str = "\\\\".join(str.split("\\"));
+        }
+        if (str.find("\n") >= 0) {
+            str = "\\n".join(str.split("\n"));
+        }
+        if (str.find("\"") >= 0) {
+            str = "\\\"".join(str.split("\""));
+        }
+        return "\"" + str + "\"";
+    }
     String quote_error(Error error) {
-        return error.getClass().getName() + "('" + error.getMessage() + "')";
+        return error.getClass().getName() + "(" + quote(error.getMessage()) + ")";
     }
 
     class Identificator {
@@ -246,7 +257,7 @@ namespace spi_api_tracing {
         void onWSError(WebSocket socket, WSError error) {
             WebSocketProxy wrapped_socket = _wrap_socket(socket);
             self.log.debug(self.id + ".onWSError("
-                           + wrapped_socket.id
+                           + wrapped_socket.id + ", "
                            + quote_error(error)
                            + ")");
             handler_impl.onWSError(wrapped_socket, error);
