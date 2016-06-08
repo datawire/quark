@@ -20,7 +20,7 @@ import threading
 import base64
 import traceback
 
-from .quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
+from quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
