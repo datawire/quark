@@ -32,6 +32,7 @@ Latest
 
 * Quark String objects have `toUpper()` and `toLower()` methods.
 
+* Ruby backend handles HTTPS and WSS client requests
 
 ### Other
 
