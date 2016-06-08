@@ -108,7 +108,7 @@
                 });
 
                 this.socket.on("error", function (error) {
-                    handler.onWSError(self, new quark.quark.WSError(error));
+                    handler.onWSError(self, new quark.quark.WSError(error.toString()));
                     self.socket.terminate();
                     handler.onWSFinal(self);
                 });
@@ -254,7 +254,7 @@
                         // Not so good.
                         // console.log("error (1)", error);
 
-                        handler.onHTTPError(qReq, new quark.quark.HTTPError(error));
+                        handler.onHTTPError(qReq, new quark.quark.HTTPError(error.toString()));
                         this.abort();
                         handler.onHTTPFinal(qReq);
                     }
@@ -490,7 +490,7 @@
             servlet.onServletInit(url, self.runtime);
         });
         this.server.on("error", function(error) {
-            servlet.onServletError(URL.format(uri), new quark.quark.ServletError(error.message));
+            servlet.onServletError(URL.format(uri), new quark.quark.ServletError(error.message.toString()));
         });
     };
 
