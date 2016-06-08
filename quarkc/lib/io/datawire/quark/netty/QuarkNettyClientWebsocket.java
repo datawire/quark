@@ -30,11 +30,41 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
         }
     };
 
+    private class Lifecycle implements ChannelFutureListener {
+        private boolean _connected = false;
+        Lifecycle() {
+            handler.onWSInit(webSocket);
+        }
+
+        void connected() {
+            _connected = true;
+            handler.onWSConnected(webSocket);
+        }
+
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+            if (future.isDone()) {
+                if (_connected) {
+                    handler.onWSClosed(webSocket);
+                }
+                if (!future.isSuccess()) {
+                    handler.onWSError(webSocket, new quark.WSError(future.cause().toString()));
+                }
+                handler.onWSFinal(webSocket);
+            }
+        }
+    }
+    Lifecycle lifecycle;
 
     public QuarkNettyClientWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
         this.handshaker = handshaker;
         this.handler = handler;
         this.ch = null;
+    }
+
+    void  startWSHandlerLifecycle(Channel ch) {
+        lifecycle = new Lifecycle();
+        ch.closeFuture().addListener(lifecycle);
     }
 
     @Override
@@ -54,22 +84,8 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
                 ctx.channel().close();
                 return;
             }
-            System.out.println("WebSocket Client connected!");
             this.ch = ch;
-            ch.closeFuture().addListener(new ChannelFutureListener() {
-                @Override
-                public void operationComplete(ChannelFuture future) throws Exception {
-                    if (future.isDone()) {
-                        if (future.isSuccess()) {
-                            handler.onWSClosed(getWebSocket());
-                        } else {
-                            handler.onWSError(getWebSocket(), new quark.WSError(future.cause().toString()));
-                        }
-                    }
-                }
-            });
-
-            this.handler.onWSConnected(webSocket);
+            lifecycle.connected();
             return;
         }
 

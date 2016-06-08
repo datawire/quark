@@ -240,8 +240,6 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                                 uri, WebSocketVersion.V13, null, false, new DefaultHttpHeaders()),
                                 ws_handler);
 
-        ws_handler.onWSInit(ws.getWebSocket());
-
         Bootstrap b = new Bootstrap();
         b.group(group)
         .channel(NioSocketChannel.class)
@@ -257,15 +255,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                         new HttpClientCodec(),
                         new HttpObjectAggregator(8192),
                         ws);
-                ch.closeFuture().addListener(new ChannelFutureListener() {
 
-                    @Override
-                    public void operationComplete(ChannelFuture future) throws Exception {
-                        if (future.isDone()) {
-                            ws_handler.onWSFinal(ws.getWebSocket());
-                        }
-                    }
-                });
+                ws.startWSHandlerLifecycle(ch);
             }
         });
         ChannelFuture connecting = b.connect(uri.getHost(), port);
