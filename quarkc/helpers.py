@@ -199,7 +199,6 @@ def filebase(name):
     return os.path.splitext(os.path.basename(name))[0]
 
 def namever(obj):
-    root = obj.root
     for file in obj.root.files:
         if file.dist: return file.dist.name.text, file.dist.version
     if isinstance(obj, File):

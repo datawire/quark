@@ -18,6 +18,7 @@ from collections import namedtuple
 from struct import Struct
 import threading
 import base64
+import traceback
 
 from .quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
 
@@ -474,7 +475,7 @@ class _Lock(object):
         import logging
         log = logging.getLogger(__name__)
         log.critical("msg",
-            exc_info=(Error, Error(repr(self._lock)),
+            exc_info=(Exception, Exception(repr(self._lock)),
                 traceback.extract_stack()))
 
 class _Condition(_Lock):

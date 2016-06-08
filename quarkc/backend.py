@@ -443,7 +443,6 @@ class Backend(object):
             path = []
             name = self.expr(mapping.arguments[0])
         else:
-            pkg = self.package(cls)
             path = self.add_import(cls)
             name = self.name(cls.name)
 
@@ -794,7 +793,7 @@ class JavaScript(Backend):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
             return json.loads(output)["dependencies"][name]["path"]
-        except shell.ShellError, e:
+        except shell.ShellError:
             pass
         return None
 
@@ -819,7 +818,7 @@ class Ruby(Backend):
         try:
             output = shell.call("gem", "which", name, stage="install", errok=True)
             return output.strip()
-        except shell.ShellError, e:
+        except shell.ShellError:
             pass
         return None
 
