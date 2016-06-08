@@ -12,13 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, ruby, tempfile, logging, inspect
+from __future__ import absolute_import
+
+import os, types, tempfile, logging, inspect
+import json
 from collections import OrderedDict
-from .ast import *
+
+from . import java, python, javascript, ruby, shell
+from .ast import (
+    Method, Class, Function, Package, File, Dependency, Interface, Primitive,
+    Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
+    Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
+    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Param, Declaration, Super, Expression,
+)
 from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
-from .dispatch import *
-from .helpers import *
-from .environment import Environment
+from .dispatch import overload
+from .helpers import (
+    is_meta, has_super, compiled_quark, is_newer, namever, mdroot, readme,
+    base_type, get_defaulted_methods, is_abstract, base_constructors, doc,
+    get_field, constructors,
+)
 
 class Backend(object):
 
@@ -706,8 +720,6 @@ class Backend(object):
             return self.expr(expr)
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
-
-import shell, os, sys, subprocess, json
 
 def is_virtual():
     output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')
