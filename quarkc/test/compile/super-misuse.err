@@ -1,3 +1,3 @@
-super-misuse.q:8:27: super can only be used for constructor or method invocation
-super-misuse.q:9:12: super can only be used for constructor or method invocation
-super-misuse.q:10:16: super can only be used for constructor or method invocation
+super-misuse.q:9:27: super can only be used for constructor or method invocation
+super-misuse.q:10:12: super can only be used for constructor or method invocation
+super-misuse.q:11:16: super can only be used for constructor or method invocation

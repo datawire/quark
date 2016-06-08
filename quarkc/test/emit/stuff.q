@@ -1,3 +1,4 @@
+quark *;
 class Test {
     Test foo(Test t) {
          return Test();

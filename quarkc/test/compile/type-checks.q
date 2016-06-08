@@ -1,3 +1,4 @@
+quark *;
 class C {
     C(int x, float f, String s) {}
 }

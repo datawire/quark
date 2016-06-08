@@ -1,3 +1,4 @@
+quark *;
 class Foo {
     static int count = 0;
 

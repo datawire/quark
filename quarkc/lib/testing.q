@@ -1,3 +1,4 @@
+quark *;
 import quark.reflect;
 import quark.concurrent;
 
@@ -208,7 +209,7 @@ class Harness {
             idx = idx + 1;
         }
         int passed = tests.size() - failures;
-            
+
         print(bold("=============================== stopping tests ==============================="));
         String result = "Total: " + (tests.size() + filtered).toString() +
             ", Filtered: " + filtered.toString() +

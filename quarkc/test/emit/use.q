@@ -1,3 +1,4 @@
+quark *;
 use lib/test.q;
 import testlib;
 import testlib.foo as bar;

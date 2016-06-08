@@ -6,12 +6,21 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Language
+
+* (!) Quark files now require compiler version declaration, e.g.
+  `quark 0.7.0;`. Compiler will decide if it is compatible with the source
+  file based on the rules of [semantic versioning](http://semver.org).
+  Programs missing this declaration are rejected.
+
 ### Standard Library
 
 * Quark String objects have `toUpper()` and `toLower()` methods.
 
 
 ### Other
+
+* Quark compiler generates an error when a type parameter is missing
 
 * Internal compile errors now report which part of the source file
   confused the compiler

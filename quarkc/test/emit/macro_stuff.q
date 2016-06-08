@@ -1,3 +1,4 @@
+quark *;
 class Macro {
     macro Macro me() self;
     macro Macro first(Macro o) self;

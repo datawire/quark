@@ -1,5 +1,6 @@
 
 
+quark *;
 package foo {
     void f(int a, int b, int c, int d) {
         ((((((((((((x).__mul__)(a)).__mul__)(b)).__mul__)(c)).__add__)(b)).__add__)(((c).__mul__)(d))).__le__)(t);

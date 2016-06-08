@@ -168,10 +168,12 @@ def main(args):
             if args["install"]: shell.check("mvn")
             backends.append(backend.Java)
         if ruby or all:
+            if args["install"]: shell.check("gem")
             backends.append(backend.Ruby)
         if python or all:
             if args["install"]:
                 shell.check("python")
+                shell.check("pip")
             backends.append(backend.Python)
         if javascript or all:
             if args["install"]: shell.check("npm")
@@ -189,9 +191,9 @@ def main(args):
                 compiler.make_docs(url, output)
             else:
                 assert False
-    except compiler.QuarkError as err:
+    except (KeyboardInterrupt, compiler.QuarkError) as err:
         if not args["run"]:
-            shell.command_log.warn("")
+            shell.command_log.error("")
         return err
     except:
         if do_log:

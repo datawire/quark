@@ -1,3 +1,4 @@
+quark *;
 class Test {
     int foo() { return 3; }
 }

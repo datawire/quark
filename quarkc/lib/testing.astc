@@ -1,5 +1,5 @@
-File(Import(Name(quark)), Import(Name(quark), Name(reflect)),
- Import(Name(quark), Name(concurrent)),
+File(Import(Name(quark)), CompilerVersionSpec(), Import(Name(quark),
+  Name(reflect)), Import(Name(quark), Name(concurrent)),
 
  Package(Name(quark),
 

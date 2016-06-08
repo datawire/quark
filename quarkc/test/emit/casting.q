@@ -1,3 +1,4 @@
+quark *;
 class Box<T> {
     T contents;
 

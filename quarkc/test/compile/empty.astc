@@ -1,2 +1,2 @@
-File(Use(url=quark.q), Import(Name(quark))
+File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec()
 )

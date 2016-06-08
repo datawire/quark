@@ -1,3 +1,4 @@
+quark *;
 class Outliner {
     static String SPACES = "                                              ";
     String ind = "";

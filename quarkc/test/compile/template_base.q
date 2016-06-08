@@ -1,4 +1,5 @@
-// xfail this file dies with 
+quark *;
+// xfail this file dies with
 // AttributeError: 'TypeParam' object has no attribute 'bases'
 class Base<T> extends T {
     T impl;

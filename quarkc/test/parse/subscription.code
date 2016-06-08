@@ -1,5 +1,6 @@
 
 
+quark *;
 package subscription {
     void test() {
         ((x).__set__)(0, 0);

@@ -1,3 +1,4 @@
+quark *;
 class Matrix<T> {
 
 	int width;

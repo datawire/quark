@@ -1,4 +1,4 @@
-File(Import(Name(quark)),
+File(Import(Name(quark)), CompilerVersionSpec(),
  Include(url=io/datawire/quark/runtime/JSONObject.java),
 
  Package(Name(quark),

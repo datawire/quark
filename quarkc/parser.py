@@ -11,10 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+import re
 
 from .ast import *
 from grammar import ParseError
 import grammar
+
 
 g = grammar.Grammar()
 
@@ -29,13 +31,21 @@ def right_associative_infix_rule(grammar_rule):
     return g.rule(grammar_rule)(semantic_action)
 
 
+re_strict_compiler_version_spec = '^(.+\n)?quark (.+?)(;|\n|\r\n)'
+
+
+def parse_strict_compiler_version_spec(source):
+    match = re.match(re_strict_compiler_version_spec, source)
+    return match.group(2) if match else None
+
+
 @g.parser
 class Parser:
 
     keywords = ["package", "use", "include", "import", "as", "namespace",
                 "class", "interface", "primitive", "extends", "return",
                 "macro", "new", "null", "if", "else", "while", "super",
-                "true", "false", "break", "continue", "static"]
+                "true", "false", "break", "continue", "static", "quark"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -95,13 +105,36 @@ class Parser:
         "~": "__bitwise_not__",
     }
 
-    @g.rule('file = toplevel* _ ~"$"')
-    def visit_file(self, node, (toplevels, _, eof)):
+    @g.rule('file = strict_compiler_version_spec? toplevel* _ ~"$"')
+    def visit_file(self, node,
+                   (strict_compiler_version_spec, toplevels, _, eof)):
+        toplevels = strict_compiler_version_spec + toplevels
         return File(self._filename, toplevels)
 
-    @g.rule('toplevel = dist_unit / dependency / use / include / import / file_definition')
+    @g.rule(r'strict_compiler_version_spec = ~%r' %
+            re_strict_compiler_version_spec)
+    def visit_strict_compiler_version_spec(self, node, _):
+        # Guarantees to match, since the parser just succedded on the same re.
+        spec_string = parse_strict_compiler_version_spec(node.text)
+        return CompilerVersionSpec(spec_string, strict=True)
+
+    @g.rule('''
+        toplevel = relaxed_compiler_version_declaration
+                 / dist_unit
+                 / dependency
+                 / use
+                 / include
+                 / import
+                 / file_definition
+    ''')
     def visit_toplevel(self, node, (top,)):
         return top
+
+    @g.rule('relaxed_compiler_version_declaration = QUARK url SEMI')
+    def visit_relaxed_compiler_version_declaration(self, node,
+                                                   (_, spec_string, __)):
+        """Relaxed quark version declaration for better error reporting."""
+        return CompilerVersionSpec(spec_string, strict=False)
 
     @g.rule('dist_unit = PACKAGE name version SEMI')
     def visit_dist_unit(self, node, (p, name, version, s)):

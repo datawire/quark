@@ -1,3 +1,4 @@
+quark *;
 macro int pi() 3;
 
 void test() {

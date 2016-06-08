@@ -1,3 +1,5 @@
+quark *;
+
 import quark.test;
 
 void main(List<String> args) {

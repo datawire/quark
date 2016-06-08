@@ -1,3 +1,4 @@
+quark *;
 include io/datawire/quark/runtime/QObject.java;
 include io/datawire/quark/runtime/Buffer.java;
 include io/datawire/quark/runtime/BufferImpl.java;

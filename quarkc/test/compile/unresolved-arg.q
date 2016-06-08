@@ -1,3 +1,4 @@
+quark *;
 class Bar {}
 
 class Foo {

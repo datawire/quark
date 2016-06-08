@@ -1,3 +1,4 @@
+quark *;
 void foo(String s) {
     print(s);
 }

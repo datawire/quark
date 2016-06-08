@@ -1,3 +1,4 @@
+quark *;
 class C {
     C() {
         super("asdf");

@@ -1,1 +1,1 @@
-import-nonexistent.q:1:1: unresolved variable: nonexistent
+import-nonexistent.q:1:8: unresolved variable: nonexistent

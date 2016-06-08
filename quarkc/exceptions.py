@@ -12,6 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-class QuarkError(Exception): pass
+class QuarkError(Exception):
+    @classmethod
+    def raise_if_any(cls, iterable_of_errors):
+        errors = list(iterable_of_errors)
+        if errors:
+            raise cls('\n'.join(errors))
+
 class ParseError(QuarkError): pass
 class CompileError(QuarkError): pass

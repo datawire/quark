@@ -1,3 +1,4 @@
+quark *;
 package fallback 1.2.3;
 import quark.concurrent;
 
