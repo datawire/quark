@@ -11,14 +11,24 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from __future__ import absolute_import
+
 import re
 
-from .ast import *
-from grammar import ParseError
-import grammar
+from .ast import (
+    Method, Class, Function, Package, File, Dependency, Interface, Primitive,
+    Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
+    Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
+    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Param, Declaration, Super, Name, CompilerVersionSpec, Annotation,
+    Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
+    ConstructorMacro,
+)
+from .grammar import Grammar
 
 
-g = grammar.Grammar()
+g = Grammar()
 
 
 def right_associative_infix_rule(grammar_rule):
@@ -28,7 +38,7 @@ def right_associative_infix_rule(grammar_rule):
             op, rhs = remaining.pop(0)
             result = Call(Attr(result, Name(self.aliases[op])), [rhs])
         return result
-    return g.rule(grammar_rule)(semantic_action)
+    return g.rule(grammar_rule)(semantic_action)  # noqa
 
 
 re_strict_compiler_version_spec = '^(.+\n)?quark (.+?)(;|\n|\r\n)'

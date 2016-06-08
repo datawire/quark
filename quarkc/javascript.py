@@ -12,10 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os
+from __future__ import absolute_import
+
 from collections import OrderedDict
+
 from .compiler import BUILTIN
-from .helpers import *
+from .ast import Code
+from .helpers import doc_helper, indent
+
 
 not_implemented_template = """\
 throw TypeError, '`{clazz}.{name}` is an abstract method';""".format
