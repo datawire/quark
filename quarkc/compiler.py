@@ -958,10 +958,8 @@ class Reflector:
             qual = self.qual(cls)
             if cls.parameters:
                 clsid = qual + "<%s>" % ",".join([OBJECT]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"%s"' % OBJECT]*len(cls.parameters))
             else:
                 clsid = qual
-                params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
 
