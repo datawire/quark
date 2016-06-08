@@ -17,6 +17,11 @@ from __future__ import absolute_import
 import os, sys, urllib, logging, cPickle as pickle, shutil
 from collections import OrderedDict
 
+try:  # py3
+    from shlex import quote as sh_quote
+except ImportError:  # py2
+    from pipes import quote as sh_quote
+
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Interface,
@@ -32,7 +37,7 @@ from .dispatch import overload
 from .helpers import (
     code, lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
     is_abstract, constructor, base_type, base_constructors, has_super, has_return,
-    is_newer, compiled_quark, namever, copy, mdroot, sh_quote,
+    is_newer, compiled_quark, namever, copy, mdroot,
 )
 from .environment import Environment
 from . import docmaker
