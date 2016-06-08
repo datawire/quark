@@ -128,6 +128,8 @@ class _QuarkRequest(object):
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError as exc:
             self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc.reason))), {}))
+        except Exception as exc:
+            self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc))), {}))
         else:
             response = _HTTPResponse()
             response.setCode(handle.getcode())
