@@ -146,4 +146,54 @@ namespace promises {
         }
     }
 
+    class _HTTPHandler extends HTTPHandler {
+        Deferred result;
+
+        HTTPHandler() {
+            self.result = new Deferred();
+        }
+
+        void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
+            self._result.resolve(response);
+        }
+
+        void onHTTPError(HTTPRequest request, HTTPError error) {
+            self._result.reject(error);
+        }
+    }
+
+    class IO {
+        @doc("Return a Promise that will get a HTTPResponse value or HTTPError")
+        static Promise httpRequest(Runtime runtime, HTTPRequest request) {
+            handler = new _HTTPHandler();
+            runtime.request(request, handler);
+            return handler.result.promise;
+        }
+
+        // Likewise have similar methods for WebSocket connect. Note that
+        // promises don't work really well for streaming results, so WebSocket
+        // messages would ahve to be handled by a different API... say a
+        // SimplerWSHandler that only has onWSMessage.
+        // @doc("Return a Promise that will get a WebSocket when connected.")
+        // static Promise wsOpen(Runtime runtime, String wsurl, SimplerWSHandler handler);
+    }
+
+    class Example {
+        Promise getWithDefault(Runtime runtime, String defaultResult) {
+            List<Object> default = [];
+            default.add(defaultResult);
+            return IO.httpRequest(runtime, new HTTPRequest()
+                                  ).then(reflect.bind(self, "_handleResponse"), []
+                                  ).catch(HTTPError, reflect.bind(self, "_handleError"), default);
+        }
+
+        String _handleResponse(HTTPResponse response) {
+            return response.text;
+        }
+
+        String _handleError(HTTPError error, String default) {
+            log(error);
+            return default;
+        }
+    }
 }}
