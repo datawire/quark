@@ -49,6 +49,26 @@ namespace promises {
         }
     }
 
+    class PromiseValue {
+        Object successResult;
+        error.Error failureResult;
+        boolean _hasResult;
+
+        boolean isError() {
+            return self.failureResult != null;
+        }
+
+        boolean isAvailable() {
+            return self.hasResult;
+        }
+
+        PromiseValue(Object successResult, error.Error failureResult, boolean hasResult) {
+            self.successResult = successResult;
+            self.failureResult = failureResult;
+            self.hasResult = hasResult;
+        }
+    }
+
     class Promise {
         Object _successResult;
         error.Error _failureResult;
@@ -128,6 +148,17 @@ namespace promises {
             self._maybeRunCallbacks();
             return result;
         }
+
+        PromiseValue value() {
+            return PromiseValue(self._successResult, self._failureResult,
+                                self._hasResult);
+        }
+
+        @doc("Wait until timeout is hit or Promise gets a value. Note that this can block, unlike other Promise methods.")
+        PromiseValue waitFor(float timeout) {
+            // XXX Sleep until timeout is hit or _reject/_resolve are called, then:
+            return self.value();
+        }
     }
 
     class Deferred {
@@ -178,11 +209,13 @@ namespace promises {
         // static Promise wsOpen(Runtime runtime, String wsurl, SimplerWSHandler handler);
     }
 
+
+    // This is just a very sketchy example of using the above:
     class Example {
-        Promise getWithDefault(Runtime runtime, String defaultResult) {
+        Promise getWithDefault(Runtime runtime, String url, String defaultResult) {
             List<Object> default = [];
             default.add(defaultResult);
-            return IO.httpRequest(runtime, new HTTPRequest()
+            return IO.httpRequest(runtime, new HTTPRequest(url)
                                   ).then(reflect.bind(self, "_handleResponse"), []
                                   ).catch(HTTPError, reflect.bind(self, "_handleError"), default);
         }
