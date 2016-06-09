@@ -58,6 +58,7 @@ namespace slack {
 
         void onWSConnected(WebSocket socket) {
             self.socket = socket;
+            print("WebSocket Client connected!");
         }
 
         void onWSClose(WebSocket socket) {
