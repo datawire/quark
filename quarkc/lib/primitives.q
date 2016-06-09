@@ -395,4 +395,9 @@ namespace quark {
         macro JSONObject toJSON() quark.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
     }
+
+    @doc("A callable that takes arguments, returns result.")
+    interface Callable {
+      Object invoke(List<Object> args);
+    }
 }

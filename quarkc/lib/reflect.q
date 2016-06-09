@@ -12,6 +12,7 @@ namespace reflect {
         static Class LONG = new Class("quark.long");
         static Class FLOAT = new Class("quark.float");
         static Class STRING = new Class("quark.String");
+        static Class ERROR = new Class("quark.error.Error");
 
         static Class get(String id) {
             if (!classes.contains(id)) {
@@ -134,4 +135,20 @@ namespace reflect {
         Object invoke(Object object, List<Object> args);
     }
 
+    @doc("A method that is bound to a particular instance.")
+    class BoundMethod extends Callable {
+        Object _target;
+        Method _method;
+
+        BoundMethod(Object target, String methodName) {
+            self._target = target;
+            self._method = target.getClass().getMethod(methodName);
+        }
+
+        Object invoke(List<Object> args) {
+            return self._method.invoke(self._target, args);
+        }
+    }
+
+    macro BoundMethod bind(Object target, String method) (new BoundMethod((target), (method)));
 }}
