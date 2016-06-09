@@ -41,8 +41,8 @@ ruby --version 2>&1 | grep -Fe 'ruby 2.3.'
 mvn --version
 mvn --version 2>&1 | grep -Fe 'Apache Maven 3.'
 
-if flake8 quarkc; then
-    echo pyflakes passed
+if flake8 $TEST_SUITE; then
+    echo flake8 passed
 else
     exit 1
 fi
