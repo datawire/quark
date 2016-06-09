@@ -172,10 +172,9 @@ class _QuarkWSMixin(object):
             self.runtime.events.put((self.handler.onWSBinary, (self.ws, Buffer(message.data)), {}))
 
     def closed(self, code, reason=None):
-        if code == 1000:
+        if code in (1000, 1006):
             self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
-            self.runtime.log.debug("websocket closed with error %s %s" % (code, reason))
             self.runtime.events.put((self.handler.onWSError, (self.ws, quark.WSError("%s %s" % (code, reason))), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
         self.ws.ws = None
