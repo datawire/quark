@@ -48,7 +48,7 @@ def check_file(path, content):
     try:
         with open(path) as fd:
             expected = fd.read()
-    except IOError, e:
+    except IOError:
         expected = None
     if expected != content:
         dir = os.path.dirname(path)

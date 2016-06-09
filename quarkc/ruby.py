@@ -12,12 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import absolute_import
+
 import itertools
 from collections import OrderedDict
-from .helpers import *
+
+from .helpers import indent, doc_helper, Code
+
 
 lower = lambda name: name[0].lower() + name[1:]
 upper = lambda name: name[0].upper() + name[1:]
+
 
 class Templates:
 

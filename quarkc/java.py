@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import absolute_import
+
 import os
-from .ast import *
-from .compiler import TypeExpr
-from .dispatch import overload
-from .helpers import *
 from collections import OrderedDict
+
+from .helpers import indent, doc_helper, Code
+
 
 ## Packaging
 
