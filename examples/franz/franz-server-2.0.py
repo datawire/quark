@@ -38,7 +38,7 @@ def push(topic, value):
     global event
     event.set()
     event = gevent.event.Event()
-    return lastIdx()
+    return str(len(data) - 1)
 
 
 @app.route("/v2/fetch/<topic>/<idx>")
