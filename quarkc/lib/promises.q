@@ -8,7 +8,7 @@ namespace promises {
 
         _Callback(Callable callable, Promise<Object> next, List<Object> extraArgs) {
             self._callable = callable;
-            self._next = new Promise();
+            self._next = next;
             self._extraArgs = extraArgs;
         }
 
@@ -21,6 +21,12 @@ namespace promises {
             } else {
                 self.next._resolve(result);
             }
+        }
+    }
+
+    class _Passthrough extends Callable {
+        Object invoke(List<Object> args) {
+            return args[0];
         }
     }
 
@@ -98,21 +104,29 @@ namespace promises {
         }
 
         Promise then(Callable callable, List<Object> moreArgs) {
-            self._successCallbacks.add(new _Callback(callable), moreArgs);
+            Promise result = new Promise();
+            self._successCallbacks.add(new _Callback(callable, result, moreArgs));
+            self._failureCallbacks.add(new _Callback(new _Passthrough(), result, []));
             self._maybeRunCallbacks();
+            return result;
         }
 
         Promise catch(reflect.Class errorClass, Callable callable, List<Object> moreArgs) {
-            _Callable callback = new _Callback(new _CallIfIsInstance(callable, errorClass));
-            self._failureCallbacks.add(callback, moreArgs);
+            Promise result = new Promise();
+            _Callable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result, moreArgs);
+            self._failureCallbacks.add(callback);
+            self._successCallbacks.add(new _Callback(new _Passthrough(), result, []));
             self._maybeRunCallbacks();
+            return result;
         }
 
         Promise finally(Callable callback, List<Object> moreArgs) {
-            _Callback callback = new _Callback(callable);
-            self._successCallbacks.add(callback, moreArgs);
-            self._failureCallbacks.add(callback, moreArgs);
+            Promise result = new Promise();
+            _Callback callback = new _Callback(callable, result, moreArgs);
+            self._successCallbacks.add(callback);
+            self._failureCallbacks.add(callback);
             self._maybeRunCallbacks();
+            return result;
         }
     }
 
