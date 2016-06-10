@@ -147,7 +147,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep, cache={}):
+def import_(path, origin, dep):
     if dep is None:
         # common 'directories'
         common = len(tuple(itertools.takewhile(
