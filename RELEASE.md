@@ -101,21 +101,24 @@ The release procedure can be retried at this point.
 
 when push suceeds the `release-in-progress` branch is deleted automatically
 
-## Publish of the Release Artefacts ##
+## Publish the Release Artefacts ##
 
-Publishing release artefacts requires write permission to pypi.
+Publishing release artefacts requires write permission to PyPI (the
+datawire-quark package) and DockerHub (the datawire organization).
 
 Currently publishing of the release artefacts is not automated beyond
 the following:
 
     $ git checkout master
     $ git pull
+    $ quark_release build-docker-images
     $ quark_release push-docs
     $ quark_release push-pkgs
+    $ quark_release push-docker-images
 
 # Required software #
 
-Tools required are `pip`, `twine`, and a not totally ancient `git`
+Tools required are `docker`, `pip`, `twine`, and a not totally ancient `git`
 
     $ pip install sphinx-better-theme wheel twine
 
