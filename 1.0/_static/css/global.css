@@ -1,0 +1,50 @@
+html {
+  box-sizing: border-box;
+}
+
+/* Set box-sizing globally to handle padding and border widths */
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  -ms-interpolation-mode: bicubic;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+pre {
+    margin: 0;
+    background: #fff;
+    font-size: 0.8rem;
+}
+
+tt, code {
+    padding: 0.1rem 0.5rem;
+    font-size: 0.8rem;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    color: #e94c38;
+}
+
+ul {
+  margin-left: 30px;
+}
+
+.is-visible {
+  display: block !important;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+.group:after {
+  content: "";
+  display: table;
+  clear: both;
+}
