@@ -5,9 +5,11 @@ FROM quark-base
 # in the current checkout.  Typically this Dockerfile should be used
 # via with-docker.py
 
+RUN /tmp/install-alpine.sh
+
 # Copy over files we need:
 COPY requirements.txt /tmp
-COPY scripts/_in-docker.sh /tmp
+COPY scripts/docker/_in-docker.sh /tmp
 RUN chmod +x /tmp/_in-docker.sh
 
 # Run as user that owns the files:

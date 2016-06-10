@@ -1,20 +1,19 @@
 # Use Dockerfile.base for this:
 FROM quark-base
 
-# Add pip:
-RUN apt-get install -y python-pip
-
 # Install user-specific packages:
 RUN mkdir /tmp/code
 COPY . /tmp/code
-RUN bundle install --gemfile /tmp/Gemfile
-RUN /tmp/prepare-npm.sh
-RUN virtualenv --python=python2.7 /tmp/run
-RUN /tmp/run/bin/pip install /tmp/code/
-RUN rm -rf /tmp/code
+RUN /tmp/install-alpine.sh && \
+    bundle install --gemfile /tmp/Gemfile && \
+    /tmp/prepare-npm.sh && \
+    virtualenv --python=python2.7 /tmp/run && \
+    /tmp/run/bin/pip install /tmp/code/ && \
+    rm -rf /tmp/code && \
+    apk del gcc libc-dev g++
 
 # Copy over entry point script:
-COPY scripts/_run-in-docker.py /tmp
+COPY scripts/docker/_run-in-docker.py /tmp
 RUN chmod +x /tmp/_run-in-docker.py
 
 # The image will expect user's working directory to be mapped to /code:

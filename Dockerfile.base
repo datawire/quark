@@ -1,27 +1,11 @@
-FROM ubuntu:16.04
+FROM alpine:3.4
 
-# Install requirements as root:
-RUN apt-get -y update
-RUN apt-get -y install language-pack-en
-ENV LANG=en_US.UTF-8
-ENV LC_ALL=en_US.UTF-8
-RUN apt-get -y install curl python2.7 tar gcc make git python2.7-dev libffi-dev libssl-dev
-RUN apt-get -y install nodejs openjdk-8-jdk-headless ruby2.3 ruby2.3-dev
-RUN apt-get -y install npm
-RUN gem2.3 install bundler
-RUN apt-get install -y python-virtualenv
-RUN apt-get install -y maven
+ENV JAVA_HOME=/usr/lib/jvm/default-jvm
+ENV PATH=$PATH:/usr/lib/mvn/bin
 
 # Copy over the files we need:
 COPY install-requirements.txt /tmp
 COPY Gemfile /tmp
 COPY scripts/prepare-npm.sh /tmp
-
-# We're using Ubuntu 16.04 where e.g. Ruby 2.3's gem is called gem2.3, so make
-# appropriate aliases:
-RUN echo "#!/bin/bash\ngem2.3 \"\$@\"" > /usr/bin/gem
-RUN chmod +x /usr/bin/gem
-RUN echo "#!/bin/bash\nruby2.3 \"\$@\"" > /usr/bin/ruby
-RUN chmod +x /usr/bin/ruby
-RUN echo "#!/bin/bash\nnodejs \"\$@\"" > /usr/bin/node
-RUN chmod +x /usr/bin/node
+COPY scripts/docker/install-alpine.sh /tmp
+RUN chmod +x /tmp/install-alpine.sh
