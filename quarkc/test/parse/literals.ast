@@ -22,5 +22,6 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
        String("two")), Entry(Number(3), String("three")))),
     ExprStmt(Number(3.14149265359)),
     ExprStmt(List(Number(0), Number(1), Number(0), Call(Attr(Number(1),
-        Name(__neg__))), Number(44805))))))
+        Name(__neg__))), Number(44805))),
+    ExprStmt(String("multiline\n    string\nwith \"inline\" quotes")))))
 )
