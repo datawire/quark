@@ -14,6 +14,8 @@ Usage:
   release [--dry --cicd] version [--dev | --prod] [<version>] [--doc=<version>]
   release [--dry --cicd] push-pkgs
   release [--dry --cicd] push-docs
+  release [--dry --cicd] build-docker-images
+  release [--dry --cicd] push-docker-images
 
   Options:
     --dry                  Dry run.
@@ -35,7 +37,7 @@ Usage:
 See RELEASE.md for guide on usage
 """
 
-import json, os, sys, random, re, subprocess, tempfile, urllib2, pprint, urllib
+import json, os, sys, random, subprocess, tempfile, urllib2, urllib
 from docopt import docopt
 from collections import OrderedDict
 from semantic_version import Version as SemVer
@@ -581,7 +583,11 @@ def cleanup_dev(args):
     else:
         print "Cancelled"
 
-def push_release(args):
+def _ensure_ready_for_release():
+    """Ensure git repository is all set up for release.
+
+    Return tuple of (version, git tag).
+    """
     ensure_clean()
     ensure_releasing()
     ensure_branch(RELEASE_BRANCH)
@@ -595,7 +601,10 @@ def push_release(args):
         raise ReleaseError("Release tag %r and metatada version %r disagree. Expected tag %r" % (
             actual_tag, ver, expected_tag))
     print "Tag %r agrees with metadata %r" % (actual_tag, ver)
+    return ver, actual_tag
 
+def push_release(args):
+    ver, actual_tag = _ensure_ready_for_release()
     if is_ancestor("master", "develop"):
         # if we had a fast-forward merge in prepare then it's one away
         dev_tag = dev_tag_at("%s^" % actual_tag)
@@ -656,6 +665,28 @@ def push_release(args):
         print "You can proceed to push-docs and push-pkgs"
     else:
         print "Cancelled"
+
+def docker_image(tag=metadata["__version__"]):
+    return "datawire/quark-run:{}".format(tag)
+
+def build_docker_images(args):
+    _ensure_ready_for_release()
+    print("Creating base Docker image...")
+    run("docker", "build", "-t", "quark-base", "-f", "Dockerfile.base", ".")
+    print("Creating quark-run Docker image...")
+    image = docker_image()
+    run("docker", "build", "-t", image, "-f", "Dockerfile.run", ".")
+    print("Created docker image, testing it locally:")
+    for language in ["--javascript", "--java", "--ruby", "--python"]:
+        run("docker", "run", "--rm", "-v", "{}:/code".format(os.getcwd()),
+            image, language, "quarkc/test/lib/list_test.q")
+    print("Docker image ready for pushing.")
+
+def push_docker_images(args):
+    print("Pushing quark-run Docker image to Docker hub...")
+    run("docker", "tag", docker_image("latest"), docker_image())
+    run("docker", "push", docker_image())
+    print("Docker image pushed.")
 
 def call_travis(repo, api):
     url = "https://api.travis-ci.org/repos/%s/%s" % (repo, api)
@@ -817,6 +848,10 @@ def main(args):
         cleanup(args)
     elif args["push-release"]:
         push_release(args)
+    elif args["push-docker-images"]:
+        push_docker_images(args)
+    elif args["build-docker-images"]:
+        build_docker_images(args)
     elif args["poll-dev-status"]:
         poll_dev_status(args)
     elif args["freeze"]:
