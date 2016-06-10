@@ -14,9 +14,9 @@
 
 import os, pytest, shutil, subprocess, filecmp, difflib
 from quarkc.backend import Java, Python, JavaScript, Ruby
-from quarkc.compiler import Compiler, CompileError, compile
+from quarkc.compiler import Compiler, compile
 from quarkc.helpers import namever
-from .util import check_file, maybe_xfail
+from .util import maybe_xfail
 
 backends = (Java, Python, JavaScript, Ruby)
 
@@ -104,7 +104,7 @@ def get_expected(name):
     out = get_out(name)
     try:
         expected = open(out).read()
-    except IOError, e:
+    except IOError:
         expected = None
     return expected
 

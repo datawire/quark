@@ -115,7 +115,7 @@ def get_pip_pkg(name, stage=None):
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)
-    except ShellError, e:
+    except ShellError:
         return None
 
 def pipcheck(name, stage=None):

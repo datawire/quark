@@ -12,24 +12,39 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle, shutil
+from __future__ import absolute_import
+
+import os, sys, urllib, logging, cPickle as pickle, shutil
 from collections import OrderedDict
 
-from .ast import *
-from .exceptions import *
+try:  # py3
+    from shlex import quote as sh_quote
+except ImportError:  # py2
+    from pipes import quote as sh_quote
+
+from parsimonious import ParseError as GParseError
+
+from .ast import (
+    AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
+    Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Interface,
+    Primitive, Name, Use as AstUse, code, copy,
+)
+from .exceptions import CompileError, ParseError
 from .parser import (
     Parser,
-    ParseError as GParseError,
     parse_strict_compiler_version_spec,
 )
 from .dispatch import overload
-from .helpers import *
+from .helpers import (
+    lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
+    is_abstract, constructor, base_type, base_constructors, has_super, has_return,
+    is_newer, compiled_quark, namever, mdroot,
+)
 from .environment import Environment
-import docmaker
-import docrenderer
-import errors
-import ast
-from versioning import compiler_version_spec_errors, version_spec_string_errors
+from . import docmaker
+from . import docrenderer
+from . import errors
+from .versioning import compiler_version_spec_errors, version_spec_string_errors
 
 sys.setrecursionlimit(10000)
 
@@ -944,10 +959,8 @@ class Reflector:
             qual = self.qual(cls)
             if cls.parameters:
                 clsid = qual + "<%s>" % ",".join([OBJECT]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"%s"' % OBJECT]*len(cls.parameters))
             else:
                 clsid = qual
-                params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
 
@@ -1019,7 +1032,7 @@ class Compiler(object):
         imp._silent = True
         file.definitions.insert(0, imp)
         if not self.root.files and not name.endswith(BUILTIN_FILE):  # First file
-            use = ast.Use(BUILTIN_FILE)
+            use = AstUse(BUILTIN_FILE)
             use._silent = True
             file.definitions.insert(0, use)
         while True:

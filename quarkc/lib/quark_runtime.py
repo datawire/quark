@@ -3,19 +3,24 @@
 # This brings in the stuff mentioned in __all__ below.
 # The wrong way to do this, but minimizes the code change.
 
+from __future__ import absolute_import
+
 __version__ = '0.4.2'
 
-import os    # used by the quark.OS.Env stuff
+import os    # noqa  used by the quark.OS.Env stuff
 import sys
-import time  # used by the builtin now() macro
+import time  # noqa  used by the builtin now() macro
 import urllib2
 import json
 import collections
-from urllib import urlencode as _urlencode
+from urllib import urlencode as _urlencode  # noqa
 from collections import namedtuple
 from struct import Struct
 import threading
 import base64
+import traceback
+
+from quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
@@ -23,8 +28,6 @@ __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSON
              _LoggerConfig _cast _get_file_contents""".split()
 
 _Map = dict
-
-from quark_runtime_logging import LoggerConfig as _LoggerConfig
 
 
 class _List(list):
@@ -472,7 +475,7 @@ class _Lock(object):
         import logging
         log = logging.getLogger(__name__)
         log.critical("msg",
-            exc_info=(Error, Error(repr(self._lock)),
+            exc_info=(Exception, Exception(repr(self._lock)),
                 traceback.extract_stack()))
 
 class _Condition(_Lock):

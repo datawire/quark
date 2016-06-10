@@ -24,9 +24,14 @@ COPY scripts/_in-docker.sh /tmp
 COPY scripts/prepare-npm.sh /tmp
 RUN chmod +x /tmp/_in-docker.sh
 
-# We're using Ubuntu 16.04 where Ruby 2.3's gem is called gem2.3, so make an alias:
+# We're using Ubuntu 16.04 where e.g. Ruby 2.3's gem is called gem2.3, so make
+# appropriate aliases:
 RUN echo "#!/bin/bash\ngem2.3 \"\$@\"" > /usr/bin/gem
 RUN chmod +x /usr/bin/gem
+RUN echo "#!/bin/bash\nruby2.3 \"\$@\"" > /usr/bin/ruby
+RUN chmod +x /usr/bin/ruby
+RUN echo "#!/bin/bash\nnodejs \"\$@\"" > /usr/bin/node
+RUN chmod +x /usr/bin/node
 
 # Run as user that owns the files:
 ARG userid

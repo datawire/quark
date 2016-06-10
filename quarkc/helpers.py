@@ -12,17 +12,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import absolute_import
+
 import os
-
-import _metadata
+import inspect
 from collections import OrderedDict
-from .dispatch import dispatch
-from .ast import *
 
-try:  # py3
-    from shlex import quote as sh_quote
-except ImportError:  # py2
-    from pipes import quote as sh_quote
+from .ast import (
+    Class, Field, File, Name, Callable, Local, If, Block, Assign, While,
+    Return, ExprStmt, Native, Statement, Expression, Call, Super, Method,
+    String, Number, Package, Primitive, Interface, Annotation, Macro,
+    Function, CompilerVersionSpec, AST,
+)
+from .dispatch import dispatch
 
 
 DEFAULT = object()
@@ -197,7 +199,6 @@ def filebase(name):
     return os.path.splitext(os.path.basename(name))[0]
 
 def namever(obj):
-    root = obj.root
     for file in obj.root.files:
         if file.dist: return file.dist.name.text, file.dist.version
     if isinstance(obj, File):
@@ -378,7 +379,6 @@ def lineinfo(node):
     return "\n".join(stack)
 
 def extract_ast_stack(frames):
-    import inspect
     ast_stack = []
     ast_seen = []
     for frame in frames:

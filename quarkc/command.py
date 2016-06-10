@@ -58,6 +58,8 @@ import compiler
 import backend
 import helpers
 import shell
+from .exceptions import QuarkError
+
 
 class ProgressHandler(logging.Handler):
 
@@ -191,7 +193,7 @@ def main(args):
                 compiler.make_docs(url, output)
             else:
                 assert False
-    except (KeyboardInterrupt, compiler.QuarkError) as err:
+    except (KeyboardInterrupt, QuarkError) as err:
         if not args["run"]:
             shell.command_log.error("")
         return err
