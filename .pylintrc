@@ -150,7 +150,6 @@ enable=import-error,
        dict-view-method,
        indexing-exception,
        raising-string,
-       standarderror-builtin,
        using-cmp-argument,
        cmp-method,
        coerce-method,
@@ -158,7 +157,27 @@ enable=import-error,
        getslice-method,
        hex-method,
        nonzero-method,
-       oct-method
+       t-method,
+       setslice-method,
+       old-division,
+       logging-format-truncated,
+       logging-too-few-args,
+       logging-too-many-args,
+       logging-unsupported-format,
+       logging-format-interpolation,
+       invalid-unary-operand-type,
+       unsupported-binary-operation,
+       not-callable,
+       redundant-keyword-arg,
+       assignment-from-no-return,
+       assignment-from-none,
+       not-context-manager,
+       repeated-keyword,
+       missing-kwoa,
+       no-value-for-parameter,
+       invalid-sequence-index,
+       invalid-slice-index,
+       unexpected-keyword-arg
 
 # Things we'd like to enable someday:
 # redefined-builtin (requires a bunch of work to clean up our code first)
@@ -167,59 +186,21 @@ enable=import-error,
 # no-name-in-module (giving us spurious warnings https://github.com/PyCQA/pylint/issues/73)
 # unused-argument (need to clean up or code a lot, e.g. prefix unused_?)
 # function-redefined (@overload causes lots of spurious warnings)
+# too-many-function-args (@overload causes spurious warnings... I think)
 # parameter-unpacking (needed for eventual Python 3 compat)
 # print-statement (needed for eventual Python 3 compat)
+# filter-builtin-not-iterating (Python 3)
+# map-builtin-not-iterating (Python 3)
+# range-builtin-not-iterating (Python 3)
+# zip-builtin-not-iterating (Python 3)
+# many others relevant to Python 3
+
 
 # Things we'd like to try.
 # Procedure:
 # 1. Enable a bunch.
 # 2. See if there's spurious ones; if so disable and record reason in list above.
        # unused-variable,
-       # setslice-method,
-       # apply-builtin,
-       # basestring-builtin,
-       # buffer-builtin,
-       # cmp-builtin,
-       # coerce-builtin,
-       # old-division,
-       # execfile-builtin,
-       # file-builtin,
-       # filter-builtin-not-iterating,
-       # no-absolute-import,
-       # input-builtin,
-       # intern-builtin,
-       # long-builtin,
-       # map-builtin-not-iterating,
-       # range-builtin-not-iterating,
-       # raw_input-builtin,
-       # reduce-builtin,
-       # reload-builtin,
-       # round-builtin,
-       # unichr-builtin,
-       # unicode-builtin,
-       # xrange-builtin,
-       # zip-builtin-not-iterating,
-       # logging-format-truncated,
-       # logging-too-few-args,
-       # logging-too-many-args,
-       # logging-unsupported-format,
-       # logging-not-lazy,
-       # logging-format-interpolation,
-       # invalid-unary-operand-type,
-       # unsupported-binary-operation,
-       # no-member,
-       # not-callable,
-       # redundant-keyword-arg,
-       # assignment-from-no-return,
-       # assignment-from-none,
-       # not-context-manager,
-       # repeated-keyword,
-       # missing-kwoa,
-       # no-value-for-parameter,
-       # invalid-sequence-index,
-       # invalid-slice-index,
-       # too-many-function-args,
-       # unexpected-keyword-arg,
        # unsupported-membership-test,
        # unsubscriptable-object,
        # access-member-before-definition,

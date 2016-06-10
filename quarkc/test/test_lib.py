@@ -28,9 +28,9 @@ def test_lib():
         banner = "##############################################################################"
         pretty = lang[2:].upper()
         print
-        print banner 
+        print banner
         n = len(banner)-4-len(pretty)
-        print "##" + (" "*(n/2)) + pretty + (" "*(n - n/2)) + "##"
+        print "##" + (" "*(n//2)) + pretty + (" "*(n - n//2)) + "##"
         print banner
 
         for path in paths:
