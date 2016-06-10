@@ -24,7 +24,7 @@ def do_compile(output, path):
     text = open(path).read()
     for b in backends:
         maybe_xfail(text, b().ext)
-    return path, compile(path, output, *backends)
+    return path, compile(Compiler(), path, output, *backends)
 
 def do_output(directory):
     result = os.path.join(directory, "output")
