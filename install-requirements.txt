@@ -7,4 +7,3 @@ pip>=8
 wheel
 markdown
 Jinja2>=2.8
-semantic_version
