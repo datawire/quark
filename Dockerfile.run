@@ -1,22 +1,24 @@
 # Use Dockerfile.base for this:
 FROM quark-base
 
-# Copy over files we need:
+# Install user-specific packages:
 RUN mkdir /tmp/code
 COPY . /tmp/code
-COPY scripts/_run-in-docker.sh /tmp
-RUN chmod +x /tmp/_run-in-docker.sh
-
-# Install user-specific packages:
 RUN bundle install --gemfile /tmp/Gemfile
 RUN /tmp/prepare-npm.sh
 RUN virtualenv --python=python2.7 /tmp/run
 RUN /tmp/run/bin/pip install /tmp/code/
+RUN rm -rf /tmp/code
 
-# The image will expect user's code to be in /code:
+# Copy over entry point script:
+COPY scripts/_run-in-docker.py /tmp
+RUN chmod +x /tmp/_run-in-docker.py
+
+# The image will expect user's working directory to be mapped to /code:
 VOLUME /code
-WORKDIR /code
+WORKDIR /tmp
 
 CMD /bin/bash
-# This will make sure arguments run inside the virtualenv:
-ENTRYPOINT ["/tmp/_run-in-docker.sh"]
+# This will make sure arguments run inside the virtualenv, and update paths to
+# include /code:
+ENTRYPOINT ["/tmp/_run-in-docker.py"]
