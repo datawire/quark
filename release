@@ -678,8 +678,13 @@ def build_docker_images(args):
     run("docker", "build", "-t", image, "-f", "Dockerfile.run", ".")
     print("Created docker image, testing it locally:")
     for language in ["--javascript", "--java", "--ruby", "--python"]:
-        run("docker", "run", "--rm", "-v", "{}:/code".format(os.getcwd()),
-            image, language, "quarkc/test/lib/list_test.q")
+        try:
+            run("docker", "run", "--rm", "-v", "{}:/code".format(os.getcwd()),
+                image, language, "quarkc/test/lib/list_test.q")
+        except subprocess.CalledProcessError, e:
+            run("docker", "rmi", image)
+            raise ReleaseError("Docker image test failed ({})".format(e))
+
     print("Docker image ready for pushing.")
 
 def push_docker_images(args):
