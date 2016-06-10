@@ -757,7 +757,7 @@ class ApplyAnnotators:
                     done.add(name)
 
 def delegate(node):
-    ann = [a for a in node.annotations if a.name.text == "delegate"][0];
+    ann = [a for a in node.annotations if a.name.text == "delegate"][0]
     delegate = ann.arguments[0].code()
     options = [arg.code() for arg in ann.arguments[1:]]
     args = ["\"%s\"" % node.name]

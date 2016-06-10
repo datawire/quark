@@ -520,7 +520,7 @@ class Return(Statement):
 class Break(Statement):
 
     @property
-    def children(self): ()
+    def children(self): return ()
 
     @coder
     def code(self, coder):
@@ -532,7 +532,7 @@ class Break(Statement):
 class Continue(Statement):
 
     @property
-    def children(self): ()
+    def children(self): return ()
 
     @coder
     def code(self, coder):
@@ -720,7 +720,7 @@ class PrimitiveLiteral(Literal):
 
     @property
     def children(self):
-        if False: yield
+        return ()
 
     @coder
     def code(self, coder):
@@ -836,7 +836,7 @@ class Fixed(Expression):
 
     @property
     def children(self):
-        if False: yield
+        return ()
 
     @coder
     def code(self, coder):
