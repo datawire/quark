@@ -12,6 +12,7 @@ include quark_threaded_runtime.py;
 include quark_runtime_logging.py;
 include quark_ws4py_fixup.py;
 
+// These should be kept in sync with Gemfile:
 use rb concurrent-ruby 1.0.1;
 use rb reel 0.6.1;
 use rb websocket-driver 0.6.3;
