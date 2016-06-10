@@ -689,7 +689,9 @@ def build_docker_images(args):
 
 def push_docker_images(args):
     print("Pushing quark-run Docker image to Docker hub...")
+    short_version = ".".join(metadata["__version__"].split(".")[:2])
     run("docker", "tag", docker_image("latest"), docker_image())
+    run("docker", "tag", docker_image(short_version), docker_image())
     run("docker", "push", docker_image())
     print("Docker image pushed.")
 
