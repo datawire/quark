@@ -202,7 +202,6 @@ def main(args):
             shell.command_log.error("")
         return err
     except:
-        raise
         if do_log:
             import inspect
             ast_stack = helpers.format_ast_stack(inspect.trace())
