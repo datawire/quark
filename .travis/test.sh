@@ -47,6 +47,12 @@ else
     exit 1
 fi
 
+if pylint $TEST_SUITE; then
+    echo pylint passed
+else
+    exit 1
+fi
+
 if py.test -v $TEST_SUITE --durations=10; then
     echo Tests passed
 else

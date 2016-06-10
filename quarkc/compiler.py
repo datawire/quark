@@ -1270,7 +1270,7 @@ class Compiler(object):
             deps = tuple(self.deps(trans_roots))
             if not is_newer(urlc, __file__, *deps):
                 self.log.info("Writing %s" % urlc)
-                with open(urlc, "write") as fd:
+                with open(urlc, "w") as fd:
                     pickle.dump(deps, fd, -1)
                     pickle.dump(trans_roots, fd, -1)
                     # Write out an object to mark the archive end so
