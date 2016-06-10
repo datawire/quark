@@ -1,0 +1,512 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Keywords &mdash; Datawire Connect 1.0.70 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.70',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 1.0.70 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="Operators" href="operators.html" />
+    <link rel="prev" title="Language Elements" href="language.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="operators.html"
+            title="Operators"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="language.html"
+            title="Language Elements"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 1.0.70 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="keywords">
+<h1>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h1>
+<p>Keywords are reserved words that have a specific meaning within Quark. They cannot be used as names of user-generated content (namespaces, classes, functions, etc).</p>
+<p>Quark defines the following keywords:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="break">
+<span id="breakkeyword"></span><h2>break<a class="headerlink" href="#break" title="Permalink to this headline">¶</a></h2>
+<p>Documentation Coming Soon</p>
+</div>
+<div class="section" id="class">
+<span id="classkeyword"></span><h2>class<a class="headerlink" href="#class" title="Permalink to this headline">¶</a></h2>
+<p>The class keyword is used to define a data structure and set of methods that together encapsulate the allowed behaviors of a specific type of object.</p>
+<div class="section" id="syntax">
+<h3>Syntax<a class="headerlink" href="#syntax" title="Permalink to this headline">¶</a></h3>
+<p>The class keyword syntax is:</p>
+<p><strong>class</strong> <em>className</em> <strong>{</strong>
+<em>definition</em>
+<strong>}</strong></p>
+<p>where <em>className</em> is a unique name within the scope of the namespace and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
+</div>
+</div>
+<div class="section" id="continue">
+<span id="continuekeyword"></span><h2>continue<a class="headerlink" href="#continue" title="Permalink to this headline">¶</a></h2>
+<p>Documentation Coming Soon</p>
+</div>
+<div class="section" id="else">
+<span id="elsekeyword"></span><h2>else<a class="headerlink" href="#else" title="Permalink to this headline">¶</a></h2>
+<p>The else keyword is used to indicate the alternate code to run when the condition of the related <a class="reference internal" href="#ifkeyword"><span class="std std-ref">if statement</span></a> is false.</p>
+<div class="section" id="id1">
+<h3>Syntax<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>The else keyword syntax is:</p>
+<p><strong>else {</strong>
+<em>executeIfConditionFalse</em>
+<strong>}</strong></p>
+<p>where <em>executeIfConditionFalse</em> is run if <em>condition</em> evaluates to false.</p>
+<p id="ifelsesyntax">However, else is subordinate to if and cannot be used separately. The full syntax for the combination is:</p>
+<p><strong>if (</strong> <em>condition</em> <strong>) {</strong>
+<em>executeIfConditionTrue</em>
+<strong>}
+else {</strong>
+<em>executeIfConditionFalse</em>
+<strong>}</strong></p>
+<p>where <em>condition</em> is the code being evaluated, <em>executeIfConditionTrue</em> is run if <em>condition</em> evaluates to true, and <em>executeIfConditionFalse</em> is run if <em>condition</em> evaluates to false.</p>
+<p>See the <a class="reference internal" href="#ifelsesyntax"><span class="std std-ref">if keyword syntax section</span></a> for more information about constructing conditional clauses.</p>
+</div>
+</div>
+<div class="section" id="extends">
+<span id="extendskeyword"></span><h2>extends<a class="headerlink" href="#extends" title="Permalink to this headline">¶</a></h2>
+<p>The extends keyword indicates a parent class of the class currently being defined or an interface used by the class.</p>
+<div class="section" id="id2">
+<h3>Syntax<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<p>The extends keyword syntax is:</p>
+<p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>superClassName</em> <strong>{</strong>
+<em>additionalClassDefinition</em>
+<strong>}</strong></p>
+<p>where <em>className</em> is a unique name within the scope of the namespace, <em>superClassName</em> is the unique name of the chosen superclass, and <em>definition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>or</p>
+<p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>interfaces</em> <strong>{</strong>
+<em>additionalClassDefinition</em>
+<strong>}</strong></p>
+<p>where <em>className</em> is a unique name within the scope of the namespace, <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
+<p>or</p>
+<p><strong>class</strong> <em>className</em> <strong>extends</strong> <em>superClassName</em> <strong>,</strong> <em>interfaces</em> <strong>{</strong>
+<em>additionalClassDefinition</em>
+<strong>}</strong></p>
+<p>where <em>className</em> is a unique name within the scope of the namespace, <em>superClassName</em> is the unique name of the chosen superclass, <em>interfaces</em> is a comma-separated list of interfaces used by this class, and <em>additionalClassDefinition</em> is the list of properties and methods within the class and their definitions.</p>
+</div>
+</div>
+<div class="section" id="false">
+<span id="falsekeyword"></span><h2>false<a class="headerlink" href="#false" title="Permalink to this headline">¶</a></h2>
+<p>The false keyword indicates that a particular condition is not true. It is one of the two allowed states of a boolean.</p>
+<div class="section" id="id3">
+<h3>Syntax<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>The false keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.</p>
+</div>
+</div>
+<div class="section" id="if">
+<span id="ifkeyword"></span><h2>if<a class="headerlink" href="#if" title="Permalink to this headline">¶</a></h2>
+<p>The if keyword is used to provide code to be run only if the supplied condition evaluates to true. It can be used in conjunction with the <a class="reference internal" href="#elsekeyword"><span class="std std-ref">else keyword</span></a> to provide alternate code paths when the condition evaluates to true and when it evaluates to false.</p>
+<div class="section" id="ifsyntax">
+<span id="id4"></span><h3>Syntax<a class="headerlink" href="#ifsyntax" title="Permalink to this headline">¶</a></h3>
+<p>The if keyword syntax is:</p>
+<p><strong>if (</strong> <em>condition</em> <strong>) {</strong>
+<em>executeIfConditionTrue</em>
+<strong>}</strong></p>
+<p>where <em>condition</em> is the code being evaluated and <em>executeIfConditionTrue</em> is run if <em>condition</em> evaluates to true.</p>
+<p>See the <a class="reference internal" href="#ifelsesyntax"><span class="std std-ref">else keyword syntax section</span></a> for the syntax of if-else statements.</p>
+</div>
+</div>
+<div class="section" id="import">
+<span id="importkeyword"></span><h2>import<a class="headerlink" href="#import" title="Permalink to this headline">¶</a></h2>
+<p>The import keyword is used to add names to the current scope that are defined in a namespace. It lets you avoid always typing out fully-qualified names.</p>
+<div class="section" id="id5">
+<h3>Syntax<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>The import keyword syntax is:</p>
+<p><strong>import</strong> <em>namespaceName</em> <strong>;</strong></p>
+<p>where <em>namespaceName</em> is the name of the namespace from which names will be added to the current scope.</p>
+<p>or</p>
+<p><strong>import</strong> <em>namespaceName</em> as <em>alias</em> <strong>;</strong></p>
+<p>where <em>namespaceName</em> is the original/full name of a namespace and <em>alias</em> is the name that can be used to refer to that namespace in the current scope.</p>
+<p>For instance, to make all names from the foo namespace accessible without excess typing:</p>
+<p><code class="docutils literal"><span class="pre">import</span> <span class="pre">foo;</span></code></p>
+<p>The import statement can also do aliasing if necessary:</p>
+<p><code class="docutils literal"><span class="pre">import</span> <span class="pre">foo</span> <span class="pre">as</span> <span class="pre">bar;</span></code></p>
+</div>
+</div>
+<div class="section" id="include">
+<span id="includekeyword"></span><h2>include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h2>
+<p>The include keyword is used to split up code into multiple files, but these files are all part of the same
+distribution unit. Effectively, it performs a textual include that is smart about circular dependencies.</p>
+<div class="section" id="id6">
+<h3>Syntax<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>The include keyword syntax is:</p>
+<p><strong>include</strong> <em>url.q</em> <strong>;</strong></p>
+<p>where <em>url.q</em> is the absolute or relative URL or filesystem path to another .q file.</p>
+<p>Given foo.q:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>include bar.q;
+// some code
+</pre></div>
+</div>
+<p>and bar.q:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>// some other code
+</pre></div>
+</div>
+<p>then the compiler will produce a single distribution unit per target language containing all the code in foo.q and bar.q.</p>
+<p>See also: <a class="reference internal" href="#usekeyword"><span class="std std-ref">use statement</span></a></p>
+</div>
+</div>
+<div class="section" id="interface">
+<span id="interfacekeyword"></span><h2>interface<a class="headerlink" href="#interface" title="Permalink to this headline">¶</a></h2>
+<p>The interface keyword defines an interface containing template information for classes. Interfaces can contain default methods (which can be redefined in classes using the interface) and method signatures (to be defined in classes using the interface).</p>
+<div class="section" id="id7">
+<h3>Syntax<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>The interface keyword syntax is:</p>
+<p><strong>interface</strong> <em>interfaceName</em> {
+<em>interfaceDefinition</em>
+}</p>
+<p>where <em>interfaceName</em> is the name of the interface, used to include it in class definitions, and <em>interfaceDefinition</em> is the content of the interface.</p>
+</div>
+</div>
+<div class="section" id="macro">
+<span id="macrokeyword"></span><h2>macro<a class="headerlink" href="#macro" title="Permalink to this headline">¶</a></h2>
+<p>The macro keyword is used to define a top-level function available to use within any Quark program compiled at the same time as the macro. Macros are defined at the top level of the file outside of any namespace, class, or main definitions. Macros are evaluated at runtime and may have either a single definition used for all target languages or be defined separately for each language supported by Quark.</p>
+<p><strong>FIXME</strong>: The above appears to be incorrect.</p>
+<div class="section" id="id8">
+<h3>Syntax<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>The macro keyword syntax is:</p>
+<p><strong>macro</strong> <em>type</em> <strong>(</strong> <em>parameters</em> <strong>) ${</strong> <em>macroDefinition</em> <strong>};</strong></p>
+<p>where <em>type</em> is the expected type of the macro results, <em>parameters</em> is a comma-separated list of typed input values, and <em>macroDefinition</em> is the code to run when the macro is executed. This code may be general or it may be defined separately for each language. If separate definitions are required, the syntax is as follows:</p>
+<dl class="docutils">
+<dt><strong>macro</strong> <em>type</em> <strong>(</strong> <em>parameters</em> <strong>) $java{</strong> <em>javaMacroDefinition</em> <strong>}</strong></dt>
+<dd><strong>$js{</strong> <em>javascriptMacroDefinition</em> <strong>}</strong>
+<strong>$py{</strong> <em>pythonMacroDefinition</em> <strong>}</strong></dd>
+</dl>
+<p>The languages may be specified in any order. However, all supported languages must be defined individually if any need to be; any omitted languages will result in the macro resolving to null which could cause errors or result in unexpected behavior in that language. See <a class="reference external" href="https://github.com/datawire/quark/issues/27">linkIssue27</a> for more information.</p>
+</div>
+</div>
+<div class="section" id="namespace">
+<span id="namespacekeyword"></span><h2>namespace<a class="headerlink" href="#namespace" title="Permalink to this headline">¶</a></h2>
+<p>The namespace keyword is used to indicate a namespace containing groups of similar or related classes. Namespaces are automatically available to any Quark files compiled at the same time as the file or files with the namespace definition.</p>
+<div class="section" id="id9">
+<h3>Syntax<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>The namespace keyword syntax is:</p>
+<dl class="docutils">
+<dt><strong>namespace</strong> <em>namespaceName</em> <strong>{</strong></dt>
+<dd><em>definition</em></dd>
+</dl>
+<p><strong>}</strong></p>
+<p>where <em>definition</em> is the content of the namespace and <em>namespaceName</em> is the name of the namespace. Namespace names are treated as unique within the scope of the Quark files being compiled together. If the same namespace name is used multiple times, the contents of each definition section are combined and treated as a single namespace.</p>
+<p>The default namespace has the same name as the package being defined. It is the containing namespace for any classes and functions defined without an explicit containing namespace. The default namespace is logically equivalent to the explicitly-named namespace with the same name.</p>
+</div>
+</div>
+<div class="section" id="new">
+<span id="newkeyword"></span><h2>new<a class="headerlink" href="#new" title="Permalink to this headline">¶</a></h2>
+<p>The new keyword is used to instantiate objects.</p>
+<div class="section" id="id10">
+<h3>Syntax<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<p>The new keyword syntax is:</p>
+<p><em>className objectHandle</em> <strong>= new</strong> <em>classConstructor</em> <strong>;</strong></p>
+<p>where <em>className</em> is the name of the class of the new object, <em>objectHandle</em> is a variable pointing to the new object, and <em>classConstructor</em> is the constructor method used to create the new object including any relevant parameters.</p>
+</div>
+</div>
+<div class="section" id="null">
+<span id="nullkeyword"></span><h2>null<a class="headerlink" href="#null" title="Permalink to this headline">¶</a></h2>
+<p>The null keyword is used to explicitly indicate a value is undefined. It is not the same as a value that has never been set.</p>
+<div class="section" id="id11">
+<h3>Syntax<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>The null keyword syntax is:</p>
+<p><em>variable</em> <strong>= null;</strong></p>
+<p>where <em>variable</em> is the handle to the value you want to set to null.</p>
+</div>
+</div>
+<div class="section" id="package">
+<span id="packagekeyword"></span><h2>package<a class="headerlink" href="#package" title="Permalink to this headline">¶</a></h2>
+<p>The package keyword is used to declare the name and version of the distribution unit being defined in the current file.</p>
+<div class="section" id="id12">
+<h3>Syntax<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>The package keyword syntax is:</p>
+<p><strong>package</strong> <em>packageName</em> <em>version</em> <strong>;</strong></p>
+<p>where <em>packageName</em> is the name of the distribution unit to be generated or installed by the compiler from this file. If not specified, the default package name is the name of the source file without the .q extension.</p>
+</div>
+</div>
+<div class="section" id="primitive">
+<span id="primitivekeyword"></span><h2>primitive<a class="headerlink" href="#primitive" title="Permalink to this headline">¶</a></h2>
+<p>The primitive keyword is used to define basic data types in Quark. At the current time it is reserved for use by the system.</p>
+</div>
+<div class="section" id="return">
+<span id="returnkeyword"></span><h2>return<a class="headerlink" href="#return" title="Permalink to this headline">¶</a></h2>
+<p>The return keyword is used to indicate the return value of a function or method.</p>
+<div class="section" id="id13">
+<h3>Syntax<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<p>The return keyword syntax is:</p>
+<dl class="docutils">
+<dt><em>functionType</em> <em>functionType</em> <strong>(</strong> <em>parameters</em> <strong>) {</strong></dt>
+<dd><em>code</em>
+<strong>return</strong> <em>valueOfTypeFunctionType</em></dd>
+</dl>
+<p><strong>}</strong></p>
+<p>where <em>functionType</em> is the type of the value returned by the function, <em>functionName</em> is the name of the function, <em>parameters</em> is a comma-separated list of parameters for the function, <em>code</em> is the code being run by the function, and <em>valueOfTypeFunctionType</em> is the value returned by the function. It must use the data type specified in the <em>functionType</em> declaration.</p>
+</div>
+</div>
+<div class="section" id="self">
+<span id="selfkeyword"></span><h2>self<a class="headerlink" href="#self" title="Permalink to this headline">¶</a></h2>
+<p>The self keyword is used to reference the current object inside method definitions particularly the value of a property of the current object.</p>
+<div class="section" id="id14">
+<h3>Syntax<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>The self keyword syntax is:</p>
+<p><strong>self.</strong> <em>propertyName</em></p>
+<p>where <em>propertyName</em> is the name of a property defined in the current class and the entire expression evaluates to the value stored in the current object&#8217;s <em>propertyName</em> property.</p>
+</div>
+</div>
+<div class="section" id="static">
+<span id="statickeyword"></span><h2>static<a class="headerlink" href="#static" title="Permalink to this headline">¶</a></h2>
+<p>Documentation Coming Soon</p>
+</div>
+<div class="section" id="super">
+<span id="superkeyword"></span><h2>super<a class="headerlink" href="#super" title="Permalink to this headline">¶</a></h2>
+<p>The super keyword is used to indicate that a referenced method is defined in the current class&#8217;s superclass.</p>
+<p>Note: A variant of the super keyword, super(), is used to reference the constructor of the superclass inside the subclass&#8217;s constructor. Any parameters defined in the superclass constructor must be supplied when super() is called (either as variables or as default values).</p>
+<div class="section" id="id15">
+<h3>Syntax<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>The super keyword syntax is:</p>
+<p><strong>super.</strong> <em>method</em></p>
+<p>where <em>method</em> is the method being called including the trailing parentheses and any necessary parameters.</p>
+<p>For instance, the following method is defined in class A:</p>
+<p><code class="docutils literal"><span class="pre">void</span> <span class="pre">enrollInClass(String</span> <span class="pre">classId,</span> <span class="pre">String</span> <span class="pre">studentId){...}</span></code></p>
+<p>Class B is a subclass of class A. A method inside class B calls the enrollInClass() method as follows:</p>
+<p><code class="docutils literal"><span class="pre">super.enrollInClass(&quot;Phys123&quot;,</span> <span class="pre">&quot;84-42956&quot;);</span></code></p>
+</div>
+</div>
+<div class="section" id="true">
+<span id="truekeyword"></span><h2>true<a class="headerlink" href="#true" title="Permalink to this headline">¶</a></h2>
+<p>The true keyword indicates that a particular condition is true. It is one of the two allowed states of a boolean.</p>
+<div class="section" id="id16">
+<h3>Syntax<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<p>The true keyword does not have specific syntax, per se. Rather it can be used as a value of any boolean variable, boolean property, or any conditional clause of code.</p>
+</div>
+</div>
+<div class="section" id="use">
+<span id="usekeyword"></span><h2>use<a class="headerlink" href="#use" title="Permalink to this headline">¶</a></h2>
+<p>The use keyword is used to allow code within this distribution unit to use code within another distribution unit. The compiler will output both this distribution unit and a separate distribution unit for the code being used.</p>
+<div class="section" id="id17">
+<h3>Syntax<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>The use keyword syntax is:</p>
+<p><strong>use</strong> <em>url.q</em> <strong>;</strong></p>
+<p>where <em>url.q</em> is the absolute or relative URL or filesystem path to another .q file.</p>
+<p>Given foo.q:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>use bar.q;
+// some code
+</pre></div>
+</div>
+<p>and bar.q:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>// some common code
+</pre></div>
+</div>
+<p>then the compiler will produce two distribution units per target language. For Python this means you will get two things you can pip install. For Node you will get two NPM modules, for Java you will get two artifacts, for Ruby two gems, etc.</p>
+<p>See also: <a class="reference internal" href="#includekeyword"><span class="std std-ref">include statement</span></a></p>
+</div>
+</div>
+<div class="section" id="while">
+<span id="whilekeyword"></span><h2>while<a class="headerlink" href="#while" title="Permalink to this headline">¶</a></h2>
+<p>The while keyword is used to provide code to be run repeatedly as long as the supplied condition continues to evaluate to true.</p>
+<div class="section" id="id18">
+<h3>Syntax<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>The while keyword syntax is:</p>
+<p><strong>while (</strong> <em>condition</em> <strong>) {</strong>
+<em>executeIfConditionTrue</em>
+<strong>}</strong></p>
+<p>where <em>condition</em> is the code being evaluated and <em>executeIfConditionTrue</em> is run as long as <em>condition</em> evaluates to true. If the state of the condition is not changed in some way within this code block so it eventually evaluates to false the code will continue to execute in an infinite loop.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    
+
+
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Quark Language Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core Concepts</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="language.html">Language Elements</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationTypes.html">Integration Types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="integrationInterfaces.html">Integration Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html">Annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rpc-basic/index.html">Getting Started with RPC Walkthrough</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Quark Language Reference</a><ul>
+  <li><a href="language.html">Language Elements</a><ul>
+      <li>Previous: <a href="language.html" title="previous chapter">Language Elements</a></li>
+      <li>Next: <a href="operators.html" title="next chapter">Operators</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="operators.html">Operators</a></li>
+    </ul>
+
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="language.html">Language Elements</a></li>
+    </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="operators.html"
+            title="Operators"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="language.html"
+            title="Language Elements"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 1.0.70 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

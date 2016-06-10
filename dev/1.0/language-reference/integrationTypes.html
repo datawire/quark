@@ -1,0 +1,293 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Integration Types &mdash; Datawire Connect 1.0.70 documentation</title>
+    
+    <link rel="stylesheet" href="../_static/css/style.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.0.70',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="top" title="Datawire Connect 1.0.70 documentation" href="../index.html" />
+    <link rel="up" title="Language Elements" href="language.html" />
+    <link rel="next" title="Integration Interfaces" href="integrationInterfaces.html" />
+    <link rel="prev" title="Data Types" href="types.html" />
+   
+  
+  <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,600' rel='stylesheet' type='text/css'>
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body role="document"><header class="dw-header" role="banner">
+    <div class="dw-headerwrapper group">
+        <div class="dw-sidebar">
+            <a href="../index.html">
+                <img class="dw-logo" src="../_static/img/logo-datawire.png" alt="Datawire">
+            </a>
+        </div>
+        <div class="dw-search group" role="search">
+            <form class="dw-searchform" action="../search.html" method="get">
+                <input type="text" placeholder="Search" name="q" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+            </form>
+        </div>
+    </div>
+</header>
+
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="integrationInterfaces.html"
+            title="Integration Interfaces"
+            accesskey="N">
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="types.html"
+            title="Data Types"
+            accesskey="P">
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 1.0.70 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" accesskey="U">Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="integration-types">
+<h1>Integration Types<a class="headerlink" href="#integration-types" title="Permalink to this headline">¶</a></h1>
+<p>Integration types are Quark data types that depend on a runtime integration. These types are typically defined with method signatures rather than with full method code because the desired functionality cannot be consistently defined by Quark code. However, not all integration types use method signatures - some integration types may include method definitions that use other integration types. These integration types look like normal Quark data types but can&#8217;t be executed without a runtime integration installed because of their dependencies.</p>
+<p>More information about the available integrations and how to install them can be found <a class="reference internal" href="../install/integration.html"><span class="doc">here</span></a>.</p>
+<p>Quark defines the following integration types:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="buffer">
+<span id="id1"></span><h2>Buffer<a class="headerlink" href="#buffer" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="client">
+<span id="id2"></span><h2>Client<a class="headerlink" href="#client" title="Permalink to this headline">¶</a></h2>
+<p>A factory class that can be used to create generic clients. Typically this class will be extended to define a more specific client for a particular application or service.</p>
+</div>
+<div class="section" id="codec">
+<span id="id3"></span><h2>Codec<a class="headerlink" href="#codec" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httphandler">
+<span id="id4"></span><h2>HTTPHandler<a class="headerlink" href="#httphandler" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httprequest">
+<span id="id5"></span><h2>HTTPRequest<a class="headerlink" href="#httprequest" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httpresponse">
+<span id="id6"></span><h2>HTTPResponse<a class="headerlink" href="#httpresponse" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="httpservlet">
+<span id="id7"></span><h2>HTTPServlet<a class="headerlink" href="#httpservlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="jsonobject">
+<span id="id8"></span><h2>JSONObject<a class="headerlink" href="#jsonobject" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="responseholder">
+<span id="id9"></span><h2>ResponseHolder<a class="headerlink" href="#responseholder" title="Permalink to this headline">¶</a></h2>
+<p>Holds a response while it is being formulated. This should only be used within types that are processing responses prior to their being sent to the client.</p>
+</div>
+<div class="section" id="runtime">
+<span id="id10"></span><h2>Runtime<a class="headerlink" href="#runtime" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="server">
+<span id="id11"></span><h2>Server<a class="headerlink" href="#server" title="Permalink to this headline">¶</a></h2>
+<p>A factory class that can be used to create generic servers. Typically this class will be extended to define a more specific server for a particular application or service.</p>
+</div>
+<div class="section" id="servlet">
+<span id="id12"></span><h2>Servlet<a class="headerlink" href="#servlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="task">
+<span id="id13"></span><h2>Task<a class="headerlink" href="#task" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="websocket">
+<span id="id14"></span><h2>WebSocket<a class="headerlink" href="#websocket" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="wshandler">
+<span id="id15"></span><h2>WSHandler<a class="headerlink" href="#wshandler" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+<div class="section" id="wsservlet">
+<span id="id16"></span><h2>WSServlet<a class="headerlink" href="#wsservlet" title="Permalink to this headline">¶</a></h2>
+<p>Documentation coming soon</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+    
+
+
+<h3><a href="../index.html">Table Of Contents</a></h3>
+<ul>
+    <li >
+        <a href="../index.html" >Welcome</a>
+    </li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../quick-start/index.html">Datawire Connect Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install/index.html">Datawire Connect Installation and Configuration Guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Quark Language Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="core.html">Core Concepts</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="language.html">Language Elements</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="keywords.html">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operators.html">Operators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html">Data Types</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Integration Types</a><ul class="simple">
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="integrationInterfaces.html">Integration Interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functions.html">Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotations.html">Annotations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="links.html">More Information</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/rpc-basic/index.html">Getting Started with RPC Walkthrough</a></li>
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="index.html">Quark Language Reference</a><ul>
+  <li><a href="language.html">Language Elements</a><ul>
+      <li>Previous: <a href="types.html" title="previous chapter">Data Types</a></li>
+      <li>Next: <a href="integrationInterfaces.html" title="next chapter">Integration Interfaces</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+    <h3>Next Topic</h3>
+    <ul>
+        <li><a href="integrationInterfaces.html">Integration Interfaces</a></li>
+    </ul>
+
+
+
+    <h3>Previous Topic</h3>
+    <ul>
+        <li><a href="types.html">Data Types</a></li>
+    </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a
+            href="integrationInterfaces.html"
+            title="Integration Interfaces"
+            >
+              
+              next
+              &rarr;
+          </a></li>
+        <li class="right" >
+          <a
+            href="types.html"
+            title="Data Types"
+            >
+              &larr;
+              previous
+              
+          </a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Datawire Connect 1.0.70 documentation</a> &raquo;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" >Quark Language Reference</a> &raquo;</li>
+          <li class="nav-item nav-item-2"><a href="language.html" >Language Elements</a> &raquo;</li> 
+      </ul>
+    </div>
+
+    <div class="footer">
+      &copy;2015, 2016 Datawire.
+      
+      |
+      <a href="https://github.com/datawire/quark"
+          rel="nofollow">GitHub Repository</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-57322503-4', 'auto');
+      ga('send', 'pageview');
+    </script>
+    
+
+    <script src="../_static/vendor/zc/ZeroClipboard.js" ></script>
+    <script src="../_static/js/main.js" ></script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-57322503-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+  </body>
+</html>

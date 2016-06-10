@@ -1,0 +1,242 @@
+
+
+
+body {
+    padding-bottom: 0;
+}
+
+div.documentwrapper {
+    margin-bottom: 2.3rem;
+}
+
+.dw-header {
+    margin: -20px -30px 30px -30px;
+    background-color: #e94c38;
+}
+
+.dw-header .dw-headerwrapper {
+    padding: 20px 30px;
+}
+
+.dw-header .dw-sidebar {
+    margin: auto;
+    width: 270px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.dw-header .dw-sidebar .dw-logo {
+    width: 190px;
+}
+
+/* BREADCRUMB */
+
+.related[role=navigation] {
+    display: none;
+}
+
+/* SIDEBAR */
+
+div.sphinxsidebar {
+    width: 118%;
+    background-color: #003d4c;
+    margin: 0 -30px 0 -30px;
+}
+
+div.sphinxsidebar a {
+    border: none;
+}
+
+div.sphinxsidebar a:hover {
+    border: none;
+}
+
+div.sphinxsidebar ul {
+    margin: 10px 0 0 30px;
+}
+
+div.sphinxsidebar ul ul {
+    list-style: none;
+    margin-top: 0.4rem;
+}
+
+div.sphinxsidebar ul li {
+    margin-bottom: 0.4rem;
+}
+
+div.sphinxsidebar ul li.toctree-l1 > a,
+div.sphinxsidebar ul li.toctree-l2 > a,
+div.sphinxsidebar ul li.toctree-l3 > a {
+    font-size: inherit;
+}
+
+/* SEARCH */
+
+.dw-header .dw-search {
+}
+
+.dw-header .dw-search .dw-searchform {
+    width: 100%;
+    margin: auto;
+    text-align: center;
+}
+
+.dw-header .dw-search input[type=text] {
+    width: 100px;
+    text-align: center;
+    border-top: none;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0);
+    border-left: none;
+    color: #fff;
+    background-color: transparent;
+    transition: width 400ms, border 100ms;
+}
+
+.dw-header .dw-search input[type=text]:focus {
+    width: 100%;
+    text-align: left;
+    outline: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+    transition: width 400ms, border 100ms;
+}
+
+.dw-header .dw-search.active input[type=text] {
+    width: 100%
+}
+
+.dw-header .dw-search.active .dw-searchform {
+    width: 100%
+}
+
+.dw-header .dw-searchform ::-webkit-input-placeholder { color: rgba(255, 255, 255, 0.8); }
+.dw-header .dw-searchform :-moz-placeholder { color: rgba(255, 255, 255, 0.8); }
+.dw-header .dw-searchform ::-moz-placeholder { color: rgba(255, 255, 255, 0.8); }
+.dw-header .dw-searchform :-ms-input-placeholder { color: rgba(255, 255, 255, 0.8); }
+.dw-header .dw-searchform ::-ms-input-placeholder { color: rgba(255, 255, 255, 0.8); }
+.dw-header .dw-searchform :placeholder-shown { color: rgba(255, 255, 255, 0.8); }
+
+/* BODY */
+
+div.body ul { margin-top:0 }
+
+div.body .copy-header {
+    background-color: #e1e4e5;
+    padding: 0;
+    text-align: right;
+}
+
+div.body .copy-header .copy-btn {
+    display: inline-block;
+    text-align: right;
+    font-size: 0.8rem;
+    color: #666;
+    padding: 0.2rem 0.2rem 0.3rem;
+    margin-right:0.9rem;
+}
+
+div.body .copy-header .copy-btn.zeroclipboard-is-hover{
+    color: #000;
+    cursor: pointer;
+}
+
+
+/* DESKTOP BREAKPOINT */
+
+@media screen and (min-width: 875px) {
+
+    .dw-header {
+        margin: 0;
+    }
+
+    .dw-header .dw-headerwrapper {
+        width: 940px;
+        margin: 0 auto;
+        padding: 47px 10px;
+    }
+
+    .dw-header .dw-sidebar {
+        float: left;
+        display: inline-block;
+        margin: 0 inherit;
+        margin-bottom: 0;
+        text-align: left;
+    }
+
+    /* BREADCRUMB */
+
+    .related[role=navigation] {
+        display: block;
+        padding: 1rem 0;
+        background-color: #333;
+        color: #fff;
+    }
+
+    .related[role=navigation] ul {
+        width: 940px;
+        margin: 0 auto;
+    }
+    .related[role=navigation] a {
+        color: #fff;
+        text-decoration: none;
+    }
+
+    /* SIDEBAR */
+    div.sphinxsidebarwrapper {
+        padding: 0 0 18px 10px;
+        border-right: 1px solid #ddd;
+    }
+
+    div.sphinxsidebarwrapper h3 {
+        margin-top: 2rem;
+    }
+
+    div.sphinxsidebarwrapper > h3:first-child {
+        margin-top: inherit;
+    }
+
+    div.sphinxsidebar {
+        background-color: transparent;
+        width: 270px;
+        margin: 0 0 0 -100%;
+    }
+
+
+    div.sphinxsidebar a {
+        color: #333;
+    }
+
+    div.sphinxsidebar a:hover {
+        color: #0AA0CA;
+    }
+
+    div.sphinxsidebar li a {
+        display: block;
+    }
+
+    div.sphinxsidebar li.current {
+        margin-right: -1px;
+    }
+
+    div.sphinxsidebar li.current a.current {
+        border-right: 2px solid #0AA0CA;
+    }
+
+    /* SEARCH */
+
+    .dw-header .dw-search {
+        display: inline-block;
+        width: 650px;
+    }
+
+    .dw-header .dw-search .dw-searchform {
+        margin: -0.7rem 20px 0;
+        text-align: left;
+    }
+
+    .dw-header .dw-search input[type=text] {
+        width: 8rem;
+        text-align:left;
+    }
+
+}
