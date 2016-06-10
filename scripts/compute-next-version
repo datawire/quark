@@ -171,12 +171,6 @@ class change_impact(object):
     def __init__(self, last_release, develop = "origin/develop"):
         self.last_release = last_release.not_containing(develop)
         self.develop = develop
-        if self.last_release.version.major == 0:
-            self.log.info("While the project is in %s version, all changes have reduced impact" % self.last_release.version)
-            self.MAJOR.xform = self.MINOR.xform
-            self.MAJOR.delta = self.MINOR.delta
-            self.MINOR.xform = self.FIX.xform
-            self.MINOR.delta = self.FIX.delta
 
     def commits(self):
         for line in Subprocess.check_output(
