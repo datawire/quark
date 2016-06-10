@@ -8,10 +8,26 @@ Latest
 
 ### Language
 
+* (!) Compiler version declaration is restricted to 3 forms:
+   * `quark x.y.z;` like `quark 1.2.3;`,
+   * `quark x.y;` like `quark 1.2;`, semantically same as `quark x.y.0;`,
+   * `quark *;` which disables version checking.
+  See detailes of the new [version comparison rules](
+    https://github.com/datawire/quark/wiki/Compiler-Versioning).
+
+0.7.6
+------
+
+### Language
+
 * (!) Quark files now require compiler version declaration, e.g.
   `quark 0.7.0;`. Compiler will decide if it is compatible with the source
   file based on the rules of [semantic versioning](http://semver.org).
   Programs missing this declaration are rejected.
+* Multiline string literals delimited by tripple double-quotes,
+  supporting same escape-sequences as existing string literals:
+  `\n`, `\r`, `\t`, `\"`, `\\`, `\x00`, `\u0000`. Although allowed,
+  a single double quote does not need escaping.
 
 ### Standard Library
 
