@@ -15,15 +15,6 @@ Latest
   See detailes of the new [version comparison rules](
     https://github.com/datawire/quark/wiki/Compiler-Versioning).
 
-0.7.6
-------
-
-### Language
-
-* (!) Quark files now require compiler version declaration, e.g.
-  `quark 0.7.0;`. Compiler will decide if it is compatible with the source
-  file based on the rules of [semantic versioning](http://semver.org).
-  Programs missing this declaration are rejected.
 * Multiline string literals delimited by tripple double-quotes,
   supporting same escape-sequences as existing string literals:
   `\n`, `\r`, `\t`, `\"`, `\\`, `\x00`, `\u0000`. Although allowed,
@@ -46,9 +37,28 @@ Latest
 
   The original `String` is now accessible as `Error#getMessage()`
 
-* Quark String objects have `toUpper()` and `toLower()` methods.
-
 * Ruby backend handles HTTPS and WSS client requests
+
+* `Runtime.open` invokes `onWSError` when socket establishment fails
+
+### Other
+
+* Testing of quark is now simplified with docker. See [TESTING.md]().
+* CI runs pyflakes and pylint on quark compiler code
+
+0.7.6
+------
+
+### Language
+
+* (!) Quark files now require compiler version declaration, e.g.
+  `quark 0.7.0;`. Compiler will decide if it is compatible with the source
+  file based on the rules of [semantic versioning](http://semver.org).
+  Programs missing this declaration are rejected.
+
+### Standard Library
+
+* Quark String objects have `toUpper()` and `toLower()` methods.
 
 ### Other
 
