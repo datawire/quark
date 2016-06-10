@@ -1,6 +1,9 @@
 # Use Dockerfile.base for this:
 FROM quark-base
 
+# Add pip:
+RUN apt-get install -y python-pip
+
 # Install user-specific packages:
 RUN mkdir /tmp/code
 COPY . /tmp/code

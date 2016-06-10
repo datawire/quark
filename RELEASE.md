@@ -106,6 +106,10 @@ when push suceeds the `release-in-progress` branch is deleted automatically
 Publishing release artefacts requires write permission to PyPI (the
 datawire-quark package) and DockerHub (the datawire organization).
 
+Make sure you are logged in to DockerHub; if not you will need to:
+
+    $ sudo docker login
+
 Currently publishing of the release artefacts is not automated beyond
 the following:
 
