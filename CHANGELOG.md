@@ -24,6 +24,10 @@ Latest
   `quark 0.7.0;`. Compiler will decide if it is compatible with the source
   file based on the rules of [semantic versioning](http://semver.org).
   Programs missing this declaration are rejected.
+* Multiline string literals delimited by tripple double-quotes,
+  supporting same escape-sequences as existing string literals:
+  `\n`, `\r`, `\t`, `\"`, `\\`, `\x00`, `\u0000`. Although allowed,
+  a single double quote does not need escaping.
 
 ### Standard Library
 
