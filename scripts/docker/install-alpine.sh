@@ -4,7 +4,7 @@ apk add --update bash
 apk add --no-cache make gcc libc-dev g++
 apk add --no-cache openjdk8
 apk add --no-cache python python-dev py-pip py-virtualenv
-apk add --no-cache ruby ruby-dev ruby-bundler ruby-rdoc
+apk add --no-cache ruby ruby-dev ruby-bundler ruby-rdoc ruby-irb
 apk add --no-cache nodejs nodejs-dev
 wget http://apache.cs.utah.edu/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz &&
 tar xfz apache-maven-3.3.9-bin.tar.gz
