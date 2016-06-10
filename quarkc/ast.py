@@ -424,7 +424,7 @@ class Constructor(Method):
     fields=[]
 
     def __init__(self, name, params, body):
-        Callable.__init__(self, None, name, params, body)
+        Method.__init__(self, None, name, params, body)
 
     def copy(self):
         return self.__class__(copy(self.name), copy(self.params),
@@ -432,7 +432,7 @@ class Constructor(Method):
 
 class ConstructorMacro(Macro):
     def __init__(self, name, params, body):
-        Callable.__init__(self, None, name, params, body)
+        Macro.__init__(self, None, name, params, body)
 
     def copy(self):
         return self.__class__(copy(self.name), copy(self.params),
