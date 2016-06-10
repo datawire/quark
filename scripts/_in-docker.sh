@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Script used by Dockerfile.dev as entry point, makes sure user commands run
+# within the virtualenv and Gem home setup in the image created by
+# Dockerfile.dev.
+
 # Virtualenv for Python:
 source /tmp/run/bin/activate
 
