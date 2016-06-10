@@ -128,7 +128,7 @@ class Backend(object):
             if fname is None:
                 continue
             self.current_package = d.package
-            if self.setfile(fname, lambda: self.make_file(d)):
+            if self.setfile(fname, lambda _d=d: self.make_file(_d)):
                 self.files[fname] += "\n"
             dfn_code = self.definition(d)
             if dfn_code and d.package is None and d.file.name.endswith(BUILTIN_FILE):

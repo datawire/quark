@@ -1,4 +1,4 @@
-import semantic_version as semver
+import semantic_version as semver  # pylint: disable=import-error
 
 from ._metadata import __version__
 from .helpers import lineinfo

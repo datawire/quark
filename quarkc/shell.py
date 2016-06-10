@@ -17,7 +17,7 @@ import shlex
 import subprocess
 import logging
 import pkg_resources
-from distutils.version import StrictVersion
+from distutils.version import StrictVersion  # pylint: disable=import-error
 
 from .exceptions import QuarkError
 
