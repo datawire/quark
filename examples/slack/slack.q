@@ -58,14 +58,15 @@ namespace slack {
 
         void onWSConnected(WebSocket socket) {
             self.socket = socket;
+            print("WebSocket Client connected!");
         }
 
         void onWSClose(WebSocket socket) {
             print("socket closed");
         }
 
-        void onWSError(WebSocket socket) {
-            print("socket error");
+        void onWSError(WebSocket socket, WSError error) {
+            print("socket error" + error.getMessage());
         }
 
         event.SlackEvent construct(String type) {

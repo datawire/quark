@@ -31,4 +31,4 @@ class Test(object):
             (self).name = _cast(value, lambda: unicode)
 
 
-Test.test_Test_ref = package_md.Root.test_Test_md
+Test.test_Test_ref = None

@@ -41,7 +41,7 @@ def self.Cat; Cat; end
 class Cat < ::Quark.inheritance.pets.Pet
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_pets_Cat_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_pets_Cat_md }
+    static inheritance_pets_Cat_ref: -> { nil }
 
 
 
@@ -98,7 +98,7 @@ def self.Dog; Dog; end
 class Dog < ::Quark.inheritance.pets.Pet
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_pets_Dog_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_pets_Dog_md }
+    static inheritance_pets_Dog_ref: -> { nil }
 
 
 

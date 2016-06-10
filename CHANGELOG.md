@@ -31,8 +31,24 @@ Latest
 
 ### Standard Library
 
+* (!) Add Error class and subclasses for various quark subsystems
+
+  BREAKING CHANGE
+
+  This is a breaking change as signatures of existing methods are changed.
+  Affected classes are:
+
+ *  `HTTPHandler#onHTTPError` changed second parameter type from `String to `HTTPError`
+ *  `WSHandler#onWSError` added second parameter of type `WSError`
+ *  `HTTPServlet#onServletError` and `WSServlet#onServletError` changed second parameter type from `String` to `ServletError`
+ *  `Future#getError` changed return type from `String` to `Error`
+ *  `os.FileContents#getError` changed return type from `String` to `OSError`
+
+  The original `String` is now accessible as `Error#getMessage()`
+
 * Quark String objects have `toUpper()` and `toLower()` methods.
 
+* Ruby backend handles HTTPS and WSS client requests
 
 ### Other
 

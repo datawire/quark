@@ -792,7 +792,7 @@ class JavaScript(Backend):
     def _install_target(self, name, ver):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
-            return json.loads(output)["dependencies"][name]["path"]
+            return json.loads(output).get("dependencies",{}).get(name,{}).get("path")
         except shell.ShellError:
             pass
         return None

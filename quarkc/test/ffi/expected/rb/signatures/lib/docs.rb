@@ -11,7 +11,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static docs_Test_ref: -> { ::Quark.quark_ffi_signatures_md.Root.docs_Test_md }
+    static docs_Test_ref: -> { nil }
 
 
 

@@ -28,7 +28,7 @@ class A(object):
             (self).name = _cast(value, lambda: unicode)
 
 
-A.inheritance_super__A_ref = quark_ffi_signatures_md.Root.inheritance_super__A_md
+A.inheritance_super__A_ref = None
 class B(A):
     def _init(self):
         A._init(self)
@@ -53,4 +53,4 @@ class B(A):
             (self).name = _cast(value, lambda: unicode)
 
 
-B.inheritance_super__B_ref = quark_ffi_signatures_md.Root.inheritance_super__B_md
+B.inheritance_super__B_ref = None

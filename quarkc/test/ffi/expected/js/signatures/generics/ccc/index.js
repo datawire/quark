@@ -14,7 +14,7 @@ exports.TLSContextInitializer = TLSContextInitializer;
 
 function TLSContextInitializer__init_fields__() {}
 TLSContextInitializer.prototype.__init_fields__ = TLSContextInitializer__init_fields__;
-TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = quark_ffi_signatures_md.Root.generics_ccc_TLSContextInitializer_md;
+TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = null;
 function TLSContextInitializer_getValue() {
     return _qrt.cast(null, function () { return Context; });
 }
@@ -46,8 +46,8 @@ function Context__init_fields__() {
 Context.prototype.__init_fields__ = Context__init_fields__;
 Context._global = null;
 Context._current = null;
-Context.generics_ccc_Context_ref = quark_ffi_signatures_md.Root.generics_ccc_Context_md;
-Context.generics_ccc_TLS_generics_ccc_Context__ref = quark_ffi_signatures_md.Root.generics_ccc_TLS_generics_ccc_Context__md;
+Context.generics_ccc_Context_ref = null;
+Context.generics_ccc_TLS_generics_ccc_Context__ref = null;
 function Context_current() {
     return _qrt.cast(null, function () { return Context; });
 }
@@ -98,7 +98,7 @@ exports.TLSInitializer = TLSInitializer;
 
 function TLSInitializer__init_fields__() {}
 TLSInitializer.prototype.__init_fields__ = TLSInitializer__init_fields__;
-TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = quark_ffi_signatures_md.Root.generics_ccc_TLSInitializer_quark_Object__md;
+TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = null;
 function TLSInitializer_getValue() { throw TypeError, '`TLSInitializer.getValue` is an abstract method'; }
 TLSInitializer.prototype.getValue = TLSInitializer_getValue;
 

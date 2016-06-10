@@ -35,7 +35,7 @@ class Overload(object):
             (self).name = _cast(value, lambda: unicode)
 
 
-Overload.classes_Overload_ref = quark_ffi_signatures_md.Root.classes_Overload_md
+Overload.classes_Overload_ref = None
 class Test(object):
     def _init(self):
         pass
@@ -52,7 +52,7 @@ class Test(object):
 
     def _setField(self, name, value):
         pass
-Test.classes_Test_ref = quark_ffi_signatures_md.Root.classes_Test_md
+Test.classes_Test_ref = None
 class string_test(object):
     def _init(self):
         pass
@@ -69,7 +69,7 @@ class string_test(object):
 
     def _setField(self, name, value):
         pass
-string_test.classes_string_test_ref = quark_ffi_signatures_md.Root.classes_string_test_md
+string_test.classes_string_test_ref = None
 class test_size(string_test):
     def _init(self):
         string_test._init(self)
@@ -95,7 +95,7 @@ class test_size(string_test):
             (self).what = _cast(value, lambda: unicode)
 
 
-test_size.classes_test_size_ref = quark_ffi_signatures_md.Root.classes_test_size_md
+test_size.classes_test_size_ref = None
 class test_startsWith(string_test):
     def _init(self):
         string_test._init(self)
@@ -131,7 +131,7 @@ class test_startsWith(string_test):
             (self)._that = _cast(value, lambda: unicode)
 
 
-test_startsWith.classes_test_startsWith_ref = quark_ffi_signatures_md.Root.classes_test_startsWith_md
+test_startsWith.classes_test_startsWith_ref = None
 class test_endsWith(string_test):
     def _init(self):
         string_test._init(self)
@@ -167,7 +167,7 @@ class test_endsWith(string_test):
             (self)._that = _cast(value, lambda: unicode)
 
 
-test_endsWith.classes_test_endsWith_ref = quark_ffi_signatures_md.Root.classes_test_endsWith_md
+test_endsWith.classes_test_endsWith_ref = None
 class test_find(string_test):
     def _init(self):
         string_test._init(self)
@@ -203,7 +203,7 @@ class test_find(string_test):
             (self)._that = _cast(value, lambda: unicode)
 
 
-test_find.classes_test_find_ref = quark_ffi_signatures_md.Root.classes_test_find_md
+test_find.classes_test_find_ref = None
 class test_substring(string_test):
     def _init(self):
         string_test._init(self)
@@ -246,7 +246,7 @@ class test_substring(string_test):
             (self).end = _cast(value, lambda: int)
 
 
-test_substring.classes_test_substring_ref = quark_ffi_signatures_md.Root.classes_test_substring_md
+test_substring.classes_test_substring_ref = None
 class test_replace(string_test):
     def _init(self):
         string_test._init(self)
@@ -289,7 +289,7 @@ class test_replace(string_test):
             (self).end = _cast(value, lambda: unicode)
 
 
-test_replace.classes_test_replace_ref = quark_ffi_signatures_md.Root.classes_test_replace_md
+test_replace.classes_test_replace_ref = None
 class test_join(string_test):
     def _init(self):
         string_test._init(self)
@@ -342,7 +342,7 @@ class test_join(string_test):
             (self).sep = _cast(value, lambda: unicode)
 
 
-test_join.classes_test_join_ref = quark_ffi_signatures_md.Root.classes_test_join_md
+test_join.classes_test_join_ref = None
 class test_split(string_test):
     def _init(self):
         string_test._init(self)
@@ -385,4 +385,4 @@ class test_split(string_test):
             (self).altsep = _cast(value, lambda: unicode)
 
 
-test_split.classes_test_split_ref = quark_ffi_signatures_md.Root.classes_test_split_md
+test_split.classes_test_split_ref = None

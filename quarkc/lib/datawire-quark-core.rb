@@ -149,7 +149,7 @@ module DatawireQuarkCore
       result.value = File.read(path, {"encoding": "UTF-8"})
       result.finish(nil)
     rescue => ex
-      result.finish(ex.message)
+      result.finish(::Quark.quark.os.OSError.new(ex.message))
     end
   end
 
@@ -597,7 +597,8 @@ module DatawireQuarkCore
           uri = URI(url)
           req = Net::HTTPGenericRequest.new(request.getMethod.upcase, 1, 1, uri, headers)
           req.body = request.getBody
-          res = Net::HTTP.start(uri.host, uri.port) do | http |
+          res = Net::HTTP.start(uri.host, uri.port,
+                                :use_ssl => uri.scheme == 'https') do | http |
             http.request(req)
           end
           response = HTTP::Response.new
@@ -607,7 +608,7 @@ module DatawireQuarkCore
         rescue Exception => e
           @log.warn "EXCEPTION: #{e.inspect}"
           @log.warn "MESSAGE: #{e.message}"
-          @events.event { handler.onHTTPError request, e.message }
+          @events.event { handler.onHTTPError request, ::Quark.quark.HTTPError.new(e.message) }
         ensure
           @events.event(final:src) { handler.onHTTPFinal request }
         end
@@ -639,6 +640,7 @@ module DatawireQuarkCore
       events.event { handler.onWSInit(sock) }
       client.on_client(:open) do |wsevt|
         # puts "open"
+        sock.opened = true
         events.event { handler.onWSConnected(sock) }
       end
       client.on_client(:message) do |wsevt|
@@ -653,16 +655,17 @@ module DatawireQuarkCore
       end
       client.on_client(:close) do |wsevt|
         # puts "close"
-        events.event { handler.onWSClosed(sock) }
+        if sock.opened
+          events.event { handler.onWSClosed(sock) }
+        end
         events.event(final:src) { handler.onWSFinal(sock) }
       end
       client.on_client(:error) do |wsevt|
         # puts self
-        events.event { handler.onWSError(sock) # , wsevt.message)
-        }
+        events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(wsevt.message)) }
       end
       client.issues.on(:start_failed) do |err|
-        events.event { handler.onWSError(sock, err.to_s) }
+        events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(err.to_s)) }
         events.event(final:src) { handler.onWSFinal(sock) }
       end
       Thread.new { client.run }
@@ -686,8 +689,10 @@ module DatawireQuarkCore
   end
 
   class WebsocketAdapter
+    attr_accessor :opened
     def initialize(client)
       @client = client
+      @opened = false
     end
 
     def send (message)
@@ -724,7 +729,13 @@ module DatawireQuarkCore
       begin
         uri = URI(url)
         port = uri.port || (uri.scheme == "ws" ? 80 : 443)
-        @socket = Celluloid::IO::TCPSocket.new(uri.host, port)
+        tcp = Celluloid::IO::TCPSocket.new(uri.host, port)
+        if uri.scheme == "wss"
+          @socket = Celluloid::IO::SSLSocket.new(tcp)
+          @socket.connect
+        else
+          @socket = tcp
+        end
         @client.start
       rescue ::Exception => err
         @issues.emit(:start_failed, err)
@@ -776,12 +787,12 @@ module DatawireQuarkCore
     def add(adapter)
       if not adapter.scheme_supported?
         error = "${adapter.uri.scheme} is not supported"
-        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        @events.event { adapter.servlet.onServletError(adapter.url, ::Quark.quark.ServletError.new(error)) }
         return
       end
       if adapter.secure?
         error = "${adapter.uri.scheme} is not yet supported"
-        @events.event { adapter.servlet.onServletError(adapter.url, error) }
+        @events.event { adapter.servlet.onServletError(adapter.url, ::Quark.quark.ServletError.new(error)) }
         return
       end
       server = @servers[adapter.key]
@@ -889,8 +900,7 @@ module DatawireQuarkCore
           events.event(final:src) { handler.onWSFinal(sock) }
         end
         websocket.on_error do |wsevt|
-          events.event { handler.onWSError(sock) #, wsevt.message)
-          }
+          events.event { handler.onWSError(sock, ::Quark.quark.WSError.new(wsevt.message)) }
         end
         Thread.new do
           while not websocket.closed?

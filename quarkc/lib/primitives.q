@@ -395,4 +395,20 @@ namespace quark {
         macro JSONObject toJSON() quark.toJSON(self, self.getClass());
         macro JSONObject __to_JSONObject() self.toJSON();
     }
+
+namespace error {
+    class Error {
+        String message;
+        Error(String message) {
+            self.message = message;
+        }
+        String getMessage() {
+            return message;
+        }
+        String toString() {
+            return "Error("+self.message+")";
+        }
+    }
+}
+
 }

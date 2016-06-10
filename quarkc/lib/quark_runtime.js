@@ -23,6 +23,8 @@
     exports.util = require("util");
     var _ = require("lodash");
 
+    var quark;
+
     function Platform() {
     }
 
@@ -136,7 +138,7 @@
             result.value = fs.readFileSync(path, { encoding: "UTF-8" });
             result.finish(null);
         } catch (exc) {
-            result.finish(exc.toString());
+            result.finish(new quark.quark.os.OSError(exc.toString()));
         }
     }
     exports.getFileContents = getFileContents;
@@ -837,5 +839,7 @@
         }
         return loggers[topic];
     }
+
+    quark = require("quark");
 
 })();

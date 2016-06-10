@@ -19,6 +19,7 @@ Helpers for testing based on command output capture.
 import urllib
 import hashlib
 import os
+import sys
 
 import pexpect
 
@@ -44,9 +45,10 @@ class FilteredOutputFile(object):
             lines[-1] = "".join(lines[-1].rsplit("^C", 1))
         return "\n".join(lines) + "\n"
 
-    def __init__(self, filename, filters):
+    def __init__(self, filename, filters, trace=False):
         self.file = open(filename, "wb", 0)
         self.filters = filters
+        self.trace = trace
         try:
             len(self.filters)
         except TypeError:
@@ -62,29 +64,34 @@ class FilteredOutputFile(object):
         return data
 
     def write(self, data):
+        if self.trace:
+            sys.stdout.write(data)
         self.captured.append(data)
         self.file.seek(0)
         self.file.truncate()
         return self.file.write(self.get_data())
 
     def flush(self):
+        if self.trace:
+            sys.stdout.flush()
         return self.file.flush()
 
 
 class Captured(object):
 
-    def __init__(self, cwd, source_file, output_file, command, filters, timeout):
+    def __init__(self, cwd, source_file, output_file, command, filters, timeout, trace=False):
         self.cwd = cwd
         self.source_file = source_file  # name of command file or none
         self.output_file = output_file  # name of output file for this command
         self.command = command          # command that was run
         self.filters = filters
         self.timeout = timeout
+        self.trace = trace
         self.output = None              # output for this command, i.e. contents of output_file
 
     def spawn(self):
         child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=self.timeout)
-        child.logfile_read = FilteredOutputFile(self.output_file, self.filters)
+        child.logfile_read = FilteredOutputFile(self.output_file, self.filters, self.trace)
         return child
 
     def update_capture(self, child):
@@ -151,7 +158,7 @@ class Session(object):
         for bg_process in self.bg_processes:
             bg_process.noop()
 
-    def capture(self, command, nocmp=False, filters=None, timeout=90):
+    def capture(self, command, nocmp=False, filters=None, timeout=90, trace=True):
         """
         Run the command synchronously and capture the output. Return an
         instance of Captured. Set option nocmp to True to tell the
@@ -160,20 +167,20 @@ class Session(object):
         """
         if filters is None:
             filters = []
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout)
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace)
         child = cap.spawn()
         cap.finish_capture(child)
         self.call_noop()
         return cap
 
-    def capture_bg(self, command, nocmp=False, filters=None, timeout=90):
+    def capture_bg(self, command, nocmp=False, filters=None, timeout=90, trace=False):
         """
         Run the command asynchronously, capturing the output. Return an
         instance of BGProcess. Use nocmp and filters as with capture.
         """
         if filters is None:
             filters = []
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout)
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace)
         res = BGProcess(cap)
         self.bg_processes.append(res)
         self.call_noop()

@@ -6,6 +6,39 @@ File(Import(Name(quark)), CompilerVersionSpec(),
 
  Package(Name(quark),
 
+  Class(Name(WSError), Type(Name(Error)),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("quark.WSError", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Return(Attr(Var(Name(self), $type=8.quark.WSError), Name(message),
+        $type=1.quark.String)))),
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Assign(Attr(Var(Name(self), $type=8.quark.WSError), Name(message),
+        $type=1.quark.String), Cast(Var(Name(value), $type=1.quark.Object),
+        $type=1.quark.String)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(quark_WSError_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+      Name(quark_WSError_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
   Interface(Name(WSHandler),
 
    Method(static=False, Type(Name(void)), Name(onWSInit),
@@ -32,16 +65,19 @@ File(Import(Name(quark)), CompilerVersionSpec(),
 
    Method(static=False, Type(Name(void)), Name(onWSError),
     Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
+    Param(Type(Name(WSError)), Name(error), $type=8.quark.WSError),
     Block()),
 
    Method(static=False, Type(Name(void)), Name(onWSFinal),
     Param(Type(Name(WebSocket)), Name(socket), $type=8.quark.WebSocket),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_WSHandler_ref), Attr(Attr(Var(Name(quark_md),
-      $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
-     Name(quark_WSHandler_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)),
+    Name(quark_WSHandler_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+      Name(quark_WSHandler_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Interface(Name(WebSocket),
 
@@ -53,10 +89,12 @@ File(Import(Name(quark)), CompilerVersionSpec(),
 
    Method(static=False, Type(Name(bool)), Name(close)),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_WebSocket_ref), Attr(Attr(Var(Name(quark_md),
-      $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
-     Name(quark_WebSocket_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)),
+    Name(quark_WebSocket_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+      Name(quark_WebSocket_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Interface(Annotation(Name(doc), String("Websocket servlet",
     $type=1.quark.String)), Name(WSServlet), Type(Name(Servlet)),
@@ -80,8 +118,10 @@ File(Import(Name(quark)), CompilerVersionSpec(),
        $type=1.quark.String), Var(Name(self), $type=8.quark.WSServlet),
       $type=1.quark.void)))),
    Field(static=True, Type(Name(reflect), Name(Class)),
-    Name(quark_WSServlet_ref), Attr(Attr(Var(Name(quark_md),
-      $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
-     Name(quark_WSServlet_md), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)))
+    Name(quark_WSServlet_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+      Name(quark_WSServlet_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
 )

@@ -14,7 +14,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.generics_pkg_Foo_quark_Object__ref = quark_ffi_signatures_md.Root.generics_pkg_Foo_quark_Object__md;
+Foo.generics_pkg_Foo_quark_Object__ref = null;
 function Foo_foo() {
     return _qrt.cast(null, function () { return T; });
 }
@@ -31,7 +31,7 @@ exports.StringFoo = StringFoo;
 
 function StringFoo__init_fields__() {}
 StringFoo.prototype.__init_fields__ = StringFoo__init_fields__;
-StringFoo.generics_pkg_StringFoo_ref = quark_ffi_signatures_md.Root.generics_pkg_StringFoo_md;
+StringFoo.generics_pkg_StringFoo_ref = null;
 function StringFoo_get() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -99,8 +99,8 @@ function StringBox__init_fields__() {
     Box.prototype.__init_fields__.call(this);
 }
 StringBox.prototype.__init_fields__ = StringBox__init_fields__;
-StringBox.generics_pkg_Box_quark_String__ref = quark_ffi_signatures_md.Root.generics_pkg_Box_quark_String__md;
-StringBox.generics_pkg_StringBox_ref = quark_ffi_signatures_md.Root.generics_pkg_StringBox_md;
+StringBox.generics_pkg_Box_quark_String__ref = null;
+StringBox.generics_pkg_StringBox_ref = null;
 function StringBox__getClass() {
     return "generics.pkg.StringBox";
 }

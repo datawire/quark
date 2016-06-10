@@ -12,7 +12,7 @@ def self.SlackHandler; SlackHandler; end
 class SlackHandler < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static slack_SlackHandler_ref: -> { ::Quark.slackpack_md.Root.slack_SlackHandler_md }
+    static slack_SlackHandler_ref: -> { nil }
 
 
 
@@ -68,7 +68,7 @@ class User < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :user
     extend ::DatawireQuarkCore::Static
 
-    static slack_User_ref: -> { ::Quark.slackpack_md.Root.slack_User_md }
+    static slack_User_ref: -> { nil }
 
 
 
@@ -131,7 +131,7 @@ class Channel < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :channel
     extend ::DatawireQuarkCore::Static
 
-    static slack_Channel_ref: -> { ::Quark.slackpack_md.Root.slack_Channel_md }
+    static slack_Channel_ref: -> { nil }
 
 
 
@@ -201,8 +201,8 @@ class Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :runtime, :token, :handler, :event_id, :socket
     extend ::DatawireQuarkCore::Static
 
-    static slack_Client_ref: -> { ::Quark.slackpack_md.Root.slack_Client_md }
-    static quark_Map_quark_String_quark_Object__ref: -> { ::Quark.slackpack_md.Root.quark_Map_quark_String_quark_Object__md }
+    static slack_Client_ref: -> { nil }
+    static quark_Map_quark_String_quark_Object__ref: -> { nil }
 
 
 
@@ -258,7 +258,7 @@ class Client < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
-    def onWSError(socket)
+    def onWSError(socket, error)
         
         nil
 

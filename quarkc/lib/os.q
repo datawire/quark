@@ -3,6 +3,8 @@ include io/datawire/quark/runtime/Os.java;
 
 namespace quark {
     namespace os {
+        class OSError extends Error {}
+
         class FileContents extends concurrent.Future {
             String value;
         }
