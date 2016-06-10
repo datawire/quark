@@ -26,7 +26,7 @@ from .ast import (
     Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
     ConstructorMacro,
 )
-from .grammar import Grammar, ParseError
+from .grammar import Grammar
 
 
 g = Grammar()
