@@ -32,7 +32,11 @@ class Version:
     class Invalid(object):
         """Version that didn't parse correctly."""
 
-    _re = re(r"^(\d)\.(\d)(?:\.(\d))?|(\*)$")
+    _re = re(r"""(?x)
+        \A(?:
+            (\d+)\.(\d+)(?:\.(\d+))? | (\*)
+        )\Z
+    """)
 
     @classmethod
     def parse(cls, source):
