@@ -4,9 +4,21 @@ include io/datawire/quark/runtime/Lock.java;
 namespace quark {
 namespace promises {
 
-    // XXX in real imlpementation instead of calling self.next._reject/_resolve
-    // directly this should be scheduled via a Collector in order to ensure
-    // thread-safety.
+    class _ChainPromise extends Callable {
+        Promise _next;
+
+        _ChangePromise(Promise next) {
+            self._next = next;
+        }
+
+        Object invoke(List<object> args) {
+            _Callback.fullfilPromise(self.next, args[0]);
+        }
+    }
+
+    // XXX in real imlpementation instead of calling this directly in
+    // Promise._maybeRunCallbacks this should be scheduled via a Collector in
+    // order to ensure thread-safety.
     class _Callback {
         Callable _callable;
         Promise _next;
@@ -18,14 +30,25 @@ namespace promises {
             self._extraArgs = extraArgs;
         }
 
+        static void fullfilPromise(Promise promise, Object result) {
+            if (reflect.Class.ERROR.isinstance(result)) {
+                promise._reject(result);
+            } else {
+                promise._resolve(result);
+            }
+        }
+
         void call(Object arg) {
             List<Object> args = self._extraArgs.slice(0, self._extraArgs.size());
             args.insert(0, arg);
             Object result = self.callable.invoke(args);
-            if (reflect.Class.ERROR.isinstance(result)) {
-                self.next._reject(result);
+            if (reflect.Class.get("quark.promises.Promise").isinstance(result)) {
+                // We got a promise as result of callback, so chain it to the
+                // promise that we're supposed to be fulfilling:
+                Promise toChain = result;
+                result.then(new _ChainPromise(self.next));
             } else {
-                self.next._resolve(result);
+                self.fullfilPromise(self.next, result);
             }
         }
     }
