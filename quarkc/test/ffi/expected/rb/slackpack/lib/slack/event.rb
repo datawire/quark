@@ -14,7 +14,7 @@ class SlackEvent < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :user, :channel, :timestamp
     extend ::DatawireQuarkCore::Static
 
-    static slack_event_SlackEvent_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackEvent_md }
+    static slack_event_SlackEvent_ref: -> { nil }
 
 
 
@@ -104,7 +104,7 @@ class SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
     extend ::DatawireQuarkCore::Static
 
-    static slack_event_SlackError_ref: -> { ::Quark.slackpack_md.Root.slack_event_SlackError_md }
+    static slack_event_SlackError_ref: -> { nil }
 
 
 
@@ -205,7 +205,7 @@ def self.Hello; Hello; end
 class Hello < ::Quark.slack.event.SlackEvent
     extend ::DatawireQuarkCore::Static
 
-    static slack_event_Hello_ref: -> { ::Quark.slackpack_md.Root.slack_event_Hello_md }
+    static slack_event_Hello_ref: -> { nil }
 
 
 
@@ -286,7 +286,7 @@ class Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
     extend ::DatawireQuarkCore::Static
 
-    static slack_event_Message_ref: -> { ::Quark.slackpack_md.Root.slack_event_Message_md }
+    static slack_event_Message_ref: -> { nil }
 
 
 
@@ -402,7 +402,7 @@ class Edited < ::DatawireQuarkCore::QuarkObject
     attr_accessor :user, :timestamp
     extend ::DatawireQuarkCore::Static
 
-    static slack_event_Edited_ref: -> { ::Quark.slackpack_md.Root.slack_event_Edited_md }
+    static slack_event_Edited_ref: -> { nil }
 
 
 

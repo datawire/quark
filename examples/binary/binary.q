@@ -23,8 +23,8 @@ namespace binary {
             self.runtime = runtime;
         }
 
-        void onWSError(WebSocket socket) {
-            print("ws error");
+        void onWSError(WebSocket socket, WSError error) {
+            print("ws error" + error.toString());
         }
 
     }

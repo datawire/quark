@@ -20,4 +20,4 @@ class Bar(object):
 
     def _setField(self, name, value):
         pass
-Bar.org_example_bar_Bar_ref = overlapping_namespace_md.Root.org_example_bar_Bar_md
+Bar.org_example_bar_Bar_ref = None

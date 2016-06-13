@@ -6,11 +6,13 @@ import io.datawire.quark.runtime.Buffer;
 import io.datawire.quark.runtime.BufferImpl;
 import io.datawire.quark.runtime.Builtins;
 import io.datawire.quark.runtime.Codec;
+import quark.HTTPError;
 import quark.HTTPHandler;
 import quark.HTTPRequest;
 import quark.HTTPResponse;
 import quark.HTTPServlet;
 import quark.Runtime;
+import quark.ServletError;
 import quark.Task;
 import quark.WSHandler;
 import quark.WSServlet;
@@ -195,7 +197,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            ws_handler.onWSError(null); // XXX websocket error handling
+            ws_handler.onWSError(null, new quark.WSError(e.toString()));
             return;
         }
         String scheme = uri.getScheme() == null? "ws" : uri.getScheme();
@@ -215,7 +217,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
 
         if (!"ws".equalsIgnoreCase(scheme) && !"wss".equalsIgnoreCase(scheme)) {
             System.err.println("Only WS(S) is supported.");
-            ws_handler.onWSError(null); // XXX websocket error handling
+            ws_handler.onWSError(null, new quark.WSError("only WS(S) is supported"));
             return;
         }
 
@@ -226,7 +228,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 sslCtx = SslContextBuilder.forClient()
                         .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             } catch (SSLException e) {
-                ws_handler.onWSError(null); // XXX websocket error handling
+                ws_handler.onWSError(null, new quark.WSError(e.toString()));
                 return;
             }
         } else {
@@ -237,8 +239,6 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                         WebSocketClientHandshakerFactory.newHandshaker(
                                 uri, WebSocketVersion.V13, null, false, new DefaultHttpHeaders()),
                                 ws_handler);
-
-        ws_handler.onWSInit(ws.getWebSocket());
 
         Bootstrap b = new Bootstrap();
         b.group(group)
@@ -255,20 +255,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                         new HttpClientCodec(),
                         new HttpObjectAggregator(8192),
                         ws);
-                ch.closeFuture().addListener(new ChannelFutureListener() {
 
-                    @Override
-                    public void operationComplete(ChannelFuture future) throws Exception {
-                        if (future.isDone()) {
-                            if (future.isSuccess()) {
-                                ws_handler.onWSClosed(ws.getWebSocket());
-                            } else {
-                                ws_handler.onWSError(ws.getWebSocket());
-                            }
-                            ws_handler.onWSFinal(ws.getWebSocket());
-                        }
-                    }
-                });
+                ws.startWSHandlerLifecycle(ch);
             }
         });
         ChannelFuture connecting = b.connect(uri.getHost(), port);
@@ -279,7 +267,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                     if (future.isSuccess()) {
                         // fire onConnected only when websocket is fully connected
                     } else {
-                        ws_handler.onWSError(ws.getWebSocket());
+                        ws_handler.onWSError(ws.getWebSocket(), new quark.WSError(future.cause().toString()));
                     }
                 }
             }
@@ -303,10 +291,12 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     public void request(final HTTPRequest request, HTTPHandler handler) {
         final HTTPHandler ht_handler = wrap(handler);
         final URI uri;
+        ht_handler.onHTTPInit(request);
         try {
             uri = new URI(request.getUrl());
         } catch (URISyntaxException e) {
-            ht_handler.onHTTPError(request, "" + e);
+            ht_handler.onHTTPError(request, new HTTPError("" + e));
+            ht_handler.onHTTPFinal(request);
             return;
         }
         String scheme = uri.getScheme() == null? "http" : uri.getScheme();
@@ -322,7 +312,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
 
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
             System.err.println("Only HTTP(S) is supported.");
-            ht_handler.onHTTPError(request, "Only HTTP(S) is supported.");
+            ht_handler.onHTTPError(request, new HTTPError("Only HTTP(S) is supported."));
+            ht_handler.onHTTPFinal(request);
             return;
         }
 
@@ -334,7 +325,8 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 sslCtx = SslContextBuilder.forClient()
                         .trustManager(InsecureTrustManagerFactory.INSTANCE).build();
             } catch (SSLException e) {
-                ht_handler.onHTTPError(null, "" + e);
+                ht_handler.onHTTPError(null, new HTTPError("" + e));
+                ht_handler.onHTTPFinal(request);
                 return;
             }
         } else {
@@ -404,7 +396,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
             public void operationComplete(ChannelFuture future) throws Exception {
                 if (future.isDone()) {
                     if (!future.isSuccess()) {
-                        ht_handler.onHTTPError(request, "" + future.cause());
+                        ht_handler.onHTTPError(request, new HTTPError("" + future.cause()));
                     } else {
                         // Send the HTTP request.
                         future.channel().writeAndFlush(request1).addListener(new ChannelFutureListener() {
@@ -415,7 +407,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                                     if (future.isSuccess()) {
                                         // yay
                                     } else {
-                                        ht_handler.onHTTPError(request, "" + future.cause());
+                                        ht_handler.onHTTPError(request, new HTTPError("" + future.cause()));
                                     }
                                 }
                             }
@@ -452,7 +444,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            servlet_w.onServletError(url, e.toString());
+            servlet_w.onServletError(url, new ServletError(e.toString()));
             return;
         }
         final String scheme = uri.getScheme() == null? "http" : uri.getScheme();
@@ -472,7 +464,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         }
 
         if (!"http".equalsIgnoreCase(scheme) && !"https".equalsIgnoreCase(scheme)) {
-            servlet_w.onServletError(url, "Only HTTP(S) is supported");
+            servlet_w.onServletError(url, new ServletError("Only HTTP(S) is supported"));
             return;
         }
 
@@ -483,10 +475,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 SelfSignedCertificate ssc = new SelfSignedCertificate();
                 sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
             } catch (SSLException e) {
-                servlet_w.onServletError(url, e.toString());
+                servlet_w.onServletError(url, new ServletError(e.toString()));
                 return;
             } catch (CertificateException e) {
-                servlet_w.onServletError(url, e.toString());
+                servlet_w.onServletError(url, new ServletError(e.toString()));
                 return;
             }
         } else {
@@ -579,7 +571,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         try {
             uri = new URI(url);
         } catch (URISyntaxException e) {
-            servlet_w.onServletError(url, e.toString());
+            servlet_w.onServletError(url, new ServletError(e.toString()));
             return;
         }
         final String scheme = uri.getScheme() == null? "ws" : uri.getScheme();
@@ -599,7 +591,7 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         }
 
         if (!"ws".equalsIgnoreCase(scheme) && !"wss".equalsIgnoreCase(scheme)) {
-            servlet_w.onServletError(url, "Only WS(S) is supported");
+            servlet_w.onServletError(url, new ServletError("Only WS(S) is supported"));
             return;
         }
 
@@ -610,10 +602,10 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
                 SelfSignedCertificate ssc = new SelfSignedCertificate();
                 sslCtx = SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey()).build();
             } catch (SSLException e) {
-                servlet_w.onServletError(url, e.toString());
+                servlet_w.onServletError(url, new ServletError(e.toString()));
                 return;
             } catch (CertificateException e) {
-                servlet_w.onServletError(url, e.toString());
+                servlet_w.onServletError(url, new ServletError(e.toString()));
                 return;
             }
         } else {

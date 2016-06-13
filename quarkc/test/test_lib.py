@@ -28,13 +28,13 @@ def test_lib():
         banner = "##############################################################################"
         pretty = lang[2:].upper()
         print
-        print banner 
+        print banner
         n = len(banner)-4-len(pretty)
-        print "##" + (" "*(n/2)) + pretty + (" "*(n - n/2)) + "##"
+        print "##" + (" "*(n//2)) + pretty + (" "*(n - n//2)) + "##"
         print banner
 
         for path in paths:
             child = pexpect.spawn("quark run %s %s" % (lang, path))
             child.logfile = sys.stdout
-            child.expect("Failed: 0")
+            child.expect("Failed: 0", timeout=100)
             child.expect(pexpect.EOF)

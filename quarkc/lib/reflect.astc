@@ -339,6 +339,13 @@ File(Import(Name(quark)), CompilerVersionSpec(),
          Cast(Var(Name(value), $type=1.quark.Object),
          $type=1.quark.List<3.quark.reflect.Method>))))))),
 
+   Macro(Type(Name(Class)), Name(__register__),
+    Param(Type(Name(Class)), Name(md_ref), $type=3.quark.reflect.Class),
+    Native(NativeCase(java,
+      Var(Name(md_ref), $type=3.quark.reflect.Class)), NativeCase(py,
+      Fixed('None')), NativeCase(rb, Fixed('nil')), NativeCase(js,
+      Fixed('null')))),
+
    Class(Name(Field),
     Field(static=False, Type(Name(String)), Name(type), $type=1.quark.String),
     Field(static=False, Type(Name(String)), Name(name), $type=1.quark.String),

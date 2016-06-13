@@ -12,7 +12,7 @@ def self.Handler; Handler; end
 class Handler < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static slackpack_Handler_ref: -> { ::Quark.slackpack_md.Root.slackpack_Handler_md }
+    static slackpack_Handler_ref: -> { nil }
 
 
 

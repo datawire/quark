@@ -12,7 +12,7 @@ def self.A; A; end
 class A < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_t2_A_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_t2_A_md }
+    static inheritance_t2_A_ref: -> { nil }
 
 
 
@@ -60,7 +60,7 @@ def self.B; B; end
 class B < ::Quark.inheritance.t2.A
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_t2_B_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_t2_B_md }
+    static inheritance_t2_B_ref: -> { nil }
 
 
 
@@ -154,8 +154,8 @@ def self.Y; Y; end
 class Y < ::Quark.inheritance.t2.X
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_t2_X_quark_int__ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_t2_X_quark_int__md }
-    static inheritance_t2_Y_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_t2_Y_md }
+    static inheritance_t2_X_quark_int__ref: -> { nil }
+    static inheritance_t2_Y_ref: -> { nil }
 
 
 

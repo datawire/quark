@@ -14,7 +14,7 @@ def self.Foo; Foo; end
 class Foo < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static org_example_foo_Foo_ref: -> { ::Quark.org_example_foo_md.Root.org_example_foo_Foo_md }
+    static org_example_foo_Foo_ref: -> { nil }
 
 
 

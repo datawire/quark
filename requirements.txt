@@ -11,3 +11,4 @@ sphinx-better-theme
 docopt
 sphinx
 flake8
+pylint

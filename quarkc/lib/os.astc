@@ -5,6 +5,39 @@ File(Import(Name(quark)), CompilerVersionSpec(),
 
   Package(Name(os),
 
+   Class(Name(OSError), Type(Name(Error)),
+
+    Method(static=False, Type(Name(String)), Name(_getClass), Block(
+      Return(String("quark.os.OSError", $type=1.quark.String)))),
+
+    Method(static=False, Type(Name(Object)), Name(_getField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=14.quark.os.OSError), Name(message),
+         $type=1.quark.String)))),
+      Return(Null(null, $type=1.quark.Object)))),
+
+    Method(static=False, Type(Name(void)), Name(_setField),
+     Param(Type(Name(String)), Name(name), $type=1.quark.String),
+     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+     Block(
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("message", $type=1.quark.String),
+       $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=14.quark.os.OSError), Name(message),
+         $type=1.quark.String), Cast(Var(Name(value), $type=1.quark.Object),
+         $type=1.quark.String)))))),
+    Field(static=True, Type(Name(reflect), Name(Class)),
+     Name(quark_os_OSError_ref), Call(Attr(Var(Name(reflect),
+       $type=3.quark.reflect), Name(__register__),
+      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+        $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+       Name(quark_os_OSError_md), $type=3.quark.reflect.Class),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
    Class(Name(FileContents), Type(Name(concurrent), Name(Future)),
     Field(static=False, Type(Name(String)), Name(value), $type=1.quark.String),
 
@@ -28,7 +61,7 @@ File(Import(Name(quark)), CompilerVersionSpec(),
         $type=1.quark.Object.__eq__), String("_error", $type=1.quark.String),
        $type=1.quark.bool), Block(
         Return(Attr(Var(Name(self), $type=14.quark.os.FileContents),
-          Name(_error), $type=1.quark.String)))),
+          Name(_error), $type=1.quark.error.Error)))),
       If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
         $type=1.quark.Object.__eq__), String("_callbacks",
         $type=1.quark.String), $type=1.quark.bool), Block(
@@ -68,8 +101,8 @@ File(Import(Name(quark)), CompilerVersionSpec(),
         $type=1.quark.Object.__eq__), String("_error", $type=1.quark.String),
        $type=1.quark.bool), Block(
         Assign(Attr(Var(Name(self), $type=14.quark.os.FileContents),
-          Name(_error), $type=1.quark.String), Cast(Var(Name(value),
-          $type=1.quark.Object), $type=1.quark.String)))),
+          Name(_error), $type=1.quark.error.Error), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=1.quark.error.Error)))),
       If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
         $type=1.quark.Object.__eq__), String("_callbacks",
         $type=1.quark.String), $type=1.quark.bool), Block(
@@ -91,10 +124,12 @@ File(Import(Name(quark)), CompilerVersionSpec(),
           Name(value), $type=1.quark.String), Cast(Var(Name(value),
           $type=1.quark.Object), $type=1.quark.String)))))),
     Field(static=True, Type(Name(reflect), Name(Class)),
-     Name(quark_os_FileContents_ref), Attr(Attr(Var(Name(quark_md),
-       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
-      Name(quark_os_FileContents_md), $type=3.quark.reflect.Class),
-    $type=3.quark.reflect.Class)),
+     Name(quark_os_FileContents_ref), Call(Attr(Var(Name(reflect),
+       $type=3.quark.reflect), Name(__register__),
+      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+        $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+       Name(quark_os_FileContents_md), $type=3.quark.reflect.Class),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
    Macro(Type(Name(void)), Name(_get_file_contents),
     Param(Type(Name(String)), Name(path), $type=1.quark.String),
@@ -225,8 +260,10 @@ File(Import(Name(quark)), CompilerVersionSpec(),
          $type=14.quark.os.Environment), Cast(Var(Name(value),
           $type=1.quark.Object), $type=14.quark.os.Environment)))))),
     Field(static=True, Type(Name(reflect), Name(Class)),
-     Name(quark_os_Environment_ref), Attr(Attr(Var(Name(quark_md),
-       $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
-      Name(quark_os_Environment_md), $type=3.quark.reflect.Class),
-    $type=3.quark.reflect.Class))))
+     Name(quark_os_Environment_ref), Call(Attr(Var(Name(reflect),
+       $type=3.quark.reflect), Name(__register__),
+      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+        $type=15.quark_md), Name(Root), $type=15.quark_md.Root),
+       Name(quark_os_Environment_md), $type=3.quark.reflect.Class),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class))))
 )

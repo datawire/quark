@@ -24,7 +24,7 @@ class OsTest {
         quark.os.FileContents bogus = quark.os.readFileAsString("/does/not/exist");
         check(bogus.isFinished(), "Expected bogus file read to finish synchronously");
         check(bogus.getError() != null, "Expected bogus file read to fail");
-        check(bogus.getError().size() > 0, "Expected non-empty bogus file read error message");
+        check(bogus.getError().getMessage().size() > 0, "Expected non-empty bogus file read error message");
     }
 
     void test_env_getenv() {

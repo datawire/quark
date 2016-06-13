@@ -24,7 +24,7 @@ def do_compile(output, path):
     text = open(path).read()
     for b in backends:
         maybe_xfail(text, b().ext)
-    return path, compile(path, output, *backends)
+    return path, compile(Compiler(), path, output, *backends)
 
 def do_output(directory):
     result = os.path.join(directory, "output")
@@ -133,7 +133,7 @@ def run_tests(base, dirs, command, env=None):
                 print(actual)
             expected = get_expected(name)
             if expected != actual:
-                open(get_out(name) + ".cmp", "write").write(actual)
+                open(get_out(name) + ".cmp", "w").write(actual)
                 failed_expectations.append(name)
                 if expected is None:
                     print("FAILURE: Expected output not found for %r." % name)
@@ -149,7 +149,7 @@ def run_tests(base, dirs, command, env=None):
 
 
 def batch_pom(target, dirs):
-    with open(os.path.join(target, "pom.xml"), "write") as fd:
+    with open(os.path.join(target, "pom.xml"), "w") as fd:
         fd.write("""<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>

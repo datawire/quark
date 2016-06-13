@@ -87,7 +87,9 @@ class Backend(object):
         self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
 
     def visit_Use(self, use):
-        entry = self.roots[use.qualified].files[0]
+        # XXX This is *probably* not a bug, but fact self.roots starts as None
+        # isn't great...
+        entry = self.roots[use.qualified].files[0]  # pylint: disable=unsubscriptable-object
         name, ver = namever(entry)
         self.dependencies[name] = entry
 
@@ -128,7 +130,7 @@ class Backend(object):
             if fname is None:
                 continue
             self.current_package = d.package
-            if self.setfile(fname, lambda: self.make_file(d)):
+            if self.setfile(fname, lambda _d=d: self.make_file(_d)):
                 self.files[fname] += "\n"
             dfn_code = self.definition(d)
             if dfn_code and d.package is None and d.file.name.endswith(BUILTIN_FILE):
@@ -792,7 +794,7 @@ class JavaScript(Backend):
     def _install_target(self, name, ver):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
-            return json.loads(output)["dependencies"][name]["path"]
+            return json.loads(output).get("dependencies",{}).get(name,{}).get("path")
         except shell.ShellError:
             pass
         return None

@@ -12,7 +12,7 @@ namespace spi_api {
         void onServletInit(String url, Runtime runtime) {
             servlet_impl.onServletInit(url, real_runtime);
         }
-        void onServletError(String url, String error) {
+        void onServletError(String url, ServletError error) {
             servlet_impl.onServletError(url, error);
         }
         void onServletEnd(String url) {

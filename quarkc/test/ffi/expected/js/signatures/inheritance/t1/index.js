@@ -14,7 +14,7 @@ exports.A = A;
 
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_t1_A_ref = quark_ffi_signatures_md.Root.inheritance_t1_A_md;
+A.inheritance_t1_A_ref = null;
 function A_foo() {}
 A.prototype.foo = A_foo;
 
@@ -43,7 +43,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_t1_B_ref = quark_ffi_signatures_md.Root.inheritance_t1_B_md;
+B.inheritance_t1_B_ref = null;
 function B_foo() {}
 B.prototype.foo = B_foo;
 
@@ -72,7 +72,7 @@ function C__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 C.prototype.__init_fields__ = C__init_fields__;
-C.inheritance_t1_C_ref = quark_ffi_signatures_md.Root.inheritance_t1_C_md;
+C.inheritance_t1_C_ref = null;
 function C__getClass() {
     return "inheritance.t1.C";
 }

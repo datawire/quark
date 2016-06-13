@@ -14,7 +14,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.org_example_foo_Foo_ref = org_example_foo_md.Root.org_example_foo_Foo_md;
+Foo.org_example_foo_Foo_ref = null;
 function Foo_test() {}
 Foo.prototype.test = Foo_test;
 

@@ -79,7 +79,8 @@ def has_return(fun):
     return has_return(fun.body)
 
 @dispatch(Local)
-def has_return(l): False
+def has_return(l):
+    return False
 
 @dispatch(If)
 def has_return(iff):

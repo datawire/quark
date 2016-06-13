@@ -8,6 +8,49 @@ Latest
 
 ### Language
 
+* (!) Compiler version declaration is restricted to 3 forms:
+   * `quark x.y.z;` like `quark 1.2.3;`,
+   * `quark x.y;` like `quark 1.2;`, semantically same as `quark x.y.0;`,
+   * `quark *;` which disables version checking.
+  See detailes of the new [version comparison rules](
+    https://github.com/datawire/quark/wiki/Compiler-Versioning).
+
+* Multiline string literals delimited by tripple double-quotes,
+  supporting same escape-sequences as existing string literals:
+  `\n`, `\r`, `\t`, `\"`, `\\`, `\x00`, `\u0000`. Although allowed,
+  a single double quote does not need escaping.
+
+### Standard Library
+
+* (!) Add Error class and subclasses for various quark subsystems
+
+  BREAKING CHANGE
+
+  This is a breaking change as signatures of existing methods are changed.
+  Affected classes are:
+
+ *  `HTTPHandler#onHTTPError` changed second parameter type from `String to `HTTPError`
+ *  `WSHandler#onWSError` added second parameter of type `WSError`
+ *  `HTTPServlet#onServletError` and `WSServlet#onServletError` changed second parameter type from `String` to `ServletError`
+ *  `Future#getError` changed return type from `String` to `Error`
+ *  `os.FileContents#getError` changed return type from `String` to `OSError`
+
+  The original `String` is now accessible as `Error#getMessage()`
+
+* Ruby backend handles HTTPS and WSS client requests
+
+* `Runtime.open` invokes `onWSError` when socket establishment fails
+
+### Other
+
+* Testing of quark is now simplified with docker. See [TESTING.md]().
+* CI runs pyflakes and pylint on quark compiler code
+
+0.7.6
+------
+
+### Language
+
 * (!) Quark files now require compiler version declaration, e.g.
   `quark 0.7.0;`. Compiler will decide if it is compatible with the source
   file based on the rules of [semantic versioning](http://semver.org).
@@ -16,7 +59,6 @@ Latest
 ### Standard Library
 
 * Quark String objects have `toUpper()` and `toLower()` methods.
-
 
 ### Other
 

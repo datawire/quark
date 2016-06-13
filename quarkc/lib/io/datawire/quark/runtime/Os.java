@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.io.IOException;
 
 import quark.os.FileContents;
+import quark.os.OSError;
 
 public class Os {
     public static void getFileContents(String path, FileContents result) {
@@ -15,7 +16,7 @@ public class Os {
             result.value = content;
             result.finish(null);
         } catch (IOException exc) {
-            result.finish(exc.getMessage());
+            result.finish(new OSError(exc.getMessage()));
         }
     }
 }

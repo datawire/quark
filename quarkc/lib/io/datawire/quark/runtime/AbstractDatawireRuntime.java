@@ -9,6 +9,9 @@ import quark.HTTPResponse;
 import quark.HTTPServlet;
 import quark.Runtime;
 import quark.Task;
+import quark.WSError;
+import quark.HTTPError;
+import quark.ServletError;
 
 public abstract class AbstractDatawireRuntime {
 
@@ -66,9 +69,9 @@ public abstract class AbstractDatawireRuntime {
                 }
             }
             @Override
-            public void onWSError(WebSocket socket) {
+            public void onWSError(WebSocket socket, WSError error) {
                 try {
-                    handler.onWSError(socket);
+                    handler.onWSError(socket, error);
                 } finally {
                     wakeup();
                 }
@@ -124,9 +127,9 @@ public abstract class AbstractDatawireRuntime {
                 }
             }
             @Override
-            public void onHTTPError(HTTPRequest request, String message) {
+            public void onHTTPError(HTTPRequest request, HTTPError error) {
                 try {
-                    handler.onHTTPError(request, message);
+                    handler.onHTTPError(request, error);
                 } finally {
                     wakeup();
                 }
@@ -178,7 +181,7 @@ public abstract class AbstractDatawireRuntime {
             }
 
             @Override
-            public void onServletError(String url, String error) {
+            public void onServletError(String url, ServletError error) {
                 try {
                     servlet.onServletError(url, error);
                 } finally {
@@ -220,7 +223,7 @@ public abstract class AbstractDatawireRuntime {
             }
 
             @Override
-            public void onServletError(String url, String error) {
+            public void onServletError(String url, ServletError error) {
                 try {
                     servlet.onServletError(url, error);
                 } finally {

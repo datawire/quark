@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 import re
+from ast import literal_eval
 
 from .ast import (
     Method, Class, Function, Package, File, Dependency, Interface, Primitive,
@@ -454,7 +455,7 @@ class Parser:
     @g.rule('uop = NOT / MINUS / TWIDDLE / CAST')
     def visit_uop(self, node, (op,)):
         if op == "?":
-            return lambda e: Cast(e)
+            return lambda e: Cast(e)  # pylint: disable=unnecessary-lambda
         else:
             return lambda e: Call(Attr(e, Name(self.unary_aliases[op])), [])
 
@@ -542,9 +543,33 @@ class Parser:
     def visit_BINARY(self, node, children):
         return Number(str(int(node.text.replace('_', ''), 2)))
 
-    @g.rule('string = _ STRING _')
-    def visit_string(self, node, (pre, string, post)):
+    @g.rule('string = _ (MULTILINE_STRING / STRING) _')
+    def visit_string(self, node, (pre, (string,), post)):
         return String(string)
+
+    @g.rule('any = ~"."s')
+    def visit_any(self, node, _):
+        pass
+
+    @g.rule('hex = ~"[0-9a-fA-F]"')
+    def visit_hex(self, node, _):
+        pass
+
+    @g.rule(r'''
+        escape_sequence = 'n' / 'r' / 't' / '"' / '\\'
+                        / ('x' hex hex)
+                        / ('u' hex hex hex hex)
+    ''')
+    def visit_escape_sequence(self, node, _):
+        pass
+
+    @g.rule(r'''
+        MULTILINE_STRING =
+            '"""' (("\\" escape_sequence) / (!'\\' !'"""' any))* '"""'
+    ''')
+    def visit_MULTILINE_STRING(self, node, _):
+        source = literal_eval(node.text)
+        return '"' + repr(source)[1:-1].replace('"', r'\"') + '"'
 
     @g.rule(r'STRING = ~"\"(\\\\[\"nrt\\\\]|\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\\\x[0-9a-fA-F][0-9a-fA-F]|[^\\\\\"])*\""')
     def visit_STRING(self, node, children):

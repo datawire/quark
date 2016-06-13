@@ -44,6 +44,8 @@ Options:
   --ruby                Install/emit Ruby code.
   --python              Install/emit Python code.
   --javascript          Install/emit JavaScript code.
+
+  --version-warning     Treat compiler-version-related errors as warnings.
 """
 
 import sys
@@ -183,21 +185,23 @@ def main(args):
 
         filenames = args["<file>"]
         for url in filenames:
+            c = compiler.Compiler()
+            c.version_warning = args["--version-warning"]
             if args["install"]:
-                compiler.install(url, *backends)
+                compiler.install(c, url, *backends)
             elif args["compile"]:
-                compiler.compile(url, output, *backends)
+                compiler.compile(c, url, output, *backends)
             elif args["run"]:
-                compiler.run(url, args["<args>"], *backends)
+                compiler.run(c, url, args["<args>"], *backends)
             elif args["docs"]:
-                compiler.make_docs(url, output)
+                compiler.make_docs(c, url, output)
             else:
                 assert False
     except (KeyboardInterrupt, QuarkError) as err:
         if not args["run"]:
             shell.command_log.error("")
         return err
-    except:
+    except:  # pylint: disable=bare-except
         if do_log:
             import inspect
             ast_stack = helpers.format_ast_stack(inspect.trace())
