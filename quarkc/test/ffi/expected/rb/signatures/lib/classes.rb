@@ -12,7 +12,7 @@ class Overload < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static classes_Overload_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_Overload_md }
+    static classes_Overload_ref: -> { nil }
 
 
 
@@ -88,7 +88,7 @@ def self.Test; Test; end
 class Test < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static classes_Test_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_Test_md }
+    static classes_Test_ref: -> { nil }
 
 
 
@@ -143,7 +143,7 @@ def self.string_test; StringTest; end
 class StringTest < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static classes_string_test_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_string_test_md }
+    static classes_string_test_ref: -> { nil }
 
 
 
@@ -199,7 +199,7 @@ class TestSize < ::Quark.classes.string_test
     attr_accessor :what
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_size_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_size_md }
+    static classes_test_size_ref: -> { nil }
 
 
 
@@ -263,7 +263,7 @@ class TestStartsWith < ::Quark.classes.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_startsWith_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_startsWith_md }
+    static classes_test_startsWith_ref: -> { nil }
 
 
 
@@ -341,7 +341,7 @@ class TestEndsWith < ::Quark.classes.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_endsWith_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_endsWith_md }
+    static classes_test_endsWith_ref: -> { nil }
 
 
 
@@ -419,7 +419,7 @@ class TestFind < ::Quark.classes.string_test
     attr_accessor :what, :_that
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_find_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_find_md }
+    static classes_test_find_ref: -> { nil }
 
 
 
@@ -497,7 +497,7 @@ class TestSubstring < ::Quark.classes.string_test
     attr_accessor :what, :start, :end_
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_substring_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_substring_md }
+    static classes_test_substring_ref: -> { nil }
 
 
 
@@ -582,7 +582,7 @@ class TestReplace < ::Quark.classes.string_test
     attr_accessor :what, :start, :end_
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_replace_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_replace_md }
+    static classes_test_replace_ref: -> { nil }
 
 
 
@@ -667,7 +667,7 @@ class TestJoin < ::Quark.classes.string_test
     attr_accessor :what, :parts, :strparts, :sep
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_join_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_join_md }
+    static classes_test_join_ref: -> { nil }
 
 
 
@@ -766,7 +766,7 @@ class TestSplit < ::Quark.classes.string_test
     attr_accessor :what, :sep, :altsep
     extend ::DatawireQuarkCore::Static
 
-    static classes_test_split_ref: -> { ::Quark.quark_ffi_signatures_md.Root.classes_test_split_md }
+    static classes_test_split_ref: -> { nil }
 
 
 

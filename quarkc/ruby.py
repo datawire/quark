@@ -12,12 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from __future__ import absolute_import
+
 import itertools
 from collections import OrderedDict
-from .helpers import *
+
+from .helpers import indent, doc_helper, Code
+
 
 lower = lambda name: name[0].lower() + name[1:]
 upper = lambda name: name[0].upper() + name[1:]
+
 
 class Templates:
 
@@ -142,7 +147,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep, cache={}):
+def import_(path, origin, dep):
     if dep is None:
         # common 'directories'
         common = len(tuple(itertools.takewhile(

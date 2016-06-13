@@ -18,7 +18,7 @@ exports.Handler = Handler;
 
 function Handler__init_fields__() {}
 Handler.prototype.__init_fields__ = Handler__init_fields__;
-Handler.slackpack_Handler_ref = slackpack_md.Root.slackpack_Handler_md;
+Handler.slackpack_Handler_ref = null;
 function Handler_onSlackEvent(event) {}
 Handler.prototype.onSlackEvent = Handler_onSlackEvent;
 

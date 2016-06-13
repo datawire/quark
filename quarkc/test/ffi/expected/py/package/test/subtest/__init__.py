@@ -30,4 +30,4 @@ class Test(object):
             (self).size = _cast(value, lambda: int)
 
 
-Test.test_subtest_Test_ref = package_md.Root.test_subtest_Test_md
+Test.test_subtest_Test_ref = None

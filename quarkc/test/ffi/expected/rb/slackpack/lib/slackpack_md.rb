@@ -1556,7 +1556,7 @@ class SlackClientOnWSErrorMethod < ::Quark.quark.reflect.Method
 
     def initialize()
         
-        super("quark.void", "onWSError", ::DatawireQuarkCore::List.new(["quark.WebSocket"]))
+        super("quark.void", "onWSError", ::DatawireQuarkCore::List.new(["quark.WebSocket", "quark.WSError"]))
 
         nil
     end
@@ -1567,7 +1567,7 @@ class SlackClientOnWSErrorMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
-        obj.onWSError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket })
+        obj.onWSError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.WebSocket }, ::DatawireQuarkCore.cast((args)[1]) { ::Quark.quark.WSError })
         return nil
 
         nil
@@ -2050,7 +2050,7 @@ class SlackClientOnHTTPErrorMethod < ::Quark.quark.reflect.Method
 
     def initialize()
         
-        super("quark.void", "onHTTPError", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.String"]))
+        super("quark.void", "onHTTPError", ::DatawireQuarkCore::List.new(["quark.HTTPRequest", "quark.HTTPError"]))
 
         nil
     end
@@ -2061,7 +2061,7 @@ class SlackClientOnHTTPErrorMethod < ::Quark.quark.reflect.Method
     def invoke(object, args)
         
         obj = ::DatawireQuarkCore.cast(object) { ::Quark.slack.Client }
-        obj.onHTTPError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
+        obj.onHTTPError(::DatawireQuarkCore.cast((args)[0]) { ::Quark.quark.HTTPRequest }, ::DatawireQuarkCore.cast((args)[1]) { ::Quark.quark.HTTPError })
         return nil
 
         nil

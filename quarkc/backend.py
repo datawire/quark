@@ -12,13 +12,27 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, types, java, python, javascript, ruby, tempfile, logging, inspect
+from __future__ import absolute_import
+
+import os, types, tempfile, logging, inspect
+import json
 from collections import OrderedDict
-from .ast import *
+
+from . import java, python, javascript, ruby, shell
+from .ast import (
+    Method, Class, Function, Package, File, Dependency, Interface, Primitive,
+    Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
+    Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
+    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Param, Declaration, Super, Expression,
+)
 from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
-from .dispatch import *
-from .helpers import *
-from .environment import Environment
+from .dispatch import overload
+from .helpers import (
+    is_meta, has_super, compiled_quark, is_newer, namever, mdroot, readme,
+    base_type, get_defaulted_methods, is_abstract, base_constructors, doc,
+    get_field, constructors,
+)
 
 class Backend(object):
 
@@ -114,7 +128,7 @@ class Backend(object):
             if fname is None:
                 continue
             self.current_package = d.package
-            if self.setfile(fname, lambda: self.make_file(d)):
+            if self.setfile(fname, lambda _d=d: self.make_file(_d)):
                 self.files[fname] += "\n"
             dfn_code = self.definition(d)
             if dfn_code and d.package is None and d.file.name.endswith(BUILTIN_FILE):
@@ -429,7 +443,6 @@ class Backend(object):
             path = []
             name = self.expr(mapping.arguments[0])
         else:
-            pkg = self.package(cls)
             path = self.add_import(cls)
             name = self.name(cls.name)
 
@@ -707,8 +720,6 @@ class Backend(object):
         else:
             return self.gen.cast(self.type(type.resolved), self.expr(expr))
 
-import shell, os, sys, subprocess, json
-
 def is_virtual():
     output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')
     return output.strip() == "True"
@@ -781,8 +792,8 @@ class JavaScript(Backend):
     def _install_target(self, name, ver):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
-            return json.loads(output)["dependencies"][name]["path"]
-        except shell.ShellError, e:
+            return json.loads(output).get("dependencies",{}).get(name,{}).get("path")
+        except shell.ShellError:
             pass
         return None
 
@@ -807,7 +818,7 @@ class Ruby(Backend):
         try:
             output = shell.call("gem", "which", name, stage="install", errok=True)
             return output.strip()
-        except shell.ShellError, e:
+        except shell.ShellError:
             pass
         return None
 

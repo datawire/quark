@@ -20,7 +20,7 @@ class TLSContextInitializer(object):
 
     def _setField(self, name, value):
         pass
-TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = quark_ffi_signatures_md.Root.generics_ccc_TLSContextInitializer_md
+TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = None
 class Context(object):
     def _init(self):
         self.parent = None
@@ -64,14 +64,14 @@ class Context(object):
 
 Context._global = None
 Context._current = None
-Context.generics_ccc_Context_ref = quark_ffi_signatures_md.Root.generics_ccc_Context_md
-Context.generics_ccc_TLS_generics_ccc_Context__ref = quark_ffi_signatures_md.Root.generics_ccc_TLS_generics_ccc_Context__md
+Context.generics_ccc_Context_ref = None
+Context.generics_ccc_TLS_generics_ccc_Context__ref = None
 class TLSInitializer(object):
 
     def getValue(self):
         raise NotImplementedError('`TLSInitializer.getValue` is an abstract method')
 
-TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = quark_ffi_signatures_md.Root.generics_ccc_TLSInitializer_quark_Object__md
+TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = None
 class TLS(object):
     def _init(self):
         self._value = None

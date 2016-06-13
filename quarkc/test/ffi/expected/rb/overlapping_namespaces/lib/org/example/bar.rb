@@ -14,7 +14,7 @@ def self.Bar; Bar; end
 class Bar < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static org_example_bar_Bar_ref: -> { ::Quark.overlapping_namespace_md.Root.org_example_bar_Bar_md }
+    static org_example_bar_Bar_ref: -> { nil }
 
 
 

@@ -3,6 +3,8 @@ package io.datawire.quark.netty;
 import quark.WSHandler;
 import quark.WebSocket;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.FullHttpResponse;
@@ -28,11 +30,41 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
         }
     };
 
+    private class Lifecycle implements ChannelFutureListener {
+        private boolean _connected = false;
+        Lifecycle() {
+            handler.onWSInit(webSocket);
+        }
+
+        void connected() {
+            _connected = true;
+            handler.onWSConnected(webSocket);
+        }
+
+        @Override
+        public void operationComplete(ChannelFuture future) throws Exception {
+            if (future.isDone()) {
+                if (_connected) {
+                    handler.onWSClosed(webSocket);
+                }
+                if (!future.isSuccess()) {
+                    handler.onWSError(webSocket, new quark.WSError(future.cause().toString()));
+                }
+                handler.onWSFinal(webSocket);
+            }
+        }
+    }
+    Lifecycle lifecycle;
 
     public QuarkNettyClientWebsocket(WebSocketClientHandshaker handshaker, WSHandler handler) {
         this.handshaker = handshaker;
         this.handler = handler;
         this.ch = null;
+    }
+
+    void  startWSHandlerLifecycle(Channel ch) {
+        lifecycle = new Lifecycle();
+        ch.closeFuture().addListener(lifecycle);
     }
 
     @Override
@@ -48,14 +80,12 @@ public class QuarkNettyClientWebsocket extends SimpleChannelInboundHandler<Objec
             try {
                 handshaker.finishHandshake(ch, (FullHttpResponse) msg);
             } catch (WebSocketHandshakeException e) {
-                this.handler.onWSError(webSocket);
-                // XXX: this will fire onWSClosed, do we need to stop that?
+                this.handler.onWSError(webSocket, new quark.WSError(e.toString()));
                 ctx.channel().close();
                 return;
             }
-            System.out.println("WebSocket Client connected!");
             this.ch = ch;
-            this.handler.onWSConnected(webSocket);
+            lifecycle.connected();
             return;
         }
 

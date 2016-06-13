@@ -14,7 +14,7 @@ exports.Bar = Bar;
 
 function Bar__init_fields__() {}
 Bar.prototype.__init_fields__ = Bar__init_fields__;
-Bar.org_example_bar_Bar_ref = overlapping_namespace_md.Root.org_example_bar_Bar_md;
+Bar.org_example_bar_Bar_ref = null;
 function Bar_test() {}
 Bar.prototype.test = Bar_test;
 

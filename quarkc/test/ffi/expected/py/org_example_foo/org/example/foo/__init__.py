@@ -20,4 +20,4 @@ class Foo(object):
 
     def _setField(self, name, value):
         pass
-Foo.org_example_foo_Foo_ref = org_example_foo_md.Root.org_example_foo_Foo_md
+Foo.org_example_foo_Foo_ref = None

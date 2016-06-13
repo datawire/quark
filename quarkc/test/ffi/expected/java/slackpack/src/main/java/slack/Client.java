@@ -21,7 +21,7 @@ public class Client implements quark.WSHandler, quark.HTTPHandler, io.datawire.q
     public void ws_send(String message) {}
     public void onWSConnected(quark.WebSocket socket) {}
     public void onWSClose(quark.WebSocket socket) {}
-    public void onWSError(quark.WebSocket socket) {}
+    public void onWSError(quark.WebSocket socket, quark.WSError error) {}
     public slack.event.SlackEvent construct(String type) {
         return (slack.event.SlackEvent) (null);
     }
@@ -70,6 +70,6 @@ public class Client implements quark.WSHandler, quark.HTTPHandler, io.datawire.q
     public void onWSClosed(quark.WebSocket socket) {}
     public void onWSFinal(quark.WebSocket socket) {}
     public void onHTTPInit(quark.HTTPRequest request) {}
-    public void onHTTPError(quark.HTTPRequest request, String message) {}
+    public void onHTTPError(quark.HTTPRequest request, quark.HTTPError message) {}
     public void onHTTPFinal(quark.HTTPRequest request) {}
 }

@@ -85,6 +85,8 @@ namespace reflect {
 
     }
 
+    macro Class __register__(Class md_ref) $java{$md_ref} $py{None} $rb{nil} $js{null};
+
     class Field {
         String type;
         String name;

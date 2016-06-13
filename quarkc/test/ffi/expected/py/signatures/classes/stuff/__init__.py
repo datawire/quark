@@ -23,4 +23,4 @@ class Test(object):
 
     def _setField(self, name, value):
         pass
-Test.classes_stuff_Test_ref = quark_ffi_signatures_md.Root.classes_stuff_Test_md
+Test.classes_stuff_Test_ref = None

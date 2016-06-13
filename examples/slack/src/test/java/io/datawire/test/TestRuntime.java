@@ -5,6 +5,7 @@ import io.datawire.quark.netty.QuarkNettyRuntime;
 import io.datawire.quark.runtime.HTTPHandler;
 import io.datawire.quark.runtime.HTTPRequest;
 import io.datawire.quark.runtime.HTTPResponse;
+import quark.HTTPError;
 import org.junit.Test;
 
 public class TestRuntime {
@@ -35,7 +36,7 @@ public class TestRuntime {
 			}
 			
 			@Override
-			public void onHTTPError(HTTPRequest request) {
+			public void onHTTPError(HTTPRequest request, HTTPError error) {
 				// TODO Auto-generated method stub
 				
 			}

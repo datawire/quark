@@ -1,3 +1,8 @@
+import sys
+
+from .exceptions import QuarkError
+
+
 version_spec_missing = '''\
 {location}: Source code version declaration is missing.
 
@@ -71,4 +76,42 @@ compiler_version_incompatible_with_source = '''\
     the library, please review the CHANGELOG:
 
         https://github.com/datawire/quark/blob/v{compiler_version}/CHANGELOG.md
+
+    If you want to keep using version {source_version_spec} of the compiler,
+    you can install it by following the instructions:
+
+        https://github.com/datawire/quark/wiki/Compiler-Versioning
 '''.format
+
+
+class Message(object):
+
+    def __init__(self, source, prefix):
+        self.source, self.prefix = source, prefix
+
+    def __str__(self):
+        return  self.prefix + self.source
+
+
+class Warning(Message):
+
+    prefix = 'Warning: '
+
+    def __init__(self, source):
+        if isinstance(source, Message):
+            source = source.source
+        assert isinstance(source, basestring)
+        self.source = source
+
+
+class Error(Warning):
+
+    prefix = 'Error: '
+
+
+def issue_all(messages):
+    is_fatal = any(isinstance(message, Error) for message in messages)
+    for message in messages:
+        sys.stderr.write(str(message))
+    if is_fatal:
+        raise QuarkError()

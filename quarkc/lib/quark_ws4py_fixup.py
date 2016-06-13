@@ -4,10 +4,10 @@ Carry a copy of ws4py fix [1] until it gets merged upstream
 [1] https://github.com/Lawouach/WebSocket-for-Python/pull/185
 """
 
+from __future__ import absolute_import
+
 import logging
-import sys
 import itertools
-import operator
 from wsgiref.handlers import SimpleHandler
 from wsgiref.simple_server import WSGIRequestHandler
 

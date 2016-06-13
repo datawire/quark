@@ -19,7 +19,7 @@ function Test__init_fields__() {
     this.size = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.test_subtest_Test_ref = package_md.Root.test_subtest_Test_md;
+Test.test_subtest_Test_ref = null;
 function Test_go() {}
 Test.prototype.go = Test_go;
 

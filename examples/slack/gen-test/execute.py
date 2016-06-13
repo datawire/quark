@@ -30,14 +30,18 @@ java_compile = helpers.mvn("compile")
 # depends on the state of the current user's Slack, i.e. what has been
 # said recently. We cannot count on any of that being consistent.
 
-with capture_bg("mvn exec:java -Dexec.mainClass=bot.SlackBot", nocmp=True) as javabot_bg:
+print "=== Java ==="
+with capture_bg("mvn exec:java -Dexec.mainClass=bot.SlackBot", nocmp=True, trace=True) as javabot_bg:
     javabot_bg.child.expect("WebSocket Client connected!")
 
-with capture_bg("python bot.py", nocmp=True) as pybot_bg:
+print "=== Python ==="
+with capture_bg("python bot.py", nocmp=True, trace=True) as pybot_bg:
     pybot_bg.child.expect("slack.event.SlackEvent object at")
 
-with capture_bg("node bot.js", nocmp=True) as jsbot_bg:
+print "=== Javascript ==="
+with capture_bg("node bot.js", nocmp=True, trace=True) as jsbot_bg:
     jsbot_bg.child.expect("Hello {")
 
-#with capture_bg("ruby bot.rb", nocmp=True) as rbbot_bg:
+print "=== Ruby [disabled] ==="
+#with capture_bg("ruby bot.rb", nocmp=True, trace=True) as rbbot_bg:
 #    rbbot_bg.child.expect("something ruby something")

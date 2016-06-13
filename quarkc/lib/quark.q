@@ -27,6 +27,8 @@ include io/datawire/quark/runtime/Builtins.java;
 
 package quark 0.0.1;
 
+import quark.error;
+
 include primitives.q;
 include logging.q;
 include reflect.q;

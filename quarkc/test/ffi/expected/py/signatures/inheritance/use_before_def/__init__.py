@@ -20,7 +20,7 @@ class Bar(object):
 
     def _setField(self, name, value):
         pass
-Bar.inheritance_use_before_def_Bar_ref = quark_ffi_signatures_md.Root.inheritance_use_before_def_Bar_md
+Bar.inheritance_use_before_def_Bar_ref = None
 class Foo(object):
     def _init(self):
         self.name = None
@@ -41,4 +41,4 @@ class Foo(object):
             (self).name = _cast(value, lambda: unicode)
 
 
-Foo.inheritance_use_before_def_Foo_ref = quark_ffi_signatures_md.Root.inheritance_use_before_def_Foo_md
+Foo.inheritance_use_before_def_Foo_ref = None

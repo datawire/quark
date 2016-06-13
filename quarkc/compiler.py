@@ -12,24 +12,43 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, sys, inspect, urllib, tempfile, logging, cPickle as pickle, shutil
+from __future__ import absolute_import
+
+import os, sys, urllib, logging, cPickle as pickle, shutil
 from collections import OrderedDict
 
-from .ast import *
-from .exceptions import *
+try:  # py3
+    from shlex import quote as sh_quote
+except ImportError:  # py2
+    from pipes import quote as sh_quote
+
+from parsimonious import ParseError as GParseError
+
+from .ast import (
+    AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
+    Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Interface,
+    Primitive, Name, Use as AstUse, code, copy,
+)
+from .exceptions import CompileError, ParseError
 from .parser import (
     Parser,
-    ParseError as GParseError,
     parse_strict_compiler_version_spec,
 )
 from .dispatch import overload
-from .helpers import *
+from .helpers import (
+    lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
+    is_abstract, constructor, base_type, base_constructors, has_super, has_return,
+    is_newer, compiled_quark, namever, mdroot,
+)
 from .environment import Environment
-import docmaker
-import docrenderer
-import errors
-import ast
-from versioning import compiler_version_spec_errors, version_spec_string_errors
+from . import docmaker
+from . import docrenderer
+from . import errors
+from .versioning import (
+    compiler_version_spec_messages,
+    version_spec_string_messages,
+)
+from .messages import Warning, issue_all
 
 sys.setrecursionlimit(10000)
 
@@ -944,10 +963,8 @@ class Reflector:
             qual = self.qual(cls)
             if cls.parameters:
                 clsid = qual + "<%s>" % ",".join([OBJECT]*len(cls.parameters))
-                params = "[%s]" % ",".join(['"%s"' % OBJECT]*len(cls.parameters))
             else:
                 clsid = qual
-                params = "[]"
             cons = constructor(cls)
             nparams = len(cons.params) if cons else 0
 
@@ -984,6 +1001,7 @@ ARCHIVE_END = "ARCHIVE_END"
 class Compiler(object):
 
     def __init__(self):
+        self.version_warning = False
         self.roots = Roots()
         self.root = None
         self.parser = Parser()
@@ -1009,8 +1027,14 @@ class Compiler(object):
             location = '%s:%s:%s: ' % (name, e.line(), e.column())
             version_string = parse_strict_compiler_version_spec(text)
             if version_string:
-                CompileError.raise_if_any(
-                    version_spec_string_errors(version_string, location))
+                messages = version_spec_string_messages(version_string,
+                                                        location)
+                if self.version_warning:
+                    messages = (
+                        [Warning('`--version-warning` is enabled\n')] +
+                        map(Warning, messages)
+                    )
+                issue_all(messages)
             raise ParseError("%s%s" % (location, e))
 
         imp = Import([Name(BUILTIN)])
@@ -1019,7 +1043,7 @@ class Compiler(object):
         imp._silent = True
         file.definitions.insert(0, imp)
         if not self.root.files and not name.endswith(BUILTIN_FILE):  # First file
-            use = ast.Use(BUILTIN_FILE)
+            use = AstUse(BUILTIN_FILE)
             use._silent = True
             file.definitions.insert(0, use)
         while True:
@@ -1135,7 +1159,13 @@ class Compiler(object):
     def icompile(self, ast):
 
         if isinstance(ast, Root):
-            CompileError.raise_if_any(compiler_version_spec_errors(ast.files))
+            messages = tuple(compiler_version_spec_messages(ast.files))
+            if self.version_warning:
+                messages = (
+                    [Warning('`--version-warning` is enabled\n')] +
+                    map(Warning, messages)
+                )
+            issue_all(messages)
 
         def_ = Def()
         ast.traverse(def_)
@@ -1182,7 +1212,7 @@ class Compiler(object):
                 self.icompile(method)
         for cls, deps in ref.metadata.items():
             for dep in deps:
-                field = Parser().rule("field", "static reflect.Class %s_ref = %s;" % (dep, deps[dep]))
+                field = Parser().rule("field", "static reflect.Class %s_ref = reflect.__register__(%s);" % (dep, deps[dep]))
                 cls.definitions.append(field)
                 field.traverse(Crosswire(cls))
                 self.icompile(field)
@@ -1240,7 +1270,7 @@ class Compiler(object):
             deps = tuple(self.deps(trans_roots))
             if not is_newer(urlc, __file__, *deps):
                 self.log.info("Writing %s" % urlc)
-                with open(urlc, "write") as fd:
+                with open(urlc, "w") as fd:
                     pickle.dump(deps, fd, -1)
                     pickle.dump(trans_roots, fd, -1)
                     # Write out an object to mark the archive end so
@@ -1251,8 +1281,7 @@ class Compiler(object):
         for r in modified:
             r._modified = True
 
-def install(url, *backends):
-    c = Compiler()
+def install(c, url, *backends):
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1264,8 +1293,7 @@ def install(url, *backends):
             root.traverse(b)
             b.install()
 
-def compile(url, target, *backends):
-    c = Compiler()
+def compile(c, url, target, *backends):
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1285,8 +1313,7 @@ def compile(url, target, *backends):
 
     return dirs
 
-def run(url, args, *backends):
-    c = Compiler()
+def run(c, url, args, *backends):
     file = c.urlparse(url, recurse=False)
     name, ver = namever(file)
     for backend in backends:
@@ -1297,9 +1324,8 @@ def run(url, args, *backends):
         b.run(name, ver, args)
 
 
-def make_docs(url, target):
+def make_docs(c, url, target):
     # FIXME: Lots of boilderplate here...
-    c = Compiler()
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()

@@ -599,11 +599,11 @@ class slack_Client_onWSError_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(slack_Client_onWSError_Method, self).__init__(u"quark.void", u"onWSError", _List([u"quark.WebSocket"]));
+        super(slack_Client_onWSError_Method, self).__init__(u"quark.void", u"onWSError", _List([u"quark.WebSocket", u"quark.WSError"]));
 
     def invoke(self, object, args):
         obj = _cast(object, lambda: slack.Client);
-        (obj).onWSError(_cast((args)[0], lambda: quark.WebSocket));
+        (obj).onWSError(_cast((args)[0], lambda: quark.WebSocket), _cast((args)[1], lambda: quark.WSError));
         return None
 
     def _getClass(self):
@@ -787,11 +787,11 @@ class slack_Client_onHTTPError_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(slack_Client_onHTTPError_Method, self).__init__(u"quark.void", u"onHTTPError", _List([u"quark.HTTPRequest", u"quark.String"]));
+        super(slack_Client_onHTTPError_Method, self).__init__(u"quark.void", u"onHTTPError", _List([u"quark.HTTPRequest", u"quark.HTTPError"]));
 
     def invoke(self, object, args):
         obj = _cast(object, lambda: slack.Client);
-        (obj).onHTTPError(_cast((args)[0], lambda: quark.HTTPRequest), _cast((args)[1], lambda: unicode));
+        (obj).onHTTPError(_cast((args)[0], lambda: quark.HTTPRequest), _cast((args)[1], lambda: quark.HTTPError));
         return None
 
     def _getClass(self):

@@ -67,9 +67,9 @@ class Crate(object):
             (self).ibox = _cast(value, lambda: Box)
 
 
-Crate.generics_Box_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Box_quark_Object__md
-Crate.generics_Box_quark_int__ref = quark_ffi_signatures_md.Root.generics_Box_quark_int__md
-Crate.generics_Crate_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Crate_quark_Object__md
+Crate.generics_Box_quark_Object__ref = None
+Crate.generics_Box_quark_int__ref = None
+Crate.generics_Crate_quark_Object__ref = None
 class Sack(object):
     def _init(self):
         self.ints = None
@@ -90,7 +90,7 @@ class Sack(object):
             (self).ints = _cast(value, lambda: Box)
 
 
-Sack.generics_Sack_ref = quark_ffi_signatures_md.Root.generics_Sack_md
+Sack.generics_Sack_ref = None
 class Matrix(object):
     def _init(self):
         self.width = None
@@ -132,6 +132,6 @@ class Matrix(object):
             (self).columns = _cast(value, lambda: _List)
 
 
-Matrix.generics_Matrix_quark_Object__ref = quark_ffi_signatures_md.Root.generics_Matrix_quark_Object__md
-Matrix.quark_List_quark_List_quark_Object___ref = quark_ffi_signatures_md.Root.quark_List_quark_List_quark_Object___md
-Matrix.quark_List_quark_Object__ref = quark_ffi_signatures_md.Root.quark_List_quark_Object__md
+Matrix.generics_Matrix_quark_Object__ref = None
+Matrix.quark_List_quark_List_quark_Object___ref = None
+Matrix.quark_List_quark_Object__ref = None

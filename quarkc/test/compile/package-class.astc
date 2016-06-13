@@ -23,7 +23,9 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(p_C_ref),
-    Attr(Attr(Var(Name(package_class_md), $type=1.package_class_md),
-      Name(Root), $type=1.package_class_md.Root), Name(p_C_md),
-    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
+    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(package_class_md),
+       $type=1.package_class_md), Name(Root), $type=1.package_class_md.Root),
+      Name(p_C_md), $type=3.quark.reflect.Class), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)))
 )

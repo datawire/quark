@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import quark.HTTPServlet;
 import quark.Runtime;
 import quark.Servlet;
+import quark.ServletError;
 import quark.WSHandler;
 import quark.WSServlet;
 import io.netty.channel.ChannelFuture;
@@ -194,7 +195,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                 currentRoot = root;
             }
             if (currentRoot != null && currentRoot.isSecure() != route.isSecure()) {
-                route.servlet.onServletError(currentRoot.urlOf(route), "This port has already been configured " + (currentRoot.isSecure() ? "with" : "without") + " TLS");
+                route.servlet.onServletError(currentRoot.urlOf(route), new ServletError("This port has already been configured " + (currentRoot.isSecure() ? "with" : "without") + " TLS"));
                 return;
             }
             if (currentResolver != null) {
@@ -244,7 +245,7 @@ public class DatawireNettyHttpContainer extends SimpleChannelInboundHandler<Obje
                             @Override
                             public void resolve(Route route) {
                                 if (route.servlet != null) {
-                                    route.servlet.onServletError(root.urlOf(route), error);
+                                    route.servlet.onServletError(root.urlOf(route), new ServletError(error));
                                 }
                             }
                         };

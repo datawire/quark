@@ -11,14 +11,25 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
+from __future__ import absolute_import
+
 import re
+from ast import literal_eval
 
-from .ast import *
-from grammar import ParseError
-import grammar
+from .ast import (
+    Method, Class, Function, Package, File, Dependency, Interface, Primitive,
+    Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
+    Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
+    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Param, Declaration, Super, Name, CompilerVersionSpec, Annotation,
+    Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
+    ConstructorMacro,
+)
+from .grammar import Grammar
 
 
-g = grammar.Grammar()
+g = Grammar()
 
 
 def right_associative_infix_rule(grammar_rule):
@@ -28,7 +39,7 @@ def right_associative_infix_rule(grammar_rule):
             op, rhs = remaining.pop(0)
             result = Call(Attr(result, Name(self.aliases[op])), [rhs])
         return result
-    return g.rule(grammar_rule)(semantic_action)
+    return g.rule(grammar_rule)(semantic_action)  # noqa
 
 
 re_strict_compiler_version_spec = '^(.+\n)?quark (.+?)(;|\n|\r\n)'
@@ -532,9 +543,33 @@ class Parser:
     def visit_BINARY(self, node, children):
         return Number(str(int(node.text.replace('_', ''), 2)))
 
-    @g.rule('string = _ STRING _')
-    def visit_string(self, node, (pre, string, post)):
+    @g.rule('string = _ (MULTILINE_STRING / STRING) _')
+    def visit_string(self, node, (pre, (string,), post)):
         return String(string)
+
+    @g.rule('any = ~"."s')
+    def visit_any(self, node, _):
+        pass
+
+    @g.rule('hex = ~"[0-9a-fA-F]"')
+    def visit_hex(self, node, _):
+        pass
+
+    @g.rule(r'''
+        escape_sequence = 'n' / 'r' / 't' / '"' / '\\'
+                        / ('x' hex hex)
+                        / ('u' hex hex hex hex)
+    ''')
+    def visit_escape_sequence(self, node, _):
+        pass
+
+    @g.rule(r'''
+        MULTILINE_STRING =
+            '"""' (("\\" escape_sequence) / (!'\\' !'"""' any))* '"""'
+    ''')
+    def visit_MULTILINE_STRING(self, node, _):
+        source = literal_eval(node.text)
+        return '"' + repr(source)[1:-1].replace('"', r'\"') + '"'
 
     @g.rule(r'STRING = ~"\"(\\\\[\"nrt\\\\]|\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\\\x[0-9a-fA-F][0-9a-fA-F]|[^\\\\\"])*\""')
     def visit_STRING(self, node, children):

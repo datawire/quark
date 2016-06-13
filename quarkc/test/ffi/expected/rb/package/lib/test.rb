@@ -20,7 +20,7 @@ class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static test_Test_ref: -> { ::Quark.package_md.Root.test_Test_md }
+    static test_Test_ref: -> { nil }
 
 
 

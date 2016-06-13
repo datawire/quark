@@ -20,8 +20,10 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(methods_Test_ref),
-    Attr(Attr(Var(Name(methods_md), $type=1.methods_md), Name(Root),
-     $type=1.methods_md.Root), Name(methods_Test_md),
+    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(methods_md),
+       $type=1.methods_md), Name(Root), $type=1.methods_md.Root),
+      Name(methods_Test_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
   Function(Type(Name(void)), Name(bar), Block(

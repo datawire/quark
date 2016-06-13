@@ -16,7 +16,7 @@ class Base < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Base_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Base_md }
+    static inheritance_Base_ref: -> { nil }
 
 
 
@@ -71,7 +71,7 @@ class Test < ::Quark.inheritance.Base
     attr_accessor :mumble, :later
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Test_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Test_md }
+    static inheritance_Test_ref: -> { nil }
 
 
 
@@ -141,7 +141,7 @@ class A < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_A_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_A_md }
+    static inheritance_A_ref: -> { nil }
 
 
 
@@ -196,7 +196,7 @@ def self.B; B; end
 class B < ::Quark.inheritance.A
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_B_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_B_md }
+    static inheritance_B_ref: -> { nil }
 
 
 
@@ -258,7 +258,7 @@ def self.C; C; end
 class C < ::Quark.inheritance.A
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_C_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_C_md }
+    static inheritance_C_ref: -> { nil }
 
 
 
@@ -320,7 +320,7 @@ def self.X; X; end
 class X < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_X_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_X_md }
+    static inheritance_X_ref: -> { nil }
 
 
 
@@ -369,7 +369,7 @@ class Y < ::Quark.inheritance.X
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Y_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Y_md }
+    static inheritance_Y_ref: -> { nil }
 
 
 
@@ -432,7 +432,7 @@ def self.Message; Message; end
 class Message < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Message_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Message_md }
+    static inheritance_Message_ref: -> { nil }
 
 
 
@@ -487,7 +487,7 @@ def self.Ping; Ping; end
 class Ping < ::Quark.inheritance.Message
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Ping_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Ping_md }
+    static inheritance_Ping_ref: -> { nil }
 
 
 
@@ -537,7 +537,7 @@ def self.Pong; Pong; end
 class Pong < ::Quark.inheritance.Message
     extend ::DatawireQuarkCore::Static
 
-    static inheritance_Pong_ref: -> { ::Quark.quark_ffi_signatures_md.Root.inheritance_Pong_md }
+    static inheritance_Pong_ref: -> { nil }
 
 
 

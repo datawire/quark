@@ -17,7 +17,7 @@ class A(object):
 
     def _setField(self, name, value):
         pass
-A.inheritance_t2_A_ref = quark_ffi_signatures_md.Root.inheritance_t2_A_md
+A.inheritance_t2_A_ref = None
 class B(A):
     def _init(self):
         A._init(self)
@@ -33,7 +33,7 @@ class B(A):
 
     def _setField(self, name, value):
         pass
-B.inheritance_t2_B_ref = quark_ffi_signatures_md.Root.inheritance_t2_B_md
+B.inheritance_t2_B_ref = None
 class X(object):
     def _init(self):
         pass
@@ -63,5 +63,5 @@ class Y(X):
 
     def _setField(self, name, value):
         pass
-Y.inheritance_t2_X_quark_int__ref = quark_ffi_signatures_md.Root.inheritance_t2_X_quark_int__md
-Y.inheritance_t2_Y_ref = quark_ffi_signatures_md.Root.inheritance_t2_Y_md
+Y.inheritance_t2_X_quark_int__ref = None
+Y.inheritance_t2_Y_ref = None

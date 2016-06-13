@@ -17,7 +17,7 @@ import shlex
 import subprocess
 import logging
 import pkg_resources
-from distutils.version import StrictVersion
+from distutils.version import StrictVersion  # pylint: disable=import-error
 
 from .exceptions import QuarkError
 
@@ -115,7 +115,7 @@ def get_pip_pkg(name, stage=None):
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)
-    except ShellError, e:
+    except ShellError:
         return None
 
 def pipcheck(name, stage=None):

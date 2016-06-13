@@ -36,5 +36,5 @@ def test_lib():
         for path in paths:
             child = pexpect.spawn("quark run %s %s" % (lang, path))
             child.logfile = sys.stdout
-            child.expect("Failed: 0")
+            child.expect("Failed: 0", timeout=100)
             child.expect(pexpect.EOF)

@@ -12,7 +12,7 @@ def self.TLSContextInitializer; TLSContextInitializer; end
 class TLSContextInitializer < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static generics_ccc_TLSContextInitializer_ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_ccc_TLSContextInitializer_md }
+    static generics_ccc_TLSContextInitializer_ref: -> { nil }
 
 
 
@@ -70,8 +70,8 @@ class Context < ::DatawireQuarkCore::QuarkObject
 
     static _global: -> { nil }
     static _current: -> { nil }
-    static generics_ccc_Context_ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_ccc_Context_md }
-    static generics_ccc_TLS_generics_ccc_Context__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_ccc_TLS_generics_ccc_Context__md }
+    static generics_ccc_Context_ref: -> { nil }
+    static generics_ccc_TLS_generics_ccc_Context__ref: -> { nil }
 
 
 
@@ -152,7 +152,7 @@ def self.TLSInitializer; TLSInitializer; end
 class TLSInitializer < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
-    static generics_ccc_TLSInitializer_quark_Object__ref: -> { ::Quark.quark_ffi_signatures_md.Root.generics_ccc_TLSInitializer_quark_Object__md }
+    static generics_ccc_TLSInitializer_quark_Object__ref: -> { nil }
 
 
 

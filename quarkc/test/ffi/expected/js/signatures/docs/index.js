@@ -24,7 +24,7 @@ function Test__init_fields__() {
     this.name = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.docs_Test_ref = quark_ffi_signatures_md.Root.docs_Test_md;
+Test.docs_Test_ref = null;
 /**
  * method docs
  */

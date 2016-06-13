@@ -1,4 +1,3 @@
-import sys
 from franz import Topic
 
 

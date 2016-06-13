@@ -396,8 +396,25 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
+
     @doc("A callable that takes arguments, returns result.")
     interface Callable {
       Object invoke(List<Object> args);
     }
+
+
+namespace error {
+    class Error {
+        String message;
+        Error(String message) {
+            self.message = message;
+        }
+        String getMessage() {
+            return message;
+        }
+        String toString() {
+            return "Error("+self.message+")";
+        }
+    }
+}
 }
