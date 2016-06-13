@@ -1,3 +1,6 @@
+quark *;
+include io/datawire/quark/runtime/Lock.java;
+
 namespace quark {
 namespace promises {
 
@@ -73,6 +76,7 @@ namespace promises {
     }
 
     class Promise {
+        Lock _lock;
         Object _successResult;
         error.Error _failureResult;
         boolean _hasResult;
@@ -80,6 +84,7 @@ namespace promises {
         List<_Callback> _failureCallbacks;
 
         Promise() {
+            self._lock = new Lock();
             self._hasResult = false;
             self._successResult = null;
             self._failureResult = null;
@@ -88,6 +93,7 @@ namespace promises {
         }
 
         void _maybeRunCallbacks() {
+            self._lock.acquire();
             if (!self._hasResult) {
                 return;
             }
@@ -97,39 +103,51 @@ namespace promises {
                 callbacks = self._failureCallbacks;
                 value = self._failureResult;
             }
+            self._failureCallbacks = [];
+            self._successCallbacks = [];
+            self._lock.release();
+
+            // XXX in real imlpementation instead of calling call()
+            // directly this should be scheduled via a Collector in order to ensure
+            // thread-safety.
             int idx = 0;
             while (idx < callbacks.size()) {
                 callbacks[idx].call(value);
                 idx = idx + 1;
             }
-            self._failureCallbacks = [];
-            self._successCallbacks = [];
         }
 
         void _resolve(Object result) {
+            self._lock.acquire();
             if (self._hasResult) {
                 // XXX indicates bug, log something
+                self._lock.release();
                 return;
             }
             self._hasResult = true;
             self._successResult = result;
+            self._lock.release();
             self._maybeRunCallbacks();
         }
 
         void _reject(Error err) {
+            self._lock.acquire();
             if (self._hasResult) {
                 // XXX indicates bug, log something
                 return;
             }
             self._hasResult = true;
             self._failureResult = result;
+            self._lock.release();
             self._maybeRunCallbacks();
         }
 
         Promise then(Callable callable, List<Object> moreArgs) {
             Promise result = new Promise();
+            self._lock.acquire();
             self._successCallbacks.add(new _Callback(callable, result, moreArgs));
             self._failureCallbacks.add(new _Callback(new _Passthrough(), result, []));
+            self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
@@ -137,8 +155,10 @@ namespace promises {
         Promise catch(reflect.Class errorClass, Callable callable, List<Object> moreArgs) {
             Promise result = new Promise();
             _Callable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result, moreArgs);
+            self._lock.acquire();
             self._failureCallbacks.add(callback);
             self._successCallbacks.add(new _Callback(new _Passthrough(), result, []));
+            self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
@@ -146,15 +166,20 @@ namespace promises {
         Promise finally(Callable callback, List<Object> moreArgs) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result, moreArgs);
+            self._lock.acquire();
             self._successCallbacks.add(callback);
             self._failureCallbacks.add(callback);
+            self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
 
         PromiseValue value() {
-            return PromiseValue(self._successResult, self._failureResult,
-                                self._hasResult);
+            self._lock.acquire();
+            PromiseValue result = PromiseValue(self._successResult, self._failureResult,
+                                               self._hasResult);
+            self._lock.release();
+            return result;
         }
 
         @doc("Wait until timeout is hit or Promise gets a value. Note that this can block, unlike other Promise methods.")
