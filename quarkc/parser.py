@@ -455,7 +455,7 @@ class Parser:
     @g.rule('uop = NOT / MINUS / TWIDDLE / CAST')
     def visit_uop(self, node, (op,)):
         if op == "?":
-            return Cast
+            return lambda e: Cast(e)  # pylint: disable=unnecessary-lambda
         else:
             return lambda e: Call(Attr(e, Name(self.unary_aliases[op])), [])
 
