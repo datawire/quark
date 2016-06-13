@@ -1,6 +1,9 @@
 namespace quark {
 namespace promises {
 
+    // XXX in real imlpementation instead of calling self.next._reject/_resolve
+    // directly this should be scheduled via a Collector in order to ensure
+    // thread-safety.
     class _Callback {
         Callable _callable;
         Promise _next;
