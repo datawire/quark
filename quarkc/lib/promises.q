@@ -75,7 +75,7 @@ namespace promises {
         }
     }
 
-    class Promise {
+    class Promise extends concurrent.EventContext {
         Lock _lock;
         Object _successResult;
         error.Error _failureResult;
