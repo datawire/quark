@@ -24,7 +24,7 @@ namespace promises {
         Promise _next;
         List<Object> _extraArgs;
 
-        _Callback(Callable callable, Promise<Object> next, List<Object> extraArgs) {
+        _Callback(Callable callable, Promise next, List<Object> extraArgs) {
             self._callable = callable;
             self._next = next;
             self._extraArgs = extraArgs;
@@ -78,23 +78,17 @@ namespace promises {
         }
     }
 
-    class PromiseValue {
-        Object successResult;
+    class Maybe<T> {
+        T successResult;
         error.Error failureResult;
-        boolean _hasResult;
 
         boolean isError() {
             return self.failureResult != null;
         }
 
-        boolean isAvailable() {
-            return self.hasResult;
-        }
-
-        PromiseValue(Object successResult, error.Error failureResult, boolean hasResult) {
+        Maybe<T>(Object successResult, error.Error failureResult, boolean hasResult) {
             self.successResult = successResult;
             self.failureResult = failureResult;
-            self.hasResult = hasResult;
         }
     }
 
@@ -106,6 +100,7 @@ namespace promises {
         List<_Callback> _successCallbacks;
         List<_Callback> _failureCallbacks;
 
+        // Private constructor, don't use externally.
         Promise() {
             self._lock = new Lock();
             self._hasResult = false;
@@ -175,7 +170,8 @@ namespace promises {
             return result;
         }
 
-        Promise catch(reflect.Class errorClass, Callable callable, List<Object> moreArgs) {
+        // Conflicts with Java keyword
+        IPromise catch(reflect.Class errorClass, Callable callable, List<Object> moreArgs) {
             Promise result = new Promise();
             _Callable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result, moreArgs);
             self._lock.acquire();
@@ -186,7 +182,8 @@ namespace promises {
             return result;
         }
 
-        Promise finally(Callable callback, List<Object> moreArgs) {
+        // Conflicts with Java keyword
+        IPromise finally(Callable callback, List<Object> moreArgs) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result, moreArgs);
             self._lock.acquire();
@@ -197,21 +194,24 @@ namespace promises {
             return result;
         }
 
-        PromiseValue value() {
+
+        @doc("Synchronous extraction of the promise's current value, if it has any.")
+        Maybe<Object> value() {
             self._lock.acquire();
-            PromiseValue result = PromiseValue(self._successResult, self._failureResult,
-                                               self._hasResult);
+            Maybe<Object> result = new Maybe<Object>(self._successResult, self._failureResult,
+                                                     self._hasResult);
             self._lock.release();
             return result;
         }
 
         @doc("Wait until timeout is hit or Promise gets a value. Note that this can block, unlike other Promise methods.")
-        PromiseValue waitFor(float timeout) {
+        Maybe<Object> waitFor(float timeout) {
             // XXX Sleep until timeout is hit or _reject/_resolve are called, then:
             return self.value();
         }
     }
 
+    // XXX Choose better name
     class Deferred {
         Promise promise;
 
@@ -260,15 +260,18 @@ namespace promises {
         // static Promise wsOpen(Runtime runtime, String wsurl, SimplerWSHandler handler);
     }
 
-
     // This is just a very sketchy example of using the above:
     class Example {
-        Promise getWithDefault(Runtime runtime, String url, String defaultResult) {
+        Promise getWithDefault(String url, String defaultResult) {
             List<Object> default = [];
             default.add(defaultResult);
-            return IO.httpRequest(runtime, new HTTPRequest(url)
+            return IO.httpRequest(Context.get().runtime, new HTTPRequest(url)
                                   ).then(reflect.bind(self, "_handleResponse"), []
                                   ).catch(HTTPError, reflect.bind(self, "_handleError"), default);
+        }
+
+        Maybe<String> syncGetWithDefault(String url, String defaultResult) {
+            return ? getWithDefault(url, defaultResult)).waitFor(5.0);
         }
 
         String _handleResponse(HTTPResponse response) {
