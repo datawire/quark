@@ -1,5 +1,7 @@
 import sys
 
+from .exceptions import QuarkError
+
 
 version_spec_missing = '''\
 {location}: Source code version declaration is missing.
@@ -112,4 +114,4 @@ def issue_all(messages):
     for message in messages:
         sys.stderr.write(str(message))
     if is_fatal:
-        sys.exit(1)
+        raise QuarkError()
