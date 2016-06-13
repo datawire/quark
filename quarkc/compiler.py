@@ -930,6 +930,7 @@ class Reflector:
             self.parameters = %(parameters)s;
             self.fields = [%(fields)s];
             self.methods = [%(methods)s];
+            self.parents = [%(parents)s];
         }
 
         Object construct(List<Object> args) {
@@ -946,6 +947,9 @@ class Reflector:
             "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
+            "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
+                                  for parent_type in cls.bases]
+                                 or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
     def leave_Root(self, root):

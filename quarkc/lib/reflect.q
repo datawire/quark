@@ -12,6 +12,7 @@ namespace reflect {
         static Class LONG = new Class("quark.long");
         static Class FLOAT = new Class("quark.float");
         static Class STRING = new Class("quark.String");
+        static Class OBJECT = new Class("quark.Object");
 
         static Class get(String id) {
             if (!classes.contains(id)) {
@@ -25,6 +26,7 @@ namespace reflect {
         List<String> parameters = [];
         List<Field> fields = [];
         List<Method> methods = [];
+        List<Class> parents = [];
 
         Class(String id) {
             self.id = id;
