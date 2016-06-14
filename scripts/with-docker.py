@@ -27,6 +27,12 @@ def main():
             "busybox", "stat", "-c", "%u", "/path"]).strip()
     subprocess.check_call(["docker", "build",
                            # Tag for resulting image:
+                           "-t", "quark-base",
+                           # Dockerfile to use:
+                           "-f",  "Dockerfile.base", "."],
+                          cwd=ROOT_DIR)
+    subprocess.check_call(["docker", "build",
+                           # Tag for resulting image:
                            "-t", "quark-run-transparently",
                            # Pass in appropriate UID:
                            "--build-arg", "userid={}".format(uid),

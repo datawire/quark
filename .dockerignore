@@ -1,2 +1,4 @@
 **/*.qc
 quark/test/emit/java-deps
+node_modules
+*.egg-info/
