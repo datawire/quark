@@ -1,15 +1,15 @@
 
-.. package documentation master file, created by Quark
+.. package_ documentation master file, created by Quark
 
-package 0.0.1
-=============
+package_ 0.0.1
+==============
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: package
+.. automodule:: package_
    :members:
 
 

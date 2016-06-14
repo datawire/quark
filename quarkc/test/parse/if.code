@@ -1,7 +1,7 @@
 
 
 quark *;
-package if {
+package if_ {
     void test() {
         if (x) {
             (y)();

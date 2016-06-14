@@ -5,7 +5,7 @@ module Test
 def self.subtest; Subtest; end
 module Subtest
 require 'quark' # .../reflect test/subtest
-require_relative '../package_md' # 0 () ('test',)
+require_relative '../package__md' # 0 () ('test',)
 
 
 def self.go()

@@ -1,6 +1,6 @@
 File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
 
- Package(Name(null),
+ Package(Name(null_),
 
   Function(Type(Name(void)), Name(test), Block(
     ExprStmt(Null(null)),

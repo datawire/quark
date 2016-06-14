@@ -1,7 +1,7 @@
 
 
 quark *;
-package null {
+package null_ {
     void test() {
         null;
         null;

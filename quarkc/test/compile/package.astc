@@ -8,7 +8,7 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
    Param(Type(Name(String)), Name(c), $type=1.quark.String),
    Block())),
 
- Package(Name(package),
+ Package(Name(package_),
 
   Function(Type(Name(void)), Name(main), Block(
     ExprStmt(Call(Attr(Var(Name(p), $type=0.p), Name(f), $type=0.p.f),

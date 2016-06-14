@@ -1,6 +1,6 @@
 File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
 
- Package(Name(class),
+ Package(Name(class_),
 
   Class(Name(C),
 
@@ -11,7 +11,7 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
     Block()),
 
    Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("class.C", $type=1.quark.String)))),
+     Return(String("class_.C", $type=1.quark.String)))),
 
    Method(static=False, Type(Name(Object)), Name(_getField),
     Param(Type(Name(String)), Name(name), $type=1.quark.String),
@@ -22,10 +22,10 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
     Param(Type(Name(String)), Name(name), $type=1.quark.String),
     Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
     Block()),
-   Field(static=True, Type(Name(reflect), Name(Class)), Name(class_C_ref),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(class__C_ref),
     Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
-     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(class_md),
-       $type=1.class_md), Name(Root), $type=1.class_md.Root), Name(class_C_md),
-     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)))
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(class__md),
+       $type=1.class__md), Name(Root), $type=1.class__md.Root),
+      Name(class__C_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
 )
