@@ -41,6 +41,7 @@ class Grammar:
         for kw in getattr(cls, "keywords", ()):
             extra_rules.append('%s = _ "%s" !~"[_a-zA-Z0-9]" _' % (kw.upper(), kw))
             visitors["visit_%s" % kw.upper()] = lambda self, node, children, x=kw: x
+        extra_rules.append('keyword = (%s)' % '/'.join(map(repr, cls.keywords)))
 
         for name, sym in getattr(cls, "symbols", {}).items():
             extra_rules.append('%s = _ "%s" _' % (name, sym))

@@ -8,6 +8,16 @@ Latest
 
 ### Language
 
+* (!) The following keywords are now reserved identifiers:
+  `as`, `break`, `class`, `continue`, `else`, `extends`, `false`, `if`,
+  `import`, `include`, `interface`, `macro`, `namespace`, `new`, `null`,
+  `package`, `primitive`, `return`, `static`, `super`, `true`, `use`, `while`.
+
+1.0.70
+------
+
+### Language
+
 * (!) Compiler version declaration is restricted to 3 forms:
    * `quark x.y.z;` like `quark 1.2.3;`,
    * `quark x.y;` like `quark 1.2;`, semantically same as `quark x.y.0;`,

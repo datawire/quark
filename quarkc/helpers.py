@@ -25,6 +25,7 @@ from .ast import (
     Function, CompilerVersionSpec, AST,
 )
 from .dispatch import dispatch
+from .parser import Parser
 
 
 DEFAULT = object()
@@ -194,6 +195,7 @@ def get_package_version(pkg):
     return "0.0.1"
 
 def sanitize(name):
+    name = name + '_' if name in Parser.keywords else name
     return name.replace('-', '_').replace('.', '_')
 
 def filebase(name):

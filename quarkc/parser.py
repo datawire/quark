@@ -56,7 +56,7 @@ class Parser:
     keywords = ["package", "use", "include", "import", "as", "namespace",
                 "class", "interface", "primitive", "extends", "return",
                 "macro", "new", "null", "if", "else", "while", "super",
-                "true", "false", "break", "continue", "static", "quark"]
+                "true", "false", "break", "continue", "static"]
     symbols = {"LBR": "{",
                "RBR": "}",
                "LBK": "[",
@@ -141,7 +141,7 @@ class Parser:
     def visit_toplevel(self, node, (top,)):
         return top
 
-    @g.rule('relaxed_compiler_version_declaration = QUARK url SEMI')
+    @g.rule('relaxed_compiler_version_declaration = (_ "quark" _) url SEMI')
     def visit_relaxed_compiler_version_declaration(self, node,
                                                    (_, spec_string, __)):
         """Relaxed quark version declaration for better error reporting."""
@@ -318,8 +318,8 @@ class Parser:
     def visit_name_re(self, node, children):
         return node.text
 
-    @g.rule('name = _ name_re  _')
-    def visit_name(self, node, (pre, name, post)):
+    @g.rule('name = _ !(keyword !~"[_a-zA-Z0-9]") name_re  _')
+    def visit_name(self, node, (pre, _, name, post)):
         return Name(name)
 
     # XXX: local declarations and exprstmt are ambiguous, e.g.:
