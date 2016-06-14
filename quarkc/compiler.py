@@ -38,7 +38,7 @@ from .dispatch import overload
 from .helpers import (
     lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
     is_abstract, constructor, base_type, base_constructors, has_super, has_return,
-    is_newer, compiled_quark, namever, mdroot,
+    is_newer, compiled_quark, namever, mdroot, is_extendable
 )
 from .environment import Environment
 from . import docmaker
@@ -948,7 +948,7 @@ class Reflector:
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
             "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
-                                  for parent_type in cls.bases]
+                                  for parent_type in cls.bases if is_extendable(parent_type)]
                                  or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
