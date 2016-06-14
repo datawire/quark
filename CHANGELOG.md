@@ -22,6 +22,9 @@ Latest
 
 ### Standard Library
 
+* Added `parents` field and `hasInstance` and `isSubclassOf` methods to
+  `quark.reflect.Class`.
+
 * (!) Add Error class and subclasses for various quark subsystems
 
   BREAKING CHANGE
