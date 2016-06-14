@@ -80,6 +80,24 @@ namespace reflect {
             return null;
         }
 
+        bool isSubclassOf(Class anotherClass) {
+            if (anotherClass == self) {
+                return true;
+            }
+            int idx = 0;
+            while (idx < self.parents.size()) {
+                if (self.parents[idx].isSubclassOf(anotherClass)) {
+                    return true;
+                }
+                idx = idx + 1;
+            }
+            return false;
+        }
+
+        @doc("Return whether the given object is an instance of the class or one of its super-classes.")
+        bool hasInstance(Object o) {
+            return o.getClass().isSubclassOf(self);
+        }
 
         macro JSONObject toJSON() new JSONObject().setString(self.id);
         macro JSONObject __to_JSONObject() self.toJSON();
