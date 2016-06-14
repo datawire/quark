@@ -46,6 +46,8 @@ def main():
                      "--rm",
                      # Map root directory in as volume:
                      "-v", "{}:{}".format(ROOT_DIR, ROOT_DIR),
+                     # Hide node_modules from root directory:
+                     "--tmpfs", "{}/node_modules:rw,uid={}".format(ROOT_DIR, uid),
                      # Run in root directory:
                      "-w", ROOT_DIR,
                      # Image to use:
