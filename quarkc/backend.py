@@ -773,7 +773,6 @@ class Python(Backend):
         shell.call("python", "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            print "WHEEL", wheel
             cmd = ["pip", "install", "--upgrade", "dist/%s" % wheel]
             if is_user(): cmd += ["--user"]
             shell.call(*cmd, cwd=dir, stage="install")
