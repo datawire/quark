@@ -14,9 +14,9 @@ RUN chmod +x /tmp/_in-docker.sh
 
 # Run as user that owns the files:
 ARG userid
-RUN adduser --home /tmp/home --uid $userid --disabled-password --gecos "" docker
+RUN adduser -u $userid -D -g "" docker
 USER $userid
-WORKDIR /tmp/home
+WORKDIR /home/docker
 
 # Install user-specific packages:
 ENV GEM_HOME=/tmp/run/gems
