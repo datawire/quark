@@ -4,15 +4,41 @@ include io/datawire/quark/runtime/Lock.java;
 namespace quark {
 namespace promises {
 
-    class _ChainPromise extends Callable {
+    @doc("A callable that takes a single argument, returns result.")
+    interface UnaryCallable {
+      Object invoke(Object arg);
+    }
+
+    @doc("A method that is bound to a particular instance, together with all but the first argument.")
+    class _BoundMethod extends UnaryCallable {
+        Object _target;
+        Method _method;
+        List<Object> _extraArgs;
+
+        _BoundMethod(Object target, String methodName, List<Object> extraArgs) {
+            self._target = target;
+            self._method = target.getClass().getMethod(methodName);
+            self._extraArgs = extraArgs;
+        }
+
+        Object invoke(Object arg) {
+            List<Object> args = self._extraArgs.slice(0, self._extraArgs.size());
+            args.insert(0, arg);
+            return self._method.invoke(self._target, args);
+        }
+    }
+
+    macro _BoundMethod bind(Object target, String method, List<Object> extraArgs) (new _BoundMethod((target), (method), (extraArgs)));
+
+    class _ChainPromise extends UnaryCallable {
         Promise _next;
 
         _ChangePromise(Promise next) {
             self._next = next;
         }
 
-        Object invoke(List<object> args) {
-            _Callback.fullfilPromise(self.next, args[0]);
+        Object invoke(Object arg) {
+            _Callback.fullfilPromise(self.next, arg);
         }
     }
 
@@ -20,14 +46,12 @@ namespace promises {
     // Promise._maybeRunCallbacks this should be scheduled via a Collector in
     // order to ensure thread-safety.
     class _Callback {
-        Callable _callable;
+        UnaryCallable _callable;
         Promise _next;
-        List<Object> _extraArgs;
 
-        _Callback(Callable callable, Promise next, List<Object> extraArgs) {
+        _Callback(UnaryCallable callable, Promise next) {
             self._callable = callable;
             self._next = next;
-            self._extraArgs = extraArgs;
         }
 
         static void fullfilPromise(Promise promise, Object result) {
@@ -39,9 +63,7 @@ namespace promises {
         }
 
         void call(Object arg) {
-            List<Object> args = self._extraArgs.slice(0, self._extraArgs.size());
-            args.insert(0, arg);
-            Object result = self.callable.invoke(args);
+            Object result = self.callable.invoke(arg);
             if (reflect.Class.get("quark.promises.Promise").isinstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
@@ -53,27 +75,27 @@ namespace promises {
         }
     }
 
-    class _Passthrough extends Callable {
-        Object invoke(List<Object> args) {
-            return args[0];
+    class _Passthrough extends UnaryCallable {
+        Object invoke(Object arg) {
+            return arg;
         }
     }
 
-    class _CallIfIsInstance extends Callable {
-        Callable _underlying;
+    class _CallIfIsInstance extends UnaryCallable {
+        UnaryCallable _underlying;
         reflect.Class _class;
 
-        _CallIfIsInstance(Callable underlying, reflect.Class klass) {
+        _CallIfIsInstance(UnaryCallable underlying, reflect.Class klass) {
             self._underlying = underlying;
             self._class = klass;
         }
 
-        Object invoke(List<Object> args) {
-            if (self._class.isinstance(args[0])) {
-                return self._underlying.invoke(args);
+        Object invoke(Object arg) {
+            if (self._class.isinstance(arg)) {
+                return self._underlying.invoke(arg);
             } else {
                 // Just pass through the instance we care about.
-                return args[0];
+                return arg];
             }
         }
     }
@@ -160,32 +182,32 @@ namespace promises {
             self._maybeRunCallbacks();
         }
 
-        Promise then(Callable callable, List<Object> moreArgs) {
+        Promise then(UnaryCallable callable) {
             Promise result = new Promise();
             self._lock.acquire();
-            self._successCallbacks.add(new _Callback(callable, result, moreArgs));
-            self._failureCallbacks.add(new _Callback(new _Passthrough(), result, []));
+            self._successCallbacks.add(new _Callback(callable, result));
+            self._failureCallbacks.add(new _Callback(new _Passthrough(), result));
             self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
 
         // Conflicts with Java keyword
-        IPromise catch(reflect.Class errorClass, Callable callable, List<Object> moreArgs) {
+        IPromise catch(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
-            _Callable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result, moreArgs);
+            _UnaryCallable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
             self._lock.acquire();
             self._failureCallbacks.add(callback);
-            self._successCallbacks.add(new _Callback(new _Passthrough(), result, []));
+            self._successCallbacks.add(new _Callback(new _Passthrough(), result));
             self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
 
         // Conflicts with Java keyword
-        IPromise finally(Callable callback, List<Object> moreArgs) {
+        IPromise finally(UnaryCallable callable) {
             Promise result = new Promise();
-            _Callback callback = new _Callback(callable, result, moreArgs);
+            _Callback callback = new _Callback(callable, result);
             self._lock.acquire();
             self._successCallbacks.add(callback);
             self._failureCallbacks.add(callback);
@@ -263,11 +285,9 @@ namespace promises {
     // This is just a very sketchy example of using the above:
     class Example {
         Promise getWithDefault(String url, String defaultResult) {
-            List<Object> default = [];
-            default.add(defaultResult);
             return IO.httpRequest(Context.get().runtime, new HTTPRequest(url)
-                                  ).then(reflect.bind(self, "_handleResponse"), []
-                                  ).catch(HTTPError, reflect.bind(self, "_handleError"), default);
+                                  ).then(reflect.bind(self, "_handleResponse", []),
+                                  ).catch(HTTPError, reflect.bind(self, "_handleError", [default]));
         }
 
         Maybe<String> syncGetWithDefault(String url, String defaultResult) {

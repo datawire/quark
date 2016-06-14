@@ -397,12 +397,6 @@ namespace quark {
     }
 
 
-    @doc("A callable that takes arguments, returns result.")
-    interface Callable {
-      Object invoke(List<Object> args);
-    }
-
-
 namespace error {
     class Error {
         String message;
