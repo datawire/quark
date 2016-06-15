@@ -8,6 +8,7 @@ public class inheritance_Ping extends quark.reflect.Class implements io.datawire
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_Ping_encode_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.get("inheritance.Message")}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.Ping();

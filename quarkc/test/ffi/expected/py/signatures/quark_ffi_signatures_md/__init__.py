@@ -54,6 +54,7 @@ class generics_Box_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([quark.reflect.Field(u"quark.Object", u"contents")])
         (self).methods = _List([generics_Box_quark_Object__set_Method(), generics_Box_quark_Object__get_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.Box()
@@ -119,6 +120,7 @@ class generics_Box_quark_int_(quark.reflect.Class):
         (self).parameters = _List([u"quark.int"])
         (self).fields = _List([quark.reflect.Field(u"quark.int", u"contents")])
         (self).methods = _List([generics_Box_quark_int__set_Method(), generics_Box_quark_int__get_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.Box()
@@ -184,6 +186,7 @@ class generics_Crate_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([quark.reflect.Field(u"generics.Box<quark.Object>", u"box"), quark.reflect.Field(u"generics.Box<quark.int>", u"ibox")])
         (self).methods = _List([generics_Crate_quark_Object__set_Method(), generics_Crate_quark_Object__get_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.Crate()
@@ -208,6 +211,7 @@ class generics_Sack(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"generics.Box<quark.int>", u"ints")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.Sack()
@@ -273,6 +277,7 @@ class generics_Matrix_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([quark.reflect.Field(u"quark.int", u"width"), quark.reflect.Field(u"quark.int", u"height"), quark.reflect.Field(u"quark.List<quark.List<quark.Object>>", u"columns")])
         (self).methods = _List([generics_Matrix_quark_Object____get___Method(), generics_Matrix_quark_Object____set___Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.Matrix(_cast((args)[0], lambda: int), _cast((args)[1], lambda: int))
@@ -317,6 +322,7 @@ class generics_constructors_Box_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([quark.reflect.Field(u"quark.Object", u"contents")])
         (self).methods = _List([generics_constructors_Box_quark_Object__get_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.constructors.Box((args)[0])
@@ -381,6 +387,7 @@ class generics_pkg_Foo_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([generics_pkg_Foo_quark_Object__foo_Method(), generics_pkg_Foo_quark_Object__get_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -445,6 +452,7 @@ class generics_pkg_StringFoo(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([generics_pkg_StringFoo_get_Method(), generics_pkg_StringFoo_foo_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.pkg.StringFoo()
@@ -469,6 +477,7 @@ class generics_pkg_Box_quark_String_(quark.reflect.Class):
         (self).parameters = _List([u"quark.String"])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"contents")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.pkg.Box(_cast((args)[0], lambda: unicode))
@@ -493,6 +502,7 @@ class generics_pkg_StringBox(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"contents")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.get(u"generics.pkg.Box")])
 
     def construct(self, args):
         return generics.pkg.StringBox(_cast((args)[0], lambda: unicode))
@@ -537,6 +547,7 @@ class generics_ccc_TLSContextInitializer(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([generics_ccc_TLSContextInitializer_getValue_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.ccc.TLSContextInitializer()
@@ -601,6 +612,7 @@ class generics_ccc_Context(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"generics.ccc.Context", u"_global"), quark.reflect.Field(u"generics.ccc.TLS<generics.ccc.Context>", u"_current"), quark.reflect.Field(u"generics.ccc.Context", u"parent")])
         (self).methods = _List([generics_ccc_Context_current_Method(), generics_ccc_Context_global_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.ccc.Context(_cast((args)[0], lambda: generics.ccc.Context))
@@ -645,6 +657,7 @@ class generics_ccc_TLSInitializer_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([generics_ccc_TLSInitializer_quark_Object__getValue_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -689,6 +702,7 @@ class generics_ccc_TLS_generics_ccc_Context_(quark.reflect.Class):
         (self).parameters = _List([u"generics.ccc.Context"])
         (self).fields = _List([quark.reflect.Field(u"generics.ccc.Context", u"_value")])
         (self).methods = _List([generics_ccc_TLS_generics_ccc_Context__getValue_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.ccc.TLS(_cast((args)[0], lambda: generics.ccc.TLSInitializer))
@@ -713,6 +727,7 @@ class inheritance_Base(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.Base()
@@ -737,6 +752,7 @@ class inheritance_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name"), quark.reflect.Field(u"quark.String", u"mumble"), quark.reflect.Field(u"quark.String", u"later")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.Base")])
 
     def construct(self, args):
         return inheritance.Test()
@@ -761,6 +777,7 @@ class inheritance_A(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.A(_cast((args)[0], lambda: unicode))
@@ -806,6 +823,7 @@ class inheritance_B(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([inheritance_B_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.A")])
 
     def construct(self, args):
         return inheritance.B(_cast((args)[0], lambda: unicode))
@@ -851,6 +869,7 @@ class inheritance_C(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([inheritance_C_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.A")])
 
     def construct(self, args):
         return inheritance.C(_cast((args)[0], lambda: unicode))
@@ -875,6 +894,7 @@ class inheritance_X(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.X()
@@ -920,6 +940,7 @@ class inheritance_Y(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([inheritance_Y_test_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.X")])
 
     def construct(self, args):
         return inheritance.Y(_cast((args)[0], lambda: unicode))
@@ -965,6 +986,7 @@ class inheritance_t1_A(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_t1_A_foo_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.t1.A()
@@ -1010,6 +1032,7 @@ class inheritance_t1_B(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_t1_B_foo_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.t1.A")])
 
     def construct(self, args):
         return inheritance.t1.B()
@@ -1055,6 +1078,7 @@ class inheritance_t1_C(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_t1_C_foo_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.t1.A")])
 
     def construct(self, args):
         return inheritance.t1.C()
@@ -1079,6 +1103,7 @@ class inheritance_t2_A(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.t2.A()
@@ -1103,6 +1128,7 @@ class inheritance_t2_B(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.t2.A")])
 
     def construct(self, args):
         return inheritance.t2.B()
@@ -1127,6 +1153,7 @@ class inheritance_t2_X_quark_int_(quark.reflect.Class):
         (self).parameters = _List([u"quark.int"])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.t2.X()
@@ -1151,6 +1178,7 @@ class inheritance_t2_Y(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.t2.X")])
 
     def construct(self, args):
         return inheritance.t2.Y()
@@ -1196,6 +1224,7 @@ class inheritance_pets_Cat(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_pets_Cat_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.pets.Pet")])
 
     def construct(self, args):
         return inheritance.pets.Cat()
@@ -1241,6 +1270,7 @@ class inheritance_pets_Dog(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_pets_Dog_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.pets.Pet")])
 
     def construct(self, args):
         return inheritance.pets.Dog()
@@ -1285,6 +1315,7 @@ class inheritance_Message(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_Message_encode_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.Message()
@@ -1329,6 +1360,7 @@ class inheritance_Ping(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_Ping_encode_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.Message")])
 
     def construct(self, args):
         return inheritance.Ping()
@@ -1393,6 +1425,7 @@ class inheritance_Pong(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_Pong_toString_Method(), inheritance_Pong_encode_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.Message")])
 
     def construct(self, args):
         return inheritance.Pong()
@@ -1438,6 +1471,7 @@ class inheritance_super__A(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([inheritance_super__A_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.super_.A(_cast((args)[0], lambda: unicode))
@@ -1483,6 +1517,7 @@ class inheritance_super__B(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([inheritance_super__B_greet_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"inheritance.super_.A")])
 
     def construct(self, args):
         return inheritance.super_.B()
@@ -1528,6 +1563,7 @@ class inheritance_use_before_def_Bar(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_use_before_def_Bar_go_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.use_before_def.Bar()
@@ -1552,6 +1588,7 @@ class inheritance_use_before_def_Foo(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.use_before_def.Foo()
@@ -1618,6 +1655,7 @@ class interfaces_A(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_A_foo_Method(), interfaces_A_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -1663,6 +1701,7 @@ class interfaces_B(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_B_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -1708,6 +1747,7 @@ class interfaces_C(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_C_foo_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -1774,6 +1814,7 @@ class interfaces_T1(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_T1_foo_Method(), interfaces_T1_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.T1()
@@ -1840,6 +1881,7 @@ class interfaces_T2(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_T2_foo_Method(), interfaces_T2_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.T2()
@@ -1906,6 +1948,7 @@ class interfaces_T3(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_T3_foo_Method(), interfaces_T3_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.T3()
@@ -1972,6 +2015,7 @@ class interfaces_T4(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_T4_foo_Method(), interfaces_T4_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.T4()
@@ -2038,6 +2082,7 @@ class interfaces_T5(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_T5_foo_Method(), interfaces_T5_bar_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.T5()
@@ -2125,6 +2170,7 @@ class interfaces_Foo(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_Foo_m1_Method(), interfaces_Foo_m2_Method(), interfaces_Foo_m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -2212,6 +2258,7 @@ class interfaces_Bar_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([interfaces_Bar_quark_Object__m1_Method(), interfaces_Bar_quark_Object__m2_Method(), interfaces_Bar_quark_Object__m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -2299,6 +2346,7 @@ class interfaces_Baz(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_Baz_m2_Method(), interfaces_Baz_m1_Method(), interfaces_Baz_m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.Baz()
@@ -2386,6 +2434,7 @@ class interfaces_RazBar(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_RazBar_m1_Method(), interfaces_RazBar_m2_Method(), interfaces_RazBar_m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -2473,6 +2522,7 @@ class interfaces_RazFaz_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([interfaces_RazFaz_quark_Object__m1_Method(), interfaces_RazFaz_quark_Object__m2_Method(), interfaces_RazFaz_quark_Object__m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -2560,6 +2610,7 @@ class interfaces_BazBar(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([interfaces_BazBar_m1_Method(), interfaces_BazBar_m2_Method(), interfaces_BazBar_m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.BazBar()
@@ -2647,6 +2698,7 @@ class interfaces_BazFaz_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([interfaces_BazFaz_quark_Object__m1_Method(), interfaces_BazFaz_quark_Object__m2_Method(), interfaces_BazFaz_quark_Object__m3_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return interfaces.BazFaz()
@@ -2732,6 +2784,7 @@ class classes_Overload(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([classes_Overload___add___Method(), classes_Overload___mul___Method(), classes_Overload_test_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return classes.Overload(_cast((args)[0], lambda: unicode))
@@ -2777,6 +2830,7 @@ class classes_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([classes_Test_test_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return classes.Test()
@@ -2822,6 +2876,7 @@ class classes_string_test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([classes_string_test_check_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return classes.string_test()
@@ -2887,6 +2942,7 @@ class classes_test_size(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what")])
         (self).methods = _List([classes_test_size_does_Method(), classes_test_size_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_size(_cast((args)[0], lambda: unicode))
@@ -2972,6 +3028,7 @@ class classes_test_startsWith(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.String", u"_that")])
         (self).methods = _List([classes_test_startsWith_that_Method(), classes_test_startsWith_does_Method(), classes_test_startsWith_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_startsWith(_cast((args)[0], lambda: unicode))
@@ -3057,6 +3114,7 @@ class classes_test_endsWith(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.String", u"_that")])
         (self).methods = _List([classes_test_endsWith_that_Method(), classes_test_endsWith_does_Method(), classes_test_endsWith_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_endsWith(_cast((args)[0], lambda: unicode))
@@ -3142,6 +3200,7 @@ class classes_test_find(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.String", u"_that")])
         (self).methods = _List([classes_test_find_that_Method(), classes_test_find_does_Method(), classes_test_find_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_find(_cast((args)[0], lambda: unicode))
@@ -3227,6 +3286,7 @@ class classes_test_substring(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.int", u"start"), quark.reflect.Field(u"quark.int", u"end")])
         (self).methods = _List([classes_test_substring_that_Method(), classes_test_substring_does_Method(), classes_test_substring_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_substring(_cast((args)[0], lambda: unicode))
@@ -3312,6 +3372,7 @@ class classes_test_replace(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.String", u"start"), quark.reflect.Field(u"quark.String", u"end")])
         (self).methods = _List([classes_test_replace_that_Method(), classes_test_replace_does_Method(), classes_test_replace_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_replace(_cast((args)[0], lambda: unicode))
@@ -3417,6 +3478,7 @@ class classes_test_join(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.List<quark.String>", u"parts"), quark.reflect.Field(u"quark.String", u"strparts"), quark.reflect.Field(u"quark.String", u"sep")])
         (self).methods = _List([classes_test_join_that_Method(), classes_test_join_a_Method(), classes_test_join_does_Method(), classes_test_join_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_join(_cast((args)[0], lambda: unicode))
@@ -3502,6 +3564,7 @@ class classes_test_split(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"what"), quark.reflect.Field(u"quark.String", u"sep"), quark.reflect.Field(u"quark.String", u"altsep")])
         (self).methods = _List([classes_test_split_that_Method(), classes_test_split_does_Method(), classes_test_split_check_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"classes.string_test")])
 
     def construct(self, args):
         return classes.test_split(_cast((args)[0], lambda: unicode), _cast((args)[1], lambda: unicode))
@@ -3567,6 +3630,7 @@ class classes_stuff_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([classes_stuff_Test_foo_Method(), classes_stuff_Test_test_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return classes.stuff.Test()
@@ -3716,6 +3780,7 @@ class statics_Foo(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.int", u"count")])
         (self).methods = _List([statics_Foo_setCount_Method(), statics_Foo_getCount_Method(), statics_Foo_test1_Method(), statics_Foo_test2_Method(), statics_Foo_test3_Method(), statics_Foo_test4_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return statics.Foo()
@@ -3760,6 +3825,7 @@ class docs_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([docs_Test_test_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return docs.Test()
@@ -3784,6 +3850,7 @@ class quark_List_quark_List_quark_Object__(quark.reflect.Class):
         (self).parameters = _List([u"quark.List<quark.Object>"])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return _List()
@@ -3808,6 +3875,7 @@ class quark_List_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return _List()
@@ -3832,6 +3900,7 @@ class quark_List_quark_String_(quark.reflect.Class):
         (self).parameters = _List([u"quark.String"])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return _List()

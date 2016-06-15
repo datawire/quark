@@ -8,6 +8,7 @@ public class generics_pkg_Box_quark_String_ extends quark.reflect.Class implemen
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.String"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "contents")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new generics.pkg.Box<String>((String) ((args).get(0)));

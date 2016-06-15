@@ -87,7 +87,9 @@ class Backend(object):
         self.dependencies["%s:%s.%s-%s" % (dep.lang, dep.group, dep.artifact, dep.version)] = dep
 
     def visit_Use(self, use):
-        entry = self.roots[use.qualified].files[0]
+        # XXX This is *probably* not a bug, but fact self.roots starts as None
+        # isn't great...
+        entry = self.roots[use.qualified].files[0]  # pylint: disable=unsubscriptable-object
         name, ver = namever(entry)
         self.dependencies[name] = entry
 

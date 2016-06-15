@@ -8,6 +8,7 @@ public class test_subtest_Test extends quark.reflect.Class implements io.datawir
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.int", "size")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new test_subtest_Test_go_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new test.subtest.Test();

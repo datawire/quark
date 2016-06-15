@@ -201,7 +201,7 @@ def main(args):
         if not args["run"]:
             shell.command_log.error("")
         return err
-    except:
+    except:  # pylint: disable=bare-except
         if do_log:
             import inspect
             ast_stack = helpers.format_ast_stack(inspect.trace())

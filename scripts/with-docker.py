@@ -27,6 +27,12 @@ def main():
             "busybox", "stat", "-c", "%u", "/path"]).strip()
     subprocess.check_call(["docker", "build",
                            # Tag for resulting image:
+                           "-t", "quark-base",
+                           # Dockerfile to use:
+                           "-f",  "Dockerfile.base", "."],
+                          cwd=ROOT_DIR)
+    subprocess.check_call(["docker", "build",
+                           # Tag for resulting image:
                            "-t", "quark-run-transparently",
                            # Pass in appropriate UID:
                            "--build-arg", "userid={}".format(uid),
@@ -40,6 +46,8 @@ def main():
                      "--rm",
                      # Map root directory in as volume:
                      "-v", "{}:{}".format(ROOT_DIR, ROOT_DIR),
+                     # Hide node_modules from root directory:
+                     "--tmpfs", "{}/node_modules:rw,uid={}".format(ROOT_DIR, uid),
                      # Run in root directory:
                      "-w", ROOT_DIR,
                      # Image to use:
