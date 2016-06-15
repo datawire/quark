@@ -9,27 +9,6 @@ namespace promises {
       Object invoke(Object arg);
     }
 
-    @doc("A method that is bound to a particular instance, together with all but the first argument.")
-    class _BoundMethod extends UnaryCallable {
-        Object _target;
-        Method _method;
-        List<Object> _extraArgs;
-
-        _BoundMethod(Object target, String methodName, List<Object> extraArgs) {
-            self._target = target;
-            self._method = target.getClass().getMethod(methodName);
-            self._extraArgs = extraArgs;
-        }
-
-        Object invoke(Object arg) {
-            List<Object> args = self._extraArgs.slice(0, self._extraArgs.size());
-            args.insert(0, arg);
-            return self._method.invoke(self._target, args);
-        }
-    }
-
-    macro _BoundMethod bind(Object target, String method, List<Object> extraArgs) (new _BoundMethod((target), (method), (extraArgs)));
-
     class _ChainPromise extends UnaryCallable {
         Promise _next;
 
