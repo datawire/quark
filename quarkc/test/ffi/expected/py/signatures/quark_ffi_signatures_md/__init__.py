@@ -1224,7 +1224,7 @@ class inheritance_pets_Cat(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_pets_Cat_greet_Method()])
-        (self).parents = _List([quark.reflect.Class.get(u"inheritance.pets.Pet")])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.pets.Cat()
@@ -1270,7 +1270,7 @@ class inheritance_pets_Dog(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([inheritance_pets_Dog_greet_Method()])
-        (self).parents = _List([quark.reflect.Class.get(u"inheritance.pets.Pet")])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.pets.Dog()

@@ -1859,7 +1859,7 @@ function inheritance_pets_Cat() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Cat_greet_Method()];
-    (this).parents = [quark.reflect.Class.get("inheritance.pets.Pet")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Cat = inheritance_pets_Cat;
 _qrt.util.inherits(inheritance_pets_Cat, quark.reflect.Class);
@@ -1929,7 +1929,7 @@ function inheritance_pets_Dog() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Dog_greet_Method()];
-    (this).parents = [quark.reflect.Class.get("inheritance.pets.Pet")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Dog = inheritance_pets_Dog;
 _qrt.util.inherits(inheritance_pets_Dog, quark.reflect.Class);

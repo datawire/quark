@@ -816,7 +816,8 @@ class Reflector:
 
     def _has_reflect_class(self, type):
         # Technically List and Map could have classes, possibly? They don't now
-        # though.
+        # though. Also parameterized types gets passed through, which is kinda
+        # wrong too.
         cls = type.resolved.type
         return not (isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls))
 
@@ -954,7 +955,9 @@ class Reflector:
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
             "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
-                                  for parent_type in cls.bases if self._has_reflect_class(parent_type)]
+                                  for parent_type in cls.bases
+                                  if (self._has_reflect_class(parent_type) and
+                                      not parent_type.resolved.type.parameters)]
                                  or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
