@@ -170,6 +170,7 @@ def test_run_java_(output):
     batch_pom(base, dirs)
     subprocess.check_call(["mvn", "-q", "install", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
 
+    subprocess.check_call(["quark", "install", "--java"])
     import quarkc.java
     run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
                                         ":target/classes",
@@ -183,6 +184,7 @@ def test_run_python(output):
     env = {"PYTHONPATH": pypath}
     env.update(os.environ)
 
+    subprocess.check_call(["quark", "install", "--python"])
     import quarkc.python
     run_tests(base, dirs, lambda name: ["python", quarkc.python.name(get_dist(name)) + ".py"], env=env)
 
@@ -193,6 +195,7 @@ def test_run_javascript(output):
     env = {"NODE_PATH": base}
     env.update(os.environ)
 
+    subprocess.check_call(["quark", "install", "--javascript"])
     import quarkc.javascript
     run_tests(base, dirs, lambda name: ["node", quarkc.javascript.name(get_dist(name)) + ".js"], env=env)
 
@@ -204,5 +207,6 @@ def test_run_ruby(output):
     env = {"RUBYLIB": ruby_path}
     env.update(os.environ)
 
+    subprocess.check_call(["quark", "install", "--ruby"])
     import quarkc.ruby
     run_tests(base, dirs, lambda name: ["bundle", "exec", "ruby", "lib/" + quarkc.ruby.name(get_dist(name)) + ".rb"], env=env)
