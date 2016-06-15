@@ -502,7 +502,7 @@ class generics_pkg_StringBox(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"contents")])
         (self).methods = _List([])
-        (self).parents = _List([quark.reflect.Class.get(u"generics.pkg.Box")])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return generics.pkg.StringBox(_cast((args)[0], lambda: unicode))
@@ -1178,7 +1178,7 @@ class inheritance_t2_Y(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([])
-        (self).parents = _List([quark.reflect.Class.get(u"inheritance.t2.X")])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return inheritance.t2.Y()
