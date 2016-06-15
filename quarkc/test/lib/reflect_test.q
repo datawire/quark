@@ -27,11 +27,17 @@ namespace complex {
     interface MyInterface {
     }
 
-    class F extends AbstractClass, MyInterface, A, List<String> {
+    class F extends AbstractClass, A {
         void subclass() {
-            1 + 1;
+            int x = 1 + 1;
         }
     }
+
+    class G extends MyInterface, A {}
+
+    class X<T> {}
+
+    class I extends X<String>, A {}
 }
 
 class ClassReflectTest {
@@ -47,8 +53,11 @@ class ClassReflectTest {
                                         reflect.Class.get("complex.E")]);
     }
 
-    void testClassParentsAbstractAndInterfaceIgnored() {
+    void testClassParentsIgnoredThings() {
+        // Interfaces, abstract classes, templatized classes are all ignored
         checkClassParents("complex.F", [reflect.Class.get("complex.A")]);
+        checkClassParents("complex.G", [reflect.Class.get("complex.A")]);
+        checkClassParents("complex.I", [reflect.Class.get("complex.A")]);
     }
 
     void testIsSubclassOf() {

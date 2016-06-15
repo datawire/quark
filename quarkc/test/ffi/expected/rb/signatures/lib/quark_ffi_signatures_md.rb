@@ -1307,7 +1307,7 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("generics.pkg.Box")])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3041,7 +3041,7 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t2.X")])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3159,7 +3159,7 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Cat_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.pets.Pet")])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3277,7 +3277,7 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Dog_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.pets.Pet")])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end

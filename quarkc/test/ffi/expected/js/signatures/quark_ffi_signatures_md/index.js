@@ -765,7 +765,7 @@ function generics_pkg_StringBox() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "contents")];
     (this).methods = [];
-    (this).parents = [quark.reflect.Class.get("generics.pkg.Box")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_pkg_StringBox = generics_pkg_StringBox;
 _qrt.util.inherits(generics_pkg_StringBox, quark.reflect.Class);
@@ -1789,7 +1789,7 @@ function inheritance_t2_Y() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [];
-    (this).parents = [quark.reflect.Class.get("inheritance.t2.X")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_t2_Y = inheritance_t2_Y;
 _qrt.util.inherits(inheritance_t2_Y, quark.reflect.Class);
@@ -1859,7 +1859,7 @@ function inheritance_pets_Cat() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Cat_greet_Method()];
-    (this).parents = [quark.reflect.Class.get("inheritance.pets.Pet")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Cat = inheritance_pets_Cat;
 _qrt.util.inherits(inheritance_pets_Cat, quark.reflect.Class);
@@ -1929,7 +1929,7 @@ function inheritance_pets_Dog() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Dog_greet_Method()];
-    (this).parents = [quark.reflect.Class.get("inheritance.pets.Pet")];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Dog = inheritance_pets_Dog;
 _qrt.util.inherits(inheritance_pets_Dog, quark.reflect.Class);
