@@ -6,7 +6,7 @@ namespace promises {
 
     @doc("A callable that takes a single argument, returns result.")
     interface UnaryCallable {
-      Object invoke(Object arg);
+        Object invoke(Object arg);
     }
 
     // Called when Promise we're waiting on has result, allowing us to hand it
@@ -19,7 +19,8 @@ namespace promises {
         }
 
         Object invoke(Object arg) {
-            _CallbackEvent.fullfilPromise(self.next, arg);
+            _CallbackEvent.fullfilPromise(self._next, arg);
+            return null;
         }
     }
 
@@ -36,11 +37,11 @@ namespace promises {
             self._value = value;
         }
 
-        static void fullfilPromise(Promise promise) {
-            if (reflect.Class.ERROR.hasInstance(self._value)) {
-                promise._reject(self._value);
+        static void fullfilPromise(Promise promise, Object value) {
+            if (reflect.Class.ERROR.hasInstance(value)) {
+                promise._reject(?value);
             } else {
-                promise._resolve(self._value);
+                promise._resolve(value);
             }
         }
 
@@ -49,10 +50,10 @@ namespace promises {
             if (reflect.Class.get("quark.promises.Promise").hasInstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
-                Promise toChain = result;
-                result.then(new _ChainPromise(self._next));
+                Promise toChain = ?result;
+                toChain.whenSuccess(new _ChainPromise(self._next));
             } else {
-                self.fullfilPromise(self._next);
+                self.fullfilPromise(self._next, self._value);
             }
         }
     }
@@ -108,28 +109,28 @@ namespace promises {
     class PromiseValue {
         Object _successResult;
         error.Error _failureResult;
-        boolean _hasValue;
+        bool _hasValue;
 
         @doc("Return true if the Promise had a value at the time this was created.")
-        boolean hasValue() {
+        bool hasValue() {
             return self._hasValue;
         }
 
         @doc("Return true if value is error. Result is only valid if hasValue() is true.")
-        boolean isError() {
+        bool isError() {
             return (self._failureResult != null);
         }
 
         @doc("Return the value. Result is only valid if hasValue() is true.")
         Object getValue() {
-            if (self.hasError()) {
+            if (self.isError()) {
                 return self._failureResult;
             } else {
                 return self._successResult;
             }
         }
 
-        PromiseValue(Object successResult, error.Error failureResult, boolean hasValue) {
+        PromiseValue(Object successResult, error.Error failureResult, bool hasValue) {
             self._successResult = successResult;
             self._failureResult = failureResult;
             self._hasValue = hasValue;
@@ -137,16 +138,16 @@ namespace promises {
     }
 
     class Promise {
-        Lock _lock;
+        concurrent.Lock _lock;
         Object _successResult;
         error.Error _failureResult;
-        boolean _hasResult;
+        bool _hasResult;
         List<_Callback> _successCallbacks;
         List<_Callback> _failureCallbacks;
 
         // Private constructor, don't use externally.
         Promise() {
-            self._lock = new Lock();
+            self._lock = new concurrent.Lock();
             self._hasResult = false;
             self._successResult = null;
             self._failureResult = null;
@@ -192,14 +193,14 @@ namespace promises {
             self._maybeRunCallbacks();
         }
 
-        void _reject(Error err) {
+        void _reject(error.Error err) {
             self._lock.acquire();
             if (self._hasResult) {
                 // XXX indicates bug, log something
                 return;
             }
             self._hasResult = true;
-            self._failureResult = result;
+            self._failureResult = err;
             self._lock.release();
             self._maybeRunCallbacks();
         }
@@ -217,7 +218,7 @@ namespace promises {
 
         Promise whenError(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
-            _UnaryCallable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
+            _Callback callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
             self._lock.acquire();
             self._failureCallbacks.add(callback);
             self._successCallbacks.add(new _Callback(new _Passthrough(), result));
@@ -241,8 +242,8 @@ namespace promises {
         @doc("Synchronous extraction of the promise's current value, if it has any.")
         PromiseValue value() {
             self._lock.acquire();
-            PromiseValueresult = new PromiseValue(self._successResult, self._failureResult,
-                                                  self._hasResult);
+            PromiseValue result = new PromiseValue(self._successResult, self._failureResult,
+                                                   self._hasResult);
             self._lock.release();
             return result;
         }
