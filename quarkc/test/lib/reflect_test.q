@@ -19,6 +19,19 @@ namespace complex {
 
     class E {}
     class D extends B, E {}
+
+    class AbstractClass {
+        void subclass();
+    }
+
+    interface MyInterface {
+    }
+
+    class F extends AbstractClass, MyInterface, A, List<String> {
+        void subclass() {
+            1 + 1;
+        }
+    }
 }
 
 class ClassReflectTest {
@@ -32,6 +45,10 @@ class ClassReflectTest {
         checkClassParents("complex.B", [reflect.Class.get("complex.A")]);
         checkClassParents("complex.D", [reflect.Class.get("complex.B"),
                                         reflect.Class.get("complex.E")]);
+    }
+
+    void testClassParentsAbstractAndInterfaceIgnored() {
+        checkClassParents("complex.F", [reflect.Class.get("complex.A")]);
     }
 
     void testIsSubclassOf() {

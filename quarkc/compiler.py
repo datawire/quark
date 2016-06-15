@@ -38,7 +38,7 @@ from .dispatch import overload
 from .helpers import (
     lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
     is_abstract, constructor, base_type, base_constructors, has_super, has_return,
-    is_newer, compiled_quark, namever, mdroot, is_extendable
+    is_newer, compiled_quark, namever, mdroot,
 )
 from .environment import Environment
 from . import docmaker
@@ -814,9 +814,15 @@ class Reflector:
     def qexpr(self, texp):
         return '"%s"' % self.qtype(texp)
 
+    def _has_reflect_class(self, type):
+        # Technically List and Map could have classes, possibly? They don't now
+        # though.
+        cls = type.resolved.type
+        return not (isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls))
+
     def visit_Type(self, type):
         cls = type.resolved.type
-        if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
+        if not self._has_reflect_class(type):
             if cls.name.text not in ("List", "Map"):
                 return
         if cls.parameters:
@@ -948,7 +954,7 @@ class Reflector:
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
             "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
-                                  for parent_type in cls.bases if is_extendable(parent_type)]
+                                  for parent_type in cls.bases if self._has_reflect_class(parent_type)]
                                  or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
