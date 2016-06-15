@@ -9,6 +9,8 @@ namespace promises {
       Object invoke(Object arg);
     }
 
+    // Called when Promise we're waiting on has result, allowing us to hand it
+    // over to Promise that is waiting for it:
     class _ChainPromise extends UnaryCallable {
         Promise _next;
 
@@ -17,14 +19,48 @@ namespace promises {
         }
 
         Object invoke(Object arg) {
-            _Callback.fullfilPromise(self.next, arg);
+            _CallbackEvent.fullfilPromise(self.next, arg);
         }
     }
 
-    // XXX in real imlpementation instead of calling this directly in
-    // Promise._maybeRunCallbacks this should be scheduled via a Collector in
-    // order to ensure thread-safety.
-    class _Callback {
+    // Actually run a callback's callable, and hand result on to promise that is
+    // expecting it:
+    class _CallbackEvent extends concurrent.Event {
+        UnaryCallable _callable;
+        Promise _next;
+        Object _value;
+
+        _CallbackEvent(UnaryCallable callable, Promise next, Object value) {
+            self._callable = callable;
+            self._next = next;
+            self._value = value;
+        }
+
+        static void fullfilPromise(Promise promise) {
+            if (reflect.Class.ERROR.hasInstance(self._value)) {
+                promise._reject(self._value);
+            } else {
+                promise._resolve(self._value);
+            }
+        }
+
+        void fireEvent() {
+            Object result = self._callable.invoke(self._value);
+            if (reflect.Class.get("quark.promises.Promise").hasInstance(result)) {
+                // We got a promise as result of callback, so chain it to the
+                // promise that we're supposed to be fulfilling:
+                Promise toChain = result;
+                result.then(new _ChainPromise(self._next));
+            } else {
+                self.fullfilPromise(self._next);
+            }
+        }
+    }
+
+    // A callback added to a Promise via whenSuccess/whenResult/always.
+    // Preserves the context of the caller so it can be used to run the
+    // callback's callable when eventually the original Promise gets its value.
+    class _Callback extends concurrent.EventContext {
         UnaryCallable _callable;
         Promise _next;
 
@@ -33,24 +69,11 @@ namespace promises {
             self._next = next;
         }
 
-        static void fullfilPromise(Promise promise, Object result) {
-            if (reflect.Class.ERROR.isinstance(result)) {
-                promise._reject(result);
-            } else {
-                promise._resolve(result);
-            }
-        }
-
-        void call(Object arg) {
-            Object result = self.callable.invoke(arg);
-            if (reflect.Class.get("quark.promises.Promise").isinstance(result)) {
-                // We got a promise as result of callback, so chain it to the
-                // promise that we're supposed to be fulfilling:
-                Promise toChain = result;
-                result.then(new _ChainPromise(self.next));
-            } else {
-                self.fullfilPromise(self.next, result);
-            }
+        void call(Object result) {
+            // Schedule the actual call to the wrapped callable to run in the
+            // appropriate context:
+            _CallbackEvent event = new _CallbackEvent(self._callable, self._next, result);
+            self.getContext().collector.put(event);
         }
     }
 
@@ -60,6 +83,8 @@ namespace promises {
         }
     }
 
+    // Wrap another UnaryCallable, only call it if the given value is an
+    // instance of the specified class.
     class _CallIfIsInstance extends UnaryCallable {
         UnaryCallable _underlying;
         reflect.Class _class;
@@ -70,30 +95,48 @@ namespace promises {
         }
 
         Object invoke(Object arg) {
-            if (self._class.isinstance(arg)) {
+            if (self._class.hasInstance(arg)) {
                 return self._underlying.invoke(arg);
             } else {
                 // Just pass through the instance we care about.
-                return arg];
+                return arg;
             }
         }
     }
 
+    @doc("Snapshot of the value of a Promise, if it has one.")
     class PromiseValue {
-        Object successResult;
-        error.Error failureResult;
+        Object _successResult;
+        error.Error _failureResult;
+        boolean _hasValue;
 
-        boolean isError() {
-            return self.failureResult != null;
+        @doc("Return true if the Promise had a value at the time this was created.")
+        boolean hasValue() {
+            return self._hasValue;
         }
 
-        PromiseValue(Object successResult, error.Error failureResult, boolean hasResult) {
-            self.successResult = successResult;
-            self.failureResult = failureResult;
+        @doc("Return true if value is error. Result is only valid if hasValue() is true.")
+        boolean isError() {
+            return (self._failureResult != null);
+        }
+
+        @doc("Return the value. Result is only valid if hasValue() is true.")
+        Object getValue() {
+            if (self.hasError()) {
+                return self._failureResult;
+            } else {
+                return self._successResult;
+            }
+        }
+
+        PromiseValue(Object successResult, error.Error failureResult, boolean hasValue) {
+            self._successResult = successResult;
+            self._failureResult = failureResult;
+            self._hasValue = hasValue;
         }
     }
 
-    class Promise extends concurrent.EventContext {
+    class Promise {
         Lock _lock;
         Object _successResult;
         error.Error _failureResult;
@@ -161,7 +204,7 @@ namespace promises {
             self._maybeRunCallbacks();
         }
 
-        Promise then(UnaryCallable callable) {
+        Promise whenSuccess(UnaryCallable callable) {
             Promise result = new Promise();
             self._lock.acquire();
             self._successCallbacks.add(new _Callback(callable, result));
@@ -171,8 +214,8 @@ namespace promises {
             return result;
         }
 
-        // Conflicts with Java keyword
-        Promise catch(reflect.Class errorClass, UnaryCallable callable) {
+
+        Promise whenError(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
             _UnaryCallable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
             self._lock.acquire();
@@ -183,8 +226,7 @@ namespace promises {
             return result;
         }
 
-        // Conflicts with Java keyword
-        Promise finally(UnaryCallable callable) {
+        Promise always(UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result);
             self._lock.acquire();
