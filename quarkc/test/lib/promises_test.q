@@ -45,4 +45,6 @@ class PromiseTest {
     // Callback returning promise is chained on success path
 
     // Callback returning promise is chained on error path
+
+    // Context is preserved on creation of callbacks
 }
