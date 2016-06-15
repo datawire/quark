@@ -143,6 +143,7 @@ class GenericsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Box_quark_Object__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Box_quark_Object__get_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -314,6 +315,7 @@ class GenericsBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.int"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Box_quark_int__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Box_quark_int__get_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -485,6 +487,7 @@ class GenericsCrateQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.Box<quark.Object>", "box"), ::Quark.quark.reflect.Field.new("generics.Box<quark.int>", "ibox")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Crate_quark_Object__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Crate_quark_Object__get_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -547,6 +550,7 @@ class GenericsSack < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.Box<quark.int>", "ints")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -718,6 +722,7 @@ class GenericsMatrixQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "width"), ::Quark.quark.reflect.Field.new("quark.int", "height"), ::Quark.quark.reflect.Field.new("quark.List<quark.List<quark.Object>>", "columns")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Matrix_quark_Object____get___Method.new(), ::Quark.quark_ffi_signatures_md.generics_Matrix_quark_Object____set___Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -834,6 +839,7 @@ class GenericsConstructorsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_constructors_Box_quark_Object__get_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1004,6 +1010,7 @@ class GenericsPkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_pkg_Foo_quark_Object__foo_Method.new(), ::Quark.quark_ffi_signatures_md.generics_pkg_Foo_quark_Object__get_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1174,6 +1181,7 @@ class GenericsPkgStringFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_pkg_StringFoo_get_Method.new(), ::Quark.quark_ffi_signatures_md.generics_pkg_StringFoo_foo_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1236,6 +1244,7 @@ class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.String"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1298,6 +1307,7 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("generics.pkg.Box")])
 
         nil
     end
@@ -1414,6 +1424,7 @@ class GenericsCccTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLSContextInitializer_getValue_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1584,6 +1595,7 @@ class GenericsCccContext < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.ccc.Context", "_global"), ::Quark.quark.reflect.Field.new("generics.ccc.TLS<generics.ccc.Context>", "_current"), ::Quark.quark.reflect.Field.new("generics.ccc.Context", "parent")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_Context_current_Method.new(), ::Quark.quark_ffi_signatures_md.generics_ccc_Context_global_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1700,6 +1712,7 @@ class GenericsCccTLSInitializerQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLSInitializer_quark_Object__getValue_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1816,6 +1829,7 @@ class GenericsCccTLSGenericsCccContext < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["generics.ccc.Context"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.ccc.Context", "_value")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLS_generics_ccc_Context__getValue_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1878,6 +1892,7 @@ class InheritanceBase < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1940,6 +1955,7 @@ class InheritanceTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name"), ::Quark.quark.reflect.Field.new("quark.String", "mumble"), ::Quark.quark.reflect.Field.new("quark.String", "later")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Base")])
 
         nil
     end
@@ -2002,6 +2018,7 @@ class InheritanceA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2119,6 +2136,7 @@ class InheritanceB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_B_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.A")])
 
         nil
     end
@@ -2236,6 +2254,7 @@ class InheritanceC < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_C_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.A")])
 
         nil
     end
@@ -2298,6 +2317,7 @@ class InheritanceX < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2415,6 +2435,7 @@ class InheritanceY < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Y_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.X")])
 
         nil
     end
@@ -2532,6 +2553,7 @@ class InheritanceT1A < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_A_foo_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2649,6 +2671,7 @@ class InheritanceT1B < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_B_foo_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t1.A")])
 
         nil
     end
@@ -2766,6 +2789,7 @@ class InheritanceT1C < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_C_foo_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t1.A")])
 
         nil
     end
@@ -2828,6 +2852,7 @@ class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2890,6 +2915,7 @@ class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t2.A")])
 
         nil
     end
@@ -2952,6 +2978,7 @@ class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.int"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3014,6 +3041,7 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t2.X")])
 
         nil
     end
@@ -3131,6 +3159,7 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Cat_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.pets.Pet")])
 
         nil
     end
@@ -3248,6 +3277,7 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Dog_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.pets.Pet")])
 
         nil
     end
@@ -3364,6 +3394,7 @@ class InheritanceMessage < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Message_encode_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3480,6 +3511,7 @@ class InheritancePing < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Ping_encode_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Message")])
 
         nil
     end
@@ -3650,6 +3682,7 @@ class InheritancePong < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Pong_toString_Method.new(), ::Quark.quark_ffi_signatures_md.inheritance_Pong_encode_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Message")])
 
         nil
     end
@@ -3767,6 +3800,7 @@ class InheritanceSuperA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_super__A_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -3884,6 +3918,7 @@ class InheritanceSuperB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_super__B_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.super_.A")])
 
         nil
     end
@@ -4001,6 +4036,7 @@ class InheritanceUseBeforeDefBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_use_before_def_Bar_go_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4063,6 +4099,7 @@ class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4235,6 +4272,7 @@ class InterfacesA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_A_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_A_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4352,6 +4390,7 @@ class InterfacesB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_B_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4469,6 +4508,7 @@ class InterfacesC < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_C_foo_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4641,6 +4681,7 @@ class InterfacesT1 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T1_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T1_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4813,6 +4854,7 @@ class InterfacesT2 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T2_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T2_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -4985,6 +5027,7 @@ class InterfacesT3 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T3_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T3_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -5157,6 +5200,7 @@ class InterfacesT4 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T4_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T4_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -5329,6 +5373,7 @@ class InterfacesT5 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T5_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T5_bar_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -5556,6 +5601,7 @@ class InterfacesFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Foo_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Foo_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Foo_m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -5783,6 +5829,7 @@ class InterfacesBarQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -6010,6 +6057,7 @@ class InterfacesBaz < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Baz_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Baz_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Baz_m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -6237,6 +6285,7 @@ class InterfacesRazBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_RazBar_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazBar_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazBar_m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -6464,6 +6513,7 @@ class InterfacesRazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -6691,6 +6741,7 @@ class InterfacesBazBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_BazBar_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazBar_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazBar_m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -6918,6 +6969,7 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m3_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -7143,6 +7195,7 @@ class ClassesOverload < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_Overload___add___Method.new(), ::Quark.quark_ffi_signatures_md.classes_Overload___mul___Method.new(), ::Quark.quark_ffi_signatures_md.classes_Overload_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -7260,6 +7313,7 @@ class ClassesTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_Test_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -7377,6 +7431,7 @@ class ClassesStringTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_string_test_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -7548,6 +7603,7 @@ class ClassesTestSize < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_size_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_size_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -7773,6 +7829,7 @@ class ClassesTestStartsWith < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_startsWith_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_startsWith_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_startsWith_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -7998,6 +8055,7 @@ class ClassesTestEndsWith < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_endsWith_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_endsWith_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_endsWith_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -8223,6 +8281,7 @@ class ClassesTestFind < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_find_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_find_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_find_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -8448,6 +8507,7 @@ class ClassesTestSubstring < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.int", "start"), ::Quark.quark.reflect.Field.new("quark.int", "end")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_substring_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_substring_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_substring_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -8673,6 +8733,7 @@ class ClassesTestReplace < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "start"), ::Quark.quark.reflect.Field.new("quark.String", "end")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_replace_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_replace_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_replace_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -8952,6 +9013,7 @@ class ClassesTestJoin < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.List<quark.String>", "parts"), ::Quark.quark.reflect.Field.new("quark.String", "strparts"), ::Quark.quark.reflect.Field.new("quark.String", "sep")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_join_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_a_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -9177,6 +9239,7 @@ class ClassesTestSplit < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "sep"), ::Quark.quark.reflect.Field.new("quark.String", "altsep")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_split_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_split_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_split_check_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
 
         nil
     end
@@ -9348,6 +9411,7 @@ class ClassesStuffTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_stuff_Test_foo_Method.new(), ::Quark.quark_ffi_signatures_md.classes_stuff_Test_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -9739,6 +9803,7 @@ class StaticsFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "count")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.statics_Foo_setCount_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_getCount_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test1_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test2_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test3_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test4_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -9855,6 +9920,7 @@ class DocsTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.docs_Test_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -9917,6 +9983,7 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.List<quark.Object>"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -9979,6 +10046,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -10041,6 +10109,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.String"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end

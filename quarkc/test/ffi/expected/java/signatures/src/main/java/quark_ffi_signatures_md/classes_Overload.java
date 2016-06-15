@@ -8,6 +8,7 @@ public class classes_Overload extends quark.reflect.Class implements io.datawire
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new classes_Overload___add___Method(), new classes_Overload___mul___Method(), new classes_Overload_test_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new classes.Overload((String) ((args).get(0)));
