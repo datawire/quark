@@ -30,11 +30,18 @@ namespace promises {
         UnaryCallable _callable;
         Promise _next;
         Object _value;
+        _Callback _callback;
 
-        _CallbackEvent(UnaryCallable callable, Promise next, Object value) {
+        _CallbackEvent(UnaryCallable callable, Promise next, Object value,
+                       _Callback callback) {
             self._callable = callable;
             self._next = next;
             self._value = value;
+            self._callback = callback;
+        }
+
+        concurrent.EventContext getContext() {
+            return ?self._callback;
         }
 
         static void fullfilPromise(Promise promise, Object value) {
@@ -73,7 +80,7 @@ namespace promises {
         void call(Object result) {
             // Schedule the actual call to the wrapped callable to run in the
             // appropriate context:
-            _CallbackEvent event = new _CallbackEvent(self._callable, self._next, result);
+            _CallbackEvent event = new _CallbackEvent(self._callable, self._next, result, self);
             self.getContext().collector.put(event);
         }
     }
@@ -249,21 +256,19 @@ namespace promises {
         }
     }
 
-    // We'll want to implement this if we end up needing to make Promises
-    // outside of built-in operations like HTTP queries:
-    //class PromiseFactory {
-    //    Promise promise;
-    //
-    //    Deferred() {
-    //        self.promise = new Promise();
-    //    }
-    //
-    //    void resolve(Object result) {
-    //        self.promise._resolve(result);
-    //    }
-    //
-    //    void reject(Error err) {
-    //        self.promise._reject(err);
-    //    }
-    //}
+    class PromiseFactory {
+        Promise promise;
+
+        Deferred() {
+            self.promise = new Promise();
+        }
+
+        void resolve(Object result) {
+            self.promise._resolve(result);
+        }
+
+        void reject(Error err) {
+            self.promise._reject(err);
+       }
+    }
 }}
