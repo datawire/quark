@@ -83,15 +83,26 @@ class Roots(AST):
     def __iter__(self):
         return iter(self.roots.values())
 
+    def dfs(self, root, result, visiting):
+        if root in visiting:
+            raise CompileError("circular use dependency detected: %s" % tuple(visiting))
+        visiting.add(root)
+        try:
+            for use in root.uses:
+                dep = self.roots[use]
+                if dep not in result:
+                    self.dfs(dep, result, visiting)
+            result.append(root)
+            return result
+        finally:
+            visiting.discard(root)
+
     def sorted(self):
-        roots = list(self)
-        def compare(x, y):
-            if x.url in y.uses:
-                return -1
-            else:
-                return 1
-        roots.sort(compare)
-        return roots
+        result = []
+        visiting = set()
+        for root in self:
+            self.dfs(root, result, visiting)
+        return result
 
     @property
     def children(self):
