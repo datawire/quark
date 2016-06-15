@@ -79,15 +79,15 @@ namespace promises {
         }
     }
 
-    class Maybe<T> {
-        T successResult;
+    class PromiseValue {
+        Object successResult;
         error.Error failureResult;
 
         boolean isError() {
             return self.failureResult != null;
         }
 
-        Maybe<T>(Object successResult, error.Error failureResult, boolean hasResult) {
+        PromiseValue(Object successResult, error.Error failureResult, boolean hasResult) {
             self.successResult = successResult;
             self.failureResult = failureResult;
         }
@@ -172,7 +172,7 @@ namespace promises {
         }
 
         // Conflicts with Java keyword
-        IPromise catch(reflect.Class errorClass, UnaryCallable callable) {
+        Promise catch(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
             _UnaryCallable callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
             self._lock.acquire();
@@ -184,7 +184,7 @@ namespace promises {
         }
 
         // Conflicts with Java keyword
-        IPromise finally(UnaryCallable callable) {
+        Promise finally(UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result);
             self._lock.acquire();
@@ -197,89 +197,30 @@ namespace promises {
 
 
         @doc("Synchronous extraction of the promise's current value, if it has any.")
-        Maybe<Object> value() {
+        PromiseValue value() {
             self._lock.acquire();
-            Maybe<Object> result = new Maybe<Object>(self._successResult, self._failureResult,
-                                                     self._hasResult);
+            PromiseValueresult = new PromiseValue(self._successResult, self._failureResult,
+                                                  self._hasResult);
             self._lock.release();
             return result;
         }
-
-        @doc("Wait until timeout is hit or Promise gets a value. Note that this can block, unlike other Promise methods.")
-        Maybe<Object> waitFor(float timeout) {
-            // XXX Sleep until timeout is hit or _reject/_resolve are called, then:
-            return self.value();
-        }
     }
 
-    // XXX Choose better name
-    class Deferred {
-        Promise promise;
-
-        Deferred() {
-            self.promise = new Promise();
-        }
-
-        void resolve(Object result) {
-            self.promise._resolve(result);
-        }
-
-        void reject(Error err) {
-            self.promise._reject(err);
-        }
-    }
-
-    class _HTTPHandler extends HTTPHandler {
-        Deferred result;
-
-        HTTPHandler() {
-            self.result = new Deferred();
-        }
-
-        void onHTTPResponse(HTTPRequest request, HTTPResponse response) {
-            self._result.resolve(response);
-        }
-
-        void onHTTPError(HTTPRequest request, HTTPError error) {
-            self._result.reject(error);
-        }
-    }
-
-    class IO {
-        @doc("Return a Promise that will get a HTTPResponse value or HTTPError")
-        static Promise httpRequest(Runtime runtime, HTTPRequest request) {
-            handler = new _HTTPHandler();
-            runtime.request(request, handler);
-            return handler.result.promise;
-        }
-
-        // Likewise have similar methods for WebSocket connect. Note that
-        // promises don't work really well for streaming results, so WebSocket
-        // messages would ahve to be handled by a different API... say a
-        // SimplerWSHandler that only has onWSMessage.
-        // @doc("Return a Promise that will get a WebSocket when connected.")
-        // static Promise wsOpen(Runtime runtime, String wsurl, SimplerWSHandler handler);
-    }
-
-    // This is just a very sketchy example of using the above:
-    class Example {
-        Promise getWithDefault(String url, String defaultResult) {
-            return IO.httpRequest(Context.get().runtime, new HTTPRequest(url)
-                                  ).then(reflect.bind(self, "_handleResponse", []),
-                                  ).catch(HTTPError, reflect.bind(self, "_handleError", [default]));
-        }
-
-        Maybe<String> syncGetWithDefault(String url, String defaultResult) {
-            return ? getWithDefault(url, defaultResult)).waitFor(5.0);
-        }
-
-        String _handleResponse(HTTPResponse response) {
-            return response.text;
-        }
-
-        String _handleError(HTTPError error, String default) {
-            log(error);
-            return default;
-        }
-    }
+    // We'll want to implement this if we end up needing to make Promises
+    // outside of built-in operations like HTTP queries:
+    //class PromiseFactory {
+    //    Promise promise;
+    //
+    //    Deferred() {
+    //        self.promise = new Promise();
+    //    }
+    //
+    //    void resolve(Object result) {
+    //        self.promise._resolve(result);
+    //    }
+    //
+    //    void reject(Error err) {
+    //        self.promise._reject(err);
+    //    }
+    //}
 }}
