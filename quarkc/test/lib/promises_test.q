@@ -55,6 +55,15 @@ class ReturnValue extends UnaryCallable {
     }
 }
 
+class StoreContext extends UnaryCallable {
+    Context recorded = null;
+
+    Object invoke(Object arg) {
+        self.recorded = Context.current();
+        return true;
+    }
+}
+
 class PromiseTest {
     void spinCollector() {
         // Wait for the collector to run out of events:
@@ -323,9 +332,29 @@ class PromiseTest {
         checkEqual(theError, failure.result);
     }
 
-    // Context is preserved on creation of callbacks
+    // Context of whoever added the callback is used when running the callback.
+    void testContextPreserved() {
+        Context original = Context.current();
+        Context customContext = new Context(original);
+        PromiseFactory f = new PromiseFactory();
+        StoreContext store = new StoreContext();
 
-    // Nice to have but unlikely use cases:
+        // Add callback with custom context:
+        Context.swap(customContext);
+        f.promise.whenSuccess(store);
+
+        // Restore the context:
+        Context.swap(original);
+
+        // Resolve:
+        f.resolve(123);
+        spinCollector();
+
+        checkEqual(customContext, store.recorded);
+        checkEqual(original, Context.current());
+    }
+
+    // Nice to have tests but unlikely use cases:
     // Re-entrancy: callback registered inside error callback is called
     // Re-entrancy: callback registered inside either-way callback is called
     // Re-entrancy: callback registered inside success callback is called
