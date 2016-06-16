@@ -58,14 +58,14 @@ namespace promise {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
                 Promise toChain = ?result;
-                toChain.always(new _ChainPromise(self._next));
+                toChain.andFinally(new _ChainPromise(self._next));
             } else {
                 self.fullfilPromise(self._next, result);
             }
         }
     }
 
-    // A callback added to a Promise via whenSuccess/whenResult/always.
+    // A callback added to a Promise via andThen/andCatch/andFinally.
     // Preserves the context of the caller so it can be used to run the
     // callback's callable when eventually the original Promise gets its value.
     class _Callback extends concurrent.EventContext {
@@ -216,7 +216,7 @@ namespace promise {
             self._maybeRunCallbacks();
         }
 
-        Promise whenSuccess(UnaryCallable callable) {
+        Promise andThen(UnaryCallable callable) {
             Promise result = new Promise();
             self._lock.acquire();
             self._successCallbacks.add(new _Callback(callable, result));
@@ -226,7 +226,7 @@ namespace promise {
             return result;
         }
 
-        Promise whenError(reflect.Class errorClass, UnaryCallable callable) {
+        Promise andCatch(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
             self._lock.acquire();
@@ -237,7 +237,7 @@ namespace promise {
             return result;
         }
 
-        Promise always(UnaryCallable callable) {
+        Promise andFinally(UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result);
             self._lock.acquire();

@@ -78,9 +78,9 @@ class PromiseTest {
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
         StoreValue both = new StoreValue();
-        p.whenSuccess(success);
-        p.whenError(Class.ERROR, failure);
-        p.always(both);
+        p.andThen(success);
+        p.andCatch(Class.ERROR, failure);
+        p.andFinally(both);
         spinCollector();
         checkEqual(false, success.called);
         checkEqual(false, failure.called);
@@ -98,9 +98,9 @@ class PromiseTest {
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
         StoreValue both = new StoreValue();
-        p.whenSuccess(success);
-        p.whenError(Class.ERROR, failure);
-        p.always(both);
+        p.andThen(success);
+        p.andCatch(Class.ERROR, failure);
+        p.andFinally(both);
         spinCollector();
         checkEqual(true, success.called);
         checkEqual(theValue, success.result);
@@ -119,9 +119,9 @@ class PromiseTest {
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
         StoreValue both = new StoreValue();
-        p.whenSuccess(success);
-        p.whenError(Class.ERROR, failure);
-        p.always(both);
+        p.andThen(success);
+        p.andCatch(Class.ERROR, failure);
+        p.andFinally(both);
         spinCollector();
         f.resolve(?theValue);
         spinCollector();
@@ -144,9 +144,9 @@ class PromiseTest {
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
         StoreValue both = new StoreValue();
-        p.whenSuccess(success);
-        p.whenError(Class.ERROR, failure);
-        p.always(both);
+        p.andThen(success);
+        p.andCatch(Class.ERROR, failure);
+        p.andFinally(both);
         spinCollector();
         checkEqual(false, success.called);
         checkEqual(true, failure.called);
@@ -165,9 +165,9 @@ class PromiseTest {
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
         StoreValue both = new StoreValue();
-        p.whenSuccess(success);
-        p.whenError(Class.ERROR, failure);
-        p.always(both);
+        p.andThen(success);
+        p.andCatch(Class.ERROR, failure);
+        p.andFinally(both);
         spinCollector();
         f.reject(theError);
         spinCollector();
@@ -180,7 +180,7 @@ class PromiseTest {
         checkEqual(theError, p.value().getValue());
     }
 
-    // whenError only catches errors that are instances of given class.
+    // andCatch only catches errors that are instances of given class.
     void testErrorFiltering() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
@@ -190,9 +190,9 @@ class PromiseTest {
         StoreValue failure = new StoreValue();
         StoreValue httpFailure = new StoreValue();
         StoreValue servletFailure = new StoreValue();
-        p.whenError(Class.ERROR, failure);
-        p.whenError(Class.get("quark.HTTPError"), httpFailure);
-        p.whenError(Class.get("quark.ServletError"), servletFailure);
+        p.andCatch(Class.ERROR, failure);
+        p.andCatch(Class.get("quark.HTTPError"), httpFailure);
+        p.andCatch(Class.get("quark.ServletError"), servletFailure);
         spinCollector();
         checkEqual(true, failure.called);
         checkEqual(err, failure.result);
@@ -209,7 +209,7 @@ class PromiseTest {
         spinCollector();
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
-        p.whenSuccess(success).whenError(Class.ERROR, failure);
+        p.andThen(success).andCatch(Class.ERROR, failure);
         spinCollector();
         checkEqual(false, success.called);
         checkEqual(true, failure.called);
@@ -222,7 +222,7 @@ class PromiseTest {
         Promise p = f.promise;
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
-        p.whenError(Class.ERROR, failure).whenSuccess(success);
+        p.andCatch(Class.ERROR, failure).andThen(success);
         f.resolve(theValue);
         spinCollector();
         checkEqual(false, failure.called);
@@ -235,7 +235,7 @@ class PromiseTest {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
         StoreValue failure = new StoreValue();
-        p.whenSuccess(new ReturnValue(theError)).whenError(Class.ERROR, failure);
+        p.andThen(new ReturnValue(theError)).andCatch(Class.ERROR, failure);
         f.resolve(theValue);
         spinCollector();
         checkEqual(true, failure.called);
@@ -248,7 +248,7 @@ class PromiseTest {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
         StoreValue failure = new StoreValue();
-        p.whenError(Class.ERROR, failure);
+        p.andCatch(Class.ERROR, failure);
         f.resolve(theError); // resolve() not reject()!
         spinCollector();
         checkEqual(true, failure.called);
@@ -260,7 +260,7 @@ class PromiseTest {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
         StoreValue success = new StoreValue();
-        p.whenError(Class.ERROR, new ReturnValue(theValue)).whenSuccess(success);
+        p.andCatch(Class.ERROR, new ReturnValue(theValue)).andThen(success);
         f.reject(theError);
         spinCollector();
         checkEqual(true, success.called);
@@ -274,7 +274,7 @@ class PromiseTest {
         PromiseFactory o = new PromiseFactory();
         Promise p = f.promise;
         StoreValue success = new StoreValue();
-        p.whenSuccess(new ReturnValue(o.promise)).whenSuccess(success);
+        p.andThen(new ReturnValue(o.promise)).andThen(success);
         f.resolve(123);
         spinCollector();
         checkEqual(false, success.called);
@@ -292,7 +292,7 @@ class PromiseTest {
         o.resolve(456);
         Promise p = f.promise;
         StoreValue success = new StoreValue();
-        p.whenSuccess(new ReturnValue(o.promise)).whenSuccess(success);
+        p.andThen(new ReturnValue(o.promise)).andThen(success);
         f.resolve(123);
         spinCollector();
         checkEqual(true, success.called);
@@ -306,7 +306,7 @@ class PromiseTest {
         PromiseFactory o = new PromiseFactory();
         Promise p = f.promise;
         StoreValue failure = new StoreValue();
-        p.whenSuccess(new ReturnValue(o.promise)).whenError(Class.ERROR, failure);
+        p.andThen(new ReturnValue(o.promise)).andCatch(Class.ERROR, failure);
         f.resolve(123);
         spinCollector();
         checkEqual(false, failure.called);
@@ -324,7 +324,7 @@ class PromiseTest {
         o.reject(theError);
         Promise p = f.promise;
         StoreValue failure = new StoreValue();
-        p.whenSuccess(new ReturnValue(o.promise)).whenError(Class.ERROR, failure);
+        p.andThen(new ReturnValue(o.promise)).andCatch(Class.ERROR, failure);
         f.resolve(123);
         spinCollector();
         checkEqual(true, failure.called);
@@ -340,7 +340,7 @@ class PromiseTest {
 
         // Add callback with custom context:
         Context.swap(customContext);
-        f.promise.whenSuccess(store);
+        f.promise.andThen(store);
 
         // Restore the context:
         Context.swap(original);
