@@ -34,6 +34,13 @@ File(Import(Name(quark)), CompilerVersionSpec(),
     Method(static=True, Type(Name(Class)), Name(get),
      Param(Type(Name(String)), Name(id), $type=1.quark.String),
      Block(
+      If(Call(Attr(Var(Name(id), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), Null(null, $type=1.quark.Object),
+       $type=1.quark.bool), Block(
+        ExprStmt(Call(Var(Name(print), $type=0.quark.print),
+          String("Cannot find class given nil class ID.",
+          $type=1.quark.String), $type=1.quark.void)),
+        Return(Null(null, $type=1.quark.Object)))),
       If(Call(Attr(Call(Attr(Var(Name(classes),
            $type=1.quark.Map<1.quark.String,3.quark.reflect.Class>),
            Name(contains), $type=1.quark.Map.contains), Var(Name(id),
@@ -219,6 +226,19 @@ File(Import(Name(quark)), CompilerVersionSpec(),
       $type=1.quark.String)), Type(Name(bool)), Name(hasInstance),
      Param(Type(Name(Object)), Name(o), $type=1.quark.Object),
      Block(
+      If(Call(Attr(Var(Name(o), $type=1.quark.Object), Name(__eq__),
+        $type=1.quark.Object.__eq__), Null(null, $type=1.quark.Object),
+       $type=1.quark.bool), Block(
+        Return(Bool(false, $type=1.quark.bool)))),
+      Local(
+       Declaration(Type(Name(Class)), Name(instanceClass),
+        Call(Attr(Var(Name(o), $type=1.quark.Object), Name(getClass),
+         $type=1.quark.Object.getClass), $type=3.quark.reflect.Class),
+       $type=3.quark.reflect.Class)),
+      If(Call(Attr(Var(Name(instanceClass), $type=3.quark.reflect.Class),
+         Name(__eq__), $type=1.quark.Object.__eq__), Null(null,
+        $type=1.quark.Object), $type=1.quark.bool), Block(
+        Return(Bool(false, $type=1.quark.bool)))),
       Return(Call(Attr(Call(Attr(Var(Name(o), $type=1.quark.Object),
            Name(getClass), $type=1.quark.Object.getClass),
          $type=3.quark.reflect.Class), Name(isSubclassOf),
