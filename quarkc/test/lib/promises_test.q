@@ -49,7 +49,8 @@ class PromiseTest {
         while (!Context.current().collector.idle) {}
     }
 
-    static String VALUE = "success!";
+    static String theValue = "success!";
+    static error.Error theError = new Error("err");
 
     // No value on initial creation
     void testNoValue() {
@@ -72,7 +73,7 @@ class PromiseTest {
     void testSuccessValueCallbackBefore() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
-        f.resolve(?VALUE);
+        f.resolve(?theValue);
         spinCollector();
         StoreValue success = new StoreValue();
         StoreValue failure = new StoreValue();
@@ -82,12 +83,12 @@ class PromiseTest {
         p.always(both);
         spinCollector();
         checkEqual(true, success.called);
-        checkEqual(VALUE, success.result);
+        checkEqual(theValue, success.result);
         checkEqual(false, failure.called);
         checkEqual(true, both.called);
-        checkEqual(VALUE, both.result);
+        checkEqual(theValue, both.result);
         checkEqual(true, p.value().hasValue());
-        checkEqual(VALUE, p.value().getValue());
+        checkEqual(theValue, p.value().getValue());
     }
 
     // Success value becomes available when a resolve() is done after a
@@ -102,23 +103,83 @@ class PromiseTest {
         p.whenError(Class.ERROR, failure);
         p.always(both);
         spinCollector();
-        f.resolve(?VALUE);
+        f.resolve(?theValue);
         spinCollector();
         checkEqual(true, success.called);
-        checkEqual(VALUE, success.result);
+        checkEqual(theValue, success.result);
         checkEqual(false, failure.called);
         checkEqual(true, both.called);
-        checkEqual(VALUE, both.result);
+        checkEqual(theValue, both.result);
         checkEqual(true, p.value().hasValue());
-        checkEqual(VALUE, p.value().getValue());
+        checkEqual(theValue, p.value().getValue());
     }
 
     // Error value becomes available when a resolve() is done before a
     // callback is added.
+    void testErrorValueCallbackBefore() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        f.reject(?theError);
+        spinCollector();
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        StoreValue both = new StoreValue();
+        p.whenSuccess(success);
+        p.whenError(Class.ERROR, failure);
+        p.always(both);
+        spinCollector();
+        checkEqual(false, success.called);
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+        checkEqual(true, both.called);
+        checkEqual(theError, both.result);
+        checkEqual(true, p.value().hasValue());
+        checkEqual(theError, p.value().getValue());
+    }
 
     // Error value becomes available when a resolve() is done after a
     // callback is added.
+    void testErrorValueCallbackAfter() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        StoreValue both = new StoreValue();
+        p.whenSuccess(success);
+        p.whenError(Class.ERROR, failure);
+        p.always(both);
+        spinCollector();
+        f.reject(theError);
+        spinCollector();
+        checkEqual(false, success.called);
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+        checkEqual(true, both.called);
+        checkEqual(theError, both.result);
+        checkEqual(true, p.value().hasValue());
+        checkEqual(theError, p.value().getValue());
+    }
 
+    // whenError only catches errors that are instances of given class.
+    void testErrorFiltering() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        HTTPError err = new HTTPError("ONO");
+        f.reject(err);
+        spinCollector();
+        StoreValue failure = new StoreValue();
+        StoreValue httpFailure = new StoreValue();
+        StoreValue servletFailure = new StoreValue();
+        p.whenError(Class.ERROR, failure);
+        p.whenError(Class.get("quark.HTTPError"), httpFailure);
+        p.whenError(Class.get("quark.ServletError"), servletFailure);
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(err, failure.result);
+        checkEqual(true, httpFailure.called);
+        checkEqual(err, httpFailure.result);
+        checkEqual(false, servletFailure.called);
+    }
 
     // Success callback on error value is skipped
 
