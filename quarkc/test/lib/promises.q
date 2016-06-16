@@ -165,6 +165,7 @@ namespace promises {
         void _maybeRunCallbacks() {
             self._lock.acquire();
             if (!self._hasResult) {
+                self._lock.release();
                 return;
             }
             List<_Callback> callbacks = self._successCallbacks;
@@ -190,7 +191,7 @@ namespace promises {
         void _resolve(Object result) {
             self._lock.acquire();
             if (self._hasResult) {
-                // XXX indicates bug, log something
+                print("BUG: Resolved Promise that already has a value.");
                 self._lock.release();
                 return;
             }
@@ -203,7 +204,8 @@ namespace promises {
         void _reject(error.Error err) {
             self._lock.acquire();
             if (self._hasResult) {
-                // XXX indicates bug, log something
+                print("BUG: Rejected Promise that already has a value.");
+                self._lock.release();
                 return;
             }
             self._hasResult = true;
