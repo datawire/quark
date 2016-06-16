@@ -1,4 +1,4 @@
-quark 1.0;
+quark *;
 package shadowing 0.1.0;
 
 namespace shadowing {

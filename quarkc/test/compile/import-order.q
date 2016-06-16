@@ -1,4 +1,4 @@
-quark 1.0;
+quark *;
 
 use shadowing.q;
 
