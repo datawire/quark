@@ -61,30 +61,30 @@ class ClassReflectTest {
     }
 
     void testIsSubclassOf() {
-        Class AClass = reflect.Class.get("complex.A");
-        Class BClass = reflect.Class.get("complex.B");
-        Class CClass = reflect.Class.get("complex.C");
-        Class DClass = reflect.Class.get("complex.D");
-        Class EClass = reflect.Class.get("complex.E");
+        Class aClass = reflect.Class.get("complex.A");
+        Class bClass = reflect.Class.get("complex.B");
+        Class cClass = reflect.Class.get("complex.C");
+        Class dClass = reflect.Class.get("complex.D");
+        Class eClass = reflect.Class.get("complex.E");
         // Class:
-        checkEqual(true, AClass.isSubclassOf(AClass));
-        checkEqual(false, AClass.isSubclassOf(BClass));
+        checkEqual(true, aClass.isSubclassOf(aClass));
+        checkEqual(false, aClass.isSubclassOf(bClass));
         // Superclass:
-        checkEqual(true, BClass.isSubclassOf(AClass));
-        checkEqual(true, BClass.isSubclassOf(BClass));
-        checkEqual(false, BClass.isSubclassOf(CClass));
-        checkEqual(false, BClass.isSubclassOf(EClass));
+        checkEqual(true, bClass.isSubclassOf(aClass));
+        checkEqual(true, bClass.isSubclassOf(bClass));
+        checkEqual(false, bClass.isSubclassOf(cClass));
+        checkEqual(false, bClass.isSubclassOf(eClass));
         // Supersuperclass:
-        checkEqual(true, CClass.isSubclassOf(AClass));
-        checkEqual(true, CClass.isSubclassOf(BClass));
-        checkEqual(true, CClass.isSubclassOf(CClass));
-        checkEqual(false, CClass.isSubclassOf(EClass));
+        checkEqual(true, cClass.isSubclassOf(aClass));
+        checkEqual(true, cClass.isSubclassOf(bClass));
+        checkEqual(true, cClass.isSubclassOf(cClass));
+        checkEqual(false, cClass.isSubclassOf(eClass));
         // Two base classes:
-        checkEqual(true, DClass.isSubclassOf(AClass));
-        checkEqual(true, DClass.isSubclassOf(BClass));
-        checkEqual(false, DClass.isSubclassOf(CClass));
-        checkEqual(true, DClass.isSubclassOf(DClass));
-        checkEqual(true, DClass.isSubclassOf(EClass));
+        checkEqual(true, dClass.isSubclassOf(aClass));
+        checkEqual(true, dClass.isSubclassOf(bClass));
+        checkEqual(false, dClass.isSubclassOf(cClass));
+        checkEqual(true, dClass.isSubclassOf(dClass));
+        checkEqual(true, dClass.isSubclassOf(eClass));
     }
 
     void testHasInstance() {
@@ -93,29 +93,29 @@ class ClassReflectTest {
         complex.C c = new complex.C();
         complex.D d = new complex.D();
         complex.E e = new complex.E();
-        Class AClass = reflect.Class.get("complex.A");
-        Class BClass = reflect.Class.get("complex.B");
-        Class CClass = reflect.Class.get("complex.C");
-        Class DClass = reflect.Class.get("complex.D");
-        Class EClass = reflect.Class.get("complex.E");
+        Class aClass = reflect.Class.get("complex.A");
+        Class bClass = reflect.Class.get("complex.B");
+        Class cClass = reflect.Class.get("complex.C");
+        Class dClass = reflect.Class.get("complex.D");
+        Class eClass = reflect.Class.get("complex.E");
         // Class:
-        checkEqual(true, AClass.hasInstance(a));
-        checkEqual(false, BClass.hasInstance(a));
+        checkEqual(true, aClass.hasInstance(a));
+        checkEqual(false, bClass.hasInstance(a));
         // Superclass:
-        checkEqual(true, AClass.hasInstance(b));
-        checkEqual(true, BClass.hasInstance(b));
-        checkEqual(false, CClass.hasInstance(b));
-        checkEqual(false, EClass.hasInstance(b));
+        checkEqual(true, aClass.hasInstance(b));
+        checkEqual(true, bClass.hasInstance(b));
+        checkEqual(false, cClass.hasInstance(b));
+        checkEqual(false, eClass.hasInstance(b));
         // Supersuperclass:
-        checkEqual(true, AClass.hasInstance(c));
-        checkEqual(true, BClass.hasInstance(c));
-        checkEqual(true, CClass.hasInstance(c));
-        checkEqual(false, EClass.hasInstance(c));
+        checkEqual(true, aClass.hasInstance(c));
+        checkEqual(true, bClass.hasInstance(c));
+        checkEqual(true, cClass.hasInstance(c));
+        checkEqual(false, eClass.hasInstance(c));
         // Two base classes:
-        checkEqual(true, AClass.hasInstance(d));
-        checkEqual(true, BClass.hasInstance(d));
-        checkEqual(false, CClass.hasInstance(d));
-        checkEqual(true, DClass.hasInstance(d));
-        checkEqual(true, EClass.hasInstance(d));
+        checkEqual(true, aClass.hasInstance(d));
+        checkEqual(true, bClass.hasInstance(d));
+        checkEqual(false, cClass.hasInstance(d));
+        checkEqual(true, dClass.hasInstance(d));
+        checkEqual(true, eClass.hasInstance(d));
     }
 }
