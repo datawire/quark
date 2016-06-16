@@ -43,6 +43,18 @@ class StoreValue extends UnaryCallable {
     }
 }
 
+class ReturnValue extends UnaryCallable {
+    Object returnme;
+
+    ReturnValue(Object returnme) {
+        self.returnme = returnme;
+    }
+
+    Object invoke(Object arg) {
+        return self.returnme;
+    }
+}
+
 class PromiseTest {
     void spinCollector() {
         // Wait for the collector to run out of events:
@@ -68,8 +80,8 @@ class PromiseTest {
         checkEqual(false, p.value().hasValue());
     }
 
-    // Success value becomes available when a resolve() is done before a
-    // callback is added.
+    // Success value becomes available to success callback and either-way
+    // callback when a resolve() is done before a callback is added.
     void testSuccessValueCallbackBefore() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
@@ -91,8 +103,8 @@ class PromiseTest {
         checkEqual(theValue, p.value().getValue());
     }
 
-    // Success value becomes available when a resolve() is done after a
-    // callback is added.
+    // Success value becomes available to success callback and either-way
+    // callback when a resolve() is done after a callback is added.
     void testSuccessValueCallbackAfter() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
@@ -114,8 +126,8 @@ class PromiseTest {
         checkEqual(theValue, p.value().getValue());
     }
 
-    // Error value becomes available when a resolve() is done before a
-    // callback is added.
+    // Error value becomes available to error callback and either-way callback
+    // when a resolve() is done before a callback is added.
     void testErrorValueCallbackBefore() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
@@ -137,8 +149,8 @@ class PromiseTest {
         checkEqual(theError, p.value().getValue());
     }
 
-    // Error value becomes available when a resolve() is done after a
-    // callback is added.
+    // Error value becomes available to error callback and either-way callback
+    // when a resolve() is done after a callback is added.
     void testErrorValueCallbackAfter() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
@@ -181,31 +193,69 @@ class PromiseTest {
         checkEqual(false, servletFailure.called);
     }
 
-    // Success callback on error value is skipped
+    // Success callback passes through error values:
+    void testErrorPassthrough() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        f.reject(theError);
+        spinCollector();
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.whenSuccess(success).whenError(Class.ERROR, failure);
+        spinCollector();
+        checkEqual(false, success.called);
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+    }
 
-    // Error callback on success value is skipped
-
-    // Either-way callback on error value is called
-
-    // Either-way callback on success value is called
-
-    // Multiple success results from single Promise
-
-    // Multiple error results from single Promise
-
-    // Re-entrancy: callback registered inside success callback is called
-
-    // Re-entrancy: callback registered inside error callback is called
-
-    // Re-entrancy: callback registered inside either-way callback is called
+    // Error callback passes through success values:
+    void testSuccessPassthrough() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.whenError(Class.ERROR, failure).whenSuccess(success);
+        f.resolve(theValue);
+        spinCollector();
+        checkEqual(false, failure.called);
+        checkEqual(true, success.called);
+        checkEqual(theValue, success.result);
+    }
 
     // Success callback returning error switches to error path
+    void testSuccessReturningError() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue failure = new StoreValue();
+        p.whenSuccess(new ReturnValue(theError)).whenError(Class.ERROR, failure);
+        f.resolve(theValue);
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+
+    }
 
     // Error callback returning not-error switches to success path
+    void testErrorReturningSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        p.whenError(Class.ERROR, new ReturnValue(theValue)).whenSuccess(success);
+        f.resolve(theError);
+        spinCollector();
+        checkEqual(true, success.called);
+        checkEqual(theValue, success.result);
+
+    }
 
     // Callback returning promise is chained on success path
 
     // Callback returning promise is chained on error path
 
     // Context is preserved on creation of callbacks
+
+    // Nice to have but unlikely use cases:
+    // Re-entrancy: callback registered inside error callback is called
+    // Re-entrancy: callback registered inside either-way callback is called
+    // Re-entrancy: callback registered inside success callback is called
 }
