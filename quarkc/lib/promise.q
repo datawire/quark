@@ -1,8 +1,8 @@
 quark *;
 import quark.concurrent;
 
-//namespace quark {
-namespace promises {
+namespace quark {
+namespace promise {
 
     @doc("A callable that takes a single argument, returns result.")
     interface UnaryCallable {
@@ -54,7 +54,7 @@ namespace promises {
 
         void fireEvent() {
             Object result = self._callable.invoke(self._value);
-            if (reflect.Class.get("promises.Promise").hasInstance(result)) {
+            if (reflect.Class.get("quark.promise.Promise").hasInstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
                 Promise toChain = ?result;
@@ -178,9 +178,6 @@ namespace promises {
             self._successCallbacks = [];
             self._lock.release();
 
-            // XXX in real imlpementation instead of calling call()
-            // directly this should be scheduled via a Collector in order to ensure
-            // thread-safety.
             int idx = 0;
             while (idx < callbacks.size()) {
                 callbacks[idx].call(value);
@@ -277,4 +274,4 @@ namespace promises {
             self.promise._reject(err);
        }
     }
-}//}
+}}
