@@ -1,5 +1,6 @@
 quark *;
 import quark.test;
+import quark.concurrent;
 
 void main(List<String> args) {
     test.run(args);
@@ -117,5 +118,44 @@ class ClassReflectTest {
         checkEqual(false, cClass.hasInstance(d));
         checkEqual(true, dClass.hasInstance(d));
         checkEqual(true, eClass.hasInstance(d));
+    }
+
+    // Minimal sanity check to make sure getClass() doesn't blow up:
+    void testGetClass() {
+        Runtime runtime = Context.current().runtime();
+        List<Object> values = [true, false, 1, 2.3, "s",
+                               new complex.A(),
+                               new List<String>(),
+                               new Map<String,String>(),
+                               runtime, runtime.logger("test"),
+                               runtime.codec(),
+                               runtime.codec().buffer(1),
+                               new Lock(),
+                               new Condition()
+                               ];
+        int idx = 0;
+        while (idx < values.size()) {
+            values[idx].getClass();
+            idx = idx + 1;
+        }
+    }
+
+    void testHasInstancePrimitives() {
+        Class aClass = reflect.Class.get("complex.A");
+        checkEqual(false, aClass.hasInstance(null));
+        checkEqual(false, aClass.hasInstance(true));
+        checkEqual(false, aClass.hasInstance(false));
+        checkEqual(false, aClass.hasInstance(""));
+        checkEqual(false, aClass.hasInstance(1));
+        checkEqual(false, aClass.hasInstance(3.2));
+        checkEqual(false, aClass.hasInstance(new List<String>()));
+        checkEqual(false, aClass.hasInstance(new Map<String,String>()));
+        Runtime runtime = Context.current().runtime();
+        checkEqual(false, aClass.hasInstance(runtime));
+        checkEqual(false, aClass.hasInstance(runtime.logger("test")));
+        checkEqual(false, aClass.hasInstance(runtime.codec()));
+        checkEqual(false, aClass.hasInstance(runtime.codec().buffer(1)));
+        checkEqual(false, aClass.hasInstance(new Lock()));
+        checkEqual(false, aClass.hasInstance(new Condition()));
     }
 }
