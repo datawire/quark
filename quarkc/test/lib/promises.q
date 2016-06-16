@@ -1,7 +1,7 @@
 quark *;
-include io/datawire/quark/runtime/Lock.java;
+import quark.concurrent;
 
-namespace quark {
+//namespace quark {
 namespace promises {
 
     @doc("A callable that takes a single argument, returns result.")
@@ -54,7 +54,7 @@ namespace promises {
 
         void fireEvent() {
             Object result = self._callable.invoke(self._value);
-            if (reflect.Class.get("quark.promises.Promise").hasInstance(result)) {
+            if (reflect.Class.get("promises.Promise").hasInstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
                 Promise toChain = ?result;
@@ -271,4 +271,4 @@ namespace promises {
             self.promise._reject(err);
        }
     }
-}}
+}//}

@@ -1,8 +1,10 @@
 quark *;
 import quark.test;
-import quark.promises;
 import quark.error;
 import quark.reflect;
+
+include promises.q;
+import promises;
 
 void main(List<String> args) {
     test.run(args);
