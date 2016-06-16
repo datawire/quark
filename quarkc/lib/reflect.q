@@ -16,6 +16,10 @@ namespace reflect {
         static Class ERROR = new Class("quark.error.Error");
 
         static Class get(String id) {
+            if (id == null) {
+                print("Cannot find class given nil class ID.");
+                return null;
+            }
             if (!classes.contains(id)) {
                 print("Cannot find " + id + " in " + classes.keys().toString());
             }
@@ -97,6 +101,13 @@ namespace reflect {
 
         @doc("Return whether the given object is an instance of the class or one of its super-classes.")
         bool hasInstance(Object o) {
+            if (o == null) {
+                return false;
+            }
+            Class instanceClass = o.getClass();
+            if (instanceClass == null) {
+                return false;
+            }
             return o.getClass().isSubclassOf(self);
         }
 
