@@ -58,9 +58,9 @@ namespace promises {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
                 Promise toChain = ?result;
-                toChain.whenSuccess(new _ChainPromise(self._next));
+                toChain.always(new _ChainPromise(self._next));
             } else {
-                self.fullfilPromise(self._next, self._value);
+                self.fullfilPromise(self._next, result);
             }
         }
     }
@@ -189,6 +189,11 @@ namespace promises {
         }
 
         void _resolve(Object result) {
+            if (reflect.Class.ERROR.hasInstance(result)) {
+                // Someone called resolve() with an Error:
+                self._reject(?result);
+                return;
+            }
             self._lock.acquire();
             if (self._hasResult) {
                 print("BUG: Resolved Promise that already has a value.");
@@ -224,7 +229,6 @@ namespace promises {
             return result;
         }
 
-
         Promise whenError(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
@@ -259,9 +263,9 @@ namespace promises {
     }
 
     class PromiseFactory {
-        Promise promise;
+        Promise promise = null;
 
-        Deferred() {
+        PromiseFactory() {
             self.promise = new Promise();
         }
 

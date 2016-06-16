@@ -234,13 +234,26 @@ class PromiseTest {
         checkEqual(theError, failure.result);
     }
 
+    // Calling resolve() with an error turns it into a reject():
+    // (Made this mistake myself... seems most reasonable thing to do).
+    void testResolveWithErrorDoesReject() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue failure = new StoreValue();
+        p.whenError(Class.ERROR, failure);
+        f.resolve(theError); // resolve() not reject()!
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+    }
+
     // Error callback returning not-error switches to success path
     void testErrorReturningSuccess() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
         StoreValue success = new StoreValue();
         p.whenError(Class.ERROR, new ReturnValue(theValue)).whenSuccess(success);
-        f.resolve(theError);
+        f.reject(theError);
         spinCollector();
         checkEqual(true, success.called);
         checkEqual(theValue, success.result);
@@ -258,6 +271,7 @@ class PromiseTest {
         spinCollector();
         checkEqual(false, success.called);
         o.resolve(456);
+        spinCollector();
         checkEqual(true, success.called);
         checkEqual(456, success.result);
     }
@@ -288,7 +302,8 @@ class PromiseTest {
         f.resolve(123);
         spinCollector();
         checkEqual(false, failure.called);
-        o.resolve(theError);
+        o.reject(theError);
+        spinCollector();
         checkEqual(true, failure.called);
         checkEqual(theError, failure.result);
     }
@@ -298,7 +313,7 @@ class PromiseTest {
     void testCallbackReturningResolvedPromiseError() {
         PromiseFactory f = new PromiseFactory();
         PromiseFactory o = new PromiseFactory();
-        o.resolve(theError);
+        o.reject(theError);
         Promise p = f.promise;
         StoreValue failure = new StoreValue();
         p.whenSuccess(new ReturnValue(o.promise)).whenError(Class.ERROR, failure);
