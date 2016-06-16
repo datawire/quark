@@ -232,7 +232,6 @@ class PromiseTest {
         spinCollector();
         checkEqual(true, failure.called);
         checkEqual(theError, failure.result);
-
     }
 
     // Error callback returning not-error switches to success path
@@ -245,12 +244,69 @@ class PromiseTest {
         spinCollector();
         checkEqual(true, success.called);
         checkEqual(theValue, success.result);
-
     }
 
-    // Callback returning promise is chained on success path
+    // Callback returning value-less promise is chained on success path when the
+    // promise is resolved.
+    void testCallbackReturningUnresolvedPromiseSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        PromiseFactory o = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        p.whenSuccess(new ReturnValue(o.promise)).whenSuccess(success);
+        f.resolve(123);
+        spinCollector();
+        checkEqual(false, success.called);
+        o.resolve(456);
+        checkEqual(true, success.called);
+        checkEqual(456, success.result);
+    }
 
-    // Callback returning promise is chained on error path
+    // Callback returning promise with value is chained on success path when the
+    // promise is resolved.
+    void testCallbackReturningResolvedPromiseSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        PromiseFactory o = new PromiseFactory();
+        o.resolve(456);
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        p.whenSuccess(new ReturnValue(o.promise)).whenSuccess(success);
+        f.resolve(123);
+        spinCollector();
+        checkEqual(true, success.called);
+        checkEqual(456, success.result);
+    }
+
+    // Callback returning value-less promise is chained on error path when the
+    // promise is rejected.
+    void testCallbackReturningUnresolvedPromiseError() {
+        PromiseFactory f = new PromiseFactory();
+        PromiseFactory o = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue failure = new StoreValue();
+        p.whenSuccess(new ReturnValue(o.promise)).whenError(Class.ERROR, failure);
+        f.resolve(123);
+        spinCollector();
+        checkEqual(false, failure.called);
+        o.resolve(theError);
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+    }
+
+    // Callback returning promise with value is chained on error path when the
+    // promise is rejected.
+    void testCallbackReturningResolvedPromiseError() {
+        PromiseFactory f = new PromiseFactory();
+        PromiseFactory o = new PromiseFactory();
+        o.resolve(theError);
+        Promise p = f.promise;
+        StoreValue failure = new StoreValue();
+        p.whenSuccess(new ReturnValue(o.promise)).whenError(Class.ERROR, failure);
+        f.resolve(123);
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(theError, failure.result);
+    }
 
     // Context is preserved on creation of callbacks
 
