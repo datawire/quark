@@ -165,7 +165,6 @@ the following:
 
     git checkout master
     git pull
-    quark_release build-docker-images
     quark_release push-docs
     quark_release push-pkgs
     quark_release push-docker-images
