@@ -2,8 +2,18 @@
 
 The release workflow has the following steps, which are scripted.  All
 commands below take additional options, see `./release --help` for
-details.  Publishing artefacts to pypi requires write permission to
-pypi.
+details.  
+
+The big picture process:
+
+1. Development release, generating a `datawire-quarkdev` package from the develop branch.
+2. The stable release, landing the `develop` branch on `master` and then a generating `datawire-quark` package.
+
+## Requirements ##
+
+* Tools required are `docker`, `pip`, `virtualenv`, and a not totally ancient `git`.
+* Publishing artefacts to pypi requires write permission to PyPI.
+* Publishing artefacts to DockerHub requires a DockerHub login and that you be part of the `datawire` organization there.
 
 ## Create a new virtualenv and activate it ##
 
@@ -22,6 +32,7 @@ Make sure your checkout is up-to-date:
 Make sure development dependencies are installed:
 
     pip install -r requirements.txt
+    pip install sphinx-better-theme wheel twine
 
 Create a stable copy of the release script in your current shell session:
 
@@ -123,9 +134,6 @@ when push suceeds the `release-in-progress` branch is deleted automatically
 
 ## Publish the Release Artefacts ##
 
-Publishing release artefacts requires write permission to PyPI (the
-datawire-quark package) and DockerHub (the datawire organization).
-
 Make sure you are logged in to DockerHub; if not you will need to:
 
     $ sudo docker login
@@ -139,12 +147,6 @@ the following:
     $ quark_release push-docs
     $ quark_release push-pkgs
     $ quark_release push-docker-images
-
-# Required software #
-
-Tools required are `docker`, `pip`, `twine`, and a not totally ancient `git`
-
-    $ pip install sphinx-better-theme wheel twine
 
 # Ideas and Improvements #
 
