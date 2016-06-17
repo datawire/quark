@@ -122,6 +122,11 @@ This command performs only local repo changes, so it is safe to run
 without `--dry`. In case of errors run `quark_release cleanup` after
 getting help with debugging what happened.
 
+## Generate Docker images ##
+
+Run:
+
+    quark_release build-docker-images
 
 ## Publish the Released State to GitHub ##
 
