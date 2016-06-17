@@ -16,7 +16,7 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
   quark [options] docs <file>...
@@ -26,6 +26,8 @@ Usage:
 Commands:
   compile               Compile and emit code in the target language(s).
   install               Compile, build, and install code in the target language(s).
+                        If no file is given only the Quark standard library package is
+                        installed.
   run                   Run the main() function from the package namespace; the quark
                         file must already be installed.
   docs                  Output API documentation in HTML.
@@ -183,7 +185,7 @@ def main(args):
             if args["install"]: shell.check("npm")
             backends.append(backend.JavaScript)
 
-        filenames = args["<file>"]
+        filenames = args["<file>"] or [compiler.join(None, compiler.BUILTIN_FILE)]
         for url in filenames:
             c = compiler.Compiler()
             c.version_warning = args["--version-warning"]
