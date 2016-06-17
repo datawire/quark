@@ -5,7 +5,21 @@ commands below take additional options, see `./release --help` for
 details.  Publishing artefacts to pypi requires write permission to
 pypi.
 
+## Create a new virtualenv and activate it ##
+
+Run:
+
+    virtualenv newrelease
+    source newrelease/bin/activate
+
 ## Prepping up the  workspace ##
+
+Make sure your checkout is up-to-date:
+
+    git pull
+    git checkout develop
+
+Make sure development dependencies are installed:
 
     pip install -r requirements.txt
 
