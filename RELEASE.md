@@ -9,8 +9,8 @@ pypi.
 
 Run:
 
-    virtualenv newrelease
-    source newrelease/bin/activate
+    virtualenv /tmp/newrelease
+    source /tmp/newrelease/bin/activate
 
 ## Prepping up the  workspace ##
 
