@@ -1,5 +1,6 @@
 quark *;
 import quark.test;
+import quark.mock;
 import quark.error;
 import quark.reflect;
 import quark.promise;
@@ -63,10 +64,12 @@ class StoreContext extends UnaryCallable {
     }
 }
 
-class PromiseTest {
+class PromiseTest extends MockRuntimeTest {
     void spinCollector() {
-        // Wait for the collector to run out of events:
-        while (!Context.current().collector.idle) {}
+        self.pump();
+        self.pump();
+        self.pump();
+        self.pump();
     }
 
     static String theValue = "success!";
