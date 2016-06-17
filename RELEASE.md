@@ -16,8 +16,8 @@ Run:
 
 Make sure your checkout is up-to-date:
 
-    git pull
     git checkout develop
+    git pull
 
 Make sure development dependencies are installed:
 
