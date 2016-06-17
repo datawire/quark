@@ -45,6 +45,7 @@ function org_example_foo_Foo() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new org_example_foo_Foo_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.org_example_foo_Foo = org_example_foo_Foo;
 _qrt.util.inherits(org_example_foo_Foo, quark.reflect.Class);

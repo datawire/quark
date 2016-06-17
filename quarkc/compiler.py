@@ -825,9 +825,16 @@ class Reflector:
     def qexpr(self, texp):
         return '"%s"' % self.qtype(texp)
 
+    def _has_reflect_class(self, type):
+        # Technically List and Map could have classes, possibly? They don't now
+        # though. Also parameterized types gets passed through, which is kinda
+        # wrong too.
+        cls = type.resolved.type
+        return not (isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls))
+
     def visit_Type(self, type):
         cls = type.resolved.type
-        if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
+        if not self._has_reflect_class(type):
             if cls.name.text not in ("List", "Map"):
                 return
         if cls.parameters:
@@ -941,6 +948,7 @@ class Reflector:
             self.parameters = %(parameters)s;
             self.fields = [%(fields)s];
             self.methods = [%(methods)s];
+            self.parents = [%(parents)s];
         }
 
         Object construct(List<Object> args) {
@@ -957,6 +965,11 @@ class Reflector:
             "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
+            "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
+                                  for parent_type in cls.bases
+                                  if (self._has_reflect_class(parent_type) and
+                                      not parent_type.resolved.type.parameters)]
+                                 or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
     def leave_Root(self, root):

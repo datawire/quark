@@ -8,6 +8,7 @@ public class generics_Sack extends quark.reflect.Class implements io.datawire.qu
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("generics.Box<quark.int>", "ints")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new generics.Sack();

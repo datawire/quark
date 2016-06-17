@@ -55,6 +55,7 @@ class slack_event_SlackEvent(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"slack.User", u"user"), quark.reflect.Field(u"slack.Channel", u"channel"), quark.reflect.Field(u"quark.String", u"timestamp")])
         (self).methods = _List([slack_event_SlackEvent_load_Method(), slack_event_SlackEvent_dispatch_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slack.event.SlackEvent()
@@ -121,6 +122,7 @@ class slack_event_SlackError(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"slack.User", u"user"), quark.reflect.Field(u"slack.Channel", u"channel"), quark.reflect.Field(u"quark.String", u"timestamp"), quark.reflect.Field(u"quark.int", u"code"), quark.reflect.Field(u"quark.String", u"text")])
         (self).methods = _List([slack_event_SlackError_load_Method(), slack_event_SlackError_dispatch_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"slack.event.SlackEvent")])
 
     def construct(self, args):
         return slack.event.SlackError()
@@ -187,6 +189,7 @@ class slack_event_Hello(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"slack.User", u"user"), quark.reflect.Field(u"slack.Channel", u"channel"), quark.reflect.Field(u"quark.String", u"timestamp")])
         (self).methods = _List([slack_event_Hello_dispatch_Method(), slack_event_Hello_load_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"slack.event.SlackEvent")])
 
     def construct(self, args):
         return slack.event.Hello()
@@ -253,6 +256,7 @@ class slack_event_Message(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"type"), quark.reflect.Field(u"slack.User", u"user"), quark.reflect.Field(u"slack.Channel", u"channel"), quark.reflect.Field(u"quark.String", u"timestamp"), quark.reflect.Field(u"quark.String", u"subtype"), quark.reflect.Field(u"quark.bool", u"hidden"), quark.reflect.Field(u"quark.String", u"text"), quark.reflect.Field(u"slack.event.Edited", u"edited")])
         (self).methods = _List([slack_event_Message_load_Method(), slack_event_Message_dispatch_Method()])
+        (self).parents = _List([quark.reflect.Class.get(u"slack.event.SlackEvent")])
 
     def construct(self, args):
         return slack.event.Message()
@@ -277,6 +281,7 @@ class slack_event_Edited(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"slack.User", u"user"), quark.reflect.Field(u"quark.String", u"timestamp")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slack.event.Edited()
@@ -385,6 +390,7 @@ class slack_SlackHandler(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([slack_SlackHandler_onSlackEvent_Method(), slack_SlackHandler_onHello_Method(), slack_SlackHandler_onSlackError_Method(), slack_SlackHandler_onMessage_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return None
@@ -409,6 +415,7 @@ class slack_User(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"slack.Client", u"client"), quark.reflect.Field(u"quark.String", u"user")])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slack.User(_cast((args)[0], lambda: slack.Client), _cast((args)[1], lambda: unicode))
@@ -454,6 +461,7 @@ class slack_Channel(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"slack.Client", u"client"), quark.reflect.Field(u"quark.String", u"channel")])
         (self).methods = _List([slack_Channel_send_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slack.Channel(_cast((args)[0], lambda: slack.Client), _cast((args)[1], lambda: unicode))
@@ -834,6 +842,7 @@ class slack_Client(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.Runtime", u"runtime"), quark.reflect.Field(u"quark.String", u"token"), quark.reflect.Field(u"slack.SlackHandler", u"handler"), quark.reflect.Field(u"quark.int", u"event_id"), quark.reflect.Field(u"quark.WebSocket", u"socket")])
         (self).methods = _List([slack_Client_connect_Method(), slack_Client_request_Method(), slack_Client_ws_connect_Method(), slack_Client_ws_send_Method(), slack_Client_onWSConnected_Method(), slack_Client_onWSClose_Method(), slack_Client_onWSError_Method(), slack_Client_construct_Method(), slack_Client_onWSMessage_Method(), slack_Client_onHTTPResponse_Method(), slack_Client_onWSInit_Method(), slack_Client_onWSBinary_Method(), slack_Client_onWSClosed_Method(), slack_Client_onWSFinal_Method(), slack_Client_onHTTPInit_Method(), slack_Client_onHTTPError_Method(), slack_Client_onHTTPFinal_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slack.Client(_cast((args)[0], lambda: quark.Runtime), _cast((args)[1], lambda: unicode), _cast((args)[2], lambda: slack.SlackHandler))
@@ -942,6 +951,7 @@ class slackpack_Handler(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([slackpack_Handler_onSlackEvent_Method(), slackpack_Handler_onHello_Method(), slackpack_Handler_onSlackError_Method(), slackpack_Handler_onMessage_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return slackpack.Handler()
@@ -966,6 +976,7 @@ class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
         (self).parameters = _List([u"quark.String", u"quark.Object"])
         (self).fields = _List([])
         (self).methods = _List([])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return _Map()

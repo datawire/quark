@@ -8,6 +8,7 @@ public class inheritance_super__A extends quark.reflect.Class implements io.data
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_super__A_greet_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.super_.A((String) ((args).get(0)));

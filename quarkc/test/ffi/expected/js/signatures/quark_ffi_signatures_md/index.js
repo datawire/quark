@@ -77,6 +77,7 @@ function generics_Box_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [new quark.reflect.Field("quark.Object", "contents")];
     (this).methods = [new generics_Box_quark_Object__set_Method(), new generics_Box_quark_Object__get_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_Box_quark_Object_ = generics_Box_quark_Object_;
 _qrt.util.inherits(generics_Box_quark_Object_, quark.reflect.Class);
@@ -178,6 +179,7 @@ function generics_Box_quark_int_() {
     (this).parameters = ["quark.int"];
     (this).fields = [new quark.reflect.Field("quark.int", "contents")];
     (this).methods = [new generics_Box_quark_int__set_Method(), new generics_Box_quark_int__get_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_Box_quark_int_ = generics_Box_quark_int_;
 _qrt.util.inherits(generics_Box_quark_int_, quark.reflect.Class);
@@ -279,6 +281,7 @@ function generics_Crate_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [new quark.reflect.Field("generics.Box<quark.Object>", "box"), new quark.reflect.Field("generics.Box<quark.int>", "ibox")];
     (this).methods = [new generics_Crate_quark_Object__set_Method(), new generics_Crate_quark_Object__get_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_Crate_quark_Object_ = generics_Crate_quark_Object_;
 _qrt.util.inherits(generics_Crate_quark_Object_, quark.reflect.Class);
@@ -315,6 +318,7 @@ function generics_Sack() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("generics.Box<quark.int>", "ints")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_Sack = generics_Sack;
 _qrt.util.inherits(generics_Sack, quark.reflect.Class);
@@ -416,6 +420,7 @@ function generics_Matrix_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [new quark.reflect.Field("quark.int", "width"), new quark.reflect.Field("quark.int", "height"), new quark.reflect.Field("quark.List<quark.List<quark.Object>>", "columns")];
     (this).methods = [new generics_Matrix_quark_Object____get___Method(), new generics_Matrix_quark_Object____set___Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_Matrix_quark_Object_ = generics_Matrix_quark_Object_;
 _qrt.util.inherits(generics_Matrix_quark_Object_, quark.reflect.Class);
@@ -484,6 +489,7 @@ function generics_constructors_Box_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [new quark.reflect.Field("quark.Object", "contents")];
     (this).methods = [new generics_constructors_Box_quark_Object__get_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_constructors_Box_quark_Object_ = generics_constructors_Box_quark_Object_;
 _qrt.util.inherits(generics_constructors_Box_quark_Object_, quark.reflect.Class);
@@ -584,6 +590,7 @@ function generics_pkg_Foo_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [new generics_pkg_Foo_quark_Object__foo_Method(), new generics_pkg_Foo_quark_Object__get_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_pkg_Foo_quark_Object_ = generics_pkg_Foo_quark_Object_;
 _qrt.util.inherits(generics_pkg_Foo_quark_Object_, quark.reflect.Class);
@@ -684,6 +691,7 @@ function generics_pkg_StringFoo() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new generics_pkg_StringFoo_get_Method(), new generics_pkg_StringFoo_foo_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_pkg_StringFoo = generics_pkg_StringFoo;
 _qrt.util.inherits(generics_pkg_StringFoo, quark.reflect.Class);
@@ -720,6 +728,7 @@ function generics_pkg_Box_quark_String_() {
     (this).parameters = ["quark.String"];
     (this).fields = [new quark.reflect.Field("quark.String", "contents")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_pkg_Box_quark_String_ = generics_pkg_Box_quark_String_;
 _qrt.util.inherits(generics_pkg_Box_quark_String_, quark.reflect.Class);
@@ -756,6 +765,7 @@ function generics_pkg_StringBox() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "contents")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_pkg_StringBox = generics_pkg_StringBox;
 _qrt.util.inherits(generics_pkg_StringBox, quark.reflect.Class);
@@ -824,6 +834,7 @@ function generics_ccc_TLSContextInitializer() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new generics_ccc_TLSContextInitializer_getValue_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_ccc_TLSContextInitializer = generics_ccc_TLSContextInitializer;
 _qrt.util.inherits(generics_ccc_TLSContextInitializer, quark.reflect.Class);
@@ -924,6 +935,7 @@ function generics_ccc_Context() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("generics.ccc.Context", "_global"), new quark.reflect.Field("generics.ccc.TLS<generics.ccc.Context>", "_current"), new quark.reflect.Field("generics.ccc.Context", "parent")];
     (this).methods = [new generics_ccc_Context_current_Method(), new generics_ccc_Context_global_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_ccc_Context = generics_ccc_Context;
 _qrt.util.inherits(generics_ccc_Context, quark.reflect.Class);
@@ -992,6 +1004,7 @@ function generics_ccc_TLSInitializer_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [new generics_ccc_TLSInitializer_quark_Object__getValue_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_ccc_TLSInitializer_quark_Object_ = generics_ccc_TLSInitializer_quark_Object_;
 _qrt.util.inherits(generics_ccc_TLSInitializer_quark_Object_, quark.reflect.Class);
@@ -1060,6 +1073,7 @@ function generics_ccc_TLS_generics_ccc_Context_() {
     (this).parameters = ["generics.ccc.Context"];
     (this).fields = [new quark.reflect.Field("generics.ccc.Context", "_value")];
     (this).methods = [new generics_ccc_TLS_generics_ccc_Context__getValue_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.generics_ccc_TLS_generics_ccc_Context_ = generics_ccc_TLS_generics_ccc_Context_;
 _qrt.util.inherits(generics_ccc_TLS_generics_ccc_Context_, quark.reflect.Class);
@@ -1096,6 +1110,7 @@ function inheritance_Base() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_Base = inheritance_Base;
 _qrt.util.inherits(inheritance_Base, quark.reflect.Class);
@@ -1132,6 +1147,7 @@ function inheritance_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name"), new quark.reflect.Field("quark.String", "mumble"), new quark.reflect.Field("quark.String", "later")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.get("inheritance.Base")];
 }
 exports.inheritance_Test = inheritance_Test;
 _qrt.util.inherits(inheritance_Test, quark.reflect.Class);
@@ -1168,6 +1184,7 @@ function inheritance_A() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_A = inheritance_A;
 _qrt.util.inherits(inheritance_A, quark.reflect.Class);
@@ -1237,6 +1254,7 @@ function inheritance_B() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new inheritance_B_greet_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.A")];
 }
 exports.inheritance_B = inheritance_B;
 _qrt.util.inherits(inheritance_B, quark.reflect.Class);
@@ -1306,6 +1324,7 @@ function inheritance_C() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new inheritance_C_greet_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.A")];
 }
 exports.inheritance_C = inheritance_C;
 _qrt.util.inherits(inheritance_C, quark.reflect.Class);
@@ -1342,6 +1361,7 @@ function inheritance_X() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_X = inheritance_X;
 _qrt.util.inherits(inheritance_X, quark.reflect.Class);
@@ -1411,6 +1431,7 @@ function inheritance_Y() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new inheritance_Y_test_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.X")];
 }
 exports.inheritance_Y = inheritance_Y;
 _qrt.util.inherits(inheritance_Y, quark.reflect.Class);
@@ -1480,6 +1501,7 @@ function inheritance_t1_A() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_t1_A_foo_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_t1_A = inheritance_t1_A;
 _qrt.util.inherits(inheritance_t1_A, quark.reflect.Class);
@@ -1549,6 +1571,7 @@ function inheritance_t1_B() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_t1_B_foo_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.t1.A")];
 }
 exports.inheritance_t1_B = inheritance_t1_B;
 _qrt.util.inherits(inheritance_t1_B, quark.reflect.Class);
@@ -1618,6 +1641,7 @@ function inheritance_t1_C() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_t1_C_foo_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.t1.A")];
 }
 exports.inheritance_t1_C = inheritance_t1_C;
 _qrt.util.inherits(inheritance_t1_C, quark.reflect.Class);
@@ -1654,6 +1678,7 @@ function inheritance_t2_A() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_t2_A = inheritance_t2_A;
 _qrt.util.inherits(inheritance_t2_A, quark.reflect.Class);
@@ -1690,6 +1715,7 @@ function inheritance_t2_B() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.get("inheritance.t2.A")];
 }
 exports.inheritance_t2_B = inheritance_t2_B;
 _qrt.util.inherits(inheritance_t2_B, quark.reflect.Class);
@@ -1726,6 +1752,7 @@ function inheritance_t2_X_quark_int_() {
     (this).parameters = ["quark.int"];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_t2_X_quark_int_ = inheritance_t2_X_quark_int_;
 _qrt.util.inherits(inheritance_t2_X_quark_int_, quark.reflect.Class);
@@ -1762,6 +1789,7 @@ function inheritance_t2_Y() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_t2_Y = inheritance_t2_Y;
 _qrt.util.inherits(inheritance_t2_Y, quark.reflect.Class);
@@ -1831,6 +1859,7 @@ function inheritance_pets_Cat() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Cat_greet_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Cat = inheritance_pets_Cat;
 _qrt.util.inherits(inheritance_pets_Cat, quark.reflect.Class);
@@ -1900,6 +1929,7 @@ function inheritance_pets_Dog() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_pets_Dog_greet_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_pets_Dog = inheritance_pets_Dog;
 _qrt.util.inherits(inheritance_pets_Dog, quark.reflect.Class);
@@ -1968,6 +1998,7 @@ function inheritance_Message() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_Message_encode_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_Message = inheritance_Message;
 _qrt.util.inherits(inheritance_Message, quark.reflect.Class);
@@ -2036,6 +2067,7 @@ function inheritance_Ping() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_Ping_encode_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.Message")];
 }
 exports.inheritance_Ping = inheritance_Ping;
 _qrt.util.inherits(inheritance_Ping, quark.reflect.Class);
@@ -2136,6 +2168,7 @@ function inheritance_Pong() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_Pong_toString_Method(), new inheritance_Pong_encode_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.Message")];
 }
 exports.inheritance_Pong = inheritance_Pong;
 _qrt.util.inherits(inheritance_Pong, quark.reflect.Class);
@@ -2205,6 +2238,7 @@ function inheritance_super__A() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new inheritance_super__A_greet_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_super__A = inheritance_super__A;
 _qrt.util.inherits(inheritance_super__A, quark.reflect.Class);
@@ -2274,6 +2308,7 @@ function inheritance_super__B() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new inheritance_super__B_greet_Method()];
+    (this).parents = [quark.reflect.Class.get("inheritance.super_.A")];
 }
 exports.inheritance_super__B = inheritance_super__B;
 _qrt.util.inherits(inheritance_super__B, quark.reflect.Class);
@@ -2343,6 +2378,7 @@ function inheritance_use_before_def_Bar() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new inheritance_use_before_def_Bar_go_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_use_before_def_Bar = inheritance_use_before_def_Bar;
 _qrt.util.inherits(inheritance_use_before_def_Bar, quark.reflect.Class);
@@ -2379,6 +2415,7 @@ function inheritance_use_before_def_Foo() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.inheritance_use_before_def_Foo = inheritance_use_before_def_Foo;
 _qrt.util.inherits(inheritance_use_before_def_Foo, quark.reflect.Class);
@@ -2481,6 +2518,7 @@ function interfaces_A() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_A_foo_Method(), new interfaces_A_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_A = interfaces_A;
 _qrt.util.inherits(interfaces_A, quark.reflect.Class);
@@ -2550,6 +2588,7 @@ function interfaces_B() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_B_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_B = interfaces_B;
 _qrt.util.inherits(interfaces_B, quark.reflect.Class);
@@ -2619,6 +2658,7 @@ function interfaces_C() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_C_foo_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_C = interfaces_C;
 _qrt.util.inherits(interfaces_C, quark.reflect.Class);
@@ -2721,6 +2761,7 @@ function interfaces_T1() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_T1_foo_Method(), new interfaces_T1_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_T1 = interfaces_T1;
 _qrt.util.inherits(interfaces_T1, quark.reflect.Class);
@@ -2823,6 +2864,7 @@ function interfaces_T2() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_T2_foo_Method(), new interfaces_T2_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_T2 = interfaces_T2;
 _qrt.util.inherits(interfaces_T2, quark.reflect.Class);
@@ -2925,6 +2967,7 @@ function interfaces_T3() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_T3_foo_Method(), new interfaces_T3_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_T3 = interfaces_T3;
 _qrt.util.inherits(interfaces_T3, quark.reflect.Class);
@@ -3027,6 +3070,7 @@ function interfaces_T4() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_T4_foo_Method(), new interfaces_T4_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_T4 = interfaces_T4;
 _qrt.util.inherits(interfaces_T4, quark.reflect.Class);
@@ -3129,6 +3173,7 @@ function interfaces_T5() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_T5_foo_Method(), new interfaces_T5_bar_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_T5 = interfaces_T5;
 _qrt.util.inherits(interfaces_T5, quark.reflect.Class);
@@ -3264,6 +3309,7 @@ function interfaces_Foo() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_Foo_m1_Method(), new interfaces_Foo_m2_Method(), new interfaces_Foo_m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_Foo = interfaces_Foo;
 _qrt.util.inherits(interfaces_Foo, quark.reflect.Class);
@@ -3399,6 +3445,7 @@ function interfaces_Bar_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [new interfaces_Bar_quark_Object__m1_Method(), new interfaces_Bar_quark_Object__m2_Method(), new interfaces_Bar_quark_Object__m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_Bar_quark_Object_ = interfaces_Bar_quark_Object_;
 _qrt.util.inherits(interfaces_Bar_quark_Object_, quark.reflect.Class);
@@ -3534,6 +3581,7 @@ function interfaces_Baz() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_Baz_m2_Method(), new interfaces_Baz_m1_Method(), new interfaces_Baz_m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_Baz = interfaces_Baz;
 _qrt.util.inherits(interfaces_Baz, quark.reflect.Class);
@@ -3669,6 +3717,7 @@ function interfaces_RazBar() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_RazBar_m1_Method(), new interfaces_RazBar_m2_Method(), new interfaces_RazBar_m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_RazBar = interfaces_RazBar;
 _qrt.util.inherits(interfaces_RazBar, quark.reflect.Class);
@@ -3804,6 +3853,7 @@ function interfaces_RazFaz_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [new interfaces_RazFaz_quark_Object__m1_Method(), new interfaces_RazFaz_quark_Object__m2_Method(), new interfaces_RazFaz_quark_Object__m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_RazFaz_quark_Object_ = interfaces_RazFaz_quark_Object_;
 _qrt.util.inherits(interfaces_RazFaz_quark_Object_, quark.reflect.Class);
@@ -3939,6 +3989,7 @@ function interfaces_BazBar() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new interfaces_BazBar_m1_Method(), new interfaces_BazBar_m2_Method(), new interfaces_BazBar_m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_BazBar = interfaces_BazBar;
 _qrt.util.inherits(interfaces_BazBar, quark.reflect.Class);
@@ -4074,6 +4125,7 @@ function interfaces_BazFaz_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [new interfaces_BazFaz_quark_Object__m1_Method(), new interfaces_BazFaz_quark_Object__m2_Method(), new interfaces_BazFaz_quark_Object__m3_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.interfaces_BazFaz_quark_Object_ = interfaces_BazFaz_quark_Object_;
 _qrt.util.inherits(interfaces_BazFaz_quark_Object_, quark.reflect.Class);
@@ -4207,6 +4259,7 @@ function classes_Overload() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new classes_Overload___add___Method(), new classes_Overload___mul___Method(), new classes_Overload_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.classes_Overload = classes_Overload;
 _qrt.util.inherits(classes_Overload, quark.reflect.Class);
@@ -4276,6 +4329,7 @@ function classes_Test() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new classes_Test_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.classes_Test = classes_Test;
 _qrt.util.inherits(classes_Test, quark.reflect.Class);
@@ -4345,6 +4399,7 @@ function classes_string_test() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new classes_string_test_check_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.classes_string_test = classes_string_test;
 _qrt.util.inherits(classes_string_test, quark.reflect.Class);
@@ -4446,6 +4501,7 @@ function classes_test_size() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what")];
     (this).methods = [new classes_test_size_does_Method(), new classes_test_size_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_size = classes_test_size;
 _qrt.util.inherits(classes_test_size, quark.reflect.Class);
@@ -4579,6 +4635,7 @@ function classes_test_startsWith() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new classes_test_startsWith_that_Method(), new classes_test_startsWith_does_Method(), new classes_test_startsWith_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_startsWith = classes_test_startsWith;
 _qrt.util.inherits(classes_test_startsWith, quark.reflect.Class);
@@ -4712,6 +4769,7 @@ function classes_test_endsWith() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new classes_test_endsWith_that_Method(), new classes_test_endsWith_does_Method(), new classes_test_endsWith_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_endsWith = classes_test_endsWith;
 _qrt.util.inherits(classes_test_endsWith, quark.reflect.Class);
@@ -4845,6 +4903,7 @@ function classes_test_find() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "_that")];
     (this).methods = [new classes_test_find_that_Method(), new classes_test_find_does_Method(), new classes_test_find_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_find = classes_test_find;
 _qrt.util.inherits(classes_test_find, quark.reflect.Class);
@@ -4978,6 +5037,7 @@ function classes_test_substring() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.int", "start"), new quark.reflect.Field("quark.int", "end")];
     (this).methods = [new classes_test_substring_that_Method(), new classes_test_substring_does_Method(), new classes_test_substring_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_substring = classes_test_substring;
 _qrt.util.inherits(classes_test_substring, quark.reflect.Class);
@@ -5111,6 +5171,7 @@ function classes_test_replace() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "start"), new quark.reflect.Field("quark.String", "end")];
     (this).methods = [new classes_test_replace_that_Method(), new classes_test_replace_does_Method(), new classes_test_replace_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_replace = classes_test_replace;
 _qrt.util.inherits(classes_test_replace, quark.reflect.Class);
@@ -5276,6 +5337,7 @@ function classes_test_join() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.List<quark.String>", "parts"), new quark.reflect.Field("quark.String", "strparts"), new quark.reflect.Field("quark.String", "sep")];
     (this).methods = [new classes_test_join_that_Method(), new classes_test_join_a_Method(), new classes_test_join_does_Method(), new classes_test_join_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_join = classes_test_join;
 _qrt.util.inherits(classes_test_join, quark.reflect.Class);
@@ -5409,6 +5471,7 @@ function classes_test_split() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "sep"), new quark.reflect.Field("quark.String", "altsep")];
     (this).methods = [new classes_test_split_that_Method(), new classes_test_split_does_Method(), new classes_test_split_check_Method()];
+    (this).parents = [quark.reflect.Class.get("classes.string_test")];
 }
 exports.classes_test_split = classes_test_split;
 _qrt.util.inherits(classes_test_split, quark.reflect.Class);
@@ -5510,6 +5573,7 @@ function classes_stuff_Test() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new classes_stuff_Test_foo_Method(), new classes_stuff_Test_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.classes_stuff_Test = classes_stuff_Test;
 _qrt.util.inherits(classes_stuff_Test, quark.reflect.Class);
@@ -5743,6 +5807,7 @@ function statics_Foo() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.int", "count")];
     (this).methods = [new statics_Foo_setCount_Method(), new statics_Foo_getCount_Method(), new statics_Foo_test1_Method(), new statics_Foo_test2_Method(), new statics_Foo_test3_Method(), new statics_Foo_test4_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.statics_Foo = statics_Foo;
 _qrt.util.inherits(statics_Foo, quark.reflect.Class);
@@ -5811,6 +5876,7 @@ function docs_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new docs_Test_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.docs_Test = docs_Test;
 _qrt.util.inherits(docs_Test, quark.reflect.Class);
@@ -5847,6 +5913,7 @@ function quark_List_quark_List_quark_Object__() {
     (this).parameters = ["quark.List<quark.Object>"];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.quark_List_quark_List_quark_Object__ = quark_List_quark_List_quark_Object__;
 _qrt.util.inherits(quark_List_quark_List_quark_Object__, quark.reflect.Class);
@@ -5883,6 +5950,7 @@ function quark_List_quark_Object_() {
     (this).parameters = ["quark.Object"];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.quark_List_quark_Object_ = quark_List_quark_Object_;
 _qrt.util.inherits(quark_List_quark_Object_, quark.reflect.Class);
@@ -5919,6 +5987,7 @@ function quark_List_quark_String_() {
     (this).parameters = ["quark.String"];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.quark_List_quark_String_ = quark_List_quark_String_;
 _qrt.util.inherits(quark_List_quark_String_, quark.reflect.Class);

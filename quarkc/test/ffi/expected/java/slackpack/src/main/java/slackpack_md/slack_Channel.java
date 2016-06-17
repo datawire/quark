@@ -8,6 +8,7 @@ public class slack_Channel extends quark.reflect.Class implements io.datawire.qu
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("slack.Client", "client"), new quark.reflect.Field("quark.String", "channel")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_Channel_send_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new slack.Channel((slack.Client) ((args).get(0)), (String) ((args).get(1)));

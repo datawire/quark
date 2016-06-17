@@ -34,6 +34,7 @@ class org_example_bar_Bar(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([])
         (self).methods = _List([org_example_bar_Bar_test_Method()])
+        (self).parents = _List([quark.reflect.Class.OBJECT])
 
     def construct(self, args):
         return org.example.bar.Bar()

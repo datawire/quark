@@ -160,11 +160,13 @@ module DatawireQuarkCore
   end
   def self.__getClass obj
     return nil if obj.nil?
+    return "quark.bool" if (obj == true) or (obj == false)
     return "quark.String" if obj.is_a? String
     return "quark.int" if obj.is_a? Fixnum
     return "quark.float" if obj.is_a? Float
     return "quark.List<quark.Object>" if obj.is_a? Array
     return "quark.Map<quark.Object,quark.Object>" if obj.is_a? Hash
+    return nil if not obj.respond_to? "_getClass"
     return obj._getClass
   end
 

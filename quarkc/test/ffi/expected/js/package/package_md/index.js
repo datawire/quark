@@ -45,6 +45,7 @@ function test_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new test_Test_go_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.test_Test = test_Test;
 _qrt.util.inherits(test_Test, quark.reflect.Class);
@@ -114,6 +115,7 @@ function test_subtest_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.int", "size")];
     (this).methods = [new test_subtest_Test_go_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.test_subtest_Test = test_subtest_Test;
 _qrt.util.inherits(test_subtest_Test, quark.reflect.Class);
