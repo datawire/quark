@@ -15,8 +15,8 @@ The big picture process:
 
 * Tools required are `docker`, `pip`, `virtualenv`, and a not totally ancient
   `git`.
-* Publishing artefacts to pypi requires write permission to PyPI.
-* Publishing artefacts to DockerHub requires a DockerHub login and that you be
+* Publishing artifacts to pypi requires write permission to PyPI.
+* Publishing artifacts to DockerHub requires a DockerHub login and that you be
   part of the `datawire` organization there.
 * A GPG key with which to sign the release.
 
