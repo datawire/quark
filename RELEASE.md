@@ -2,18 +2,35 @@
 
 The release workflow has the following steps, which are scripted.  All
 commands below take additional options, see `./release --help` for
-details.  
+details.
 
 The big picture process:
 
-1. Development release, generating a `datawire-quarkdev` package from the develop branch.
-2. The stable release, landing the `develop` branch on `master` and then a generating `datawire-quark` package.
+1. Development release, generating a `datawire-quarkdev` package from the
+   develop branch.
+2. The stable release, landing the `develop` branch on `master` and then a
+   generating `datawire-quark` package.
 
 ## Requirements ##
 
-* Tools required are `docker`, `pip`, `virtualenv`, and a not totally ancient `git`.
+* Tools required are `docker`, `pip`, `virtualenv`, and a not totally ancient
+  `git`.
 * Publishing artefacts to pypi requires write permission to PyPI.
-* Publishing artefacts to DockerHub requires a DockerHub login and that you be part of the `datawire` organization there.
+* Publishing artefacts to DockerHub requires a DockerHub login and that you be
+  part of the `datawire` organization there.
+* A GPG key with which to sign the release.
+
+## New major releases ##
+
+When you're going from ``1.x`` to ``1.x+1`` (e.g. current release is ``1.0.123``
+and new release will be ``1.1.0``) you need to do two additional steps manually:
+
+* Update ``index.html`` on the ``gh-pages`` branch to add a link to the newly
+  updated docs on the site, i.e. update https://datawire.github.io/quark/ (see
+  the version you tagged above).
+* Update links in ``README.md`` on ``develop``: edit, commit, push, wait until
+  Travis is happy.
+
 
 ## Create a new virtualenv and activate it ##
 
@@ -70,19 +87,19 @@ manually as part of the release process.
 
 To query the CI system for new builds of the develop branch and tag the successful ones
 
-    $ quark_release poll-dev-status --tag-dev-builds
+    quark_release poll-dev-status --tag-dev-builds
 
-## Publish Development Artefacts ##
+## Publish Development Artifacts ##
 
-Development artefacts are produced on a reserved temporary branch
+Development artifacts are produced on a reserved temporary branch
 `release-in-progress-dev` so that `develop` does not need to move.
 
 *Do not* `git push` *the result, do not* `git merge` *the result to any branch.*
 
-    $  quark_release prepare-release --dev
-    $  quark_release push-docs
-    $  quark_release push-pkgs
-    $  quark_release cleanup
+    quark_release prepare-release --dev
+    quark_release push-docs
+    quark_release push-pkgs
+    quark_release cleanup
 
 
 ## Prepare Released State ##
@@ -91,7 +108,7 @@ Creation of production release is done on a reserved temporary branch
 `release-in-progress` so that neither `develop` nor `master` need to
 move.
 
-    $ quark_release prepare-release --prod
+    quark_release prepare-release --prod
 
 It is possible to also do a partial release of the
 develop branch in case the tip of develop is not stable, see help.
@@ -108,7 +125,7 @@ getting help with debugging what happened.
 
 ## Publish the Released State to GitHub ##
 
-    $ quark_release push-release
+    quark_release push-release
 
 `push-release` uses atomic push (like a compare-and-set operation) to
 guarantee the following invariants:
@@ -124,7 +141,7 @@ release tag on develop
 if push fails it will not succeed later. Abort the release, throwing
 away local release state
 
-    $ quark_release cleanup
+    quark_release cleanup
 
 The release procedure can be retried at this point.
 
@@ -132,21 +149,29 @@ The release procedure can be retried at this point.
 
 when push suceeds the `release-in-progress` branch is deleted automatically
 
-## Publish the Release Artefacts ##
+## Publish the Release Artifacts ##
 
 Make sure you are logged in to DockerHub; if not you will need to:
 
-    $ sudo docker login
+    sudo docker login
 
-Currently publishing of the release artefacts is not automated beyond
+Currently publishing of the release artifacts is not automated beyond
 the following:
 
-    $ git checkout master
-    $ git pull
-    $ quark_release build-docker-images
-    $ quark_release push-docs
-    $ quark_release push-pkgs
-    $ quark_release push-docker-images
+    git checkout master
+    git pull
+    quark_release build-docker-images
+    quark_release push-docs
+    quark_release push-pkgs
+    quark_release push-docker-images
+
+## All done! ##
+
+Switch back to ``develop`` branch and out of virtualenv:
+
+    git checkout develop
+    deactivate
+
 
 # Ideas and Improvements #
 
