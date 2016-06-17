@@ -18,7 +18,8 @@ The big picture process:
 * Publishing artifacts to pypi requires write permission to PyPI.
 * Publishing artifacts to DockerHub requires a DockerHub login and that you be
   part of the `datawire` organization there.
-* A GPG key with which to sign the release.
+* A GPG key with which to sign the release (see
+  https://git-scm.com/book/en/v2/Git-Tools-Signing-Your-Work).
 
 ## New major releases ##
 
@@ -150,9 +151,9 @@ away local release state
 
 The release procedure can be retried at this point.
 
-### Push Suceeds ###
+### Push Succeeds ###
 
-when push suceeds the `release-in-progress` branch is deleted automatically
+when push succeeds the `release-in-progress` branch is deleted automatically
 
 ## Publish the Release Artifacts ##
 
