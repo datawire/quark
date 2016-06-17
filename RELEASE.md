@@ -58,27 +58,24 @@ Create a stable copy of the release script in your current shell session:
 
 which will define `quark_release` function in your shell.
 
-<blockquote>
-*Explanation:*
+> *Explanation:*
+>
+> Since the release script is part of the repository, and release process
+> involves switching branches, the release script may change when
+> branches are switched. The best approach is to clone the repo, and use
+> the clone to provide the script.  The above approach is implemented by
+> the `./release freeze` command, which does the equivalent of
+>
+>   TMP=$(mktemp -d)
+>   git clone . $TMP
+>   echo "function quark_release() { $TMP/release \"\$@\" }"
+>
+> Please note that this section is the only place in the document where
+> `./release` script is invoked directly, all places below invoke the
+> `quark_release` function defined by the `./release freeze`.
+>
+> Taking shortcuts is OK if you know what you're doing :)
 
-Since the release script is part of the repository, and release process
-involves switching branches, the release script may change when
-branches are switched. The best approach is to clone the repo, and use
-the clone to provide the script.  The above approach is implemented by
-the `./release freeze` command, which does the equivalent of
-
-<pre>
-    TMP=$(mktemp -d)
-    git clone . $TMP
-    echo "function quark_release() { $TMP/release \"\$@\" }"
-</pre>
-
-Please note that this section is the only place in the document where
-`./release` script is invoked directly, all places below invoke the
-`quark_release` function defined by the `./release freeze`.
-
-Taking shortcuts is OK if you know what you're doing :)
-</blockquote>
 
 ## Sync Status of CI ##
 
