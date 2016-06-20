@@ -73,20 +73,10 @@
     }
 
     function cast(value, callback) {
-        try {
-            var type = callback();
-            if (value == null || is_instance_of(value, type)) {
-                return value;
-            } else {
-                throw TypeError,
-                    '`' + value + '` is not an instance of `' + type + '`';
-            }
-        } catch (error) {
-            if (error instanceof ReferenceError) {
-                return value;
-            }
-            throw error;
-        }
+        // For now there is no easy way to check in Javascript that Quark class
+        // C is subclass of of Quark class B, so don't check anything until
+        // that's fixed.
+        return value;
     }
     exports.cast = cast;
 
