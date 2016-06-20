@@ -3,12 +3,6 @@ import quark.concurrent;
 
 namespace quark {
 namespace promise {
-
-    @doc("A callable that takes a single argument, returns result.")
-    interface UnaryCallable {
-        Object invoke(Object arg);
-    }
-
     // Called when Promise we're waiting on has result, allowing us to hand it
     // over to Promise that is waiting for it:
     class _ChainPromise extends UnaryCallable {
@@ -18,7 +12,7 @@ namespace promise {
             self._next = next;
         }
 
-        Object invoke(Object arg) {
+        Object __call__(Object arg) {
             _CallbackEvent.fullfilPromise(self._next, arg);
             return null;
         }
@@ -53,7 +47,7 @@ namespace promise {
         }
 
         void fireEvent() {
-            Object result = self._callable.invoke(self._value);
+            Object result = self._callable.__call__(self._value);
             if (reflect.Class.get("quark.promise.Promise").hasInstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
@@ -86,7 +80,7 @@ namespace promise {
     }
 
     class _Passthrough extends UnaryCallable {
-        Object invoke(Object arg) {
+        Object __call__(Object arg) {
             return arg;
         }
     }
@@ -102,9 +96,9 @@ namespace promise {
             self._class = klass;
         }
 
-        Object invoke(Object arg) {
+        Object __call__(Object arg) {
             if (self._class.hasInstance(arg)) {
-                return self._underlying.invoke(arg);
+                return self._underlying.__call__(arg);
             } else {
                 // Just pass through the instance we care about.
                 return arg;

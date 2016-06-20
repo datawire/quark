@@ -36,7 +36,7 @@ class StoreValue extends UnaryCallable {
     Object result = null;
     bool called = false;
 
-    Object invoke(Object arg) {
+    Object __call__(Object arg) {
         self.result = arg;
         self.called = true;
         return null;
@@ -50,7 +50,7 @@ class ReturnValue extends UnaryCallable {
         self.returnme = returnme;
     }
 
-    Object invoke(Object arg) {
+    Object __call__(Object arg) {
         return self.returnme;
     }
 }
@@ -58,7 +58,7 @@ class ReturnValue extends UnaryCallable {
 class StoreContext extends UnaryCallable {
     Context recorded = null;
 
-    Object invoke(Object arg) {
+    Object __call__(Object arg) {
         self.recorded = Context.current();
         return true;
     }
