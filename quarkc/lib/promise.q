@@ -12,7 +12,7 @@ namespace promise {
             self._next = next;
         }
 
-        Object __call__(Object arg) {
+        Object call(Object arg) {
             _CallbackEvent.fullfilPromise(self._next, arg);
             return null;
         }
@@ -80,7 +80,7 @@ namespace promise {
     }
 
     class _Passthrough extends UnaryCallable {
-        Object __call__(Object arg) {
+        Object call(Object arg) {
             return arg;
         }
     }
@@ -96,7 +96,7 @@ namespace promise {
             self._class = klass;
         }
 
-        Object __call__(Object arg) {
+        Object call(Object arg) {
             if (self._class.hasInstance(arg)) {
                 return self._underlying.__call__(arg);
             } else {
