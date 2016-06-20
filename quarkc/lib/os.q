@@ -46,10 +46,6 @@ namespace quark {
 
         @doc("Class for interacting with the process environment")
         class Environment {
-            Environment() {
-                quark.spi.RuntimeFactory.quark_trace = _env_get("QUARK_TRACE");
-            }
-
             @doc("Singleton for interacting with the process environment")
             static Environment ENV = new Environment();
 

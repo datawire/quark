@@ -309,8 +309,8 @@ namespace spi_api_tracing {
 
     class RuntimeProxy extends Identifiable, Runtime {
         Runtime impl;
-        RuntimeProxy(Runtime impl, Logger logger) {
-            super(logger, "Runtime");
+        RuntimeProxy(Runtime impl) {
+            super(impl.logger("api"), "Runtime");
             self.impl = impl;
         }
         void open(String url, WSHandler handler) {

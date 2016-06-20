@@ -34,7 +34,7 @@ namespace spi {
                     logging.makeConfig().setLevel("DEBUG").setAppender(logging.file(quark_trace)).configure();
                     logger = spi.logger("api");
                 }
-                api = new quark.spi_api_tracing.RuntimeProxy(spi, logger);
+                api = new quark.spi_api.RuntimeProxy(spi);
             }
             return api;
         }
