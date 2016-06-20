@@ -53,7 +53,6 @@ class CastingTest {
         local.C asSuperFromObject = ?asObject;
         checkEqual(d, asSuperFromObject);
     }
-
 }
 
 void main(List<String> args) {

@@ -1043,12 +1043,8 @@ module DatawireQuarkCore
   end
 
   def self.cast(value, &block)
-    type = begin block.call rescue Object end
-
-    unless value.is_a?(type) || value.nil?
-      raise TypeError, "`#{value.inspect}` is not an instance of `#{type}`"
-    end
-
+    # For now there is no easy way to check in Ruby that Quark class C is
+    # subclass of of Quark class B, so don't check anything until that's fixed.
     value
   end
 

@@ -63,17 +63,9 @@ def _map_remove(m, key):
         return None
 
 def _cast(value, callback):
-    try:
-        type = callback()
-    except:
-        type = object
-    if type is unicode:
-        type = (unicode, str)
-    if isinstance(value, type) or value is None:
-        return value
-    else:
-        template = '`{value}` is not an instance of `{type}`'.format
-        raise TypeError(template(value=repr(value), type=type))
+    # For now there is no easy way to check in Python that Quark class C is
+    # subclass of of Quark class B, so don't check anything until that's fixed.
+    return value
 
 class _JSONObject(object):
     _backend = json
