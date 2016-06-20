@@ -2,6 +2,18 @@ quark *;
 import quark.promise;
 
 namespace quark_io {
+    class _IOScheduleTask extends Task {
+        PromiseFactory factory;
+
+        _IOScheduleTask(PromiseFactory factory) {
+            self.factory = factory;
+        }
+
+        void onExecute(Runtime runtime) {
+            self.factory.resolve(true);
+        }
+    }
+
     class _IOHTTPHandler extends HTTPHandler {
         PromiseFactory factory;
 
@@ -29,13 +41,13 @@ namespace quark_io {
             return factory.promise;
         }
 
-        @doc("Schedule a callable to run in the future, return Promise with its result.")
-        static Promise schedule(UnaryCallable callable, float delayInSeconds) {
+        @doc("Schedule a callable to run in the future, return Promise with null result.")
+        static Promise schedule(float delayInSeconds) {
             PromiseFactory factory = new PromiseFactory();
+            Context.runtime().schedule(new _IOScheduleTask(factory), delayInSeconds);
             return factory.promise;
         }
+
+        // Might want WebSocket connect API too. Not clear at the moment.
     }
-        // For websockets:
-        // 1. Figure out if all runtimes use same API path
-        // 2. Write some toy sample code with proposed API to see if it improves things at all.
 }

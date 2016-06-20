@@ -21,7 +21,7 @@ class HTTPRequestTest extends MockRuntimeTest {
         event.respond(123, headers, "BODY!");
         HTTPResponse result = ?p.value().getValue();
         checkEqual(123, result.getCode());
-        checkEqual(headers, result.getHeaders());
+        checkEqual("value", result.getHeader("key"));
         checkEqual("BODY!", result.getBody());
     }
 
@@ -34,5 +34,26 @@ class HTTPRequestTest extends MockRuntimeTest {
         event.fail(error);
         HTTPError result = ?p.value().getValue();
         checkEqual(error, result);
+    }
+}
+
+// These could be tested better once Mock runtime supports mocking time.
+class ScheduleTest extends MockRuntimeTest {
+    // A Task is scheduled with given delay
+    void testScheduleWithDelay() {
+        IO.schedule(5.3);
+        checkEqual(5.3, self.mock.tasks[0].delay);
+    }
+
+    // The Promise gets a result eventually
+    void testHasResultEventually() {
+        Promise p = IO.schedule(1.0);
+        checkEqual(false, p.value().hasValue());
+
+        // Testing of time is not good yet, so this happens immediately instead
+        // of after a second.
+        self.mock.pump();
+        checkEqual(true, p.value().hasValue());
+        checkEqual(true, p.value().getValue());
     }
 }
