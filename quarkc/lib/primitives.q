@@ -402,14 +402,15 @@ namespace quark {
     //  - pick better names
     //  - later on could make blocks work with a little compiler magic to prepend & if the last arg is a Callable
 
-    interface Callable {
+    interface UnaryCallable {
 
-        Object doit(Object arg);
+        Object call(Object arg);
 
-        macro Object invoke(Object arg) $py{($self)($arg) if callable($self) else ($self).doit($arg)}
-                                        $js{(($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).doit.call(($self), $arg)}
-                                        $rb{ ($self).respond_to?(:doit) ? ($self).doit($arg) : ($self).call($arg) }
-                                        $java{($self).doit($arg)};
+        macro Object __call__(Object arg) $py{($self)($arg) if callable($self) else ($self).call($arg)}
+                                          $js{(($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg)}
+                                          $rb{($self).call($arg)}
+                                          $java{($self).call($arg)};
+
     }
 
 namespace error {

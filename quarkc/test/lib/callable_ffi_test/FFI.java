@@ -1,13 +1,13 @@
 package callable_ffi_test;
 
 import static test_callable.Functions.*;
-import quark.Callable;
+import quark.UnaryCallable;
 
 public class FFI {
 
     public static final boolean check() {
-        Callable doubler = new Callable() {
-                public Object doit(Object arg) {
+        UnaryCallable doubler = new UnaryCallable() {
+                public Object call(Object arg) {
                     return 2*((int) arg);
                 }
             };

@@ -10,13 +10,13 @@ void main(List<String> args) {
     test.run(args);
 }
 
-Object smug(Callable c, Object arg) {
-    return c.invoke(arg);
+Object smug(UnaryCallable c, Object arg) {
+    return c.__call__(arg);
 }
 
-class Doubler extends Callable {
+class Doubler extends UnaryCallable {
 
-    int doit(Object arg) {
+    int call(Object arg) {
         int x = ?arg;
         return 2*x;
     }
