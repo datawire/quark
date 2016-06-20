@@ -144,6 +144,11 @@ namespace promise {
         }
     }
 
+    @doc("An object that will eventually have a result. ")
+    @doc("Results are passed to callables whose return value is passed ")
+    @doc("to resulting Promise. If a return result is a Promise it will ")
+    @doc("be chained automatically, i.e. callables will never be called ")
+    @doc("with a Promise, only with values.")
     class Promise {
         concurrent.Lock _lock;
         Object _successResult;
@@ -216,6 +221,8 @@ namespace promise {
             self._maybeRunCallbacks();
         }
 
+        @doc("Add callback that will be called on non-Error values. ")
+        @doc("Its result will become the value of the returned Promise.")
         Promise andThen(UnaryCallable callable) {
             Promise result = new Promise();
             self._lock.acquire();
@@ -226,6 +233,8 @@ namespace promise {
             return result;
         }
 
+        @doc("Add callback that will be called on Error values. ")
+        @doc("Its result will become the value of the returned Promise.")
         Promise andCatch(reflect.Class errorClass, UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(new _CallIfIsInstance(callable, errorClass), result);
@@ -237,6 +246,7 @@ namespace promise {
             return result;
         }
 
+        @doc("Callback that will be called for both success and error results.")
         Promise andFinally(UnaryCallable callable) {
             Promise result = new Promise();
             _Callback callback = new _Callback(callable, result);
@@ -249,7 +259,8 @@ namespace promise {
         }
 
 
-        @doc("Synchronous extraction of the promise's current value, if it has any.")
+        @doc("Synchronous extraction of the promise's current value, if it has any. ")
+        @doc("Its result will become the value of the returned Promise.")
         PromiseValue value() {
             self._lock.acquire();
             PromiseValue result = new PromiseValue(self._successResult, self._failureResult,
@@ -259,6 +270,7 @@ namespace promise {
         }
     }
 
+    @doc("Create Promises and input their initial value. Should typically only be used by Quark standard library.")
     class PromiseFactory {
         Promise promise = null;
 
@@ -266,10 +278,12 @@ namespace promise {
             self.promise = new Promise();
         }
 
+        @doc("Set the attached Promise's initial value.")
         void resolve(Object result) {
             self.promise._resolve(result);
         }
 
+        @doc("Set the attached Promise's initial value to an Error.")
         void reject(Error err) {
             self.promise._reject(err);
        }
