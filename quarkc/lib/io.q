@@ -1,7 +1,7 @@
 quark *;
 import quark.promise;
 
-namespace quark_io {
+namespace quark {
     class _IOScheduleTask extends Task {
         PromiseFactory factory;
 
