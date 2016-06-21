@@ -15,25 +15,20 @@ namespace spi {
     class RuntimeFactory {
         static RuntimeFactory factory = new RuntimeFactory();
 
-        static String quark_trace = null;
+        static bool enable_tracing = true;
+        static bool env_checked = false;
 
         quark.Runtime makeRuntime() {
             RuntimeSpi spi = new RuntimeSpi();
             Runtime api;
-            if ((quark_trace == null) ||
-                (quark_trace == "") ||
-                (quark_trace == "0") ||
-                (quark_trace.toLower() == "false")) {
-                api = new quark.spi_api.RuntimeProxy(spi);
+            if (!env_checked) {
+                logging.setEnvironmentOverride("QUARK_TRACE", "DEBUG");
+                enable_tracing = logging._Override.check();
+                env_checked = true;
+            }
+            if (enable_tracing) {
+                api = new quark.spi_api_tracing.RuntimeProxy(spi);
             } else {
-                Logger logger;
-                if ((quark_trace == "1") || (quark_trace.toLower() == "true")) {
-                    logging.makeConfig().setLevel("DEBUG").configure();
-                    logger = spi.logger("api");
-                } else {
-                    logging.makeConfig().setLevel("DEBUG").setAppender(logging.file(quark_trace)).configure();
-                    logger = spi.logger("api");
-                }
                 api = new quark.spi_api.RuntimeProxy(spi);
             }
             return api;
