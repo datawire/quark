@@ -13,6 +13,9 @@ namespace reflect {
         static Class FLOAT = new Class("quark.float");
         static Class STRING = new Class("quark.String");
         static Class OBJECT = new Class("quark.Object");
+        // We want to have easy constant, but it is also created automatically,
+        // so populate this below.
+        static Class ERROR = null;
 
         static Class get(String id) {
             if (id == null) {
@@ -33,6 +36,9 @@ namespace reflect {
         List<Class> parents = [];
 
         Class(String id) {
+            if (id == "quark.error.Error") {
+                self.ERROR = self;
+            }
             self.id = id;
             classes[id] = self;
             self.name = id;
@@ -166,5 +172,4 @@ namespace reflect {
 
         Object invoke(Object object, List<Object> args);
     }
-
 }}
