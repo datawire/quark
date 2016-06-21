@@ -158,4 +158,8 @@ class ClassReflectTest {
         checkEqual(false, aClass.hasInstance(new Lock()));
         checkEqual(false, aClass.hasInstance(new Condition()));
     }
+
+    // TODO: hasInstance currently doesn't support interfaces or parameterized
+    // types, e.g. List<K> or YourClass<K,V>. We should add that and then write
+    // tests.
 }
