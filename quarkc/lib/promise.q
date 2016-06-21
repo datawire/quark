@@ -240,18 +240,21 @@ namespace promise {
             return result;
         }
 
-        @doc("Callback that will be called for both success and error results.")
-        Promise andFinally(UnaryCallable callable) {
+        @doc("Two callbacks, one for success and one for error results.")
+        Promise andEither(UnaryCallable success, UnaryCallable failure) {
             Promise result = new Promise();
-            _Callback callback = new _Callback(callable, result);
             self._lock.acquire();
-            self._successCallbacks.add(callback);
-            self._failureCallbacks.add(callback);
+            self._successCallbacks.add(new _Callback(success, result));
+            self._failureCallbacks.add(new _Callback(failure, result));
             self._lock.release();
             self._maybeRunCallbacks();
             return result;
         }
 
+        @doc("Callback that will be called for both success and error results.")
+        Promise andFinally(UnaryCallable callable) {
+            return andEither(callable, callable);
+        }
 
         @doc("Synchronous extraction of the promise's current value, if it has any. ")
         @doc("Its result will become the value of the returned Promise.")

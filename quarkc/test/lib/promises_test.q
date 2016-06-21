@@ -356,6 +356,35 @@ class PromiseTest extends MockRuntimeTest {
         checkEqual(original, Context.current());
     }
 
+    // Resolving a Promise calls the success callback when both are given
+    void testResolveEitherSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.andEither(success, failure);
+        f.resolve(theValue);
+        spinCollector();
+        checkEqual(false, failure.called);
+        checkEqual(true, success.called);
+        checkEqual(theValue, success.result);
+    }
+
+    // Rejecting a Promise calls the error callback when both are given
+    void testResolveEitherSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.andEither(success, failure);
+        f.reject(theError);
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(false, success.called);
+        checkEqual(theError, failure.result);
+    }
+
+
     // Nice to have tests but unlikely use cases:
     // Re-entrancy: callback registered inside error callback is called
     // Re-entrancy: callback registered inside either-way callback is called
