@@ -804,6 +804,17 @@
         return this;
     };
     LogConfigurator.prototype.configure = function configure() {
+        var quark = require("quark").quark;
+        if (quark.logging._Override.check()) {
+            this.setLevel(quark.logging._Override.level);
+            var filename = quark.logging._Override.getFilename();
+            if (filename == null) {
+                this.setAppender(STDERR);
+            } else {
+                this.setAppender(makeFileAppender(filename));
+            }
+        }
+
         this.cfg.appender = this.appender;
         this.cfg.level = this.level;
     };
