@@ -26,6 +26,7 @@ File(Import(Name(quark)), CompilerVersionSpec(),
  Include(url=ws.q), Include(url=testing.q), Include(url=url.q),
  Include(url=spi.q), Include(url=spi_api.q), Include(url=spi_api_tracing.q),
  Include(url=os.q), Include(url=mock.q), Include(url=promise.q),
+ Include(url=io.q),
 
  Package(Name(quark),
 
@@ -87,7 +88,7 @@ File(Import(Name(quark)), CompilerVersionSpec(),
    Field(static=True, Type(Name(reflect), Name(Class)), Name(quark_Task_ref),
     Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
-       $type=17.quark_md), Name(Root), $type=17.quark_md.Root),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
       Name(quark_Task_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 
@@ -133,7 +134,7 @@ File(Import(Name(quark)), CompilerVersionSpec(),
     Name(quark_Runtime_ref), Call(Attr(Var(Name(reflect),
       $type=3.quark.reflect), Name(__register__),
      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
-       $type=17.quark_md), Name(Root), $type=17.quark_md.Root),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
       Name(quark_Runtime_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
 )

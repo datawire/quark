@@ -1,0 +1,189 @@
+File(Import(Name(quark)), CompilerVersionSpec(), Import(Name(quark),
+  Name(promise)),
+
+ Package(Name(quark),
+
+  Class(Name(_IOScheduleTask), Type(Name(Task)),
+   Field(static=False, Type(Name(PromiseFactory)), Name(factory),
+   $type=16.quark.promise.PromiseFactory),
+
+   Constructor(Name(_IOScheduleTask),
+    Param(Type(Name(PromiseFactory)), Name(factory),
+    $type=16.quark.promise.PromiseFactory),
+    Block(
+     Assign(Attr(Var(Name(self), $type=17.quark._IOScheduleTask),
+       Name(factory), $type=16.quark.promise.PromiseFactory),
+      Var(Name(factory), $type=16.quark.promise.PromiseFactory)))),
+
+   Method(static=False, Type(Name(void)), Name(onExecute),
+    Param(Type(Name(Runtime)), Name(runtime), $type=0.quark.Runtime),
+    Block(
+     ExprStmt(Call(Attr(Attr(Var(Name(self), $type=17.quark._IOScheduleTask),
+         Name(factory), $type=16.quark.promise.PromiseFactory), Name(resolve),
+       $type=16.quark.promise.PromiseFactory.resolve), Bool(true,
+       $type=1.quark.bool), $type=1.quark.void)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("quark._IOScheduleTask", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("factory", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Return(Attr(Var(Name(self), $type=17.quark._IOScheduleTask),
+         Name(factory), $type=16.quark.promise.PromiseFactory)))),
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("factory", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Assign(Attr(Var(Name(self), $type=17.quark._IOScheduleTask),
+         Name(factory), $type=16.quark.promise.PromiseFactory),
+        Cast(Var(Name(value), $type=1.quark.Object),
+        $type=16.quark.promise.PromiseFactory)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(quark__IOScheduleTask_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
+      Name(quark__IOScheduleTask_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
+  Class(Name(_IOHTTPHandler), Type(Name(HTTPHandler)),
+   Field(static=False, Type(Name(PromiseFactory)), Name(factory),
+   $type=16.quark.promise.PromiseFactory),
+
+   Constructor(Name(_IOHTTPHandler),
+    Param(Type(Name(PromiseFactory)), Name(factory),
+    $type=16.quark.promise.PromiseFactory),
+    Block(
+     Assign(Attr(Var(Name(self), $type=17.quark._IOHTTPHandler), Name(factory),
+      $type=16.quark.promise.PromiseFactory), Var(Name(factory),
+      $type=16.quark.promise.PromiseFactory)))),
+
+   Method(static=False, Type(Name(void)), Name(onHTTPInit),
+    Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onHTTPFinal),
+    Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
+    Block()),
+
+   Method(static=False, Type(Name(void)), Name(onHTTPResponse),
+    Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
+    Param(Type(Name(HTTPResponse)), Name(response),
+    $type=7.quark.HTTPResponse),
+    Block(
+     ExprStmt(Call(Attr(Attr(Var(Name(self), $type=17.quark._IOHTTPHandler),
+         Name(factory), $type=16.quark.promise.PromiseFactory), Name(resolve),
+       $type=16.quark.promise.PromiseFactory.resolve), Var(Name(response),
+       $type=7.quark.HTTPResponse), $type=1.quark.void)))),
+
+   Method(static=False, Type(Name(void)), Name(onHTTPError),
+    Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
+    Param(Type(Name(HTTPError)), Name(message), $type=7.quark.HTTPError),
+    Block(
+     ExprStmt(Call(Attr(Attr(Var(Name(self), $type=17.quark._IOHTTPHandler),
+         Name(factory), $type=16.quark.promise.PromiseFactory), Name(reject),
+       $type=16.quark.promise.PromiseFactory.reject), Var(Name(message),
+       $type=7.quark.HTTPError), $type=1.quark.void)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("quark._IOHTTPHandler", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("factory", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Return(Attr(Var(Name(self), $type=17.quark._IOHTTPHandler),
+         Name(factory), $type=16.quark.promise.PromiseFactory)))),
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block(
+     If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+       $type=1.quark.Object.__eq__), String("factory", $type=1.quark.String),
+      $type=1.quark.bool), Block(
+       Assign(Attr(Var(Name(self), $type=17.quark._IOHTTPHandler),
+         Name(factory), $type=16.quark.promise.PromiseFactory),
+        Cast(Var(Name(value), $type=1.quark.Object),
+        $type=16.quark.promise.PromiseFactory)))))),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(quark__IOHTTPHandler_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
+      Name(quark__IOHTTPHandler_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
+  Class(Annotation(Name(doc), String("Promise-based I/O and scheduling APIs.",
+    $type=1.quark.String)), Name(IO),
+
+   Method(static=True, Annotation(Name(doc),
+     String("Send a HTTP request, get back Promise that gets HTTPResponse or HTTPError result.",
+     $type=1.quark.String)), Type(Name(Promise)), Name(httpRequest),
+    Param(Type(Name(HTTPRequest)), Name(request), $type=7.quark.HTTPRequest),
+    Block(
+     Local(
+      Declaration(Type(Name(PromiseFactory)), Name(factory),
+       Call(Type(Name(PromiseFactory)), $type=16.quark.promise.PromiseFactory),
+      $type=16.quark.promise.PromiseFactory)),
+     ExprStmt(Call(Attr(Call(Attr(Var(Name(Context),
+          $type=6.quark.concurrent.Context), Name(runtime),
+         $type=6.quark.concurrent.Context.runtime), $type=0.quark.Runtime),
+        Name(request), $type=0.quark.Runtime.request), Var(Name(request),
+       $type=7.quark.HTTPRequest), Call(Type(Name(_IOHTTPHandler)),
+        Var(Name(factory), $type=16.quark.promise.PromiseFactory),
+       $type=17.quark._IOHTTPHandler), $type=1.quark.void)),
+     Return(Attr(Var(Name(factory), $type=16.quark.promise.PromiseFactory),
+       Name(promise), $type=16.quark.promise.Promise)))),
+
+   Method(static=True, Annotation(Name(doc),
+     String("Schedule a callable to run in the future, return Promise with null result.",
+     $type=1.quark.String)), Type(Name(Promise)), Name(schedule),
+    Param(Type(Name(float)), Name(delayInSeconds), $type=1.quark.float),
+    Block(
+     Local(
+      Declaration(Type(Name(PromiseFactory)), Name(factory),
+       Call(Type(Name(PromiseFactory)), $type=16.quark.promise.PromiseFactory),
+      $type=16.quark.promise.PromiseFactory)),
+     ExprStmt(Call(Attr(Call(Attr(Var(Name(Context),
+          $type=6.quark.concurrent.Context), Name(runtime),
+         $type=6.quark.concurrent.Context.runtime), $type=0.quark.Runtime),
+        Name(schedule), $type=0.quark.Runtime.schedule),
+       Call(Type(Name(_IOScheduleTask)), Var(Name(factory),
+        $type=16.quark.promise.PromiseFactory),
+       $type=17.quark._IOScheduleTask), Var(Name(delayInSeconds),
+       $type=1.quark.float), $type=1.quark.void)),
+     Return(Attr(Var(Name(factory), $type=16.quark.promise.PromiseFactory),
+       Name(promise), $type=16.quark.promise.Promise)))),
+
+   Method(static=False, Type(Name(String)), Name(_getClass), Block(
+     Return(String("quark.IO", $type=1.quark.String)))),
+
+   Method(static=False, Type(Name(Object)), Name(_getField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Block(
+     Return(Null(null, $type=1.quark.Object)))),
+
+   Method(static=False, Type(Name(void)), Name(_setField),
+    Param(Type(Name(String)), Name(name), $type=1.quark.String),
+    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
+    Block()),
+   Field(static=True, Type(Name(reflect), Name(Class)), Name(quark_IO_ref),
+    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
+      Name(quark_IO_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
+)
