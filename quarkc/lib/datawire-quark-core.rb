@@ -1045,6 +1045,8 @@ module DatawireQuarkCore
   def self.cast(value, &block)
     # For now there is no easy way to check in Ruby that Quark class C is
     # subclass of of Quark class B, so don't check anything until that's fixed.
+    # The correct way to do so would be via reflect.Class.hasInstance, probably,
+    # but that doesn't support interfaces yet.
     value
   end
 
