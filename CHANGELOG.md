@@ -6,6 +6,24 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* Setting the environment variable QUARK_TRACE modifies logging done by
+  libraries written in Quark.
+  * Setting QUARK_TRACE to a filename redirects all logging to that
+    file.
+  * Setting QUARK_TRACE to "1" or "TRUE" redirects all logging to
+    stderr.
+  * Setting QUARK_TRACE as above enables additional logging output from
+    within Quark's standard library to help trace network I/O.
+  * Setting QUARK_TRACE to the empty string, to "0", or to "FALSE" will
+    allow logging to function as normal, just as if the environment
+    variable were not set.
+
+
+1.0.133
+-------
+
 ### Language
 
 * (!) Compiler version declaration is restricted to 3 forms:
@@ -50,7 +68,7 @@ Latest
 * CI runs pyflakes and pylint on quark compiler code
 
 0.7.6
-------
+-----
 
 ### Language
 
