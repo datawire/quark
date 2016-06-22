@@ -10,7 +10,7 @@ Latest
 
 * The `quark docs` command by default no longer generates documentation
   for any named element (namespaces, classes, functions, methods,
-  fields) that begins with a single "_" followed by an alphanumeric
+  fields) that begins with a single `_` followed by an alphanumeric
   character. Note that documentation for things like `__add__` will
   still be included. Use `quark docs --include-private` to change this
   behavior.
