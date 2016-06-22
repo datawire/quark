@@ -476,6 +476,16 @@ module DatawireQuarkCore
 
     def configure
       root = Logging.logger["quark"]
+      require 'quark'
+      if Quark::Quark::Logging::Override.check
+        setLevel Quark::Quark::Logging::Override.level
+        filename = Quark::Quark::Logging::Override.getFilename
+        if filename == nil
+          setAppender STDERR
+        else
+          setAppender (LoggerConfig.file filename)
+        end
+      end
       appender = @appender.appender
       appender.layout = QuarkLayout.new
       root.appenders = appender

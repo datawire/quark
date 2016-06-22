@@ -80,6 +80,14 @@ class Configurator(object):
         root = logging.getLogger("quark")
         for hnd in root.handlers[:]:
             root.removeHandler(hnd)
+        import quark
+        if quark.logging._Override.check():
+            self.setLevel(quark.logging._Override.level)
+            filename = quark.logging._Override.getFilename()
+            if filename is None:
+                self.setAppender(STDERR)
+            else:
+                self.setAppender(LoggerConfig.file(filename))
         root.setLevel(self.level)
         self.appender.handler.setFormatter(Formatter())
         root.addHandler(self.appender.handler)
