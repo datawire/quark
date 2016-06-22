@@ -104,10 +104,27 @@ def get_child_path(path, node):
         return str(node.name)
 
 
+def is_private(node, path):
+    name = str(node.name)
+    if name[0] == "_" and name[1] != "_":
+        return True
+    if isinstance(node, ast.Field) and node.static:
+        if name == path.replace(".", "_") + "_ref":
+            return True
+    return False
+
+
+def get_visibility(node, path):
+    if is_private(node, path):
+        return "private"
+    return "public"
+
+
 def make_struct(node, path):
     res = OrderedDict()
     res["name"] = str(node.name)
     res["path"] = path
+    res["visibility"] = get_visibility(node, path)
     res["description"] = get_doc(node)
     return res
 
@@ -140,11 +157,6 @@ def make_doc_structure(node, path):
     child_path = get_child_path(path, node)
     res["definitions"] = []
     for dfn in node.definitions:
-        # field / constructor / method / constructor_macro / method_macro
-        if str(dfn.name) in "_getClass _getField _setField".split():
-            continue
-        if str(dfn.name).endswith("_%s_ref" % node.name):
-            continue
         st = make_doc_structure(dfn, child_path)
         res["definitions"].append(st)
     return res

@@ -6,6 +6,15 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Command line
+
+* The `quark docs` command by default no longer generates documentation
+  for any named element (namespaces, classes, functions, methods,
+  fields) that begins with a single "_" followed by an alphanumeric
+  character. Note that documentation for things like `__add__` will
+  still be included. Use `quark docs --include-private` to change this
+  behavior.
+
 ### Standard Library
 
 * Setting the environment variable QUARK_TRACE modifies logging done by
@@ -19,7 +28,6 @@ Latest
   * Setting QUARK_TRACE to the empty string, to "0", or to "FALSE" will
     allow logging to function as normal, just as if the environment
     variable were not set.
-
 
 1.0.133
 -------

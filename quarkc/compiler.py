@@ -1348,7 +1348,7 @@ def run(c, url, args, *backends):
         b.run(name, ver, args)
 
 
-def make_docs(c, url, target):
+def make_docs(c, url, target, inc_private):
     # FIXME: Lots of boilderplate here...
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
@@ -1360,4 +1360,4 @@ def make_docs(c, url, target):
             shutil.rmtree(dest)
         os.makedirs(dest)
         st = docmaker.make_docs_json(root, os.path.join(dest, "api.json"))
-        docrenderer.render(st, dest)
+        docrenderer.render(st, dest, inc_private)
