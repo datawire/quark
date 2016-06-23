@@ -168,7 +168,14 @@ if [ -z "$installation_source" ]; then
     		curl $CURLVERBOSITY -L ${url} > ${work}/quark-${safename}.zip
 
     		if unzip -q ${work}/quark-${safename}.zip -d ${work} >> ${work}/install.log 2>&1; then
-    		    piparg=${work}/quark-${safename}
+                    if [ -d ${work}/quark-${safename} ]; then
+    		        piparg=${work}/quark-${safename}
+                    else
+                        # If your tag is "v1.0.133" the unzipped folder will be
+                        # "quark-1.0.133", without the leading "v". Thanks,
+                        # GitHub.
+                        piparg=${work}/quark-$(echo "$safename" | tr -d 'v')
+                    fi
     		else
     		    die "Unable to download from ${url}\n        check in ${work}/install.log for details."
     		fi
