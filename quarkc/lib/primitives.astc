@@ -1085,7 +1085,7 @@ File(Import(Name(quark)), CompilerVersionSpec(),
     Name(quark_UnaryCallable_ref), Call(Attr(Var(Name(reflect),
       $type=3.quark.reflect), Name(__register__),
      $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(quark_md),
-       $type=17.quark_md), Name(Root), $type=17.quark_md.Root),
+       $type=18.quark_md), Name(Root), $type=18.quark_md.Root),
       Name(quark_UnaryCallable_md), $type=3.quark.reflect.Class),
     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
 

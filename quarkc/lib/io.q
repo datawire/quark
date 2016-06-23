@@ -1,5 +1,4 @@
 quark *;
-import quark.promise;
 
 namespace quark {
     class _IOScheduleTask extends Task {
@@ -37,14 +36,14 @@ namespace quark {
         @doc("Send a HTTP request, get back Promise that gets HTTPResponse or HTTPError result.")
         static Promise httpRequest(HTTPRequest request) {
             PromiseFactory factory = new PromiseFactory();
-            Context.runtime().request(request, new _IOHTTPHandler(factory));
+            concurrent.Context.runtime().request(request, new _IOHTTPHandler(factory));
             return factory.promise;
         }
 
         @doc("Schedule a callable to run in the future, return Promise with null result.")
         static Promise schedule(float delayInSeconds) {
             PromiseFactory factory = new PromiseFactory();
-            Context.runtime().schedule(new _IOScheduleTask(factory), delayInSeconds);
+            concurrent.Context.runtime().schedule(new _IOScheduleTask(factory), delayInSeconds);
             return factory.promise;
         }
 

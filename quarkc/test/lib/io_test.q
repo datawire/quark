@@ -2,7 +2,6 @@ quark *;
 
 import quark.test;
 import quark.mock;
-import quark.promise;
 
 void main(List<String> args) {
     test.run(args);

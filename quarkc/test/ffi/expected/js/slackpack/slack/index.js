@@ -224,27 +224,15 @@ function Client__setField(name, value) {
 }
 Client.prototype._setField = Client__setField;
 
-/**
- * Called when the WebSocket is first created.
- */
 function Client_onWSInit(socket) {}
 Client.prototype.onWSInit = Client_onWSInit;
 
-/**
- * Called when the WebSocket receives a binary message.
- */
 function Client_onWSBinary(socket, message) {}
 Client.prototype.onWSBinary = Client_onWSBinary;
 
-/**
- * Called when the WebSocket disconnects cleanly.
- */
 function Client_onWSClosed(socket) {}
 Client.prototype.onWSClosed = Client_onWSClosed;
 
-/**
- * Called when the WebSocket is done with life, one way or another.
- */
 function Client_onWSFinal(socket) {}
 Client.prototype.onWSFinal = Client_onWSFinal;
 
