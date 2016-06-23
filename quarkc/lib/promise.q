@@ -2,7 +2,7 @@ quark *;
 import quark.concurrent;
 
 namespace quark {
-namespace promise {
+
     // Called when Promise we're waiting on has result, allowing us to hand it
     // over to Promise that is waiting for it:
     class _ChainPromise extends UnaryCallable {
@@ -48,7 +48,7 @@ namespace promise {
 
         void fireEvent() {
             Object result = self._callable.__call__(self._value);
-            if (reflect.Class.get("quark.promise.Promise").hasInstance(result)) {
+            if (reflect.Class.get("quark.Promise").hasInstance(result)) {
                 // We got a promise as result of callback, so chain it to the
                 // promise that we're supposed to be fulfilling:
                 Promise toChain = ?result;
@@ -285,4 +285,4 @@ namespace promise {
             self.promise._reject(err);
        }
     }
-}}
+}

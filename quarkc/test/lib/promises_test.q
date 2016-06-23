@@ -3,7 +3,6 @@ import quark.test;
 import quark.mock;
 import quark.error;
 import quark.reflect;
-import quark.promise;
 
 
 void main(List<String> args) {
@@ -371,7 +370,7 @@ class PromiseTest extends MockRuntimeTest {
     }
 
     // Rejecting a Promise calls the error callback when both are given
-    void testResolveEitherSuccess() {
+    void testResolveEitherError() {
         PromiseFactory f = new PromiseFactory();
         Promise p = f.promise;
         StoreValue success = new StoreValue();
