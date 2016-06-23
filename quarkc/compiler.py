@@ -244,7 +244,7 @@ class Crosswire:
 
     def visit_Import(self, i):
         self.visit_AST(i)
-        i.parent.imports.append(i)
+        i.parent.imports.insert(0, i)
 
     def visit_Class(self, c):
         self.visit_AST(c)

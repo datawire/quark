@@ -34,6 +34,13 @@ Latest
 
 ### Language
 
+* Fixed precedence of `import` statements. Later `import`s are searched first
+
+1.0.74
+------
+
+### Language
+
 * (!) Compiler version declaration is restricted to 3 forms:
    * `quark x.y.z;` like `quark 1.2.3;`,
    * `quark x.y;` like `quark 1.2;`, semantically same as `quark x.y.0;`,
