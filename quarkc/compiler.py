@@ -1305,7 +1305,7 @@ class Compiler(object):
         for r in modified:
             r._modified = True
 
-def install(c, url, *backends):
+def install(c, url, offline=False, *backends):
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
     c.compile()
@@ -1315,7 +1315,7 @@ def install(c, url, *backends):
             b = backend()
             b.roots = c.roots
             root.traverse(b)
-            b.install()
+            b.install(offline)
 
 def compile(c, url, target, *backends):
     c.log.info("Parsing: %s", url)

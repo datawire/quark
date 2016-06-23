@@ -222,19 +222,47 @@ class Harness {
             print(green(result));
         }
     }
+
+    void json_report() {
+        print("=============================== json report ===============================");
+
+        int idx = 0;
+        JSONObject report = new JSONObject();
+        while (idx < tests.size()) {
+            JSONObject item = new JSONObject();
+            Test test = tests[idx];
+            int f = 0;
+            JSONObject failures = new JSONObject();
+            while (f < test.failures.size()) {
+                failures.setListItem(f, test.failures[f]);
+                f = f + 1;
+            }
+            item["name"] = test.name;
+            item["checks"] = test.checks;
+            item["failures"] = failures;
+            report.setListItem(idx, item);
+            idx = idx + 1;
+        }
+        print(report.toString());
+    }
 }
 
 void run(List<String> args) {
     String pkg = args[0];
     List<String> filters = [];
     bool list = false;
+    bool json = false;
     int idx = 1;
     while (idx < args.size()) {
         String arg = args[idx];
         if (arg == "-l") {
             list = true;
         } else {
-            filters.add(arg);
+            if (arg == "--json") {
+                json = true;
+            } else {
+                filters.add(arg);
+            }
         }
         idx = idx + 1;
     }
@@ -245,6 +273,9 @@ void run(List<String> args) {
     } else {
         print(bold("Running: " + " ".join(args)));
         h.run();
+        if (json) {
+            h.json_report();
+        }
     }
 }
 

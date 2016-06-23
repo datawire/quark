@@ -8,6 +8,10 @@ Latest
 
 ### Command line
 
+* `quark install` tries to run in offline mode by default as most
+  quark generated packages do not have external dependencies. To force
+  online mode use `quark install --online`.
+
 * The `quark docs` command by default no longer generates documentation
   for any named element (namespaces, classes, functions, methods,
   fields) that begins with a single `_` followed by an alphanumeric
