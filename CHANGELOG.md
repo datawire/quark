@@ -15,6 +15,10 @@ Latest
   still be included. Use `quark docs --include-private` to change this
   behavior.
 
+### Language
+
+* Fixed precedence of `import` statements. Later `import`s are searched first.
+
 ### Standard Library
 
 * Setting the environment variable QUARK_TRACE modifies logging done by
@@ -32,9 +36,10 @@ Latest
 1.0.133
 -------
 
-### Language
+### Standard Library
 
-* Fixed precedence of `import` statements. Later `import`s are searched first
+* Added `parents` field and `hasInstance` and `isSubclassOf` methods to
+  `quark.reflect.Class`.
 
 1.0.74
 ------
@@ -54,9 +59,6 @@ Latest
   a single double quote does not need escaping.
 
 ### Standard Library
-
-* Added `parents` field and `hasInstance` and `isSubclassOf` methods to
-  `quark.reflect.Class`.
 
 * (!) Add Error class and subclasses for various quark subsystems
 
