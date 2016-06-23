@@ -3,7 +3,6 @@ import quark.test;
 import quark.mock;
 import quark.error;
 import quark.reflect;
-import quark.promise;
 
 
 void main(List<String> args) {
@@ -356,8 +355,63 @@ class PromiseTest extends MockRuntimeTest {
         checkEqual(original, Context.current());
     }
 
+    // Resolving a Promise calls the success callback when both are given
+    void testResolveEitherSuccess() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.andEither(success, failure);
+        f.resolve(theValue);
+        spinCollector();
+        checkEqual(false, failure.called);
+        checkEqual(true, success.called);
+        checkEqual(theValue, success.result);
+    }
+
+    // Rejecting a Promise calls the error callback when both are given
+    void testResolveEitherError() {
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        StoreValue failure = new StoreValue();
+        p.andEither(success, failure);
+        f.reject(theError);
+        spinCollector();
+        checkEqual(true, failure.called);
+        checkEqual(false, success.called);
+        checkEqual(theError, failure.result);
+    }
+
+
     // Nice to have tests but unlikely use cases:
     // Re-entrancy: callback registered inside error callback is called
     // Re-entrancy: callback registered inside either-way callback is called
     // Re-entrancy: callback registered inside success callback is called
+}
+
+class Simple {
+    String duplicate(String value) {
+        return value + value;
+    }
+
+    String add(String value, String another) {
+        return value + another;
+    }
+}
+
+class BindTest {
+    // A single argument method can be called
+    void testSingleArgument() {
+        Simple s = new Simple();
+        UnaryCallable c = bind(s, "duplicate", []);
+        checkEqual("hellohello", c.__call__("hello"));
+    }
+
+    // A multi-argument method gets called with the extra arguments
+    void testMultipleArgument() {
+        Simple s = new Simple();
+        UnaryCallable c = bind(s, "add", ["world"]);
+        checkEqual("helloworld", c.__call__("hello"));
+    }
 }

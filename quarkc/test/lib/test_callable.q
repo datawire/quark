@@ -1,7 +1,9 @@
 quark *;
 import quark.test;
 
-include callable_ffi_test.py;
+// Avoid the _test prefix for the py ffi so py.test doesn't try to
+// load it as a test.
+include callable_ffi.py;
 include callable_ffi_test.js;
 include callable_ffi_test.rb;
 include callable_ffi_test/FFI.java;
@@ -24,7 +26,7 @@ class Doubler extends UnaryCallable {
 }
 
 macro bool checkFFI() 
-    $py{__import__('callable_ffi_test').check()}
+    $py{__import__('callable_ffi').check()}
     $rb{(lambda { require('callable_ffi_test.rb'); return CallableFFI::check() }).call()}
     $js{require('test_callable/callable_ffi_test.js').check()}
     $java{callable_ffi_test.FFI.check()};

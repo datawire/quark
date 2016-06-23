@@ -63,8 +63,10 @@ def _map_remove(m, key):
         return None
 
 def _cast(value, callback):
-    # For now there is no easy way to check in Python that Quark class C is
-    # subclass of of Quark class B, so don't check anything until that's fixed.
+    # For now  there is no  easy way to  check in Python  that Quark class  C is
+    # subclass of of Quark class B,  so don't check anything until that's fixed.
+    # The correct way to do so would be via reflect.Class.hasInstance, probably,
+    # but that doesn't support interfaces yet.
     return value
 
 class _JSONObject(object):
