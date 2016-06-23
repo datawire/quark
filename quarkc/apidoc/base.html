@@ -65,18 +65,22 @@
         <div class="col-sm-4 col-md-3 sidebar">
           <ul class="nav nav-sidebar">
             {%- for namespace in namespaces %}
+            {%- if include_private or namespace.visibility != "private" %}
             {%- if namespace == main %}
             <li class="active"><a href="#{{ macros.get_name(namespace) }}">{{ macros.get_decorated_name(namespace) }}</a></li>
             {%- else %}
             <li><a href="{{ macros.get_namespace_filename(namespace) }}">{{ macros.get_decorated_name(namespace) }}</a></li>
+            {%- endif %}
             {%- endif %}
             {%- endfor %}
           </ul>
           <ul class="nav nav-sidebar">
             {%- for item in main.definitions recursive %}
             {%- if item.kind != "namespace" %}
+            {%- if include_private or item.visibility != "private" %}
             <li><a href="#{{ macros.get_name(item) }}">{{ macros.get_decorated_name(item) }}</a></li>
             {{ loop(item.definitions) }}
+            {%- endif %}
             {%- endif %}
             {%- endfor %}
           </ul>

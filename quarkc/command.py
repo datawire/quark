@@ -19,7 +19,7 @@ Usage:
   quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
-  quark [options] docs <file>...
+  quark [options] docs [<file>]...
   quark -h | --help | help
   quark --version
 
@@ -48,6 +48,7 @@ Options:
   --javascript          Install/emit JavaScript code.
 
   --version-warning     Treat compiler-version-related errors as warnings.
+  --include-private     Include private entities in generated documentation.
 """
 
 import sys
@@ -196,7 +197,7 @@ def main(args):
             elif args["run"]:
                 compiler.run(c, url, args["<args>"], *backends)
             elif args["docs"]:
-                compiler.make_docs(c, url, output)
+                compiler.make_docs(c, url, output, args["--include-private"])
             else:
                 assert False
     except (KeyboardInterrupt, QuarkError) as err:

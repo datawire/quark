@@ -2,12 +2,14 @@
     {
         "name": "foo", 
         "path": "", 
+        "visibility": "public", 
         "description": "(multinamespace)", 
         "kind": "namespace", 
         "definitions": [
             {
                 "name": "Pet", 
                 "path": "foo", 
+                "visibility": "public", 
                 "description": "Essential information about a pet.", 
                 "kind": "class", 
                 "bases": [], 
@@ -16,6 +18,7 @@
                     {
                         "name": "id", 
                         "path": "foo.Pet", 
+                        "visibility": "public", 
                         "description": "The id of the pet.", 
                         "kind": "instance field", 
                         "type": "int"
@@ -23,6 +26,7 @@
                     {
                         "name": "name", 
                         "path": "foo.Pet", 
+                        "visibility": "public", 
                         "description": "The name of the pet.", 
                         "kind": "instance field", 
                         "type": "String"
@@ -30,15 +34,78 @@
                     {
                         "name": "tag", 
                         "path": "foo.Pet", 
+                        "visibility": "public", 
                         "description": "The tag associated with the pet.", 
                         "kind": "instance field", 
                         "type": "String"
+                    }, 
+                    {
+                        "name": "_getClass", 
+                        "path": "foo.Pet", 
+                        "visibility": "private", 
+                        "description": "(method)", 
+                        "kind": "instance method", 
+                        "type": "String", 
+                        "parameters": []
+                    }, 
+                    {
+                        "name": "_getField", 
+                        "path": "foo.Pet", 
+                        "visibility": "private", 
+                        "description": "(method)", 
+                        "kind": "instance method", 
+                        "type": "Object", 
+                        "parameters": [
+                            {
+                                "name": "name", 
+                                "path": "foo.Pet._getField", 
+                                "visibility": "public", 
+                                "description": "(param)", 
+                                "kind": "parameter", 
+                                "type": "String"
+                            }
+                        ]
+                    }, 
+                    {
+                        "name": "_setField", 
+                        "path": "foo.Pet", 
+                        "visibility": "private", 
+                        "description": "(method)", 
+                        "kind": "instance method", 
+                        "type": "void", 
+                        "parameters": [
+                            {
+                                "name": "name", 
+                                "path": "foo.Pet._setField", 
+                                "visibility": "public", 
+                                "description": "(param)", 
+                                "kind": "parameter", 
+                                "type": "String"
+                            }, 
+                            {
+                                "name": "value", 
+                                "path": "foo.Pet._setField", 
+                                "visibility": "public", 
+                                "description": "(param)", 
+                                "kind": "parameter", 
+                                "type": "Object"
+                            }
+                        ]
+                    }, 
+                    {
+                        "name": "foo_Pet_ref", 
+                        "path": "foo.Pet", 
+                        "visibility": "private", 
+                        "description": "(field)", 
+                        "kind": "static field", 
+                        "type": "reflect.Class"
                     }
                 ]
             }, 
             {
                 "name": "PetStore", 
                 "path": "foo", 
+                "visibility": "public", 
                 "description": "The PetStore service interface.", 
                 "kind": "interface", 
                 "bases": [], 
@@ -47,6 +114,7 @@
                     {
                         "name": "findPet", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "Find a pet based upon its id.", 
                         "kind": "instance method", 
                         "type": "Pet", 
@@ -54,6 +122,7 @@
                             {
                                 "name": "id", 
                                 "path": "foo.PetStore.findPet", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "int"
@@ -63,6 +132,7 @@
                     {
                         "name": "findPets", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "Get an optionally limited set of pets based on a list of tags.", 
                         "kind": "instance method", 
                         "type": "List&lt;Pet&gt;", 
@@ -70,6 +140,7 @@
                             {
                                 "name": "tags", 
                                 "path": "foo.PetStore.findPets", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "List&lt;String&gt;"
@@ -77,6 +148,7 @@
                             {
                                 "name": "limit", 
                                 "path": "foo.PetStore.findPets", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "int"
@@ -86,6 +158,7 @@
                     {
                         "name": "createPet", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "Create a new pet.", 
                         "kind": "instance method", 
                         "type": "Pet", 
@@ -93,6 +166,7 @@
                             {
                                 "name": "name", 
                                 "path": "foo.PetStore.createPet", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "String"
@@ -100,6 +174,7 @@
                             {
                                 "name": "tag", 
                                 "path": "foo.PetStore.createPet", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "String"
@@ -109,6 +184,7 @@
                     {
                         "name": "deletePet", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "Delete a pet based on its id.", 
                         "kind": "instance method", 
                         "type": "void", 
@@ -116,6 +192,7 @@
                             {
                                 "name": "id", 
                                 "path": "foo.PetStore.deletePet", 
+                                "visibility": "public", 
                                 "description": "(param)", 
                                 "kind": "parameter", 
                                 "type": "int"
@@ -123,8 +200,17 @@
                         ]
                     }, 
                     {
+                        "name": "foo_PetStore_ref", 
+                        "path": "foo.PetStore", 
+                        "visibility": "private", 
+                        "description": "(field)", 
+                        "kind": "static field", 
+                        "type": "reflect.Class"
+                    }, 
+                    {
                         "name": "quark_List_foo_Pet__ref", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "(field)", 
                         "kind": "static field", 
                         "type": "reflect.Class"
@@ -132,6 +218,7 @@
                     {
                         "name": "quark_List_quark_String__ref", 
                         "path": "foo.PetStore", 
+                        "visibility": "public", 
                         "description": "(field)", 
                         "kind": "static field", 
                         "type": "reflect.Class"

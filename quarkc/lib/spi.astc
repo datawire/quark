@@ -26,6 +26,8 @@ File(Import(Name(quark)), CompilerVersionSpec(),
     $type=11.quark.spi.RuntimeFactory),
     Field(static=True, Type(Name(bool)), Name(enable_tracing), Bool(true,
      $type=1.quark.bool), $type=1.quark.bool),
+    Field(static=True, Type(Name(bool)), Name(env_checked), Bool(false,
+     $type=1.quark.bool), $type=1.quark.bool),
 
     Method(static=False, Type(Name(quark), Name(Runtime)), Name(makeRuntime),
      Block(
@@ -35,6 +37,19 @@ File(Import(Name(quark)), CompilerVersionSpec(),
        $type=11.quark.spi.RuntimeSpi)),
       Local(
        Declaration(Type(Name(Runtime)), Name(api), $type=0.quark.Runtime)),
+      If(Call(Attr(Var(Name(env_checked), $type=1.quark.bool), Name(__not__),
+        $type=1.quark.bool.__not__), $type=1.quark.bool), Block(
+        ExprStmt(Call(Attr(Var(Name(logging), $type=2.quark.logging),
+           Name(setEnvironmentOverride),
+          $type=2.quark.logging.setEnvironmentOverride), String("QUARK_TRACE",
+          $type=1.quark.String), String("DEBUG", $type=1.quark.String),
+         $type=1.quark.void)),
+        Assign(Var(Name(enable_tracing), $type=1.quark.bool),
+         Call(Attr(Attr(Var(Name(logging), $type=2.quark.logging),
+            Name(_Override), $type=2.quark.logging._Override), Name(check),
+          $type=2.quark.logging._Override.check), $type=1.quark.bool)),
+        Assign(Var(Name(env_checked), $type=1.quark.bool), Bool(true,
+         $type=1.quark.bool)))),
       If(Var(Name(enable_tracing), $type=1.quark.bool), Block(
         Assign(Var(Name(api), $type=0.quark.Runtime), Call(Type(Name(quark),
            Name(spi_api_tracing), Name(RuntimeProxy)), Var(Name(spi),
@@ -62,6 +77,11 @@ File(Import(Name(quark)), CompilerVersionSpec(),
         $type=1.quark.String), $type=1.quark.bool), Block(
         Return(Attr(Var(Name(self), $type=11.quark.spi.RuntimeFactory),
           Name(enable_tracing), $type=1.quark.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("env_checked",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Return(Attr(Var(Name(self), $type=11.quark.spi.RuntimeFactory),
+          Name(env_checked), $type=1.quark.bool)))),
       Return(Null(null, $type=1.quark.Object)))),
 
     Method(static=False, Type(Name(void)), Name(_setField),
@@ -80,6 +100,12 @@ File(Import(Name(quark)), CompilerVersionSpec(),
         $type=1.quark.String), $type=1.quark.bool), Block(
         Assign(Attr(Var(Name(self), $type=11.quark.spi.RuntimeFactory),
           Name(enable_tracing), $type=1.quark.bool), Cast(Var(Name(value),
+          $type=1.quark.Object), $type=1.quark.bool)))),
+      If(Call(Attr(Var(Name(name), $type=1.quark.String), Name(__eq__),
+        $type=1.quark.Object.__eq__), String("env_checked",
+        $type=1.quark.String), $type=1.quark.bool), Block(
+        Assign(Attr(Var(Name(self), $type=11.quark.spi.RuntimeFactory),
+          Name(env_checked), $type=1.quark.bool), Cast(Var(Name(value),
           $type=1.quark.Object), $type=1.quark.bool)))))),
     Field(static=True, Type(Name(reflect), Name(Class)),
      Name(quark_spi_RuntimeFactory_ref), Call(Attr(Var(Name(reflect),

@@ -1,0 +1,41 @@
+File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
+
+ DistUnit(Name(shadowing)),
+
+ Package(Name(shadowing),
+
+  Interface(Name(Runtime),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(shadowing_Runtime_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(shadowing_md),
+       $type=1.shadowing_md), Name(Root), $type=1.shadowing_md.Root),
+      Name(shadowing_Runtime_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+
+  Interface(Name(VeryUnlikelyShadowedByQuark),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(shadowing_VeryUnlikelyShadowedByQuark_ref),
+    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(shadowing_md),
+       $type=1.shadowing_md), Name(Root), $type=1.shadowing_md.Root),
+      Name(shadowing_VeryUnlikelyShadowedByQuark_md),
+     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class),
+   $type=3.quark.reflect.Class)),
+
+  Interface(Name(ShadowingInterface),
+
+   Method(static=False, Type(Name(void)), Name(foo),
+    Param(Type(Name(Runtime)), Name(err), $type=0.shadowing.Runtime)),
+
+   Method(static=False, Type(Name(void)), Name(bar),
+    Param(Type(Name(VeryUnlikelyShadowedByQuark)), Name(err),
+    $type=0.shadowing.VeryUnlikelyShadowedByQuark)),
+   Field(static=True, Type(Name(reflect), Name(Class)),
+    Name(shadowing_ShadowingInterface_ref), Call(Attr(Var(Name(reflect),
+      $type=3.quark.reflect), Name(__register__),
+     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(shadowing_md),
+       $type=1.shadowing_md), Name(Root), $type=1.shadowing_md.Root),
+      Name(shadowing_ShadowingInterface_md), $type=3.quark.reflect.Class),
+    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)))
+)
