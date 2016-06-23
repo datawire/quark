@@ -8,6 +8,7 @@ public class test_Test extends quark.reflect.Class implements io.datawire.quark.
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new test_Test_go_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new test.Test();

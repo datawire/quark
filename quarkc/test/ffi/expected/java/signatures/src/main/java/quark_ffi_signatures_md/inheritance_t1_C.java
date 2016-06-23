@@ -8,6 +8,7 @@ public class inheritance_t1_C extends quark.reflect.Class implements io.datawire
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_t1_C_foo_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.get("inheritance.t1.A")}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.t1.C();

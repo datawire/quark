@@ -22,6 +22,40 @@ namespace quark {
                                 $rb{::DatawireQuarkCore::LoggerConfig.file($path)}
                                 $js{_qrt.LoggerConfig.file($path)};
 
+        class _Override {
+            static String envVar = "QUARK_TRACE";
+            static String level = "DEBUG";
+
+            static bool check() {
+                if (envVar == null) {
+                    return false;
+                }
+                String envVarValue = quark.os._env_get(envVar);
+                if ((envVarValue == null) ||
+                    (envVarValue == "") ||
+                    (envVarValue == "0") ||
+                    (envVarValue.toLower() == "false")) {
+                    return false;
+                }
+                return true;
+            }
+
+            static String getFilename() {
+                // Assumes check() has returned true
+                String envVarValue = quark.os._env_get(envVar);
+                if ((envVarValue == "1") || (envVarValue.toLower() == "true")) {
+                    return null;
+                }
+                return envVarValue;
+            }
+        }
+
+        @doc("Set an environment variable to override logging set up in the code")
+        void setEnvironmentOverride(String envVar, String level) {
+            _Override.envVar = envVar;
+            _Override.level = level;
+        }
+
         @doc("Logging configurator")
         interface Config {
             @doc("Set the destination for logging, default stderr()")

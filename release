@@ -693,7 +693,9 @@ def push_docker_images(args):
     run("sudo", "docker", "tag", docker_image(), docker_image("latest"))
     run("sudo", "docker", "tag", docker_image(), docker_image(short_version))
     run("sudo", "docker", "push", docker_image())
-    print("Docker image pushed.")
+    run("sudo", "docker", "push", docker_image(short_version))
+    run("sudo", "docker", "push", docker_image("latest"))
+    print("Docker images pushed.")
 
 def call_travis(repo, api):
     url = "https://api.travis-ci.org/repos/%s/%s" % (repo, api)

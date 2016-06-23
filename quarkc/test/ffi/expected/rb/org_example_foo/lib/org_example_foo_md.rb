@@ -75,6 +75,7 @@ class OrgExampleFooFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.org_example_foo_md.org_example_foo_Foo_test_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end

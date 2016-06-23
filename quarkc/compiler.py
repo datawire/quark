@@ -83,15 +83,26 @@ class Roots(AST):
     def __iter__(self):
         return iter(self.roots.values())
 
+    def dfs(self, root, result, visiting):
+        if root in visiting:
+            raise CompileError("circular use dependency detected: %s" % tuple(visiting))
+        visiting.add(root)
+        try:
+            for use in root.uses:
+                dep = self.roots[use]
+                if dep not in result:
+                    self.dfs(dep, result, visiting)
+            result.append(root)
+            return result
+        finally:
+            visiting.discard(root)
+
     def sorted(self):
-        roots = list(self)
-        def compare(x, y):
-            if x.url in y.uses:
-                return -1
-            else:
-                return 1
-        roots.sort(compare)
-        return roots
+        result = []
+        visiting = set()
+        for root in self:
+            self.dfs(root, result, visiting)
+        return result
 
     @property
     def children(self):
@@ -814,9 +825,16 @@ class Reflector:
     def qexpr(self, texp):
         return '"%s"' % self.qtype(texp)
 
+    def _has_reflect_class(self, type):
+        # Technically List and Map could have classes, possibly? They don't now
+        # though. Also parameterized types gets passed through, which is kinda
+        # wrong too.
+        cls = type.resolved.type
+        return not (isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls))
+
     def visit_Type(self, type):
         cls = type.resolved.type
-        if isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls):
+        if not self._has_reflect_class(type):
             if cls.name.text not in ("List", "Map"):
                 return
         if cls.parameters:
@@ -930,6 +948,7 @@ class Reflector:
             self.parameters = %(parameters)s;
             self.fields = [%(fields)s];
             self.methods = [%(methods)s];
+            self.parents = [%(parents)s];
         }
 
         Object construct(List<Object> args) {
@@ -946,6 +965,11 @@ class Reflector:
             "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
+            "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
+                                  for parent_type in cls.bases
+                                  if (self._has_reflect_class(parent_type) and
+                                      not parent_type.resolved.type.parameters)]
+                                 or ["reflect.Class.OBJECT"]),
             "construct": construct}
 
     def leave_Root(self, root):
@@ -1324,7 +1348,7 @@ def run(c, url, args, *backends):
         b.run(name, ver, args)
 
 
-def make_docs(c, url, target):
+def make_docs(c, url, target, inc_private):
     # FIXME: Lots of boilderplate here...
     c.log.info("Parsing: %s", url)
     c.urlparse(url)
@@ -1336,4 +1360,4 @@ def make_docs(c, url, target):
             shutil.rmtree(dest)
         os.makedirs(dest)
         st = docmaker.make_docs_json(root, os.path.join(dest, "api.json"))
-        docrenderer.render(st, dest)
+        docrenderer.render(st, dest, inc_private)

@@ -160,11 +160,13 @@ module DatawireQuarkCore
   end
   def self.__getClass obj
     return nil if obj.nil?
+    return "quark.bool" if (obj == true) or (obj == false)
     return "quark.String" if obj.is_a? String
     return "quark.int" if obj.is_a? Fixnum
     return "quark.float" if obj.is_a? Float
     return "quark.List<quark.Object>" if obj.is_a? Array
     return "quark.Map<quark.Object,quark.Object>" if obj.is_a? Hash
+    return nil if not obj.respond_to? "_getClass"
     return obj._getClass
   end
 
@@ -474,6 +476,16 @@ module DatawireQuarkCore
 
     def configure
       root = Logging.logger["quark"]
+      require 'quark'
+      if Quark::Quark::Logging::Override.check
+        setLevel Quark::Quark::Logging::Override.level
+        filename = Quark::Quark::Logging::Override.getFilename
+        if filename == nil
+          setAppender STDERR
+        else
+          setAppender (LoggerConfig.file filename)
+        end
+      end
       appender = @appender.appender
       appender.layout = QuarkLayout.new
       root.appenders = appender
@@ -1041,12 +1053,10 @@ module DatawireQuarkCore
   end
 
   def self.cast(value, &block)
-    type = begin block.call rescue Object end
-
-    unless value.is_a?(type) || value.nil?
-      raise TypeError, "`#{value.inspect}` is not an instance of `#{type}`"
-    end
-
+    # For now there is no easy way to check in Ruby that Quark class C is
+    # subclass of of Quark class B, so don't check anything until that's fixed.
+    # The correct way to do so would be via reflect.Class.hasInstance, probably,
+    # but that doesn't support interfaces yet.
     value
   end
 

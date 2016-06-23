@@ -133,6 +133,7 @@ class SlackEventSlackEvent < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "type"), ::Quark.quark.reflect.Field.new("slack.User", "user"), ::Quark.quark.reflect.Field.new("slack.Channel", "channel"), ::Quark.quark.reflect.Field.new("quark.String", "timestamp")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_SlackEvent_load_Method.new(), ::Quark.slackpack_md.slack_event_SlackEvent_dispatch_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -305,6 +306,7 @@ class SlackEventSlackError < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "type"), ::Quark.quark.reflect.Field.new("slack.User", "user"), ::Quark.quark.reflect.Field.new("slack.Channel", "channel"), ::Quark.quark.reflect.Field.new("quark.String", "timestamp"), ::Quark.quark.reflect.Field.new("quark.int", "code"), ::Quark.quark.reflect.Field.new("quark.String", "text")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_SlackError_load_Method.new(), ::Quark.slackpack_md.slack_event_SlackError_dispatch_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("slack.event.SlackEvent")])
 
         nil
     end
@@ -477,6 +479,7 @@ class SlackEventHello < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "type"), ::Quark.quark.reflect.Field.new("slack.User", "user"), ::Quark.quark.reflect.Field.new("slack.Channel", "channel"), ::Quark.quark.reflect.Field.new("quark.String", "timestamp")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_Hello_dispatch_Method.new(), ::Quark.slackpack_md.slack_event_Hello_load_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("slack.event.SlackEvent")])
 
         nil
     end
@@ -649,6 +652,7 @@ class SlackEventMessage < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "type"), ::Quark.quark.reflect.Field.new("slack.User", "user"), ::Quark.quark.reflect.Field.new("slack.Channel", "channel"), ::Quark.quark.reflect.Field.new("quark.String", "timestamp"), ::Quark.quark.reflect.Field.new("quark.String", "subtype"), ::Quark.quark.reflect.Field.new("quark.bool", "hidden"), ::Quark.quark.reflect.Field.new("quark.String", "text"), ::Quark.quark.reflect.Field.new("slack.event.Edited", "edited")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_event_Message_load_Method.new(), ::Quark.slackpack_md.slack_event_Message_dispatch_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("slack.event.SlackEvent")])
 
         nil
     end
@@ -711,6 +715,7 @@ class SlackEventEdited < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("slack.User", "user"), ::Quark.quark.reflect.Field.new("quark.String", "timestamp")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -993,6 +998,7 @@ class SlackSlackHandler < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_SlackHandler_onSlackEvent_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onHello_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onSlackError_Method.new(), ::Quark.slackpack_md.slack_SlackHandler_onMessage_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1055,6 +1061,7 @@ class SlackUser < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("slack.Client", "client"), ::Quark.quark.reflect.Field.new("quark.String", "user")])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -1172,6 +1179,7 @@ class SlackChannel < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("slack.Client", "client"), ::Quark.quark.reflect.Field.new("quark.String", "channel")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Channel_send_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2168,6 +2176,7 @@ class SlackClient < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Runtime", "runtime"), ::Quark.quark.reflect.Field.new("quark.String", "token"), ::Quark.quark.reflect.Field.new("slack.SlackHandler", "handler"), ::Quark.quark.reflect.Field.new("quark.int", "event_id"), ::Quark.quark.reflect.Field.new("quark.WebSocket", "socket")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slack_Client_connect_Method.new(), ::Quark.slackpack_md.slack_Client_request_Method.new(), ::Quark.slackpack_md.slack_Client_ws_connect_Method.new(), ::Quark.slackpack_md.slack_Client_ws_send_Method.new(), ::Quark.slackpack_md.slack_Client_onWSConnected_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClose_Method.new(), ::Quark.slackpack_md.slack_Client_onWSError_Method.new(), ::Quark.slackpack_md.slack_Client_construct_Method.new(), ::Quark.slackpack_md.slack_Client_onWSMessage_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPResponse_Method.new(), ::Quark.slackpack_md.slack_Client_onWSInit_Method.new(), ::Quark.slackpack_md.slack_Client_onWSBinary_Method.new(), ::Quark.slackpack_md.slack_Client_onWSClosed_Method.new(), ::Quark.slackpack_md.slack_Client_onWSFinal_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPInit_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPError_Method.new(), ::Quark.slackpack_md.slack_Client_onHTTPFinal_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2450,6 +2459,7 @@ class SlackpackHandler < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.slackpack_md.slackpack_Handler_onSlackEvent_Method.new(), ::Quark.slackpack_md.slackpack_Handler_onHello_Method.new(), ::Quark.slackpack_md.slackpack_Handler_onSlackError_Method.new(), ::Quark.slackpack_md.slackpack_Handler_onMessage_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end
@@ -2512,6 +2522,7 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.String", "quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
 
         nil
     end

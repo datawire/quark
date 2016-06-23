@@ -8,6 +8,7 @@ public class generics_ccc_TLSInitializer_quark_Object_ extends quark.reflect.Cla
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new generics_ccc_TLSInitializer_quark_Object__getValue_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return null;

@@ -57,6 +57,15 @@ public class LoggerConfig {
             public void configure() {
                 LogManager mgr = LogManager.getLogManager();
                 mgr.reset();
+                if (quark.logging._Override.check()) {
+                    setLevel(quark.logging._Override.level);
+                    String filename = quark.logging._Override.getFilename();
+                    if (filename == null) {
+                        setAppender(STDERR);
+                    } else {
+                        setAppender(file(filename));
+                    }
+                }
                 root.setLevel(level);
                 Handler handler = appender.handler();
                 handler.setLevel(level);

@@ -8,6 +8,7 @@ public class generics_Crate_quark_Object_ extends quark.reflect.Class implements
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("generics.Box<quark.Object>", "box"), new quark.reflect.Field("generics.Box<quark.int>", "ibox")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new generics_Crate_quark_Object__set_Method(), new generics_Crate_quark_Object__get_Method()}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new generics.Crate<Object>();

@@ -63,17 +63,11 @@ def _map_remove(m, key):
         return None
 
 def _cast(value, callback):
-    try:
-        type = callback()
-    except:
-        type = object
-    if type is unicode:
-        type = (unicode, str)
-    if isinstance(value, type) or value is None:
-        return value
-    else:
-        template = '`{value}` is not an instance of `{type}`'.format
-        raise TypeError(template(value=repr(value), type=type))
+    # For now  there is no  easy way to  check in Python  that Quark class  C is
+    # subclass of of Quark class B,  so don't check anything until that's fixed.
+    # The correct way to do so would be via reflect.Class.hasInstance, probably,
+    # but that doesn't support interfaces yet.
+    return value
 
 class _JSONObject(object):
     _backend = json
@@ -445,8 +439,10 @@ def _getClass(obj):
         return "quark.List<quark.Object>"
     if isinstance(obj, dict):
         return "quark.Map<quark.Object,quark.Object>"
-    return obj._getClass()
-
+    # https://hynek.me/articles/hasattr/ - hasattr is bad
+    if getattr(obj, "_getClass", None):
+        return obj._getClass()
+    return None
 
 class _RuntimeFactory(object):
     RUNTIME_MODULE="quark_threaded_runtime"

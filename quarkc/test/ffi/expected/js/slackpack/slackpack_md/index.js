@@ -78,6 +78,7 @@ function slack_event_SlackEvent() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("slack.Channel", "channel"), new quark.reflect.Field("quark.String", "timestamp")];
     (this).methods = [new slack_event_SlackEvent_load_Method(), new slack_event_SlackEvent_dispatch_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_event_SlackEvent = slack_event_SlackEvent;
 _qrt.util.inherits(slack_event_SlackEvent, quark.reflect.Class);
@@ -180,6 +181,7 @@ function slack_event_SlackError() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("slack.Channel", "channel"), new quark.reflect.Field("quark.String", "timestamp"), new quark.reflect.Field("quark.int", "code"), new quark.reflect.Field("quark.String", "text")];
     (this).methods = [new slack_event_SlackError_load_Method(), new slack_event_SlackError_dispatch_Method()];
+    (this).parents = [quark.reflect.Class.get("slack.event.SlackEvent")];
 }
 exports.slack_event_SlackError = slack_event_SlackError;
 _qrt.util.inherits(slack_event_SlackError, quark.reflect.Class);
@@ -282,6 +284,7 @@ function slack_event_Hello() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("slack.Channel", "channel"), new quark.reflect.Field("quark.String", "timestamp")];
     (this).methods = [new slack_event_Hello_dispatch_Method(), new slack_event_Hello_load_Method()];
+    (this).parents = [quark.reflect.Class.get("slack.event.SlackEvent")];
 }
 exports.slack_event_Hello = slack_event_Hello;
 _qrt.util.inherits(slack_event_Hello, quark.reflect.Class);
@@ -384,6 +387,7 @@ function slack_event_Message() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "type"), new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("slack.Channel", "channel"), new quark.reflect.Field("quark.String", "timestamp"), new quark.reflect.Field("quark.String", "subtype"), new quark.reflect.Field("quark.bool", "hidden"), new quark.reflect.Field("quark.String", "text"), new quark.reflect.Field("slack.event.Edited", "edited")];
     (this).methods = [new slack_event_Message_load_Method(), new slack_event_Message_dispatch_Method()];
+    (this).parents = [quark.reflect.Class.get("slack.event.SlackEvent")];
 }
 exports.slack_event_Message = slack_event_Message;
 _qrt.util.inherits(slack_event_Message, quark.reflect.Class);
@@ -420,6 +424,7 @@ function slack_event_Edited() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("quark.String", "timestamp")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_event_Edited = slack_event_Edited;
 _qrt.util.inherits(slack_event_Edited, quark.reflect.Class);
@@ -588,6 +593,7 @@ function slack_SlackHandler() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new slack_SlackHandler_onSlackEvent_Method(), new slack_SlackHandler_onHello_Method(), new slack_SlackHandler_onSlackError_Method(), new slack_SlackHandler_onMessage_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_SlackHandler = slack_SlackHandler;
 _qrt.util.inherits(slack_SlackHandler, quark.reflect.Class);
@@ -624,6 +630,7 @@ function slack_User() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("slack.Client", "client"), new quark.reflect.Field("quark.String", "user")];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_User = slack_User;
 _qrt.util.inherits(slack_User, quark.reflect.Class);
@@ -693,6 +700,7 @@ function slack_Channel() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("slack.Client", "client"), new quark.reflect.Field("quark.String", "channel")];
     (this).methods = [new slack_Channel_send_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_Channel = slack_Channel;
 _qrt.util.inherits(slack_Channel, quark.reflect.Class);
@@ -1289,6 +1297,7 @@ function slack_Client() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.Runtime", "runtime"), new quark.reflect.Field("quark.String", "token"), new quark.reflect.Field("slack.SlackHandler", "handler"), new quark.reflect.Field("quark.int", "event_id"), new quark.reflect.Field("quark.WebSocket", "socket")];
     (this).methods = [new slack_Client_connect_Method(), new slack_Client_request_Method(), new slack_Client_ws_connect_Method(), new slack_Client_ws_send_Method(), new slack_Client_onWSConnected_Method(), new slack_Client_onWSClose_Method(), new slack_Client_onWSError_Method(), new slack_Client_construct_Method(), new slack_Client_onWSMessage_Method(), new slack_Client_onHTTPResponse_Method(), new slack_Client_onWSInit_Method(), new slack_Client_onWSBinary_Method(), new slack_Client_onWSClosed_Method(), new slack_Client_onWSFinal_Method(), new slack_Client_onHTTPInit_Method(), new slack_Client_onHTTPError_Method(), new slack_Client_onHTTPFinal_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slack_Client = slack_Client;
 _qrt.util.inherits(slack_Client, quark.reflect.Class);
@@ -1457,6 +1466,7 @@ function slackpack_Handler() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new slackpack_Handler_onSlackEvent_Method(), new slackpack_Handler_onHello_Method(), new slackpack_Handler_onSlackError_Method(), new slackpack_Handler_onMessage_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.slackpack_Handler = slackpack_Handler;
 _qrt.util.inherits(slackpack_Handler, quark.reflect.Class);
@@ -1493,6 +1503,7 @@ function quark_Map_quark_String_quark_Object_() {
     (this).parameters = ["quark.String", "quark.Object"];
     (this).fields = [];
     (this).methods = [];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.quark_Map_quark_String_quark_Object_ = quark_Map_quark_String_quark_Object_;
 _qrt.util.inherits(quark_Map_quark_String_quark_Object_, quark.reflect.Class);

@@ -45,6 +45,7 @@ function org_example_bar_Bar() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new org_example_bar_Bar_test_Method()];
+    (this).parents = [quark.reflect.Class.OBJECT];
 }
 exports.org_example_bar_Bar = org_example_bar_Bar;
 _qrt.util.inherits(org_example_bar_Bar, quark.reflect.Class);

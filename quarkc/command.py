@@ -16,16 +16,18 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
-  quark [options] docs <file>...
+  quark [options] docs [<file>]...
   quark -h | --help | help
   quark --version
 
 Commands:
   compile               Compile and emit code in the target language(s).
   install               Compile, build, and install code in the target language(s).
+                        If no file is given only the Quark standard library package is
+                        installed.
   run                   Run the main() function from the package namespace; the quark
                         file must already be installed.
   docs                  Output API documentation in HTML.
@@ -46,6 +48,7 @@ Options:
   --javascript          Install/emit JavaScript code.
 
   --version-warning     Treat compiler-version-related errors as warnings.
+  --include-private     Include private entities in generated documentation.
 """
 
 import sys
@@ -183,7 +186,7 @@ def main(args):
             if args["install"]: shell.check("npm")
             backends.append(backend.JavaScript)
 
-        filenames = args["<file>"]
+        filenames = args["<file>"] or [compiler.join(None, compiler.BUILTIN_FILE)]
         for url in filenames:
             c = compiler.Compiler()
             c.version_warning = args["--version-warning"]
@@ -194,7 +197,7 @@ def main(args):
             elif args["run"]:
                 compiler.run(c, url, args["<args>"], *backends)
             elif args["docs"]:
-                compiler.make_docs(c, url, output)
+                compiler.make_docs(c, url, output, args["--include-private"])
             else:
                 assert False
     except (KeyboardInterrupt, QuarkError) as err:
