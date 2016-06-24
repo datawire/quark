@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest
-from quarkc.compiler import Compiler, CompileError, ParseError
+from quarkc.compiler import Compiler, CompileError, ParseError, pkg_name
 from .util import assert_file, maybe_xfail, is_excluded_file, check_file
 
 directory = os.path.join(os.path.dirname(__file__), "compile")
@@ -42,6 +42,9 @@ def compile(path, file_filter):
         c.compile()
         failed_expectations = []
         for root in c.roots:
+            # Skip standard library:
+            if root.url.endswith("quarkc/lib/quark.q"):
+                continue
             for ast in root.files:
                 if ast.filename == "reflector": continue
                 if file_filter(ast.filename): continue
