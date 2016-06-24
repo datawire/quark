@@ -103,7 +103,7 @@ class MapTest {
         checkOneOf(["one=1&two=2", "two=2&one=1"], actual);
     }
 
-    void not_test_toJSON() {
+    void test_toJSON() {
         JSONObject json = theMap.toJSON();
         String actual = json.toString();
         checkEqual("{\"one\":1,\"two\":2}", actual);

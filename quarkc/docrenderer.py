@@ -35,9 +35,10 @@ def find_namespaces(structure, res=None):
     return res
 
 
-def render(structure, target_directory):
+def render(structure, target_directory, include_private):
     for name in ["apidoc.css"]:
         shutil.copy(os.path.join(os.path.dirname(__file__), "apidoc", name), target_directory)
+    environment.globals["include_private"] = include_private
     template = environment.get_template("index.html")
     namespaces = find_namespaces(structure)
     for namespace in namespaces:

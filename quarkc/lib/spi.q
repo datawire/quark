@@ -16,10 +16,16 @@ namespace spi {
         static RuntimeFactory factory = new RuntimeFactory();
 
         static bool enable_tracing = true;
+        static bool env_checked = false;
 
         quark.Runtime makeRuntime() {
             RuntimeSpi spi = new RuntimeSpi();
             Runtime api;
+            if (!env_checked) {
+                logging.setEnvironmentOverride("QUARK_TRACE", "DEBUG");
+                enable_tracing = logging._Override.check();
+                env_checked = true;
+            }
             if (enable_tracing) {
                 api = new quark.spi_api_tracing.RuntimeProxy(spi);
             } else {

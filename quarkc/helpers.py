@@ -353,17 +353,38 @@ def readme(cls, lines):
 def readme(cls, lines):
     pass
 
-def is_newer(target, *deps):
-    if target is None: return False
-    if not os.path.exists(target): return False
-    ctime = os.stat(target).st_mtime
-    for d in deps:
-        if d is None: return True
-        if not os.path.exists(d): return True
-        diff = ctime - os.stat(d).st_mtime
-        if diff <= 0:
-            return False
-    return True
+class is_newer(object):
+    def __init__(self, target, *deps):
+        self.target = target
+        self.deps = deps
+        self._init()
+    
+    def _init(self):
+        def resolve(result, explanation):
+            self.explanation = explanation
+            self.result = result
+        if self.target is None:
+            return resolve(False, "target is None")
+        if not os.path.exists(self.target):
+            return resolve(False, "target does not exist")
+        ctime = os.stat(self.target).st_mtime
+        for d in self.deps:
+            if d is None:
+                return resolve(True, "a dependency is None")
+            if not os.path.exists(d):
+                return resolve(True, "dependency does not exist %s" % d)
+            diff = ctime - os.stat(d).st_mtime
+            if diff <= 0:
+                return resolve(False, "dependency %s is younger by %s" % (d, diff))
+        return resolve(True, "OK")
+
+    def __bool__(self):
+        return self.result
+    __nonzero__ = __bool__
+
+    def __str__(self):
+        return "is_newer(%s (%s, %s) -> %s)" % (
+            self.result, self.target, self.deps, self.explanation)
 
 def compiled_quark(url):
     return "%sc" % url

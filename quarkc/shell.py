@@ -21,6 +21,13 @@ from distutils.version import StrictVersion  # pylint: disable=import-error
 
 from .exceptions import QuarkError
 
+try:
+    from shlex import quote
+except ImportError:
+    from pipes import quote
+
+quote = quote # silence not used
+
 def noop(output): pass
 
 # Checks versions for commands with output like this: "Blah x.y.z"

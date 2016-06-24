@@ -16,10 +16,10 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
+  quark [options] install [--online] [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
   quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
-  quark [options] docs <file>...
+  quark [options] docs [<file>]...
   quark -h | --help | help
   quark --version
 
@@ -48,6 +48,7 @@ Options:
   --javascript          Install/emit JavaScript code.
 
   --version-warning     Treat compiler-version-related errors as warnings.
+  --include-private     Include private entities in generated documentation.
 """
 
 import sys
@@ -156,7 +157,8 @@ def main(args):
         log.addHandler(hnd)
         hnd.setFormatter(logging.Formatter("%(message)s"))
 
-    helpers.Code.identifier = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
+    version = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
+    helpers.Code.identifier = version
 
     java = args["--java"]
     ruby = args["--ruby"]
@@ -166,6 +168,7 @@ def main(args):
     all = args["--all"] or not (java or python or javascript or ruby)
 
     output = args["--output"]
+    offline = not args["--online"]
 
     try:
         shell.command_log.info("Checking environment")
@@ -190,25 +193,34 @@ def main(args):
             c = compiler.Compiler()
             c.version_warning = args["--version-warning"]
             if args["install"]:
-                compiler.install(c, url, *backends)
+                compiler.install(c, url, offline, *backends)
             elif args["compile"]:
                 compiler.compile(c, url, output, *backends)
             elif args["run"]:
                 compiler.run(c, url, args["<args>"], *backends)
             elif args["docs"]:
-                compiler.make_docs(c, url, output)
+                compiler.make_docs(c, url, output, args["--include-private"])
             else:
                 assert False
     except (KeyboardInterrupt, QuarkError) as err:
         if not args["run"]:
             shell.command_log.error("")
+        if args["install"] and offline and isinstance(err, shell.ShellError):
+            err = str(err) + "\n\n"
+            err += "Please retry the command with the --online switch\n\n"
+            err += "    quark install --online "
+            for opt in "--verbose --java --javascript --ruby --python".split():
+                if args[opt]: err += opt + " "
+            err += " ".join(shell.quote(f) for f in args["<file>"])
+            err += "\n"
         return err
     except:  # pylint: disable=bare-except
         if do_log:
             import inspect
             ast_stack = helpers.format_ast_stack(inspect.trace())
-            shell.command_log.error("\n -- snip --\nInternal compiler error", exc_info=True)
-            shell.command_log.error("\nCompiler was looking at:\n%s\n" % ast_stack)
+            shell.command_log.error("\n -- snip --\nInternal compiler error, %s\n\n" %  version, exc_info=True)
+            if ast_stack:
+                shell.command_log.error("\nCompiler was looking at:\n%s\n" % ast_stack)
         instructions = textwrap.dedent("""\
 
         Your code triggered an internal compiler error.
