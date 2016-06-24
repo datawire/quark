@@ -219,6 +219,14 @@ class RequestEvent extends MockEvent {
         handler.onHTTPFinal(request);
     }
 
+    /*@doc("""
+    Supply an error for the request captured in this RequestEvent.
+    """)*/
+    void fail(HTTPError error) {
+        handler.onHTTPInit(request);
+        handler.onHTTPError(request, error);
+        handler.onHTTPFinal(request);
+    }
 }
 
 class MockResponse extends HTTPResponse {

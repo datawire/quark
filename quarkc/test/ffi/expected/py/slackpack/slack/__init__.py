@@ -180,15 +180,27 @@ class Client(object):
             (self).socket = _cast(value, lambda: quark.WebSocket)
 
     def onWSInit(self, socket):
+        """
+        Called when the WebSocket is first created.
+        """
         pass
 
     def onWSBinary(self, socket, message):
+        """
+        Called when the WebSocket receives a binary message.
+        """
         pass
 
     def onWSClosed(self, socket):
+        """
+        Called when the WebSocket disconnects cleanly.
+        """
         pass
 
     def onWSFinal(self, socket):
+        """
+        Called when the WebSocket is done with life, one way or another.
+        """
         pass
 
     def onHTTPInit(self, request):

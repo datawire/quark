@@ -42,6 +42,9 @@ def compile(path, file_filter):
         c.compile()
         failed_expectations = []
         for root in c.roots:
+            # Skip standard library:
+            if root.url.endswith("quarkc/lib/quark.q"):
+                continue
             for ast in root.files:
                 if ast.filename == "reflector": continue
                 if file_filter(ast.filename): continue
