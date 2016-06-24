@@ -210,6 +210,10 @@ namespace quark {
                 int i = json;
                 return i;
             }
+            if (cls.name == "quark.long") {
+                long l = json;
+                return l;
+            }
             if (cls.name == "quark.bool") {
                 bool b = json;
                 return b;
