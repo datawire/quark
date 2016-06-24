@@ -65,9 +65,21 @@ public class Client implements quark.WSHandler, quark.HTTPHandler, io.datawire.q
             (this).socket = (quark.WebSocket) (value);
         }
     }
+    /**
+     * Called when the WebSocket is first created.
+     */
     public void onWSInit(quark.WebSocket socket) {}
+    /**
+     * Called when the WebSocket receives a binary message.
+     */
     public void onWSBinary(quark.WebSocket socket, io.datawire.quark.runtime.Buffer message) {}
+    /**
+     * Called when the WebSocket disconnects cleanly.
+     */
     public void onWSClosed(quark.WebSocket socket) {}
+    /**
+     * Called when the WebSocket is done with life, one way or another.
+     */
     public void onWSFinal(quark.WebSocket socket) {}
     public void onHTTPInit(quark.HTTPRequest request) {}
     public void onHTTPError(quark.HTTPRequest request, quark.HTTPError message) {}

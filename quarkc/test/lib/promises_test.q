@@ -389,3 +389,29 @@ class PromiseTest extends MockRuntimeTest {
     // Re-entrancy: callback registered inside either-way callback is called
     // Re-entrancy: callback registered inside success callback is called
 }
+
+class Simple {
+    String duplicate(String value) {
+        return value + value;
+    }
+
+    String add(String value, String another) {
+        return value + another;
+    }
+}
+
+class BindTest {
+    // A single argument method can be called
+    void testSingleArgument() {
+        Simple s = new Simple();
+        UnaryCallable c = bind(s, "duplicate", []);
+        checkEqual("hellohello", c.__call__("hello"));
+    }
+
+    // A multi-argument method gets called with the extra arguments
+    void testMultipleArgument() {
+        Simple s = new Simple();
+        UnaryCallable c = bind(s, "add", ["world"]);
+        checkEqual("helloworld", c.__call__("hello"));
+    }
+}
