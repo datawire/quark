@@ -44,6 +44,8 @@ include spi.q;
 include spi_api.q;
 include spi_api_tracing.q;
 include os.q;
+include mock.q;
+include promise.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
