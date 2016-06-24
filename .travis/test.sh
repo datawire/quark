@@ -14,18 +14,11 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
 fi
 
-case "$TEST_SUITE" in
-    examples)
-        # First example test sometimes times out due to quark install taking too long
-        # Seems like an empty maven cache issue
-        q=/tmp/maven_cache_warmup.q
-        echo 'quark *; void main(List<String> args) {}' > $q
-        quark install --java $q
-        quark run --java $q
-        ;;
-    *)
-        ;;
-esac
+# Allow subsequent quark install commands to run offline
+q=/tmp/maven_cache_warmup.q
+echo 'quark *; void main(List<String> args) {}' > $q
+quark install --online $q
+quark run $q
 
 set -x
 
