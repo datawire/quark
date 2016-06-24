@@ -92,8 +92,8 @@ class Roots(AST):
                 dep = self.roots[use]
                 if dep not in result:
                     self.dfs(dep, result, visiting)
-            result.append(root)
-            return result
+            if root not in result:
+                result.append(root)
         finally:
             visiting.discard(root)
 
@@ -1255,7 +1255,7 @@ class Compiler(object):
 
     @overload(AST, AST)
     def merge_one(self, n1, n2):
-        raise CompileError("Cannot merge %r @ %s with %r @ %s" % (n1, lineinfo(n1), n2, lineinfo(n2)))
+        return n1
 
     def trans_roots(self, root):
         result = [root]
