@@ -39,9 +39,9 @@ namespace hello {
     @doc("Class to enable Quark tracing via static instantiation")
     class DoTrace {
         DoTrace() {
-            //logging.makeConfig().setLevel("DEBUG")
+            //logging.makeConfig().setLevel("WARN")
             //    .setAppender(logging.file("trace.log")).configure();
-            logging.makeConfig().setLevel("DEBUG").configure();
+            logging.makeConfig().setLevel("WARN").configure();
         }
     }
 

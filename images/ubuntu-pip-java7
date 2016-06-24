@@ -1,3 +1,0 @@
-FROM ubuntu-pip
-RUN apt-get -y update && apt-get -y install maven openjdk-7-jdk
-CMD /bin/bash
