@@ -18,7 +18,7 @@ fi
 q=/tmp/maven_cache_warmup.q
 echo 'quark *; void main(List<String> args) {}' > $q
 quark install --online $q
-quark run $q
+quark run --java $q
 
 set -x
 
