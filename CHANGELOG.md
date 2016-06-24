@@ -25,6 +25,11 @@ Latest
 
 ### Standard Library
 
+* Added `quark.Promise`, allowing chaining and error handling of asynchronous
+  results. `quark.bind` is a utility to make class methods into callbacks suitable
+  for use with `quark.Promise`. `quark.IO` provides utilities for doing HTTP
+  HTTP requests and scheduling tasks with results returned as `Promise` instances.
+
 * Fixed a major regression in JSON generation introduced in 1.0.133.
 
 * Setting the environment variable `QUARK_TRACE` modifies logging done by
