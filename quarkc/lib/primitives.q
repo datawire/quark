@@ -396,16 +396,12 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    // TODO:
-    //  - maybe change all logic to be if is-a-quark-object then doit, else go native
-    //  - move macros into native portion of library (avoid double evals)
-    //  - pick better names
-    //  - later on could make blocks work with a little compiler magic to prepend & if the last arg is a Callable
-
     interface UnaryCallable {
-
+        // Quark subclasses should override this:
         Object call(Object arg);
 
+        // To call a UnaryCallable call this, *not* call(), so that e.g. passed
+        // in functions from native language work too.
         macro Object __call__(Object arg) $py{($self)($arg) if callable($self) else ($self).call($arg)}
                                           $js{(($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg)}
                                           $rb{($self).call($arg)}
@@ -427,5 +423,4 @@ namespace error {
         }
     }
 }
-
 }
