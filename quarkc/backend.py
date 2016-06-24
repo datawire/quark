@@ -56,7 +56,7 @@ class Backend(object):
         self.dependencies = OrderedDict()
         self.log = logging.getLogger("quark.compile")
 
-    def install(self):
+    def install(self, offline):
         cls = self.__class__.__name__
         pkg = self.packages[0].name
 
@@ -65,8 +65,18 @@ class Backend(object):
             deps = (compiled_quark(self.root.url),)
         else:
             deps = ()
-        if not (getattr(self.root, "_modified", False) or
-                not is_newer(target, __file__, inspect.getsourcefile(self.gen), *deps)):
+        modified = getattr(self.root, "_modified", False)
+        newer = is_newer(target,
+                         __file__, inspect.getsourcefile(self.gen), *deps)
+        uptodate = not modified and bool(newer)
+        #  F        F       T              T
+        #  F        F       T              F
+        #  T        T       F              T
+        #  F        T       F              F
+        self.log.debug("Uptodate: %s, Modified %s, Newer: %s",
+                       uptodate, modified, newer)
+
+        if uptodate:
             self.log.debug("Skipping %s for %s[%s]", cls, pkg, target)
             return
 
@@ -74,8 +84,20 @@ class Backend(object):
         dir = tempfile.mkdtemp(suffix="-%s" % cls,
                                prefix="%s-" % pkg)
         self.write(dir)
-        self.log.info("Installing %s %s with %s", cls, pkg, self.PRETTY_INSTALL)
-        self.install_command(dir)
+        quark_pkg = "quark"
+        if offline:
+            # XXX: while use` of external packages is private...
+            if str(pkg) == quark_pkg:
+                offline = False
+                mode = "online, automatic"
+            else:
+                mode = "offline"
+        else:
+            mode = "online, selected by user"
+        self.log.info("Installing %s %s with %s (%s)",
+                      cls, repr(pkg), self.PRETTY_INSTALL, mode)
+        self.install_command(dir, offline)
+        self.root._modified = False
 
     def visit_Root(self, r):
         self.root = r
@@ -748,8 +770,10 @@ class Java(Backend):
             return jar
         return None
 
-    def install_command(self, dir):
-        shell.call("mvn", "install", cwd=dir, stage="install")
+    def install_command(self, dir, offline):
+        cmd = ["mvn", "install"]
+        if offline: cmd += ["--offline"]
+        shell.call(*cmd, cwd=dir, stage="install")
 
     def run(self, name, version, args):
         jar = os.path.join(os.environ["HOME"], ".m2", "repository", name, name, version,
@@ -769,12 +793,14 @@ class Python(Backend):
     def _install_target(self, name, ver):
         return shell.get_pip_pkg(name, stage="install")
 
-    def install_command(self, dir):
+    def install_command(self, dir, offline):
         shell.call("python", "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            cmd = ["pip", "install", "--upgrade", "dist/%s" % wheel]
+            cmd = ["pip", "install",]
+            if offline: cmd += ["--no-index"]
             if is_user(): cmd += ["--user"]
+            cmd += ["--upgrade", "dist/%s" % wheel]
             shell.call(*cmd, cwd=dir, stage="install")
 
     def run(self, name, version, args):
@@ -799,8 +825,11 @@ class JavaScript(Backend):
             pass
         return None
 
-    def install_command(self, dir):
-        shell.call("npm", "install", dir, stage="install")
+    def install_command(self, dir, offline):
+        cmd = ["npm", "install"]
+        if offline: cmd += ["--cache-min", "9999999"]
+        cmd += [dir]
+        shell.call(*cmd, stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)
@@ -824,10 +853,14 @@ class Ruby(Backend):
             pass
         return None
 
-    def install_command(self, dir):
+    def install_command(self, dir, offline):
         name, ver = namever(self.entry)
-        shell.call("gem", "build", "-q", "%s.gemspec" % name, cwd=dir, stage="install")
-        shell.call("gem", "install", "%s/%s-%s.gem" % (dir, name, ver), stage="install")
+        cmd = ["gem", "build", "-q", "%s.gemspec" % name]
+        shell.call(*cmd, cwd=dir, stage="install")
+        cmd = ["gem", "install"]
+        if offline: cmd += ["--local"]
+        cmd += ["%s/%s-%s.gem" % (dir, name, ver)]
+        shell.call(*cmd, stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)

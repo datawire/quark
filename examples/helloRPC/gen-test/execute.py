@@ -24,13 +24,14 @@ java_compile = helpers.mvn("compile")
 # Test each combo
 client_captures = {}  # server target, client target -> captured client output
 server_captures = {}  # server target -> captured server output
+env = dict(QUARK_TRACE="true")
 for server_target, server_cmd, _, server_pattern, server_nocmp in targets:
-    with capture_bg(server_cmd, nocmp=True or server_nocmp) as server_bg:  # XXX always nocmp due to logging
+    with capture_bg(server_cmd, nocmp=True or server_nocmp, env=env) as server_bg:  # XXX always nocmp due to logging
         server_bg.child.expect(server_pattern)  # Wait for "Blah HelloRPC server starting"
         for client_target, _, client_cmd, client_pattern, client_nocmp in targets:
             key = server_target, client_target
             suffix = " # " + server_target if server_target != client_target else ""
-            client_captures[key] = capture(client_cmd + suffix, nocmp=True or client_nocmp)  # XXX always nocmp ...
+            client_captures[key] = capture(client_cmd + suffix, nocmp=True or client_nocmp, env=env)  # XXX always nocmp
             tmp = server_bg.get_captured().output
             try:
                 assert "Responding to [Hello from %s!] from %s" % (client_pattern, server_pattern) in \

@@ -79,7 +79,7 @@ class FilteredOutputFile(object):
 
 class Captured(object):
 
-    def __init__(self, cwd, source_file, output_file, command, filters, timeout, trace=False):
+    def __init__(self, cwd, source_file, output_file, command, filters, timeout, trace=False, env=None):
         self.cwd = cwd
         self.source_file = source_file  # name of command file or none
         self.output_file = output_file  # name of output file for this command
@@ -87,10 +87,22 @@ class Captured(object):
         self.filters = filters
         self.timeout = timeout
         self.trace = trace
+        if env is not None:
+            self.child_env = {}
+            self.child_env.update(os.environ)
+            for name in env:
+                if env[name] is None:
+                    if name in self.child_env:
+                        del self.child_env[name]
+                else:
+                    self.child_env[name] = env[name]
+        else:
+            self.child_env = None
         self.output = None              # output for this command, i.e. contents of output_file
 
     def spawn(self):
-        child = pexpect.spawn("/bin/bash", ["-c", self.command], cwd=self.cwd, timeout=self.timeout)
+        child = pexpect.spawn("/bin/bash", ["-c", self.command],
+                              cwd=self.cwd, timeout=self.timeout, env=self.child_env)
         child.logfile_read = FilteredOutputFile(self.output_file, self.filters, self.trace)
         return child
 
@@ -158,7 +170,7 @@ class Session(object):
         for bg_process in self.bg_processes:
             bg_process.noop()
 
-    def capture(self, command, nocmp=False, filters=None, timeout=90, trace=True):
+    def capture(self, command, nocmp=False, filters=None, timeout=90, trace=True, env=None):
         """
         Run the command synchronously and capture the output. Return an
         instance of Captured. Set option nocmp to True to tell the
@@ -167,20 +179,20 @@ class Session(object):
         """
         if filters is None:
             filters = []
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace)
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace, env)
         child = cap.spawn()
         cap.finish_capture(child)
         self.call_noop()
         return cap
 
-    def capture_bg(self, command, nocmp=False, filters=None, timeout=90, trace=False):
+    def capture_bg(self, command, nocmp=False, filters=None, timeout=90, trace=False, env=None):
         """
         Run the command asynchronously, capturing the output. Return an
         instance of BGProcess. Use nocmp and filters as with capture.
         """
         if filters is None:
             filters = []
-        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace)
+        cap = Captured(self.cwd, None, self._get_output_name(command, nocmp), command, filters, timeout, trace, env)
         res = BGProcess(cap)
         self.bg_processes.append(res)
         self.call_noop()

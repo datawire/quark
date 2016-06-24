@@ -1,4 +1,4 @@
 FROM ubuntu:latest
-ENV LANG en_US.utf8
-RUN locale-gen en_US en_US.UTF-8 && dpkg-reconfigure locales && apt-get -y update && apt-get -y install curl python-pip tar gcc make git python-dev libffi-dev libssl-dev
+ENV LANG en_US.UTF-8
+RUN apt-get -y update && apt-get -y install language-pack-en curl python-pip tar gcc make git python-dev libffi-dev libssl-dev
 CMD /bin/bash

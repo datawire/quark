@@ -22,6 +22,9 @@ namespace reflect {
                 print("Cannot find class given nil class ID.");
                 return null;
             }
+            if (id == "quark.Object") {
+                return null;
+            }
             if (!classes.contains(id)) {
                 print("Cannot find " + id + " in " + classes.keys().toString());
             }

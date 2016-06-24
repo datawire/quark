@@ -8,6 +8,10 @@ Latest
 
 ### Command line
 
+* `quark install` tries to run in offline mode by default as most
+  quark generated packages do not have external dependencies. To force
+  online mode use `quark install --online`.
+
 * The `quark docs` command by default no longer generates documentation
   for any named element (namespaces, classes, functions, methods,
   fields) that begins with a single `_` followed by an alphanumeric
@@ -21,15 +25,17 @@ Latest
 
 ### Standard Library
 
-* Setting the environment variable QUARK_TRACE modifies logging done by
+* Fixed a major regression in JSON generation introduced in 1.0.133.
+
+* Setting the environment variable `QUARK_TRACE` modifies logging done by
   libraries written in Quark.
-  * Setting QUARK_TRACE to a filename redirects all logging to that
+  * Setting `QUARK_TRACE` to a filename redirects all logging to that
     file.
-  * Setting QUARK_TRACE to "1" or "TRUE" redirects all logging to
+  * Setting `QUARK_TRACE` to "1" or "TRUE" redirects all logging to
     stderr.
-  * Setting QUARK_TRACE as above enables additional logging output from
+  * Setting `QUARK_TRACE` as above enables additional logging output from
     within Quark's standard library to help trace network I/O.
-  * Setting QUARK_TRACE to the empty string, to "0", or to "FALSE" will
+  * Setting `QUARK_TRACE` to the empty string, to "0", or to "FALSE" will
     allow logging to function as normal, just as if the environment
     variable were not set.
 
