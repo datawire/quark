@@ -31,6 +31,7 @@ class Test {
 
     String name;
     int checks = 0;
+    List<String> successes = [];
     List<String> failures = [];
 
     Test(String name) {
@@ -66,8 +67,13 @@ class Test {
             print(bold(result));
         }
         int idx = 0;
+        while (idx < successes.size()) {
+            print(green("  PASS: " + successes[idx]));
+            idx = idx + 1;
+        }
+        idx = 0;
         while (idx < failures.size()) {
-            print(red("  " + failures[idx]));
+            print(red("  FAIL: " + failures[idx]));
             idx = idx + 1;
         }
         ctx.setValue(null);
@@ -75,7 +81,9 @@ class Test {
 
     bool check(bool value, String message) {
         checks = checks + 1;
-        if (!value) {
+        if (value) {
+            successes.add(message);
+        } else {
             failures.add(message);
         }
         return value;
