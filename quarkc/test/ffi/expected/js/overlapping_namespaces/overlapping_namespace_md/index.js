@@ -45,7 +45,7 @@ function org_example_bar_Bar() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new org_example_bar_Bar_test_Method()];
-    (this).parents = [quark.reflect.Class.OBJECT];
+    (this).parents = ["quark.Object"];
 }
 exports.org_example_bar_Bar = org_example_bar_Bar;
 _qrt.util.inherits(org_example_bar_Bar, quark.reflect.Class);
@@ -59,6 +59,11 @@ function org_example_bar_Bar_construct(args) {
     return new org.example.bar.Bar();
 }
 org_example_bar_Bar.prototype.construct = org_example_bar_Bar_construct;
+
+function org_example_bar_Bar_isAbstract() {
+    return false;
+}
+org_example_bar_Bar.prototype.isAbstract = org_example_bar_Bar_isAbstract;
 
 function org_example_bar_Bar__getClass() {
     return _qrt.cast(null, function () { return String; });

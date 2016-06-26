@@ -45,7 +45,7 @@ function test_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.String", "name")];
     (this).methods = [new test_Test_go_Method()];
-    (this).parents = [quark.reflect.Class.OBJECT];
+    (this).parents = ["quark.Object"];
 }
 exports.test_Test = test_Test;
 _qrt.util.inherits(test_Test, quark.reflect.Class);
@@ -59,6 +59,11 @@ function test_Test_construct(args) {
     return new test.Test();
 }
 test_Test.prototype.construct = test_Test_construct;
+
+function test_Test_isAbstract() {
+    return false;
+}
+test_Test.prototype.isAbstract = test_Test_isAbstract;
 
 function test_Test__getClass() {
     return _qrt.cast(null, function () { return String; });
@@ -115,7 +120,7 @@ function test_subtest_Test() {
     (this).parameters = [];
     (this).fields = [new quark.reflect.Field("quark.int", "size")];
     (this).methods = [new test_subtest_Test_go_Method()];
-    (this).parents = [quark.reflect.Class.OBJECT];
+    (this).parents = ["quark.Object"];
 }
 exports.test_subtest_Test = test_subtest_Test;
 _qrt.util.inherits(test_subtest_Test, quark.reflect.Class);
@@ -129,6 +134,11 @@ function test_subtest_Test_construct(args) {
     return new test.subtest.Test();
 }
 test_subtest_Test.prototype.construct = test_subtest_Test_construct;
+
+function test_subtest_Test_isAbstract() {
+    return false;
+}
+test_subtest_Test.prototype.isAbstract = test_subtest_Test_isAbstract;
 
 function test_subtest_Test__getClass() {
     return _qrt.cast(null, function () { return String; });

@@ -143,7 +143,7 @@ class GenericsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Box_quark_Object__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Box_quark_Object__get_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -154,6 +154,13 @@ class GenericsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.Box.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -315,7 +322,7 @@ class GenericsBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.int"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Box_quark_int__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Box_quark_int__get_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -326,6 +333,13 @@ class GenericsBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.Box.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -487,7 +501,7 @@ class GenericsCrateQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.Box<quark.Object>", "box"), ::Quark.quark.reflect.Field.new("generics.Box<quark.int>", "ibox")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Crate_quark_Object__set_Method.new(), ::Quark.quark_ffi_signatures_md.generics_Crate_quark_Object__get_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -498,6 +512,13 @@ class GenericsCrateQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.Crate.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -550,7 +571,7 @@ class GenericsSack < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.Box<quark.int>", "ints")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -561,6 +582,13 @@ class GenericsSack < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.Sack.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -722,7 +750,7 @@ class GenericsMatrixQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "width"), ::Quark.quark.reflect.Field.new("quark.int", "height"), ::Quark.quark.reflect.Field.new("quark.List<quark.List<quark.Object>>", "columns")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_Matrix_quark_Object____get___Method.new(), ::Quark.quark_ffi_signatures_md.generics_Matrix_quark_Object____set___Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -733,6 +761,13 @@ class GenericsMatrixQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.Matrix.new(::DatawireQuarkCore.cast((args)[0]) { ::Integer }, ::DatawireQuarkCore.cast((args)[1]) { ::Integer })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -839,7 +874,7 @@ class GenericsConstructorsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.Object", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_constructors_Box_quark_Object__get_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -850,6 +885,13 @@ class GenericsConstructorsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.constructors.Box.new((args)[0])
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1010,7 +1052,7 @@ class GenericsPkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_pkg_Foo_quark_Object__foo_Method.new(), ::Quark.quark_ffi_signatures_md.generics_pkg_Foo_quark_Object__get_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1021,6 +1063,13 @@ class GenericsPkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -1181,7 +1230,7 @@ class GenericsPkgStringFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_pkg_StringFoo_get_Method.new(), ::Quark.quark_ffi_signatures_md.generics_pkg_StringFoo_foo_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1192,6 +1241,13 @@ class GenericsPkgStringFoo < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.pkg.StringFoo.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1244,7 +1300,7 @@ class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.String"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1255,6 +1311,13 @@ class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.pkg.Box.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1307,7 +1370,7 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "contents")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1318,6 +1381,13 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.pkg.StringBox.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1424,7 +1494,7 @@ class GenericsCccTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLSContextInitializer_getValue_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1435,6 +1505,13 @@ class GenericsCccTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.ccc.TLSContextInitializer.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1595,7 +1672,7 @@ class GenericsCccContext < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.ccc.Context", "_global"), ::Quark.quark.reflect.Field.new("generics.ccc.TLS<generics.ccc.Context>", "_current"), ::Quark.quark.reflect.Field.new("generics.ccc.Context", "parent")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_Context_current_Method.new(), ::Quark.quark_ffi_signatures_md.generics_ccc_Context_global_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1606,6 +1683,13 @@ class GenericsCccContext < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.ccc.Context.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.generics.ccc.Context })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1712,7 +1796,7 @@ class GenericsCccTLSInitializerQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLSInitializer_quark_Object__getValue_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1723,6 +1807,13 @@ class GenericsCccTLSInitializerQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -1829,7 +1920,7 @@ class GenericsCccTLSGenericsCccContext < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["generics.ccc.Context"])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("generics.ccc.Context", "_value")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.generics_ccc_TLS_generics_ccc_Context__getValue_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1840,6 +1931,13 @@ class GenericsCccTLSGenericsCccContext < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.generics.ccc.TLS.new(::DatawireQuarkCore.cast((args)[0]) { ::Quark.generics.ccc.TLSInitializer })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1892,7 +1990,7 @@ class InheritanceBase < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -1903,6 +2001,13 @@ class InheritanceBase < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Base.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -1955,7 +2060,7 @@ class InheritanceTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name"), ::Quark.quark.reflect.Field.new("quark.String", "mumble"), ::Quark.quark.reflect.Field.new("quark.String", "later")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Base")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.Base"])
 
         nil
     end
@@ -1966,6 +2071,13 @@ class InheritanceTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2018,7 +2130,7 @@ class InheritanceA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -2029,6 +2141,13 @@ class InheritanceA < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.A.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2136,7 +2255,7 @@ class InheritanceB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_B_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.A"])
 
         nil
     end
@@ -2147,6 +2266,13 @@ class InheritanceB < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.B.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2254,7 +2380,7 @@ class InheritanceC < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_C_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.A"])
 
         nil
     end
@@ -2265,6 +2391,13 @@ class InheritanceC < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.C.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2317,7 +2450,7 @@ class InheritanceX < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -2328,6 +2461,13 @@ class InheritanceX < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.X.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2435,7 +2575,7 @@ class InheritanceY < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Y_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.X")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.X"])
 
         nil
     end
@@ -2446,6 +2586,13 @@ class InheritanceY < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Y.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2553,7 +2700,7 @@ class InheritanceT1A < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_A_foo_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -2564,6 +2711,13 @@ class InheritanceT1A < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t1.A.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2671,7 +2825,7 @@ class InheritanceT1B < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_B_foo_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t1.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.t1.A"])
 
         nil
     end
@@ -2682,6 +2836,13 @@ class InheritanceT1B < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t1.B.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2789,7 +2950,7 @@ class InheritanceT1C < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_t1_C_foo_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t1.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.t1.A"])
 
         nil
     end
@@ -2800,6 +2961,13 @@ class InheritanceT1C < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t1.C.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2852,7 +3020,7 @@ class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -2863,6 +3031,13 @@ class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t2.A.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2915,7 +3090,7 @@ class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.t2.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.t2.A"])
 
         nil
     end
@@ -2926,6 +3101,13 @@ class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t2.B.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -2978,7 +3160,7 @@ class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.int"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -2989,6 +3171,13 @@ class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t2.X.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3041,7 +3230,7 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -3052,6 +3241,13 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.t2.Y.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3087,6 +3283,131 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceT2Y.unlazy_statics
+
+
+def self.inheritance_pets_Pet_greet_Method; InheritancePetsPetGreetMethod; end
+class InheritancePetsPetGreetMethod < ::Quark.quark.reflect.Method
+
+
+
+    def initialize()
+        
+        super("quark.void", "greet", ::DatawireQuarkCore::List.new([]))
+
+        nil
+    end
+
+
+
+
+    def invoke(object, args)
+        
+        obj = ::DatawireQuarkCore.cast(object) { ::Quark.inheritance.pets.Pet }
+        obj.greet()
+        return nil
+
+        nil
+    end
+
+    def _getClass()
+        
+        return ::DatawireQuarkCore.cast(nil) { ::String }
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+
+def self.inheritance_pets_Pet; InheritancePetsPet; end
+class InheritancePetsPet < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_ffi_signatures_md.inheritance_pets_Pet.new() }
+
+
+
+    def initialize()
+        
+        super("inheritance.pets.Pet")
+        (self).name = "inheritance.pets.Pet"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([])
+        (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Pet_greet_Method.new()])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
+
+        nil
+    end
+
+    def _getClass()
+        
+        return ::DatawireQuarkCore.cast(nil) { ::String }
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+InheritancePetsPet.unlazy_statics
 
 
 def self.inheritance_pets_Cat_greet_Method; InheritancePetsCatGreetMethod; end
@@ -3159,7 +3480,7 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Cat_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.pets.Pet"])
 
         nil
     end
@@ -3170,6 +3491,13 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.pets.Cat.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3277,7 +3605,7 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_pets_Dog_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.pets.Pet"])
 
         nil
     end
@@ -3288,6 +3616,13 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.pets.Dog.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3394,7 +3729,7 @@ class InheritanceMessage < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Message_encode_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -3405,6 +3740,13 @@ class InheritanceMessage < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Message.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3511,7 +3853,7 @@ class InheritancePing < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Ping_encode_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Message")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.Message"])
 
         nil
     end
@@ -3522,6 +3864,13 @@ class InheritancePing < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Ping.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3682,7 +4031,7 @@ class InheritancePong < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_Pong_toString_Method.new(), ::Quark.quark_ffi_signatures_md.inheritance_Pong_encode_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.Message")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.Message"])
 
         nil
     end
@@ -3693,6 +4042,13 @@ class InheritancePong < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.Pong.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3800,7 +4156,7 @@ class InheritanceSuperA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_super__A_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -3811,6 +4167,13 @@ class InheritanceSuperA < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.super_.A.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -3918,7 +4281,7 @@ class InheritanceSuperB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_super__B_greet_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("inheritance.super_.A")])
+        (self).parents = ::DatawireQuarkCore::List.new(["inheritance.super_.A"])
 
         nil
     end
@@ -3929,6 +4292,13 @@ class InheritanceSuperB < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.super_.B.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -4036,7 +4406,7 @@ class InheritanceUseBeforeDefBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.inheritance_use_before_def_Bar_go_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4047,6 +4417,13 @@ class InheritanceUseBeforeDefBar < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.use_before_def.Bar.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -4099,7 +4476,7 @@ class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4110,6 +4487,13 @@ class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.inheritance.use_before_def.Foo.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -4272,7 +4656,7 @@ class InterfacesA < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_A_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_A_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4283,6 +4667,13 @@ class InterfacesA < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -4390,7 +4781,7 @@ class InterfacesB < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_B_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4401,6 +4792,13 @@ class InterfacesB < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -4508,7 +4906,7 @@ class InterfacesC < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_C_foo_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4519,6 +4917,13 @@ class InterfacesC < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -4681,7 +5086,7 @@ class InterfacesT1 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T1_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T1_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4692,6 +5097,13 @@ class InterfacesT1 < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.T1.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -4854,7 +5266,7 @@ class InterfacesT2 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T2_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T2_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -4865,6 +5277,13 @@ class InterfacesT2 < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.T2.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -5027,7 +5446,7 @@ class InterfacesT3 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T3_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T3_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -5038,6 +5457,13 @@ class InterfacesT3 < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.T3.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -5200,7 +5626,7 @@ class InterfacesT4 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T4_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T4_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -5211,6 +5637,13 @@ class InterfacesT4 < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.T4.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -5373,7 +5806,7 @@ class InterfacesT5 < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_T5_foo_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_T5_bar_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -5384,6 +5817,13 @@ class InterfacesT5 < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.T5.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -5601,7 +6041,7 @@ class InterfacesFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Foo_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Foo_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Foo_m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -5612,6 +6052,13 @@ class InterfacesFoo < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -5829,7 +6276,7 @@ class InterfacesBarQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Bar_quark_Object__m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -5840,6 +6287,13 @@ class InterfacesBarQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -6057,7 +6511,7 @@ class InterfacesBaz < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_Baz_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Baz_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_Baz_m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -6068,6 +6522,13 @@ class InterfacesBaz < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.Baz.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -6285,7 +6746,7 @@ class InterfacesRazBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_RazBar_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazBar_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazBar_m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -6296,6 +6757,13 @@ class InterfacesRazBar < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -6513,7 +6981,7 @@ class InterfacesRazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object__m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -6524,6 +6992,13 @@ class InterfacesRazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
 
         nil
     end
@@ -6741,7 +7216,7 @@ class InterfacesBazBar < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_BazBar_m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazBar_m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazBar_m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -6752,6 +7227,13 @@ class InterfacesBazBar < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.BazBar.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -6969,7 +7451,7 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m1_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m2_Method.new(), ::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object__m3_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -6980,6 +7462,13 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.interfaces.BazFaz.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -7195,7 +7684,7 @@ class ClassesOverload < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_Overload___add___Method.new(), ::Quark.quark_ffi_signatures_md.classes_Overload___mul___Method.new(), ::Quark.quark_ffi_signatures_md.classes_Overload_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -7206,6 +7695,13 @@ class ClassesOverload < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.Overload.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -7313,7 +7809,7 @@ class ClassesTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_Test_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -7324,6 +7820,13 @@ class ClassesTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -7431,7 +7934,7 @@ class ClassesStringTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_string_test_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -7442,6 +7945,13 @@ class ClassesStringTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.string_test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -7603,7 +8113,7 @@ class ClassesTestSize < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_size_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_size_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -7614,6 +8124,13 @@ class ClassesTestSize < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_size.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -7829,7 +8346,7 @@ class ClassesTestStartsWith < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_startsWith_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_startsWith_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_startsWith_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -7840,6 +8357,13 @@ class ClassesTestStartsWith < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_startsWith.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -8055,7 +8579,7 @@ class ClassesTestEndsWith < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_endsWith_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_endsWith_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_endsWith_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -8066,6 +8590,13 @@ class ClassesTestEndsWith < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_endsWith.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -8281,7 +8812,7 @@ class ClassesTestFind < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "_that")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_find_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_find_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_find_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -8292,6 +8823,13 @@ class ClassesTestFind < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_find.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -8507,7 +9045,7 @@ class ClassesTestSubstring < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.int", "start"), ::Quark.quark.reflect.Field.new("quark.int", "end")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_substring_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_substring_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_substring_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -8518,6 +9056,13 @@ class ClassesTestSubstring < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_substring.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -8733,7 +9278,7 @@ class ClassesTestReplace < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "start"), ::Quark.quark.reflect.Field.new("quark.String", "end")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_replace_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_replace_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_replace_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -8744,6 +9289,13 @@ class ClassesTestReplace < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_replace.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9013,7 +9565,7 @@ class ClassesTestJoin < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.List<quark.String>", "parts"), ::Quark.quark.reflect.Field.new("quark.String", "strparts"), ::Quark.quark.reflect.Field.new("quark.String", "sep")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_join_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_a_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_join_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -9024,6 +9576,13 @@ class ClassesTestJoin < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_join.new(::DatawireQuarkCore.cast((args)[0]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9239,7 +9798,7 @@ class ClassesTestSplit < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "what"), ::Quark.quark.reflect.Field.new("quark.String", "sep"), ::Quark.quark.reflect.Field.new("quark.String", "altsep")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_test_split_that_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_split_does_Method.new(), ::Quark.quark_ffi_signatures_md.classes_test_split_check_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.get("classes.string_test")])
+        (self).parents = ::DatawireQuarkCore::List.new(["classes.string_test"])
 
         nil
     end
@@ -9250,6 +9809,13 @@ class ClassesTestSplit < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.test_split.new(::DatawireQuarkCore.cast((args)[0]) { ::String }, ::DatawireQuarkCore.cast((args)[1]) { ::String })
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9411,7 +9977,7 @@ class ClassesStuffTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.classes_stuff_Test_foo_Method.new(), ::Quark.quark_ffi_signatures_md.classes_stuff_Test_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -9422,6 +9988,13 @@ class ClassesStuffTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.classes.stuff.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9803,7 +10376,7 @@ class StaticsFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "count")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.statics_Foo_setCount_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_getCount_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test1_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test2_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test3_Method.new(), ::Quark.quark_ffi_signatures_md.statics_Foo_test4_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -9814,6 +10387,13 @@ class StaticsFoo < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.statics.Foo.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9920,7 +10500,7 @@ class DocsTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.quark_ffi_signatures_md.docs_Test_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -9931,6 +10511,13 @@ class DocsTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.docs.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -9983,7 +10570,7 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.List<quark.Object>"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -9994,6 +10581,13 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::DatawireQuarkCore::List.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -10046,7 +10640,7 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.Object"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -10057,6 +10651,13 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::DatawireQuarkCore::List.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -10109,7 +10710,7 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new(["quark.String"])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -10120,6 +10721,13 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::DatawireQuarkCore::List.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -10189,6 +10797,7 @@ class Root < ::DatawireQuarkCore::QuarkObject
     static inheritance_t2_B_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_t2_B.singleton }
     static inheritance_t2_X_quark_int__md: -> { ::Quark.quark_ffi_signatures_md.inheritance_t2_X_quark_int_.singleton }
     static inheritance_t2_Y_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_t2_Y.singleton }
+    static inheritance_pets_Pet_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_pets_Pet.singleton }
     static inheritance_pets_Cat_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_pets_Cat.singleton }
     static inheritance_pets_Dog_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_pets_Dog.singleton }
     static inheritance_Message_md: -> { ::Quark.quark_ffi_signatures_md.inheritance_Message.singleton }

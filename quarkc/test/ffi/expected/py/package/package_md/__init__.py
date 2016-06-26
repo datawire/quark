@@ -34,10 +34,13 @@ class test_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.String", u"name")])
         (self).methods = _List([test_Test_go_Method()])
-        (self).parents = _List([quark.reflect.Class.OBJECT])
+        (self).parents = _List([u"quark.Object"])
 
     def construct(self, args):
         return test.Test()
+
+    def isAbstract(self):
+        return False
 
     def _getClass(self):
         return _cast(None, lambda: unicode)
@@ -80,10 +83,13 @@ class test_subtest_Test(quark.reflect.Class):
         (self).parameters = _List([])
         (self).fields = _List([quark.reflect.Field(u"quark.int", u"size")])
         (self).methods = _List([test_subtest_Test_go_Method()])
-        (self).parents = _List([quark.reflect.Class.OBJECT])
+        (self).parents = _List([u"quark.Object"])
 
     def construct(self, args):
         return test.subtest.Test()
+
+    def isAbstract(self):
+        return False
 
     def _getClass(self):
         return _cast(None, lambda: unicode)

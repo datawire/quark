@@ -1,20 +1,20 @@
 package quark_ffi_signatures_md;
 
-public class classes_string_test extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
-    public static quark.reflect.Class singleton = new classes_string_test();
-    public classes_string_test() {
-        super("classes.string_test");
-        (this).name = "classes.string_test";
+public class inheritance_pets_Pet extends quark.reflect.Class implements io.datawire.quark.runtime.QObject {
+    public static quark.reflect.Class singleton = new inheritance_pets_Pet();
+    public inheritance_pets_Pet() {
+        super("inheritance.pets.Pet");
+        (this).name = "inheritance.pets.Pet";
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new classes_string_test_check_Method()}));
+        (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_pets_Pet_greet_Method()}));
         (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
-        return new classes.string_test();
+        return null;
     }
     public Boolean isAbstract() {
-        return false;
+        return true;
     }
     public String _getClass() {
         return (String) (null);

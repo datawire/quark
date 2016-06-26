@@ -8,10 +8,13 @@ public class slackpack_Handler extends quark.reflect.Class implements io.datawir
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slackpack_Handler_onSlackEvent_Method(), new slackpack_Handler_onHello_Method(), new slackpack_Handler_onSlackError_Method(), new slackpack_Handler_onMessage_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new slackpack.Handler();
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

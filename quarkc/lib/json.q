@@ -78,7 +78,7 @@ namespace quark {
             return result;
         }
 
-        if (cls == null) {
+        if (cls == null || cls.isAbstract()) {
             cls = obj.getClass();
         }
 
@@ -167,7 +167,7 @@ namespace quark {
         if (json == null || json.isNull() || json.isUndefined()) { return null; }
         int idx = 0;
 
-        if (cls == null) {
+        if (cls == null || cls.isAbstract()) {
             String type = json.getType();
             if (type == "boolean") {
                 cls = reflect.Class.BOOL;

@@ -78,6 +78,14 @@ macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec
                            $rb{::DatawireQuarkCore.default_codec}
                            $js{_qrt.defaultCodec()};
 
+macro void _trace() $java{do{new Throwable().printStackTrace();} while(false)}
+                    $py{__import__("traceback").print_stack()};
+
+macro void panic(String msg) $java{throw new RuntimeException($msg)}
+                             $py{raise Exception($msg)}
+                             $rb{raise ($msg)}
+                             $js{throw ($msg)};
+
 interface Task {
     void onExecute(Runtime runtime); // XXX: right now, context is not
                                      // restored for these. We should

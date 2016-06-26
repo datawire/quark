@@ -76,7 +76,7 @@ class TestTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "name")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.package_md.test_Test_go_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -87,6 +87,13 @@ class TestTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.test.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end
@@ -194,7 +201,7 @@ class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.int", "size")])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.package_md.test_subtest_Test_go_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -205,6 +212,13 @@ class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.test.subtest.Test.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end

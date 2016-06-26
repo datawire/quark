@@ -8,10 +8,13 @@ public class interfaces_BazFaz_quark_Object_ extends quark.reflect.Class impleme
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new interfaces_BazFaz_quark_Object__m1_Method(), new interfaces_BazFaz_quark_Object__m2_Method(), new interfaces_BazFaz_quark_Object__m3_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new interfaces.BazFaz<Object>();
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);
