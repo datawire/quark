@@ -52,12 +52,7 @@ from .messages import Warning, issue_all
 
 sys.setrecursionlimit(10000)
 
-BUILTIN = "quark"
-BUILTIN_FILE = "%s.q" % BUILTIN
-REFLECT = "reflect"
-
-OBJECT = "%s.Object" % BUILTIN
-VOID = "%s.void" % BUILTIN
+from .constants import *
 
 def join(base, rel):
     if rel == BUILTIN_FILE:
@@ -1291,7 +1286,7 @@ class Compiler(object):
                 assert getattr(dep, "_compiled", False)
                 self.merge(root.env, dep.env)
             self.icompile(root)
-            self.reflect(root)
+#            self.reflect(root)
             root._compiled = True
 
         modified = []

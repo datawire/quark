@@ -1,6 +1,5 @@
 from quark_runtime import *
 
-
 class Root(object):
     def _init(self):
         pass

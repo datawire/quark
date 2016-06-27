@@ -20,10 +20,10 @@ from collections import OrderedDict
 
 from . import java, python, javascript, ruby, shell
 from .ast import (
-    Method, Class, Function, Package, File, Dependency, Interface, Primitive,
+    AST, Method, Class, Function, Package, File, Dependency, Interface, Primitive,
     Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
     Assign, If, Return, While, Break, Continue, Var, Call, String, Number,
-    Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
+    Bool, List, Map, Name, Null, Native, NativeCase, Fixed, Attr, Cast,
     Param, Declaration, Super, Expression,
 )
 from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
@@ -33,6 +33,9 @@ from .helpers import (
     base_type, get_defaulted_methods, is_abstract, base_constructors, doc,
     get_field, constructors,
 )
+from quarkc import reflection
+
+class FakeExpr(object): pass
 
 class Backend(object):
 
@@ -146,6 +149,8 @@ class Backend(object):
         if self.dist:
             self.entry = self.dist.file
 
+        self.mdpkg, cleanup = reflection.reflect(r, self)
+
         self.main = None
         for d in self.definitions:
             fname = self.file(d)
@@ -161,6 +166,8 @@ class Backend(object):
                 self.files[fname] += "\n" + self.gen.comment("END_BUILTIN")
             else:
                 self.files[fname] += dfn_code
+
+        cleanup()
 
         if self.main:
             self.genmain()
@@ -202,16 +209,24 @@ class Backend(object):
         imps = [self.gen.import_(pkg, org, dep) for (pkg, org, dep) in imps]
         return "\n".join(filter(lambda x: x is not None, imps))
 
+    @overload(AST)
     def add_import(self, obj):
+        return self.add_import(tuple(self.package(obj)), obj.root, obj.file)
+
+    @overload(list)
+    def add_import(self, pkg, root, file):
+        return self.add_import(tuple(pkg), root, file)
+
+    @overload(tuple)
+    def add_import(self, pkg, root, file):
         imports = self._imports[self.current_file]
-        pkg = tuple(self.package(obj))
         if self.current_package:
             org = tuple(self.package(self.current_package))
         else:
             org = ()
         if pkg != org:
-            if obj.root != self.root:
-                dep, ver = namever(obj.file)
+            if root != self.root:
+                dep, ver = namever(file or root)
             else:
                 dep = None
             imports[(pkg, org, dep)] = True
@@ -253,6 +268,7 @@ class Backend(object):
             lines = []
             readme(pkg, lines)
             packages[tuple(self.package(pkg))] = "\n".join(lines)
+        packages[tuple(self.mdpkg)] = "## Root\n"
 
         files_to_emit = OrderedDict(self.files)
         for path, content in self.entry.root.included.items():
@@ -320,8 +336,18 @@ class Backend(object):
         constructors = []
 
         defaulted, self.bindings = get_defaulted_methods(cls)
-        for d in cls.definitions + defaulted.values():
+        for d in cls.definitions + [None] + defaulted.values():
             if isinstance(d, Macro): continue
+            if d is None:
+                extra_methods = getattr(cls, "_extra_methods", None)
+                if extra_methods:
+                    methods.extend(extra_methods())
+                    del cls._extra_methods
+                extra_statics = getattr(cls, "_extra_statics", None)
+                if extra_statics:
+                    static_fields.extend(extra_statics())
+                    del cls._extra_statics
+                continue
             doc = self.doc(d)
             if isinstance(d, Field):
                 fun = self.gen.static_field if d.static else self.gen.field
@@ -379,7 +405,16 @@ class Backend(object):
         methods = []
         static_fields = []
 
-        for d in iface.definitions:
+        for d in iface.definitions + [None]:
+            if d is None:
+                extra_methods = getattr(iface, "_extra_methods", None)
+                if extra_methods:
+                    methods.extend(extra_methods())
+                    del iface._extra_methods
+                extra_statics = getattr(iface, "_extra_statics", None)
+                if extra_statics:
+                    static_fields.extend(extra_statics())
+                    del iface._extra_statics
             if isinstance(d, Field) and d.static:
                 static_fields.append(self.gen.static_field(self.doc(d),
                                                            name,
@@ -428,15 +463,20 @@ class Backend(object):
     def pop(self):
         self.names.pop()
 
+    @overload(Name)
+    def name(self, n):
+        return self.name(n.text)
+
+    @overload(basestring)
     def name(self, n):
         if self.names:
             env = self.names[-1]
-            if n.text in env:
-                return env[n.text]
-        return self.gen.name(n.text)
+            if n in env:
+                return env[n]
+        return self.gen.name(n)
 
+    @overload(AST)
     def package(self, node):
-        if node is None: return []
         if isinstance(node, Package):
             me = self.name(node.name)
             if node.package:
@@ -447,6 +487,14 @@ class Backend(object):
             return self.package(node.package)
         else:
             assert False
+
+    @overload(types.NoneType)
+    def package(self, node):
+        return []
+
+    @overload(list)
+    def package(self, path):
+        return path
 
     @overload(Type)
     def type(self, t):
@@ -543,6 +591,10 @@ class Backend(object):
     @overload(Continue)
     def statement(self, cnt):
         return self.gen.continue_()
+
+    @overload(str)
+    def expr(self, s):
+        return s
 
     @overload(Var)
     def expr(self, v):
@@ -706,7 +758,6 @@ class Backend(object):
     def coerce(self, expr):
         if expr.coersion:
             if isinstance(expr.coersion, Macro):
-                class FakeExpr: pass
                 fake = FakeExpr()
                 fake.expr = expr
                 fake.resolved = expr.coersion.resolved
@@ -735,14 +786,30 @@ class Backend(object):
         finally:
             self.pop()
 
+    @overload(AST, object)
     def maybe_cast(self, type, expr):
+        return self.maybe_cast(type.resolved, expr)
+
+    @overload(TypeExpr, object)
+    def maybe_cast(self, texpr, expr):
         if expr is None: return None
         if expr.coersion:
             return self.coerce(expr)
-        if type.resolved.assignableFrom(expr.resolved):
+        if texpr.assignableFrom(expr.resolved):
             return self.expr(expr)
         else:
-            return self.gen.cast(self.type(type.resolved), self.expr(expr))
+            return self.gen.cast(self.type(texpr), self.expr(expr))
+
+    def fake(self, type, expr):
+        fake = FakeExpr()
+        fake.resolved = type
+        fake.coersion = None
+        fake.expr = expr
+        return fake
+
+    @overload(FakeExpr)
+    def expr(self, fake):
+        return fake.expr
 
 def is_virtual():
     output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')

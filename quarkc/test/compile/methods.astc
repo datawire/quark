@@ -5,26 +5,7 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
   Class(Name(Test),
 
    Method(static=False, Type(Name(int)), Name(foo), Block(
-     Return(Number(3, $type=1.quark.int)))),
-
-   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("methods.Test", $type=1.quark.String)))),
-
-   Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=1.quark.String),
-    Block(
-     Return(Null(null, $type=1.quark.Object)))),
-
-   Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=1.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
-    Block()),
-   Field(static=True, Type(Name(reflect), Name(Class)), Name(methods_Test_ref),
-    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
-     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(methods_md),
-       $type=1.methods_md), Name(Root), $type=1.methods_md.Root),
-      Name(methods_Test_md), $type=3.quark.reflect.Class),
-    $type=3.quark.reflect.Class), $type=3.quark.reflect.Class)),
+     Return(Number(3, $type=1.quark.int))))),
 
   Function(Type(Name(void)), Name(bar), Block(
     Local(

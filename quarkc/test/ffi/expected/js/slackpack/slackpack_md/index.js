@@ -3,7 +3,6 @@ var quark = require('quark').quark;
 exports.quark = quark;
 
 
-
 // CLASS slack_event_SlackEvent_load_Method
 
 function slack_event_SlackEvent_load_Method() {
@@ -110,7 +109,6 @@ slack_event_SlackEvent.prototype._getField = slack_event_SlackEvent__getField;
 
 function slack_event_SlackEvent__setField(name, value) {}
 slack_event_SlackEvent.prototype._setField = slack_event_SlackEvent__setField;
-
 
 // CLASS slack_event_SlackError_load_Method
 
@@ -219,7 +217,6 @@ slack_event_SlackError.prototype._getField = slack_event_SlackError__getField;
 function slack_event_SlackError__setField(name, value) {}
 slack_event_SlackError.prototype._setField = slack_event_SlackError__setField;
 
-
 // CLASS slack_event_Hello_dispatch_Method
 
 function slack_event_Hello_dispatch_Method() {
@@ -326,7 +323,6 @@ slack_event_Hello.prototype._getField = slack_event_Hello__getField;
 
 function slack_event_Hello__setField(name, value) {}
 slack_event_Hello.prototype._setField = slack_event_Hello__setField;
-
 
 // CLASS slack_event_Message_load_Method
 
@@ -435,7 +431,6 @@ slack_event_Message.prototype._getField = slack_event_Message__getField;
 function slack_event_Message__setField(name, value) {}
 slack_event_Message.prototype._setField = slack_event_Message__setField;
 
-
 // CLASS slack_event_Edited
 
 function slack_event_Edited() {
@@ -476,7 +471,6 @@ slack_event_Edited.prototype._getField = slack_event_Edited__getField;
 
 function slack_event_Edited__setField(name, value) {}
 slack_event_Edited.prototype._setField = slack_event_Edited__setField;
-
 
 // CLASS slack_SlackHandler_onSlackEvent_Method
 
@@ -651,7 +645,6 @@ slack_SlackHandler.prototype._getField = slack_SlackHandler__getField;
 function slack_SlackHandler__setField(name, value) {}
 slack_SlackHandler.prototype._setField = slack_SlackHandler__setField;
 
-
 // CLASS slack_User
 
 function slack_User() {
@@ -692,7 +685,6 @@ slack_User.prototype._getField = slack_User__getField;
 
 function slack_User__setField(name, value) {}
 slack_User.prototype._setField = slack_User__setField;
-
 
 // CLASS slack_Channel_send_Method
 
@@ -767,7 +759,6 @@ slack_Channel.prototype._getField = slack_Channel__getField;
 
 function slack_Channel__setField(name, value) {}
 slack_Channel.prototype._setField = slack_Channel__setField;
-
 
 // CLASS slack_Client_connect_Method
 
@@ -1370,7 +1361,6 @@ slack_Client.prototype._getField = slack_Client__getField;
 function slack_Client__setField(name, value) {}
 slack_Client.prototype._setField = slack_Client__setField;
 
-
 // CLASS slackpack_Handler_onSlackEvent_Method
 
 function slackpack_Handler_onSlackEvent_Method() {
@@ -1544,7 +1534,6 @@ slackpack_Handler.prototype._getField = slackpack_Handler__getField;
 function slackpack_Handler__setField(name, value) {}
 slackpack_Handler.prototype._setField = slackpack_Handler__setField;
 
-
 // CLASS quark_Map_quark_String_quark_Object_
 
 function quark_Map_quark_String_quark_Object_() {
@@ -1585,7 +1574,6 @@ quark_Map_quark_String_quark_Object_.prototype._getField = quark_Map_quark_Strin
 
 function quark_Map_quark_String_quark_Object___setField(name, value) {}
 quark_Map_quark_String_quark_Object_.prototype._setField = quark_Map_quark_String_quark_Object___setField;
-
 
 // CLASS Root
 function Root() {

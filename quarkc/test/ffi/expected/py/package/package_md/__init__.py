@@ -2,7 +2,6 @@ from quark_runtime import *
 
 import quark.reflect
 
-
 class test_Test_go_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -51,7 +50,6 @@ class test_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 test_Test.singleton = test_Test()
-
 class test_subtest_Test_go_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -100,7 +98,6 @@ class test_subtest_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 test_subtest_Test.singleton = test_subtest_Test()
-
 class Root(object):
     def _init(self):
         pass

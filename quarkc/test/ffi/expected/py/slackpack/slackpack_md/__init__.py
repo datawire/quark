@@ -2,7 +2,6 @@ from quark_runtime import *
 
 import quark.reflect
 
-
 class slack_event_SlackEvent_load_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -72,7 +71,6 @@ class slack_event_SlackEvent(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_event_SlackEvent.singleton = slack_event_SlackEvent()
-
 class slack_event_SlackError_load_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -142,7 +140,6 @@ class slack_event_SlackError(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_event_SlackError.singleton = slack_event_SlackError()
-
 class slack_event_Hello_dispatch_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -212,7 +209,6 @@ class slack_event_Hello(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_event_Hello.singleton = slack_event_Hello()
-
 class slack_event_Message_load_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -282,7 +278,6 @@ class slack_event_Message(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_event_Message.singleton = slack_event_Message()
-
 class slack_event_Edited(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -310,7 +305,6 @@ class slack_event_Edited(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_event_Edited.singleton = slack_event_Edited()
-
 class slack_SlackHandler_onSlackEvent_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -422,7 +416,6 @@ class slack_SlackHandler(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_SlackHandler.singleton = slack_SlackHandler()
-
 class slack_User(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -450,7 +443,6 @@ class slack_User(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_User.singleton = slack_User()
-
 class slack_Channel_send_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -499,7 +491,6 @@ class slack_Channel(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_Channel.singleton = slack_Channel()
-
 class slack_Client_connect_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -883,7 +874,6 @@ class slack_Client(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slack_Client.singleton = slack_Client()
-
 class slackpack_Handler_onSlackEvent_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -995,7 +985,6 @@ class slackpack_Handler(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 slackpack_Handler.singleton = slackpack_Handler()
-
 class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1023,7 +1012,6 @@ class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_Map_quark_String_quark_Object_.singleton = quark_Map_quark_String_quark_Object_()
-
 class Root(object):
     def _init(self):
         pass

@@ -5,7 +5,6 @@ require 'quark' # .../reflect
 # for ('package_md',): require_relative 'test' # 0 () ()
 # for ('package_md',): require_relative 'test/subtest' # 0 ('test',) ()
 
-
 def self.test_Test_go_Method; TestTestGoMethod; end
 class TestTestGoMethod < ::Quark.quark.reflect.Method
 
@@ -130,7 +129,6 @@ class TestTest < ::Quark.quark.reflect.QuarkClass
 end
 TestTest.unlazy_statics
 
-
 def self.test_subtest_Test_go_Method; TestSubtestTestGoMethod; end
 class TestSubtestTestGoMethod < ::Quark.quark.reflect.Method
 
@@ -254,7 +252,6 @@ class TestSubtestTest < ::Quark.quark.reflect.QuarkClass
 
 end
 TestSubtestTest.unlazy_statics
-
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

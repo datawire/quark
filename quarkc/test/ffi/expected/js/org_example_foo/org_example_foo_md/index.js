@@ -3,7 +3,6 @@ var quark = require('quark').quark;
 exports.quark = quark;
 
 
-
 // CLASS org_example_foo_Foo_test_Method
 
 function org_example_foo_Foo_test_Method() {
@@ -77,7 +76,6 @@ org_example_foo_Foo.prototype._getField = org_example_foo_Foo__getField;
 
 function org_example_foo_Foo__setField(name, value) {}
 org_example_foo_Foo.prototype._setField = org_example_foo_Foo__setField;
-
 
 // CLASS Root
 function Root() {

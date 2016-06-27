@@ -2,7 +2,6 @@ from quark_runtime import *
 
 import quark.reflect
 
-
 class org_example_bar_Bar_test_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -51,7 +50,6 @@ class org_example_bar_Bar(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 org_example_bar_Bar.singleton = org_example_bar_Bar()
-
 class Root(object):
     def _init(self):
         pass

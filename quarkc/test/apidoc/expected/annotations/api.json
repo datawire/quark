@@ -38,67 +38,6 @@
                         "description": "The tag associated with the pet.", 
                         "kind": "instance field", 
                         "type": "String"
-                    }, 
-                    {
-                        "name": "_getClass", 
-                        "path": "foo.Pet", 
-                        "visibility": "private", 
-                        "description": "(method)", 
-                        "kind": "instance method", 
-                        "type": "String", 
-                        "parameters": []
-                    }, 
-                    {
-                        "name": "_getField", 
-                        "path": "foo.Pet", 
-                        "visibility": "private", 
-                        "description": "(method)", 
-                        "kind": "instance method", 
-                        "type": "Object", 
-                        "parameters": [
-                            {
-                                "name": "name", 
-                                "path": "foo.Pet._getField", 
-                                "visibility": "public", 
-                                "description": "(param)", 
-                                "kind": "parameter", 
-                                "type": "String"
-                            }
-                        ]
-                    }, 
-                    {
-                        "name": "_setField", 
-                        "path": "foo.Pet", 
-                        "visibility": "private", 
-                        "description": "(method)", 
-                        "kind": "instance method", 
-                        "type": "void", 
-                        "parameters": [
-                            {
-                                "name": "name", 
-                                "path": "foo.Pet._setField", 
-                                "visibility": "public", 
-                                "description": "(param)", 
-                                "kind": "parameter", 
-                                "type": "String"
-                            }, 
-                            {
-                                "name": "value", 
-                                "path": "foo.Pet._setField", 
-                                "visibility": "public", 
-                                "description": "(param)", 
-                                "kind": "parameter", 
-                                "type": "Object"
-                            }
-                        ]
-                    }, 
-                    {
-                        "name": "foo_Pet_ref", 
-                        "path": "foo.Pet", 
-                        "visibility": "private", 
-                        "description": "(field)", 
-                        "kind": "static field", 
-                        "type": "reflect.Class"
                     }
                 ]
             }, 
@@ -198,30 +137,6 @@
                                 "type": "int"
                             }
                         ]
-                    }, 
-                    {
-                        "name": "foo_PetStore_ref", 
-                        "path": "foo.PetStore", 
-                        "visibility": "private", 
-                        "description": "(field)", 
-                        "kind": "static field", 
-                        "type": "reflect.Class"
-                    }, 
-                    {
-                        "name": "quark_List_foo_Pet__ref", 
-                        "path": "foo.PetStore", 
-                        "visibility": "public", 
-                        "description": "(field)", 
-                        "kind": "static field", 
-                        "type": "reflect.Class"
-                    }, 
-                    {
-                        "name": "quark_List_quark_String__ref", 
-                        "path": "foo.PetStore", 
-                        "visibility": "public", 
-                        "description": "(field)", 
-                        "kind": "static field", 
-                        "type": "reflect.Class"
                     }
                 ]
             }
