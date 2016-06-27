@@ -8,10 +8,13 @@ public class slack_SlackHandler extends quark.reflect.Class implements io.datawi
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new slack_SlackHandler_onSlackEvent_Method(), new slack_SlackHandler_onHello_Method(), new slack_SlackHandler_onSlackError_Method(), new slack_SlackHandler_onMessage_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return null;
+    }
+    public Boolean isAbstract() {
+        return true;
     }
     public String _getClass() {
         return (String) (null);

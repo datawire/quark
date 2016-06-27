@@ -29,6 +29,7 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class inheritance_t2_B_md = inheritance_t2_B.singleton;
     public static quark.reflect.Class inheritance_t2_X_quark_int__md = inheritance_t2_X_quark_int_.singleton;
     public static quark.reflect.Class inheritance_t2_Y_md = inheritance_t2_Y.singleton;
+    public static quark.reflect.Class inheritance_pets_Pet_md = inheritance_pets_Pet.singleton;
     public static quark.reflect.Class inheritance_pets_Cat_md = inheritance_pets_Cat.singleton;
     public static quark.reflect.Class inheritance_pets_Dog_md = inheritance_pets_Dog.singleton;
     public static quark.reflect.Class inheritance_Message_md = inheritance_Message.singleton;

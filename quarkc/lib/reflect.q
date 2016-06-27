@@ -19,14 +19,10 @@ namespace reflect {
 
         static Class get(String id) {
             if (id == null) {
-                print("Cannot find class given nil class ID.");
-                return null;
-            }
-            if (id == "quark.Object") {
-                return null;
+                panic("Cannot find class given nil class ID.");
             }
             if (!classes.contains(id)) {
-                print("Cannot find " + id + " in " + classes.keys().toString());
+                panic("Cannot find " + id + " in " + classes.keys().toString());
             }
             return classes[id];
         }
@@ -36,7 +32,7 @@ namespace reflect {
         List<String> parameters = [];
         List<Field> fields = [];
         List<Method> methods = [];
-        List<Class> parents = [];
+        List<String> parents = [];
 
         Class(String id) {
             if (id == "quark.error.Error") {
@@ -55,14 +51,30 @@ namespace reflect {
             return name;
         }
 
+        List<Class> getParents() {
+            List<Class> result = [];
+            int idx = 0;
+            while (idx < parents.size()) {
+                result.add(get(parents[idx]));
+                idx = idx + 1;
+            }
+            return result;
+        }
+
         List<Class> getParameters() {
             List<Class> result = [];
             int idx = 0;
             while (idx < parameters.size()) {
-                result.add(Class.get(parameters[idx]));
+                result.add(get(parameters[idx]));
                 idx = idx + 1;
             }
             return result;
+        }
+
+        bool isAbstract() {
+            // this will do the right thing for all the primitives,
+            // and we override this for compiler generated metadata
+            return id == OBJECT.id;
         }
 
         Object construct(List<Object> args) { return null; }
@@ -99,7 +111,7 @@ namespace reflect {
             }
             int idx = 0;
             while (idx < self.parents.size()) {
-                if (self.parents[idx].isSubclassOf(anotherClass)) {
+                if (get(self.parents[idx]).isSubclassOf(anotherClass)) {
                     return true;
                 }
                 idx = idx + 1;

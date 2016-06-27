@@ -8,10 +8,13 @@ public class generics_pkg_Foo_quark_Object_ extends quark.reflect.Class implemen
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new generics_pkg_Foo_quark_Object__foo_Method(), new generics_pkg_Foo_quark_Object__get_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return null;
+    }
+    public Boolean isAbstract() {
+        return true;
     }
     public String _getClass() {
         return (String) (null);

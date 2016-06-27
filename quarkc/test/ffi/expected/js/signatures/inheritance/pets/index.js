@@ -14,9 +14,22 @@ exports.Pet = Pet;
 
 function Pet__init_fields__() {}
 Pet.prototype.__init_fields__ = Pet__init_fields__;
-
+Pet.inheritance_pets_Pet_ref = null;
 function Pet_greet() { throw TypeError, '`Pet.greet` is an abstract method'; }
 Pet.prototype.greet = Pet_greet;
+
+function Pet__getClass() {
+    return "inheritance.pets.Pet";
+}
+Pet.prototype._getClass = Pet__getClass;
+
+function Pet__getField(name) {
+    return null;
+}
+Pet.prototype._getField = Pet__getField;
+
+function Pet__setField(name, value) {}
+Pet.prototype._setField = Pet__setField;
 
 // CLASS Cat
 

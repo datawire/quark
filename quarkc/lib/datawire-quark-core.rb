@@ -166,8 +166,11 @@ module DatawireQuarkCore
     return "quark.float" if obj.is_a? Float
     return "quark.List<quark.Object>" if obj.is_a? Array
     return "quark.Map<quark.Object,quark.Object>" if obj.is_a? Hash
-    return nil if not obj.respond_to? "_getClass"
-    return obj._getClass
+    if obj.respond_to? "_getClass" then
+      return obj._getClass
+    else
+      return "quark.Object"
+    end
   end
 
   class QuarkObject

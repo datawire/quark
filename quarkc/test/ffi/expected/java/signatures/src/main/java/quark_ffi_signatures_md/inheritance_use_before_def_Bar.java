@@ -8,10 +8,13 @@ public class inheritance_use_before_def_Bar extends quark.reflect.Class implemen
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_use_before_def_Bar_go_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.use_before_def.Bar();
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

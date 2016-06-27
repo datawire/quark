@@ -8,10 +8,13 @@ public class classes_test_replace extends quark.reflect.Class implements io.data
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "what"), new quark.reflect.Field("quark.String", "start"), new quark.reflect.Field("quark.String", "end")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new classes_test_replace_that_Method(), new classes_test_replace_does_Method(), new classes_test_replace_check_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.get("classes.string_test")}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"classes.string_test"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new classes.test_replace((String) ((args).get(0)));
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

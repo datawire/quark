@@ -623,14 +623,17 @@
 
     function _getClass(obj) {
         if (typeof obj === "boolean") { return "quark.bool"; }
-        if (typeof obj === "number") { return "quark.float"; }
+        if (typeof obj === "number") {
+            // should we could detect integral values here?
+            return "quark.float";
+        }
         if (typeof obj === "string") { return "quark.String"; }
         if (obj instanceof Array) { return "quark.List<quark.Object>"; }
         if (obj instanceof Map) { return "quark.Map<quark.Object,quark.Object>"; }
 
         if (obj._getClass) { return obj._getClass(); }
 
-        return null;
+        return "quark.Object";
     }
     exports._getClass = _getClass;
 

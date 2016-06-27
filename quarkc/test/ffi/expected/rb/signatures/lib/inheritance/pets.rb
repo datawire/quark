@@ -10,6 +10,9 @@ require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
 
 def self.Pet; Pet; end
 class Pet < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static inheritance_pets_Pet_ref: -> { nil }
 
 
 
@@ -28,6 +31,27 @@ class Pet < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
+    def _getClass()
+        
+        return "inheritance.pets.Pet"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
     def __init_fields__()
         
 
@@ -36,6 +60,7 @@ class Pet < ::DatawireQuarkCore::QuarkObject
 
 
 end
+Pet.unlazy_statics
 
 def self.Cat; Cat; end
 class Cat < ::Quark.inheritance.pets.Pet

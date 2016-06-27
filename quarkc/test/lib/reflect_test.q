@@ -44,7 +44,7 @@ namespace complex {
 class ClassReflectTest {
 
     void checkClassParents(String name, List<Class> expectedParents) {
-        checkEqual(expectedParents, reflect.Class.get(name).parents);
+        checkEqual(expectedParents, reflect.Class.get(name).getParents());
     }
 
     void testClassParents() {
@@ -56,7 +56,7 @@ class ClassReflectTest {
 
     void testClassParentsIgnoredThings() {
         // Interfaces, abstract classes, templatized classes are all ignored
-        checkClassParents("complex.F", [reflect.Class.get("complex.A")]);
+        checkClassParents("complex.F", [reflect.Class.get("complex.AbstractClass"), reflect.Class.get("complex.A")]);
         checkClassParents("complex.G", [reflect.Class.get("complex.A")]);
         checkClassParents("complex.I", [reflect.Class.get("complex.A")]);
     }

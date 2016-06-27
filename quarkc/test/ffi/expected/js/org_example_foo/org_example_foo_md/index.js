@@ -45,7 +45,7 @@ function org_example_foo_Foo() {
     (this).parameters = [];
     (this).fields = [];
     (this).methods = [new org_example_foo_Foo_test_Method()];
-    (this).parents = [quark.reflect.Class.OBJECT];
+    (this).parents = ["quark.Object"];
 }
 exports.org_example_foo_Foo = org_example_foo_Foo;
 _qrt.util.inherits(org_example_foo_Foo, quark.reflect.Class);
@@ -59,6 +59,11 @@ function org_example_foo_Foo_construct(args) {
     return new org.example.foo.Foo();
 }
 org_example_foo_Foo.prototype.construct = org_example_foo_Foo_construct;
+
+function org_example_foo_Foo_isAbstract() {
+    return false;
+}
+org_example_foo_Foo.prototype.isAbstract = org_example_foo_Foo_isAbstract;
 
 function org_example_foo_Foo__getClass() {
     return _qrt.cast(null, function () { return String; });
