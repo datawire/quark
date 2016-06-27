@@ -12,6 +12,15 @@ class Pet(object):
     def greet(self):
         raise NotImplementedError('`Pet.greet` is an abstract method')
 
+    def _getClass(self):
+        return u"inheritance.pets.Pet"
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+Pet.inheritance_pets_Pet_ref = None
 class Cat(Pet):
     def _init(self):
         Pet._init(self)

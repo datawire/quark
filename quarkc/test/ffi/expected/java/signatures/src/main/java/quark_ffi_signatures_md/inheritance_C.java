@@ -8,10 +8,13 @@ public class inheritance_C extends quark.reflect.Class implements io.datawire.qu
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_C_greet_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.get("inheritance.A")}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"inheritance.A"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.C((String) ((args).get(0)));
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

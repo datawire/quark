@@ -92,8 +92,8 @@ class Roots(AST):
                 dep = self.roots[use]
                 if dep not in result:
                     self.dfs(dep, result, visiting)
-            result.append(root)
-            return result
+            if root not in result:
+                result.append(root)
         finally:
             visiting.discard(root)
 
@@ -830,7 +830,7 @@ class Reflector:
         # though. Also parameterized types gets passed through, which is kinda
         # wrong too.
         cls = type.resolved.type
-        return not (isinstance(cls, (Primitive, Interface, TypeParam)) or is_abstract(cls))
+        return not (isinstance(cls, (Primitive, Interface, TypeParam)))
 
     def visit_Type(self, type):
         cls = type.resolved.type
@@ -897,7 +897,7 @@ class Reflector:
         return ".".join(self.package(cls.package) + [cls.name.text])
 
     def visit_Class(self, cls):
-        if isinstance(cls, (Primitive, Interface)) or is_abstract(cls):
+        if isinstance(cls, (Primitive, Interface)):
             if (cls.package and cls.package.name.text == BUILTIN and cls.name.text in ("List", "Map") or
                 isinstance(cls, Interface)):
                 self.classes.append(cls)
@@ -932,10 +932,12 @@ class Reflector:
             mdefs.append(mdef)
             mids.append('new %s()' % mid)
 
-        if isinstance(cls, Interface):
+        if isinstance(cls, Interface) or is_abstract(cls):
             construct = "null"
+            abstract = "true"
         else:
             construct = "new %s(%s)" % (id, ", ".join(['?args[%s]' % i for i in range(nparams)]))
+            abstract = "false"
 
         return """%(mdefs)s
     class %(mdname)s extends reflect.Class {
@@ -955,6 +957,8 @@ class Reflector:
             return %(construct)s;
         }
 
+        bool isAbstract() { return %(abstract)s; }
+
         String _getClass() { return null; }
         Object _getField(String name) { return null; }
         void _setField(String name, Object value) {}
@@ -965,12 +969,13 @@ class Reflector:
             "fields": ", ".join(['new reflect.Field("%s", "%s")' % f for f in self.fields(cls, texp.bindings)]),
             "mdefs": "\n".join(mdefs),
             "methods": ", ".join(mids),
-            "parents": ", ".join(['reflect.Class.get("{}")'.format(self.qual(parent_type.resolved.type))
+            "parents": ", ".join(['"{}"'.format(self.qual(parent_type.resolved.type))
                                   for parent_type in cls.bases
                                   if (self._has_reflect_class(parent_type) and
                                       not parent_type.resolved.type.parameters)]
-                                 or ["reflect.Class.OBJECT"]),
-            "construct": construct}
+                                 or ['"quark.Object"']),
+            "construct": construct,
+            "abstract": abstract}
 
     def leave_Root(self, root):
         mdpkg = mdroot(self.entry)
@@ -1101,12 +1106,13 @@ class Compiler(object):
             self.log.debug("loading from: %sc", url)
             with open(urlc) as fd:
                 try:
-                    deps = pickle.load(fd)
+                    unp = pickle.Unpickler(fd)
+                    deps = unp.load()
                     if is_newer(urlc, *deps):
-                        roots = pickle.load(fd)
+                        roots = unp.load()
                         # Check for the end record in case we
                         # encounter a partially written file.
-                        end = pickle.load(fd)
+                        end = unp.load()
                         if end == ARCHIVE_END:
                             for root in roots:
                                 self.CACHE[root.url] = root
@@ -1217,8 +1223,10 @@ class Compiler(object):
     def reflect(self, root):
         ref = Reflector()
         root.traverse(ref)
-#        with open("/tmp/reflector.q", "w") as fd:
-#            fd.write(ref.code)
+        refout = os.environ.get("QUARK_REFLECTOR")
+        if refout:
+            with open(refout, "w") as fd:
+                fd.write(ref.code)
         old = self.root
         self.root = root
         try:
@@ -1255,7 +1263,7 @@ class Compiler(object):
 
     @overload(AST, AST)
     def merge_one(self, n1, n2):
-        raise CompileError("Cannot merge %r @ %s with %r @ %s" % (n1, lineinfo(n1), n2, lineinfo(n2)))
+        return n1
 
     def trans_roots(self, root):
         result = [root]
@@ -1295,11 +1303,12 @@ class Compiler(object):
             if not is_newer(urlc, __file__, *deps):
                 self.log.info("Writing %s" % urlc)
                 with open(urlc, "w") as fd:
-                    pickle.dump(deps, fd, -1)
-                    pickle.dump(trans_roots, fd, -1)
+                    pickler = pickle.Pickler(fd, -1)
+                    pickler.dump(deps)
+                    pickler.dump(trans_roots)
                     # Write out an object to mark the archive end so
                     # we can detect partial writes.
-                    pickle.dump(ARCHIVE_END, fd, -1)
+                    pickler.dump(ARCHIVE_END)
                 modified.append(file.root)
         # We compute the modified flag here so it never gets saved to disk.
         for r in modified:

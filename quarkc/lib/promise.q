@@ -285,4 +285,26 @@ namespace quark {
             self.promise._reject(err);
        }
     }
+
+    class _BoundMethod extends UnaryCallable {
+        Object target;
+        reflect.Method method;
+        List<Object> additionalArgs;
+
+        _BoundMethod(Object target, String methodName, List<Object> additionalArgs) {
+            self.target = target;
+            self.method = target.getClass().getMethod(methodName);
+            self.additionalArgs = additionalArgs;
+        }
+
+        Object call(Object arg) {
+            List<Object> args = new ListUtil<Object>().slice(additionalArgs, 0, additionalArgs.size());
+            args.insert(0, arg);
+            return self.method.invoke(self.target, args);
+        }
+    }
+
+    // Create a UnaryCallable out of a method, with additional arguments that
+    // will be passed in after the value passed in by the Promise callback.
+    macro _BoundMethod bind(Object target, String method, List<Object> additionalArgs) (new _BoundMethod((target), (method), (additionalArgs)));
 }

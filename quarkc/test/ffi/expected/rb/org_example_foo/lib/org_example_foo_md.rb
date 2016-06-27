@@ -75,7 +75,7 @@ class OrgExampleFooFoo < ::Quark.quark.reflect.QuarkClass
         (self).parameters = ::DatawireQuarkCore::List.new([])
         (self).fields = ::DatawireQuarkCore::List.new([])
         (self).methods = ::DatawireQuarkCore::List.new([::Quark.org_example_foo_md.org_example_foo_Foo_test_Method.new()])
-        (self).parents = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.QuarkClass.OBJECT])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
 
         nil
     end
@@ -86,6 +86,13 @@ class OrgExampleFooFoo < ::Quark.quark.reflect.QuarkClass
     def construct(args)
         
         return ::Quark.org.example.foo.Foo.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
 
         nil
     end

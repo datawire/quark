@@ -173,7 +173,7 @@ public class Builtins {
 
         if (obj instanceof QObject) { return ((QObject) obj)._getClass(); }
 
-        return null;
+        return "quark.Object";
     }
 
 }

@@ -8,10 +8,13 @@ public class slack_event_Edited extends quark.reflect.Class implements io.datawi
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("slack.User", "user"), new quark.reflect.Field("quark.String", "timestamp")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new slack.event.Edited();
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

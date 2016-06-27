@@ -8,10 +8,13 @@ public class quark_Map_quark_String_quark_Object_ extends quark.reflect.Class im
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.String", "quark.Object"}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.OBJECT}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"quark.Object"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new java.util.HashMap<String,Object>();
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

@@ -46,6 +46,7 @@ include spi_api_tracing.q;
 include os.q;
 include mock.q;
 include promise.q;
+include io.q;
 
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
@@ -76,6 +77,14 @@ macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec
                            $py{_default_codec()}
                            $rb{::DatawireQuarkCore.default_codec}
                            $js{_qrt.defaultCodec()};
+
+macro void _trace() $java{do{new Throwable().printStackTrace();} while(false)}
+                    $py{__import__("traceback").print_stack()};
+
+macro void panic(String msg) $java{throw new RuntimeException($msg)}
+                             $py{raise Exception($msg)}
+                             $rb{raise ($msg)}
+                             $js{throw ($msg)};
 
 interface Task {
     void onExecute(Runtime runtime); // XXX: right now, context is not

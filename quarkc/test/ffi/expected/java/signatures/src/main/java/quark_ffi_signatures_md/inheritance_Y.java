@@ -8,10 +8,13 @@ public class inheritance_Y extends quark.reflect.Class implements io.datawire.qu
         (this).parameters = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{}));
         (this).fields = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new quark.reflect.Field("quark.String", "name")}));
         (this).methods = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{new inheritance_Y_test_Method()}));
-        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{quark.reflect.Class.get("inheritance.X")}));
+        (this).parents = new java.util.ArrayList(java.util.Arrays.asList(new Object[]{"inheritance.X"}));
     }
     public Object construct(java.util.ArrayList<Object> args) {
         return new inheritance.Y((String) ((args).get(0)));
+    }
+    public Boolean isAbstract() {
+        return false;
     }
     public String _getClass() {
         return (String) (null);

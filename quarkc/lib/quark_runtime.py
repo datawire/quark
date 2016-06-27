@@ -433,6 +433,8 @@ def _getClass(obj):
         return "quark.String"
     if isinstance(obj, int):
         return "quark.int"
+    if isinstance(obj, long):
+        return "quark.long"
     if isinstance(obj, float):
         return "quark.float"
     if isinstance(obj, (list, tuple)):
@@ -442,7 +444,7 @@ def _getClass(obj):
     # https://hynek.me/articles/hasattr/ - hasattr is bad
     if getattr(obj, "_getClass", None):
         return obj._getClass()
-    return None
+    return "quark.Object"
 
 class _RuntimeFactory(object):
     RUNTIME_MODULE="quark_threaded_runtime"
