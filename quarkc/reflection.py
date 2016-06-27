@@ -108,14 +108,15 @@ class Reflector:
         return self.apply_macro(self.get("Object", "__eq__"), self.texpr("String"), self.gen.name("name"),
                                 [self.string(field.name)])
 
-    def gen_ladder(self, texp, rung, default=None):
+    def gen_ladder(self, texp, rung, default=None, pred=lambda f: True):
         cls, use_bindings = texp.type, texp.bindings
 
         ladder = []
         bindings = base_bindings(cls)
         bindings.update(use_bindings)
         for f in get_fields(cls):
-            ladder.append(rung(f, bindings))
+            if pred(f):
+                ladder.append(rung(f, bindings))
         if default:
             ladder.append(default)
 
@@ -143,7 +144,8 @@ class Reflector:
         return self.gen_ladder(texp, self.gen_accessrung, self.gen.return_(self.gen.null()))
 
     def gen_fieldsets(self, texp):
-        return self.gen_ladder(texp, lambda f, b: self.gen_accessrung(f, b, False))
+        pred = lambda f: not isinstance(f.clazz, Interface)
+        return self.gen_ladder(texp, lambda f, b: self.gen_accessrung(f, b, False), pred=pred)
 
     def gen_accessors(self, cls):
         methods = [
