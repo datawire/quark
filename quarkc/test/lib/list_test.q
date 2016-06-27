@@ -68,4 +68,18 @@ class ListTest {
         checkEqual([1, 2, 4], l);
     }
 
+    void test_toJSON() {
+        List<int> l = [1, 2, 3];
+        JSONObject json = l.toJSON();
+        String actual = json.toString();
+        checkEqual("[1,2,3]", actual);
+    }
+
+    void test_fromJSON() {
+        String json = "[1,2,3]";
+        List<int> result = new List<int>();
+        Class klass = Class.get("quark.List<quark.int>");
+        result = ?fromJSON(klass, result, json.parseJSON());
+        checkEqual([1, 2, 3], result);
+    }
 }

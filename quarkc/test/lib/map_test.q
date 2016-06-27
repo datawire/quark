@@ -108,4 +108,14 @@ class MapTest {
         String actual = json.toString();
         checkEqual("{\"one\":1,\"two\":2}", actual);
     }
+
+    void test_fromJSON() {
+        String json = "{\"one\":1,\"two\":2}";
+        Map<String,int> result = new Map<String,int>();
+        Class klass = Class.get("quark.Map<quark.String,quark.int>");
+        result = ?fromJSON(klass, result, json.parseJSON());
+        checkEqual(result["one"], theMap["one"]);
+        checkEqual(result["two"], theMap["two"]);
+        checkEqual(result.keys().size(), 2);
+    }
 }
