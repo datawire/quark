@@ -8,6 +8,9 @@ Latest
 
 ### Command line
 
+* The compiler is now roughly 2-3 times faster due to a change in the way
+  reflection code is generated.
+
 * `quark install` tries to run in offline mode by default as most
   quark generated packages do not have external dependencies. To force
   online mode use `quark install --online`.
@@ -30,8 +33,6 @@ Latest
   for use with `quark.Promise`. `quark.IO` provides utilities for doing HTTP
   HTTP requests and scheduling tasks with results returned as `Promise` instances.
 
-* Fixed a major regression in JSON generation introduced in 1.0.133.
-
 * Setting the environment variable `QUARK_TRACE` modifies logging done by
   libraries written in Quark.
   * Setting `QUARK_TRACE` to a filename redirects all logging to that
@@ -46,6 +47,12 @@ Latest
 
 * String relational operators `<`, `<=`, `>`, `>=` compare two strings
   lexicographically
+
+* Fixed a major regression in JSON generation introduced in 1.0.133.
+
+* Fixed a long-standing bug in deserialization of longs.
+
+* Fixed Future.wait in Ruby.
 
 1.0.133
 -------
