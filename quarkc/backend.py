@@ -26,7 +26,8 @@ from .ast import (
     Bool, List, Map, Name, Null, Native, NativeCase, Fixed, Attr, Cast,
     Param, Declaration, Super, Expression,
 )
-from .compiler import texpr, TypeExpr, BUILTIN, BUILTIN_FILE, REFLECT
+from .compiler import texpr, TypeExpr
+from .constants import (BUILTIN, BUILTIN_FILE, REFLECT)
 from .dispatch import overload
 from .helpers import (
     is_meta, has_super, compiled_quark, is_newer, namever, mdroot, readme,

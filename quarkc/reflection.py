@@ -14,16 +14,13 @@
 
 from collections import OrderedDict
 from .ast import (
-    AST, Bool, Class, Callable, Definition, Param, TypeParam, Function, Call,
-    Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Interface,
-    Primitive, Name, Use as AstUse, code, copy, String, Number, Var
+    Bool, Class, TypeParam, Macro, Interface, Primitive, String, Number
 )
 from .helpers import (
-    is_meta, get_fields, base_bindings, get_methods, get_field,
-    is_abstract, constructor, mdroot
+    is_meta, get_fields, base_bindings, get_methods, is_abstract, constructor, mdroot
 )
 
-from .constants import (BUILTIN, BUILTIN_FILE, REFLECT, OBJECT, VOID)
+from .constants import (BUILTIN, REFLECT, OBJECT, VOID)
 from .compiler import TypeExpr, texpr
 
 class Reflector:
@@ -204,8 +201,6 @@ class Reflector:
                 clsid = qual + "<%s>" % ",".join([OBJECT]*len(cls.parameters))
             else:
                 clsid = qual
-            cons = constructor(cls)
-            nparams = len(cons.params) if cons else 0
 
             uses = self.class_uses.get(cls, OrderedDict([(clsid,
                                                           (cls.resolved, cls, tuple(self.package(cls.package))))]))

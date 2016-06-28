@@ -26,8 +26,8 @@ from parsimonious import ParseError as GParseError
 
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
-    Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Interface,
-    Primitive, Name, Use as AstUse, code, copy,
+    Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
+    Use as AstUse, code, copy,
 )
 from .exceptions import CompileError, ParseError
 from .parser import (
@@ -36,9 +36,8 @@ from .parser import (
 )
 from .dispatch import overload
 from .helpers import (
-    lineinfo, is_meta, get_fields, base_bindings, get_methods, get_field,
-    is_abstract, constructor, base_type, base_constructors, has_super, has_return,
-    is_newer, compiled_quark, namever, mdroot,
+    lineinfo, base_bindings, get_field, constructor, base_type, base_constructors,
+    has_super, has_return, is_newer, compiled_quark, namever
 )
 from .environment import Environment
 from . import docmaker
@@ -52,7 +51,7 @@ from .messages import Warning, issue_all
 
 sys.setrecursionlimit(10000)
 
-from .constants import (BUILTIN, BUILTIN_FILE, REFLECT, OBJECT, VOID)
+from .constants import (BUILTIN, BUILTIN_FILE, VOID)
 
 def join(base, rel):
     if rel == BUILTIN_FILE:
