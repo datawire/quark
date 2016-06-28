@@ -23,7 +23,7 @@ from .helpers import (
     is_abstract, constructor, mdroot
 )
 
-from .constants import *
+from .constants import (BUILTIN, BUILTIN_FILE, REFLECT, OBJECT, VOID)
 from .compiler import TypeExpr, texpr
 
 class Reflector:

@@ -52,7 +52,7 @@ from .messages import Warning, issue_all
 
 sys.setrecursionlimit(10000)
 
-from .constants import *
+from .constants import (BUILTIN, BUILTIN_FILE, REFLECT, OBJECT, VOID)
 
 def join(base, rel):
     if rel == BUILTIN_FILE:
