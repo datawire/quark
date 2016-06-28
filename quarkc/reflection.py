@@ -196,6 +196,8 @@ class Reflector:
             classes[cls] = None
         classes.update(self.class_uses)
 
+        generated = set()
+
         for cls in classes:
             qual = self.qual(cls)
             if cls.parameters:
@@ -211,7 +213,9 @@ class Reflector:
             for clsid, (texp, ucls, pkg) in uses.items():
                 # XXX: I *think* everything is always guaranteed to have a package these days.
                 if pkg:
-                    self.gen_clazz(texp, cls, clsid, qual)
+                    if clsid not in generated:
+                        self.gen_clazz(texp, cls, clsid, qual)
+                        generated.add(clsid)
                     if not ucls: continue
                     if ucls.package and ucls.package.name.text in (REFLECT, ):
                         continue
