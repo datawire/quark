@@ -1102,7 +1102,7 @@ module DatawireQuarkCore
       if !@lock.owned?
         fail "Illegal waitWakeup of a not-acquired quark Condition"
       end
-      @condition.wait(@lock, timeout)
+      @condition.wait(@lock, timeout / 1000.0)
     end
 
     def wakeup
