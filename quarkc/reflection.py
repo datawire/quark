@@ -227,12 +227,18 @@ class Reflector:
         gname = self.backend.name("Root")
         fname = self.setclassfile(gname)
         statics = []
+        generated = set()
         for cls, obj in mdclasses:
+            varname = self.gen.name("%s_md" % cls)
+            if varname in generated:
+                continue
+            else:
+                generated.add(varname)
             mdpath = self.backend.add_import(self.backend.current_package, obj.root, obj.file)
-            statics.append(self.gen.static_field("", gname, self.reftype("Class"), self.gen.name("%s_md" % cls),
+            statics.append(self.gen.static_field("", gname, self.reftype("Class"), varname,
                                                  self.gen.get_static_field(mdpath,
                                                                            self.gen.name(cls),
-                                                                           self.gen.name("singleton"))))
+                                                                        self.gen.name("singleton"))))
         dfn_code = self.gen.clazz("", False, gname, [], None, [], statics, [],
                                   [self.gen.default_constructor(gname)],
                                   self.gen_boilerplate(gname))
