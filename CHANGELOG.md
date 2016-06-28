@@ -44,6 +44,9 @@ Latest
     allow logging to function as normal, just as if the environment
     variable were not set.
 
+* String relational operators `<`, `<=`, `>`, `>=` compare two strings
+  lexicographically
+
 1.0.133
 -------
 
