@@ -32,8 +32,8 @@
     // - the interface differs between native browser WebSocket and the ws
     // module;
     // - browsers can't be WebSocket servers (or, for that matter, HTTP servers).
-    // 
-    // We cope with this by figuring out which implementation we have, 
+    //
+    // We cope with this by figuring out which implementation we have,
     // remembering that in the runtime itself, and setting up QuarkWebSocket
     // as an impedence matcher.
     //
@@ -172,7 +172,7 @@
                 this.socket.onmessage = function (messageEvent) {
                     var incomingData = messageEvent.data;
 
-                    if (typeof(incomingData) == 'ArrayBuffer') {
+                    if (typeof(incomingData) === "ArrayBuffer") {
                         handler.onWSBinary(self, new runtime.Buffer(incomingData));
                     }
                     else {
@@ -187,7 +187,7 @@
                 };
 
                 this.socket.onerror = function (error) {
-                    handler.onWSError(self, new quark.WSError(error));
+                    handler.onWSError(self, new quark.quark.WSError(error.toString()));
                     self.socket.close();
                     handler.onWSFinal(self);
                 };
@@ -232,7 +232,7 @@
                 uri: qReq.url,
                 method: qReq.method,
                 verbose: true
-            }
+            };
 
             handler.onHTTPInit(qReq);
 
@@ -248,7 +248,7 @@
             }
 
             var req = request(
-                options, 
+                options,
                 function (error, response, body) {
                     if (error) {
                         // Not so good.
@@ -261,7 +261,7 @@
                     else {
                         // console.log("final");
 
-                        var qResp = 
+                        var qResp =
                             new QuarkResponse(response.statusCode,
                                 body,
                                 response.headers);
@@ -410,7 +410,7 @@
         this.locked = false;
 
         if (serversSupported) {
-            this.http = require('http');
+            this.http = require("http");
         }
         else {
             this.http = undefined;
@@ -657,7 +657,7 @@
     Runtime.prototype.logger = function(topic) {
         var l = runtime.logger(topic);
         return l;
-    }
+    };
 
     module.exports = new Runtime();
 
