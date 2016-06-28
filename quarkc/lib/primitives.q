@@ -3,6 +3,7 @@ include io/datawire/quark/runtime/QObject.java;
 include io/datawire/quark/runtime/Buffer.java;
 include io/datawire/quark/runtime/BufferImpl.java;
 include io/datawire/quark/runtime/Codec.java;
+include io/datawire/quark/runtime/StringUtils.java;
 
 namespace quark {
     @mapping($java{Object} $py{object} $js{Object} $rb{::DatawireQuarkCore::QuarkObject})
@@ -180,6 +181,23 @@ namespace quark {
     @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
+        macro bool __lt__(String other)    $java{io.datawire.quark.runtime.StringUtils.lt(($self),($other))}
+                                           $py{($self) < ($other)}
+                                           $rb{($self) < ($other)}
+                                           $js{($self) < ($other)};
+        macro bool __le__(String other)    $java{io.datawire.quark.runtime.StringUtils.le(($self),($other))}
+                                           $py{($self) <= ($other)}
+                                           $rb{($self) <= ($other)}
+                                           $js{($self) <= ($other)};
+        macro bool __gt__(String other)    $java{io.datawire.quark.runtime.StringUtils.gt(($self),($other))}
+                                           $py{($self) > ($other)}
+                                           $rb{($self) > ($other)}
+                                           $js{($self) > ($other)};
+        macro bool __ge__(String other)    $java{io.datawire.quark.runtime.StringUtils.ge(($self),($other))}
+                                           $py{($self) >= ($other)}
+                                           $rb{($self) >= ($other)}
+                                           $js{($self) >= ($other)};
+
         macro int size()                   $java{($self).length()}
                                            $py{len($self)}
                                            $rb{($self).size}
