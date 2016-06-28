@@ -30,7 +30,6 @@ class SocketEvent extends MockEvent {
     String url;
     WSHandler handler;
     MockSocket sock = null;
-    bool closed = false;
     int expectIdx = 0;
 
     SocketEvent(String url, WSHandler handler) {
@@ -53,9 +52,7 @@ class SocketEvent extends MockEvent {
         if (sock != null) {
             Context.runtime().fail("already accepted");
         } else {
-            sock = new MockSocket();
-            handler.onWSInit(sock);
-            handler.onWSConnected(sock);
+            sock = new MockSocket(handler);
         }
     }
 
@@ -70,13 +67,7 @@ class SocketEvent extends MockEvent {
     Simulate the remote peer closing the socket.
     """)*/
     void close() {
-        if (closed) {
-            Context.runtime().fail("already closed");
-        } else {
-            handler.onWSClosed(sock);
-            handler.onWSFinal(sock);
-            closed = true;
-        }
+        self.sock.close();
     }
 
     /*@doc("""
@@ -164,8 +155,17 @@ class BinaryMessage extends MockMessage {
 }
 
 class MockSocket extends WebSocket {
-
     List<MockMessage> messages = [];
+    bool closed = false;
+    WSHandler handler;
+
+    MockSocket(WSHandler handler) {
+        self.handler = handler;
+        self.closed = false;
+        self.messages = [];
+        handler.onWSInit(self);
+        handler.onWSConnected(self);
+    }
 
     bool send(String message) {
         messages.add(new TextMessage(message));
@@ -178,10 +178,15 @@ class MockSocket extends WebSocket {
     }
 
     bool close() {
-        // ...
+        if (closed) {
+            Context.runtime().fail("already closed");
+        } else {
+            handler.onWSClosed(self);
+            handler.onWSFinal(self);
+            closed = true;
+        }
         return true;
     }
-
 }
 
 /*@doc("""

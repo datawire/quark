@@ -146,13 +146,19 @@ class _QuarkWSAdapter(object):
         self.ws = ws
 
     def send(self, message):
-        self.ws.send(message)
+        ws = self.ws
+        if ws is not None:
+            ws.send(message)
 
     def sendBinary(self, buffer):
-        self.ws.send(buffer.data, binary=True)
+        ws = self.ws
+        if ws is not None:
+            ws.send(buffer.data, binary=True)
 
     def close(self):
-        self.ws.close()
+        ws = self.ws
+        if ws is not None:
+            ws.close()
 
 class _QuarkWSMixin(object):
 
@@ -177,6 +183,8 @@ class _QuarkWSMixin(object):
         else:
             self.runtime.events.put((self.handler.onWSError, (self.ws, quark.WSError("%s %s" % (code, reason))), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
+        # After we get the closed callback we can clean up the
+        # websocket adapter immediately
         self.ws.ws = None
         self.ws = None
 
