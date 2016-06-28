@@ -18,9 +18,10 @@ class ConcurrentTest {
         }
         long start = now();
         Future f = new Future();
-        f.await(0.125);
+        f.await(0.5);
         long elapsed = now() - start;
-        check(elapsed < 200, "Returned too late.");
-        check(elapsed > 60, "Returned too early.");
+        String elapsedStr = elapsed.toString() + " ms";
+        check(elapsed < 750, "Expected elapsed < 750 ms got " + elapsedStr);
+        check(elapsed > 400, "Expected elapsed > 400 ms got " + elapsedStr);
     }
 }
