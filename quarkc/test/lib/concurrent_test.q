@@ -7,10 +7,15 @@ void main(List<String> args) {
     test.run(args);
 }
 
+macro bool isJavascript() $java{false} $py{False} $rb{false} $js{true};
+
 class ConcurrentTest {
     // Future.await returns after given timeout if the Future hasn't got a value
     // yet.
     void testAwaitNoResult() {
+        if (isJavascript()) {
+            return;
+        }
         long start = now();
         Future f = new Future();
         f.await(0.125);
