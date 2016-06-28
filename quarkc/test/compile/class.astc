@@ -8,24 +8,5 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
     Param(Type(Name(int)), Name(a), $type=1.quark.int),
     Param(Type(Name(int)), Name(b), $type=1.quark.int),
     Param(Type(Name(String)), Name(c), $type=1.quark.String),
-    Block()),
-
-   Method(static=False, Type(Name(String)), Name(_getClass), Block(
-     Return(String("class.C", $type=1.quark.String)))),
-
-   Method(static=False, Type(Name(Object)), Name(_getField),
-    Param(Type(Name(String)), Name(name), $type=1.quark.String),
-    Block(
-     Return(Null(null, $type=1.quark.Object)))),
-
-   Method(static=False, Type(Name(void)), Name(_setField),
-    Param(Type(Name(String)), Name(name), $type=1.quark.String),
-    Param(Type(Name(Object)), Name(value), $type=1.quark.Object),
-    Block()),
-   Field(static=True, Type(Name(reflect), Name(Class)), Name(class_C_ref),
-    Call(Attr(Var(Name(reflect), $type=3.quark.reflect), Name(__register__),
-     $type=3.quark.reflect.__register__), Attr(Attr(Var(Name(class_md),
-       $type=1.class_md), Name(Root), $type=1.class_md.Root), Name(class_C_md),
-     $type=3.quark.reflect.Class), $type=3.quark.reflect.Class),
-   $type=3.quark.reflect.Class)))
+    Block())))
 )

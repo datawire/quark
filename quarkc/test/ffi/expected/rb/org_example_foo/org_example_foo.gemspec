@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.author      = 'Quark compiled code'
   # spec.email       = ''
   # spec.license     = ''
-  spec.files       = ['lib/org.rb', 'lib/org/example.rb', 'lib/org/example/foo.rb', 'lib/org_example_foo_md.rb']
+  spec.files       = ['lib/org_example_foo_md.rb', 'lib/org.rb', 'lib/org/example.rb', 'lib/org/example/foo.rb']
   # spec.homepage    = ''
   spec.add_runtime_dependency 'quark', '= 0.0.1'
 end

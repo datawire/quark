@@ -18,7 +18,6 @@ require 'quark' # .../reflect
 # for ('quark_ffi_signatures_md',): require_relative 'statics' # 0 () ()
 # for ('quark_ffi_signatures_md',): require_relative 'docs' # 0 () ()
 
-
 def self.generics_Box_quark_Object__set_Method; GenericsBoxQuarkObjectSetMethod; end
 class GenericsBoxQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
@@ -196,7 +195,6 @@ class GenericsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsBoxQuarkObject.unlazy_statics
-
 
 def self.generics_Box_quark_int__set_Method; GenericsBoxQuarkIntSetMethod; end
 class GenericsBoxQuarkIntSetMethod < ::Quark.quark.reflect.Method
@@ -376,7 +374,6 @@ class GenericsBoxQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 GenericsBoxQuarkInt.unlazy_statics
 
-
 def self.generics_Crate_quark_Object__set_Method; GenericsCrateQuarkObjectSetMethod; end
 class GenericsCrateQuarkObjectSetMethod < ::Quark.quark.reflect.Method
 
@@ -555,7 +552,6 @@ class GenericsCrateQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 GenericsCrateQuarkObject.unlazy_statics
 
-
 def self.generics_Sack; GenericsSack; end
 class GenericsSack < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -624,7 +620,6 @@ class GenericsSack < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsSack.unlazy_statics
-
 
 def self.generics_Matrix_quark_Object____get___Method; GenericsMatrixQuarkObjectGetMethod; end
 class GenericsMatrixQuarkObjectGetMethod < ::Quark.quark.reflect.Method
@@ -804,7 +799,6 @@ class GenericsMatrixQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 GenericsMatrixQuarkObject.unlazy_statics
 
-
 def self.generics_constructors_Box_quark_Object__get_Method; GenericsConstructorsBoxQuarkObjectGetMethod; end
 class GenericsConstructorsBoxQuarkObjectGetMethod < ::Quark.quark.reflect.Method
 
@@ -927,7 +921,6 @@ class GenericsConstructorsBoxQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsConstructorsBoxQuarkObject.unlazy_statics
-
 
 def self.generics_pkg_Foo_quark_Object__foo_Method; GenericsPkgFooQuarkObjectFooMethod; end
 class GenericsPkgFooQuarkObjectFooMethod < ::Quark.quark.reflect.Method
@@ -1106,7 +1099,6 @@ class GenericsPkgFooQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 GenericsPkgFooQuarkObject.unlazy_statics
 
-
 def self.generics_pkg_StringFoo_get_Method; GenericsPkgStringFooGetMethod; end
 class GenericsPkgStringFooGetMethod < ::Quark.quark.reflect.Method
 
@@ -1284,7 +1276,6 @@ class GenericsPkgStringFoo < ::Quark.quark.reflect.QuarkClass
 end
 GenericsPkgStringFoo.unlazy_statics
 
-
 def self.generics_pkg_Box_quark_String_; GenericsPkgBoxQuarkString; end
 class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1354,7 +1345,6 @@ class GenericsPkgBoxQuarkString < ::Quark.quark.reflect.QuarkClass
 end
 GenericsPkgBoxQuarkString.unlazy_statics
 
-
 def self.generics_pkg_StringBox; GenericsPkgStringBox; end
 class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1423,7 +1413,6 @@ class GenericsPkgStringBox < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsPkgStringBox.unlazy_statics
-
 
 def self.generics_ccc_TLSContextInitializer_getValue_Method; GenericsCccTLSContextInitializerGetValueMethod; end
 class GenericsCccTLSContextInitializerGetValueMethod < ::Quark.quark.reflect.Method
@@ -1547,7 +1536,6 @@ class GenericsCccTLSContextInitializer < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsCccTLSContextInitializer.unlazy_statics
-
 
 def self.generics_ccc_Context_current_Method; GenericsCccContextCurrentMethod; end
 class GenericsCccContextCurrentMethod < ::Quark.quark.reflect.Method
@@ -1726,7 +1714,6 @@ class GenericsCccContext < ::Quark.quark.reflect.QuarkClass
 end
 GenericsCccContext.unlazy_statics
 
-
 def self.generics_ccc_TLSInitializer_quark_Object__getValue_Method; GenericsCccTLSInitializerQuarkObjectGetValueMethod; end
 class GenericsCccTLSInitializerQuarkObjectGetValueMethod < ::Quark.quark.reflect.Method
 
@@ -1849,7 +1836,6 @@ class GenericsCccTLSInitializerQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 GenericsCccTLSInitializerQuarkObject.unlazy_statics
-
 
 def self.generics_ccc_TLS_generics_ccc_Context__getValue_Method; GenericsCccTLSGenericsCccContextGetValueMethod; end
 class GenericsCccTLSGenericsCccContextGetValueMethod < ::Quark.quark.reflect.Method
@@ -1974,7 +1960,6 @@ class GenericsCccTLSGenericsCccContext < ::Quark.quark.reflect.QuarkClass
 end
 GenericsCccTLSGenericsCccContext.unlazy_statics
 
-
 def self.inheritance_Base; InheritanceBase; end
 class InheritanceBase < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -2043,7 +2028,6 @@ class InheritanceBase < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceBase.unlazy_statics
-
 
 def self.inheritance_Test; InheritanceTest; end
 class InheritanceTest < ::Quark.quark.reflect.QuarkClass
@@ -2114,7 +2098,6 @@ class InheritanceTest < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceTest.unlazy_statics
 
-
 def self.inheritance_A; InheritanceA; end
 class InheritanceA < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -2183,7 +2166,6 @@ class InheritanceA < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceA.unlazy_statics
-
 
 def self.inheritance_B_greet_Method; InheritanceBGreetMethod; end
 class InheritanceBGreetMethod < ::Quark.quark.reflect.Method
@@ -2309,7 +2291,6 @@ class InheritanceB < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceB.unlazy_statics
 
-
 def self.inheritance_C_greet_Method; InheritanceCGreetMethod; end
 class InheritanceCGreetMethod < ::Quark.quark.reflect.Method
 
@@ -2434,7 +2415,6 @@ class InheritanceC < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceC.unlazy_statics
 
-
 def self.inheritance_X; InheritanceX; end
 class InheritanceX < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -2503,7 +2483,6 @@ class InheritanceX < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceX.unlazy_statics
-
 
 def self.inheritance_Y_test_Method; InheritanceYTestMethod; end
 class InheritanceYTestMethod < ::Quark.quark.reflect.Method
@@ -2629,7 +2608,6 @@ class InheritanceY < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceY.unlazy_statics
 
-
 def self.inheritance_t1_A_foo_Method; InheritanceT1AFooMethod; end
 class InheritanceT1AFooMethod < ::Quark.quark.reflect.Method
 
@@ -2753,7 +2731,6 @@ class InheritanceT1A < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceT1A.unlazy_statics
-
 
 def self.inheritance_t1_B_foo_Method; InheritanceT1BFooMethod; end
 class InheritanceT1BFooMethod < ::Quark.quark.reflect.Method
@@ -2879,7 +2856,6 @@ class InheritanceT1B < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceT1B.unlazy_statics
 
-
 def self.inheritance_t1_C_foo_Method; InheritanceT1CFooMethod; end
 class InheritanceT1CFooMethod < ::Quark.quark.reflect.Method
 
@@ -3004,7 +2980,6 @@ class InheritanceT1C < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceT1C.unlazy_statics
 
-
 def self.inheritance_t2_A; InheritanceT2A; end
 class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -3073,7 +3048,6 @@ class InheritanceT2A < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceT2A.unlazy_statics
-
 
 def self.inheritance_t2_B; InheritanceT2B; end
 class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
@@ -3144,7 +3118,6 @@ class InheritanceT2B < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceT2B.unlazy_statics
 
-
 def self.inheritance_t2_X_quark_int_; InheritanceT2XQuarkInt; end
 class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -3214,7 +3187,6 @@ class InheritanceT2XQuarkInt < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceT2XQuarkInt.unlazy_statics
 
-
 def self.inheritance_t2_Y; InheritanceT2Y; end
 class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -3283,7 +3255,6 @@ class InheritanceT2Y < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceT2Y.unlazy_statics
-
 
 def self.inheritance_pets_Pet_greet_Method; InheritancePetsPetGreetMethod; end
 class InheritancePetsPetGreetMethod < ::Quark.quark.reflect.Method
@@ -3409,7 +3380,6 @@ class InheritancePetsPet < ::Quark.quark.reflect.QuarkClass
 end
 InheritancePetsPet.unlazy_statics
 
-
 def self.inheritance_pets_Cat_greet_Method; InheritancePetsCatGreetMethod; end
 class InheritancePetsCatGreetMethod < ::Quark.quark.reflect.Method
 
@@ -3533,7 +3503,6 @@ class InheritancePetsCat < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritancePetsCat.unlazy_statics
-
 
 def self.inheritance_pets_Dog_greet_Method; InheritancePetsDogGreetMethod; end
 class InheritancePetsDogGreetMethod < ::Quark.quark.reflect.Method
@@ -3659,7 +3628,6 @@ class InheritancePetsDog < ::Quark.quark.reflect.QuarkClass
 end
 InheritancePetsDog.unlazy_statics
 
-
 def self.inheritance_Message_encode_Method; InheritanceMessageEncodeMethod; end
 class InheritanceMessageEncodeMethod < ::Quark.quark.reflect.Method
 
@@ -3783,7 +3751,6 @@ class InheritanceMessage < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceMessage.unlazy_statics
 
-
 def self.inheritance_Ping_encode_Method; InheritancePingEncodeMethod; end
 class InheritancePingEncodeMethod < ::Quark.quark.reflect.Method
 
@@ -3906,7 +3873,6 @@ class InheritancePing < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritancePing.unlazy_statics
-
 
 def self.inheritance_Pong_toString_Method; InheritancePongToStringMethod; end
 class InheritancePongToStringMethod < ::Quark.quark.reflect.Method
@@ -4085,7 +4051,6 @@ class InheritancePong < ::Quark.quark.reflect.QuarkClass
 end
 InheritancePong.unlazy_statics
 
-
 def self.inheritance_super__A_greet_Method; InheritanceSuperAGreetMethod; end
 class InheritanceSuperAGreetMethod < ::Quark.quark.reflect.Method
 
@@ -4209,7 +4174,6 @@ class InheritanceSuperA < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceSuperA.unlazy_statics
-
 
 def self.inheritance_super__B_greet_Method; InheritanceSuperBGreetMethod; end
 class InheritanceSuperBGreetMethod < ::Quark.quark.reflect.Method
@@ -4335,7 +4299,6 @@ class InheritanceSuperB < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceSuperB.unlazy_statics
 
-
 def self.inheritance_use_before_def_Bar_go_Method; InheritanceUseBeforeDefBarGoMethod; end
 class InheritanceUseBeforeDefBarGoMethod < ::Quark.quark.reflect.Method
 
@@ -4460,7 +4423,6 @@ class InheritanceUseBeforeDefBar < ::Quark.quark.reflect.QuarkClass
 end
 InheritanceUseBeforeDefBar.unlazy_statics
 
-
 def self.inheritance_use_before_def_Foo; InheritanceUseBeforeDefFoo; end
 class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -4529,7 +4491,6 @@ class InheritanceUseBeforeDefFoo < ::Quark.quark.reflect.QuarkClass
 
 end
 InheritanceUseBeforeDefFoo.unlazy_statics
-
 
 def self.interfaces_A_foo_Method; InterfacesAFooMethod; end
 class InterfacesAFooMethod < ::Quark.quark.reflect.Method
@@ -4710,7 +4671,6 @@ class InterfacesA < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesA.unlazy_statics
 
-
 def self.interfaces_B_bar_Method; InterfacesBBarMethod; end
 class InterfacesBBarMethod < ::Quark.quark.reflect.Method
 
@@ -4835,7 +4795,6 @@ class InterfacesB < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesB.unlazy_statics
 
-
 def self.interfaces_C_foo_Method; InterfacesCFooMethod; end
 class InterfacesCFooMethod < ::Quark.quark.reflect.Method
 
@@ -4959,7 +4918,6 @@ class InterfacesC < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesC.unlazy_statics
-
 
 def self.interfaces_T1_foo_Method; InterfacesT1FooMethod; end
 class InterfacesT1FooMethod < ::Quark.quark.reflect.Method
@@ -5140,7 +5098,6 @@ class InterfacesT1 < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesT1.unlazy_statics
 
-
 def self.interfaces_T2_foo_Method; InterfacesT2FooMethod; end
 class InterfacesT2FooMethod < ::Quark.quark.reflect.Method
 
@@ -5319,7 +5276,6 @@ class InterfacesT2 < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesT2.unlazy_statics
-
 
 def self.interfaces_T3_foo_Method; InterfacesT3FooMethod; end
 class InterfacesT3FooMethod < ::Quark.quark.reflect.Method
@@ -5500,7 +5456,6 @@ class InterfacesT3 < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesT3.unlazy_statics
 
-
 def self.interfaces_T4_foo_Method; InterfacesT4FooMethod; end
 class InterfacesT4FooMethod < ::Quark.quark.reflect.Method
 
@@ -5680,7 +5635,6 @@ class InterfacesT4 < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesT4.unlazy_statics
 
-
 def self.interfaces_T5_foo_Method; InterfacesT5FooMethod; end
 class InterfacesT5FooMethod < ::Quark.quark.reflect.Method
 
@@ -5859,7 +5813,6 @@ class InterfacesT5 < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesT5.unlazy_statics
-
 
 def self.interfaces_Foo_m1_Method; InterfacesFooM1Method; end
 class InterfacesFooM1Method < ::Quark.quark.reflect.Method
@@ -6095,7 +6048,6 @@ class InterfacesFoo < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesFoo.unlazy_statics
 
-
 def self.interfaces_Bar_quark_Object__m1_Method; InterfacesBarQuarkObjectM1Method; end
 class InterfacesBarQuarkObjectM1Method < ::Quark.quark.reflect.Method
 
@@ -6329,7 +6281,6 @@ class InterfacesBarQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesBarQuarkObject.unlazy_statics
-
 
 def self.interfaces_Baz_m2_Method; InterfacesBazM2Method; end
 class InterfacesBazM2Method < ::Quark.quark.reflect.Method
@@ -6565,7 +6516,6 @@ class InterfacesBaz < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesBaz.unlazy_statics
 
-
 def self.interfaces_RazBar_m1_Method; InterfacesRazBarM1Method; end
 class InterfacesRazBarM1Method < ::Quark.quark.reflect.Method
 
@@ -6683,7 +6633,7 @@ class InterfacesRazBarM3Method < ::Quark.quark.reflect.Method
 
     def initialize()
         
-        super("quark.void", "m3", ::DatawireQuarkCore::List.new(["quark.List<quark.Object>"]))
+        super("quark.void", "m3", ::DatawireQuarkCore::List.new(["quark.List<quark.String>"]))
 
         nil
     end
@@ -6799,7 +6749,6 @@ class InterfacesRazBar < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesRazBar.unlazy_statics
-
 
 def self.interfaces_RazFaz_quark_Object__m1_Method; InterfacesRazFazQuarkObjectM1Method; end
 class InterfacesRazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
@@ -7035,7 +6984,6 @@ class InterfacesRazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesRazFazQuarkObject.unlazy_statics
 
-
 def self.interfaces_BazBar_m1_Method; InterfacesBazBarM1Method; end
 class InterfacesBazBarM1Method < ::Quark.quark.reflect.Method
 
@@ -7269,7 +7217,6 @@ class InterfacesBazBar < ::Quark.quark.reflect.QuarkClass
 
 end
 InterfacesBazBar.unlazy_statics
-
 
 def self.interfaces_BazFaz_quark_Object__m1_Method; InterfacesBazFazQuarkObjectM1Method; end
 class InterfacesBazFazQuarkObjectM1Method < ::Quark.quark.reflect.Method
@@ -7505,7 +7452,6 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesBazFazQuarkObject.unlazy_statics
 
-
 def self.classes_Overload___add___Method; ClassesOverloadAddMethod; end
 class ClassesOverloadAddMethod < ::Quark.quark.reflect.Method
 
@@ -7738,7 +7684,6 @@ class ClassesOverload < ::Quark.quark.reflect.QuarkClass
 end
 ClassesOverload.unlazy_statics
 
-
 def self.classes_Test_test_Method; ClassesTestTestMethod; end
 class ClassesTestTestMethod < ::Quark.quark.reflect.Method
 
@@ -7863,7 +7808,6 @@ class ClassesTest < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTest.unlazy_statics
 
-
 def self.classes_string_test_check_Method; ClassesStringTestCheckMethod; end
 class ClassesStringTestCheckMethod < ::Quark.quark.reflect.Method
 
@@ -7987,7 +7931,6 @@ class ClassesStringTest < ::Quark.quark.reflect.QuarkClass
 
 end
 ClassesStringTest.unlazy_statics
-
 
 def self.classes_test_size_does_Method; ClassesTestSizeDoesMethod; end
 class ClassesTestSizeDoesMethod < ::Quark.quark.reflect.Method
@@ -8166,7 +8109,6 @@ class ClassesTestSize < ::Quark.quark.reflect.QuarkClass
 
 end
 ClassesTestSize.unlazy_statics
-
 
 def self.classes_test_startsWith_that_Method; ClassesTestStartsWithThatMethod; end
 class ClassesTestStartsWithThatMethod < ::Quark.quark.reflect.Method
@@ -8400,7 +8342,6 @@ class ClassesTestStartsWith < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTestStartsWith.unlazy_statics
 
-
 def self.classes_test_endsWith_that_Method; ClassesTestEndsWithThatMethod; end
 class ClassesTestEndsWithThatMethod < ::Quark.quark.reflect.Method
 
@@ -8632,7 +8573,6 @@ class ClassesTestEndsWith < ::Quark.quark.reflect.QuarkClass
 
 end
 ClassesTestEndsWith.unlazy_statics
-
 
 def self.classes_test_find_that_Method; ClassesTestFindThatMethod; end
 class ClassesTestFindThatMethod < ::Quark.quark.reflect.Method
@@ -8866,7 +8806,6 @@ class ClassesTestFind < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTestFind.unlazy_statics
 
-
 def self.classes_test_substring_that_Method; ClassesTestSubstringThatMethod; end
 class ClassesTestSubstringThatMethod < ::Quark.quark.reflect.Method
 
@@ -9099,7 +9038,6 @@ class ClassesTestSubstring < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTestSubstring.unlazy_statics
 
-
 def self.classes_test_replace_that_Method; ClassesTestReplaceThatMethod; end
 class ClassesTestReplaceThatMethod < ::Quark.quark.reflect.Method
 
@@ -9331,7 +9269,6 @@ class ClassesTestReplace < ::Quark.quark.reflect.QuarkClass
 
 end
 ClassesTestReplace.unlazy_statics
-
 
 def self.classes_test_join_that_Method; ClassesTestJoinThatMethod; end
 class ClassesTestJoinThatMethod < ::Quark.quark.reflect.Method
@@ -9619,7 +9556,6 @@ class ClassesTestJoin < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTestJoin.unlazy_statics
 
-
 def self.classes_test_split_that_Method; ClassesTestSplitThatMethod; end
 class ClassesTestSplitThatMethod < ::Quark.quark.reflect.Method
 
@@ -9852,7 +9788,6 @@ class ClassesTestSplit < ::Quark.quark.reflect.QuarkClass
 end
 ClassesTestSplit.unlazy_statics
 
-
 def self.classes_stuff_Test_foo_Method; ClassesStuffTestFooMethod; end
 class ClassesStuffTestFooMethod < ::Quark.quark.reflect.Method
 
@@ -10030,7 +9965,6 @@ class ClassesStuffTest < ::Quark.quark.reflect.QuarkClass
 
 end
 ClassesStuffTest.unlazy_statics
-
 
 def self.statics_Foo_setCount_Method; StaticsFooSetCountMethod; end
 class StaticsFooSetCountMethod < ::Quark.quark.reflect.Method
@@ -10430,7 +10364,6 @@ class StaticsFoo < ::Quark.quark.reflect.QuarkClass
 end
 StaticsFoo.unlazy_statics
 
-
 def self.docs_Test_test_Method; DocsTestTestMethod; end
 class DocsTestTestMethod < ::Quark.quark.reflect.Method
 
@@ -10554,7 +10487,6 @@ class DocsTest < ::Quark.quark.reflect.QuarkClass
 end
 DocsTest.unlazy_statics
 
-
 def self.quark_List_quark_List_quark_Object__; QuarkListQuarkListQuarkObject; end
 class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -10623,7 +10555,6 @@ class QuarkListQuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkListQuarkObject.unlazy_statics
-
 
 def self.quark_List_quark_Object_; QuarkListQuarkObject; end
 class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
@@ -10694,7 +10625,6 @@ class QuarkListQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 QuarkListQuarkObject.unlazy_statics
 
-
 def self.quark_List_quark_String_; QuarkListQuarkString; end
 class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -10763,7 +10693,6 @@ class QuarkListQuarkString < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkListQuarkString.unlazy_statics
-
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

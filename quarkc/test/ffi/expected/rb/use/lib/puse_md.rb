@@ -1,7 +1,6 @@
 module Quark
 def self.puse_md; PuseMd; end
 module PuseMd
-
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
 

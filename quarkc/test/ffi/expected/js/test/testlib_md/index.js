@@ -1,6 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
 
-
 // CLASS Root
 function Root() {
     this.__init_fields__();

@@ -4,7 +4,6 @@ module OrgExampleFooMd
 require 'quark' # .../reflect
 # for ('org_example_foo_md',): require_relative 'org/example/foo' # 0 ('org', 'example') ()
 
-
 def self.org_example_foo_Foo_test_Method; OrgExampleFooFooTestMethod; end
 class OrgExampleFooFooTestMethod < ::Quark.quark.reflect.Method
 
@@ -128,7 +127,6 @@ class OrgExampleFooFoo < ::Quark.quark.reflect.QuarkClass
 
 end
 OrgExampleFooFoo.unlazy_statics
-
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

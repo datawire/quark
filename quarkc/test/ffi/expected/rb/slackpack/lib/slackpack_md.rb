@@ -7,7 +7,6 @@ require 'quark' # .../reflect
 require 'quark' 
 # for ('slackpack_md',): require_relative 'slackpack' # 0 () ()
 
-
 def self.slack_event_SlackEvent_load_Method; SlackEventSlackEventLoadMethod; end
 class SlackEventSlackEventLoadMethod < ::Quark.quark.reflect.Method
 
@@ -186,7 +185,6 @@ class SlackEventSlackEvent < ::Quark.quark.reflect.QuarkClass
 
 end
 SlackEventSlackEvent.unlazy_statics
-
 
 def self.slack_event_SlackError_load_Method; SlackEventSlackErrorLoadMethod; end
 class SlackEventSlackErrorLoadMethod < ::Quark.quark.reflect.Method
@@ -367,7 +365,6 @@ class SlackEventSlackError < ::Quark.quark.reflect.QuarkClass
 end
 SlackEventSlackError.unlazy_statics
 
-
 def self.slack_event_Hello_dispatch_Method; SlackEventHelloDispatchMethod; end
 class SlackEventHelloDispatchMethod < ::Quark.quark.reflect.Method
 
@@ -546,7 +543,6 @@ class SlackEventHello < ::Quark.quark.reflect.QuarkClass
 
 end
 SlackEventHello.unlazy_statics
-
 
 def self.slack_event_Message_load_Method; SlackEventMessageLoadMethod; end
 class SlackEventMessageLoadMethod < ::Quark.quark.reflect.Method
@@ -727,7 +723,6 @@ class SlackEventMessage < ::Quark.quark.reflect.QuarkClass
 end
 SlackEventMessage.unlazy_statics
 
-
 def self.slack_event_Edited; SlackEventEdited; end
 class SlackEventEdited < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -796,7 +791,6 @@ class SlackEventEdited < ::Quark.quark.reflect.QuarkClass
 
 end
 SlackEventEdited.unlazy_statics
-
 
 def self.slack_SlackHandler_onSlackEvent_Method; SlackSlackHandlerOnSlackEventMethod; end
 class SlackSlackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
@@ -1087,7 +1081,6 @@ class SlackSlackHandler < ::Quark.quark.reflect.QuarkClass
 end
 SlackSlackHandler.unlazy_statics
 
-
 def self.slack_User; SlackUser; end
 class SlackUser < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -1156,7 +1149,6 @@ class SlackUser < ::Quark.quark.reflect.QuarkClass
 
 end
 SlackUser.unlazy_statics
-
 
 def self.slack_Channel_send_Method; SlackChannelSendMethod; end
 class SlackChannelSendMethod < ::Quark.quark.reflect.Method
@@ -1281,7 +1273,6 @@ class SlackChannel < ::Quark.quark.reflect.QuarkClass
 
 end
 SlackChannel.unlazy_statics
-
 
 def self.slack_Client_connect_Method; SlackClientConnectMethod; end
 class SlackClientConnectMethod < ::Quark.quark.reflect.Method
@@ -2286,7 +2277,6 @@ class SlackClient < ::Quark.quark.reflect.QuarkClass
 end
 SlackClient.unlazy_statics
 
-
 def self.slackpack_Handler_onSlackEvent_Method; SlackpackHandlerOnSlackEventMethod; end
 class SlackpackHandlerOnSlackEventMethod < ::Quark.quark.reflect.Method
 
@@ -2576,7 +2566,6 @@ class SlackpackHandler < ::Quark.quark.reflect.QuarkClass
 end
 SlackpackHandler.unlazy_statics
 
-
 def self.quark_Map_quark_String_quark_Object_; QuarkMapQuarkStringQuarkObject; end
 class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
     extend ::DatawireQuarkCore::Static
@@ -2645,7 +2634,6 @@ class QuarkMapQuarkStringQuarkObject < ::Quark.quark.reflect.QuarkClass
 
 end
 QuarkMapQuarkStringQuarkObject.unlazy_statics
-
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

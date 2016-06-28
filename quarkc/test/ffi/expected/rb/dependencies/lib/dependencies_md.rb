@@ -1,7 +1,6 @@
 module Quark
 def self.dependencies_md; DependenciesMd; end
 module DependenciesMd
-
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject
 

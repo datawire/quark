@@ -4,7 +4,6 @@ module OverlappingNamespaceMd
 require 'quark' # .../reflect
 # for ('overlapping_namespace_md',): require_relative 'org/example/bar' # 0 ('org', 'example') ()
 
-
 def self.org_example_bar_Bar_test_Method; OrgExampleBarBarTestMethod; end
 class OrgExampleBarBarTestMethod < ::Quark.quark.reflect.Method
 
@@ -128,7 +127,6 @@ class OrgExampleBarBar < ::Quark.quark.reflect.QuarkClass
 
 end
 OrgExampleBarBar.unlazy_statics
-
 
 def self.Root; Root; end
 class Root < ::DatawireQuarkCore::QuarkObject

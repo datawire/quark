@@ -2,7 +2,6 @@ from quark_runtime import *
 
 import quark.reflect
 
-
 class generics_Box_quark_Object__set_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -71,7 +70,6 @@ class generics_Box_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_Box_quark_Object_.singleton = generics_Box_quark_Object_()
-
 class generics_Box_quark_int__set_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -140,7 +138,6 @@ class generics_Box_quark_int_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_Box_quark_int_.singleton = generics_Box_quark_int_()
-
 class generics_Crate_quark_Object__set_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -209,7 +206,6 @@ class generics_Crate_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_Crate_quark_Object_.singleton = generics_Crate_quark_Object_()
-
 class generics_Sack(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -237,7 +233,6 @@ class generics_Sack(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_Sack.singleton = generics_Sack()
-
 class generics_Matrix_quark_Object____get___Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -306,7 +301,6 @@ class generics_Matrix_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_Matrix_quark_Object_.singleton = generics_Matrix_quark_Object_()
-
 class generics_constructors_Box_quark_Object__get_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -354,7 +348,6 @@ class generics_constructors_Box_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_constructors_Box_quark_Object_.singleton = generics_constructors_Box_quark_Object_()
-
 class generics_pkg_Foo_quark_Object__foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -422,7 +415,6 @@ class generics_pkg_Foo_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_pkg_Foo_quark_Object_.singleton = generics_pkg_Foo_quark_Object_()
-
 class generics_pkg_StringFoo_get_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -490,7 +482,6 @@ class generics_pkg_StringFoo(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_pkg_StringFoo.singleton = generics_pkg_StringFoo()
-
 class generics_pkg_Box_quark_String_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -518,7 +509,6 @@ class generics_pkg_Box_quark_String_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_pkg_Box_quark_String_.singleton = generics_pkg_Box_quark_String_()
-
 class generics_pkg_StringBox(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -546,7 +536,6 @@ class generics_pkg_StringBox(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_pkg_StringBox.singleton = generics_pkg_StringBox()
-
 class generics_ccc_TLSContextInitializer_getValue_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -594,7 +583,6 @@ class generics_ccc_TLSContextInitializer(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_ccc_TLSContextInitializer.singleton = generics_ccc_TLSContextInitializer()
-
 class generics_ccc_Context_current_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -662,7 +650,6 @@ class generics_ccc_Context(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_ccc_Context.singleton = generics_ccc_Context()
-
 class generics_ccc_TLSInitializer_quark_Object__getValue_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -710,7 +697,6 @@ class generics_ccc_TLSInitializer_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_ccc_TLSInitializer_quark_Object_.singleton = generics_ccc_TLSInitializer_quark_Object_()
-
 class generics_ccc_TLS_generics_ccc_Context__getValue_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -758,7 +744,6 @@ class generics_ccc_TLS_generics_ccc_Context_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 generics_ccc_TLS_generics_ccc_Context_.singleton = generics_ccc_TLS_generics_ccc_Context_()
-
 class inheritance_Base(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -786,7 +771,6 @@ class inheritance_Base(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Base.singleton = inheritance_Base()
-
 class inheritance_Test(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -814,7 +798,6 @@ class inheritance_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Test.singleton = inheritance_Test()
-
 class inheritance_A(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -842,7 +825,6 @@ class inheritance_A(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_A.singleton = inheritance_A()
-
 class inheritance_B_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -891,7 +873,6 @@ class inheritance_B(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_B.singleton = inheritance_B()
-
 class inheritance_C_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -940,7 +921,6 @@ class inheritance_C(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_C.singleton = inheritance_C()
-
 class inheritance_X(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -968,7 +948,6 @@ class inheritance_X(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_X.singleton = inheritance_X()
-
 class inheritance_Y_test_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1017,7 +996,6 @@ class inheritance_Y(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Y.singleton = inheritance_Y()
-
 class inheritance_t1_A_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1066,7 +1044,6 @@ class inheritance_t1_A(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t1_A.singleton = inheritance_t1_A()
-
 class inheritance_t1_B_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1115,7 +1092,6 @@ class inheritance_t1_B(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t1_B.singleton = inheritance_t1_B()
-
 class inheritance_t1_C_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1164,7 +1140,6 @@ class inheritance_t1_C(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t1_C.singleton = inheritance_t1_C()
-
 class inheritance_t2_A(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1192,7 +1167,6 @@ class inheritance_t2_A(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t2_A.singleton = inheritance_t2_A()
-
 class inheritance_t2_B(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1220,7 +1194,6 @@ class inheritance_t2_B(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t2_B.singleton = inheritance_t2_B()
-
 class inheritance_t2_X_quark_int_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1248,7 +1221,6 @@ class inheritance_t2_X_quark_int_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t2_X_quark_int_.singleton = inheritance_t2_X_quark_int_()
-
 class inheritance_t2_Y(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1276,7 +1248,6 @@ class inheritance_t2_Y(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_t2_Y.singleton = inheritance_t2_Y()
-
 class inheritance_pets_Pet_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1325,7 +1296,6 @@ class inheritance_pets_Pet(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_pets_Pet.singleton = inheritance_pets_Pet()
-
 class inheritance_pets_Cat_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1374,7 +1344,6 @@ class inheritance_pets_Cat(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_pets_Cat.singleton = inheritance_pets_Cat()
-
 class inheritance_pets_Dog_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1423,7 +1392,6 @@ class inheritance_pets_Dog(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_pets_Dog.singleton = inheritance_pets_Dog()
-
 class inheritance_Message_encode_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1471,7 +1439,6 @@ class inheritance_Message(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Message.singleton = inheritance_Message()
-
 class inheritance_Ping_encode_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1519,7 +1486,6 @@ class inheritance_Ping(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Ping.singleton = inheritance_Ping()
-
 class inheritance_Pong_toString_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1587,7 +1553,6 @@ class inheritance_Pong(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_Pong.singleton = inheritance_Pong()
-
 class inheritance_super__A_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1636,7 +1601,6 @@ class inheritance_super__A(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_super__A.singleton = inheritance_super__A()
-
 class inheritance_super__B_greet_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1685,7 +1649,6 @@ class inheritance_super__B(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_super__B.singleton = inheritance_super__B()
-
 class inheritance_use_before_def_Bar_go_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1734,7 +1697,6 @@ class inheritance_use_before_def_Bar(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_use_before_def_Bar.singleton = inheritance_use_before_def_Bar()
-
 class inheritance_use_before_def_Foo(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -1762,7 +1724,6 @@ class inheritance_use_before_def_Foo(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 inheritance_use_before_def_Foo.singleton = inheritance_use_before_def_Foo()
-
 class interfaces_A_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1832,7 +1793,6 @@ class interfaces_A(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_A.singleton = interfaces_A()
-
 class interfaces_B_bar_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1881,7 +1841,6 @@ class interfaces_B(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_B.singleton = interfaces_B()
-
 class interfaces_C_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -1930,7 +1889,6 @@ class interfaces_C(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_C.singleton = interfaces_C()
-
 class interfaces_T1_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2000,7 +1958,6 @@ class interfaces_T1(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_T1.singleton = interfaces_T1()
-
 class interfaces_T2_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2070,7 +2027,6 @@ class interfaces_T2(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_T2.singleton = interfaces_T2()
-
 class interfaces_T3_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2140,7 +2096,6 @@ class interfaces_T3(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_T3.singleton = interfaces_T3()
-
 class interfaces_T4_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2210,7 +2165,6 @@ class interfaces_T4(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_T4.singleton = interfaces_T4()
-
 class interfaces_T5_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2280,7 +2234,6 @@ class interfaces_T5(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_T5.singleton = interfaces_T5()
-
 class interfaces_Foo_m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2371,7 +2324,6 @@ class interfaces_Foo(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_Foo.singleton = interfaces_Foo()
-
 class interfaces_Bar_quark_Object__m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2462,7 +2414,6 @@ class interfaces_Bar_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_Bar_quark_Object_.singleton = interfaces_Bar_quark_Object_()
-
 class interfaces_Baz_m2_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2553,7 +2504,6 @@ class interfaces_Baz(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_Baz.singleton = interfaces_Baz()
-
 class interfaces_RazBar_m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2601,7 +2551,7 @@ class interfaces_RazBar_m3_Method(quark.reflect.Method):
         quark.reflect.Method._init(self)
 
     def __init__(self):
-        super(interfaces_RazBar_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.Object>"]));
+        super(interfaces_RazBar_m3_Method, self).__init__(u"quark.void", u"m3", _List([u"quark.List<quark.String>"]));
 
     def invoke(self, object, args):
         obj = _cast(object, lambda: interfaces.RazBar);
@@ -2644,7 +2594,6 @@ class interfaces_RazBar(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_RazBar.singleton = interfaces_RazBar()
-
 class interfaces_RazFaz_quark_Object__m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2735,7 +2684,6 @@ class interfaces_RazFaz_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_RazFaz_quark_Object_.singleton = interfaces_RazFaz_quark_Object_()
-
 class interfaces_BazBar_m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2826,7 +2774,6 @@ class interfaces_BazBar(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_BazBar.singleton = interfaces_BazBar()
-
 class interfaces_BazFaz_quark_Object__m1_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -2917,7 +2864,6 @@ class interfaces_BazFaz_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_BazFaz_quark_Object_.singleton = interfaces_BazFaz_quark_Object_()
-
 class classes_Overload___add___Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3006,7 +2952,6 @@ class classes_Overload(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_Overload.singleton = classes_Overload()
-
 class classes_Test_test_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3055,7 +3000,6 @@ class classes_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_Test.singleton = classes_Test()
-
 class classes_string_test_check_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3104,7 +3048,6 @@ class classes_string_test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_string_test.singleton = classes_string_test()
-
 class classes_test_size_does_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3173,7 +3116,6 @@ class classes_test_size(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_size.singleton = classes_test_size()
-
 class classes_test_startsWith_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3262,7 +3204,6 @@ class classes_test_startsWith(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_startsWith.singleton = classes_test_startsWith()
-
 class classes_test_endsWith_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3351,7 +3292,6 @@ class classes_test_endsWith(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_endsWith.singleton = classes_test_endsWith()
-
 class classes_test_find_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3440,7 +3380,6 @@ class classes_test_find(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_find.singleton = classes_test_find()
-
 class classes_test_substring_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3529,7 +3468,6 @@ class classes_test_substring(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_substring.singleton = classes_test_substring()
-
 class classes_test_replace_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3618,7 +3556,6 @@ class classes_test_replace(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_replace.singleton = classes_test_replace()
-
 class classes_test_join_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3727,7 +3664,6 @@ class classes_test_join(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_join.singleton = classes_test_join()
-
 class classes_test_split_that_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3816,7 +3752,6 @@ class classes_test_split(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_test_split.singleton = classes_test_split()
-
 class classes_stuff_Test_foo_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -3885,7 +3820,6 @@ class classes_stuff_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 classes_stuff_Test.singleton = classes_stuff_Test()
-
 class statics_Foo_setCount_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -4038,7 +3972,6 @@ class statics_Foo(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 statics_Foo.singleton = statics_Foo()
-
 class docs_Test_test_Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -4086,7 +4019,6 @@ class docs_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 docs_Test.singleton = docs_Test()
-
 class quark_List_quark_List_quark_Object__(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -4114,7 +4046,6 @@ class quark_List_quark_List_quark_Object__(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_List_quark_Object__.singleton = quark_List_quark_List_quark_Object__()
-
 class quark_List_quark_Object_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -4142,7 +4073,6 @@ class quark_List_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_Object_.singleton = quark_List_quark_Object_()
-
 class quark_List_quark_String_(quark.reflect.Class):
     def _init(self):
         quark.reflect.Class._init(self)
@@ -4170,7 +4100,6 @@ class quark_List_quark_String_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_String_.singleton = quark_List_quark_String_()
-
 class Root(object):
     def _init(self):
         pass
