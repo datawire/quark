@@ -6,6 +6,14 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* Added String.parseInt and String.parseLong
+
+
+1.0.282
+------
+
 ### Command line
 
 * The compiler is now roughly 2-3 times faster due to a change in the way

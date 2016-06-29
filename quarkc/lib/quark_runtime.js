@@ -162,6 +162,28 @@
     }
     exports.sleep = sleep;
 
+    function _parseInt(value, guard) {
+        value = value.trim();
+        if(/^(\-|\+)?([0-9]+)$/.test(value)) {
+            var ret = parseInt(value, 10);
+            if (-2147483648 <= ret && ret <= 2147483647) {
+                return ret;
+            }
+        }
+        return guard;
+    }
+    exports._parseInt = _parseInt;
+
+    function _parseLong(value, guard) {
+        value = value.trim();
+        if(/^(\-|\+)?([0-9]+)$/.test(value)) {
+            var ret = parseInt(value, 10);
+            return ret;
+        }
+        return guard;
+    }
+    exports._parseLong = _parseLong;
+
     function JSONObject() {
         this.value = null;
     }

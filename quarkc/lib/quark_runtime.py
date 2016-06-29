@@ -25,7 +25,7 @@ from quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-             _LoggerConfig _cast _get_file_contents""".split()
+             _LoggerConfig _cast _get_file_contents _parseInt _parseLong""".split()
 
 _Map = dict
 
@@ -512,6 +512,21 @@ def _get_file_contents(path, result):
             result.finish(None)
     except IOError as exc:
         result.finish(quark.os.OSError(str(exc)))
+
+def _parseInt(val, guard):
+    try:
+        ret = int(val)
+        if -2147483648 <= ret <= 2147483647:
+            return ret
+    except (ValueError, TypeError):
+        pass
+    return guard
+
+def _parseLong(val, guard):
+    try:
+        return long(val)
+    except (ValueError, TypeError):
+        return guard
 
 # import quark at the end due to cyclical dependencies
 import quark

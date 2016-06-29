@@ -244,6 +244,23 @@ namespace quark {
                                      $py{_JSONObject.parse($self)}
                                      $rb{::DatawireQuarkCore::JSONObject.parse($self)}
                                      $js{_qrt.json_from_string($self)};
+        @doc("""Parse the string as a base-10 integer. leading and trailing whitespace
+                is ignored. If string does not contain a valid integer
+                the guard is returned""")
+        macro int parseInt(int guard) $java{io.datawire.quark.runtime.StringUtils.parseInt(($self),($guard))}
+                                      $py{_parseInt(($self),($guard))}
+                                      $rb{::DatawireQuarkCore::parseInt(($self),($guard))}
+                                      $js{_qrt._parseInt(($self),($guard))};
+        @doc("""Parse the string as a base-10 long. leading and trailing whitespace
+                is ignored. If string does not contain a valid long
+                the guard is returned
+
+                Note: javascript does not support the full range of long""")
+        macro long parseLong(long guard) $java{io.datawire.quark.runtime.StringUtils.parseLong(($self),($guard))}
+                                      $py{_parseLong(($self),($guard))}
+                                      $rb{::DatawireQuarkCore::parseLong(($self),($guard))}
+                                      $js{_qrt._parseLong(($self),($guard))};
+
     }
 
     @doc("A stateless buffer of bytes. Default byte order is network byte order.")
