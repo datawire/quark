@@ -178,6 +178,81 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
+    
+    interface Maybe<T> {
+        T getValue();
+        bool hasValue();
+    }
+
+    class ParsedNumber<T> extends Maybe<T> {
+        static int MINUS = "-".ordAt(0);
+        static int PLUS = "+".ordAt(0);
+        static int ZERO = "0".ordAt(0);
+        static int NINE = "9".ordAt(0);
+        T _value;
+        bool _hasValue = false;
+        T getValue() { return self._value; }
+        bool hasValue() { return self._hasValue; }
+        long _parseLong(String num) {
+            int i = 0;
+            long val = 0;
+            bool neg = false;
+            if (i == num.size()) {
+                return 0;
+            }
+            int first = num.ordAt(0);
+            if (first == MINUS || first == PLUS) {
+                neg = first == MINUS;
+                i = i + 1;
+            }
+            if (i == num.size() ) {
+                return 0;
+            }
+            while (i < num.size()) {
+                int d = num.ordAt(i);
+                if (d < ZERO || d > NINE) {
+                    break;
+                } else {
+                    val = 10L * val + (d - ZERO);
+                }
+                i = i + 1;
+            }
+            self._hasValue = (i == num.size());
+            if (neg) {
+                return -val;
+            } else {
+                return val;
+            }
+        }
+    }
+
+    class ParsedInt extends ParsedNumber<int> {
+         // XXX: -2147483648 produces -(2147483648) which is not valid java
+        int MIN = -2147483647-1;
+        int MAX = 2147483647;
+        ParsedInt(String num) {
+            long temp  = self._parseLong(num);
+            if ( temp < self.MIN || self.MAX < temp ) {
+                self._hasValue = false;
+                if (temp < 0) {
+                    self._value = self.MIN;
+                } else {
+                    self._value = self.MAX;
+                }
+            } else {
+                self._value = temp;
+            }
+        }
+        macro int __to_int()  self.getValue();
+    }
+
+    class ParsedLong extends ParsedNumber<long> {
+        ParsedLong(String num) {
+            self._value = self._parseLong(num);
+        }
+        macro long __to_long()  self.getValue();
+    }
+
     @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
@@ -202,6 +277,14 @@ namespace quark {
                                            $py{len($self)}
                                            $rb{($self).size}
                                            $js{($self).length};
+        macro String strip()               $java{($self).trim()}
+                                           $py{($self).strip()}
+                                           $rb{($self).strip}
+                                           $js{($self).trim()};
+        macro int ordAt(int index)         $java{($self).codePointAt($index)}
+                                           $py{ord(unicode($self)[$index])}
+                                           $rb{($self)[$index].ord}
+                                           $js{($self).charCodeAt($index)};
         macro bool startsWith(String other) $java{Boolean.valueOf(($self).startsWith($other))}
                                            $py{($self).startswith($other)}
                                            $rb{($self).start_with?($other)}
@@ -245,21 +328,13 @@ namespace quark {
                                      $rb{::DatawireQuarkCore::JSONObject.parse($self)}
                                      $js{_qrt.json_from_string($self)};
         @doc("""Parse the string as a base-10 integer. leading and trailing whitespace
-                is ignored. If string does not contain a valid integer
-                the guard is returned""")
-        macro int parseInt(int guard) $java{io.datawire.quark.runtime.StringUtils.parseInt(($self),($guard))}
-                                      $py{_parseInt(($self),($guard))}
-                                      $rb{::DatawireQuarkCore::parseInt(($self),($guard))}
-                                      $js{_qrt._parseInt(($self),($guard))};
+                is ignored.""")
+        macro ParsedInt parseInt() new ParsedInt(self);
         @doc("""Parse the string as a base-10 long. leading and trailing whitespace
-                is ignored. If string does not contain a valid long
-                the guard is returned
+                is ignored.
 
                 Note: javascript does not support the full range of long""")
-        macro long parseLong(long guard) $java{io.datawire.quark.runtime.StringUtils.parseLong(($self),($guard))}
-                                      $py{_parseLong(($self),($guard))}
-                                      $rb{::DatawireQuarkCore::parseLong(($self),($guard))}
-                                      $js{_qrt._parseLong(($self),($guard))};
+        macro ParsedLong parseLong() new ParsedLong(self);
 
     }
 

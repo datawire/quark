@@ -8,7 +8,9 @@ Latest
 
 ### Standard Library
 
-* Added String.parseInt and String.parseLong
+* Added `String.ordAt`
+* Added `String.strip`
+* Added `String.parseInt` and `String.parseLong`
 
 
 1.0.282

@@ -144,24 +144,6 @@ module DatawireQuarkCore
     (Time.now.to_f * 1000).round
   end
 
-  def self.parseInt(val, guard)
-    ret = Integer(val, 10)
-    if -2147483648 <= ret and ret <= 2147483647
-      ret
-    else
-      guard
-    end
-  rescue
-    guard
-  end
-
-  def self.parseLong(val, guard)
-    ret = Integer(val, 10)
-    ret
-  rescue
-    guard
-  end
-
   def self.getFileContents(path, result)
     begin
       result.value = File.read(path, {"encoding": "UTF-8"})
