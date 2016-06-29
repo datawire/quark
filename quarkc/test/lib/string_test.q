@@ -109,6 +109,9 @@ class StringTest {
         }
         expected["00"] = 0;
         expected["+1"] = 1;
+        expected[" 1"] = 1;
+        expected["1 "] = 1;
+        expected[" 1 "] = 1;
         List<String> cases = expected.keys();
         i = 0;
         while (i < cases.size()) {
@@ -135,6 +138,9 @@ class StringTest {
         }
         expected["00"] = 0L;
         expected["+1"] = 1L;
+        expected[" 1"] = 1L;
+        expected["1 "] = 1L;
+        expected[" 1 "] = 1L;
         List<String> cases = expected.keys();
         i = 0;
         while (i < cases.size()) {

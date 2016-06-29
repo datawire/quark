@@ -329,12 +329,12 @@ namespace quark {
                                      $js{_qrt.json_from_string($self)};
         @doc("""Parse the string as a base-10 integer. leading and trailing whitespace
                 is ignored.""")
-        macro ParsedInt parseInt() new ParsedInt(self);
+        macro ParsedInt parseInt() new ParsedInt(self.strip());
         @doc("""Parse the string as a base-10 long. leading and trailing whitespace
                 is ignored.
 
                 Note: javascript does not support the full range of long""")
-        macro ParsedLong parseLong() new ParsedLong(self);
+        macro ParsedLong parseLong() new ParsedLong(self.strip());
 
     }
 
