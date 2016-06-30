@@ -63,7 +63,7 @@ class StoreContext extends UnaryCallable {
     }
 }
 
-macro Object makeUndefined() $js{undefined};
+macro Object makeUndefined() $js{undefined} $java{null};
 
 class PromiseTest extends MockRuntimeTest {
     void spinCollector() {
