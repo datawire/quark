@@ -513,7 +513,7 @@ namespace quark {
         // To call a UnaryCallable call this, *not* call(), so that e.g. passed
         // in functions from native language work too.
         macro Object __call__(Object arg) $py{($self)($arg) if callable($self) else ($self).call($arg)}
-                                          $js{(($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg)}
+        $js{_qrt.sanitize_undefined((($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg))}
                                           $rb{($self).call($arg)}
                                           $java{($self).call($arg)};
 

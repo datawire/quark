@@ -846,6 +846,13 @@
         return loggers[topic];
     };
 
+    exports.sanitize_undefined = function(value) {
+        if (value === undefined) {
+            return null;
+        }
+        return value;
+    }
+
     quark = require("quark");
 
 })();
