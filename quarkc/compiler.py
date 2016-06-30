@@ -582,6 +582,8 @@ class Use(object):
     def visit_Number(self, n):
         if "." in n.text:
             self.leaf(n, "float")
+        elif n.text.endswith("L"):
+            self.leaf(n, "long")
         else:
             self.leaf(n, "int")
 
