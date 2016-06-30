@@ -11,7 +11,8 @@ Latest
 * Added `String.ordAt`
 * Added `String.strip`
 * Added `String.parseInt` and `String.parseLong`
-
+* Returning `undefined` from a Javascript function used as a `Promise` callback
+  no longer blows up.
 
 1.0.282
 ------

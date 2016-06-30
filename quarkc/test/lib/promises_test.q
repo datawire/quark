@@ -63,6 +63,8 @@ class StoreContext extends UnaryCallable {
     }
 }
 
+macro Object makeUndefined() $js{undefined} $java{null};
+
 class PromiseTest extends MockRuntimeTest {
     void spinCollector() {
         self.pump();
@@ -383,6 +385,25 @@ class PromiseTest extends MockRuntimeTest {
         checkEqual(theError, failure.result);
     }
 
+    Object _jsUndefined(Object ignore) {
+        return makeUndefined();
+    }
+
+    // Javascript undefined is converted into a null when returned from a
+    // UnaryCallable:
+    void testJSUndefinedResult() {
+        if (!isJavascript()) {
+            return;
+        }
+        PromiseFactory f = new PromiseFactory();
+        Promise p = f.promise;
+        StoreValue success = new StoreValue();
+        p.andThen(bind(self, "_jsUndefined", [])).andThen(success);
+        f.resolve(true);
+        spinCollector();
+        checkEqual(true, success.called);
+        checkEqual(null, success.result);
+    }
 
     // Nice to have tests but unlikely use cases:
     // Re-entrancy: callback registered inside error callback is called

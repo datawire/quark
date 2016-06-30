@@ -1,3 +1,5 @@
+quark *;
+
 import quark.test;
 
 void main(List<String> args) {
@@ -93,8 +95,6 @@ class HTTPHandlerTrace extends HTTPHandler {
     }
 }
 
-
-macro bool isJavascript() $java{false} $py{False} $rb{false} $js{true};
 
 class HTTPErrorTest {
 

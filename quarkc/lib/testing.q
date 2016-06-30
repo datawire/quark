@@ -287,4 +287,6 @@ void run(List<String> args) {
     }
 }
 
+macro bool isJavascript() $java{false} $py{False} $rb{false} $js{true};
+
 }}

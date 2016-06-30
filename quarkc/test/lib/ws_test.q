@@ -1,3 +1,5 @@
+quark *;
+
 import quark.test;
 
 
@@ -129,8 +131,6 @@ class Closer extends WSHandler {
         socket.close();
     }
 }
-
-macro bool isJavascript() $java{false} $py{False} $rb{false} $js{true};
 
 class WSErrorTest {
     WSErrorTest() {}
