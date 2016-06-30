@@ -78,14 +78,10 @@ index_rst = """
 %(name)s %(version)s
 =%(underline)s
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: %(name)s
-   :members:
-
+%(automodules)s
 
 Indices and tables
 ==================
@@ -95,15 +91,28 @@ Indices and tables
 * :ref:`search`
 """
 
+automodule_rst = """
+%(name)s
+%(underline)s
+
+.. automodule:: %(name)s
+   :members:
+   :undoc-members:
+"""
+
 not_implemented_template = """\
 raise NotImplementedError('`{clazz}.{name}` is an abstract method')""".format
 
 
 def package(name, version, packages, srcs, deps):
+    automodules = "".join([automodule_rst % dict(name=".".join(package), underline="-" * len(".".join(package)))
+                           for package in packages
+                           if not package[-1].endswith("_md")])
     fmt_dict = {"name": name,
                 "version": version,
                 "underline" : "=" * len(name + version),
                 "pkg_list": repr([".".join(p) for p in packages]),
+                "automodules": automodules,
                 "py_modules": ", ".join(repr(name[:-3]) for name in srcs if os.path.basename(name) == name),
                 "dependencies": ", ".join(['"wheel"'] + ['"%s==%s"' % d[1:] for d in deps])}
     files = OrderedDict()
