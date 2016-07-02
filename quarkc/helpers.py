@@ -406,7 +406,12 @@ def extract_ast_stack(frames):
     for frame in frames:
         ast_frame = []
         a = inspect.getargvalues(frame[0])
-        args = map(a.locals.get, a.args)
+        def tryget(x):
+            try:
+                return a.locals.get(x)
+            except Exception:
+                pass
+        args = map(tryget, a.args)
         if a.varargs:
             args.extend(a.locals[a.varargs])
         if a.keywords:

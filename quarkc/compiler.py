@@ -27,6 +27,7 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
+    ArithmeticOperator,
     Use as AstUse, code, copy,
 )
 from .exceptions import CompileError, ParseError
@@ -407,13 +408,7 @@ class TypeExpr(object):
                 ft = FakeType()
                 ft.resolved = pexpr
                 castify(ft, arg)
-                if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
-                    dfn = get_field(arg.resolved.type, "__to_%s" % pexpr.type.name, None)
-                    if dfn and len(dfn.params) == 0 and pexpr.assignableFrom(dfn.type.resolved):
-                        arg.coersion = dfn
-                    else:
-                        errors.append("%s:type mismatch: expected %s, got %s" %
-                                      (lineinfo(arg), pexpr, arg.resolved))
+                pexpr.assign(arg, errors)
         else:
             errors.append("%s: expected %s args, got %s" %
                           (lineinfo(call), len(params), len(call.args)))
@@ -435,14 +430,20 @@ class TypeExpr(object):
         return texpr(cls, self.bindings)
 
     def assign(self, expr, errors=None):
+        dfn = self._assign(expr, errors)
+        if dfn:
+            expr.coersion = dfn
+
+    def _assign(self, expr, errors=None):
         if not isinstance(expr, Null) and expr.resolved and not self.assignableFrom(expr.resolved):
             dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
-                expr.coersion = dfn
+                return dfn
             else:
                 if errors is not None:
                     errors.append("%s:type mismatch: expected %s, got %s" %
                                   (lineinfo(expr), self, expr.resolved))
+        return None
 
     @property
     def id(self):
@@ -794,6 +795,13 @@ def delegate(node):
 
 ARCHIVE_END = "ARCHIVE_END"
 
+class CompileWarning(object):
+    def __init__(self, warning):
+        self.warning = warning
+
+    def __str__(self):
+        return "warning: %s" % self.warning
+
 class Compiler(object):
 
     def __init__(self):
@@ -806,6 +814,7 @@ class Compiler(object):
         self.included = set()
         self.log = logging.getLogger("quark.compiler")
         self.entries = OrderedDict()
+        self.warnings = []
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -953,6 +962,14 @@ class Compiler(object):
         finally:
             fd.close()
 
+    def raise_errors(self, errors):
+        if not errors: return
+        warnings = [e for e in errors if isinstance(e, CompileWarning)]
+        if len(warnings) == len(errors):
+            self.warnings.extend(warnings)
+        else:
+            raise CompileError("\n".join(map(str,self.warnings + errors)))
+
     def icompile(self, ast):
 
         if isinstance(ast, Root):
@@ -966,26 +983,25 @@ class Compiler(object):
 
         def_ = Def()
         ast.traverse(def_)
-        if def_.errors:
-            raise CompileError("\n".join(map(str, def_.errors)))
+        self.raise_errors(def_.errors)
 
         use = Use()
         ast.traverse(use)
         if use.unresolved:
             use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
                     for node, name in use.unresolved])
-        if use.errors:
-            raise CompileError("\n".join(use.errors))
+        self.raise_errors(use.errors)
 
         res = Resolver()
         ast.traverse(res)
-        if res.errors:
-            raise CompileError("\n".join(res.errors))
+        self.raise_errors(res.errors)
 
         check = Check()
         ast.traverse(check)
-        if check.errors:
-            raise CompileError("\n".join(check.errors))
+        self.raise_errors(check.errors)
+
+        if self.warnings:
+            sys.stderr.write("%s\n" % "\n".join(map(str, self.warnings)))
 
     def merge(self, env, dep):
         if env == dep: return

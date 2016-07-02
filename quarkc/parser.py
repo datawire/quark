@@ -24,7 +24,7 @@ from .ast import (
     Bool, List, Map, Null, Native, NativeCase, Fixed, Attr, Cast,
     Param, Declaration, Super, Name, CompilerVersionSpec, Annotation,
     Constructor, MethodMacro, Block, Entry, DistUnit, Use, Include,
-    ConstructorMacro,
+    ConstructorMacro, Operator, ArithmeticOperator
 )
 from .grammar import Grammar
 
@@ -32,12 +32,12 @@ from .grammar import Grammar
 g = Grammar()
 
 
-def right_associative_infix_rule(grammar_rule):
+def right_associative_infix_rule(operator, grammar_rule):
     """Semantic action for rules like 'A = B (C B)*'."""
     def semantic_action(self, node, (result, remaining)):
         while remaining:
             op, rhs = remaining.pop(0)
-            result = Call(Attr(result, Name(self.aliases[op])), [rhs])
+            result = operator(Attr(result, Name(self.aliases[op])), [rhs], op)
         return result
     return g.rule(grammar_rule)(semantic_action)  # noqa
 
@@ -409,36 +409,36 @@ class Parser:
     def visit_while(self, node, (kw, lp, expr, rp, body)):
         return While(expr, body)
 
-    visit_expr = right_associative_infix_rule(
+    visit_expr = right_associative_infix_rule(Operator,
         'expr = oroperand (OR oroperand)*')
 
-    visit_oroperand = right_associative_infix_rule(
+    visit_oroperand = right_associative_infix_rule(Operator,
         'oroperand = andoperand (AND andoperand)*')
 
-    visit_andoperand = right_associative_infix_rule(
+    visit_andoperand = right_associative_infix_rule(ArithmeticOperator,
         'andoperand = bitwise_or_operand (BITWISE_OR bitwise_or_operand)*')
 
-    visit_bitwise_or_operand = right_associative_infix_rule(
+    visit_bitwise_or_operand = right_associative_infix_rule(ArithmeticOperator,
         'bitwise_or_operand = bitwise_xor_operand (BITWISE_XOR bitwise_xor_operand)*')
 
-    visit_bitwise_xor_operand = right_associative_infix_rule(
+    visit_bitwise_xor_operand = right_associative_infix_rule(ArithmeticOperator,
         'bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*')
 
-    visit_bitwise_and_operand = right_associative_infix_rule(
+    visit_bitwise_and_operand = right_associative_infix_rule(Operator,
         'bitwise_and_operand = cmpoperand (cmpop cmpoperand)*')
 
     @g.rule('cmpop = GE / LE / LT / GT / EQL / NEQ')
     def visit_cmpop(self, node, (op,)):
         return op
 
-    visit_cmpoperand = right_associative_infix_rule(
+    visit_cmpoperand = right_associative_infix_rule(ArithmeticOperator,
         'cmpoperand = addoperand (addop addoperand)*')
 
     @g.rule('addop = PLUS / MINUS')
     def visit_addop(self, node, (op,)):
         return op
 
-    visit_addoperand = right_associative_infix_rule(
+    visit_addoperand = right_associative_infix_rule(ArithmeticOperator,
         'addoperand = muloperand (mulop muloperand)*')
 
     @g.rule('mulop = MUL / DIV / MOD')

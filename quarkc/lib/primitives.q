@@ -99,6 +99,7 @@ namespace quark {
                                 $js{_qrt.toString($self)};
         macro short __to_short() self;
         macro int __to_int() self;
+        macro long __to_long() self;
     }
 
 
@@ -154,7 +155,12 @@ namespace quark {
                                 $py{_toString($self)}
                                 $rb{($self).to_s}
                                 $js{_qrt.toString($self)};
+        @deprecated("Long used in integer context will silently truncate the result. Please use truncateToInt() or reverse the operands.")
         macro int __to_int() $java{(int) ((Long) ($self)).intValue()}
+                             $py{($self)}
+                             $rb{($self)}
+                             $js{($self)};
+        macro int truncateToInt() $java{(int) ((Long) ($self)).intValue()}
                              $py{($self)}
                              $rb{($self)}
                              $js{($self)};
@@ -232,7 +238,7 @@ namespace quark {
         int MAX = 2147483647;
         ParsedInt(String num) {
             long temp  = self._parseLong(num);
-            if ( temp < self.MIN || self.MAX < temp ) {
+            if ( temp < self.MIN || temp > self.MAX ) {
                 self._hasValue = false;
                 if (temp < 0) {
                     self._value = self.MIN;
@@ -240,7 +246,7 @@ namespace quark {
                     self._value = self.MAX;
                 }
             } else {
-                self._value = temp;
+                self._value = temp.truncateToInt();
             }
         }
         macro int __to_int()  self.getValue();
