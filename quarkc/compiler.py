@@ -303,16 +303,27 @@ class Def:
         self.define(f.parent.env, f, dup=lambda x: ((isinstance(x, Function) and x.body) or
                                                     (not isinstance(x, Function))))
 
-    def visit_Method(self, m):
+    def visit_Constructor(self, m):
+        self.check_constructor_name(m)
         # we don't put constructors in the namespace
-        if m.type:
-            self.define(m.parent.env, m)
+        self.define(m.env, m.parent, "self")
+
+    def visit_ConstructorMacro(self, m):
+        self.check_constructor_name(m)
+        # we don't put constructors in the namespace
+        pass
+
+    def check_constructor_name(self, m):
+        if m.name.text != m.parent.name.text:
+            self.errors.append("%s: constructor name '%s' does not match class name '%s'. Missing return type?" % (
+                lineinfo(m), m.name.text, m.parent.name.text))
+
+    def visit_Method(self, m):
+        self.define(m.parent.env, m)
         self.define(m.env, m.parent, "self")
 
     def visit_Macro(self, m):
-        # we don't put constructors in the namespace
-        if m.type:
-            self.define(m.parent.env, m)
+        self.define(m.parent.env, m)
 
     def visit_MethodMacro(self, mm):
         self.define(mm.parent.env, mm)
