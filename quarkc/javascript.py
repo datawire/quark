@@ -119,6 +119,25 @@ def qualify(package, origin):
 def doc(lines):
     return doc_helper(lines, "/**", " * ", " */")
 
+def add_doc(doc, lines):
+    if doc:
+        docl = doc.splitlines()
+    else:
+        #docl = ["/**", " */"]  # Use this if we want to output for undocumented items
+        return ""               # Using this because we don't want that noise
+
+    # Allow calling with a (presumably one-line) string instead of a list
+    if str(lines) == lines:
+        lines = [lines]
+
+    for line in lines:
+        docl[-1:-1] = [" * " + line]
+
+    return "\n".join(docl) + "\n"
+
+def add_param_doc(doc, params):
+    return add_doc(doc, ["@param {*} %s" % param for param in params])
+
 ## Comments
 
 def comment(stuff):
@@ -129,6 +148,7 @@ def comment(stuff):
 def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fields, constructors, methods):
     if base: fields = [base + ".prototype.__init_fields__.call(this);"] + fields
 
+    doc = add_doc(doc, "@class %s" % clazz)
     result = "\n// CLASS %s\n" % clazz + doc
     result += "\n".join(constructors)
     if base:
@@ -144,6 +164,7 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fie
     return result
 
 def static_field(doc, clazz, type, name, value):
+    doc = add_doc(doc, "@static")
     return "%s%s.%s = %s;" % (doc, clazz, name, value or "null")
 
 def field(doc, clazz, type, name, value):
@@ -161,18 +182,24 @@ def constructor(doc, name, parameters, body):
         (doc, name, ", ".join(parameters), body, name, name)
 
 def method(doc, clazz, type, name, parameters, body):
+    doc = add_doc(doc, ["@method %s" % name, "@memberof %s" % clazz, "@instance"])
+    doc = add_param_doc(doc, parameters)
     params = ", ".join(parameters)
     full_name = "%s_%s" % (clazz, name)
     trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
 def static_method(doc, clazz, type, name, parameters, body):
+    doc = add_doc(doc, ["@memberof %s" % clazz, "@static"])
+    doc = add_param_doc(doc, parameters)
     params = ", ".join(parameters)
     full_name = "%s_%s" % (clazz, name)
     trailer = "%s.%s = %s;" % (clazz, name, full_name)
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
 def abstract_method(doc, clazz, type, name, parameters):
+    doc = add_doc(doc, ["@abstract", "@memberof %s" % clazz, "@instance"])
+    doc = add_param_doc(doc, parameters)
     params = ", ".join(parameters)
     full_name = "%s_%s" % (clazz, name)
     trailer = "%s.prototype.%s = %s;" % (clazz, name, full_name)
@@ -182,14 +209,18 @@ def abstract_method(doc, clazz, type, name, parameters):
 ## Interface definition
 
 def interface(doc, iface, parameters, bases, static_fields, methods):
+    doc = add_doc(doc, "@interface")
     return clazz(doc, False, iface, parameters, None, [], static_fields, [], [default_constructor(iface)], methods)
 
 def interface_method(doc, iface, type, name, parameters, body):
     params = ", ".join(parameters)
     full_name = "%s_%s" % (iface, name)
     trailer = "%s.prototype.%s = %s;" % (iface, name, full_name)
+    doc = add_doc(doc, ["@method %s" % name, "@memberof %s" % iface, "@instance"])
     if body is None:
         body = " { %s }" % not_implemented_template(clazz=iface, name=name)
+        add_doc(doc, "@abstract")
+    doc = add_param_doc(doc, parameters)
 
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
@@ -197,6 +228,8 @@ def interface_method(doc, iface, type, name, parameters, body):
 
 def function(doc, type, name, parameters, body):
     trailer = "exports.%s = %s;" % (name, name)
+    doc = add_doc(doc, "@function")
+    doc = add_param_doc(doc, parameters)
     return "\n%sfunction %s(%s)%s\n" % (doc, name, ", ".join(parameters), body) + trailer
 
 ## Parameters for methods and functions
