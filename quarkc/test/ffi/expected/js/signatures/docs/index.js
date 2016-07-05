@@ -11,6 +11,7 @@ exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
  * hey, here are some docs
  * here are some more docs
  * a bunch of docs in fact
+ * @class Test
  */
 function Test() {
     this.__init_fields__();
@@ -27,6 +28,10 @@ Test.prototype.__init_fields__ = Test__init_fields__;
 Test.docs_Test_ref = null;
 /**
  * method docs
+ * @method test
+ * @memberof Test
+ * @instance
+ * @param {*} param
  */
 function Test_test(param) {
     return 3;

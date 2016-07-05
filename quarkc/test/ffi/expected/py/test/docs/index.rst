@@ -4,13 +4,23 @@
 testlib 1.2.3
 =============
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
+
+testlib
+-------
+
 .. automodule:: testlib
    :members:
+   :undoc-members:
+
+t2
+--
+
+.. automodule:: t2
+   :members:
+   :undoc-members:
 
 
 Indices and tables

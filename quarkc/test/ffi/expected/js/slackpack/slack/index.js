@@ -14,6 +14,8 @@ exports.quark = quark;
 /**
  * Event handler for slack events. All unhandled events
  * are delegated to onSlackEvent by default.
+ * @interface
+ * @class SlackHandler
  */
 function SlackHandler() {
     this.__init_fields__();
@@ -38,6 +40,7 @@ SlackHandler.prototype.onMessage = SlackHandler_onMessage;
 // CLASS User
 /**
  * A reference to a user.
+ * @class User
  */
 
 function User(client, user) {
@@ -80,6 +83,7 @@ User.prototype._setField = User__setField;
 // CLASS Channel
 /**
  * A reference to a channel.
+ * @class Channel
  */
 
 function Channel(client, channel) {
@@ -95,6 +99,10 @@ Channel.prototype.__init_fields__ = Channel__init_fields__;
 Channel.slack_Channel_ref = null;
 /**
  * Send a message to a channel.
+ * @method send
+ * @memberof Channel
+ * @instance
+ * @param {*} message
  */
 function Channel_send(message) {}
 Channel.prototype.send = Channel_send;
@@ -128,6 +136,7 @@ Channel.prototype._setField = Channel__setField;
 // CLASS Client
 /**
  * Represents a persistent connection to the slack service.
+ * @class Client
  */
 
 function Client(runtime, token, handler) {
@@ -147,6 +156,9 @@ Client.slack_Client_ref = null;
 Client.quark_Map_quark_String_quark_Object__ref = null;
 /**
  * Connect the client to the slack service.
+ * @method connect
+ * @memberof Client
+ * @instance
  */
 function Client_connect() {}
 Client.prototype.connect = Client_connect;
@@ -226,24 +238,41 @@ Client.prototype._setField = Client__setField;
 
 /**
  * Called when the WebSocket is first created.
+ * @method onWSInit
+ * @memberof Client
+ * @instance
+ * @param {*} socket
  */
 function Client_onWSInit(socket) {}
 Client.prototype.onWSInit = Client_onWSInit;
 
 /**
  * Called when the WebSocket receives a binary message.
+ * @method onWSBinary
+ * @memberof Client
+ * @instance
+ * @param {*} socket
+ * @param {*} message
  */
 function Client_onWSBinary(socket, message) {}
 Client.prototype.onWSBinary = Client_onWSBinary;
 
 /**
  * Called when the WebSocket disconnects cleanly.
+ * @method onWSClosed
+ * @memberof Client
+ * @instance
+ * @param {*} socket
  */
 function Client_onWSClosed(socket) {}
 Client.prototype.onWSClosed = Client_onWSClosed;
 
 /**
  * Called when the WebSocket is done with life, one way or another.
+ * @method onWSFinal
+ * @memberof Client
+ * @instance
+ * @param {*} socket
  */
 function Client_onWSFinal(socket) {}
 Client.prototype.onWSFinal = Client_onWSFinal;

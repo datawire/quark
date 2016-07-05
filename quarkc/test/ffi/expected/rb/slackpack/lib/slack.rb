@@ -9,6 +9,10 @@ require 'quark'
 
 
 def self.SlackHandler; SlackHandler; end
+##
+# Event handler for slack events. All unhandled events
+# are delegated to onSlackEvent by default.
+
 class SlackHandler < ::DatawireQuarkCore::QuarkObject
     extend ::DatawireQuarkCore::Static
 
@@ -64,6 +68,9 @@ end
 SlackHandler.unlazy_statics
 
 def self.User; User; end
+##
+# A reference to a user.
+
 class User < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :user
     extend ::DatawireQuarkCore::Static
@@ -127,6 +134,9 @@ end
 User.unlazy_statics
 
 def self.Channel; Channel; end
+##
+# A reference to a channel.
+
 class Channel < ::DatawireQuarkCore::QuarkObject
     attr_accessor :client, :channel
     extend ::DatawireQuarkCore::Static
@@ -144,6 +154,9 @@ class Channel < ::DatawireQuarkCore::QuarkObject
 
 
 
+
+    ##
+    # Send a message to a channel.
 
     def send(message)
         
@@ -197,6 +210,9 @@ end
 Channel.unlazy_statics
 
 def self.Client; Client; end
+##
+# Represents a persistent connection to the slack service.
+
 class Client < ::DatawireQuarkCore::QuarkObject
     attr_accessor :runtime, :token, :handler, :event_id, :socket
     extend ::DatawireQuarkCore::Static
@@ -215,6 +231,9 @@ class Client < ::DatawireQuarkCore::QuarkObject
 
 
 
+
+    ##
+    # Connect the client to the slack service.
 
     def connect()
         
@@ -336,12 +355,18 @@ class Client < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
+    ##
+    # Called when the WebSocket is first created.
+
     def onWSInit(socket)
         
         nil
 
         nil
     end
+
+    ##
+    # Called when the WebSocket receives a binary message.
 
     def onWSBinary(socket, message)
         
@@ -350,12 +375,18 @@ class Client < ::DatawireQuarkCore::QuarkObject
         nil
     end
 
+    ##
+    # Called when the WebSocket disconnects cleanly.
+
     def onWSClosed(socket)
         
         nil
 
         nil
     end
+
+    ##
+    # Called when the WebSocket is done with life, one way or another.
 
     def onWSFinal(socket)
         
