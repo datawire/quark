@@ -718,6 +718,9 @@ class Operator(Call):
         return "(%s %s %s)" % (
             self.expr.expr.code(coder), self.op, coder.code(self.args, ", "))
 
+    def copy(self):
+        return self.__class__(copy(self.expr), copy(self.args), self.op)
+
 class ArithmeticOperator(Operator):
     pass
 

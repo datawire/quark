@@ -424,7 +424,7 @@ class Parser:
     visit_bitwise_xor_operand = right_associative_infix_rule(ArithmeticOperator,
         'bitwise_xor_operand = bitwise_and_operand (BITWISE_AND bitwise_and_operand)*')
 
-    visit_bitwise_and_operand = right_associative_infix_rule(Operator,
+    visit_bitwise_and_operand = right_associative_infix_rule(ArithmeticOperator,
         'bitwise_and_operand = cmpoperand (cmpop cmpoperand)*')
 
     @g.rule('cmpop = GE / LE / LT / GT / EQL / NEQ')

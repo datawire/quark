@@ -441,10 +441,10 @@ def extract_ast_stack(frames):
     for frame in frames:
         ast_frame = []
         a = inspect.getargvalues(frame[0])
-        def tryget(x):
+        def tryget(x,a=a):
             try:
                 return a.locals.get(x)
-            except Exception:
+            except (TypeError, KeyError):
                 pass
         args = map(tryget, a.args)
         if a.varargs:

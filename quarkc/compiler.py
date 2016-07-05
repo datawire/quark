@@ -27,7 +27,6 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
-    ArithmeticOperator,
     Use as AstUse, code, copy,
 )
 from .exceptions import CompileError, ParseError
@@ -314,7 +313,6 @@ class Def:
     def visit_ConstructorMacro(self, m):
         self.check_constructor_name(m)
         # we don't put constructors in the namespace
-        pass
 
     def check_constructor_name(self, m):
         if m.name.text != m.parent.name.text:
