@@ -1,0 +1,16 @@
+File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
+
+ Package(Name(missing_return_type),
+
+  Class(Name(Foo),
+
+   Constructor(Name(Fooo), Block()),
+
+   Constructor(Name(doSometing), Block()),
+
+   Constructor(Name(doSomethingElse), Block())),
+
+  Class(Name(Bar),
+
+   Constructor(Name(Fooo), Block())))
+)
