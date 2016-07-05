@@ -38,7 +38,8 @@ from .parser import (
 from .dispatch import overload
 from .helpers import (
     lineinfo, base_bindings, get_field, constructor, base_type, base_constructors,
-    has_super, has_return, is_newer, compiled_quark, namever
+    has_super, has_return, is_newer, compiled_quark, namever, check_deprecated,
+    CompileWarning
 )
 from .environment import Environment
 from . import docmaker
@@ -261,8 +262,9 @@ class Crosswire:
 
 class Def:
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def define(self, env, node, name=None, is_leaf=True, dup=lambda x: True):
         error = None
@@ -316,8 +318,8 @@ class Def:
 
     def check_constructor_name(self, m):
         if m.name.text != m.parent.name.text:
-            self.errors.append("%s: constructor name '%s' does not match class name '%s'. Missing return type?" % (
-                lineinfo(m), m.name.text, m.parent.name.text))
+            self.errors.append(CompileWarning(m, "constructor name '%s' does not match class name '%s'. Missing return type?" % (
+                m.name.text, m.parent.name.text)))
 
     def visit_Method(self, m):
         self.define(m.parent.env, m)
@@ -438,6 +440,7 @@ class TypeExpr(object):
         if not isinstance(expr, Null) and expr.resolved and not self.assignableFrom(expr.resolved):
             dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
+                check_deprecated(dfn, expr, errors)
                 return dfn
             else:
                 if errors is not None:
@@ -496,9 +499,10 @@ def texpr(type, *bindingses):
 
 class Use(object):
 
-    def __init__(self):
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
         self.unresolved = []
-        self.errors = []
 
     @overload(AST, str)
     def lookup(self, node, name, imported=None):
@@ -629,8 +633,9 @@ def castify(type, expr):
 
 class Resolver(object):
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def leave_Super(self, s):
         bt = base_type(s.clazz)
@@ -702,8 +707,9 @@ class Resolver(object):
 
 class Check:
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def visit_Field(self, f):
         for base in f.clazz.bases:
@@ -795,13 +801,6 @@ def delegate(node):
 
 ARCHIVE_END = "ARCHIVE_END"
 
-class CompileWarning(object):
-    def __init__(self, warning):
-        self.warning = warning
-
-    def __str__(self):
-        return "warning: %s" % self.warning
-
 class Compiler(object):
 
     def __init__(self):
@@ -814,7 +813,6 @@ class Compiler(object):
         self.included = set()
         self.log = logging.getLogger("quark.compiler")
         self.entries = OrderedDict()
-        self.warnings = []
 
     def annotator(self, name, annotator):
         if name in self.annotators:
@@ -963,12 +961,9 @@ class Compiler(object):
             fd.close()
 
     def raise_errors(self, errors):
-        if not errors: return
         warnings = [e for e in errors if isinstance(e, CompileWarning)]
-        if len(warnings) == len(errors):
-            self.warnings.extend(warnings)
-        else:
-            raise CompileError("\n".join(map(str,self.warnings + errors)))
+        if len(warnings) != len(errors):
+            raise CompileError("")
 
     def icompile(self, ast):
 
@@ -981,27 +976,36 @@ class Compiler(object):
                 )
             issue_all(messages)
 
-        def_ = Def()
-        ast.traverse(def_)
-        self.raise_errors(def_.errors)
+        errors = []
 
-        use = Use()
-        ast.traverse(use)
-        if use.unresolved:
-            use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
-                    for node, name in use.unresolved])
-        self.raise_errors(use.errors)
+        try:
+            def_ = Def(errors)
+            ast.traverse(def_)
+            self.raise_errors(errors)
 
-        res = Resolver()
-        ast.traverse(res)
-        self.raise_errors(res.errors)
+            use = Use(errors)
+            ast.traverse(use)
+            if use.unresolved:
+                use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
+                        for node, name in use.unresolved])
+            self.raise_errors(errors)
 
-        check = Check()
-        ast.traverse(check)
-        self.raise_errors(check.errors)
+            res = Resolver(errors)
+            ast.traverse(res)
+            self.raise_errors(errors)
 
-        if self.warnings:
-            sys.stderr.write("%s\n" % "\n".join(map(str, self.warnings)))
+            check = Check(errors)
+            ast.traverse(check)
+            self.raise_errors(errors)
+
+        except CompileError as ce:
+            if ce.args[0]:
+                errors.append(ce.args[0])
+            raise CompileError("\n".join(map(str,list(errors))))
+
+        if errors:
+            # there were only warnings
+            sys.stderr.write("\n%s\n" % "\n".join(map(str, errors)))
 
     def merge(self, env, dep):
         if env == dep: return
