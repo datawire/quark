@@ -27,6 +27,7 @@ upper = lambda name: name[0].upper() + name[1:]
 class Templates:
 
     method = """\
+{doc}\
 def {name}({parameters})
     {body}
 
@@ -60,6 +61,7 @@ raise NotImplementedError, '`{clazz}.{name}` is an abstract method'""".format
 
     class_ = """\
 def self.{alias}; {name}; end
+{doc}\
 class {name} < {base}
 {prologue}
 
@@ -129,6 +131,7 @@ def make_package_file(path, name):
 
 def main_prolog():
     return Templates.method(
+        doc="",
         name='self.call_main',
         parameters='',
         body='self.main(::DatawireQuarkCore::List.new(ARGV))',
@@ -181,7 +184,7 @@ def qualify(package, origin):
 ## Documentation
 
 def doc(lines):
-    return doc_helper(lines, '#  ', '#  ', '#  ')
+    return doc_helper(lines, '##', '# ', '')
 
 ## Comments
 
@@ -210,6 +213,7 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
         init_body.append('super')
     init_body.extend('self.%s = %s' % pairs for pairs in fields)
     init_fields = Templates.method(
+        doc="",
         name='__init_fields__',
         parameters='',
         body=indent(init_body),
@@ -217,6 +221,7 @@ def clazz(doc, abstract, name, parameters, base, interfaces, static_fields, fiel
     source = Templates.class_(
         name=camel_case_name,
         alias=name,
+        doc=doc,
         base=('::Quark.' + base) if base else '::DatawireQuarkCore::QuarkObject',
         prologue=indent(prologue, leading_nl=False),
         constructors=indent(constructors),
@@ -236,6 +241,7 @@ def field_init():
 
 def default_constructor(clazz):
     return Templates.method(
+        doc="",
         name='initialize',
         parameters='',
         body=field_init(),
@@ -243,6 +249,7 @@ def default_constructor(clazz):
 
 def constructor(doc, name, parameters, body):
     return Templates.method(
+        doc=doc,
         name='initialize',
         parameters=', '.join(parameters),
         body=body,
@@ -250,6 +257,7 @@ def constructor(doc, name, parameters, body):
 
 def method(doc, clazz, type, name, parameters, body):
     return Templates.method(
+        doc=doc,
         name=name,
         parameters=', '.join(parameters),
         body=body,
@@ -257,6 +265,7 @@ def method(doc, clazz, type, name, parameters, body):
 
 def static_method(doc, clazz, type, name, parameters, body):
     return Templates.method(
+        doc=doc,
         name='self.' + name,
         parameters=', '.join(parameters),
         body=body,
@@ -264,6 +273,7 @@ def static_method(doc, clazz, type, name, parameters, body):
 
 def abstract_method(doc, clazz, type, name, parameters):
     return Templates.method(
+        doc=doc,
         name=name,
         parameters=', '.join(parameters),
         body=Templates.not_implemented(clazz=clazz, name=name)
@@ -278,6 +288,7 @@ def interface(doc, iface, parameters, bases, static_fields, methods):
 
 def interface_method(doc, iface, type, name, parameters, body):
     return Templates.method(
+        doc=doc,
         name=name,
         parameters=', '.join(parameters),
         body=body or Templates.not_implemented(clazz=iface, name=name)
@@ -287,6 +298,7 @@ def interface_method(doc, iface, type, name, parameters, body):
 
 def function(doc, type, name, parameters, body):
     return Templates.method(
+        doc=doc,
         name='self.' + name,
         parameters=', '.join(parameters),
         body=body,
