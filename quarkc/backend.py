@@ -292,7 +292,8 @@ class Backend(object):
             dir = os.path.dirname(path)
             if not os.path.exists(dir):
                 os.makedirs(dir)
-            open(path, "wb").write(content)
+            with open(path, "wb") as fd:
+                fd.write(content)
             self.log.debug(" wrote %s", path)
 
     @overload(Package)
