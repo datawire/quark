@@ -11,6 +11,7 @@ exports.slackpack_md = slackpack_md;
 // CLASS SlackEvent
 /**
  * Base class for all slack events.
+ * @class SlackEvent
  */
 function SlackEvent() {
     this.__init_fields__();
@@ -84,6 +85,7 @@ SlackEvent.prototype._setField = SlackEvent__setField;
 // CLASS SlackError
 /**
  * The server has indicated an error has occurred.
+ * @class SlackError
  */
 
 function SlackError() {
@@ -164,6 +166,7 @@ SlackError.prototype._setField = SlackError__setField;
 // CLASS Hello
 /**
  * The client successfully connected to the server.
+ * @class Hello
  */
 
 function Hello() {
@@ -221,6 +224,7 @@ Hello.prototype._setField = Hello__setField;
 // CLASS Message
 /**
  * A message was sent to a channel.
+ * @class Message
  */
 
 function Message() {
@@ -312,6 +316,7 @@ Message.prototype._setField = Message__setField;
 // CLASS Edited
 /**
  * Metadata about an edit to a message.
+ * @class Edited
  */
 function Edited() {
     this.__init_fields__();

@@ -7,6 +7,11 @@ require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Test; Test; end
+##
+# hey, here are some docs
+# here are some more docs
+# a bunch of docs in fact
+
 class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static
@@ -23,6 +28,9 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 
 
+
+    ##
+    # method docs
 
     def test(param)
         

@@ -4,13 +4,30 @@
 slackpack 1.0.0
 ===============
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
+
+slack
+-----
+
+.. automodule:: slack
+   :members:
+   :undoc-members:
+
+slack.event
+-----------
+
+.. automodule:: slack.event
+   :members:
+   :undoc-members:
+
+slackpack
+---------
+
 .. automodule:: slackpack
    :members:
+   :undoc-members:
 
 
 Indices and tables

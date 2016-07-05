@@ -10,6 +10,9 @@ require_relative '../slackpack_md' # 0 () ('slack',)
 
 
 def self.SlackEvent; SlackEvent; end
+##
+# Base class for all slack events.
+
 class SlackEvent < ::DatawireQuarkCore::QuarkObject
     attr_accessor :type, :user, :channel, :timestamp
     extend ::DatawireQuarkCore::Static
@@ -100,6 +103,9 @@ end
 SlackEvent.unlazy_statics
 
 def self.SlackError; SlackError; end
+##
+# The server has indicated an error has occurred.
+
 class SlackError < ::Quark.slack.event.SlackEvent
     attr_accessor :code, :text
     extend ::DatawireQuarkCore::Static
@@ -202,6 +208,9 @@ end
 SlackError.unlazy_statics
 
 def self.Hello; Hello; end
+##
+# The client successfully connected to the server.
+
 class Hello < ::Quark.slack.event.SlackEvent
     extend ::DatawireQuarkCore::Static
 
@@ -282,6 +291,9 @@ end
 Hello.unlazy_statics
 
 def self.Message; Message; end
+##
+# A message was sent to a channel.
+
 class Message < ::Quark.slack.event.SlackEvent
     attr_accessor :subtype, :hidden, :text, :edited
     extend ::DatawireQuarkCore::Static
@@ -398,6 +410,9 @@ end
 Message.unlazy_statics
 
 def self.Edited; Edited; end
+##
+# Metadata about an edit to a message.
+
 class Edited < ::DatawireQuarkCore::QuarkObject
     attr_accessor :user, :timestamp
     extend ::DatawireQuarkCore::Static

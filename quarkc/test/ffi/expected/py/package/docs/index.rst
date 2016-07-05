@@ -4,13 +4,23 @@
 package 0.0.1
 =============
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: package
+
+test
+----
+
+.. automodule:: test
    :members:
+   :undoc-members:
+
+test.subtest
+------------
+
+.. automodule:: test.subtest
+   :members:
+   :undoc-members:
 
 
 Indices and tables

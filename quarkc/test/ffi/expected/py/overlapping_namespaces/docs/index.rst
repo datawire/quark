@@ -4,13 +4,30 @@
 overlapping_namespace 0.1.0
 ===========================
 
-Contents:
-
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: overlapping_namespace
+
+org
+---
+
+.. automodule:: org
    :members:
+   :undoc-members:
+
+org.example
+-----------
+
+.. automodule:: org.example
+   :members:
+   :undoc-members:
+
+org.example.bar
+---------------
+
+.. automodule:: org.example.bar
+   :members:
+   :undoc-members:
 
 
 Indices and tables
