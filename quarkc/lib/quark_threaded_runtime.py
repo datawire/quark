@@ -206,6 +206,12 @@ class _QuarkWS(_QuarkWSMixin, WebSocketClient):
     def __str__(self):
         return "WS: %s" % self.url
 
+    def run(self):
+        try:
+            super(_QuarkWS, self).run()
+        except Exception as ex:
+            self.runtime.log.debug("Caught ws4py exception %s in handler for %s:\n%s" %
+                                   (ex, self.url, "".join(traceback.format_stack())))
 
 class _QuarkWSGIApp(object):
 
@@ -298,7 +304,7 @@ class HttpServletAdapter(object):
         body = response.body.encode("utf-8")
         headers.append(("Content-Length", str(len(body))))
         start_response(status, headers)
-    
+
         yield body
 
 class WSServletAdapter(HttpServletAdapter):
