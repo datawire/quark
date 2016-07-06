@@ -13,7 +13,7 @@ class Foo(object):
         raise NotImplementedError('`Foo.get` is an abstract method')
 
 Foo.generics_pkg_Foo_quark_Object__ref = None
-class StringFoo(object):
+class StringFoo(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -34,7 +34,7 @@ class StringFoo(object):
         return _cast(None, lambda: unicode)
 
 StringFoo.generics_pkg_StringFoo_ref = None
-class Box(object):
+class Box(_QObject):
     def _init(self):
         self.contents = None
 

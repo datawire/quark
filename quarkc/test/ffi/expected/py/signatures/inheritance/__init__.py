@@ -9,7 +9,7 @@ import use_before_def
 import quark_ffi_signatures_md
 
 
-class Base(object):
+class Base(_QObject):
     def _init(self):
         self.name = None
 
@@ -66,7 +66,7 @@ class Test(Base):
 
 
 Test.inheritance_Test_ref = None
-class A(object):
+class A(_QObject):
     def _init(self):
         self.name = None
 
@@ -138,7 +138,7 @@ class C(A):
 
 
 C.inheritance_C_ref = None
-class X(object):
+class X(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -178,7 +178,7 @@ class Y(X):
 
 
 Y.inheritance_Y_ref = None
-class Message(object):
+class Message(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

@@ -4,7 +4,7 @@ import quark.reflect
 import org_example_foo_md
 
 
-class Foo(object):
+class Foo(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

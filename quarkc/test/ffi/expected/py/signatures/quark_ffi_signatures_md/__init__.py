@@ -4100,7 +4100,7 @@ class quark_List_quark_String_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_List_quark_String_.singleton = quark_List_quark_String_()
-class Root(object):
+class Root(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

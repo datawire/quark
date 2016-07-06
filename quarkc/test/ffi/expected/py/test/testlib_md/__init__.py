@@ -1,6 +1,6 @@
 from quark_runtime import *
 
-class Root(object):
+class Root(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

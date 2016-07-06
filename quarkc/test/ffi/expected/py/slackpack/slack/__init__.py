@@ -25,7 +25,7 @@ class SlackHandler(object):
         pass
 
 SlackHandler.slack_SlackHandler_ref = None
-class User(object):
+class User(_QObject):
     """
     A reference to a user.
     """
@@ -57,7 +57,7 @@ class User(object):
 
 
 User.slack_User_ref = None
-class Channel(object):
+class Channel(_QObject):
     """
     A reference to a channel.
     """
@@ -95,7 +95,7 @@ class Channel(object):
 
 
 Channel.slack_Channel_ref = None
-class Client(object):
+class Client(_QObject):
     """
     Represents a persistent connection to the slack service.
     """

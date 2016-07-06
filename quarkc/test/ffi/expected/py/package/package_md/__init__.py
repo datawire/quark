@@ -98,7 +98,7 @@ class test_subtest_Test(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 test_subtest_Test.singleton = test_subtest_Test()
-class Root(object):
+class Root(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

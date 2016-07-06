@@ -4,7 +4,7 @@ import quark.reflect
 import quark_ffi_signatures_md
 
 
-class Box(object):
+class Box(_QObject):
     def _init(self):
         self.contents = None
 

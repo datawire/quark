@@ -4,7 +4,7 @@ import quark.reflect
 import quark_ffi_signatures_md
 
 
-class TLSContextInitializer(object):
+class TLSContextInitializer(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -21,7 +21,7 @@ class TLSContextInitializer(object):
     def _setField(self, name, value):
         pass
 TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = None
-class Context(object):
+class Context(_QObject):
     def _init(self):
         self.parent = None
 
@@ -72,7 +72,7 @@ class TLSInitializer(object):
         raise NotImplementedError('`TLSInitializer.getValue` is an abstract method')
 
 TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = None
-class TLS(object):
+class TLS(_QObject):
     def _init(self):
         self._value = None
 

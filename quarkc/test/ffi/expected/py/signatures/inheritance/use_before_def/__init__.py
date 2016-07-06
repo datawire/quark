@@ -4,7 +4,7 @@ import quark.reflect
 import quark_ffi_signatures_md
 
 
-class Bar(object):
+class Bar(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -21,7 +21,7 @@ class Bar(object):
     def _setField(self, name, value):
         pass
 Bar.inheritance_use_before_def_Bar_ref = None
-class Foo(object):
+class Foo(_QObject):
     def _init(self):
         self.name = None
 

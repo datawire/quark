@@ -206,7 +206,7 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fie
     if base: fields = ["%s._init(self)" % base] + fields
     finit = ["def _init(self):%s" % (indent("\n".join(fields)) or "\n    pass")]
     body = indent("\n".join(finit + constructors + methods))
-    result = "class %s(%s):%s%s" % (clazz, base or "object", doc, body or "\n    pass")
+    result = "class %s(%s):%s%s" % (clazz, base or "_QObject", doc, body or "\n    pass")
     result += "\n".join(static_fields)
     return result
 

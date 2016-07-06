@@ -25,7 +25,7 @@ class C(object):
         pass
 
 C.interfaces_C_ref = None
-class T1(object):
+class T1(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -45,7 +45,7 @@ class T1(object):
     def bar(self):
         pass
 T1.interfaces_T1_ref = None
-class T2(object):
+class T2(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -65,7 +65,7 @@ class T2(object):
     def bar(self):
         pass
 T2.interfaces_T2_ref = None
-class T3(object):
+class T3(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -85,7 +85,7 @@ class T3(object):
     def bar(self):
         pass
 T3.interfaces_T3_ref = None
-class T4(object):
+class T4(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -105,7 +105,7 @@ class T4(object):
     def foo(self):
         pass
 T4.interfaces_T4_ref = None
-class T5(object):
+class T5(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -150,7 +150,7 @@ class Bar(object):
         raise NotImplementedError('`Bar.m3` is an abstract method')
 
 Bar.interfaces_Bar_quark_Object__ref = None
-class Baz(object):
+class Baz(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -179,7 +179,7 @@ RazBar.interfaces_RazBar_ref = None
 class RazFaz(object):
     pass
 RazFaz.interfaces_RazFaz_quark_Object__ref = None
-class BazBar(object):
+class BazBar(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -202,7 +202,7 @@ class BazBar(object):
     def _setField(self, name, value):
         pass
 BazBar.interfaces_BazBar_ref = None
-class BazFaz(object):
+class BazFaz(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

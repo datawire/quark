@@ -6,7 +6,7 @@ import slack.event
 import slackpack_md
 
 
-class Handler(object):
+class Handler(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

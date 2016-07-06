@@ -8,7 +8,7 @@ import package_md
 
 def go():
     pass
-class Test(object):
+class Test(_QObject):
     def _init(self):
         self.name = None
 

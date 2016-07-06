@@ -1012,7 +1012,7 @@ class quark_Map_quark_String_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 quark_Map_quark_String_quark_Object_.singleton = quark_Map_quark_String_quark_Object_()
-class Root(object):
+class Root(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

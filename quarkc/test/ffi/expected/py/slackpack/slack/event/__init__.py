@@ -5,7 +5,7 @@ import slack
 import slackpack_md
 
 
-class SlackEvent(object):
+class SlackEvent(_QObject):
     """
     Base class for all slack events.
     """
@@ -242,7 +242,7 @@ class Message(SlackEvent):
 
 
 Message.slack_event_Message_ref = None
-class Edited(object):
+class Edited(_QObject):
     """
     Metadata about an edit to a message.
     """

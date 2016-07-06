@@ -4,7 +4,7 @@ import quark.reflect
 import overlapping_namespace_md
 
 
-class Bar(object):
+class Bar(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

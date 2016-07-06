@@ -5,7 +5,7 @@ import stuff
 import quark_ffi_signatures_md
 
 
-class Overload(object):
+class Overload(_QObject):
     def _init(self):
         self.name = None
 
@@ -36,7 +36,7 @@ class Overload(object):
 
 
 Overload.classes_Overload_ref = None
-class Test(object):
+class Test(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()
@@ -53,7 +53,7 @@ class Test(object):
     def _setField(self, name, value):
         pass
 Test.classes_Test_ref = None
-class string_test(object):
+class string_test(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

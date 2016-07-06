@@ -7,7 +7,7 @@ import ccc
 import quark_ffi_signatures_md
 
 
-class Box(object):
+class Box(_QObject):
     def _init(self):
         self.contents = None
 
@@ -34,7 +34,7 @@ class Box(object):
 
 
 
-class Crate(object):
+class Crate(_QObject):
     def _init(self):
         self.box = None
         self.ibox = None
@@ -70,7 +70,7 @@ class Crate(object):
 Crate.generics_Box_quark_Object__ref = None
 Crate.generics_Box_quark_int__ref = None
 Crate.generics_Crate_quark_Object__ref = None
-class Sack(object):
+class Sack(_QObject):
     def _init(self):
         self.ints = None
 
@@ -91,7 +91,7 @@ class Sack(object):
 
 
 Sack.generics_Sack_ref = None
-class Matrix(object):
+class Matrix(_QObject):
     def _init(self):
         self.width = None
         self.height = None

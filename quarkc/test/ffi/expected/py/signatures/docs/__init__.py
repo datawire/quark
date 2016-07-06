@@ -4,7 +4,7 @@ import quark.reflect
 import quark_ffi_signatures_md
 
 
-class Test(object):
+class Test(_QObject):
     """
     hey, here are some docs
     here are some more docs

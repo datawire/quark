@@ -4,7 +4,7 @@ import quark.reflect
 import quark_ffi_signatures_md
 
 
-class Test(object):
+class Test(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

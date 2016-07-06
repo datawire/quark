@@ -50,7 +50,7 @@ class org_example_bar_Bar(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 org_example_bar_Bar.singleton = org_example_bar_Bar()
-class Root(object):
+class Root(_QObject):
     def _init(self):
         pass
     def __init__(self): self._init()

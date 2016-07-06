@@ -25,9 +25,16 @@ from quark_runtime_logging import LoggerConfig as _LoggerConfig  # noqa
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
              _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-             _LoggerConfig _cast _get_file_contents""".split()
+             _LoggerConfig _cast _get_file_contents _QObject""".split()
 
 _Map = dict
+
+
+class _QObject(object):
+    def __repr__(self):
+        if hasattr(self, "toString"):
+            return self.toString()
+        return super(_QObject, self).__repr__()
 
 
 class _List(list):
