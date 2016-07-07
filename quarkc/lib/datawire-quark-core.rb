@@ -9,6 +9,7 @@ module DatawireQuarkCore
   require 'reel'
   require 'logging'
   require 'event_emitter'
+  require 'securerandom'
 
   module GettersSetters
     # Generate Java/Quark-style getters and setters for
@@ -138,10 +139,6 @@ module DatawireQuarkCore
     result = result + [''] if string.end_with? separator
 
     result
-  end
-
-  def self.now
-    (Time.now.to_f * 1000).round
   end
 
   def self.getFileContents(path, result)
@@ -700,6 +697,18 @@ module DatawireQuarkCore
 
     def codec
       return Codec.new
+    end
+
+    def now
+      (Time.now.to_f * 1000).round
+    end
+
+    def sleep(seconds)
+      Kernel.sleep seconds
+    end
+
+    def uuid
+      SecureRandom.uuid
     end
   end
 

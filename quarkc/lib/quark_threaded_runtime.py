@@ -11,6 +11,7 @@ import time
 import traceback
 import urllib2
 import urlparse
+import uuid
 from wsgiref import util
 from Queue import Queue, Empty
 import quark
@@ -515,6 +516,15 @@ class ThreadedRuntime(object):
 
     def logger(self, topic):
         return Logger(topic)
+
+    def now(self):
+        return long(time.time() * 1000)
+
+    def sleep(self, seconds):
+        time.sleep(seconds)
+
+    def uuid(self):
+        return str(uuid.uuid4())
 
 _global_lock = threading.Lock()
 _threaded_runtime = None

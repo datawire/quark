@@ -342,6 +342,20 @@ namespace spi_api_tracing {
             self.log.debug(self.id + ".codec()");
             return impl.codec();
         }
+        long now() {
+            self.log.debug(self.id + ".now()");
+            return impl.now();
+        }
+        void sleep(float seconds) {
+            self.log.debug(self.id + ".sleep("
+                           + seconds.toString()
+                           + ")");
+            impl.sleep(seconds);
+        }
+        String uuid() {
+            self.log.debug(self.id + ".uuid()");
+            return impl.uuid();
+        }
         void serveHTTP(String url, HTTPServlet servlet) {
             HTTPServletProxy wrapped_servlet = new HTTPServletProxy(self.log, self, servlet);
             self.log.debug(self.id + ".serveHTTP("

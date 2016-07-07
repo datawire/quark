@@ -423,6 +423,25 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
         return Builtins.defaultCodec();
     }
 
+    @Override
+    public Long now() {
+        return System.currentTimeMillis();
+    }
+
+    @Override
+    public void sleep(Double seconds) {
+        try {
+            Thread.sleep((int)(seconds * 1000));
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    @Override
+    public String uuid() {
+        return java.util.UUID.randomUUID().toString();
+    }
+
     public static ByteBuf adaptBuffer(Buffer quarkBuffer) {
         // TODO: add netty implementation of runtime buffer and short-circuit here
         if (quarkBuffer instanceof BufferImpl) {

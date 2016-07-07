@@ -71,6 +71,15 @@ namespace spi_api {
         Codec codec() {
             return impl.codec();
         }
+        long now() {
+            return impl.now();
+        }
+        void sleep(float seconds) {
+            impl.sleep(seconds);
+        }
+        String uuid() {
+            return impl.uuid();
+        }
         void serveHTTP(String url, HTTPServlet servlet) {
             impl.serveHTTP(url, new HTTPServletProxy(self, servlet));
         }

@@ -11,8 +11,14 @@ Latest
 * Added `String.ordAt`
 * Added `String.strip`
 * Added `String.parseInt` and `String.parseLong`
+
 * Returning `undefined` from a Javascript function used as a `Promise` callback
   no longer blows up.
+
+* Added `quark.uuid`, which calls `Runtime.uuid`, to generate a UUID v4 string.
+
+* Changed `quark.sleep` and `quark.now` to delegate to methods on `Runtime` so
+  that they can be replaced with mock versions.
 
 1.0.282
 ------
