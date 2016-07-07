@@ -53,16 +53,6 @@ macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush(
                              $rb{::DatawireQuarkCore.print($msg)}
                              $js{_qrt.print($msg)};
 
-macro long now() $java{System.currentTimeMillis()}
-                 $py{long(time.time()*1000)}
-                 $rb{::DatawireQuarkCore.now}
-                 $js{Date.now()};
-
-macro void sleep(float seconds) $java{io.datawire.quark.runtime.Builtins.sleep($seconds)}
-                                $py{time.sleep($seconds)}
-                                $rb{sleep($seconds)}
-                                $js{_qrt.sleep($seconds)};
-
 macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
                                  $py{_url_get($url)}
                                  $rb{::DatawireQuarkCore.url_get($url)}
@@ -79,7 +69,9 @@ macro Codec defaultCodec() $java{io.datawire.quark.runtime.Builtins.defaultCodec
                            $js{_qrt.defaultCodec()};
 
 macro void _trace() $java{do{new Throwable().printStackTrace();} while(false)}
-                    $py{__import__("traceback").print_stack()};
+                    $py{__import__("traceback").print_stack()}
+                    $js{console.trace()}
+                    $rb{puts caller};
 
 macro void panic(String msg) $java{throw new RuntimeException($msg)}
                              $py{raise Exception($msg)}
@@ -108,4 +100,22 @@ interface Runtime {
 
     @doc("Get a logger for the specified topic.")
     Logger logger(String topic);
+
+    @doc("Get epoch time in milliseconds")
+    long now();
+
+    @doc("Suspend execution of this thread for some number of seconds")
+    void sleep(float seconds);
+
+    @doc("Get a v4 random UUID (Universally Unique IDentifier)")
+    String uuid();
 }
+
+@doc("Get epoch time in milliseconds")
+long now() { return quark.concurrent.Context.runtime().now(); }
+
+@doc("Suspend execution of this thread for some number of seconds")
+void sleep(float seconds) { quark.concurrent.Context.runtime().sleep(seconds); }
+
+@doc("Get a v4 random UUID (Universally Unique IDentifier)")
+String uuid() { return quark.concurrent.Context.runtime().uuid(); }

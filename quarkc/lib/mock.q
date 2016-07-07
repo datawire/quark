@@ -315,6 +315,18 @@ class MockRuntime extends Runtime {
         return runtime.codec();
     }
 
+    long now() {
+        return runtime.now();
+    }
+
+    void sleep(float seconds) {
+        runtime.sleep(seconds);
+    }
+
+    String uuid() {
+        return runtime.uuid();
+    }
+
     void serveHTTP(String url, HTTPServlet servlet) {
         runtime.fail("Runtime.serveHTTP not yet supported by the MockRuntime");
     }

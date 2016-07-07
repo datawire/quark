@@ -157,11 +157,6 @@
     }
     exports.urlencode = urlencode;
 
-    function sleep(seconds) {
-        execSync("sleep " + seconds);
-    }
-    exports.sleep = sleep;
-
     function JSONObject() {
         this.value = null;
     }

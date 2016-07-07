@@ -22,4 +22,13 @@ class ConcurrentTest {
         check(elapsed < 750, "Expected elapsed < 750 ms got " + elapsedStr);
         check(elapsed > 400, "Expected elapsed > 400 ms got " + elapsedStr);
     }
+
+    void testSleep() {
+        long start = now();
+        sleep(0.5);
+        long elapsed = now() - start;
+        String elapsedStr = elapsed.toString() + " ms";
+        check(elapsed < 750, "Expected elapsed < 750 ms got " + elapsedStr);
+        check(elapsed > 400, "Expected elapsed > 400 ms got " + elapsedStr);
+    }
 }
