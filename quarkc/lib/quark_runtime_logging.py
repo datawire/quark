@@ -11,6 +11,7 @@ def ensure_trace():
         TRACE = 5
         logging.addLevelName(TRACE, "TRACE")
 
+TRACE = None
 ensure_trace()
 levelNames = dict(
     trace = TRACE,
@@ -26,29 +27,6 @@ def parseLevel(lvl):
         lvl = str(lvl).lower()
     return levelNames.get(lvl, logging.INFO)
 
-class LoggerConfig(object):
-    @classmethod
-    def config(cls):
-        return Configurator()
-
-    @classmethod
-    def stdout(cls):
-        return STDOUT
-
-    @classmethod
-    def stderr(cls):
-        return STDERR
-
-    @classmethod
-    def file(cls, path):
-        return Appender(logging.FileHandler(path))
-
-class Appender(object):
-    def __init__(self, handler):
-        self.handler = handler
-
-STDOUT = Appender(logging.StreamHandler(sys.stdout))
-STDERR = Appender(logging.StreamHandler(sys.stdout))
 
 class Formatter(logging.Formatter):
     LEVELMAP = dict((v,k.upper()) for k,v in levelNames.items())
@@ -63,34 +41,21 @@ class Formatter(logging.Formatter):
         finally:
             record.levelname = orig
 
-class Configurator(object):
-    def __init__(self):
-        self.appender = STDOUT
-        self.level = logging.INFO
 
-    def setAppender(self, appender):
-        self.appender = appender
-        return self
+def configure_logging(appender, level):
+    root = logging.getLogger("quark")
+    for hnd in root.handlers[:]:
+        root.removeHandler(hnd)
+    root.setLevel(parseLevel(level))
+    if appender.name == ":STDOUT":
+        handler = logging.StreamHandler(sys.stdout)
+    elif appender.name == ":STDERR":
+        handler = logging.StreamHandler(sys.stderr)
+    else:
+        handler = logging.FileHandler(appender.name)
+    handler.setFormatter(Formatter())
+    root.addHandler(handler)
 
-    def setLevel(self, level):
-        self.level = parseLevel(level)
-        return self
-
-    def configure(self):
-        root = logging.getLogger("quark")
-        for hnd in root.handlers[:]:
-            root.removeHandler(hnd)
-        import quark
-        if quark.logging._Override.check():
-            self.setLevel(quark.logging._Override.level)
-            filename = quark.logging._Override.getFilename()
-            if filename is None:
-                self.setAppender(STDERR)
-            else:
-                self.setAppender(LoggerConfig.file(filename))
-        root.setLevel(self.level)
-        self.appender.handler.setFormatter(Formatter())
-        root.addHandler(self.appender.handler)
 
 class Logger(object):
     def __init__(self, topic):
@@ -101,4 +66,3 @@ class Logger(object):
     def info(self, msg): self.impl.info("%s", msg)
     def warn(self, msg): self.impl.warning("%s", msg)
     def error(self, msg): self.impl.error("%s", msg)
-

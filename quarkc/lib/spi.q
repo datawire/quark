@@ -22,8 +22,7 @@ namespace spi {
             RuntimeSpi spi = new RuntimeSpi();
             Runtime api;
             if (!env_checked) {
-                logging.setEnvironmentOverride("QUARK_TRACE", "DEBUG");
-                enable_tracing = logging._Override.check();
+                enable_tracing = (logging.Config._getOverrideIfExists() != null);
                 env_checked = true;
             }
             if (enable_tracing) {

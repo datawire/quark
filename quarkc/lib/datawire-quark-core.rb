@@ -458,65 +458,18 @@ module DatawireQuarkCore
     end
   end
 
-  class LogConfigurator
-    def initialize
-      @appender = STDOUT
-      @level = :info
+  def self.configureLogging(appender, level)
+    root = Logging.logger["quark"]
+    if appender.name == ":STDOUT"
+      app = Logging.appenders.stdout
+    elsif appender.name == ":STDERR"
+      app = Logging.appenders.stderr
+    else
+      app = Logging.appenders.file(appender.name)
     end
-
-    def setAppender appender
-      @appender = appender
-      self
-    end
-
-    def setLevel level
-      @level = level
-      self
-    end
-
-    def configure
-      root = Logging.logger["quark"]
-      require 'quark'
-      if Quark::Quark::Logging::Override.check
-        setLevel Quark::Quark::Logging::Override.level
-        filename = Quark::Quark::Logging::Override.getFilename
-        if filename == nil
-          setAppender STDERR
-        else
-          setAppender (LoggerConfig.file filename)
-        end
-      end
-      appender = @appender.appender
-      appender.layout = QuarkLayout.new
-      root.appenders = appender
-      root.level = @level
-      nil
-    end
-  end
-
-  class Appender
-    attr_reader :appender
-    def initialize appender
-      @appender = appender
-    end
-  end
-
-  STDOUT = Appender.new Logging.appenders.stdout
-  STDERR = Appender.new Logging.appenders.stderr
-
-  class LoggerConfig
-    def self.config
-      LogConfigurator.new
-    end
-    def self.stdout
-      STDOUT
-    end
-    def self.stderr
-      STDERR
-    end
-    def self.file(path)
-      Appender.new Logging.appenders.file(path)
-    end
+    app.layout = QuarkLayout.new
+    root.appenders = app
+    root.level = level
   end
 
   class Logger
@@ -583,7 +536,7 @@ module DatawireQuarkCore
         sleep 0.1
       end
     rescue Interrupt
-      @log.warn "Interrupted"
+      #@log.warn "Interrupted"
     end
 
   end
@@ -618,8 +571,8 @@ module DatawireQuarkCore
           response.setBody(res.body)
           @events.event { handler.onHTTPResponse request, response }
         rescue Exception => e
-          @log.warn "EXCEPTION: #{e.inspect}"
-          @log.warn "MESSAGE: #{e.message}"
+          #@log.warn "EXCEPTION: #{e.inspect}"
+          #@log.warn "MESSAGE: #{e.message}"
           @events.event { handler.onHTTPError request, ::Quark.quark.HTTPError.new(e.message) }
         ensure
           @events.event(final:src) { handler.onHTTPFinal request }

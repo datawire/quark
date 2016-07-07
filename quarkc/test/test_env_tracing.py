@@ -23,10 +23,26 @@ import shutil
 
 import pexpect
 
-quark_contents = """quark 1.0;
+quark_contents_config = """quark 1.0;
 void main(List<String> args) {
     print("Start of test main()");
     logging.makeConfig().setLevel("WARN").configure();
+    Logger log = new Logger("user_code_logging");
+    quark.concurrent.Context.runtime().codec();  // Cause a trace message
+    log.trace("logged at trace");
+    log.debug("logged at debug");
+    log.info("logged at info");
+    log.warn("logged at warn");
+    log.error("logged at error");
+    quark.concurrent.Context.runtime().codec();  // Cause a trace message
+    print("End of test main()");
+}
+"""
+
+quark_contents_noconfig = """quark 1.0;
+void main(List<String> args) {
+    print("Start of test main()");
+    //logging.makeConfig().setLevel("WARN").configure(); // commented out, no config
     Logger log = new Logger("user_code_logging");
     quark.concurrent.Context.runtime().codec();  // Cause a trace message
     log.trace("logged at trace");
@@ -44,6 +60,14 @@ def assert_user_none(content):
     assert "WARN quark.user_code_logging" not in content
     assert "ERROR quark.user_code_logging" not in content
     assert "INFO quark.user_code_logging" not in content
+    assert "DEBUG quark.user_code_logging" not in content
+    assert "TRACE quark.user_code_logging" not in content
+
+
+def assert_user_info(content):
+    assert "WARN quark.user_code_logging" in content
+    assert "ERROR quark.user_code_logging" in content
+    assert "INFO quark.user_code_logging" in content
     assert "DEBUG quark.user_code_logging" not in content
     assert "TRACE quark.user_code_logging" not in content
 
@@ -110,20 +134,20 @@ def test_env_tracing():
 
     temp = mkdtemp()
     try:
-        quark_file_name = os.path.join(temp, "tet.q")
+        quark_file_name = os.path.join(temp, "tetc.q")
         with open(quark_file_name, "wb") as quark_file:
-            quark_file.write(quark_contents)
+            quark_file.write(quark_contents_config)
         child = pexpect.spawn("quark install --%s %s" % (" --".join(languages), quark_file_name), logfile=sys.stdout)
         child.expect(pexpect.EOF, timeout=300)
         assert child.before.splitlines()[-1].strip() == "Done"
         del child
 
         for language in languages:
-            qtrace_file_name = os.path.join(temp, "qtrace-%s.log" % language)
-            ttrace_file_name = os.path.join(temp, "ttrace-%s.log" % language)
+            qtrace_file_name = os.path.join(temp, "qtrace-config-%s.log" % language)
+            ttrace_file_name = os.path.join(temp, "ttrace-config-%s.log" % language)
 
             print
-            print language, "==" * 30
+            print language, "-- logging configured", "==" * 20
 
             print
             print "Run no qtrace no ttrace", language
@@ -155,6 +179,53 @@ def test_env_tracing():
             assert_user_debug(qtrace_contents)
             assert_quark_trace(qtrace_contents)
             assert fetch_file(ttrace_file_name) is None
+
+        quark_file_name = os.path.join(temp, "tetn.q")
+        with open(quark_file_name, "wb") as quark_file:
+            quark_file.write(quark_contents_noconfig)
+        child = pexpect.spawn("quark install --%s %s" % (" --".join(languages), quark_file_name), logfile=sys.stdout)
+        child.expect(pexpect.EOF, timeout=300)
+        assert child.before.splitlines()[-1].strip() == "Done"
+        del child
+
+        for language in languages:
+            qtrace_file_name = os.path.join(temp, "qtrace-noconfig-%s.log" % language)
+            ttrace_file_name = os.path.join(temp, "ttrace-noconfig-%s.log" % language)
+
+            print
+            print language, "-- logging NOT configured", "==" * 20
+
+            print
+            print "Run no qtrace no ttrace", language
+            output = do_quark_run(quark_file_name, language, {}, unenv)
+            assert_user_info(output)
+            assert_not_quark_trace(output)
+            assert fetch_file(qtrace_file_name) is None
+            assert fetch_file(ttrace_file_name) is None
+
+            print
+            print "Run qtrace 1 no ttrace", language
+            output = do_quark_run(quark_file_name, language, {qtrace: "1"}, unenv)
+            assert_user_debug(output)
+            assert_quark_trace(output)
+            assert fetch_file(qtrace_file_name) is None
+            assert fetch_file(ttrace_file_name) is None
+
+            print
+            print "Run qtrace file no ttrace", language
+            output = do_quark_run(quark_file_name, language, {qtrace: qtrace_file_name}, unenv)
+            assert_user_none(output)
+            assert_not_quark_trace(output)
+
+            print
+            print "qtrace file contents", language
+            qtrace_contents = fetch_file(qtrace_file_name)
+            assert qtrace_contents is not None
+            print qtrace_contents
+            assert_user_debug(qtrace_contents)
+            assert_quark_trace(qtrace_contents)
+            assert fetch_file(ttrace_file_name) is None
+
     finally:
         shutil.rmtree(temp)
 

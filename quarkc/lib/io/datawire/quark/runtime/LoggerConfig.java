@@ -8,7 +8,9 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class LoggerConfig {
+    private static boolean firstRun = true;
     private static java.util.logging.Logger root = java.util.logging.Logger.getLogger("quark");
+
     static String levelToName(Level level) {
         if (level == Level.FINEST) return "trace";
         if (level == Level.FINE) return "debug";
@@ -17,6 +19,7 @@ public class LoggerConfig {
         if (level == Level.SEVERE) return "error";
         return level.getName();
     }
+
     private static class QuarkFormatter extends Formatter {
         public QuarkFormatter(String fmt) {
             this.fmt = fmt;
@@ -33,50 +36,7 @@ public class LoggerConfig {
     }
     private static Formatter TS_FORMATTER = new QuarkFormatter("%1$tF-%1$tT.%1$tL %2$s %3$s %4$s\n");
     private static Formatter FORMATTER = new QuarkFormatter("%2$s %3$s %4$s\n");
-    public static quark.logging.Config config() {
-        return new quark.logging.Config() {
-            Appender appender = STDERR;
-            Level level = Level.INFO;
-            public quark.logging.Config setAppender(quark.logging.Appender appender) {
-                this.appender = (Appender)appender;
-                return this;
-            }
-            public quark.logging.Config setLevel(String level) {
-                if (level != null) {
-                    level = level.toLowerCase();
-                }
 
-                if ("trace".equals(level)) this.level = Level.FINEST;
-                else if ("debug".equals(level)) this.level = Level.FINE;
-                else if ("info".equals(level)) this.level = Level.INFO;
-                else if ("warn".equals(level)) this.level = Level.WARNING;
-                else if ("error".equals(level)) this.level = Level.SEVERE;
-                else this.level = Level.INFO;
-                return this;
-            }
-            public void configure() {
-                LogManager mgr = LogManager.getLogManager();
-                mgr.reset();
-                if (quark.logging._Override.check()) {
-                    setLevel(quark.logging._Override.level);
-                    String filename = quark.logging._Override.getFilename();
-                    if (filename == null) {
-                        setAppender(STDERR);
-                    } else {
-                        setAppender(file(filename));
-                    }
-                }
-                root.setLevel(level);
-                Handler handler = appender.handler();
-                handler.setLevel(level);
-                root.setLevel(level);
-                root.addHandler(handler);
-            }
-        };
-    }
-    private interface Appender extends quark.logging.Appender {
-        Handler handler();
-    }
     private static class FlushingStreamHandler extends StreamHandler {
         OutputStream stream;
         FlushingStreamHandler(OutputStream stream, Formatter formatter) {
@@ -89,32 +49,45 @@ public class LoggerConfig {
             flush();
         }
     }
-    private static Appender STDOUT =  new Appender() {
-            public StreamHandler handler() {
-                PrintStream stream = System.out;
-                return new FlushingStreamHandler(stream, FORMATTER);
+
+    public static void configureLogging(quark.logging.Appender appender, String levelString) {
+        StreamHandler handler;
+        if (":STDOUT".equals(appender.name)) {
+            handler = new FlushingStreamHandler(System.out, FORMATTER);
+        } else if (":STDERR".equals(appender.name)) {
+            handler = new FlushingStreamHandler(System.err, FORMATTER);
+        } else {
+            try {
+                handler = new java.util.logging.StreamHandler(new FileOutputStream(appender.name), FORMATTER);
+            } catch (java.io.FileNotFoundException ex) {
+                throw new RuntimeException("Cannot write logfile", ex);
             }
-        };
-    public static quark.logging.Appender stdout() {
-        return STDOUT;
-    }
-    private static Appender STDERR = new Appender() {
-            public StreamHandler handler() {
-                return new FlushingStreamHandler(System.err, FORMATTER);
-            }
-        };
-    public static quark.logging.Appender stderr() {
-        return STDERR;
-    }
-    public static quark.logging.Appender file(final String path) {
-        return new Appender() {
-            public StreamHandler handler() {
-                try {
-                    return new java.util.logging.StreamHandler(new FileOutputStream(path),  FORMATTER);
-                } catch (java.io.FileNotFoundException ex) {
-                    throw new RuntimeException("Cannot write logfile", ex);
-                }
-            }
-        };
+        }
+
+        Level level;
+        if (levelString != null) {
+            levelString = levelString.toLowerCase();
+        }
+        if ("trace".equals(levelString)) level = Level.FINEST;
+        else if ("debug".equals(levelString)) level = Level.FINE;
+        else if ("info".equals(levelString)) level = Level.INFO;
+        else if ("warn".equals(levelString)) level = Level.WARNING;
+        else if ("error".equals(levelString)) level = Level.SEVERE;
+        else level = Level.INFO;
+
+        if (firstRun) {
+            LogManager mgr = LogManager.getLogManager();
+            mgr.reset();
+            firstRun = false;
+        }
+
+        Handler[] handlers = root.getHandlers();
+        for (int idx = 0; idx < handlers.length; idx++) {
+            root.removeHandler(handlers[idx]);
+        }
+
+        handler.setLevel(level);
+        root.setLevel(level);
+        root.addHandler(handler);
     }
 }

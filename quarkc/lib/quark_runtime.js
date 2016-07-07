@@ -715,6 +715,9 @@
 
     exports.TLS = TLS;
 
+    // ----------------------------------------------------------------------
+    // Logging
+
     function makeStreamAppender(stream) {
         return function (line) {
             stream.write(line);
@@ -723,24 +726,8 @@
     }
 
     function makeFileAppender(path) {
-        if (platform.isNode()) {
-            var fs = require("fs");
-            return makeStreamAppender(fs.createWriteStream(path));
-        } else {
-            return function (line) {
-                console.log(line);
-            };
-        }
-    }
-
-    var STDOUT, STDERR;
-
-    if (platform.isNode()) {
-        STDOUT = makeStreamAppender(process.stdout);
-        STDERR = makeStreamAppender(process.stderr);
-    } else {
-        STDOUT = function (line) { console.log(line); };
-        STDERR = function (line) { console.err(line); };
+        var fs = require("fs");
+        return makeStreamAppender(fs.createWriteStream(path));
     }
 
     var levels = {};
@@ -757,64 +744,32 @@
     var WARN = new Level("WARN", 4);
     var ERROR = new Level("ERROR", 5);
 
-    function LoggerConfig() {
-        this.appender = STDOUT;
-        this.level = INFO;
-    }
-
-    function LogConfigurator(cfg) {
-        this.cfg = cfg;
-        this.appender = STDOUT;
-        this.level = INFO;
-    }
-    LogConfigurator.prototype.setAppender = function setAppender(appender) {
-        this.appender = appender;
-        return this;
+    var loggingConfiguration = {
+        appender: function (line) { console.log("(Quark logging not configured) " + line); },
+        level: INFO
     };
-    LogConfigurator.prototype.setLevel = function setLevel(level) {
+
+    function configureLogging(appender, level) {
+        if (platform.isNode()) {
+            if (appender.name === ":STDOUT") {
+                loggingConfiguration.appender = makeStreamAppender(process.stdout);
+            } else if (appender.name === ":STDERR") {
+                loggingConfiguration.appender = makeStreamAppender(process.stderr);
+            } else {
+                loggingConfiguration.appender = makeFileAppender(appender.name);
+            }
+        } else {
+            loggingConfiguration.appender = function (line) { console.log(line); };
+        }
         if (typeof(level) === "string") {
             level = level.toUpperCase();
         }
         if (level in levels) {
-            this.level = levels[level];
-        }
-        return this;
-    };
-    LogConfigurator.prototype.configure = function configure() {
-        var quark = require("quark").quark;
-        if (quark.logging._Override.check()) {
-            this.setLevel(quark.logging._Override.level);
-            var filename = quark.logging._Override.getFilename();
-            if (filename == null) {
-                this.setAppender(STDERR);
-            } else {
-                this.setAppender(makeFileAppender(filename));
-            }
+            loggingConfiguration.level = levels[level];
         }
 
-        this.cfg.appender = this.appender;
-        this.cfg.level = this.level;
-    };
-
-    LoggerConfig.prototype.config = function config() {
-        return new LogConfigurator(this);
-    };
-
-    LoggerConfig.prototype.stdout = function stdout() {
-        return STDOUT;
-    };
-
-    LoggerConfig.prototype.stderr = function stderr() {
-        return STDERR;
-    };
-
-    LoggerConfig.prototype.file = function file(path) {
-        return makeFileAppender(path);
-    };
-
-
-    var config = new LoggerConfig();
-    exports.LoggerConfig = config;
+    }
+    exports.configureLogging = configureLogging;
 
     var loggers = {};
 
@@ -828,9 +783,9 @@
     Logger.prototype.warn = function (msg)  { this.log(WARN,  msg); };
     Logger.prototype.error = function (msg) { this.log(ERROR, msg); };
     Logger.prototype.log = function(level, msg) {
-        if (config.level.num <= level.num) {
+        if (loggingConfiguration.level.num <= level.num) {
             var line = level.name + " " + this.topic + " " + msg;
-            config.appender(line);
+            loggingConfiguration.appender(line);
         }
     };
 
@@ -841,12 +796,15 @@
         return loggers[topic];
     };
 
+    // ----------------------------------------------------------------------
+    //
+
     exports.sanitize_undefined = function(value) {
         if (value === undefined) {
             return null;
         }
         return value;
-    }
+    };
 
     quark = require("quark");
 

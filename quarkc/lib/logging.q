@@ -5,76 +5,105 @@ include io/datawire/quark/runtime/LoggerConfig.java;
 
 namespace quark {
     namespace logging {
-        @doc("Destination for logging, just a marker interface for now")
-        interface Appender {
+
+        @doc("Destination for logging")
+        class Appender {
+            String name;
+            Appender(String name) {
+                self.name = name;
+            }
         }
 
-        macro Appender stdout() $java{io.datawire.quark.runtime.LoggerConfig.stdout()}
-                                $py{_LoggerConfig.stdout()}
-                                $rb{::DatawireQuarkCore::LoggerConfig.stdout()}
-                                $js{_qrt.LoggerConfig.stdout()};
-        macro Appender stderr() $java{io.datawire.quark.runtime.LoggerConfig.stderr()}
-                                $py{_LoggerConfig.stderr()}
-                                $rb{::DatawireQuarkCore::LoggerConfig.stderr()}
-                                $js{_qrt.LoggerConfig.stderr()};
-        macro Appender file(String path) $java{io.datawire.quark.runtime.LoggerConfig.file($path)}
-                                $py{_LoggerConfig.file($path)}
-                                $rb{::DatawireQuarkCore::LoggerConfig.file($path)}
-                                $js{_qrt.LoggerConfig.file($path)};
+        @doc("Logging appender that sends log messages to standard output")
+        Appender stdout() { return new Appender(":STDOUT"); }
 
-        class _Override {
-            static String envVar = "QUARK_TRACE";
-            static String level = "DEBUG";
+        @doc("Logging appender that sends log messages to standard error")
+        Appender stderr() { return new Appender(":STDERR"); }
 
-            static bool check() {
-                if (envVar == null) {
-                    return false;
+        @doc("Logging appender that sends log messages to a file")
+        Appender file(String path) { return new Appender(path); }
+
+        @doc("Set an environment variable to override logging set up in the code")
+        void setEnvironmentOverride(String envVar, String level) {
+            Config._overrideEnvVar = envVar;
+            Config._overrideLevel = level;
+        }
+
+        macro void _configureLogging(Appender appender, String level)
+            $java{io.datawire.quark.runtime.LoggerConfig.configureLogging(($appender), ($level))}
+            $py{_configure_logging(($appender), ($level))}
+            $js{_qrt.configureLogging(($appender), ($level))}
+            $rb{::DatawireQuarkCore.configureLogging(($appender), ($level))}
+        ;
+
+        @doc("Logging configurator")
+        class Config {
+            static String _overrideEnvVar = "QUARK_TRACE";
+            static String _overrideLevel = "DEBUG";
+            static bool _configured = false;
+
+            Appender appender = stderr();
+            String level = "INFO";
+
+            @doc("Set the destination for logging, default stderr()")
+            Config setAppender(Appender appender) {
+                self.appender = appender;
+                return self;
+            }
+
+            @doc("set the logging level [trace|debug|info|warn|error], default 'info'")
+            Config setLevel(String level) {
+                self.level = level;
+                return self;
+            }
+
+            static String _getOverrideIfExists() {
+                if (Config._overrideEnvVar == null) {
+                    return null;
                 }
-                String envVarValue = quark.os._env_get(envVar);
+                String envVarValue = quark.os._env_get(Config._overrideEnvVar);
                 if ((envVarValue == null) ||
                     (envVarValue == "") ||
                     (envVarValue == "0") ||
                     (envVarValue.toLower() == "false")) {
-                    return false;
-                }
-                return true;
-            }
-
-            static String getFilename() {
-                // Assumes check() has returned true
-                String envVarValue = quark.os._env_get(envVar);
-                if ((envVarValue == "1") || (envVarValue.toLower() == "true")) {
                     return null;
                 }
                 return envVarValue;
             }
-        }
 
-        @doc("Set an environment variable to override logging set up in the code")
-        void setEnvironmentOverride(String envVar, String level) {
-            _Override.envVar = envVar;
-            _Override.level = level;
-        }
-
-        @doc("Logging configurator")
-        interface Config {
-            @doc("Set the destination for logging, default stderr()")
-            Config setAppender(Appender appender);
-            @doc("set the logging level [trace|debug|info|warn|error], default 'info'")
-            Config setLevel(String level);
             @doc("Configure the logging")
-            void configure();
+            void configure() {
+                String envVarValue = Config._getOverrideIfExists();
+                if (envVarValue != null) {
+                    if ((envVarValue == "1") || (envVarValue.toLower() == "true")) {
+                        appender = stderr();
+                    } else {
+                        appender = file(envVarValue);
+                    }
+                    level = Config._overrideLevel;
+                }
+                _configureLogging(appender, level);
+                Config._configured = true;
+            }
         }
-        macro Config makeConfig() $java{io.datawire.quark.runtime.LoggerConfig.config()}
-                              $py{_LoggerConfig.config()}
-                              $rb{::DatawireQuarkCore::LoggerConfig.config()}
-                              $js{_qrt.LoggerConfig.config()};
+
+        @doc("Create a logging configurator")
+        Config makeConfig() {
+            return new Config();
+        }
+    }
+
+    Logger _getLogger(String topic) {
+        if (!quark.logging.Config._configured) {
+            quark.logging.makeConfig().configure();
+        }
+        return quark.concurrent.Context.current().runtime().logger(topic);
     }
 
     @doc("A logging facility")
     @mapping($java{io.datawire.quark.runtime.Logger})
     primitive Logger {
-        macro Logger(String topic) quark.concurrent.Context.current().runtime().logger(topic);
+        macro Logger(String topic) _getLogger(topic);
         @doc("emit a log at trace level")
         void trace(String msg);
         @doc("emit a log at debug level")
@@ -85,7 +114,6 @@ namespace quark {
         void warn(String msg);
         @doc("emit a log at error level")
         void error(String msg);
-
     }
 
 }
