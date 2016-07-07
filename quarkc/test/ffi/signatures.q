@@ -282,6 +282,12 @@ namespace interfaces {
         void m3(List<T> args) {}
     }
 
+    interface IConstants {
+        static String FOO = "foo";
+    }
+
+    class Constants extends IConstants {}
+
 }
 
 namespace classes {

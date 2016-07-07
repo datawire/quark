@@ -775,5 +775,85 @@ class BazFaz < ::DatawireQuarkCore::QuarkObject
 
 end
 BazFaz.unlazy_statics
+
+def self.IConstants; IConstants; end
+class IConstants < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static FOO: -> { "foo" }
+    static interfaces_IConstants_ref: -> { nil }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+IConstants.unlazy_statics
+
+def self.Constants; Constants; end
+class Constants < ::DatawireQuarkCore::QuarkObject
+    extend ::DatawireQuarkCore::Static
+
+    static interfaces_Constants_ref: -> { nil }
+    static FOO: -> { "foo" }
+
+
+
+    def initialize()
+        self.__init_fields__
+
+        nil
+    end
+
+
+
+
+    def _getClass()
+        
+        return "interfaces.Constants"
+
+        nil
+    end
+
+    def _getField(name)
+        
+        if ((name) == ("FOO"))
+            return ::Quark.interfaces.IConstants.FOO
+        end
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+
+        nil
+    end
+
+
+end
+Constants.unlazy_statics
 end # module Interfaces
 end # module Quark

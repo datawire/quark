@@ -54,6 +54,8 @@ public class Root implements io.datawire.quark.runtime.QObject {
     public static quark.reflect.Class interfaces_RazFaz_quark_Object__md = interfaces_RazFaz_quark_Object_.singleton;
     public static quark.reflect.Class interfaces_BazBar_md = interfaces_BazBar.singleton;
     public static quark.reflect.Class interfaces_BazFaz_quark_Object__md = interfaces_BazFaz_quark_Object_.singleton;
+    public static quark.reflect.Class interfaces_IConstants_md = interfaces_IConstants.singleton;
+    public static quark.reflect.Class interfaces_Constants_md = interfaces_Constants.singleton;
     public static quark.reflect.Class classes_Overload_md = classes_Overload.singleton;
     public static quark.reflect.Class classes_Test_md = classes_Test.singleton;
     public static quark.reflect.Class classes_string_test_md = classes_string_test.singleton;

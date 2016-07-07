@@ -7452,6 +7452,144 @@ class InterfacesBazFazQuarkObject < ::Quark.quark.reflect.QuarkClass
 end
 InterfacesBazFazQuarkObject.unlazy_statics
 
+def self.interfaces_IConstants; InterfacesIConstants; end
+class InterfacesIConstants < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_ffi_signatures_md.interfaces_IConstants.new() }
+
+
+
+    def initialize()
+        
+        super("interfaces.IConstants")
+        (self).name = "interfaces.IConstants"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "FOO")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return nil
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return true
+
+        nil
+    end
+
+    def _getClass()
+        
+        return ::DatawireQuarkCore.cast(nil) { ::String }
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+InterfacesIConstants.unlazy_statics
+
+def self.interfaces_Constants; InterfacesConstants; end
+class InterfacesConstants < ::Quark.quark.reflect.QuarkClass
+    extend ::DatawireQuarkCore::Static
+
+    static singleton: -> { ::Quark.quark_ffi_signatures_md.interfaces_Constants.new() }
+
+
+
+    def initialize()
+        
+        super("interfaces.Constants")
+        (self).name = "interfaces.Constants"
+        (self).parameters = ::DatawireQuarkCore::List.new([])
+        (self).fields = ::DatawireQuarkCore::List.new([::Quark.quark.reflect.Field.new("quark.String", "FOO")])
+        (self).methods = ::DatawireQuarkCore::List.new([])
+        (self).parents = ::DatawireQuarkCore::List.new(["quark.Object"])
+
+        nil
+    end
+
+
+
+
+    def construct(args)
+        
+        return ::Quark.interfaces.Constants.new()
+
+        nil
+    end
+
+    def isAbstract()
+        
+        return false
+
+        nil
+    end
+
+    def _getClass()
+        
+        return ::DatawireQuarkCore.cast(nil) { ::String }
+
+        nil
+    end
+
+    def _getField(name)
+        
+        return nil
+
+        nil
+    end
+
+    def _setField(name, value)
+        
+        nil
+
+        nil
+    end
+
+    def __init_fields__()
+        
+        super
+
+        nil
+    end
+
+
+end
+InterfacesConstants.unlazy_statics
+
 def self.classes_Overload___add___Method; ClassesOverloadAddMethod; end
 class ClassesOverloadAddMethod < ::Quark.quark.reflect.Method
 
@@ -10751,6 +10889,8 @@ class Root < ::DatawireQuarkCore::QuarkObject
     static interfaces_RazFaz_quark_Object__md: -> { ::Quark.quark_ffi_signatures_md.interfaces_RazFaz_quark_Object_.singleton }
     static interfaces_BazBar_md: -> { ::Quark.quark_ffi_signatures_md.interfaces_BazBar.singleton }
     static interfaces_BazFaz_quark_Object__md: -> { ::Quark.quark_ffi_signatures_md.interfaces_BazFaz_quark_Object_.singleton }
+    static interfaces_IConstants_md: -> { ::Quark.quark_ffi_signatures_md.interfaces_IConstants.singleton }
+    static interfaces_Constants_md: -> { ::Quark.quark_ffi_signatures_md.interfaces_Constants.singleton }
     static classes_Overload_md: -> { ::Quark.quark_ffi_signatures_md.classes_Overload.singleton }
     static classes_Test_md: -> { ::Quark.quark_ffi_signatures_md.classes_Test.singleton }
     static classes_string_test_md: -> { ::Quark.quark_ffi_signatures_md.classes_string_test.singleton }

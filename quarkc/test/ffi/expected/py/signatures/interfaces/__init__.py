@@ -225,3 +225,25 @@ class BazFaz(_QObject):
     def _setField(self, name, value):
         pass
 BazFaz.interfaces_BazFaz_quark_Object__ref = None
+class IConstants(object):
+    pass
+IConstants.FOO = u"foo"
+IConstants.interfaces_IConstants_ref = None
+class Constants(_QObject):
+    def _init(self):
+        pass
+    def __init__(self): self._init()
+
+    def _getClass(self):
+        return u"interfaces.Constants"
+
+    def _getField(self, name):
+        if ((name) == (u"FOO")):
+            return IConstants.FOO
+
+        return None
+
+    def _setField(self, name, value):
+        pass
+Constants.interfaces_Constants_ref = None
+Constants.FOO = u"foo"
