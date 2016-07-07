@@ -891,6 +891,8 @@ class JavaScript(Backend):
         try:
             output = shell.call("npm", "ll", "--depth", "0", "--json", name, errok=True)
             return json.loads(output).get("dependencies",{}).get(name,{}).get("path")
+        except ValueError:
+            pass
         except shell.ShellError:
             pass
         return None
