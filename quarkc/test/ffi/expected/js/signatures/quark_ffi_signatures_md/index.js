@@ -4435,6 +4435,88 @@ interfaces_BazFaz_quark_Object_.prototype._getField = interfaces_BazFaz_quark_Ob
 function interfaces_BazFaz_quark_Object___setField(name, value) {}
 interfaces_BazFaz_quark_Object_.prototype._setField = interfaces_BazFaz_quark_Object___setField;
 
+// CLASS interfaces_IConstants
+
+function interfaces_IConstants() {
+    interfaces_IConstants.super_.call(this, "interfaces.IConstants");
+    (this).name = "interfaces.IConstants";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.String", "FOO")];
+    (this).methods = [];
+    (this).parents = ["quark.Object"];
+}
+exports.interfaces_IConstants = interfaces_IConstants;
+_qrt.util.inherits(interfaces_IConstants, quark.reflect.Class);
+
+function interfaces_IConstants__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+interfaces_IConstants.prototype.__init_fields__ = interfaces_IConstants__init_fields__;
+interfaces_IConstants.singleton = new interfaces_IConstants();
+function interfaces_IConstants_construct(args) {
+    return null;
+}
+interfaces_IConstants.prototype.construct = interfaces_IConstants_construct;
+
+function interfaces_IConstants_isAbstract() {
+    return true;
+}
+interfaces_IConstants.prototype.isAbstract = interfaces_IConstants_isAbstract;
+
+function interfaces_IConstants__getClass() {
+    return _qrt.cast(null, function () { return String; });
+}
+interfaces_IConstants.prototype._getClass = interfaces_IConstants__getClass;
+
+function interfaces_IConstants__getField(name) {
+    return null;
+}
+interfaces_IConstants.prototype._getField = interfaces_IConstants__getField;
+
+function interfaces_IConstants__setField(name, value) {}
+interfaces_IConstants.prototype._setField = interfaces_IConstants__setField;
+
+// CLASS interfaces_Constants
+
+function interfaces_Constants() {
+    interfaces_Constants.super_.call(this, "interfaces.Constants");
+    (this).name = "interfaces.Constants";
+    (this).parameters = [];
+    (this).fields = [new quark.reflect.Field("quark.String", "FOO")];
+    (this).methods = [];
+    (this).parents = ["quark.Object"];
+}
+exports.interfaces_Constants = interfaces_Constants;
+_qrt.util.inherits(interfaces_Constants, quark.reflect.Class);
+
+function interfaces_Constants__init_fields__() {
+    quark.reflect.Class.prototype.__init_fields__.call(this);
+}
+interfaces_Constants.prototype.__init_fields__ = interfaces_Constants__init_fields__;
+interfaces_Constants.singleton = new interfaces_Constants();
+function interfaces_Constants_construct(args) {
+    return new interfaces.Constants();
+}
+interfaces_Constants.prototype.construct = interfaces_Constants_construct;
+
+function interfaces_Constants_isAbstract() {
+    return false;
+}
+interfaces_Constants.prototype.isAbstract = interfaces_Constants_isAbstract;
+
+function interfaces_Constants__getClass() {
+    return _qrt.cast(null, function () { return String; });
+}
+interfaces_Constants.prototype._getClass = interfaces_Constants__getClass;
+
+function interfaces_Constants__getField(name) {
+    return null;
+}
+interfaces_Constants.prototype._getField = interfaces_Constants__getField;
+
+function interfaces_Constants__setField(name, value) {}
+interfaces_Constants.prototype._setField = interfaces_Constants__setField;
+
 // CLASS classes_Overload___add___Method
 
 function classes_Overload___add___Method() {
@@ -6426,6 +6508,8 @@ Root.interfaces_RazBar_md = interfaces_RazBar.singleton;
 Root.interfaces_RazFaz_quark_Object__md = interfaces_RazFaz_quark_Object_.singleton;
 Root.interfaces_BazBar_md = interfaces_BazBar.singleton;
 Root.interfaces_BazFaz_quark_Object__md = interfaces_BazFaz_quark_Object_.singleton;
+Root.interfaces_IConstants_md = interfaces_IConstants.singleton;
+Root.interfaces_Constants_md = interfaces_Constants.singleton;
 Root.classes_Overload_md = classes_Overload.singleton;
 Root.classes_Test_md = classes_Test.singleton;
 Root.classes_string_test_md = classes_string_test.singleton;

@@ -334,3 +334,40 @@ BazFaz.prototype._getField = BazFaz__getField;
 
 function BazFaz__setField(name, value) {}
 BazFaz.prototype._setField = BazFaz__setField;
+
+// CLASS IConstants
+function IConstants() {
+    this.__init_fields__();
+}
+exports.IConstants = IConstants;
+
+function IConstants__init_fields__() {}
+IConstants.prototype.__init_fields__ = IConstants__init_fields__;
+IConstants.FOO = "foo";
+IConstants.interfaces_IConstants_ref = null;
+
+// CLASS Constants
+function Constants() {
+    this.__init_fields__();
+}
+exports.Constants = Constants;
+
+function Constants__init_fields__() {}
+Constants.prototype.__init_fields__ = Constants__init_fields__;
+Constants.interfaces_Constants_ref = null;
+Constants.FOO = "foo";
+function Constants__getClass() {
+    return "interfaces.Constants";
+}
+Constants.prototype._getClass = Constants__getClass;
+
+function Constants__getField(name) {
+    if (_qrt.equals((name), ("FOO"))) {
+        return IConstants.FOO;
+    }
+    return null;
+}
+Constants.prototype._getField = Constants__getField;
+
+function Constants__setField(name, value) {}
+Constants.prototype._setField = Constants__setField;

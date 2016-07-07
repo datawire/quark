@@ -260,6 +260,19 @@ def get_defaulted_methods(cls):
     get_defaulted_methods(cls, result, derived, bindings)
     return result, bindings
 
+@dispatch(Class)
+def get_interfaces(cls):
+    return [t.resolved.type for t in cls.bases if isinstance(t.resolved.type, (Interface, Primitive))]
+
+@dispatch(Class)
+def get_defaulted_statics(cls):
+    result = OrderedDict()
+    for iface in get_interfaces(cls):
+        for f in get_fields(iface):
+            if f.static and f.name.text not in result:
+                result[f.name.text] = f
+    return result
+
 def indent(st, level=4, leading_nl=True):
     if st:
         if isinstance(st, (tuple, list)):

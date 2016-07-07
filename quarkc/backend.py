@@ -32,7 +32,7 @@ from .dispatch import overload
 from .helpers import (
     is_meta, has_super, compiled_quark, is_newer, namever, mdroot, readme,
     base_type, get_defaulted_methods, is_abstract, base_constructors, doc,
-    get_field, constructors,
+    get_field, constructors, get_defaulted_statics
 )
 from quarkc import reflection
 
@@ -338,7 +338,8 @@ class Backend(object):
         constructors = []
 
         defaulted, self.bindings = get_defaulted_methods(cls)
-        for d in cls.definitions + [None] + defaulted.values():
+        defaulted_statics = get_defaulted_statics(cls)
+        for d in cls.definitions + [None] + defaulted.values() + defaulted_statics.values():
             if isinstance(d, Macro): continue
             if d is None:
                 extra_methods = getattr(cls, "_extra_methods", None)

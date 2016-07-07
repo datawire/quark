@@ -2864,6 +2864,60 @@ class interfaces_BazFaz_quark_Object_(quark.reflect.Class):
     def _setField(self, name, value):
         pass
 interfaces_BazFaz_quark_Object_.singleton = interfaces_BazFaz_quark_Object_()
+class interfaces_IConstants(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(interfaces_IConstants, self).__init__(u"interfaces.IConstants");
+        (self).name = u"interfaces.IConstants"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"FOO")])
+        (self).methods = _List([])
+        (self).parents = _List([u"quark.Object"])
+
+    def construct(self, args):
+        return None
+
+    def isAbstract(self):
+        return True
+
+    def _getClass(self):
+        return _cast(None, lambda: unicode)
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+interfaces_IConstants.singleton = interfaces_IConstants()
+class interfaces_Constants(quark.reflect.Class):
+    def _init(self):
+        quark.reflect.Class._init(self)
+
+    def __init__(self):
+        super(interfaces_Constants, self).__init__(u"interfaces.Constants");
+        (self).name = u"interfaces.Constants"
+        (self).parameters = _List([])
+        (self).fields = _List([quark.reflect.Field(u"quark.String", u"FOO")])
+        (self).methods = _List([])
+        (self).parents = _List([u"quark.Object"])
+
+    def construct(self, args):
+        return interfaces.Constants()
+
+    def isAbstract(self):
+        return False
+
+    def _getClass(self):
+        return _cast(None, lambda: unicode)
+
+    def _getField(self, name):
+        return None
+
+    def _setField(self, name, value):
+        pass
+interfaces_Constants.singleton = interfaces_Constants()
 class classes_Overload___add___Method(quark.reflect.Method):
     def _init(self):
         quark.reflect.Method._init(self)
@@ -4166,6 +4220,8 @@ Root.interfaces_RazBar_md = interfaces_RazBar.singleton
 Root.interfaces_RazFaz_quark_Object__md = interfaces_RazFaz_quark_Object_.singleton
 Root.interfaces_BazBar_md = interfaces_BazBar.singleton
 Root.interfaces_BazFaz_quark_Object__md = interfaces_BazFaz_quark_Object_.singleton
+Root.interfaces_IConstants_md = interfaces_IConstants.singleton
+Root.interfaces_Constants_md = interfaces_Constants.singleton
 Root.classes_Overload_md = classes_Overload.singleton
 Root.classes_Test_md = classes_Test.singleton
 Root.classes_string_test_md = classes_string_test.singleton
