@@ -3,9 +3,14 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
  Package(Name(comparisons),
 
   Function(Type(Name(void)), Name(test), Block(
-    ExprStmt(Call(Attr(Var(Name(a)), Name(__lt__)), Var(Name(b)))),
-    ExprStmt(Call(Attr(Var(Name(a)), Name(__gt__)), Var(Name(b)))),
-    ExprStmt(Call(Attr(Var(Name(a)), Name(__le__)), Var(Name(b)))),
-    ExprStmt(Call(Attr(Var(Name(a)), Name(__ge__)), Var(Name(b)))),
-    ExprStmt(Call(Attr(Var(Name(a)), Name(__eq__)), Var(Name(b)))))))
+    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__lt__)),
+      Var(Name(b)))),
+    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__gt__)),
+      Var(Name(b)))),
+    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__le__)),
+      Var(Name(b)))),
+    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__ge__)),
+      Var(Name(b)))),
+    ExprStmt(ArithmeticOperator(Attr(Var(Name(a)), Name(__eq__)),
+      Var(Name(b)))))))
 )

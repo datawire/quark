@@ -25,9 +25,17 @@ from .ast import (
     Function, CompilerVersionSpec, AST,
 )
 from .dispatch import dispatch
-
+from .exceptions import CompileError
 
 DEFAULT = object()
+
+class CompileWarning(object):
+    def __init__(self, loc, warning):
+        self.loc = loc
+        self.warning = warning
+
+    def __str__(self):
+        return "%s: warning: %s" % (lineinfo(self.loc),  self.warning)
 
 @dispatch(Class, Field)
 def get_field(cls, field, default=DEFAULT):
@@ -148,8 +156,10 @@ def constructor(cls):
     if not cons:
         cons = base_constructors(cls)
     if cons:
-        assert len(cons) == 1
-        return cons[0]
+        if len(cons) == 1:
+            return cons[0]
+        raise CompileError("%s: Too many constructors in class %s: %s" % (
+            lineinfo(cls), cls.name.text, ", ".join("'%s'" % c.name.text for c in cons)))
 
 def constructors(cls):
     return [d for d in cls.definitions if isinstance(d, Callable) and d.type is None]
@@ -399,6 +409,31 @@ class is_newer(object):
         return "is_newer(%s (%s, %s) -> %s)" % (
             self.result, self.target, self.deps, self.explanation)
 
+def check_deprecated(dfn, expr, errors):
+    deprecated = getattr(dfn, "_deprecated", None)
+    if deprecated is None:
+        deprecated = []
+        found = False
+        for a in getattr(dfn, "annotations", []):
+            if a.name.text == "deprecated":
+                eval_deprecated(a, deprecated)
+                found = True
+        if found:
+            deprecated.insert(0, "Use of deprecated %s '%s'." % (
+                dfn.__class__.__name__.lower(), dfn.name.text))
+        setattr(dfn, "_deprecated", deprecated)
+    if deprecated:
+        errors.append(CompileWarning(expr, "%s" % (" ".join(deprecated))))
+
+@dispatch(Annotation)
+def eval_deprecated(a, deprecated):
+    for a in a.arguments:
+        eval_deprecated(a, deprecated)
+
+@dispatch(String)
+def eval_deprecated(a, deprecated):
+    deprecated.append(a.text)
+
 def compiled_quark(url):
     return "%sc" % url
 
@@ -419,7 +454,12 @@ def extract_ast_stack(frames):
     for frame in frames:
         ast_frame = []
         a = inspect.getargvalues(frame[0])
-        args = map(a.locals.get, a.args)
+        def tryget(x,a=a):
+            try:
+                return a.locals.get(x)
+            except (TypeError, KeyError):
+                pass
+        args = map(tryget, a.args)
         if a.varargs:
             args.extend(a.locals[a.varargs])
         if a.keywords:

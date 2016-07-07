@@ -29,7 +29,7 @@ package test3 {
     class Box<T> {}
     void go() {
         Box<int> box = new Box<int>();
-        if (((((a).__lt__)(b)).__gt__)(c)) {
+        if (((a < b) > c)) {
             (doFoo)();
         }
     }

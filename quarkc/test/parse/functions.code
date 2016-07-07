@@ -3,10 +3,10 @@
 quark *;
 package functions {
     int factorial(int n) {
-        if (((n).__eq__)(0)) {
+        if ((n == 0)) {
             return 1;
         } else {
-            return ((n).__mul__)((factorial)(((n).__sub__)(1)));
+            return (n * (factorial)((n - 1)));
         }
     }
 }

@@ -8,7 +8,7 @@ namespace quark {
     class _ChainPromise extends UnaryCallable {
         Promise _next;
 
-        _ChangePromise(Promise next) {
+        _ChainPromise(Promise next) {
             self._next = next;
         }
 

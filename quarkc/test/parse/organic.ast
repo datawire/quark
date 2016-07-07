@@ -8,21 +8,25 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
    Param(Type(Name(int)), Name(c)),
    Param(Type(Name(int)), Name(d)),
    Block(
-    ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(
-                  Name(x)), Name(__mul__)), Var(Name(a))), Name(__mul__)),
-              Var(Name(b))), Name(__mul__)), Var(Name(c))), Name(__add__)),
-          Var(Name(b))), Name(__add__)), Call(Attr(Var(Name(c)),
-          Name(__mul__)), Var(Name(d)))), Name(__le__)), Var(Name(t)))))),
+    ExprStmt(ArithmeticOperator(Attr(ArithmeticOperator(Attr(
+         ArithmeticOperator(Attr(ArithmeticOperator(Attr(ArithmeticOperator(
+              Attr(ArithmeticOperator(Attr(Var(Name(x)), Name(__mul__)),
+                Var(Name(a))), Name(__mul__)), Var(Name(b))), Name(__mul__)),
+            Var(Name(c))), Name(__add__)), Var(Name(b))), Name(__add__)),
+        ArithmeticOperator(Attr(Var(Name(c)), Name(__mul__)), Var(Name(d)))),
+       Name(__le__)), Var(Name(t)))))),
 
   Function(Type(Name(void)), Name(asdf),
    Param(Type(Name(float)), Name(x)),
    Param(Type(Name(float)), Name(y)),
    Block(
-    ExprStmt(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Call(Attr(Var(Name(x)),
-               Name(__mul__)), Var(Name(a))), Name(__mul__)), Var(Name(b))),
-           Name(__mul__)), Call(Attr(Call(Attr(Var(Name(c)), Name(__add__)),
-             Var(Name(b))), Name(__add__)), Var(Name(c)))), Name(__mul__)),
-        Var(Name(d))), Name(__le__)), Var(Name(t)))))),
+    ExprStmt(ArithmeticOperator(Attr(ArithmeticOperator(Attr(
+         ArithmeticOperator(Attr(ArithmeticOperator(Attr(ArithmeticOperator(
+              Attr(Var(Name(x)), Name(__mul__)), Var(Name(a))), Name(__mul__)),
+            Var(Name(b))), Name(__mul__)),
+          ArithmeticOperator(Attr(ArithmeticOperator(Attr(Var(Name(c)),
+              Name(__add__)), Var(Name(b))), Name(__add__)), Var(Name(c)))),
+         Name(__mul__)), Var(Name(d))), Name(__le__)), Var(Name(t)))))),
 
   Function(Type(Name(void)), Name(fdsa),
    Param(Type(Name(float)), Name(x)),
@@ -44,14 +48,14 @@ File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
      If(Var(Name(x)), Block(
        ExprStmt(Call(Var(Name(y)))))),
      ExprStmt(Call(Attr(Var(Name(z)), Name(__neg__)))),
-     If(Call(Attr(Call(Attr(Var(Name(x)), Name(__and__)), Var(Name(y))),
-        Name(__or__)), Var(Name(z))), Block(
+     If(Operator(Attr(Operator(Attr(Var(Name(x)), Name(__and__)),
+         Var(Name(y))), Name(__or__)), Var(Name(z))), Block(
        ExprStmt(Var(Name(z))))),
-     If(Call(Attr(Var(Name(x)), Name(__or__)), Call(Attr(Var(Name(y)),
+     If(Operator(Attr(Var(Name(x)), Name(__or__)), Operator(Attr(Var(Name(y)),
          Name(__and__)), Var(Name(z)))), Block(
        ExprStmt(Var(Name(z))))),
-     If(Call(Attr(Var(Name(x)), Name(__or__)),
-       Call(Attr(Call(Attr(Var(Name(y)), Name(__not__))), Name(__and__)),
+     If(Operator(Attr(Var(Name(x)), Name(__or__)),
+       Operator(Attr(Call(Attr(Var(Name(y)), Name(__not__))), Name(__and__)),
         Var(Name(z)))), Block(
        ExprStmt(Var(Name(z))))))))),
 

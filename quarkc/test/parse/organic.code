@@ -3,10 +3,10 @@
 quark *;
 package foo {
     void f(int a, int b, int c, int d) {
-        ((((((((((((x).__mul__)(a)).__mul__)(b)).__mul__)(c)).__add__)(b)).__add__)(((c).__mul__)(d))).__le__)(t);
+        ((((((x * a) * b) * c) + b) + (c * d)) <= t);
     }
     void asdf(float x, float y) {
-        ((((((((((x).__mul__)(a)).__mul__)(b)).__mul__)(((((c).__add__)(b)).__add__)(c))).__mul__)(d)).__le__)(t);
+        (((((x * a) * b) * ((c + b) + c)) * d) <= t);
     }
     void fdsa(float x) {}
     int pie() {
@@ -23,13 +23,13 @@ package foo {
                 (y)();
             }
             ((z).__neg__)();
-            if (((((x).__and__)(y)).__or__)(z)) {
+            if (((x && y) || z)) {
                 z;
             }
-            if (((x).__or__)(((y).__and__)(z))) {
+            if ((x || (y && z))) {
                 z;
             }
-            if (((x).__or__)(((((y).__not__)()).__and__)(z))) {
+            if ((x || (((y).__not__)() && z))) {
                 z;
             }
         }

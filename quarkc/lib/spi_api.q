@@ -5,7 +5,7 @@ namespace spi_api {
     class ServletProxy extends Servlet {
         Servlet servlet_impl;
         Runtime real_runtime;
-        WSServletProxy(Runtime real_runtime, Servlet servlet_impl) {
+        ServletProxy(Runtime real_runtime, Servlet servlet_impl) {
             self.real_runtime = real_runtime;
             self.servlet_impl = servlet_impl;
         }

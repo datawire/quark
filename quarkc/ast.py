@@ -705,7 +705,24 @@ class Call(Expression):
         return "%s(%s)" % (expr, coder.code(self.args, ", "))
 
     def copy(self):
-        return Call(copy(self.expr), copy(self.args))
+        return self.__class__(copy(self.expr), copy(self.args))
+
+class Operator(Call):
+    def __init__(self, expr, args, op):
+        self.expr = expr
+        self.args = args
+        self.op = op
+
+    @coder
+    def code(self, coder):
+        return "(%s %s %s)" % (
+            self.expr.expr.code(coder), self.op, coder.code(self.args, ", "))
+
+    def copy(self):
+        return self.__class__(copy(self.expr), copy(self.args), self.op)
+
+class ArithmeticOperator(Operator):
+    pass
 
 class Literal(Expression):
     pass

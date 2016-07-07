@@ -37,7 +37,8 @@ from .parser import (
 from .dispatch import overload
 from .helpers import (
     lineinfo, base_bindings, get_field, constructor, base_type, base_constructors,
-    has_super, has_return, is_newer, compiled_quark, namever
+    has_super, has_return, is_newer, compiled_quark, namever, check_deprecated,
+    CompileWarning
 )
 from .environment import Environment
 from . import docmaker
@@ -260,8 +261,9 @@ class Crosswire:
 
 class Def:
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def define(self, env, node, name=None, is_leaf=True, dup=lambda x: True):
         error = None
@@ -303,16 +305,26 @@ class Def:
         self.define(f.parent.env, f, dup=lambda x: ((isinstance(x, Function) and x.body) or
                                                     (not isinstance(x, Function))))
 
-    def visit_Method(self, m):
+    def visit_Constructor(self, m):
+        self.check_constructor_name(m)
         # we don't put constructors in the namespace
-        if m.type:
-            self.define(m.parent.env, m)
+        self.define(m.env, m.parent, "self")
+
+    def visit_ConstructorMacro(self, m):
+        self.check_constructor_name(m)
+        # we don't put constructors in the namespace
+
+    def check_constructor_name(self, m):
+        if m.name.text != m.parent.name.text:
+            self.errors.append(CompileWarning(m, "constructor name '%s' does not match class name '%s'. Missing return type?" % (
+                m.name.text, m.parent.name.text)))
+
+    def visit_Method(self, m):
+        self.define(m.parent.env, m)
         self.define(m.env, m.parent, "self")
 
     def visit_Macro(self, m):
-        # we don't put constructors in the namespace
-        if m.type:
-            self.define(m.parent.env, m)
+        self.define(m.parent.env, m)
 
     def visit_MethodMacro(self, mm):
         self.define(mm.parent.env, mm)
@@ -396,13 +408,7 @@ class TypeExpr(object):
                 ft = FakeType()
                 ft.resolved = pexpr
                 castify(ft, arg)
-                if not isinstance(arg, Null) and arg.resolved and not pexpr.assignableFrom(arg.resolved):
-                    dfn = get_field(arg.resolved.type, "__to_%s" % pexpr.type.name, None)
-                    if dfn and len(dfn.params) == 0 and pexpr.assignableFrom(dfn.type.resolved):
-                        arg.coersion = dfn
-                    else:
-                        errors.append("%s:type mismatch: expected %s, got %s" %
-                                      (lineinfo(arg), pexpr, arg.resolved))
+                pexpr.assign(arg, errors)
         else:
             errors.append("%s: expected %s args, got %s" %
                           (lineinfo(call), len(params), len(call.args)))
@@ -424,14 +430,21 @@ class TypeExpr(object):
         return texpr(cls, self.bindings)
 
     def assign(self, expr, errors=None):
+        dfn = self._assign(expr, errors)
+        if dfn:
+            expr.coersion = dfn
+
+    def _assign(self, expr, errors=None):
         if not isinstance(expr, Null) and expr.resolved and not self.assignableFrom(expr.resolved):
             dfn = get_field(expr.resolved.type, "__to_%s" % self.type.name, None)
             if dfn and len(dfn.params) == 0 and self.assignableFrom(dfn.type.resolved):
-                expr.coersion = dfn
+                check_deprecated(dfn, expr, errors)
+                return dfn
             else:
                 if errors is not None:
                     errors.append("%s:type mismatch: expected %s, got %s" %
                                   (lineinfo(expr), self, expr.resolved))
+        return None
 
     @property
     def id(self):
@@ -484,9 +497,10 @@ def texpr(type, *bindingses):
 
 class Use(object):
 
-    def __init__(self):
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
         self.unresolved = []
-        self.errors = []
 
     @overload(AST, str)
     def lookup(self, node, name, imported=None):
@@ -582,6 +596,8 @@ class Use(object):
     def visit_Number(self, n):
         if "." in n.text:
             self.leaf(n, "float")
+        elif n.text.endswith("L"):
+            self.leaf(n, "long")
         else:
             self.leaf(n, "int")
 
@@ -615,8 +631,9 @@ def castify(type, expr):
 
 class Resolver(object):
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def leave_Super(self, s):
         bt = base_type(s.clazz)
@@ -688,8 +705,9 @@ class Resolver(object):
 
 class Check:
 
-    def __init__(self):
-        self.errors = []
+    def __init__(self, errors=None):
+        if errors is None: errors = []
+        self.errors = errors
 
     def visit_Field(self, f):
         for base in f.clazz.bases:
@@ -940,6 +958,11 @@ class Compiler(object):
         finally:
             fd.close()
 
+    def raise_errors(self, errors):
+        warnings = [e for e in errors if isinstance(e, CompileWarning)]
+        if len(warnings) != len(errors):
+            raise CompileError("")
+
     def icompile(self, ast):
 
         if isinstance(ast, Root):
@@ -951,28 +974,36 @@ class Compiler(object):
                 )
             issue_all(messages)
 
-        def_ = Def()
-        ast.traverse(def_)
-        if def_.errors:
-            raise CompileError("\n".join(map(str, def_.errors)))
+        errors = []
 
-        use = Use()
-        ast.traverse(use)
-        if use.unresolved:
-            use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
-                    for node, name in use.unresolved])
-        if use.errors:
-            raise CompileError("\n".join(use.errors))
+        try:
+            def_ = Def(errors)
+            ast.traverse(def_)
+            self.raise_errors(errors)
 
-        res = Resolver()
-        ast.traverse(res)
-        if res.errors:
-            raise CompileError("\n".join(res.errors))
+            use = Use(errors)
+            ast.traverse(use)
+            if use.unresolved:
+                use.errors.extend(["%s: unresolved variable: %s" % (lineinfo(node), name)
+                        for node, name in use.unresolved])
+            self.raise_errors(errors)
 
-        check = Check()
-        ast.traverse(check)
-        if check.errors:
-            raise CompileError("\n".join(check.errors))
+            res = Resolver(errors)
+            ast.traverse(res)
+            self.raise_errors(errors)
+
+            check = Check(errors)
+            ast.traverse(check)
+            self.raise_errors(errors)
+
+        except CompileError as ce:
+            if ce.args[0]:
+                errors.append(ce.args[0])
+            raise CompileError("\n".join(map(str,list(errors))))
+
+        if errors:
+            # there were only warnings
+            sys.stderr.write("\n%s\n" % "\n".join(map(str, errors)))
 
     def merge(self, env, dep):
         if env == dep: return
