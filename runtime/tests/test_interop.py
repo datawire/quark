@@ -58,7 +58,6 @@ class QuarkCompile(object):
         self.process_includes()
         print "Need to compile", self.processed
         self.quark("install",
-                   "--online",
                    "--java",
                    "--javascript",
                    "--python",
