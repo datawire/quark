@@ -6,6 +6,17 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Command line
+
+* The compiler now emits warnings in addition to errors. Warnings do
+  not abort the compilation.
+
+### Language
+
+* classes now inherit static fields of interfaces
+
+* constructor name must match class name. For now this is a warning.
+
 ### Standard Library
 
 * Added `String.ordAt`
@@ -19,6 +30,13 @@ Latest
 
 * Changed `quark.sleep` and `quark.now` to delegate to methods on `Runtime` so
   that they can be replaced with mock versions.
+
+* Added `MockRuntime.advanceClock()` to control mock time. Scheduled
+  tasks now get executed when their time comes.
+
+* Ensures the logging is configured upon first log
+
+* `long.__to_int__()` is now deprecated and emits a warning.
 
 1.0.282
 ------
