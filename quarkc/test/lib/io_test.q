@@ -47,8 +47,7 @@ class ScheduleTest extends MockRuntimeTest {
         Promise p = IO.schedule(1.0);
         checkEqual(false, p.value().hasValue());
 
-        // Testing of time is not good yet, so this happens immediately instead
-        // of after a second.
+        self.mock.advanceClock(1001L);
         self.mock.pump();
         checkEqual(true, p.value().hasValue());
         checkEqual(true, p.value().getValue());

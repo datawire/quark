@@ -254,6 +254,7 @@ class MockTask {
 
     Task task;
     float delay;
+    long _scheduledFor;
 
     MockTask(Task task, float delay) {
         self.task = task;
@@ -279,7 +280,9 @@ class MockRuntime extends Runtime {
     Runtime runtime;
     List<MockEvent> events = [];
     List<MockTask> tasks = [];
+    List<bool> _executed_tasks = [];
     int executed = 0;
+    long _currentTime = 1000000L;
 
     MockRuntime(Runtime runtime) {
         self.runtime = runtime;
@@ -289,13 +292,21 @@ class MockRuntime extends Runtime {
     void pump() {
         // snapshot the size so that respawning tasks don't loop forever
         int size = tasks.size();
-        while (executed < size) {
-            Task next = tasks[executed].task;
-            // XXX: we need to be able to intercept queries of the clock
-            // too so that we can accelerate the clock by the appropriate
-            // amount when we execute tasks
-            next.onExecute(self);
-            executed = executed + 1;
+        int idx = 0;
+        while (idx < size) {
+            if (_executed_tasks[idx]) {
+                idx = idx + 1;
+                continue;
+            }
+            MockTask wrapper = tasks[idx];
+            Task next = tasks[idx].task;
+            // Don't execute scheduled tasks whose time has not arrived:
+            if (wrapper._scheduledFor <= self.now()) {
+                _executed_tasks[idx] = true;
+                next.onExecute(self);
+                executed = executed + 1;
+            }
+            idx = idx + 1;
         }
     }
 
@@ -308,7 +319,10 @@ class MockRuntime extends Runtime {
     }
 
     void schedule(Task handler, float delayInSeconds) {
-        tasks.add(new MockTask(handler, delayInSeconds));
+        MockTask task = new MockTask(handler, delayInSeconds);
+        task._scheduledFor = self.now() + ?(1000.0 * delayInSeconds).round();
+        tasks.add(task);
+        _executed_tasks.add(false);
     }
 
     Codec codec() {
@@ -316,7 +330,11 @@ class MockRuntime extends Runtime {
     }
 
     long now() {
-        return runtime.now();
+        return _currentTime;
+    }
+
+    void advanceClock(long ms) {
+        _currentTime = _currentTime + ms;
     }
 
     void sleep(float seconds) {
