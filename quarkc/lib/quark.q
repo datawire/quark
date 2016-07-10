@@ -6,7 +6,7 @@ use js lodash 4.8.2;
 include quark_runtime.js;
 include quark_node_runtime.js;
 
-use py ws4py 0.3.5;
+use py ws4py 0.3.4;
 include quark_runtime.py;
 include quark_threaded_runtime.py;
 include quark_runtime_logging.py;
