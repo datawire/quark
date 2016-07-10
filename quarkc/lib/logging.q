@@ -71,6 +71,10 @@ namespace quark {
                 return envVarValue;
             }
 
+            static bool _autoconfig() {
+                return !_configured && _getOverrideIfExists() != null;
+            }
+
             @doc("Configure the logging")
             void configure() {
                 String envVarValue = Config._getOverrideIfExists();
@@ -94,7 +98,7 @@ namespace quark {
     }
 
     Logger _getLogger(String topic) {
-        if (!quark.logging.Config._configured) {
+        if (quark.logging.Config._autoconfig()) {
             quark.logging.makeConfig().configure();
         }
         return quark.concurrent.Context.current().runtime().logger(topic);
