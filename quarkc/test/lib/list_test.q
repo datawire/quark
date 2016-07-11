@@ -66,6 +66,12 @@ class ListTest {
 
         checkEqual(3, l.remove(2));
         checkEqual([1, 2, 4], l);
+
+        // Because Java is confusing...
+        List<String> another = ["zero", "one", "two"];
+        int idx = 0;
+        String res = another.remove(idx);
+        checkEqual("zero", res);
     }
 
     void test_toJSON() {

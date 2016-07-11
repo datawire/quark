@@ -184,7 +184,7 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    
+
     interface Maybe<T> {
         T getValue();
         bool hasValue();
@@ -459,7 +459,7 @@ namespace quark {
         @doc("Mutates the list, removing the element at the specified position.")
         @doc("Shifts any subsequent elements to the left (subtracts one from their indices).")
         @doc("Returns the element that was removed.")
-        macro T remove(int index) $java{($self).remove($index)}
+        macro T remove(int index) $java{($self).remove((int)($index))}
                                   $py{($self).pop($index)}
                                   $rb{($self).delete_at($index)}
                                   $js{_qrt.list_remove(($self), ($index))};
