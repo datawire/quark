@@ -350,6 +350,10 @@ class TypeExpr(object):
         for sup in self.supertypes(self.type):
             yield sup
 
+    @overload(AST)
+    def supertypes(self, ast_node):
+        return iter([])
+
     @overload(Class)
     def supertypes(self, cls):
         yield self

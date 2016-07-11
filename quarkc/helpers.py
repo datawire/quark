@@ -38,6 +38,10 @@ class CompileWarning(object):
     def __str__(self):
         return "%s: warning: %s" % (lineinfo(self.loc),  self.warning)
 
+@dispatch(AST, object)
+def get_field(ast_node, whatever, default=DEFAULT):
+    return None
+
 @dispatch(Class, Field)
 def get_field(cls, field, default=DEFAULT):
     return get_field(cls, field.name, default)
