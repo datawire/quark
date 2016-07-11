@@ -17,6 +17,7 @@ from __future__ import absolute_import
 import os
 import inspect
 from collections import OrderedDict
+from textwrap import dedent
 
 from .ast import (
     Class, Field, File, Name, Callable, Local, If, Block, Assign, While,
@@ -340,7 +341,14 @@ def doc_eval(st, lines):
 def doc_helper(lines, head="", prefix="", tail=""):
     if lines:
         result = [head]
-        result.extend([("%s%s" % (prefix, l)).rstrip() for l in lines])
+        split_lines = []
+        for line in lines:
+            if "\n" in line:
+                add_lines = dedent(line).lstrip().split("\n")
+            else:
+                add_lines = [line]
+            split_lines.extend(add_lines)
+        result.extend([("%s%s" % (prefix, l.lstrip())).rstrip() for l in split_lines])
         result.append(tail)
         result.append("")
         return "\n".join(result)

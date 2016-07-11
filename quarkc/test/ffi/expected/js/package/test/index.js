@@ -12,6 +12,13 @@ function go() {}
 exports.go = go;
 
 // CLASS Test
+/**
+ * This is a package.
+ *
+ * It has multiple lines of docs.
+ * Hurrah!
+ * @class Test
+ */
 function Test() {
     this.__init_fields__();
 }

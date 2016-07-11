@@ -16,6 +16,12 @@ def self.go()
 end
 
 def self.Test; Test; end
+##
+# This is a package.
+#
+# It has multiple lines of docs.
+# Hurrah!
+
 class Test < ::DatawireQuarkCore::QuarkObject
     attr_accessor :name
     extend ::DatawireQuarkCore::Static

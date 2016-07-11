@@ -9,6 +9,12 @@ import package_md
 def go():
     pass
 class Test(_QObject):
+    """
+    This is a package.
+
+    It has multiple lines of docs.
+    Hurrah!
+    """
     def _init(self):
         self.name = None
 

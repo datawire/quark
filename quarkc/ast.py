@@ -14,7 +14,7 @@
 
 from .coder import Coder
 from .exceptions import ParseError
-from pprinter import PPrinter as _PPrinter
+from .pprinter import PPrinter as _PPrinter
 
 def copy(node):
     if node is None:
@@ -756,7 +756,12 @@ class Number(PrimitiveLiteral):
     pass
 
 class String(PrimitiveLiteral):
-    pass
+    @coder
+    def code(self, coder):
+        if "\n" in self.text:
+            return '"""' + self.text[1:-1] + '"""'
+        return self.text
+
 
 class List(CompoundLiteral):
 
