@@ -19,6 +19,8 @@ package literals {
         {"one": 1, 2: "two", 3: "three"};
         3.14149265359;
         [0, 1, 0, ((1).__neg__)(), 44805];
-        "multiline\n    string\nwith \"inline\" quotes";
+        """multiline
+    string
+with \"inline\" quotes""";
     }
 }

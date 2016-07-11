@@ -569,7 +569,7 @@ class Parser:
     ''')
     def visit_MULTILINE_STRING(self, node, _):
         source = literal_eval(node.text)
-        return '"' + repr(source)[1:-1].replace('"', r'\"') + '"'
+        return '"' + source.replace('"', r'\"') + '"'
 
     @g.rule(r'STRING = ~"\"(\\\\[\"nrt\\\\]|\\\\u[0-9a-fA-F][0-9a-fA-F][0-9a-fA-F][0-9a-fA-F]|\\\\x[0-9a-fA-F][0-9a-fA-F]|[^\\\\\"])*\""')
     def visit_STRING(self, node, children):

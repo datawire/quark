@@ -71,6 +71,8 @@ class PPrinter(object):
             if node.name:
                 self.append(node.name)
                 self.first = False
+        elif isinstance(node, ast.String):
+            self.append(node.text.replace("\n", "\\n"))
         elif hasattr(node, "text"):
             self.append(node.text)
         for f in node.fields:
