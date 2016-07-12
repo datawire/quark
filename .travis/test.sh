@@ -14,7 +14,9 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
 fi
 
-# Allow subsequent quark install commands to run offline
+PYTEST_ARG_1=""
+PYTEST_ARG_2=""
+
 case "$TEST_SUITE" in
     examples)
         # First example test sometimes times out due to quark install taking too long
@@ -23,6 +25,16 @@ case "$TEST_SUITE" in
         echo 'quark *; void main(List<String> args) {}' > $q
         quark install --online $q
         quark run --java $q
+        ;;
+    quarkc-no-lib)
+        TEST_SUITE=quarkc
+        PYTEST_ARG_1=-k
+        PYTEST_ARG_2="not quarkc/test/lib"
+        ;;
+    quarkc-only-lib)
+        TEST_SUITE=quarkc
+        PYTEST_ARG_1=-k
+        PYTEST_ARG_2="quarkc/test/lib"
         ;;
     *)
         ;;
@@ -54,7 +66,7 @@ else
     exit 1
 fi
 
-if py.test -v $TEST_SUITE --durations=10; then
+if py.test -v $TEST_SUITE "$PYTEST_ARG_1" "$PYTEST_ARG_2" --durations=10; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
