@@ -66,7 +66,7 @@ else
     exit 1
 fi
 
-if py.test -v $TEST_SUITE "$PYTEST_ARG_1" "$PYTEST_ARG_2" --durations=10; then
+if py.test -v $TEST_SUITE --durations=10 "$PYTEST_ARG_1" "$PYTEST_ARG_2"; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
