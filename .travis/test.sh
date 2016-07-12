@@ -14,8 +14,7 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
 fi
 
-PYTEST_ARG_1=""
-PYTEST_ARG_2=""
+pytest_args=( )
 
 case "$TEST_SUITE" in
     examples)
@@ -28,17 +27,17 @@ case "$TEST_SUITE" in
         ;;
     quarkc-no-lib)
         TEST_SUITE=quarkc
-        PYTEST_ARG_1=-k
-        PYTEST_ARG_2="not quarkc/test/lib"
+        pytest_args+=( "-k" "not quarkc/test/lib" )
         ;;
     quarkc-only-lib)
         TEST_SUITE=quarkc
-        PYTEST_ARG_1=-k
-        PYTEST_ARG_2="quarkc/test/lib"
+        pytest_args+=( "-k" "quarkc/test/lib" )
         ;;
     *)
         ;;
 esac
+
+pytest_args+=( "--durations=10" )
 
 set -x
 
@@ -66,7 +65,7 @@ else
     exit 1
 fi
 
-if py.test -v $TEST_SUITE --durations=10 "$PYTEST_ARG_1" "$PYTEST_ARG_2"; then
+if py.test -v $TEST_SUITE "${pytest_args[@]}"; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
