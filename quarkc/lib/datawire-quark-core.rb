@@ -348,7 +348,7 @@ module DatawireQuarkCore
     UNDEFINED = Class.new
 
     def isUndefined
-      undefined.equal? value
+      UNDEFINED.equal? value
     end
 
     def isDefined

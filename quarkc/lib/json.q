@@ -258,7 +258,7 @@ namespace quark {
             if (f.name.startsWith("_")) {
                 continue;
             }
-            if (!json[f.name].isNull()) {
+            if (json[f.name].isDefined() && !json[f.name].isNull()) {
                 result.setField(f.name, fromJSON(f.getType(), null, json[f.name]));
             }
         }
