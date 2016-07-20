@@ -38,7 +38,11 @@ class _BoundDispatcher(object):
         else:
             for c in self.clazz.__mro__:
                 if self.dispatcher.name in c.__dict__:
-                    method = c.__dict__[self.dispatcher.name].get(types)
+                    disp = c.__dict__[self.dispatcher.name]
+                    if isinstance(disp, _Dispatcher):
+                        method = disp.get(types)
+                    else:
+                        method = None
                 else:
                     method = None
                 if method is None: continue
