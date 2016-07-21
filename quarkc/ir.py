@@ -4,6 +4,7 @@ from .dispatch import (overload, dispatch)
 #  - scoping of names (if nested in while nested in function, sometimes introduces scopes, sometimes not)
 #  - mapping of names into target language (dumb languages that use captialization to mean things)
 #  - importing between namespaces and/or packages
+#  - sourcemaps
 #  - testing backend in isolation
 
 # Potential ordering that this could proceed.
