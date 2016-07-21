@@ -12,7 +12,9 @@ from .dispatch import (overload, dispatch)
 #  1. Flesh out this sketch to skeletaly solve the problem areas
 #     described above, e.g. make it just capable of correctly
 #     compiling an if nested in a while nested in a function that is
-#     imported into another namespace and another package.
+#     imported into another namespace and another package and fully
+#     capture the mapping of line numbers between input source and
+#     output code while doing so.
 #
 #  2. Hook up skeletal version into each target language (including
 #     go) and make sure the methodology for testing this is
