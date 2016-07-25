@@ -79,6 +79,12 @@ class Declaration(IR):
         self.type = Name(type)
         self.name = name
 
+    def collisions(self, names):
+        if self.name in names:
+            yield self.name
+        else:
+            names.add(self.name)
+
     def __repr__(self):
         return self.repr(self.type, self.name)
 
@@ -110,12 +116,21 @@ class Definition(IR):
 # knows how to render inside a dfn, this has to account for imports
 # needed by rendered code
 class Code(IR):
+    pass
 
-    def __init__(self, code):
-        self.code = code
+class Block(Code):
+
+    @overload(tuple)
+    def __init__(self, statements):
+        self.statements = statements
+
+    def collisions(self, names):
+        for s in self.statements:
+            for c in s.collisions(names):
+                yield c
 
     def __repr__(self):
-        return self.code
+        return self.repr(self.statements)
 
 class Function(Definition):
 
@@ -155,7 +170,7 @@ class Interface(Definition):
 
 class Method(IR):
 
-    @overload(basestring, Name, tuple)
+    @overload(basestring, Name, Block)
     def __init__(self, name, type, params, body):
         self.name = name
         self.type = type
@@ -267,10 +282,42 @@ class Return(Statement):
         return self.repr(self.expr)
 
 class If(Statement):
-    pass
+
+    @overload(Expression, Block, Block)
+    def __init__(self, predicate, consequence, alternative):
+        self.predicate = predicate
+        self.consequence = consequence
+        self.alternative = alternative
+
+    @overload(Expression, tuple, tuple)
+    def __init__(self, predicate, consequence, alternative):
+        self.__init__(predicate, Block(consequence), Block(alternative))
+
+    def collisions(self, names):
+        for c in self.consequence.collisions(names):
+            yield c
+        for c in self.alternative.collisions(names):
+            yield c
+
+    def __repr__(self):
+        return self.repr(self.predicate, self.consequence, self.alternative)
 
 class While(Statement):
-    pass
+
+    @overload(Expression, Block)
+    def __init__(self, predicate, body):
+        self.predicate = predicate
+        self.body = body
+
+    def collisions(self, names):
+        return self.body.collisions(names)
+
+    @overload(Expression, tuple)
+    def __init__(self, predicate, body):
+        self.__init__(predicate, Block(body))
+
+    def __repr__(self):
+        return self.repr(self.predicate, self.body)
 
 class Break(Statement):
     pass

@@ -44,3 +44,13 @@ def test_package():
                             Param("q:int", "b")),
                            Return(Invoke(Name("q:mul"), (Var("a"), Var("b")))))))
     print p1
+
+def test_nesting():
+    l = Local(Name("q:int"), "foo")
+    l2 = Local(Name("q:int"), "foo")
+    stmt = While(Var("x"), (l, If(Var("y"), (l2,), (l2,))))
+    b = Block((stmt,))
+    print b
+    names = set()
+    for c in b.collisions(names):
+        print "collision:", c
