@@ -42,6 +42,10 @@ class IR(object):
         sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
         return "%s(%s)" % (self.__class__.__name__, ", ".join(sargs))
 
+    @property
+    def children(self):
+        assert False, "%s must implement children" % self.__class__
+
 def namesplit(name):
     if ':' in name:
         package, path = name.split(':')
@@ -64,6 +68,10 @@ class Name(IR):
         for n in path:
             self.path += tuple(n.split('.'))
 
+    @property
+    def children(self):
+        if False: yield
+
     def __repr__(self):
         return self.repr(self.package, *self.path)
 
@@ -78,6 +86,10 @@ class Declaration(IR):
     def __init__(self, type, name):
         self.type = Name(type)
         self.name = name
+
+    @property
+    def children(self):
+        yield self.type
 
     def collisions(self, names):
         if self.name in names:
@@ -103,6 +115,11 @@ class Package(IR):
     def __init__(self, definitions):
         self.definitions = definitions
 
+    @property
+    def children(self):
+        for d in self.definitions:
+            yield d
+
     def __repr__(self):
         if self.definitions:
             return "Package(\n  %s)" % "\n  ".join([repr(d) for d in self.definitions])
@@ -118,11 +135,30 @@ class Definition(IR):
 class Code(IR):
     pass
 
+class Statement(Code):
+    pass
+
+class Expression(Code):
+    pass
+
 class Block(Code):
 
     @overload(tuple)
     def __init__(self, statements):
         self.statements = statements
+
+    @overload(Statement)
+    def __init__(self, statement):
+        self.__init__((statement,))
+
+    @overload(Expression)
+    def __init__(self, expr):
+        self.__init__(Evaluate(expr))
+
+    @property
+    def children(self):
+        for s in self.statements:
+            yield s
 
     def collisions(self, names):
         for s in self.statements:
@@ -140,6 +176,14 @@ class Function(Definition):
         self.type = type
         self.params = params
         self.body = body
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.type
+        for p in self.params:
+            yield p
+        yield self.body
 
     def __repr__(self):
         return self.repr(self.name, self.type, self.params, self.body)
@@ -159,6 +203,16 @@ class Class(Definition):
         self.methods = methods
         self.fields = fields
 
+    @property
+    def children(self):
+        yield self.name
+        for i in self.implements:
+            yield i
+        for m in self.methods:
+            yield m
+        for f in self.fields:
+            yield f
+
 # basically the same as a class but no fields
 class Interface(Definition):
 
@@ -167,6 +221,14 @@ class Interface(Definition):
         self.name = name
         self.implements = implements
         self.methods = methods
+
+    @property
+    def children(self):
+        yield self.name
+        for i in self.implements:
+            yield self.i
+        for m in self.methods:
+            yield m
 
 class Method(IR):
 
@@ -177,13 +239,17 @@ class Method(IR):
         self.params = params
         self.body = body
 
+    @property
+    def children(self):
+        yield self.type
+        for p in self.params:
+            yield p
+        yield b
+
     def __repr__(self):
         return self.repr(self.name, self.type, self.params, self.body)
 
 # code
-
-class Expression(Code):
-    pass
 
 class This(Expression):
     pass
@@ -192,6 +258,10 @@ class Var(Expression):
 
     def __init__(self, name):
         self.name = name
+
+    @property
+    def children(self):
+        if False: yield
 
     def __repr__(self):
         return self.repr(self.name)
@@ -203,6 +273,10 @@ class Get(Expression):
         self.expr = expr
         self.attr = attr
 
+    @property
+    def children(self):
+        yield self.expr
+
 class Set(Expression):
 
     @overload(Expression, basestring, Expression)
@@ -211,6 +285,11 @@ class Set(Expression):
         self.attr = attr
         self.value = value
 
+    @property
+    def children(self):
+        yield self.expr
+        yield self.value
+
 # Invokes a function given the fully qualified name and arguments
 class Invoke(Expression):
 
@@ -218,6 +297,12 @@ class Invoke(Expression):
     def __init__(self, name, args):
         self.name = name
         self.args = args
+
+    @property
+    def children(self):
+        yield self.name
+        for a in self.args:
+            yield a
 
     def __repr__(self):
         return self.repr(self.name, self.args)
@@ -231,6 +316,13 @@ class Send(Expression):
         self.name = name
         self.args = args
 
+    @property
+    def children(self):
+        yield self.obj
+        yield self.name
+        for a in self.args:
+            yield a
+
     def __repr__(self):
         return self.repr(self.obj, self.name, self.args)
 
@@ -241,6 +333,12 @@ class Construct(Expression):
     def __init__(self, name, args):
         self.name = name
         self.args = args
+
+    @property
+    def children(self):
+        yield self.name
+        for a in self.args:
+            yield a
 
     def __repr__(self):
         return self.repr(self.name, self.args)
@@ -253,6 +351,12 @@ class Call(Expression):
         self.expr = expr
         self.args = args
 
+    @property
+    def children(self):
+        yield self.expr
+        for a in self.args:
+            yield a
+
     def __repr__(self):
         return self.repr(self.expr, self.args)
 
@@ -263,20 +367,39 @@ class Cast(Expression):
         self.type = type
         self.expr = expr
 
+    @property
+    def children(self):
+        yield self.type
+        yield self.expr
+
 # literals
 
 # ...
 
 # statements
 
-class Statement(Code):
-    pass
+class Evaluate(Statement):
+
+    @overload(Expression)
+    def __init__(self, expr):
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.expr
+
+    def __repr__(self):
+        return self.repr(self.expr)
 
 class Return(Statement):
 
     @overload(Expression)
     def __init__(self, expr):
         self.expr = expr
+
+    @property
+    def children(self):
+        yield self.expr
 
     def __repr__(self):
         return self.repr(self.expr)
@@ -293,6 +416,16 @@ class If(Statement):
     def __init__(self, predicate, consequence, alternative):
         self.__init__(predicate, Block(consequence), Block(alternative))
 
+    @overload(Expression, Expression, Expression)
+    def __init__(self, predicate, consequence, alternative):
+        self.__init__(predicate, Block(consequence), Block(alternative))
+
+    @property
+    def children(self):
+        yield self.predicate
+        yield self.consequence
+        yield self.alternative
+
     def collisions(self, names):
         for c in self.consequence.collisions(names):
             yield c
@@ -308,6 +441,11 @@ class While(Statement):
     def __init__(self, predicate, body):
         self.predicate = predicate
         self.body = body
+
+    @property
+    def children(self):
+        yield self.predicate
+        yield self.body
 
     def collisions(self, names):
         return self.body.collisions(names)

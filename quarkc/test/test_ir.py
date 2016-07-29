@@ -54,3 +54,27 @@ def test_nesting():
     names = set()
     for c in b.collisions(names):
         print "collision:", c
+
+
+from quarkc.emit import *
+
+def test_emit():
+    stmt = If(Var("x"),
+              Call(Var("y"), ()),
+              Call(Var("z"), ()))
+    print code(stmt, Python())
+    print code(stmt, Java())
+
+    print
+
+    stmt = If(Var("x"),
+              (Call(Var("y"), ()),),
+              (stmt,))
+    print code(stmt, Python())
+    print code(stmt, Java())
+
+    stmt = While(Invoke(Name("pkg:asdf"), ()), (stmt,))
+    print header(stmt, Java())
+    print code(stmt, Java())
+    print footer(stmt, Java())
+    print code(stmt, Python())
