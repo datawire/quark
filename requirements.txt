@@ -10,5 +10,6 @@ twine
 sphinx-better-theme
 docopt
 sphinx
-flake8
+# flake8 decided to ignore setup.cfg. 3.0.3 may fix this, currently there's only 3.0.2.
+flake8<3.0.0
 pylint
