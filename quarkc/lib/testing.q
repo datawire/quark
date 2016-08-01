@@ -201,7 +201,8 @@ class Harness {
         }
     }
 
-    void run() {
+    @doc("Run the tests, return number of failures.")
+    int run() {
         print(bold("=============================== starting tests ==============================="));
 
         int idx = 0;
@@ -229,6 +230,7 @@ class Harness {
         } else {
             print(green(result));
         }
+        return failures;
     }
 
     void json_report() {
@@ -280,9 +282,12 @@ void run(List<String> args) {
         h.list();
     } else {
         print(bold("Running: " + " ".join(args)));
-        h.run();
+        int failures = h.run();
         if (json) {
             h.json_report();
+        }
+        if (failures > 0) {
+            Context.runtime().fail("Test run failed.");
         }
     }
 }
