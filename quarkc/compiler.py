@@ -38,7 +38,7 @@ from .dispatch import overload
 from .helpers import (
     lineinfo, base_bindings, get_field, constructor, base_type, base_constructors,
     has_super, has_return, is_newer, compiled_quark, namever, check_deprecated,
-    CompileWarning
+    CompileWarning, get_interfaces
 )
 from .environment import Environment
 from . import docmaker
@@ -49,6 +49,7 @@ from .versioning import (
     version_spec_string_messages,
 )
 from .messages import Warning, issue_all
+from .coder import Coder
 
 sys.setrecursionlimit(10000)
 
@@ -735,6 +736,29 @@ class Check:
         if (not isinstance(c, Macro) and c.body and c.type
             and c.type.code() != "void" and not has_return(c)):
             self.errors.append("%s: missing return (%s)" % (lineinfo(c), c.type.code()))
+
+    def visit_Method(self, method):
+        """
+        Ensure method has the same signature matching method on parent interface.
+
+        :param method: L{quarkc.ast.Method} instance.
+        """
+        def get_params(method):
+            return [param.resolved.id for param in method.params]
+        def signature(method):
+            coder = Coder()
+            return "%s(%s)" % (coder.code(method.name), coder.code(method.params))
+        # Ensure the method has the same signature as matching methods on parent
+        # interfaces:
+        for interface in get_interfaces(method.clazz):
+            for definition in interface.definitions:
+                if definition.name.text == method.name.text:
+                    if get_params(definition) != get_params(method):
+                        self.errors.append(
+                            "%s: method signature %s on %r does not match method %s on interface %r" % (
+                                lineinfo(method), signature(method), method.clazz, signature(definition),
+                                interface))
+
 
 class SetTrace:
 
