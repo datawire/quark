@@ -1,0 +1,2 @@
+interface-method-mismatch-templatized-interface.q:10:5: method signature 'willMismatch(int x)' on 0.interface_method_mismatch_templatized_interface.C does not match method 'willMismatch(T x)' on interface 0.interface_method_mismatch_templatized_interface.I
+interface-method-mismatch-templatized-interface.q:11:5: method signature 'willMatch(String x)' on 0.interface_method_mismatch_templatized_interface.C does not match method 'willMatch(T x)' on interface 0.interface_method_mismatch_templatized_interface.I

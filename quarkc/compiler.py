@@ -27,7 +27,7 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
-    Use as AstUse, code, copy,
+    Use as AstUse, code, copy, Interface,
 )
 from .exceptions import CompileError, ParseError
 from .parser import (
@@ -38,7 +38,7 @@ from .dispatch import overload
 from .helpers import (
     lineinfo, base_bindings, get_field, constructor, base_type, base_constructors,
     has_super, has_return, is_newer, compiled_quark, namever, check_deprecated,
-    CompileWarning, get_interfaces
+    CompileWarning
 )
 from .environment import Environment
 from . import docmaker
@@ -483,6 +483,10 @@ class TypeExpr(object):
     def pprint(self, pkg):
         return pkg.id
 
+    @overload(Param)
+    def pprint(self, pkg):
+        return pkg.id
+
     def __repr__(self):
         return self.id
 
@@ -743,21 +747,34 @@ class Check:
 
         :param method: L{quarkc.ast.Method} instance.
         """
+        resolved_method = method.resolved.type
+
         def get_params(method):
-            return [param.resolved.id for param in method.params]
+            result = []
+            for param in method.params:
+                resolved_type = param.type.resolved.type
+                if param.type.parameters:
+                    params = [t.resolved.type.id for t in param.type.parameters]
+                else:
+                    params = []
+                result.append((resolved_type.id, params))
+            return result
         def signature(method):
             coder = Coder()
             return "%s(%s)" % (coder.code(method.name), coder.code(method.params))
         # Ensure the method has the same signature as matching methods on parent
         # interfaces:
-        for interface in get_interfaces(method.clazz):
-            for definition in interface.definitions:
+        interfaces = list(t for t in method.clazz.bases if isinstance(t.resolved.type, Interface))
+        for interface in interfaces:
+            interfaceTypeExpr = interface.resolved
+            for definition in interfaceTypeExpr.type.definitions:
                 if definition.name.text == method.name.text:
-                    if get_params(definition) != get_params(method):
+                    resolved_definition = definition.resolved.type
+                    if get_params(resolved_definition) != get_params(resolved_method):
                         self.errors.append(
-                            "%s: method signature %s on %r does not match method %s on interface %r" % (
-                                lineinfo(method), signature(method), method.clazz, signature(definition),
-                                interface))
+                            "%s: method signature '%s' on %s does not match method '%s' on interface %s" % (
+                                lineinfo(method), signature(resolved_method), method.clazz.resolved.type.id,
+                                signature(resolved_definition), interface.resolved.type.id))
 
 
 class SetTrace:

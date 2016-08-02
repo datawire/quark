@@ -1,0 +1,11 @@
+File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
+
+ Package(Name(interface_method_inheritance),
+
+  Class(Name(I),
+
+   Method(static=False, Type(Name(void)), Name(defaultImplementation), Block(
+     Return()))),
+
+  Class(Name(C), Type(Name(I))))
+)

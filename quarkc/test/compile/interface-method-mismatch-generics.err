@@ -1,1 +1,1 @@
-interface-method-mismatch-generics.q:10:5: method signature willMismatch(List<int> x) on 0.interface_method_mismatch_generics.C does not match method willMismatch(List<String> x) on interface 0.interface_method_mismatch_generics.I
+interface-method-mismatch-generics.q:10:5: method signature 'willMismatch(List<int> x)' on 0.interface_method_mismatch_generics.C does not match method 'willMismatch(List<String> x)' on interface 0.interface_method_mismatch_generics.I
