@@ -1,5 +1,5 @@
 quark *;
-namespace pkg {
+namespace pkg_im {
 
     @mapping($java{java.lang.Runnable})
     primitive Runnable {
@@ -27,7 +27,7 @@ namespace pkg {
 }
 
 void main(List<String> args) {
-    pkg.C c = new pkg.C();
+    pkg_im.C c = new pkg_im.C();
     c.event1();
     c.event2();
     c.run();

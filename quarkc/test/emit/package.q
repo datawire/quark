@@ -1,28 +1,22 @@
 quark *;
-// xfail:rb
-// Ruby back-end upper-cases `test` namespace to `Test`,
-// so it collides with `Test` class. The solution to that
-// will be to reject programs with public identifiers
-// distingushed only by case.
-
-namespace test {
+namespace package_test {
     void go() {
         print("GO!");
     }
 
-    class Test {
+    class CPackageTest {
         String name;
         void go() {
             print("TGO!");
         }
     }
 
-    namespace test {
+    namespace package_test {
         void go() {
             print("GOGO!!");
         }
 
-        class Test {
+        class CPackageTest {
             int size;
             void go() {
                 print("TTGO!!");
@@ -32,10 +26,10 @@ namespace test {
 }
 
 void main(List<String> args) {
-    test.go();
-    test.test.go();
-    test.Test t1 = new test.Test();
-    test.test.Test t2 = new test.test.Test();
+    package_test.go();
+    package_test.package_test.go();
+    package_test.CPackageTest t1 = new package_test.CPackageTest();
+    package_test.package_test.CPackageTest t2 = new package_test.package_test.CPackageTest();
     t1.go();
     t2.go();
 }

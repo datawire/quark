@@ -1,5 +1,5 @@
 quark *;
-namespace pkg {
+namespace pkg_cbd {
     class Bar {
 
 	void go() {
@@ -15,6 +15,6 @@ namespace pkg {
 }
 
 void main(List<String> args) {
-    pkg.Bar bar = new pkg.Bar();
+    pkg_cbd.Bar bar = new pkg_cbd.Bar();
     bar.go();
 }

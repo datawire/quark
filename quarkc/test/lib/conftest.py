@@ -2,28 +2,19 @@ import pytest
 import json, sys
 import pexpect
 
+import quarkc.test.qtest as qtest
+
 def pytest_collect_file(path, parent):
     if path.ext == ".q" and path.basename.endswith("_test.q"):
         return QuarkFile(path, parent)
 
-class QuarkFile(pytest.File):
-    def collect(self):
-        for lang in ["python", "java", "javascript", "ruby"]:
-            yield QuarkItem(self, lang)
+class QuarkFile(qtest.QuarkFile):
+    def makeQuarkItem(self, lang):
+        return QuarkItem(self, lang)
 
-class QuarkItem(pytest.Item):
-    def __init__(self, parent, lang):
-        super(QuarkItem, self).__init__("%s:%s" % (lang, parent.fspath.basename), parent)
-        self.lang = lang
-
+class QuarkItem(qtest.QuarkItem):
     def runtest(self):
-        child = pexpect.spawn("quark", ["install", "-v"] +
-                              ["--%s" % self.lang,
-                               self.parent.fspath.strpath])
-        child.logfile = sys.stdout
-        child.expect(pexpect.EOF, timeout=300)
-        assert child.before.splitlines()[-1].strip() == "Done"
-
+        self.install_quark()
         child = pexpect.spawn(
             "quark", ["run", "--%s" % self.lang,
                       self.parent.fspath.strpath, "--", "--json"])
