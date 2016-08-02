@@ -1,5 +1,5 @@
 quark *;
-namespace pkg {
+namespace pkg_dm {
     interface A {
         void foo();
         void bar() {
@@ -46,31 +46,31 @@ namespace pkg {
 }
 
 void main(List<String> args) {
-    pkg.T1 t1 = new pkg.T1();
+    pkg_dm.T1 t1 = new pkg_dm.T1();
     t1.foo();
     t1.bar();
 
     print("===");
 
-    pkg.T2 t2 = new pkg.T2();
+    pkg_dm.T2 t2 = new pkg_dm.T2();
     t2.foo();
     t2.bar();
 
     print("===");
 
-    pkg.T3 t3 = new pkg.T3();
+    pkg_dm.T3 t3 = new pkg_dm.T3();
     t3.foo();
     t3.bar();
 
     print("===");
 
-    pkg.T4 t4 = new pkg.T4();
+    pkg_dm.T4 t4 = new pkg_dm.T4();
     t4.foo();
     t4.bar();
 
     print("===");
 
-    pkg.T5 t5 = new pkg.T5();
+    pkg_dm.T5 t5 = new pkg_dm.T5();
     t5.foo();
     t5.bar();
 }

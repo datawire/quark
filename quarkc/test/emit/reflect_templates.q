@@ -32,6 +32,7 @@ class TLSContextInitializer extends TLSInitializer<Context> {
     class TLS<T> {
         T _value;
         // xfail:js because static initializer for ccc.Context._current is emitted before the TLS class
+        // xfail:rb because static initializer for ccc.Context._current is emitted before the TLS class
         TLS(TLSInitializer<T> initializer) {
             self._value = initializer.getValue();
         }

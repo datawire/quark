@@ -1,4 +1,5 @@
 quark *;
+package quark_matrix_test 0.0.1;
 class Matrix<T> {
 
 	int width;

@@ -1,5 +1,5 @@
 quark *;
-namespace pkg {
+namespace pkg_sd {
 
     interface Foo<T> {
         T foo() {
@@ -26,8 +26,8 @@ namespace pkg {
 }
 
 void main(List<String> args) {
-    pkg.StringBox box = new pkg.StringBox("asdf");
+    pkg_sd.StringBox box = new pkg_sd.StringBox("asdf");
     print(box.contents);
-    pkg.StringFoo foo = new pkg.StringFoo();
+    pkg_sd.StringFoo foo = new pkg_sd.StringFoo();
     print(foo.foo());
 }
