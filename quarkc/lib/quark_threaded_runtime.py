@@ -63,6 +63,7 @@ class _EventProcessor(threading.Thread):
 
     def __init__(self, runtime):
         super(_EventProcessor, self).__init__()
+        self.main_thread = threading.current_thread()
         self.runtime = runtime
         self.live = set()
         self.token_lock = threading.Lock()
@@ -74,8 +75,7 @@ class _EventProcessor(threading.Thread):
             return bool(self.live)
 
     def run(self):
-        main_thread_running = True
-        while main_thread_running or self.is_live:
+        while self.main_thread.is_alive() or self.is_live:
             if self.die_now:
                 with self.token_lock:
                     self.live = _Terminator()
@@ -83,6 +83,9 @@ class _EventProcessor(threading.Thread):
                 event = self.runtime.events.get(block=True, timeout=1)
             except Empty:
                 continue
+            except TypeError:
+                print traceback.format_exc()
+                self.die_now = True
 
             self.runtime.acquire()
             try:
@@ -574,9 +577,8 @@ getRuntime = get_runtime
 def wait_for_completion():
     if _threaded_runtime is None:
         return
-    _threaded_runtime.event_thread.main_thread_running = False
     try:
-        while _threaded_runtime.event_thread.is_live:
-            time.sleep(1)
+        while _threaded_runtime.event_thread.is_alive():
+            time.sleep(0.1)
     except KeyboardInterrupt:
         pass
