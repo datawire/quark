@@ -1,1 +1,1 @@
-interface-method-mismatch-types.q:10:5: method signature 'willMismatch(String x, String y)' on 0.interface_method_mismatch_types.C does not match method 'willMismatch(String x, int y)' on interface 0.interface_method_mismatch_types.I
+interface-method-mismatch-types.q:10:5: method signature 'willMismatch(1.quark.String, 1.quark.String)' on 0.interface_method_mismatch_types.C does not match method 'willMismatch(1.quark.String, 1.quark.int)' on interface 0.interface_method_mismatch_types.I

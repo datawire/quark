@@ -749,19 +749,14 @@ class Check:
         """
         resolved_method = method.resolved.type
 
-        def get_params(method):
+        def get_params(method, extra_bindings):
             result = []
             for param in method.params:
-                resolved_type = param.type.resolved.type
-                if param.type.parameters:
-                    params = [t.resolved.type.id for t in param.type.parameters]
-                else:
-                    params = []
-                result.append((resolved_type.id, params))
+                resolved_param = texpr(param.resolved.type, param.resolved.bindings, extra_bindings)
+                result.append(resolved_param.id)
             return result
-        def signature(method):
-            coder = Coder()
-            return "%s(%s)" % (coder.code(method.name), coder.code(method.params))
+        def signature(method, params):
+            return "%s(%s)" % (method.name.text, ", ".join(params))
         # Ensure the method has the same signature as matching methods on parent
         # interfaces:
         interfaces = list(t for t in method.clazz.bases if isinstance(t.resolved.type, Interface))
@@ -770,11 +765,15 @@ class Check:
             for definition in interfaceTypeExpr.type.definitions:
                 if definition.name.text == method.name.text:
                     resolved_definition = definition.resolved.type
-                    if get_params(resolved_definition) != get_params(resolved_method):
+                    method_params = get_params(resolved_method, method.clazz.resolved.bindings)
+                    definition_params = get_params(resolved_definition, interfaceTypeExpr.bindings)
+                    if (method_params != definition_params):
                         self.errors.append(
                             "%s: method signature '%s' on %s does not match method '%s' on interface %s" % (
-                                lineinfo(method), signature(resolved_method), method.clazz.resolved.type.id,
-                                signature(resolved_definition), interface.resolved.type.id))
+                                lineinfo(method), signature(resolved_method, method_params),
+                                method.clazz.resolved.type.id,
+                                signature(resolved_definition, definition_params),
+                                interface.resolved.type.id))
 
 
 class SetTrace:
