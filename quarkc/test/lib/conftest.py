@@ -38,6 +38,7 @@ class QuarkItem(qtest.QuarkItem):
                 for item in excinfo.value.report
                 if item["failures"]])
             return ret
+        return self._repr_failure_py(excinfo, style="short")
 
     def reportinfo(self):
         return self.fspath, 0, "lang: %s" % self.lang
