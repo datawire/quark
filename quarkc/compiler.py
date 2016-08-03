@@ -750,13 +750,21 @@ class Check:
         resolved_method = method.resolved.type
 
         def get_params(method, extra_bindings):
+            # The Method should already be the resolved version.
             result = []
             for param in method.params:
                 resolved_param = texpr(param.resolved.type, param.resolved.bindings, extra_bindings)
                 result.append(resolved_param.id)
             return result
-        def signature(method, params):
-            return "%s(%s)" % (method.name.text, ", ".join(params))
+
+        def get_return_type(method, extra_bindings):
+            # The Method should already be the resolved version.
+            return texpr(method.type.resolved.type, method.type.resolved.bindings,
+                         extra_bindings).id
+
+        def signature(method, return_type, params):
+            return "%s %s(%s)" % (return_type, method.name.text, ", ".join(params))
+
         # Ensure the method has the same signature as matching methods on parent
         # interfaces:
         interfaces = list(t for t in method.clazz.bases if isinstance(t.resolved.type, Interface))
@@ -767,12 +775,15 @@ class Check:
                     resolved_definition = definition.resolved.type
                     method_params = get_params(resolved_method, method.clazz.resolved.bindings)
                     definition_params = get_params(resolved_definition, interfaceTypeExpr.bindings)
-                    if (method_params != definition_params):
+                    method_return = get_return_type(resolved_method, method.clazz.resolved.bindings)
+                    definition_return = get_return_type(resolved_definition, interfaceTypeExpr.bindings)
+
+                    if method_params != definition_params or method_return != definition_return:
                         self.errors.append(
                             "%s: method signature '%s' on %s does not match method '%s' on interface %s" % (
-                                lineinfo(method), signature(resolved_method, method_params),
+                                lineinfo(method), signature(resolved_method, method_return, method_params),
                                 method.clazz.resolved.type.id,
-                                signature(resolved_definition, definition_params),
+                                signature(resolved_definition, definition_return, definition_params),
                                 interface.resolved.type.id))
 
 

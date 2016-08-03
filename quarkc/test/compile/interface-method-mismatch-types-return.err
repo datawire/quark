@@ -1,0 +1,2 @@
+interface-method-mismatch-types-return.q:11:5: method signature '1.quark.String willMismatch(1.quark.String)' on 0.interface_method_mismatch_types_return.C does not match method '1.quark.void willMismatch(1.quark.String)' on interface 0.interface_method_mismatch_types_return.I
+interface-method-mismatch-types-return.q:12:5: method signature '1.quark.String willMismatch2(1.quark.String)' on 0.interface_method_mismatch_types_return.C does not match method '1.quark.int willMismatch2(1.quark.String)' on interface 0.interface_method_mismatch_types_return.I
