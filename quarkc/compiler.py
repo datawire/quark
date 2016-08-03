@@ -49,7 +49,6 @@ from .versioning import (
     version_spec_string_messages,
 )
 from .messages import Warning, issue_all
-from .coder import Coder
 
 sys.setrecursionlimit(10000)
 
