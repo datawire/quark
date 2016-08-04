@@ -1,6 +1,17 @@
 from .dispatch import dispatch
 from .ir import *
 
+class File:
+
+    def __init__(self, name):
+        self.name = name
+        self.header = ""
+        self.code = ""
+        self.footer = ""
+
+    def __repr__(self):
+        return "\n".join([s for s in (self.header, self.code, self.footer) if s])
+
 class Target(object):
 
     def __init__(self, parent=None):
@@ -9,6 +20,7 @@ class Target(object):
             self.depth = parent.depth + 1
         else:
             self.depth = 0
+        self.files = {}
 
     def descend(self):
         return self.__class__(self)
@@ -16,11 +28,27 @@ class Target(object):
     def indent(self, st=""):
         return "%s%s" % ("  "*self.depth, st)
 
+    def file(self, dfn):
+        name = self.filename(dfn)
+        if name not in self.files:
+            self.files[name] = File(name)
+        return self.files[name]
+
 class Java(Target):
-    pass
+
+    @overload(Function)
+    def filename(self, fun):
+        return "/".join(fun.name.path[:-1], "Functions.java")
+
+    @overload(Class)
+    def filename(self, cls):
+        return "/".join(cls.name.path[:-1], "%s.java" % cls.name.path[-1])
 
 class Python(Target):
-    pass
+
+    @overload(Definition)
+    def filename(self, dfn):
+        return "/".join(dfn.name.path[:-1])
 
 @dispatch(IR, Target)
 def header(nd, target):
@@ -29,6 +57,32 @@ def header(nd, target):
 @dispatch(IR, Target)
 def footer(nd, target):
     return "".join([footer(c, target) for c in nd.children])
+
+## Package
+
+@dispatch(Package, Target)
+def emit(pkg, target):
+    for d in pkg.definitions:
+        f = target.file(d)
+        f.header += header(d, target)
+        f.code += code(d, target)
+        f.footer += footer(d, target)
+
+## Function
+
+@dispatch(Function, Python)
+def code(fun, target):
+    return "def {name}({params}){body}\n".format(
+        name=fun.name.path[-1],
+        params=", ".join(code(p, target) for p in fun.params),
+        body=code(fun.body, target)
+    )
+
+## Param
+
+@dispatch(Param, Python)
+def code(param, target):
+    return param.name
 
 ## If
 
@@ -72,6 +126,12 @@ def code(block, target):
 def code(evaluate, target):
     return code(evaluate.expr, target)
 
+## Return
+
+@dispatch(Return, Target)
+def code(retr, target):
+    return "return {expr}".format(expr=code(retr.expr, target))
+
 ## Names
 
 @dispatch(Name, Java)
@@ -80,7 +140,7 @@ def code(name, target):
 
 @dispatch(Name, Python)
 def header(name, target):
-    return "import %s as %s" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
+    return "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
 
 @dispatch(Name, Python)
 def code(name, target):
@@ -109,4 +169,14 @@ def code(invoke, target):
     return "{function}({args})".format(
         function=code(invoke.name, target),
         args=", ".join([code(a, target) for a in invoke.args])
+    )
+
+## Send
+
+@dispatch(Send, Target)
+def code(send, target):
+    return "{object}.{method}({args})".format(
+        object=code(send.expr, target),
+        method=send.name,
+        args=", ".join([code(a, target) for a in send.args])
     )

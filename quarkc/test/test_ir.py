@@ -44,6 +44,9 @@ def test_package():
                             Param("q:int", "b")),
                            Return(Invoke(Name("q:mul"), (Var("a"), Var("b")))))))
     print p1
+    p = Python()
+    emit(p1, p)
+    print p.files
 
 def test_nesting():
     l = Local(Name("q:int"), "foo")
@@ -70,11 +73,13 @@ def test_emit():
     stmt = If(Var("x"),
               (Call(Var("y"), ()),),
               (stmt,))
+    print "======"
     print code(stmt, Python())
     print code(stmt, Java())
+    print "======"
 
-    stmt = While(Invoke(Name("pkg:asdf"), ()), (stmt,))
-    print header(stmt, Java())
+    stmt = While(Invoke(Name("pkg:asdf"), (Send(Var("x"), "y", ()),)), (stmt,))
     print code(stmt, Java())
-    print footer(stmt, Java())
+    print header(stmt, Python())
     print code(stmt, Python())
+    print footer(stmt, Python())

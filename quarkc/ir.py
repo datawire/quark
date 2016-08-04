@@ -75,17 +75,33 @@ class Name(IR):
     def __repr__(self):
         return self.repr(self.package, *self.path)
 
+# XXX: Should maybe switch to Ref/Def versions of names or something.
+class Type(IR):
+
+    def __init__(self, name):
+        self.name = name
+
+    @property
+    def children(self):
+        yield self.name
+
+    def __repr__(self):
+        return self.repr(self.name)
+
 class Declaration(IR):
 
-    @overload(Name, basestring)
+    @overload(Type, basestring)
     def __init__(self, type, name):
         self.type = type
         self.name = name
 
+    @overload(Name, basestring)
+    def __init__(self, type, name):
+        self.__init__(Type(type), name)
+
     @overload(basestring, basestring)
     def __init__(self, type, name):
-        self.type = Name(type)
-        self.name = name
+        self.__init__(Name(type), name)
 
     @property
     def children(self):
@@ -170,12 +186,16 @@ class Block(Code):
 
 class Function(Definition):
 
-    @overload(Name, Name, tuple, Code)
+    @overload(Name, Type, tuple, Block)
     def __init__(self, name, type, params, body):
         self.name = name
         self.type = type
         self.params = params
         self.body = body
+
+    @overload(Name, Name, tuple, Code)
+    def __init__(self, name, type, params, body):
+        self.__init__(name, Type(type), params, Block(body))
 
     @property
     def children(self):
@@ -311,20 +331,19 @@ class Invoke(Expression):
 class Send(Expression):
 
     @overload(Expression, basestring, tuple)
-    def __init__(self, obj, name, args):
-        self.obj = obj
+    def __init__(self, expr, name, args):
+        self.expr = expr
         self.name = name
         self.args = args
 
     @property
     def children(self):
-        yield self.obj
-        yield self.name
+        yield self.expr
         for a in self.args:
             yield a
 
     def __repr__(self):
-        return self.repr(self.obj, self.name, self.args)
+        return self.repr(self.expr, self.name, self.args)
 
 # Constructs an instance of a class.
 class Construct(Expression):
