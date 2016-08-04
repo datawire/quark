@@ -6,10 +6,6 @@ import traceback
 
 import quarkc.test.qtest as qtest
 
-output = py.path.local(__file__).new(basename="output")
-output.remove(rec=1, ignore_errors=True)
-output.ensure_dir()
-
 def has_main(path):
     return "main" in path.read()
 
@@ -22,25 +18,8 @@ class QuarkFile(qtest.QuarkFile):
         return QuarkItem(self, lang)
 
 class QuarkItem(qtest.QuarkItem):
-    output = output
+    output = qtest.ensure_output(__file__)
     
-    def compile_quark(self):
-        self.check_xfail()
-        self.language.compile_quark(self)
-
-    def run_quark(self):
-        child = pexpect.spawn(
-            "quark", ["run", "--%s" % self.language,
-                      self.parent.fspath.strpath])
-        child.logfile = sys.stdout
-        child.expect(pexpect.EOF, timeout=300)
-        child.close()
-        actual = child.before.replace("\r\n","\n")
-        return actual
-
-    def run_quark_quick(self):
-        return self.language.run_quark(self)
-
     def runtest(self):
         self.compile_quark()
         actual = self.run_quark_quick()
@@ -70,9 +49,6 @@ class QuarkItem(qtest.QuarkItem):
             ret = "missing %s, maybe initialize from %s" % (ex.out, ex.cmp)
             return ret
         return self._repr_failure_py(excinfo, style="short")
-
-    def reportinfo(self):
-        return self.fspath, 0, "lang: %s" % self.language
 
 class DiffException(Exception):
     def __init__(self, actual, cmp, expected, out):
