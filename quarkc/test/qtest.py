@@ -93,6 +93,25 @@ class Java(Language):
     language = "java"
     backend = backend.Java
 
+    def run_quark(self, item):
+        base = item.output / self.backend.ext
+        name = item.compilation.get_dist_name()
+        dir = base / item.parent.fspath.purebasename
+        env = {}
+        env.update(os.environ)
+        try:
+            mvn = ["mvn", "-q", "install",
+                   "dependency:build-classpath", "-Dmdep.outputFile=classpath"]
+            subprocess.check_output(mvn, cwd=dir.strpath, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            return e.output
+        try:
+            cmd = ["java", "-cp", (dir / "classpath").read().strip() + ":target/classes",
+                   "%s.Main" % name]
+            return subprocess.check_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            return e.output
+
 class Ruby(Language):
     language = "ruby"
     backend = backend.Ruby
@@ -100,11 +119,12 @@ class Ruby(Language):
     def run_quark(self, item):
         base = item.output / self.backend.ext
         name = item.compilation.get_dist_name()
-        dir = base / item.parent.fspath.purebasename / "lib"
+        dir = base / item.parent.fspath.purebasename
+        lib = dir / "lib"
         env = {}
         env.update(os.environ)
         try:
-            cmd = ["ruby", base.bestrelpath(dir / name) + ".rb"]
+            cmd = ["ruby", base.bestrelpath(lib / name) + ".rb"]
             return subprocess.check_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
