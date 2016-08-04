@@ -1,9 +1,4 @@
-import pytest
-import py
-import json, sys, difflib
-import pexpect
-import traceback
-
+import difflib
 import quarkc.test.qtest as qtest
 
 def has_main(path):

@@ -12,10 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest, shutil, subprocess, filecmp, difflib
+import os, pytest, shutil, subprocess, filecmp
 from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, compile
-from quarkc.helpers import namever
 from .util import maybe_xfail
 
 backends = (Java, Python, JavaScript, Ruby)
