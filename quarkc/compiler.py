@@ -1171,7 +1171,7 @@ def compile(c, url, target, *backends):
     c.urlparse(url)
     c.compile()
 
-    return emit(c, c.roots,sorted(), target, *backends)
+    return emit(c, c.roots.sorted(), target, *backends)
 
 def emit(c, roots, target, *backends):
     dirs = []
