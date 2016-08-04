@@ -4,6 +4,7 @@ import pexpect
 import subprocess
 import os
 import py.path
+import contextlib
 from collections import defaultdict
 from itertools import chain
 from quarkc import compiler
@@ -45,7 +46,7 @@ class QuarkRuntime:
                 if not language.used:
                     language.used = True
                     missing.append(language)
-    
+
         unknown = set(new)
         assert not unknown, "Malformed quark test ids %s" % ", ".join(chain(*[new[l] for l in unknown]))
         if not missing: return
@@ -57,29 +58,49 @@ class QuarkRuntime:
             language.prime_quark_install(cmd, env)
         subprocess.check_call(cmd, env=env)
 
+class QuarkCache(object):
+    quark_url = compiler.join(compiler.BUILTIN_FILE, compiler.BUILTIN_FILE)
+    quark_root = None
+    def make_compiler(self):
+        c = compiler.Compiler()
+        if self.quark_root is not None:
+            c.roots.add(self.quark_root)
+        return c
+
+    def prime(self, c):
+        if self.quark_root is None:
+            self.quark_root = c.roots[self.quark_url]
 
 class QuarkCompilation(object):
+    cache = QuarkCache()
+
     def __init__(self, item, language):
         self.item = item
         self.language = language
-        self.compiler = compiler.Compiler()
+        self.compiler = self.cache.make_compiler()
 
     def compile(self):
         # XXX: emit of quark package races with itself in os.makedirs()
         self.item.output.join(self.language.backend.ext, "quark").ensure_dir()
         url = self.item.parent.fspath.strpath
+        file = self.compiler.urlparse(url)
+        self.dist, _ = namever(file)
+        self.dist_name = self.language.backend.gen.name(self.dist)
+        self.compiler.compile()
         target = self.item.output.strpath
-        compiler.compile(self.compiler, url, target, self.language.backend)
+        roots = [r for r in self.compiler.roots.sorted() if r.url != self.cache.quark_url]
+        dirs = compiler.emit(self.compiler, roots, target, self.language.backend)
+        print "emitted", dirs
+        self.cache.prime(self.compiler)
         if not self.has_no_dependencies():
+            print "need to install dependencies"
             compiler.install(self.compiler, url, True, self.language.backend)
 
     def get_dist(self):
-        file = self.compiler.urlparse(self.item.parent.fspath.strpath, recurse=False)
-        name, ver = namever(file)
-        return name
+        return self.dist
 
     def get_dist_name(self):
-        return self.language.backend.gen.name(self.get_dist())
+        return self.dist_name
 
     def has_no_dependencies(self):
         return len(self.compiler.roots.sorted()) <= 2
