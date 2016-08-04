@@ -3,6 +3,7 @@ import json, sys
 import pexpect
 import subprocess
 import os
+import py.path
 from collections import defaultdict
 from itertools import chain
 from quarkc.compiler import Compiler, compile
@@ -27,18 +28,23 @@ class QuarkRuntime:
 
         missing = []
         for language in QuarkFile.languages:
-            name = language.language
+            name = language.keyword
             if name in new:
                 new.pop(name)
                 if not language.used:
                     language.used = True
-                    missing.append(name)
+                    missing.append(language)
     
         unknown = set(new)
         assert not unknown, "Malformed quark test ids %s" % ", ".join(chain(*[new[l] for l in unknown]))
         if not missing: return
         sys.stderr.write("\ninstall quark runtime for %s\n" % missing)
-        subprocess.check_call(["quark", "install"] + ["--%s" % l for l in missing])
+        cmd = ["quark", "install"]
+        env={}
+        env.update(os.environ)
+        for language in missing:
+            language.prime_quark_install(cmd, env)
+        subprocess.check_call(cmd, env=env)
 
 
 class QuarkCompilation(object):
@@ -57,13 +63,23 @@ class QuarkCompilation(object):
 
     def get_dist_name(self):
         return self.language.backend.gen.name(self.get_dist())
-    
-class Language:
+
+    def has_no_dependencies(self):
+        return len(self.compiler.roots.sorted()) <= 2
+
+class Language(object):
+    keyword = None
     language = None
     used = False
     backend = None
     def __str__(self):
-        return self.language
+        return self.keyword
+
+    def __repr__(self):
+        return self.keyword
+
+    def prime_quark_install(self, cmd, env):
+        cmd.append("--%s" % self.language)
 
     def compile_quark(self, item):
         item.compilation=QuarkCompilation(item, self)
@@ -73,6 +89,7 @@ class Language:
         raise Exception("Abstract")
 
 class Python(Language):
+    keyword = "python"
     language = "python"
     backend = backend.Python
 
@@ -90,8 +107,49 @@ class Python(Language):
             return e.output
 
 class Java(Language):
+    keyword = "java7"
     language = "java"
     backend = backend.Java
+
+    classpath = py.path.local(__file__).new(basename=".classpath")
+
+    def prime_quark_install(self, cmd, env):
+        super(Java,self).prime_quark_install(cmd, env)
+        if self.classpath.check():
+            self.classpath.remove()
+
+    def compile_java_maven(self, dir):
+        mvn = ["mvn", "-q", "install",
+               "dependency:build-classpath", "-Dmdep.outputFile=classpath"]
+        self.run_java_compile(dir, mvn)
+        dir.join("classpath").move(self.classpath)
+
+    def target_classes_of(self, dir):
+        return dir / "target" / "classes"
+
+    def classpath_of(self, dir):
+        return "%s:%s" % (self.target_classes_of(dir), self.classpath.read().strip())
+
+    def compile_java_javac(self, dir):
+        t_c = self.target_classes_of(dir)
+        t_c.ensure_dir()
+        srcpath = dir / "src/main/java"
+        javac = ["javac", "-d", t_c, "-classpath", self.classpath_of(dir), "-sourcepath", srcpath, "-g", "-target", "1.7", "-source", "1.7", "-nowarn"]
+        javac.extend(srcpath.visit(fil = "*.java"))
+        self.run_java_compile(dir, map(str, javac))
+
+    def compile_java(self, item, dir):
+        if item.compilation.has_no_dependencies() and self.classpath.check():
+            self.compile_java_javac(dir)
+        else:
+            self.compile_java_maven(dir)
+
+    def run_java_compile(self, dir, cmd):
+        try:
+            print cmd
+            subprocess.check_output(cmd, cwd=dir.strpath, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            raise JavaCompileError(e)
 
     def run_quark(self, item):
         base = item.output / self.backend.ext
@@ -99,20 +157,23 @@ class Java(Language):
         dir = base / item.parent.fspath.purebasename
         env = {}
         env.update(os.environ)
+        self.compile_java(item, dir)
         try:
-            mvn = ["mvn", "-q", "install",
-                   "dependency:build-classpath", "-Dmdep.outputFile=classpath"]
-            subprocess.check_output(mvn, cwd=dir.strpath, stderr=subprocess.STDOUT)
-        except subprocess.CalledProcessError as e:
-            return e.output
-        try:
-            cmd = ["java", "-cp", (dir / "classpath").read().strip() + ":target/classes",
+            cmd = ["java", "-cp", self.classpath_of(dir),
                    "%s.Main" % name]
             return subprocess.check_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
 
+
+class JavaCompileError(Exception):
+    def __init__(self, err):
+        super(JavaCompileError,self).__init__(
+            "Running %s failed with %s:\n---\n%s\n---" % (
+                err.cmd, err.returncode, err.output))
+
 class Ruby(Language):
+    keyword = "ruby"
     language = "ruby"
     backend = backend.Ruby
 
@@ -130,6 +191,7 @@ class Ruby(Language):
             return e.output
 
 class Javascript(Language):
+    keyword = "javascript"
     language = "javascript"
     backend = backend.JavaScript
 
