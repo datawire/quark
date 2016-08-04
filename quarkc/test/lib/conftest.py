@@ -1,4 +1,5 @@
 import pytest
+import py
 import json, sys
 import pexpect
 
@@ -13,18 +14,16 @@ class QuarkFile(qtest.QuarkFile):
         return QuarkItem(self, lang)
 
 class QuarkItem(qtest.QuarkItem):
+    output = qtest.ensure_output(__file__)
+
     def runtest(self):
-        self.install_quark()
-        child = pexpect.spawn(
-            "quark", ["run", "--%s" % self.lang,
-                      self.parent.fspath.strpath, "--", "--json"])
-        child.logfile = sys.stdout
-        child.expect_exact(
-            "=============================== json report ===============================",
-            timeout=300
+        self.compile_quark()
+        actual = self.run_quark_quick(["--json"])
+        report = actual.split(
+            "=============================== json report ==============================="
         )
-        child.expect(pexpect.EOF)
-        report = json.loads(child.before)
+        assert len(report) == 2, "missing json report in\n" + actual
+        report = json.loads(report[1])
         for item in report:
             if item["failures"]:
                 raise QuarkException(report)
@@ -39,9 +38,6 @@ class QuarkItem(qtest.QuarkItem):
                 if item["failures"]])
             return ret
         return self._repr_failure_py(excinfo, style="short")
-
-    def reportinfo(self):
-        return self.fspath, 0, "lang: %s" % self.lang
 
 class QuarkException(Exception):
     def __init__(self, report):

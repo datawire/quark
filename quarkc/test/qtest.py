@@ -6,9 +6,20 @@ import os
 import py.path
 from collections import defaultdict
 from itertools import chain
-from quarkc.compiler import Compiler, compile
+from quarkc import compiler
 from quarkc import backend
 from quarkc.helpers import namever
+try:  # py3
+    from shlex import quote
+except ImportError:  # py2
+    from pipes import quote
+
+def ensure_output(path):
+    output = py.path.local(path).new(basename="output")
+    if output.check():
+        output.remove(rec=1, ignore_errors=True)
+    output.ensure_dir()
+    return output
 
 class QuarkRuntime:
     master = False
@@ -51,10 +62,16 @@ class QuarkCompilation(object):
     def __init__(self, item, language):
         self.item = item
         self.language = language
-        self.compiler = Compiler()
+        self.compiler = compiler.Compiler()
 
     def compile(self):
-        compile(self.compiler, self.item.parent.fspath.strpath, self.item.output.strpath, self.language.backend)
+        # XXX: emit of quark package races with itself in os.makedirs()
+        self.item.output.join(self.language.backend.ext, "quark").ensure_dir()
+        url = self.item.parent.fspath.strpath
+        target = self.item.output.strpath
+        compiler.compile(self.compiler, url, target, self.language.backend)
+        if not self.has_no_dependencies():
+            compiler.install(self.compiler, url, True, self.language.backend)
 
     def get_dist(self):
         file = self.compiler.urlparse(self.item.parent.fspath.strpath, recurse=False)
@@ -66,6 +83,38 @@ class QuarkCompilation(object):
 
     def has_no_dependencies(self):
         return len(self.compiler.roots.sorted()) <= 2
+
+class Pexpect(object):
+    cwd = None
+
+    @classmethod
+    def output(cls, cmd, **kwargs):
+        kwargs.pop("stderr", None)
+        cmd = map(str, cmd)
+        cls.debug(cmd, kwargs)
+        child = pexpect.spawn(cmd[0], cmd[1:], **kwargs)
+        child.logfile = sys.stdout
+        child.expect(pexpect.EOF, timeout=kwargs.get('timeout', 30))
+        child.close()
+        actual = child.before.replace("\r\n","\n")
+        if child.exitstatus != 0:
+            raise subprocess.CalledProcessError(child.exitstatus, cmd, actual)
+        return actual
+
+    @classmethod
+    def debug(cls, cmd, kwargs):
+        cwd = py.path.local(kwargs.get("cwd"))
+        env = kwargs.get("env", os.environ)
+        delta = " ".join("%s=%s" % (k,quote(v)) for k,v in env.iteritems() if os.environ.get(k) != v)
+        cmd = " ".join(map(quote, cmd))
+        print
+        if cls.cwd != cwd:
+            print "## cd ", quote(str(cwd))
+            cls.cwd = cwd
+        print "## env", delta, cmd
+
+def pexpect_output(cmd, **kwargs):
+    return Pexpect.output(cmd, **kwargs)
 
 class Language(object):
     keyword = None
@@ -85,7 +134,7 @@ class Language(object):
         item.compilation=QuarkCompilation(item, self)
         item.compilation.compile()
 
-    def run_quark(self, item):
+    def run_quark(self, item, args=[], timeout=300):
         raise Exception("Abstract")
 
 class Python(Language):
@@ -93,7 +142,7 @@ class Python(Language):
     language = "python"
     backend = backend.Python
 
-    def run_quark(self, item):
+    def run_quark(self, item, args=[], timeout=300):
         base = item.output / self.backend.ext
         name = item.compilation.get_dist_name()
         dir = base / item.parent.fspath.purebasename
@@ -101,8 +150,8 @@ class Python(Language):
         env = {"PYTHONPATH":pypath.strpath}
         env.update(os.environ)
         try:
-            cmd = ["python", base.bestrelpath(dir / name) + ".py"]
-            return subprocess.check_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
+            cmd = ["python", base.bestrelpath(dir / name) + ".py", name] + list(args)
+            return pexpect_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
 
@@ -147,11 +196,11 @@ class Java(Language):
     def run_java_compile(self, dir, cmd):
         try:
             print cmd
-            subprocess.check_output(cmd, cwd=dir.strpath, stderr=subprocess.STDOUT)
+            pexpect_output(cmd, cwd=dir.strpath, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             raise JavaCompileError(e)
 
-    def run_quark(self, item):
+    def run_quark(self, item, args=[], timeout=300):
         base = item.output / self.backend.ext
         name = item.compilation.get_dist_name()
         dir = base / item.parent.fspath.purebasename
@@ -160,8 +209,8 @@ class Java(Language):
         self.compile_java(item, dir)
         try:
             cmd = ["java", "-cp", self.classpath_of(dir),
-                   "%s.Main" % name]
-            return subprocess.check_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
+                   "%s.Main" % name, name] + list(args)
+            return pexpect_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
 
@@ -177,7 +226,7 @@ class Ruby(Language):
     language = "ruby"
     backend = backend.Ruby
 
-    def run_quark(self, item):
+    def run_quark(self, item, args=[], timeout=300):
         base = item.output / self.backend.ext
         name = item.compilation.get_dist_name()
         dir = base / item.parent.fspath.purebasename
@@ -185,8 +234,8 @@ class Ruby(Language):
         env = {}
         env.update(os.environ)
         try:
-            cmd = ["ruby", base.bestrelpath(lib / name) + ".rb"]
-            return subprocess.check_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
+            cmd = ["ruby", base.bestrelpath(lib / name) + ".rb", name] + list(args)
+            return pexpect_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
 
@@ -195,15 +244,15 @@ class Javascript(Language):
     language = "javascript"
     backend = backend.JavaScript
 
-    def run_quark(self, item):
+    def run_quark(self, item, args=[], timeout=300):
         base = item.output / self.backend.ext
         name = item.compilation.get_dist_name()
         dir = base / item.parent.fspath.purebasename
-        env = {"NODE_PATH": base.strpath}
+        env = {"NODE_PATH": dir.strpath}
         env.update(os.environ)
         try:
-            cmd = ["node", base.bestrelpath(dir / name) + ".js"]
-            return subprocess.check_output(cmd, cwd=base.strpath, env=env, stderr=subprocess.STDOUT)
+            cmd = ["node", "-e", 'require("./index.js").%s.call_main()' % (name), name] + list(args)
+            return pexpect_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             return e.output
 
@@ -225,15 +274,26 @@ class QuarkItem(pytest.Item):
 
     def install_quark(self):
         self.check_xfail()
-        child = pexpect.spawn("quark", ["install",
-                                        # "-v",
-        ] +
-                              ["--%s" % self.language,
-                               self.parent.fspath.strpath])
-        child.logfile = sys.stdout
-        child.expect(pexpect.EOF, timeout=300)
-        assert child.before.splitlines()[-1].strip() == "Done"
-        child.close()
+        actual = pexpect_output([
+            "quark", "install",
+            # "-v",
+            "--%s" % self.language.language,
+            self.parent.fspath.strpath])
+        assert actual.splitlines()[-1].strip() == "Done", actual
+
+    def run_quark(self, args=[], timeout=300):
+        cmd = ["quark", "run", "--%s" % self.language.language, self.parent.fspath.strpath]
+        if args:
+            cmd.append("--")
+            cmd.extend(args)
+        return pexpect_output(cmd)
+
+    def compile_quark(self):
+        self.check_xfail()
+        self.language.compile_quark(self)
+
+    def run_quark_quick(self, args=[], timeout=300):
+        return self.language.run_quark(self, args, timeout)
 
     def check_xfail(self):
         src = self.parent.fspath.read()
@@ -241,3 +301,6 @@ class QuarkItem(pytest.Item):
             pytest.xfail("marked as xfail")
         if ("xfail:%s" % self.language.backend.ext) in src:
             pytest.xfail("marked as xfail:%s" % self.language.backend.ext)
+
+    def reportinfo(self):
+        return self.fspath, 0, "lang: %s" % self.language
