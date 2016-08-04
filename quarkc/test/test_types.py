@@ -4,10 +4,10 @@ from quarkc.types import *
 # TODO: negative tests?
 
 COMPARISONS = [
-    (Leaf('a'), Leaf('a'), 0),
-    (Leaf('a'), Leaf('b'), -1),
-    (Object(Field('a', Leaf('A'))), Object(Field('a', Leaf('A'))), 0),
-    (Object(Field('a', Leaf('A'))), Callable(Leaf('r'), Field('a', Leaf('A'))), 1)
+    (Atom('a'), Atom('a'), 0),
+    (Atom('a'), Atom('b'), -1),
+    (Object(Field('a', Atom('A'))), Object(Field('a', Atom('A'))), 0),
+    (Object(Field('a', Atom('A'))), Callable(Atom('r'), Field('a', Atom('A'))), 1)
 ]
 
 @pytest.mark.parametrize("a,b,result", COMPARISONS)
@@ -15,7 +15,7 @@ def test_comparisons(a, b, result):
     assert cmp(a, b) == result
 
 GET = [
-    (Object(Field('a', Leaf('X'))), 'a', Leaf('X'))
+    (Object(Field('a', Atom('X'))), 'a', Atom('X'))
 ]
 
 @pytest.mark.parametrize("t,attr,result", GET)
@@ -24,13 +24,13 @@ def test_get(t, attr, result):
 
 BIND = [
     (Callable(Param('T'), Field('a', Param('T'))),
-     {'T': Leaf('L')},
-     Callable(Leaf('L'), Field('a', Leaf('L')))),
+     {'T': Atom('L')},
+     Callable(Atom('L'), Field('a', Atom('L')))),
     (Object(Field('get', Callable(Param('T'))),
-            Field('set', Callable(Leaf('void'), Field('value', Param('T'))))),
-     {'T': Leaf('int')},
-     Object(Field('get', Callable(Leaf('int'))),
-            Field('set', Callable(Leaf('void'), Field('value', Leaf('int'))))))
+            Field('set', Callable(Atom('void'), Field('value', Param('T'))))),
+     {'T': Atom('int')},
+     Object(Field('get', Callable(Atom('int'))),
+            Field('set', Callable(Atom('void'), Field('value', Atom('int'))))))
 ]
 
 @pytest.mark.parametrize("t,bindings,result", BIND)
@@ -44,11 +44,11 @@ def test_bind(t, bindings, result):
 
 MATCH = [
     (Callable(Param('T'), Field('a', Param('T'))),
-     Callable(Leaf('int'), Field('a', Leaf('int'))),
-     {'T': Leaf('int')}),
+     Callable(Atom('int'), Field('a', Atom('int'))),
+     {'T': Atom('int')}),
     (Callable(Param('T'), Field('a', Param('T'))),
-     Callable(Leaf('int'), Field('a', Leaf('float'))),
-     {'T': Union(Leaf('int'), Leaf('float'))})
+     Callable(Atom('int'), Field('a', Atom('float'))),
+     {'T': Union(Atom('int'), Atom('float'))})
 ]
 
 @pytest.mark.parametrize("a,b,result", MATCH)
@@ -64,8 +64,8 @@ def test_smug():
                     Field('b', Param('B')),
                     Field('c', Param('C')))
 
-    sum = Callable(Leaf('int'), Field('a', Leaf('int')), Field('b', Leaf('float')), Field('c', Leaf('String')))
+    sum = Callable(Atom('int'), Field('a', Atom('int')), Field('b', Atom('float')), Field('c', Atom('String')))
 
-    bindings = zipmatch(smug.params, (sum, Leaf('int')))
-    assert bindings == {'T': Leaf('int'), 'A': Leaf('int'), 'B': Leaf('float'), 'C': Leaf('String')}
-    assert smug.bind(bindings).call(sum, Leaf('int'), Leaf('float'), Leaf('String')) == Leaf('int')
+    bindings = zipmatch(smug.params, (sum, Atom('int')))
+    assert bindings == {'T': Atom('int'), 'A': Atom('int'), 'B': Atom('float'), 'C': Atom('String')}
+    assert smug.bind(bindings).call(sum, Atom('int'), Atom('float'), Atom('String')) == Atom('int')

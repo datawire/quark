@@ -58,7 +58,15 @@ class Base(object):
 class Type(Base):
     pass
 
-class Leaf(Type):
+class Atom(Type):
+
+    """
+    An Atom represents an indivisible or primitive type within the
+    type system. Compound types such as Objects, Callables, and Unions
+    are composed of combinations of primitive types and/or other
+    Compound types. Examples in most programming languages include
+    "int" and "float".
+    """
 
     def __init__(self, name):
         self.name = name
@@ -76,6 +84,19 @@ class Leaf(Type):
         return self.repr(self.name)
 
 class Param(Type):
+
+    """
+    A Param represents a type parameter. Type parameters can appear
+    within compound types in order to make generic/abstract/template
+    types. When a generic type is instantiated, the params are
+    replaced with another type. It is possible to partially
+    instantiate (i.e. replace only *some* of the parameters in a
+    generic type). It is also possible to substitute another abstract
+    type in place of a parameter.
+
+    *** Do we need a term for a fully concretized type? ***
+
+    """
 
     def __init__(self, name, bound=None):
         self.name = name
