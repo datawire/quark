@@ -891,7 +891,7 @@ class Compiler(object):
                                 self.roots.add(root)
                             if not include: self.entries[url] = roots[0].files[0]
                             return roots[0].files[0]
-                except (EOFError, TypeError):
+                except EOFError:
                     pass
 
         old = None
