@@ -12,13 +12,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest, shutil, subprocess, filecmp, difflib
 from quarkc.backend import Java, Python, JavaScript, Ruby, Python3
 from quarkc.compiler import Compiler, compile
-from quarkc.helpers import namever
-from .util import maybe_xfail, filter_builtin
+from .util import maybe_xfail
 
-backends = (Java, Python, JavaScript, Ruby)
+backends = (Java, Python, JavaScript, Ruby, Python3)
 
 def do_compile(output, path):
     text = open(path).read()

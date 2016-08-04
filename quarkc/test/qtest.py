@@ -1,10 +1,9 @@
 import pytest
-import json, sys
+import sys
 import pexpect
 import subprocess
 import os
 import py.path
-import contextlib
 from collections import defaultdict
 from itertools import chain
 from quarkc import compiler

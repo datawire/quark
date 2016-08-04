@@ -1,8 +1,4 @@
-import pytest
-import py
-import json, sys
-import pexpect
-
+import json
 import quarkc.test.qtest as qtest
 
 def pytest_collect_file(path, parent):
