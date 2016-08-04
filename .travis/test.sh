@@ -14,8 +14,13 @@ if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
 fi
 
+PYTEST_ARGS=""
 # Allow subsequent quark install commands to run offline
+
 case "$TEST_SUITE" in
+    quarkc)
+        PYTEST_ARGS=-n2
+        ;;
     examples)
         # First example test sometimes times out due to quark install taking too long
         # Seems like an empty maven cache issue
@@ -54,7 +59,7 @@ else
     exit 1
 fi
 
-if py.test -v $TEST_SUITE -n2 --durations=10; then
+if py.test -v $TEST_SUITE $PYTEST_ARGS --durations=10; then
     echo Tests passed
 else
     ./quarkc/test/compare --batch
