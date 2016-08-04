@@ -52,6 +52,7 @@ java -version 2>&1 | grep -Fe 'java version "1.7.0'
 type python
 python -c 'import sys; print(sys.version); sys.exit(int(sys.version_info[:3] < (2,7,6) or (3,0,0) < sys.version_info[:3]))'
 node --version
+npm --version
 ruby --version
 type ruby
 ruby --version 2>&1 | grep -Fe 'ruby 2.3.'
