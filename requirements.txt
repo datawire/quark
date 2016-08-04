@@ -3,6 +3,7 @@ setuptools>=18
 pip>=8
 ws4py==0.3.4
 pytest
+pytest-xdist
 pexpect
 virtualenv>=13
 semantic-version==2.5.0
