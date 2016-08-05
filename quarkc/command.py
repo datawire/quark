@@ -147,15 +147,19 @@ def main(args):
         return None
 
     do_log = not args["run"] or args["--verbose"]
+    logging.basicConfig(level=logging.DEBUG)
+    log = logging.getLogger("quark")
+    log.propagate = False
+    for wat in list(log.handlers):
+        log.removeHandler(wat)
     if do_log:
         if args["--verbose"]:
             shell.COMMAND_DEFAULTS["mvn"] = "mvn"
-        logging.basicConfig(level=logging.DEBUG)
-        log = logging.getLogger("quark")
-        log.propagate = False
         hnd = ProgressHandler(verbose=args["--verbose"])
         log.addHandler(hnd)
         hnd.setFormatter(logging.Formatter("%(message)s"))
+    else:
+        log.addHandler(logging.NullHandler())
 
     version = "Quark %s run at %s" % (_metadata.__version__, datetime.datetime.now())
     helpers.Code.identifier = version
