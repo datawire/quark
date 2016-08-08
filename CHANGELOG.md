@@ -17,6 +17,11 @@ Latest
 
 * constructor name must match class name. For now this is a warning.
 
+* The compiler now enforces that an implementation signature matches the
+  declaration in the interface. Some code that compiled/ran successfully in
+  the past may fail to compile; we assert said code is incorrect and was
+  relying on a compiler bug.
+
 ### Standard Library
 
 * Added `String.ordAt`
