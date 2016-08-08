@@ -482,10 +482,6 @@ class TypeExpr(object):
     def pprint(self, pkg):
         return pkg.id
 
-    @overload(Param)
-    def pprint(self, pkg):
-        return pkg.id
-
     def __repr__(self):
         return self.id
 
