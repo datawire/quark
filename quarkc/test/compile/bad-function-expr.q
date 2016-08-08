@@ -1,3 +1,4 @@
+quark *;
 void bar() {
-    print("bar: " + bar); // xfail but bad compiler error
+    print("bar: " + bar);
 }

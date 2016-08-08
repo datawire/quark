@@ -1,0 +1,1 @@
+method_reference.q:4:33:type mismatch: expected 1.quark.String, got 0.method_reference.Foo.zazzle
