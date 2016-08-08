@@ -27,7 +27,7 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
-    Use as AstUse, code, copy,
+    Use as AstUse, code, copy, Interface,
 )
 from .exceptions import CompileError, ParseError
 from .parser import (
@@ -739,6 +739,52 @@ class Check:
         if (not isinstance(c, Macro) and c.body and c.type
             and c.type.code() != "void" and not has_return(c)):
             self.errors.append("%s: missing return (%s)" % (lineinfo(c), c.type.code()))
+
+    def visit_Method(self, method):
+        """
+        Ensure method has the same signature matching method on parent interface.
+
+        :param method: L{quarkc.ast.Method} instance.
+        """
+        resolved_method = method.resolved.type
+
+        def get_params(method, extra_bindings):
+            # The Method should already be the resolved version.
+            result = []
+            for param in method.params:
+                resolved_param = texpr(param.resolved.type, param.resolved.bindings, extra_bindings)
+                result.append(resolved_param.id)
+            return result
+
+        def get_return_type(method, extra_bindings):
+            # The Method should already be the resolved version.
+            return texpr(method.type.resolved.type, method.type.resolved.bindings,
+                         extra_bindings).id
+
+        def signature(method, return_type, params):
+            return "%s %s(%s)" % (return_type, method.name.text, ", ".join(params))
+
+        # Ensure the method has the same signature as matching methods on parent
+        # interfaces:
+        interfaces = list(t for t in method.clazz.bases if isinstance(t.resolved.type, Interface))
+        for interface in interfaces:
+            interfaceTypeExpr = interface.resolved
+            for definition in interfaceTypeExpr.type.definitions:
+                if definition.name.text == method.name.text:
+                    resolved_definition = definition.resolved.type
+                    method_params = get_params(resolved_method, method.clazz.resolved.bindings)
+                    definition_params = get_params(resolved_definition, interfaceTypeExpr.bindings)
+                    method_return = get_return_type(resolved_method, method.clazz.resolved.bindings)
+                    definition_return = get_return_type(resolved_definition, interfaceTypeExpr.bindings)
+
+                    if method_params != definition_params or method_return != definition_return:
+                        self.errors.append(
+                            "%s: method signature '%s' on %s does not match method '%s' on interface %s" % (
+                                lineinfo(method), signature(resolved_method, method_return, method_params),
+                                method.clazz.resolved.type.id,
+                                signature(resolved_definition, definition_return, definition_params),
+                                interface.resolved.type.id))
+
 
 class SetTrace:
 

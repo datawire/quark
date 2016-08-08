@@ -1,0 +1,1 @@
+interface-method-mismatch.q:10:5: method signature '1.quark.void willMismatch(1.quark.String)' on 0.interface_method_mismatch.C does not match method '1.quark.void willMismatch(1.quark.String, 1.quark.int)' on interface 0.interface_method_mismatch.I
