@@ -28,6 +28,8 @@ class Base(object):
         return self.__class__.__name__
 
     def __cmp__(self, other):
+        # scaffolding for polymorphic comparison that delegates to
+        # monomorphic comparison code
         return cmp(self.kind, other.kind) or self.cmp(other)
 
     def match(self, other):
@@ -61,11 +63,11 @@ class Type(Base):
 class Atom(Type):
 
     """
-    An Atom represents an indivisible or primitive type within the
+    The Atom class represents an indivisible, primitive type within a
     type system. Compound types such as Objects, Callables, and Unions
-    are composed of combinations of primitive types and/or other
-    Compound types. Examples in most programming languages include
-    "int" and "float".
+    are composed of combinations of atoms and/or other Compound
+    types. Examples (in most programming languages) include "int" and
+    "float".
     """
 
     def __init__(self, name):
@@ -86,16 +88,21 @@ class Atom(Type):
 class Param(Type):
 
     """
-    A Param represents a type parameter. Type parameters can appear
-    within compound types in order to make generic/abstract/template
-    types. When a generic type is instantiated, the params are
-    replaced with another type. It is possible to partially
-    instantiate (i.e. replace only *some* of the parameters in a
-    generic type). It is also possible to substitute another abstract
-    type in place of a parameter.
+    A Param represents a type parameter. Type parameters are
+    placeholders that can be replaced with other types. A type that
+    contains type parameters is considered a generic type. Generic
+    types can be transformed into other types by substituting other
+    types for a given parameter.
 
-    *** Do we need a term for a fully concretized type? ***
+    When substitution is performed on a generic type, the occurences
+    of a parameter are replaced with another type and the result is a
+    new type. The new type might be fully concrete, or might still
+    contain parameters, this can happen because only some of the
+    parameters in the original type are replaced, or it can happen
+    because the substituted types contain parameters, or some
+    combination thereof.
 
+    *** Do we need a term for a type with no paraemters, maybe a reified type? ***
     """
 
     def __init__(self, name, bound=None):
