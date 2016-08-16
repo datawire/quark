@@ -18,14 +18,14 @@ Object smug(UnaryCallable c, Object arg) {
 
 class Doubler extends UnaryCallable {
 
-    int call(Object arg) {
+    Object call(Object arg) {
         int x = ?arg;
         return 2*x;
     }
 
 }
 
-macro bool checkFFI() 
+macro bool checkFFI()
     $py{__import__('callable_ffi').check()}
     $rb{(lambda { require('callable_ffi_test.rb'); return CallableFFI::check() }).call()}
     $js{require('test_callable/callable_ffi_test.js').check()}

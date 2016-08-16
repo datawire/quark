@@ -1,6 +1,6 @@
 package callable_ffi_test;
 
-import static test_callable.Functions.*;
+import static callable_test.Functions.*;
 import quark.UnaryCallable;
 
 public class FFI {
