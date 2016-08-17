@@ -116,7 +116,7 @@ interface Runtime {
     The result of calling the UnaryCallable will be returned, unless an
     exception is caught in which case the default is returned.
     """)
-    Object callSafely(UnaryCallable callable, Object default);
+    Object callSafely(UnaryCallable callable, Object defaultResult);
 }
 
 @doc("Get epoch time in milliseconds")
