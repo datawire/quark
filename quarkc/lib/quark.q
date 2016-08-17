@@ -109,6 +109,14 @@ interface Runtime {
 
     @doc("Get a v4 random UUID (Universally Unique IDentifier)")
     String uuid();
+
+    @doc("""
+    Call a UnaryCallable safely, catching native exceptions.
+
+    The result of calling the UnaryCallable will be returned, unless an
+    exception is caught in which case the default is returned.
+    """)
+    Object callSafely(UnaryCallable callable, Object default);
 }
 
 @doc("Get epoch time in milliseconds")

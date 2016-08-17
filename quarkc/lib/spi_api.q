@@ -95,6 +95,9 @@ namespace spi_api {
         Logger logger(String topic) {
             return impl.logger(topic);
         }
+        Object callSafely(UnaryCallable callee, Object default) {
+            return impl.callSafely(callee, default);
+        }
     }
 }
 }

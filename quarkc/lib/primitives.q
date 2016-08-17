@@ -522,7 +522,11 @@ namespace quark {
         $js{_qrt.sanitize_undefined((($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg))}
                                           $rb{($self).call($arg)}
                                           $java{($self).call($arg)};
+    }
 
+    @doc("Allow native code to call UnaryCallables.")
+    Object callUnaryCallable(UnaryCallable callee, Object arg) {
+        return callee.__call__(arg);
     }
 
 namespace error {
