@@ -663,6 +663,15 @@ module DatawireQuarkCore
     def uuid
       SecureRandom.uuid
     end
+
+    def callSafely(unary_callable, default)
+      begin
+        ::Quark.quark.callUnaryCallable(unary_callable, nil)
+      rescue
+        @log.error("Exception while calling safely: #{$!}")
+        default
+      end
+    end
   end
 
   class WebsocketAdapter
