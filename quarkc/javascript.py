@@ -114,6 +114,11 @@ def qualify(package, origin):
     else:
         return package
 
+def native_include(path):
+    assert path.endswith(".js"), path
+    assert "/" not in path, (path, "Subpackage native inclusion not implemented for JS")
+    return """var %s = require("%s");\n""" % (path[:-3], path)
+
 ## Documentation
 
 def doc(lines):

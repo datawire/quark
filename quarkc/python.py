@@ -186,6 +186,11 @@ def qualify(package, origin):
     else:
         return package
 
+def native_include(path):
+    assert path.endswith(".py"), path
+    assert "/" not in path, (path, "Subpackage native inclusion not implemented for Python")
+    return """import %s\n""" % path[:-3]
+
 ## Documentation
 
 def doc(lines):
