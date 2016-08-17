@@ -6,6 +6,14 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* Added `Context.runtime().callSafely`, which catches exceptions thrown in
+  native code.
+
+1.0.332
+------
+
 ### Command line
 
 * The compiler now emits warnings in addition to errors. Warnings do
