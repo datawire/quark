@@ -262,6 +262,10 @@ namespace quark {
     @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
+        macro String __mul__(int count)    $java{new String(new char[Math.max(0, ($count))]).replace("\0", ($self))}
+                                           $py{($self) * ($count)}
+                                           $rb{($self) * [0, ($count)].max}
+                                           $js{($self).repeat(Math.max(0, ($count)))};
         macro bool __lt__(String other)    $java{io.datawire.quark.runtime.StringUtils.lt(($self),($other))}
                                            $py{($self) < ($other)}
                                            $rb{($self) < ($other)}

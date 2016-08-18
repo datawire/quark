@@ -11,6 +11,9 @@ Latest
 * Added `Context.runtime().callSafely`, which catches exceptions thrown in
   native code.
 
+* Added `String.__mul__` to support easy repetition of strings, e.g.,
+  `"asdf" * 3 ==> "asdfasdfasdf"`.
+
 1.0.332
 ------
 
