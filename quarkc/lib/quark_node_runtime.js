@@ -461,6 +461,15 @@
         return (function b(a){return a?(a^Math.random()*16>>a/4).toString(16):([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,b);})();  // jshint ignore: line
     };
 
+    Runtime.prototype.callSafely = function(callee, defaultResult) {
+        try {
+            return quark.quark.callUnaryCallable(callee, null);
+        } catch(e) {
+            this.logger("quark.runtime").error("Exception while calling safely: " + e);
+            return defaultResult;
+        }
+    };
+
     function QuarkContainer() {
         this.servlets = {};
     }

@@ -365,6 +365,9 @@ class MockRuntime extends Runtime {
         return runtime.logger(topic);
     }
 
+    Object callSafely(UnaryCallable callee, Object defaultResult) {
+        return callee.__call__(null);
+    }
 }
 
 /*@doc("""

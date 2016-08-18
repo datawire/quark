@@ -526,6 +526,14 @@ class ThreadedRuntime(object):
     def uuid(self):
         return str(uuid.uuid4())
 
+    def callSafely(self, unary_callable, default):
+        try:
+            return quark.callUnaryCallable(unary_callable, None)
+        except:
+            self.log.error("Exception while calling safely: "
+                           + traceback.format_exc())
+            return default
+
 _global_lock = threading.Lock()
 _threaded_runtime = None
 
