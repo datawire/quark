@@ -15,6 +15,7 @@
 import os, pytest
 import subprocess
 
+from quarkc import _metadata
 
 def is_excluded_file(name):
     if name.endswith("quarkc/lib/quark.q") or name == "reflector":
@@ -26,15 +27,24 @@ def is_runtime(path):
     return "quark_" in path and "_runtime" in path
 
 def filter_builtin(content):
+    """Filter out lines that shouldn't be compared in tests."""
     if content is None:
         return None
     lines = content.split("\n")
     result = []
     skipping = False
     for line in lines:
+        # Generate packaging hardcodes version 0.0.1 since we have different
+        # versions of Quark stdlib on each release:
+        quark_dependency = (('"quark": "0.0.1"' in line) or
+                            ('"quark": "{}"'.format(_metadata.__version__) in line) or
+                            ("spec.add_runtime_dependency 'quark'" in line) or
+                            ("<version>0.0.1</version>" in line) or
+                            ("<version>{}</version>".format(_metadata.__version__) in line) or
+                            ("install_requires" in line and "quark==" in line))
         if "BEGIN_BUILTIN" in line:
             skipping = True
-        if not skipping:
+        if not skipping and not quark_dependency:
             result.append(line)
         if "END_BUILTIN" in line:
             skipping = False

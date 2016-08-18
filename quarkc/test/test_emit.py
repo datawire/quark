@@ -16,7 +16,7 @@ import os, pytest, shutil, subprocess, filecmp, difflib
 from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, compile
 from quarkc.helpers import namever
-from .util import maybe_xfail
+from .util import maybe_xfail, assert_file, filter_builtin
 
 backends = (Java, Python, JavaScript, Ruby)
 
@@ -50,13 +50,18 @@ def ffi_path(request):
 def ffi_compiled(ffi_output, ffi_path):
     return do_compile(ffi_output, ffi_path)
 
-def check_diff(diff):
+def check_diff(output_root, expected_root, diff):
     # left is output, right is expected
     assert not diff.left_only, diff.left_only
     assert not diff.right_only, diff.right_only
-    assert not diff.diff_files, diff.diff_files
+    for name in diff.diff_files:
+        with open(os.path.join(expected_root, name), "r") as expected_file:
+            assert_file(os.path.join(output_root, name), expected_file.read())
     for common_dirname, common_sub_diff in diff.subdirs.items():
-        check_diff(common_sub_diff)
+        print common_dirname
+        check_diff(os.path.join(output_root, common_dirname),
+                   os.path.join(expected_root, common_dirname),
+                   common_sub_diff)
 
 def test_ffi(ffi_output, ffi_compiled):
     path, dirs = ffi_compiled
@@ -64,10 +69,11 @@ def test_ffi(ffi_output, ffi_compiled):
         for name in dirs:
             if name == "quark": continue
             ext = b().ext
-            diff = filecmp.dircmp(os.path.join(ffi_output, ext, name),
-                                  os.path.join(ffi_expected, ext, name),
+            output_root = os.path.join(ffi_output, ext, name)
+            expected_root = os.path.join(ffi_expected, ext, name)
+            diff = filecmp.dircmp(output_root, expected_root,
                                   ['target']) # XXX: should only filter out target for java
-            check_diff(diff)
+            check_diff(output_root, expected_root, diff)
 
 def test_ffi_build_java(ffi_output):
     j = Java()
@@ -139,8 +145,8 @@ def run_tests(base, dirs, command, env=None):
                     print("FAILURE: Expected output not found for %r." % name)
                 else:
                     d = difflib.Differ()
-                    delta = list(d.compare(expected.splitlines(True),
-                                           actual.splitlines(True)))
+                    delta = list(d.compare(filter_builtin(expected.splitlines(True)),
+                                           filter_builtin(actual.splitlines(True))))
                     print("FAILURE: Expected and actual output dont match for '%s':\n%s" % (
                         name, "".join(delta)))
     print(failed_expectations)
