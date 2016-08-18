@@ -10,6 +10,20 @@ void main(List<String> args) {
 
 class StringTest {
 
+    void test_concatenate() {
+        checkEqual("", "" + "");
+        checkEqual("hello", "hello" + "");
+        checkEqual("hello", "hel" + "lo");
+        checkEqual("hello", "" + "hello");
+    }
+
+    void test_repeat() {
+        checkEqual("hellohellohello", "hello" * 3);
+        checkEqual("", "helloZero" * 0);
+        checkEqual("", "helloNegative" * -5);
+        checkEqual(100, (" " * 100).size());
+    }
+
     void test_upper_lower() {
         checkEqual("asdf", "AsDf".toLower());
         checkEqual("ASDF", "AsDf".toUpper());
