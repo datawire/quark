@@ -16,7 +16,7 @@ import os, pytest, shutil, subprocess, filecmp, difflib
 from quarkc.backend import Java, Python, JavaScript, Ruby
 from quarkc.compiler import Compiler, compile
 from quarkc.helpers import namever
-from .util import maybe_xfail, assert_file, filter_builtin
+from .util import maybe_xfail, filter_builtin
 
 backends = (Java, Python, JavaScript, Ruby)
 
@@ -55,10 +55,9 @@ def check_diff(output_root, expected_root, diff):
     assert not diff.left_only, diff.left_only
     assert not diff.right_only, diff.right_only
     for name in diff.diff_files:
-        with open(os.path.join(expected_root, name), "r") as expected_file:
-            assert_file(os.path.join(output_root, name), expected_file.read())
+        assert (filter_builtin(open(os.path.join(output_root, name)).read()) ==
+                filter_builtin(open(os.path.join(expected_root, name)).read()))
     for common_dirname, common_sub_diff in diff.subdirs.items():
-        print common_dirname
         check_diff(os.path.join(output_root, common_dirname),
                    os.path.join(expected_root, common_dirname),
                    common_sub_diff)
