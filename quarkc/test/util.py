@@ -34,8 +34,8 @@ def filter_builtin(content):
     result = []
     skipping = False
     for line in lines:
-        # Generate packaging hardcodes version 0.0.1 since we have different
-        # versions of Quark stdlib on each release:
+        # Checked-in test comparison packaging hardcodes version 0.0.1 since we
+        # have different versions of Quark stdlib on each release:
         quark_dependency = (('"quark": "0.0.1"' in line) or
                             ('"quark": "{}"'.format(_metadata.__version__) in line) or
                             ("spec.add_runtime_dependency 'quark'" in line) or
