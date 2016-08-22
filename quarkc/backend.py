@@ -841,7 +841,7 @@ class Java(Backend):
         return None
 
     def install_command(self, dir, offline):
-        cmd = ["mvn", "install"]
+        cmd = ["mvn", "install", "-DskipTests"]
         if offline: cmd += ["--offline"]
         shell.call(*cmd, cwd=dir, stage="install")
 
