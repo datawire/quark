@@ -143,16 +143,20 @@ def substitute(line, vars):
 
 def update_python(name, **kwargs):
     """Update a python file with supplied overrides."""
+    return update_file(name, lambda line: substitute(line, kwargs))
+
+def update_file(name, transform):
+    """Update a file by passing each line through a transform function."""
     lines = []
     orig_lines = []
     with open(name, "r") as fd:
         for line in fd:
             orig_lines.append(line)
-            lines.append(substitute(line, kwargs))
+            lines.append(transform(line))
     updated = "".join(lines)
     original = "".join(orig_lines)
     if updated != original:
-        print "Updating python %s: %s" % (name, kwargs)
+        print("Updating file %s: %s" % (name, set(lines) - set(orig_lines)))
         if __dry__: return True
         with open(name, "w") as fd:
             fd.write(updated)
@@ -182,6 +186,15 @@ def quark_version(version, doc_version, dev):
     for fname in ("quarkc/_metadata.py", "docs/conf.py"):
         if update_python(base(fname), **subs):
             updated.append(fname)
+
+    # Update quark stdlib package version:
+    def update_quark(line):
+        if line.startswith("package quark "):
+            return "package quark {};\n".format(version)
+        else:
+            return line
+    update_file(base("quarkc/lib/quark.q"), update_quark)
+    updated.append("quarkc/lib/quark.q")
 
     return title, updated
 
