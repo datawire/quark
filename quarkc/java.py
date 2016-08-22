@@ -104,8 +104,24 @@ shade_plugin = """
               </dependencyReducedPomLocation>
               <relocations>
                 <relocation>
-                  <pattern>com.acme.coyote</pattern>
-                  <shadedPattern>hidden.coyote</shadedPattern>
+                  <pattern>com.fasterxml.jackson</pattern>
+                  <shadedPattern>internaldatawire.com.fasterxml.jackson</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>io.netty</pattern>
+                  <shadedPattern>internaldatawire.io.netty</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>junit</pattern>
+                  <shadedPattern>internaldatawire.junit</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.junit</pattern>
+                  <shadedPattern>internaldatawire.org.junit</shadedPattern>
+                </relocation>
+                <relocation>
+                  <pattern>org.hamcrest</pattern>
+                  <shadedPattern>internaldatawire.org.hamcrest</shadedPattern>
                 </relocation>
               </relocations>
             </configuration>
