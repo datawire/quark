@@ -144,8 +144,8 @@ def run_tests(base, dirs, command, env=None):
                     print("FAILURE: Expected output not found for %r." % name)
                 else:
                     d = difflib.Differ()
-                    delta = list(d.compare(filter_builtin(expected.splitlines(True)),
-                                           filter_builtin(actual.splitlines(True))))
+                    delta = list(d.compare(filter_builtin(expected),
+                                           filter_builtin(actual)))
                     print("FAILURE: Expected and actual output dont match for '%s':\n%s" % (
                         name, "".join(delta)))
     print(failed_expectations)
