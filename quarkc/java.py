@@ -68,7 +68,7 @@ pom_xml = """<?xml version="1.0" encoding="UTF-8"?>
             </manifestEntries>
           </archive>
         </configuration>
-      </plugin>
+      </plugin>%(more_plugins)s
     </plugins>
   </build>
   <dependencies>
@@ -85,6 +85,35 @@ def format_deps(deps):
       <version>%s</version>
     </dependency>""" % (group, name, ver)
 
+shade_plugin = """
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>2.4.3</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <configuration>
+              <minimizeJar>false</minimizeJar>
+              <createDependencyReducedPom>true</createDependencyReducedPom>
+              <dependencyReducedPomLocation>
+                ${java.io.tmpdir}/dependency-reduced-pom.xml
+              </dependencyReducedPomLocation>
+              <relocations>
+                <relocation>
+                  <pattern>com.acme.coyote</pattern>
+                  <shadedPattern>hidden.coyote</shadedPattern>
+                </relocation>
+              </relocations>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+"""
+
 def package(name_, version, packages, srcs, deps):
     files = OrderedDict()
     for fname, content in srcs.items():
@@ -94,7 +123,12 @@ def package(name_, version, packages, srcs, deps):
                 "version": version,
                 "pkg_list": repr([".".join(p) for p in packages]),
                 "dependencies": "\n".join(format_deps(deps)),
-                "main": name(name_)}
+                "main": name(name_),
+                "more_plugins": ""}
+    if name_ == "quark":
+        # We want to shade the quark stdlib so its dependencies don't conflict
+        # with user's dependencies.
+        fmt_dict["more_plugins"] = shade_plugin
     files["pom.xml"] = pom_xml % fmt_dict
     return files
 
