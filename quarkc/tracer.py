@@ -5,12 +5,13 @@ from .exceptions import ParseError
 from parsimonious import ParseError as GParseError
 
 @match(AST, object, opt(object))
-def traverse(ast, visit, leave=None):
-    visit(ast)
-    for c in ast.children:
-        traverse(c, visit, leave)
+def traverse(node, visit, leave=None):
+    visit(node)
+    for c in node.children:
+        if c is not None:
+            traverse(c, visit, leave)
     if leave:
-        leave(ast)
+        leave(node)
 
 @match(AST)
 def wire(ast):
@@ -45,17 +46,13 @@ def path(n):
 def path(f):
     return ()
 
-@match(AST)
+@match(choice(Local, Block))
 def path(n):
     return path(n.parent)
 
 @match(choice(Package, Function, Class, Interface, Method, Declaration))
 def name(n):
     return ".".join([n.text for n in path(n)])
-
-@match(AST)
-def define(_):
-    pass
 
 from collections import OrderedDict
 
@@ -88,11 +85,22 @@ def emit(ir):
 if __name__ == '__main__':
     print check(parse("asdf", """
     quark 1.0;
+
+    primitive String {
+        String __add__(String other);
+    }
+
+    primitive int {
+        int __add__(int other);
+    }
+
     void foo() {}
     void bar() {}
     class Foo {
-        void foo() {
+        String field;
+        void foo(int fdsa) {
             String asdf = "asdf";
+            int two = 1 + 1;
         }
     }
 
