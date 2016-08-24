@@ -112,6 +112,32 @@ class Test {
 
 }
 
+class SafeMethodCaller extends UnaryCallable {
+    static bool useSafeCalls = true;
+
+    Method method;
+    Object test;
+
+    SafeMethodCaller(Method method, Object test) {
+        self.method = method;
+        self.test = test;
+    }
+
+    Object call(Object ignore) {
+        method.invoke(test, []);
+        return true;
+    }
+
+    static bool callMethod(Method method, Object test) {
+        if (useSafeCalls) {
+            SafeMethodCaller callable = new SafeMethodCaller(method, test);
+            return ?Context.runtime().callSafely(callable, false);
+        }
+        method.invoke(test, []);
+        return true;
+    }
+}
+
 class MethodTest extends Test {
 
     Class klass;
@@ -129,11 +155,17 @@ class MethodTest extends Test {
 
         Object test = klass.construct([]);
         if (setup != null) {
-            setup.invoke(test, []);
+            if (!SafeMethodCaller.callMethod(setup, test)) {
+                fail("setup invocation crashed");
+            }
         }
-        method.invoke(test, []);
+        if (!SafeMethodCaller.callMethod(method, test)) {
+            fail("test invocation crashed");
+        }
         if (teardown != null) {
-            teardown.invoke(test, []);
+            if (!SafeMethodCaller.callMethod(teardown, test)) {
+                fail("teardown invocation crashed");
+            }
         }
     }
 
@@ -306,7 +338,11 @@ void run(List<String> args) {
             if (arg == "--json") {
                 json = true;
             } else {
-                filters.add(arg);
+                if (arg == "--unsafe") {
+                    SafeMethodCaller.useSafeCalls = false;
+                } else {
+                    filters.add(arg);
+                }
             }
         }
         idx = idx + 1;
