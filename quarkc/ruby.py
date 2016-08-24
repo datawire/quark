@@ -181,7 +181,7 @@ def qualify(package, origin):
     # Always fully-qualify names, because Ruby is not fully lexically-scoped.
     return package
 
-def native_include(path):
+def native_include(path, du_name):
     assert path.endswith(".rb"), path
     assert "/" not in path, (path, "Subpackage native inclusion not implemented for Ruby")
     return """require "%s"\n""" % path[:-3]

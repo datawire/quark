@@ -140,10 +140,11 @@ class Backend(object):
     def add_native_includes(self, code):
         if self.entry.name.endswith(BUILTIN_FILE):
             return code
+        du_name, _ = namever(self.entry)
         includes = []
         for path, content in self.entry.root.included.items():
             if path.endswith(self.ext):
-                includes.append(self.gen.native_include(path))
+                includes.append(self.gen.native_include(path, du_name))
         code.head += "".join(includes)
         return code
 

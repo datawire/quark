@@ -186,7 +186,7 @@ def qualify(package, origin):
     else:
         return package
 
-def native_include(path):
+def native_include(path, du_name):
     assert path.endswith(".py"), path
     assert "/" not in path, (path, "Subpackage native inclusion not implemented for Python")
     return """import %s\n""" % path[:-3]
