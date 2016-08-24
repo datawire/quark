@@ -39,7 +39,7 @@ class CallableTest {
     }
 
     void testFromFFI() {
-        check(checkFFI(), "native ffi checks failed");
+        check(checkFFI(), "native ffi checks");
     }
 
 }
