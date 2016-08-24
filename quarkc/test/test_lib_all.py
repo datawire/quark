@@ -56,7 +56,7 @@ def run_lib_tests():
     print
     os.chdir(os.path.join(os.path.dirname(__file__), "lib"))
     test_paths = glob("*_test.q")
-    #test_paths = [path for path in test_paths if "http_test" not in path and "ws_test" not in path]
+    test_paths = [path for path in test_paths if "http_test" not in path and "ws_test" not in path]
     assert test_paths, "No test files found"
 
     classRe = re.compile(r"class\s+([A-z0-9_]+Test)[A-z0-9_\s]*{")
