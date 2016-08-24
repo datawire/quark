@@ -16,6 +16,8 @@ import quark.ServletError;
 import quark.Task;
 import quark.WSHandler;
 import quark.WSServlet;
+import quark.UnaryCallable;
+import quark.Functions;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
@@ -440,6 +442,16 @@ public class QuarkNettyRuntime extends AbstractDatawireRuntime implements Runtim
     @Override
     public String uuid() {
         return java.util.UUID.randomUUID().toString();
+    }
+
+    @Override
+    public Object callSafely(UnaryCallable callee, Object defaultResult) {
+        try {
+            return Functions.callUnaryCallable(callee, null);
+        } catch (Exception e) {
+            logger("quark.runtime").error("Error calling safely: " + e.toString());
+            return defaultResult;
+        }
     }
 
     public static ByteBuf adaptBuffer(Buffer quarkBuffer) {

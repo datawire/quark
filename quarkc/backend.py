@@ -324,7 +324,8 @@ class Backend(object):
         prolog = ""
         if fun.name.text == "main" and len(fun.params) == 1 and \
            fun.params[0].resolved.type.name.text == "List":
-            if self.is_entry_package(fun.package):
+            if fun.file == self.root.files[0] and \
+               self.is_entry_package(fun.package):
                 self.main = fun
                 prolog = self.gen.main_prolog()
 
@@ -851,7 +852,7 @@ class Java(Backend):
         return None
 
     def install_command(self, dir, offline):
-        cmd = ["mvn", "install"]
+        cmd = ["mvn", "install", "-DskipTests"]
         if offline: cmd += ["--offline"]
         shell.call(*cmd, cwd=dir, stage="install")
 

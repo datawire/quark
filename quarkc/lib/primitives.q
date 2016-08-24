@@ -262,6 +262,10 @@ namespace quark {
     @mapping($java{String} $py{unicode} $js{String} $rb{::String})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
+        macro String __mul__(int count)    $java{new String(new char[Math.max(0, ($count))]).replace("\0", ($self))}
+                                           $py{($self) * ($count)}
+                                           $rb{($self) * [0, ($count)].max}
+                                           $js{($self).repeat(Math.max(0, ($count)))};
         macro bool __lt__(String other)    $java{io.datawire.quark.runtime.StringUtils.lt(($self),($other))}
                                            $py{($self) < ($other)}
                                            $rb{($self) < ($other)}
@@ -522,7 +526,11 @@ namespace quark {
         $js{_qrt.sanitize_undefined((($self) instanceof Function) ? ($self).call(($self), $arg) : ($self).call.call(($self), $arg))}
                                           $rb{($self).call($arg)}
                                           $java{($self).call($arg)};
+    }
 
+    @doc("Allow native code to call UnaryCallables.")
+    Object callUnaryCallable(UnaryCallable callee, Object arg) {
+        return callee.__call__(arg);
     }
 
 namespace error {

@@ -151,7 +151,7 @@ class Parser:
     def visit_dist_unit(self, node, (p, name, version, s)):
         return DistUnit(name, version)
 
-    @g.rule(r'version = ~"[0-9a-zA-Z]+(\.[0-9a-zA-Z])+"')
+    @g.rule(r'version = ~"[0-9a-zA-Z]+(\.[0-9a-zA-Z]+)+"')
     def visit_version(self, node, children):
         return node.text
 

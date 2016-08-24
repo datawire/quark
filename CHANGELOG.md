@@ -6,6 +6,22 @@ Breaking changes are marked with (!)
 Latest
 ------
 
+### Standard Library
+
+* Added `Context.runtime().callSafely`, which catches exceptions thrown in
+  native code.
+
+* Added `String.__mul__` to support easy repetition of strings, e.g.,
+  `"asdf" * 3 ==> "asdfasdfasdf"`.
+
+### Packaging
+
+* The `quark` standard library package is now shaded in Java so that its
+  dependencies don't conflict with user code's dependencies.
+
+1.0.332
+------
+
 ### Command line
 
 * The compiler now emits warnings in addition to errors. Warnings do

@@ -356,6 +356,12 @@ namespace spi_api_tracing {
             self.log.debug(self.id + ".uuid()");
             return impl.uuid();
         }
+        Object callSafely(UnaryCallable callee, Object defaultResult) {
+            self.log.debug(self.id + ".callSafely("
+                           + callee.toString() + ", "
+                           + defaultResult.toString() + ")");
+            return impl.callSafely(callee, defaultResult);
+        }
         void serveHTTP(String url, HTTPServlet servlet) {
             HTTPServletProxy wrapped_servlet = new HTTPServletProxy(self.log, self, servlet);
             self.log.debug(self.id + ".serveHTTP("
