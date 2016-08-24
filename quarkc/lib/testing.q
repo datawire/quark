@@ -154,18 +154,19 @@ void fail(String message) {
 bool checkOneOf(List<Object> expected, Object actual) {
     String message = "Expected one of [";
     int idx = 0;
+    bool success = false;
     while (idx < expected.size()) {
         if (idx != 0) {
             message = message + ", ";
         }
         message = message + expected[idx].toString();
         if (expected[idx] == actual) {
-            return check(true, "");
+            success = true;
         }
         idx = idx + 1;
     }
-    fail(message + "] got " + actual.toString());
-    return false;
+    message = message + "] got " + actual.toString();
+    return check(success, message);
 }
 
 class Harness {
