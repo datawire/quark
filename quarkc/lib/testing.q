@@ -273,6 +273,25 @@ class Harness {
     }
 }
 
+int testPackages(List<String> packages, List<String> filters, bool emitJson) {
+    Harness h = new Harness("");
+    int total_failures = 0;
+    int idx = 0;
+    while (idx < packages.size()) {
+        h.pkg = packages[idx];
+        h.collect(filters);
+        idx = idx + 1;
+    }
+
+    total_failures = h.run();
+
+    if (emitJson) {
+        h.json_report();
+    }
+
+    return total_failures;
+}
+
 void run(List<String> args) {
     String pkg = args[0];
     List<String> filters = [];
@@ -292,16 +311,13 @@ void run(List<String> args) {
         }
         idx = idx + 1;
     }
-    Harness h = new Harness(pkg);
-    h.collect(filters);
     if (list) {
+        Harness h = new Harness(pkg);
+        h.collect(filters);
         h.list();
     } else {
         print(bold("Running: " + " ".join(args)));
-        int failures = h.run();
-        if (json) {
-            h.json_report();
-        }
+        int failures = testPackages([pkg], filters, json);
         if (failures > 0) {
             Context.runtime().fail("Test run failed.");
         }
