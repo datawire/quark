@@ -21,6 +21,21 @@ String bold(String str) {
     return "\x1b[1m" + str + "\x1b[0m";
 }
 
+String heading(String str) {
+    String padding = "=";
+    int target_width = 78;
+
+    String res = padding + " " + str + " ";
+    int count = (target_width - res.size()) / padding.size();
+    String block = padding * (count / 2);
+    String extra = "";
+    if (count % 2 == 1) {
+        extra = padding;
+    }
+
+    return bold((block + res + block + extra).strip());
+}
+
 class Test {
 
     static TLS<Test> ctx = new TLS<Test>(new TestInitializer());
@@ -203,7 +218,7 @@ class Harness {
 
     @doc("Run the tests, return number of failures.")
     int run() {
-        print(bold("=============================== starting tests ==============================="));
+        print(heading("starting tests"));
 
         int idx = 0;
         int failures = 0;
@@ -219,7 +234,7 @@ class Harness {
         }
         int passed = tests.size() - failures;
 
-        print(bold("=============================== stopping tests ==============================="));
+        print(heading("stopping tests"));
         String result = "Total: " + (tests.size() + filtered).toString() +
             ", Filtered: " + filtered.toString() +
             ", Passed: " + passed.toString() +
