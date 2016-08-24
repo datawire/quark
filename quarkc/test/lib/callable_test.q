@@ -26,9 +26,9 @@ class Doubler extends UnaryCallable {
 }
 
 macro bool checkFFI()
-    $py{__import__('callable_ffi').check()}
-    $rb{(lambda { require('callable_ffi_test.rb'); return CallableFFI::check() }).call()}
-    $js{require('callable_test/callable_ffi_test.js').check()}
+    $py{callable_ffi.check()}
+    $rb{CallableFFI::check()}
+    $js{callable_ffi_test.check()}
     $java{callable_ffi_test.FFI.check()};
 
 class CallableTest {
@@ -39,7 +39,7 @@ class CallableTest {
     }
 
     void testFromFFI() {
-        check(checkFFI(), "native ffi checks failed");
+        check(checkFFI(), "native ffi checks");
     }
 
 }

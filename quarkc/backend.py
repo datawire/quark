@@ -137,12 +137,23 @@ class Backend(object):
         self.packages.append(p)
         self.definitions.append(p)
 
+    def add_native_includes(self, code):
+        if self.entry.name.endswith(BUILTIN_FILE):
+            return code
+        du_name, _ = namever(self.entry)
+        includes = []
+        for path, content in self.entry.root.included.items():
+            if path.endswith(self.ext):
+                includes.append(self.gen.native_include(path, du_name))
+        code.head += "".join(includes)
+        return code
+
     def setfile(self, fname, maker):
         self.current_file = fname
         if fname not in self._imports:
             self._imports[fname] = OrderedDict()
         if fname not in self.files:
-            self.files[fname] = maker()
+            self.files[fname] = self.add_native_includes(maker())
             return False
         return True
 

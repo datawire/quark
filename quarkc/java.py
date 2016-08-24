@@ -210,6 +210,10 @@ def qualify(package, origin):
     else:
         return []
 
+def native_include(path, du_name):
+    assert path.endswith(".java"), path
+    return ""
+
 ## Documentation
 
 def doc(lines):
