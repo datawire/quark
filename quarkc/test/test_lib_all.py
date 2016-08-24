@@ -21,7 +21,6 @@ import tempfile
 import time
 from glob import glob
 
-import pytest
 import pexpect
 
 
