@@ -518,7 +518,6 @@ def _get_file_contents(path, result):
             result.value = inf.read()
             result.finish(None)
     except IOError as exc:
+        # Import here due to cyclical dependencies:
+        import quark
         result.finish(quark.os.OSError(str(exc)))
-
-# import quark at the end due to cyclical dependencies
-import quark
