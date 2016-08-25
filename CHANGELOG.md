@@ -4,6 +4,14 @@ CHANGELOG
 Breaking changes are marked with (!)
 
 Latest
+-----
+
+### Command line
+
+* Added `--include-stdlib` option to `quark compile`, for easier omnibus
+  distribution of Quark-generated native code.
+
+1.0.376
 ------
 
 ### Standard Library
