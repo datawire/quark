@@ -27,7 +27,7 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
-    Use as AstUse, code, copy, Interface, Include,
+    Use as AstUse, code, copy, Interface, Include, CompilerVersionSpec,
 )
 from .exceptions import CompileError, ParseError
 from .parser import (
@@ -899,14 +899,20 @@ class Compiler(object):
         imp.line = -1
         imp.column = -1
         imp._silent = True
-        file.definitions.insert(0, imp)
+        # We want to insert an Import(quark) in a files, and
+        # Use(quark.q)/Include(quark.q) in the main one right after the
+        # CompilerVersionSpec if any.
+        insert_builtin_index = 0
+        if file.definitions and isinstance(file.definitions[0], CompilerVersionSpec):
+            insert_builtin_index = 1
+        file.definitions.insert(insert_builtin_index, imp)
         if not self.root.files and not name.endswith(BUILTIN_FILE):  # First file
             if self.include_stdlib:
                 stdlib = Include(BUILTIN_FILE)
             else:
                 stdlib = AstUse(BUILTIN_FILE)
             stdlib._silent = True
-            file.definitions.insert(0, stdlib)
+            file.definitions.insert(insert_builtin_index, stdlib)
         while True:
             file.name = name
             file.traverse(Crosswire(self.root))
