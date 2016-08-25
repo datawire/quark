@@ -3,7 +3,7 @@ dist: trusty
 matrix:
   include:
     - os: linux
-      env: TEST_SUITE=quarkc-no-lib
+      env: TEST_SUITE=quarkc-no-lib-indiv
     - os: linux
       env: TEST_SUITE=runtime
     - os: linux
