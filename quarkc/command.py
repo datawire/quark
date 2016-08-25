@@ -17,7 +17,7 @@ Quark compiler.
 
 Usage:
   quark [options] install [--online] [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
-  quark [options] compile [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
+  quark [options] compile [--inline-stdlib] [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
   quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
   quark [options] docs [<file>]...
   quark -h | --help | help
@@ -37,6 +37,9 @@ Options:
   --version             Show version.
   -v --verbose          Show more detail.
 
+  --include-stdlib      The generated native distribution unit (wheel, gem, etc.) will
+                        include the Quark standard library rather than having external
+                        dependency on it.
   -o DIR, --output DIR  Target directory for output files. [default: output]
 
   --all                 Install/emit code for all available target languages.
@@ -190,7 +193,7 @@ def main(args):
 
         filenames = args["<file>"] or [compiler.join(None, compiler.BUILTIN_FILE)]
         for url in filenames:
-            c = compiler.Compiler()
+            c = compiler.Compiler(args["--include-stdlib"])
             c.version_warning = args["--version-warning"]
             if args["install"]:
                 compiler.install(c, url, offline, *backends)

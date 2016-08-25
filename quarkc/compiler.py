@@ -27,7 +27,7 @@ from parsimonious import ParseError as GParseError
 from .ast import (
     AST, Class, Callable, Definition, Param, TypeParam, Function, Call,
     Package, Null, Type, Import, Cast, List, Map, Attr, Macro, Name,
-    Use as AstUse, code, copy, Interface,
+    Use as AstUse, code, copy, Interface, Include,
 )
 from .exceptions import CompileError, ParseError
 from .parser import (
@@ -851,7 +851,14 @@ ARCHIVE_END = "ARCHIVE_END"
 
 class Compiler(object):
 
-    def __init__(self):
+    def __init__(self, include_stdlib=False):
+        """
+        :param include_stdlib: If False, the quark.q stdlib is added with a 'use'
+            statement. If True then 'include' is used. The former means the stdlib
+            is external dependency, the latter that it will be included in the
+            generated distribution unit (e.g. gem).
+        """
+        self.include_stdlib = include_stdlib
         self.version_warning = False
         self.roots = Roots()
         self.root = None
@@ -894,9 +901,12 @@ class Compiler(object):
         imp._silent = True
         file.definitions.insert(0, imp)
         if not self.root.files and not name.endswith(BUILTIN_FILE):  # First file
-            use = AstUse(BUILTIN_FILE)
-            use._silent = True
-            file.definitions.insert(0, use)
+            if self.include_stdlib:
+                stdlib = Include(BUILTIN_FILE)
+            else:
+                stdlib = AstUse(BUILTIN_FILE)
+            stdlib._silent = True
+            file.definitions.insert(0, stdlib)
         while True:
             file.name = name
             file.traverse(Crosswire(self.root))

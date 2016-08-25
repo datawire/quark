@@ -36,14 +36,17 @@ def compile(path, file_filter):
     text = open(path).read()
     maybe_xfail(text)
     base = os.path.splitext(path)[0]
-    c = Compiler()
+    include_stdlib = False
+    if path.endswith("include-stdlib.q"):
+        include_stdlib = True
+    c = Compiler(include_stdlib)
     try:
         c.urlparse(path)
         c.compile()
         failed_expectations = []
         for root in c.roots:
             # Skip standard library:
-            if root.url.endswith("quarkc/lib/quark.q"):
+            if "quarkc/lib/" in root.url:
                 continue
             for ast in root.files:
                 if ast.filename == "reflector": continue
