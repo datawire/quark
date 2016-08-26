@@ -21,6 +21,21 @@ String bold(String str) {
     return "\x1b[1m" + str + "\x1b[0m";
 }
 
+String heading(String str) {
+    String padding = "=";
+    int target_width = 78;
+
+    String res = padding + " " + str + " ";
+    int count = (target_width - res.size()) / padding.size();
+    String block = padding * (count / 2);
+    String extra = "";
+    if (count % 2 == 1) {
+        extra = padding;
+    }
+
+    return bold((block + res + block + extra).strip());
+}
+
 class Test {
 
     static TLS<Test> ctx = new TLS<Test>(new TestInitializer());
@@ -97,6 +112,32 @@ class Test {
 
 }
 
+class SafeMethodCaller extends UnaryCallable {
+    static bool useSafeCalls = true;
+
+    Method method;
+    Object test;
+
+    SafeMethodCaller(Method method, Object test) {
+        self.method = method;
+        self.test = test;
+    }
+
+    Object call(Object ignore) {
+        method.invoke(test, []);
+        return true;
+    }
+
+    static bool callMethod(Method method, Object test) {
+        if (useSafeCalls) {
+            SafeMethodCaller callable = new SafeMethodCaller(method, test);
+            return ?Context.runtime().callSafely(callable, false);
+        }
+        method.invoke(test, []);
+        return true;
+    }
+}
+
 class MethodTest extends Test {
 
     Class klass;
@@ -114,11 +155,17 @@ class MethodTest extends Test {
 
         Object test = klass.construct([]);
         if (setup != null) {
-            setup.invoke(test, []);
+            if (!SafeMethodCaller.callMethod(setup, test)) {
+                fail("setup invocation crashed");
+            }
         }
-        method.invoke(test, []);
+        if (!SafeMethodCaller.callMethod(method, test)) {
+            fail("test invocation crashed");
+        }
         if (teardown != null) {
-            teardown.invoke(test, []);
+            if (!SafeMethodCaller.callMethod(teardown, test)) {
+                fail("teardown invocation crashed");
+            }
         }
     }
 
@@ -139,18 +186,19 @@ void fail(String message) {
 bool checkOneOf(List<Object> expected, Object actual) {
     String message = "Expected one of [";
     int idx = 0;
+    bool success = false;
     while (idx < expected.size()) {
         if (idx != 0) {
             message = message + ", ";
         }
         message = message + expected[idx].toString();
         if (expected[idx] == actual) {
-            return check(true, "");
+            success = true;
         }
         idx = idx + 1;
     }
-    fail(message + "] got " + actual.toString());
-    return false;
+    message = message + "] got " + actual.toString();
+    return check(success, message);
 }
 
 class Harness {
@@ -203,7 +251,7 @@ class Harness {
 
     @doc("Run the tests, return number of failures.")
     int run() {
-        print(bold("=============================== starting tests ==============================="));
+        print(heading("starting tests"));
 
         int idx = 0;
         int failures = 0;
@@ -219,7 +267,7 @@ class Harness {
         }
         int passed = tests.size() - failures;
 
-        print(bold("=============================== stopping tests ==============================="));
+        print(heading("stopping tests"));
         String result = "Total: " + (tests.size() + filtered).toString() +
             ", Filtered: " + filtered.toString() +
             ", Passed: " + passed.toString() +
@@ -257,6 +305,25 @@ class Harness {
     }
 }
 
+int testPackages(List<String> packages, List<String> filters, bool emitJson) {
+    Harness h = new Harness("");
+    int total_failures = 0;
+    int idx = 0;
+    while (idx < packages.size()) {
+        h.pkg = packages[idx];
+        h.collect(filters);
+        idx = idx + 1;
+    }
+
+    total_failures = h.run();
+
+    if (emitJson) {
+        h.json_report();
+    }
+
+    return total_failures;
+}
+
 void run(List<String> args) {
     String pkg = args[0];
     List<String> filters = [];
@@ -271,21 +338,22 @@ void run(List<String> args) {
             if (arg == "--json") {
                 json = true;
             } else {
-                filters.add(arg);
+                if (arg == "--unsafe") {
+                    SafeMethodCaller.useSafeCalls = false;
+                } else {
+                    filters.add(arg);
+                }
             }
         }
         idx = idx + 1;
     }
-    Harness h = new Harness(pkg);
-    h.collect(filters);
     if (list) {
+        Harness h = new Harness(pkg);
+        h.collect(filters);
         h.list();
     } else {
         print(bold("Running: " + " ".join(args)));
-        int failures = h.run();
-        if (json) {
-            h.json_report();
-        }
+        int failures = testPackages([pkg], filters, json);
         if (failures > 0) {
             Context.runtime().fail("Test run failed.");
         }
