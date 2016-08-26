@@ -926,11 +926,28 @@ class Compiler(object):
         return file
 
     def urlparse(self, url, top=True, text=None, include=False, recurse=True):
+        """
+        Parse a quark file and, optionally, its recursive dependencies.
+
+        A quark file (main.q) is loaded via urlparse() can have two kinds of
+        dependencies, `use a.q` or `include b.q`. For the `use` case each file
+        is added as a separate top-level root to self.roots. For the `include`
+        case the file is added to the *current* root that is including it, so
+        it's added as a child of `self.root`.
+
+        There are  two forms  of caching:  CACHE is  a shared  dictionary across
+        class instances of parsed roots.  Additionally .qc file are written with
+        pickled versions of  loaded roots. Given that both of  them store a root
+        these forms  of caching are only  relevant to top-level quark  files and
+        files referenced using `use`. Files  loaded with `include` should bypass
+        the  caching mechanism  since they  need to  be loaded  as child  of the
+        parent root.
+        """
         if os.path.exists(url):
             url = os.path.abspath(url)
 
         urlc = compiled_quark(url)
-        if url in self.CACHE:
+        if not include and url in self.CACHE:
             self.log.debug("loading from cache: %s", url)
             root = self.CACHE[url]
             self.roots.add(root)
@@ -940,7 +957,7 @@ class Compiler(object):
                     self.roots.add(self.CACHE[u])
             if not include: self.entries[url] = root.files[0]
             return root.files[0]
-        elif recurse and os.path.exists(url) and is_newer(urlc, url, __file__):
+        elif not include and recurse and os.path.exists(url) and is_newer(urlc, url, __file__):
             self.log.debug("loading from: %sc", url)
             with open(urlc) as fd:
                 try:
@@ -977,6 +994,7 @@ class Compiler(object):
                         raise
             self.log.debug("parsing %s", url)
             file = self.parse(url, text)
+
             if recurse:
                 for u in file.uses.values():
                     qurl = join(url, u.url)
@@ -988,7 +1006,8 @@ class Compiler(object):
                         self.perform_quark_include(qurl, inc)
                     else:
                         self.perform_native_include(qurl, inc)
-                self.CACHE[url] = self.root
+                if not include:
+                    self.CACHE[url] = self.root
             if not include: self.entries[url] = file
             return file
         finally:
