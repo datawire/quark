@@ -14,7 +14,6 @@ import urlparse
 import uuid
 from wsgiref import util
 from Queue import Queue, Empty
-import quark
 
 import ws4py
 if ws4py.__version__ != "0.3.4":
@@ -128,8 +127,10 @@ class _QuarkRequest(object):
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError as exc:
+            import quark
             self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc.reason))), {}))
         except Exception as exc:
+            import quark
             self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc))), {}))
         else:
             response = _HTTPResponse()
@@ -182,6 +183,7 @@ class _QuarkWSMixin(object):
         if code in (1000, 1006):
             self.runtime.events.put((self.handler.onWSClosed, (self.ws,), {}))
         else:
+            import quark
             self.runtime.events.put((self.handler.onWSError, (self.ws, quark.WSError("%s %s" % (code, reason))), {}))
         self.runtime.events.put((self.handler.onWSFinal, (self.ws,), {}))
         # After we get the closed callback we can clean up the
@@ -358,6 +360,7 @@ class _NoApplication(object):
         self.exc = exc
 
     def add(self, servlet):
+        import quark
         self.runtime.events.put((servlet.servlet.onServletError,
                 (servlet.url.url, quark.ServletError("Failed to bind to %s:%s (%s)" % (self.url.host, self.url.port, self.exc))), {}))
 
@@ -424,7 +427,8 @@ class ThreadedRuntime(object):
                 ws.connect()
                 ws.run_forever()
             except Exception as ex:
-                runtime.log.debug("websocket pump exception: %s" % ex);
+                runtime.log.debug("websocket pump exception: %s" % ex)
+                import quark
                 runtime.events.put((handler.onWSError, (ws, quark.WSError(str(ex))), {}))
                 runtime.events.put((handler.onWSFinal, (ws,), {}))
         try:
@@ -459,6 +463,7 @@ class ThreadedRuntime(object):
 
     def serveHTTP(self, url, servlet):
         url = Url(url)
+        import quark
         if url.scheme not in ["http", "https"]:
             self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported")), {}))
             return
@@ -470,6 +475,7 @@ class ThreadedRuntime(object):
 
     def serveWS(self, url, servlet):
         url = Url(url)
+        import quark
         if url.scheme not in ["ws", "wss"]:
             self.events.put((servlet.onServletError, (url.url, quark.ServletError(url.scheme + " is not supported")), {}))
             return
@@ -528,6 +534,7 @@ class ThreadedRuntime(object):
 
     def callSafely(self, unary_callable, default):
         try:
+            import quark
             return quark.callUnaryCallable(unary_callable, None)
         except:
             self.log.error("Exception while calling safely: "
