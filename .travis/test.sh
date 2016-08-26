@@ -25,7 +25,7 @@ case "$TEST_SUITE" in
         quark install --online $q
         quark run --java $q
         ;;
-    quarkc-no-lib)
+    quarkc-no-lib-indiv)
         TEST_SUITE=quarkc
         pytest_args+=( "-k" "not quarkc/test/lib" )
         ;;
