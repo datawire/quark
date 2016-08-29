@@ -26,7 +26,7 @@ use java junit junit 4.12;
 include io/datawire/quark/runtime/AbstractDatawireRuntime.java;
 include io/datawire/quark/runtime/Builtins.java;
 
-package quark 1.0.376;
+package quark 1.0.406;
 
 import quark.error;
 
