@@ -1,4 +1,5 @@
-File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
+File(CompilerVersionSpec(),
+ Use(url=quark.q), Import(Name(quark)),
 
  Package(Name(inheritence),
 

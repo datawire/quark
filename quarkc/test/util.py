@@ -18,7 +18,7 @@ import subprocess
 from quarkc import _metadata
 
 def is_excluded_file(name):
-    if name.endswith("quarkc/lib/quark.q") or name == "reflector":
+    if "quarkc/lib/" in name or name == "reflector":
         return True
     else:
         return False

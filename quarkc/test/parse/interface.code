@@ -1,6 +1,6 @@
-
-
 quark *;
+
+
 package interface {
     interface Foo {
         void m1();

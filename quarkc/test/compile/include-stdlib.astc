@@ -1,0 +1,6 @@
+File(CompilerVersionSpec(), Include(url=quark.q), Import(Name(quark)),
+
+ Package(Name(include_stdlib),
+
+  Function(Type(Name(void)), Name(noop), Block()))
+)

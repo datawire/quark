@@ -1,6 +1,6 @@
-
-
 quark *;
+
+
 package fields {
     class A {
         int x;

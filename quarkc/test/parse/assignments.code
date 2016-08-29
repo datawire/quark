@@ -1,6 +1,6 @@
-
-
 quark *;
+
+
 package assignments {
     void assignments() {
         a = x;

@@ -1,4 +1,5 @@
-File(Use(url=quark.q), Import(Name(quark)), CompilerVersionSpec(),
+File(CompilerVersionSpec(),
+ Use(url=quark.q), Import(Name(quark)),
  Use(url=http://example.org/foo/bar/example.q),
  Use(url=http://example.org/example.q),
  Use(url=directory/file.q),
