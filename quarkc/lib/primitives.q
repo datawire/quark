@@ -417,24 +417,24 @@ namespace quark {
     }
 
     class ListUtil<T> {
-        List<T> slice(List<T> list, int start, int stop) {
+        List<T> slice(List<T> qlist, int start, int stop) {
             List<T> result = [];
 
-            if (start >= list.size()) {
-                start = list.size();
+            if (start >= qlist.size()) {
+                start = qlist.size();
             } else {
-                start = start % list.size();
+                start = start % qlist.size();
             }
 
-            if (stop >= list.size()) {
-                stop = list.size();
+            if (stop >= qlist.size()) {
+                stop = qlist.size();
             } else {
-                stop = stop % list.size();
+                stop = stop % qlist.size();
             }
 
             int idx = start;
             while (idx < stop) {
-                result.add(list[idx]);
+                result.add(qlist[idx]);
                 idx = idx + 1;
             }
 
