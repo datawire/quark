@@ -58,6 +58,7 @@ PREREQS = {
     "npm": (["npm", "--version"], "npm is required in order to install javascript packages", noop),
     "gem": (["gem", "--version"], "gem is required in order to install ruby packages", noop),
     "python": (["python", "-V"], "python 2.7 is required in order ot install python packages", validate_python)
+    "2to3": (["2to3", "-h"], "2to3 is required in order ot install python packages", noop)
 }
 
 CHECKED = set()
