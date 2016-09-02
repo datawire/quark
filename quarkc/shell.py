@@ -50,7 +50,7 @@ def validate_python(output):
     # On Ubuntu 16.04 version can be e.g. "2.7.11+":
     if output.endswith("+"):
         output = output[:-1]
-    check_version("python", output, "2.7.0", "3.0.0")
+    check_version("python", output, "2.7.0", "4.0.0")
 
 PREREQS = {
     "mvn": (["mvn", "-v"], "maven is required in order to install java packages", noop),
