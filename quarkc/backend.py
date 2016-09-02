@@ -827,7 +827,7 @@ class Backend(object):
         return fake.expr
 
 def is_virtual():
-    output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')
+    output = shell.call("python", "-c", 'import sys; print(hasattr(sys, "real_prefix"))')
     return output.strip() == "True"
 
 def is_root():
