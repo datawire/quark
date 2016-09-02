@@ -876,6 +876,7 @@ class Python(Backend):
         return shell.get_pip_pkg(name, stage="install")
 
     def install_command(self, dir, offline):
+        shell.call("2to3", "-wn", ".", cwd=dir, stage="2to3")
         shell.call("python", "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
