@@ -121,9 +121,8 @@ class _QuarkRequest(object):
         except urllib2.HTTPError, e:
             response = _HTTPResponse()
             response.setCode(e.code)
-            response.setBody(e.read())
-            for h in e.info().headers:
-                k, v = h.split(':', 1)
+            response.setBody(e.read().decode('utf-8'))
+            for k,v in e.info().items():
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
         except urllib2.URLError as exc:
@@ -135,9 +134,8 @@ class _QuarkRequest(object):
         else:
             response = _HTTPResponse()
             response.setCode(handle.getcode())
-            response.setBody(body)
-            for h in handle.info().headers:
-                k, v = h.split(':', 1)
+            response.setBody(body.decode('utf-8'))
+            for k,v in handle.info().items():
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
