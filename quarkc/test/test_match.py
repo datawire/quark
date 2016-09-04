@@ -210,3 +210,52 @@ def test_fib():
     assert fib(5) == 5
     assert fib(10) == 55
     assert fib(20) == 6765
+
+class Node(object):
+
+    @match(opt(delay(lambda: Node)))
+    def __init__(self, parent = None):
+        self.parent = parent
+
+def test_delay():
+    parent = Node()
+    child = Node(parent)
+    assert child.parent == parent
+    assert parent.parent == None
+
+class Hasher(object):
+
+    @match(basestring)
+    def __init__(self, name):
+        self.name = name
+
+    def __hash__(self):
+        return hash(self.name)
+
+    @match(delay(lambda: Hasher))
+    def __eq__(self, other):
+        return self.name == other.name
+
+    @match(object)
+    def __eq__(self, other):
+        return False
+
+def test_hasher():
+    h1 = Hasher("asdf")
+    h2 = Hasher("asdf")
+    assert h1 == h2
+    assert h1 != "asdf"
+    assert hash(h1) == hash("asdf")
+
+def a(*args):
+    return a
+def b(*args):
+    return b
+
+def test_choice():
+    n = compile(choice(when(choice(str, int), a),
+                       when(choice(float, ()), b)))
+    assert n.apply(1) == a
+    assert n.apply("one") == a
+    assert n.apply(1.0) == b
+    assert n.apply(()) == b

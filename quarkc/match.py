@@ -17,6 +17,8 @@ import inspect
 class MatchError(Exception):
     pass
 
+EPSILON = object()
+
 class State:
 
     sequence = 0
@@ -27,6 +29,38 @@ class State:
         self.matches = {}
         self.epsilons = ()
         self.action = None
+        self.match_value = True
+
+    @property
+    def transitions(self):
+        for s in self.epsilons:
+            yield (EPSILON, s)
+        for k, v in self.matches.items():
+            for s in v:
+                yield (k, s)
+
+    @property
+    def nodes(self):
+        done = set()
+        todo = [self]
+        while todo:
+            state = todo.pop()
+            if state not in done:
+                yield state
+                done.add(state)
+            for k, s in state.transitions:
+                if s not in done:
+                    todo.append(s)
+
+    @property
+    def edges(self):
+        done = set()
+        for state in self.nodes:
+            for k, s in state.transitions:
+                edge = (state, k, s)
+                if edge not in done:
+                    yield (state, k, s)
+                    done.add(edge)
 
     @property
     def epsilon_closure(self):
@@ -34,11 +68,31 @@ class State:
         done = set()
         while todo:
             s = todo.pop()
-            done.add(s)
-            for e in s.epsilons:
-                yield e
-                if e not in done:
-                    todo.append(e)
+            if s not in done:
+                done.add(s)
+                for e in s.epsilons:
+                    yield e
+                    if e not in done:
+                        todo.append(e)
+
+    def force(self):
+        todo = [self]
+        done = set()
+        while todo:
+            s = todo.pop()
+            if s not in done:
+                done.add(s)
+                for k, v in s.matches.items():
+                    if isinstance(k, delay):
+                        key = k.force()
+                        s.matches[key] = v
+                        del s.matches[k]
+                    for s2 in v:
+                        if s2 not in done:
+                            todo.append(s2)
+                for e in s.epsilons:
+                    if e not in done:
+                        todo.append(e)
 
     def compile(self):
         if self.epsilons:
@@ -49,7 +103,7 @@ class State:
                 actions.add(e.action)
             for k, v in e.matches.items():
                 for s in v: self.edge(k, s)
-        assert len(actions) <= 1
+        assert len(actions) <= 1, str(self)
         if actions:
             self.action = actions.pop()
         self.epsilons = ()
@@ -73,21 +127,16 @@ class State:
     def __repr__(self):
         transitions = []
         actions = []
-        todo = [self]
-        done = set()
 
-        while todo:
-            state = todo.pop()
-            done.add(state)
+        for start, key, end in self.edges:
+            if key is EPSILON:
+                transitions.append("S%s -> S%s" % (start.id, end.id))
+            else:
+                transitions.append("S%s %s -> S%s" % (start.id, key, end.id))
+
+        for state in self.nodes:
             if state.action:
                 actions.append("S%s(%s)" % (state.id, state.action))
-            for k, v in state.matches.items():
-                for s in v:
-                    transitions.append("S%s %s -> S%s" % (state.id, k, s.id))
-                    if s not in done: todo.append(s)
-            for e in state.epsilons:
-                transitions.append("S%s -> S%s" % (state.id, e.id))
-                if e not in done: todo.append(e)
 
         if transitions:
             return "State(S%s\n  %s\n)" % (self.id, ",\n  ".join(transitions + actions))
@@ -101,7 +150,7 @@ class State:
             next = {}
             for state, distance in states.items():
                 count = 0
-                for proj in projections(value):
+                for proj in projections(value, state.match_value):
                     transitions = state[proj]
                     if transitions:
                         for s in transitions:
@@ -125,7 +174,7 @@ class State:
             raise MatchError("arguments ({}) match multiple actions:\n\n{}".format(", ".join([repr(a) for a in args]),
                                                                                   dfns))
         if not nearest:
-            raise MatchError("arguments ({}) do not match".format(", ".join([repr(a) for a in args])))
+            raise MatchError("arguments ({}) do not match".format(", ".join([str(a.__class__.__name__) for a in args])))
         assert len(nearest) == 1, nearest
         state = nearest.popitem()[1]
         assert state.action, (state, remaining)
@@ -162,8 +211,9 @@ def flatten(values):
         else:
             yield value
 
-def projections(value):
-    yield value
+def projections(value, match_value=True):
+    if match_value:
+        yield value
     if not isinstance(value, Marker):
         for cls in value.__class__.__mro__:
             yield cls
@@ -222,7 +272,16 @@ def choice(*patterns):
         start.edge(f.start)
     return Fragment(start, lambda next: [f.extend(next) for f in fragments])
 
+class delay(object):
+
+    def __init__(self, thunk):
+        self.thunk = thunk
+
+    def force(self):
+        return self.thunk()
+
 def compile(fragment):
+    fragment.start.force()
     todo = [fragment.start]
     done = set()
     while todo:
@@ -251,6 +310,7 @@ class _BoundDispatcher(object):
                     if isinstance(disp, _Dispatcher):
                         fragments.append(one(c, disp.fragment))
             compiled = compile(choice(*fragments))
+            compiled.match_value = False
             self.dispatcher.cache[self.clazz] = compiled
         try:
             if self.object is None:
