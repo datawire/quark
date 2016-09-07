@@ -13,6 +13,7 @@ source quark-travis/bin/activate
 # too, in their own virtualenv:
 export PATH=$PATH:py3/bin
 which pip3
+pip3 install setuptools
 which python3
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
