@@ -4,6 +4,7 @@
 # The wrong way to do this, but minimizes the code change.
 
 from __future__ import absolute_import
+from __future__ import unicode_literals
 
 __version__ = '0.4.2'
 
@@ -27,7 +28,7 @@ import traceback
 from quark_runtime_logging import configure_logging as _configure_logging  # noqa
 
 from past.builtins import long, unicode, basestring
-from builtins import memoryview as buffer
+from builtins import memoryview as buffer, bytes
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
@@ -335,10 +336,10 @@ class _HTTPResponse(object):
 
 class _default_codec(object):
     def buffer(self, capacity):
-        return Buffer(bytearray("\x00"*capacity))
+        return Buffer(bytearray(b"\x00"*capacity))
 
     def toHexdump(self, buffer, offset, length, spaceScale):
-        h = map(lambda x:"%02x"%x, buffer.data[offset:offset+length])
+        h = list(map(lambda x:"%02x"%x, buffer.data[offset:offset+length]))
         stride = 2 ** spaceScale
         return " ".join("".join(h[i:i+stride]) for i in range(0,len(h),stride))
 
@@ -349,7 +350,7 @@ class _default_codec(object):
         return Buffer(bytearray(int(hexstr[i:i+2],16) for i in range(0,len(hexstr), 2)))
 
     def toBase64(self, buffer, offset, length):
-        return base64.b64encode(buffer.data[offset:offset+length])
+        return unicode(base64.b64encode(buffer.data[offset:offset+length]), "ascii")
 
     def fromBase64(self, b64str):
         return Buffer(bytearray(base64.b64decode(b64str)))
@@ -357,8 +358,8 @@ class _default_codec(object):
 
 class Buffer(object):
     Packer = namedtuple("Packer", "byte short int long float".split())
-    BE = Packer(*map(Struct, [">"+c for c in "bhiqd"]))
-    LE = Packer(*map(Struct, ["<"+c for c in "bhiqd"]))
+    BE = Packer(*map(Struct, [b">"+bytes([c]) for c in bytes(b"bhiqd")]))
+    LE = Packer(*map(Struct, [b"<"+bytes([c]) for c in bytes(b"bhiqd")]))
     def __init__(self, _data=None):
         if _data is None:
             _data = bytearray()

@@ -868,8 +868,8 @@ class Python(Backend):
     argswitch = "--python"
     ext = "py"
     gen = python
-    python_command = "python"
-    pip_command = "pip"
+    python_command = "python2"
+    pip_command = "pip2"
 
     def install_target(self):
         name, ver = namever(self.entry)
@@ -890,7 +890,7 @@ class Python(Backend):
 
     def run(self, name, version, args):
         main = self.gen.name(name)
-        os.execlp(self.python_command, "python", "-c",
+        os.execlp(self.python_command, self.python_command, "-c",
                   "import %s; %s.call_main()" % (main, main), name, *args)
 
 

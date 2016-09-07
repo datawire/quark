@@ -76,7 +76,7 @@ def run_lib_tests():
         fd.write(template % ctx)
         fd.flush()
 
-        languages = "java python javascript ruby".split()
+        languages = "java python python3 javascript ruby".split()
         child = pexpect.spawn("quark install --%s %s" % (" --".join(languages), quark_file_name), logfile=sys.stdout)
         child.expect(pexpect.EOF, timeout=300)
         assert child.before.splitlines()[-1].strip() == "Done"

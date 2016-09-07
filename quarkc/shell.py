@@ -50,7 +50,7 @@ def validate_python(output):
     # On Ubuntu 16.04 version can be e.g. "2.7.11+":
     if output.endswith("+"):
         output = output[:-1]
-    check_version("python", output, "2.7.0", "3.0.0")
+    check_version("python2", output, "2.7.0", "3.0.0")
 
 def validate_python3(output):
     # On Ubuntu 16.04 version can be e.g. "2.7.11+":
@@ -60,11 +60,11 @@ def validate_python3(output):
 
 PREREQS = {
     "mvn": (["mvn", "-v"], "maven is required in order to install java packages", noop),
-    "pip": (["pip", "--version"], "pip is required in order to install python packages", validate_pip),
+    "pip2": (["pip2", "--version"], "pip is required in order to install python packages", validate_pip),
     "pip3": (["pip3", "--version"], "pip3 is required in order to install python packages", validate_pip),
     "npm": (["npm", "--version"], "npm is required in order to install javascript packages", noop),
     "gem": (["gem", "--version"], "gem is required in order to install ruby packages", noop),
-    "python": (["python", "-V"], "python 2.7 is required in order to install python packages", validate_python),
+    "python2": (["python2", "-V"], "python 2.7 is required in order to install python packages", validate_python),
     "python3": (["python3", "-V"], "python 3 is required in order to install python3 packages", validate_python3)
 }
 

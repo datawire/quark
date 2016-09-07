@@ -186,8 +186,8 @@ def main(args):
             backends.append(backend.Ruby)
         if python or all:
             if args["install"]:
-                shell.check("python")
-                shell.check("pip")
+                shell.check("python2")
+                shell.check("pip2")
             backends.append(backend.Python)
         if python3 or all:
             if args["install"]:
