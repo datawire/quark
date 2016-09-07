@@ -137,8 +137,18 @@ def function_file(path, name, fname):
 def package_file(path, name, fname):
     return "/".join(path + [name, "__init__.py"])
 
+PREAMBLE = """\
+from __future__ import unicode_literals
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str as unicode
+
+from quark_runtime import *
+
+"""
 def make_class_file(path, name):
-    return Code(comment, head="from quark_runtime import *\n\n")
+    return Code(comment, head=PREAMBLE)
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
@@ -181,8 +191,6 @@ def qualify(package, origin):
     if not package: return []
     if not origin:
         return package
-    elif package[:len(origin)] == origin:
-        return package[len(origin):]
     else:
         return package
 
@@ -370,6 +378,8 @@ def bool_(b):
     return b.text.capitalize()
 
 def number(n):
+    if n.text.endswith("l") or n.text.endswith("L"):
+        return n.text[:-1]
     return n.text
 
 def string(s):

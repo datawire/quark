@@ -69,7 +69,7 @@ namespace quark {
 
     primitive integral<T> extends numeric<T> {
         macro T __div__(T other) $java{~((~($self)) / ($other))}
-                                 $py{($self) / ($other)}
+                                 $py{($self) // ($other)}
                                  $rb{($self) / ($other)}
                                  $js{Math.floor(($self) / ($other))};
         macro T __mod__(T other) $java{io.datawire.quark.runtime.Builtins.modulo(($self), ($other))}
@@ -144,7 +144,7 @@ namespace quark {
                                $js{($self)};
     }
 
-    @mapping($java{Long} $py{long} $js{Number} $rb{::Integer})
+    @mapping($java{Long} $py{int} $js{Number} $rb{::Integer})
     primitive long extends integral<long> {
         macro long() $java{new Long()}
                      $py{int()}
@@ -173,7 +173,7 @@ namespace quark {
                                          $rb{($self) / ($other)}
                                          $js{($self) / ($other)};
         macro long round() $java{Math.round($self)}
-                           $py{long(round($self))}
+                           $py{int(round($self))}
                            $rb{($self).round()}
                            $js{Math.round($self)};
         macro String toString() $java{Double.toString($self)}
@@ -501,7 +501,7 @@ namespace quark {
                                    $rb{($self).key?($key)}
                                    $js{($self).has($key)};
         macro List<K> keys() $java{new java.util.ArrayList(($self).keySet())}
-                             $py{_List(($self).keys())}
+                             $py{_List(list(($self).keys()))}
                              $rb{::DatawireQuarkCore::List.new(($self).keys)}
                              $js{Array.from(($self).keys())};
         macro void update(Map<K,V> other) $java{($self).putAll($other)}

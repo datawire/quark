@@ -10,10 +10,14 @@ __version__ = '0.4.2'
 import os    # noqa  used by the quark.OS.Env stuff
 import sys
 import time  # noqa  used by the builtin now() macro
-import urllib2
+
+from future.standard_library import hooks
+with hooks():
+    from urllib.parse import urlencode as _urlencode  # noqa
+    from urllib.request import urlopen
+
 import json
 import collections
-from urllib import urlencode as _urlencode  # noqa
 from collections import namedtuple
 from struct import Struct
 import threading
@@ -21,6 +25,9 @@ import base64
 import traceback
 
 from quark_runtime_logging import configure_logging as _configure_logging  # noqa
+
+from past.builtins import long, unicode, basestring
+from builtins import memoryview as buffer
 
 __all__ = """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
              _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
@@ -44,9 +51,12 @@ class _List(list):
 
 def _println(obj):
     if obj is None:
-        sys.stdout.write(u"null\n".encode("utf8"))
+        message = u"null\n"
     else:
-        sys.stdout.write((u"%s\n" % obj).encode("utf8"))
+        message = u"%s\n" % (obj,)
+    if sys.version_info.major == 2:
+        message = message.encode("utf8")
+    sys.stdout.write(message)
     sys.stdout.flush()
 
 def _toString(obj):
@@ -59,7 +69,7 @@ def _toString(obj):
 
 def _url_get(url):
     try:
-        return urllib2.urlopen(url).read()
+        return urlopen(url).read()
     except Exception:
         return "error"
 

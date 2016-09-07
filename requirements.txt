@@ -2,6 +2,7 @@
 setuptools>=18
 pip>=8
 ws4py==0.3.4
+future==0.15.2
 pytest
 pexpect
 virtualenv>=13
