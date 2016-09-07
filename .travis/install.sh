@@ -76,6 +76,8 @@ virtualenv --verbose --python=python2.7 quark-travis
 # conflict with the real one:
 rm -f quark-travis/bin/pip3
 virtualenv --python=python3.4 py3
+mv py3/bin/pip py3/bin/pip3
+
 set +x && source quark-travis/bin/activate && set -x
 pip install --upgrade pip
 pip install --upgrade setuptools
