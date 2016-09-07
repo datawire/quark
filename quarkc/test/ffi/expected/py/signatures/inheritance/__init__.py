@@ -1,11 +1,17 @@
+from __future__ import unicode_literals
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str as unicode
+
 from quark_runtime import *
 
 import quark.reflect
-import t1
-import t2
-import pets
-import super_
-import use_before_def
+import inheritance.t1
+import inheritance.t2
+import inheritance.pets
+import inheritance.super_
+import inheritance.use_before_def
 import quark_ffi_signatures_md
 
 

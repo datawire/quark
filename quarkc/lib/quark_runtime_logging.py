@@ -1,3 +1,5 @@
+from past.builtins import unicode
+
 import logging
 import sys
 
