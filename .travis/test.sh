@@ -12,6 +12,8 @@ source quark-travis/bin/activate
 # Even though we're in Python 2 virtualenv, we want python3 and pip3 to work
 # too, in their own virtualenv:
 export PATH=$PATH:py3/bin
+which pip3
+which python3
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh
