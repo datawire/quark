@@ -130,7 +130,8 @@ def get_pip_pkg(name, stage=None, command="pip"):
         for line in output.split("\n"):
             if line.startswith("Location: "):
                 return os.path.join(line.split(": ")[1], name)
-    except ShellError:
+    except ShellError as e:
+        print("Can't find package because: " + str(e))
         return None
 
 def pipcheck(name, stage=None):
