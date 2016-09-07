@@ -11,7 +11,7 @@ sanitize test
 source quark-travis/bin/activate
 # Even though we're in Python 2 virtualenv, we want python3 and pip3 to work
 # too, in their own virtualenv:
-export PATH=$PATH:py3/bin
+export PATH=py3/bin:$PATH
 which pip3
 pip3 install setuptools
 which python3
