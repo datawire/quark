@@ -301,7 +301,7 @@ class _HTTPRequest(object):
         return self.headers.get(key.lower())  # Maybe return None
 
     def getHeaders(self):
-        return self.headers.keys()
+        return list(self.headers.keys())
 
 
 class _HTTPResponse(object):
@@ -331,7 +331,7 @@ class _HTTPResponse(object):
         return self.headers.get(key.lower())  # Maybe return None
 
     def getHeaders(self):
-        return self.headers.keys()
+        return list(self.headers.keys())
 
 
 class _default_codec(object):
@@ -339,7 +339,7 @@ class _default_codec(object):
         return Buffer(bytearray(b"\x00"*capacity))
 
     def toHexdump(self, buffer, offset, length, spaceScale):
-        h = list(map(lambda x:"%02x"%x, buffer.data[offset:offset+length]))
+        h = ["%02x"%x for x in buffer.data[offset:offset+length]]
         stride = 2 ** spaceScale
         return " ".join("".join(h[i:i+stride]) for i in range(0,len(h),stride))
 
@@ -358,8 +358,8 @@ class _default_codec(object):
 
 class Buffer(object):
     Packer = namedtuple("Packer", "byte short int long float".split())
-    BE = Packer(*map(Struct, [b">"+bytes([c]) for c in bytes(b"bhiqd")]))
-    LE = Packer(*map(Struct, [b"<"+bytes([c]) for c in bytes(b"bhiqd")]))
+    BE = Packer(*list(map(Struct, [b">"+bytes([c]) for c in bytes(b"bhiqd")])))
+    LE = Packer(*list(map(Struct, [b"<"+bytes([c]) for c in bytes(b"bhiqd")])))
     def __init__(self, _data=None):
         if _data is None:
             _data = bytearray()
