@@ -71,7 +71,11 @@ case "${TRAVIS_OS_NAME}" in
 esac
 
 type virtualenv
-virtualenv --verbose quark-travis
+virtualenv --verbose --python=python2.7 quark-travis
+# Sometimes virtualenv adds a pip3 when it oughtn't, and we don't want that to
+# conflict with the real one:
+rm -f quark-travis/bin/pip3
+virtualenv --python=python3.4 py3
 set +x && source quark-travis/bin/activate && set -x
 pip install --upgrade pip
 pip install --upgrade setuptools
