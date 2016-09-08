@@ -14,10 +14,16 @@ import contextlib
 import time
 import traceback
 
-from future.moves.urllib.request import Request, urlopen
-from future.moves.urllib.error import HTTPError, URLError
-from future.moves.urllib.parse import urlparse
-from future.moves.queue import Queue, Empty
+# future stdlib stuff is broken: https://github.com/PythonCharmers/python-future/issues/238
+try:
+    from urllib.request import Request, urlopen
+    from urllib.error import HTTPError, URLError
+    from urllib.parse import urlparse
+    from queue import Queue, Empty
+except ImportError:
+    from urllib2 import Request, urlopen, HTTPError, URLError
+    from urlparse import urlparse
+    from Queue import Queue, Empty
 
 import uuid
 from wsgiref import util

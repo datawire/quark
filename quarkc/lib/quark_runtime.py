@@ -8,14 +8,24 @@ from __future__ import unicode_literals
 
 __version__ = '0.4.2'
 
+__all__ = str(
+    """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
+    _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
+    _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
+    _configure_logging _cast _get_file_contents _QObject""").split()
+
 import os    # noqa  used by the quark.OS.Env stuff
 import sys
 import time  # noqa  used by the builtin now() macro
 
 
-from future.moves.urllib.parse import urlencode as _urlencode  # noqa
-from future.moves.urllib.request import urlopen
-from future.utils import native_str
+# future stdlib stuff is broken: https://github.com/PythonCharmers/python-future/issues/238
+try:
+    from urllib.parse import urlencode as _urlencode  # noqa
+    from urllib.request import urlopen
+except ImportError:
+    from urlparse import urlencode as _urlencode  # noqa
+    from urllib2 import urlopen
 
 import json
 import collections
@@ -29,12 +39,6 @@ from quark_runtime_logging import configure_logging as _configure_logging  # noq
 
 from past.builtins import long, unicode, basestring
 from builtins import memoryview as buffer, bytes
-
-__all__ = native_str(
-    """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
-    _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
-    _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-    _configure_logging _cast _get_file_contents _QObject""").split()
 
 _Map = dict
 
