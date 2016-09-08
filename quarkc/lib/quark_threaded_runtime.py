@@ -14,13 +14,10 @@ import contextlib
 import time
 import traceback
 
-
-from future.standard_library import hooks
-with hooks():
-    from urllib.request import Request, urlopen
-    from urllib.error import HTTPError, URLError
-    from urllib.parse import urlparse
-    from queue import Queue, Empty
+from future.moves.urllib.request import Request, urlopen
+from future.moves.urllib.error import HTTPError, URLError
+from future.moves.urllib.parse import urlparse
+from future.moves.queue import Queue, Empty
 
 import uuid
 from wsgiref import util
