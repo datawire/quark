@@ -1,9 +1,15 @@
+from __future__ import unicode_literals
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str as unicode
+
 from quark_runtime import *
 
 import quark.reflect
-import constructors
-import pkg
-import ccc
+import generics.constructors
+import generics.pkg
+import generics.ccc
 import quark_ffi_signatures_md
 
 

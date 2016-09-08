@@ -100,9 +100,9 @@ namespace quark {
 
         if (cls.name == "quark.List") {
             result.setList();
-            List<Object> list = ?obj;
-            while (idx < list.size()) {
-                result.setListItem(idx, toJSON(list[idx], null));
+            List<Object> qlist = ?obj;
+            while (idx < qlist.size()) {
+                result.setListItem(idx, toJSON(qlist[idx], null));
                 idx = idx + 1;
             }
             return result;
@@ -222,12 +222,12 @@ namespace quark {
         }
 
         if (cls.name == "quark.List") {
-            List<Object> list = ?result;
+            List<Object> qlist = ?result;
             while (idx < json.size()) {
-                list.add(fromJSON(cls.getParameters()[0], null, json.getListItem(idx)));
+                qlist.add(fromJSON(cls.getParameters()[0], null, json.getListItem(idx)));
                 idx = idx + 1;
             }
-            return list;
+            return qlist;
         }
 
         if (cls.name == "quark.Map") {

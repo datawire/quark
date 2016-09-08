@@ -327,13 +327,13 @@ int testPackages(List<String> packages, List<String> filters, bool emitJson) {
 void run(List<String> args) {
     String pkg = args[0];
     List<String> filters = [];
-    bool list = false;
+    bool qlist = false;
     bool json = false;
     int idx = 1;
     while (idx < args.size()) {
         String arg = args[idx];
         if (arg == "-l") {
-            list = true;
+            qlist = true;
         } else {
             if (arg == "--json") {
                 json = true;
@@ -347,7 +347,7 @@ void run(List<String> args) {
         }
         idx = idx + 1;
     }
-    if (list) {
+    if (qlist) {
         Harness h = new Harness(pkg);
         h.collect(filters);
         h.list();

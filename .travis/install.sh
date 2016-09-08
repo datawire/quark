@@ -43,14 +43,20 @@ case "${TRAVIS_OS_NAME}" in
         ;;
     osx)
         sudo chown -R $USER /usr/local
+        brew tap derekkwok/python
+        brew install openssl
+        brew link --force openssl
         brew update
         brew install python
+        brew install --overwrite python34
         hash -r
         echo $PATH
         type python
         type pip
         python --version
         pip --version
+        python3 --version
+        pip3 --version
         pip install --isolated --force-reinstall --ignore-installed -vvv virtualenv
         brew install xz ruby
         for pkg in maven node; do
@@ -71,7 +77,14 @@ case "${TRAVIS_OS_NAME}" in
 esac
 
 type virtualenv
-virtualenv --verbose quark-travis
+virtualenv --verbose --python=python2.7 quark-travis
+# Sometimes virtualenv adds a pip3 when it oughtn't, and we don't want that to
+# conflict with the real one:
+rm -f quark-travis/bin/pip3
+virtualenv --python=python3.4 py3
+mv py3/bin/pip py3/bin/pip3
+mv py3/bin/python py3/bin/python3
+
 set +x && source quark-travis/bin/activate && set -x
 pip install --upgrade pip
 pip install --upgrade setuptools

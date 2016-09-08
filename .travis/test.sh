@@ -9,6 +9,11 @@ source .travis/sanitize.sh
 sanitize test
 
 source quark-travis/bin/activate
+# Even though we're in Python 2 virtualenv, we want python3 and pip3 to work
+# too, in their own virtualenv:
+export PATH=$PWD/py3/bin:$PATH
+which pip3
+which python3
 
 if [[ -f ~/.nvm/nvm.sh ]]; then
     source ~/.nvm/nvm.sh

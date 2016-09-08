@@ -1,7 +1,13 @@
+from __future__ import unicode_literals
+from __future__ import division
+from __future__ import absolute_import
+from __future__ import print_function
+from builtins import str as unicode
+
 from quark_runtime import *
 
 import quark.reflect
-import event
+import slack.event
 import slackpack_md
 import quark
 
@@ -134,7 +140,7 @@ class Client(_QObject):
         pass
 
     def construct(self, type):
-        return _cast(None, lambda: event.SlackEvent)
+        return _cast(None, lambda: slack.event.SlackEvent)
 
     def onWSMessage(self, socket, message):
         pass

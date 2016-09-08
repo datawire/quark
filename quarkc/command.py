@@ -16,9 +16,9 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [--online] [ (--java | --python | --javascript | --ruby)... | --all ] [<file>]...
+  quark [options] install [--online] [ (--java | --python | --python3 | --javascript | --ruby)... | --all ] [<file>]...
   quark [options] compile [--inline-stdlib] [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
-  quark [options] run ( --java | --python | --javascript | --ruby ) <file> [ -- <args>... ]
+  quark [options] run ( --java | --python | --python3 | --javascript | --ruby ) <file> [ -- <args>... ]
   quark [options] docs [<file>]...
   quark -h | --help | help
   quark --version
@@ -47,7 +47,8 @@ Options:
 
   --java                Install/emit Java code.
   --ruby                Install/emit Ruby code.
-  --python              Install/emit Python code.
+  --python              Install/emit Python 2 code (if you're just emitting --python3 will work too.)
+  --python3             Install/emit Python 3 code (if you're just emitting --python will work too.)
   --javascript          Install/emit JavaScript code.
 
   --version-warning     Treat compiler-version-related errors as warnings.
@@ -166,9 +167,10 @@ def main(args):
     java = args["--java"]
     ruby = args["--ruby"]
     python = args["--python"]
+    python3 = args["--python3"]
     javascript = args["--javascript"]
 
-    all = args["--all"] or not (java or python or javascript or ruby)
+    all = args["--all"] or not (java or python or javascript or ruby or python3)
 
     output = args["--output"]
     offline = not args["--online"]
@@ -184,9 +186,14 @@ def main(args):
             backends.append(backend.Ruby)
         if python or all:
             if args["install"]:
-                shell.check("python")
-                shell.check("pip")
+                shell.check("python2")
+                shell.check("pip2")
             backends.append(backend.Python)
+        if python3 or all:
+            if args["install"]:
+                shell.check("python3")
+                shell.check("pip3")
+            backends.append(backend.Python3)
         if javascript or all:
             if args["install"]: shell.check("npm")
             backends.append(backend.JavaScript)
@@ -212,7 +219,7 @@ def main(args):
             err = str(err) + "\n\n"
             err += "Please retry the command with the --online switch\n\n"
             err += "    quark install --online "
-            for opt in "--verbose --java --javascript --ruby --python".split():
+            for opt in "--verbose --java --javascript --ruby --python --python3".split():
                 if args[opt]: err += opt + " "
             err += " ".join(shell.quote(f) for f in args["<file>"])
             err += "\n"

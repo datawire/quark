@@ -826,15 +826,15 @@ class Backend(object):
     def expr(self, fake):
         return fake.expr
 
-def is_virtual():
-    output = shell.call("python", "-c", 'import sys; print hasattr(sys, "real_prefix")')
+def is_virtual(python_command):
+    output = shell.call(python_command, "-c", 'import sys; print(hasattr(sys, "real_prefix"))')
     return output.strip() == "True"
 
 def is_root():
     return os.geteuid() == 0
 
-def is_user():
-    return not is_virtual() and not is_root()
+def is_user(python_command):
+    return not is_virtual(python_command) and not is_root()
 
 class Java(Backend):
     PRETTY_INSTALL = "Maven"
@@ -862,32 +862,44 @@ class Java(Backend):
                            "%s-%s.jar" % (name, version))
         os.execlp("java", "java", "-jar", jar, name, *args)
 
+
 class Python(Backend):
     PRETTY_INSTALL = "PIP"
     argswitch = "--python"
     ext = "py"
     gen = python
+    python_command = "python2"
+    pip_command = "pip2"
 
     def install_target(self):
         name, ver = namever(self.entry)
         return self._install_target(name, ver)
 
     def _install_target(self, name, ver):
-        return shell.get_pip_pkg(name, stage="install")
+        return shell.get_pip_pkg(name, stage="install", command=self.pip_command)
 
     def install_command(self, dir, offline):
-        shell.call("python", "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
+        shell.call(self.python_command, "setup.py", "-q", "bdist_wheel", cwd=dir, stage="install")
         wheels = [name for name in os.listdir(os.path.join(dir, "dist")) if name.endswith(".whl")]
         for wheel in wheels:
-            cmd = ["pip", "install",]
+            cmd = [self.pip_command, "install",]
             if offline: cmd += ["--no-index"]
-            if is_user(): cmd += ["--user"]
+            if is_user(self.python_command): cmd += ["--user"]
             cmd += ["--upgrade", "dist/%s" % wheel]
             shell.call(*cmd, cwd=dir, stage="install")
 
     def run(self, name, version, args):
         main = self.gen.name(name)
-        os.execlp("python", "python", "-c", "import %s; %s.call_main()" % (main, main), name, *args)
+        python = shell.user_override((self.python_command,))[0]
+        os.execlp(python, python, "-c",
+                  "import %s; %s.call_main()" % (main, main), name, *args)
+
+
+class Python3(Python):
+    argswitch = "--python3"
+    python_command = "python3"
+    pip_command = "pip3"
+
 
 class JavaScript(Backend):
     PRETTY_INSTALL = "NPM"

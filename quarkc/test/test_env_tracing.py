@@ -127,7 +127,7 @@ def fetch_file(filename):
 
 
 def test_env_tracing():
-    languages = "java python javascript ruby".split()
+    languages = "java python javascript ruby python3".split()
     qtrace = "QUARK_TRACE"
     ttrace = "TET_TRACE"  # Use this to test the user's env overrides
     unenv = qtrace, ttrace

@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import os, pytest, shutil, subprocess, filecmp, difflib
-from quarkc.backend import Java, Python, JavaScript, Ruby
+from quarkc.backend import Java, Python, JavaScript, Ruby, Python3
 from quarkc.compiler import Compiler, compile
 from quarkc.helpers import namever
 from .util import maybe_xfail, filter_builtin
@@ -192,6 +192,18 @@ def test_run_python(output):
     subprocess.check_call(["quark", "install", "--python"])
     import quarkc.python
     run_tests(base, dirs, lambda name: ["python", quarkc.python.name(get_dist(name)) + ".py"], env=env)
+
+def test_run_python3(output):
+    py = Python3()
+    base = os.path.join(output, py.ext)
+    dirs = [name for name in os.listdir(base)]
+    pypath = ":".join([os.path.join(base, name) for name in dirs])
+    env = {"PYTHONPATH": pypath}
+    env.update(os.environ)
+
+    subprocess.check_call(["quark", "install", "--python3"])
+    import quarkc.python
+    run_tests(base, dirs, lambda name: ["python3", quarkc.python.name(get_dist(name)) + ".py"], env=env)
 
 def test_run_javascript(output):
     js = JavaScript()

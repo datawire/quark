@@ -1,6 +1,10 @@
 # Quark's Threaded Runtime
 
+from __future__ import print_function
+
 __version__ = '0.4.2'
+
+from past.builtins import unicode, long
 
 import atexit
 import os
@@ -9,11 +13,20 @@ import threading
 import contextlib
 import time
 import traceback
-import urllib2
-import urlparse
+
+# future stdlib stuff is broken: https://github.com/PythonCharmers/python-future/issues/238
+try:
+    from urllib.request import Request, urlopen
+    from urllib.error import HTTPError, URLError
+    from urllib.parse import urlparse
+    from queue import Queue, Empty
+except ImportError:
+    from urllib2 import Request, urlopen, HTTPError, URLError
+    from urlparse import urlparse
+    from Queue import Queue, Empty
+
 import uuid
 from wsgiref import util
-from Queue import Queue, Empty
 
 import ws4py
 if ws4py.__version__ != "0.3.4":
@@ -38,6 +51,9 @@ class _Terminator(object):
         return
 
     def __nonzero__(self):
+        return False
+
+    def __bool__(self):
         return False
 
 
@@ -77,8 +93,8 @@ class _EventProcessor(threading.Thread):
                     try:
                         function(*args, **kwargs)
                     except Exception as exc:
-                        print "Event handler %s failed (%s)." % (function, exc)
-                        print traceback.format_exc()
+                        print("Event handler %s failed (%s)." % (function, exc))
+                        print(traceback.format_exc())
                     event = self.runtime.events.get(block=False)  # Raises Empty to break out of loop
             except Empty:
                 pass
@@ -88,11 +104,11 @@ class _EventProcessor(threading.Thread):
 
 
 # http://stackoverflow.com/questions/4511598/how-to-make-http-delete-method-using-urllib2
-class _RequestWithMethod(urllib2.Request):
+class _RequestWithMethod(Request):
 
     def __init__(self, *args, **kwargs):
         self._method = kwargs.pop('method', None)
-        urllib2.Request.__init__(self, *args, **kwargs)
+        Request.__init__(self, *args, **kwargs)
 
     def get_method(self):
         return self._method if self._method else super(_RequestWithMethod, self).get_method()
@@ -116,17 +132,16 @@ class _QuarkRequest(object):
     def __call__(self):
         self.runtime.events.put((self.handler.onHTTPInit, (self.request,), {}))
         try:
-            handle = urllib2.urlopen(self.py_request)
+            handle = urlopen(self.py_request)
             body = handle.read()
-        except urllib2.HTTPError, e:
+        except HTTPError as e:
             response = _HTTPResponse()
             response.setCode(e.code)
-            response.setBody(e.read())
-            for h in e.info().headers:
-                k, v = h.split(':', 1)
+            response.setBody(e.read().decode('utf-8'))
+            for k,v in e.info().items():
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
-        except urllib2.URLError as exc:
+        except URLError as exc:
             import quark
             self.runtime.events.put((self.handler.onHTTPError, (self.request, quark.HTTPError(str(exc.reason))), {}))
         except Exception as exc:
@@ -135,9 +150,8 @@ class _QuarkRequest(object):
         else:
             response = _HTTPResponse()
             response.setCode(handle.getcode())
-            response.setBody(body)
-            for h in handle.info().headers:
-                k, v = h.split(':', 1)
+            response.setBody(body.decode('utf-8'))
+            for k,v in handle.info().items():
                 response.setHeader(k, v.strip())
             self.runtime.events.put((self.handler.onHTTPResponse, (self.request, response), {}))
 
@@ -229,8 +243,8 @@ class _QuarkWSGIApp(object):
             servlet.call_servlet(request, response)
         except Exception as exc:
             servlet.fail(response, 500, "500 Internal Server Error (%s)\r\n" % exc)
-            print "Servlet call for %s failed." % request.getUrl()
-            print traceback.format_exc()
+            print("Servlet call for %s failed." % request.getUrl())
+            print(traceback.format_exc())
 
     def __call__(self, environ, start_response):
         path = environ["PATH_INFO"]
@@ -346,7 +360,7 @@ class Tracker(object):
             with self._token():
                 self.target(*args, **kwargs)
         except:
-            print traceback.format_exc()
+            print(traceback.format_exc())
 
     @contextlib.contextmanager
     def _token(self):
@@ -367,7 +381,7 @@ class _NoApplication(object):
 class Url(object):
     def __init__(self, url):
         self.url = url
-        self.uri = urlparse.urlparse(url)
+        self.uri = urlparse(url)
         self.host = self.uri.hostname or "127.0.0.1"
         if self.uri.port is not None:
             self.port = self.uri.port
@@ -502,7 +516,7 @@ class ThreadedRuntime(object):
                     self.sites[url.host, url.port] = server
                 return server.application
         except Exception as exc:
-            print traceback.format_exc()
+            print(traceback.format_exc())
             return _NoApplication(self, url, exc)
 
     def respond(self, request, response):
@@ -511,7 +525,7 @@ class ThreadedRuntime(object):
     def fail(self, message):
         self.event_thread.die_now = True
         if False:  # Set to True to enable traceback printing
-            print "Traceback (most recent call last, up to fail(...)):"
+            print("Traceback (most recent call last, up to fail(...)):")
             traceback.print_stack(sys._getframe(1))
             # Note: sys._getframe(1) works on CPython, Jython, and PyPy. Need to test on IronPython etc.
         sys.stderr.write(message + "\n")
