@@ -48,7 +48,7 @@ case "${TRAVIS_OS_NAME}" in
         brew link --force openssl
         brew update
         brew install python
-        brew install python34
+        brew install --overwrite python34
         hash -r
         echo $PATH
         type python
