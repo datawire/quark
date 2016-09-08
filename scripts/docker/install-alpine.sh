@@ -3,7 +3,7 @@
 apk add --update bash
 apk add --no-cache make gcc libc-dev g++
 apk add --no-cache git openjdk8
-apk add --no-cache python python-dev py-pip py-virtualenv
+apk add --no-cache python python-dev py-pip py-virtualenv python3 python3-dev
 apk add --no-cache ruby ruby-dev ruby-bundler ruby-rdoc ruby-irb
 apk add --no-cache nodejs nodejs-dev
 apk add --no-cache curl ncurses unzip

@@ -8,7 +8,9 @@ RUN /tmp/install-alpine.sh && \
     bundle install --gemfile /tmp/Gemfile && \
     /tmp/prepare-npm.sh && \
     virtualenv --python=python2.7 /tmp/run && \
-    /tmp/run/bin/pip install /tmp/code/ && \
+    virtualenv --python=python3 /tmp/run3 && \
+    virtualenv --python=python2.7 /tmp/quark-run && \
+    /tmp/quark-run/bin/pip install /tmp/code/ && \
     rm -rf /tmp/code && \
     apk del gcc libc-dev g++
 
