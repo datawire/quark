@@ -43,9 +43,12 @@ case "${TRAVIS_OS_NAME}" in
         ;;
     osx)
         sudo chown -R $USER /usr/local
+        brew tap derekkwok/python
+        brew install openssl
+        brew link --force openssl
         brew update
         brew install python
-        brew install python3.4
+        brew install python34
         hash -r
         echo $PATH
         type python
