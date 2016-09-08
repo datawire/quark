@@ -2,8 +2,6 @@ quark *;
 
 import quark.test;
 
-    macro void breakpoint() $py{import pdb; pdb.set_trace() } $js{} $java{} $rb{};
-
 void main(List<String> args) {
     test.run(args);
 }
