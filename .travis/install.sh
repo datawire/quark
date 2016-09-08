@@ -45,12 +45,15 @@ case "${TRAVIS_OS_NAME}" in
         sudo chown -R $USER /usr/local
         brew update
         brew install python
+        brew install python3.4
         hash -r
         echo $PATH
         type python
         type pip
         python --version
         pip --version
+        python3 --version
+        pip3 --version
         pip install --isolated --force-reinstall --ignore-installed -vvv virtualenv
         brew install xz ruby
         for pkg in maven node; do
