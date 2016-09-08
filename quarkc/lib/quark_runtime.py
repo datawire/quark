@@ -24,7 +24,7 @@ try:
     from urllib.parse import urlencode as _urlencode  # noqa
     from urllib.request import urlopen
 except ImportError:
-    from urlparse import urlencode as _urlencode  # noqa
+    from urllib import urlencode as _urlencode  # noqa
     from urllib2 import urlopen
 
 import json
