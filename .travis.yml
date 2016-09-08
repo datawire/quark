@@ -6,8 +6,6 @@ matrix:
       env: TEST_SUITE=quarkc-no-lib-indiv
     - os: linux
       env: TEST_SUITE=examples
-    - os: osx
-      env: TEST_SUITE=examples
   exclude:
     - env: TEST_SUITE=should-never-be-selected
 
