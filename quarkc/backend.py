@@ -890,7 +890,8 @@ class Python(Backend):
 
     def run(self, name, version, args):
         main = self.gen.name(name)
-        os.execlp(self.python_command, self.python_command, "-c",
+        python = shell.user_override((self.python_command,))[0]
+        os.execlp(python, python, "-c",
                   "import %s; %s.call_main()" % (main, main), name, *args)
 
 
