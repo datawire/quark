@@ -23,8 +23,10 @@
     var assert = require("assert");
     var timers = require("timers");
 
-    var runtime = require("quark/quark_runtime");
-    var quark = require("quark");
+    var runtime = require("./quark_runtime");
+    var quark; runtime.lazyImport("./quark", function() {
+        quark = require("./quark");
+    });
 
     // WebSockets are a little odd:
     // - browsers have them built in;
@@ -108,7 +110,7 @@
                 });
 
                 this.socket.on("error", function (error) {
-                    handler.onWSError(self, new quark.quark.WSError(error.toString()));
+                    handler.onWSError(self, new quark.WSError(error.toString()));
                     self.socket.terminate();
                     handler.onWSFinal(self);
                 });
@@ -187,7 +189,7 @@
                 };
 
                 this.socket.onerror = function (error) {
-                    handler.onWSError(self, new quark.quark.WSError(error.toString()));
+                    handler.onWSError(self, new quark.WSError(error.toString()));
                     self.socket.close();
                     handler.onWSFinal(self);
                 };
@@ -254,7 +256,7 @@
                         // Not so good.
                         // console.log("error (1)", error);
 
-                        handler.onHTTPError(qReq, new quark.quark.HTTPError(error.toString()));
+                        handler.onHTTPError(qReq, new quark.HTTPError(error.toString()));
                         this.abort();
                         handler.onHTTPFinal(qReq);
                     }
@@ -463,7 +465,7 @@
 
     Runtime.prototype.callSafely = function(callee, defaultResult) {
         try {
-            return quark.quark.callUnaryCallable(callee, null);
+            return quark.callUnaryCallable(callee, null);
         } catch(e) {
             this.logger("quark.runtime").error("Exception while calling safely: " + e);
             return defaultResult;
@@ -508,7 +510,7 @@
             servlet.onServletInit(url, self.runtime);
         });
         this.server.on("error", function(error) {
-            servlet.onServletError(URL.format(uri), new quark.quark.ServletError(error.message.toString()));
+            servlet.onServletError(URL.format(uri), new quark.ServletError(error.message.toString()));
         });
     };
 
@@ -614,10 +616,10 @@
             if (uri.port === null ) {
                 uri.port = "443";
             }
-            servlet.onServletError(url, new quark.quark.ServletError("https not supported yet"));
+            servlet.onServletError(url, new quark.ServletError("https not supported yet"));
             return;
         } else {
-            servlet.onServletError(url, new quark.quark.ServletError("unsupported protocol " + uri.protocol));
+            servlet.onServletError(url, new quark.ServletError("unsupported protocol " + uri.protocol));
             return;
         }
 
@@ -645,10 +647,10 @@
             if (uri.port === null ) {
                 uri.port = "443";
             }
-            servlet.onServletError(url, new quark.quark.ServletError("WSS not supported yet"));
+            servlet.onServletError(url, new quark.ServletError("WSS not supported yet"));
             return;
         } else {
-            servlet.onServletError(url, new quark.quark.ServletError("Unsupported protocol " + uri.protocol));
+            servlet.onServletError(url, new quark.ServletError("Unsupported protocol " + uri.protocol));
             return;
         }
         server = make_server(uri.port, uri.hostname, self);

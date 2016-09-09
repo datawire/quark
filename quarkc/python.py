@@ -147,13 +147,13 @@ from builtins import str as unicode
 from quark_runtime import *
 
 """
-def make_class_file(path, name):
+def make_class_file(path, name, rtloc=None):
     return Code(comment, head=PREAMBLE)
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
 
-def make_package_file(path, name):
+def make_package_file(path, name, rtloc=None):
     return make_class_file(path, name)
 
 def main_file(name):
@@ -183,7 +183,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep):
+def import_(path, origin, dep, seen=None, lazy=False):
     return "import %s" % ".".join(qualify(path, origin))
 
 def qualify(package, origin):

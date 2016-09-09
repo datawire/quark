@@ -416,7 +416,7 @@ class Reflector:
 
     def setclassfile(self, name):
         fname = self.gen.class_file(self.backend.current_package, name, None)
-        if self.backend.setfile(fname, lambda: self.gen.make_class_file(self.backend.current_package, name)):
+        if self.backend.setfile(fname, lambda: self.gen.make_class_file(self.backend.current_package, name, rtloc=self.backend.rtloc)):
             self.backend.files[fname] += "\n"
         return fname
 

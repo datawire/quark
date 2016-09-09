@@ -158,7 +158,7 @@ def function_file(path, name, fname):
 def package_file(path, name, fname):
     return None
 
-def make_class_file(path, name):
+def make_class_file(path, name, rtloc=None):
     return Code(comment, head="package %s;\n\n" % ".".join(path))
 
 def make_function_file(path, name, mdpkg):
@@ -166,7 +166,7 @@ def make_function_file(path, name, mdpkg):
                 "    static %s.Root root = new %s.Root();\n\n" % (".".join(path), mdpkg, mdpkg),
                 tail="}")
 
-def make_package_file(path, name):
+def make_package_file(path, name, rtloc=None):
     assert False
 
 def main_file(name):
@@ -201,7 +201,7 @@ def type(path, name, parameters):
     else:
         return base
 
-def import_(path, origin, dep):
+def import_(path, origin, dep, seen=None, lazy=False):
     return None
 
 def qualify(package, origin):
