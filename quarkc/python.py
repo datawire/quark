@@ -146,16 +146,17 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-_lazyImport.plug("TODO")
+_lazyImport.plug("%s")
 """
 
 POSTAMBLE = """\
 
-_lazyImport.pump("TODO")
+_lazyImport.pump("%s")
 """
 
 def make_class_file(path, name, rtloc=None):
-    return Code(comment, head=PREAMBLE, tail=POSTAMBLE)
+    what = ".".join(list(path) + [name])
+    return Code(comment, head=PREAMBLE % (what), tail=POSTAMBLE % (what))
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
