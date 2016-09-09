@@ -16,6 +16,7 @@ from __future__ import absolute_import
 
 import os
 from collections import OrderedDict
+from textwrap import dedent
 
 from .helpers import doc_helper, indent, Code
 
@@ -145,10 +146,16 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("TODO")
 """
+
+POSTAMBLE = """\
+
+_lazyImport.pump("TODO")
+"""
+
 def make_class_file(path, name, rtloc=None):
-    return Code(comment, head=PREAMBLE)
+    return Code(comment, head=PREAMBLE, tail=POSTAMBLE)
 
 def make_function_file(path, name, mdpkg):
     return make_class_file(path, name)
@@ -184,7 +191,19 @@ def type(path, name, parameters):
     return ".".join(path + [name])
 
 def import_(path, origin, dep, seen=None, lazy=False):
-    return "import %s" % ".".join(qualify(path, origin))
+    qual = qualify(path, origin)
+    imp = "import %s" % ".".join(qual)
+    if lazy:
+        lazymeth = "_".join(["","lazy","import"] + list(qual))
+        return dedent(
+            '''\
+            def %s():
+                %s
+                globals().update(locals())
+            _lazyImport("%s", %s)
+            ''' % (lazymeth, imp, imp, lazymeth))
+    else:
+        return imp
 
 def qualify(package, origin):
     if package == origin: return []
