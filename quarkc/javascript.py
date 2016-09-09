@@ -117,7 +117,7 @@ def import_(path, origin, dep, seen=None, lazy=False):
             prefix = "../"*len(origin)
         req = prefix + qual[0] + "/index.js"
     if lazy:
-        return "var %s;\nquark_runtime.lazyImport('%s', function(){%s = require('%s')%s;\n  exports.%s = %s;}, 0);" % (qual[0], req, qual[0], req, extra, qual[0], qual[0])
+        return "var %s;\n_qrt.lazyImport('%s', function(){%s = require('%s')%s;\n  exports.%s = %s;}, 0);" % (qual[0], req, qual[0], req, extra, qual[0], qual[0])
     return "var %s = require('%s')%s;\nexports.%s = %s; // %s" % (qual[0], req, extra, qual[0], qual[0], dep)
 
 def qualify(package, origin):
