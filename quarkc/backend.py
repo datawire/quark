@@ -205,7 +205,7 @@ class Backend(object):
                 tailimps = self.genimps(mdimps, lazy=True)
 
             if headimps: code.head += headimps + "\n\n"
-            if tailimps: code.tail += "\n\n" + tailimps
+            if tailimps: code.tail = "\n\n" + tailimps + "\n\n" + code.tail
 
             content = str(code)
             if content[-1:] != "\n": content += "\n"
