@@ -3,7 +3,6 @@ require "quark"
 def self.docs; Docs; end
 module Docs
 require 'quark' # .../reflect
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Test; Test; end
@@ -75,5 +74,9 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 end
 Test.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Docs
 end # module Quark

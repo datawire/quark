@@ -5,12 +5,11 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("generics")
 import quark.reflect
 import generics.constructors
 import generics.pkg
 import generics.ccc
-import quark_ffi_signatures_md
 
 
 class Box(_QObject):
@@ -141,3 +140,12 @@ class Matrix(_QObject):
 Matrix.generics_Matrix_quark_Object__ref = None
 Matrix.quark_List_quark_List_quark_Object___ref = None
 Matrix.quark_List_quark_Object__ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("generics")

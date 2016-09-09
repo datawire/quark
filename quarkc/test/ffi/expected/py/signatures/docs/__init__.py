@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("docs")
 import quark.reflect
-import quark_ffi_signatures_md
 
 
 class Test(_QObject):
@@ -42,3 +41,12 @@ class Test(_QObject):
 
 
 Test.docs_Test_ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("docs")

@@ -5,7 +5,6 @@ module Classes
 def self.stuff; Stuff; end
 module Stuff
 require 'quark' # .../reflect classes/stuff
-require_relative '../quark_ffi_signatures_md' # 0 () ('classes',)
 
 
 def self.Test; Test; end
@@ -69,6 +68,10 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 end
 Test.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('classes',)
+
 end # module Stuff
 end # module Classes
 end # module Quark

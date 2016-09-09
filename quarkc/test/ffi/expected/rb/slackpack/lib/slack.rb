@@ -4,7 +4,6 @@ def self.slack; Slack; end
 module Slack
 require 'quark' # .../reflect
 require_relative 'slack/event' # 0 ('slack',) ()
-require_relative 'slackpack_md' # 0 () ()
 require 'quark' 
 
 
@@ -430,5 +429,9 @@ class Client < ::DatawireQuarkCore::QuarkObject
 
 end
 Client.unlazy_statics
+
+
+require_relative 'slackpack_md' # 0 () ()
+
 end # module Slack
 end # module Quark

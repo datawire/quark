@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("slackpack_md.slack_event_SlackEvent_load_Method")
 import quark.reflect
 
 class slack_event_SlackEvent_load_Method(quark.reflect.Method):
@@ -1043,7 +1043,26 @@ Root.slack_Client_md = slack_Client.singleton
 Root.slackpack_Handler_md = slackpack_Handler.singleton
 Root.quark_Map_quark_String_quark_Object__md = quark_Map_quark_String_quark_Object_.singleton
 
-import slack.event
-import slack
-import quark
-import slackpack
+def _lazy_import_slack_event():
+    import slack.event
+    globals().update(locals())
+_lazyImport("import slack.event", _lazy_import_slack_event)
+
+def _lazy_import_slack():
+    import slack
+    globals().update(locals())
+_lazyImport("import slack", _lazy_import_slack)
+
+def _lazy_import_quark():
+    import quark
+    globals().update(locals())
+_lazyImport("import quark", _lazy_import_quark)
+
+def _lazy_import_slackpack():
+    import slackpack
+    globals().update(locals())
+_lazyImport("import slackpack", _lazy_import_slackpack)
+
+
+
+_lazyImport.pump("slackpack_md.slack_event_SlackEvent_load_Method")

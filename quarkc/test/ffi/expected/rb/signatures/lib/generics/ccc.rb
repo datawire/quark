@@ -5,7 +5,6 @@ module Generics
 def self.ccc; Ccc; end
 module Ccc
 require 'quark' # .../reflect generics/ccc
-require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
 
 
 def self.TLSContextInitializer; TLSContextInitializer; end
@@ -239,6 +238,10 @@ class TLS < ::DatawireQuarkCore::QuarkObject
 
 
 end
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
+
 end # module Ccc
 end # module Generics
 end # module Quark

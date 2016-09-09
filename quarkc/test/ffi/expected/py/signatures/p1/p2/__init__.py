@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("p1.p2")
 
 
 def a():
@@ -14,3 +14,4 @@ def a():
 
 def b():
     pass
+_lazyImport.pump("p1.p2")

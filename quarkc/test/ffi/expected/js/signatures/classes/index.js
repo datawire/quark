@@ -1,10 +1,9 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("classes");
 var quark = require('quark').quark;
 exports.quark = quark;
 var stuff = require('./stuff/index.js');
 exports.stuff = stuff;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -19,7 +18,7 @@ function Overload__init_fields__() {
     this.name = null;
 }
 Overload.prototype.__init_fields__ = Overload__init_fields__;
-Overload.classes_Overload_ref = null;
+_qrt.lazyStatic(function(){Overload.classes_Overload_ref = null;});
 function Overload___add__(o) {
     return _qrt.cast(null, function () { return Overload; });
 }
@@ -61,7 +60,7 @@ exports.Test = Test;
 
 function Test__init_fields__() {}
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.classes_Test_ref = null;
+_qrt.lazyStatic(function(){Test.classes_Test_ref = null;});
 function Test_test() {}
 Test.prototype.test = Test_test;
 
@@ -86,7 +85,7 @@ exports.string_test = string_test;
 
 function string_test__init_fields__() {}
 string_test.prototype.__init_fields__ = string_test__init_fields__;
-string_test.classes_string_test_ref = null;
+_qrt.lazyStatic(function(){string_test.classes_string_test_ref = null;});
 function string_test_check(actual, expected, op, q) {}
 string_test.prototype.check = string_test_check;
 
@@ -116,7 +115,7 @@ function test_size__init_fields__() {
     this.what = null;
 }
 test_size.prototype.__init_fields__ = test_size__init_fields__;
-test_size.classes_test_size_ref = null;
+_qrt.lazyStatic(function(){test_size.classes_test_size_ref = null;});
 function test_size_does(expected) {
     return _qrt.cast(null, function () { return test_size; });
 }
@@ -156,7 +155,7 @@ function test_startsWith__init_fields__() {
     this._that = null;
 }
 test_startsWith.prototype.__init_fields__ = test_startsWith__init_fields__;
-test_startsWith.classes_test_startsWith_ref = null;
+_qrt.lazyStatic(function(){test_startsWith.classes_test_startsWith_ref = null;});
 function test_startsWith_that(_that) {
     return _qrt.cast(null, function () { return test_startsWith; });
 }
@@ -207,7 +206,7 @@ function test_endsWith__init_fields__() {
     this._that = null;
 }
 test_endsWith.prototype.__init_fields__ = test_endsWith__init_fields__;
-test_endsWith.classes_test_endsWith_ref = null;
+_qrt.lazyStatic(function(){test_endsWith.classes_test_endsWith_ref = null;});
 function test_endsWith_that(_that) {
     return _qrt.cast(null, function () { return test_endsWith; });
 }
@@ -258,7 +257,7 @@ function test_find__init_fields__() {
     this._that = null;
 }
 test_find.prototype.__init_fields__ = test_find__init_fields__;
-test_find.classes_test_find_ref = null;
+_qrt.lazyStatic(function(){test_find.classes_test_find_ref = null;});
 function test_find_that(_that) {
     return _qrt.cast(null, function () { return test_find; });
 }
@@ -310,7 +309,7 @@ function test_substring__init_fields__() {
     this.end = null;
 }
 test_substring.prototype.__init_fields__ = test_substring__init_fields__;
-test_substring.classes_test_substring_ref = null;
+_qrt.lazyStatic(function(){test_substring.classes_test_substring_ref = null;});
 function test_substring_that(start, end) {
     return _qrt.cast(null, function () { return test_substring; });
 }
@@ -368,7 +367,7 @@ function test_replace__init_fields__() {
     this.end = null;
 }
 test_replace.prototype.__init_fields__ = test_replace__init_fields__;
-test_replace.classes_test_replace_ref = null;
+_qrt.lazyStatic(function(){test_replace.classes_test_replace_ref = null;});
 function test_replace_that(start, end) {
     return _qrt.cast(null, function () { return test_replace; });
 }
@@ -427,7 +426,7 @@ function test_join__init_fields__() {
     this.sep = null;
 }
 test_join.prototype.__init_fields__ = test_join__init_fields__;
-test_join.classes_test_join_ref = null;
+_qrt.lazyStatic(function(){test_join.classes_test_join_ref = null;});
 function test_join_that() {
     return _qrt.cast(null, function () { return test_join; });
 }
@@ -496,7 +495,7 @@ function test_split__init_fields__() {
     this.altsep = null;
 }
 test_split.prototype.__init_fields__ = test_split__init_fields__;
-test_split.classes_test_split_ref = null;
+_qrt.lazyStatic(function(){test_split.classes_test_split_ref = null;});
 function test_split_that(what) {
     return _qrt.cast(null, function () { return test_split; });
 }
@@ -538,3 +537,12 @@ function test_split__setField(name, value) {
     }
 }
 test_split.prototype._setField = test_split__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("classes");

@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("org_example_foo_md/org_example_foo_Foo_test_Method");
 var quark = require('quark').quark;
 exports.quark = quark;
 
@@ -53,7 +54,7 @@ function org_example_foo_Foo__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 org_example_foo_Foo.prototype.__init_fields__ = org_example_foo_Foo__init_fields__;
-org_example_foo_Foo.singleton = new org_example_foo_Foo();
+_qrt.lazyStatic(function(){org_example_foo_Foo.singleton = new org_example_foo_Foo();});
 function org_example_foo_Foo_construct(args) {
     return new org.example.foo.Foo();
 }
@@ -85,7 +86,7 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.org_example_foo_Foo_md = org_example_foo_Foo.singleton;
+_qrt.lazyStatic(function(){Root.org_example_foo_Foo_md = org_example_foo_Foo.singleton;});
 function Root__getClass() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -99,5 +100,11 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var org = require('../org/index.js');
-exports.org = org;
+var org; _qrt.lazyImport('../org/index.js', function(){
+    org = require('../org/index.js');
+    exports.org = org;
+});
+
+
+
+_qrt.pumpImports("org_example_foo_md/org_example_foo_Foo_test_Method");

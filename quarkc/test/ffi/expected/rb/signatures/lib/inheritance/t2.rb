@@ -5,7 +5,6 @@ module Inheritance
 def self.t2; T2; end
 module T2
 require 'quark' # .../reflect inheritance/t2
-require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
 
 
 def self.A; A; end
@@ -200,6 +199,10 @@ class Y < ::Quark.inheritance.t2.X
 
 end
 Y.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
+
 end # module T2
 end # module Inheritance
 end # module Quark

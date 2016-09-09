@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance/pets");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.Pet = Pet;
 
 function Pet__init_fields__() {}
 Pet.prototype.__init_fields__ = Pet__init_fields__;
-Pet.inheritance_pets_Pet_ref = null;
+_qrt.lazyStatic(function(){Pet.inheritance_pets_Pet_ref = null;});
 function Pet_greet() { throw TypeError, '`Pet.greet` is an abstract method'; }
 Pet.prototype.greet = Pet_greet;
 
@@ -43,7 +42,7 @@ function Cat__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
 }
 Cat.prototype.__init_fields__ = Cat__init_fields__;
-Cat.inheritance_pets_Cat_ref = null;
+_qrt.lazyStatic(function(){Cat.inheritance_pets_Cat_ref = null;});
 function Cat_greet() {
     _qrt.print("meow!");
 }
@@ -74,7 +73,7 @@ function Dog__init_fields__() {
     Pet.prototype.__init_fields__.call(this);
 }
 Dog.prototype.__init_fields__ = Dog__init_fields__;
-Dog.inheritance_pets_Dog_ref = null;
+_qrt.lazyStatic(function(){Dog.inheritance_pets_Dog_ref = null;});
 function Dog_greet() {
     _qrt.print("woof!");
 }
@@ -92,3 +91,12 @@ Dog.prototype._getField = Dog__getField;
 
 function Dog__setField(name, value) {}
 Dog.prototype._setField = Dog__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance/pets");

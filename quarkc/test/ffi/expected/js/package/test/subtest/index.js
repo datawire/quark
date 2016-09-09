@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("test/subtest");
 var quark = require('quark').quark;
 exports.quark = quark;
-var package_md = require('../../package_md/index.js');
-exports.package_md = package_md;
 
 
 
@@ -19,7 +18,7 @@ function Test__init_fields__() {
     this.size = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.test_subtest_Test_ref = null;
+_qrt.lazyStatic(function(){Test.test_subtest_Test_ref = null;});
 function Test_go() {}
 Test.prototype.go = Test_go;
 
@@ -42,3 +41,12 @@ function Test__setField(name, value) {
     }
 }
 Test.prototype._setField = Test__setField;
+
+var package_md; _qrt.lazyImport('../../package_md/index.js', function(){
+    package_md = require('../../package_md/index.js');
+    exports.package_md = package_md;
+});
+
+
+
+_qrt.pumpImports("test/subtest");

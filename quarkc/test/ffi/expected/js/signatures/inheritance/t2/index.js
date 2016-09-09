@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance/t2");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.A = A;
 
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_t2_A_ref = null;
+_qrt.lazyStatic(function(){A.inheritance_t2_A_ref = null;});
 function A__getClass() {
     return "inheritance.t2.A";
 }
@@ -40,7 +39,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_t2_B_ref = null;
+_qrt.lazyStatic(function(){B.inheritance_t2_B_ref = null;});
 function B__getClass() {
     return "inheritance.t2.B";
 }
@@ -88,8 +87,8 @@ function Y__init_fields__() {
     X.prototype.__init_fields__.call(this);
 }
 Y.prototype.__init_fields__ = Y__init_fields__;
-Y.inheritance_t2_X_quark_int__ref = null;
-Y.inheritance_t2_Y_ref = null;
+_qrt.lazyStatic(function(){Y.inheritance_t2_X_quark_int__ref = null;});
+_qrt.lazyStatic(function(){Y.inheritance_t2_Y_ref = null;});
 function Y__getClass() {
     return "inheritance.t2.Y";
 }
@@ -102,3 +101,12 @@ Y.prototype._getField = Y__getField;
 
 function Y__setField(name, value) {}
 Y.prototype._setField = Y__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance/t2");

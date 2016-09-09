@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("generics/ccc");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.TLSContextInitializer = TLSContextInitializer;
 
 function TLSContextInitializer__init_fields__() {}
 TLSContextInitializer.prototype.__init_fields__ = TLSContextInitializer__init_fields__;
-TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = null;
+_qrt.lazyStatic(function(){TLSContextInitializer.generics_ccc_TLSContextInitializer_ref = null;});
 function TLSContextInitializer_getValue() {
     return _qrt.cast(null, function () { return Context; });
 }
@@ -44,10 +43,10 @@ function Context__init_fields__() {
     this.parent = null;
 }
 Context.prototype.__init_fields__ = Context__init_fields__;
-Context._global = null;
-Context._current = null;
-Context.generics_ccc_Context_ref = null;
-Context.generics_ccc_TLS_generics_ccc_Context__ref = null;
+_qrt.lazyStatic(function(){Context._global = null;});
+_qrt.lazyStatic(function(){Context._current = null;});
+_qrt.lazyStatic(function(){Context.generics_ccc_Context_ref = null;});
+_qrt.lazyStatic(function(){Context.generics_ccc_TLS_generics_ccc_Context__ref = null;});
 function Context_current() {
     return _qrt.cast(null, function () { return Context; });
 }
@@ -98,7 +97,7 @@ exports.TLSInitializer = TLSInitializer;
 
 function TLSInitializer__init_fields__() {}
 TLSInitializer.prototype.__init_fields__ = TLSInitializer__init_fields__;
-TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = null;
+_qrt.lazyStatic(function(){TLSInitializer.generics_ccc_TLSInitializer_quark_Object__ref = null;});
 function TLSInitializer_getValue() { throw TypeError, '`TLSInitializer.getValue` is an abstract method'; }
 TLSInitializer.prototype.getValue = TLSInitializer_getValue;
 
@@ -138,3 +137,12 @@ function TLS__setField(name, value) {
     }
 }
 TLS.prototype._setField = TLS__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("generics/ccc");

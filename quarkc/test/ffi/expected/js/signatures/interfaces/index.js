@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("interfaces");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.A = A;
 
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
-A.interfaces_A_ref = null;
+_qrt.lazyStatic(function(){A.interfaces_A_ref = null;});
 function A_foo() { throw TypeError, '`A.foo` is an abstract method'; }
 A.prototype.foo = A_foo;
 
@@ -29,7 +28,7 @@ exports.B = B;
 
 function B__init_fields__() {}
 B.prototype.__init_fields__ = B__init_fields__;
-B.interfaces_B_ref = null;
+_qrt.lazyStatic(function(){B.interfaces_B_ref = null;});
 function B_bar() {}
 B.prototype.bar = B_bar;
 
@@ -41,7 +40,7 @@ exports.C = C;
 
 function C__init_fields__() {}
 C.prototype.__init_fields__ = C__init_fields__;
-C.interfaces_C_ref = null;
+_qrt.lazyStatic(function(){C.interfaces_C_ref = null;});
 function C_foo() {}
 C.prototype.foo = C_foo;
 
@@ -53,7 +52,7 @@ exports.T1 = T1;
 
 function T1__init_fields__() {}
 T1.prototype.__init_fields__ = T1__init_fields__;
-T1.interfaces_T1_ref = null;
+_qrt.lazyStatic(function(){T1.interfaces_T1_ref = null;});
 function T1_foo() {}
 T1.prototype.foo = T1_foo;
 
@@ -81,7 +80,7 @@ exports.T2 = T2;
 
 function T2__init_fields__() {}
 T2.prototype.__init_fields__ = T2__init_fields__;
-T2.interfaces_T2_ref = null;
+_qrt.lazyStatic(function(){T2.interfaces_T2_ref = null;});
 function T2_foo() {}
 T2.prototype.foo = T2_foo;
 
@@ -109,7 +108,7 @@ exports.T3 = T3;
 
 function T3__init_fields__() {}
 T3.prototype.__init_fields__ = T3__init_fields__;
-T3.interfaces_T3_ref = null;
+_qrt.lazyStatic(function(){T3.interfaces_T3_ref = null;});
 function T3_foo() {}
 T3.prototype.foo = T3_foo;
 
@@ -137,7 +136,7 @@ exports.T4 = T4;
 
 function T4__init_fields__() {}
 T4.prototype.__init_fields__ = T4__init_fields__;
-T4.interfaces_T4_ref = null;
+_qrt.lazyStatic(function(){T4.interfaces_T4_ref = null;});
 function T4__getClass() {
     return "interfaces.T4";
 }
@@ -165,7 +164,7 @@ exports.T5 = T5;
 
 function T5__init_fields__() {}
 T5.prototype.__init_fields__ = T5__init_fields__;
-T5.interfaces_T5_ref = null;
+_qrt.lazyStatic(function(){T5.interfaces_T5_ref = null;});
 function T5_foo() {}
 T5.prototype.foo = T5_foo;
 
@@ -193,8 +192,8 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.interfaces_Foo_ref = null;
-Foo.quark_List_quark_String__ref = null;
+_qrt.lazyStatic(function(){Foo.interfaces_Foo_ref = null;});
+_qrt.lazyStatic(function(){Foo.quark_List_quark_String__ref = null;});
 function Foo_m1() { throw TypeError, '`Foo.m1` is an abstract method'; }
 Foo.prototype.m1 = Foo_m1;
 
@@ -212,7 +211,7 @@ exports.Bar = Bar;
 
 function Bar__init_fields__() {}
 Bar.prototype.__init_fields__ = Bar__init_fields__;
-Bar.interfaces_Bar_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Bar.interfaces_Bar_quark_Object__ref = null;});
 function Bar_m1() { throw TypeError, '`Bar.m1` is an abstract method'; }
 Bar.prototype.m1 = Bar_m1;
 
@@ -230,7 +229,7 @@ exports.Baz = Baz;
 
 function Baz__init_fields__() {}
 Baz.prototype.__init_fields__ = Baz__init_fields__;
-Baz.interfaces_Baz_ref = null;
+_qrt.lazyStatic(function(){Baz.interfaces_Baz_ref = null;});
 function Baz_m2(arg) {}
 Baz.prototype.m2 = Baz_m2;
 
@@ -261,7 +260,7 @@ exports.RazBar = RazBar;
 
 function RazBar__init_fields__() {}
 RazBar.prototype.__init_fields__ = RazBar__init_fields__;
-RazBar.interfaces_RazBar_ref = null;
+_qrt.lazyStatic(function(){RazBar.interfaces_RazBar_ref = null;});
 
 // CLASS RazFaz
 function RazFaz() {
@@ -271,7 +270,7 @@ exports.RazFaz = RazFaz;
 
 function RazFaz__init_fields__() {}
 RazFaz.prototype.__init_fields__ = RazFaz__init_fields__;
-RazFaz.interfaces_RazFaz_quark_Object__ref = null;
+_qrt.lazyStatic(function(){RazFaz.interfaces_RazFaz_quark_Object__ref = null;});
 
 // CLASS BazBar
 function BazBar() {
@@ -281,7 +280,7 @@ exports.BazBar = BazBar;
 
 function BazBar__init_fields__() {}
 BazBar.prototype.__init_fields__ = BazBar__init_fields__;
-BazBar.interfaces_BazBar_ref = null;
+_qrt.lazyStatic(function(){BazBar.interfaces_BazBar_ref = null;});
 function BazBar_m1() {}
 BazBar.prototype.m1 = BazBar_m1;
 
@@ -312,7 +311,7 @@ exports.BazFaz = BazFaz;
 
 function BazFaz__init_fields__() {}
 BazFaz.prototype.__init_fields__ = BazFaz__init_fields__;
-BazFaz.interfaces_BazFaz_quark_Object__ref = null;
+_qrt.lazyStatic(function(){BazFaz.interfaces_BazFaz_quark_Object__ref = null;});
 function BazFaz_m1() {}
 BazFaz.prototype.m1 = BazFaz_m1;
 
@@ -343,8 +342,8 @@ exports.IConstants = IConstants;
 
 function IConstants__init_fields__() {}
 IConstants.prototype.__init_fields__ = IConstants__init_fields__;
-IConstants.FOO = "foo";
-IConstants.interfaces_IConstants_ref = null;
+_qrt.lazyStatic(function(){IConstants.FOO = "foo";});
+_qrt.lazyStatic(function(){IConstants.interfaces_IConstants_ref = null;});
 
 // CLASS Constants
 function Constants() {
@@ -354,8 +353,8 @@ exports.Constants = Constants;
 
 function Constants__init_fields__() {}
 Constants.prototype.__init_fields__ = Constants__init_fields__;
-Constants.interfaces_Constants_ref = null;
-Constants.FOO = "foo";
+_qrt.lazyStatic(function(){Constants.interfaces_Constants_ref = null;});
+_qrt.lazyStatic(function(){Constants.FOO = "foo";});
 function Constants__getClass() {
     return "interfaces.Constants";
 }
@@ -371,3 +370,12 @@ Constants.prototype._getField = Constants__getField;
 
 function Constants__setField(name, value) {}
 Constants.prototype._setField = Constants__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("interfaces");

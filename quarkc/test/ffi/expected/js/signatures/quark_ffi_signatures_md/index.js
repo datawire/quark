@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("quark_ffi_signatures_md/generics_Box_quark_Object__set_Method");
 var quark = require('quark').quark;
 exports.quark = quark;
 
@@ -85,7 +86,7 @@ function generics_Box_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_Box_quark_Object_.prototype.__init_fields__ = generics_Box_quark_Object___init_fields__;
-generics_Box_quark_Object_.singleton = new generics_Box_quark_Object_();
+_qrt.lazyStatic(function(){generics_Box_quark_Object_.singleton = new generics_Box_quark_Object_();});
 function generics_Box_quark_Object__construct(args) {
     return new generics.Box();
 }
@@ -191,7 +192,7 @@ function generics_Box_quark_int___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_Box_quark_int_.prototype.__init_fields__ = generics_Box_quark_int___init_fields__;
-generics_Box_quark_int_.singleton = new generics_Box_quark_int_();
+_qrt.lazyStatic(function(){generics_Box_quark_int_.singleton = new generics_Box_quark_int_();});
 function generics_Box_quark_int__construct(args) {
     return new generics.Box();
 }
@@ -297,7 +298,7 @@ function generics_Crate_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_Crate_quark_Object_.prototype.__init_fields__ = generics_Crate_quark_Object___init_fields__;
-generics_Crate_quark_Object_.singleton = new generics_Crate_quark_Object_();
+_qrt.lazyStatic(function(){generics_Crate_quark_Object_.singleton = new generics_Crate_quark_Object_();});
 function generics_Crate_quark_Object__construct(args) {
     return new generics.Crate();
 }
@@ -338,7 +339,7 @@ function generics_Sack__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_Sack.prototype.__init_fields__ = generics_Sack__init_fields__;
-generics_Sack.singleton = new generics_Sack();
+_qrt.lazyStatic(function(){generics_Sack.singleton = new generics_Sack();});
 function generics_Sack_construct(args) {
     return new generics.Sack();
 }
@@ -444,7 +445,7 @@ function generics_Matrix_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_Matrix_quark_Object_.prototype.__init_fields__ = generics_Matrix_quark_Object___init_fields__;
-generics_Matrix_quark_Object_.singleton = new generics_Matrix_quark_Object_();
+_qrt.lazyStatic(function(){generics_Matrix_quark_Object_.singleton = new generics_Matrix_quark_Object_();});
 function generics_Matrix_quark_Object__construct(args) {
     return new generics.Matrix(_qrt.cast((args)[0], function () { return Number; }), _qrt.cast((args)[1], function () { return Number; }));
 }
@@ -517,7 +518,7 @@ function generics_constructors_Box_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_constructors_Box_quark_Object_.prototype.__init_fields__ = generics_constructors_Box_quark_Object___init_fields__;
-generics_constructors_Box_quark_Object_.singleton = new generics_constructors_Box_quark_Object_();
+_qrt.lazyStatic(function(){generics_constructors_Box_quark_Object_.singleton = new generics_constructors_Box_quark_Object_();});
 function generics_constructors_Box_quark_Object__construct(args) {
     return new generics.constructors.Box((args)[0]);
 }
@@ -622,7 +623,7 @@ function generics_pkg_Foo_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_pkg_Foo_quark_Object_.prototype.__init_fields__ = generics_pkg_Foo_quark_Object___init_fields__;
-generics_pkg_Foo_quark_Object_.singleton = new generics_pkg_Foo_quark_Object_();
+_qrt.lazyStatic(function(){generics_pkg_Foo_quark_Object_.singleton = new generics_pkg_Foo_quark_Object_();});
 function generics_pkg_Foo_quark_Object__construct(args) {
     return null;
 }
@@ -727,7 +728,7 @@ function generics_pkg_StringFoo__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_pkg_StringFoo.prototype.__init_fields__ = generics_pkg_StringFoo__init_fields__;
-generics_pkg_StringFoo.singleton = new generics_pkg_StringFoo();
+_qrt.lazyStatic(function(){generics_pkg_StringFoo.singleton = new generics_pkg_StringFoo();});
 function generics_pkg_StringFoo_construct(args) {
     return new generics.pkg.StringFoo();
 }
@@ -768,7 +769,7 @@ function generics_pkg_Box_quark_String___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_pkg_Box_quark_String_.prototype.__init_fields__ = generics_pkg_Box_quark_String___init_fields__;
-generics_pkg_Box_quark_String_.singleton = new generics_pkg_Box_quark_String_();
+_qrt.lazyStatic(function(){generics_pkg_Box_quark_String_.singleton = new generics_pkg_Box_quark_String_();});
 function generics_pkg_Box_quark_String__construct(args) {
     return new generics.pkg.Box(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -809,7 +810,7 @@ function generics_pkg_StringBox__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_pkg_StringBox.prototype.__init_fields__ = generics_pkg_StringBox__init_fields__;
-generics_pkg_StringBox.singleton = new generics_pkg_StringBox();
+_qrt.lazyStatic(function(){generics_pkg_StringBox.singleton = new generics_pkg_StringBox();});
 function generics_pkg_StringBox_construct(args) {
     return new generics.pkg.StringBox(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -882,7 +883,7 @@ function generics_ccc_TLSContextInitializer__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_ccc_TLSContextInitializer.prototype.__init_fields__ = generics_ccc_TLSContextInitializer__init_fields__;
-generics_ccc_TLSContextInitializer.singleton = new generics_ccc_TLSContextInitializer();
+_qrt.lazyStatic(function(){generics_ccc_TLSContextInitializer.singleton = new generics_ccc_TLSContextInitializer();});
 function generics_ccc_TLSContextInitializer_construct(args) {
     return new generics.ccc.TLSContextInitializer();
 }
@@ -987,7 +988,7 @@ function generics_ccc_Context__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_ccc_Context.prototype.__init_fields__ = generics_ccc_Context__init_fields__;
-generics_ccc_Context.singleton = new generics_ccc_Context();
+_qrt.lazyStatic(function(){generics_ccc_Context.singleton = new generics_ccc_Context();});
 function generics_ccc_Context_construct(args) {
     return new generics.ccc.Context(_qrt.cast((args)[0], function () { return generics.ccc.Context; }));
 }
@@ -1060,7 +1061,7 @@ function generics_ccc_TLSInitializer_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_ccc_TLSInitializer_quark_Object_.prototype.__init_fields__ = generics_ccc_TLSInitializer_quark_Object___init_fields__;
-generics_ccc_TLSInitializer_quark_Object_.singleton = new generics_ccc_TLSInitializer_quark_Object_();
+_qrt.lazyStatic(function(){generics_ccc_TLSInitializer_quark_Object_.singleton = new generics_ccc_TLSInitializer_quark_Object_();});
 function generics_ccc_TLSInitializer_quark_Object__construct(args) {
     return null;
 }
@@ -1133,7 +1134,7 @@ function generics_ccc_TLS_generics_ccc_Context___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 generics_ccc_TLS_generics_ccc_Context_.prototype.__init_fields__ = generics_ccc_TLS_generics_ccc_Context___init_fields__;
-generics_ccc_TLS_generics_ccc_Context_.singleton = new generics_ccc_TLS_generics_ccc_Context_();
+_qrt.lazyStatic(function(){generics_ccc_TLS_generics_ccc_Context_.singleton = new generics_ccc_TLS_generics_ccc_Context_();});
 function generics_ccc_TLS_generics_ccc_Context__construct(args) {
     return new generics.ccc.TLS(_qrt.cast((args)[0], function () { return generics.ccc.TLSInitializer; }));
 }
@@ -1174,7 +1175,7 @@ function inheritance_Base__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Base.prototype.__init_fields__ = inheritance_Base__init_fields__;
-inheritance_Base.singleton = new inheritance_Base();
+_qrt.lazyStatic(function(){inheritance_Base.singleton = new inheritance_Base();});
 function inheritance_Base_construct(args) {
     return new inheritance.Base();
 }
@@ -1215,7 +1216,7 @@ function inheritance_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Test.prototype.__init_fields__ = inheritance_Test__init_fields__;
-inheritance_Test.singleton = new inheritance_Test();
+_qrt.lazyStatic(function(){inheritance_Test.singleton = new inheritance_Test();});
 function inheritance_Test_construct(args) {
     return new inheritance.Test();
 }
@@ -1256,7 +1257,7 @@ function inheritance_A__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_A.prototype.__init_fields__ = inheritance_A__init_fields__;
-inheritance_A.singleton = new inheritance_A();
+_qrt.lazyStatic(function(){inheritance_A.singleton = new inheritance_A();});
 function inheritance_A_construct(args) {
     return new inheritance.A(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -1330,7 +1331,7 @@ function inheritance_B__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_B.prototype.__init_fields__ = inheritance_B__init_fields__;
-inheritance_B.singleton = new inheritance_B();
+_qrt.lazyStatic(function(){inheritance_B.singleton = new inheritance_B();});
 function inheritance_B_construct(args) {
     return new inheritance.B(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -1404,7 +1405,7 @@ function inheritance_C__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_C.prototype.__init_fields__ = inheritance_C__init_fields__;
-inheritance_C.singleton = new inheritance_C();
+_qrt.lazyStatic(function(){inheritance_C.singleton = new inheritance_C();});
 function inheritance_C_construct(args) {
     return new inheritance.C(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -1445,7 +1446,7 @@ function inheritance_X__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_X.prototype.__init_fields__ = inheritance_X__init_fields__;
-inheritance_X.singleton = new inheritance_X();
+_qrt.lazyStatic(function(){inheritance_X.singleton = new inheritance_X();});
 function inheritance_X_construct(args) {
     return new inheritance.X();
 }
@@ -1519,7 +1520,7 @@ function inheritance_Y__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Y.prototype.__init_fields__ = inheritance_Y__init_fields__;
-inheritance_Y.singleton = new inheritance_Y();
+_qrt.lazyStatic(function(){inheritance_Y.singleton = new inheritance_Y();});
 function inheritance_Y_construct(args) {
     return new inheritance.Y(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -1593,7 +1594,7 @@ function inheritance_t1_A__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t1_A.prototype.__init_fields__ = inheritance_t1_A__init_fields__;
-inheritance_t1_A.singleton = new inheritance_t1_A();
+_qrt.lazyStatic(function(){inheritance_t1_A.singleton = new inheritance_t1_A();});
 function inheritance_t1_A_construct(args) {
     return new inheritance.t1.A();
 }
@@ -1667,7 +1668,7 @@ function inheritance_t1_B__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t1_B.prototype.__init_fields__ = inheritance_t1_B__init_fields__;
-inheritance_t1_B.singleton = new inheritance_t1_B();
+_qrt.lazyStatic(function(){inheritance_t1_B.singleton = new inheritance_t1_B();});
 function inheritance_t1_B_construct(args) {
     return new inheritance.t1.B();
 }
@@ -1741,7 +1742,7 @@ function inheritance_t1_C__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t1_C.prototype.__init_fields__ = inheritance_t1_C__init_fields__;
-inheritance_t1_C.singleton = new inheritance_t1_C();
+_qrt.lazyStatic(function(){inheritance_t1_C.singleton = new inheritance_t1_C();});
 function inheritance_t1_C_construct(args) {
     return new inheritance.t1.C();
 }
@@ -1782,7 +1783,7 @@ function inheritance_t2_A__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t2_A.prototype.__init_fields__ = inheritance_t2_A__init_fields__;
-inheritance_t2_A.singleton = new inheritance_t2_A();
+_qrt.lazyStatic(function(){inheritance_t2_A.singleton = new inheritance_t2_A();});
 function inheritance_t2_A_construct(args) {
     return new inheritance.t2.A();
 }
@@ -1823,7 +1824,7 @@ function inheritance_t2_B__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t2_B.prototype.__init_fields__ = inheritance_t2_B__init_fields__;
-inheritance_t2_B.singleton = new inheritance_t2_B();
+_qrt.lazyStatic(function(){inheritance_t2_B.singleton = new inheritance_t2_B();});
 function inheritance_t2_B_construct(args) {
     return new inheritance.t2.B();
 }
@@ -1864,7 +1865,7 @@ function inheritance_t2_X_quark_int___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t2_X_quark_int_.prototype.__init_fields__ = inheritance_t2_X_quark_int___init_fields__;
-inheritance_t2_X_quark_int_.singleton = new inheritance_t2_X_quark_int_();
+_qrt.lazyStatic(function(){inheritance_t2_X_quark_int_.singleton = new inheritance_t2_X_quark_int_();});
 function inheritance_t2_X_quark_int__construct(args) {
     return new inheritance.t2.X();
 }
@@ -1905,7 +1906,7 @@ function inheritance_t2_Y__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_t2_Y.prototype.__init_fields__ = inheritance_t2_Y__init_fields__;
-inheritance_t2_Y.singleton = new inheritance_t2_Y();
+_qrt.lazyStatic(function(){inheritance_t2_Y.singleton = new inheritance_t2_Y();});
 function inheritance_t2_Y_construct(args) {
     return new inheritance.t2.Y();
 }
@@ -1979,7 +1980,7 @@ function inheritance_pets_Pet__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_pets_Pet.prototype.__init_fields__ = inheritance_pets_Pet__init_fields__;
-inheritance_pets_Pet.singleton = new inheritance_pets_Pet();
+_qrt.lazyStatic(function(){inheritance_pets_Pet.singleton = new inheritance_pets_Pet();});
 function inheritance_pets_Pet_construct(args) {
     return null;
 }
@@ -2053,7 +2054,7 @@ function inheritance_pets_Cat__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_pets_Cat.prototype.__init_fields__ = inheritance_pets_Cat__init_fields__;
-inheritance_pets_Cat.singleton = new inheritance_pets_Cat();
+_qrt.lazyStatic(function(){inheritance_pets_Cat.singleton = new inheritance_pets_Cat();});
 function inheritance_pets_Cat_construct(args) {
     return new inheritance.pets.Cat();
 }
@@ -2127,7 +2128,7 @@ function inheritance_pets_Dog__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_pets_Dog.prototype.__init_fields__ = inheritance_pets_Dog__init_fields__;
-inheritance_pets_Dog.singleton = new inheritance_pets_Dog();
+_qrt.lazyStatic(function(){inheritance_pets_Dog.singleton = new inheritance_pets_Dog();});
 function inheritance_pets_Dog_construct(args) {
     return new inheritance.pets.Dog();
 }
@@ -2200,7 +2201,7 @@ function inheritance_Message__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Message.prototype.__init_fields__ = inheritance_Message__init_fields__;
-inheritance_Message.singleton = new inheritance_Message();
+_qrt.lazyStatic(function(){inheritance_Message.singleton = new inheritance_Message();});
 function inheritance_Message_construct(args) {
     return new inheritance.Message();
 }
@@ -2273,7 +2274,7 @@ function inheritance_Ping__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Ping.prototype.__init_fields__ = inheritance_Ping__init_fields__;
-inheritance_Ping.singleton = new inheritance_Ping();
+_qrt.lazyStatic(function(){inheritance_Ping.singleton = new inheritance_Ping();});
 function inheritance_Ping_construct(args) {
     return new inheritance.Ping();
 }
@@ -2378,7 +2379,7 @@ function inheritance_Pong__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_Pong.prototype.__init_fields__ = inheritance_Pong__init_fields__;
-inheritance_Pong.singleton = new inheritance_Pong();
+_qrt.lazyStatic(function(){inheritance_Pong.singleton = new inheritance_Pong();});
 function inheritance_Pong_construct(args) {
     return new inheritance.Pong();
 }
@@ -2452,7 +2453,7 @@ function inheritance_super__A__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_super__A.prototype.__init_fields__ = inheritance_super__A__init_fields__;
-inheritance_super__A.singleton = new inheritance_super__A();
+_qrt.lazyStatic(function(){inheritance_super__A.singleton = new inheritance_super__A();});
 function inheritance_super__A_construct(args) {
     return new inheritance.super_.A(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -2526,7 +2527,7 @@ function inheritance_super__B__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_super__B.prototype.__init_fields__ = inheritance_super__B__init_fields__;
-inheritance_super__B.singleton = new inheritance_super__B();
+_qrt.lazyStatic(function(){inheritance_super__B.singleton = new inheritance_super__B();});
 function inheritance_super__B_construct(args) {
     return new inheritance.super_.B();
 }
@@ -2600,7 +2601,7 @@ function inheritance_use_before_def_Bar__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_use_before_def_Bar.prototype.__init_fields__ = inheritance_use_before_def_Bar__init_fields__;
-inheritance_use_before_def_Bar.singleton = new inheritance_use_before_def_Bar();
+_qrt.lazyStatic(function(){inheritance_use_before_def_Bar.singleton = new inheritance_use_before_def_Bar();});
 function inheritance_use_before_def_Bar_construct(args) {
     return new inheritance.use_before_def.Bar();
 }
@@ -2641,7 +2642,7 @@ function inheritance_use_before_def_Foo__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 inheritance_use_before_def_Foo.prototype.__init_fields__ = inheritance_use_before_def_Foo__init_fields__;
-inheritance_use_before_def_Foo.singleton = new inheritance_use_before_def_Foo();
+_qrt.lazyStatic(function(){inheritance_use_before_def_Foo.singleton = new inheritance_use_before_def_Foo();});
 function inheritance_use_before_def_Foo_construct(args) {
     return new inheritance.use_before_def.Foo();
 }
@@ -2748,7 +2749,7 @@ function interfaces_A__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_A.prototype.__init_fields__ = interfaces_A__init_fields__;
-interfaces_A.singleton = new interfaces_A();
+_qrt.lazyStatic(function(){interfaces_A.singleton = new interfaces_A();});
 function interfaces_A_construct(args) {
     return null;
 }
@@ -2822,7 +2823,7 @@ function interfaces_B__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_B.prototype.__init_fields__ = interfaces_B__init_fields__;
-interfaces_B.singleton = new interfaces_B();
+_qrt.lazyStatic(function(){interfaces_B.singleton = new interfaces_B();});
 function interfaces_B_construct(args) {
     return null;
 }
@@ -2896,7 +2897,7 @@ function interfaces_C__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_C.prototype.__init_fields__ = interfaces_C__init_fields__;
-interfaces_C.singleton = new interfaces_C();
+_qrt.lazyStatic(function(){interfaces_C.singleton = new interfaces_C();});
 function interfaces_C_construct(args) {
     return null;
 }
@@ -3003,7 +3004,7 @@ function interfaces_T1__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_T1.prototype.__init_fields__ = interfaces_T1__init_fields__;
-interfaces_T1.singleton = new interfaces_T1();
+_qrt.lazyStatic(function(){interfaces_T1.singleton = new interfaces_T1();});
 function interfaces_T1_construct(args) {
     return new interfaces.T1();
 }
@@ -3110,7 +3111,7 @@ function interfaces_T2__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_T2.prototype.__init_fields__ = interfaces_T2__init_fields__;
-interfaces_T2.singleton = new interfaces_T2();
+_qrt.lazyStatic(function(){interfaces_T2.singleton = new interfaces_T2();});
 function interfaces_T2_construct(args) {
     return new interfaces.T2();
 }
@@ -3217,7 +3218,7 @@ function interfaces_T3__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_T3.prototype.__init_fields__ = interfaces_T3__init_fields__;
-interfaces_T3.singleton = new interfaces_T3();
+_qrt.lazyStatic(function(){interfaces_T3.singleton = new interfaces_T3();});
 function interfaces_T3_construct(args) {
     return new interfaces.T3();
 }
@@ -3324,7 +3325,7 @@ function interfaces_T4__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_T4.prototype.__init_fields__ = interfaces_T4__init_fields__;
-interfaces_T4.singleton = new interfaces_T4();
+_qrt.lazyStatic(function(){interfaces_T4.singleton = new interfaces_T4();});
 function interfaces_T4_construct(args) {
     return new interfaces.T4();
 }
@@ -3431,7 +3432,7 @@ function interfaces_T5__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_T5.prototype.__init_fields__ = interfaces_T5__init_fields__;
-interfaces_T5.singleton = new interfaces_T5();
+_qrt.lazyStatic(function(){interfaces_T5.singleton = new interfaces_T5();});
 function interfaces_T5_construct(args) {
     return new interfaces.T5();
 }
@@ -3571,7 +3572,7 @@ function interfaces_Foo__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_Foo.prototype.__init_fields__ = interfaces_Foo__init_fields__;
-interfaces_Foo.singleton = new interfaces_Foo();
+_qrt.lazyStatic(function(){interfaces_Foo.singleton = new interfaces_Foo();});
 function interfaces_Foo_construct(args) {
     return null;
 }
@@ -3711,7 +3712,7 @@ function interfaces_Bar_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_Bar_quark_Object_.prototype.__init_fields__ = interfaces_Bar_quark_Object___init_fields__;
-interfaces_Bar_quark_Object_.singleton = new interfaces_Bar_quark_Object_();
+_qrt.lazyStatic(function(){interfaces_Bar_quark_Object_.singleton = new interfaces_Bar_quark_Object_();});
 function interfaces_Bar_quark_Object__construct(args) {
     return null;
 }
@@ -3851,7 +3852,7 @@ function interfaces_Baz__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_Baz.prototype.__init_fields__ = interfaces_Baz__init_fields__;
-interfaces_Baz.singleton = new interfaces_Baz();
+_qrt.lazyStatic(function(){interfaces_Baz.singleton = new interfaces_Baz();});
 function interfaces_Baz_construct(args) {
     return new interfaces.Baz();
 }
@@ -3991,7 +3992,7 @@ function interfaces_RazBar__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_RazBar.prototype.__init_fields__ = interfaces_RazBar__init_fields__;
-interfaces_RazBar.singleton = new interfaces_RazBar();
+_qrt.lazyStatic(function(){interfaces_RazBar.singleton = new interfaces_RazBar();});
 function interfaces_RazBar_construct(args) {
     return null;
 }
@@ -4131,7 +4132,7 @@ function interfaces_RazFaz_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_RazFaz_quark_Object_.prototype.__init_fields__ = interfaces_RazFaz_quark_Object___init_fields__;
-interfaces_RazFaz_quark_Object_.singleton = new interfaces_RazFaz_quark_Object_();
+_qrt.lazyStatic(function(){interfaces_RazFaz_quark_Object_.singleton = new interfaces_RazFaz_quark_Object_();});
 function interfaces_RazFaz_quark_Object__construct(args) {
     return null;
 }
@@ -4271,7 +4272,7 @@ function interfaces_BazBar__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_BazBar.prototype.__init_fields__ = interfaces_BazBar__init_fields__;
-interfaces_BazBar.singleton = new interfaces_BazBar();
+_qrt.lazyStatic(function(){interfaces_BazBar.singleton = new interfaces_BazBar();});
 function interfaces_BazBar_construct(args) {
     return new interfaces.BazBar();
 }
@@ -4411,7 +4412,7 @@ function interfaces_BazFaz_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_BazFaz_quark_Object_.prototype.__init_fields__ = interfaces_BazFaz_quark_Object___init_fields__;
-interfaces_BazFaz_quark_Object_.singleton = new interfaces_BazFaz_quark_Object_();
+_qrt.lazyStatic(function(){interfaces_BazFaz_quark_Object_.singleton = new interfaces_BazFaz_quark_Object_();});
 function interfaces_BazFaz_quark_Object__construct(args) {
     return new interfaces.BazFaz();
 }
@@ -4452,7 +4453,7 @@ function interfaces_IConstants__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_IConstants.prototype.__init_fields__ = interfaces_IConstants__init_fields__;
-interfaces_IConstants.singleton = new interfaces_IConstants();
+_qrt.lazyStatic(function(){interfaces_IConstants.singleton = new interfaces_IConstants();});
 function interfaces_IConstants_construct(args) {
     return null;
 }
@@ -4493,7 +4494,7 @@ function interfaces_Constants__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 interfaces_Constants.prototype.__init_fields__ = interfaces_Constants__init_fields__;
-interfaces_Constants.singleton = new interfaces_Constants();
+_qrt.lazyStatic(function(){interfaces_Constants.singleton = new interfaces_Constants();});
 function interfaces_Constants_construct(args) {
     return new interfaces.Constants();
 }
@@ -4631,7 +4632,7 @@ function classes_Overload__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_Overload.prototype.__init_fields__ = classes_Overload__init_fields__;
-classes_Overload.singleton = new classes_Overload();
+_qrt.lazyStatic(function(){classes_Overload.singleton = new classes_Overload();});
 function classes_Overload_construct(args) {
     return new classes.Overload(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -4705,7 +4706,7 @@ function classes_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_Test.prototype.__init_fields__ = classes_Test__init_fields__;
-classes_Test.singleton = new classes_Test();
+_qrt.lazyStatic(function(){classes_Test.singleton = new classes_Test();});
 function classes_Test_construct(args) {
     return new classes.Test();
 }
@@ -4779,7 +4780,7 @@ function classes_string_test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_string_test.prototype.__init_fields__ = classes_string_test__init_fields__;
-classes_string_test.singleton = new classes_string_test();
+_qrt.lazyStatic(function(){classes_string_test.singleton = new classes_string_test();});
 function classes_string_test_construct(args) {
     return new classes.string_test();
 }
@@ -4885,7 +4886,7 @@ function classes_test_size__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_size.prototype.__init_fields__ = classes_test_size__init_fields__;
-classes_test_size.singleton = new classes_test_size();
+_qrt.lazyStatic(function(){classes_test_size.singleton = new classes_test_size();});
 function classes_test_size_construct(args) {
     return new classes.test_size(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5023,7 +5024,7 @@ function classes_test_startsWith__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_startsWith.prototype.__init_fields__ = classes_test_startsWith__init_fields__;
-classes_test_startsWith.singleton = new classes_test_startsWith();
+_qrt.lazyStatic(function(){classes_test_startsWith.singleton = new classes_test_startsWith();});
 function classes_test_startsWith_construct(args) {
     return new classes.test_startsWith(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5161,7 +5162,7 @@ function classes_test_endsWith__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_endsWith.prototype.__init_fields__ = classes_test_endsWith__init_fields__;
-classes_test_endsWith.singleton = new classes_test_endsWith();
+_qrt.lazyStatic(function(){classes_test_endsWith.singleton = new classes_test_endsWith();});
 function classes_test_endsWith_construct(args) {
     return new classes.test_endsWith(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5299,7 +5300,7 @@ function classes_test_find__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_find.prototype.__init_fields__ = classes_test_find__init_fields__;
-classes_test_find.singleton = new classes_test_find();
+_qrt.lazyStatic(function(){classes_test_find.singleton = new classes_test_find();});
 function classes_test_find_construct(args) {
     return new classes.test_find(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5437,7 +5438,7 @@ function classes_test_substring__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_substring.prototype.__init_fields__ = classes_test_substring__init_fields__;
-classes_test_substring.singleton = new classes_test_substring();
+_qrt.lazyStatic(function(){classes_test_substring.singleton = new classes_test_substring();});
 function classes_test_substring_construct(args) {
     return new classes.test_substring(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5575,7 +5576,7 @@ function classes_test_replace__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_replace.prototype.__init_fields__ = classes_test_replace__init_fields__;
-classes_test_replace.singleton = new classes_test_replace();
+_qrt.lazyStatic(function(){classes_test_replace.singleton = new classes_test_replace();});
 function classes_test_replace_construct(args) {
     return new classes.test_replace(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5745,7 +5746,7 @@ function classes_test_join__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_join.prototype.__init_fields__ = classes_test_join__init_fields__;
-classes_test_join.singleton = new classes_test_join();
+_qrt.lazyStatic(function(){classes_test_join.singleton = new classes_test_join();});
 function classes_test_join_construct(args) {
     return new classes.test_join(_qrt.cast((args)[0], function () { return String; }));
 }
@@ -5883,7 +5884,7 @@ function classes_test_split__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_test_split.prototype.__init_fields__ = classes_test_split__init_fields__;
-classes_test_split.singleton = new classes_test_split();
+_qrt.lazyStatic(function(){classes_test_split.singleton = new classes_test_split();});
 function classes_test_split_construct(args) {
     return new classes.test_split(_qrt.cast((args)[0], function () { return String; }), _qrt.cast((args)[1], function () { return String; }));
 }
@@ -5989,7 +5990,7 @@ function classes_stuff_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 classes_stuff_Test.prototype.__init_fields__ = classes_stuff_Test__init_fields__;
-classes_stuff_Test.singleton = new classes_stuff_Test();
+_qrt.lazyStatic(function(){classes_stuff_Test.singleton = new classes_stuff_Test();});
 function classes_stuff_Test_construct(args) {
     return new classes.stuff.Test();
 }
@@ -6227,7 +6228,7 @@ function statics_Foo__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 statics_Foo.prototype.__init_fields__ = statics_Foo__init_fields__;
-statics_Foo.singleton = new statics_Foo();
+_qrt.lazyStatic(function(){statics_Foo.singleton = new statics_Foo();});
 function statics_Foo_construct(args) {
     return new statics.Foo();
 }
@@ -6300,7 +6301,7 @@ function docs_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 docs_Test.prototype.__init_fields__ = docs_Test__init_fields__;
-docs_Test.singleton = new docs_Test();
+_qrt.lazyStatic(function(){docs_Test.singleton = new docs_Test();});
 function docs_Test_construct(args) {
     return new docs.Test();
 }
@@ -6341,7 +6342,7 @@ function quark_List_quark_List_quark_Object____init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 quark_List_quark_List_quark_Object__.prototype.__init_fields__ = quark_List_quark_List_quark_Object____init_fields__;
-quark_List_quark_List_quark_Object__.singleton = new quark_List_quark_List_quark_Object__();
+_qrt.lazyStatic(function(){quark_List_quark_List_quark_Object__.singleton = new quark_List_quark_List_quark_Object__();});
 function quark_List_quark_List_quark_Object___construct(args) {
     return new Array();
 }
@@ -6382,7 +6383,7 @@ function quark_List_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 quark_List_quark_Object_.prototype.__init_fields__ = quark_List_quark_Object___init_fields__;
-quark_List_quark_Object_.singleton = new quark_List_quark_Object_();
+_qrt.lazyStatic(function(){quark_List_quark_Object_.singleton = new quark_List_quark_Object_();});
 function quark_List_quark_Object__construct(args) {
     return new Array();
 }
@@ -6423,7 +6424,7 @@ function quark_List_quark_String___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 quark_List_quark_String_.prototype.__init_fields__ = quark_List_quark_String___init_fields__;
-quark_List_quark_String_.singleton = new quark_List_quark_String_();
+_qrt.lazyStatic(function(){quark_List_quark_String_.singleton = new quark_List_quark_String_();});
 function quark_List_quark_String__construct(args) {
     return new Array();
 }
@@ -6455,78 +6456,78 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.generics_Box_quark_Object__md = generics_Box_quark_Object_.singleton;
-Root.generics_Box_quark_int__md = generics_Box_quark_int_.singleton;
-Root.generics_Crate_quark_Object__md = generics_Crate_quark_Object_.singleton;
-Root.generics_Sack_md = generics_Sack.singleton;
-Root.generics_Matrix_quark_Object__md = generics_Matrix_quark_Object_.singleton;
-Root.generics_constructors_Box_quark_Object__md = generics_constructors_Box_quark_Object_.singleton;
-Root.generics_pkg_Foo_quark_Object__md = generics_pkg_Foo_quark_Object_.singleton;
-Root.generics_pkg_StringFoo_md = generics_pkg_StringFoo.singleton;
-Root.generics_pkg_Box_quark_String__md = generics_pkg_Box_quark_String_.singleton;
-Root.generics_pkg_StringBox_md = generics_pkg_StringBox.singleton;
-Root.generics_ccc_TLSContextInitializer_md = generics_ccc_TLSContextInitializer.singleton;
-Root.generics_ccc_Context_md = generics_ccc_Context.singleton;
-Root.generics_ccc_TLSInitializer_quark_Object__md = generics_ccc_TLSInitializer_quark_Object_.singleton;
-Root.generics_ccc_TLS_generics_ccc_Context__md = generics_ccc_TLS_generics_ccc_Context_.singleton;
-Root.inheritance_Base_md = inheritance_Base.singleton;
-Root.inheritance_Test_md = inheritance_Test.singleton;
-Root.inheritance_A_md = inheritance_A.singleton;
-Root.inheritance_B_md = inheritance_B.singleton;
-Root.inheritance_C_md = inheritance_C.singleton;
-Root.inheritance_X_md = inheritance_X.singleton;
-Root.inheritance_Y_md = inheritance_Y.singleton;
-Root.inheritance_t1_A_md = inheritance_t1_A.singleton;
-Root.inheritance_t1_B_md = inheritance_t1_B.singleton;
-Root.inheritance_t1_C_md = inheritance_t1_C.singleton;
-Root.inheritance_t2_A_md = inheritance_t2_A.singleton;
-Root.inheritance_t2_B_md = inheritance_t2_B.singleton;
-Root.inheritance_t2_X_quark_int__md = inheritance_t2_X_quark_int_.singleton;
-Root.inheritance_t2_Y_md = inheritance_t2_Y.singleton;
-Root.inheritance_pets_Pet_md = inheritance_pets_Pet.singleton;
-Root.inheritance_pets_Cat_md = inheritance_pets_Cat.singleton;
-Root.inheritance_pets_Dog_md = inheritance_pets_Dog.singleton;
-Root.inheritance_Message_md = inheritance_Message.singleton;
-Root.inheritance_Ping_md = inheritance_Ping.singleton;
-Root.inheritance_Pong_md = inheritance_Pong.singleton;
-Root.inheritance_super__A_md = inheritance_super__A.singleton;
-Root.inheritance_super__B_md = inheritance_super__B.singleton;
-Root.inheritance_use_before_def_Bar_md = inheritance_use_before_def_Bar.singleton;
-Root.inheritance_use_before_def_Foo_md = inheritance_use_before_def_Foo.singleton;
-Root.interfaces_A_md = interfaces_A.singleton;
-Root.interfaces_B_md = interfaces_B.singleton;
-Root.interfaces_C_md = interfaces_C.singleton;
-Root.interfaces_T1_md = interfaces_T1.singleton;
-Root.interfaces_T2_md = interfaces_T2.singleton;
-Root.interfaces_T3_md = interfaces_T3.singleton;
-Root.interfaces_T4_md = interfaces_T4.singleton;
-Root.interfaces_T5_md = interfaces_T5.singleton;
-Root.interfaces_Foo_md = interfaces_Foo.singleton;
-Root.interfaces_Bar_quark_Object__md = interfaces_Bar_quark_Object_.singleton;
-Root.interfaces_Baz_md = interfaces_Baz.singleton;
-Root.interfaces_RazBar_md = interfaces_RazBar.singleton;
-Root.interfaces_RazFaz_quark_Object__md = interfaces_RazFaz_quark_Object_.singleton;
-Root.interfaces_BazBar_md = interfaces_BazBar.singleton;
-Root.interfaces_BazFaz_quark_Object__md = interfaces_BazFaz_quark_Object_.singleton;
-Root.interfaces_IConstants_md = interfaces_IConstants.singleton;
-Root.interfaces_Constants_md = interfaces_Constants.singleton;
-Root.classes_Overload_md = classes_Overload.singleton;
-Root.classes_Test_md = classes_Test.singleton;
-Root.classes_string_test_md = classes_string_test.singleton;
-Root.classes_test_size_md = classes_test_size.singleton;
-Root.classes_test_startsWith_md = classes_test_startsWith.singleton;
-Root.classes_test_endsWith_md = classes_test_endsWith.singleton;
-Root.classes_test_find_md = classes_test_find.singleton;
-Root.classes_test_substring_md = classes_test_substring.singleton;
-Root.classes_test_replace_md = classes_test_replace.singleton;
-Root.classes_test_join_md = classes_test_join.singleton;
-Root.classes_test_split_md = classes_test_split.singleton;
-Root.classes_stuff_Test_md = classes_stuff_Test.singleton;
-Root.statics_Foo_md = statics_Foo.singleton;
-Root.docs_Test_md = docs_Test.singleton;
-Root.quark_List_quark_List_quark_Object___md = quark_List_quark_List_quark_Object__.singleton;
-Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;
-Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;
+_qrt.lazyStatic(function(){Root.generics_Box_quark_Object__md = generics_Box_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_Box_quark_int__md = generics_Box_quark_int_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_Crate_quark_Object__md = generics_Crate_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_Sack_md = generics_Sack.singleton;});
+_qrt.lazyStatic(function(){Root.generics_Matrix_quark_Object__md = generics_Matrix_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_constructors_Box_quark_Object__md = generics_constructors_Box_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_pkg_Foo_quark_Object__md = generics_pkg_Foo_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_pkg_StringFoo_md = generics_pkg_StringFoo.singleton;});
+_qrt.lazyStatic(function(){Root.generics_pkg_Box_quark_String__md = generics_pkg_Box_quark_String_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_pkg_StringBox_md = generics_pkg_StringBox.singleton;});
+_qrt.lazyStatic(function(){Root.generics_ccc_TLSContextInitializer_md = generics_ccc_TLSContextInitializer.singleton;});
+_qrt.lazyStatic(function(){Root.generics_ccc_Context_md = generics_ccc_Context.singleton;});
+_qrt.lazyStatic(function(){Root.generics_ccc_TLSInitializer_quark_Object__md = generics_ccc_TLSInitializer_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.generics_ccc_TLS_generics_ccc_Context__md = generics_ccc_TLS_generics_ccc_Context_.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Base_md = inheritance_Base.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Test_md = inheritance_Test.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_A_md = inheritance_A.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_B_md = inheritance_B.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_C_md = inheritance_C.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_X_md = inheritance_X.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Y_md = inheritance_Y.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t1_A_md = inheritance_t1_A.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t1_B_md = inheritance_t1_B.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t1_C_md = inheritance_t1_C.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t2_A_md = inheritance_t2_A.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t2_B_md = inheritance_t2_B.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t2_X_quark_int__md = inheritance_t2_X_quark_int_.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_t2_Y_md = inheritance_t2_Y.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_pets_Pet_md = inheritance_pets_Pet.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_pets_Cat_md = inheritance_pets_Cat.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_pets_Dog_md = inheritance_pets_Dog.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Message_md = inheritance_Message.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Ping_md = inheritance_Ping.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_Pong_md = inheritance_Pong.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_super__A_md = inheritance_super__A.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_super__B_md = inheritance_super__B.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_use_before_def_Bar_md = inheritance_use_before_def_Bar.singleton;});
+_qrt.lazyStatic(function(){Root.inheritance_use_before_def_Foo_md = inheritance_use_before_def_Foo.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_A_md = interfaces_A.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_B_md = interfaces_B.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_C_md = interfaces_C.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_T1_md = interfaces_T1.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_T2_md = interfaces_T2.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_T3_md = interfaces_T3.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_T4_md = interfaces_T4.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_T5_md = interfaces_T5.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_Foo_md = interfaces_Foo.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_Bar_quark_Object__md = interfaces_Bar_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_Baz_md = interfaces_Baz.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_RazBar_md = interfaces_RazBar.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_RazFaz_quark_Object__md = interfaces_RazFaz_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_BazBar_md = interfaces_BazBar.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_BazFaz_quark_Object__md = interfaces_BazFaz_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_IConstants_md = interfaces_IConstants.singleton;});
+_qrt.lazyStatic(function(){Root.interfaces_Constants_md = interfaces_Constants.singleton;});
+_qrt.lazyStatic(function(){Root.classes_Overload_md = classes_Overload.singleton;});
+_qrt.lazyStatic(function(){Root.classes_Test_md = classes_Test.singleton;});
+_qrt.lazyStatic(function(){Root.classes_string_test_md = classes_string_test.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_size_md = classes_test_size.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_startsWith_md = classes_test_startsWith.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_endsWith_md = classes_test_endsWith.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_find_md = classes_test_find.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_substring_md = classes_test_substring.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_replace_md = classes_test_replace.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_join_md = classes_test_join.singleton;});
+_qrt.lazyStatic(function(){Root.classes_test_split_md = classes_test_split.singleton;});
+_qrt.lazyStatic(function(){Root.classes_stuff_Test_md = classes_stuff_Test.singleton;});
+_qrt.lazyStatic(function(){Root.statics_Foo_md = statics_Foo.singleton;});
+_qrt.lazyStatic(function(){Root.docs_Test_md = docs_Test.singleton;});
+_qrt.lazyStatic(function(){Root.quark_List_quark_List_quark_Object___md = quark_List_quark_List_quark_Object__.singleton;});
+_qrt.lazyStatic(function(){Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton;});
+_qrt.lazyStatic(function(){Root.quark_List_quark_String__md = quark_List_quark_String_.singleton;});
 function Root__getClass() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -6540,33 +6541,45 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var generics = require('../generics/index.js');
-exports.generics = generics;
-var generics = require('../generics/index.js');
-exports.generics = generics;
-var generics = require('../generics/index.js');
-exports.generics = generics;
-var generics = require('../generics/index.js');
-exports.generics = generics;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var inheritance = require('../inheritance/index.js');
-exports.inheritance = inheritance;
-var interfaces = require('../interfaces/index.js');
-exports.interfaces = interfaces;
-var classes = require('../classes/index.js');
-exports.classes = classes;
-var classes = require('../classes/index.js');
-exports.classes = classes;
-var statics = require('../statics/index.js');
-exports.statics = statics;
-var docs = require('../docs/index.js');
-exports.docs = docs;
+var generics; _qrt.lazyImport('../generics/index.js', function(){
+    generics = require('../generics/index.js');
+    exports.generics = generics;
+});
+
+
+
+
+var inheritance; _qrt.lazyImport('../inheritance/index.js', function(){
+    inheritance = require('../inheritance/index.js');
+    exports.inheritance = inheritance;
+});
+
+
+
+
+
+
+var interfaces; _qrt.lazyImport('../interfaces/index.js', function(){
+    interfaces = require('../interfaces/index.js');
+    exports.interfaces = interfaces;
+});
+
+var classes; _qrt.lazyImport('../classes/index.js', function(){
+    classes = require('../classes/index.js');
+    exports.classes = classes;
+});
+
+
+var statics; _qrt.lazyImport('../statics/index.js', function(){
+    statics = require('../statics/index.js');
+    exports.statics = statics;
+});
+
+var docs; _qrt.lazyImport('../docs/index.js', function(){
+    docs = require('../docs/index.js');
+    exports.docs = docs;
+});
+
+
+
+_qrt.pumpImports("quark_ffi_signatures_md/generics_Box_quark_Object__set_Method");

@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("org.example.bar")
 import quark.reflect
-import overlapping_namespace_md
 
 
 class Bar(_QObject):
@@ -27,3 +26,12 @@ class Bar(_QObject):
     def _setField(self, name, value):
         pass
 Bar.org_example_bar_Bar_ref = None
+
+def _lazy_import_overlapping_namespace_md():
+    import overlapping_namespace_md
+    globals().update(locals())
+_lazyImport("import overlapping_namespace_md", _lazy_import_overlapping_namespace_md)
+
+
+
+_lazyImport.pump("org.example.bar")

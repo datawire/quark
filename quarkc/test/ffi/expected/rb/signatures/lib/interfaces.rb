@@ -3,7 +3,6 @@ require "quark"
 def self.interfaces; Interfaces; end
 module Interfaces
 require 'quark' # .../reflect
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.A; A; end
@@ -855,5 +854,9 @@ class Constants < ::DatawireQuarkCore::QuarkObject
 
 end
 Constants.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Interfaces
 end # module Quark

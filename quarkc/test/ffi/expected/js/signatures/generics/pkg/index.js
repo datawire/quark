@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("generics/pkg");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.generics_pkg_Foo_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Foo.generics_pkg_Foo_quark_Object__ref = null;});
 function Foo_foo() {
     return _qrt.cast(null, function () { return T; });
 }
@@ -31,7 +30,7 @@ exports.StringFoo = StringFoo;
 
 function StringFoo__init_fields__() {}
 StringFoo.prototype.__init_fields__ = StringFoo__init_fields__;
-StringFoo.generics_pkg_StringFoo_ref = null;
+_qrt.lazyStatic(function(){StringFoo.generics_pkg_StringFoo_ref = null;});
 function StringFoo_get() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -99,8 +98,8 @@ function StringBox__init_fields__() {
     Box.prototype.__init_fields__.call(this);
 }
 StringBox.prototype.__init_fields__ = StringBox__init_fields__;
-StringBox.generics_pkg_Box_quark_String__ref = null;
-StringBox.generics_pkg_StringBox_ref = null;
+_qrt.lazyStatic(function(){StringBox.generics_pkg_Box_quark_String__ref = null;});
+_qrt.lazyStatic(function(){StringBox.generics_pkg_StringBox_ref = null;});
 function StringBox__getClass() {
     return "generics.pkg.StringBox";
 }
@@ -120,3 +119,12 @@ function StringBox__setField(name, value) {
     }
 }
 StringBox.prototype._setField = StringBox__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("generics/pkg");

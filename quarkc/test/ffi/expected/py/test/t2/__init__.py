@@ -5,8 +5,9 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("t2")
 
 
 def atest():
     pass
+_lazyImport.pump("t2")

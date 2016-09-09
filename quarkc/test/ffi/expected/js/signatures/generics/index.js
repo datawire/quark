@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("generics");
 var quark = require('quark').quark;
 exports.quark = quark;
 var constructors = require('./constructors/index.js');
@@ -7,8 +8,6 @@ var pkg = require('./pkg/index.js');
 exports.pkg = pkg;
 var ccc = require('./ccc/index.js');
 exports.ccc = ccc;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -62,9 +61,9 @@ function Crate__init_fields__() {
     this.ibox = null;
 }
 Crate.prototype.__init_fields__ = Crate__init_fields__;
-Crate.generics_Box_quark_Object__ref = null;
-Crate.generics_Box_quark_int__ref = null;
-Crate.generics_Crate_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Crate.generics_Box_quark_Object__ref = null;});
+_qrt.lazyStatic(function(){Crate.generics_Box_quark_int__ref = null;});
+_qrt.lazyStatic(function(){Crate.generics_Crate_quark_Object__ref = null;});
 function Crate_set(stuff) {}
 Crate.prototype.set = Crate_set;
 
@@ -109,7 +108,7 @@ function Sack__init_fields__() {
     this.ints = null;
 }
 Sack.prototype.__init_fields__ = Sack__init_fields__;
-Sack.generics_Sack_ref = null;
+_qrt.lazyStatic(function(){Sack.generics_Sack_ref = null;});
 function Sack__getClass() {
     return "generics.Sack";
 }
@@ -143,9 +142,9 @@ function Matrix__init_fields__() {
     this.columns = null;
 }
 Matrix.prototype.__init_fields__ = Matrix__init_fields__;
-Matrix.generics_Matrix_quark_Object__ref = null;
-Matrix.quark_List_quark_List_quark_Object___ref = null;
-Matrix.quark_List_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Matrix.generics_Matrix_quark_Object__ref = null;});
+_qrt.lazyStatic(function(){Matrix.quark_List_quark_List_quark_Object___ref = null;});
+_qrt.lazyStatic(function(){Matrix.quark_List_quark_Object__ref = null;});
 function Matrix___get__(i, j) {
     return _qrt.cast(null, function () { return T; });
 }
@@ -185,3 +184,12 @@ function Matrix__setField(name, value) {
     }
 }
 Matrix.prototype._setField = Matrix__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("generics");

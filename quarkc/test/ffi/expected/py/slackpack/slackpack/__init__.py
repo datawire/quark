@@ -5,11 +5,10 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("slackpack")
 import quark.reflect
 import slack
 import slack.event
-import slackpack_md
 
 
 class Handler(_QObject):
@@ -38,3 +37,12 @@ class Handler(_QObject):
     def onMessage(self, message):
         pass
 Handler.slackpack_Handler_ref = None
+
+def _lazy_import_slackpack_md():
+    import slackpack_md
+    globals().update(locals())
+_lazyImport("import slackpack_md", _lazy_import_slackpack_md)
+
+
+
+_lazyImport.pump("slackpack")

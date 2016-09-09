@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("overlapping_namespace_md.org_example_bar_Bar_test_Method")
 import quark.reflect
 
 class org_example_bar_Bar_test_Method(quark.reflect.Method):
@@ -71,4 +71,11 @@ class Root(_QObject):
         pass
 Root.org_example_bar_Bar_md = org_example_bar_Bar.singleton
 
-import org.example.bar
+def _lazy_import_org_example_bar():
+    import org.example.bar
+    globals().update(locals())
+_lazyImport("import org.example.bar", _lazy_import_org_example_bar)
+
+
+
+_lazyImport.pump("overlapping_namespace_md.org_example_bar_Bar_test_Method")
