@@ -64,11 +64,10 @@ def package_file(path, name, fname):
 def make_class_file(path, name, rtloc=BUILTIN, why="class"):
     what = "/".join(list(path) + [name])
     head=dedent('''\
-        // %s
         var _qrt = require("%s/quark_runtime.js");
         _qrt.plugImports("%s");
-    ''' % (why, rtloc, what))
-    tail=dedent('''\
+    ''' % (rtloc, what))
+    tail=dedent('''\n\
         _qrt.pumpImports("%s");
     ''' % (what))
     return Code(comment, head=head, tail=tail)
@@ -117,8 +116,18 @@ def import_(path, origin, dep, seen=None, lazy=False):
             prefix = "../"*len(origin)
         req = prefix + qual[0] + "/index.js"
     if lazy:
-        return "var %s;\n_qrt.lazyImport('%s', function(){%s = require('%s')%s;\n  exports.%s = %s;}, 0);" % (qual[0], req, qual[0], req, extra, qual[0], qual[0])
-    return "var %s = require('%s')%s;\nexports.%s = %s; // %s" % (qual[0], req, extra, qual[0], qual[0], dep)
+        return dedent(
+            """\
+            var %s; _qrt.lazyImport('%s', function(){
+                %s = require('%s')%s;
+                exports.%s = %s;
+            });
+            """) % (qual[0], req,
+                    qual[0], req, extra,
+                    qual[0], qual[0])
+    else:
+        return "var %s = require('%s')%s;\nexports.%s = %s;" % (
+            qual[0], req, extra, qual[0], qual[0])
 
 def qualify(package, origin):
     if package == origin: return []
