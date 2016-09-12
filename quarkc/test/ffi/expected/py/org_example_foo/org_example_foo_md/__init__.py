@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("org_example_foo_md.org_example_foo_Foo_test_Method")
 import quark.reflect
 
 class org_example_foo_Foo_test_Method(quark.reflect.Method):
@@ -71,4 +71,11 @@ class Root(_QObject):
         pass
 Root.org_example_foo_Foo_md = org_example_foo_Foo.singleton
 
-import org.example.foo
+def _lazy_import_org_example_foo():
+    import org.example.foo
+    globals().update(locals())
+_lazyImport("import org.example.foo", _lazy_import_org_example_foo)
+
+
+
+_lazyImport.pump("org_example_foo_md.org_example_foo_Foo_test_Method")

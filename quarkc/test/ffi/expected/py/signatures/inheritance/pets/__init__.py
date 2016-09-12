@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("inheritance.pets")
 import quark.reflect
-import quark_ffi_signatures_md
 
 
 class Pet(_QObject):
@@ -65,3 +64,12 @@ class Dog(Pet):
     def _setField(self, name, value):
         pass
 Dog.inheritance_pets_Dog_ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("inheritance.pets")

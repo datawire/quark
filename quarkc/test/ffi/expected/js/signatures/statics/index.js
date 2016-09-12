@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("statics");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -15,8 +14,8 @@ exports.Foo = Foo;
 
 function Foo__init_fields__() {}
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.count = null;
-Foo.statics_Foo_ref = null;
+_qrt.lazyStatic(function(){Foo.count = null;});
+_qrt.lazyStatic(function(){Foo.statics_Foo_ref = null;});
 function Foo_setCount(n) {}
 Foo.setCount = Foo_setCount;
 
@@ -56,3 +55,12 @@ function Foo__setField(name, value) {
     }
 }
 Foo.prototype._setField = Foo__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("statics");

@@ -5,10 +5,9 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("slack.event")
 import quark.reflect
 import slack
-import slackpack_md
 
 
 class SlackEvent(_QObject):
@@ -279,3 +278,12 @@ class Edited(_QObject):
 
 
 Edited.slack_event_Edited_ref = None
+
+def _lazy_import_slackpack_md():
+    import slackpack_md
+    globals().update(locals())
+_lazyImport("import slackpack_md", _lazy_import_slackpack_md)
+
+
+
+_lazyImport.pump("slack.event")

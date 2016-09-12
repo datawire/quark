@@ -5,7 +5,6 @@ module Generics
 def self.pkg; Pkg; end
 module Pkg
 require 'quark' # .../reflect generics/pkg
-require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
 
 
 def self.Foo; Foo; end
@@ -217,6 +216,10 @@ class StringBox < ::Quark.generics.pkg.Box
 
 end
 StringBox.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
+
 end # module Pkg
 end # module Generics
 end # module Quark

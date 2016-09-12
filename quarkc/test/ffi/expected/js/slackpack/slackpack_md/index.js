@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("slackpack_md/slack_event_SlackEvent_load_Method");
 var quark = require('quark').quark;
 exports.quark = quark;
 
@@ -86,7 +87,7 @@ function slack_event_SlackEvent__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_SlackEvent.prototype.__init_fields__ = slack_event_SlackEvent__init_fields__;
-slack_event_SlackEvent.singleton = new slack_event_SlackEvent();
+_qrt.lazyStatic(function(){slack_event_SlackEvent.singleton = new slack_event_SlackEvent();});
 function slack_event_SlackEvent_construct(args) {
     return new slack.event.SlackEvent();
 }
@@ -193,7 +194,7 @@ function slack_event_SlackError__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_SlackError.prototype.__init_fields__ = slack_event_SlackError__init_fields__;
-slack_event_SlackError.singleton = new slack_event_SlackError();
+_qrt.lazyStatic(function(){slack_event_SlackError.singleton = new slack_event_SlackError();});
 function slack_event_SlackError_construct(args) {
     return new slack.event.SlackError();
 }
@@ -300,7 +301,7 @@ function slack_event_Hello__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Hello.prototype.__init_fields__ = slack_event_Hello__init_fields__;
-slack_event_Hello.singleton = new slack_event_Hello();
+_qrt.lazyStatic(function(){slack_event_Hello.singleton = new slack_event_Hello();});
 function slack_event_Hello_construct(args) {
     return new slack.event.Hello();
 }
@@ -407,7 +408,7 @@ function slack_event_Message__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Message.prototype.__init_fields__ = slack_event_Message__init_fields__;
-slack_event_Message.singleton = new slack_event_Message();
+_qrt.lazyStatic(function(){slack_event_Message.singleton = new slack_event_Message();});
 function slack_event_Message_construct(args) {
     return new slack.event.Message();
 }
@@ -448,7 +449,7 @@ function slack_event_Edited__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_event_Edited.prototype.__init_fields__ = slack_event_Edited__init_fields__;
-slack_event_Edited.singleton = new slack_event_Edited();
+_qrt.lazyStatic(function(){slack_event_Edited.singleton = new slack_event_Edited();});
 function slack_event_Edited_construct(args) {
     return new slack.event.Edited();
 }
@@ -621,7 +622,7 @@ function slack_SlackHandler__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_SlackHandler.prototype.__init_fields__ = slack_SlackHandler__init_fields__;
-slack_SlackHandler.singleton = new slack_SlackHandler();
+_qrt.lazyStatic(function(){slack_SlackHandler.singleton = new slack_SlackHandler();});
 function slack_SlackHandler_construct(args) {
     return null;
 }
@@ -662,7 +663,7 @@ function slack_User__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_User.prototype.__init_fields__ = slack_User__init_fields__;
-slack_User.singleton = new slack_User();
+_qrt.lazyStatic(function(){slack_User.singleton = new slack_User();});
 function slack_User_construct(args) {
     return new slack.User(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return String; }));
 }
@@ -736,7 +737,7 @@ function slack_Channel__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_Channel.prototype.__init_fields__ = slack_Channel__init_fields__;
-slack_Channel.singleton = new slack_Channel();
+_qrt.lazyStatic(function(){slack_Channel.singleton = new slack_Channel();});
 function slack_Channel_construct(args) {
     return new slack.Channel(_qrt.cast((args)[0], function () { return slack.Client; }), _qrt.cast((args)[1], function () { return String; }));
 }
@@ -1337,7 +1338,7 @@ function slack_Client__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slack_Client.prototype.__init_fields__ = slack_Client__init_fields__;
-slack_Client.singleton = new slack_Client();
+_qrt.lazyStatic(function(){slack_Client.singleton = new slack_Client();});
 function slack_Client_construct(args) {
     return new slack.Client(_qrt.cast((args)[0], function () { return quark.Runtime; }), _qrt.cast((args)[1], function () { return String; }), _qrt.cast((args)[2], function () { return slack.SlackHandler; }));
 }
@@ -1510,7 +1511,7 @@ function slackpack_Handler__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 slackpack_Handler.prototype.__init_fields__ = slackpack_Handler__init_fields__;
-slackpack_Handler.singleton = new slackpack_Handler();
+_qrt.lazyStatic(function(){slackpack_Handler.singleton = new slackpack_Handler();});
 function slackpack_Handler_construct(args) {
     return new slackpack.Handler();
 }
@@ -1551,7 +1552,7 @@ function quark_Map_quark_String_quark_Object___init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 quark_Map_quark_String_quark_Object_.prototype.__init_fields__ = quark_Map_quark_String_quark_Object___init_fields__;
-quark_Map_quark_String_quark_Object_.singleton = new quark_Map_quark_String_quark_Object_();
+_qrt.lazyStatic(function(){quark_Map_quark_String_quark_Object_.singleton = new quark_Map_quark_String_quark_Object_();});
 function quark_Map_quark_String_quark_Object__construct(args) {
     return new Map();
 }
@@ -1583,17 +1584,17 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.slack_event_SlackEvent_md = slack_event_SlackEvent.singleton;
-Root.slack_event_SlackError_md = slack_event_SlackError.singleton;
-Root.slack_event_Hello_md = slack_event_Hello.singleton;
-Root.slack_event_Message_md = slack_event_Message.singleton;
-Root.slack_event_Edited_md = slack_event_Edited.singleton;
-Root.slack_SlackHandler_md = slack_SlackHandler.singleton;
-Root.slack_User_md = slack_User.singleton;
-Root.slack_Channel_md = slack_Channel.singleton;
-Root.slack_Client_md = slack_Client.singleton;
-Root.slackpack_Handler_md = slackpack_Handler.singleton;
-Root.quark_Map_quark_String_quark_Object__md = quark_Map_quark_String_quark_Object_.singleton;
+_qrt.lazyStatic(function(){Root.slack_event_SlackEvent_md = slack_event_SlackEvent.singleton;});
+_qrt.lazyStatic(function(){Root.slack_event_SlackError_md = slack_event_SlackError.singleton;});
+_qrt.lazyStatic(function(){Root.slack_event_Hello_md = slack_event_Hello.singleton;});
+_qrt.lazyStatic(function(){Root.slack_event_Message_md = slack_event_Message.singleton;});
+_qrt.lazyStatic(function(){Root.slack_event_Edited_md = slack_event_Edited.singleton;});
+_qrt.lazyStatic(function(){Root.slack_SlackHandler_md = slack_SlackHandler.singleton;});
+_qrt.lazyStatic(function(){Root.slack_User_md = slack_User.singleton;});
+_qrt.lazyStatic(function(){Root.slack_Channel_md = slack_Channel.singleton;});
+_qrt.lazyStatic(function(){Root.slack_Client_md = slack_Client.singleton;});
+_qrt.lazyStatic(function(){Root.slackpack_Handler_md = slackpack_Handler.singleton;});
+_qrt.lazyStatic(function(){Root.quark_Map_quark_String_quark_Object__md = quark_Map_quark_String_quark_Object_.singleton;});
 function Root__getClass() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -1607,11 +1608,22 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var slack = require('../slack/index.js');
-exports.slack = slack;
-var slack = require('../slack/index.js');
-exports.slack = slack;
-var quark = require('quark').quark;
-exports.quark = quark;
-var slackpack = require('../slackpack/index.js');
-exports.slackpack = slackpack;
+var slack; _qrt.lazyImport('../slack/index.js', function(){
+    slack = require('../slack/index.js');
+    exports.slack = slack;
+});
+
+
+var quark; _qrt.lazyImport('quark', function(){
+    quark = require('quark').quark;
+    exports.quark = quark;
+});
+
+var slackpack; _qrt.lazyImport('../slackpack/index.js', function(){
+    slackpack = require('../slackpack/index.js');
+    exports.slackpack = slackpack;
+});
+
+
+
+_qrt.pumpImports("slackpack_md/slack_event_SlackEvent_load_Method");

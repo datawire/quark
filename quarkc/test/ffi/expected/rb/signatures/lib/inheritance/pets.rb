@@ -5,7 +5,6 @@ module Inheritance
 def self.pets; Pets; end
 module Pets
 require 'quark' # .../reflect inheritance/pets
-require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
 
 
 def self.Pet; Pet; end
@@ -175,6 +174,10 @@ class Dog < ::Quark.inheritance.pets.Pet
 
 end
 Dog.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
+
 end # module Pets
 end # module Inheritance
 end # module Quark

@@ -130,7 +130,7 @@
             result.value = fs.readFileSync(path, { encoding: "UTF-8" });
             result.finish(null);
         } catch (exc) {
-            result.finish(new quark.quark.os.OSError(exc.toString()));
+            result.finish(new quark.os.OSError(exc.toString()));
         }
     }
     exports.getFileContents = getFileContents;
@@ -633,7 +633,7 @@
     exports._getClass = _getClass;
 
     function _RuntimeFactory() {
-        this.runtimeName = "quark/quark_node_runtime";  // jshint ignore:line
+        this.runtimeName = "./quark_node_runtime";  // jshint ignore:line
     }
     _RuntimeFactory.prototype.create = function() {
         return require(this.runtimeName);
@@ -806,6 +806,48 @@
         return value;
     };
 
-    quark = require("quark");
+    var pendingImports = [];
+    var pendingStatics = [];
+    var importNesting = [];
+
+    exports.plugImports = function(pkg) {
+        importNesting.push(pkg);
+    }
+
+    exports.pumpImports = function(pkg) {
+        var x = importNesting.pop();
+        require('assert').equal(x,pkg);
+        while(importNesting.length == 0 && pendingImports.length) {
+            var pending = pendingImports;
+            pendingImports = [];
+            pending.forEach(function(x){
+                try {
+                    x.cb()
+                } catch (exc) {
+                    console.log("uhuh, lazy import", x.trace, x.dep);
+                    throw(exc);
+                }
+            });
+        }
+        while(importNesting.length == 0 && pendingStatics.length) {
+            var pending = pendingStatics;
+            pendingStatics = [];
+            pending.forEach(function(x){x()});
+        }
+    }
+    exports.lazyImport = function(dep, cb) {
+        pendingImports.push({trace: importNesting.slice(),
+                             dep: dep,
+                             cb: cb});
+    }
+
+    exports.lazyStatic = function(cb) {
+        pendingStatics.push(cb);
+    }
+
+    var quark;
+    exports.lazyImport('./quark', function() {
+        quark = require("./quark");
+    });
 
 })();

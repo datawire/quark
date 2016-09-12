@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance/t1");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.A = A;
 
 function A__init_fields__() {}
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_t1_A_ref = null;
+_qrt.lazyStatic(function(){A.inheritance_t1_A_ref = null;});
 function A_foo() {}
 A.prototype.foo = A_foo;
 
@@ -43,7 +42,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_t1_B_ref = null;
+_qrt.lazyStatic(function(){B.inheritance_t1_B_ref = null;});
 function B_foo() {}
 B.prototype.foo = B_foo;
 
@@ -72,7 +71,7 @@ function C__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 C.prototype.__init_fields__ = C__init_fields__;
-C.inheritance_t1_C_ref = null;
+_qrt.lazyStatic(function(){C.inheritance_t1_C_ref = null;});
 function C__getClass() {
     return "inheritance.t1.C";
 }
@@ -85,3 +84,12 @@ C.prototype._getField = C__getField;
 
 function C__setField(name, value) {}
 C.prototype._setField = C__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance/t1");

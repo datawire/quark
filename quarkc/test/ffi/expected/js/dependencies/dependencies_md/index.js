@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("dependencies_md/Root");
 
 // CLASS Root
 function Root() {
@@ -21,3 +22,4 @@ Root.prototype._getField = Root__getField;
 
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
+_qrt.pumpImports("dependencies_md/Root");

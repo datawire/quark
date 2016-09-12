@@ -1,10 +1,9 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("slack/event");
 var quark = require('quark').quark;
 exports.quark = quark;
 var slack = require('../../slack/index.js');
 exports.slack = slack;
-var slackpack_md = require('../../slackpack_md/index.js');
-exports.slackpack_md = slackpack_md;
 
 
 
@@ -37,7 +36,7 @@ function SlackEvent__init_fields__() {
     this.timestamp = null;
 }
 SlackEvent.prototype.__init_fields__ = SlackEvent__init_fields__;
-SlackEvent.slack_event_SlackEvent_ref = null;
+_qrt.lazyStatic(function(){SlackEvent.slack_event_SlackEvent_ref = null;});
 function SlackEvent_load(client, obj) {}
 SlackEvent.prototype.load = SlackEvent_load;
 
@@ -106,7 +105,7 @@ function SlackError__init_fields__() {
     this.text = null;
 }
 SlackError.prototype.__init_fields__ = SlackError__init_fields__;
-SlackError.slack_event_SlackError_ref = null;
+_qrt.lazyStatic(function(){SlackError.slack_event_SlackError_ref = null;});
 function SlackError_load(client, obj) {}
 SlackError.prototype.load = SlackError_load;
 
@@ -179,7 +178,7 @@ function Hello__init_fields__() {
     SlackEvent.prototype.__init_fields__.call(this);
 }
 Hello.prototype.__init_fields__ = Hello__init_fields__;
-Hello.slack_event_Hello_ref = null;
+_qrt.lazyStatic(function(){Hello.slack_event_Hello_ref = null;});
 function Hello_dispatch(handler) {}
 Hello.prototype.dispatch = Hello_dispatch;
 
@@ -244,7 +243,7 @@ function Message__init_fields__() {
     this.edited = null;
 }
 Message.prototype.__init_fields__ = Message__init_fields__;
-Message.slack_event_Message_ref = null;
+_qrt.lazyStatic(function(){Message.slack_event_Message_ref = null;});
 function Message_load(client, obj) {}
 Message.prototype.load = Message_load;
 
@@ -328,7 +327,7 @@ function Edited__init_fields__() {
     this.timestamp = null;
 }
 Edited.prototype.__init_fields__ = Edited__init_fields__;
-Edited.slack_event_Edited_ref = null;
+_qrt.lazyStatic(function(){Edited.slack_event_Edited_ref = null;});
 function Edited__getClass() {
     return "slack.event.Edited";
 }
@@ -354,3 +353,12 @@ function Edited__setField(name, value) {
     }
 }
 Edited.prototype._setField = Edited__setField;
+
+var slackpack_md; _qrt.lazyImport('../../slackpack_md/index.js', function(){
+    slackpack_md = require('../../slackpack_md/index.js');
+    exports.slackpack_md = slackpack_md;
+});
+
+
+
+_qrt.pumpImports("slack/event");

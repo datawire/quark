@@ -4,7 +4,6 @@ def self.test; Test; end
 module Test
 require 'quark' # .../reflect
 require_relative 'test/subtest' # 0 ('test',) ()
-require_relative 'package_md' # 0 () ()
 
 
 def self.go()
@@ -82,5 +81,9 @@ class Test < ::DatawireQuarkCore::QuarkObject
 
 end
 Test.unlazy_statics
+
+
+require_relative 'package_md' # 0 () ()
+
 end # module Test
 end # module Quark

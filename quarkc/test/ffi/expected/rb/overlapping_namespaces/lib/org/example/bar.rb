@@ -7,7 +7,6 @@ module Example
 def self.bar; Bar; end
 module Bar
 require 'quark' # .../reflect org/example/bar
-require_relative '../../overlapping_namespace_md' # 0 () ('org', 'example')
 
 
 def self.Bar; Bar; end
@@ -64,6 +63,10 @@ class Bar < ::DatawireQuarkCore::QuarkObject
 
 end
 Bar.unlazy_statics
+
+
+require_relative '../../overlapping_namespace_md' # 0 () ('org', 'example')
+
 end # module Bar
 end # module Example
 end # module Org

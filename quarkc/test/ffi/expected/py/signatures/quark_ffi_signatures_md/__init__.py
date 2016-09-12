@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("quark_ffi_signatures_md.generics_Box_quark_Object__set_Method")
 import quark.reflect
 
 class generics_Box_quark_Object__set_Method(quark.reflect.Method):
@@ -4246,18 +4246,81 @@ Root.quark_List_quark_List_quark_Object___md = quark_List_quark_List_quark_Objec
 Root.quark_List_quark_Object__md = quark_List_quark_Object_.singleton
 Root.quark_List_quark_String__md = quark_List_quark_String_.singleton
 
-import generics
-import generics.constructors
-import generics.pkg
-import generics.ccc
-import inheritance
-import inheritance.t1
-import inheritance.t2
-import inheritance.pets
-import inheritance.super_
-import inheritance.use_before_def
-import interfaces
-import classes
-import classes.stuff
-import statics
-import docs
+def _lazy_import_generics():
+    import generics
+    globals().update(locals())
+_lazyImport("import generics", _lazy_import_generics)
+
+def _lazy_import_generics_constructors():
+    import generics.constructors
+    globals().update(locals())
+_lazyImport("import generics.constructors", _lazy_import_generics_constructors)
+
+def _lazy_import_generics_pkg():
+    import generics.pkg
+    globals().update(locals())
+_lazyImport("import generics.pkg", _lazy_import_generics_pkg)
+
+def _lazy_import_generics_ccc():
+    import generics.ccc
+    globals().update(locals())
+_lazyImport("import generics.ccc", _lazy_import_generics_ccc)
+
+def _lazy_import_inheritance():
+    import inheritance
+    globals().update(locals())
+_lazyImport("import inheritance", _lazy_import_inheritance)
+
+def _lazy_import_inheritance_t1():
+    import inheritance.t1
+    globals().update(locals())
+_lazyImport("import inheritance.t1", _lazy_import_inheritance_t1)
+
+def _lazy_import_inheritance_t2():
+    import inheritance.t2
+    globals().update(locals())
+_lazyImport("import inheritance.t2", _lazy_import_inheritance_t2)
+
+def _lazy_import_inheritance_pets():
+    import inheritance.pets
+    globals().update(locals())
+_lazyImport("import inheritance.pets", _lazy_import_inheritance_pets)
+
+def _lazy_import_inheritance_super_():
+    import inheritance.super_
+    globals().update(locals())
+_lazyImport("import inheritance.super_", _lazy_import_inheritance_super_)
+
+def _lazy_import_inheritance_use_before_def():
+    import inheritance.use_before_def
+    globals().update(locals())
+_lazyImport("import inheritance.use_before_def", _lazy_import_inheritance_use_before_def)
+
+def _lazy_import_interfaces():
+    import interfaces
+    globals().update(locals())
+_lazyImport("import interfaces", _lazy_import_interfaces)
+
+def _lazy_import_classes():
+    import classes
+    globals().update(locals())
+_lazyImport("import classes", _lazy_import_classes)
+
+def _lazy_import_classes_stuff():
+    import classes.stuff
+    globals().update(locals())
+_lazyImport("import classes.stuff", _lazy_import_classes_stuff)
+
+def _lazy_import_statics():
+    import statics
+    globals().update(locals())
+_lazyImport("import statics", _lazy_import_statics)
+
+def _lazy_import_docs():
+    import docs
+    globals().update(locals())
+_lazyImport("import docs", _lazy_import_docs)
+
+
+
+_lazyImport.pump("quark_ffi_signatures_md.generics_Box_quark_Object__set_Method")

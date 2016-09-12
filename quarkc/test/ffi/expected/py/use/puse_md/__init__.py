@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("puse_md.Root")
 class Root(_QObject):
     def _init(self):
         pass
@@ -19,3 +19,5 @@ class Root(_QObject):
 
     def _setField(self, name, value):
         pass
+
+_lazyImport.pump("puse_md.Root")

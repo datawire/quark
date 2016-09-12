@@ -6,7 +6,6 @@ require 'quark' # .../reflect
 require_relative 'generics/constructors' # 0 ('generics',) ()
 require_relative 'generics/pkg' # 0 ('generics',) ()
 require_relative 'generics/ccc' # 0 ('generics',) ()
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Box; Box; end
@@ -292,5 +291,9 @@ class Matrix < ::DatawireQuarkCore::QuarkObject
 
 end
 Matrix.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Generics
 end # module Quark

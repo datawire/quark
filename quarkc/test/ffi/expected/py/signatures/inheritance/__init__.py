@@ -5,14 +5,13 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("inheritance")
 import quark.reflect
 import inheritance.t1
 import inheritance.t2
 import inheritance.pets
 import inheritance.super_
 import inheritance.use_before_def
-import quark_ffi_signatures_md
 
 
 class Base(_QObject):
@@ -236,3 +235,12 @@ class Pong(Message):
     def _setField(self, name, value):
         pass
 Pong.inheritance_Pong_ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("inheritance")

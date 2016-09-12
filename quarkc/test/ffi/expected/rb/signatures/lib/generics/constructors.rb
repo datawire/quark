@@ -5,7 +5,6 @@ module Generics
 def self.constructors; Constructors; end
 module Constructors
 require 'quark' # .../reflect generics/constructors
-require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
 
 
 def self.Box; Box; end
@@ -70,6 +69,10 @@ class Box < ::DatawireQuarkCore::QuarkObject
 
 end
 Box.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('generics',)
+
 end # module Constructors
 end # module Generics
 end # module Quark

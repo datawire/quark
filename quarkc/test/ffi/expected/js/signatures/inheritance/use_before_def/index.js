@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance/use_before_def");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -14,7 +13,7 @@ exports.Bar = Bar;
 
 function Bar__init_fields__() {}
 Bar.prototype.__init_fields__ = Bar__init_fields__;
-Bar.inheritance_use_before_def_Bar_ref = null;
+_qrt.lazyStatic(function(){Bar.inheritance_use_before_def_Bar_ref = null;});
 function Bar_go() {}
 Bar.prototype.go = Bar_go;
 
@@ -41,7 +40,7 @@ function Foo__init_fields__() {
     this.name = null;
 }
 Foo.prototype.__init_fields__ = Foo__init_fields__;
-Foo.inheritance_use_before_def_Foo_ref = null;
+_qrt.lazyStatic(function(){Foo.inheritance_use_before_def_Foo_ref = null;});
 function Foo__getClass() {
     return "inheritance.use_before_def.Foo";
 }
@@ -61,3 +60,12 @@ function Foo__setField(name, value) {
     }
 }
 Foo.prototype._setField = Foo__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance/use_before_def");

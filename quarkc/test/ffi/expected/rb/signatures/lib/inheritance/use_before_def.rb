@@ -5,7 +5,6 @@ module Inheritance
 def self.use_before_def; UseBeforeDef; end
 module UseBeforeDef
 require 'quark' # .../reflect inheritance/use_before_def
-require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
 
 
 def self.Bar; Bar; end
@@ -117,6 +116,10 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 
 end
 Foo.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
+
 end # module UseBeforeDef
 end # module Inheritance
 end # module Quark

@@ -4,7 +4,6 @@ def self.classes; Classes; end
 module Classes
 require 'quark' # .../reflect
 require_relative 'classes/stuff' # 0 ('classes',) ()
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Overload; Overload; end
@@ -845,5 +844,9 @@ class TestSplit < ::Quark.classes.string_test
 
 end
 TestSplit.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Classes
 end # module Quark

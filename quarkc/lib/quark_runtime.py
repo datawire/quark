@@ -12,7 +12,8 @@ __all__ = str(
     """os sys time _Map _List _println _toString _url_get _urlencode _JSONObject
     _HTTPRequest _HTTPResponse _default_codec _getClass _map_remove
     _RuntimeFactory _Lock _Condition _TLS _TLSInitializer
-    _configure_logging _cast _get_file_contents _QObject""").split()
+    _configure_logging _cast _get_file_contents _QObject
+    _lazyImport""").split()
 
 import os    # noqa  used by the quark.OS.Env stuff
 import sys
@@ -537,3 +538,28 @@ def _get_file_contents(path, result):
         # Import here due to cyclical dependencies:
         import quark
         result.finish(quark.os.OSError(str(exc)))
+
+class LazyImports(object):
+    def __init__(self):
+        self.nesting = []
+        self.imports = []
+
+    def plug(self, pkg):
+        self.nesting.append(pkg)
+
+    def pump(self, pkg):
+        last = self.nesting.pop()
+        assert last == pkg, (last, pkg)
+        while not self.nesting and self.imports:
+            pending = self.imports
+            self.imports = []
+            for imp in pending:
+                try:
+                    imp["cb"]()
+                except:
+                    print("uhuh, lazy import %s %s" % (imp["trace"], imp["dep"]))
+                    raise
+    def __call__(self, dep, cb):
+        self.imports.append(dict(trace=list(self.nesting), dep=dep, cb=cb))
+
+_lazyImport = LazyImports()

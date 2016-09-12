@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance/super_");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -17,7 +16,7 @@ function A__init_fields__() {
     this.name = null;
 }
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_super__A_ref = null;
+_qrt.lazyStatic(function(){A.inheritance_super__A_ref = null;});
 function A_greet() {}
 A.prototype.greet = A_greet;
 
@@ -53,7 +52,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_super__B_ref = null;
+_qrt.lazyStatic(function(){B.inheritance_super__B_ref = null;});
 function B_greet() {}
 B.prototype.greet = B_greet;
 
@@ -76,3 +75,12 @@ function B__setField(name, value) {
     }
 }
 B.prototype._setField = B__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance/super_");

@@ -15,6 +15,7 @@
 from __future__ import absolute_import
 
 from collections import OrderedDict
+from textwrap import dedent
 
 from .compiler import BUILTIN
 from .helpers import doc_helper, indent, Code
@@ -60,14 +61,22 @@ def function_file(path, name, fname):
 def package_file(path, name, fname):
     return "/".join(path + [name, "index.js"])
 
-def make_class_file(path, name):
-    return Code(comment, head='var _qrt = require("%s/quark_runtime.js");\n' % BUILTIN)
+def make_class_file(path, name, rtloc=BUILTIN, why="class"):
+    what = "/".join(list(path) + [name])
+    head=dedent('''\
+        var _qrt = require("%s/quark_runtime.js");
+        _qrt.plugImports("%s");
+    ''' % (rtloc, what))
+    tail=dedent('''\n\
+        _qrt.pumpImports("%s");
+    ''' % (what))
+    return Code(comment, head=head, tail=tail)
 
-def make_function_file(path, name, mdpkg):
-    return make_class_file(path, name)
+def make_function_file(path, name, mdpkg, rtloc=BUILTIN):
+    return make_class_file(path, name, rtloc=rtloc, why="function")
 
-def make_package_file(path, name):
-    return make_class_file(path, name)
+def make_package_file(path, name, rtloc=BUILTIN):
+    return make_class_file(path, name, rtloc=rtloc, why="package")
 
 def main_file(name):
     return "%s.js" % name
@@ -90,8 +99,12 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep):
+def import_(path, origin, dep, seen=None, lazy=False):
     qual = qualify(path, origin)
+    if seen is not None:
+        if qual[0] in seen:
+            return ""
+        seen.add(qual[0])
     extra = ""
     if dep:
         req = dep
@@ -102,7 +115,19 @@ def import_(path, origin, dep):
         else:
             prefix = "../"*len(origin)
         req = prefix + qual[0] + "/index.js"
-    return "var %s = require('%s')%s;\nexports.%s = %s;" % (qual[0], req, extra, qual[0], qual[0])
+    if lazy:
+        return dedent(
+            """\
+            var %s; _qrt.lazyImport('%s', function(){
+                %s = require('%s')%s;
+                exports.%s = %s;
+            });
+            """) % (qual[0], req,
+                    qual[0], req, extra,
+                    qual[0], qual[0])
+    else:
+        return "var %s = require('%s')%s;\nexports.%s = %s;" % (
+            qual[0], req, extra, qual[0], qual[0])
 
 def qualify(package, origin):
     if package == origin: return []
@@ -162,7 +187,7 @@ def clazz(doc, abstract, clazz, parameters, base, interfaces, static_fields, fie
     result += "\nfunction %s__init_fields__() {" % clazz + indent("\n".join(fields)) + "}\n"
     result += "%s.prototype.__init_fields__ = %s__init_fields__;\n" % (clazz, clazz)
 
-    result += "\n".join(static_fields)
+    result += "\n".join("_qrt.lazyStatic(function(){%s});" % x for x in static_fields)
 
     result += "\n".join(methods)
 

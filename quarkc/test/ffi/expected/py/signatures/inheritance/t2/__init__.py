@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("inheritance.t2")
 import quark.reflect
-import quark_ffi_signatures_md
 
 
 class A(_QObject):
@@ -71,3 +70,12 @@ class Y(X):
         pass
 Y.inheritance_t2_X_quark_int__ref = None
 Y.inheritance_t2_Y_ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("inheritance.t2")

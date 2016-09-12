@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("inheritance");
 var quark = require('quark').quark;
 exports.quark = quark;
 var t1 = require('./t1/index.js');
@@ -11,8 +12,6 @@ var super_ = require('./super_/index.js');
 exports.super_ = super_;
 var use_before_def = require('./use_before_def/index.js');
 exports.use_before_def = use_before_def;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -26,7 +25,7 @@ function Base__init_fields__() {
     this.name = null;
 }
 Base.prototype.__init_fields__ = Base__init_fields__;
-Base.inheritance_Base_ref = null;
+_qrt.lazyStatic(function(){Base.inheritance_Base_ref = null;});
 function Base__getClass() {
     return "inheritance.Base";
 }
@@ -61,7 +60,7 @@ function Test__init_fields__() {
     this.later = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.inheritance_Test_ref = null;
+_qrt.lazyStatic(function(){Test.inheritance_Test_ref = null;});
 function Test__getClass() {
     return "inheritance.Test";
 }
@@ -105,7 +104,7 @@ function A__init_fields__() {
     this.name = null;
 }
 A.prototype.__init_fields__ = A__init_fields__;
-A.inheritance_A_ref = null;
+_qrt.lazyStatic(function(){A.inheritance_A_ref = null;});
 function A__getClass() {
     return "inheritance.A";
 }
@@ -138,7 +137,7 @@ function B__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 B.prototype.__init_fields__ = B__init_fields__;
-B.inheritance_B_ref = null;
+_qrt.lazyStatic(function(){B.inheritance_B_ref = null;});
 function B_greet() {}
 B.prototype.greet = B_greet;
 
@@ -174,7 +173,7 @@ function C__init_fields__() {
     A.prototype.__init_fields__.call(this);
 }
 C.prototype.__init_fields__ = C__init_fields__;
-C.inheritance_C_ref = null;
+_qrt.lazyStatic(function(){C.inheritance_C_ref = null;});
 function C_greet() {}
 C.prototype.greet = C_greet;
 
@@ -206,7 +205,7 @@ exports.X = X;
 
 function X__init_fields__() {}
 X.prototype.__init_fields__ = X__init_fields__;
-X.inheritance_X_ref = null;
+_qrt.lazyStatic(function(){X.inheritance_X_ref = null;});
 function X__getClass() {
     return "inheritance.X";
 }
@@ -233,7 +232,7 @@ function Y__init_fields__() {
     this.name = null;
 }
 Y.prototype.__init_fields__ = Y__init_fields__;
-Y.inheritance_Y_ref = null;
+_qrt.lazyStatic(function(){Y.inheritance_Y_ref = null;});
 function Y_test() {}
 Y.prototype.test = Y_test;
 
@@ -265,7 +264,7 @@ exports.Message = Message;
 
 function Message__init_fields__() {}
 Message.prototype.__init_fields__ = Message__init_fields__;
-Message.inheritance_Message_ref = null;
+_qrt.lazyStatic(function(){Message.inheritance_Message_ref = null;});
 function Message_encode() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -296,7 +295,7 @@ function Ping__init_fields__() {
     Message.prototype.__init_fields__.call(this);
 }
 Ping.prototype.__init_fields__ = Ping__init_fields__;
-Ping.inheritance_Ping_ref = null;
+_qrt.lazyStatic(function(){Ping.inheritance_Ping_ref = null;});
 function Ping__getClass() {
     return "inheritance.Ping";
 }
@@ -322,7 +321,7 @@ function Pong__init_fields__() {
     Message.prototype.__init_fields__.call(this);
 }
 Pong.prototype.__init_fields__ = Pong__init_fields__;
-Pong.inheritance_Pong_ref = null;
+_qrt.lazyStatic(function(){Pong.inheritance_Pong_ref = null;});
 function Pong_toString() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -340,3 +339,12 @@ Pong.prototype._getField = Pong__getField;
 
 function Pong__setField(name, value) {}
 Pong.prototype._setField = Pong__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("inheritance");

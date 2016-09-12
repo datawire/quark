@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("docs");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -25,7 +24,7 @@ function Test__init_fields__() {
     this.name = null;
 }
 Test.prototype.__init_fields__ = Test__init_fields__;
-Test.docs_Test_ref = null;
+_qrt.lazyStatic(function(){Test.docs_Test_ref = null;});
 /**
  * method docs
  * @method test
@@ -57,3 +56,12 @@ function Test__setField(name, value) {
     }
 }
 Test.prototype._setField = Test__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("docs");

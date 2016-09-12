@@ -44,7 +44,8 @@ class Backend(object):
     ext = None
     gen = None
 
-    def __init__(self):
+    def __init__(self, include_stdlib=False):
+        self.include_stdlib = include_stdlib
         self.files = OrderedDict()
         self._imports = OrderedDict()
         self.current_file = None
@@ -194,16 +195,17 @@ class Backend(object):
             raw_imports = self._imports[name].keys()
             refimps = filter(lambda x: x[0] == (BUILTIN, REFLECT), raw_imports)
             imports = filter(lambda x: x[0] != (BUILTIN, REFLECT), raw_imports)
-
+            mdimps  = filter(lambda x: x[0][0].endswith("_md"), imports)
+            imports = filter(lambda x: not x[0][0].endswith("_md"), imports)
             if name.split("/")[0].endswith("_md"):
                 headimps = self.genimps(refimps)
-                tailimps = self.genimps(imports)
+                tailimps = self.genimps(imports + mdimps, lazy=True)
             else:
                 headimps = self.genimps(refimps + imports)
-                tailimps = self.genimps([])
+                tailimps = self.genimps(mdimps, lazy=True)
 
             if headimps: code.head += headimps + "\n\n"
-            if tailimps: code.tail += "\n\n" + tailimps
+            if tailimps: code.tail = "\n\n" + tailimps + "\n\n" + code.tail
 
             content = str(code)
             if content[-1:] != "\n": content += "\n"
@@ -217,8 +219,9 @@ class Backend(object):
         path = self.add_import(self.main)
         self.files[fname] += self.gen.main(path, self.name(self.main.name))
 
-    def genimps(self, imps):
-        imps = [self.gen.import_(pkg, org, dep) for (pkg, org, dep) in imps]
+    def genimps(self, imps, lazy=False):
+        seen = set()
+        imps = [self.gen.import_(pkg, org, dep, seen=seen, lazy=lazy) for (pkg, org, dep) in imps]
         return "\n".join(filter(lambda x: x is not None, imps))
 
     @overload(AST)
@@ -259,9 +262,17 @@ class Backend(object):
     def fname(self, obj):
         return os.path.splitext(os.path.basename(obj.file.name))[0]
 
+    @property
+    def rtloc(self):
+        if self.include_stdlib:
+            rtloc, _ = namever(self.entry)
+        else:
+            rtloc = BUILTIN
+        return rtloc
+
     @overload(Class)
     def make_file(self, cls):
-        return self.gen.make_class_file(self.package(cls), self.name(cls.name))
+        return self.gen.make_class_file(self.package(cls), self.name(cls.name), rtloc=self.rtloc)
 
     @overload(Function)
     def make_file(self, fun):
@@ -269,7 +280,7 @@ class Backend(object):
 
     @overload(Package)
     def make_file(self, pkg):
-        return self.gen.make_package_file(self.package(pkg.package), self.name(pkg.name))
+        return self.gen.make_package_file(self.package(pkg.package), self.name(pkg.name), rtloc = self.rtloc)
 
     def write(self, target):
         if not os.path.exists(target):

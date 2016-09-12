@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("test.subtest")
 import quark.reflect
-import package_md
 
 
 
@@ -37,3 +36,12 @@ class Test(_QObject):
 
 
 Test.test_subtest_Test_ref = None
+
+def _lazy_import_package_md():
+    import package_md
+    globals().update(locals())
+_lazyImport("import package_md", _lazy_import_package_md)
+
+
+
+_lazyImport.pump("test.subtest")

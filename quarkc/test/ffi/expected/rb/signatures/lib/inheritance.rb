@@ -8,7 +8,6 @@ require_relative 'inheritance/t2' # 0 ('inheritance',) ()
 require_relative 'inheritance/pets' # 0 ('inheritance',) ()
 require_relative 'inheritance/super_' # 0 ('inheritance',) ()
 require_relative 'inheritance/use_before_def' # 0 ('inheritance',) ()
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Base; Base; end
@@ -589,5 +588,9 @@ class Pong < ::Quark.inheritance.Message
 
 end
 Pong.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Inheritance
 end # module Quark

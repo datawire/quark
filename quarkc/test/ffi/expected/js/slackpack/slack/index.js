@@ -1,12 +1,10 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("slack");
 var quark = require('quark').quark;
 exports.quark = quark;
 var event = require('./event/index.js');
 exports.event = event;
-var slackpack_md = require('../slackpack_md/index.js');
-exports.slackpack_md = slackpack_md;
-var quark = require('quark').quark;
-exports.quark = quark;
+
 
 
 
@@ -24,7 +22,7 @@ exports.SlackHandler = SlackHandler;
 
 function SlackHandler__init_fields__() {}
 SlackHandler.prototype.__init_fields__ = SlackHandler__init_fields__;
-SlackHandler.slack_SlackHandler_ref = null;
+_qrt.lazyStatic(function(){SlackHandler.slack_SlackHandler_ref = null;});
 function SlackHandler_onSlackEvent(event) {}
 SlackHandler.prototype.onSlackEvent = SlackHandler_onSlackEvent;
 
@@ -53,7 +51,7 @@ function User__init_fields__() {
     this.user = null;
 }
 User.prototype.__init_fields__ = User__init_fields__;
-User.slack_User_ref = null;
+_qrt.lazyStatic(function(){User.slack_User_ref = null;});
 function User__getClass() {
     return "slack.User";
 }
@@ -96,7 +94,7 @@ function Channel__init_fields__() {
     this.channel = null;
 }
 Channel.prototype.__init_fields__ = Channel__init_fields__;
-Channel.slack_Channel_ref = null;
+_qrt.lazyStatic(function(){Channel.slack_Channel_ref = null;});
 /**
  * Send a message to a channel.
  * @method send
@@ -152,8 +150,8 @@ function Client__init_fields__() {
     this.socket = null;
 }
 Client.prototype.__init_fields__ = Client__init_fields__;
-Client.slack_Client_ref = null;
-Client.quark_Map_quark_String_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Client.slack_Client_ref = null;});
+_qrt.lazyStatic(function(){Client.quark_Map_quark_String_quark_Object__ref = null;});
 /**
  * Connect the client to the slack service.
  * @method connect
@@ -285,3 +283,12 @@ Client.prototype.onHTTPError = Client_onHTTPError;
 
 function Client_onHTTPFinal(request) {}
 Client.prototype.onHTTPFinal = Client_onHTTPFinal;
+
+var slackpack_md; _qrt.lazyImport('../slackpack_md/index.js', function(){
+    slackpack_md = require('../slackpack_md/index.js');
+    exports.slackpack_md = slackpack_md;
+});
+
+
+
+_qrt.pumpImports("slack");

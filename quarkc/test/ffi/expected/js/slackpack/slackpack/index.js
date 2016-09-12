@@ -1,12 +1,10 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("slackpack");
 var quark = require('quark').quark;
 exports.quark = quark;
 var slack = require('../slack/index.js');
 exports.slack = slack;
-var slack = require('../slack/index.js');
-exports.slack = slack;
-var slackpack_md = require('../slackpack_md/index.js');
-exports.slackpack_md = slackpack_md;
+
 
 
 
@@ -18,7 +16,7 @@ exports.Handler = Handler;
 
 function Handler__init_fields__() {}
 Handler.prototype.__init_fields__ = Handler__init_fields__;
-Handler.slackpack_Handler_ref = null;
+_qrt.lazyStatic(function(){Handler.slackpack_Handler_ref = null;});
 function Handler_onSlackEvent(event) {}
 Handler.prototype.onSlackEvent = Handler_onSlackEvent;
 
@@ -43,3 +41,12 @@ Handler.prototype.onSlackError = Handler_onSlackError;
 
 function Handler_onMessage(message) {}
 Handler.prototype.onMessage = Handler_onMessage;
+
+var slackpack_md; _qrt.lazyImport('../slackpack_md/index.js', function(){
+    slackpack_md = require('../slackpack_md/index.js');
+    exports.slackpack_md = slackpack_md;
+});
+
+
+
+_qrt.pumpImports("slackpack");

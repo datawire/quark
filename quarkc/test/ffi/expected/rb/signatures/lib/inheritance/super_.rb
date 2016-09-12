@@ -5,7 +5,6 @@ module Inheritance
 def self.super_; Super; end
 module Super
 require 'quark' # .../reflect inheritance/super_
-require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
 
 
 def self.A; A; end
@@ -132,6 +131,10 @@ class B < ::Quark.inheritance.super_.A
 
 end
 B.unlazy_statics
+
+
+require_relative '../quark_ffi_signatures_md' # 0 () ('inheritance',)
+
 end # module Super
 end # module Inheritance
 end # module Quark

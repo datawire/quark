@@ -1,4 +1,5 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("package_md/test_Test_go_Method");
 var quark = require('quark').quark;
 exports.quark = quark;
 
@@ -53,7 +54,7 @@ function test_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_Test.prototype.__init_fields__ = test_Test__init_fields__;
-test_Test.singleton = new test_Test();
+_qrt.lazyStatic(function(){test_Test.singleton = new test_Test();});
 function test_Test_construct(args) {
     return new test.Test();
 }
@@ -127,7 +128,7 @@ function test_subtest_Test__init_fields__() {
     quark.reflect.Class.prototype.__init_fields__.call(this);
 }
 test_subtest_Test.prototype.__init_fields__ = test_subtest_Test__init_fields__;
-test_subtest_Test.singleton = new test_subtest_Test();
+_qrt.lazyStatic(function(){test_subtest_Test.singleton = new test_subtest_Test();});
 function test_subtest_Test_construct(args) {
     return new test.subtest.Test();
 }
@@ -159,8 +160,8 @@ exports.Root = Root;
 
 function Root__init_fields__() {}
 Root.prototype.__init_fields__ = Root__init_fields__;
-Root.test_Test_md = test_Test.singleton;
-Root.test_subtest_Test_md = test_subtest_Test.singleton;
+_qrt.lazyStatic(function(){Root.test_Test_md = test_Test.singleton;});
+_qrt.lazyStatic(function(){Root.test_subtest_Test_md = test_subtest_Test.singleton;});
 function Root__getClass() {
     return _qrt.cast(null, function () { return String; });
 }
@@ -174,7 +175,12 @@ Root.prototype._getField = Root__getField;
 function Root__setField(name, value) {}
 Root.prototype._setField = Root__setField;
 
-var test = require('../test/index.js');
-exports.test = test;
-var test = require('../test/index.js');
-exports.test = test;
+var test; _qrt.lazyImport('../test/index.js', function(){
+    test = require('../test/index.js');
+    exports.test = test;
+});
+
+
+
+
+_qrt.pumpImports("package_md/test_Test_go_Method");

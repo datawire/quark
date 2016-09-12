@@ -5,7 +5,6 @@ module Slackpack
 require 'quark' # .../reflect
 require_relative 'slack' # 0 () ()
 require_relative 'slack/event' # 0 ('slack',) ()
-require_relative 'slackpack_md' # 0 () ()
 
 
 def self.Handler; Handler; end
@@ -83,5 +82,9 @@ class Handler < ::DatawireQuarkCore::QuarkObject
 
 end
 Handler.unlazy_statics
+
+
+require_relative 'slackpack_md' # 0 () ()
+
 end # module Slackpack
 end # module Quark

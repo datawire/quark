@@ -1,8 +1,7 @@
 var _qrt = require("quark/quark_runtime.js");
+_qrt.plugImports("generics/constructors");
 var quark = require('quark').quark;
 exports.quark = quark;
-var quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
-exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
 
 
 
@@ -17,7 +16,7 @@ function Box__init_fields__() {
     this.contents = null;
 }
 Box.prototype.__init_fields__ = Box__init_fields__;
-Box.generics_constructors_Box_quark_Object__ref = null;
+_qrt.lazyStatic(function(){Box.generics_constructors_Box_quark_Object__ref = null;});
 function Box_get() {
     return _qrt.cast(null, function () { return T; });
 }
@@ -42,3 +41,12 @@ function Box__setField(name, value) {
     }
 }
 Box.prototype._setField = Box__setField;
+
+var quark_ffi_signatures_md; _qrt.lazyImport('../../quark_ffi_signatures_md/index.js', function(){
+    quark_ffi_signatures_md = require('../../quark_ffi_signatures_md/index.js');
+    exports.quark_ffi_signatures_md = quark_ffi_signatures_md;
+});
+
+
+
+_qrt.pumpImports("generics/constructors");

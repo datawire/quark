@@ -4,7 +4,7 @@
     "version": "4.5.6",
     "main": "index.js",
     "dependencies": {
-        "quark": "0.0.1",
+        "quark": "1.0.406",
         "testlib": "1.2.3"
     }
 }

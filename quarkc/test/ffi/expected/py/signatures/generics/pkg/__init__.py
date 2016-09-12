@@ -5,9 +5,8 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("generics.pkg")
 import quark.reflect
-import quark_ffi_signatures_md
 
 
 class Foo(object):
@@ -85,3 +84,12 @@ class StringBox(Box):
 
 StringBox.generics_pkg_Box_quark_String__ref = None
 StringBox.generics_pkg_StringBox_ref = None
+
+def _lazy_import_quark_ffi_signatures_md():
+    import quark_ffi_signatures_md
+    globals().update(locals())
+_lazyImport("import quark_ffi_signatures_md", _lazy_import_quark_ffi_signatures_md)
+
+
+
+_lazyImport.pump("generics.pkg")

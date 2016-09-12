@@ -5,7 +5,7 @@ from __future__ import print_function
 from builtins import str as unicode
 
 from quark_runtime import *
-
+_lazyImport.plug("testlib")
 
 
 def atest():
@@ -14,3 +14,5 @@ def atest():
 
 def foo():
     return _cast(None, lambda: unicode)
+
+_lazyImport.pump("testlib")

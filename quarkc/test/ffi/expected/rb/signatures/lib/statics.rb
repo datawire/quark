@@ -3,7 +3,6 @@ require "quark"
 def self.statics; Statics; end
 module Statics
 require 'quark' # .../reflect
-require_relative 'quark_ffi_signatures_md' # 0 () ()
 
 
 def self.Foo; Foo; end
@@ -102,5 +101,9 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 
 end
 Foo.unlazy_statics
+
+
+require_relative 'quark_ffi_signatures_md' # 0 () ()
+
 end # module Statics
 end # module Quark

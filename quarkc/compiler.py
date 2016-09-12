@@ -1161,7 +1161,7 @@ def install(c, url, offline=False, *backends):
 
     for root in c.roots.sorted():
         for backend in backends:
-            b = backend()
+            b = backend(c.include_stdlib)
             b.roots = c.roots
             root.traverse(b)
             b.install(offline)
@@ -1178,7 +1178,7 @@ def compile(c, url, target, *backends):
         if dir not in dirs:
             dirs.append(dir)
         for backend in backends:
-            b = backend()
+            b = backend(c.include_stdlib)
             b.roots = c.roots
             root.traverse(b)
             out = os.path.join(os.path.join(target, b.ext), dir)

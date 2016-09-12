@@ -117,7 +117,7 @@ def _make_file(path):
     # tail += 'puts "end loading module %s"\n' % ".".join(path)
     return Code(comment, head='module Quark\n' + head, tail=tail + 'end # module Quark')
 
-def make_class_file(path, name):
+def make_class_file(path, name, rtloc=None):
     return _make_file(path)
 
 def make_function_file(path, name, mdpkg):
@@ -126,7 +126,7 @@ def make_function_file(path, name, mdpkg):
 def main_file(name):
     return "%s.rb" % name
 
-def make_package_file(path, name):
+def make_package_file(path, name, rtloc=None):
     return _make_file(path + [name])
 
 def main_prolog():
@@ -150,7 +150,7 @@ def name(n):
 def type(path, name, parameters):
     return ".".join(path + [name])
 
-def import_(path, origin, dep):
+def import_(path, origin, dep, seen=None, lazy=False):
     if dep is None:
         # common 'directories'
         common = len(tuple(itertools.takewhile(

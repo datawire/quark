@@ -7,7 +7,6 @@ module Example
 def self.foo; Foo; end
 module Foo
 require 'quark' # .../reflect org/example/foo
-require_relative '../../org_example_foo_md' # 0 () ('org', 'example')
 
 
 def self.Foo; Foo; end
@@ -64,6 +63,10 @@ class Foo < ::DatawireQuarkCore::QuarkObject
 
 end
 Foo.unlazy_statics
+
+
+require_relative '../../org_example_foo_md' # 0 () ('org', 'example')
+
 end # module Foo
 end # module Example
 end # module Org
