@@ -51,7 +51,7 @@
     <dependency>
       <groupId>quark</groupId>
       <artifactId>quark</artifactId>
-      <version>1.0.406</version>
+      <version>0.0.1</version>
     </dependency>
   </dependencies>
 </project>

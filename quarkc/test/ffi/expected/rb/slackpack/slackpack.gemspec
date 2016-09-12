@@ -8,5 +8,5 @@ Gem::Specification.new do |spec|
   # spec.license     = ''
   spec.files       = ['lib/slackpack_md.rb', 'lib/slack.rb', 'lib/slack/event.rb', 'lib/slackpack.rb']
   # spec.homepage    = ''
-  spec.add_runtime_dependency 'quark', '= 1.0.406'
+  spec.add_runtime_dependency 'quark', '= 0.0.1'
 end

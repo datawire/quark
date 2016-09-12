@@ -8,5 +8,5 @@ Gem::Specification.new do |spec|
   # spec.license     = ''
   spec.files       = ['lib/package_md.rb', 'lib/test.rb', 'lib/test/subtest.rb']
   # spec.homepage    = ''
-  spec.add_runtime_dependency 'quark', '= 1.0.406'
+  spec.add_runtime_dependency 'quark', '= 0.0.1'
 end
