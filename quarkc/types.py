@@ -1,128 +1,46 @@
 from collections import OrderedDict
-
-# TODO: pyrsistent, hypothesis
-
-class _Matches(object):
-
-    def __init__(self):
-        self.byname = {}
-
-    def add(self, key, value):
-        if key in self.byname:
-            old = self.byname[key]
-            if value != old:
-                self.byname[key] = Union(old, value)
-        else:
-            self.byname[key] = value
-
-def zipmatch(a, b):
-    matches = _Matches()
-    for za, zb in zip(a, b):
-        za.do_match(zb, matches)
-    return matches.byname
+from quarkc.match import *
 
 class Base(object):
-
-    @property
-    def kind(self):
-        return self.__class__.__name__
-
-    def __cmp__(self, other):
-        # scaffolding for polymorphic comparison that delegates to
-        # monomorphic comparison code
-        return cmp(self.kind, other.kind) or self.cmp(other)
-
-    def match(self, other):
-        matches = _Matches()
-        self.do_match(other, matches)
-        return matches.byname
-
-    def do_match(self, other, matches):
-        assert False, "%s needs to implement do_match" % self.__class__
-
-    def get(self, name):
-        assert False, "%s has no attribute %s" % (self.__class__, name)
-
-    def call(self, *args):
-        assert False, "%s is not callable %s" % (self.__class__, args)
-
-    def bind(self, bindings=None, **kwargs):
-        if bindings:
-            kwargs.update(bindings)
-        return self.do_bind(kwargs)
-
-    def do_bind(self, bindings):
-        assert False, "%s must implement do_bind" % self.__class__
 
     def repr(self, *args):
         return "%s(%s)" % (self.__class__.__name__, ", ".join([repr(a) for a in args]))
 
-class Type(Base):
-    pass
+class Ref(Base):
 
-class Atom(Type):
-
-    """
-    The Atom class represents an indivisible, primitive type within a
-    type system. Compound types such as Objects, Callables, and Unions
-    are composed of combinations of atoms and/or other Compound
-    types. Examples (in most programming languages) include "int" and
-    "float".
-    """
-
-    def __init__(self, name):
+    @match(basestring, many(delay(lambda: Ref)))
+    def __init__(self, name, *params):
         self.name = name
+        self.params = params
 
-    def cmp(self, other):
-        return cmp(self.name, other.name)
+    def __hash__(self):
+        return hash((self.name, self.params))
 
-    def do_match(self, other, matches):
-        pass
+    def __eq__(self, other):
+        return isinstance(other, Ref) and self.name == other.name and self.params == other.params
 
-    def do_bind(self, bindings):
-        return self
+    def bind(self, bindings):
+        if self.name in bindings:
+            assert not self.params
+            return bindings.get(self.name)
+        else:
+            return Ref(self.name, *[p.bind(bindings) for p in self.params])
 
-    def __repr__(self):
-        return self.repr(self.name)
+    def __repr__(self, *args):
+        return self.repr(self.name, *self.params)
 
-class Param(Type):
+    def __str__(self):
+        if self.params:
+            return "{}<{}>".format(self.name, ", ".join([str(p) for p in self.params]))
+        else:
+            return self.name
 
-    """
-    A Param represents a type parameter. Type parameters are
-    placeholders that can be replaced with other types. A type that
-    contains type parameters is considered a generic type. Generic
-    types can be transformed into other types by substituting other
-    types for a given parameter.
+class Param(Base):
 
-    When substitution is performed on a generic type, the occurences
-    of a parameter are replaced with another type and the result is a
-    new type. The new type might be fully concrete, or might still
-    contain parameters, this can happen because only some of the
-    parameters in the original type are replaced, or it can happen
-    because the substituted types contain parameters, or some
-    combination thereof.
-
-    *** Do we need a term for a type with no paraemters, maybe a reified type? ***
-    """
-
+    @match(basestring, opt(Ref))
     def __init__(self, name, bound=None):
         self.name = name
         self.bound = bound
-
-    def cmp(self, other):
-        return cmp(self.name, other.name) or cmp(self.bound, other.bound)
-
-    def do_match(self, other, matches):
-        matches.add(self.name, other)
-
-    def get(self, name):
-        if self.bound:
-            return self.bound.get(name)
-        else:
-            return Type.get(self, name)
-
-    def do_bind(self, bindings):
-        return bindings.get(self.name, self)
 
     def __repr__(self):
         if self.bound:
@@ -130,87 +48,251 @@ class Param(Type):
         else:
             return self.repr(self.name)
 
+class Type(Base):
+    pass
+
+class Typespace(object):
+
+    def __init__(self):
+        self.types = OrderedDict()
+        self.resolved = OrderedDict()
+
+    @match(basestring)
+    def __getitem__(self, name):
+        return self.types[name]
+
+    @match(basestring, Type)
+    def __setitem__(self, name, type):
+        assert name not in self.types
+        self.types[name] = type
+
+    @match(Ref)
+    def resolve(self, ref):
+        if ref in self.resolved:
+            return self.resolved[ref]
+#        if ref.name not in self.types:
+#            return ref
+        type = self.types[ref.name]
+        if ref.params:
+            assert isinstance(type, Template)
+            assert len(ref.params) == len(type.params)
+            bindings = {}
+            for p, v in zip(type.params, ref.params):
+                bindings[p.name] = v
+            type = type.bind(bindings)
+        self.resolved[ref] = type
+        return type
+
+    @match(Type)
+    def resolve(self, type):
+        return type
+
+    @match(Ref, basestring)
+    def get(self, ref, attr):
+        type = self.resolve(ref)
+        assert isinstance(type, Object)
+        return self.resolve(type.byname[attr].type)
+
+    @match(Ref, many(Ref))
+    def call(self, ref, *args):
+        type = self.resolve(ref)
+        assert isinstance(type, Callable)
+        assert len(type.arguments) == len(args)
+        for a1, a2 in zip(type.arguments, args):
+            assert self.assignable(a1, a2)
+        return self.resolve(type.result)
+
+    @match(Ref)
+    def traverse(self, ref):
+        todo = [self.resolve(ref)]
+        done = set()
+
+        while todo:
+            type = todo.pop()
+            if type in done:
+                continue
+            done.add(type)
+            yield type
+            for ref in type.transitions:
+                todo.append(self.resolve(ref))
+
+    @match(Type, Type, opt(bool))
+    def cotraverse(self, a, b, bidi=False):
+        todo = [(a, b)]
+        if bidi: todo.append((b, a))
+        done = set()
+        while todo:
+            node, companion = todo.pop()
+            key = (node, companion)
+            if key in done:
+                continue
+            done.add(key)
+            yield node, companion
+            for n, c in self.cotransitions(node, companion):
+                todo.append((n, c))
+
+    @match(delay(lambda: Object), delay(lambda: Object))
+    def cotransitions(self, obj, companion):
+        for f in obj.fields:
+            cofield = companion.byname.get(f.name)
+            if cofield:
+                yield self.resolve(f.type), self.resolve(cofield.type)
+                if f.writable:
+                    # invariant
+                    yield self.resolve(cofield.type), self.resolve(f.type)
+            else:
+                yield self.resolve(f.type), None
+
+    @match(delay(lambda: Object), None)
+    def cotransitions(self, obj, companion):
+        if False: yield
+
+#    @match(delay(lambda: Object), Ref)
+#    def cotransitions(self, obj, companion):
+#        if False: yield
+
+#    @match(Ref, delay(lambda: Object))
+#    def cotransitions(self, obj, companion):
+#        if False: yield
+
+    @match(delay(lambda: Callable), delay(lambda: Callable))
+    def cotransitions(self, callable, companion):
+        # covariant
+        yield self.resolve(callable.result), self.resolve(companion.result)
+        minargs = min(len(callable.arguments), len(companion.arguments))
+        maxargs = max(len(callable.arguments), len(companion.arguments))
+        idx = 0
+        while idx < minargs:
+            # contravariant
+            yield self.resolve(companion.arguments[idx]), self.resolve(callable.arguments[idx])
+            idx += 1
+        while idx < maxargs:
+            if idx < len(callable.arguments):
+                yield self.resolve(callable.arguments[idx]), None
+            else:
+                yield self.resolve(companion.arguments[idx]), None
+            idx += 1
+
+    @match(Ref, Ref)
+    def assignable(self, a, b):
+        return self.assignable(self.resolve(a), self.resolve(b))
+
+    @match(Ref, Type)
+    def assignable(self, a, b):
+        return self.assignable(self.resolve(a), b)
+
+    @match(Type, Ref)
+    def assignable(self, a, b):
+        return self.assignable(a, self.resolve(b))
+
+    @match(Type, Type)
+    def assignable(self, a, b):
+        for n, m in self.cotraverse(a, b):
+            if not self.compatible(n, m):
+                return False
+        return True
+
+    @match(delay(lambda: Template), delay(lambda: Object))
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Object), delay(lambda: Template))
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Object), delay(lambda: Callable))
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Callable), delay(lambda: Object))
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Object), None)
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Callable), None)
+    def compatible(self, a, b):
+        return False
+
+    @match(delay(lambda: Object), delay(lambda: Object))
+    def compatible(self, a, b):
+        for f in a.fields:
+            if f.name not in b.byname:
+                return False
+        return True
+
+    @match(delay(lambda: Callable), delay(lambda: Callable))
+    def compatible(self, a, b):
+        return len(a.arguments) == len(b.arguments)
+
 class Field(Base):
 
+    @match(basestring, choice(Ref, delay(lambda: Callable)))
     def __init__(self, name, type):
         self.name = name
         self.type = type
 
-    def cmp(self, other):
-        return cmp(self.name, other.name) or cmp(self.type, other.type)
+    @property
+    def writable(self):
+        return True
 
-    # XXX: this is only here for Callable parameters, not used for
-    # Object fields, maybe should have different class for them
-    def do_match(self, other, matches):
-        self.type.do_match(other, matches)
-
-    def do_bind(self, bindings):
-        return Field(self.name, self.type.bind(bindings))
+    def bind(self, bindings):
+        return self.__class__(self.name, self.type.bind(bindings))
 
     def __repr__(self):
         return self.repr(self.name, self.type)
 
+class Final(Field):
+
+    @property
+    def writable(self):
+        return False
+
 class Object(Type):
 
+    @match(many(Field))
     def __init__(self, *fields):
         self.fields = fields
         self.byname = {}
-        for f in fields:
+        for f in self.fields:
             assert f.name not in self.byname
             self.byname[f.name] = f
 
-    def cmp(self, other):
-        return cmp(self.fields, other.fields)
-
-    def do_match(self, other, matches):
+    @property
+    def transitions(self):
         for f in self.fields:
-            f.type.do_match(other.byname[f.name].type, matches)
+            yield f.type
 
-    def get(self, name):
-        if name in self.byname:
-            return self.byname[name].type
-        else:
-            return Type.get(self, name)
-
-    def do_bind(self, bindings):
+    def bind(self, bindings):
         return Object(*[f.bind(bindings) for f in self.fields])
 
     def __repr__(self):
         return self.repr(*self.fields)
 
+CALLABLE = delay(lambda: Callable)
+
 class Callable(Type):
 
-    def __init__(self, result, *params):
+    @match(choice(Ref, CALLABLE), many(choice(Ref, CALLABLE)))
+    def __init__(self, result, *arguments):
         self.result = result
-        self.params = params
+        self.arguments = arguments
 
-    def cmp(self, other):
-        return cmp(self.result, other.result) or cmp(self.params, other.params)
-
-    def do_match(self, other, matches):
-        self.result.do_match(other.result, matches)
-        for p1, p2 in zip(self.params, other.params):
-            p1.type.do_match(p2.type, matches)
-
-    def call(self, *args):
-        sig = tuple([p.type for p in self.params])
-        assert sig == args, (sig, args)
-        return self.result
-
-    def do_bind(self, bindings):
-        return Callable(self.result.bind(bindings), *[f.bind(bindings) for f in self.params])
+    def bind(self, bindings):
+        return Callable(self.result.bind(bindings), *[f.bind(bindings) for f in self.arguments])
 
     def __repr__(self):
-        return self.repr(self.result, *self.params)
+        return self.repr(self.result, *self.arguments)
 
-class Union(Type):
+class Template(Type):
 
-    def __init__(self, *types):
-        self.types = tuple(sorted(set([t.types if isinstance(t, Union) else t
-                                       for t in types])))
+    @match(Param, many(Param), choice(Object, Callable))
+    def __init__(self, *args):
+        self.params = args[:-1]
+        self.type = args[-1]
 
-    def cmp(self, other):
-        return cmp(self.types, other.types)
-
-    def __repr__(self):
-        return self.repr(*self.types)
+    @match(dict)
+    def bind(self, bindings):
+        return self.type.bind(bindings)
