@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import inspect
+import inspect, collections
 
 class MatchError(Exception):
     pass
@@ -212,7 +212,7 @@ def flatten(values):
             yield value
 
 def projections(value, match_value=True):
-    if match_value:
+    if match_value and isinstance(value, collections.Hashable):
         yield value
     if not isinstance(value, Marker):
         for cls in value.__class__.__mro__:
