@@ -48,6 +48,23 @@ def typespace():
     space["String"] = Object(Field("string", Ref("String")))
     return space
 
+def test_struct():
+    space = typespace()
+
+    space["Foo"] = Object(Field("a", Ref("int")),
+                          Field("b", Ref("float")),
+                          Field("c", Ref("String")))
+
+    space["Bar"] = Object(Field("a", Ref("int")),
+                          Field("b", Ref("float")),
+                          Field("c", Ref("String")),
+                          Field("d", Ref("String")))
+
+    assert space.assignable(Ref("Foo"), Ref("Foo"))
+    assert space.assignable(Ref("Bar"), Ref("Bar"))
+    assert space.assignable(Ref("Foo"), Ref("Bar"))
+    assert not space.assignable(Ref("Bar"), Ref("Foo"))
+
 def test_template():
     space = typespace()
 
@@ -181,9 +198,8 @@ def test_higher_order_function():
                         Ref("int"), Ref("float"), Ref("String"))
     assert result == space.resolve(Ref("int"))
 
-#    for n, m in space.cotraverse(space["smug"].type.arguments[0], space["sum"]):
-#        print n, m
-#        print "=="
+    bindings = space.infer(space["smug"].type.arguments[0], space["sum"])
+    print bindings
 
 #    bindings = zipmatch(smug.arguments, (sum, Ref('int'), Ref('float'), Ref('String')))
 #    assert bindings == {'T': Ref('int'), 'A': Ref('int'), 'B': Ref('float'), 'C': Ref('String')}

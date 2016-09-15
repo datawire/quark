@@ -1,6 +1,66 @@
 from collections import OrderedDict
 from quarkc.match import *
 
+"""
+A type is represented as a node in a graph. There are three
+different kinds of nodes: Object, Callable, and Template nodes. Each node
+connects to other nodes via labeled edges.
+
+An Object is composed of fields, and each field has a declared
+type. An object is translated into a node by creating an edge labeled
+by field name that connects to the node corresponding to the declared
+type of each field:
+
+    Declaration:
+
+      object Foo {
+          Bar field1;
+          Baz field2;
+      }
+
+      object Bar {
+          Foo field3;
+      }
+
+      object Baz {}
+
+
+    Graph:
+
+             field3
+       +-----------------+
+       |                 |
+      \|/                |
+      Foo---------->Bar--+
+       |   field1
+       |
+       |
+       | field2
+       +-------->Baz
+
+A Callable has a result type, and an expected type for each
+argument. A Callable is translated into a graph by creating an edge
+labeled by result and by argument position:
+
+    Decleration:
+
+      Baz fun(Foo, Bar)
+
+
+    Graph:
+
+          arg 1
+       +--------->Foo
+       |
+       |   arg 2
+      fun-------->Bar
+       |
+       | result
+       +-------->Baz
+
+"""
+
+
 class Base(object):
 
     def repr(self, *args):
@@ -48,8 +108,17 @@ class Param(Base):
         else:
             return self.repr(self.name)
 
+
 class Type(Base):
     pass
+
+class Unresolved(Type):
+
+    def __init__(self, ref):
+        self.ref = ref
+
+    def __repr__(self):
+        return self.repr(self.ref)
 
 class Typespace(object):
 
@@ -70,8 +139,8 @@ class Typespace(object):
     def resolve(self, ref):
         if ref in self.resolved:
             return self.resolved[ref]
-#        if ref.name not in self.types:
-#            return ref
+        if ref.name not in self.types:
+            return Unresolved(ref)
         type = self.types[ref.name]
         if ref.params:
             assert isinstance(type, Template)
@@ -102,20 +171,23 @@ class Typespace(object):
             assert self.assignable(a1, a2)
         return self.resolve(type.result)
 
-    @match(Ref)
-    def traverse(self, ref):
-        todo = [self.resolve(ref)]
-        done = set()
+    """
+    This traversal yields a sequence of node pairs that must be
+    compatible in order for node 'a' to have a subtype relationship
+    with node 'b'.
 
-        while todo:
-            type = todo.pop()
-            if type in done:
-                continue
-            done.add(type)
-            yield type
-            for ref in type.transitions:
-                todo.append(self.resolve(ref))
+    By exhaustively traversing the type graph starting from node 'a',
+    and making corresponding transitions starting from node 'b', we
+    can establish that every operation that can be performed on a
+    value of type 'a' can also be performed on a value of type
+    'b'. This establishes liskov substitutability, aka a subtype
+    relationship.
 
+    If there is a transition on node 'a' or one of the nodes reachable
+    from 'a' that does not have a corresponding transition on its
+    companion node, the target of the transition is yielded by the
+    generator with None as the companion node.
+    """
     @match(Type, Type, opt(bool))
     def cotraverse(self, a, b, bidi=False):
         todo = [(a, b)]
@@ -147,13 +219,13 @@ class Typespace(object):
     def cotransitions(self, obj, companion):
         if False: yield
 
-#    @match(delay(lambda: Object), Ref)
-#    def cotransitions(self, obj, companion):
-#        if False: yield
+    @match(delay(lambda: Object), Unresolved)
+    def cotransitions(self, obj, companion):
+        if False: yield
 
-#    @match(Ref, delay(lambda: Object))
-#    def cotransitions(self, obj, companion):
-#        if False: yield
+    @match(Unresolved, delay(lambda: Object))
+    def cotransitions(self, obj, companion):
+        if False: yield
 
     @match(delay(lambda: Callable), delay(lambda: Callable))
     def cotransitions(self, callable, companion):
@@ -218,14 +290,32 @@ class Typespace(object):
 
     @match(delay(lambda: Object), delay(lambda: Object))
     def compatible(self, a, b):
-        for f in a.fields:
-            if f.name not in b.byname:
-                return False
         return True
 
     @match(delay(lambda: Callable), delay(lambda: Callable))
     def compatible(self, a, b):
         return len(a.arguments) == len(b.arguments)
+
+    @match(Type, Type)
+    def infer(self, a, b):
+        bindings = {}
+        for n, m in self.cotraverse(a, b):
+            self.add_inference(bindings, n, m)
+        return bindings
+
+    @match(dict, Type, Unresolved)
+    def add_inference(self, bindings, type, un):
+        assert un.ref not in bindings
+        bindings[un.ref] = type
+
+    @match(dict, Unresolved, Type)
+    def add_inference(self, bindings, un, type):
+        assert un.ref not in bindings
+        bindings[un.ref] = type
+
+    @match(dict, Type, Type)
+    def add_inference(self, bindings, a, b):
+        pass
 
 class Field(Base):
 
