@@ -27,6 +27,9 @@ use java junit junit 4.12;
 include io/datawire/quark/runtime/AbstractDatawireRuntime.java;
 include io/datawire/quark/runtime/Builtins.java;
 
+
+include TODO/TODO/TODO/QuarkRuntime/quark_runtime.go;
+
 package quark 1.0.443;
 
 import quark.error;
@@ -52,7 +55,8 @@ include io.q;
 macro void print(Object msg) $java{do{System.out.println($msg);System.out.flush();}while(false)}
                              $py{_println($msg)}
                              $rb{::DatawireQuarkCore.print($msg)}
-                             $js{_qrt.print($msg)};
+                             $js{_qrt.print($msg)}
+                             $go{QuarkRuntime.Print($msg)};
 
 macro String url_get(String url) $java{io.datawire.quark.runtime.Builtins.url_get($url)}
                                  $py{_url_get($url)}

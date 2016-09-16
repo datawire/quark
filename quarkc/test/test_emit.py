@@ -13,12 +13,12 @@
 # limitations under the License.
 
 import os, pytest, shutil, subprocess, filecmp, difflib
-from quarkc.backend import Java, Python, JavaScript, Ruby, Python3
+from quarkc.backend import Java, Python, JavaScript, Ruby, Python3, Go
 from quarkc.compiler import Compiler, compile
 from quarkc.helpers import namever
 from .util import maybe_xfail, filter_builtin
 
-backends = (Java, Python, JavaScript, Ruby)
+backends = (Java, Python, JavaScript, Ruby, Go)
 
 def do_compile(output, path):
     text = open(path).read()
@@ -227,3 +227,15 @@ def test_run_ruby(output):
     subprocess.check_call(["quark", "install", "--ruby"])
     import quarkc.ruby
     run_tests(base, dirs, lambda name: ["bundle", "exec", "ruby", "lib/" + quarkc.ruby.name(get_dist(name)) + ".rb"], env=env)
+
+def test_run_go(output):
+    go = Go()
+    base = os.path.join(output, go.ext)
+    dirs = [name for name in os.listdir(base)]
+    go_path = ":".join([os.path.join(base, name) for name in dirs])
+    env = {}
+    env.update(os.environ)
+
+    subprocess.check_call(["quark", "install", "--go"])
+    import quarkc.go
+    run_tests(base, dirs, lambda name: ["go", "exec", quarkc.go.name(get_dist(name)) + ".go"], env=env)

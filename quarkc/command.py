@@ -16,9 +16,9 @@
 Quark compiler.
 
 Usage:
-  quark [options] install [--online] [ (--java | --python | --python3 | --javascript | --ruby)... | --all ] [<file>]...
-  quark [options] compile [--inline-stdlib] [ -o DIR ] [ (--java | --python | --javascript | --ruby)... | --all ] <file>...
-  quark [options] run ( --java | --python | --python3 | --javascript | --ruby ) <file> [ -- <args>... ]
+  quark [options] install [--online] [ (--java | --python | --python3 | --javascript | --ruby | --go)... | --all ] [<file>]...
+  quark [options] compile [--inline-stdlib] [ -o DIR ] [ (--java | --python | --javascript | --ruby | --go)... | --all ] <file>...
+  quark [options] run ( --java | --python | --python3 | --javascript | --ruby | --go) <file> [ -- <args>... ]
   quark [options] docs [<file>]...
   quark -h | --help | help
   quark --version
@@ -50,6 +50,7 @@ Options:
   --python              Install/emit Python 2 code (if you're just emitting --python3 will work too.)
   --python3             Install/emit Python 3 code (if you're just emitting --python will work too.)
   --javascript          Install/emit JavaScript code.
+  --go                  Install/emit Go code.
 
   --version-warning     Treat compiler-version-related errors as warnings.
   --include-private     Include private entities in generated documentation.
@@ -169,8 +170,9 @@ def main(args):
     python = args["--python"]
     python3 = args["--python3"]
     javascript = args["--javascript"]
+    go = args["--go"]
 
-    all = args["--all"] or not (java or python or javascript or ruby or python3)
+    all = args["--all"] or not (java or python or javascript or ruby or python3 or go)
 
     output = args["--output"]
     offline = not args["--online"]
@@ -197,6 +199,9 @@ def main(args):
         if javascript or all:
             if args["install"]: shell.check("npm")
             backends.append(backend.JavaScript)
+        if go or all:
+            if args["install"]: shell.check("go")
+            backends.append(backend.Go)
 
         filenames = args["<file>"] or [compiler.join(None, compiler.BUILTIN_FILE)]
         for url in filenames:
@@ -219,7 +224,7 @@ def main(args):
             err = str(err) + "\n\n"
             err += "Please retry the command with the --online switch\n\n"
             err += "    quark install --online "
-            for opt in "--verbose --java --javascript --ruby --python --python3".split():
+            for opt in "--verbose --java --javascript --ruby --python --python3 --go".split():
                 if args[opt]: err += opt + " "
             err += " ".join(shell.quote(f) for f in args["<file>"])
             err += "\n"

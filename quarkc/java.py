@@ -276,6 +276,9 @@ def interface(doc, iface, parameters, bases, static_fields, methods):
 def interface_method(doc, iface, type, name, parameters, body):
     return "%s %s %s(%s);" % (doc, type, name, ", ".join(parameters))
 
+def ducktype(name):
+    return name
+
 ## Function definition
 
 def function(doc, type, name, parameters, body):

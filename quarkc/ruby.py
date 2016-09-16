@@ -299,6 +299,9 @@ def interface_method(doc, iface, type, name, parameters, body):
         body=body or Templates.not_implemented(clazz=iface, name=name)
     )
 
+def ducktype(name):
+    return name
+
 ## Function definition
 
 def function(doc, type, name, parameters, body):

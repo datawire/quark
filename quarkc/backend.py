@@ -18,7 +18,7 @@ import os, types, tempfile, logging, inspect
 import json
 from collections import OrderedDict
 
-from . import java, python, javascript, ruby, shell
+from . import java, python, javascript, ruby, shell, go
 from .ast import (
     AST, Method, Class, Function, Package, File, Dependency, Interface, Primitive,
     Macro, Field, Type, TypeParam, Import, Local, ExprStmt,
@@ -341,6 +341,7 @@ class Backend(object):
                 self.main = fun
                 prolog = self.gen.main_prolog()
 
+        name = self.name(fun.name)
         return prolog + self.gen.function(self.doc(fun),
                                           self.type(fun.type),
                                           self.name(fun.name),
@@ -561,7 +562,7 @@ class Backend(object):
         elif self.bindings and tparam in self.bindings:
             return self.type(self.bindings[tparam])
         else:
-            return self.name(tparam.name)
+            return self.gen.ducktype(self.name(tparam.name))
 
     @overload(types.NoneType)
     def type(self, n):
@@ -649,7 +650,7 @@ class Backend(object):
 
     @overload(Map)
     def expr(self, m):
-        return self.gen.map([(self.expr(e.key), self.expr(e.value)) for e in m.entries])
+        return self.gen.map_([(self.expr(e.key), self.expr(e.value)) for e in m.entries])
 
     @overload(Null)
     def expr(self, n):
@@ -972,3 +973,33 @@ class Ruby(Backend):
     def run(self, name, version, args):
         main = self.gen.name(name)
         os.execlp("ruby", "ruby", "-e", "require('%s'); ::Quark.%s.call_main()" % (name, main), name, *args)
+
+class Go(Backend):
+    PRETTY_INSTALL = "GO"
+    argswitch = "--go"
+    ext = "go"
+    gen = go
+
+    def install_target(self):
+        name, ver = namever(self.entry)
+        return self._install_target(name, ver)
+
+    def _install_target(self, name, ver):
+        try:
+            output = shell.call("echo", "mumble", name, stage="install", errok=True)
+            return output.strip()
+        except shell.ShellError:
+            pass
+        return None
+
+    def install_command(self, dir, offline):
+        name, ver = namever(self.entry)
+        cmd = ["go", "build", "%s" % name]
+        shell.call(*cmd, cwd=dir, stage="install")
+        cmd = ["go", "install"]
+        cmd += ["%s/%s-%s.gem" % (dir, name, ver)]
+        shell.call(*cmd, stage="install")
+
+    def run(self, name, version, args):
+        main = self.gen.name(name)
+        os.execlp("go", "run", "-e", "require('%s'); ::Quark.%s.call_main()" % (name, main), name, *args)

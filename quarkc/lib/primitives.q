@@ -6,7 +6,7 @@ include io/datawire/quark/runtime/Codec.java;
 include io/datawire/quark/runtime/StringUtils.java;
 
 namespace quark {
-    @mapping($java{Object} $py{object} $js{Object} $rb{::DatawireQuarkCore::QuarkObject})
+    @mapping($java{Object} $py{object} $js{Object} $rb{::DatawireQuarkCore::QuarkObject}, $go{interface{}})
     primitive Object {
         macro bool __eq__(Object other) $java{($self)==($other) || ((Object)($self) != null && ((Object) ($self)).equals($other))}
                                         $py{($self) == ($other)}
@@ -39,7 +39,7 @@ namespace quark {
     primitive void {}
 
     // Ruby doesn't have a Boolean type, only TrueClass and FalseClass
-    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{::Object})
+    @mapping($java{Boolean} $py{bool} $js{Boolean} $rb{::Object} $go{bool})
     primitive bool {
         macro bool __not__() $java{!($self)} $py{not ($self)} $rb{!($self)} $js{!($self)};
         macro bool __and__(bool other) $java{($self) && ($other)}
@@ -86,7 +86,7 @@ namespace quark {
         macro T __bitwise_not__() ${(~($self))};
     }
 
-    @mapping($java{Byte} $py{int} $js{Number} $rb{::Integer})
+    @mapping($java{Byte} $py{int} $js{Number} $rb{::Integer} $go{int})
     primitive byte extends integral<byte> {
         macro byte() $java{new Byte()}
                      $py{int()}
@@ -103,7 +103,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Short} $py{int} $js{Number} $rb{::Integer})
+    @mapping($java{Short} $py{int} $js{Number} $rb{::Integer} $go{int})
     primitive short extends integral<short> {
         macro short() $java{new Short()}
                       $py{int()}
@@ -119,7 +119,7 @@ namespace quark {
     }
 
 
-    @mapping($java{Integer} $py{int} $js{Number} $rb{::Integer})
+    @mapping($java{Integer} $py{int} $js{Number} $rb{::Integer} $go{int})
     primitive int extends integral<int> {
         macro int() $java{new Integer()}
                     $py{int()}
@@ -144,7 +144,7 @@ namespace quark {
                                $js{($self)};
     }
 
-    @mapping($java{Long} $py{int} $js{Number} $rb{::Integer})
+    @mapping($java{Long} $py{int} $js{Number} $rb{::Integer} $go{int})
     primitive long extends integral<long> {
         macro long() $java{new Long()}
                      $py{int()}
@@ -166,7 +166,7 @@ namespace quark {
                              $js{($self)};
     }
 
-    @mapping($java{Double} $py{float} $js{Number} $rb{::Float})
+    @mapping($java{Double} $py{float} $js{Number} $rb{::Float} $go{float64})
     primitive float extends numeric<float> {
         macro float __div__(float other) $java{($self) / ($other)}
                                          $py{float($self) / float($other)}
@@ -259,7 +259,7 @@ namespace quark {
         macro long __to_long()  self.getValue();
     }
 
-    @mapping($java{String} $py{unicode} $js{String} $rb{::String})
+    @mapping($java{String} $py{unicode} $js{String} $rb{::String} $go{string})
     primitive String {
         macro String __add__(String other) ${($self) + ($other)};
         macro String __mul__(int count)    $java{new String(new char[Math.max(0, ($count))]).replace("\0", ($self))}
@@ -442,7 +442,7 @@ namespace quark {
         }
     }
 
-    @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{::DatawireQuarkCore::List})
+    @mapping($java{java.util.ArrayList} $py{_List} $js{Array} $rb{::DatawireQuarkCore::List} $go{[]})
     primitive List<T> {
         macro void add(T element) $java{($self).add($element)}
                                   $py{($self).append($element)}
@@ -480,7 +480,7 @@ namespace quark {
         macro JSONObject __to_JSONObject() self.toJSON();
     }
 
-    @mapping($java{java.util.HashMap} $py{_Map} $js{Map} $rb{::Hash})
+    @mapping($java{java.util.HashMap} $py{_Map} $js{Map} $rb{::Hash} $go{TODO MAP})
     primitive Map<K,V> {
         macro void __set__(K key, V value) $java{($self).put(($key), ($value))}
                                            $py{($self)[$key] = ($value)}

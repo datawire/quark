@@ -254,6 +254,9 @@ def interface_method(doc, iface, type, name, parameters, body):
 
     return "\n%sfunction %s(%s)%s\n" % (doc, full_name, params, body) + trailer
 
+def ducktype(name):
+    return name
+
 ## Function definition
 
 def function(doc, type, name, parameters, body):

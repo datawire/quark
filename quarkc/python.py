@@ -288,6 +288,9 @@ def interface_method(doc, iface, type, name, parameters, body):
     body_with_doc = ":" + doc + body[1:]
     return "\ndef %s(%s)%s" % (name, ", ".join(["self"] + parameters), body_with_doc)
 
+def ducktype(name):
+    return name
+
 ## Function definition
 
 def function(doc, type, name, parameters, body):
