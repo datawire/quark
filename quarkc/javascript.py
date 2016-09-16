@@ -391,5 +391,5 @@ def string(s):
 def list_(elements):
     return "[%s]" % ", ".join(elements)
 
-def map(entries):
+def map_(entries):
     return "new Map([%s])" % (", ".join(["[%s, %s]" % e for e in entries]))

@@ -461,6 +461,6 @@ def string(s):
 def list_(elements):
     return '::DatawireQuarkCore::List.new([%s])' % ', '.join(elements)
 
-def map(entries):
+def map_(entries):
     pair = '{} => {}'.format
     return '{%s}' % (', '.join(pair(key, value) for key, value in entries))

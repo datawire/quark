@@ -405,6 +405,6 @@ def string(s):
 def list_(elements):
     return "new java.util.ArrayList(java.util.Arrays.asList(new Object[]{%s}))" % ", ".join(elements)
 
-def map(entries):
+def map_(entries):
     return "io.datawire.quark.runtime.Builtins.map(new Object[]{%s})" % \
         (", ".join(["%s, %s" % e for e in entries]))

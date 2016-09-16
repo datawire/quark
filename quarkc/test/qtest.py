@@ -50,12 +50,14 @@ class QuarkRuntime:
         assert not unknown, "Malformed quark test ids %s" % ", ".join(chain(*[new[l] for l in unknown]))
         if not missing: return
         sys.stderr.write("\ninstall quark runtime for %s\n" % missing)
-        cmd = ["quark", "install"]
+        cmd = []
         env={}
         env.update(os.environ)
         for language in missing:
             language.prime_quark_install(cmd, env)
-        subprocess.check_call(cmd, env=env)
+	if cmd:
+            cmd[0:0] = ["quark", "install"]
+            subprocess.check_call(cmd, env=env)
 
 class QuarkCache(object):
     quark_url = compiler.join(compiler.BUILTIN_FILE, compiler.BUILTIN_FILE)
@@ -87,7 +89,7 @@ class QuarkCompilation(object):
         self.dist_name = self.language.backend.gen.name(self.dist)
         self.compiler.compile()
         target = self.item.output.strpath
-        roots = [r for r in self.compiler.roots.sorted() if r.url != self.cache.quark_url]
+        roots = [r for r in self.compiler.roots.sorted() if not (r.url == self.cache.quark_url and self.language.can_preinstall_quark)]
         dirs = compiler.emit(self.compiler, roots, target, self.language.backend)
         print "emitted", dirs
         self.cache.prime(self.compiler)
@@ -137,6 +139,7 @@ def pexpect_output(cmd, **kwargs):
     return Pexpect.output(cmd, **kwargs)
 
 class Language(object):
+    can_preinstall_quark = True
     keyword = None
     language = None
     used = False
@@ -178,7 +181,7 @@ class Python(Language):
 class Python3(Language):
     keyword = "python3"
     language = "python3"
-    backend = backend.Python3
+    backend = quarkc.backend.Python3
 
     def run_quark(self, item, args=[], timeout=300):
         base = item.output / self.backend.ext
@@ -294,8 +297,30 @@ class Javascript(Language):
         except subprocess.CalledProcessError as e:
             return e.output
 
+class Go(Language):
+    can_preinstall_quark = False
+    keyword = "go"
+    language = "go"
+    backend = quarkc.backend.Go
+
+    def prime_quark_install(self, cmd, env):
+        pass
+
+    def run_quark(self, item, args=None, timeout=300):
+        base = item.output.join(self.backend.ext)
+        name = item.compilation.get_dist_name()
+        dir = base.join(item.parent.fspath.purebasename)
+        env = {"GOPATH": "%s:%s" % (dir, dir.new(basename="quark"))}
+        main = "src/TODO/TODO/TODO/%s/%s/main.go" % ( name, name)
+        env.update(os.environ)
+        try:
+            cmd = ["go", "run", main] + list(args or [])
+            return pexpect_output(cmd, cwd=dir.strpath, env=env, stderr=subprocess.STDOUT)
+        except subprocess.CalledProcessError as e:
+            return e.output
+
 class QuarkFile(pytest.File):
-    languages = [Python(), Java(), Javascript(), Ruby()]
+    languages = [Python(), Java(), Javascript(), Ruby(), Python3(), Go()]
 
     def makeQuarkItem(self, lang):
         raise Exception("abstract")
