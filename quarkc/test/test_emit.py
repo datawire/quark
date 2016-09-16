@@ -12,13 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import os, pytest, shutil, subprocess, filecmp, difflib
+import os, pytest, shutil, subprocess, filecmp
 from quarkc.backend import Java, Python, JavaScript, Ruby, Python3, Go
 from quarkc.compiler import Compiler, compile
-from quarkc.helpers import namever
-from .util import maybe_xfail, filter_builtin
+from .util import maybe_xfail
 
-backends = (Java, Python, JavaScript, Ruby, Go)
+backends = (Java, Python, JavaScript, Ruby, Python3, Go)
 
 def do_compile(output, path):
     text = open(path).read()
@@ -81,78 +80,6 @@ def test_ffi_build_java(ffi_output):
     batch_pom(base, dirs)
     subprocess.check_call(["mvn", "-q", "compile"], cwd=base)
 
-directory = os.path.join(os.path.dirname(__file__), "emit")
-files = [name for name in os.listdir(directory) if name.endswith(".q")]
-paths = [os.path.join(directory, name) for name in files]
-
-@pytest.fixture(scope="session")
-def output(request):
-    return do_output(directory)
-
-@pytest.fixture(scope="session", params=paths)
-def path(request):
-    return request.param
-
-@pytest.fixture(scope="session")
-def compiled(output, path):
-    return do_compile(output, path)
-
-# This test is necessary to glue together the compiled fixture to
-# test_run_*
-def test_emit(output, compiled):
-    pass
-
-def get_out(name):
-    return os.path.join(directory, name + ".out")
-
-def get_expected(name):
-    out = get_out(name)
-    try:
-        expected = open(out).read()
-    except IOError:
-        expected = None
-    return expected
-
-def has_main(name):
-    code = os.path.join(directory, name + ".q")
-    return os.path.exists(code) and "main" in open(code).read()
-
-def get_dist(name):
-    code = os.path.join(directory, name + ".q")
-    cmp = Compiler()
-    file = cmp.urlparse(code, recurse=False)
-    name, ver = namever(file)
-    return name
-
-def run_tests(base, dirs, command, env=None):
-    failed_expectations = []
-    for name in dirs:
-        if has_main(name):
-            try:
-                cmd = command(name)
-                cwd = os.path.join(base, name)
-                print "cd %s && %s" % (cwd, " ".join(cmd))
-                actual = subprocess.check_output(cmd, cwd=cwd, env=env, stderr=subprocess.STDOUT)
-            except subprocess.CalledProcessError as e:
-                actual = e.output
-                print(actual)
-            expected = get_expected(name)
-            if expected != actual:
-                open(get_out(name) + ".cmp", "w").write(actual)
-                failed_expectations.append(name)
-                if expected is None:
-                    print("FAILURE: Expected output not found for %r." % name)
-                else:
-                    d = difflib.Differ()
-                    delta = list(d.compare(filter_builtin(expected),
-                                           filter_builtin(actual)))
-                    print("FAILURE: Expected and actual output dont match for '%s':\n%s" % (
-                        name, "".join(delta)))
-    print(failed_expectations)
-    assert not failed_expectations
-
-
-
 def batch_pom(target, dirs):
     with open(os.path.join(target, "pom.xml"), "w") as fd:
         fd.write("""<?xml version="1.0" encoding="UTF-8"?>
@@ -168,74 +95,3 @@ def batch_pom(target, dirs):
 </project>
 """ % "\n    ".join(["<module>%s</module>" % d for d in dirs]))
 
-def test_run_java_(output):
-    j = Java()
-    base = os.path.join(output, j.ext)
-    dirs = [name for name in os.listdir(base) if name not in ("pom.xml",)]
-    batch_pom(base, dirs)
-    subprocess.check_call(["mvn", "-q", "install", "dependency:build-classpath", "-Dmdep.outputFile=classpath"], cwd=base)
-
-    subprocess.check_call(["quark", "install", "--java"])
-    import quarkc.java
-    run_tests(base, dirs, lambda name: ["java", "-cp", open(os.path.join(base, name, "classpath")).read().strip() +
-                                        ":target/classes",
-                                        "%s.Main" % quarkc.java.name(get_dist(name))])
-
-def test_run_python(output):
-    py = Python()
-    base = os.path.join(output, py.ext)
-    dirs = [name for name in os.listdir(base)]
-    pypath = ":".join([os.path.join(base, name) for name in dirs])
-    env = {"PYTHONPATH": pypath}
-    env.update(os.environ)
-
-    subprocess.check_call(["quark", "install", "--python"])
-    import quarkc.python
-    run_tests(base, dirs, lambda name: ["python", quarkc.python.name(get_dist(name)) + ".py"], env=env)
-
-def test_run_python3(output):
-    py = Python3()
-    base = os.path.join(output, py.ext)
-    dirs = [name for name in os.listdir(base)]
-    pypath = ":".join([os.path.join(base, name) for name in dirs])
-    env = {"PYTHONPATH": pypath}
-    env.update(os.environ)
-
-    subprocess.check_call(["quark", "install", "--python3"])
-    import quarkc.python
-    run_tests(base, dirs, lambda name: ["python3", quarkc.python.name(get_dist(name)) + ".py"], env=env)
-
-def test_run_javascript(output):
-    js = JavaScript()
-    base = os.path.join(output, js.ext)
-    dirs = [name for name in os.listdir(base)]
-    env = {"NODE_PATH": base}
-    env.update(os.environ)
-
-    subprocess.check_call(["quark", "install", "--javascript"])
-    import quarkc.javascript
-    run_tests(base, dirs, lambda name: ["node", quarkc.javascript.name(get_dist(name)) + ".js"], env=env)
-
-def test_run_ruby(output):
-    rb = Ruby()
-    base = os.path.join(output, rb.ext)
-    dirs = [name for name in os.listdir(base)]
-    ruby_path = ":".join([os.path.join(base, name, "lib") for name in dirs])
-    env = {"RUBYLIB": ruby_path}
-    env.update(os.environ)
-
-    subprocess.check_call(["quark", "install", "--ruby"])
-    import quarkc.ruby
-    run_tests(base, dirs, lambda name: ["bundle", "exec", "ruby", "lib/" + quarkc.ruby.name(get_dist(name)) + ".rb"], env=env)
-
-def test_run_go(output):
-    go = Go()
-    base = os.path.join(output, go.ext)
-    dirs = [name for name in os.listdir(base)]
-    go_path = ":".join([os.path.join(base, name) for name in dirs])
-    env = {}
-    env.update(os.environ)
-
-    subprocess.check_call(["quark", "install", "--go"])
-    import quarkc.go
-    run_tests(base, dirs, lambda name: ["go", "exec", quarkc.go.name(get_dist(name)) + ".go"], env=env)

@@ -1,39 +1,25 @@
-import pytest
-import json, sys
-import pexpect
+import json
+import quarkc.test.qtest as qtest
 
 def pytest_collect_file(path, parent):
     if path.ext == ".q" and path.basename.endswith("_test.q"):
         return QuarkFile(path, parent)
 
-class QuarkFile(pytest.File):
-    def collect(self):
-        for lang in ["python", "java", "javascript", "ruby"]:
-            yield QuarkItem(self, lang)
+class QuarkFile(qtest.QuarkFile):
+    def makeQuarkItem(self, lang):
+        return QuarkItem(self, lang)
 
-class QuarkItem(pytest.Item):
-    def __init__(self, parent, lang):
-        super(QuarkItem, self).__init__("%s:%s" % (lang, parent.fspath.basename), parent)
-        self.lang = lang
+class QuarkItem(qtest.QuarkItem):
+    output = qtest.ensure_output(__file__)
 
     def runtest(self):
-        child = pexpect.spawn("quark", ["install", "-v"] +
-                              ["--%s" % self.lang,
-                               self.parent.fspath.strpath])
-        child.logfile = sys.stdout
-        child.expect(pexpect.EOF, timeout=300)
-        assert child.before.splitlines()[-1].strip() == "Done"
-
-        child = pexpect.spawn(
-            "quark", ["run", "--%s" % self.lang,
-                      self.parent.fspath.strpath, "--", "--json"])
-        child.logfile = sys.stdout
-        child.expect_exact(
-            "=============================== json report ===============================",
-            timeout=300
+        self.compile_quark()
+        actual = self.run_quark_quick(["--json"])
+        report = actual.split(
+            "=============================== json report ==============================="
         )
-        child.expect(pexpect.EOF)
-        report = json.loads(child.before)
+        assert len(report) == 2, "missing json report in\n" + actual
+        report = json.loads(report[1])
         for item in report:
             if item["failures"]:
                 raise QuarkException(report)
@@ -47,9 +33,7 @@ class QuarkItem(pytest.Item):
                 for item in excinfo.value.report
                 if item["failures"]])
             return ret
-
-    def reportinfo(self):
-        return self.fspath, 0, "lang: %s" % self.lang
+        return self._repr_failure_py(excinfo, style="short")
 
 class QuarkException(Exception):
     def __init__(self, report):

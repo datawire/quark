@@ -1171,9 +1171,12 @@ def compile(c, url, target, *backends):
     c.urlparse(url)
     c.compile()
 
+    return emit(c, c.roots.sorted(), target, *backends)
+
+def emit(c, roots, target, *backends):
     dirs = []
 
-    for root in c.roots.sorted():
+    for root in roots:
         dir = os.path.splitext(os.path.basename(root.url))[0]
         if dir not in dirs:
             dirs.append(dir)

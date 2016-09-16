@@ -239,7 +239,7 @@ namespace slack {
 }
 
 // XXX: javascript backend crashes with the handler class at the top level
-namespace pkg {
+namespace pkg_sl {
     class Handler extends slack.SlackHandler {
         void onSlackEvent(slack.event.SlackEvent event) {
             print(event.type);
@@ -255,7 +255,7 @@ namespace pkg {
 
 
 void main(List<String> args) {
-    slack.Client cli = new slack.Client(null, "fake-token", new pkg.Handler());
+    slack.Client cli = new slack.Client(null, "fake-token", new pkg_sl.Handler());
     cli.onWSMessage(null, "{\"type\": \"hello\"}");
     cli.onWSMessage(null, "{\"type\": \"message\", \"user\": \"uid-1\", \"channel\": \"chanel-1\"}");
 }

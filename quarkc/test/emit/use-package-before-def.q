@@ -1,9 +1,9 @@
 quark *;
 void main(List<String> args) {
-    test.go();
+    before_def.go();
 }
 
-namespace test {
+namespace before_def {
     void go() {
         print("GO!");
     }
