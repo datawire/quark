@@ -1,10 +1,19 @@
 from collections import OrderedDict
 from quarkc.match import *
 
-"""
-A type is represented as a node in a graph. There are three
-different kinds of nodes: Object, Callable, and Template nodes. Each node
-connects to other nodes via labeled edges.
+"""A type is represented as a node in a graph. There are two kinds of
+nodes: Object and Callable. Edges are represented either implicitly
+via containment (e.g. an Object may contain a Field that is a
+Callable), or explicitly via a Ref.
+
+Templates represent sets of similarly shaped nodes. A Ref to a
+template must be supplied with parameters in order to select a single
+node from within the set represented by the templates.
+
+Every node in the graph connects to other nodes via labeled
+edges. Each labeled edge corresponds to a field name, argument
+position, or callable result depending on the particular kind of node
+the edge is leaving.
 
 An Object is composed of fields, and each field has a declared
 type. An object is translated into a node by creating an edge labeled
@@ -42,31 +51,97 @@ A Callable has a result type, and an expected type for each
 argument. A Callable is translated into a graph by creating an edge
 labeled by result and by argument position:
 
-    Decleration:
+    Declaration:
 
       Baz fun(Foo, Bar)
 
 
     Graph:
 
-          arg 1
+           arg 1
        +--------->Foo
        |
        |   arg 2
       fun-------->Bar
        |
-       | result
-       +-------->Baz
+       |  result
+       +--------->Baz
+
+
+Object and Callable types can be mixed and matched:
+
+    Declaration:
+
+        object Mixed {
+            Foo field;
+            Baz fun(Foo, Bar);
+        }
+
+
+    Graph:
+
+            field
+         +------------------------------+
+         |                              |
+         |                      arg 1  \|/
+       Mixed                +--------->Foo
+         |                  |
+         |  fun             |   arg 2
+         +---------------->fun-------->Bar
+                            |
+                            |  result
+                            +--------->Baz
+
+Fields can be read/write or read only (final).
+
+A Template contains an Object or Callable with unbound references
+(placeholder edges). When a Template node is referenced, these unbound
+references are replaced with actual references:
+
+    Declaration:
+
+        object Box<T> {
+            T contents;
+        }
+
+        object Foo {
+            Box<Bar> field;
+        }
+
+        object Bar {}
+
+
+    Implicit Declaration:
+
+        object Box<Bar> {
+            Bar contents;
+        }
+
+
+    Graph:
+
+             field             contents
+        Foo -------> Box<Bar> ----------> Bar
+
+
+Given this formalization, type equivalencies can be established by a
+pairwise traversal of the graph from two starting points. The pairwise
+traversal can be used to establish that any operation or sequence of
+operations that can possibly be performed on one node has a
+corresponding equivalence on the other node.
 
 """
 
 
 class Base(object):
+    """Base object that provides a convenient repr utility function."""
 
     def repr(self, *args):
         return "%s(%s)" % (self.__class__.__name__, ", ".join([repr(a) for a in args]))
 
 class Ref(Base):
+
+    """A reference to a node in the type graph."""
 
     @match(basestring, many(delay(lambda: Ref)))
     def __init__(self, name, *params):
@@ -97,22 +172,30 @@ class Ref(Base):
 
 class Param(Base):
 
+    """A parameter for a template."""
+
     @match(basestring, opt(Ref))
     def __init__(self, name, bound=None):
         self.name = name
         self.bound = bound
 
     def __repr__(self):
-        if self.bound:
-            return self.repr(self.name, self.bound)
-        else:
-            return self.repr(self.name)
+        return self.repr(self.name)
 
 
 class Type(Base):
+
+    """Base class for Types. A type is represented as a node in a
+    graph. Templates reperesent a set of similarly structured nodes.
+
+    """
+
     pass
 
 class Unresolved(Type):
+
+    """Every unresolved reference points to this type.
+    """
 
     def __init__(self, ref):
         self.ref = ref
@@ -121,6 +204,13 @@ class Unresolved(Type):
         return self.repr(self.ref)
 
 class Typespace(object):
+
+    """A typespace contains a set of nodes and provides the scope for
+    resolving any references those nodes contains. It also contains
+    methods for comparing types and for calculating the result type of
+    operations such as invoking a callable or accessing a field.
+
+    """
 
     def __init__(self):
         self.types = OrderedDict()
@@ -137,6 +227,8 @@ class Typespace(object):
 
     @match(Ref)
     def resolve(self, ref):
+        """Resolve a reference."""
+
         if ref in self.resolved:
             return self.resolved[ref]
         if ref.name not in self.types:
@@ -154,16 +246,26 @@ class Typespace(object):
 
     @match(Type)
     def resolve(self, type):
+        """This variant of resolve allows field, argument, and result types
+        (or anywhere a reference may occur) to be specified as a
+        nested anonymous types rather than being forced to have a
+        name.
+
+        """
         return type
 
     @match(Ref, basestring)
-    def get(self, ref, attr):
+    def get(self, ref, name):
+        """Calculate the result type of accessing a field.
+        """
         type = self.resolve(ref)
         assert isinstance(type, Object)
-        return self.resolve(type.byname[attr].type)
+        return self.resolve(type.byname[name].type)
 
     @match(Ref, many(Ref))
     def call(self, ref, *args):
+        """Calculate the result type of invoking a callable.
+        """
         type = self.resolve(ref)
         assert isinstance(type, Callable)
         assert len(type.arguments) == len(args)
@@ -171,25 +273,27 @@ class Typespace(object):
             assert self.assignable(a1, a2)
         return self.resolve(type.result)
 
-    """
-    This traversal yields a sequence of node pairs that must be
-    compatible in order for node 'a' to have a subtype relationship
-    with node 'b'.
-
-    By exhaustively traversing the type graph starting from node 'a',
-    and making corresponding transitions starting from node 'b', we
-    can establish that every operation that can be performed on a
-    value of type 'a' can also be performed on a value of type
-    'b'. This establishes liskov substitutability, aka a subtype
-    relationship.
-
-    If there is a transition on node 'a' or one of the nodes reachable
-    from 'a' that does not have a corresponding transition on its
-    companion node, the target of the transition is yielded by the
-    generator with None as the companion node.
-    """
     @match(Type, Type, opt(bool))
     def cotraverse(self, a, b, bidi=False):
+        """This traversal yields a sequence of node pairs that must be
+        compatible in order for node 'a' to have a subtype
+        relationship with node 'b'.
+
+        By traversing the type graph starting from node 'a', and
+        making corresponding transitions starting from node 'b', we
+        can establish that every operation that can be performed on a
+        value of type 'a' can also be performed on a value of type
+        'b'. This establishes liskov substitutability, aka a subtype
+        relationship.
+
+        If there is a transition on node 'a' or one of the nodes
+        reachable from 'a' that does not have a corresponding
+        transition on its companion node, the target of the transition
+        is yielded by the generator with None as the companion
+        node. (Should this be Unresolved?)
+
+        """
+
         todo = [(a, b)]
         if bidi: todo.append((b, a))
         done = set()
@@ -319,7 +423,7 @@ class Typespace(object):
 
 class Field(Base):
 
-    @match(basestring, choice(Ref, delay(lambda: Callable)))
+    @match(basestring, choice(Ref, Type))
     def __init__(self, name, type):
         self.name = name
         self.type = type
@@ -361,11 +465,9 @@ class Object(Type):
     def __repr__(self):
         return self.repr(*self.fields)
 
-CALLABLE = delay(lambda: Callable)
-
 class Callable(Type):
 
-    @match(choice(Ref, CALLABLE), many(choice(Ref, CALLABLE)))
+    @match(choice(Ref, Type), many(choice(Ref, Type)))
     def __init__(self, result, *arguments):
         self.result = result
         self.arguments = arguments
@@ -386,3 +488,6 @@ class Template(Type):
     @match(dict)
     def bind(self, bindings):
         return self.type.bind(bindings)
+
+    def __repr__(self):
+        return self.repr(*(self.params + (self.type,)))
