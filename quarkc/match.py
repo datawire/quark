@@ -272,6 +272,9 @@ def choice(*patterns):
         start.edge(f.start)
     return Fragment(start, lambda next: [f.extend(next) for f in fragments])
 
+def ntuple(pattern):
+    return (many(pattern),)
+
 class delay(object):
 
     def __init__(self, thunk):
@@ -318,7 +321,7 @@ class _BoundDispatcher(object):
             else:
                 return compiled.apply(self.object, *args, **kwargs)
         except MatchError, e:
-            raise TypeError("%s() %s" % (self.dispatcher.name, e))
+            raise TypeError("%s.%s() %s" % (self.clazz.__name__, self.dispatcher.name, e))
 
 class _Dispatcher(object):
 
