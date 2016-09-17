@@ -107,22 +107,27 @@ def test_giant_switch():
 
 @match(int, str)
 def asdf(x, y):
+    "d1"
     return 1, x, y
 
 @match(str, int)
 def asdf(x, y):
+    "d2"
     return 2, x, y
 
 @match(3, opt(str))
 def asdf(x, y="bleh"):
+    "d3"
     return 3, x, y
 
 @match(choice(int, float))
 def asdf(x):
+    "d4"
     return 4, x
 
 @match(int)
 def asdf(x):
+    "d5"
     return 5, x
 
 def test_asdf():
@@ -132,39 +137,50 @@ def test_asdf():
     assert asdf(3, "fdsa") == (3, 3, "fdsa")
     assert asdf(3.14) == (4, 3.14)
 
+def test_function_doc():
+    for i in range(1, 6):
+        assert "d%i" % i in asdf.__doc__
+
 class Test(object):
 
     @match(str)
     def __init__(self, x):
+        "init1"
         self.x = x
         self.case = 1
 
     @match(int)
     def __init__(self, y):
+        "init2"
         self.__init__(str(y))
         self.case = 2
 
     @match(str, int)
     def foo(self, x, y):
+        "foo1"
         return 1, x, y
 
     @match(int, str)
     def foo(self, x, y):
+        "foo2"
         return 2, x, y
 
     @match([many(int)])
     def foo(self, lst):
+        "foo3"
         return 3, lst
 
 class Sub(Test):
 
     @match(float)
     def __init__(self, x):
+        "init3"
         self.__init__(int(x))
         self.case = 3
 
     @match(str)
     def foo(self, s):
+        "foo4"
         return 4, s
 
 def test_Test():
@@ -186,6 +202,26 @@ def test_Test():
     assert s.x == "3"
     assert Sub.foo(s, "asdf") == (4, "asdf")
     assert Sub.foo(s, "asdf", 3) == (1, "asdf", 3)
+
+    s2 = Sub("asdf")
+    assert s2.case == 1
+
+    s3 = Sub(3)
+    assert s3.case == 2
+
+def test_init_doc():
+    for i in range(1, 3):
+        assert "init%i" % i in Test.__init__.__doc__
+    assert "init4" not in Test.__init__.__doc__
+    for i in range(1, 4):
+        assert "init%i" % i in Sub.__init__.__doc__
+
+def test_method_doc():
+    for i in range(1, 4):
+        assert "foo%i" % i in Test.foo.__doc__
+    assert "foo5" not in Test.foo.__doc__
+    for i in range(1, 5):
+        assert "foo%i" % i in Sub.foo.__doc__
 
 @match(many(int))
 def fdsa(*args):
@@ -220,6 +256,18 @@ class Node(object):
 def test_delay():
     parent = Node()
     child = Node(parent)
+    assert child.parent == parent
+    assert parent.parent == None
+
+class LazyNode(object):
+
+    @match(opt(lazy("LazyNode")))
+    def __init__(self, parent = None):
+        self.parent = parent
+
+def test_lazy():
+    parent = LazyNode()
+    child = LazyNode(parent)
     assert child.parent == parent
     assert parent.parent == None
 

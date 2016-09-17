@@ -220,14 +220,21 @@ def projections(value, match_value=True):
 
 class Fragment(object):
 
-    def __init__(self, start, extend):
+    def __init__(self, start, extend, doc):
         assert isinstance(start, State)
         self.start = start
         self.extend = extend
+        self.doc = doc
 
 def _value(value):
     start = State()
-    return Fragment(start, lambda next: start.edge(value, next))
+    if isinstance(value, type):
+        doc = value.__name__
+    elif isinstance(value, lazy):
+        doc = value.name
+    else:
+        doc = repr(value)
+    return Fragment(start, lambda next: start.edge(value, next), doc)
 
 def one(*pattern):
     return cat(pattern)
@@ -235,42 +242,46 @@ def one(*pattern):
 def cat(patterns):
     start = None
     extend = None
+    docs = []
     for p in flatten(patterns):
         if isinstance(p, Fragment):
             frag = p
         else:
             frag = _value(p)
+        docs.append(frag.doc)
         if start is None:
             start = frag.start
             extend = frag.extend
         else:
             extend(frag.start)
             extend = frag.extend
-    return Fragment(start, extend)
+    return Fragment(start, extend, ", ".join(docs))
 
 def opt(*pattern):
     frag = cat(pattern)
-    return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)))
+    return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)), "opt(%s)" % frag.doc)
 
 def many(*pattern):
     frag = cat(pattern)
     frag.extend(frag.start)
-    return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)))
+    return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)), "many(%s)" % frag.doc)
 
 
 def when(pattern, action):
-    fragment = one(pattern)
+    frag = one(pattern)
     state = State()
     state.action = action
-    fragment.extend(state)
-    return Fragment(fragment.start, lambda next: state.edge(next))
+    frag.extend(state)
+    return Fragment(frag.start, lambda next: state.edge(next), "When: %s\n\n%s" % (frag.doc, action.__doc__))
 
 def choice(*patterns):
     start = State()
+    docs = []
     fragments = [one(p) for p in patterns]
     for f in fragments:
         start.edge(f.start)
-    return Fragment(start, lambda next: [f.extend(next) for f in fragments])
+        docs.append(f.doc)
+    return Fragment(start, lambda next: [f.extend(next) for f in fragments], "choice(%s)" % ", ".join(docs))
 
 def ntuple(pattern):
     return (many(pattern),)
@@ -282,6 +293,27 @@ class delay(object):
 
     def force(self):
         return self.thunk()
+
+class lazy(delay):
+
+    def __init__(self, name):
+        self.name = name
+        frame = inspect.currentframe()
+        try:
+            self.frame = frame.f_back
+        finally:
+            del frame
+
+    def force(self):
+        frame = self.frame
+        while frame:
+            if self.name in frame.f_locals:
+                return frame.f_locals[self.name]
+            frame = frame.f_back
+        raise NameError(self.name)
+
+    def __repr__(self):
+        return "lazy(%r)" % self.name
 
 def compile(fragment):
     fragment.start.force()
@@ -303,15 +335,24 @@ class _BoundDispatcher(object):
         self.object = object
         self.dispatcher = dispatcher
 
+    @property
+    def __doc__(self):
+        return "\n\n".join([f.__doc__ for c, f in self._mro])
+
+    @property
+    def _mro(self):
+        for c in self.clazz.__mro__:
+            if self.dispatcher.name in c.__dict__:
+                disp = c.__dict__[self.dispatcher.name]
+                if isinstance(disp, _Dispatcher):
+                    yield c, disp
+
     def __call__(self, *args, **kwargs):
         compiled = self.dispatcher.cache.get(self.clazz)
         if compiled is None:
             fragments = []
-            for c in self.clazz.__mro__:
-                if self.dispatcher.name in c.__dict__:
-                    disp = c.__dict__[self.dispatcher.name]
-                    if isinstance(disp, _Dispatcher):
-                        fragments.append(one(c, disp.fragment))
+            for c, disp in self._mro:
+                fragments.append(one(c, disp.fragment))
             compiled = compile(choice(*fragments))
             compiled.match_value = False
             self.dispatcher.cache[self.clazz] = compiled
@@ -330,13 +371,17 @@ class _Dispatcher(object):
         self.fragment = None
         self.compiled = None
         self.cache = {}
+        self.docs = []
 
-    def add(self, types, method):
+    def add(self, types, action):
+        frag = when(cat(types), action)
         if self.fragment is None:
-            self.fragment = when(cat(types), method)
+            self.fragment = frag
         else:
-            self.fragment = choice(self.fragment, when(cat(types), method))
+            self.fragment = choice(self.fragment, frag)
         self.compiled = None
+        self.docs.append(frag.doc)
+        self.__doc__ = "\n\n".join(self.docs)
 
     def __get__(self, object, clazz):
         return _BoundDispatcher(clazz, object, self)

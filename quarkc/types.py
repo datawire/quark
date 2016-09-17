@@ -8,12 +8,13 @@ Callable), or explicitly via a Ref.
 
 Templates represent sets of similarly shaped nodes. A Ref to a
 template must be supplied with parameters in order to select a single
-node from within the set represented by the templates.
+node from within the set represented by the template.
 
 Every node in the graph connects to other nodes via labeled
 edges. Each labeled edge corresponds to a field name, argument
-position, or callable result depending on the particular kind of node
-the edge is leaving.
+position, or return type depending on the particular kind of node the
+edge is leaving.
+
 
 An Object is composed of fields, and each field has a declared
 type. An object is translated into a node by creating an edge labeled
@@ -33,7 +34,6 @@ type of each field:
 
       object Baz {}
 
-
     Graph:
 
              field3
@@ -46,6 +46,7 @@ type of each field:
        |
        | field2
        +-------->Baz
+
 
 A Callable has a result type, and an expected type for each
 argument. A Callable is translated into a graph by creating an edge
@@ -92,7 +93,6 @@ Object and Callable types can be mixed and matched:
                             |  result
                             +--------->Baz
 
-Fields can be read/write or read only (final).
 
 A Template contains an Object or Callable with unbound references
 (placeholder edges). When a Template node is referenced, these unbound
@@ -124,6 +124,9 @@ references are replaced with actual references:
         Foo -------> Box<Bar> ----------> Bar
 
 
+Object fields can be read/write or read only (final). A method is just
+a read only field of a callable type.
+
 Given this formalization, type equivalencies can be established by a
 pairwise traversal of the graph from two starting points. The pairwise
 traversal can be used to establish that any operation or sequence of
@@ -143,7 +146,7 @@ class Ref(Base):
 
     """A reference to a node in the type graph."""
 
-    @match(basestring, many(delay(lambda: Ref)))
+    @match(basestring, many(lazy("Ref")))
     def __init__(self, name, *params):
         self.name = name
         self.params = params
@@ -224,6 +227,16 @@ class Typespace(object):
     def __setitem__(self, name, type):
         assert name not in self.types
         self.types[name] = type
+
+    @match(Type)
+    def unresolve(self, type):
+        for k, v in self.types.items():
+            if v == type:
+                return Ref(k)
+        for k, v in self.resolved.items():
+            if v == type:
+                return k
+        return type
 
     @match(Ref)
     def resolve(self, ref):
@@ -307,7 +320,7 @@ class Typespace(object):
             for n, c in self.cotransitions(node, companion):
                 todo.append((n, c))
 
-    @match(delay(lambda: Object), delay(lambda: Object))
+    @match(lazy("Object"), lazy("Object"))
     def cotransitions(self, obj, companion):
         for f in obj.fields:
             cofield = companion.byname.get(f.name)
@@ -319,19 +332,19 @@ class Typespace(object):
             else:
                 yield self.resolve(f.type), None
 
-    @match(delay(lambda: Object), None)
+    @match(lazy("Object"), None)
     def cotransitions(self, obj, companion):
         if False: yield
 
-    @match(delay(lambda: Object), Unresolved)
+    @match(lazy("Object"), Unresolved)
     def cotransitions(self, obj, companion):
         if False: yield
 
-    @match(Unresolved, delay(lambda: Object))
+    @match(Unresolved, lazy("Object"))
     def cotransitions(self, obj, companion):
         if False: yield
 
-    @match(delay(lambda: Callable), delay(lambda: Callable))
+    @match(lazy("Callable"), lazy("Callable"))
     def cotransitions(self, callable, companion):
         # covariant
         yield self.resolve(callable.result), self.resolve(companion.result)
@@ -368,35 +381,35 @@ class Typespace(object):
                 return False
         return True
 
-    @match(delay(lambda: Template), delay(lambda: Object))
+    @match(lazy("Template"), lazy("Object"))
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Object), delay(lambda: Template))
+    @match(lazy("Object"), lazy("Template"))
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Object), delay(lambda: Callable))
+    @match(lazy("Object"), lazy("Callable"))
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Callable), delay(lambda: Object))
+    @match(lazy("Callable"), lazy("Object"))
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Object), None)
+    @match(lazy("Object"), None)
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Callable), None)
+    @match(lazy("Callable"), None)
     def compatible(self, a, b):
         return False
 
-    @match(delay(lambda: Object), delay(lambda: Object))
+    @match(lazy("Object"), lazy("Object"))
     def compatible(self, a, b):
         return True
 
-    @match(delay(lambda: Callable), delay(lambda: Callable))
+    @match(lazy("Callable"), lazy("Callable"))
     def compatible(self, a, b):
         return len(a.arguments) == len(b.arguments)
 
@@ -410,12 +423,12 @@ class Typespace(object):
     @match(dict, Type, Unresolved)
     def add_inference(self, bindings, type, un):
         assert un.ref not in bindings
-        bindings[un.ref] = type
+        bindings[un.ref] = self.unresolve(type)
 
     @match(dict, Unresolved, Type)
     def add_inference(self, bindings, un, type):
         assert un.ref not in bindings
-        bindings[un.ref] = type
+        bindings[un.ref] = self.unresolve(type)
 
     @match(dict, Type, Type)
     def add_inference(self, bindings, a, b):
