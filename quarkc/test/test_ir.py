@@ -16,33 +16,44 @@ import pytest
 
 from quarkc.ir import *
 
-def test_name():
-    n = Name("foo")
-    print n
-    n = Name("pkg:foo")
-    print n
-    n = Name("pkg:foo.bar")
-    print n
-    n = Name("pkg", "foo.bar")
-    print n
+NAMES = [
+    (("foo",), "foo", ()),
+    (("pkg:foo",), "pkg", ("foo",)),
+    (("pkg:foo.bar",), "pkg", ("foo", "bar")),
+    (("pkg", "foo.bar"), "pkg", ("foo", "bar"))
+]
 
-def test_local():
-    l = Local(Name("pkg:foo"), "bar")
-    print l
-    l = Local("pkg:foo.bar", "bar")
-    print l
+@pytest.mark.parametrize("args,package,path", NAMES)
+def test_name(args, package, path):
+    n = Name(*args)
+    assert n.package == package
+    assert n.path == path
+
+LOCALS = [
+    ((Name("pkg:foo"), "bar"), "pkg", ("foo",), "bar"),
+    ((Name("pkg:foo"), "baz"), "pkg", ("foo",), "baz"),
+    (("pkg:foo.bar", "bar"), "pkg", ("foo", "bar"), "bar"),
+    (("pkg:foo.bar", "baz"), "pkg", ("foo", "bar"), "baz")
+]
+
+@pytest.mark.parametrize("args,package,path,name", LOCALS)
+def test_local(args, package, path, name):
+    l = Local(*args)
+    assert l.type.name.package == package
+    assert l.type.name.path == path
+    assert l.name == name
 
 def test_package():
-    p1 = Package((Function(Name("p1:fun"),
-                           Name("p1:int"),
-                           (Param("p1:int", "a"),
-                            Param("p1:int", "b")),
-                           Return(Invoke(Name("q:add"), (Var("a"), Var("b"))))),
-                  Function(Name("p1:f2"),
-                           Name("q:int"),
-                           (Param("q:int", "a"),
-                            Param("q:int", "b")),
-                           Return(Invoke(Name("q:mul"), (Var("a"), Var("b")))))))
+    p1 = Package(Function(Name("p1:fun"),
+                          Name("p1:int"),
+                          Param("p1:int", "a"),
+                          Param("p1:int", "b"),
+                          Return(Invoke(Name("q:add"), Var("a"), Var("b")))),
+                 Function(Name("p1:f2"),
+                          Name("q:int"),
+                          Param("q:int", "a"),
+                          Param("q:int", "b"),
+                          Return(Invoke(Name("q:mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
     emit(p1, p)
@@ -51,8 +62,8 @@ def test_package():
 def test_nesting():
     l = Local(Name("q:int"), "foo")
     l2 = Local(Name("q:int"), "foo")
-    stmt = While(Var("x"), (l, If(Var("y"), (l2,), (l2,))))
-    b = Block((stmt,))
+    stmt = While(Var("x"), l, If(Var("y"), l2, l2))
+    b = Block(stmt)
     print b
     names = set()
     for c in b.collisions(names):
@@ -71,14 +82,14 @@ def test_emit():
     print
 
     stmt = If(Var("x"),
-              (Call(Var("y"), ()),),
-              (stmt,))
+              Call(Var("y"), ()),
+              stmt)
     print "======"
     print code(stmt, Python())
     print code(stmt, Java())
     print "======"
 
-    stmt = While(Invoke(Name("pkg:asdf"), (Send(Var("x"), "y", ()),)), (stmt,))
+    stmt = While(Invoke(Name("pkg:asdf"), Send(Var("x"), "y", ())), stmt)
     print code(stmt, Java())
     print header(stmt, Python())
     print code(stmt, Python())

@@ -1,4 +1,4 @@
-from .dispatch import (overload, dispatch)
+from .match import *
 
 # Problem areas from the current backend:
 #  - scoping of names (if nested in while nested in function, sometimes introduces scopes, sometimes not)
@@ -61,6 +61,7 @@ def namesplit(name):
 
 class Name(IR):
 
+    @match(basestring, many(basestring))
     def __init__(self, package, *path):
         package, pfx = namesplit(package)
         self.package = package
@@ -78,6 +79,7 @@ class Name(IR):
 # XXX: Should maybe switch to Ref/Def versions of names or something.
 class Type(IR):
 
+    @match(Name)
     def __init__(self, name):
         self.name = name
 
@@ -90,16 +92,16 @@ class Type(IR):
 
 class Declaration(IR):
 
-    @overload(Type, basestring)
+    @match(Type, basestring)
     def __init__(self, type, name):
         self.type = type
         self.name = name
 
-    @overload(Name, basestring)
+    @match(Name, basestring)
     def __init__(self, type, name):
         self.__init__(Type(type), name)
 
-    @overload(basestring, basestring)
+    @match(basestring, basestring)
     def __init__(self, type, name):
         self.__init__(Name(type), name)
 
@@ -116,19 +118,15 @@ class Declaration(IR):
     def __repr__(self):
         return self.repr(self.type, self.name)
 
-class Param(Declaration):
-    pass
-    
-class Local(Declaration):
-    pass
-
-class Field(Declaration):
+# A class, interface, or function.
+class Definition(IR):
     pass
 
 # Contains definitions. Renders to a buildable distribution unit.
 class Package(IR):
 
-    def __init__(self, definitions):
+    @match(many(Definition))
+    def __init__(self, *definitions):
         self.definitions = definitions
 
     @property
@@ -141,10 +139,6 @@ class Package(IR):
             return "Package(\n  %s)" % "\n  ".join([repr(d) for d in self.definitions])
         else:
             return "Package()"
-
-# A class, interface, or function.
-class Definition(IR):
-    pass
 
 # knows how to render inside a dfn, this has to account for imports
 # needed by rendered code
@@ -159,15 +153,15 @@ class Expression(Code):
 
 class Block(Code):
 
-    @overload(tuple)
-    def __init__(self, statements):
+    @match(many(Statement))
+    def __init__(self, *statements):
         self.statements = statements
 
-    @overload(Statement)
-    def __init__(self, statement):
-        self.__init__((statement,))
+    @match(ntuple(Statement))
+    def __init__(self, statements):
+        self.__init__(*statements)
 
-    @overload(Expression)
+    @match(Expression)
     def __init__(self, expr):
         self.__init__(Evaluate(expr))
 
@@ -182,20 +176,23 @@ class Block(Code):
                 yield c
 
     def __repr__(self):
-        return self.repr(self.statements)
+        return self.repr(*self.statements)
 
+class Param(Declaration):
+    pass
+    
 class Function(Definition):
 
-    @overload(Name, Type, tuple, Block)
-    def __init__(self, name, type, params, body):
+    @match(Name, Type, many(Param), Block)
+    def __init__(self, name, type, *args):
         self.name = name
         self.type = type
-        self.params = params
-        self.body = body
+        self.params = args[:-1]
+        self.body = args[-1]
 
-    @overload(Name, Name, tuple, Code)
-    def __init__(self, name, type, params, body):
-        self.__init__(name, Type(type), params, Block(body))
+    @match(Name, Name, many(Param), Code)
+    def __init__(self, name, type, *args):
+        self.__init__(name, Type(type), *(args[:-1] + (Block(args[-1]),)))
 
     @property
     def children(self):
@@ -206,58 +203,19 @@ class Function(Definition):
         yield self.body
 
     def __repr__(self):
-        return self.repr(self.name, self.type, self.params, self.body)
+        return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
-# Note that there is no concept of inheritence here, just
-# implementation of interfaces. This implies that the quark FFI cannot
-# accomodate subclassing, i.e. quark types cannot be subclassed from
-# outside of quark, the only types quark really exports are
-# interfaces, and the only external types quark allows to pass across
-# its surface are interfaces.
-class Class(Definition):
-
-    @overload(Name, tuple, tuple, tuple)
-    def __init__(self, name, implements, methods, fields):
-        self.name = name
-        self.implements = implements
-        self.methods = methods
-        self.fields = fields
-
-    @property
-    def children(self):
-        yield self.name
-        for i in self.implements:
-            yield i
-        for m in self.methods:
-            yield m
-        for f in self.fields:
-            yield f
-
-# basically the same as a class but no fields
-class Interface(Definition):
-
-    @overload(Name, tuple, tuple)
-    def __init__(self, name, implements, methods):
-        self.name = name
-        self.implements = implements
-        self.methods = methods
-
-    @property
-    def children(self):
-        yield self.name
-        for i in self.implements:
-            yield self.i
-        for m in self.methods:
-            yield m
+class Field(Declaration):
+    pass
 
 class Method(IR):
 
-    @overload(basestring, Name, Block)
-    def __init__(self, name, type, params, body):
+    @match(basestring, Type, many(Param), Block)
+    def __init__(self, name, type, *args):
         self.name = name
         self.type = type
-        self.params = params
-        self.body = body
+        self.params = args[:-1]
+        self.body = args[-1]
 
     @property
     def children(self):
@@ -267,7 +225,49 @@ class Method(IR):
         yield b
 
     def __repr__(self):
-        return self.repr(self.name, self.type, self.params, self.body)
+        return self.repr(self.name, self.type, *(self.params + (self.body,)))
+
+# Note that there is no concept of inheritence here, just
+# implementation of interfaces. This implies that the quark FFI cannot
+# accomodate subclassing, i.e. quark types cannot be subclassed from
+# outside of quark, the only types quark really exports are
+# interfaces, and the only external types quark allows to pass across
+# its surface are interfaces.
+class Class(Definition):
+
+    @match(Name, many(Type), many(choice(Method, Field)))
+    def __init__(self, name, *args):
+        self.name = name
+        self.implements = [a for a in args if isinstance(a, Type)]
+        self.fields = [a for a in args if isinstance(a, Field)]
+        self.methods = [a for a in args if isinstance(a, Method)]
+
+    @property
+    def children(self):
+        yield self.name
+        for i in self.implements:
+            yield i
+        for f in self.fields:
+            yield f
+        for m in self.methods:
+            yield m
+
+# basically the same as a class but no fields
+class Interface(Definition):
+
+    @match(Name, many(Type), many(Field))
+    def __init__(self, name, *args):
+        self.name = name
+        self.implements = [a for a in args if isinstance(a, Type)]
+        self.methods = [a for a in args if isinstance(a, Method)]
+
+    @property
+    def children(self):
+        yield self.name
+        for i in self.implements:
+            yield self.i
+        for m in self.methods:
+            yield m
 
 # code
 
@@ -288,7 +288,7 @@ class Var(Expression):
 
 class Get(Expression):
 
-    @overload(Expression, basestring)
+    @match(Expression, basestring)
     def __init__(self, expr, attr):
         self.expr = expr
         self.attr = attr
@@ -299,7 +299,7 @@ class Get(Expression):
 
 class Set(Expression):
 
-    @overload(Expression, basestring, Expression)
+    @match(Expression, basestring, Expression)
     def __init__(self, expr, attr, value):
         self.expr = expr
         self.attr = attr
@@ -313,8 +313,8 @@ class Set(Expression):
 # Invokes a function given the fully qualified name and arguments
 class Invoke(Expression):
 
-    @overload(Name, tuple)
-    def __init__(self, name, args):
+    @match(Name, many(Expression))
+    def __init__(self, name, *args):
         self.name = name
         self.args = args
 
@@ -330,7 +330,7 @@ class Invoke(Expression):
 # Invokes a method on an object
 class Send(Expression):
 
-    @overload(Expression, basestring, tuple)
+    @match(Expression, basestring, (many(Expression),))
     def __init__(self, expr, name, args):
         self.expr = expr
         self.name = name
@@ -348,7 +348,7 @@ class Send(Expression):
 # Constructs an instance of a class.
 class Construct(Expression):
 
-    @overload(Name, tuple)
+    @match(Name, (many(Expression),))
     def __init__(self, name, args):
         self.name = name
         self.args = args
@@ -365,7 +365,7 @@ class Construct(Expression):
 # Invokes a callable expression.
 class Call(Expression):
 
-    @overload(Expression, tuple)
+    @match(Expression, (many(Expression),))
     def __init__(self, expr, args):
         self.expr = expr
         self.args = args
@@ -381,7 +381,7 @@ class Call(Expression):
 
 class Cast(Expression):
 
-    @overload(Name, Expression)
+    @match(Name, Expression)
     def __init__(self, type, expr):
         self.type = type
         self.expr = expr
@@ -397,9 +397,12 @@ class Cast(Expression):
 
 # statements
 
+class Local(Declaration, Statement):
+    pass
+
 class Evaluate(Statement):
 
-    @overload(Expression)
+    @match(Expression)
     def __init__(self, expr):
         self.expr = expr
 
@@ -412,7 +415,7 @@ class Evaluate(Statement):
 
 class Return(Statement):
 
-    @overload(Expression)
+    @match(Expression)
     def __init__(self, expr):
         self.expr = expr
 
@@ -425,17 +428,25 @@ class Return(Statement):
 
 class If(Statement):
 
-    @overload(Expression, Block, Block)
+    @match(Expression, Block, Block)
     def __init__(self, predicate, consequence, alternative):
         self.predicate = predicate
         self.consequence = consequence
         self.alternative = alternative
 
-    @overload(Expression, tuple, tuple)
+    @match(Expression, Statement, Statement)
     def __init__(self, predicate, consequence, alternative):
         self.__init__(predicate, Block(consequence), Block(alternative))
 
-    @overload(Expression, Expression, Expression)
+    @match(Expression, Expression, Expression)
+    def __init__(self, predicate, consequence, alternative):
+        self.__init__(predicate, Block(consequence), Block(alternative))
+
+    @match(Expression, Expression, Statement)
+    def __init__(self, predicate, consequence, alternative):
+        self.__init__(predicate, Block(consequence), Block(alternative))
+
+    @match(Expression, Statement, Expression)
     def __init__(self, predicate, consequence, alternative):
         self.__init__(predicate, Block(consequence), Block(alternative))
 
@@ -456,10 +467,14 @@ class If(Statement):
 
 class While(Statement):
 
-    @overload(Expression, Block)
+    @match(Expression, Block)
     def __init__(self, predicate, body):
         self.predicate = predicate
         self.body = body
+
+    @match(Expression, many(Statement))
+    def __init__(self, predicate, *statements):
+        self.__init__(predicate, Block(statements))
 
     @property
     def children(self):
@@ -468,10 +483,6 @@ class While(Statement):
 
     def collisions(self, names):
         return self.body.collisions(names)
-
-    @overload(Expression, tuple)
-    def __init__(self, predicate, body):
-        self.__init__(predicate, Block(body))
 
     def __repr__(self):
         return self.repr(self.predicate, self.body)

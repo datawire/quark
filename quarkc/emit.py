@@ -1,4 +1,4 @@
-from .dispatch import dispatch
+from .match import *
 from .ir import *
 
 class File:
@@ -36,31 +36,31 @@ class Target(object):
 
 class Java(Target):
 
-    @overload(Function)
+    @match(Function)
     def filename(self, fun):
         return "/".join(fun.name.path[:-1], "Functions.java")
 
-    @overload(Class)
+    @match(Class)
     def filename(self, cls):
         return "/".join(cls.name.path[:-1], "%s.java" % cls.name.path[-1])
 
 class Python(Target):
 
-    @overload(Definition)
+    @match(Definition)
     def filename(self, dfn):
         return "/".join(dfn.name.path[:-1])
 
-@dispatch(IR, Target)
+@match(IR, Target)
 def header(nd, target):
     return "".join([header(c, target) for c in nd.children])
 
-@dispatch(IR, Target)
+@match(IR, Target)
 def footer(nd, target):
     return "".join([footer(c, target) for c in nd.children])
 
 ## Package
 
-@dispatch(Package, Target)
+@match(Package, Target)
 def emit(pkg, target):
     for d in pkg.definitions:
         f = target.file(d)
@@ -70,7 +70,7 @@ def emit(pkg, target):
 
 ## Function
 
-@dispatch(Function, Python)
+@match(Function, Python)
 def code(fun, target):
     return "def {name}({params}){body}\n".format(
         name=fun.name.path[-1],
@@ -80,13 +80,13 @@ def code(fun, target):
 
 ## Param
 
-@dispatch(Param, Python)
+@match(Param, Python)
 def code(param, target):
     return param.name
 
 ## If
 
-@dispatch(If, Target)
+@match(If, Target)
 def code(if_, target):
     return "if ({predicate}){consequence}{nl}else{alternative}".format(
         predicate=code(if_.predicate, target),
@@ -97,7 +97,7 @@ def code(if_, target):
 
 ## While
 
-@dispatch(While, Target)
+@match(While, Target)
 def code(wh, target):
     return "while ({predicate}){body}".format(
         predicate=code(wh.predicate, target),
@@ -106,12 +106,12 @@ def code(wh, target):
 
 ## Blocks
 
-@dispatch(Block, Python)
+@match(Block, Python)
 def code(block, target):
     child = target.descend()
     return ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
 
-@dispatch(Block, Java)
+@match(Block, Java)
 def code(block, target):
     child = target.descend()
     result = "\n".join([child.indent(code(s, child)) for s in block.statements])
@@ -122,40 +122,40 @@ def code(block, target):
 
 ## Evaluate
 
-@dispatch(Evaluate, Target)
+@match(Evaluate, Target)
 def code(evaluate, target):
     return code(evaluate.expr, target)
 
 ## Return
 
-@dispatch(Return, Target)
+@match(Return, Target)
 def code(retr, target):
     return "return {expr}".format(expr=code(retr.expr, target))
 
 ## Names
 
-@dispatch(Name, Java)
+@match(Name, Java)
 def code(name, target):
     return ".".join(name.path)
 
-@dispatch(Name, Python)
+@match(Name, Python)
 def header(name, target):
     return "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
 
-@dispatch(Name, Python)
+@match(Name, Python)
 def code(name, target):
     # need to emit an alias here that has been set up for appropriately in a prior pass, maybe have a header(blah, target) and possibly footer(blah, target) pass that can be invoked around the code(blah, target)
     return "%s_%s" % (name.package, "_".join(name.path))
 
 ## Variables
 
-@dispatch(Var, Target)
+@match(Var, Target)
 def code(var, target):
     return var.name
 
 ## Call
 
-@dispatch(Call, Target)
+@match(Call, Target)
 def code(call, target):
     return "{callable}({args})".format(
         callable=code(call.expr, target),
@@ -164,7 +164,7 @@ def code(call, target):
 
 ## Invoke
 
-@dispatch(Invoke, Target)
+@match(Invoke, Target)
 def code(invoke, target):
     return "{function}({args})".format(
         function=code(invoke.name, target),
@@ -173,7 +173,7 @@ def code(invoke, target):
 
 ## Send
 
-@dispatch(Send, Target)
+@match(Send, Target)
 def code(send, target):
     return "{object}.{method}({args})".format(
         object=code(send.expr, target),
