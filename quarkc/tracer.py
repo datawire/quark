@@ -55,11 +55,13 @@ def name(n):
     return ".".join([n.text for n in path(n)])
 
 from collections import OrderedDict
+import types
 
 class SymbolTable(object):
 
     def __init__(self):
         self.definitions = OrderedDict()
+        self.types = types.Typespace()
 
     @match(choice(Function, Class, Interface, Method, Declaration))
     def define(self, dfn):
@@ -68,11 +70,29 @@ class SymbolTable(object):
     @match(AST)
     def define(self, dfn): pass
 
+    @match(Class)
+    def type(self, cls):
+        self.types[name(cls)] = types.Object(*[self.field(d) for d in cls.definitions])
+
+    @match(AST)
+    def type(self, _): pass
+
+    @match(Field)
+    def field(self, f):
+        return types.Field(f.name.text, types.Ref("xxx"))
+
+    @match(Method)
+    def field(self, m):
+        return types.Field(m.name.text, types.Callable(types.Ref("xxx")))
+
 @match(File)
 def check(ast):
     symbols = SymbolTable()
     traverse(ast, symbols.define)
+    traverse(ast, symbols.type)
     print symbols.definitions.keys()
+    print symbols.types.types
+    print symbols.types.resolved
     return ast
 
 @match(File)
