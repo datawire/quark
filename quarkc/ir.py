@@ -101,18 +101,18 @@ class Type(IR):
 
 class Declaration(IR):
 
-    @match(Type, basestring)
-    def __init__(self, type, name):
+    @match(basestring, Type)
+    def __init__(self, name, type):
         self.type = type
         self.name = name
 
-    @match(Name, basestring)
-    def __init__(self, type, name):
-        self.__init__(Type(type), name)
+    @match(basestring, Name)
+    def __init__(self, name, type):
+        self.__init__(name, Type(type))
 
     @match(basestring, basestring)
-    def __init__(self, type, name):
-        self.__init__(Name(type), name)
+    def __init__(self, name, type):
+        self.__init__(name, Name(type))
 
     @property
     def children(self):
@@ -217,6 +217,26 @@ class Function(Definition):
 class Field(Declaration):
     pass
 
+
+class Message(Declaration):
+
+    @match(basestring, Type, many(Param))
+    def __init__(self, name, type, *args):
+        self.name = name
+        self.type = type
+        self.params = args[:-1]
+        self.body = args[-1]
+
+    @property
+    def children(self):
+        yield self.type
+        for p in self.params:
+            yield p
+        yield b
+
+    def __repr__(self):
+        return self.repr(self.name, self.type, *(self.params + (self.body,)))
+
 class Method(IR):
 
     @match(basestring, Type, many(Param), Block)
@@ -264,7 +284,7 @@ class Class(Definition):
 # basically the same as a class but no fields
 class Interface(Definition):
 
-    @match(Name, many(Type), many(Field))
+    @match(Name, many(Type), many(Message))
     def __init__(self, name, *args):
         self.name = name
         self.implements = [a for a in args if isinstance(a, Type)]
@@ -425,7 +445,20 @@ class Number(Literal):
 # statements
 
 class Local(Declaration, Statement):
-    pass
+    @match(basestring, Type, opt(Expression))
+    def __init__(self, name, type, expr=None):
+        self.type = type
+        self.name = name
+        self.expr = expr
+
+    @property
+    def children(self):
+        yield self.type
+        if self.expr:
+            yield self.expr
+
+    def __repr__(self):
+        return self.repr(self.type, self.name, self.expr)
 
 class Evaluate(Statement):
 

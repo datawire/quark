@@ -30,10 +30,10 @@ def test_name(args, package, path):
     assert n.path == path
 
 LOCALS = [
-    ((Name("pkg:x.foo"), "bar"), "pkg", ("x", "foo",), "bar"),
-    ((Name("pkg:x.foo"), "baz"), "pkg", ("x", "foo",), "baz"),
-    (("pkg:foo.bar", "bar"), "pkg", ("foo", "bar"), "bar"),
-    (("pkg:foo.bar", "baz"), "pkg", ("foo", "bar"), "baz")
+    (("bar", Name("pkg:x.foo")), "pkg", ("x", "foo",), "bar"),
+    (("baz", Name("pkg:x.foo")), "pkg", ("x", "foo",), "baz"),
+    (("bar", "pkg:foo.bar"), "pkg", ("foo", "bar"), "bar"),
+    (("baz", "pkg:foo.bar"), "pkg", ("foo", "bar"), "baz")
 ]
 
 @pytest.mark.parametrize("args,package,path,name", LOCALS)
@@ -46,13 +46,13 @@ def test_local(args, package, path, name):
 def test_package():
     p1 = Package(Function(Name("p1:n.fun"),
                           Name("p1:n.int"),
-                          Param("p1:n.int", "a"),
-                          Param("p1:n.int", "b"),
+                          Param("a", "p1:n.int"),
+                          Param("b", "p1:n.int"),
                           Return(Invoke(Name("q:n.add"), Var("a"), Var("b")))),
                  Function(Name("p1:n.f2"),
                           Name("q:n.int"),
-                          Param("q:n.int", "a"),
-                          Param("q:n.int", "b"),
+                          Param("a", "q:n.int"),
+                          Param("b", "q:n.int"),
                           Return(Invoke(Name("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
@@ -60,8 +60,8 @@ def test_package():
     print p.files
 
 def test_nesting():
-    l = Local(Name("q:n.int"), "foo")
-    l2 = Local(Name("q:n.int"), "foo")
+    l = Local("foo", Name("q:n.int"))
+    l2 = Local("foo", Name("q:n.int"))
     stmt = While(Var("x"), l, If(Var("y"), l2, l2))
     b = Block(stmt)
     print b
@@ -100,7 +100,7 @@ def fibonacci_ir():
     return Package(
         Function(
             Name("pf:pf.fib"), Type(Name("q:q.int")),
-            Param(Type(Name("q:q.int")), "i"),
+            Param("i", Type(Name("q:q.int"))),
             Block(
                 If(Invoke(Name("q:q.__eq__"), Var("i"), Number(0)),
                    Block(
@@ -127,7 +127,8 @@ def fibonacci_ir():
 
 
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
-def test_emit_fibonacci_python(target):
+def test_emit_fibonacci(target):
     t = target()
     emit(fibonacci_ir(), t)
     print list(t.files.items())
+
