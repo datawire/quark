@@ -1,3 +1,4 @@
+from contextlib import contextmanager
 from .match import *
 from .ir import *
 
@@ -41,8 +42,11 @@ class Target(object):
             self._current_dfn = self.parent.current_dfn
         return self._current_dfn
 
+    @contextmanager
     def descend(self):
-        return self.__class__(self)
+        child = self.__class__(self)
+        yield child
+        assert not child.files
 
     def indent(self, st=""):
         return "%s%s" % ("  "*self.depth, st)
@@ -305,16 +309,13 @@ def code(wh, target):
 
 @match(Block, Python)
 def code(block, target):
-    child = target.descend()
-    result = ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
-    assert not child.files
-    return result
+    with target.descend() as child:
+        return ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
 
 @match(Block, Java)
 def code(block, target):
-    child = target.descend()
-    result = "\n".join([child.indent(code(s, child)) for s in block.statements])
-    assert not child.files
+    with target.descend() as child:
+        result = "\n".join([child.indent(code(s, child)) for s in block.statements])
     if result:
         return " {\n" + result + "\n%s}" % target.indent()
     else:
@@ -322,16 +323,13 @@ def code(block, target):
 
 @match(Block, Ruby)
 def code(block, target):
-    child = target.descend()
-    result = "\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("nil"))
-    assert not child.files
-    return result
+    with target.descend() as child:
+        return "\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("nil"))
 
 @match(Block, Go)
 def code(block, target):
-    child = target.descend()
-    result = "\n".join([child.indent(code(s, child)) for s in block.statements])
-    assert not child.files
+    with target.descend() as child:
+        result = "\n".join([child.indent(code(s, child)) for s in block.statements])
     if result:
         return " {\n" + result + "\n%s}" % target.indent()
     else:
@@ -458,32 +456,32 @@ def code(local, target):
 
 @match(Interface, Python)
 def code(iface, target):
-    child = target.descend()
-    return "class {name}(object){methods}\n".format(
-        name = target.nameof(iface.name),
-        methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in iface.methods] or ["pass"]))
-    )
+    with target.descend() as child:
+        return "class {name}(object){methods}\n".format(
+            name = target.nameof(iface.name),
+            methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in iface.methods] or ["pass"]))
+        )
 
 @match(Interface, Ruby)
 def code(iface, target):
-    child = target.descend()
-    return "class {name}\n{methods}".format(
-        name = target.nameof(iface.name),
-        methods = "\n".join(map(child.indent, [code(m, child) for m in iface.methods]) + [target.indent("end")])
-    )
+    with target.descend() as child:
+        return "class {name}\n{methods}".format(
+            name = target.nameof(iface.name),
+            methods = "\n".join(map(child.indent, [code(m, child) for m in iface.methods]) + [target.indent("end")])
+        )
 
 @match(Interface, Java)
 def code(iface, target):
-    child = target.descend()
-    return "interface {name} {methods}\n".format(
-        name = target.nameof(iface.name),
-        methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
-    )
+    with target.descend() as child:
+        return "interface {name} {methods}\n".format(
+            name = target.nameof(iface.name),
+            methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
+        )
 
 @match(Interface, Go)
 def code(iface, target):
-    child = target.descend()
-    return "type {name} interface {methods}\n".format(
-        name = target.nameof(iface.name),
-        methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
-    )
+    with target.descend() as child:
+        return "type {name} interface {methods}\n".format(
+            name = target.nameof(iface.name),
+            methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
+        )
