@@ -21,6 +21,13 @@ class Target(object):
         else:
             self.depth = 0
         self.files = {}
+        self._current_dfn = None
+
+    @property
+    def current_dfn(self):
+        if self._current_dfn is None and self.parent is not None:
+            self._current_dfn = self.parent.current_dfn
+        return self._current_dfn
 
     def descend(self):
         return self.__class__(self)
@@ -29,6 +36,7 @@ class Target(object):
         return "%s%s" % ("  "*self.depth, st)
 
     def file(self, dfn):
+        self._current_dfn = dfn
         name = self.filename(dfn)
         if name not in self.files:
             self.files[name] = File(name)
@@ -38,25 +46,75 @@ class Java(Target):
 
     @match(Function)
     def filename(self, fun):
-        return "/".join(fun.name.path[:-1], "Functions.java")
+        # XXX this will clash with a Quark class 'Functions' in the same namespace
+        return "/".join(fun.name.path[:-1] + ("Functions.java",))
 
     @match(Class)
     def filename(self, cls):
-        return "/".join(cls.name.path[:-1], "%s.java" % cls.name.path[-1])
+        return "/".join(cls.name.path[:-1] + ("%s.java" % cls.name.path[-1], ))
 
 class Python(Target):
 
     @match(Definition)
     def filename(self, dfn):
-        return "/".join(dfn.name.path[:-1])
+        return "/".join(dfn.name.path[:]) + ".py"
+
+class Ruby(Target):
+
+    @match(Definition)
+    def filename(self, dfn):
+        return "/".join(dfn.name.path) + ".rb"
+
+    def upcase(self, s):
+        return s[0:1].capitalize() + s[1:]
+
+class Go(Target):
+
+    @match(Definition)
+    def filename(self, dfn):
+        return "/".join(dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
+
+    def is_interpackage(self, name):
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0] != name.path[0]
+
+    def nameof(self, name):
+        ident = "_".join(self.upcase(p) for p in name.path[1:])
+        if self.is_interpackage(name):
+            ident = name.path[0].lower() + "." + ident
+        return ident
+
+    def upcase(self, s):
+        return s[0:1].capitalize() + s[1:]
+
+class Duplicate(set):
+    __slots__=()
+    def __call__(self, item):
+        if item in self:
+            return False
+        else:
+            self.add(item)
+            return True
+
+def flatten_to_strings(gen_or_str):
+    if isinstance(gen_or_str, basestring):
+        if gen_or_str:
+            yield gen_or_str
+    else:
+        for item in gen_or_str:
+            if item:
+                yield item
 
 @match(IR, Target)
 def header(nd, target):
-    return "".join([header(c, target) for c in nd.children])
+    for c in nd.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
 
 @match(IR, Target)
 def footer(nd, target):
-    return "".join([footer(c, target) for c in nd.children])
+    for c in nd.children:
+        for f in flatten_to_strings(footer(c, target)):
+            yield f
 
 ## Package
 
@@ -64,11 +122,61 @@ def footer(nd, target):
 def emit(pkg, target):
     for d in pkg.definitions:
         f = target.file(d)
-        f.header += header(d, target)
-        f.code += code(d, target)
-        f.footer += footer(d, target)
+        f.header += "".join(filter(Duplicate(), header(d, target)))
+        f.code += target.indent(code(d, target))
+        f.footer += "".join(filter(Duplicate(), footer(d, target)))
 
 ## Function
+
+@match(Definition, Ruby)
+def header(dfn, target):
+    module = ""
+    for p in dfn.name.path[:-1]:
+        module += "\n{indent}module {name}".format(
+            indent = target.indent(),
+            name = target.upcase(p))
+        target.depth += 1
+    return module
+
+@match(Definition, Java)
+def header(dfn, target):
+    return package_of(dfn, target)
+
+@match(Definition, Java)
+def package_of(dfn, target):
+    return "package {pkg};".format(
+        pkg = ".".join(dfn.name.path[:-1]))
+
+@match(Function, Java)
+def header(dfn, target):
+    hdr = "{pkg}\n\n{fun}".format(
+        pkg = package_of(dfn, target),
+        fun = target.indent("public class Functions {"))
+    target.depth += 1;
+    return hdr;
+
+@match(Definition, Go)
+def header(dfn, target):
+    return package_of(dfn, target)
+
+@match(Definition, Go)
+def package_of(dfn, target):
+    return "package {pkg}".format(
+        pkg = dfn.name.path[0].lower())
+
+@match(Function, Java)
+def footer(dfn, target):
+    target.depth -= 1;
+    return target.indent("}");
+
+@match(Definition, Ruby)
+def footer(dfn, target):
+    module = []
+    for p in dfn.name.path[:-1]:
+        target.depth -= 1
+        module.append("{indent}end".format(
+            indent = target.indent()))
+    return "\n".join(module)
 
 @match(Function, Python)
 def code(fun, target):
@@ -78,22 +186,88 @@ def code(fun, target):
         body=code(fun.body, target)
     )
 
+@match(Function, Java)
+def code(fun, target):
+    return "public static {type} {name}({params}){body}\n".format(
+        type=code(fun.type, target),
+        name=fun.name.path[-1],
+        params=", ".join(code(p, target) for p in fun.params),
+        body=code(fun.body, target)
+    )
+
+@match(Function, Ruby)
+def code(fun, target):
+    return "def self.{name}({params}){body}\n".format(
+        name=fun.name.path[-1],
+        params=", ".join(code(p, target) for p in fun.params),
+        body=code(fun.body, target)
+    )
+
+@match(Function, Go)
+def code(fun, target):
+    return "func {name}({params}) {type}{body}\n".format(
+        type=code(fun.type, target),
+        name=target.nameof(fun.name),
+        params=", ".join(code(p, target) for p in fun.params),
+        body=code(fun.body, target)
+    )
+
+@match(Type, Java)
+def code(type, target):
+    return type.name.path[-1]
+
+@match(Type, Go)
+def code(type, target):
+    return target.nameof(type.name)
+
 ## Param
 
 @match(Param, Python)
 def code(param, target):
     return param.name
 
+@match(Param, Ruby)
+def code(param, target):
+    return param.name
+
+@match(Param, Java)
+def code(param, target):
+    return "{type} {name}".format(
+        type=code(param.type, target),
+        name=param.name)
+
+@match(Param, Go)
+def code(param, target):
+    return "{name} {type}".format(
+        type=code(param.type, target),
+        name=param.name)
 ## If
 
 @match(If, Target)
 def code(if_, target):
     return "if ({predicate}){consequence}{nl}else{alternative}".format(
         predicate=code(if_.predicate, target),
-        nl="\n" + target.indent(),
+        nl=else_sep(target),
         consequence=code(if_.consequence, target),
         alternative=code(if_.alternative, target)
     )
+
+@match(If, Ruby)
+def code(if_, target):
+    return "if {predicate}{consequence}{nl}else{alternative}{nl}end".format(
+        predicate=code(if_.predicate, target),
+        nl=else_sep(target),
+        consequence=code(if_.consequence, target),
+        alternative=code(if_.alternative, target)
+    )
+
+@match(Target)
+def else_sep(target):
+    return "\n" + target.indent()
+
+@match(Java)
+def else_sep(target):
+    return " "
 
 ## While
 
@@ -109,12 +283,32 @@ def code(wh, target):
 @match(Block, Python)
 def code(block, target):
     child = target.descend()
-    return ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
+    result = ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
+    assert not child.files
+    return result
 
 @match(Block, Java)
 def code(block, target):
     child = target.descend()
     result = "\n".join([child.indent(code(s, child)) for s in block.statements])
+    assert not child.files
+    if result:
+        return " {\n" + result + "\n%s}" % target.indent()
+    else:
+        return " {}"
+
+@match(Block, Ruby)
+def code(block, target):
+    child = target.descend()
+    result = "\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("nil"))
+    assert not child.files
+    return result
+
+@match(Block, Go)
+def code(block, target):
+    child = target.descend()
+    result = "\n".join([child.indent(code(s, child)) for s in block.statements])
+    assert not child.files
     if result:
         return " {\n" + result + "\n%s}" % target.indent()
     else:
@@ -142,16 +336,40 @@ def code(name, target):
 def header(name, target):
     return "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
 
+@match(Name, Go)
+def header(name, target):
+    if target.is_interpackage(name):
+        yield """import "{package}/{toplevel}"\n""".format(
+            package = name.package,
+            toplevel = name.path[0].lower())
+
 @match(Name, Python)
 def code(name, target):
     # need to emit an alias here that has been set up for appropriately in a prior pass, maybe have a header(blah, target) and possibly footer(blah, target) pass that can be invoked around the code(blah, target)
     return "%s_%s" % (name.package, "_".join(name.path))
+
+@match(Name, Ruby)
+def code(name, target):
+    return ".".join(list(map(target.upcase, name.path[:-1])) + [name.path[-1]])
+
+@match(Name, Go)
+def code(name, target):
+    return target.nameof(name)
 
 ## Variables
 
 @match(Var, Target)
 def code(var, target):
     return var.name
+
+@match(Var, Python)
+def code(var, target):
+    return var.name
+
+
+@match(Number, Target)
+def code(num, target):
+    return str(num.value)
 
 ## Call
 
@@ -167,9 +385,17 @@ def code(call, target):
 @match(Invoke, Target)
 def code(invoke, target):
     return "{function}({args})".format(
-        function=code(invoke.name, target),
+        function=funcall(invoke.name, target),
         args=", ".join([code(a, target) for a in invoke.args])
     )
+
+@match(Name, Target)
+def funcall(name, target):
+    return code(name, target)
+
+@match(Name, Java)
+def funcall(name, target):
+    return ".".join(name.path[:-1] + ("Functions",) + name.path[-1:])
 
 ## Send
 

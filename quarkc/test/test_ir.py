@@ -17,8 +17,8 @@ import pytest
 from quarkc.ir import *
 
 NAMES = [
-    (("foo",), "foo", ()),
-    (("pkg:foo",), "pkg", ("foo",)),
+#    (("foo",), "foo", ()),
+#    (("pkg:foo",), "pkg", ("foo",)),
     (("pkg:foo.bar",), "pkg", ("foo", "bar")),
     (("pkg", "foo.bar"), "pkg", ("foo", "bar"))
 ]
@@ -30,8 +30,8 @@ def test_name(args, package, path):
     assert n.path == path
 
 LOCALS = [
-    ((Name("pkg:foo"), "bar"), "pkg", ("foo",), "bar"),
-    ((Name("pkg:foo"), "baz"), "pkg", ("foo",), "baz"),
+    ((Name("pkg:x.foo"), "bar"), "pkg", ("x", "foo",), "bar"),
+    ((Name("pkg:x.foo"), "baz"), "pkg", ("x", "foo",), "baz"),
     (("pkg:foo.bar", "bar"), "pkg", ("foo", "bar"), "bar"),
     (("pkg:foo.bar", "baz"), "pkg", ("foo", "bar"), "baz")
 ]
@@ -44,24 +44,24 @@ def test_local(args, package, path, name):
     assert l.name == name
 
 def test_package():
-    p1 = Package(Function(Name("p1:fun"),
-                          Name("p1:int"),
-                          Param("p1:int", "a"),
-                          Param("p1:int", "b"),
-                          Return(Invoke(Name("q:add"), Var("a"), Var("b")))),
-                 Function(Name("p1:f2"),
-                          Name("q:int"),
-                          Param("q:int", "a"),
-                          Param("q:int", "b"),
-                          Return(Invoke(Name("q:mul"), Var("a"), Var("b")))))
+    p1 = Package(Function(Name("p1:n.fun"),
+                          Name("p1:n.int"),
+                          Param("p1:n.int", "a"),
+                          Param("p1:n.int", "b"),
+                          Return(Invoke(Name("q:n.add"), Var("a"), Var("b")))),
+                 Function(Name("p1:n.f2"),
+                          Name("q:n.int"),
+                          Param("q:n.int", "a"),
+                          Param("q:n.int", "b"),
+                          Return(Invoke(Name("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
     emit(p1, p)
     print p.files
 
 def test_nesting():
-    l = Local(Name("q:int"), "foo")
-    l2 = Local(Name("q:int"), "foo")
+    l = Local(Name("q:n.int"), "foo")
+    l2 = Local(Name("q:n.int"), "foo")
     stmt = While(Var("x"), l, If(Var("y"), l2, l2))
     b = Block(stmt)
     print b
@@ -89,8 +89,45 @@ def test_emit():
     print code(stmt, Java())
     print "======"
 
-    stmt = While(Invoke(Name("pkg:asdf"), Send(Var("x"), "y", ())), stmt)
+    stmt = While(Invoke(Name("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt)
     print code(stmt, Java())
     print header(stmt, Python())
     print code(stmt, Python())
     print footer(stmt, Python())
+
+
+def fibonacci_ir():
+    return Package(
+        Function(
+            Name("pf:pf.fib"), Type(Name("q:q.int")),
+            Param(Type(Name("q:q.int")), "i"),
+            Block(
+                If(Invoke(Name("q:q.__eq__"), Var("i"), Number(0)),
+                   Block(
+                       Return(Number(0))),
+                   Block(
+                       If(Invoke(Name("q:q.__eq__"), Var("i"), Number(1)),
+                          Block(
+                              Return(Number(1))),
+                          Block(
+                              Return(Invoke(
+                                  Name("q:q.__add__"),
+                                  Invoke(Name("pf:pf.fib"),
+                                         Invoke(Name("q:q.__sub__"), Var("i"), Number(1))),
+                                  Invoke(Name("pf:pf.fib"),
+                                         Invoke(Name("q:q.__sub__"), Var("i"), Number(2)))
+                              ))
+                          )
+                       )
+                   )
+                )
+            )
+        )
+    )
+
+
+@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
+def test_emit_fibonacci_python(target):
+    t = target()
+    emit(fibonacci_ir(), t)
+    print list(t.files.items())

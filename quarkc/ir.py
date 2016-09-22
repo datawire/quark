@@ -37,6 +37,9 @@ from .match import *
 
 class IR(object):
 
+    def __init__(self):
+        assert False, "%s is abstract base class" % self.__class__
+
     def repr(self, *args, **kwargs):
         sargs = [repr(a) for a in args]
         sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
@@ -63,15 +66,21 @@ class Name(IR):
 
     @match(basestring, many(basestring))
     def __init__(self, package, *path):
-        package, pfx = namesplit(package)
-        self.package = package
+        pkg, pfx = namesplit(package)
+        self.package = pkg
         self.path = pfx
         for n in path:
             self.path += tuple(n.split('.'))
+        assert len(self.path) > 1, "Expected at least one namespace-thing %s %s" % (package, path)
 
     @property
     def children(self):
         if False: yield
+
+    def __eq__(self, other):
+        return isinstance(other, Name) and self.package == other.package and self.path == other.path
+    def __hash__(self):
+        return hash((self.package, self.path))
 
     def __repr__(self):
         return self.repr(self.package, *self.path)
@@ -271,11 +280,14 @@ class Interface(Definition):
 
 # code
 
+# evaluation of the implied this
 class This(Expression):
     pass
 
+# access a Local or a Param
 class Var(Expression):
 
+    @match(basestring)
     def __init__(self, name):
         self.name = name
 
@@ -286,6 +298,7 @@ class Var(Expression):
     def __repr__(self):
         return self.repr(self.name)
 
+# access a Field or a Method
 class Get(Expression):
 
     @match(Expression, basestring)
@@ -297,6 +310,7 @@ class Get(Expression):
     def children(self):
         yield self.expr
 
+# mutate a Field
 class Set(Expression):
 
     @match(Expression, basestring, Expression)
@@ -393,7 +407,20 @@ class Cast(Expression):
 
 # literals
 
-# ...
+class Literal(Expression):
+    @property
+    def children(self):
+        if False: yield
+
+class Number(Literal):
+
+    @match(int)
+    def __init__(self, value):
+        self.type = Name("q:q.int")
+        self.value = value
+
+    def __repr__(self):
+        return str(self.value)
 
 # statements
 
