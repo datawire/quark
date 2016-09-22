@@ -132,3 +132,26 @@ def test_emit_fibonacci(target):
     emit(fibonacci_ir(), t)
     print list(t.files.items())
 
+
+def minimal_q():
+    return Package(
+        Function(
+            Name("minimal:mdk.init"), Type(Name("minimal:mdk.api.MDK")),
+            Block(Return(Invoke(Name("minimal:mdk.api.GetMDK"))))
+        ),
+        Function(
+            Name("minimal:mdk.start"), Type(Name("minimal:mdk.api.MDK")),
+            Block(
+                Local("m", Type(Name("minimal:mdk.api.MDK")), Invoke(Name("minimal:mdk.init"))),
+                Evaluate(Send(Var("m"), "start", ())),
+                Return(Var("m"))
+            )
+        ),
+        Interface(Name("minimal:mdk.api.Session"))
+    )
+
+@pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
+def test_emit_minimal_q(target):
+    t = target()
+    emit(minimal_q(), t)
+    print list(t.files.items())

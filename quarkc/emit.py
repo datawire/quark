@@ -1,16 +1,28 @@
 from .match import *
 from .ir import *
 
+class Duplicate(set):
+    __slots__=()
+    def __call__(self, item):
+        if item in self:
+            return False
+        else:
+            self.add(item)
+            return True
+
+def dedupe(seq):
+    return filter(Duplicate(), flatten_to_strings(seq))
+
 class File:
 
     def __init__(self, name):
         self.name = name
-        self.header = ""
+        self.header = []
         self.code = ""
-        self.footer = ""
+        self.footer = []
 
     def __repr__(self):
-        return "\n".join([s for s in (self.header, self.code, self.footer) if s])
+        return "\n".join([s for s in ("".join(dedupe(self.header)), self.code, "".join(dedupe(self.footer))) if s]) + ""
 
 class Target(object):
 
@@ -42,6 +54,14 @@ class Target(object):
             self.files[name] = File(name)
         return self.files[name]
 
+    @match(Name)
+    def nameof(self, name):
+        return name.path[-1]
+
+    @match(Name)
+    def is_interpackage(self, name):
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]
+
 class Java(Target):
 
     @match(Function)
@@ -49,7 +69,7 @@ class Java(Target):
         # XXX this will clash with a Quark class 'Functions' in the same namespace
         return "/".join(fun.name.path[:-1] + ("Functions.java",))
 
-    @match(Class)
+    @match(choice(Class, Interface))
     def filename(self, cls):
         return "/".join(cls.name.path[:-1] + ("%s.java" % cls.name.path[-1], ))
 
@@ -74,9 +94,11 @@ class Go(Target):
     def filename(self, dfn):
         return "/".join(dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
 
+    @match(Name)
     def is_interpackage(self, name):
         return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0] != name.path[0]
 
+    @match(Name)
     def nameof(self, name):
         ident = "_".join(self.upcase(p) for p in name.path[1:])
         if self.is_interpackage(name):
@@ -85,15 +107,6 @@ class Go(Target):
 
     def upcase(self, s):
         return s[0:1].capitalize() + s[1:]
-
-class Duplicate(set):
-    __slots__=()
-    def __call__(self, item):
-        if item in self:
-            return False
-        else:
-            self.add(item)
-            return True
 
 def flatten_to_strings(gen_or_str):
     if isinstance(gen_or_str, basestring):
@@ -116,15 +129,23 @@ def footer(nd, target):
         for f in flatten_to_strings(footer(c, target)):
             yield f
 
+@match(basestring, IR, Target, opt(basestring))
+def opt_code(glue, nd, target, default=""):
+    if nd is None:
+        return default
+    else:
+        return "{glue}{code}".format(
+            glue=glue, code=code(nd, target))
+
 ## Package
 
 @match(Package, Target)
 def emit(pkg, target):
     for d in pkg.definitions:
         f = target.file(d)
-        f.header += "".join(filter(Duplicate(), header(d, target)))
+        f.header.extend(dedupe(header(d, target)))
         f.code += target.indent(code(d, target))
-        f.footer += "".join(filter(Duplicate(), footer(d, target)))
+        f.footer.extend(dedupe(footer(d, target)))
 
 ## Function
 
@@ -140,18 +161,18 @@ def header(dfn, target):
 
 @match(Definition, Java)
 def header(dfn, target):
-    return package_of(dfn, target)
+    yield package_of(dfn, target)
 
 @match(Definition, Java)
 def package_of(dfn, target):
-    return "package {pkg};".format(
+    return "package {pkg};\n".format(
         pkg = ".".join(dfn.name.path[:-1]))
 
 @match(Function, Java)
 def header(dfn, target):
-    hdr = "{pkg}\n\n{fun}".format(
+    hdr = "{pkg}\n{fun}".format(
         pkg = package_of(dfn, target),
-        fun = target.indent("public class Functions {"))
+        fun = target.indent("public class Functions {\n"))
     target.depth += 1;
     return hdr;
 
@@ -176,12 +197,13 @@ def footer(dfn, target):
         target.depth -= 1
         module.append("{indent}end".format(
             indent = target.indent()))
+    module.append("")
     return "\n".join(module)
 
 @match(Function, Python)
 def code(fun, target):
     return "def {name}({params}){body}\n".format(
-        name=fun.name.path[-1],
+        name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
         body=code(fun.body, target)
     )
@@ -190,17 +212,18 @@ def code(fun, target):
 def code(fun, target):
     return "public static {type} {name}({params}){body}\n".format(
         type=code(fun.type, target),
-        name=fun.name.path[-1],
+        name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
         body=code(fun.body, target)
     )
 
 @match(Function, Ruby)
 def code(fun, target):
-    return "def self.{name}({params}){body}\n".format(
-        name=fun.name.path[-1],
+    return "def self.{name}({params}){body}\n{end}\n".format(
+        name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
-        body=code(fun.body, target)
+        body=code(fun.body, target),
+        end=target.indent("end")
     )
 
 @match(Function, Go)
@@ -334,7 +357,8 @@ def code(name, target):
 
 @match(Name, Python)
 def header(name, target):
-    return "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
+    if target.is_interpackage(name):
+        yield "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
 
 @match(Name, Go)
 def header(name, target):
@@ -405,4 +429,61 @@ def code(send, target):
         object=code(send.expr, target),
         method=send.name,
         args=", ".join([code(a, target) for a in send.args])
+    )
+
+## Local
+
+@match(Local, choice(Python, Ruby))
+def code(local, target):
+    return "{name}{initializer}".format(
+        name=local.name,
+        initializer=opt_code(" = ", local.expr, target))
+
+@match(Local, Java)
+def code(local, target):
+    return "{type} {name}{initializer}".format(
+        name=local.name,
+        type=code(local.type, target),
+        initializer=opt_code(" = ", local.expr, target))
+
+@match(Local, Go)
+def code(local, target):
+    return "var {name} {type}{initializer}".format(
+        name=local.name,
+        type=code(local.type, target),
+        initializer=opt_code(" = ", local.expr, target))
+
+
+## Interface
+
+@match(Interface, Python)
+def code(iface, target):
+    child = target.descend()
+    return "class {name}(object){methods}\n".format(
+        name = target.nameof(iface.name),
+        methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in iface.methods] or ["pass"]))
+    )
+
+@match(Interface, Ruby)
+def code(iface, target):
+    child = target.descend()
+    return "class {name}\n{methods}".format(
+        name = target.nameof(iface.name),
+        methods = "\n".join(map(child.indent, [code(m, child) for m in iface.methods]) + [target.indent("end")])
+    )
+
+@match(Interface, Java)
+def code(iface, target):
+    child = target.descend()
+    return "interface {name} {methods}\n".format(
+        name = target.nameof(iface.name),
+        methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
+    )
+
+@match(Interface, Go)
+def code(iface, target):
+    child = target.descend()
+    return "type {name} interface {methods}\n".format(
+        name = target.nameof(iface.name),
+        methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
     )
