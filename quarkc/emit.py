@@ -263,6 +263,8 @@ def code(type, target):
 def code(type, target):
     return target.nameof(type.name)
 
+## Void
+
 @match(Void, Target)
 def code(void, target):
     return ""
@@ -270,6 +272,45 @@ def code(void, target):
 @match(Void, Java)
 def code(void, target):
     return "void"
+
+## Int
+
+@match(Int, Target)
+def code(intt, target):
+    return ""
+
+@match(Int, choice(Java, Go))
+def code(intt, target):
+    # XXX: int or long ?
+    return "int"
+
+## Float
+
+@match(Float, Target)
+def code(floatt, target):
+    return ""
+
+@match(Float, Java)
+def code(floatt, target):
+    return "double"
+
+@match(Float, Go)
+def code(floatt, target):
+    return "float64"
+
+## String
+
+@match(String, Target)
+def code(floatt, target):
+    return ""
+
+@match(String, Java)
+def code(floatt, target):
+    return "String"
+
+@match(String, Go)
+def code(floatt, target):
+    return "string"
 
 ## Param
 
@@ -461,14 +502,14 @@ def code(var, target):
 
 ## Numbers
 
-@match(choice(Int, Float), Target)
+@match(choice(IntLit, FloatLit), Target)
 def code(num, target):
     # XXX: probably good enough
     return str(num.value)
 
-## String
+## StringLit
 
-@match(String, Target)
+@match(StringLit, Target)
 def code(num, target):
     # XXX: this is potenitally good enough
     return '"' + num.value.encode('unicode_escape').replace('"','\\"') + '"'
@@ -553,7 +594,7 @@ def code(iface, target):
 @match(Interface, Java)
 def code(iface, target):
     with target.descend() as child:
-        return "interface {name} {methods}\n".format(
+        return "public interface {name} {methods}\n".format(
             name = target.nameof(iface.name),
             methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
         )

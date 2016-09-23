@@ -103,10 +103,30 @@ class Type(IR):
     def __repr__(self):
         return self.repr(self.name)
 
-class Void(Type):
+# a type that maps to a native type in target language
+class NativeType(Type):
 
     def __init__(self):
-        self.name = Name("q:q.void")
+        pass
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr()
+
+class Void(NativeType):
+    pass
+
+class Int(NativeType):
+    pass
+
+class Float(NativeType):
+    pass
+
+class String(NativeType):
+    pass
 
 class Declaration(IR):
 
@@ -460,27 +480,27 @@ class Literal(SimpleExpression):
         return str(self.value)
 
 # int literal
-class Int(Literal):
+class IntLit(Literal):
 
     @match(int)
     def __init__(self, value):
-        self.type = Name("q:q.int")
+        self.type = Int()
         self.value = value
 
-# int literal
-class Float(Literal):
+# float literal
+class FloatLit(Literal):
 
     @match(float)
     def __init__(self, value):
-        self.type = Name("q:q.float")
+        self.type = Float()
         self.value = value
 
-# int literal
-class String(Literal):
+# string literal
+class StringLit(Literal):
 
     @match(basestring)
     def __init__(self, value):
-        self.type = Name("q:q.String")
+        self.type = String()
         self.value = unicode(value)
 
 # statements

@@ -3,23 +3,23 @@ from quarkc.ir import *
 def fibonacci_ir():
     return Package(
         Function(
-            Name("pf:pf.fib"), Type(Name("q:q.int")),
-            Param("i", Type(Name("q:q.int"))),
+            Name("pf:pf.fib"), Int(),
+            Param("i", Int()),
             Block(
-                If(Invoke(Name("q:q.__eq__"), Var("i"), Int(0)),
+                If(Invoke(Name("q:q.int__eq__"), Var("i"), IntLit(0)),
                    Block(
-                       Return(Int(0))),
+                       Return(IntLit(0))),
                    Block(
-                       If(Invoke(Name("q:q.__eq__"), Var("i"), Int(1)),
+                       If(Invoke(Name("q:q.int__eq__"), Var("i"), IntLit(1)),
                           Block(
-                              Return(Int(1))),
+                              Return(IntLit(1))),
                           Block(
                               Return(Invoke(
-                                  Name("q:q.__add__"),
+                                  Name("q:q.int__add__"),
                                   Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.__sub__"), Var("i"), Int(1))),
+                                         Invoke(Name("q:q.int__sub__"), Var("i"), IntLit(1))),
                                   Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.__sub__"), Var("i"), Int(2)))
+                                         Invoke(Name("q:q.int__sub__"), Var("i"), IntLit(2)))
                               ))
                           )
                        )
@@ -46,8 +46,8 @@ def minimal_ir():
         ),
         Interface(
             Name("minimal:mdk.api.Session"),
-            Message("externalize", Type(Name("q:q.String"))),
-            Message("log", Void(), Param("msg", Type(Name("q:q.String"))))
+            Message("externalize", String()),
+            Message("log", Void(), Param("msg", String()))
         ),
         Interface(
             Name("minimal:mdk.api.Plugin"),
@@ -58,7 +58,7 @@ def minimal_ir():
             Name("minimal:mdk.api.MDK"),
             Message("start", Void()),
             Message("session", Type("minimal:mdk.api.Session")),
-            Message("join", Type("minimal:mdk.api.Session"), Param("id", "q:q.String")),
+            Message("join", Type("minimal:mdk.api.Session"), Param("id", String())),
             Message("stop", Void()),
             Message("register", Void(), Param("plugin", "minimal:mdk.api.Plugin"))
             ),
@@ -80,16 +80,16 @@ def minimal_ir():
                   ))
               ),
               Method("join", Type("minimal:mdk.api.Session"),
-                      Param("id", Type("q:q.String")),
+                      Param("id", String()),
                       Block(Return(Send(This(), "_session", (Var("id"), ))))
               ),
               Method("_session", Type("minimal:mdk.api.Session"),
-                     Param("id", Type("q:q.String")),
+                     Param("id", String()),
                      Block(
                          Local("s", Type("minimal:mdk.api.Session"),
                                Construct(Name("minimal:mdk.impl.Session"),
                                          (This(), Var("id")))),
-                         If(Invoke(Name("q:q.__ne__"), Get(This(), "plugin"), Null()),
+                         If(Invoke(Name("q:q.object__ne__"), Get(This(), "plugin"), Null()),
                             Block(
                                 Send(Get(This(), "plugin"), "onSession", (Var("s"), ))
                             ),
@@ -109,10 +109,10 @@ def minimal_ir():
         Class(Name("minimal:mdk.impl.Session"),
               Type("minimal:mdk.api.Session"),
               Field("mdk", Type("minimal:mdk.impl.MDK")),
-              Field("id", Type("q:q.String")),
+              Field("id", String()),
               Constructor("Session", Type("minimal:mdk.impl.Session"),
                           Param("mdk", Type("minimal:mdk.impl.MDK")),
-                          Param("id", Type("q:q.String")),
+                          Param("id", String()),
                           Block(
                               # XXX default field initializers?
                               Evaluate(Set(This(), "mdk", Null())),
@@ -121,12 +121,12 @@ def minimal_ir():
                               Evaluate(Set(This(), "mdk", Var("mdk"))),
                               Evaluate(Set(This(), "id", Var("id"))),
                           )),
-              Method("log", Void(), Param("msg", Type("q:q.String")),
+              Method("log", Void(), Param("msg", String()),
                      Block(Invoke(Name("q:q.print"), Var("msg")))),
-              Method("externalize", Type("q:q.String"),
-                     Block(Return(String("id"))))
+              Method("externalize", String(),
+                     Block(Return(StringLit("id"))))
               ),
-        Function(Name("minimal:mdk.helpers.uuid"), Type("q:q.String"),
-                 Block(Return(String("u-u-i-d"))))
+        Function(Name("minimal:mdk.helpers.uuid"), String(),
+                 Block(Return(StringLit("u-u-i-d"))))
     )
 
