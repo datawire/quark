@@ -114,13 +114,14 @@ if __name__ == '__main__':
 //            box.contents.startswith(3); // errors
             Stringable s = "asdf";
             s = 3;
-//            s = box;
+            s = box;
             Box<Stringable> box2;
             box2.contents = 3;
             box2.contents = "asdf";
+            box2.contents = box;
 //            box2.contents = asdf.foo(); // errors
             asdf.foo();
-//            foo.bar.baz();
+//            foo.bar.baz(); // errors
 //            box2 = box; // errors
 //            box = box2; // errors
             foobar.baz();
@@ -130,6 +131,7 @@ if __name__ == '__main__':
 
     class Box<T> {
         T contents;
+        String toString();
     }
 
     namespace foo { namespace bar {
