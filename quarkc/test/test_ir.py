@@ -102,20 +102,20 @@ def fibonacci_ir():
             Name("pf:pf.fib"), Type(Name("q:q.int")),
             Param("i", Type(Name("q:q.int"))),
             Block(
-                If(Invoke(Name("q:q.__eq__"), Var("i"), Number(0)),
+                If(Invoke(Name("q:q.__eq__"), Var("i"), Int(0)),
                    Block(
-                       Return(Number(0))),
+                       Return(Int(0))),
                    Block(
-                       If(Invoke(Name("q:q.__eq__"), Var("i"), Number(1)),
+                       If(Invoke(Name("q:q.__eq__"), Var("i"), Int(1)),
                           Block(
-                              Return(Number(1))),
+                              Return(Int(1))),
                           Block(
                               Return(Invoke(
                                   Name("q:q.__add__"),
                                   Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.__sub__"), Var("i"), Number(1))),
+                                         Invoke(Name("q:q.__sub__"), Var("i"), Int(1))),
                                   Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.__sub__"), Var("i"), Number(2)))
+                                         Invoke(Name("q:q.__sub__"), Var("i"), Int(2)))
                               ))
                           )
                        )
@@ -171,6 +171,9 @@ def minimal_q():
         Class(Name("minimal:mdk.impl.MDK"),
               Type("minimal:mdk.api.MDK"),
               Field("plugin", Type("minimal:mdk.api.Plugin")),
+              Constructor("MDK", Type("minimal:mdk.impl.MDK"), Block(
+                  Evaluate(Set(This(), "plugin", Null())))
+              ),
               Method("start", Void(), Block()
               ),
               Method("session", Type("minimal:mdk.api.Session"), Block(
@@ -183,7 +186,51 @@ def minimal_q():
                       Param("id", Type("q:q.String")),
                       Block(Return(Send(This(), "_session", (Var("id"), ))))
               ),
+              Method("_session", Type("minimal:mdk.api.Session"),
+                     Param("id", Type("q:q.String")),
+                     Block(
+                         Local("s", Type("minimal:mdk.api.Session"),
+                               Construct(Name("minimal:mdk.impl.Session"),
+                                         (This(), Var("id")))),
+                         If(Invoke(Name("q:q.__ne__"), Get(This(), "plugin"), Null()),
+                            Block(
+                                Send(Get(This(), "plugin"), "onSession", (Var("s"), ))
+                            ),
+                            Block()
+                         ),
+                         Return(Var("s")))
+              ),
+              Method("stop", Void(), Block()),
+              Method("register", Void(),
+                     Param("plugin", Type("minimal:mdk.api.Plugin")),
+                     Block(
+                         Evaluate(Set(This(), "plugin", Var("plugin"))),
+                         Evaluate(Send(Var("plugin"), "init", (This(), )))
+                     )
+              )
         ),
+        Class(Name("minimal:mdk.impl.Session"),
+              Type("minimal:mdk.api.Session"),
+              Field("mdk", Type("minimal:mdk.impl.MDK")),
+              Field("id", Type("q:q.String")),
+              Constructor("Session", Type("minimal:mdk.impl.Session"),
+                          Param("mdk", Type("minimal:mdk.impl.MDK")),
+                          Param("id", Type("q:q.String")),
+                          Block(
+                              # XXX default field initializers?
+                              Evaluate(Set(This(), "mdk", Null())),
+                              Evaluate(Set(This(), "id", Null())),
+                              # user code
+                              Evaluate(Set(This(), "mdk", Var("mdk"))),
+                              Evaluate(Set(This(), "id", Var("id"))),
+                          )),
+              Method("log", Void(), Param("msg", Type("q:q.String")),
+                     Block(Invoke(Name("q:q.print"), Var("msg")))),
+              Method("externalize", Type("q:q.String"),
+                     Block(Return(String("id"))))
+              ),
+        Function(Name("minimal:mdk.helpers.uuid"), Type("q:q.String"),
+                 Block(Return(String("u-u-i-d"))))
     )
 
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])

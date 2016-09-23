@@ -102,11 +102,11 @@ class Go(Target):
 
     @match(Definition)
     def filename(self, dfn):
-        return "/".join(dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
+        return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
 
     @match(Name)
     def is_interpackage(self, name):
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0] != name.path[0]
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0]
 
     @match(Name)
     def nameof(self, name):
@@ -162,21 +162,27 @@ def emit(pkg, target):
 
 @match(Definition, Ruby)
 def header(dfn, target):
+    for c in dfn.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
     module = ""
     for p in dfn.name.path[:-1]:
         module += "\n{indent}module {name}".format(
             indent = target.indent(),
             name = target.upcase(p))
         target.depth += 1
-    return module
+    yield module
 
 @match(Definition, Java)
 def header(dfn, target):
     yield package_of(dfn, target)
+    for c in dfn.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
 
 @match(Definition, Java)
 def package_of(dfn, target):
-    return "package {pkg};\n".format(
+    return "package {pkg};\n\n".format(
         pkg = ".".join(dfn.name.path[:-1]))
 
 @match(Function, Java)
@@ -189,11 +195,14 @@ def header(dfn, target):
 
 @match(Definition, Go)
 def header(dfn, target):
-    return package_of(dfn, target)
+    yield package_of(dfn, target)
+    for c in dfn.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
 
 @match(Definition, Go)
 def package_of(dfn, target):
-    return "package {pkg}".format(
+    return "package {pkg}\n\n".format(
         pkg = dfn.name.path[0].lower())
 
 @match(Function, Java)
@@ -385,7 +394,16 @@ def code(name, target):
 @match(Name, Python)
 def header(name, target):
     if target.is_interpackage(name):
-        yield "import %s as %s\n" % (".".join(name.path), "%s_%s" % (name.package, "_".join(name.path)))
+        yield "import {module} as {alias}\n".format(
+            module=".".join(name.path),
+            alias="%s_%s" % (name.package, "_".join(name.path)))
+
+@match(Name, Ruby)
+def header(name, target):
+    if target.is_interpackage(name):
+        yield "require '{package}/{module}'\n".format(
+            package=name.package,
+            module="/".join(name.path[:-1]))
 
 @match(Name, Go)
 def header(name, target):
@@ -427,11 +445,33 @@ def code(this, target):
 def code(var, target):
     return "self"
 
+## Null
+
+@match(Null, Target)
+def code(this, target):
+    return "null"
+
+@match(Null, choice(Ruby, Go))
+def code(var, target):
+    return "nil"
+
+@match(Null, Python)
+def code(var, target):
+    return "None"
+
 ## Numbers
 
-@match(Number, Target)
+@match(choice(Int, Float), Target)
 def code(num, target):
+    # XXX: probably good enough
     return str(num.value)
+
+## String
+
+@match(String, Target)
+def code(num, target):
+    # XXX: this is potenitally good enough
+    return '"' + num.value.encode('unicode_escape').replace('"','\\"') + '"'
 
 ## Call
 
@@ -590,6 +630,48 @@ def code(fun, target):
         params=", ".join(code(p, target) for p in fun.params)
     )
 
+## Get
+
+@match(Get, Go)
+def code(fget, target):
+    return "{target}.{field}".format(
+        target=code(fget.expr, target),
+        field=target.upcase(fget.attr))
+
+@match(Get, choice(Python, Java))
+def code(fget, target):
+    return "{target}.{field}".format(
+        target=code(fget.expr, target),
+        field=fget.attr)
+
+@match(Get, Ruby)
+def code(fget, target):
+    return "{target}.{field}".format(
+        target=code(fget.expr, target),
+        field=fget.attr)
+
+## Set
+
+@match(Set, Go)
+def code(fset, target):
+    return "{target}.{field} = {value}".format(
+        target=code(fset.expr, target),
+        field=target.upcase(fset.attr),
+        value=code(fset.value, target))
+
+@match(Set, choice(Python, Java))
+def code(fset, target):
+    return "{target}.{field} = {value}".format(
+        target=code(fset.expr, target),
+        field=fset.attr,
+        value=code(fset.value, target))
+
+@match(Set, Ruby)
+def code(fset, target):
+    return "{target}.{field} = {value}".format(
+        target=code(fset.expr, target),
+        field=fset.attr,
+        value=code(fset.value, target))
 
 ## Class
 
@@ -606,7 +688,7 @@ def code(clazz, target):
     with target.descend() as child:
         return "class {name}\n{methods}".format(
             name = target.nameof(clazz.name),
-            methods = "\n".join(map(child.indent, [code(m, child) for m in clazz.methods]) + [target.indent("end")])
+            methods = "\n".join(map(child.indent, [code(m, child) for m in clazz.fields + clazz.methods]) + [target.indent("end")])
         )
 
 @match(Class, Java)
@@ -632,6 +714,12 @@ def code(clazz, target):
 def code(field, target):
     return "public {type} {name};\n".format(
         type=code(field.type, target),
+        name=field.name,
+    )
+
+@match(Field, Ruby)
+def code(field, target):
+    return "attr_accessor :{name}\n".format(
         name=field.name,
     )
 
@@ -679,3 +767,42 @@ def code(method, target):
         params=", ".join(code(p, target) for p in method.params),
         body=code(method.body, target)
     )
+
+
+## Constructor
+
+@match(Constructor, Python)
+def code(constructor, target):
+    return "def __init__({params}){body}\n".format(
+        name=constructor.name,
+        params=", ".join(["self"] + [code(p, target) for p in constructor.params]),
+        body=code(constructor.body, target)
+    )
+
+@match(Constructor, Java)
+def code(constructor, target):
+    return "public {name}({params}){body}\n".format(
+        name=constructor.name,
+        params=", ".join(code(p, target) for p in constructor.params),
+        body=code(constructor.body, target)
+    )
+
+@match(Constructor, Ruby)
+def code(constructor, target):
+    return "def initialize({params}){body}\n{end}\n".format(
+        params=", ".join(code(p, target) for p in constructor.params),
+        body=code(constructor.body, target),
+        end=target.indent("end")
+    )
+
+@match(Constructor, Go)
+def code(constructor, target):
+    with target.descend() as child:
+        return "func {name}__Construct({params}) *{clazz} {alloc}({clazz})\n{body}{ret}".format(
+            clazz=target.nameof(constructor.parent.name),
+            name=target.upcase(constructor.name),
+            params=", ".join(code(p, target) for p in constructor.params),
+            alloc="{\n" + target.indent("this := new"),
+            body=target.indent(code(constructor.body, child) + "\n"),
+            ret=target.indent("return this\n") + "}\n"
+        )

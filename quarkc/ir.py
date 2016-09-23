@@ -263,6 +263,9 @@ class Method(IR):
     def __repr__(self):
         return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
+class Constructor(Method):
+    pass
+
 # Note that there is no concept of inheritence here, just
 # implementation of interfaces. This implies that the quark FFI cannot
 # accomodate subclassing, i.e. quark types cannot be subclassed from
@@ -308,8 +311,8 @@ class Interface(Definition):
 
 # code
 
-# evaluation of the implied this
-class This(Expression):
+# an expression with no children
+class SimpleExpression(Expression):
 
     def __init__(self):
         pass
@@ -321,8 +324,16 @@ class This(Expression):
     def __repr__(self):
         self.repr()
 
+# evaluation of the implied this
+class This(SimpleExpression):
+    pass
+
+# null value
+class Null(SimpleExpression):
+    pass
+
 # access a Local or a Param
-class Var(Expression):
+class Var(SimpleExpression):
 
     @match(basestring)
     def __init__(self, name):
@@ -444,20 +455,33 @@ class Cast(Expression):
 
 # literals
 
-class Literal(Expression):
-    @property
-    def children(self):
-        if False: yield
+class Literal(SimpleExpression):
+    def __repr__(self):
+        return str(self.value)
 
-class Number(Literal):
+# int literal
+class Int(Literal):
 
     @match(int)
     def __init__(self, value):
         self.type = Name("q:q.int")
         self.value = value
 
-    def __repr__(self):
-        return str(self.value)
+# int literal
+class Float(Literal):
+
+    @match(float)
+    def __init__(self, value):
+        self.type = Name("q:q.float")
+        self.value = value
+
+# int literal
+class String(Literal):
+
+    @match(basestring)
+    def __init__(self, value):
+        self.type = Name("q:q.String")
+        self.value = unicode(value)
 
 # statements
 
