@@ -147,7 +147,27 @@ def minimal_q():
                 Return(Var("m"))
             )
         ),
-        Interface(Name("minimal:mdk.api.Session"))
+        Interface(
+            Name("minimal:mdk.api.Session"),
+            Message("externalize", Type(Name("q:q.string"))),
+            Message("log", Void(), Param("msg", Type(Name("q:q.string"))))
+        ),
+        Interface(
+            Name("minimal:mdk.api.Plugin"),
+            Message("init", Void(), Param("mdk", Type("minimal:mdk.api.MDK"))),
+            Message("onSession", Void(), Param("s", "minimal:mdk.api.Session"))
+        ),
+        Interface(
+            Name("minimal:mdk.api.MDK"),
+            Message("start", Void()),
+            Message("session", Type("minimal:mdk.api.Session")),
+            Message("join", Type("minimal:mdk.api.Session"), Param("id", "q:q.string")),
+            Message("stop", Void()),
+            Message("register", Void(), Param("plugin", "minimal:mdk.api.Plugin"))
+            ),
+        Function(Name("minimal:mdk.api.GetMDK"), Type("minimal:mdk.api.MDK"),
+                 Block(Return(Construct(Name("minimal:mdk.impl.MDK"), ())))
+        )
     )
 
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])

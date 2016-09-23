@@ -92,12 +92,21 @@ class Type(IR):
     def __init__(self, name):
         self.name = name
 
+    @match(basestring)
+    def __init__(self, name):
+        self.__init__(Name(name))
+
     @property
     def children(self):
         yield self.name
 
     def __repr__(self):
         return self.repr(self.name)
+
+class Void(Type):
+
+    def __init__(self):
+        self.name = Name("q:q.void")
 
 class Declaration(IR):
 
@@ -224,18 +233,16 @@ class Message(Declaration):
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
-        self.params = args[:-1]
-        self.body = args[-1]
+        self.params = args[:]
 
     @property
     def children(self):
         yield self.type
         for p in self.params:
             yield p
-        yield b
 
     def __repr__(self):
-        return self.repr(self.name, self.type, *(self.params + (self.body,)))
+        return self.repr(self.name, self.type, *self.params)
 
 class Method(IR):
 
@@ -251,7 +258,7 @@ class Method(IR):
         yield self.type
         for p in self.params:
             yield p
-        yield b
+        yield self.body
 
     def __repr__(self):
         return self.repr(self.name, self.type, *(self.params + (self.body,)))
@@ -288,7 +295,8 @@ class Interface(Definition):
     def __init__(self, name, *args):
         self.name = name
         self.implements = [a for a in args if isinstance(a, Type)]
-        self.methods = [a for a in args if isinstance(a, Method)]
+        self.methods = [a for a in args if isinstance(a, Message)]
+        assert len(self.implements) + len(self.methods) == len(args)
 
     @property
     def children(self):

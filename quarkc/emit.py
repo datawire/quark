@@ -247,6 +247,14 @@ def code(type, target):
 def code(type, target):
     return target.nameof(type.name)
 
+@match(Void, Target)
+def code(void, target):
+    return ""
+
+@match(Void, Java)
+def code(void, target):
+    return "void"
+
 ## Param
 
 @match(Param, Python)
@@ -485,3 +493,68 @@ def code(iface, target):
             name = target.nameof(iface.name),
             methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in iface.methods] + [target.indent("}")])
         )
+
+## Construct
+
+@match(Construct, Go)
+def code(cons, target):
+    return "{name}__Construct({args})".format(
+        name=code(cons.name, target),
+        args = ", ".join(code(a, target) for a in cons.args)
+    )
+
+@match(Construct, Python)
+def code(cons, target):
+    return "{name}({args})".format(
+        name=code(cons.name, target),
+        args = ", ".join(code(a, target) for a in cons.args)
+    )
+
+@match(Construct, Ruby)
+def code(cons, target):
+    return "{name}.new({args})".format(
+        name=code(cons.name, target),
+        args = ", ".join(code(a, target) for a in cons.args)
+    )
+
+@match(Construct, Java)
+def code(cons, target):
+    return "new {name}({args})".format(
+        name=code(cons.name, target),
+        args = ", ".join(code(a, target) for a in cons.args)
+    )
+
+
+## Message
+
+@match(Message, Python)
+def code(fun, target):
+    return "def {name}({params}): pass\n".format(
+        name=fun.name,
+        params=", ".join(code(p, target) for p in fun.params)
+    )
+
+@match(Message, Java)
+def code(fun, target):
+    return "public {type} {name}({params});\n".format(
+        type=code(fun.type, target),
+        name=fun.name,
+        params=", ".join(code(p, target) for p in fun.params)
+    )
+
+@match(Message, Ruby)
+def code(fun, target):
+    return "def {name}({params})\n{end}\n".format(
+        name=fun.name,
+        params=", ".join(code(p, target) for p in fun.params),
+        end=target.indent("end")
+    )
+
+@match(Message, Go)
+def code(fun, target):
+    return "{name}({params}) {type}\n".format(
+        type=code(fun.type, target),
+        name=target.upcase(fun.name),
+        params=", ".join(code(p, target) for p in fun.params)
+    )
+
