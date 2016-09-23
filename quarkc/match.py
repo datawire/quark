@@ -335,6 +335,16 @@ class _BoundDispatcher(object):
         self.object = object
         self.dispatcher = dispatcher
 
+    # XXX: This is here for inspect.ismethoddescriptor which needs to
+    # return True for help() to work properly. There may be a better
+    # way to do this.
+    def __get__(self):
+        assert False
+
+    @property
+    def __name__(self):
+        return self.dispatcher.name
+
     @property
     def __doc__(self):
         return "\n\n".join([f.__doc__ for c, f in self._mro])
