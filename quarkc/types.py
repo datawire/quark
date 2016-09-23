@@ -228,6 +228,10 @@ class Typespace(object):
         assert name not in self.types
         self.types[name] = type
 
+    @match(Ref)
+    def unresolve(self, ref):
+        return ref
+
     @match(Type)
     def unresolve(self, type):
         for k, v in self.types.items():
@@ -271,20 +275,26 @@ class Typespace(object):
     def get(self, ref, name):
         """Calculate the result type of accessing a field.
         """
-        type = self.resolve(ref)
-        assert isinstance(type, Object)
-        return self.resolve(type.byname[name].type)
+        return self.get(self.resolve(ref), name)
 
-    @match(Ref, many(Ref))
+    @match(lazy("Object"), basestring)
+    def get(self, object, name):
+        """Calculate the result type of accessing a field.
+        """
+        return self.resolve(object.byname[name].type)
+
+    @match(Ref, many(choice(Ref, Type)))
     def call(self, ref, *args):
+        return self.call(self.resolve(ref), *args)
+
+    @match(lazy("Callable"), many(choice(Ref, Type)))
+    def call(self, callable, *args):
         """Calculate the result type of invoking a callable.
         """
-        type = self.resolve(ref)
-        assert isinstance(type, Callable)
-        assert len(type.arguments) == len(args)
-        for a1, a2 in zip(type.arguments, args):
-            assert self.assignable(a1, a2)
-        return self.resolve(type.result)
+        assert len(callable.arguments) == len(args)
+        for a1, a2 in zip(callable.arguments, args):
+            assert self.assignable(a1, a2), "cannot assign a %s to a %s" % (self.unresolve(a2), self.unresolve(a1))
+        return self.resolve(callable.result)
 
     @match(Type, Type, opt(bool))
     def cotraverse(self, a, b, bidi=False):
