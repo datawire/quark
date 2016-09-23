@@ -66,6 +66,12 @@ class Target(object):
     def is_interpackage(self, name):
         return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]
 
+def backlink(ir, parent):
+    if not hasattr(ir, "parent"):
+        for c in ir.children:
+            backlink(c, ir)
+        ir.parent = parent
+
 class Java(Target):
 
     @match(Function)
@@ -145,6 +151,7 @@ def opt_code(glue, nd, target, default=""):
 
 @match(Package, Target)
 def emit(pkg, target):
+    backlink(pkg, None)
     for d in pkg.definitions:
         f = target.file(d)
         f.header.extend(dedupe(header(d, target)))
@@ -241,7 +248,7 @@ def code(fun, target):
 
 @match(Type, Java)
 def code(type, target):
-    return type.name.path[-1]
+    return ".".join(type.name.path)
 
 @match(Type, Go)
 def code(type, target):
@@ -318,42 +325,56 @@ def code(wh, target):
 @match(Block, Python)
 def code(block, target):
     with target.descend() as child:
-        return ":\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("pass"))
+        return "\n".join(
+            [":"] +
+            map(child.indent,
+                [code(s, child) for s in block.statements] or ["pass"]))
 
 @match(Block, Java)
 def code(block, target):
     with target.descend() as child:
-        result = "\n".join([child.indent(code(s, child)) for s in block.statements])
-    if result:
-        return " {\n" + result + "\n%s}" % target.indent()
-    else:
-        return " {}"
+        return "\n".join(
+            ["{"] +
+            [child.indent(code(s, child)) for s in block.statements] +
+            [target.indent("}")])
 
 @match(Block, Ruby)
 def code(block, target):
     with target.descend() as child:
-        return "\n" + ("\n".join([child.indent(code(s, child)) for s in block.statements]) or child.indent("nil"))
+        return "\n".join(
+            [""] +
+            map(child.indent,
+                [code(s, child) for s in block.statements] or ["nil"]))
 
 @match(Block, Go)
 def code(block, target):
     with target.descend() as child:
-        result = "\n".join([child.indent(code(s, child)) for s in block.statements])
-    if result:
-        return " {\n" + result + "\n%s}" % target.indent()
-    else:
-        return " {}"
+        return "\n".join(
+            ["{"] +
+            [child.indent(code(s, child)) for s in block.statements] +
+            [target.indent("}")])
+
+## Statement semicolons
+
+@match(Target)
+def semi(target):
+    return ""
+
+@match(Java)
+def semi(target):
+    return ";"
 
 ## Evaluate
 
 @match(Evaluate, Target)
 def code(evaluate, target):
-    return code(evaluate.expr, target)
+    return "{expr}{semi}".format(expr=code(evaluate.expr, target), semi=semi(target))
 
 ## Return
 
 @match(Return, Target)
 def code(retr, target):
-    return "return {expr}".format(expr=code(retr.expr, target))
+    return "return {expr}{semi}".format(expr=code(retr.expr, target), semi=semi(target))
 
 ## Names
 
@@ -396,6 +417,17 @@ def code(var, target):
 def code(var, target):
     return var.name
 
+## This
+
+@match(This, Target)
+def code(this, target):
+    return "this"
+
+@match(This, choice(Ruby, Python))
+def code(var, target):
+    return "self"
+
+## Numbers
 
 @match(Number, Target)
 def code(num, target):
@@ -447,7 +479,7 @@ def code(local, target):
 
 @match(Local, Java)
 def code(local, target):
-    return "{type} {name}{initializer}".format(
+    return "{type} {name}{initializer};".format(
         name=local.name,
         type=code(local.type, target),
         initializer=opt_code(" = ", local.expr, target))
@@ -558,3 +590,92 @@ def code(fun, target):
         params=", ".join(code(p, target) for p in fun.params)
     )
 
+
+## Class
+
+@match(Class, Python)
+def code(clazz, target):
+    with target.descend() as child:
+        return "class {name}(object){methods}\n".format(
+            name = target.nameof(clazz.name),
+            methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in clazz.methods] or ["pass"]))
+        )
+
+@match(Class, Ruby)
+def code(clazz, target):
+    with target.descend() as child:
+        return "class {name}\n{methods}".format(
+            name = target.nameof(clazz.name),
+            methods = "\n".join(map(child.indent, [code(m, child) for m in clazz.methods]) + [target.indent("end")])
+        )
+
+@match(Class, Java)
+def code(clazz, target):
+    with target.descend() as child:
+        return "public class {name} {methods}\n".format(
+            name = target.nameof(clazz.name),
+            methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in clazz.fields + clazz.methods] + [target.indent("}")])
+        )
+
+@match(Class, Go)
+def code(clazz, target):
+    with target.descend() as child:
+        return "type {name} struct {fields}\n{methods}\n".format(
+            name = target.nameof(clazz.name),
+            fields = "\n".join(["{"] + [child.indent(code(m, child)) for m in clazz.fields] + [target.indent("}")]),
+            methods = "\n\n".join([""] + [code(m, child) for m in clazz.methods])
+        )
+
+## Field
+
+@match(Field, Java)
+def code(field, target):
+    return "public {type} {name};\n".format(
+        type=code(field.type, target),
+        name=field.name,
+    )
+
+@match(Field, Go)
+def code(field, target):
+    return "{name} {type}\n".format(
+        name=target.upcase(field.name),
+        type=code(field.type, target),
+    )
+
+## Method
+
+@match(Method, Python)
+def code(method, target):
+    return "def {name}({params}){body}\n".format(
+        name=method.name,
+        params=", ".join(code(p, target) for p in method.params),
+        body=code(method.body, target)
+    )
+
+@match(Method, Java)
+def code(method, target):
+    return "public {type} {name}({params}){body}\n".format(
+        type=code(method.type, target),
+        name=method.name,
+        params=", ".join(code(p, target) for p in method.params),
+        body=code(method.body, target)
+    )
+
+@match(Method, Ruby)
+def code(method, target):
+    return "def {name}({params}){body}\n{end}\n".format(
+        name=method.name,
+        params=", ".join(code(p, target) for p in method.params),
+        body=code(method.body, target),
+        end=target.indent("end")
+    )
+
+@match(Method, Go)
+def code(method, target):
+    return "func (this *{clazz}) {name}({params}) {type}{body}\n".format(
+        clazz=target.nameof(method.parent.name),
+        type=code(method.type, target),
+        name=target.upcase(method.name),
+        params=", ".join(code(p, target) for p in method.params),
+        body=code(method.body, target)
+    )

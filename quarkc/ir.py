@@ -310,7 +310,16 @@ class Interface(Definition):
 
 # evaluation of the implied this
 class This(Expression):
-    pass
+
+    def __init__(self):
+        pass
+
+    @property
+    def children(self):
+        if False: yield
+
+    def __repr__(self):
+        self.repr()
 
 # access a Local or a Param
 class Var(Expression):

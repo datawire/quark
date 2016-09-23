@@ -149,8 +149,8 @@ def minimal_q():
         ),
         Interface(
             Name("minimal:mdk.api.Session"),
-            Message("externalize", Type(Name("q:q.string"))),
-            Message("log", Void(), Param("msg", Type(Name("q:q.string"))))
+            Message("externalize", Type(Name("q:q.String"))),
+            Message("log", Void(), Param("msg", Type(Name("q:q.String"))))
         ),
         Interface(
             Name("minimal:mdk.api.Plugin"),
@@ -161,13 +161,29 @@ def minimal_q():
             Name("minimal:mdk.api.MDK"),
             Message("start", Void()),
             Message("session", Type("minimal:mdk.api.Session")),
-            Message("join", Type("minimal:mdk.api.Session"), Param("id", "q:q.string")),
+            Message("join", Type("minimal:mdk.api.Session"), Param("id", "q:q.String")),
             Message("stop", Void()),
             Message("register", Void(), Param("plugin", "minimal:mdk.api.Plugin"))
             ),
         Function(Name("minimal:mdk.api.GetMDK"), Type("minimal:mdk.api.MDK"),
                  Block(Return(Construct(Name("minimal:mdk.impl.MDK"), ())))
-        )
+        ),
+        Class(Name("minimal:mdk.impl.MDK"),
+              Type("minimal:mdk.api.MDK"),
+              Field("plugin", Type("minimal:mdk.api.Plugin")),
+              Method("start", Void(), Block()
+              ),
+              Method("session", Type("minimal:mdk.api.Session"), Block(
+                  Return(
+                      Send(This(), "_session", (
+                          Invoke(Name("minimal:mdk.helpers.uuid")), ))
+                  ))
+              ),
+              Method("join", Type("minimal:mdk.api.Session"),
+                      Param("id", Type("q:q.String")),
+                      Block(Return(Send(This(), "_session", (Var("id"), ))))
+              ),
+        ),
     )
 
 @pytest.mark.parametrize("target", [Go, Python, Java, Ruby])
