@@ -38,62 +38,15 @@ def parse(name, text):
         location = '%s:%s:%s: ' % (name, e.line(), e.column())
         raise ParseError("%s%s" % (location, e))
 
-@match(choice(Package, Function, Class, Interface, Method, Declaration))
-def path(n):
-    return path(n.parent) + (n.name,)
-
-@match(File)
-def path(f):
-    return ()
-
-@match(choice(Local, Block))
-def path(n):
-    return path(n.parent)
-
-@match(choice(Package, Function, Class, Interface, Method, Declaration))
-def name(n):
-    return ".".join([n.text for n in path(n)])
-
-from collections import OrderedDict
-import types
-
-class SymbolTable(object):
-
-    def __init__(self):
-        self.definitions = OrderedDict()
-        self.types = types.Typespace()
-
-    @match(choice(Function, Class, Interface, Method, Declaration))
-    def define(self, dfn):
-        self.definitions[name(dfn)] = dfn
-
-    @match(AST)
-    def define(self, dfn): pass
-
-    @match(Class)
-    def type(self, cls):
-        self.types[name(cls)] = types.Object(*[self.field(d) for d in cls.definitions])
-
-    @match(AST)
-    def type(self, _): pass
-
-    @match(Field)
-    def field(self, f):
-        return types.Field(f.name.text, types.Ref("xxx"))
-
-    @match(Method)
-    def field(self, m):
-        return types.Field(m.name.text, types.Callable(types.Ref("xxx")))
+from symbols import Symbols
 
 @match(File)
 def check(ast):
-    symbols = SymbolTable()
+    symbols = Symbols()
     traverse(ast, symbols.define)
     traverse(ast, symbols.type)
-    print symbols.definitions.keys()
-    print symbols.types.types
-    print symbols.types.resolved
-    return ast
+    traverse(ast, symbols.check)
+    return symbols
 
 @match(File)
 def compile(ast):
@@ -103,28 +56,97 @@ def emit(ir):
     assert False, "not implemented"
 
 if __name__ == '__main__':
-    print check(parse("asdf", """
+    symbols = check(parse("asdf", """
     quark 1.0;
 
-    primitive String {
-        String __add__(String other);
+    package asdf 1.0;
+
+    import foo.bar as foobar;
+    import foo.bar;
+
+    namespace quark {
+
+        primitive void {}
+
+        primitive String {
+            String trim();
+            String __add__(String other);
+            int size();
+            int substring(int start, int size);
+            int startswith(String s);
+            String toString();
+        }
+
+        primitive int {
+            int __add__(int other);
+            String toString();
+        }
+
+        interface Stringable {
+            String toString();
+        }
+
     }
 
-    primitive int {
-        int __add__(int other);
-    }
 
     void foo() {}
     void bar() {}
+
     class Foo {
         String field;
         void foo(int fdsa) {
             String asdf = "asdf";
-            int two = 1 + 1;
+            int one = 1;
+            int two = 1 + one;
+            field.trim();
         }
+
+        void bar() {
+            foo(3);
+            trimmed; // XXX: should be an error
+            String trimmed = field.trim();
+            String doubled = trimmed + trimmed;
+            int size = doubled.size();
+            Box<String> box;
+            box.contents;
+            box.contents.substring(1, 2);
+            box.contents.startswith("asdf");
+//            box.contents.startswith(3); // errors
+            Stringable s = "asdf";
+            s = 3;
+//            s = box;
+            Box<Stringable> box2;
+            box2.contents = 3;
+            box2.contents = "asdf";
+//            box2.contents = asdf.foo(); // errors
+            asdf.foo();
+//            foo.bar.baz();
+//            box2 = box; // errors
+//            box = box2; // errors
+            foobar.baz();
+            baz();
+        }
+    }
+
+    class Box<T> {
+        T contents;
     }
 
     namespace foo { namespace bar {
         void baz() {}
     }}
     """))
+
+#    print symbols.definitions.keys()
+#    print symbols.typespace.types
+#    print symbols.typespace.resolved
+    print "============"
+    for k, v in symbols.definitions.items():
+        print "==%s==" % k
+        print v
+#    from quarkc.types import *
+#    t = symbols.typespace
+#    Foo = t.resolve(Ref("asdf.Foo"))
+#    foo = t.get(Foo, "foo")
+#    print t.unresolve(t.call(foo, Ref("quark.int")))
+#    print t.unresolve(t.call(foo, Ref("quark.String")))
