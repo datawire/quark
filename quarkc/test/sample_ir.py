@@ -66,9 +66,9 @@ def minimal_ir():
                  Block(Return(Construct(Name("minimal:mdk.impl.MDK"), ())))
         ),
         Class(Name("minimal:mdk.impl.MDK"),
-              Type("minimal:mdk.api.MDK"),
+              InterfaceType("minimal:mdk.api.MDK"),
               Field("plugin", Type("minimal:mdk.api.Plugin")),
-              Constructor("MDK", Type("minimal:mdk.impl.MDK"), Block(
+              Constructor("MDK", ClassType("minimal:mdk.impl.MDK"), Block(
                   Evaluate(Set(This(), "plugin", Null())))
               ),
               Method("start", Void(), Block()
@@ -107,10 +107,10 @@ def minimal_ir():
               )
         ),
         Class(Name("minimal:mdk.impl.Session"),
-              Type("minimal:mdk.api.Session"),
+              InterfaceType("minimal:mdk.api.Session"),
               Field("mdk", Type("minimal:mdk.impl.MDK")),
               Field("id", String()),
-              Constructor("Session", Type("minimal:mdk.impl.Session"),
+              Constructor("Session", ClassType("minimal:mdk.impl.Session"),
                           Param("mdk", Type("minimal:mdk.impl.MDK")),
                           Param("id", String()),
                           Block(

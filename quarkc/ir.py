@@ -85,9 +85,15 @@ class Name(IR):
     def __repr__(self):
         return self.repr(self.package, *self.path)
 
-# XXX: Should maybe switch to Ref/Def versions of names or something.
-class Type(IR):
 
+# Either a quark Type or a NativeType
+class AbstractType(IR):
+    pass
+
+# A Quark defined type
+# XXX: Should maybe switch to Ref/Def versions of names or something.
+# XXX: These are allowed to be instantiated just so that shorthand Declaration continues to work.
+class Type(AbstractType):
     @match(Name)
     def __init__(self, name):
         self.name = name
@@ -103,8 +109,16 @@ class Type(IR):
     def __repr__(self):
         return self.repr(self.name)
 
-# a type that maps to a native type in target language
-class NativeType(Type):
+# A quark defined class type
+class ClassType(Type):
+    pass
+
+# A quark defined interface type
+class InterfaceType(Type):
+    pass
+
+# a type that maps to a native type in target language, probably the quark primitive
+class NativeType(AbstractType):
 
     def __init__(self):
         pass
@@ -130,7 +144,7 @@ class String(NativeType):
 
 class Declaration(IR):
 
-    @match(basestring, Type)
+    @match(basestring, AbstractType)
     def __init__(self, name, type):
         self.type = type
         self.name = name
@@ -221,7 +235,7 @@ class Param(Declaration):
     
 class Function(Definition):
 
-    @match(Name, Type, many(Param), Block)
+    @match(Name, AbstractType, many(Param), Block)
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
@@ -249,7 +263,7 @@ class Field(Declaration):
 
 class Message(Declaration):
 
-    @match(basestring, Type, many(Param))
+    @match(basestring, AbstractType, many(Param))
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
@@ -266,7 +280,7 @@ class Message(Declaration):
 
 class Method(IR):
 
-    @match(basestring, Type, many(Param), Block)
+    @match(basestring, AbstractType, many(Param), Block)
     def __init__(self, name, type, *args):
         self.name = name
         self.type = type
@@ -284,7 +298,13 @@ class Method(IR):
         return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
 class Constructor(Method):
-    pass
+    @match(basestring, ClassType, many(Param), Block)
+    def __init__(self, name, type, *args):
+        self.name = name
+        self.type = type
+        self.params = args[:-1]
+        self.body = args[-1]
+
 
 # Note that there is no concept of inheritence here, just
 # implementation of interfaces. This implies that the quark FFI cannot
@@ -294,7 +314,7 @@ class Constructor(Method):
 # its surface are interfaces.
 class Class(Definition):
 
-    @match(Name, many(Type), many(choice(Method, Field)))
+    @match(Name, many(InterfaceType), many(choice(Method, Field)))
     def __init__(self, name, *args):
         self.name = name
         self.implements = [a for a in args if isinstance(a, Type)]
@@ -314,7 +334,7 @@ class Class(Definition):
 # basically the same as a class but no fields
 class Interface(Definition):
 
-    @match(Name, many(Type), many(Message))
+    @match(Name, many(InterfaceType), many(Message))
     def __init__(self, name, *args):
         self.name = name
         self.implements = [a for a in args if isinstance(a, Type)]
@@ -506,7 +526,7 @@ class StringLit(Literal):
 # statements
 
 class Local(Declaration, Statement):
-    @match(basestring, Type, opt(Expression))
+    @match(basestring, AbstractType, opt(Expression))
     def __init__(self, name, type, expr=None):
         self.type = type
         self.name = name

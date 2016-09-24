@@ -104,4 +104,5 @@ from .sample_ir import *
 def test_emit_sample(sample, target):
     t = target()
     emit(sample(), t)
-    print list(t.files.items())
+    import pprint
+    pprint.pprint(t.files)
