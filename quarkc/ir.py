@@ -257,8 +257,41 @@ class Function(Definition):
     def __repr__(self):
         return self.repr(self.name, self.type, *(self.params + (self.body,)))
 
-class Field(Declaration):
-    pass
+class Field(IR):
+
+    @match(basestring, Type, opt(lazy('Null')))
+    def __init__(self, name, type, initializer=None):
+        self.type = type
+        self.name = name
+        self.initializer = initializer or Null()
+
+    # XXX: poor-man private constructor :)
+    @match("private", basestring, NativeType, lazy('Literal'))
+    def __init__(self, _, name, type, initializer):
+        self.type = type
+        self.name = name
+        self.initializer = initializer
+
+    @match(basestring, Int, opt(lazy('IntLit')))
+    def __init__(self, name, type, initializer=None):
+        self.__init__("private", name, type, initializer or IntLit(0))
+
+    @match(basestring, String, opt(lazy('StringLit')))
+    def __init__(self, name, type, initializer=None):
+        self.__init__("private", name, type, initializer or StringLit(""))
+
+    @match(basestring, Float, opt(lazy('FloatLit')))
+    def __init__(self, name, type, initializer=None):
+        self.__init__("private", name, type, initializer or FloatLit(0))
+
+    @property
+    def children(self):
+        yield self.type
+        yield self.initializer
+
+    def __repr__(self):
+        return self.repr(self.name, self.type, self.initializer)
+
 
 
 class Message(Declaration):
@@ -319,7 +352,15 @@ class Class(Definition):
         self.name = name
         self.implements = [a for a in args if isinstance(a, Type)]
         self.fields = [a for a in args if isinstance(a, Field)]
-        self.methods = [a for a in args if isinstance(a, Method)]
+        self.constructors = [a for a in args if isinstance(a, Constructor)]
+        self.methods = [a for a in args if isinstance(a, Method) and not isinstance(a,Constructor)]
+        assert len(self.implements) + len(self.fields) + len(self.constructors) + len(self.methods) == len(args)
+        assert len(self.constructors) == 1
+
+        constructor_body = self.constructors[0].body
+
+        initializers = tuple(Evaluate(Set(This(), f.name, f.initializer)) for f in self.fields)
+        constructor_body.statements = initializers + constructor_body.statements
 
     @property
     def children(self):
@@ -328,6 +369,8 @@ class Class(Definition):
             yield i
         for f in self.fields:
             yield f
+        for c in self.constructors:
+            yield c
         for m in self.methods:
             yield m
 
@@ -505,7 +548,7 @@ class IntLit(Literal):
     @match(int)
     def __init__(self, value):
         self.type = Int()
-        self.value = value
+        self.value = int(value)
 
 # float literal
 class FloatLit(Literal):
@@ -513,7 +556,7 @@ class FloatLit(Literal):
     @match(float)
     def __init__(self, value):
         self.type = Float()
-        self.value = value
+        self.value = float(value)
 
 # string literal
 class StringLit(Literal):
@@ -539,7 +582,7 @@ class Local(Declaration, Statement):
             yield self.expr
 
     def __repr__(self):
-        return self.repr(self.type, self.name, self.expr)
+        return self.repr(self.name, self.type, self.expr)
 
 class Evaluate(Statement):
 

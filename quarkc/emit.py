@@ -721,7 +721,7 @@ def code(clazz, target):
     with target.descend() as child:
         return "class {name}(object){methods}\n".format(
             name = target.nameof(clazz.name),
-            methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in clazz.methods] or ["pass"]))
+            methods = "\n".join([":"] + map(child.indent, [code(m, child) for m in clazz.constructors + clazz.methods] or ["pass"]))
         )
 
 @match(Class, Ruby)
@@ -729,7 +729,7 @@ def code(clazz, target):
     with target.descend() as child:
         return "class {name}\n{methods}".format(
             name = target.nameof(clazz.name),
-            methods = "\n".join(map(child.indent, [code(m, child) for m in clazz.fields + clazz.methods]) + [target.indent("end")])
+            methods = "\n".join(map(child.indent, [code(m, child) for m in clazz.fields + clazz.constructors + clazz.methods]) + [target.indent("end")])
         )
 
 @match(Class, Java)
@@ -737,7 +737,7 @@ def code(clazz, target):
     with target.descend() as child:
         return "public class {name} {methods}\n".format(
             name = target.nameof(clazz.name),
-            methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in clazz.fields + clazz.methods] + [target.indent("}")])
+            methods = "\n".join(["{"] + [child.indent(code(m, child)) for m in clazz.fields + clazz.constructors + clazz.methods] + [target.indent("}")])
         )
 
 @match(Class, Go)
@@ -746,7 +746,7 @@ def code(clazz, target):
         return "type {name} struct {fields}\n{methods}\n".format(
             name = target.nameof(clazz.name),
             fields = "\n".join(["{"] + [child.indent(code(m, child)) for m in clazz.fields] + [target.indent("}")]),
-            methods = "\n\n".join([""] + [code(m, child) for m in clazz.methods])
+            methods = "\n\n".join([""] + [code(m, child) for m in clazz.constructors + clazz.methods])
         )
 
 ## Field

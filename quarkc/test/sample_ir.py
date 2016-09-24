@@ -68,8 +68,7 @@ def minimal_ir():
         Class(Name("minimal:mdk.impl.MDK"),
               InterfaceType("minimal:mdk.api.MDK"),
               Field("plugin", Type("minimal:mdk.api.Plugin")),
-              Constructor("MDK", ClassType("minimal:mdk.impl.MDK"), Block(
-                  Evaluate(Set(This(), "plugin", Null())))
+              Constructor("MDK", ClassType("minimal:mdk.impl.MDK"), Block()
               ),
               Method("start", Void(), Block()
               ),
@@ -114,9 +113,6 @@ def minimal_ir():
                           Param("mdk", Type("minimal:mdk.impl.MDK")),
                           Param("id", String()),
                           Block(
-                              # XXX default field initializers?
-                              Evaluate(Set(This(), "mdk", Null())),
-                              Evaluate(Set(This(), "id", Null())),
                               # user code
                               Evaluate(Set(This(), "mdk", Var("mdk"))),
                               Evaluate(Set(This(), "id", Var("id"))),
