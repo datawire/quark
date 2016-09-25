@@ -20,9 +20,14 @@ def path(n):
 def name(n):
     return ".".join([n.text for n in path(n)])
 
+@match([many(Name)])
+def name(path):
+    return ".".join([n.text for n in path])
+
 @match(Import)
 def name(imp):
-    return ".".join([n.text for n in imp.path])
+    assert imp.alias
+    return ".".join([n.text for n in path(imp.parent)] + [imp.alias.text])
 
 @match(AST)
 def scope(n):
@@ -48,19 +53,37 @@ def imported_scopes(n):
 @match(Import)
 def imported_scopes(imp):
     if not imp.alias:
-        yield imp
+        yield imp.path
+
+def definitions():
+    return choice(Function, Class, Interface, Method, Declaration, TypeParam)
+
+@match(definitions())
+def dfn_lineinfo(dfn):
+    return lineinfo(dfn)
+
+@match([many(Package)])
+def dfn_lineinfo(pkgs):
+    return lineinfo(pkgs[0])
 
 class Symbols(object):
 
-    def __init__(self):
+    def __init__(self, errors):
+        self.errors = errors
         self.definitions = OrderedDict()
         self.typespace = types.Typespace()
 
-    @match(choice(Function, Class, Interface, Method, Declaration, TypeParam))
+    @match(definitions())
     def define(self, dfn):
-        n = name(dfn)
-        assert n not in self.definitions
-        self.definitions[n] = dfn
+        self.define(name(dfn), dfn)
+
+    @match(basestring, choice(definitions(), [many(Package)], Import))
+    def define(self, name, dfn):
+        if name in self.definitions:
+            self.errors(dfn, "duplicate definition of %s, first occurance on %s" %
+                        (name, dfn_lineinfo(self.definitions[name])))
+        else:
+            self.definitions[name] = dfn
 
     @match(Package)
     def define(self, pkg):
@@ -73,19 +96,14 @@ class Symbols(object):
     @match(Import)
     def define(self, imp):
         if imp.alias:
-            alias = imp.alias.text
-            assert alias not in self.definitions
-            n = name(imp)
-            if n not in self.definitions:
-                self.definitions[n] = []
-            self.definitions[alias] = self.definitions[n]
+            self.define(name(imp), imp)
 
     @match(AST)
     def define(self, dfn): pass
 
     @match(Type)
     def qualify(self, type):
-        return self.qualify(scope(type), type, ".".join([n.text for n in type.path]))
+        return self.qualify(type, name(type.path))
 
     @match(Var)
     def qualify(self, var):
@@ -93,10 +111,10 @@ class Symbols(object):
 
     @match(Name)
     def qualify(self, name):
-        return self.qualify(scope(name), name, name.text)
+        return self.qualify(name, name.text)
 
-    @match(choice(Package, Function, Class, Interface, Method), AST, basestring)
-    def qualify(self, scope, node, text):
+    @match(AST, basestring)
+    def qualify(self, node, text):
         for s in scopes(node):
             candidate = ".".join([name(s), text])
             if candidate in self.definitions:
@@ -186,6 +204,13 @@ class Symbols(object):
     @match([Package, many(Package)])
     def resolve(self, pkgs):
         return self.typespace[name(pkgs[0])]
+
+    @match(Import)
+    def resolve(self, imp):
+        assert imp.alias
+        dfn = self.definitions[name(imp.path)]
+        assert not isinstance(dfn, Import)
+        return self.resolve(dfn)
 
     @match(Type)
     def resolve(self, type):

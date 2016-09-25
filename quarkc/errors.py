@@ -1,4 +1,24 @@
+from .ast import *
+from .match import *
+from .exceptions import CompileError
+from .helpers import lineinfo
 from collections import namedtuple
+
+class Errors(object):
+
+    def __init__(self):
+        self.errors = []
+
+    def __call__(self, node, message):
+        self.add(node, message)
+
+    @match(AST, basestring)
+    def add(self, node, message):
+        self.errors.append((node, message))
+
+    def check(self):
+        if self.errors:
+            raise CompileError("\n".join(["%s: %s" % (lineinfo(node), message) for node, message in self.errors]))
 
 
 class DuplicateDefinition(namedtuple('DuplicateDefinition',

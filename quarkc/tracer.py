@@ -38,14 +38,18 @@ def parse(name, text):
         location = '%s:%s:%s: ' % (name, e.line(), e.column())
         raise ParseError("%s%s" % (location, e))
 
+from errors import Errors
 from symbols import Symbols
 
 @match(File)
 def check(ast):
-    symbols = Symbols()
+    errors = Errors()
+    symbols = Symbols(errors)
     traverse(ast, symbols.define)
+    errors.check()
     traverse(ast, symbols.type)
     traverse(ast, symbols.check)
+    errors.check()
     return symbols
 
 @match(File)
@@ -63,6 +67,12 @@ if __name__ == '__main__':
 
     import foo.bar as foobar;
     import foo.bar;
+
+    import p1.fun as something;
+
+    namespace p1 {
+        void fun() {}
+    }
 
     namespace quark {
 
@@ -99,6 +109,7 @@ if __name__ == '__main__':
             int one = 1;
             int two = 1 + one;
             field.trim();
+            something();
         }
 
         void bar() {
@@ -131,12 +142,17 @@ if __name__ == '__main__':
 
     class Box<T> {
         T contents;
+//        String contents;
         String toString();
     }
 
+//    void Box() {}
+
     namespace foo { namespace bar {
         void baz() {}
-    }}
+    }
+//        void bar() {}
+    }
     """))
 
 #    print symbols.definitions.keys()
