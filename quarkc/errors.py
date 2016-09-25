@@ -16,9 +16,13 @@ class Errors(object):
     def add(self, node, message):
         self.errors.append((node, message))
 
+    def format(self):
+        if self.errors:
+            return "\n".join(["%s: %s" % (lineinfo(node), message) for node, message in self.errors])
+
     def check(self):
         if self.errors:
-            raise CompileError("\n".join(["%s: %s" % (lineinfo(node), message) for node, message in self.errors]))
+            raise CompileError(self.format())
 
 
 class DuplicateDefinition(namedtuple('DuplicateDefinition',

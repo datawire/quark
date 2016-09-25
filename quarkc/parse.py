@@ -13,10 +13,11 @@ def traverse(node, visit, leave=None):
     if leave:
         leave(node)
 
-@match(AST)
-def wire(ast):
+@match(File)
+def wire(file):
     path = []
     def visit(n):
+        n.file = file
         if path:
             n.parent = path[-1]
         else:
@@ -24,8 +25,8 @@ def wire(ast):
         path.append(n)
     def leave(n):
         path.pop()
-    traverse(ast, visit, leave)
-    return ast
+    traverse(file, visit, leave)
+    return file
 
 @match(basestring, basestring)
 def parse(name, text):

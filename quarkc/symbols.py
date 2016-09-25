@@ -1,5 +1,6 @@
 from .ast import *
 from .match import *
+from .parse import traverse
 from .helpers import lineinfo
 from collections import OrderedDict
 import types
@@ -72,6 +73,10 @@ class Symbols(object):
         self.errors = errors
         self.definitions = OrderedDict()
         self.typespace = types.Typespace()
+
+    @match(File)
+    def add(self, file):
+        traverse(file, self.define)
 
     @match(definitions())
     def define(self, dfn):
