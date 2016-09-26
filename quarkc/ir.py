@@ -1,5 +1,3 @@
-from .match import *
-
 # Problem areas from the current backend:
 #  - scoping of names (if nested in while nested in function, sometimes introduces scopes, sometimes not)
 #  - mapping of names into target language (dumb languages that use captialization to mean things)
@@ -28,22 +26,50 @@ from .match import *
 #     streams have eliminated dependencies on frontend features like
 #     inheritence. Hypothetically it could even be an alternative
 #     frontend.
+from contextlib import contextmanager
 
+from .match import match, lazy, ntuple, many, opt, choice
+
+
+class _Indent(object):
+    def __init__(self):
+        self.indent = 0
+
+    @contextmanager
+    def __call__(self):
+        self.indent += 1
+        yield self.indent
+        self.indent -= 1
 
 # should pull in stuff from types base class here... would enable
 # comparisons and stuff for testing, should possibly use pyrsistent or
 # something like that for this stuff, although I want to see how
 # pattern matching would work
 
+
 class IR(object):
+
+    @staticmethod
+    def load(ir_str):
+        return eval(ir_str)
+
+    __INDENT = _Indent()
 
     def __init__(self):
         assert False, "%s is abstract base class" % self.__class__
 
     def repr(self, *args, **kwargs):
-        sargs = [repr(a) for a in args]
-        sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
-        return "%s(%s)" % (self.__class__.__name__, ", ".join(sargs))
+        with self.__INDENT() as i:
+            sargs = [repr(a) for a in args]
+            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
+            if sum(map(len, sargs)) > 60:
+                indent = " " * i * 2
+                first = "\n" + indent
+                sep = ",\n" + indent
+            else:
+                first = ""
+                sep = ", "
+            return "%s%s(%s%s)" % (((i == 1) and "\n" or ""), self.__class__.__name__, first, sep.join(sargs))
 
     @property
     def children(self):
@@ -106,6 +132,9 @@ class Type(AbstractType):
     def children(self):
         yield self.name
 
+    def __eq__(self, other):
+        return type(self) is type(other) and self.name == other.name
+
     def __repr__(self):
         return self.repr(self.name)
 
@@ -142,12 +171,15 @@ class Float(NativeType):
 class String(NativeType):
     pass
 
+class Bool(NativeType):
+    pass
+
 class Declaration(IR):
 
     @match(basestring, AbstractType)
     def __init__(self, name, type):
-        self.type = type
         self.name = name
+        self.type = type
 
     @match(basestring, Name)
     def __init__(self, name, type):
@@ -168,7 +200,7 @@ class Declaration(IR):
             names.add(self.name)
 
     def __repr__(self):
-        return self.repr(self.type, self.name)
+        return self.repr(self.name, self.type)
 
 # A class, interface, or function.
 class Definition(IR):
@@ -187,10 +219,7 @@ class Package(IR):
             yield d
 
     def __repr__(self):
-        if self.definitions:
-            return "Package(\n  %s)" % "\n  ".join([repr(d) for d in self.definitions])
-        else:
-            return "Package()"
+        return self.repr(*self.definitions)
 
 # knows how to render inside a dfn, this has to account for imports
 # needed by rendered code
@@ -228,7 +257,7 @@ class Block(Code):
                 yield c
 
     def __repr__(self):
-        return self.repr(*self.statements)
+        return self.repr(*[s for s in self.statements if not isinstance(s, FieldInitialize)])
 
 class Param(Declaration):
     pass
@@ -359,7 +388,7 @@ class Class(Definition):
 
         constructor_body = self.constructors[0].body
 
-        initializers = tuple(Evaluate(Set(This(), f.name, f.initializer)) for f in self.fields)
+        initializers = tuple(FieldInitialize("private", Set(This(), f.name, f.initializer)) for f in self.fields)
         constructor_body.statements = initializers + constructor_body.statements
 
     @property
@@ -373,6 +402,9 @@ class Class(Definition):
             yield c
         for m in self.methods:
             yield m
+
+    def __repr__(self):
+        return self.repr(*([self.name] + self.implements + self.fields + self.constructors + self.methods))
 
 # basically the same as a class but no fields
 class Interface(Definition):
@@ -388,9 +420,12 @@ class Interface(Definition):
     def children(self):
         yield self.name
         for i in self.implements:
-            yield self.i
+            yield i
         for m in self.methods:
             yield m
+
+    def __repr__(self):
+        return self.repr(*([self.name] + self.implements + self.methods))
 
 # code
 
@@ -405,7 +440,7 @@ class SimpleExpression(Expression):
         if False: yield
 
     def __repr__(self):
-        self.repr()
+        return self.repr()
 
 # evaluation of the implied this
 class This(SimpleExpression):
@@ -433,27 +468,33 @@ class Var(SimpleExpression):
 class Get(Expression):
 
     @match(Expression, basestring)
-    def __init__(self, expr, attr):
+    def __init__(self, expr, name):
         self.expr = expr
-        self.attr = attr
+        self.name = name
 
     @property
     def children(self):
         yield self.expr
 
+    def __repr__(self):
+        return self.repr(self.expr, self.name)
+
 # mutate a Field
 class Set(Expression):
 
     @match(Expression, basestring, Expression)
-    def __init__(self, expr, attr, value):
+    def __init__(self, expr, name, value):
         self.expr = expr
-        self.attr = attr
+        self.name = name
         self.value = value
 
     @property
     def children(self):
         yield self.expr
         yield self.value
+
+    def __repr__(self):
+        return self.repr(self.expr, self.name, self.value)
 
 # Invokes a function given the fully qualified name and arguments
 class Invoke(Expression):
@@ -470,7 +511,7 @@ class Invoke(Expression):
             yield a
 
     def __repr__(self):
-        return self.repr(self.name, self.args)
+        return self.repr(self.name, *self.args)
 
 # Invokes a method on an object
 class Send(Expression):
@@ -540,7 +581,10 @@ class Cast(Expression):
 
 class Literal(SimpleExpression):
     def __repr__(self):
-        return str(self.value)
+        return self.repr(self.value)
+
+    def __eq__(self, other):
+        return type(self) is type(other) and self.value == other.value
 
 # int literal
 class IntLit(Literal):
@@ -566,6 +610,14 @@ class StringLit(Literal):
         self.type = String()
         self.value = unicode(value)
 
+# string literal
+class BoolLit(Literal):
+
+    @match(bool)
+    def __init__(self, value):
+        self.type = String()
+        self.value = bool(value)
+
 # statements
 
 class Local(Declaration, Statement):
@@ -582,7 +634,10 @@ class Local(Declaration, Statement):
             yield self.expr
 
     def __repr__(self):
-        return self.repr(self.name, self.type, self.expr)
+        if self.expr:
+            return self.repr(self.name, self.type, self.expr)
+        else:
+            return self.repr(self.name, self.type)
 
 class Evaluate(Statement):
 
@@ -596,6 +651,15 @@ class Evaluate(Statement):
 
     def __repr__(self):
         return self.repr(self.expr)
+
+# a specialization of Evaluate, for Class Field initialization, so
+# that Constructor Block can filter them out
+class FieldInitialize(Evaluate):
+    @match("private", Set)
+    def __init__(self, _, expr):
+        self.expr = expr
+
+    pass
 
 class Return(Statement):
 
@@ -671,8 +735,25 @@ class While(Statement):
     def __repr__(self):
         return self.repr(self.predicate, self.body)
 
-class Break(Statement):
+
+class SimpleStatement(Statement):
+    def __init__(self):
+        pass
+
+    @property
+    def children(self):
+        if False: yield
+
+    def collisions(self, names):
+        if False: yield
+
+    def __repr__(self):
+        return self.repr()
+
+class Break(SimpleStatement):
     pass
 
-class Continue(Statement):
+class Continue(SimpleStatement):
     pass
+
+__all__ = [n for n,v in globals().items() if IR in getattr(v,"__mro__",[])]

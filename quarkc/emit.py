@@ -677,19 +677,19 @@ def code(fun, target):
 def code(fget, target):
     return "{target}.{field}".format(
         target=code(fget.expr, target),
-        field=target.upcase(fget.attr))
+        field=target.upcase(fget.name))
 
 @match(Get, choice(Python, Java))
 def code(fget, target):
     return "{target}.{field}".format(
         target=code(fget.expr, target),
-        field=fget.attr)
+        field=fget.name)
 
 @match(Get, Ruby)
 def code(fget, target):
     return "{target}.{field}".format(
         target=code(fget.expr, target),
-        field=fget.attr)
+        field=fget.name)
 
 ## Set
 
@@ -697,21 +697,21 @@ def code(fget, target):
 def code(fset, target):
     return "{target}.{field} = {value}".format(
         target=code(fset.expr, target),
-        field=target.upcase(fset.attr),
+        field=target.upcase(fset.name),
         value=code(fset.value, target))
 
 @match(Set, choice(Python, Java))
 def code(fset, target):
     return "{target}.{field} = {value}".format(
         target=code(fset.expr, target),
-        field=fset.attr,
+        field=fset.name,
         value=code(fset.value, target))
 
 @match(Set, Ruby)
 def code(fset, target):
     return "{target}.{field} = {value}".format(
         target=code(fset.expr, target),
-        field=fset.attr,
+        field=fset.name,
         value=code(fset.value, target))
 
 ## Class
