@@ -51,7 +51,8 @@ class IR(object):
 
     @staticmethod
     def load(ir_str):
-        return eval(ir_str)
+        g = globals()
+        return eval(ir_str, {}, dict((k,g[k]) for k in __all__))
 
     __INDENT = _Indent()
 
