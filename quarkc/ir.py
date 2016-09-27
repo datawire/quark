@@ -175,6 +175,10 @@ class String(NativeType):
 class Bool(NativeType):
     pass
 
+# a native type for a function accepting an InterfaceType and returning an InterfaceType
+class Callable(NativeType):
+    pass
+
 class Declaration(IR):
 
     @match(basestring, AbstractType)
