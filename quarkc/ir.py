@@ -69,7 +69,7 @@ class IR(object):
             else:
                 first = ""
                 sep = ", "
-            return "%s%s(%s%s)" % (((i == 1) and "\n" or ""), self.__class__.__name__, first, sep.join(sargs))
+            return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
 
     @property
     def children(self):

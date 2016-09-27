@@ -8,18 +8,31 @@ from quarkc.ir import ( IR, Name, Local, Package, Literal,
                         This, Null, StringLit, IntLit, FloatLit, BoolLit,
                         Block, If, While, Evaluate, Break, Continue)
 
+def nameof(c, default=None):
+    if default is None:
+        default = "/"
+    else:
+        default = "[%s]" % default
+    return (c.__class__.__name__, getattr(c, "name", default))
+
 def check_tree_equal(tree, etree, stack=()):
     assert isinstance(tree, IR)
     assert type(tree) is type(etree)
-    for c, ec in map(None, tree.children, etree.children):
-        assert c is not None, "Unexpected child %s in %s" % (ec, stack)
-        assert ec is not None, "Missing child %s in %s" % (ec, stack)
-        check_tree_equal(c, ec, stack + (c.__class__.__name__, ))
+    if not stack:
+        stack = (nameof(tree), )
+    for i, (c, ec) in enumerate(map(None, tree.children, etree.children)):
+        cn = nameof(c, i)
+        ecn = nameof(ec, i)
+        assert c is not None, "Unexpected child %s, got extra %s" % (stack, ecn)
+        assert ec is not None, "Missing child %s, missing %s" % (stack, cn)
+        assert type(c) is type(ec), "Mismatched child %s, want %s got %s" % (stack, cn, ecn)
+        check_tree_equal(c, ec, stack + (cn, ))
     if isinstance(tree, (Name, Literal)):
-        assert tree == etree
+        assert tree == etree, "Value mismatch, expected %r got %r for %s" % (
+            tree, etree, stack)
     elif isinstance(tree, (Declaration, Field, Message, Method, Constructor, Var, Get, Set)):
         assert tree.name == etree.name, "Name mismatch, expected %r got %r for %s" % (
-            tree.name, etree.name, tree.__class__.__name__)
+            tree.name, etree.name, stack)
 
 def check_repr(tree):
     r = repr(tree)
@@ -29,7 +42,7 @@ def check_repr(tree):
 
 
 class TestTreeEqual(object):
-    def test_detects_non_ir(self):
+    def test_non_ir(self):
         with pytest.raises(AssertionError):
             check_tree_equal(None, None)
 
