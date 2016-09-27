@@ -1,13 +1,26 @@
 import pytest
+from collections import OrderedDict, defaultdict
 
 from quarkc.match import *
 from quarkc.parse import *
 from quarkc.errors import Errors
 from quarkc.symbols import Symbols
 
+###############################################################################
+# Check that a given file/content produces the expected symbols or errors
+###############################################################################
+
 @match(AST)
 def dfn_sig(n):
     return n.__class__, n.name.text
+
+@match(choice(Field, Param))
+def dfn_sig(n):
+    return n.__class__, n.name.text
+
+@match(Declaration)
+def dfn_sig(n):
+    return n.parent.__class__, n.name.text
 
 @match([Package, many(Package)])
 def dfn_sig(pkgs):
@@ -15,7 +28,10 @@ def dfn_sig(pkgs):
     result = pkg.name.text
     for p in pkgs[1:]:
         assert p.name.text == result
-    return pkg.__class__, result
+    if pkg.name.text == "f":
+        return File, result
+    else:
+        return pkg.__class__, result
 
 def check(name, content, expected=None, errors=None):
     file = parse(name, content)
@@ -23,11 +39,201 @@ def check(name, content, expected=None, errors=None):
     symbols = Symbols(errs)
     symbols.add(file)
     assert errors == errs.format()
-    if expected:
+    if expected is not None:
         elided = {}
         for k, v in symbols.definitions.items():
             elided[k] = dfn_sig(v)
         assert expected == elided
+
+###############################################################################
+
+
+###############################################################################
+# Utilities for generating input code that covers the many permutations
+# of nested symbols possible
+###############################################################################
+
+TOP = [File]
+CHILDREN = {File: (Package, Function, Class, Interface),
+            Package: (Package, Function, Class, Interface),
+            Interface: (TypeParam, Field, Method),
+            Class: (TypeParam, Field, Method),
+            Function: (Param, Local),
+            Method: (Param, Local)}
+
+def permutations(path, limit):
+    last = path[-1]
+    if len(path) == limit or last not in CHILDREN:
+        yield path
+    else:
+        for type in CHILDREN[last]:
+            for p in permutations(path + (type,), limit):
+                yield p
+
+def dfn_paths(limit):
+    for top in TOP:
+        for path in permutations((top,), limit):
+            yield path
+
+def tree(paths):
+    root = OrderedDict()
+    for path in paths:
+        node = root
+        for p in path:
+            if p not in node:
+                node[p] = OrderedDict()
+            node = node[p]
+    return root
+
+class GenTree(object):
+
+    @match(OrderedDict)
+    def __init__(self, children):
+        self.children = children
+
+    @match(basestring)
+    def __getitem__(self, name):
+        key = globals()[name]
+        return self.format(key, self.children.get(key, []))
+
+    @match(choice(Function, Class, Interface, Method, Package), [many(basestring)])
+    def format(self, type, children):
+        if children:
+            return "\n".join(children) + "\n"
+        else:
+            return ""
+
+    @match(Param, [many(basestring)])
+    def format(self, _, decls):
+        return ", ".join(decls)
+
+    @match(TypeParam, [many(basestring)])
+    def format(self, _, decls):
+        if decls:
+            return "<%s>" % ", ".join(decls)
+        else:
+            return ""
+
+    @match(choice(Local, Field), [many(basestring)])
+    def format(self, type, fields):
+        if fields:
+            return "".join(["%s;\n" % f for f in fields])
+        else:
+            return ""
+
+@match(basestring)
+def block(code):
+    if code:
+        return "{\n    " + code.replace("\n", "\n    ").rstrip() + "\n}"
+    else:
+        return "{}"
+
+@match(File)
+def basename(pkg):
+    return "f"
+
+@match(Package)
+def basename(pkg):
+    return "p"
+
+@match(Class)
+def keyword(cls):
+    return "class"
+
+@match(Interface)
+def keyword(iface):
+    return "interface"
+
+@match(Class)
+def basename(cls):
+    return "Cls"
+
+@match(Interface)
+def basename(iface):
+    return "Iface"
+
+@match(Local)
+def basename(l):
+    return "local"
+
+@match(Field)
+def basename(l):
+    return "field"
+
+@match(TypeParam)
+def basename(t):
+    return "T"
+
+@match(Param)
+def basename(p):
+    return "param"
+
+@match(Function)
+def basename(f):
+    return "fun"
+
+@match(Method)
+def basename(m):
+    return "meth"
+
+@match(OrderedDict)
+def gen(node):
+    result = OrderedDict()
+    for k, v in node.items():
+        subtree = gen(k, gen(v))
+        if k in result:
+            result[k].append(subtree)
+        else:
+            result[k] = [subtree]
+    return GenTree(result)
+
+@match(File, GenTree)
+def gen(file, children):
+    return "quark 1.0;\n\npackage {name} 1.2.3;\n\n{c[Function]}{c[Class]}{c[Interface]}{c[Package]}".format(
+        name=basename(file),
+        c=children
+    )
+
+@match(Package, GenTree)
+def gen(pkg, children):
+    return "namespace {name} {body}".format(name=basename(pkg),
+                                            body=block("{c[Function]}{c[Class]}{c[Interface]}{c[Package]}"
+                                                       .format(c=children)))
+
+@match(choice(Function, Method), GenTree)
+def gen(fun, children):
+    return "void {name}({c[Param]}) {body}".format(c=children, name=basename(fun),
+                                                   body=block("{c[Local]}".format(c=children)))
+
+@match(choice(Class, Interface), GenTree)
+def gen(cls, children):
+    return "{kw} {name}{c[TypeParam]} {body}".format(kw=keyword(cls),
+                                                     name=basename(cls),
+                                                     c=children,
+                                                     body=block("{c[Field]}{c[Method]}".format(c=children)))
+
+@match(TypeParam, GenTree)
+def gen(tp, _):
+    return basename(tp)
+
+@match(Field, GenTree)
+def gen(field, _):
+    return "String %s" % basename(field)
+
+@match(Param, GenTree)
+def gen(p, _):
+    return "int %s" % basename(p)
+
+@match(Local, GenTree)
+def gen(l, _):
+    return "float %s" % basename(l)
+
+###############################################################################
+
+
+###############################################################################
+# Tests
+###############################################################################
 
 def test_implicit_foobar():
     check("asdf", """
@@ -76,113 +282,28 @@ def test_explicit_foofoo():
     """,
     errors="asdf:6:9: duplicate definition of ns.foo, first occurance on asdf:5:9")
     
+@match((File, Package, many(type)))
+def fixup(p):
+    return p[1:]
 
-def old():
-    symbols = check(parse("asdf", """
-    quark 1.0;
+@match((many(type),))
+def fixup(p):
+    return p
 
-    package asdf 1.0;
+def symbols(paths):
+    expected = {}
+    for p in paths:
+        p = fixup(p)
+        for i in range(len(p)):
+            subpath = p[:i+1]
+            qualified = ".".join([basename(e) for e in subpath])
+            sig = (subpath[-1], basename(subpath[-1]))
+            expected[qualified] = sig
+    return expected
 
-    import foo.bar as foobar;
-    import foo.bar;
+def test_permutations():
+    paths = list(dfn_paths(5))
+    code = "".join(["".join(v) for v in gen(tree(paths)).children.values()])
+    check("f", code, symbols(paths))
 
-    import p1.fun as something;
-
-    namespace p1 {
-        void fun() {}
-    }
-
-    namespace quark {
-
-        primitive void {}
-
-        primitive String {
-            String trim();
-            String __add__(String other);
-            int size();
-            int substring(int start, int size);
-            int startswith(String s);
-            String toString();
-        }
-
-        primitive int {
-            int __add__(int other);
-            String toString();
-        }
-
-        interface Stringable {
-            String toString();
-        }
-
-    }
-
-
-    void foo() {}
-    void bar() {}
-
-    class Foo {
-        String field;
-        void foo(int fdsa) {
-            String asdf = "asdf";
-            int one = 1;
-            int two = 1 + one;
-            field.trim();
-            something();
-        }
-
-        void bar() {
-            foo(3);
-            trimmed; // XXX: should be an error
-            String trimmed = field.trim();
-            String doubled = trimmed + trimmed;
-            int size = doubled.size();
-            Box<String> box;
-            box.contents;
-            box.contents.substring(1, 2);
-            box.contents.startswith("asdf");
-//            box.contents.startswith(3); // errors
-            Stringable s = "asdf";
-            s = 3;
-            s = box;
-            Box<Stringable> box2;
-            box2.contents = 3;
-            box2.contents = "asdf";
-            box2.contents = box;
-//            box2.contents = asdf.foo(); // errors
-            asdf.foo();
-//            foo.bar.baz(); // errors
-//            box2 = box; // errors
-//            box = box2; // errors
-            foobar.baz();
-            baz();
-        }
-    }
-
-    class Box<T> {
-        T contents;
-//        String contents;
-        String toString();
-    }
-
-//    void Box() {}
-
-    namespace foo { namespace bar {
-        void baz() {}
-    }
-//        void bar() {}
-    }
-    """))
-
-#    print symbols.definitions.keys()
-#    print symbols.typespace.types
-#    print symbols.typespace.resolved
-    print "============"
-    for k, v in symbols.definitions.items():
-        print "==%s==" % k
-        print v
-#    from quarkc.types import *
-#    t = symbols.typespace
-#    Foo = t.resolve(Ref("asdf.Foo"))
-#    foo = t.get(Foo, "foo")
-#    print t.unresolve(t.call(foo, Ref("quark.int")))
-#    print t.unresolve(t.call(foo, Ref("quark.String")))
+###############################################################################
