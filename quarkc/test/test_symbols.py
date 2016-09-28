@@ -306,4 +306,13 @@ def test_permutations():
     code = "".join(["".join(v) for v in gen(tree(paths)).children.values()])
     check("f", code, symbols(paths))
 
+def xtest_collisions():
+    paths = list(dfn_paths(5))
+    code = "".join(["".join(v) for v in gen(tree(paths)).children.values()])
+    for p in paths:
+        dup = "".join(["".join(v) for v in gen(tree([fixup(p)])).children.values()])
+        badcode = code + "\n" + dup
+        print badcode
+        check("f", badcode)
+
 ###############################################################################
