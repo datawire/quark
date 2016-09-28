@@ -4,6 +4,14 @@ from .parse import *
 from errors import Errors
 from symbols import Symbols
 
+# step 1 parse
+# step 2 wire
+# step 3 symbol definition
+# step 4 type definition
+# step 5 type checks
+# step 6 dataflow checks (use + return)
+# step 7 emit ir
+
 @match(File)
 def check(ast):
     errors = Errors()
@@ -14,13 +22,6 @@ def check(ast):
     traverse(ast, symbols.check)
     errors.check()
     return symbols
-
-@match(File)
-def compile(ast):
-    assert False, "not implemented"
-
-def emit(ir):
-    assert False, "not implemented"
 
 if __name__ == '__main__':
     symbols = check(parse("asdf", """
