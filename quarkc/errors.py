@@ -12,13 +12,16 @@ class Errors(object):
     def __call__(self, node, message):
         self.add(node, message)
 
+    @match(basestring)
+    def add(self, message):
+        self.errors.append(message)
+
     @match(AST, basestring)
     def add(self, node, message):
-        self.errors.append((node, message))
+        self.add("%s: %s" % (lineinfo(node), message))
 
     def format(self):
-        if self.errors:
-            return "\n".join(["%s: %s" % (lineinfo(node), message) for node, message in self.errors])
+        return "\n".join(self.errors) or None
 
     def check(self):
         if self.errors:

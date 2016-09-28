@@ -1,4 +1,5 @@
 import pytest
+from quarkc.errors import Errors
 from quarkc.types import *
 
 # TODO: negative tests?
@@ -40,7 +41,7 @@ def xtest_match(a,b,result):
     assert a.match(b) == result
 
 def typespace():
-    space = Typespace()
+    space = Typespace(Errors())
 
     space["Object"] = Object()
     space["int"] = Object(Field("int", Ref("int")))

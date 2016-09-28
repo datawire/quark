@@ -1,5 +1,6 @@
 from collections import OrderedDict
-from quarkc.match import *
+from .match import *
+from .errors import Errors
 
 """A type is represented as a node in a graph. There are two kinds of
 nodes: Object and Callable. Edges are represented either implicitly
@@ -215,7 +216,9 @@ class Typespace(object):
 
     """
 
-    def __init__(self):
+    @match(Errors)
+    def __init__(self, errors):
+        self.errors = errors
         self.types = OrderedDict()
         self.resolved = OrderedDict()
 

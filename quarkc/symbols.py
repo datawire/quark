@@ -1,5 +1,6 @@
 from .ast import *
 from .match import *
+from .errors import Errors
 from .parse import traverse
 from .helpers import lineinfo
 from collections import OrderedDict
@@ -69,10 +70,11 @@ def dfn_lineinfo(pkgs):
 
 class Symbols(object):
 
+    @match(Errors)
     def __init__(self, errors):
         self.errors = errors
         self.definitions = OrderedDict()
-        self.typespace = types.Typespace()
+        self.typespace = types.Typespace(self.errors)
 
     @match(File)
     def add(self, file):
