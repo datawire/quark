@@ -173,9 +173,12 @@ class State:
         if len(nearest) > 1:
             dfns = "\n".join([ppfun(n.action) for n in nearest.values()])
             raise MatchError("arguments ({}) match multiple actions:\n\n{}".format(", ".join([repr(a) for a in args]),
-                                                                                  dfns))
+                                                                                   dfns))
         if not nearest:
-            raise MatchError("arguments ({}) do not match".format(", ".join([str(a.__class__.__name__) for a in args])))
+            dfns = "\n".join([ppfun(n.action) for n in self.nodes if n.action])
+            raise MatchError("arguments ({}) do not match:\n\n{}".format(", ".join([str(a.__class__.__name__)
+                                                                                    for a in args]),
+                                                                         dfns))
         assert len(nearest) == 1, nearest
         state = nearest.popitem()[1]
         assert state.action, (state, remaining)
