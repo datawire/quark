@@ -154,7 +154,8 @@ class State:
                     transitions = state[proj]
                     if transitions:
                         for s in transitions:
-                            next[s] = distance + (count,)
+                            if s not in next:
+                                next[s] = distance + (count,)
                     count += 1
             states = next
         nearest = {}
@@ -255,6 +256,9 @@ def cat(patterns):
         else:
             extend(frag.start)
             extend = frag.extend
+    if start is None:
+        start = State()
+        extend = start.edge
     return Fragment(start, extend, ", ".join(docs))
 
 def opt(*pattern):

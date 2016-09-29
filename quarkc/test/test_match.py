@@ -307,3 +307,28 @@ def test_choice():
     assert n.apply("one") == a
     assert n.apply(1.0) == b
     assert n.apply(()) == b
+
+
+@match()
+def empty_choice():
+    return 1
+
+@match(int)
+def empty_choice(n):
+    return 2
+
+def test_empty_choice():
+    assert empty_choice() == 1
+    assert empty_choice(3) == 2
+
+@match(choice(basestring))
+def nested_choice(n):
+    return 1
+
+@match(choice(object, unicode))
+def nested_choice(o):
+    return 2
+
+def test_nested_choice():
+    assert nested_choice("asdf") == 1
+    assert nested_choice(u"asdf") == 2
