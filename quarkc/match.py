@@ -233,7 +233,15 @@ class Begin(Marker):
             return False
         return self.cls == other.cls
 
-END = Marker()
+    def __repr__(self):
+        return "BEGIN(%s)" % self.cls.__name__
+
+class End(Marker):
+
+    def __repr__(self):
+        return "END"
+
+END = End()
 
 def flatten(values):
     for value in values:
@@ -248,6 +256,13 @@ def flatten(values):
 def projections(value, match_value=True):
     if match_value and isinstance(value, collections.Hashable):
         yield value
+    traits = getattr(value, "MATCH_TRAITS", None)
+    if traits is not None:
+        if isinstance(traits, tuple):
+            for t in traits:
+                yield t
+        else:
+            yield traits
     if not isinstance(value, Marker):
         if isinstance(value, super):
             for cls in value.__self_class__.__mro__[1:]:
@@ -367,6 +382,7 @@ def compile(fragment):
         for v in state.matches.values():
             for s in v:
                 if s not in done: todo.append(s)
+    fragment.start.doc = fragment.doc
     return fragment.start
 
 class _BoundDispatcher(object):
@@ -462,3 +478,14 @@ def match(*pattern):
         namespace = inspect.currentframe().f_back.f_locals
         return _decorate(namespace, function, pattern)
     return decorator
+
+class trait(object):
+
+    def __init__(self, value):
+        self.value = value
+
+    def __hash__(self):
+        return hash(self.value)
+
+    def __eq__(self, other):
+        return isinstance(other, trait) and self.value == other.value

@@ -349,3 +349,19 @@ def superfoo(derived):
 
 def test_super():
     assert superfoo(SuperDerived()) == "derived and basic"
+
+class Traitor(object):
+
+    MATCH_TRAITS = trait("T")
+
+@match(trait("T"))
+def execute(t):
+    return 1
+
+@match(basestring)
+def execute(x):
+    return 2
+
+def test_traits():
+    assert execute(Traitor()) == 1
+    assert execute("asdf") == 2
