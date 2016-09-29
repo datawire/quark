@@ -332,3 +332,20 @@ def nested_choice(o):
 def test_nested_choice():
     assert nested_choice("asdf") == 1
     assert nested_choice(u"asdf") == 2
+
+class SuperBase(object):
+    pass
+
+class SuperDerived(SuperBase):
+    pass
+
+@match(SuperBase)
+def superfoo(base):
+    return "basic"
+
+@match(SuperDerived)
+def superfoo(derived):
+    return "derived and " + superfoo(super(SuperDerived, derived))
+
+def test_super():
+    assert superfoo(SuperDerived()) == "derived and basic"

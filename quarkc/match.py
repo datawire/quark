@@ -185,8 +185,11 @@ class State:
         return state.action(*args)
 
 def ppfun(fun):
-    lines, number = inspect.getsourcelines(fun)
-    return "%s:%s:\n%s" % (inspect.getsourcefile(fun), number, "".join(lines))
+    try:
+        lines, number = inspect.getsourcelines(fun)
+        return "%s:%s:\n%s" % (inspect.getsourcefile(fun), number, "".join(lines))
+    except TypeError:
+        return repr(fun)
 
 class Marker(object): pass
 
@@ -219,8 +222,12 @@ def projections(value, match_value=True):
     if match_value and isinstance(value, collections.Hashable):
         yield value
     if not isinstance(value, Marker):
-        for cls in value.__class__.__mro__:
-            yield cls
+        if isinstance(value, super):
+            for cls in value.__self_class__.__mro__[1:]:
+                yield cls
+        else:
+            for cls in value.__class__.__mro__:
+                yield cls
 
 class Fragment(object):
 
