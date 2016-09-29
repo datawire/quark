@@ -172,17 +172,44 @@ class State:
                     nearest[state.action] = state
         if len(nearest) > 1:
             dfns = "\n".join([ppfun(n.action) for n in nearest.values()])
-            raise MatchError("arguments ({}) match multiple actions:\n\n{}".format(", ".join([repr(a) for a in args]),
-                                                                                   dfns))
+            raise MatchError("arguments ({}) match multiple actions:\n\n{}".format(ppargs(args), dfns))
         if not nearest:
             dfns = "\n".join([ppfun(n.action) for n in self.nodes if n.action])
-            raise MatchError("arguments ({}) do not match:\n\n{}".format(", ".join([str(a.__class__.__name__)
-                                                                                    for a in args]),
-                                                                         dfns))
+            raise MatchError("arguments ({}) do not match:\n\n{}".format(ppargs(args), dfns))
         assert len(nearest) == 1, nearest
         state = nearest.popitem()[1]
         assert state.action, (state, remaining)
         return state.action(*args)
+
+def deduplicate(items):
+    deduped = []
+    count = 0
+    for item in items:
+        if not deduped:
+            deduped.append([item, 1])
+        else:
+            last = deduped[-1]
+            if last[0] == item:
+                last[1] += 1
+            else:
+                deduped.append([item, 1])
+
+    return [(("%s*%s" % tuple(p)) if p[1] > 1 else "%s" % p[0]) for p in deduped]
+
+def ppargs(args, dedup=False):
+
+    result = []
+    for a in args:
+        if isinstance(a, list):
+            result.append("[%s]" % ppargs(a, True))
+        elif isinstance(a, tuple):
+            result.append("(%s)" % ppargs(a, True))
+        else:
+            result.append(str(a.__class__.__name__))
+
+    if dedup:
+        result = deduplicate(result)
+    return ", ".join(result)
 
 def ppfun(fun):
     try:
