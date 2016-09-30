@@ -365,3 +365,31 @@ def execute(x):
 def test_traits():
     assert execute(Traitor()) == 1
     assert execute("asdf") == 2
+
+@match(many(int, min=1))
+def min1(*n):
+    return 1
+
+def test_many_min1():
+    try:
+        min1()
+        assert False
+    except TypeError, e:
+        assert "do not match" in str(e)
+    assert min1(1) == 1
+    assert min1(1, 2) == 1
+
+@match(many(int, min=3))
+def min3(*n):
+    return 1
+
+def test_many_min3():
+    for i in range(3):
+        try:
+            min3(*range(i))
+            assert False
+        except TypeError, e:
+            assert "do not match" in str(e)
+    assert min3(1, 2, 3) == 1
+    assert min3(1, 2, 3, 4) == 1
+    assert min3(1, 2, 3, 4, 5) == 1

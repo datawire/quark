@@ -317,10 +317,20 @@ def opt(*pattern):
     frag = cat(pattern)
     return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)), "opt(%s)" % frag.doc)
 
-def many(*pattern):
+def _many(pattern):
     frag = cat(pattern)
     frag.extend(frag.start)
     return Fragment(frag.start, lambda next: (frag.extend(next), frag.start.edge(next)), "many(%s)" % frag.doc)
+
+def many(*pattern, **kwargs):
+    min = kwargs.pop("min", 0)
+    if kwargs:
+        raise TypeError("no such keyword argument(s): %s" % ", ".join(kwargs.keys()))
+    patterns = []
+    for i in range(min):
+        patterns.extend(pattern)
+    patterns.append(_many(pattern))
+    return cat(patterns)
 
 
 def when(pattern, action):
