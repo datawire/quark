@@ -45,11 +45,13 @@ class Compiler(object):
 
     @match()
     def compile(self):
+        dfns = []
         for k, v in self.symbols.definitions.items():
             if toplevel(v):
-                ir = irconstruction.compile(self, k, v)
-                if ir:
-                    print ir
+                iro = irconstruction.compile(self, k, v)
+                if iro:
+                    dfns.append(iro)
+        return ir.Package(*dfns)
 
 
 if __name__ == "__main__":
@@ -88,4 +90,11 @@ if __name__ == "__main__":
     """)
 
     c.check()
-    c.compile()
+    pkg = c.compile()
+    print pkg
+    import emit, sys
+    tgt = emit.Python()
+    emit.emit(pkg, tgt)
+    for file in tgt.files.values():
+        print "===%s===" % file.name
+        sys.stdout.write(str(file))
