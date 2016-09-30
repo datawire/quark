@@ -64,7 +64,7 @@ class Target(object):
 
     @match(Name)
     def is_interpackage(self, name):
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]  or isinstance(self.current_dfn, TestFunction)
 
 def backlink(ir, parent):
     if not hasattr(ir, "parent"):
@@ -77,23 +77,36 @@ class Java(Target):
     @match(Function)
     def filename(self, fun):
         # XXX this will clash with a Quark class 'Functions' in the same namespace
-        return "/".join(fun.name.path[:-1] + ("Functions.java",))
+        return "/".join(("src", "main", "java") + fun.name.path[:-1] + ("Functions.java",))
+
+    @match(TestFunction)
+    def filename(self, fun):
+        # XXX this will clash with a Quark class 'Functions' in the same namespace
+        return "/".join(("src", "test", "java") + fun.name.path[:-1] + ("Tests.java",))
 
     @match(choice(Class, Interface))
     def filename(self, cls):
-        return "/".join(cls.name.path[:-1] + ("%s.java" % cls.name.path[-1], ))
+        return "/".join(("src", "main", "java") + cls.name.path[:-1] + ("%s.java" % cls.name.path[-1], ))
 
 class Python(Target):
 
     @match(Definition)
     def filename(self, dfn):
-        return "/".join(dfn.name.path[:]) + ".py"
+        return "/".join(dfn.name.path[:]).lower() + ".py"
+
+    @match(TestFunction)
+    def filename(self, dfn):
+        return "/".join(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],)).lower() + ".py"
 
 class Ruby(Target):
 
     @match(Definition)
     def filename(self, dfn):
-        return "/".join(dfn.name.path) + ".rb"
+        return "/".join(dfn.name.path).lower() + ".rb"
+
+    @match(TestFunction)
+    def filename(self, dfn):
+        return "/".join(dfn.name.path[:-1] + ("tc_" + dfn.name.path[-2],)).lower() + ".rb"
 
     def upcase(self, s):
         return s[0:1].capitalize() + s[1:]
@@ -104,9 +117,13 @@ class Go(Target):
     def filename(self, dfn):
         return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
 
+    @match(TestFunction)
+    def filename(self, dfn):
+        return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[:-1]) + "_test",)) + ".go"
+
     @match(Name)
     def is_interpackage(self, name):
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0]
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0] or isinstance(self.current_dfn, TestFunction)
 
     @match(Name)
     def nameof(self, name):
@@ -173,6 +190,20 @@ def header(dfn, target):
         target.depth += 1
     yield module
 
+@match(TestFunction, Ruby)
+def header(dfn, target):
+    for c in dfn.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
+    yield 'require "test/unit"\n\n'
+    for p in dfn.name.path[:-2]:
+        yield target.indent("module {name}\n".format(
+            name = target.upcase(p)))
+        target.depth += 1
+    yield target.indent("class Test{name} < Test::Unit::TestCase\n".format(
+        name = target.upcase(dfn.name.path[-2])))
+    target.depth += 1
+
 @match(Definition, Java)
 def header(dfn, target):
     yield package_of(dfn, target)
@@ -190,12 +221,29 @@ def header(dfn, target):
     hdr = "{pkg}\n{fun}".format(
         pkg = package_of(dfn, target),
         fun = target.indent("public class Functions {\n"))
-    target.depth += 1;
+    target.depth += 1
     return hdr;
+
+@match(TestFunction, Java)
+def header(dfn, target):
+    yield package_of(dfn, target)
+    yield "import static org.junit.Assert.assertEquals;\n"
+    yield "import org.junit.Test;\n"
+    yield "\n"
+    yield "public class Tests {\n"
+    target.depth += 1
 
 @match(Definition, Go)
 def header(dfn, target):
     yield package_of(dfn, target)
+    for c in dfn.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
+
+@match(TestFunction, Go)
+def header(dfn, target):
+    yield package_of(dfn, target)
+    yield 'import "testing"\n'
     for c in dfn.children:
         for h in flatten_to_strings(header(c, target)):
             yield h
@@ -205,10 +253,20 @@ def package_of(dfn, target):
     return "package {pkg}\n\n".format(
         pkg = dfn.name.path[0].lower())
 
+@match(TestFunction, Go)
+def package_of(dfn, target):
+    return "package {pkg}_test\n\n".format(
+        pkg = dfn.name.path[0].lower())
+
 @match(Function, Java)
 def footer(dfn, target):
     target.depth -= 1;
     return target.indent("}");
+
+@match(TestFunction, Java)
+def footer(dfn, target):
+    target.depth -= 1;
+    return "}";
 
 @match(Definition, Ruby)
 def footer(dfn, target):
@@ -228,30 +286,60 @@ def code(fun, target):
         body=code(fun.body, target)
     )
 
+@match(TestFunction, Python)
+def code(fun, target):
+    return "def test_{name}(){body}\n\n".format(
+        name=target.nameof(fun.name),
+        body=code(fun.body, target)
+    )
+
 @match(Function, Java)
 def code(fun, target):
-    return "public static {type} {name}({params}){body}\n".format(
+    return "public static {type} {name}({params}){body}\n\n".format(
         type=code(fun.type, target),
         name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
         body=code(fun.body, target)
     )
 
+@match(TestFunction, Java)
+def code(fun, target):
+    return "@Test\n{indent}public void {name}(){body}\n\n".format(
+        indent=target.indent(""),
+        name=target.nameof(fun.name),
+        body=code(fun.body, target)
+    )
+
 @match(Function, Ruby)
 def code(fun, target):
-    return "def self.{name}({params}){body}\n{end}\n".format(
+    return "def self.{name}({params}){body}\n{end}\n\n".format(
         name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
         body=code(fun.body, target),
         end=target.indent("end")
     )
 
+@match(TestFunction, Ruby)
+def code(fun, target):
+    return "def test_{name}{body}\n{end}\n\n".format(
+        name=target.nameof(fun.name),
+        body=code(fun.body, target),
+        end=target.indent("end")
+    )
+
 @match(Function, Go)
 def code(fun, target):
-    return "func {name}({params}) {type}{body}\n".format(
+    return "func {name}({params}) {type}{body}\n\n".format(
         type=code(fun.type, target),
         name=target.nameof(fun.name),
         params=", ".join(code(p, target) for p in fun.params),
+        body=code(fun.body, target)
+    )
+
+@match(TestFunction, Go)
+def code(fun, target):
+    return "func TestQ_{name}(t__ *testing.T) {body}\n\n".format(
+        name=target.upcase(fun.name.path[-1]),
         body=code(fun.body, target)
     )
 
@@ -432,22 +520,25 @@ def code(retr, target):
 def code(name, target):
     return ".".join(name.path)
 
-@match(Name, Python)
-def header(name, target):
+@match(choice(Type, Invoke), Python)
+def header(thing, target):
+    name = thing.name
     if target.is_interpackage(name):
         yield "import {module} as {alias}\n".format(
             module=".".join(name.path),
             alias="%s_%s" % (name.package, "_".join(name.path)))
 
-@match(Name, Ruby)
-def header(name, target):
+@match(choice(Type, Invoke), Ruby)
+def header(thing, target):
+    name = thing.name
     if target.is_interpackage(name):
         yield "require '{package}/{module}'\n".format(
             package=name.package,
             module="/".join(name.path[:-1]))
 
-@match(Name, Go)
-def header(name, target):
+@match(choice(Type, Invoke), Go)
+def header(thing, target):
+    name = thing.name
     if target.is_interpackage(name):
         yield """import "{package}/{toplevel}"\n""".format(
             package = name.package,
@@ -535,6 +626,13 @@ def code(invoke, target):
 @match(Name, Target)
 def funcall(name, target):
     return code(name, target)
+
+@match(Name, Python)
+def funcall(name, target):
+    if target.is_interpackage(name):
+        return code(name, target) + "." + name.path[-1]
+    else:
+        return name.path[-1]
 
 @match(Name, Java)
 def funcall(name, target):
@@ -847,3 +945,35 @@ def code(constructor, target):
             body=target.indent(code(constructor.body, child) + "\n"),
             ret=target.indent("return this\n") + "}\n"
         )
+
+## AssertEqual
+
+@match(AssertEqual, Go)
+def code(assrt, target):
+    with target.descend() as child:
+        return "\n".join(
+            ["{",
+             child.indent("expected, actual = ({expected}), ({actual})".format(
+                 expected = code(assrt.expected, child),
+                 actual = code(assrt.actual, child))),
+             child.indent("if (expected != actual) { t__.Error(expected, actual) }"),
+             target.indent("}")
+            ])
+
+@match(AssertEqual, Python)
+def code(assrt, target):
+    return "assert ({expected}) == ({actual})".format(
+                 expected = code(assrt.expected, target),
+                 actual = code(assrt.actual, target))
+
+@match(AssertEqual, Java)
+def code(assrt, target):
+    return "assertEquals(({expected}), ({actual}));".format(
+                 expected = code(assrt.expected, target),
+                 actual = code(assrt.actual, target))
+
+@match(AssertEqual, Ruby)
+def code(assrt, target):
+    return "assert_equal(({expected}), ({actual}))".format(
+                 expected = code(assrt.expected, target),
+                 actual = code(assrt.actual, target))

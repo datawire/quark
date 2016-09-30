@@ -761,4 +761,39 @@ class Break(SimpleStatement):
 class Continue(SimpleStatement):
     pass
 
-__all__ = [n for n,v in globals().items() if IR in getattr(v,"__mro__",[])]
+
+class TestFunction(Definition):
+
+    @match(Name, Block)
+    def __init__(self, name, body):
+        self.name = name
+        self.body = body
+
+    @property
+    def children(self):
+        yield self.name
+        yield self.body
+
+    def __repr__(self):
+        return self.repr(self.name, self.body)
+
+
+class TestAssertion(Statement):
+    pass
+
+class AssertEqual(TestAssertion):
+    @match(Expression, Expression)
+    def __init__(self, expected, actual):
+        self.expected = expected
+        self.actual = actual
+
+    @property
+    def children(self):
+        yield self.expected
+        yield self.actual
+
+    def __repr__(self):
+        return self.repr(self.expected, self.actual)
+
+
+__all__ = [n for n,v in globals().items() if IR in getattr(v, "__mro__", [])]

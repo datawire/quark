@@ -26,6 +26,42 @@ def fibonacci_ir():
                    )
                 )
             )
+        ),
+        TestFunction(
+            Name("pf:pf.zero"),
+            Block(
+                AssertEqual(IntLit(0), Invoke(Name("pf:pf.fib"), IntLit(0)))
+            )
+        ),
+        TestFunction(
+            Name("pf:pf.one"),
+            Block(
+                AssertEqual(IntLit(1), Invoke(Name("pf:pf.fib"), IntLit(1)))
+            )
+        ),
+        TestFunction(
+            Name("pf:pf.two"),
+            Block(
+                AssertEqual(IntLit(1), Invoke(Name("pf:pf.fib"), IntLit(2)))
+            )
+        ),
+        TestFunction(
+            Name("pf:pf.three"),
+            Block(
+                AssertEqual(IntLit(2), Invoke(Name("pf:pf.fib"), IntLit(3)))
+            )
+        ),
+        TestFunction(
+            Name("pf:pf.four"),
+            Block(
+                AssertEqual(IntLit(3), Invoke(Name("pf:pf.fib"), IntLit(4)))
+            )
+        ),
+        TestFunction(
+            Name("pf:pf.five"),
+            Block(
+                AssertEqual(IntLit(5), Invoke(Name("pf:pf.fib"), IntLit(5)))
+            )
         )
     )
 

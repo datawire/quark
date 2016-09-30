@@ -141,7 +141,7 @@ def test_function_doc():
     for i in range(1, 6):
         assert "d%i" % i in asdf.__doc__
 
-class Test(object):
+class ATest(object):
 
     @match(str)
     def __init__(self, x):
@@ -170,7 +170,7 @@ class Test(object):
         "foo3"
         return 3, lst
 
-class Sub(Test):
+class Sub(ATest):
 
     @match(float)
     def __init__(self, x):
@@ -183,16 +183,16 @@ class Sub(Test):
         "foo4"
         return 4, s
 
-def test_Test():
-    t = Test(1)
+def test_ATest():
+    t = ATest(1)
     assert t.case == 2
     assert t.x == "1"
 
-    t = Test("one")
+    t = ATest("one")
     assert t.case == 1
     assert t.x == "one"
 
-    assert Test.foo(t, 1, "two") == (2, 1, "two")
+    assert ATest.foo(t, 1, "two") == (2, 1, "two")
     assert t.foo(1, "two") == (2, 1, "two")
     assert t.foo("one", 2) == (1, "one", 2)
     assert t.foo([1, 2, 3]) == (3, [1, 2, 3])
@@ -211,15 +211,15 @@ def test_Test():
 
 def test_init_doc():
     for i in range(1, 3):
-        assert "init%i" % i in Test.__init__.__doc__
-    assert "init4" not in Test.__init__.__doc__
+        assert "init%i" % i in ATest.__init__.__doc__
+    assert "init4" not in ATest.__init__.__doc__
     for i in range(1, 4):
         assert "init%i" % i in Sub.__init__.__doc__
 
 def test_method_doc():
     for i in range(1, 4):
-        assert "foo%i" % i in Test.foo.__doc__
-    assert "foo5" not in Test.foo.__doc__
+        assert "foo%i" % i in ATest.foo.__doc__
+    assert "foo5" not in ATest.foo.__doc__
     for i in range(1, 5):
         assert "foo%i" % i in Sub.foo.__doc__
 
