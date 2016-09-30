@@ -379,6 +379,10 @@ def code(fun, target):
 def code(type, target):
     return ".".join(type.name.path)
 
+@match(ClassType, Go)
+def code(type, target):
+    return "*" + target.nameof(type.name)
+
 @match(Type, Go)
 def code(type, target):
     return target.nameof(type.name)
@@ -477,7 +481,7 @@ def code(if_, target):
 def else_sep(target):
     return "\n" + target.indent()
 
-@match(Java)
+@match(choice(Java, Go))
 def else_sep(target):
     return " "
 
@@ -677,6 +681,14 @@ def code(send, target):
     return "{object}.{method}({args})".format(
         object=code(send.expr, target),
         method=send.name,
+        args=", ".join([code(a, target) for a in send.args])
+    )
+
+@match(Send, Go)
+def code(send, target):
+    return "{object}.{method}({args})".format(
+        object=code(send.expr, target),
+        method=target.upcase(send.name),
         args=", ".join([code(a, target) for a in send.args])
     )
 
@@ -971,7 +983,7 @@ def code(constructor, target):
     with target.descend() as child:
         return "func {name}__Construct({params}) *{clazz} {alloc}({clazz})\n{body}{ret}".format(
             clazz=target.nameof(constructor.parent.name),
-            name=target.upcase(constructor.name),
+            name=code(constructor.type.name, target),
             params=", ".join(code(p, target) for p in constructor.params),
             alloc="{\n" + target.indent("this := new"),
             body=target.indent(code(constructor.body, child) + "\n"),
@@ -985,7 +997,7 @@ def code(assrt, target):
     with target.descend() as child:
         return "\n".join(
             ["{",
-             child.indent("expected, actual = ({expected}), ({actual})".format(
+             child.indent("expected, actual := ({expected}), ({actual})".format(
                  expected = code(assrt.expected, child),
                  actual = code(assrt.actual, child))),
              child.indent("if (expected != actual) { t__.Error(expected, actual) }"),
