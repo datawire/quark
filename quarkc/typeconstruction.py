@@ -81,8 +81,7 @@ def resolve(comp, st):
 
 @match(COMPILER, Var)
 def resolve(comp, v):
-    dfn = comp.symbols.definitions[comp.symbols.qualify(v)]
-    return resolve(comp, dfn)
+    return resolve(comp, comp.symbols[v])
 
 @match(COMPILER, Declaration)
 def resolve(comp, dfn):
@@ -95,7 +94,7 @@ def resolve(comp, pkgs):
 @match(COMPILER, Import)
 def resolve(comp, imp):
     assert imp.alias
-    dfn = comp.symbols.definitions[name(imp.path)]
+    dfn = comp.symbols[imp.path]
     assert not isinstance(dfn, Import)
     return resolve(comp, dfn)
 

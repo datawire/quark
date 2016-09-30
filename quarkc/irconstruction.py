@@ -48,7 +48,7 @@ def compile(comp, if_):
 def compile(comp, call):
     t = comp.typespace.unresolve(typeconstruction.resolve(comp, call.expr))
     assert isinstance(t, types.Ref)
-    dfn = comp.symbols.definitions[t.name]
+    dfn = comp.symbols[t.name]
     return compile_call(comp, t, dfn, call.expr, call.args)
 
 @cmatch(types.Ref, Method, Attr, [many(Expression)])
@@ -74,8 +74,7 @@ def compile(comp, retr):
 
 @cmatch(Var)
 def compile(comp, var):
-    dfn = comp.symbols.definitions[comp.symbols.qualify(var)]
-    return compile_var(comp, dfn, var)
+    return compile_var(comp, comp.symbols[var], var)
 
 @cmatch(Param, Var)
 def compile_var(comp, p, v):

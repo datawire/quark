@@ -130,3 +130,23 @@ class Symbols(object):
             if candidate in self.definitions:
                 return candidate
         raise KeyError("%s: no such symbol %s" % (lineinfo(node), text))
+
+    @match(Var)
+    def __getitem__(self, var):
+        return self[self.qualify(var)]
+
+    @match(Type)
+    def __getitem__(self, type):
+        return self[self.qualify(type)]
+
+    @match(Name)
+    def __getitem__(self, name):
+        return self[self.qualify(name)]
+
+    @match([many(Name)])
+    def __getitem__(self, path):
+        return self[name(path)]
+
+    @match(basestring)
+    def __getitem__(self, name):
+        return self.definitions[name]
