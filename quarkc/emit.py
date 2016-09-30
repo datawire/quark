@@ -16,7 +16,7 @@
 Quark IR emitter.
 
 Usage:
-  quark-ir emit [options] --go <files>...
+  quark-ir emit [options] (--go | --java | --python | --ruby) <files>...
 
 Commands:
 
@@ -124,6 +124,10 @@ class Python(Target):
 
     @match(Definition)
     def filename(self, dfn):
+        for l in range(1,len(dfn.name.path)):
+            init = "/".join(dfn.name.path[:l] + ('__init__.py',))
+            if init not in self.files:
+                self.files[init] = File(init)
         return "/".join(dfn.name.path[:]).lower() + ".py"
 
     @match(TestFunction)
@@ -563,6 +567,10 @@ def header(thing, target):
         yield "import {module} as {alias}\n".format(
             module=".".join(name.path),
             alias="%s_%s" % (name.package, "_".join(name.path)))
+    for c in thing.children:
+        for h in flatten_to_strings(header(c, target)):
+            yield h
+    
 
 @match(choice(Type, Invoke), Ruby)
 def header(thing, target):
@@ -1045,7 +1053,7 @@ def main(args):
         with open(fn) as f:
             ir = IR.load(f.read(), source=fn)
         for opt, backend in backends.items():
-            if not (opt in args or "--all" in args):
+            if not args.get(opt, False):
                 continue
             b = backend()
             emit(ir, b)
