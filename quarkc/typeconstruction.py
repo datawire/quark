@@ -5,7 +5,7 @@ from .symbols import name
 
 import types
 
-@match(COMPILER, Class)
+@cmatch(Class)
 def type(comp, cls):
     clstype = types.Object(*[field(comp, d, cls.parameters) for d in cls.definitions])
     if cls.parameters:
@@ -13,11 +13,11 @@ def type(comp, cls):
     else:
         return clstype
 
-@match(COMPILER, Function)
+@cmatch(Function)
 def type(comp, fun):
     return callable(comp, fun)
 
-@match(COMPILER, Method)
+@cmatch(Method)
 def type(comp, meth):
     mtype = callable(comp, meth)
     cls = meth.parent
@@ -26,33 +26,33 @@ def type(comp, meth):
     else:
         return mtype
 
-@match(COMPILER, [many(Package)])
+@cmatch([many(Package)])
 def type(comp, pkgs):
     return types.Object(*[types.Field(d.name.text, types.Ref(name(d))) for p in pkgs for d in p.definitions])
 
-@match(COMPILER, AST)
+@cmatch(AST)
 def type(comp, _):
     return None
 
-@match(COMPILER, Callable)
+@cmatch(Callable)
 def callable(comp, c):
     result = types.Ref(comp.symbols.qualify(c.type))
     args = [types.Ref(comp.symbols.qualify(p.type)) for p in c.params]
     return types.Callable(result, *args)
 
-@match(COMPILER, Field, [many(TypeParam)])
+@cmatch(Field, [many(TypeParam)])
 def field(comp, f, parameters):
     return types.Field(f.name.text, types.Ref(comp.symbols.qualify(f.type)))
 
-@match(COMPILER, Method, [many(TypeParam)])
+@cmatch(Method, [many(TypeParam)])
 def field(comp, m, parameters):
     return types.Final(m.name.text, types.Ref(name(m), *[types.Ref(name(p)) for p in parameters]))
 
-@match(COMPILER, Expression)
+@cmatch(Expression)
 def check(comp, e):
     print "%s: %s" % (e, comp.typespace.unresolve(resolve(comp, e)))
 
-@match(COMPILER, Local)
+@cmatch(Local)
 def check(comp, l):
     if l.declaration.value:
         left = resolve(comp, l.declaration.type)
@@ -60,62 +60,62 @@ def check(comp, l):
         assert comp.typespace.assignable(left, right), "cannot assign %s to %s" % (self.typespace.unresolve(right),
                                                                                    self.typespace.unresolve(left))
 
-@match(COMPILER, Assign)
+@cmatch(Assign)
 def check(comp, a):
     left = resolve(comp, a.lhs)
     right = resolve(comp, a.rhs)
     assert comp.typespace.assignable(left, right), "cannot assign %s to %s" % (comp.typespace.unresolve(right),
                                                                                comp.typespace.unresolve(left))
 
-@match(COMPILER, AST)
+@cmatch(AST)
 def check(comp, _):
     pass
 
-@match(COMPILER, String)
+@cmatch(String)
 def resolve(comp, st):
     return types.Ref("quark.String")
 
-@match(COMPILER, Number)
+@cmatch(Number)
 def resolve(comp, st):
     return types.Ref("quark.int")
 
-@match(COMPILER, Var)
+@cmatch(Var)
 def resolve(comp, v):
     return resolve(comp, comp.symbols[v])
 
-@match(COMPILER, Declaration)
+@cmatch(Declaration)
 def resolve(comp, dfn):
     return resolve(comp, dfn.type)
 
-@match(COMPILER, [Package, many(Package)])
+@cmatch([Package, many(Package)])
 def resolve(comp, pkgs):
     return comp.typespace[name(pkgs[0])]
 
-@match(COMPILER, Import)
+@cmatch(Import)
 def resolve(comp, imp):
     assert imp.alias
     dfn = comp.symbols[imp.path]
     assert not isinstance(dfn, Import)
     return resolve(comp, dfn)
 
-@match(COMPILER, Type)
+@cmatch(Type)
 def resolve(comp, type):
     if type.parameters:
         return types.Ref(comp.symbols.qualify(type), *[resolve(comp, p) for p in type.parameters])
     else:
         return types.Ref(comp.symbols.qualify(type))
 
-@match(COMPILER, choice(Method, Function))
+@cmatch(choice(Method, Function))
 def resolve(comp, meth):
     return comp.typespace.get(comp.typespace[name(meth.parent)], meth.name.text)
 
-@match(COMPILER, Call)
+@cmatch(Call)
 def resolve(comp, c):
     expr = resolve(comp, c.expr)
     args = [resolve(comp, a) for a in c.args]
     return comp.typespace.call(expr, *args)
 
-@match(COMPILER, Attr)
+@cmatch(Attr)
 def resolve(comp, a):
     expr = resolve(comp, a.expr)
     return comp.typespace.get(expr, a.attr.text)
