@@ -95,15 +95,16 @@ class Compiler(object):
         t = self.typespace.unresolve(typeconstruction.resolve(self, call.expr))
         assert isinstance(t, types.Ref)
         dfn = self.symbols.definitions[t.name]
-        return self.compile_call(t, dfn, call)
+        return self.compile_call(t, dfn, call.expr, call.args)
 
-    @match(types.Ref, Method, Call)
-    def compile_call(self, ref, dfn, call):
-        return ir.Send(self.compile(call.expr), dfn.name.text, tuple([self.compile(a) for a in call.args]))
+    @match(types.Ref, Method, Attr, [many(Expression)])
+    def compile_call(self, ref, dfn, attr, args):
+        assert attr.attr.text == dfn.name.text
+        return ir.Send(self.compile(attr.expr), dfn.name.text, tuple([self.compile(a) for a in args]))
 
-    @match(types.Ref, Function, Call)
-    def compile_call(self, ref, dfn, call):
-        return ir.Invoke(self.compile(name(dfn)), *[self.compile(a) for a in call.args])
+    @match(types.Ref, Function, Var, [many(Expression)])
+    def compile_call(self, ref, dfn, var, args):
+        return ir.Invoke(self.compile(name(dfn)), *[self.compile(a) for a in args])
 
     @match(Attr)
     def compile(self, attr):
