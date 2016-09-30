@@ -24,7 +24,9 @@ def check(ast):
     return symbols
 
 if __name__ == '__main__':
-    symbols = check(parse("asdf", """
+    import c2
+    c = c2.Compiler()
+    c.parse("asdf", """
     quark 1.0;
 
     package asdf 1.0;
@@ -86,6 +88,7 @@ if __name__ == '__main__':
             box.contents;
             box.contents.substring(1, 2);
             box.contents.startswith("asdf");
+            box.get();
 //            box.contents.startswith(3); // errors
             Stringable s = "asdf";
             s = 3;
@@ -94,6 +97,7 @@ if __name__ == '__main__':
             box2.contents = 3;
             box2.contents = "asdf";
             box2.contents = box;
+            box2.get();
 //            box2.contents = asdf.foo(); // errors
             asdf.foo();
 //            foo.bar.baz(); // errors
@@ -108,6 +112,7 @@ if __name__ == '__main__':
         T contents;
 //        String contents;
         String toString();
+        T get();
     }
 
 //    void Box() {}
@@ -117,13 +122,15 @@ if __name__ == '__main__':
     }
 //        void bar() {}
     }
-    """))
+    """)
+
+    c.check()
 
 #    print symbols.definitions.keys()
 #    print symbols.typespace.types
 #    print symbols.typespace.resolved
     print "============"
-    for k, v in symbols.definitions.items():
+    for k, v in c.symbols.definitions.items():
         print "==%s==" % k
         print v
 #    from quarkc.types import *
