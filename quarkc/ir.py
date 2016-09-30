@@ -276,7 +276,7 @@ class Function(Definition):
         self.params = args[:-1]
         self.body = args[-1]
 
-    @match(Name, Name, many(Param), Code)
+    @match(Name, Name, many(Param), Statement)
     def __init__(self, name, type, *args):
         self.__init__(name, Type(type), *(args[:-1] + (Block(args[-1]),)))
 
