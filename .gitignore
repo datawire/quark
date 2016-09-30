@@ -59,9 +59,6 @@ quark/test/emit/java-deps
 # Sphinx documentation
 docs/_build/
 
-# PyBuilder
-target/
-
 # Linux
 .directory
 *.pid
