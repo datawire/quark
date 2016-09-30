@@ -50,9 +50,13 @@ class _Indent(object):
 class IR(object):
 
     @staticmethod
-    def load(ir_str):
+    def load(ir_str, source='<string>'):
         g = globals()
-        return eval(ir_str, {}, dict((k,g[k]) for k in __all__))
+        ir_c = compile("(" + ir_str + ",)\n", source, 'eval')
+        ir_e = eval(ir_c, {}, dict((k,g[k]) for k in __all__))
+        ir = ir_e[0]
+        assert isinstance(ir, IR), "%s: does not contain IR" % source
+        return ir
 
     __INDENT = _Indent()
 
