@@ -54,7 +54,16 @@ def compile(comp, call):
 @cmatch(types.Ref, Method, Attr, [many(Expression)])
 def compile_call(comp, ref, dfn, attr, args):
     assert attr.attr.text == dfn.name.text
-    return ir.Send(compile(comp, attr.expr), dfn.name.text, tuple([compile(comp, a) for a in args]))
+    return compile_call_method(comp, ref, dfn.parent, dfn, attr, args)
+
+@cmatch(types.Ref, Class, Method, Attr, [many(Expression)])
+def compile_call_method(comp, ref, objdfn, methdfn, attr, args):
+    return ir.Send(compile(comp, attr.expr), methdfn.name.text, tuple([compile(comp, a) for a in args]))
+
+@cmatch(types.Ref, Primitive, Method, Attr, [many(Expression)])
+def compile_call_method(comp, ref, objdfn, methdfn, attr, args):
+    n = compile(comp, "%s_%s" % (name(objdfn), methdfn.name.text))
+    return ir.Invoke(n, compile(comp, attr.expr), *[compile(comp, a) for a in args])
 
 @cmatch(types.Ref, Function, Var, [many(Expression)])
 def compile_call(comp, ref, dfn, var, args):
