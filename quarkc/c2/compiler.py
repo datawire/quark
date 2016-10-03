@@ -4,7 +4,7 @@ from .parse import *
 from .symbols import *
 from .traits import *
 
-import ir, types, typeconstruction, irconstruction
+import ir, types, irconstruction
 
 @match(choice(Function, Interface, Class))
 def toplevel(dfn):
@@ -21,7 +21,7 @@ class Compiler(object):
     def __init__(self):
         self.errors = Errors()
         self.symbols = Symbols(self.errors)
-        self.types = types.Typespace(self.errors)
+        self.types = types.Typespace()
 
     @match(basestring, basestring)
     def parse(self, name, content):
@@ -35,12 +35,12 @@ class Compiler(object):
     def check(self):
         self.errors.check()
         for k, v in self.symbols.definitions.items():
-            t = typeconstruction.type(self, v)
+            t = types.type(self, v)
             if t is not None:
                 self.types[k] = t
         for k, v in self.symbols.definitions.items():
             if not isinstance(v, list):
-                traverse(v, lambda x: typeconstruction.check(self, x))
+                traverse(v, lambda x: types.check(self, x))
         self.errors.check()
 
     @match()

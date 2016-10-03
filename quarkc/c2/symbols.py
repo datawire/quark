@@ -4,7 +4,6 @@ from .errors import Errors
 from .parse import traverse
 from .helpers import lineinfo
 from collections import OrderedDict
-import types
 
 @match(choice(Package, Function, Class, Interface, Method, Declaration, TypeParam))
 def path(n):
