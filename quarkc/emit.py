@@ -134,18 +134,58 @@ class Python(Target):
     def filename(self, dfn):
         return "/".join(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],)).lower() + ".py"
 
+class RubyModuleStitcher(object):
+    def __init__(self, target, lib_prefix):
+        self.target = target
+        self.lib_prefix = lib_prefix
+
+    @match(basestring, (many(basestring), ))
+    def filename(self, package, path):
+        return "/".join((self.lib_prefix, package,) + path).lower() + ".rb"
+
+    @match(basestring, basestring, (many(basestring), ))
+    def global_require(self, global_package, package, path):
+        package_name = self.filename(global_package, ())
+        if package_name not in self.target.files:
+            self.target.files[package_name] = File(package_name)
+        package_file = self.target.files[package_name]
+        package_file.header.append("require_relative '{module}'\n".format(
+            module = "/".join((package, ) + path).lower()))
+        return self.filename(package, path)
+
 class Ruby(Target):
 
     @match(Definition)
     def filename(self, dfn):
-        return "/".join(dfn.name.path).lower() + ".rb"
+        lib = RubyModuleStitcher(self, "lib")
+        return lib.global_require(dfn.name.package, dfn.name.package, dfn.name.path)
 
     @match(TestFunction)
     def filename(self, dfn):
-        return "/".join(dfn.name.path[:-1] + ("tc_" + dfn.name.path[-2],)).lower() + ".rb"
+        package = "ts_" + dfn.name.package
+        path = dfn.name.path[:-1] + ("tc_" + dfn.name.path[-2],)
+        test = RubyModuleStitcher(self, "test")
+        test.global_require("ts", package, path)
+        return test.global_require(package, package, path)
 
     def upcase(self, s):
         return s[0:1].capitalize() + s[1:]
+
+    def is_intermodule(self, name):
+        assert self.current_dfn.name.package == name.package
+        return self.current_dfn.name.path != name.path
+
+    def rel_module(self, name):
+        assert self.is_intermodule(name)
+        cname = self.current_dfn.name
+        ret = []
+        for src, tgt in map(None,cname.path[:-1], name.path):
+            if src == tgt and not ret: continue
+            if src is not None:
+                ret.insert(0, src)
+            if tgt is not None:
+                ret.append(tgt)
+        return tuple(ret)
 
 class Go(Target):
 
@@ -570,15 +610,18 @@ def header(thing, target):
     for c in thing.children:
         for h in flatten_to_strings(header(c, target)):
             yield h
-    
 
 @match(choice(Type, Invoke), Ruby)
 def header(thing, target):
     name = thing.name
     if target.is_interpackage(name):
-        yield "require '{package}/{module}'\n".format(
+        yield "require '{package}'\n".format(
             package=name.package,
             module="/".join(name.path[:-1]))
+    elif target.is_intermodule(name):
+        yield "require_relative '{rel_module}'\n".format(
+            package=name.package,
+            rel_module="/".join(target.rel_module(name)))
 
 @match(choice(Type, Invoke), Go)
 def header(thing, target):
