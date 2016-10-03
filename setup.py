@@ -44,7 +44,7 @@ setup(name=metadata["__title__"],
       install_requires=install_requirements,
       entry_points={"console_scripts": ["quark = quarkc.command:call_main",
                                         "quark-grammar = quarkc.parser:rules",
-                                        "quark-ir = quarkc.emit:call_main"]},
+                                        "quark-ir = quarkc.c2.emit:call_main"]},
       keywords=['IDL', 'service', 'microservice', 'RPC', 'async'],
       classifiers=[
           'Development Status :: 3 - Alpha',

@@ -1,10 +1,10 @@
 import pytest
 from collections import OrderedDict, defaultdict
 
-from quarkc.match import *
-from quarkc.parse import *
-from quarkc.errors import Errors
-from quarkc.symbols import Symbols
+from quarkc.c2.match import *
+from quarkc.c2.parse import *
+from quarkc.c2.errors import Errors
+from quarkc.c2.symbols import Symbols
 
 ###############################################################################
 # Check that a given file/content produces the expected symbols or errors

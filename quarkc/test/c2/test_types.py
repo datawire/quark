@@ -1,6 +1,6 @@
 import pytest
-from quarkc.errors import Errors
-from quarkc.types import *
+from quarkc.c2.errors import Errors
+from quarkc.c2.types import *
 
 # TODO: negative tests?
 

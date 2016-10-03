@@ -14,7 +14,7 @@
 
 import pytest
 
-from quarkc.ir import *
+from quarkc.c2.ir import *
 
 NAMES = [
 #    (("foo",), "foo", ()),
@@ -70,7 +70,7 @@ def test_nesting():
         print "collision:", c
 
 
-from quarkc.emit import *
+from quarkc.c2.emit import *
 
 def test_emit():
     stmt = If(Var("x"),

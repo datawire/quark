@@ -1,4 +1,4 @@
-from quarkc.ir import *
+from quarkc.c2.ir import *
 
 def fibonacci_ir():
     return Package(

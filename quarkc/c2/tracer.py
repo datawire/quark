@@ -24,8 +24,8 @@ def check(ast):
     return symbols
 
 if __name__ == '__main__':
-    import c2
-    c = c2.Compiler()
+    import compiler
+    c = compiler.Compiler()
     c.parse("asdf", """
     quark 1.0;
 

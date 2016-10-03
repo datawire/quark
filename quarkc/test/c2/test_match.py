@@ -13,7 +13,7 @@
 # limitations under the License.
 
 import pytest
-from quarkc.match import *
+from quarkc.c2.match import *
 
 class Action(object):
 
