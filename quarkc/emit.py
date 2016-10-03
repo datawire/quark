@@ -638,16 +638,26 @@ def code(var, target):
 ## Numbers
 
 @match(choice(IntLit, FloatLit), Target)
-def code(num, target):
+def code(lit, target):
     # XXX: probably good enough
-    return str(num.value)
+    return str(lit.value)
 
 ## StringLit
 
 @match(StringLit, Target)
-def code(num, target):
+def code(lit, target):
     # XXX: this is potenitally good enough
-    return '"' + num.value.encode('unicode_escape').replace('"','\\"') + '"'
+    return '"' + lit.value.encode('unicode_escape').replace('"','\\"') + '"'
+
+## StringLit
+
+@match(BoolLit, choice(Ruby, Java, Go))
+def code(lit, target):
+    return lit.value and "true" or "false"
+
+@match(BoolLit, Python)
+def code(lit, target):
+    return str(lit.value)
 
 ## Call
 
