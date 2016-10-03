@@ -50,22 +50,22 @@ def field(comp, m, parameters):
 
 @cmatch(Expression)
 def check(comp, e):
-    print "%s: %s" % (e, comp.typespace.unresolve(resolve(comp, e)))
+    print "%s: %s" % (e, comp.types.unresolve(resolve(comp, e)))
 
 @cmatch(Local)
 def check(comp, l):
     if l.declaration.value:
         left = resolve(comp, l.declaration.type)
         right = resolve(comp, l.declaration.value)
-        assert comp.typespace.assignable(left, right), "cannot assign %s to %s" % (self.typespace.unresolve(right),
-                                                                                   self.typespace.unresolve(left))
+        assert comp.types.assignable(left, right), "cannot assign %s to %s" % (self.types.unresolve(right),
+                                                                               self.types.unresolve(left))
 
 @cmatch(Assign)
 def check(comp, a):
     left = resolve(comp, a.lhs)
     right = resolve(comp, a.rhs)
-    assert comp.typespace.assignable(left, right), "cannot assign %s to %s" % (comp.typespace.unresolve(right),
-                                                                               comp.typespace.unresolve(left))
+    assert comp.types.assignable(left, right), "cannot assign %s to %s" % (comp.types.unresolve(right),
+                                                                           comp.types.unresolve(left))
 
 @cmatch(AST)
 def check(comp, _):
@@ -89,7 +89,7 @@ def resolve(comp, dfn):
 
 @cmatch([Package, many(Package)])
 def resolve(comp, pkgs):
-    return comp.typespace[name(pkgs[0])]
+    return comp.types[name(pkgs[0])]
 
 @cmatch(Import)
 def resolve(comp, imp):
@@ -107,15 +107,15 @@ def resolve(comp, type):
 
 @cmatch(choice(Method, Function))
 def resolve(comp, meth):
-    return comp.typespace.get(comp.typespace[name(meth.parent)], meth.name.text)
+    return comp.types.get(comp.types[name(meth.parent)], meth.name.text)
 
 @cmatch(Call)
 def resolve(comp, c):
     expr = resolve(comp, c.expr)
     args = [resolve(comp, a) for a in c.args]
-    return comp.typespace.call(expr, *args)
+    return comp.types.call(expr, *args)
 
 @cmatch(Attr)
 def resolve(comp, a):
     expr = resolve(comp, a.expr)
-    return comp.typespace.get(expr, a.attr.text)
+    return comp.types.get(expr, a.attr.text)

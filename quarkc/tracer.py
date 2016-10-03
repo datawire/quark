@@ -99,6 +99,7 @@ if __name__ == '__main__':
             box2.contents = box;
             box2.get();
 //            box2.contents = asdf.foo(); // errors
+//            box2.contents = foo(); // errors
             asdf.foo();
 //            foo.bar.baz(); // errors
 //            box2 = box; // errors

@@ -21,7 +21,7 @@ class Compiler(object):
     def __init__(self):
         self.errors = Errors()
         self.symbols = Symbols(self.errors)
-        self.typespace = types.Typespace(self.errors)
+        self.types = types.Typespace(self.errors)
 
     @match(basestring, basestring)
     def parse(self, name, content):
@@ -37,7 +37,7 @@ class Compiler(object):
         for k, v in self.symbols.definitions.items():
             t = typeconstruction.type(self, v)
             if t is not None:
-                self.typespace[k] = t
+                self.types[k] = t
         for k, v in self.symbols.definitions.items():
             if not isinstance(v, list):
                 traverse(v, lambda x: typeconstruction.check(self, x))
@@ -61,6 +61,7 @@ if __name__ == "__main__":
         primitive int {
             int __add__(int other);
             int __sub__(int other);
+            int __mul__(int other);
             bool __lt__(int other);
             bool __eq__(int other);
             String toString();
@@ -87,13 +88,21 @@ if __name__ == "__main__":
             }
         }
     }
+
+    import math;
+
+    namespace other {
+        int fib2(int n) {
+            return 2*fib(n);
+        }
+    }
     """)
 
     c.check()
     pkg = c.compile()
     print pkg
     import emit, sys
-    tgt = emit.Python()
+    tgt = emit.Ruby()
     emit.emit(pkg, tgt)
     for file in tgt.files.values():
         print "===%s===" % file.name

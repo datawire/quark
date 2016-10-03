@@ -8,7 +8,7 @@ import ir, types, typeconstruction
 @cmatch(basestring, Function)
 def compile(comp, key, fun):
     if fun.body is None: return
-    t = comp.typespace.unresolve(typeconstruction.resolve(comp, fun).result)
+    t = comp.types.unresolve(typeconstruction.resolve(comp, fun).result)
     args = [compile(comp, key), compile(comp, t)] + compile(comp, fun.params) + [compile(comp, fun.body)]
     return ir.Function(*args)
 
@@ -30,7 +30,7 @@ def compile(comp, ref):
 
 @cmatch(Type)
 def compile(comp, t):
-    return compile(comp, comp.typespace.unresolve(typeconstruction.resolve(comp, t)))
+    return compile(comp, comp.types.unresolve(typeconstruction.resolve(comp, t)))
 
 @cmatch(ntuple(Param))
 def compile(comp, params):
@@ -46,7 +46,7 @@ def compile(comp, if_):
 
 @cmatch(Call)
 def compile(comp, call):
-    t = comp.typespace.unresolve(typeconstruction.resolve(comp, call.expr))
+    t = comp.types.unresolve(typeconstruction.resolve(comp, call.expr))
     assert isinstance(t, types.Ref)
     dfn = comp.symbols[t.name]
     return compile_call(comp, t, dfn, call.expr, call.args)
