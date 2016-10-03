@@ -20,4 +20,4 @@ test: emit
 
 emit:
 	mkdir -p emit/src
-	quark-ir emit -o emit/src --go ../../quarkc/test/ffi_ir/*.ir
+	quark-ir emit -o emit/src --go ../../quarkc/test/c2/ffi_ir/*.ir

@@ -19,4 +19,4 @@ test: emit
 	echo Done
 
 emit:
-	quark-ir emit -o emit --python ../../quarkc/test/ffi_ir/*.ir
+	quark-ir emit -o emit --python ../../quarkc/test/c2/ffi_ir/*.ir

@@ -50,6 +50,11 @@ class _Indent(object):
 class IR(object):
 
     @staticmethod
+    def load_path(path):
+        with open(path) as f:
+            return IR.load(f.read(), source=path)
+
+    @staticmethod
     def load(ir_str, source='<string>'):
         g = globals()
         ir_c = compile("(" + ir_str + ",)\n", source, 'eval')
@@ -766,7 +771,7 @@ class Continue(SimpleStatement):
     pass
 
 
-class TestFunction(Definition):
+class NativeTestFunction(Definition):
 
     @match(Name, Block)
     def __init__(self, name, body):
@@ -782,10 +787,10 @@ class TestFunction(Definition):
         return self.repr(self.name, self.body)
 
 
-class TestAssertion(Statement):
+class NativeTestAssertion(Statement):
     pass
 
-class AssertEqual(TestAssertion):
+class AssertEqual(NativeTestAssertion):
     @match(Expression, Expression)
     def __init__(self, expected, actual):
         self.expected = expected

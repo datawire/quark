@@ -19,4 +19,4 @@ test: emit
 	echo Done
 
 emit:
-	quark-ir emit -v --ruby -o emit ../../quarkc/test/ffi_ir/*.ir
+	quark-ir emit -v --ruby -o emit ../../quarkc/test/c2/ffi_ir/*.ir

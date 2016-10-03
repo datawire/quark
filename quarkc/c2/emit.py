@@ -96,7 +96,8 @@ class Target(object):
 
     @match(Name)
     def is_interpackage(self, name):
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]  or isinstance(self.current_dfn, TestFunction)
+        if self.current_dfn is None: return True
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]  or isinstance(self.current_dfn, NativeTestFunction)
 
 def backlink(ir, parent):
     if not hasattr(ir, "parent"):
@@ -111,7 +112,7 @@ class Java(Target):
         # XXX this will clash with a Quark class 'Functions' in the same namespace
         return "/".join(("src", "main", "java") + fun.name.path[:-1] + ("Functions.java",))
 
-    @match(TestFunction)
+    @match(NativeTestFunction)
     def filename(self, fun):
         # XXX this will clash with a Quark class 'Functions' in the same namespace
         return "/".join(("src", "test", "java") + fun.name.path[:-1] + ("Tests.java",))
@@ -130,7 +131,7 @@ class Python(Target):
                 self.files[init] = File(init)
         return "/".join(dfn.name.path[:]).lower() + ".py"
 
-    @match(TestFunction)
+    @match(NativeTestFunction)
     def filename(self, dfn):
         return "/".join(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],)).lower() + ".py"
 
@@ -160,7 +161,7 @@ class Ruby(Target):
         lib = RubyModuleStitcher(self, "lib")
         return lib.global_require(dfn.name.package, dfn.name.package, dfn.name.path)
 
-    @match(TestFunction)
+    @match(NativeTestFunction)
     def filename(self, dfn):
         package = "ts_" + dfn.name.package
         path = dfn.name.path[:-1] + ("tc_" + dfn.name.path[-2],)
@@ -172,6 +173,7 @@ class Ruby(Target):
         return s[0:1].capitalize() + s[1:]
 
     def is_intermodule(self, name):
+        if self.current_dfn is None: return True
         assert self.current_dfn.name.package == name.package
         return self.current_dfn.name.path != name.path
 
@@ -193,13 +195,14 @@ class Go(Target):
     def filename(self, dfn):
         return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
 
-    @match(TestFunction)
+    @match(NativeTestFunction)
     def filename(self, dfn):
         return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[:-1]) + "_test",)) + ".go"
 
     @match(Name)
     def is_interpackage(self, name):
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0] or isinstance(self.current_dfn, TestFunction)
+        if self.current_dfn is None: return True
+        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0] or isinstance(self.current_dfn, NativeTestFunction)
 
     @match(Name)
     def nameof(self, name):
@@ -266,7 +269,7 @@ def header(dfn, target):
         target.depth += 1
     yield module
 
-@match(TestFunction, Ruby)
+@match(NativeTestFunction, Ruby)
 def header(dfn, target):
     for c in dfn.children:
         for h in flatten_to_strings(header(c, target)):
@@ -300,7 +303,7 @@ def header(dfn, target):
     target.depth += 1
     return hdr;
 
-@match(TestFunction, Java)
+@match(NativeTestFunction, Java)
 def header(dfn, target):
     yield package_of(dfn, target)
     yield "import static org.junit.Assert.assertEquals;\n"
@@ -316,7 +319,7 @@ def header(dfn, target):
         for h in flatten_to_strings(header(c, target)):
             yield h
 
-@match(TestFunction, Go)
+@match(NativeTestFunction, Go)
 def header(dfn, target):
     yield package_of(dfn, target)
     yield 'import "testing"\n'
@@ -329,7 +332,7 @@ def package_of(dfn, target):
     return "package {pkg}\n\n".format(
         pkg = dfn.name.path[0].lower())
 
-@match(TestFunction, Go)
+@match(NativeTestFunction, Go)
 def package_of(dfn, target):
     return "package {pkg}_test\n\n".format(
         pkg = dfn.name.path[0].lower())
@@ -339,7 +342,7 @@ def footer(dfn, target):
     target.depth -= 1;
     return target.indent("}");
 
-@match(TestFunction, Java)
+@match(NativeTestFunction, Java)
 def footer(dfn, target):
     target.depth -= 1;
     return "}";
@@ -362,7 +365,7 @@ def code(fun, target):
         body=code(fun.body, target)
     )
 
-@match(TestFunction, Python)
+@match(NativeTestFunction, Python)
 def code(fun, target):
     return "def test_{name}(){body}\n\n".format(
         name=target.nameof(fun.name),
@@ -378,7 +381,7 @@ def code(fun, target):
         body=code(fun.body, target)
     )
 
-@match(TestFunction, Java)
+@match(NativeTestFunction, Java)
 def code(fun, target):
     return "@Test\n{indent}public void {name}(){body}\n\n".format(
         indent=target.indent(""),
@@ -395,7 +398,7 @@ def code(fun, target):
         end=target.indent("end")
     )
 
-@match(TestFunction, Ruby)
+@match(NativeTestFunction, Ruby)
 def code(fun, target):
     return "def test_{name}{body}\n{end}\n\n".format(
         name=target.nameof(fun.name),
@@ -412,7 +415,7 @@ def code(fun, target):
         body=code(fun.body, target)
     )
 
-@match(TestFunction, Go)
+@match(NativeTestFunction, Go)
 def code(fun, target):
     return "func TestQ_{name}(t__ *testing.T) {body}\n\n".format(
         name=target.upcase(fun.name.path[-1]),
@@ -1103,8 +1106,7 @@ def main(args):
                 "--python" : Python,
             }
     for fn in args["<files>"]:
-        with open(fn) as f:
-            ir = IR.load(f.read(), source=fn)
+        ir = IR.load_path(fn)
         for opt, backend in backends.items():
             if not args.get(opt, False):
                 continue
