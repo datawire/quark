@@ -24,15 +24,23 @@ def traversal(node):
 @match(File)
 def wire(file):
     path = []
+
     def visit(n):
         n.file = file
         if path:
             n.parent = path[-1]
         else:
             n.parent = None
+
+        if not hasattr(n, "_marked"):
+            n._marked = True
+            n.line, n.column = n.parent.line, n.parent.column
+
         path.append(n)
+
     def leave(n):
         path.pop()
+
     traverse(file, visit, leave)
     return file
 

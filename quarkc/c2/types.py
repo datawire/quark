@@ -73,13 +73,13 @@ class Types(object):
     def do_check(self, e):
         print "%s: %s" % (e, self.types.unresolve(self.resolve(e)))
 
-    @match(Local)
-    def do_check(self, l):
-        if l.declaration.value:
-            left = self.resolve(l.declaration.type)
-            right = self.resolve(l.declaration.value)
+    @match(Declaration)
+    def do_check(self, declaration):
+        if declaration.value:
+            left = self.resolve(declaration.type)
+            right = self.resolve(declaration.value)
             if not self.types.assignable(left, right):
-                raise UnassignableError(l, self.types.unresolve(left), self.types.unresolve(right))
+                raise UnassignableError(declaration, self.types.unresolve(left), self.types.unresolve(right))
 
     @match(Assign)
     def do_check(self, a):
