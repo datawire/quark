@@ -13,6 +13,14 @@ def traverse(node, visit, leave=None):
     if leave:
         leave(node)
 
+@match(AST)
+def traversal(node):
+    yield node
+    for c in node.children:
+        if c is not None:
+            for n in traversal(c):
+                yield n
+
 @match(File)
 def wire(file):
     path = []

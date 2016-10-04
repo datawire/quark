@@ -4,6 +4,7 @@ from collections import OrderedDict, defaultdict
 from quarkc.c2.match import *
 from quarkc.c2.parse import *
 from quarkc.c2.errors import Errors
+from quarkc.c2.exceptions import DuplicateSymbol
 from quarkc.c2.symbols import Symbols
 
 ###############################################################################
@@ -36,8 +37,13 @@ def dfn_sig(pkgs):
 def check(name, content, expected=None, errors=None):
     file = parse(name, content)
     errs = Errors()
-    symbols = Symbols(errs)
-    symbols.add(file)
+    symbols = Symbols()
+    for node in traversal(file):
+        if symbols.is_symbol(node):
+            try:
+                symbols.define(node)
+            except DuplicateSymbol, e:
+                errs.add(e)
     assert errors == errs.format()
     if expected is not None:
         elided = {}

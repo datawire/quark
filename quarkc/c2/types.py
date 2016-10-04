@@ -1,122 +1,146 @@
 from .match import *
+from .exceptions import *
 from .traits import *
 from .ast import *
-from .symbols import name
+from .symbols import Symbols, name, traversal
 
 import typespace as types
 from typespace import Typespace, Ref
 
-@cmatch(Class)
-def type(comp, cls):
-    clstype = types.Object(*[field(comp, d, cls.parameters) for d in cls.definitions])
-    if cls.parameters:
-        return types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
-    else:
-        return clstype
+class Types(object):
 
-@cmatch(Function)
-def type(comp, fun):
-    return callable(comp, fun)
+    @match(Symbols)
+    def __init__(self, symbols):
+        self.symbols = symbols
+        self.types = Typespace()
 
-@cmatch(Method)
-def type(comp, meth):
-    mtype = callable(comp, meth)
-    cls = meth.parent
-    if cls.parameters:
-        return types.Template(*[types.Param(name(p)) for p in cls.parameters] + [mtype])
-    else:
-        return mtype
+    @match(choice(Class, Function, Method, [many(Package)]))
+    def is_type(self, _):
+        return True
 
-@cmatch([many(Package)])
-def type(comp, pkgs):
-    return types.Object(*[types.Field(d.name.text, types.Ref(name(d))) for p in pkgs for d in p.definitions])
+    @match(AST)
+    def is_type(self, _):
+        return False
 
-@cmatch(AST)
-def type(comp, _):
-    return None
+    @match(Class)
+    def define(self, cls):
+        clstype = types.Object(*[self.field(d, cls.parameters) for d in cls.definitions])
+        if cls.parameters:
+            clstype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [clstype])
+        self.types[name(cls)] = clstype
 
-@cmatch(Callable)
-def callable(comp, c):
-    result = types.Ref(comp.symbols.qualify(c.type))
-    args = [types.Ref(comp.symbols.qualify(p.type)) for p in c.params]
-    return types.Callable(result, *args)
+    @match(Function)
+    def define(self, fun):
+        self.types[name(fun)] = self.callable(fun)
 
-@cmatch(Field, [many(TypeParam)])
-def field(comp, f, parameters):
-    return types.Field(f.name.text, types.Ref(comp.symbols.qualify(f.type)))
+    @match(Method)
+    def define(self, meth):
+        mtype = self.callable(meth)
+        cls = meth.parent
+        if cls.parameters:
+            mtype = types.Template(*[types.Param(name(p)) for p in cls.parameters] + [mtype])
+        self.types[name(meth)] = mtype
 
-@cmatch(Method, [many(TypeParam)])
-def field(comp, m, parameters):
-    return types.Final(m.name.text, types.Ref(name(m), *[types.Ref(name(p)) for p in parameters]))
+    @match([many(Package)])
+    def define(self, pkgs):
+        self.types[name(pkgs[0])] = types.Object(*[types.Field(d.name.text, types.Ref(name(d)))
+                                                   for p in pkgs for d in p.definitions])
 
-@cmatch(Expression)
-def check(comp, e):
-    print "%s: %s" % (e, comp.types.unresolve(resolve(comp, e)))
+    @match(Callable)
+    def callable(self, c):
+        result = types.Ref(self.symbols.qualify(c.type))
+        args = [types.Ref(self.symbols.qualify(p.type)) for p in c.params]
+        return types.Callable(result, *args)
 
-@cmatch(Local)
-def check(comp, l):
-    if l.declaration.value:
-        left = resolve(comp, l.declaration.type)
-        right = resolve(comp, l.declaration.value)
-        assert comp.types.assignable(left, right), "cannot assign %s to %s" % (self.types.unresolve(right),
-                                                                               self.types.unresolve(left))
+    @match(Field, [many(TypeParam)])
+    def field(self, f, parameters):
+        return types.Field(f.name.text, types.Ref(self.symbols.qualify(f.type)))
 
-@cmatch(Assign)
-def check(comp, a):
-    left = resolve(comp, a.lhs)
-    right = resolve(comp, a.rhs)
-    assert comp.types.assignable(left, right), "cannot assign %s to %s" % (comp.types.unresolve(right),
-                                                                           comp.types.unresolve(left))
+    @match(Method, [many(TypeParam)])
+    def field(self, m, parameters):
+        return types.Final(m.name.text, types.Ref(name(m), *[types.Ref(name(p)) for p in parameters]))
 
-@cmatch(AST)
-def check(comp, _):
-    pass
+    @match(AST)
+    def check(self, node):
+        for n in traversal(node):
+            self.do_check(n)
 
-@cmatch(String)
-def resolve(comp, st):
-    return types.Ref("quark.String")
+    @match([many(Package)])
+    def check(self, _):
+        pass
 
-@cmatch(Number)
-def resolve(comp, st):
-    return types.Ref("quark.int")
+    @match(Expression)
+    def do_check(self, e):
+        print "%s: %s" % (e, self.types.unresolve(self.resolve(e)))
 
-@cmatch(Var)
-def resolve(comp, v):
-    return resolve(comp, comp.symbols[v])
+    @match(Local)
+    def do_check(self, l):
+        if l.declaration.value:
+            left = self.resolve(l.declaration.type)
+            right = self.resolve(l.declaration.value)
+            if not self.types.assignable(left, right):
+                raise UnassignableError(l, self.types.unresolve(left), self.types.unresolve(right))
 
-@cmatch(Declaration)
-def resolve(comp, dfn):
-    return resolve(comp, dfn.type)
+    @match(Assign)
+    def do_check(self, a):
+        left = self.resolve(a.lhs)
+        right = self.resolve(a.rhs)
+        if not self.types.assignable(left, right):
+            raise UnassignableError(a, self.types.unresolve(left), self.types.unresolve(right))
 
-@cmatch([Package, many(Package)])
-def resolve(comp, pkgs):
-    return comp.types[name(pkgs[0])]
+    @match(AST)
+    def do_check(self, _):
+        pass
 
-@cmatch(Import)
-def resolve(comp, imp):
-    assert imp.alias
-    dfn = comp.symbols[imp.path]
-    assert not isinstance(dfn, Import)
-    return resolve(comp, dfn)
+    @match(String)
+    def resolve(self, st):
+        return types.Ref("quark.String")
 
-@cmatch(Type)
-def resolve(comp, type):
-    if type.parameters:
-        return types.Ref(comp.symbols.qualify(type), *[resolve(comp, p) for p in type.parameters])
-    else:
-        return types.Ref(comp.symbols.qualify(type))
+    @match(Number)
+    def resolve(self, st):
+        return types.Ref("quark.int")
 
-@cmatch(choice(Method, Function))
-def resolve(comp, meth):
-    return comp.types.get(comp.types[name(meth.parent)], meth.name.text)
+    @match(Var)
+    def resolve(self, v):
+        return self.resolve(self.symbols[v])
 
-@cmatch(Call)
-def resolve(comp, c):
-    expr = resolve(comp, c.expr)
-    args = [resolve(comp, a) for a in c.args]
-    return comp.types.call(expr, *args)
+    @match(Declaration)
+    def resolve(self, dfn):
+        return self.resolve(dfn.type)
 
-@cmatch(Attr)
-def resolve(comp, a):
-    expr = resolve(comp, a.expr)
-    return comp.types.get(expr, a.attr.text)
+    @match([Package, many(Package)])
+    def resolve(self, pkgs):
+        return self.types[name(pkgs[0])]
+
+    @match(Import)
+    def resolve(self, imp):
+        assert imp.alias
+        dfn = self.symbols[imp.path]
+        assert not isinstance(dfn, Import)
+        return self.resolve(dfn)
+
+    @match(Type)
+    def resolve(self, type):
+        if type.parameters:
+            return types.Ref(self.symbols.qualify(type), *[self.resolve(p) for p in type.parameters])
+        else:
+            return types.Ref(self.symbols.qualify(type))
+
+    @match(choice(Method, Function))
+    def resolve(self, meth):
+        return self.types.get(self.types[name(meth.parent)], meth.name.text)
+
+    @match(Call)
+    def resolve(self, c):
+        expr = self.resolve(c.expr)
+        args = [self.resolve(a) for a in c.args]
+        return self.types.call(expr, *args)
+
+    @match(Attr)
+    def resolve(self, a):
+        expr = self.resolve(a.expr)
+        return self.types.get(expr, a.attr.text)
+
+    @match(choice(types.Ref, types.Type))
+    def unresolve(self, type):
+        return self.types.unresolve(type)

@@ -1,7 +1,9 @@
 from .match import *
 from .errors import *
+from .exceptions import *
 from .parse import *
 from .symbols import *
+from .types import Types
 from .traits import *
 
 import ir, types, irconstruction
@@ -20,27 +22,34 @@ class Compiler(object):
 
     def __init__(self):
         self.errors = Errors()
-        self.symbols = Symbols(self.errors)
-        self.types = types.Typespace()
+        self.symbols = Symbols()
+        self.types = Types(self.symbols)
 
     @match(basestring, basestring)
     def parse(self, name, content):
         try:
             file = parse(name, content)
-            self.symbols.add(file)
         except ParseError, e:
             self.errors.add(str(e))
+            return
+        for node in traversal(file):
+            if self.symbols.is_symbol(node):
+                try:
+                    self.symbols.define(node)
+                except DuplicateSymbol, e:
+                    self.errors.add(e)
 
     @match()
     def check(self):
         self.errors.check()
         for k, v in self.symbols.definitions.items():
-            t = types.type(self, v)
-            if t is not None:
-                self.types[k] = t
+            if self.types.is_type(v):
+                self.types.define(v)
         for k, v in self.symbols.definitions.items():
-            if not isinstance(v, list):
-                traverse(v, lambda x: types.check(self, x))
+            try:
+                self.types.check(v)
+            except SemanticError, e:
+                self.errors.add(e)
         self.errors.check()
 
     @match()

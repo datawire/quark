@@ -1,5 +1,5 @@
 from .ast import *
-from .exceptions import CompileError
+from .exceptions import QuarkError, CompileError
 from .helpers import lineinfo
 from .match import *
 
@@ -18,6 +18,10 @@ class Errors(object):
     @match(AST, basestring)
     def add(self, node, message):
         self.add("%s: %s" % (lineinfo(node), message))
+
+    @match(QuarkError)
+    def add(self, err):
+        self.add(str(err))
 
     def format(self):
         return "\n".join(self.errors) or None

@@ -1,7 +1,7 @@
 from .ast import *
+from .exceptions import DuplicateSymbol
 from .match import *
-from .errors import Errors
-from .parse import traverse
+from .parse import traversal
 from .helpers import lineinfo
 from collections import OrderedDict
 
@@ -60,23 +60,29 @@ def definitions():
     return choice(Function, Class, Interface, Method, Declaration, TypeParam)
 
 @match(definitions())
-def dfn_lineinfo(dfn):
-    return lineinfo(dfn)
+def depackage(dfn):
+    return dfn
 
 @match([many(Package)])
-def dfn_lineinfo(pkgs):
-    return lineinfo(pkgs[0])
+def depackage(pkgs):
+    return pkgs[0]
 
 class Symbols(object):
 
-    @match(Errors)
-    def __init__(self, errors):
-        self.errors = errors
+    def __init__(self):
         self.definitions = OrderedDict()
 
-    @match(File)
-    def add(self, file):
-        traverse(file, self.define)
+    @match(choice(definitions(), Package))
+    def is_symbol(self, _):
+        return True
+
+    @match(Import)
+    def is_symbol(self, imp):
+        return True if imp.alias else False
+
+    @match(AST)
+    def is_symbol(self, _):
+        return False
 
     @match(definitions())
     def define(self, dfn):
@@ -85,8 +91,7 @@ class Symbols(object):
     @match(basestring, choice(definitions(), [many(Package)], Import))
     def define(self, name, dfn):
         if name in self.definitions:
-            self.errors(dfn, "duplicate definition of %s, first occurance on %s" %
-                        (name, dfn_lineinfo(self.definitions[name])))
+            raise DuplicateSymbol(name, dfn, depackage(self.definitions[name]))
         else:
             self.definitions[name] = dfn
 
@@ -102,9 +107,8 @@ class Symbols(object):
     def define(self, imp):
         if imp.alias:
             self.define(name(imp), imp)
-
-    @match(AST)
-    def define(self, dfn): pass
+        else:
+            assert False
 
     @match(Type)
     def qualify(self, type):
