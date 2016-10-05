@@ -30,7 +30,7 @@ class Compiler(object):
         try:
             file = parse(name, content)
         except ParseError, e:
-            self.errors.add(str(e))
+            self.errors.add(e)
             return
         for node in traversal(file):
             if self.symbols.is_symbol(node):
