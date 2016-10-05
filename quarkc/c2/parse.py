@@ -21,6 +21,26 @@ def traversal(node):
             for n in traversal(c):
                 yield n
 
+@match([many(Package)])
+def traversal(pkgs):
+    for p in pkgs:
+        for n in traversal(p):
+            yield n
+
+@match(AST)
+def postorder_traversal(node):
+    for c in node.children:
+        if c is not None:
+            for n in postorder_traversal(c):
+                yield n
+    yield node
+
+@match([many(Package)])
+def postorder_traversal(pkgs):
+    for p in pkgs:
+        for n in postorder_traversal(p):
+            yield n
+
 @match(File)
 def wire(file):
     path = []

@@ -113,7 +113,9 @@ if __name__ == '__main__':
         T contents;
 //        String contents;
         String toString();
-        T get();
+        T get() {
+            return contents;
+        }
     }
 
 //    void Box() {}

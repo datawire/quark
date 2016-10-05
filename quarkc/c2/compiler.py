@@ -46,10 +46,11 @@ class Compiler(object):
             if self.types.is_type(v):
                 self.types.define(v)
         for k, v in self.symbols.definitions.items():
-            try:
-                self.types.check(v)
-            except SemanticError, e:
-                self.errors.add(e)
+            for node in traversal(v):
+                if self.types.has_type(node):
+                    self.types.resolve(node)
+        for v in self.types.violations:
+            self.errors.add(v)
         self.errors.check()
 
     @match()
@@ -111,7 +112,7 @@ if __name__ == "__main__":
     pkg = c.compile()
     print pkg
     import emit, sys
-    tgt = emit.Ruby()
+    tgt = emit.Java()
     emit.emit(pkg, tgt)
     for file in tgt.files.values():
         print "===%s===" % file.name
