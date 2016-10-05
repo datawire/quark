@@ -349,8 +349,8 @@ def choice(*patterns):
         docs.append(f.doc)
     return Fragment(start, lambda next: [f.extend(next) for f in fragments], "choice(%s)" % ", ".join(docs))
 
-def ntuple(pattern):
-    return (many(pattern),)
+def ntuple(pattern, **kwargs):
+    return (many(pattern, **kwargs),)
 
 class delay(object):
 
