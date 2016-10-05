@@ -2,10 +2,8 @@ import pytest
 from collections import OrderedDict, defaultdict
 
 from quarkc.c2.match import *
-from quarkc.c2.parse import *
-from quarkc.c2.errors import Errors
-from quarkc.c2.exceptions import DuplicateSymbol
-from quarkc.c2.symbols import Symbols
+from quarkc.c2.ast import *
+from quarkc.c2.compiler import Compiler
 
 ###############################################################################
 # Check that a given file/content produces the expected symbols or errors
@@ -35,19 +33,12 @@ def dfn_sig(pkgs):
         return pkg.__class__, result
 
 def check(name, content, expected=None, errors=None):
-    file = parse(name, content)
-    errs = Errors()
-    symbols = Symbols()
-    for node in traversal(file):
-        if symbols.is_symbol(node):
-            try:
-                symbols.define(node)
-            except DuplicateSymbol, e:
-                errs.add(e)
-    assert errors == errs.format()
+    c = Compiler()
+    c.parse(name, content)
+    assert errors == c.errors.format()
     if expected is not None:
         elided = {}
-        for k, v in symbols.definitions.items():
+        for k, v in c.symbols.definitions.items():
             elided[k] = dfn_sig(v)
         assert expected == elided
 
