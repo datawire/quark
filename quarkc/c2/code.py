@@ -35,9 +35,9 @@ class Code(object):
 
     @match(Function)
     def compile(self, fun):
-        key = name(fun)
+        sym = name(fun)
         t = self.types[fun.type]
-        args = [self.compile_def(key), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
+        args = [self.compile_def(sym), self.compile(t)] + self.compile(fun.params) + [self.compile(fun.body)]
         return ir.Function(*args)
 
     @match(basestring)
