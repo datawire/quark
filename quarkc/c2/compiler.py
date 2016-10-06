@@ -4,17 +4,8 @@ from .exceptions import *
 from .parse import *
 from .symbols import *
 from .types import Types
+from .code import Code
 from .traits import *
-
-import ir, types, irconstruction
-
-@match(choice(Function, Interface, Class))
-def toplevel(dfn):
-    return True
-
-@match(choice(AST, [Package], Primitive))
-def toplevel(dfn):
-    return False
 
 class Compiler(object):
 
@@ -24,6 +15,7 @@ class Compiler(object):
         self.errors = Errors()
         self.symbols = Symbols()
         self.types = Types(self.symbols)
+        self.code = Code(self.symbols, self.types)
 
     @match(basestring, basestring)
     def parse(self, name, content):
@@ -64,13 +56,7 @@ class Compiler(object):
 
     @match()
     def compile(self):
-        dfns = []
-        for k, v in self.symbols.definitions.items():
-            if toplevel(v):
-                iro = irconstruction.compile(self, k, v)
-                if iro:
-                    dfns.append(iro)
-        return ir.Package(*dfns)
+        return self.code.compile()
 
 
 if __name__ == "__main__":
