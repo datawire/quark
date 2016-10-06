@@ -9,16 +9,20 @@ import ir, types
 def compile(comp, key, fun):
     if fun.body is None: return
     t = comp.types[fun.type]
-    args = [compile(comp, key), compile(comp, t)] + compile(comp, fun.params) + [compile(comp, fun.body)]
+    args = [compile_def(comp, key), compile(comp, t)] + compile(comp, fun.params) + [compile(comp, fun.body)]
     return ir.Function(*args)
 
 @cmatch(basestring)
-def compile(comp, name):
+def compile_ref(comp, name):
+    return ir.Ref("pkg", name)
+
+@cmatch(basestring)
+def compile_def(comp, name):
     return ir.Name("pkg", name)
 
 @cmatch(types.Ref)
 def compile(comp, ref):
-    return ir.Type(compile(comp, ref.name))
+    return ir.Type(compile_ref(comp, ref.name))
 
 @cmatch(types.Ref("quark.int"))
 def compile(comp, ref):
@@ -62,12 +66,12 @@ def compile_call_method(comp, ref, objdfn, methdfn, attr, args):
 
 @cmatch(types.Ref, Primitive, Method, Attr, [many(Expression)])
 def compile_call_method(comp, ref, objdfn, methdfn, attr, args):
-    n = compile(comp, "%s_%s" % (name(objdfn), methdfn.name.text))
+    n = compile_ref(comp, "%s_%s" % (name(objdfn), methdfn.name.text))
     return ir.Invoke(n, compile(comp, attr.expr), *[compile(comp, a) for a in args])
 
 @cmatch(types.Ref, Function, Var, [many(Expression)])
 def compile_call(comp, ref, dfn, var, args):
-    return ir.Invoke(compile(comp, name(dfn)), *[compile(comp, a) for a in args])
+    return ir.Invoke(compile_ref(comp, name(dfn)), *[compile(comp, a) for a in args])
 
 @cmatch(Attr)
 def compile(self, attr):
