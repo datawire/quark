@@ -72,6 +72,13 @@ class Symbols(object):
         self.definitions = OrderedDict()
         self.duplicates = OrderedDict()
 
+    @match(basestring, choice(definitions(), Package, Import))
+    def duplicate(self, name, node):
+        if name in self.duplicates:
+            self.duplicates[name].append(node)
+        else:
+            self.duplicates[name] = [node]
+
     @match(choice(definitions(), Package))
     def is_symbol(self, _):
         return True
@@ -84,34 +91,9 @@ class Symbols(object):
     def is_symbol(self, _):
         return False
 
-    @match(definitions())
+    @match(choice(definitions(), Package))
     def define(self, dfn):
         self.define(name(dfn), dfn)
-
-    @match(basestring, choice(definitions(), [many(Package)], Import))
-    def define(self, name, dfn):
-        if name in self.definitions:
-            if name in self.duplicates:
-                self.duplicates[name].append(dfn)
-            else:
-                self.duplicates[name] = [dfn]
-        else:
-            self.definitions[name] = dfn
-
-    @match(Package)
-    def define(self, pkg):
-        n = name(pkg)
-        if n in self.definitions:
-            prev = self.definitions[n]
-            if isinstance(prev, AST):
-                if n in self.duplicates:
-                    self.duplicates[n].append(pkg)
-                else:
-                    self.duplicates[n] = [pkg]
-            else:
-                prev.append(pkg)
-        else:
-            self.definitions[n] = [pkg]
 
     @match(Import)
     def define(self, imp):
@@ -119,6 +101,30 @@ class Symbols(object):
             self.define(name(imp), imp)
         else:
             assert False
+
+    @match(basestring, choice(definitions(), Package, Import))
+    def define(self, name, dfn):
+        self.define(name, dfn, self.definitions.get(name, None))
+
+    @match(basestring, choice(definitions(), Import), None)
+    def define(self, name, dfn, prev):
+        self.definitions[name] = dfn
+
+    @match(basestring, choice(definitions(), Import), choice(AST, [many(Package)]))
+    def define(self, name, dfn, prev):
+        self.duplicate(name, dfn)
+
+    @match(basestring, Package, AST)
+    def define(self, name, pkg, prev):
+        self.duplicate(name, pkg)
+
+    @match(basestring, Package, None)
+    def define(self, name, pkg, _):
+        self.definitions[name] = [pkg]
+
+    @match(basestring, Package, [many(Package)])
+    def define(self, name, pkg, pkgs):
+        pkgs.append(pkg)
 
     @match(Type)
     def qualify(self, type):
