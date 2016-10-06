@@ -46,6 +46,20 @@ class Duplicate(set):
 def dedupe(seq):
     return filter(Duplicate(), flatten_to_strings(seq))
 
+
+@match(IR)
+def dfn_of(ir):
+    return dfn_of(getattr(ir, "parent", None))
+
+@match(Definition)
+def dfn_of(ir):
+    return ir
+
+@match(None)
+def dfn_of(ir):
+    raise Exception("Calling dfn_of without an ancestor Definition, forgot to backlink()?")
+    return None
+
 class File:
 
     def __init__(self, name):
@@ -66,13 +80,6 @@ class Target(object):
         else:
             self.depth = 0
         self.files = {}
-        self._current_dfn = None
-
-    @property
-    def current_dfn(self):
-        if self._current_dfn is None and self.parent is not None:
-            self._current_dfn = self.parent.current_dfn
-        return self._current_dfn
 
     @contextmanager
     def descend(self):
@@ -84,7 +91,6 @@ class Target(object):
         return "%s%s" % ("  "*self.depth, st)
 
     def file(self, dfn):
-        self._current_dfn = dfn
         name = self.filename(dfn)
         if name not in self.files:
             self.files[name] = File(name)
@@ -96,10 +102,13 @@ class Target(object):
 
     @match(Ref)
     def is_interpackage(self, name):
-        if self.current_dfn is None: return True
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[:-1] != name.path[:-1]  or isinstance(self.current_dfn, Check)
+        dfn = dfn_of(name)
+        if dfn is None: return True
+        dname = dfn.name
+        return dname.package != name.package or dname.path[:-1] != name.path[:-1]  or isinstance(dfn, Check)
 
-def backlink(ir, parent):
+@match(IR, opt(IR))
+def backlink(ir, parent=None):
     if not hasattr(ir, "parent"):
         for c in ir.children:
             backlink(c, ir)
@@ -137,7 +146,7 @@ class Python(Target):
 
     @match(Ref)
     def needs_import(self, ref):
-        dfn = self.current_dfn
+        dfn = dfn_of(ref)
         if dfn is None: return True
         return dfn.name.package != ref.package or dfn.name.path != ref.path
 
@@ -179,15 +188,16 @@ class Ruby(Target):
         return s[0:1].capitalize() + s[1:]
 
     def is_intermodule(self, name):
-        if self.current_dfn is None: return True
-        assert self.current_dfn.name.package == name.package
-        return self.current_dfn.name.path != name.path
+        dfn = dfn_of(name)
+        if dfn is None: return True
+        assert dfn.name.package == name.package
+        return dfn.name.path != name.path
 
     def rel_module(self, name):
         assert self.is_intermodule(name)
-        cname = self.current_dfn.name
+        dname = dfn_of(name).name
         ret = []
-        for src, tgt in map(None,cname.path[:-1], name.path):
+        for src, tgt in map(None, dname.path[:-1], name.path):
             if src == tgt and not ret: continue
             if src is not None:
                 ret.insert(0, src)
@@ -207,8 +217,9 @@ class Go(Target):
 
     @match(Ref)
     def is_interpackage(self, name):
-        if self.current_dfn is None: return True
-        return self.current_dfn.name.package != name.package or self.current_dfn.name.path[0]  != name.path[0] or isinstance(self.current_dfn, Check)
+        dfn = dfn_of(name)
+        if dfn is None: return True
+        return dfn.name.package != name.package or dfn.name.path[0]  != name.path[0] or isinstance(dfn, Check)
 
     @match(Ref)
     def nameof(self, name):
@@ -258,7 +269,7 @@ def opt_code(glue, nd, target, default=""):
 
 @match(Package, Target)
 def emit(pkg, target):
-    backlink(pkg, None)
+    backlink(pkg)
     for d in pkg.definitions:
         f = target.file(d)
         f.header.extend(dedupe(header(d, target)))

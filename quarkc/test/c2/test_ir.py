@@ -89,7 +89,8 @@ def test_emit():
     print code(stmt, Java())
     print "======"
 
-    stmt = While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt)
+    stmt = Function(Name("a:b.c"),Void(),While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt))
+    backlink(stmt)
     print code(stmt, Java())
     print header(stmt, Python())
     print code(stmt, Python())

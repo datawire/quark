@@ -299,6 +299,10 @@ class Function(Definition):
     def __init__(self, name, type, *args):
         self.__init__(name, Type(type), *(args[:-1] + (Block(args[-1]),)))
 
+    @match(Name, AbstractType, many(Param), Statement)
+    def __init__(self, name, type, *args):
+        self.__init__(name, type, *(args[:-1] + (Block(args[-1]),)))
+
     @property
     def children(self):
         yield self.name
