@@ -32,19 +32,10 @@ def dfn_sig(pkgs):
     else:
         return pkg.__class__, result
 
-def check(name, content, expected=None, errors=None, duplicates=None):
+def check(name, content, expected=None, duplicates=()):
     c = Compiler()
     c.parse(name, content)
-    errs = c.errors.format()
-    if errors is not None:
-        assert errors == errs
-    if duplicates is not None:
-        for d in duplicates:
-            assert ("duplicate definition of %s" % d) in errs
-        if errs:
-            for err in errs.split("\n"):
-                sym = err.split()[4].strip(",")
-                assert sym in duplicates
+    assert set(duplicates) == set(c.symbols.duplicates)
     if expected is not None:
         elided = {}
         for k, v in c.symbols.definitions.items():
@@ -213,7 +204,7 @@ def test_implicit_foofoo():
     void foo() {}
     void foo() {}
     """,
-    errors="asdf:4:5: duplicate definition of asdf.foo, first occurance on asdf:3:5")
+    duplicates=["asdf.foo"])
 
 
 def test_explicit_foobar():
@@ -240,29 +231,7 @@ def test_explicit_foofoo():
         void foo() {}
     }
     """,
-    errors="asdf:6:9: duplicate definition of ns.foo, first occurance on asdf:5:9")
-
-def findall(st, word):
-    idx = 0
-    while True:
-        idx = st.find(word, idx)
-        if idx >= 0:
-            yield idx
-            idx += len(word)
-        else:
-            break
-
-def linecol(st, idx):
-    text = st[:idx]
-    return text.count("\n") + 1, len(text) - text.rindex("\n")
-
-def duplicate_errors(filename, code, sym):
-    name = sym.split(".")[-1]
-    locations = list(findall(code, name))
-    first = "first occurance on %s:%s:%s" % ((filename,) + linecol(code, locations[0]))
-    for idx in locations[1:]:
-        line, col = linecol(code, idx)
-        yield "%s:%s:%s: duplicate definition of %s, %s" % (filename, line, col, sym, first)
+    duplicates=["ns.foo"])
 
 def symerr(filename, topname, code, tree):
     expected = {}
@@ -270,7 +239,7 @@ def symerr(filename, topname, code, tree):
     for sym, sig in tree.symbols(filename, topname):
         if sym in expected:
             prev = expected[sym]
-            if prev[0] != Package or sig[0] == Package:
+            if prev[0] != Package or sig[0] != Package:
                 dups.append(sym)
         else:
             expected[sym] = sig

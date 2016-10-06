@@ -34,14 +34,19 @@ class Compiler(object):
             return
         for node in traversal(file):
             if self.symbols.is_symbol(node):
-                try:
-                    self.symbols.define(node)
-                except DuplicateSymbol, e:
-                    self.errors.add(e)
+                self.symbols.define(node)
 
     @match()
-    def check(self):
+    def check_symbols(self):
+        for sym, nodes in self.symbols.duplicates.items():
+            prev = depackage(self.symbols.definitions[sym])
+            for n in nodes:
+                self.errors.add(DuplicateSymbol(sym, n, prev))
         self.errors.check()
+
+    @match()
+    def check_types(self):
+        self.check_symbols()
         for k, v in self.symbols.definitions.items():
             if self.types.is_type(v):
                 self.types.define(v)
@@ -52,6 +57,10 @@ class Compiler(object):
         for v in self.types.violations:
             self.errors.add(v)
         self.errors.check()
+
+    @match()
+    def check(self):
+        self.check_types()
 
     @match()
     def compile(self):

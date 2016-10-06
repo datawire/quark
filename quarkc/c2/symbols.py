@@ -1,5 +1,4 @@
 from .ast import *
-from .exceptions import DuplicateSymbol
 from .match import *
 from .parse import traversal
 from .helpers import lineinfo
@@ -71,6 +70,7 @@ class Symbols(object):
 
     def __init__(self):
         self.definitions = OrderedDict()
+        self.duplicates = OrderedDict()
 
     @match(choice(definitions(), Package))
     def is_symbol(self, _):
@@ -91,7 +91,10 @@ class Symbols(object):
     @match(basestring, choice(definitions(), [many(Package)], Import))
     def define(self, name, dfn):
         if name in self.definitions:
-            raise DuplicateSymbol(name, dfn, depackage(self.definitions[name]))
+            if name in self.duplicates:
+                self.duplicates[name].append(dfn)
+            else:
+                self.duplicates[name] = [dfn]
         else:
             self.definitions[name] = dfn
 
@@ -101,7 +104,10 @@ class Symbols(object):
         if n in self.definitions:
             prev = self.definitions[n]
             if isinstance(prev, AST):
-                raise DuplicateSymbol(n, pkg, prev)
+                if n in self.duplicates:
+                    self.duplicates[n].append(pkg)
+                else:
+                    self.duplicates[n] = [pkg]
             else:
                 prev.append(pkg)
         else:
