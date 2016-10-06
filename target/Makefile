@@ -1,8 +1,10 @@
-.PHONY: test clean default
+.PHONY: test clean default time
 
-default clean test: MAKEFLAGS := $(MAKEFLAGS) -w
 default clean test:
-	$(MAKE) -C python $@
-	$(MAKE) -C go $@
-	$(MAKE) -C ruby $@
+	@$< { \
+	$(MAKE) -C python $@ && \
+	$(MAKE) -C go $@ && \
+	$(MAKE) -C ruby $@ ;\
+	}
 
+test: time

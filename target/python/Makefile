@@ -6,17 +6,15 @@ default:
 PYTHONPATH := $(shell pwd)/rt
 export PYTHONPATH
 
-confuse_emacs =
-track = echo "$(1) directory \`$(2)'"
+track = echo "$(1) directory \`$$PWD'"
 
-inside = cd $(1) && ($(call track,Entering,$(1)) ;  $(2); $(call track,Leaving,$(1)))
+inside = cd $(1) && ($(call track,Entering) ;  $(2); $(call track,Leaving))
 
 clean:
-	rm -fr emit
+	rm -fr "$(CURDIR)/emit"
 
 test: emit
-	$(call inside,emit,env PYTHONPATH="$(shell pwd)/emit:$(PYTHONPATH)" py.test -v)
-	echo Done
+	$(call inside,emit,env PYTHONPATH="$(shell pwd)/emit:$(PYTHONPATH)" py.test)
 
 emit:
 	quark-ir emit -o emit --python ../../quarkc/test/c2/ffi_ir/*.ir

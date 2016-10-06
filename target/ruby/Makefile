@@ -6,17 +6,15 @@ default:
 PYTHONPATH := $(shell pwd)/rt
 export PYTHONPATH
 
-confuse_emacs =
-track = echo "$(1) directory \`$(2)'"
+track = echo "$(1) directory \`$$PWD'"
 
-inside = cd $(1) && ($(call track,Entering,$(1)) ;  $(2); $(call track,Leaving,$(1)))
+inside = cd $(1) && ($(call track,Entering) ;  $(2); $(call track,Leaving))
 
 clean:
-	rm -fr emit
+	rm -fr "$(CURDIR)/emit"
 
 test: emit
 	ruby -Iemit/test:emit/lib:rt/lib emit/test/ts.rb
-	echo Done
 
 emit:
-	quark-ir emit -v --ruby -o emit ../../quarkc/test/c2/ffi_ir/*.ir
+	quark-ir emit --ruby -o emit ../../quarkc/test/c2/ffi_ir/*.ir
