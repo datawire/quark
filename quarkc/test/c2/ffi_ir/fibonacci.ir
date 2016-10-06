@@ -3,20 +3,20 @@
             Name("pf:pf.fib"), Int(),
             Param("i", Int()),
             Block(
-                If(Invoke(Name("q:q.int__eq__"), Var("i"), IntLit(0)),
+                If(Invoke(Ref("q:q.int__eq__"), Var("i"), IntLit(0)),
                    Block(
                        Return(IntLit(0))),
                    Block(
-                       If(Invoke(Name("q:q.int__eq__"), Var("i"), IntLit(1)),
+                       If(Invoke(Ref("q:q.int__eq__"), Var("i"), IntLit(1)),
                           Block(
                               Return(IntLit(1))),
                           Block(
                               Return(Invoke(
-                                  Name("q:q.int__add__"),
-                                  Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.int__sub__"), Var("i"), IntLit(1))),
-                                  Invoke(Name("pf:pf.fib"),
-                                         Invoke(Name("q:q.int__sub__"), Var("i"), IntLit(2)))
+                                  Ref("q:q.int__add__"),
+                                  Invoke(Ref("pf:pf.fib"),
+                                         Invoke(Ref("q:q.int__sub__"), Var("i"), IntLit(1))),
+                                  Invoke(Ref("pf:pf.fib"),
+                                         Invoke(Ref("q:q.int__sub__"), Var("i"), IntLit(2)))
                               ))
                           )
                        )
@@ -24,40 +24,40 @@
                 )
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.zero"),
             Block(
-                AssertEqual(IntLit(0), Invoke(Name("pf:pf.fib"), IntLit(0)))
+                AssertEqual(IntLit(0), Invoke(Ref("pf:pf.fib"), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.one"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Name("pf:pf.fib"), IntLit(1)))
+                AssertEqual(IntLit(1), Invoke(Ref("pf:pf.fib"), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.two"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Name("pf:pf.fib"), IntLit(2)))
+                AssertEqual(IntLit(1), Invoke(Ref("pf:pf.fib"), IntLit(2)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.three"),
             Block(
-                AssertEqual(IntLit(2), Invoke(Name("pf:pf.fib"), IntLit(3)))
+                AssertEqual(IntLit(2), Invoke(Ref("pf:pf.fib"), IntLit(3)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.four"),
             Block(
-                AssertEqual(IntLit(3), Invoke(Name("pf:pf.fib"), IntLit(4)))
+                AssertEqual(IntLit(3), Invoke(Ref("pf:pf.fib"), IntLit(4)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("pf:pf.five"),
             Block(
-                AssertEqual(IntLit(5), Invoke(Name("pf:pf.fib"), IntLit(5)))
+                AssertEqual(IntLit(5), Invoke(Ref("pf:pf.fib"), IntLit(5)))
             )
         )
     )

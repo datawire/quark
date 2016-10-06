@@ -1,86 +1,86 @@
     Package(
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.eq_0_0_T"),
             Block(
-                AssertEqual(BoolLit(True), Invoke(Name("q:q.int__eq__"), IntLit(0), IntLit(0)))
+                AssertEqual(BoolLit(True), Invoke(Ref("q:q.int__eq__"), IntLit(0), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.eq_0_1_F"),
             Block(
-                AssertEqual(BoolLit(False), Invoke(Name("q:q.int__eq__"), IntLit(0), IntLit(1)))
+                AssertEqual(BoolLit(False), Invoke(Ref("q:q.int__eq__"), IntLit(0), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.eq_1_0_F"),
             Block(
-                AssertEqual(BoolLit(False), Invoke(Name("q:q.int__eq__"), IntLit(1), IntLit(0)))
+                AssertEqual(BoolLit(False), Invoke(Ref("q:q.int__eq__"), IntLit(1), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.eq_1_1_T"),
             Block(
-                AssertEqual(BoolLit(True), Invoke(Name("q:q.int__eq__"), IntLit(1), IntLit(1)))
+                AssertEqual(BoolLit(True), Invoke(Ref("q:q.int__eq__"), IntLit(1), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.add_0_0_0"),
             Block(
-                AssertEqual(IntLit(0), Invoke(Name("q:q.int__add__"), IntLit(0), IntLit(0)))
+                AssertEqual(IntLit(0), Invoke(Ref("q:q.int__add__"), IntLit(0), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.add_0_1_1"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Name("q:q.int__add__"), IntLit(0), IntLit(1)))
+                AssertEqual(IntLit(1), Invoke(Ref("q:q.int__add__"), IntLit(0), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.add_1_0_1"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Name("q:q.int__add__"), IntLit(1), IntLit(0)))
+                AssertEqual(IntLit(1), Invoke(Ref("q:q.int__add__"), IntLit(1), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.add_1_1_2"),
             Block(
-                AssertEqual(IntLit(2), Invoke(Name("q:q.int__add__"), IntLit(1), IntLit(1)))
+                AssertEqual(IntLit(2), Invoke(Ref("q:q.int__add__"), IntLit(1), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.add_20_22_42"),
             Block(
-                AssertEqual(IntLit(42), Invoke(Name("q:q.int__add__"), IntLit(20), IntLit(22)))
+                AssertEqual(IntLit(42), Invoke(Ref("q:q.int__add__"), IntLit(20), IntLit(22)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.sub_0_0_0"),
             Block(
-                AssertEqual(IntLit(0), Invoke(Name("q:q.int__sub__"), IntLit(0), IntLit(0)))
+                AssertEqual(IntLit(0), Invoke(Ref("q:q.int__sub__"), IntLit(0), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.sub_0_1__1"),
             Block(
-                AssertEqual(IntLit(-1), Invoke(Name("q:q.int__sub__"), IntLit(0), IntLit(1)))
+                AssertEqual(IntLit(-1), Invoke(Ref("q:q.int__sub__"), IntLit(0), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.sub_1_0_1"),
             Block(
-                AssertEqual(IntLit(1), Invoke(Name("q:q.int__sub__"), IntLit(1), IntLit(0)))
+                AssertEqual(IntLit(1), Invoke(Ref("q:q.int__sub__"), IntLit(1), IntLit(0)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.sub_1_1_0"),
             Block(
-                AssertEqual(IntLit(0), Invoke(Name("q:q.int__sub__"), IntLit(1), IntLit(1)))
+                AssertEqual(IntLit(0), Invoke(Ref("q:q.int__sub__"), IntLit(1), IntLit(1)))
             )
         ),
-        NativeTestFunction(
+        Check(
             Name("native_int:native_int.sub_64_22_42"),
             Block(
-                AssertEqual(IntLit(42), Invoke(Name("q:q.int__sub__"), IntLit(64), IntLit(22)))
+                AssertEqual(IntLit(42), Invoke(Ref("q:q.int__sub__"), IntLit(64), IntLit(22)))
             )
         ),
     )

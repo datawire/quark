@@ -30,8 +30,8 @@ def test_name(args, package, path):
     assert n.path == path
 
 LOCALS = [
-    (("bar", Name("pkg:x.foo")), "pkg", ("x", "foo",), "bar"),
-    (("baz", Name("pkg:x.foo")), "pkg", ("x", "foo",), "baz"),
+    (("bar", Ref("pkg:x.foo")), "pkg", ("x", "foo",), "bar"),
+    (("baz", Ref("pkg:x.foo")), "pkg", ("x", "foo",), "baz"),
     (("bar", "pkg:foo.bar"), "pkg", ("foo", "bar"), "bar"),
     (("baz", "pkg:foo.bar"), "pkg", ("foo", "bar"), "baz")
 ]
@@ -45,23 +45,23 @@ def test_local(args, package, path, name):
 
 def test_package():
     p1 = Package(Function(Name("p1:n.fun"),
-                          Name("p1:n.int"),
+                          Ref("p1:n.int"),
                           Param("a", "p1:n.int"),
                           Param("b", "p1:n.int"),
-                          Return(Invoke(Name("q:n.add"), Var("a"), Var("b")))),
+                          Return(Invoke(Ref("q:n.add"), Var("a"), Var("b")))),
                  Function(Name("p1:n.f2"),
-                          Name("q:n.int"),
+                          Ref("q:n.int"),
                           Param("a", "q:n.int"),
                           Param("b", "q:n.int"),
-                          Return(Invoke(Name("q:n.mul"), Var("a"), Var("b")))))
+                          Return(Invoke(Ref("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
     emit(p1, p)
     print p.files
 
 def test_nesting():
-    l = Local("foo", Name("q:n.int"))
-    l2 = Local("foo", Name("q:n.int"))
+    l = Local("foo", Int())
+    l2 = Local("foo", Int())
     stmt = While(Var("x"), l, If(Var("y"), l2, l2))
     b = Block(stmt)
     print b
@@ -89,7 +89,7 @@ def test_emit():
     print code(stmt, Java())
     print "======"
 
-    stmt = While(Invoke(Name("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt)
+    stmt = While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt)
     print code(stmt, Java())
     print header(stmt, Python())
     print code(stmt, Python())

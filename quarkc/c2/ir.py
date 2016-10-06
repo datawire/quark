@@ -46,8 +46,31 @@ class _Indent(object):
 # something like that for this stuff, although I want to see how
 # pattern matching would work
 
+class _Tree(object):
 
-class IR(object):
+    def __init__(self):
+        assert False, "%s is abstract base class" % self.__class__
+
+    @property
+    def children(self):
+        assert False, "%s must implement children" % self.__class__
+
+    __INDENT = _Indent()
+
+    def repr(self, *args, **kwargs):
+        with self.__INDENT() as i:
+            sargs = [repr(a) for a in args]
+            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
+            if sum(map(len, sargs)) > 60:
+                indent = " " * i * 2
+                first = "\n" + indent
+                sep = ",\n" + indent
+            else:
+                first = ""
+                sep = ", "
+            return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
+
+class IR(_Tree):
 
     @staticmethod
     def load_path(path):
@@ -63,28 +86,6 @@ class IR(object):
         assert isinstance(ir, IR), "%s: does not contain IR" % source
         return ir
 
-    __INDENT = _Indent()
-
-    def __init__(self):
-        assert False, "%s is abstract base class" % self.__class__
-
-    def repr(self, *args, **kwargs):
-        with self.__INDENT() as i:
-            sargs = [repr(a) for a in args]
-            sargs += ["%s=%r" % (k, v) for k, v in kwargs.items() if v is not None]
-            if sum(map(len, sargs)) > 60:
-                indent = " " * i * 2
-                first = "\n" + indent
-                sep = ",\n" + indent
-            else:
-                first = ""
-                sep = ", "
-            return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
-
-    @property
-    def children(self):
-        assert False, "%s must implement children" % self.__class__
-
 def namesplit(name):
     if ':' in name:
         package, path = name.split(':')
@@ -93,12 +94,9 @@ def namesplit(name):
     else:
         return name, ()
 
-# A fully qualified name. This knows how to import itself both across
-# packages and from other namespaces within the same package. Does
-# this need to know what type it is importing, e.g. might
-# functions/interfaces/classes be imported differently?
+# A fully qualified name.
 
-class Name(IR):
+class _Name(IR):
 
     @match(basestring, many(basestring))
     def __init__(self, package, *path):
@@ -121,6 +119,18 @@ class Name(IR):
     def __repr__(self):
         return self.repr(self.package, *self.path)
 
+# The name of a Definition.
+class Name(_Name):
+    pass
+
+# A reference to a Definition
+# This knows how to import itself both across
+# packages and from other namespaces within the same package. Does
+# this need to know what type it is importing, e.g. might
+# functions/interfaces/classes be imported differently?
+
+class Ref(_Name):
+    pass
 
 # Either a quark Type or a NativeType
 class AbstractType(IR):
@@ -130,13 +140,13 @@ class AbstractType(IR):
 # XXX: Should maybe switch to Ref/Def versions of names or something.
 # XXX: These are allowed to be instantiated just so that shorthand Declaration continues to work.
 class Type(AbstractType):
-    @match(Name)
+    @match(Ref)
     def __init__(self, name):
         self.name = name
 
     @match(basestring)
     def __init__(self, name):
-        self.__init__(Name(name))
+        self.__init__(Ref(name))
 
     @property
     def children(self):
@@ -195,13 +205,13 @@ class Declaration(IR):
         self.name = name
         self.type = type
 
-    @match(basestring, Name)
+    @match(basestring, Ref)
     def __init__(self, name, type):
         self.__init__(name, Type(type))
 
     @match(basestring, basestring)
     def __init__(self, name, type):
-        self.__init__(name, Name(type))
+        self.__init__(name, Ref(type))
 
     @property
     def children(self):
@@ -285,7 +295,7 @@ class Function(Definition):
         self.params = args[:-1]
         self.body = args[-1]
 
-    @match(Name, Name, many(Param), Statement)
+    @match(Name, Ref, many(Param), Statement)
     def __init__(self, name, type, *args):
         self.__init__(name, Type(type), *(args[:-1] + (Block(args[-1]),)))
 
@@ -513,7 +523,7 @@ class Set(Expression):
 # Invokes a function given the fully qualified name and arguments
 class Invoke(Expression):
 
-    @match(Name, many(Expression))
+    @match(Ref, many(Expression))
     def __init__(self, name, *args):
         self.name = name
         self.args = args
@@ -548,7 +558,7 @@ class Send(Expression):
 # Constructs an instance of a class.
 class Construct(Expression):
 
-    @match(Name, (many(Expression),))
+    @match(Ref, (many(Expression),))
     def __init__(self, name, args):
         self.name = name
         self.args = args
@@ -771,7 +781,11 @@ class Continue(SimpleStatement):
     pass
 
 
-class NativeTestFunction(Definition):
+class Check(Definition):
+
+    @match(basestring, many(Statement))
+    def __init__(self, name, *body):
+        self.__init__(Name(name), Block(body))
 
     @match(Name, Block)
     def __init__(self, name, body):
