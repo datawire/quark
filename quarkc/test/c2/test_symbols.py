@@ -290,7 +290,7 @@ def test_collisions():
     fname = "fname"
     topname = "asdf"
     depth = 5
-    for t in TOP[1:]:
+    for t in TOP:
         tree = symtree(t, Namer("name_", "_"), depth)
         for nd in tree.nodes():
             for name in nd.children:
