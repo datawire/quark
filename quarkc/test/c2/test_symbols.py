@@ -32,10 +32,19 @@ def dfn_sig(pkgs):
     else:
         return pkg.__class__, result
 
-def check(name, content, expected=None, errors=None):
+def check(name, content, expected=None, errors=None, duplicates=None):
     c = Compiler()
     c.parse(name, content)
-    assert errors == c.errors.format()
+    errs = c.errors.format()
+    if errors is not None:
+        assert errors == errs
+    if duplicates is not None:
+        for d in duplicates:
+            assert ("duplicate definition of %s" % d) in errs
+        if errs:
+            for err in errs.split("\n"):
+                sym = err.split()[4].strip(",")
+                assert sym in duplicates
     if expected is not None:
         elided = {}
         for k, v in c.symbols.definitions.items():
@@ -46,77 +55,17 @@ def check(name, content, expected=None, errors=None):
 
 
 ###############################################################################
-# Utilities for generating input code that covers the many permutations
-# of nested symbols possible
+# Utilities for generating input code that covers the many
+# permutations of symbols and/or symbol conflicts possible
 ###############################################################################
 
-TOP = [File]
+TOP = [File, Package, Class, Function]
 CHILDREN = {File: (Package, Function, Class, Interface),
             Package: (Package, Function, Class, Interface),
             Interface: (TypeParam, Field, Method),
             Class: (TypeParam, Field, Method),
             Function: (Param, Local),
             Method: (Param, Local)}
-
-def permutations(path, limit):
-    last = path[-1]
-    if len(path) == limit or last not in CHILDREN:
-        yield path
-    else:
-        for type in CHILDREN[last]:
-            for p in permutations(path + (type,), limit):
-                yield p
-
-def dfn_paths(limit):
-    for top in TOP:
-        for path in permutations((top,), limit):
-            yield path
-
-def tree(paths):
-    root = OrderedDict()
-    for path in paths:
-        node = root
-        for p in path:
-            if p not in node:
-                node[p] = OrderedDict()
-            node = node[p]
-    return root
-
-class GenTree(object):
-
-    @match(OrderedDict)
-    def __init__(self, children):
-        self.children = children
-
-    @match(basestring)
-    def __getitem__(self, name):
-        key = globals()[name]
-        return self.format(key, self.children.get(key, []))
-
-    @match(choice(Function, Class, Interface, Method, Package), [many(basestring)])
-    def format(self, type, children):
-        if children:
-            return "\n".join(children) + "\n"
-        else:
-            return ""
-
-    @match(Param, [many(basestring)])
-    def format(self, _, decls):
-        return ", ".join(decls)
-
-    @match(TypeParam, [many(basestring)])
-    def format(self, _, decls):
-        if decls:
-            return "<%s>" % ", ".join(decls)
-        else:
-            return ""
-
-    @match(choice(Local, Field), [many(basestring)])
-    def format(self, type, fields):
-        if fields:
-            return "".join(["%s;\n" % f for f in fields])
-        else:
-            return ""
 
 @match(basestring)
 def block(code):
@@ -125,105 +74,119 @@ def block(code):
     else:
         return "{}"
 
-@match(File)
-def basename(pkg):
-    return "f"
+class SymbolTree(object):
 
-@match(Package)
-def basename(pkg):
-    return "p"
+    @match(choice(File, Package, Function, Class, Interface, Method, Field, Local, TypeParam, Param))
+    def __init__(self, type):
+        self.type = type
+        # map of name to a list of child trees
+        self.children = OrderedDict()
 
-@match(Class)
-def keyword(cls):
-    return "class"
-
-@match(Interface)
-def keyword(iface):
-    return "interface"
-
-@match(Class)
-def basename(cls):
-    return "Cls"
-
-@match(Interface)
-def basename(iface):
-    return "Iface"
-
-@match(Local)
-def basename(l):
-    return "local"
-
-@match(Field)
-def basename(l):
-    return "field"
-
-@match(TypeParam)
-def basename(t):
-    return "T"
-
-@match(Param)
-def basename(p):
-    return "param"
-
-@match(Function)
-def basename(f):
-    return "fun"
-
-@match(Method)
-def basename(m):
-    return "meth"
-
-@match(OrderedDict)
-def gen(node):
-    result = OrderedDict()
-    for k, v in node.items():
-        subtree = gen(k, gen(v))
-        if k in result:
-            result[k].append(subtree)
+    @match(basestring, many(lazy("SymbolTree"), min=1))
+    def add(self, name, *subtrees):
+        if name in self.children:
+            children = self.children[name]
         else:
-            result[k] = [subtree]
-    return GenTree(result)
+            children = []
+            self.children[name] = children
+        children.extend(subtrees)
 
-@match(File, GenTree)
-def gen(file, children):
-    return "quark 1.0;\n\npackage {name} 1.2.3;\n\n{c[Function]}{c[Class]}{c[Interface]}{c[Package]}".format(
-        name=basename(file),
-        c=children
-    )
+    @match(many(type, min=1))
+    def get(self, *types):
+        subtrees = [(name, tree) for name in self.children for tree in self.children[name] if tree.type in types]
+        return tuple([tree.code(name) for name, tree in subtrees])
 
-@match(Package, GenTree)
-def gen(pkg, children):
-    return "namespace {name} {body}".format(name=basename(pkg),
-                                            body=block("{c[Function]}{c[Class]}{c[Interface]}{c[Package]}"
-                                                       .format(c=children)))
+    @match(basestring)
+    def code(self, name):
+        return self.assemble(self.type, name)
 
-@match(choice(Function, Method), GenTree)
-def gen(fun, children):
-    return "void {name}({c[Param]}) {body}".format(c=children, name=basename(fun),
-                                                   body=block("{c[Local]}".format(c=children)))
+    @match(choice(Function, Method), basestring)
+    def assemble(self, _, name):
+        return "T {name}({params}) {body}".format(name=name, params=", ".join(self.get(Param)),
+                                                  body=block("\n".join(self.get(Local))))
 
-@match(choice(Class, Interface), GenTree)
-def gen(cls, children):
-    return "{kw} {name}{c[TypeParam]} {body}".format(kw=keyword(cls),
-                                                     name=basename(cls),
-                                                     c=children,
-                                                     body=block("{c[Field]}{c[Method]}".format(c=children)))
+    @match(choice(Class, Interface), basestring)
+    def assemble(self, t, name):
+        tparams = self.get(TypeParam)
+        if tparams:
+            params = "<%s>" % ", ".join(tparams)
+        else:
+            params = ""
+        definitions = self.get(*[c for c in CHILDREN[t] if c != TypeParam])
+        return "{kw} {name}{params} {body}".format(kw="interface" if t == Interface else "class",
+                                                   name=name, params=params,
+                                                   body=block("\n".join(definitions)))
 
-@match(TypeParam, GenTree)
-def gen(tp, _):
-    return basename(tp)
+    @match(TypeParam, basestring)
+    def assemble(self, _, name):
+        return name
 
-@match(Field, GenTree)
-def gen(field, _):
-    return "String %s" % basename(field)
+    @match(Param, basestring)
+    def assemble(self, _, name):
+        return "T %s" % name
 
-@match(Param, GenTree)
-def gen(p, _):
-    return "int %s" % basename(p)
+    @match(choice(Local, Field), basestring)
+    def assemble(self, _, name):
+        return "T %s;" % name
 
-@match(Local, GenTree)
-def gen(l, _):
-    return "float %s" % basename(l)
+    @match(Package, basestring)
+    def assemble(self, t, name):
+        return "namespace {name} {body}".format(name=name, body=block("\n".join(self.get(*CHILDREN[t]))))
+
+    @match(File, basestring)
+    def assemble(self, t, name):
+        definitions = "\n".join(self.get(*CHILDREN[t]))
+        return "quark 1.0;\n\npackage {name} 1.2.3;\n\n{definitions}".format(name=name, definitions=definitions)
+
+    def nodes(self):
+        yield self
+        for trees in self.children.values():
+            for tree in trees:
+                for n in tree.nodes():
+                    yield n
+
+    def symbols(self, filename, name):
+        if self.type in (File, Package):
+            path = (name,)
+        else:
+            path = (filename, name)
+            yield filename, (Package, filename)
+
+        for sym, sig in self.symbols_r(path):
+            yield sym, sig
+
+    def symbols_r(self, path):
+        yield ".".join(path), (Package if self.type == File else self.type, path[-1])
+        for name, trees in self.children.items():
+            for tree in trees:
+                if self.type == File and tree.type == Package:
+                    extended = (name,)
+                else:
+                    extended = path + (name,)
+                for sym, sig in tree.symbols_r(extended):
+                    yield sym, sig
+
+class Namer(object):
+
+    def __init__(self, prefix, suffix=""):
+        self.prefix = prefix
+        self.suffix = suffix
+        self.count = 0
+
+    def __call__(self):
+        result = "%s%s%s" % (self.prefix, self.count, self.suffix)
+        self.count = self.count + 1
+        return result
+
+@match(type, Namer, int)
+def symtree(type, namer, depth):
+    tree = SymbolTree(type)
+    if depth > 0 and type in CHILDREN:
+        types = CHILDREN[type]
+        names = (namer() for t in CHILDREN[type])
+        for name, t in zip(names, types):
+            tree.add(name, symtree(t, namer, depth - 1))
+    return tree
 
 ###############################################################################
 
@@ -278,38 +241,62 @@ def test_explicit_foofoo():
     }
     """,
     errors="asdf:6:9: duplicate definition of ns.foo, first occurance on asdf:5:9")
-    
-@match((File, Package, many(type)))
-def fixup(p):
-    return p[1:]
 
-@match((many(type),))
-def fixup(p):
-    return p
+def findall(st, word):
+    idx = 0
+    while True:
+        idx = st.find(word, idx)
+        if idx >= 0:
+            yield idx
+            idx += len(word)
+        else:
+            break
 
-def symbols(paths):
+def linecol(st, idx):
+    text = st[:idx]
+    return text.count("\n") + 1, len(text) - text.rindex("\n")
+
+def duplicate_errors(filename, code, sym):
+    name = sym.split(".")[-1]
+    locations = list(findall(code, name))
+    first = "first occurance on %s:%s:%s" % ((filename,) + linecol(code, locations[0]))
+    for idx in locations[1:]:
+        line, col = linecol(code, idx)
+        yield "%s:%s:%s: duplicate definition of %s, %s" % (filename, line, col, sym, first)
+
+def symerr(filename, topname, code, tree):
     expected = {}
-    for p in paths:
-        p = fixup(p)
-        for i in range(len(p)):
-            subpath = p[:i+1]
-            qualified = ".".join([basename(e) for e in subpath])
-            sig = (subpath[-1], basename(subpath[-1]))
-            expected[qualified] = sig
-    return expected
+    dups = []
+    for sym, sig in tree.symbols(filename, topname):
+        if sym in expected:
+            prev = expected[sym]
+            if prev[0] != Package or sig[0] == Package:
+                dups.append(sym)
+        else:
+            expected[sym] = sig
+    return expected, dups
 
 def test_permutations():
-    paths = list(dfn_paths(5))
-    code = "".join(["".join(v) for v in gen(tree(paths)).children.values()])
-    check("f", code, symbols(paths))
+    fname = "fname"
+    topname = "asdf"
+    depth = 5
+    for t in TOP:
+        tree = symtree(t, Namer("n"), 5)
+        expected, dups = symerr(fname, topname, code, tree)
+        assert not dups
+        check(fname, tree.code(topname), expected)
 
-def xtest_collisions():
-    paths = list(dfn_paths(5))
-    code = "".join(["".join(v) for v in gen(tree(paths)).children.values()])
-    for p in paths:
-        dup = "".join(["".join(v) for v in gen(tree([fixup(p)])).children.values()])
-        badcode = code + "\n" + dup
-        print badcode
-        check("f", badcode)
+def test_collisions():
+    fname = "fname"
+    topname = "asdf"
+    depth = 5
+    for t in TOP[1:]:
+        tree = symtree(t, Namer("name_", "_"), depth)
+        for nd in tree.nodes():
+            for name in nd.children:
+                nd.add(name, *[SymbolTree(c) for c in CHILDREN[nd.type]])
+        code = tree.code(topname)
+        expected, dups = symerr(fname, topname, code, tree)
+        check(fname, code, duplicates=dups)
 
 ###############################################################################

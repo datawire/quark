@@ -98,10 +98,14 @@ class Symbols(object):
     @match(Package)
     def define(self, pkg):
         n = name(pkg)
-        if n not in self.definitions:
-            self.definitions[n] = [pkg]
+        if n in self.definitions:
+            prev = self.definitions[n]
+            if isinstance(prev, AST):
+                raise DuplicateSymbol(n, pkg, prev)
+            else:
+                prev.append(pkg)
         else:
-            self.definitions[n].append(pkg)
+            self.definitions[n] = [pkg]
 
     @match(Import)
     def define(self, imp):
