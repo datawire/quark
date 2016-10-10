@@ -257,7 +257,7 @@ def footer(nd, target):
         for f in flatten_to_strings(footer(c, target)):
             yield f
 
-@match(basestring, IR, Target, opt(basestring))
+@match(basestring, choice(IR, None), Target, opt(basestring))
 def opt_code(glue, nd, target, default=""):
     if nd is None:
         return default
@@ -625,6 +625,10 @@ def code(retr, target):
 def code(name, target):
     return ".".join(name.path)
 
+@match(Ref, Java)
+def code(name, target):
+    return ".".join(name.path)
+
 @match(choice(Type, Invoke), Python)
 def header(thing, target):
     name = thing.name
@@ -806,6 +810,15 @@ def code(local, target):
         type=code(local.type, target),
         initializer=opt_code(" = ", local.expr, target))
 
+## Assign
+
+@match(Assign, choice(Python, Ruby, Go, Java))
+def code(ass, target):
+    return "{lhs} = {rhs}{semi}".format(
+        lhs=ass.lhs.name,
+        rhs=code(ass.rhs, target),
+        semi=semi(target)
+        )
 
 ## Interface
 
@@ -929,24 +942,27 @@ def code(fget, target):
 
 @match(Set, Go)
 def code(fset, target):
-    return "{target}.{field} = {value}".format(
+    return "{target}.{field} = {value}{semi}".format(
         target=code(fset.expr, target),
         field=target.upcase(fset.name),
-        value=code(fset.value, target))
+        value=code(fset.value, target),
+        semi=semi(target))
 
 @match(Set, choice(Python, Java))
 def code(fset, target):
-    return "{target}.{field} = {value}".format(
+    return "{target}.{field} = {value}{semi}".format(
         target=code(fset.expr, target),
         field=fset.name,
-        value=code(fset.value, target))
+        value=code(fset.value, target),
+        semi=semi(target))
 
 @match(Set, Ruby)
 def code(fset, target):
-    return "{target}.{field} = {value}".format(
+    return "{target}.{field} = {value}{semi}".format(
         target=code(fset.expr, target),
         field=fset.name,
-        value=code(fset.value, target))
+        value=code(fset.value, target),
+        semi=semi(target))
 
 ## Class
 

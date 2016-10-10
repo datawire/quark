@@ -508,7 +508,7 @@ class Get(Expression):
         return self.repr(self.expr, self.name)
 
 # mutate a Field
-class Set(Expression):
+class Set(Statement):
 
     @match(Expression, basestring, Expression)
     def __init__(self, expr, name, value):
@@ -701,6 +701,21 @@ class Return(Statement):
 
     def __repr__(self):
         return self.repr(self.expr)
+
+class Assign(Statement):
+
+    @match(Var, Expression)
+    def __init__(self, lhs, rhs):
+        self.lhs = lhs
+        self.rhs = rhs
+
+    @property
+    def children(self):
+        yield self.lhs
+        yield self.rhs
+
+    def __repr__(self):
+        return self.repr(self.lhs, self.rhs)
 
 class If(Statement):
 
