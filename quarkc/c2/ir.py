@@ -27,6 +27,7 @@
 #     inheritence. Hypothetically it could even be an alternative
 #     frontend.
 from contextlib import contextmanager
+from collections import deque
 
 from .match import match, lazy, ntuple, many, opt, choice
 
@@ -70,6 +71,31 @@ class _Tree(object):
                 sep = ", "
             return "%s(%s%s)" % (self.__class__.__name__, first, sep.join(sargs))
 
+@match(_Tree)
+def backlink(tree):
+    pending = deque([tree])
+    while pending:
+        node = pending.popleft()
+        for c in node.children:
+            assert not hasattr(c, "parent"), "%s is not a tree" % tree.__class__.__name__
+            c.parent = node
+            pending.append(c)
+
+def walk_dfs(tree):
+    pending = deque([tree])
+    while pending:
+        node = pending.popleft()
+        yield node
+        pending.extendleft(node.children)
+
+def walk_bfs(tree):
+    pending = deque([tree])
+    while pending:
+        node = pending.popleft()
+        yield node
+        pending.extend(node.children)
+
+
 class IR(_Tree):
 
     @staticmethod
@@ -112,7 +138,9 @@ class _Name(IR):
         if False: yield
 
     def __eq__(self, other):
-        return isinstance(other, Name) and self.package == other.package and self.path == other.path
+        """ Name and Ref compare equal """
+        return isinstance(other, _Name) and self.package == other.package and self.path == other.path
+
     def __hash__(self):
         return hash((self.package, self.path))
 
@@ -124,7 +152,7 @@ class Name(_Name):
     pass
 
 # A reference to a Definition
-# This knows how to import itself both across
+# The target must know how to import a Ref both across
 # packages and from other namespaces within the same package. Does
 # this need to know what type it is importing, e.g. might
 # functions/interfaces/classes be imported differently?
@@ -154,6 +182,9 @@ class Type(AbstractType):
 
     def __eq__(self, other):
         return type(self) is type(other) and self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
 
     def __repr__(self):
         return self.repr(self.name)
@@ -614,6 +645,9 @@ class Literal(SimpleExpression):
     def __eq__(self, other):
         return type(self) is type(other) and self.value == other.value
 
+    def __hash__(self):
+        return hash(self.value)
+
 # int literal
 class IntLit(Literal):
 
@@ -821,6 +855,21 @@ class AssertEqual(NativeTestAssertion):
 
     def __repr__(self):
         return self.repr(self.expected, self.actual)
+
+
+@match(IR)
+def dfn_of(ir):
+    return dfn_of(getattr(ir, "parent", None))
+
+@match(Definition)
+def dfn_of(ir):
+    return ir
+
+@match(None)
+def dfn_of(ir):
+    raise Exception("Calling dfn_of without an ancestor Definition, forgot to backlink()?")
+    return None
+
 
 
 __all__ = [n for n,v in globals().items() if IR in getattr(v, "__mro__", [])]

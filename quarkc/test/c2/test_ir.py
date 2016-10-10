@@ -92,9 +92,7 @@ def test_emit():
     stmt = Function(Name("a:b.c"),Void(),While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt))
     backlink(stmt)
     print code(stmt, Java())
-    print header(stmt, Python())
     print code(stmt, Python())
-    print footer(stmt, Python())
 
 
 from .sample_ir import *
