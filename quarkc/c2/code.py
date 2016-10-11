@@ -21,7 +21,7 @@ class Code(object):
     def is_top(self, fun):
         return True if fun.body else False
 
-    @match(choice(AST, [Package], Primitive))
+    @match(choice(AST, [Package], Primitive, Method))
     def is_top(self, dfn):
         return False
 
@@ -60,6 +60,14 @@ class Code(object):
     def compile(self, ref):
         return ir.Bool()
 
+    @match(types.Ref("quark.String"))
+    def compile(self, ref):
+        return ir.String()
+
+    @match(types.Ref("quark.void"))
+    def compile(self, ref):
+        return ir.Void()
+
     @match(Type)
     def compile(self, t):
         return self.compile(self.types[t])
@@ -76,6 +84,15 @@ class Code(object):
     def compile(self, if_):
         return ir.If(self.compile(if_.predicate), self.compile(if_.consequence), self.compile(if_.alternative))
 
+    @match(While)
+    def compile(self, while_):
+        return ir.While(self.compile(while_.condition), self.compile(while_.body))
+
+    @match(Local)
+    def compile(self, local):
+        expr = (self.compile(local.declaration.value),) if local.declaration.value else ()
+        return ir.Local(local.declaration.name.text, self.compile(self.types[local]), *expr)
+
     @match(Call)
     def compile(self, call):
         t = self.types[call.expr]
@@ -86,20 +103,29 @@ class Code(object):
     @match(types.Ref, Method, Attr, [many(Expression)])
     def compile_call(self, ref, dfn, attr, args):
         assert attr.attr.text == dfn.name.text
-        return self.compile_call_method(ref, dfn.parent, dfn, attr, args)
+        return self.compile_call_method(ref, dfn.parent, dfn, self.compile(attr.expr), args)
 
-    @match(types.Ref, Class, Method, Attr, [many(Expression)])
-    def compile_call_method(self, ref, objdfn, methdfn, attr, args):
-        return ir.Send(self.compile(attr.expr), methdfn.name.text, tuple([self.compile(a) for a in args]))
+    @match(types.Ref, Method, Var, [many(Expression)])
+    def compile_call(self, ref, dfn, var, args):
+        assert var.name.text == dfn.name.text
+        return self.compile_call_method(ref, dfn.parent, dfn, ir.This(), args)
 
-    @match(types.Ref, Primitive, Method, Attr, [many(Expression)])
-    def compile_call_method(self, ref, objdfn, methdfn, attr, args):
+    @match(types.Ref, Class, Method, ir.Expression, [many(Expression)])
+    def compile_call_method(self, ref, objdfn, methdfn, expr, args):
+        return ir.Send(expr, methdfn.name.text, tuple([self.compile(a) for a in args]))
+
+    @match(types.Ref, Primitive, Method, ir.Expression, [many(Expression)])
+    def compile_call_method(self, ref, objdfn, methdfn, expr, args):
         n = self.compile_ref("%s_%s" % (name(objdfn), methdfn.name.text))
-        return ir.Invoke(n, self.compile(attr.expr), *[self.compile(a) for a in args])
+        return ir.Invoke(n, expr, *[self.compile(a) for a in args])
 
     @match(types.Ref, Function, Var, [many(Expression)])
     def compile_call(self, ref, dfn, var, args):
         return ir.Invoke(self.compile_ref(name(dfn)), *[self.compile(a) for a in args])
+
+    @match(types.Ref, Class, Type, [many(Expression)])
+    def compile_call(self, ref, dfn, var, args):
+        return ir.Construct(self.compile_ref(ref), tuple([self.compile(a) for a in args]))
 
     @match(Attr)
     def compile(self, attr):
@@ -109,6 +135,10 @@ class Code(object):
     def compile(self, n):
         return ir.IntLit(int(n.text))
 
+    @match(String)
+    def compile(self, s):
+        return ir.StringLit(s.text)
+
     @match(Return)
     def compile(self, retr):
         return ir.Return(self.compile(retr.expr))
@@ -117,6 +147,30 @@ class Code(object):
     def compile(self, var):
         return self.compile_var(self.symbols[var], var)
 
-    @match(Param, Var)
+    @match(choice(Param, Declaration), Var)
     def compile_var(self, p, v):
         return ir.Var(v.name.text)
+
+    @match(Field, Var)
+    def compile_var(self, p, v):
+        return ir.Get(ir.This(), v.name.text)
+
+    @match(Assign)
+    def compile(self, ass):
+        return self.compile_assign(ass.lhs, ass.rhs)
+
+    @match(Var, Expression)
+    def compile_assign(self, var, expr):
+        return self.compile_assign(self.symbols[var], var, expr)
+
+    @match(Field, Var, Expression)
+    def compile_assign(self, field, var, expr):
+        return ir.Set(ir.This(), var.name.text, self.compile(expr))
+
+    @match(choice(Param, Declaration), Var, Expression)
+    def compile_assign(self, decl, var, expr):
+        return ir.Assign(self.compile(var), self.compile(expr))
+
+    @match(ExprStmt)
+    def compile(self, exprs):
+        return ir.Evaluate(self.compile(exprs.expr))

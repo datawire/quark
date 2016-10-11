@@ -74,18 +74,14 @@ class Types(object):
         return types.Final(m.name.text, types.Ref(name(m), *[types.Ref(name(p)) for p in parameters]))
 
 
-    @match(choice(Function, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
+    @match(choice(Function, Class, Declaration, Package, [many(Package, min=1)], Expression, Type, Local,
                   Return, Assign, ExprStmt))
     def has_type(self, _):
         return True
 
-    @match(choice(Name, Block, If, TypeParam))
+    @match(choice(Name, Block, If, While, TypeParam))
     def has_type(self, _):
         return False
-
-    @match(Class)
-    def has_type(self, cls):
-        return False if cls.parameters else True
 
     @match(Method)
     def has_type(self, meth):
@@ -151,7 +147,7 @@ class Types(object):
     def do_resolve(self, declaration):
         left = self.resolve(declaration.type)
         if declaration.value:
-            right = self.do_resolve(declaration.value)
+            right = self.resolve(declaration.value)
             if not self.types.assignable(left, right):
                 self.violation(declaration, left, right)
         return left
@@ -192,4 +188,8 @@ class Types(object):
 
     @match(AST)
     def __getitem__(self, node):
-        return self.resolved[node]
+        return self.resolve(node)
+
+    @match(basestring)
+    def __getitem__(self, sym):
+        return self[self.symbols[sym]]
