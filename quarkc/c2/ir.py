@@ -77,7 +77,8 @@ def backlink(tree):
     while pending:
         node = pending.popleft()
         for c in node.children:
-            assert not hasattr(c, "parent"), "%s is not a tree" % tree.__class__.__name__
+            parent = getattr(c, "parent", node)
+            assert parent is node, "%s is not a tree: %s has parent %s but expected %s" % (tree.__class__.__name__, c, parent, node)
             c.parent = node
             pending.append(c)
 
@@ -111,6 +112,9 @@ class IR(_Tree):
         ir = ir_e[0]
         assert isinstance(ir, IR), "%s: does not contain IR" % source
         return ir
+
+    def copy(self):
+        return IR.load(repr(self))
 
 def namesplit(name):
     if ':' in name:
@@ -447,7 +451,7 @@ class Class(Definition):
 
         constructor_body = self.constructors[0].body
 
-        initializers = tuple(FieldInitialize("private", Set(This(), f.name, f.initializer)) for f in self.fields)
+        initializers = tuple(FieldInitialize("private", Set(This(), f.name, f.initializer.copy())) for f in self.fields)
         constructor_body.statements = initializers + constructor_body.statements
 
     @property

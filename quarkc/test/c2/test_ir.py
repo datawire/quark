@@ -45,14 +45,14 @@ def test_local(args, package, path, name):
 
 def test_package():
     p1 = Package(Function(Name("p1:n.fun"),
-                          Ref("p1:n.int"),
-                          Param("a", "p1:n.int"),
-                          Param("b", "p1:n.int"),
+                          Int(),
+                          Param("a", Int()),
+                          Param("b", Int()),
                           Return(Invoke(Ref("q:n.add"), Var("a"), Var("b")))),
                  Function(Name("p1:n.f2"),
-                          Ref("q:n.int"),
-                          Param("a", "q:n.int"),
-                          Param("b", "q:n.int"),
+                          Int(),
+                          Param("a", Int()),
+                          Param("b", Int()),
                           Return(Invoke(Ref("q:n.mul"), Var("a"), Var("b")))))
     print p1
     p = Python()
@@ -91,8 +91,12 @@ def test_emit():
 
     stmt = Function(Name("a:b.c"),Void(),While(Invoke(Ref("pkg:n.asdf"), Send(Var("x"), "y", ())), stmt))
     backlink(stmt)
-    print code(stmt, Java())
-    print code(stmt, Python())
+    j = Java()
+    j.define(stmt)
+    print code(stmt, j)
+    p = Python()
+    p.define(stmt)
+    print code(stmt, p)
 
 
 from .sample_ir import *
@@ -104,4 +108,6 @@ def test_emit_sample(sample, target):
     t = target()
     emit(sample(), t)
     import pprint
+    pprint.pprint(t.definitions)
+    pprint.pprint(t.modules)
     pprint.pprint(t.files)

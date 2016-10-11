@@ -1,8 +1,8 @@
 ##
 from match import match, many, lazy
-from . import ir
+from .ir import _Tree
 
-class TR(ir._Tree):
+class TR(_Tree):
     @match()
     def __init__(self):
         assert False, "%s must implement init" % self.__class__.__name__
@@ -27,18 +27,29 @@ class Block(TR):
     def __repr__(self):
         return self.repr(*self.stmts)
 
-class Module(TR):
-    @match((many(basestring),))
-    def __init__(self, name):
-        self.definitions = []
-        self.block = Block()
+class File(TR):
+    @match(basestring)
+    def __init__(self, filename):
+        self.filename = filename
+        self.outer_block = Block()
+        self.inner_block = self.outer_block
+
+    @match(many(Statement))
+    def add(self, *stmts):
+        self.inner_block.add(*stmts)
+
+    @match(lazy("Compound"), Block)
+    def push(self, stmt, block):
+        assert block in list(stmt.children)
+        self.add(stmt)
+        self.inner_block = block
 
     @property
     def children(self):
-        yield block
+        yield self.outer_block
 
     def __repr__(self):
-        return self.repr(self.modules, self.block)
+        return self.repr(self.outer_block)
 
 class Simple(Statement):
     @match(basestring)

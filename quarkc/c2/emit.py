@@ -32,12 +32,13 @@ Options:
 
 from .match import *
 from .ir import *
-from .ir import backlink, dfn_of
+from .ir import backlink, dfn_of, walk_dfs
 from . import tr
 
-from .emit_target import *
+from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_code import code
 from .emit_expr import expr
+from .emit_format import format
 
 
 class Duplicate(set):
@@ -72,33 +73,54 @@ def flatten_to_strings(gen_or_str):
             if item:
                 yield item
 
-@match(basestring, IR, Target, opt(basestring))
-def opt_expr(glue, nd, target, default=""):
-    if nd is None:
-        return default
-    else:
-        return "{glue}{expr}".format(
-            glue=glue, expr=expr(nd, target))
-
 ## Package
 
 @match(Package, Target)
 def emit(pkg, target):
     backlink(pkg)
     chop(pkg, target)
+    crosslink(pkg, target)
     transform(pkg, target)
-
+    format(pkg, target)
 
 @match(Package, Target)
 def chop(pkg, target):
+    """Decide target module and name of each definition"""
     for d in pkg.definitions:
         target.define(d)
 
 @match(Package, Target)
+def crosslink(pkg, target):
+    """Compute all inter-module references"""
+    for d in pkg.definitions:
+        crosslink(d, target)
+
+@match(Definition, Target)
+def crosslink(dfn, target):
+    for node in walk_dfs(dfn):
+        crosslink(dfn, node, target)
+
+@match(Definition, Ref, Target)
+def crosslink(dfn, ref, target):
+    target.reference(dfn, ref)
+
+@match(Definition, IR, Target)
+def crosslink(dfn, node, target):
+    pass
+
+@match(Package, Target)
 def transform(pkg, target):
+    """Generate tr.Statement-s for the IR"""
     for d in pkg.definitions:
         module = target.module(d)
-        module.block.add(code(d, target))
+        module.add(code(d, target))
+
+@match(Package, Target)
+def format(pkg, target):
+    """Generate set of files with formatted content"""
+    for m in target.modules.values():
+        target.file(m, format(m, target))
+
 
 import py.path
 

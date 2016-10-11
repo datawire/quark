@@ -235,14 +235,14 @@ def expr(send, target):
 @match(Construct, Go)
 def expr(cons, target):
     return "{name}__Construct({args})".format(
-        name=code(cons.name, target),
+        name=expr(cons.name, target),
         args = ", ".join(expr(a, target) for a in cons.args)
     )
 
 @match(Construct, Python)
 def expr(cons, target):
     return "{name}({args})".format(
-        name=code(cons.name, target),
+        name=expr(cons.name, target),
         args = ", ".join(expr(a, target) for a in cons.args)
     )
 

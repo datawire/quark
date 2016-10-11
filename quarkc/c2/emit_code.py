@@ -20,6 +20,15 @@ from . import tr
 from .emit_target import *
 from .emit_expr import expr
 
+@match(basestring, IR, Target, opt(basestring))
+def opt_expr(glue, nd, target, default=""):
+    if nd is None:
+        return default
+    else:
+        return "{glue}{expr}".format(
+            glue=glue, expr=expr(nd, target))
+
+
 ## Function
 @match(Function, Python)
 def code(fun, target):
@@ -32,7 +41,7 @@ def code(fun, target):
 @match(Check, Python)
 def code(fun, target):
     return tr.Compound(
-        "def test_{name}()\n\n".format(
+        "def test_{name}()".format(
             name=target.nameof(fun.name)),
         code(fun.body, target)
     )
@@ -155,44 +164,47 @@ def code(local, target):
 
 @match(Interface, Python)
 def code(iface, target):
+    methods = [code(m, target) for m in iface.methods]
+    print (iface)
+    print (methods)
     return tr.Compound(
         "class {name}(object)".format(
             name = target.nameof(iface.name)),
-        Block(*[code(m, target) for m in iface.methods]))
+        tr.Block(*methods))
 
 @match(Interface, Ruby)
 def code(iface, target):
     return tr.Compound(
         "class {name}".format(
             name = target.nameof(iface.name)),
-        Block(*[code(m, target) for m in iface.methods]))
+        tr.Block(*[code(m, target) for m in iface.methods]))
 
 @match(Interface, Java)
 def code(iface, target):
     return tr.Compound(
         "public interface {name}".format(
             name = target.nameof(iface.name)),
-        Block(*[code(m, target) for m in iface.methods]))
+        tr.Block(*[code(m, target) for m in iface.methods]))
 
 @match(Interface, Go)
 def code(iface, target):
     return tr.Compound(
         "type {name} interface".format(
             name = target.nameof(iface.name)),
-        Block(*[code(m, target) for m in iface.methods]))
+        tr.Block(*[code(m, target) for m in iface.methods]))
 
 ## Message
 
 @match(Message, Python)
 def code(fun, target):
-    return tr.Simple("def {name}({params}): pass\n".format(
+    return tr.Simple("def {name}({params}): pass".format(
         name=fun.name,
         params=", ".join(expr(p, target) for p in fun.params)
     ))
 
 @match(Message, Java)
 def code(fun, target):
-    return tr.Simple("public {type} {name}({params});\n".format(
+    return tr.Simple("public {type} {name}({params});".format(
         type=expr(fun.type, target),
         name=fun.name,
         params=", ".join(expr(p, target) for p in fun.params)
@@ -209,7 +221,7 @@ def code(fun, target):
 @match(Message, Go)
 def code(fun, target):
     return tr.Simple(
-        "{name}({params}) {type}\n".format(
+        "{name}({params}) {type}".format(
             type=expr(fun.type, target),
             name=target.upcase(fun.name),
             params=", ".join(expr(p, target) for p in fun.params)
@@ -237,7 +249,7 @@ def code(clazz, target):
 @match(Class, Java)
 def code(clazz, target):
     return tr.Compound(
-        "public class {name}\n".format(
+        "public class {name}".format(
             name = target.nameof(clazz.name)),
         tr.Block(*[code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods])
         )
@@ -256,20 +268,20 @@ def code(clazz, target):
 
 @match(Field, Java)
 def code(field, target):
-    return tr.Simple("public {type} {name};\n".format(
+    return tr.Simple("public {type} {name};".format(
         type=expr(field.type, target),
         name=field.name,
     ))
 
 @match(Field, Ruby)
 def code(field, target):
-    return tr.Simple("attr_accessor :{name}\n".format(
+    return tr.Simple("attr_accessor :{name}".format(
         name=field.name,
     ))
 
 @match(Field, Go)
 def code(field, target):
-    return tr.Simple("{name} {type}\n".format(
+    return tr.Simple("{name} {type}".format(
         name=target.upcase(field.name),
         type=expr(field.type, target),
     ))

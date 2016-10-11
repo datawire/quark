@@ -12,9 +12,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import *
-from .ir import *
-from .ir import backlink, dfn_of
+from collections import OrderedDict
+from .match import match, many, choice
+from .ir import Definition, Name, Ref, Invoke, Class, Interface, Function, Check, Invoke, Void, Block
+from .ir import dfn_of
 from . import tr
 
 class TargetModule(object):
@@ -22,18 +23,21 @@ class TargetModule(object):
     @match((many(basestring),))
     def __init__(self, target_name):
         self.target_name = target_name
-        self.names = {}
-        self.target_names = {}
+        self.names = OrderedDict()
+        self.target_names = OrderedDict()
 
     def __repr__(self):
-        return "%s %s %s" % (self.target_name, self.names, self.target_names)
+        return "TargetModule(%s, %s, %s)" % (self.target_name, self.names, self.target_names)
 
 class TargetDefinition(object):
     """ Name of a ir.Definition in the target """
     @match(basestring, TargetModule)
-    def __init__(self, name, module):
-        self.name = name
+    def __init__(self, target_name, module):
+        self.target_name = target_name
         self.module = module
+
+    def __repr__(self):
+        return "TargetDefinition(%s, %s)" % (self.target_name, self.module.target_name)
 
 class Target(object):
 
@@ -43,9 +47,9 @@ class Target(object):
             self.depth = parent.depth + 1
         else:
             self.depth = 0
-        self.files = {}
-        self.modules = {}
-        self.definitions = {}
+        self.files = OrderedDict()
+        self.modules = OrderedDict()
+        self.definitions = OrderedDict()
 
     @match(Definition)
     def define(self, dfn):
@@ -55,11 +59,12 @@ class Target(object):
         self.definitions[dfn.name] = tgt_def
         return tgt_def
 
-    def file(self, dfn):
-        name = self.filename(dfn)
+    @match(tr.File, basestring)
+    def file(self, module, contents):
+        name = module.filename
         if name not in self.files:
-            self.files[name] = File(name)
-        return self.files[name]
+            self.files[name] = ""
+        self.files[name] += contents
 
     @match(TargetModule, Definition)
     def define(self, module, dfn):
@@ -78,17 +83,35 @@ class Target(object):
 
     @match(Definition)
     def module(self, dfn):
-        """ REWORD: Return or create a tr.Module for a target as previously defined with a TargetModule and TargetDefinition """
-        pydef = self.definitions[dfn.name]
-        mod_path = pydef.module.target_name
-        if mod_path not in self.modules:
-            module = tr.Module(mod_path)
-            self.modules[mod_path] = module
-        return self.modules[mod_path]
+        """ REWORD: Return or create a tr.File for a target as previously defined with a TargetModule and TargetDefinition """
+        tgtdef = self.definitions[dfn.name]
+        filename = self.filename(dfn, tgtdef)
+        if filename not in self.modules:
+            module = tr.File(filename)
+            self.modules[filename] = module
+        return self.modules[filename]
+
+
+    @match(Definition, Ref)
+    def reference(self, dfn, ref):
+        assert dfn.name in self.definitions
+        if ref not in self.definitions:
+            use = ref.parent
+            self.define_ffi(ref.parent)
+        assert ref in self.definitions
+        pass
+
+    @match(Invoke)
+    def define_ffi(self, invoke):
+        self.define(Function(Name(invoke.name.package, *invoke.name.path), Void(), Block()))
 
     @match(Name)
     def nameof(self, name):
-        return name.path[-1]
+        return self.definitions[name].target_name
+
+    @match(Ref)
+    def nameof(self, ref):
+        return self.definitions[ref].target_name
 
     @match(Ref)
     def is_interpackage(self, name):
@@ -100,6 +123,13 @@ class Target(object):
     @match(basestring)
     def upcase(self, s):
         return s[0:1].capitalize() + s[1:]
+
+class Snowflake(str):
+    def __eq__(self, other):
+        return False
+
+    def __hash__(self):
+        return hash(str(self))
 
 class Java(Target):
 
@@ -116,16 +146,26 @@ class Java(Target):
                       class       finally         long            strictfp        volatile
                       const       float           native          super           while
 
-                      null        true            false """.split())
+                      null        true            false 
+
+                      Functions   Tests""".split())
 
     @match(TargetModule, Definition)
     def define(self, module, dfn):
         target_name = self.define_name(module, dfn.name.path[-1])
         return TargetDefinition(target_name, module)
 
-    @match(Definition)
+    @match(choice(Class, Interface))
     def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-1])
+        return self.define_module(dfn.name.path)
+
+    @match(Function)
+    def define_module(self, dfn):
+        return self.define_module(dfn.name.path[:-1] + (Snowflake("Functions"),))
+
+    @match(Check)
+    def define_module(self, dfn):
+        return self.define_module(dfn.name.path[:-1] + (Snowflake("Tests"),))
 
     @match((many(basestring, min=1),))
     def define_module(self, path):
@@ -153,20 +193,13 @@ class Java(Target):
         module.target_names[target_name] = defname
         return target_name
 
-    @match(Function)
-    def filename(self, fun):
-        # XXX this will clash with a Quark class 'Functions' in the same namespace
-        return "/".join(("src", "main", "java") + fun.name.path[:-1] + ("Functions.java",))
+    @match(Definition, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join(("src", "main", "java") + tgtdfn.module.target_name) + ".java"
 
-    @match(Check)
-    def filename(self, fun):
-        # XXX this will clash with a Quark class 'Functions' in the same namespace
-        return "/".join(("src", "test", "java") + fun.name.path[:-1] + ("Tests.java",))
-
-    @match(choice(Class, Interface))
-    def filename(self, cls):
-        return "/".join(("src", "main", "java") + cls.name.path[:-1] + ("%s.java" % cls.name.path[-1], ))
-
+    @match(Check, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join(("src", "test", "java") + tgtdfn.module.target_name) + ".java"
 
 class Python(Target):
 
@@ -182,7 +215,7 @@ class Python(Target):
         assert defname
         target_name = self.UNKEYWORDS.get(defname, defname)
         assert target_name
-        target_name = "haha_py_" + target_name
+        target_name = target_name
         assert target_name not in module.target_names
         module.names[defname] = target_name
         module.target_names[target_name] = defname
@@ -191,6 +224,10 @@ class Python(Target):
     @match(Definition)
     def define_module(self, dfn):
         return self.define_module(dfn.name.path)
+
+    @match(Check)
+    def define_module(self, dfn):
+        return self.define_module(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],))
 
     @match((many(basestring, min=1),))
     def define_module(self, path):
@@ -207,42 +244,9 @@ class Python(Target):
         # toplevel module names because we don't store root, should that be prohibited by the IR anyways?
         return TargetModule(())
 
-    @match(Definition)
-    def filename(self, dfn):
-        for l in range(1,len(dfn.name.path)):
-            init = "/".join(dfn.name.path[:l] + ('__init__.py',))
-            if init not in self.files:
-                self.files[init] = File(init)
-        return "/".join(dfn.name.path[:]).lower() + ".py"
-
-    @match(Check)
-    def filename(self, dfn):
-        return "/".join(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],)).lower() + ".py"
-
-    @match(Ref)
-    def needs_import(self, ref):
-        dfn = dfn_of(ref)
-        if dfn is None: return True
-        return dfn.name.package != ref.package or dfn.name.path != ref.path
-
-class RubyModuleStitcher(object):
-    def __init__(self, target, lib_prefix):
-        self.target = target
-        self.lib_prefix = lib_prefix
-
-    @match(basestring, (many(basestring), ))
-    def filename(self, package, path):
-        return "/".join((self.lib_prefix, package,) + path).lower() + ".rb"
-
-    @match(basestring, basestring, (many(basestring), ))
-    def global_require(self, global_package, package, path):
-        package_name = self.filename(global_package, ())
-        if package_name not in self.target.files:
-            self.target.files[package_name] = File(package_name)
-        package_file = self.target.files[package_name]
-        package_file.header.append("require_relative '{module}'\n".format(
-            module = "/".join((package, ) + path).lower()))
-        return self.filename(package, path)
+    @match(Definition, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join(tgtdfn.module.target_name) + ".py"
 
 class Ruby(Target):
 
@@ -261,6 +265,10 @@ class Ruby(Target):
     @match(Definition)
     def define_module(self, dfn):
         return self.define_module(dfn.name.path[:-1])
+
+    @match(Check)
+    def define_module(self, dfn):
+        return self.define_module(dfn.name.path[:-2] + ("tc_" + dfn.name.path[-2],))
 
     @match((many(basestring, min=1),))
     def define_module(self, path):
@@ -285,39 +293,13 @@ class Ruby(Target):
     def define_module(self, path):
         return TargetModule(())
 
-    @match(Definition)
-    def filename(self, dfn):
-        lib = RubyModuleStitcher(self, "lib")
-        return lib.global_require(dfn.name.package, dfn.name.package, dfn.name.path)
+    @match(Definition, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join(("lib", dfn.name.package) + tgtdfn.module.target_name) + ".rb"
 
-    @match(Check)
-    def filename(self, dfn):
-        package = "ts_" + dfn.name.package
-        path = dfn.name.path[:-1] + ("tc_" + dfn.name.path[-2],)
-        test = RubyModuleStitcher(self, "test")
-        test.global_require("ts", package, path)
-        return test.global_require(package, package, path)
-
-    def upcase(self, s):
-        return s[0:1].capitalize() + s[1:]
-
-    def is_intermodule(self, name):
-        dfn = dfn_of(name)
-        if dfn is None: return True
-        assert dfn.name.package == name.package
-        return dfn.name.path != name.path
-
-    def rel_module(self, name):
-        assert self.is_intermodule(name)
-        dname = dfn_of(name).name
-        ret = []
-        for src, tgt in map(None, dname.path[:-1], name.path):
-            if src == tgt and not ret: continue
-            if src is not None:
-                ret.insert(0, src)
-            if tgt is not None:
-                ret.append(tgt)
-        return tuple(ret)
+    @match(Check, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join(("test", dfn.name.package) + tgtdfn.module.target_name) + ".rb"
 
 class Go(Target):
 
@@ -336,11 +318,11 @@ class Go(Target):
 
     @match(Definition)
     def define_module(self, dfn):
-        return self.define_module(dfn.name.path[0])
+        return self.define_module((dfn.name.path[0], ))
 
     @match(TargetModule, Definition)
     def define(self, module, dfn):
-        target_name = self.define_name(module, "_".join(dfn.name.path[1:]))
+        target_name = self.define_name(module, self.upcase("_".join(dfn.name.path[1:])))
         return TargetDefinition(target_name, module)
 
     @match(TargetModule, basestring)
@@ -348,42 +330,30 @@ class Go(Target):
         assert defname
         target_name = self.UNKEYWORDS.get(defname, defname)
         assert target_name
-        target_name = "haha_go_" + target_name
+        target_name = target_name
         assert target_name not in module.target_names
         module.names[defname] = target_name
         module.target_names[target_name] = defname
         return target_name
 
-    @match(basestring)
-    def define_module(self, pkg):
-        if pkg not in self.definitions:
-            target_name = self.define_name(TargetModule(()), pkg)
-            self.definitions[pkg] = TargetModule((target_name, ))
-        return self.definitions[pkg]
+    @match((many(basestring, min=1),))
+    def define_module(self, path):
+        if path not in self.definitions:
+            parent = self.define_module(path[:-1])
+            target_name = self.define_name(parent, path[-1])
+            self.definitions[path] = TargetModule(parent.target_name + (target_name, ))
+        return self.definitions[path]
 
-    @match(Definition)
-    def filename(self, dfn):
-        return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[1:]),)) + ".go"
+    @match(())
+    def define_module(self, path):
+        # XXX: as a consequence, we don't check for duplicates of
+        # toplevel module names because we don't store root, should that be prohibited by the IR anyways?
+        return TargetModule(())
 
-    @match(Check)
-    def filename(self, dfn):
-        return "/".join((dfn.name.package,) + dfn.name.path[:1] + ("-".join(p.lower() for p in dfn.name.path[:-1]) + "_test",)) + ".go"
+    @match(Definition, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join((dfn.name.package,) + tgtdfn.module.target_name + (tgtdfn.target_name.lower(),)) + ".go"
 
-    @match(Ref)
-    def is_interpackage(self, name):
-        dfn = dfn_of(name)
-        if dfn is None: return True
-        return dfn.name.package != name.package or dfn.name.path[0]  != name.path[0] or isinstance(dfn, Check)
-
-    @match(Ref)
-    def nameof(self, name):
-        ident = "_".join(self.upcase(p) for p in name.path[1:])
-        if self.is_interpackage(name):
-            ident = name.path[0].lower() + "." + ident
-        return ident
-
-    @match(Name)
-    def nameof(self, name):
-        ident = "_".join(self.upcase(p) for p in name.path[1:])
-        return ident
-
+    @match(Check, TargetDefinition)
+    def filename(self, dfn, tgtdfn):
+        return "/".join((dfn.name.package,) + tgtdfn.module.target_name + (tgtdfn.target_name.lower() + "_test",)) + ".go"
