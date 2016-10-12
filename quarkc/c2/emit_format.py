@@ -26,7 +26,7 @@ class Indent(object):
 
     @match(basestring, opt(basestring))
     def __call__(self, line, sep=""):
-        lines = list(line.strip().splitlines()) or ['']
+        lines = list(line.splitlines()) or ['']
         return "\n".join(self.prefix + l for l in lines) + sep
 
     @property
@@ -60,14 +60,14 @@ def format(stmt, target, indent):
 
 @match(Block, Target, Indent)
 def format(block, target, indent):
-    return "\n".join([" {"] + [format(s, target, indent.more) for s in block.children] + [indent("}")])
+    return "\n".join([" {"] + [format(s, target, indent.more) for s in block.children] + [indent("} ")])
 
 @match(Block, Python, Indent)
 def format(block, target, indent):
     return "\n".join(
         [":"] + (
-            [format(s, target, indent.more) for s in block.children] or
-            [indent.more("pass")]))
+            [format(s, target, indent.more).rstrip() for s in block.children] or
+            [indent.more("pass")]) + [indent("")])
 
 @match(Block, Ruby, Indent)
 def format(block, target, indent):
@@ -80,7 +80,7 @@ def format(block, target, indent):
 
 @match(Compound, Target, Indent)
 def format(stmt, target, indent):
-    return indent("") + " ".join([
+    return indent("") + "".join([
         "{stmt}{block}".format(
             stmt = s,
             block = format(b, target, indent))
