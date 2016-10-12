@@ -42,12 +42,13 @@ class JSONTest {
 	checkEqual({}, result.third_value);
     }
 
-    // Various types roundtrip.
+    // Various types can be encoded into JSON and then decoded, resulting in the
+    // same values.
     void testRoundtripping() {
         Class mapClass = Class.get("quark.Map<quark.String,quark.Object>");
         float f = 1.5;
         String s = "hello";
-        int i = 12;
+        long i = 12;
         List<Object> l = [f, s, i];
         Map<String,Object> submap = {"f": f, "s": s, "i": i, "l": l};
         Map<String,Object> map = {"f": f, "s": s, "i": i, "l": l,
