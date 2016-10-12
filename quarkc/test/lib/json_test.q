@@ -41,4 +41,22 @@ class JSONTest {
 	checkEqual(null, result.another_value);
 	checkEqual({}, result.third_value);
     }
+
+    // Various types roundtrip.
+    void testRoundtripping() {
+        Class mapClass = Class.get("quark.Map<quark.String,quark.Object>");
+        float f = 1.5;
+        String s = "hello";
+        int i = 12;
+        List<Object> l = [f, s, i];
+        Map<String,Object> submap = {"f": f, "s": s, "i": i, "l": l};
+        Map<String,Object> map = {"f": f, "s": s, "i": i, "l": l,
+                                  "m": submap, "null": null};
+        JSONObject json = toJSON(map, mapClass);
+        String serialized = json.toString();
+        Map<String,Object> result =
+            ?fromJSON(mapClass, new Map<String,Object>(),
+                      serialized.parseJSON());
+        checkEqual(map, result);
+    }
 }
