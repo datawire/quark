@@ -325,6 +325,7 @@ int testPackages(List<String> packages, List<String> filters, bool emitJson) {
 }
 
 void run(List<String> args) {
+    logging.makeConfig().setLevel("INFO").configure();
     String pkg = args[0];
     List<String> filters = [];
     bool qlist = false;
