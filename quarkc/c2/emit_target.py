@@ -13,6 +13,7 @@
 # limitations under the License.
 
 from collections import OrderedDict
+from pprint import pformat
 from .match import match, many, choice
 from .ir import Definition, Name, Ref, Invoke, Class, Interface, Function, Check, Invoke, Void, Block
 from .ir import dfn_of
@@ -25,9 +26,10 @@ class TargetNamespace(object):
         self.target_name = target_name
         self.names = OrderedDict()
         self.target_names = OrderedDict()
+        self.imports = set()
 
     def __repr__(self):
-        return "TargetNamespace(%s, %s, %s)" % (self.target_name, self.names, self.target_names)
+        return "TargetNamespace(%s,\n    names=%s,\n    target_names=%s)" % (self.target_name, pformat(self.names), pformat(self.target_names))
 
 class TargetDefinition(object):
     """ Name of a ir.Definition in the target """
@@ -214,8 +216,8 @@ class Java(Target):
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
-        # Java fully qualifies all references, imports are not necessary
         tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
+        # Java fully qualifies all references, imports are not necessary
         pass
 
 class Python(Target):
@@ -329,7 +331,11 @@ class Go(Target):
 
     @match(Definition)
     def define_namespace(self, dfn):
-        return self.define_namespace((dfn.name.path[0], ))
+        return self.define_namespace((dfn.name.path[0], "_".join(dfn.name.path[1:])))
+
+    @match(Check)
+    def define_namespace(self, dfn):
+        return self.define_namespace((dfn.name.path[0], "_".join(dfn.name.path[:1]),"test",))
 
     @match(TargetNamespace, Definition)
     def define(self, namespace, dfn):
@@ -356,15 +362,39 @@ class Go(Target):
         module.add(tr.Simple("package {pkg}".format(pkg = tgtdfn.namespace.target_name[0])))
         module.add(self.head_comment(),)
 
+    @match(Check, tr.File)
+    def header(self, dfn, module):
+        tgtdfn = self.definitions[dfn.name]
+        module.add(tr.Simple("package {pkg}_test".format(pkg = tgtdfn.namespace.target_name[0])))
+        module.add(self.head_comment(),)
+        module.add(tr.Simple("import \"testing\""))
+
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join((dfn.name.package,) + tgtdfn.namespace.target_name + (tgtdfn.target_name.lower(),)) + ".go"
+        return "/".join((dfn.name.package,
+                         tgtdfn.namespace.target_name[0],
+                         tgtdfn.target_name.lower(),)) + ".go"
 
     @match(Check, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join((dfn.name.package,) + tgtdfn.namespace.target_name + (tgtdfn.target_name.lower() + "_test",)) + ".go"
+        return "/".join((dfn.name.package,
+                         tgtdfn.namespace.target_name[0],
+                         tgtdfn.namespace.target_name[0].lower() + "_test",)) + ".go"
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
-        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
-
+        d_ns = tgtdfn.namespace
+        r_ns = tgtref.namespace
+        dfn_module_path = "/".join((dfn.name.package, d_ns.target_name[0]))
+        ref_module_path = "/".join((ref.package, r_ns.target_name[0]))
+        if dfn_module_path == ref_module_path and not isinstance(dfn, Check):
+            d_ns.names[ref] = tgtref.target_name
+            module.add(tr.Comment("Must not import " + ref_module_path))
+        else:
+            d_ns.names[ref] = ".".join((r_ns.target_name[0], tgtref.target_name, ))
+            if ref_module_path not in d_ns.imports:
+                d_ns.imports.add(ref_module_path)
+                module.add(tr.Simple("import \"{ref_module_path}\"".format(
+                    ref_module_path = ref_module_path)))
+            else:
+                module.add(tr.Comment("Already imported " + ref_module_path + " to " + str((tgtdfn, tgtref))))
