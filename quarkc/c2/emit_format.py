@@ -71,7 +71,7 @@ def format(block, target, indent):
 
 @match(Block, Ruby, Indent)
 def format(block, target, indent):
-    return "\n".join(
+    return "\n".join([""] +
         [format(s, target, indent.more) for s in block.children] +
         [indent("end")])
 
