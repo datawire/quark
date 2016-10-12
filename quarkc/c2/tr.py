@@ -1,5 +1,5 @@
 ##
-from match import match, many, lazy
+from match import match, many, lazy, choice
 from .ir import _Tree
 
 class TR(_Tree):
@@ -18,14 +18,20 @@ class Comment(Statement):
     def __repr__(self):
         return self.repr(self.comment)
 
-class Block(TR):
-    @match(many(Statement))
-    def __init__(self, *stmts):
-        self.stmts = stmts
+def flattened(stmts):
+    return sum((s if isinstance(s, tuple) else (s,) for s in stmts), ())
 
-    @match(many(Statement))
+def many_tuple(x):
+    return many(choice(x, (many(x),)))
+
+class Block(TR):
+    @match(many_tuple(Statement))
+    def __init__(self, *stmts):
+        self.stmts = flattened(stmts)
+
+    @match(many_tuple(Statement))
     def add(self, *stmts):
-        self.stmts += stmts
+        self.stmts += flattened(stmts)
 
     @property
     def children(self):
@@ -42,7 +48,7 @@ class File(TR):
         self.outer_block = Block()
         self.inner_block = self.outer_block
 
-    @match(many(Statement))
+    @match(many_tuple(Statement))
     def add(self, *stmts):
         self.inner_block.add(*stmts)
 

@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import match, opt, choice
+from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
                  While, Block, Evaluate, Local, Return,
                  Message, Field, Method, Constructor, AssertEqual)
@@ -244,7 +244,7 @@ def code(clazz, target):
     return tr.Compound(
         "class {name}".format(
             name = target.nameof(clazz.name)),
-        tr.Block(*[code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods])
+        tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )
 
 @match(Class, Java)
@@ -252,17 +252,17 @@ def code(clazz, target):
     return tr.Compound(
         "public class {name}".format(
             name = target.nameof(clazz.name)),
-        tr.Block(*[code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods])
+        tr.Block(tuple([code(m, target) for m in clazz.fields + clazz.constructors + clazz.methods]))
         )
 
 @match(Class, Go)
 def code(clazz, target):
     return tuple(
-        tr.Compound(
+        [tr.Compound(
             "type {name} struct".format(
                 name = target.nameof(clazz.name)),
-            tr.Block(*[code(m, target) for m in clazz.fields])),
-        *[code(m, target) for m in clazz.constructors + clazz.methods]
+            tr.Block(tuple([code(m, target) for m in clazz.fields])))] +
+        [code(m, target) for m in clazz.constructors + clazz.methods]
     )
 
 ## Field
@@ -365,7 +365,7 @@ def code(constructor, target):
             clazz=clazz,
             name=expr(constructor.type.name, target),
             params=", ".join(expr(p, target) for p in constructor.params)),
-        Block(
+        tr.Block(
             tr.Simple("this := new({clazz})".format(clazz=clazz)),
             tr.Compound("", code(constructor.body, target)),
             tr.Simple("return this"))
@@ -411,6 +411,6 @@ def code(*args, **kwargs):
     validate_code(retval)
     return retval
 
-@match(choice(tr.Statement, tr.Block))
+@match(choice(tr.Statement, tr.Block, (many(tr.Statement),)))
 def validate_code(retval):
     return True

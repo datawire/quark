@@ -56,7 +56,7 @@ class Target(object):
         """Install a mapping in self.definitions[dfn.name] -> AllRequiredInfoOnTargetName"""
         tgt_namespace = self.define_namespace(dfn)
         tgt_def = self.define(tgt_namespace, dfn)
-        tgt_def.namespace.names[dfn.name] = tgt_def
+        tgt_def.namespace.names[dfn.name] = tgt_def.target_name # XXX: this is a hack, define_name needs some more thinking
         self.definitions[dfn.name] = tgt_def
         return tgt_def
 
@@ -101,7 +101,11 @@ class Target(object):
 
     @match(Definition, tr.File)
     def header(self, dfn, module):
-        module.add(tr.Comment("Quark %s backend generated code. override header() for a better comment" % self.__class__.__name__))
+        module.add(self.head_comment(),)
+        module.add(tr.Comment("override header() for a better comment"))
+
+    def head_comment(self):
+        return tr.Comment("Quark %s backend generated code." % self.__class__.__name__)
 
     @match(Definition, Ref)
     def reference(self, dfn, ref):
@@ -345,6 +349,12 @@ class Go(Target):
         # XXX: as a consequence, we don't check for duplicates of
         # toplevel namespace names because we don't store root, should that be prohibited by the IR anyways?
         return TargetNamespace(())
+
+    @match(Definition, tr.File)
+    def header(self, dfn, module):
+        tgtdfn = self.definitions[dfn.name]
+        module.add(tr.Simple("package {pkg}".format(pkg = tgtdfn.namespace.target_name[0])))
+        module.add(self.head_comment(),)
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):

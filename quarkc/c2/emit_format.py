@@ -26,7 +26,8 @@ class Indent(object):
 
     @match(basestring, opt(basestring))
     def __call__(self, line, sep=""):
-        return "\n".join(self.prefix + l for l in line.strip().splitlines()) + sep
+        lines = list(line.strip().splitlines()) or ['']
+        return "\n".join(self.prefix + l for l in lines) + sep
 
     @property
     def more(self):
@@ -79,9 +80,9 @@ def format(block, target, indent):
 
 @match(Compound, Target, Indent)
 def format(stmt, target, indent):
-    return "\n".join([
+    return indent("") + " ".join([
         "{stmt}{block}".format(
-            stmt = indent(s),
+            stmt = s,
             block = format(b, target, indent))
         for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])])
 
