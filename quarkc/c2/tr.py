@@ -10,6 +10,14 @@ class TR(_Tree):
 class Statement(TR):
     pass
 
+class Comment(Statement):
+    @match(basestring)
+    def __init__(self, comment):
+        self.comment = comment
+
+    def __repr__(self):
+        return self.repr(self.comment)
+
 class Block(TR):
     @match(many(Statement))
     def __init__(self, *stmts):

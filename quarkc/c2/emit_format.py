@@ -12,18 +12,17 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from contextlib import contextmanager
-from .match import *
+from .match import match, opt, choice
 
-from .emit_target import *
+from .emit_target import Target, Python, Ruby, Go, Java
 
-from .tr import *
+from .tr import File, Block, Simple, Compound, Comment
 
 class Indent(object):
-    def __init__(self, indent=4, level=0):
+    def __init__(self, indent=4, level=0, postprefix=""):
         self.indent = indent
         self.level = level
-        self.prefix = " " * self.level * self.indent
+        self.prefix = " " * self.level * self.indent + postprefix
 
     @match(basestring, opt(basestring))
     def __call__(self, line, sep=""):
@@ -32,24 +31,51 @@ class Indent(object):
     @property
     def more(self):
         return Indent(self.indent, self.level + 1)
+
+    def commented(self, line_comment):
+        return Indent(self.indent, self.level, line_comment)
  
 @match(File, Target)
 def format(module, target):
-    return "{header}\n{block}".format(
-        header=header(module, target),
-        block=format(module.outer_block, target))
+    return format(module.outer_block, target)
 
 @match(Block, Target)
 def format(block, target):
     return "\n\n".join(format(s, target, Indent()) for s in block.children)
 
+
+## Simple statements
+
 @match(Simple, Target, Indent)
 def format(stmt, target, indent):
     return indent(stmt.stmt)
 
+@match(Simple, Java, Indent)
+def format(stmt, target, indent):
+    return indent(stmt.stmt, ";")
+
+
+## Block
+
 @match(Block, Target, Indent)
 def format(block, target, indent):
     return "\n".join([" {"] + [format(s, target, indent.more) for s in block.children] + [indent("}")])
+
+@match(Block, Python, Indent)
+def format(block, target, indent):
+    return "\n".join(
+        [":"] + (
+            [format(s, target, indent.more) for s in block.children] or
+            [indent.more("pass")]))
+
+@match(Block, Ruby, Indent)
+def format(block, target, indent):
+    return "\n".join(
+        [format(s, target, indent.more) for s in block.children] +
+        [indent("end")])
+
+
+## Compound
 
 @match(Compound, Target, Indent)
 def format(stmt, target, indent):
@@ -60,46 +86,12 @@ def format(stmt, target, indent):
         for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])])
 
 
-# Python specific formatting
+## Comment
 
-@match(File, Python)
-def header(module, target):
-    return "# TODO imports"
+@match(Comment, Target, Indent)
+def format(comment, target, indent):
+    return indent.commented("# ")(comment.comment)
 
-@match(Block, Python, Indent)
-def format(block, target, indent):
-    return "\n".join(
-        [":"] + (
-            [format(s, target, indent.more) for s in block.children] or
-            [indent.more("pass")]))
-
-
-# Go specific formatting
-
-@match(File, Go)
-def header(module, target):
-    return "# TODO package, imports"
-
-
-# Java specific formatting
-
-@match(File, Java)
-def header(module, target):
-    return "# TODO package, imports"
-
-@match(Simple, Java, Indent)
-def format(stmt, target, indent):
-    return indent(stmt.stmt, ";")
-
-
-# Ruby specific formatting
-
-@match(File, Ruby)
-def header(module, target):
-    return "# TODO package, imports"
-
-@match(Block, Ruby, Indent)
-def format(block, target, indent):
-    return "\n".join(
-        [format(s, target, indent.more) for s in block.children] +
-        [indent("end")])
+@match(Comment, choice(Java, Go), Indent)
+def format(comment, target, indent):
+    return indent.commented("// ")(comment.comment)

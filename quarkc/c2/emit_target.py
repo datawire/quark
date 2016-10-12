@@ -18,8 +18,8 @@ from .ir import Definition, Name, Ref, Invoke, Class, Interface, Function, Check
 from .ir import dfn_of
 from . import tr
 
-class TargetModule(object):
-    """ Name of an importable module/package in the target """
+class TargetNamespace(object):
+    """ Name of an importable namespace/package in the target """
     @match((many(basestring),))
     def __init__(self, target_name):
         self.target_name = target_name
@@ -27,17 +27,17 @@ class TargetModule(object):
         self.target_names = OrderedDict()
 
     def __repr__(self):
-        return "TargetModule(%s, %s, %s)" % (self.target_name, self.names, self.target_names)
+        return "TargetNamespace(%s, %s, %s)" % (self.target_name, self.names, self.target_names)
 
 class TargetDefinition(object):
     """ Name of a ir.Definition in the target """
-    @match(basestring, TargetModule)
-    def __init__(self, target_name, module):
+    @match(basestring, TargetNamespace)
+    def __init__(self, target_name, namespace):
         self.target_name = target_name
-        self.module = module
+        self.namespace = namespace
 
     def __repr__(self):
-        return "TargetDefinition(%s, %s)" % (self.target_name, self.module.target_name)
+        return "TargetDefinition(%s, %s)" % (self.namespace.target_name, self.target_name)
 
 class Target(object):
 
@@ -54,8 +54,9 @@ class Target(object):
     @match(Definition)
     def define(self, dfn):
         """Install a mapping in self.definitions[dfn.name] -> AllRequiredInfoOnTargetName"""
-        tgt_module = self.define_module(dfn)
-        tgt_def = self.define(tgt_module, dfn)
+        tgt_namespace = self.define_namespace(dfn)
+        tgt_def = self.define(tgt_namespace, dfn)
+        tgt_def.namespace.names[dfn.name] = tgt_def
         self.definitions[dfn.name] = tgt_def
         return tgt_def
 
@@ -66,40 +67,59 @@ class Target(object):
             self.files[name] = ""
         self.files[name] += contents
 
-    @match(TargetModule, Definition)
-    def define(self, module, dfn):
-        """ return a TargetDefinition inside the TargetModule for a given ir.Definition """
-        assert False, "%s does not have define(TargetModule, Definition)" % self.__class__.__name__
+    @match(TargetNamespace, Definition)
+    def define(self, namespace, dfn):
+        """ return a TargetDefinition inside the TargetNamespace for a given ir.Definition """
+        assert False, "%s does not have define(TargetNamespace, Definition)" % self.__class__.__name__
 
-    @match(TargetModule, basestring)
-    def define_name(self, module, name):
-        """ return a name that is safe to use inside the spefified TargetModule """
-        assert False, "%s does not have define_name(TargetModule, basestring)" % self.__class__.__name__
+    @match(TargetNamespace, basestring)
+    def define_name(self, namespace, defname):
+        assert defname
+        target_name = self.UNKEYWORDS.get(defname, defname)
+        assert target_name
+        target_name = target_name
+        assert target_name not in namespace.target_names
+        namespace.names[defname] = target_name
+        namespace.target_names[target_name] = defname
+        return target_name
 
     @match(Definition)
-    def define_module(self, dfn):
-        """ return a TargetModule for a given ir.Definition and install it in self.definitions"""
-        assert False, "%s does not have define_module(Definition)" % self.__class__.__name__
+    def define_namespace(self, dfn):
+        """ return a TargetNamespace for a given ir.Definition and install it in self.definitions"""
+        assert False, "%s does not have define_namespace(Definition)" % self.__class__.__name__
 
     @match(Definition)
     def module(self, dfn):
-        """ REWORD: Return or create a tr.File for a target as previously defined with a TargetModule and TargetDefinition """
-        tgtdef = self.definitions[dfn.name]
-        filename = self.filename(dfn, tgtdef)
+        """ REWORD: Return or create a tr.File for a target as previously defined with a TargetNamespace and TargetDefinition """
+        tgtdfn = self.definitions[dfn.name]
+        filename = self.filename(dfn, tgtdfn)
         if filename not in self.modules:
             module = tr.File(filename)
+            self.header(dfn, module)
             self.modules[filename] = module
         return self.modules[filename]
 
+    @match(Definition, tr.File)
+    def header(self, dfn, module):
+        module.add(tr.Comment("Quark %s backend generated code. override header() for a better comment" % self.__class__.__name__))
 
     @match(Definition, Ref)
     def reference(self, dfn, ref):
         assert dfn.name in self.definitions
         if ref not in self.definitions:
-            use = ref.parent
             self.define_ffi(ref.parent)
         assert ref in self.definitions
-        pass
+        tgtdfn = self.definitions[dfn.name]
+        tgtref = self.definitions[ref]
+        module = self.module(dfn)
+        if ref not in tgtdfn.namespace.names:
+            self.reference(module, dfn, tgtdfn, ref, tgtref)
+        assert ref in tgtdfn.namespace.names, "%s.reference() does not install into target namespace" % self.__class__.__name__
+
+    @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        """ generate the import statement and store import name in the tgtdfn namespace """
+        assert False, "TODO: add import logic for %s" % self.__class__.__name__
 
     @match(Invoke)
     def define_ffi(self, invoke):
@@ -111,14 +131,12 @@ class Target(object):
 
     @match(Ref)
     def nameof(self, ref):
-        return self.definitions[ref].target_name
-
-    @match(Ref)
-    def is_interpackage(self, name):
-        dfn = dfn_of(name)
-        if dfn is None: return True
-        dname = dfn.name
-        return dname.package != name.package or dname.path[:-1] != name.path[:-1]  or isinstance(dfn, Check)
+        assert ref in self.definitions
+        dfn = dfn_of(ref)
+        assert dfn.name in self.definitions
+        tgtdfn = self.definitions[dfn.name]
+        assert ref in tgtdfn.namespace.names
+        return tgtdfn.namespace.names[ref]
 
     @match(basestring)
     def upcase(self, s):
@@ -126,7 +144,7 @@ class Target(object):
 
 class Snowflake(str):
     def __eq__(self, other):
-        return False
+        return type(self) is type(other) and str(self) == str(other)
 
     def __hash__(self):
         return hash(str(self))
@@ -150,103 +168,97 @@ class Java(Target):
 
                       Functions   Tests""".split())
 
-    @match(TargetModule, Definition)
-    def define(self, module, dfn):
-        target_name = self.define_name(module, dfn.name.path[-1])
-        return TargetDefinition(target_name, module)
+    @match(TargetNamespace, Definition)
+    def define(self, namespace, dfn):
+        target_name = self.define_name(namespace, dfn.name.path[-1])
+        return TargetDefinition(target_name, namespace)
 
     @match(choice(Class, Interface))
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path)
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn, dfn.name.path)
 
     @match(Function)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-1] + (Snowflake("Functions"),))
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path[:-1] + (Snowflake("Functions"),))
 
     @match(Check)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-1] + (Snowflake("Tests"),))
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path[:-1] + (Snowflake("Tests"),))
 
     @match((many(basestring, min=1),))
-    def define_module(self, path):
+    def define_namespace(self, path):
         if path not in self.definitions:
-            parent = self.define_module(path[:-1])
+            parent = self.define_namespace(path[:-1])
             target_name = self.define_name(parent, path[-1])
             # XXX: here we can inject additional implementation namespace
-            self.definitions[path] = TargetModule(parent.target_name + (target_name, ))
+            self.definitions[path] = TargetNamespace(parent.target_name + (target_name, ))
         return self.definitions[path]
 
     @match(())
-    def define_module(self, path):
+    def define_namespace(self, path):
         # XXX: as a consequence, we don't check for duplicates of
-        # toplevel module names because we don't store root, should that be prohibited by the IR anyways?
-        return TargetModule(())
-
-    @match(TargetModule, basestring)
-    def define_name(self, module, defname):
-        assert defname
-        target_name = self.UNKEYWORDS.get(defname, defname)
-        assert target_name
-        target_name = target_name
-        assert target_name not in module.target_names
-        module.names[defname] = target_name
-        module.target_names[target_name] = defname
-        return target_name
+        # toplevel namespace names because we don't store root, should that be prohibited by the IR anyways?
+        return TargetNamespace(())
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("src", "main", "java") + tgtdfn.module.target_name) + ".java"
+        return "/".join(("src", "main", "java") + tgtdfn.namespace.target_name) + ".java"
 
     @match(Check, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("src", "test", "java") + tgtdfn.module.target_name) + ".java"
+        return "/".join(("src", "test", "java") + tgtdfn.namespace.target_name) + ".java"
+
+    @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        # Java fully qualifies all references, imports are not necessary
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
+        pass
 
 class Python(Target):
 
     UNKEYWORDS = dict((k, k+"_") for k in """self map list None True False""".split())
 
-    @match(TargetModule, Definition)
-    def define(self, module, dfn):
-        target_name = self.define_name(module, dfn.name.path[-1])
-        return TargetDefinition(target_name, module)
-
-    @match(TargetModule, basestring)
-    def define_name(self, module, defname):
-        assert defname
-        target_name = self.UNKEYWORDS.get(defname, defname)
-        assert target_name
-        target_name = target_name
-        assert target_name not in module.target_names
-        module.names[defname] = target_name
-        module.target_names[target_name] = defname
-        return target_name
+    @match(TargetNamespace, Definition)
+    def define(self, namespace, dfn):
+        target_name = self.define_name(namespace, dfn.name.path[-1])
+        return TargetDefinition(target_name, namespace)
 
     @match(Definition)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path)
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path)
 
     @match(Check)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],))
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path[:-1] + ("test_" + dfn.name.path[-2],))
 
     @match((many(basestring, min=1),))
-    def define_module(self, path):
+    def define_namespace(self, path):
         if path not in self.definitions:
-            parent = self.define_module(path[:-1])
+            parent = self.define_namespace(path[:-1])
             target_name = self.define_name(parent, path[-1])
             # XXX: here we can inject additional implementation namespace
-            self.definitions[path] = TargetModule(parent.target_name + (target_name, ))
+            self.definitions[path] = TargetNamespace(parent.target_name + (target_name, ))
         return self.definitions[path]
 
     @match(())
-    def define_module(self, path):
+    def define_namespace(self, path):
         # XXX: as a consequence, we don't check for duplicates of
-        # toplevel module names because we don't store root, should that be prohibited by the IR anyways?
-        return TargetModule(())
+        # toplevel namespace names because we don't store root, should that be prohibited by the IR anyways?
+        return TargetNamespace(())
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(tgtdfn.module.target_name) + ".py"
+        return "/".join(tgtdfn.namespace.target_name) + ".py"
+
+    @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        ref_module = ".".join(tgtref.namespace.target_name)
+        ref_module_name = "_".join(tgtref.namespace.target_name)
+
+        tgtdfn.namespace.names[ref] = ".".join((ref_module_name, tgtref.target_name))
+
+        module.add(tr.Simple("import {ref_module} as {ref_module_name}".format(
+            ref_module = ref_module, ref_module_name = ref_module_name)))
 
 class Ruby(Target):
 
@@ -257,49 +269,44 @@ class Ruby(Target):
          self super then true undef unless until when while yield
     """.split())
 
-    @match(TargetModule, Definition)
-    def define(self, module, dfn):
-        target_name = self.define_name(module, self.upcase(dfn.name.path[-1]))
-        return TargetDefinition(target_name, module)
+    @match(TargetNamespace, Definition)
+    def define(self, namespace, dfn):
+        target_name = self.define_name(namespace, self.upcase(dfn.name.path[-1]))
+        return TargetDefinition(target_name, namespace)
 
     @match(Definition)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-1])
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path[:-1])
 
     @match(Check)
-    def define_module(self, dfn):
-        return self.define_module(dfn.name.path[:-2] + ("tc_" + dfn.name.path[-2],))
+    def define_namespace(self, dfn):
+        return self.define_namespace(dfn.name.path[:-2] + ("tc_" + dfn.name.path[-2],))
 
     @match((many(basestring, min=1),))
-    def define_module(self, path):
+    def define_namespace(self, path):
         if path not in self.definitions:
-            parent = self.define_module(path[:-1])
+            parent = self.define_namespace(path[:-1])
             target_name = self.define_name(parent, self.upcase(path[-1]))
-            self.definitions[path] = TargetModule(parent.target_name + (target_name, ))
+            self.definitions[path] = TargetNamespace(parent.target_name + (target_name, ))
         return self.definitions[path]
 
-    @match(TargetModule, basestring)
-    def define_name(self, module, defname):
-        assert defname
-        target_name = self.UNKEYWORDS.get(defname, defname)
-        assert target_name
-        target_name = target_name
-        assert target_name not in module.target_names
-        module.names[defname] = target_name
-        module.target_names[target_name] = defname
-        return target_name
-
     @match(())
-    def define_module(self, path):
-        return TargetModule(())
+    def define_namespace(self, path):
+        return TargetNamespace(())
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("lib", dfn.name.package) + tgtdfn.module.target_name) + ".rb"
+        return "/".join(("lib", dfn.name.package) + tgtdfn.namespace.target_name) + ".rb"
 
     @match(Check, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join(("test", dfn.name.package) + tgtdfn.module.target_name) + ".rb"
+        return "/".join(("test", dfn.name.package) + tgtdfn.namespace.target_name) + ".rb"
+
+    @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        """ generate the import statement and store import name in the target namespace """
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
+        module.add(tr.Simple("# TODO: add import logic for %s" % self.__class__.__name__))
 
 class Go(Target):
 
@@ -317,43 +324,37 @@ class Go(Target):
 
 
     @match(Definition)
-    def define_module(self, dfn):
-        return self.define_module((dfn.name.path[0], ))
+    def define_namespace(self, dfn):
+        return self.define_namespace((dfn.name.path[0], ))
 
-    @match(TargetModule, Definition)
-    def define(self, module, dfn):
-        target_name = self.define_name(module, self.upcase("_".join(dfn.name.path[1:])))
-        return TargetDefinition(target_name, module)
-
-    @match(TargetModule, basestring)
-    def define_name(self, module, defname):
-        assert defname
-        target_name = self.UNKEYWORDS.get(defname, defname)
-        assert target_name
-        target_name = target_name
-        assert target_name not in module.target_names
-        module.names[defname] = target_name
-        module.target_names[target_name] = defname
-        return target_name
+    @match(TargetNamespace, Definition)
+    def define(self, namespace, dfn):
+        target_name = self.define_name(namespace, self.upcase("_".join(dfn.name.path[1:])))
+        return TargetDefinition(target_name, namespace)
 
     @match((many(basestring, min=1),))
-    def define_module(self, path):
+    def define_namespace(self, path):
         if path not in self.definitions:
-            parent = self.define_module(path[:-1])
+            parent = self.define_namespace(path[:-1])
             target_name = self.define_name(parent, path[-1])
-            self.definitions[path] = TargetModule(parent.target_name + (target_name, ))
+            self.definitions[path] = TargetNamespace(parent.target_name + (target_name, ))
         return self.definitions[path]
 
     @match(())
-    def define_module(self, path):
+    def define_namespace(self, path):
         # XXX: as a consequence, we don't check for duplicates of
-        # toplevel module names because we don't store root, should that be prohibited by the IR anyways?
-        return TargetModule(())
+        # toplevel namespace names because we don't store root, should that be prohibited by the IR anyways?
+        return TargetNamespace(())
 
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join((dfn.name.package,) + tgtdfn.module.target_name + (tgtdfn.target_name.lower(),)) + ".go"
+        return "/".join((dfn.name.package,) + tgtdfn.namespace.target_name + (tgtdfn.target_name.lower(),)) + ".go"
 
     @match(Check, TargetDefinition)
     def filename(self, dfn, tgtdfn):
-        return "/".join((dfn.name.package,) + tgtdfn.module.target_name + (tgtdfn.target_name.lower() + "_test",)) + ".go"
+        return "/".join((dfn.name.package,) + tgtdfn.namespace.target_name + (tgtdfn.target_name.lower() + "_test",)) + ".go"
+
+    @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
+

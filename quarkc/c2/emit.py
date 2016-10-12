@@ -30,14 +30,12 @@ Options:
 
 """
 
-from .match import *
-from .ir import *
-from .ir import backlink, dfn_of, walk_dfs
-from . import tr
+from .match import match
+from .ir import IR, Package, Definition, Ref
+from .ir import backlink, walk_dfs
 
 from .emit_target import Target, Go, Ruby, Java, Python
 from .emit_code import code
-from .emit_expr import expr
 from .emit_format import format
 
 

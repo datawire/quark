@@ -12,12 +12,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import *
-from .ir import *
-from .ir import backlink
+from .match import match, opt, choice
+from .ir import (IR, Function, Interface, Class, Check, If,
+                 While, Block, Evaluate, Local, Return,
+                 Message, Field, Method, Constructor, AssertEqual)
 from . import tr
 
-from .emit_target import *
+from .emit_target import Target, Python, Ruby, Java, Go
 from .emit_expr import expr
 
 @match(basestring, IR, Target, opt(basestring))
@@ -365,9 +366,9 @@ def code(constructor, target):
             name=expr(constructor.type.name, target),
             params=", ".join(expr(p, target) for p in constructor.params)),
         Block(
-            st.Simple("this := new({clazz})".format(clazz=clazz)),
-            st.Compound("", code(constructor.body, target)),
-            st.Simple("return this"))
+            tr.Simple("this := new({clazz})".format(clazz=clazz)),
+            tr.Compound("", code(constructor.body, target)),
+            tr.Simple("return this"))
         )
 
 ## AssertEqual
@@ -413,4 +414,3 @@ def code(*args, **kwargs):
 @match(choice(tr.Statement, tr.Block))
 def validate_code(retval):
     return True
-

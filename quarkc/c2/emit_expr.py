@@ -12,12 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from .match import *
-from .ir import *
-from .ir import backlink
-from . import tr
+from .match import match, choice
+from .ir import (Type, ClassType, Name, Ref,
+                 Param, Var, This, Call, Invoke, Send, Construct, Get, Set,
+                 Void, Null,
+                 Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit
+                 )
 
-from .emit_target import *
+from .emit_target import Target, Python, Java, Go, Ruby
 
 
 @match(Type, Java)
@@ -41,6 +43,20 @@ def expr(void, target):
 @match(Void, Java)
 def expr(void, target):
     return "void"
+
+## Bool
+
+@match(Bool, Target)
+def expr(intt, target):
+    return ""
+
+@match(Bool, Go)
+def expr(intt, target):
+    return "bool"
+
+@match(Bool, Java)
+def expr(intt, target):
+    return "boolean"
 
 ## Int
 
@@ -102,22 +118,15 @@ def expr(param, target):
     return "{name} {type}".format(
         type=expr(param.type, target),
         name=param.name)
+
 ## Names
 
 @match(Name, Java)
 def expr(name, target):
-    return ".".join(name.path)
+    return target.nameof(name)
 
-@match(Ref, Python)
-def expr(name, target):
-    # need to emit an alias here that has been set up for appropriately in a prior pass, maybe have a header(blah, target) and possibly footer(blah, target) pass that can be invoked around the code(blah, target)
-    return "%s_%s" % (name.package, "_".join(name.path))
 
-@match(Ref, Ruby)
-def expr(name, target):
-    return ".".join(list(map(target.upcase, name.path[:-1])) + [name.path[-1]])
-
-@match(Ref, Go)
+@match(Ref, Target)
 def expr(name, target):
     return target.nameof(name)
 
@@ -200,17 +209,6 @@ def expr(invoke, target):
 @match(Ref, Target)
 def funcall(name, target):
     return expr(name, target)
-
-@match(Ref, Python)
-def funcall(name, target):
-    if target.is_interpackage(name):
-        return expr(name, target) + "." + name.path[-1]
-    else:
-        return name.path[-1]
-
-@match(Ref, Java)
-def funcall(name, target):
-    return ".".join(name.path[:-1] + ("Functions",) + name.path[-1:])
 
 ## Send
 
