@@ -77,6 +77,7 @@ def backlink(tree):
     while pending:
         node = pending.popleft()
         for c in node.children:
+            assert isinstance(c, IR), repr(c)
             parent = getattr(c, "parent", node)
             assert parent is node, "%s is not a tree: %s has parent %s but expected %s" % (tree.__class__.__name__, c, parent, node)
             c.parent = node
@@ -451,7 +452,7 @@ class Class(Definition):
 
         constructor_body = self.constructors[0].body
 
-        initializers = tuple(FieldInitialize("private", Set(This(), f.name, f.initializer.copy())) for f in self.fields)
+        initializers = tuple(FieldInitialize(This(), f.name, f.initializer.copy()) for f in self.fields)
         constructor_body.statements = initializers + constructor_body.statements
 
     @property
@@ -543,7 +544,7 @@ class Get(Expression):
         return self.repr(self.expr, self.name)
 
 # mutate a Field
-class Set(Expression):
+class Set(Statement):
 
     @match(Expression, basestring, Expression)
     def __init__(self, expr, name, value):
@@ -558,6 +559,11 @@ class Set(Expression):
 
     def __repr__(self):
         return self.repr(self.expr, self.name, self.value)
+
+# a specialization of Set, for Class Field initialization, so
+# that Constructor Block can filter them out
+class FieldInitialize(Set):
+    pass
 
 # Invokes a function given the fully qualified name and arguments
 class Invoke(Expression):
@@ -717,15 +723,6 @@ class Evaluate(Statement):
 
     def __repr__(self):
         return self.repr(self.expr)
-
-# a specialization of Evaluate, for Class Field initialization, so
-# that Constructor Block can filter them out
-class FieldInitialize(Evaluate):
-    @match("private", Set)
-    def __init__(self, _, expr):
-        self.expr = expr
-
-    pass
 
 class Return(Statement):
 

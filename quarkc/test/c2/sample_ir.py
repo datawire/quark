@@ -8,4 +8,4 @@ def fibonacci_ir():
     return load_sample("fibonacci.ir")
 
 def minimal_ir():
-    return load_sample("fibonacci.ir")
+    return load_sample("minimal_q.ir")

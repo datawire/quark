@@ -14,7 +14,7 @@
 
 from .match import match, opt, choice, many
 from .ir import (IR, Function, Interface, Class, Check, If,
-                 While, Block, Evaluate, Local, Return,
+                 While, Block, Evaluate, Local, Return, Set,
                  Message, Field, Method, Constructor, AssertEqual)
 from . import tr
 
@@ -130,13 +130,15 @@ def code(block, target):
 
 @match(Evaluate, Target)
 def code(evaluate, target):
-    return tr.Simple("{expr}".format(expr=expr(evaluate.expr, target)))
+    return tr.Simple("{expr}".format(
+        expr=expr(evaluate.expr, target)))
 
 ## Return
 
 @match(Return, Target)
 def code(retr, target):
-    return tr.Simple("return {expr}".format(expr=expr(retr.expr, target)))
+    return tr.Simple("return {expr}".format(
+        expr=expr(retr.expr, target)))
 
 ## Local
 
@@ -160,14 +162,34 @@ def code(local, target):
         type=expr(local.type, target),
         initializer=opt_expr(" = ", local.expr, target)))
 
+## Set
+
+@match(Set, Go)
+def code(fset, target):
+    return tr.Simple("{target}.{field} = {value}".format(
+        target=expr(fset.expr, target),
+        field=target.upcase(fset.name),
+        value=expr(fset.value, target)))
+
+@match(Set, choice(Python, Java))
+def code(fset, target):
+    return tr.Simple("{target}.{field} = {value}".format(
+        target=expr(fset.expr, target),
+        field=fset.name,
+        value=expr(fset.value, target)))
+
+@match(Set, Ruby)
+def code(fset, target):
+    return tr.Simple("{target}.{field} = {value}".format(
+        target=expr(fset.expr, target),
+        field=fset.name,
+        value=expr(fset.value, target)))
 
 ## Interface
 
 @match(Interface, Python)
 def code(iface, target):
     methods = [code(m, target) for m in iface.methods]
-    print (iface)
-    print (methods)
     return tr.Compound(
         "class {name}(object)".format(
             name = target.nameof(iface.name)),

@@ -13,11 +13,12 @@
 # limitations under the License.
 
 from .match import match, choice
-from .ir import (Type, ClassType, Name, Ref,
-                 Param, Var, This, Call, Invoke, Send, Construct, Get, Set,
-                 Void, Null,
-                 Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit
-                 )
+from .ir import (
+    Type, ClassType, Name, Ref,
+    Param, Var, This, Call, Invoke, Send, Construct, Get,
+    Void, Null,
+    Int, IntLit, Float, FloatLit, String, StringLit, Bool, BoolLit
+)
 
 from .emit_target import Target, Python, Java, Go, Ruby
 
@@ -279,26 +280,4 @@ def expr(fget, target):
         target=expr(fget.expr, target),
         field=fget.name)
 
-## Set
-
-@match(Set, Go)
-def expr(fset, target):
-    return "({target}.{field} = {value})".format(
-        target=expr(fset.expr, target),
-        field=target.upcase(fset.name),
-        value=expr(fset.value, target))
-
-@match(Set, choice(Python, Java))
-def expr(fset, target):
-    return "({target}.{field} = {value})".format(
-        target=expr(fset.expr, target),
-        field=fset.name,
-        value=expr(fset.value, target))
-
-@match(Set, Ruby)
-def expr(fset, target):
-    return "({target}.{field} = {value})".format(
-        target=expr(fset.expr, target),
-        field=fset.name,
-        value=expr(fset.value, target))
 

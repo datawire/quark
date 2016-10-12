@@ -179,7 +179,7 @@ class Java(Target):
 
     @match(choice(Class, Interface))
     def define_namespace(self, dfn):
-        return self.define_namespace(dfn, dfn.name.path)
+        return self.define_namespace(dfn.name.path)
 
     @match(Function)
     def define_namespace(self, dfn):
