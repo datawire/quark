@@ -166,6 +166,9 @@ namespace quark {
     Object fromJSON(reflect.Class cls, Object result, JSONObject json) {
         if (json == null || json.isNull() || json.isUndefined()) { return null; }
         int idx = 0;
+        // If true we don't know the type of the number, so we will convert to
+        // float or long depending on its value.
+        bool genericNumber = false;
 
         if (cls == null || cls.isAbstract()) {
             String type = json.getType();
@@ -173,7 +176,8 @@ namespace quark {
                 cls = reflect.Class.BOOL;
             }
             if (type == "number") {
-                cls = reflect.Class.BOOL;
+                cls = reflect.Class.FLOAT;
+                genericNumber = true;
             }
             if (type == "string") {
                 cls = reflect.Class.STRING;
@@ -204,6 +208,12 @@ namespace quark {
             }
             if (cls.name == "quark.float") {
                 float flt = json;
+                if (genericNumber) {
+                    if (flt.round() == flt) {
+                        long l2 = json;
+                        return l2;
+                    }
+                }
                 return flt;
             }
             if (cls.name == "quark.int") {

@@ -6,6 +6,13 @@ Breaking changes are marked with (!)
 Latest
 -----
 
+### Standard Library
+
+* Fixed JSON bug where deserialization would convert numbers into nulls.
+
+1.0.433
+-----
+
 ### Command line
 
 * Added `--include-stdlib` option to `quark compile`, for easier omnibus
