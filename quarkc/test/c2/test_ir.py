@@ -109,7 +109,39 @@ from .sample_ir import *
 def test_emit_sample(sample, target):
     t = target()
     emit(sample(), t)
-    import pprint
-    pprint.pprint(t.definitions)
-    pprint.pprint(t.modules)
-    pprint.pprint(t.files)
+    pretty_definitions(sample.func_name, t)
+    for name, content in t.files.items():
+        print("")
+        print(">>>>>> begin " + name)
+        print(content)
+        print("<<<<<<<< end " + name)
+
+
+from quarkc.c2.match import match, many
+from quarkc.c2.emit_target import TargetDefinition, TargetNamespace
+
+@match(basestring, Target)
+def pretty_definitions(name, target):
+    f = tr.File("pretty_definitions")
+    f.add(tr.Comment("======="))
+    f.add(tr.Compound(
+        "{target} pretty_definitions for {name}".format(target=target.__class__.__name__, name=name),
+        tr.Block(*[pretty_definitions(k, v, target) for k, v in target.definitions.items()])))
+    f.add(tr.Comment("======="))
+    print format(f, target)
+
+@match(Name, TargetDefinition, Target)
+def pretty_definitions(name, tgtdef, target):
+    return tr.Simple("{name} => {dfn}".format(name=name, dfn=tgtdef))
+
+@match((many(basestring),), TargetNamespace, Target)
+def pretty_definitions(name, tgtns, target):
+    return tr.Compound("{name} => namespace".format(name=name), tr.Block(
+        tr.Compound("imports", tr.Block(
+            *[tr.Simple(s) for s in tgtns.imports]
+            )),
+        tr.Compound("names", tr.Block(
+            *[tr.Simple("{name} => {target_name}".format(name=n, target_name=v))
+                      for n,v in tgtns.names.items()]
+            )),
+    ))

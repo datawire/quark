@@ -60,7 +60,7 @@ def format(stmt, target, indent):
 
 @match(Block, Target, Indent)
 def format(block, target, indent):
-    return "\n".join([" {"] + [format(s, target, indent.more) for s in block.children] + [indent("} ")])
+    return "\n".join([" {"] + [format(s, target, indent.more).rstrip() for s in block.children] + [indent("} ")])
 
 @match(Block, Python, Indent)
 def format(block, target, indent):
@@ -83,7 +83,7 @@ def format(stmt, target, indent):
         "{stmt}{block}".format(
             stmt = s,
             block = format(b, target, indent))
-        for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])])
+        for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])]).rstrip()
 
 @match(Compound, Ruby, Indent)
 def format(stmt, target, indent):
@@ -94,7 +94,6 @@ def format(stmt, target, indent):
         for s, b in zip(stmt.comps[0::2], stmt.comps[1::2])] +
                    [indent("end")]
     )
-
 
 ## Comment
 

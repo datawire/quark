@@ -227,7 +227,7 @@ def code(fun, target):
 
 @match(Message, Java)
 def code(fun, target):
-    return tr.Simple("public {type} {name}({params});".format(
+    return tr.Simple("public {type} {name}({params})".format(
         type=expr(fun.type, target),
         name=fun.name,
         params=", ".join(expr(p, target) for p in fun.params)
@@ -291,7 +291,7 @@ def code(clazz, target):
 
 @match(Field, Java)
 def code(field, target):
-    return tr.Simple("public {type} {name};".format(
+    return tr.Simple("public {type} {name}".format(
         type=expr(field.type, target),
         name=field.name,
     ))
@@ -411,7 +411,7 @@ def code(assrt, target):
 
 @match(AssertEqual, Java)
 def code(assrt, target):
-    return tr.Simple("assertEquals(({expected}), ({actual}));".format(
+    return tr.Simple("assertEquals(({expected}), ({actual}))".format(
         expected = expr(assrt.expected, target),
         actual = expr(assrt.actual, target)))
 

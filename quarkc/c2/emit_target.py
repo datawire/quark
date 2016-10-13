@@ -172,7 +172,7 @@ class Java(Target):
 
                       null        true            false 
 
-                      Functions   Tests""".split())
+                      Functions   Tests           assertEquals""".split())
 
     @match(TargetNamespace, Definition)
     def define(self, namespace, dfn):
@@ -206,6 +206,18 @@ class Java(Target):
         # toplevel namespace names because we don't store root, should that be prohibited by the IR anyways?
         return TargetNamespace(())
 
+    @match(Definition, tr.File)
+    def header(self, dfn, module):
+        tgtdfn = self.definitions[dfn.name]
+        module.add(tr.Simple("package {pkg}".format(pkg = ".".join(tgtdfn.namespace.target_name[:-1]))))
+        module.add(self.head_comment(),)
+
+    @match(choice(Check, Function), tr.File)
+    def header(self, dfn, module):
+        tgtdfn = self.definitions[dfn.name]
+        module.add(tr.Simple("package {pkg}".format(pkg = ".".join(tgtdfn.namespace.target_name[:-1]))))
+        module.add(self.head_comment(),)
+
     @match(Definition, TargetDefinition)
     def filename(self, dfn, tgtdfn):
         return "/".join(("src", "main", "java") + tgtdfn.namespace.target_name) + ".java"
@@ -215,6 +227,12 @@ class Java(Target):
         return "/".join(("src", "test", "java") + tgtdfn.namespace.target_name) + ".java"
 
     @match(tr.File, Definition, TargetDefinition, Ref, TargetDefinition)
+    def reference(self, module, dfn, tgtdfn, ref, tgtref):
+        tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name)
+        # Java fully qualifies all references, imports are not necessary
+        pass
+
+    @match(tr.File, Function, TargetDefinition, Ref, TargetDefinition)
     def reference(self, module, dfn, tgtdfn, ref, tgtref):
         tgtdfn.namespace.names[ref] = ".".join(tgtref.namespace.target_name + (tgtref.target_name, ))
         # Java fully qualifies all references, imports are not necessary

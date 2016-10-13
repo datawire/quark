@@ -31,7 +31,7 @@ Options:
 """
 
 from .match import match
-from .ir import IR, Package, Definition, Check, Ref
+from .ir import IR, Package, Definition, Check, Function, Ref
 from .ir import backlink, walk_dfs
 from . import tr
 
@@ -100,6 +100,14 @@ def crosslink(dfn, target):
         crosslink(dfn, node, target)
     crosslink_done(dfn, target)
 
+@match(Definition, Ref, Target)
+def crosslink(dfn, ref, target):
+    target.reference(dfn, ref)
+
+@match(Definition, IR, Target)
+def crosslink(dfn, node, target):
+    pass
+
 @match(Definition, Target)
 def crosslink_done(dfn, target):
     pass
@@ -125,15 +133,27 @@ def crosslink_done(dfn, target):
         module.push(tr.Compound("module {name}".format(name=name), inner_block), inner_block)
     inner_block = tr.Block()
     module.push(tr.Compound("class Test{name} < Test::Unit::TestCase".format(
-        name=tgtdfn.namespace.target_name[-1]), inner_block), inner_block) 
+        name=tgtdfn.namespace.target_name[-1]), inner_block), inner_block)
 
-@match(Definition, Ref, Target)
-def crosslink(dfn, ref, target):
-    target.reference(dfn, ref)
+@match(Function, Java)
+def crosslink_done(dfn, target):
+    module = target.module(dfn)
+    # XXX: there are several Functions per module, short-circuit by cheating a bit here
+    if module.outer_block is not module.inner_block:
+        return
+    inner_block = tr.Block()
+    module.push(tr.Compound("class Functions", inner_block), inner_block)
 
-@match(Definition, IR, Target)
-def crosslink(dfn, node, target):
-    pass
+@match(Check, Java)
+def crosslink_done(dfn, target):
+    module = target.module(dfn)
+    # XXX: there are several Checks per module, short-circuit by cheating a bit here
+    if module.outer_block is not module.inner_block:
+        return
+    module.add(tr.Simple("import static org.junit.Assert.assertEquals"))
+    module.add(tr.Simple("import org.junit.Test"))
+    inner_block = tr.Block()
+    module.push(tr.Compound("class Tests", inner_block), inner_block)
 
 @match(Package, Target)
 def transform(pkg, target):
