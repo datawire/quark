@@ -7,6 +7,6 @@ public class Functions {
 
     public static boolean int__eq__ (int i, int j) { return i == j; }
     public static int     int__add__(int i, int j) { return i + j; }
-    public static int     int__sub__(int i, int j) { return i + j; }
+    public static int     int__sub__(int i, int j) { return i - j; }
 
 }
